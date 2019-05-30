@@ -35,13 +35,13 @@ class Team():
                 weapon = self.weapons[key]
                 d.setdefault('weapons', {})
                 if type(weapon) == Weapon:         
-                    d['weapons'][weapon.name] = weapon.write_json()
+                    d['weapons'][weapon.name] = weapon.write_dict()
                     
         for key in self.units.keys():
                 unit = self.units[key]
                 d.setdefault('units', {})
                 if type(unit) == Unit:
-                        d['units'][unit.name] = unit.write_json()
+                        d['units'][unit.name] = unit.write_dict()
         
         print(d)
 
@@ -67,24 +67,24 @@ class Team():
         for key in d0.keys():
                 if key not in nested_keys:
                         try:
-                                d0[key] = d1[key]
+                                setattr(self, key, d1[key])
                         except KeyError:
-                                d0[key] = ''
+                                setattr(self, key, '')
 
                                 
                
         for unit_name in d1['units'].keys():
-                self.units['unit_name'] = Unit(unit_name, self)
+                self.units[unit_name] = Unit(unit_name, self)
                 rest_dict= d1['units'][unit_name]
-                self.units['unit_name'].team = self
-                self.units['unit_name'].from_dict(rest_dict)
+                self.units[unit_name].team = self
+                self.units[unit_name].from_dict(rest_dict)
 
                 
-        for unit_name in d1['weapons'].keys():
-                self.weapons['unit_name'] = Unit(unit_name, self)
-                rest_dict= d1['weapons'][unit_name]
-                self.weapons['unit_name'].team = self
-                self.weapons['unit_name'].from_dict(rest_dict)
+        for weapon_name in d1['weapons'].keys():
+                self.weapons[weapon_name] = Unit(weapon_name, self)
+                rest_dict= d1['weapons'][weapon_name]
+                self.weapons[weapon_name].team = self
+                self.weapons[weapon_name].from_dict(rest_dict)
 
 
                       
@@ -134,10 +134,9 @@ class Weapon():
         self.orders_lost = []
         self.cost = ''
         self.requiered_to_buy = ''
-
         self.filters = ['team']
         
-    def write_json(self):
+    def write_dict(self):
         d = self.__dict__.copy()
 
         for f in self.filters:
@@ -149,6 +148,15 @@ class Weapon():
         #add filters if neccessary
         
         return d
+
+    def from_dict(self, d0):
+        d1 = self.write_dict()
+        for key in d1:
+                try:
+                        setattr(self, key, d0[key])
+                except KeyError:
+                        setattr(self, key, '')
+
         
     def update(self):
         self.team.append_weapon(self)
@@ -226,9 +234,16 @@ class Unit():
         self.__dict__[key] = self.__dict__[key] + addision
                 
         #import IPython; IPython.embed()
+
+    def from_dict(self, d0):
+        d1 = self.write_dict()
+        for key in d1:
+                try:
+                        setattr(self, key, d0[key])
+                except KeyError:
+                        setattr(self, key, '')
         
-        
-    def write_json(self):
+    def write_dict(self):
 
         d = self.__dict__.copy()
         
