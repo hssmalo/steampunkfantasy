@@ -134,6 +134,8 @@ class Weapon():
         self.orders_lost = []
         self.cost = ''
         self.requiered_to_buy = ''
+        #type = unit base, 1 handed, 2 handed, misc, etc...
+        self.type_ = ''
         self.filters = ['team']
         
     def write_dict(self):
