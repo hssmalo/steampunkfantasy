@@ -203,6 +203,8 @@ class Unit():
         self.size = ''
         self.cost = ''
         self.armor = ''
+        self.type_ = ''
+
 
         self.weapons_input= []
         
@@ -210,6 +212,7 @@ class Unit():
 
         self.assault = ''
         self.assault_die = ''
+        self.assault_deflection_die = ''
         self.assualt_damage = ''
         self.assualt_pen = ''
         self.assault_deflection = ''
