@@ -1,0 +1,197 @@
+name = "Dwarf"
+
+[orders]
+
+[units.SteamPowerArmor]
+name = "SteamPowerArmor"
+type_ = "Bio"
+size = "medium"
+race = "Dwarf"
+assault_special = ""
+cost = "2mp, 1ip, 2cp"
+filters = [ "weapons", "team",]
+assault_deflection_die = ""
+armor = "1/1/1/1"
+unit_special = "Poison resistance 4\\ Fire reistance 2"
+assualt_damage = "-1"
+assault_die = "4+/5+/5+/6+"
+assault = "3/3/3/3"
+assualt_pen = "-1"
+members = "4"
+assault_deflection = ""
+weapons_input = [ "Heavy Musket",]
+
+[units."Dwarven AT-gun"]
+type_ = "Bio"
+assault_special = ""
+size = "Large"
+armor = "2/-/-/-"
+orders = [ "Rest", "Stand-Still", "",]
+assault_die = "6+/6+/6+/6+"
+members = "1AT-gun, 4 crew"
+weapons_input = [ "BIG AT-gun",]
+name = "Dwarven AT-gun"
+unit_special = "Poison Resistance 2 \\ Fire resistance 1"
+race = "Dwarf"
+assault = "1/1/1/1"
+assault_deflection_die = ""
+cost = "5cp, 3xp"
+filters = [ "weapons", "team",]
+assualt_damage = "-2"
+assualt_pen = "-2"
+assault_deflection = ""
+
+[units."Tamed Balrog"]
+name = "Tamed Balrog"
+type_ = "Bio, Monster"
+size = "Huge, +1 to be hit"
+race = "Dwarf"
+assault_special = "Fire"
+cost = "12xp"
+filters = [ "weapons", "team",]
+assault_deflection_die = ""
+armor = "3/2/2/1"
+orders = [ "slow", "Whip", "",]
+unit_special = "Poison Resistance :4 \\ Fir Resistance 12 \\ Terror[8][range=2]"
+assualt_damage = "AP 3"
+assault_die = "2+"
+assault = "6/4/3/2"
+assualt_pen = ""
+members = "1"
+assault_deflection = ""
+weapons_input = [ "Flaming Whip",]
+
+[units."Dwarf Infantry"]
+name = "Dwarf Infantry"
+type_ = "Bio"
+size = "medium"
+race = "Dwarf"
+assault_special = ""
+cost = "2mp"
+filters = [ "weapons", "team",]
+assault_deflection_die = ""
+armor = ""
+unit_special = "Poison Resistance 2 \\ Fire Resistance 1"
+assualt_damage = "-2"
+assault_die = "4+/5+/5+/6+"
+assault = "1/1/1/1"
+assualt_pen = "-2"
+members = "4"
+assault_deflection = ""
+weapons_input = [ "Dwarven Musket",]
+
+[units."Elite Dwarven Infantry"]
+name = "Elite Dwarven Infantry"
+type_ = "Bio"
+size = "medium"
+race = "Dwarf"
+assault_special = ""
+cost = "1xp to replace up too 2 regular infantry from one or two unit bases"
+filters = [ "weapons", "team",]
+assault_deflection_die = ""
+armor = ""
+unit_special = "Good shot: +1 to hit. \\ -2 to psycic damage taken \\ Poison Resistance 2 \\ Fire Resistance 1"
+assualt_damage = "-2"
+assault_die = "4+/5+/5+/6+"
+assault = "2/2/1/1/"
+assualt_pen = "-2"
+members = ""
+assault_deflection = "1/-/-/-"
+weapons_input = [ "Dwarven Musket",]
+
+[units."Elite SteamPowerArmor"]
+name = "Elite SteamPowerArmor"
+type_ = "Bio"
+size = "medium"
+race = "Dwarf"
+assault_special = ""
+cost = "4xp to replace one regular SteamPowerArmor member with an elite"
+filters = [ "weapons", "team",]
+assault_deflection_die = ""
+armor = "1/1/1/1"
+orders = [ "",]
+unit_special = "Unit base gains 1 psycic resistance. \\ Poison Resistance 4 \\ Fire Resistance 2"
+assualt_damage = "-1"
+assault_die = "4+/5+/5+/6+"
+assault = "3/3/3/3"
+assualt_pen = "-1"
+members = ""
+assault_deflection = "2/2/1/1"
+weapons_input = [ "Heavy Musket",]
+
+[units."Assault Bots"]
+name = "Assault Bots"
+type_ = "Mechanical"
+size = "medium"
+race = "Dwarf"
+assault_special = ""
+cost = "3ip, 6xp"
+filters = [ "weapons", "team",]
+assault_deflection_die = "5+/-/-/-"
+armor = "2/2/2/2"
+unit_special = "Immune to all pinning effects."
+assualt_damage = "2AP"
+assault_die = "4+/5+/5+/6+/"
+assault = "3/3/3/3"
+assualt_pen = "+0"
+members = "4"
+assault_deflection = "1/-/-/-"
+weapons_input = [ "",]
+
+[weapons."BIG AT-gun"]
+name = "BIG AT-gun"
+assault_special = ""
+assault_deflection_mod = ""
+race = "Dwarf"
+assault_pen_set_to = ""
+ap = "5"
+cost = ""
+angle = "*/-/-/-"
+orders_gained = [ "",]
+assault_ap = ""
+assault_deflection_die_set_to = ""
+special = ""
+range_ = "6"
+orders_lost = [ "",]
+assault_dam_set_to = ""
+filters = [ "team",]
+pen = ""
+assault_mod = ""
+damage = "+1"
+requiered_to_buy = ""
+
+[units."Assault Bots".damage_tables]
+"Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 memeber",]
+
+[units."Assault Bots".orders]
+Slow = [ "360^0 + F + 360^0",]
+
+[units."Tamed Balrog".damage_tables]
+"Regular Damage" = [ "1-8: +1 on future damage", "9-10: +2 on future damage \\ Assault -1/-1/-1/-1 \\ looses terror", "11-12: +3 on future damage \\ Assault -1/-1/-1/-1 \\ Looses Terror \\ Pinned", "13: Destroied/killed",]
+
+[units."Dwarven AT-gun".damage_tables]
+"Regular Damage" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psycic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
+"Psycic damage" = [ "4+: unit base pinned",]
+
+[units."Elite Dwarven Infantry".orders]
+"" = [ "",]
+
+[units."Elite SteamPowerArmor".damage_tables]
+"" = [ "",]
+
+[units."Elite Dwarven Infantry".damage_tables]
+"" = [ "",]
+
+[units."Dwarf Infantry".damage_tables]
+"Regular Damage" = [ "1-5: kill 1 member", "6-9: kill 1 member, roll on psycic damage[d6]", "10: kill all 4 members",]
+"Psycic Damage" = [ "4+: pinned",]
+
+[units.SteamPowerArmor.orders]
+"Main Orders" = [ "(slow) 360^0 + F + 360^0", "360^0 + 360^0 + 360^0", "Fire + -", "aim + - ", "load + -",]
+
+[units."Dwarf Infantry".orders]
+"Main Orders" = [ "(slow) 360^0 + F + 360^0", "360^0 + 360^0 + 360^0", "Fire + -", "aim + - ", "load + -",]
+
+[units.SteamPowerArmor.damage_tables]
+"Regular Damage" = [ "1-5: 1 member killed", "6-9: 1 member killed, roll on psycic damage[d6]", "10+: all 4 members killed",]
+"Psycic damage" = [ "5+: unit base pinned",]
