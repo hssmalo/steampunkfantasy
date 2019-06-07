@@ -81,7 +81,7 @@ class Team():
 
                 
         for weapon_name in d1['weapons'].keys():
-                self.weapons[weapon_name] = Unit(weapon_name, self)
+                self.weapons[weapon_name] = Weapon(weapon_name, self)
                 rest_dict= d1['weapons'][weapon_name]
                 self.weapons[weapon_name].team = self
                 self.weapons[weapon_name].from_dict(rest_dict)
