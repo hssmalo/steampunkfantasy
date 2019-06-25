@@ -212,10 +212,12 @@ class Unit():
         
         self.unit_special = ''
 
+
         self.assault = ''
         self.assault_die = ''
         self.assault_deflection_die = ''
         self.assualt_damage = ''
+        self.assault_ap = ''
         self.assualt_pen = ''
         self.assault_deflection = ''
         self.assault_special = ''
