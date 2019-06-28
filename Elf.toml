@@ -37,7 +37,7 @@ requiered_to_buy = ""
 type_ = "Special Cavalry weapon"
 pen = "-1"
 ap = ""
-special = "Fire once at all enemy units within range \\ If aim, use focus fire, roll 6 dice at same unit base"
+special = "Fire once at all enemy units within range and within one angle of fire \\ If aim, use focus fire, roll 6 dice at same unit base"
 damage = "-1"
 assault_deflection_die_set_to = ""
 assault_ap = ""
@@ -374,7 +374,7 @@ Movement = [ "(fly, fast) 360^0 + F + F", "(fly, fast) 360^0,F + F + F,360^0", "
 "Psycic damage" = [ "4+: pinned",]
 
 [units."Elk Cavalry".orders]
-Movement = [ "(slow) 360^0 + F + 360^0",]
+Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(fast) F+F+B",]
 "Fire orders" = [ "- + Throw Grenade",]
 
 [units."Bear Rider".orders]
