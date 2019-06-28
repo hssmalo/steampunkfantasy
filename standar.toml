@@ -1,0 +1,29 @@
+name = "standar"
+
+[orders]
+
+[units."Standar Tank Orders"]
+armor = ""
+unit_special = ""
+assualt_pen = ""
+race = "standar"
+filters = [ "weapons", "team",]
+assault = ""
+assualt_damage = ""
+members = ""
+name = "Standar Tank Orders"
+assault_deflection = ""
+type_ = ""
+cost = ""
+size = ""
+weapons_input = [ "",]
+assault_die = ""
+assault_ap = ""
+assault_special = ""
+assault_deflection_die = ""
+
+[units."Standar Tank Orders".damage_tables]
+"" = [ "",]
+
+[units."Standar Tank Orders".orders]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -",]
