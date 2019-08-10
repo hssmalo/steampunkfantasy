@@ -2,428 +2,394 @@ name = "DarkElf"
 
 [orders]
 
-[units."Nightmare Mechanical Cavalry"]
-type_ = "Bio, Mechanical Mount, Cavalry"
-filters = [ "weapons", "team",]
-assault_deflection_die = "5+"
-armor = ""
-race = "DarkElf"
-unit_special = ""
-assualt_pen = "-2"
-cost = "2mp, 4cp, 6xp"
-assualt_damage = "-1"
-assault_special = "z is equal to the number of normal hits in assault"
-name = "Nightmare Mechanical Cavalry"
-weapons_input = [ "SMG", "Acid Breath",]
-assault_ap = ""
-size = "medium"
-assault = "3/2/1/1"
-members = "2"
-assault_deflection = "2z/1z/-/-"
-assault_die = "5+/6+/6+/6+/"
-
-[units."Elite Infantry"]
-type_ = "Infantry"
-filters = [ "weapons", "team",]
-assault_deflection_die = "6+"
-armor = ""
-race = "DarkElf"
-unit_special = "Unit base gains Psycic resistance 1"
-assualt_pen = "-2"
-cost = "1xp to upgrade 2 infantry from one or two unit bases"
-assualt_damage = "-2"
-assault_special = "flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection"
-name = "Elite Infantry"
-weapons_input = [ "Rifle",]
-assault_ap = ""
-size = "medium"
-assault = "2/2/2/2"
-members = ""
-assault_deflection = "3/3/3/3"
-assault_die = "5+"
-
-[weapons.Rifle]
-type_ = "2 handed infantry weapon"
-damage = "-2"
-special = ""
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "4"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Rifle"
-pen = "-2"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = ""
-angle = "*/*/*/*"
-
-[weapons."Head Gun"]
-type_ = "Droid weapon"
-damage = "-2, +2 (total 0) if penetrating all armor \\ poison[6]"
-special = ""
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "3"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Head Gun"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "1"
-angle = "*/*/-/-"
-
-[weapons."Acid Cannon"]
-type_ = "Main Tank Gun"
-damage = ""
-special = "Major Acid"
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "6"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Acid Cannon"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "1"
-angle = "*/-/-/-"
-
-[units.Infantry]
-type_ = "Bio, Infantry"
-filters = [ "weapons", "team",]
-assault_deflection_die = "6+"
-armor = ""
-race = "DarkElf"
-unit_special = ""
-assualt_pen = "-2"
-cost = "3mp"
-assualt_damage = "-2"
-assault_special = ""
-name = "Infantry"
-weapons_input = [ "Rifle",]
-assault_ap = ""
-size = "medium"
-assault = "1/1/1/1"
-members = "4"
-assault_deflection = "1/1/1/1"
-assault_die = "5+"
-
-[units."Mechanical Horse Cavalry"]
-type_ = "Bio, Mechanical Mount, Cavalry"
-filters = [ "weapons", "team",]
-assault_deflection_die = "5+"
-armor = ""
-race = "DarkElf"
-unit_special = ""
-assualt_pen = "-2"
-cost = "2mp, 4cp, 1cp"
-assualt_damage = "-1"
-assault_special = "z=number of hits in assault"
-name = "Mechanical Horse Cavalry"
-weapons_input = [ "SMG", "CrossBow",]
-assault_ap = ""
-size = "medium"
-assault = "3/2/1/1"
-members = "2"
-assault_deflection = "2z/2z/2z/2z"
-assault_die = "5+"
-
-[weapons.CrossBow]
-type_ = "Infantry and cavalry weapon."
-damage = "-2"
-special = "Poison[6], minor acid"
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "2"
-filters = [ "team",]
-assault_mod = ""
-cost = "2cp to upgrade one base of infantry"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "CrossBow"
-pen = "-2"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = "Infantry"
-ap = ""
-angle = "*/*/*/*"
-
-[weapons."Poison Gas Grenade"]
-type_ = "Infantry Misc weapon."
-damage = "N.A."
-special = "Place a Poison Cload[6](4+) within normal range. "
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "1"
-filters = [ "team",]
-assault_mod = ""
-cost = "1cp to upgrade base"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Poison Gas Grenade"
-pen = "N.A."
-assault_ap = ""
-orders_gained = [ "- + throw Gas Grenade",]
-assault_pen_set_to = ""
-requiered_to_buy = "Infantry or Cavalery Base"
-ap = "N.A"
-angle = "*/*/*/*"
-
 [units."Elite Mechanical Cavalry"]
+size = "medium"
 type_ = "Bio, Mechanical Mount, Cavalry"
-filters = [ "weapons", "team",]
-assault_deflection_die = "5+"
-armor = ""
-race = "DarkElf"
-unit_special = "Good shot: +1 to hit \\ Negates to-hit penalty for shooting while moving fast"
 assualt_pen = "-2"
+unit_special = "Good shot: +1 to hit \\ Negates to-hit penalty for shooting while moving fast"
 cost = "2mp, 4cp, 4xp"
-assualt_damage = "-1"
+assault_deflection = "3z/2z/-/-"
+race = "DarkElf"
+assault_die = "5+/6+/6+/6+"
+weapons_input = [ "SMG", "Crossbow",]
 assault_special = "z is equal to the number of hits in regular assault roll"
 name = "Elite Mechanical Cavalry"
-weapons_input = [ "SMG", "Crossbow",]
-assault_ap = ""
-size = "medium"
 assault = "4/2/1/1"
-members = "2"
-assault_deflection = "3z/2z/-/-"
-assault_die = "5+/6+/6+/6+"
-
-[units."Queen XXX"]
-type_ = "Mechanical, Bio Crew"
-filters = [ "weapons", "team",]
-assault_deflection_die = "5+"
-armor = "5/4/2/1"
-race = "DarkElf"
-unit_special = "Immunity to poison cloads \\ Good shot +1 to hit"
-assualt_pen = "-1"
-cost = "8ip"
 assualt_damage = "-1"
-assault_special = "poison[6] \\ Tatcial Retreat: Does not get pinned if losing an assault. May also choose to retreat even if winning the assault. Threat the enemy as winning, but noone gets pinned. The enemy occupies the hex, wether it wants to or not..."
-name = "Queen XXX"
-weapons_input = [ "Acid-Cannon",]
+members = "2"
 assault_ap = ""
-size = "Large"
-assault = "4/2/2/1"
-members = "1"
-assault_deflection = "2/-/-/-"
-assault_die = "5+"
-
-[units."Mechanical Spider"]
-type_ = "Mechanical, droid"
-filters = [ "weapons", "team",]
 assault_deflection_die = "5+"
-armor = "2/2/2/2"
-race = "DarkElf"
-unit_special = "Good Shot: +1 to hit\\ All terrain cost 1 movement point to enter"
-assualt_pen = ""
-cost = "2ip"
-assualt_damage = "+0"
-assault_special = "Poison[6]"
-name = "Mechanical Spider"
-weapons_input = [ "Head Gun",]
-assault_ap = "2"
-size = "medium"
-assault = "6/4/2/1"
-members = "1"
-assault_deflection = "3/1/-/-"
-assault_die = "5+"
-
-[weapons."Acid Breath"]
-type_ = "Specail Cavalery Breath Weapon"
-damage = ""
-special = "Fires at everthing within range and angle of fire. \\ Major Acid"
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "1"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Acid Breath"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = ""
-angle = "*/-/-/-"
+filters = [ "weapons", "team",]
+armor = ""
 
 [weapons.SMG]
-type_ = "Infantry, cavalry weapon. 1 handed"
-damage = "-3"
-special = ""
-assault_deflection_die_set_to = ""
-race = "DarkElf"
-range_ = "3"
-filters = [ "team",]
-assault_mod = ""
-cost = "1cp to upgrade one base of infantry"
-orders_lost = [ "aim",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "SMG"
 pen = "-3"
-assault_ap = ""
-orders_gained = [ "fire + fire", "load(5) + -", "",]
-assault_pen_set_to = ""
+cost = "1cp to upgrade one base of infantry"
 requiered_to_buy = "Infantry"
-ap = ""
-angle = "*/*/*/*"
-
-[weapons."Enhanced Crossbow"]
-type_ = "2 handed infantry weapon"
-damage = "-2"
-special = "poison[8], minor acid"
+orders_gained = [ "(stand-still, slow) fire + fire", "(stand-still, slow) load(5) + -",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Infantry, cavalry weapon. 1 handed"
+filters = [ "team",]
 assault_deflection_die_set_to = ""
 race = "DarkElf"
-range_ = "6"
-filters = [ "team",]
-assault_mod = ""
-cost = "1cp to upgrade weapon of one single elite \\\\ ps! for 2xp and 4cp you may have 4 elites with enhanced crossbows..."
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Enhanced Crossbow"
-pen = "-2"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = "Elite Infantry"
-ap = ""
+damage = "-3"
+name = "SMG"
 angle = "*/*/*/*"
+range_ = "3"
+orders_lost = [ "aim",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[units."Mechanical Spider"]
+size = "medium"
+type_ = "Mechanical, droid"
+assualt_pen = ""
+unit_special = "Good Shot: +1 to hit\\ All terrain cost 1 movement point to enter"
+cost = "2ip"
+assault_deflection = "3/1/-/-"
+race = "DarkElf"
+assault_die = "5+"
+weapons_input = [ "Head Gun",]
+assault_special = "Poison[6], Fear[6]"
+name = "Mechanical Spider"
+assault = "6/4/2/1"
+assualt_damage = "+0"
+members = "1"
+assault_ap = "2"
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = "2/2/2/2"
+
+[units."Queen XXX"]
+size = "Large"
+type_ = "Mechanical, Bio Crew"
+assualt_pen = "-1"
+unit_special = "Immunity to poison cloads \\ Good shot +1 to hit"
+cost = "8ip"
+assault_deflection = "2/-/-/-"
+race = "DarkElf"
+assault_die = "5+"
+weapons_input = [ "Acid-Cannon",]
+assault_special = "poison[6], Fear[8] \\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
+name = "Queen XXX"
+assault = "4/2/2/1"
+assualt_damage = "-1"
+members = "1"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = "5/4/2/1"
+
+[weapons."Poison Gas Grenade"]
+pen = "N.A."
+cost = "1cp to upgrade base"
+requiered_to_buy = "Infantry or Cavalery Base"
+orders_gained = [ "(stand-still, slow) - + Throw Gas Grenade",]
+assault_special = ""
+special = "Place a Poison Cload[6](4+) within normal range. "
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Infantry Misc weapon."
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = "N.A."
+name = "Poison Gas Grenade"
+angle = "*/*/*/*"
+range_ = "1"
+orders_lost = [ "",]
+ap = "N.A"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons."Acid Cannon"]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "Major Acid"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Main Tank Gun"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = ""
+name = "Acid Cannon"
+angle = "*/-/-/-"
+range_ = "6"
+orders_lost = [ "",]
+ap = "1"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[abilities.Hidden]
+cost = "2xp"
+requiered_to_buy = "Infantry base"
+orders_gained = [ "(stand still) Reveal + - + - ", "(slow) - + Reveal + Chase", "(stand-still, slow or crawl) Hide[swamp] + - + -",]
+operational_by = "1 choosen infantry base"
+orders_lost = [ "",]
+filters = [ "team",]
+special = [ "Hidden: while hidden you cannot be fired upon or be assaulted. If in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the infantry base with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, or enter a clear hex with line of sight of enemy, or by the roll of 4+ by an enemy within point blank range, or by enemy special action. You only get reveal bonuses while using the order or in assaults.", "Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50% assault and assault deflection dice (rounded up). This round only", "Camuflage[swam] -1 to be hit in swamps", "Hide action: remove your unit from the board, replace it with a hidden token. Only works if you are in swamp terrain.", "Reveal: place your infantry within 2 hexes of the hidden token and gain reveal bonuses.", "Infiltrate: may start up to 2 hex from normal starting area",]
+race = "DarkElf"
+name = "Hidden"
+
+[units."Nightmare Mechanical Cavalry"]
+size = "medium"
+type_ = "Bio, Mechanical Mount, Cavalry"
+assualt_pen = "-2"
+unit_special = ""
+cost = "2mp, 4cp, 6xp"
+assault_deflection = "2z/1z/-/-"
+race = "DarkElf"
+assault_die = "5+/6+/6+/6+/"
+weapons_input = [ "SMG", "Acid Breath",]
+assault_special = "z is equal to the number of normal hits in assault"
+name = "Nightmare Mechanical Cavalry"
+assault = "3/2/1/1"
+assualt_damage = "-1"
+members = "2"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = ""
 
 [weapons.Mortar]
-type_ = "Infantry base weapon"
-damage = "N.A."
+pen = "N.A"
+cost = "8cp, 4xp"
+requiered_to_buy = "Infantry base"
+orders_gained = [ "",]
+assault_special = ""
 special = "Choose a hex within range and rol a die, at 5+ place a Poison & Acid Cload [8, minor][4+] at target hex. Place a Poison Cload[6]  at all hexes surronding that initial hex\\\\ If you don't roll a 5+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Infantry base weapon"
+filters = [ "team",]
 assault_deflection_die_set_to = ""
 race = "DarkElf"
-range_ = "10"
-filters = [ "team",]
-assault_mod = ""
-cost = "8cp, 4xp"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
+damage = "N.A."
 name = "Mortar"
-pen = "N.A"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = "Infantry base"
-ap = "N.A."
 angle = "*/*/*/*"
+range_ = "10"
+orders_lost = [ "",]
+ap = "N.A."
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons."Acid Breath"]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "Fires at everthing within range and angle of fire. \\ Major Acid"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Specail Cavalery Breath Weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = ""
+name = "Acid Breath"
+angle = "*/-/-/-"
+range_ = "1"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[units.Infantry]
+size = "medium"
+type_ = "Bio, Infantry"
+assualt_pen = "-2"
+unit_special = "Take Cover[stand-still,crawl][-2]"
+cost = "3mp"
+assault_deflection = "1/1/1/1"
+race = "DarkElf"
+assault_die = "5+"
+weapons_input = [ "Rifle",]
+assault_special = ""
+name = "Infantry"
+assault = "1/1/1/1"
+assualt_damage = "-2"
+members = "4"
+assault_ap = ""
+assault_deflection_die = "6+"
+filters = [ "weapons", "team",]
+armor = ""
+
+[weapons."Enhanced Crossbow"]
+pen = "-2"
+cost = "1cp to upgrade weapon of one single elite \\\\ ps! for 2xp and 4cp you may have 4 elites with enhanced crossbows..."
+requiered_to_buy = "Elite Infantry"
+orders_gained = [ "",]
+assault_special = ""
+special = "poison[8], minor acid"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "2 handed infantry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = "-2"
+name = "Enhanced Crossbow"
+angle = "*/*/*/*"
+range_ = "6"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[abilities.Crawl]
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+operational_by = "All infantry bases"
+orders_lost = [ "",]
+filters = [ "team",]
+special = [ "Specail speed gained: crawl. Retrain Take Cover benefis while moving. However, all terrain cost 2 movement points to enter.",]
+race = "DarkElf"
+name = "Crawl"
+
+[weapons.Rifle]
+pen = "-2"
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "2 handed infantry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = "-2"
+name = "Rifle"
+angle = "*/*/*/*"
+range_ = "4"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[units."Mechanical Horse Cavalry"]
+size = "medium"
+type_ = "Bio, Mechanical Mount, Cavalry"
+assualt_pen = "-2"
+unit_special = ""
+cost = "2mp, 4cp, 1cp"
+assault_deflection = "2z/2z/2z/2z"
+race = "DarkElf"
+assault_die = "5+"
+weapons_input = [ "SMG", "CrossBow",]
+assault_special = "z=number of hits in assault"
+name = "Mechanical Horse Cavalry"
+assault = "3/2/1/1"
+assualt_damage = "-1"
+members = "2"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = ""
+
+[units."Elite Infantry"]
+size = "medium"
+type_ = "Infantry"
+assualt_pen = "-2"
+unit_special = "Unit base gains Psycic resistance 1"
+cost = "1xp to upgrade 2 infantry from one or two unit bases"
+assault_deflection = "3/3/3/3"
+race = "DarkElf"
+assault_die = "5+"
+weapons_input = [ "Rifle",]
+assault_special = "flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection"
+name = "Elite Infantry"
+assault = "2/2/2/2"
+assualt_damage = "-2"
+members = ""
+assault_ap = ""
+assault_deflection_die = "6+"
+filters = [ "weapons", "team",]
+armor = ""
+
+[weapons."Head Gun"]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Droid weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = "-2, +2 (total 0) if penetrating all armor \\ poison[6]"
+name = "Head Gun"
+angle = "*/*/-/-"
+range_ = "3"
+orders_lost = [ "",]
+ap = "1"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons.CrossBow]
+pen = "-2"
+cost = "2cp to upgrade one base of infantry"
+requiered_to_buy = "Infantry"
+orders_gained = [ "",]
+assault_special = ""
+special = "Poison[6], minor acid"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Infantry and cavalry weapon."
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "DarkElf"
+damage = "-2"
+name = "CrossBow"
+angle = "*/*/*/*"
+range_ = "2"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
 
 [units."Gigant-Spider Rider"]
+size = "medium"
 type_ = "Bio, Cavalry"
-filters = [ "weapons", "team",]
-assault_deflection_die = "5+"
-armor = ""
-race = "DarkElf"
-unit_special = "GasMask: immune to poison gas"
 assualt_pen = "-2"
+unit_special = "GasMask: immune to poison gas"
 cost = "1mp, 3xp"
-assualt_damage = "-2"
+assault_deflection = "4/2/-/-"
+race = "DarkElf"
+assault_die = "5+"
+weapons_input = [ "",]
 assault_special = "Poison[12], minor acid, Fear[4]"
 name = "Gigant-Spider Rider"
-weapons_input = [ "",]
-assault_ap = ""
-size = "medium"
 assault = "6/4/2/1"
+assualt_damage = "-2"
 members = "2"
-assault_deflection = "4/2/-/-"
-assault_die = "5+"
-
-[units."Nightmare Mechanical Cavalry".orders]
-"Fire(smg)" = [ "Fire + fire", "load(5) + -", "- + load(5)",]
-Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
-"Breath Acid Orders" = [ "- + Breath Acid", "- + -",]
-
-[units."Queen XXX".damage_tables]
-"Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in misc 1 step", "3: rotates left in misc 2 and in misc 3", "4: only stand-stil available", "5: unit is covered in major acid", "6: unit covered in major acid x2",]
-"Regular damage" = [ "1-5: Lightly Damaged", "6-8: Crittical Damaged, +1 on all future damage",]
-"Lightly Damage" = [ "1-3: Pinned", "4-6: +1 on future damage",]
-
-[units."Gigant-Spider Rider".damage_tables]
-"Regular Damage" = [ "2-3: Bleed[4]", "4-6: kill 1 member", "''",]
-"Psycic damage" = [ "8+: unit pinned",]
-
-[units."Elite Mechanical Cavalry".orders]
-"Fire(smg)" = [ "fire + fire", "- + load(5)", "load(5) + -",]
-Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
-"Fire crossbow" = [ "- + fire", "- + load", "- + aim",]
-
-[units."Queen XXX".orders]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
-"Fire Orders" = [ "(stand still and slow) - + load", "(stand still and slow) - + aim", "(stand still, slow and fast) - + fire", "(stand still, slow and fast) - + Release Poison Cload[12](4+)",]
-
-[units."Mechanical Spider".orders]
-"Fire " = [ "- + Fire", "- + Load", "- + Aim",]
-Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^o + 360^0",]
-
-[units."Nightmare Mechanical Cavalry".damage_tables]
-"Regular Damage" = [ "2-3: +1 on future damage", "4-6: Destroy 1 memeber", "7+ : Destroy 1 member, roll on psycic damage",]
-"Psycic damage" = [ "6+: unit pinned",]
-
-[units.Infantry.damage_tables]
-"Psycic Damage" = [ "4+ Unit base pinned",]
-"Regular damage" = [ "0-6: kill 1 member", "7-8: kill 1 member, psycic damage[d6]", "9+ Kill all 4 members",]
-
-[units."Elite Infantry".damage_tables]
-"" = [ "",]
-
-[units."Gigant-Spider Rider".orders]
-Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^0 + 360^0",]
-
-[units.Infantry.orders]
-"" = [ "",]
-
-[units."Elite Infantry".orders]
-"" = [ "",]
-
-[units."Mechanical Spider".damage_tables]
-"Regular Damage" = [ "1-3: Lightly damaged[d6]", "4-6: Heavily Damage, +1 on future damage", "7: Destroyed",]
-"Heavy Damage" = [ "1: +1 for future damage", "2: -1 to-hit, +1 to-be-hit", "3: Cannot move", "4: Cannot rotate", "5: Roll on Lightly damage table 3 times", "6: Fire",]
-"Lightly Damage" = [ "1-2: unit pinned", "3-4: +1 on future damage", "5-6: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0)",]
-
-[units."Mechanical Horse Cavalry".orders]
-Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
-Fire = [ "fire(smg) + fire(smg)", "load(5)(smg), + - ", "- + fire (crossbow)", "- + load (crossbow) (stand still, slow only",]
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = ""
 
 [units."Elite Mechanical Cavalry".damage_tables]
 "" = [ "",]
@@ -431,3 +397,60 @@ Fire = [ "fire(smg) + fire(smg)", "load(5)(smg), + - ", "- + fire (crossbow)", "
 [units."Mechanical Horse Cavalry".damage_tables]
 "Regular Damage" = [ "2-3: +1 on future damage", "4-6: Kill 1 member", "7+: Destroy 1 member, roll on psycic damage",]
 "Psycic Damage" = [ "5+: unit pinned",]
+
+[units."Elite Infantry".damage_tables]
+"" = [ "",]
+
+[units."Elite Infantry".orders]
+"" = [ "",]
+
+[units."Mechanical Horse Cavalry".orders]
+Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
+Fire = [ "fire(smg) + fire(smg)", "load(5)(smg), + - ", "- + fire (crossbow)", "- + load (crossbow) (stand still, slow only",]
+
+[units."Nightmare Mechanical Cavalry".damage_tables]
+"Regular Damage" = [ "2-3: +1 on future damage", "4-6: Destroy 1 memeber", "7+ : Destroy 1 member, roll on psycic damage",]
+"Psycic damage" = [ "6+: unit pinned",]
+
+[units."Mechanical Spider".orders]
+Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^o + 360^0",]
+"Fire " = [ "- + Fire", "- + Load", "- + Aim",]
+
+[units."Gigant-Spider Rider".orders]
+Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^0 + 360^0",]
+
+[units."Queen XXX".damage_tables]
+"Regular damage" = [ "1-5: Lightly Damaged", "6-8: Crittical Damaged, +1 on all future damage",]
+"Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in misc 1 step", "3: rotates left in misc 2 and in misc 3", "4: only stand-stil available", "5: unit is covered in major acid", "6: unit covered in major acid x2",]
+"Lightly Damage" = [ "1-3: Pinned", "4-6: +1 on future damage",]
+
+[units."Queen XXX".orders]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
+"Fire Orders" = [ "(stand still and slow) - + load", "(stand still and slow) - + aim", "(stand still, slow and fast) - + fire", "(stand still, slow and fast) - + Release Poison Cload[12](4+)",]
+
+[units."Gigant-Spider Rider".damage_tables]
+"Regular Damage" = [ "2-3: Bleed[4]", "4-6: kill 1 member", "''",]
+"Psycic damage" = [ "8+: unit pinned",]
+
+[units.Infantry.orders]
+"Fire orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
+"Movement Orders" = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + B(crawl) + F", "(slow) 360^0 + B + -", "(slow) 360^0 + 360^0 + 360^0", "(stand still) 360^0 + - + - ", "(stand still) 360^0 + A(crawl) + -", "(stand still) 360^0 + A + -", "(crawl) 360^0 + F + -", "(crawl) 360^0 + A(slow) + F", "(crawl) 360^0 + B(stand-still) + -",]
+
+[units."Mechanical Spider".damage_tables]
+"Heavy Damage" = [ "1: +1 for future damage", "2: -1 to-hit, +1 to-be-hit", "3: Cannot move", "4: Cannot rotate", "5: Roll on Lightly damage table 3 times", "6: Fire",]
+"Regular Damage" = [ "1-3: Lightly damaged[d6]", "4-6: Heavily Damage, +1 on future damage", "7: Destroyed",]
+"Lightly Damage" = [ "1-2: unit pinned", "3-4: +1 on future damage", "5-6: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0)",]
+
+[units."Nightmare Mechanical Cavalry".orders]
+Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
+"Breath Acid Orders" = [ "- + Breath Acid", "- + -",]
+"Fire(smg)" = [ "Fire + fire", "load(5) + -", "- + load(5)",]
+
+[units."Elite Mechanical Cavalry".orders]
+Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
+"Fire crossbow" = [ "- + fire", "- + load", "- + aim",]
+"Fire(smg)" = [ "fire + fire", "- + load(5)", "load(5) + -",]
+
+[units.Infantry.damage_tables]
+"Regular damage" = [ "0-6: kill 1 member", "7-8: kill 1 member, psycic damage[d6]", "9+ Kill all 4 members",]
+"Psycic Damage" = [ "4+ Unit base pinned",]
