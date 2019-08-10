@@ -2,578 +2,580 @@ name = "Elf"
 
 [orders]
 
-[units."Elite Raptor Riders"]
-assualt_damage = "-2"
-type_ = "Bio, Cavalery"
-assault_deflection = "2/-/-/-"
-name = "Elite Raptor Riders"
-weapons_input = [ "SMG", "TwinGunns",]
-armor = ""
-race = "Elf"
-assault_die = "5+"
-assault_ap = ""
-size = "medium"
-filters = [ "weapons", "team",]
-assualt_pen = "-2"
-assault = "4/2/2/1"
-members = "2"
-assault_deflection_die = "5+"
-unit_special = "Poison Resistance[2], good shot: +1 to hit"
-cost = "1xp to upgrade 2 velociraptor riders from same base"
-assault_special = "Poison[4]"
-
-[weapons."Calibrated Gun"]
-type_ = "Tank gun"
-damage = "+3 to damage if a natural 6 is rolle for to-hit, +3 to damage if pentrating all armor"
-special = "Armor penetration not reduced with distance"
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "6"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Calibrated Gun"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "2"
-angle = "*/-/-/-"
-
-[weapons."Deflection Field"]
-type_ = "Mechanical upgrade"
-damage = ""
-special = ""
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = ""
-filters = [ "team",]
-assault_mod = ""
-cost = "4cp to upgarde 1 vehicle"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = "+6/+6/+6/+6"
-name = "Deflection Field"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = "Mechanical"
-ap = ""
-angle = ""
-
-[weapons."Raptor Running Aid"]
-type_ = "Special Cavalry misc"
-damage = ""
-special = ""
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = ""
-filters = [ "team",]
-assault_mod = ""
-cost = "2cp to upgrade one unit base of velociraptor riders"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Raptor Running Aid"
-pen = ""
-assault_ap = ""
-orders_gained = [ "(stand still) A + A + F", "(fast) F + B + B,360^0", "(fast) F+ F + F", "F + F,360^0 + B,B",]
-assault_pen_set_to = ""
-requiered_to_buy = "Velciraptor Rider"
-ap = ""
-angle = ""
-
-[weapons."Gattle Gun"]
-type_ = "Vehicle mounted gun."
-damage = "-2, +2 when penetrating all armor (total 0)"
-special = "May load up to 5 shots."
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "2"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Gattle Gun"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "0"
-angle = "*/*/-/-"
-
-[weapons."Main Tank Gun"]
-type_ = "Tank gun"
-damage = "+3 when penetrating all armor"
-special = "double barraled: may load up to 2 shots. But fire them one at a time"
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "6"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Main Tank Gun"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "3"
-angle = "*/*/*/*"
-
-[weapons.twin_gun]
-type_ = "Special cavalry weapon"
-damage = ""
-special = "x2 shots per shot"
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "3"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "twin_gun"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "1"
-angle = "*/-/-/-"
-
-[units."Bear Rider"]
-assualt_damage = "+1"
-type_ = "Bio, Cavalry"
-assault_deflection = "1/-/-/-"
-name = "Bear Rider"
-weapons_input = [ "MiniGun",]
-armor = "2/1/1/1"
-race = "Elf"
-assault_die = "5+"
-assault_ap = ""
-size = "medium"
-filters = [ "weapons", "team",]
-assualt_pen = "-1"
-assault = "6/4/2/1"
-members = "1"
-assault_deflection_die = "5+"
-unit_special = ""
-cost = "1mp, 4xp"
-assault_special = ""
-
-[weapons.SMG]
-type_ = "2 handed infantry weapon"
-damage = "-3"
-special = ""
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "3"
-filters = [ "team",]
-assault_mod = ""
-cost = "1cp to upgrade an unit base"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "SMG"
-pen = "-3"
-assault_ap = ""
-orders_gained = [ "fire(smg) + fire(smg)", "load(5) + -",]
-assault_pen_set_to = ""
-requiered_to_buy = "Inf"
-ap = ""
-angle = "*/*/*/*"
-
-[weapons."Sniper rifle"]
-type_ = "2 handed infantry weapon"
-damage = "-1"
-special = "Improves aim: +4 to hit, +2 to dam\\ May choose which unit in a unit base to kill if it kills 1 (or more) members."
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "8"
-filters = [ "team",]
-assault_mod = ""
-cost = "6cp to upgrade weapon of 1 elite unit"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Sniper rifle"
-pen = "-1"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = "Elite inf."
-ap = ""
-angle = "*/-/-/-"
-
-[weapons."Elk Bazooka"]
-type_ = "2 handed Special cavalery weapon."
-damage = ""
-special = "The other unit in the unit base may threat any fire orders as throw."
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "3"
-filters = [ "team",]
-assault_mod = ""
-cost = "4cp to give 1 elk cavalry 1 bazooka"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Elk Bazooka"
-pen = ""
-assault_ap = ""
-orders_gained = [ "+ - fire", "+ - aim", "+ - load",]
-assault_pen_set_to = ""
-requiered_to_buy = "Elk Cavalry"
-ap = "3"
-angle = "*/-/-/-"
-
-[weapons.grenade]
-type_ = "Special Cavalery misc weapon. "
-damage = ""
-special = "Area(5+). May target anyone within normal range. (including 0 if flying and sharing a hex with an enemy)"
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "1"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "grenade"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = "2"
-angle = "*/*/*/*"
-
-[weapons.AT-rifle]
-type_ = "Infantry 2-handed weapon"
-damage = "-1"
-special = ""
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "5"
-filters = [ "team",]
-assault_mod = ""
-cost = "6cp to upgrade an infantry base"
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "AT-rifle"
-pen = ""
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = "Infantry"
-ap = "1"
-angle = "*/-/-/-"
-
-[weapons.Rifle]
-type_ = "2 handed infantry weapon"
-damage = "-2"
-special = ""
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "5"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "Rifle"
-pen = "-2"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = ""
-angle = "*/*/*/*"
-
-[units.Infantry]
-assualt_damage = "-2"
-type_ = "Bio, Infantry"
-assault_deflection = ""
-name = "Infantry"
-weapons_input = [ "Rifle",]
-armor = ""
-race = "Elf"
-assault_die = "5+"
-assault_ap = ""
-size = "medium"
-filters = [ "weapons", "team",]
-assualt_pen = "-2"
-assault = "1/1/1/1"
-members = "4"
-assault_deflection_die = ""
-unit_special = ""
-cost = "3mp"
-assault_special = ""
-
-[weapons.MiniGun]
-type_ = "Special Cavalry weapon"
-damage = "-1"
-special = "Fire once at all enemy units within range and within one angle of fire \\ If aim, use focus fire, roll 6 dice at same unit base"
-assault_deflection_die_set_to = ""
-race = "Elf"
-range_ = "2"
-filters = [ "team",]
-assault_mod = ""
-cost = ""
-orders_lost = [ "",]
-assault_special = ""
-assault_dam_set_to = ""
-assault_deflection_mod = ""
-name = "MiniGun"
-pen = "-1"
-assault_ap = ""
-orders_gained = [ "",]
-assault_pen_set_to = ""
-requiered_to_buy = ""
-ap = ""
-angle = "*/*/*/*"
+[abilities]
 
 [units."Elk Cavalry"]
-assualt_damage = "-2"
-type_ = "Bio, Cavalry"
-assault_deflection = "1/-/-/-"
-name = "Elk Cavalry"
-weapons_input = [ "Grenade",]
-armor = ""
-race = "Elf"
-assault_die = "5+"
-assault_ap = ""
 size = "medium"
-filters = [ "weapons", "team",]
+type_ = "Bio, Cavalry"
 assualt_pen = "-2"
-assault = "2/2/1/1"
-members = "2"
-assault_deflection_die = "5+"
 unit_special = ""
 cost = "2mp, 1xp"
-assault_special = ""
-
-[units."Veloci Rapotor Riders"]
-assualt_damage = "-2"
-type_ = "Bio, Cavalry"
 assault_deflection = "1/-/-/-"
-name = "Veloci Rapotor Riders"
-weapons_input = [ "SMG", "TwinGunns",]
-armor = ""
 race = "Elf"
 assault_die = "5+"
-assault_ap = ""
-size = "medium"
-filters = [ "weapons", "team",]
-assualt_pen = "-2"
-assault = "3/2/2/1"
+weapons_input = [ "Grenade",]
+assault_special = ""
+name = "Elk Cavalry"
+assault = "2/2/1/1"
+assualt_damage = "-2"
 members = "2"
+assault_ap = ""
 assault_deflection_die = "5+"
-unit_special = "Poison Resistance[2]"
-cost = "2mp, 4cp, 2xp"
-assault_special = "poison[4]"
-
-[units."Elite Infantry"]
-assualt_damage = "-2"
-type_ = "Bio, Infantry"
-assault_deflection = "1/-/-/-"
-name = "Elite Infantry"
-weapons_input = [ "Rifle",]
+filters = [ "weapons", "team",]
 armor = ""
+
+[weapons."Gattle Gun"]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "May load up to 5 shots."
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Vehicle mounted gun."
+filters = [ "team",]
+assault_deflection_die_set_to = ""
 race = "Elf"
-assault_die = "5+"
+damage = "-2, +2 when penetrating all armor (total 0)"
+name = "Gattle Gun"
+angle = "*/*/-/-"
+range_ = "2"
+orders_lost = [ "",]
+ap = "0"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
 assault_ap = ""
+
+[units."Elite Raptor Riders"]
 size = "medium"
-filters = [ "weapons", "team",]
+type_ = "Bio, Cavalery"
 assualt_pen = "-2"
-assault = "2/1/1/1"
-members = ""
-assault_deflection_die = "5+"
-unit_special = "Unit gain good shot +1 and psycic resistance 1"
-cost = "1xp to upgrade up to 2 normal infantry units."
-assault_special = ""
-
-[units."Eagle Rider"]
-assualt_damage = "-1"
-type_ = "Bio, Flying, Cavaleri"
-assault_deflection = "2/2/2/1"
-name = "Eagle Rider"
-weapons_input = [ "AT-rifle", "Grenade",]
-armor = "1/1/1/1"
-race = "Elf"
-assault_die = "3+"
-assault_ap = ""
-size = "medium"
-filters = [ "weapons", "team",]
-assualt_pen = "-1"
-assault = "6/6/6/4"
-members = "1"
-assault_deflection_die = "3+"
-unit_special = "If in the air, it may choose to assault if entering same hex as an enemy. If so, regardless of the outcome, the eagle lands. The following round the orders is replaced by the default if illegal. The default is 360^0 + TakeOff + F.\\ In chase, the eagle may choose to land for assault if it wishes. \\ Good Shot[At-Rifle] +1 to hit"
-cost = "1mp, 3xp"
-assault_special = "Find weakest points: in assault always uses armor from optimal angle"
-
-[units."Tatto INK"]
-assualt_damage = "-1"
-type_ = "Mechanical, Half-track, Bio Crew"
-assault_deflection = "1/-/-/-"
-name = "Tatto INK"
-weapons_input = [ "Gattle Gun",]
-armor = "3/1/1/1"
+unit_special = "Poison Resistance[2], good shot: +1 to hit"
+cost = "1xp to upgrade 2 velociraptor riders from same base"
+assault_deflection = "2/-/-/-"
 race = "Elf"
 assault_die = "5+"
+weapons_input = [ "SMG", "TwinGunns",]
+assault_special = "Poison[4]"
+name = "Elite Raptor Riders"
+assault = "4/2/2/1"
+assualt_damage = "-2"
+members = "2"
 assault_ap = ""
-size = "Large"
-filters = [ "weapons", "team",]
-assualt_pen = "-1"
-assault = "2/1/1/1"
-members = "1"
 assault_deflection_die = "5+"
-unit_special = "Gun Blazing: Ignore to-hit penalties when moving fast"
-cost = "2ip"
-assault_special = ""
+filters = [ "weapons", "team",]
+armor = ""
 
-[units.E34]
-assualt_damage = "-1"
-type_ = "Mechanical, Bio Crew, Tank"
-assault_deflection = "1/-/-/-"
-name = "E34"
-weapons_input = [ "Main Tank Gun",]
-armor = "4/3/3/2"
-race = "Elf"
-assault_die = "5+"
-assault_ap = ""
-size = "Large"
-filters = [ "weapons", "team",]
-assualt_pen = "-1"
-assault = "3/2/2/1"
-members = "1"
-assault_deflection_die = "5+"
-unit_special = "Forrester: moving through forrest cost 1 point (not 2)"
-cost = "6ip"
+[weapons.twin_gun]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
 assault_special = ""
+special = "x2 shots per shot"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Special cavalry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = ""
+name = "twin_gun"
+angle = "*/-/-/-"
+range_ = "3"
+orders_lost = [ "",]
+ap = "1"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
 
 [units."Sniper Tank"]
-type_ = "Mechanical, Tank, Bio crew"
-filters = [ "weapons", "team",]
 size = "Large"
-assault = "3/2/2/1"
-armor = "4/3/3/2"
-race = "Elf"
+type_ = "Mechanical, Tank, Bio crew"
 assualt_pen = "-1"
+unit_special = "Forrester: moving through forrest cost 1 point \\ Camuflage[forrest] -1 to-be-hit"
 cost = "8ip"
-unit_special = "Forrester: moving through forrest cost 1 point \\\\ Camuflage[forrest] -1 to-be-hit"
-assault_special = ""
-assualt_damage = "-1"
+assault_deflection = "2/-/-/-"
+race = "Elf"
+assault_die = "5+"
 weapons_input = [ "Calibrated Gun", "Sniper rifle",]
+assault_special = "Fear(6)"
+name = "Sniper Tank"
+assault = "4/3/3/2"
+assualt_damage = "-1"
+members = "1"
 assault_ap = ""
 assault_deflection_die = "5+"
-name = "Sniper Tank"
-members = "1"
-assault_deflection = "1/-/-/-"
+filters = [ "weapons", "team",]
+armor = "4/3/3/2"
+
+[units.E34]
+size = "Large"
+type_ = "Mechanical, Bio Crew, Tank"
+assualt_pen = "-1"
+unit_special = "Forrester: moving through forrest cost 1 point (not 2)"
+cost = "6ip"
+assault_deflection = "2/-/-/-"
+race = "Elf"
 assault_die = "5+"
-unit_specail = "Forrester: moving through forrest cost 1 point \\\\ Camulfage[forrest]: -1 to-be-hit \\\\ fire orders are valid for both weapons simulatniously. "
+weapons_input = [ "Main Tank Gun",]
+assault_special = "Fear(6)"
+name = "E34"
+assault = "4/3/3/2"
+assualt_damage = "-1"
+members = "1"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = "4/3/3/2"
 
-[units."Veloci Rapotor Riders".orders]
-Movement = [ "(fast) 360^0 + F + F", "(fast) F + B + 360^0", "(fast) F + F + 360^0", "(slow) 360^0 + A + F", "B + 360^0 + -", "(stand still) - + -  + -", "(stand still) A + F + -", "(stand still) 360^0 + - + -",]
-"Fire Actions" = [ "fire(smg) + fire(smg)", "load(5)(smg) + - ", "fire(twin-gun) + - (stand still only)", "load(twin-gun) + -", "- + load(twin gun)", "- + aim (twin gun)", "- + fire(twin gun) (stand still only)",]
+[weapons.AT-rifle]
+pen = ""
+cost = "6cp to upgrade an infantry base"
+requiered_to_buy = "Infantry"
+orders_gained = [ "",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Infantry 2-handed weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "-1"
+name = "AT-rifle"
+angle = "*/-/-/-"
+range_ = "5"
+orders_lost = [ "",]
+ap = "1"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
 
-[units."Eagle Rider".damage_tables]
-"Regular Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to fuure damage, psycic damage[d6]", "6+: killed",]
-"psycic damage" = [ "6+ pinned",]
+[units.Infantry]
+size = "medium"
+type_ = "Bio, Infantry"
+assualt_pen = "-2"
+unit_special = "Take Cover[stand-still][-2]"
+cost = "3mp"
+assault_deflection = ""
+race = "Elf"
+assault_die = "5+"
+weapons_input = [ "Rifle",]
+assault_special = ""
+name = "Infantry"
+assault = "1/1/1/1"
+assualt_damage = "-2"
+members = "4"
+assault_ap = ""
+assault_deflection_die = ""
+filters = [ "weapons", "team",]
+armor = ""
 
-[units."Elk Cavalry".damage_tables]
-"psycic damage" = [ "4+ pinned",]
-"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 memeber, psycic_damage[d6]", "9: kill unit base",]
+[units."Veloci Rapotor Riders"]
+size = "medium"
+type_ = "Bio, Cavalry"
+assualt_pen = "-2"
+unit_special = "Poison Resistance[2]"
+cost = "2mp, 4cp, 2xp"
+assault_deflection = "1/-/-/-"
+race = "Elf"
+assault_die = "5+"
+weapons_input = [ "SMG", "TwinGunns",]
+assault_special = "poison[4]"
+name = "Veloci Rapotor Riders"
+assault = "3/2/2/1"
+assualt_damage = "-2"
+members = "2"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = ""
+
+[weapons.Rifle]
+pen = "-2"
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "2 handed infantry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "-2"
+name = "Rifle"
+angle = "*/*/*/*"
+range_ = "5"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons."Main Tank Gun"]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "double barraled: may load up to 2 shots. But fire them one at a time"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Tank gun"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "+3 when penetrating all armor"
+name = "Main Tank Gun"
+angle = "*/*/*/*"
+range_ = "6"
+orders_lost = [ "",]
+ap = "3"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons."Deflection Field"]
+pen = ""
+cost = "4cp to upgarde 1 vehicle"
+requiered_to_buy = "Mechanical"
+orders_gained = [ "",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Mechanical upgrade"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = ""
+name = "Deflection Field"
+angle = ""
+range_ = ""
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = "+6/+6/+6/+6"
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons.grenade]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "Area(5+). May target anyone within normal range. (including 0 if flying and sharing a hex with an enemy)"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Special Cavalery misc weapon. "
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = ""
+name = "grenade"
+angle = "*/*/*/*"
+range_ = "1"
+orders_lost = [ "",]
+ap = "2"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[units."Bear Rider"]
+size = "medium"
+type_ = "Bio, Cavalry"
+assualt_pen = "-1"
+unit_special = ""
+cost = "1mp, 4xp"
+assault_deflection = "1/-/-/-"
+race = "Elf"
+assault_die = "5+"
+weapons_input = [ "MiniGun",]
+assault_special = ""
+name = "Bear Rider"
+assault = "6/4/2/1"
+assualt_damage = "+1"
+members = "1"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = "2/1/1/1"
+
+[units."Eagle Rider"]
+size = "medium"
+type_ = "Bio, Flying, Cavaleri"
+assualt_pen = "-1"
+unit_special = "If in the air, it may choose to assault if entering same hex as an enemy. If so, regardless of the outcome, the eagle lands. The following round the orders is replaced by the default if illegal. The default is 360^0 + TakeOff + F.\\ In chase, the eagle may choose to land for assault if it wishes. \\ Good Shot[At-Rifle] +1 to hit"
+cost = "1mp, 4xp"
+assault_deflection = "2/2/2/1"
+race = "Elf"
+assault_die = "3+"
+weapons_input = [ "AT-rifle", "Grenade",]
+assault_special = "Find weakest points: in assault always uses armor from optimal angle"
+name = "Eagle Rider"
+assault = "6/6/6/4"
+assualt_damage = "-1"
+members = "1"
+assault_ap = ""
+assault_deflection_die = "3+"
+filters = [ "weapons", "team",]
+armor = "1/1/1/1"
+
+[weapons."Raptor Running Aid"]
+pen = ""
+cost = "2cp to upgrade one unit base of velociraptor riders"
+requiered_to_buy = "Velciraptor Rider"
+orders_gained = [ "(stand still) A + A + F", "(fast) F + B + B,360^0", "(fast) F+ F + F", "F + F,360^0 + B,B",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Special Cavalry misc"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = ""
+name = "Raptor Running Aid"
+angle = ""
+range_ = ""
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons."Elk Bazooka"]
+pen = ""
+cost = "4cp to give 1 elk cavalry 1 bazooka"
+requiered_to_buy = "Elk Cavalry"
+orders_gained = [ "+ - fire", "+ - aim", "+ - load",]
+assault_special = ""
+special = "The other unit in the unit base may threat any fire orders as throw."
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "2 handed Special cavalery weapon."
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = ""
+name = "Elk Bazooka"
+angle = "*/-/-/-"
+range_ = "3"
+orders_lost = [ "",]
+ap = "3"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons.SMG]
+pen = "-3"
+cost = "1cp to upgrade an unit base"
+requiered_to_buy = "Inf"
+orders_gained = [ "(stand-still, slow, fast) fire(smg) + fire(smg)", "(stand-still, slow) load(5) + -",]
+assault_special = ""
+special = ""
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "2 handed infantry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "-3"
+name = "SMG"
+angle = "*/*/*/*"
+range_ = "3"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons.MiniGun]
+pen = "-1"
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "Fire once at all enemy units within range and within one angle of fire \\ If aim, use focus fire, roll 6 dice at same unit base"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Special Cavalry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "-1"
+name = "MiniGun"
+angle = "*/*/*/*"
+range_ = "2"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[units."Tatto INK"]
+size = "Large"
+type_ = "Mechanical, Half-track, Bio Crew"
+assualt_pen = "-1"
+unit_special = "Gun Blazing: Ignore to-hit penalties when moving fast"
+cost = "2ip"
+assault_deflection = "2/-/-/-"
+race = "Elf"
+assault_die = "5+"
+weapons_input = [ "Gattle Gun", "SMG"]
+assault_special = ""
+name = "Tatto INK"
+assault = "3/2/2/2"
+assualt_damage = "-1"
+members = "1"
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = "3/1/1/1"
+
+[units."Elite Infantry"]
+size = "medium"
+type_ = "Bio, Infantry"
+assualt_pen = "-2"
+unit_special = "Unit gain good shot +1 and psycic resistance 1"
+cost = "1xp to upgrade up to 2 normal infantry units."
+assault_deflection = "1/-/-/-"
+race = "Elf"
+assault_die = "5+"
+weapons_input = [ "Rifle",]
+assault_special = ""
+name = "Elite Infantry"
+assault = "2/1/1/1"
+assualt_damage = "-2"
+members = ""
+assault_ap = ""
+assault_deflection_die = "5+"
+filters = [ "weapons", "team",]
+armor = ""
+
+[weapons."Sniper rifle"]
+pen = "-1"
+cost = "4cp to upgrade weapon of 1 elite unit"
+requiered_to_buy = "Elite inf."
+orders_gained = [ "",]
+assault_special = ""
+special = "Improves aim: +4 to hit, +2 to dam\\ May choose which unit in a unit base to kill if it kills 1 (or more) members."
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "2 handed infantry weapon"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "-1"
+name = "Sniper rifle"
+angle = "*/-/-/-"
+range_ = "8"
+orders_lost = [ "",]
+ap = ""
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
+
+[weapons."Calibrated Gun"]
+pen = ""
+cost = ""
+requiered_to_buy = ""
+orders_gained = [ "",]
+assault_special = ""
+special = "Armor penetration not reduced with distance"
+assault_mod = ""
+assault_dam_set_to = ""
+type_ = "Tank gun"
+filters = [ "team",]
+assault_deflection_die_set_to = ""
+race = "Elf"
+damage = "+3 to damage if a natural 6 is rolle for to-hit, +3 to damage if pentrating all armor"
+name = "Calibrated Gun"
+angle = "*/-/-/-"
+range_ = "6"
+orders_lost = [ "",]
+ap = "2"
+assault_deflection_mod = ""
+assault_pen_set_to = ""
+assault_ap = ""
 
 [units."Tatto INK".damage_tables]
 "Regular Damage" = [ "1-3: Lightly Damaged", "4-6: Heavily Damaged, +1 on future damage", "7+ Destroyed",]
-"Heavily Damage" = [ "1: +1 on future damage", "-1 to hit, +1 to be hit", "cannot rotate right", "cannot rotate left", "Treat all B and A as illegal. Replace with -", "Fire!",]
 "Lightly Damage" = [ "1-3: pinned", "4-6: +1 on future damage",]
+"Heavily Damage" = [ "1: +1 on future damage", "-1 to hit, +1 to be hit", "cannot rotate right", "cannot rotate left", "Treat all B and A as illegal. Replace with -", "Fire!",]
 
-[units."Sniper Tank".damage_tables]
-"Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on fire",]
-"Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
-"Lightly Damaged" = [ "1-3: pinned", "4-6: +1 on future damage",]
-
-[units.E34.orders]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
-Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only",]
-
-[units.E34.damage_tables]
-"Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on fire",]
-"Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
-"Lightly Damaged" = [ "1-3: pinned", "4-6: +1 on future damage",]
-
-[units.Infantry.damage_tables]
-"Psycic damage" = [ "4+ pinned",]
-"Regular damage" = [ "0-6: kill 1 member", "7-8: kill 1 member, psycic damage[d6]", "9: kill all 4",]
-
-[units."Elk Cavalry".orders]
-Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(fast) F+F+B",]
-"Fire orders" = [ "- + Throw Grenade",]
-
-[units."Eagle Rider".orders]
-Movement = [ "(fly, fast) 360^0 + F + F", "(fly, fast) 360^0,F + F + F,360^0", "(fly, fast) chase + chase + chase", "(fly, fast) 360^0,F + F + Land", "(on ground, slow) 360^0 + F + 360^0", "(on ground, slow) 360^0 + 360^0 + 360^0", "(on ground, slow) 360^0 + TakeOff + F",]
-"Fire Orders" = [ "- + Fire (AT-rifle)", "- + load (AT-rifle)", "- + Throw Grenade", "- + aim (AT-rifle) (on ground only)",]
-
-[units."Elite Infantry".damage_tables]
-
-[units."Elite Raptor Riders".damage_tables]
+[units."Elite Raptor Riders".orders]
 "" = [ "",]
 
 [units."Veloci Rapotor Riders".damage_tables]
 "Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1, stop bleeding, pcysic damage[1d6]",]
 "Psycic damage" = [ "4+: pinned",]
 
-[units."Bear Rider".damage_tables]
-"Psycic damage" = [ "6+: pinned",]
-"Regular damage" = [ "2-4: +1 to future damage", "5-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[d], psycic damage[d6]", "10: killed",]
-
-[units."Tatto INK".orders]
-Fire = [ "fire + aim (stand still only)", "aim + fire (stand still only)", "fire + fire ", "load + aim (stand still only)", "load + load (stand still and slow only)",]
-
-[units."Bear Rider".orders]
-Movement = [ "(slow) 360^0 + F + 360^0",]
-"Fire orders" = [ "+ - load", "+ - fire", "+ - aim",]
+[units."Elite Raptor Riders".damage_tables]
+"" = [ "",]
 
 [units."Sniper Tank".orders]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
 Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only",]
 
+[units.Infantry.damage_tables]
+"Regular damage" = [ "0-6: kill 1 member", "7-8: kill 1 member, psycic damage[d6]", "9: kill all 4",]
+"Psycic damage" = [ "4+ pinned",]
+
+[units.E34.damage_tables]
+"Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on fire",]
+"Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
+"Lightly Damaged" = [ "1-3: pinned", "4-6: +1 on future damage",]
+
+[units."Veloci Rapotor Riders".orders]
+"Fire Actions" = [ "fire(smg) + fire(smg)", "load(5)(smg) + - ", "fire(twin-gun) + - (stand still only)", "load(twin-gun) + -", "- + load(twin gun)", "- + aim (twin gun)", "- + fire(twin gun) (stand still only)",]
+Movement = [ "(fast) 360^0 + F + F", "(fast) F + B + 360^0", "(fast) F + F + 360^0", "(slow) 360^0 + A + F", "B + 360^0 + -", "(stand still) - + -  + -", "(stand still) A + F + -", "(stand still) 360^0 + - + -",]
+
+[units."Bear Rider".damage_tables]
+"Regular damage" = [ "2-4: +1 to future damage", "5-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[d], psycic damage[d6]", "10: killed",]
+"Psycic damage" = [ "6+: pinned",]
+
+[units."Bear Rider".orders]
+Movement = [ "(slow) 360^0 + F + 360^0",]
+"Fire orders" = [ "+ - load", "+ - fire", "+ - aim",]
+
+[units."Sniper Tank".damage_tables]
+"Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on fire",]
+"Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
+"Lightly Damaged" = [ "1-3: pinned", "4-6: +1 on future damage",]
+
+[units."Elk Cavalry".damage_tables]
+"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 memeber, psycic_damage[d6]", "9: kill unit base",]
+"psycic damage" = [ "4+ pinned",]
+
 [units.Infantry.orders]
-"Main Orders" = [ "(slow) 360^0+F+360^0", "(slow) 360^0 + 360^0 + 360^0", "(slow) - + aim", "(slow) - + fire", "(slow) - + load",]
+"Movement Orders" = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^0 + 360^0", "(slow) 360^0 + B + -", "(stand-still) 360^0 + - + -", "(stand-still) A + 360^0 + F", "- + - + -", "(slow) 360^0,A + F + F", "(fast) rest + - + -", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360^0,A,A + F + F",]
+"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
+
+[units."Eagle Rider".damage_tables]
+"Regular Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to fuure damage, psycic damage[d6]", "6+: killed",]
+"psycic damage" = [ "6+ pinned",]
+
+[units."Eagle Rider".orders]
+Movement = [ "(fly, fast) 360^0 + F + F", "(fly, fast) 360^0,F + F + F,360^0", "(fly, fast) chase + chase + chase", "(fly, fast) 360^0,F + F + Land", "(on ground, slow) 360^0 + F + 360^0", "(on ground, slow) 360^0 + 360^0 + 360^0", "(on ground, slow) 360^0 + TakeOff + F",]
+"Fire Orders" = [ "- + Fire (AT-rifle)", "- + load (AT-rifle)", "- + Throw Grenade", "- + aim (AT-rifle) (on ground only)",]
+
+[units."Elk Cavalry".orders]
+Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(fast) F+F+B",]
+"Fire orders" = [ "- + Throw Grenade",]
+
+[units."Elite Infantry".damage_tables]
+
+[units.E34.orders]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
+Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only",]
 
 [units."Elite Infantry".orders]
 "" = [ "",]
 
-[units."Elite Raptor Riders".orders]
-"" = [ "",]
+[units."Tatto INK".orders]
+Fire = [ "fire + aim (stand still only)", "aim + fire (stand still only)", "fire + fire ", "load + aim (stand still only)", "load + load (stand still and slow only)",]
