@@ -11,6 +11,7 @@ class Team():
         self.name= name
         self.units = {}
         self.weapons = {}
+        self.abilities = {}
         self.orders = {}
         
     def add_team_order(self, name, l):
@@ -42,9 +43,14 @@ class Team():
                 d.setdefault('units', {})
                 if type(unit) == Unit:
                         d['units'][unit.name] = unit.write_dict()
+
+        for key in self.abilities.keys():
+                ability = self.abilities[key]
+                d.setdefault('abilities', {})
+                if type(ability) == Ability:
+                        d['abilities'][ability.name] = ability.write_dict()
         
         print(d)
-
         return d
 
     def write_toml(self):
@@ -70,8 +76,6 @@ class Team():
                                 setattr(self, key, d1[key])
                         except KeyError:
                                 setattr(self, key, '')
-
-                                
                
         for unit_name in d1['units'].keys():
                 self.units[unit_name] = Unit(unit_name, self)
@@ -86,6 +90,14 @@ class Team():
                 self.weapons[weapon_name].team = self
                 self.weapons[weapon_name].from_dict(rest_dict)
 
+        try:                
+                for ability_name in d1['abilities'].keys():
+                        self.abilities[ability_name] = Ability(ability_name, self)
+                        rest_dict= d1['abilities'][ability_name]
+                        self.abilities[ability_name].team = self
+                        self.abilities[ability_name].from_dict(rest_dict)
+        except KeyError:
+                print('No abilities')
 
                       
     def write_json(self):
@@ -110,6 +122,85 @@ class Team():
         self.weapons[weapon.name] = weapon
 
 
+    def append_weapon(self, ability):
+        self.abilities[ability.name] = ability
+
+
+
+class Ability():
+    def __init__(self, name, team):
+
+        self.team = team
+        self.race = team.name
+        self.name = name
+
+        self.special = []
+
+        self.orders_gained = []
+        self.orders_lost = []
+        self.cost = ''
+
+        self.requiered_to_buy = ''
+
+        self.operational_by = ''
+        
+        self.filters = ['team']
+        
+    def write_dict(self):
+        d = self.__dict__.copy()
+
+        for f in self.filters:
+                try:
+                        d.pop(f)
+                except KeyError:
+                        continue
+
+        #add filters if neccessary
+        
+        return d
+
+    def from_dict(self, d0):
+        d1 = self.write_dict()
+        for key in d1:
+                try:
+                        setattr(self, key, d0[key])
+                except KeyError:
+                        setattr(self, key, '')
+
+        
+    def update(self):
+        self.team.append_ability(self)
+        
+    def write(self):
+        for key in sorted(self.__dict__.keys() ):
+            text = self.__dict__[key]
+            if self.__dict__[key] == '':
+                self.__dict__[key] = input(key + ': ')
+
+            if self.__dict__[key] == []:
+                more = True
+                while more:
+                    self.__dict__[key].append(input('Add ' + key+':') )
+                    another = input('add another input? y/n:')
+                    if another == 'y':
+                        more= True
+                    else:
+                        more = False
+            
+            else:
+                print(key, ': ', self.__dict__[key])
+
+        self.team.append_weapon(self)
+    
+    def add_to(self, key):
+        try:
+                self.__dict__[key]
+        except KeyError:
+                print('KeyError')
+                retrun
+
+        addision = input('Add extra line to ' + key + ':')
+        self.__dict__[key] = self.__dict__[key] + addision        
 
 class Weapon():
     def __init__(self, name, team):
