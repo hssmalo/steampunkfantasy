@@ -5,7 +5,7 @@ name = "DarkElf"
 [units."Elite Mechanical Cavalry"]
 size = "medium"
 type_ = "Bio, Mechanical Mount, Cavalry"
-assualt_pen = "-2"
+assault_pen = "-2"
 unit_special = "Good shot: +1 to hit \\ Negates to-hit penalty for shooting while moving fast"
 cost = "2mp, 4cp, 4xp"
 assault_deflection = "3z/2z/-/-"
@@ -15,7 +15,7 @@ weapons_input = [ "SMG", "Crossbow",]
 assault_special = "z is equal to the number of hits in regular assault roll"
 name = "Elite Mechanical Cavalry"
 assault = "4/2/1/1"
-assualt_damage = "-1"
+assault_damage = "-1"
 members = "2"
 assault_ap = ""
 assault_deflection_die = "5+"
@@ -48,7 +48,7 @@ assault_ap = ""
 [units."Mechanical Spider"]
 size = "medium"
 type_ = "Mechanical, droid"
-assualt_pen = ""
+assault_pen = ""
 unit_special = "Good Shot: +1 to hit\\ All terrain cost 1 movement point to enter"
 cost = "2ip"
 assault_deflection = "3/1/-/-"
@@ -58,7 +58,7 @@ weapons_input = [ "Head Gun",]
 assault_special = "Poison[6], Fear[6]"
 name = "Mechanical Spider"
 assault = "6/4/2/1"
-assualt_damage = "+0"
+assault_damage = "+0"
 members = "1"
 assault_ap = "2"
 assault_deflection_die = "5+"
@@ -68,7 +68,7 @@ armor = "2/2/2/2"
 [units."Queen XXX"]
 size = "Large"
 type_ = "Mechanical, Bio Crew"
-assualt_pen = "-1"
+assault_pen = "-1"
 unit_special = "Immunity to poison cloads \\ Good shot +1 to hit"
 cost = "8ip"
 assault_deflection = "2/-/-/-"
@@ -78,7 +78,7 @@ weapons_input = [ "Acid-Cannon",]
 assault_special = "poison[6], Fear[8] \\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
 name = "Queen XXX"
 assault = "4/2/2/1"
-assualt_damage = "-1"
+assault_damage = "-1"
 members = "1"
 assault_ap = ""
 assault_deflection_die = "5+"
@@ -145,7 +145,7 @@ name = "Hidden"
 [units."Nightmare Mechanical Cavalry"]
 size = "medium"
 type_ = "Bio, Mechanical Mount, Cavalry"
-assualt_pen = "-2"
+assault_pen = "-2"
 unit_special = ""
 cost = "2mp, 4cp, 6xp"
 assault_deflection = "2z/1z/-/-"
@@ -155,7 +155,7 @@ weapons_input = [ "SMG", "Acid Breath",]
 assault_special = "z is equal to the number of normal hits in assault"
 name = "Nightmare Mechanical Cavalry"
 assault = "3/2/1/1"
-assualt_damage = "-1"
+assault_damage = "-1"
 members = "2"
 assault_ap = ""
 assault_deflection_die = "5+"
@@ -211,7 +211,7 @@ assault_ap = ""
 [units.Infantry]
 size = "medium"
 type_ = "Bio, Infantry"
-assualt_pen = "-2"
+assault_pen = "-2"
 unit_special = "Take Cover[stand-still,crawl][-2]"
 cost = "3mp"
 assault_deflection = "1/1/1/1"
@@ -221,7 +221,7 @@ weapons_input = [ "Rifle",]
 assault_special = ""
 name = "Infantry"
 assault = "1/1/1/1"
-assualt_damage = "-2"
+assault_damage = "-2"
 members = "4"
 assault_ap = ""
 assault_deflection_die = "6+"
@@ -288,7 +288,7 @@ assault_ap = ""
 [units."Mechanical Horse Cavalry"]
 size = "medium"
 type_ = "Bio, Mechanical Mount, Cavalry"
-assualt_pen = "-2"
+assault_pen = "-2"
 unit_special = ""
 cost = "2mp, 4cp, 1cp"
 assault_deflection = "2z/2z/2z/2z"
@@ -298,7 +298,7 @@ weapons_input = [ "SMG", "CrossBow",]
 assault_special = "z=number of hits in assault"
 name = "Mechanical Horse Cavalry"
 assault = "3/2/1/1"
-assualt_damage = "-1"
+assault_damage = "-1"
 members = "2"
 assault_ap = ""
 assault_deflection_die = "5+"
@@ -308,7 +308,7 @@ armor = ""
 [units."Elite Infantry"]
 size = "medium"
 type_ = "Infantry"
-assualt_pen = "-2"
+assault_pen = "-2"
 unit_special = "Unit base gains Psycic resistance 1"
 cost = "1xp to upgrade 2 infantry from one or two unit bases"
 assault_deflection = "3/3/3/3"
@@ -318,7 +318,7 @@ weapons_input = [ "Rifle",]
 assault_special = "flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection"
 name = "Elite Infantry"
 assault = "2/2/2/2"
-assualt_damage = "-2"
+assault_damage = "-2"
 members = ""
 assault_ap = ""
 assault_deflection_die = "6+"
@@ -374,7 +374,7 @@ assault_ap = ""
 [units."Gigant-Spider Rider"]
 size = "medium"
 type_ = "Bio, Cavalry"
-assualt_pen = "-2"
+assault_pen = "-2"
 unit_special = "GasMask: immune to poison gas"
 cost = "1mp, 3xp"
 assault_deflection = "4/2/-/-"
@@ -384,7 +384,7 @@ weapons_input = [ "",]
 assault_special = "Poison[12], minor acid, Fear[4]"
 name = "Gigant-Spider Rider"
 assault = "6/4/2/1"
-assualt_damage = "-2"
+assault_damage = "-2"
 members = "2"
 assault_ap = ""
 assault_deflection_die = "5+"
@@ -405,7 +405,7 @@ armor = ""
 "" = [ "",]
 
 [units."Mechanical Horse Cavalry".orders]
-Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
+Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F + F", "(fast) F + F + F,B", "(fast) F + B + 360$^0$", "(slow) 360$^0$ + - 0 -", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) 360$^0$ + F,B + 360$^0$", "(stand still) 360$^0$ + A + F", "(stand still) 360$^0$ + 360$^0$ + 360$^0$",]
 Fire = [ "fire(smg) + fire(smg)", "load(5)(smg), + - ", "- + fire (crossbow)", "- + load (crossbow) (stand still, slow only",]
 
 [units."Nightmare Mechanical Cavalry".damage_tables]
@@ -413,11 +413,11 @@ Fire = [ "fire(smg) + fire(smg)", "load(5)(smg), + - ", "- + fire (crossbow)", "
 "Psycic damage" = [ "6+: unit pinned",]
 
 [units."Mechanical Spider".orders]
-Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^o + 360^0",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$",]
 "Fire " = [ "- + Fire", "- + Load", "- + Aim",]
 
 [units."Gigant-Spider Rider".orders]
-Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^0 + 360^0",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$",]
 
 [units."Queen XXX".damage_tables]
 "Regular damage" = [ "1-5: Lightly Damaged", "6-8: Crittical Damaged, +1 on all future damage",]
@@ -425,7 +425,7 @@ Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^0 + 360^0",]
 "Lightly Damage" = [ "1-3: Pinned", "4-6: +1 on future damage",]
 
 [units."Queen XXX".orders]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -"]
 "Fire Orders" = [ "(stand still and slow) - + load", "(stand still and slow) - + aim", "(stand still, slow and fast) - + fire", "(stand still, slow and fast) - + Release Poison Cload[12](4+)",]
 
 [units."Gigant-Spider Rider".damage_tables]
@@ -434,7 +434,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units.Infantry.orders]
 "Fire orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
-"Movement Orders" = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + B(crawl) + F", "(slow) 360^0 + B + -", "(slow) 360^0 + 360^0 + 360^0", "(stand still) 360^0 + - + - ", "(stand still) 360^0 + A(crawl) + -", "(stand still) 360^0 + A + -", "(crawl) 360^0 + F + -", "(crawl) 360^0 + A(slow) + F", "(crawl) 360^0 + B(stand-still) + -",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + F", "(slow) 360$^0$ + B + -", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + -", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -",]
 
 [units."Mechanical Spider".damage_tables]
 "Heavy Damage" = [ "1: +1 for future damage", "2: -1 to-hit, +1 to-be-hit", "3: Cannot move", "4: Cannot rotate", "5: Roll on Lightly damage table 3 times", "6: Fire",]
@@ -442,12 +442,12 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Lightly Damage" = [ "1-2: unit pinned", "3-4: +1 on future damage", "5-6: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0)",]
 
 [units."Nightmare Mechanical Cavalry".orders]
-Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
+Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F + F", "(fast) F + F + F,B", "(fast) F + B + 360$^0$", "(slow) 360$^0$ + - 0 -", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) 360$^0$ + F,B + 360$^0$", "(stand still) 360$^0$ + A + F", "(stand still) 360$^0$ + 360$^0$ + 360$^0$",]
 "Breath Acid Orders" = [ "- + Breath Acid", "- + -",]
 "Fire(smg)" = [ "Fire + fire", "load(5) + -", "- + load(5)",]
 
 [units."Elite Mechanical Cavalry".orders]
-Movement = [ "(fast) F + F + F ", "(fast) F + F + 360^0", "(fast) 360^0 + F + F", "(fast) F + F + F,B", "(fast) F + B + 360^0", "(slow) 360^0 + - 0 -", "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(slow) 360^0 + F,B + 360^0", "(stand still) 360^0 + A + F", "(stand still) 360^0 + 360^0 + 360^0",]
+Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F + F", "(fast) F + F + F,B", "(fast) F + B + 360$^0$", "(slow) 360$^0$ + - 0 -", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) 360$^0$ + F,B + 360$^0$", "(stand still) 360$^0$ + A + F", "(stand still) 360$^0$ + 360$^0$ + 360$^0$",]
 "Fire crossbow" = [ "- + fire", "- + load", "- + aim",]
 "Fire(smg)" = [ "fire + fire", "- + load(5)", "load(5) + -",]
 
