@@ -77,7 +77,7 @@ assault_die = "5+"
 weapons_input = [ "Acid-Cannon",]
 assault_special = "poison[6], Fear[8] \\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
 name = "Queen XXX"
-assault = "4/2/2/1"
+assault = "5/4/3/2"
 assault_damage = "-1"
 members = "1"
 assault_ap = ""
@@ -425,7 +425,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$
 "Lightly Damage" = [ "1-3: Pinned", "4-6: +1 on future damage",]
 
 [units."Queen XXX".orders]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -"]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R + F + -", "(fast) L + F + -"]
 "Fire Orders" = [ "(stand still and slow) - + load", "(stand still and slow) - + aim", "(stand still, slow and fast) - + fire", "(stand still, slow and fast) - + Release Poison Cload[12](4+)",]
 
 [units."Gigant-Spider Rider".damage_tables]
