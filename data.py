@@ -23,11 +23,20 @@ class Team():
                 self.orders_name_line = fid.readline()
                 self.orders_line = fid.readline()
 
-        
+        with open('damage_template.tex', 'r') as fid:        
+                self.damage_name_line = fid.readline()
+                self.damage_line = fid.readline()
+
+        #weapon which are prepaid for by the unit
+        with open('weapon_template.tex', 'r') as fid:
+                  self.weapon_template = fid.read()
+                
         latex_unit = ""
         for unit_name in self.units:
                 unit = self.units[unit_name]
                 latex_order = ""
+                latex_damage = ""
+                latex_weapons = ""
                 for order_name in unit.__dict__['orders'].keys():
                         d1 = {'order_name' : order_name}
                         latex_order = latex_order + self.orders_name_line.format(**d1)
@@ -35,10 +44,26 @@ class Team():
                                 d2 = {'orders_line': line}
                                 latex_order = latex_order + self.orders_line.format(**d2)
 
+                for damage_name in unit.__dict__['damage_tables'].keys():
+                        d1 = {'damage_name' : damage_name}
+                        latex_damage = latex_damage + self.damage_name_line.format(**d1)
+                        for line in unit.__dict__['damage_tables'][damage_name]:
+                                d2 = {'damage_line': line}
+                                latex_damage = latex_damage + self.damage_line.format(**d2)
+
+                
+                for weapon_name in unit.weapons_input:
+                        if weapon_name:
+                                weapon = self.weapons[weapon_name]
+
+                        latex_weapons = latex_weapons + self.weapon_template.format(**weapon.__dict__)
+                  
                 print(latex_order)
 
                 combined_dict = unit.__dict__
                 combined_dict['orders'] = latex_order
+                combined_dict['damage'] = latex_damage
+                combined_dict['weapon'] = latex_weapons
                 latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
                 print(latex_unit)
                                 
