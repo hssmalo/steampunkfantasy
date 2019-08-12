@@ -74,7 +74,7 @@ cost = "8ip"
 assault_deflection = "2/-/-/-"
 race = "DarkElf"
 assault_die = "5+"
-weapons_input = [ "Acid-Cannon",]
+weapons_input = [ "Acid Cannon",]
 assault_special = "poison[6], Fear[8] \\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
 name = "Queen XXX"
 assault = "5/4/3/2"
@@ -294,7 +294,7 @@ cost = "2mp, 4cp, 1cp"
 assault_deflection = "2z/2z/2z/2z"
 race = "DarkElf"
 assault_die = "5+"
-weapons_input = [ "SMG", "CrossBow",]
+weapons_input = [ "SMG", "Crossbow",]
 assault_special = "z=number of hits in assault"
 name = "Mechanical Horse Cavalry"
 assault = "3/2/1/1"
@@ -348,7 +348,7 @@ assault_deflection_mod = ""
 assault_pen_set_to = ""
 assault_ap = ""
 
-[weapons.CrossBow]
+[weapons.Crossbow]
 pen = "-2"
 cost = "2cp to upgrade one base of infantry"
 requiered_to_buy = "Infantry"
@@ -362,7 +362,7 @@ filters = [ "team",]
 assault_deflection_die_set_to = ""
 race = "DarkElf"
 damage = "-2"
-name = "CrossBow"
+name = "Crossbow"
 angle = "*/*/*/*"
 range_ = "2"
 orders_lost = [ "",]
