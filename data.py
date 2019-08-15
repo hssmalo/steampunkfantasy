@@ -1,10 +1,6 @@
 import json
-import pickle
+#import pickle
 import toml
-
-def read_pickle(name):
-        with open(name+'.pcl','rb') as fid:
-                return pickle.load(fid)
 
 class Team():
     def __init__(self, name):
@@ -12,63 +8,130 @@ class Team():
         self.units = {}
         self.weapons = {}
         self.abilities = {}
-        self.orders = {}
 
     def write_pdf(self):
 
         #Need to be able to read the inputlines
         with open('unit_base_template.tex', 'r') as fid:
-                self.unit_base_template = fid.read()
+            self.unit_base_template = fid.read()
         with open('orders_template.tex', 'r') as fid:        
-                self.orders_name_line = fid.readline()
-                self.orders_line = fid.readline()
+            self.orders_name_line = fid.readline()
+            self.orders_line = fid.readline()
 
+        with open('abilities_template.tex', 'r') as fid:
+            self.abilities_template = fid.read()
+        
+                 
+            
         with open('damage_template.tex', 'r') as fid:        
-                self.damage_name_line = fid.readline()
-                self.damage_line = fid.readline()
+            self.damage_name_line = fid.readline()
+            self.damage_line = fid.readline()
 
         #weapon which are prepaid for by the unit
         with open('weapon_template.tex', 'r') as fid:
-                  self.weapon_template = fid.read()
-                
-        latex_unit = ""
-        for unit_name in self.units:
-                unit = self.units[unit_name]
-                latex_order = ""
-                latex_damage = ""
-                latex_weapons = ""
-                for order_name in unit.__dict__['orders'].keys():
-                        d1 = {'order_name' : order_name}
-                        latex_order = latex_order + self.orders_name_line.format(**d1)
-                        for line in unit.__dict__['orders'][order_name]:
-                                d2 = {'orders_line': line}
-                                latex_order = latex_order + self.orders_line.format(**d2)
+            self.weapon_template = fid.read()
 
-                for damage_name in unit.__dict__['damage_tables'].keys():
-                        d1 = {'damage_name' : damage_name}
-                        latex_damage = latex_damage + self.damage_name_line.format(**d1)
-                        for line in unit.__dict__['damage_tables'][damage_name]:
-                                d2 = {'damage_line': line}
-                                latex_damage = latex_damage + self.damage_line.format(**d2)
+        with open('assault_template.tex', 'r') as fid:
+            self.assault_template = fid.read()
 
-                
-                for weapon_name in unit.weapons_input:
-                        if weapon_name:
-                                weapon = self.weapons[weapon_name]
+        with open('combined_template.tex', 'r') as fid:
+            self.combined_template = fid.read()
 
-                        latex_weapons = latex_weapons + self.weapon_template.format(**weapon.__dict__)
+        with open('ranged_template.tex', 'r') as fid:
+            self.ranged_template = fid.read()
                   
-                print(latex_order)
+        latex_unit = ""
+        latex_equipment_upgrade = ""
+    
+        for unit_name in self.units:
+            print('working on ', unit_name)
+            unit = self.units[unit_name]
+            latex_order = ""
+            latex_damage = ""
+            latex_weapons = ""
+            for order_name in unit.__dict__['orders'].keys():
+                d1 = {'order_name' : order_name}
+                latex_order = latex_order + self.orders_name_line.format(**d1)
+                for line in unit.__dict__['orders'][order_name]:
+                    d2 = {'orders_line': line}
+                    latex_order = latex_order + self.orders_line.format(**d2)
 
-                combined_dict = unit.__dict__
-                combined_dict['orders'] = latex_order
-                combined_dict['damage'] = latex_damage
-                combined_dict['weapon'] = latex_weapons
-                latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
-                print(latex_unit)
+            for damage_name in unit.__dict__['damage_tables'].keys():
+                d1 = {'damage_name' : damage_name}
+                latex_damage = latex_damage + self.damage_name_line.format(**d1)
+                for line in unit.__dict__['damage_tables'][damage_name]:
+                    d2 = {'damage_line': line}
+                    latex_damage = latex_damage + self.damage_line.format(**d2)
+
+                
+            for weapon_name in unit.weapons_input:
+                if weapon_name:
+                    weapon = self.weapons[weapon_name]
+                    latex_weapons = latex_weapons + self.weapon_template.format(**weapon.__dict__)
+                  
+            combined_dict = unit.__dict__.copy()
+            combined_dict['orders'] = latex_order
+            combined_dict['damage'] = latex_damage
+            combined_dict['weapon'] = latex_weapons
+            latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
+            #print(latex_unit)
+
+        for weapon_name in self.weapons.keys():
+
+            if weapon_name:
+                weapon = self.weapons[weapon_name]
+                if weapon.cost:
+                    if weapon.template == 'a':
+                        template = self.assault_template
+                    if weapon.template == 'r':
+                        template = self.ranged_template
+                    if weapon.template == 'ra':
+                        template = self.combined_template
+                    if weapon.template == '':
+                        template = ''
+                        print('Missing weapon template', weapon_name)
+                        
+                    orders_gained = ''
+                    orders_lost   = ''
+                    for o in weapon.orders_gained:
+                        if o:
+                            orders_gained = orders_gained + o + r'\\'
+
+                    for o in weapon.orders_lost:
+                        if o:
+                            orders_lost = orders_lost + o + r'\\'
+
+                    combined = weapon.__dict__.copy()
+                    combined['orders_gained'] = orders_gained
+                    combined['orders_lost'] = orders_lost
+    
+                    latex_equipment_upgrade = latex_equipment_upgrade + template.format(**weapon.__dict__)
+
+        latex_abilities = ''
+        for ability_name in self.abilities.keys():
+            ability = self.abilities[ability_name]
+
+            orders_gained = ''
+            orders_lost   = ''
+            
+            for o in ability.orders_gained:
+                if o:
+                    orders_gained = orders_gained + o + r'\\'
+
+            for o in ability.orders_lost:
+                if o:
+                    orders_lost = orders_lost + o + r'\\'
+
+            combined = ability.__dict__.copy()
+            combined['orders_gained'] = orders_gained
+            combined['orders_lost'] = orders_lost
+
+            latex_abilities = latex_abilities + self.abilities_template.format(**combined)
+            
+        latex = latex_abilities + latex_unit + latex_equipment_upgrade
                                 
         with open(self.name +'.tex', 'w') as fid:
-                fid.write(latex_unit)
+                fid.write(latex)
 
                                         
                         
@@ -85,13 +148,12 @@ class Team():
         
     def store_data(self):
         self.write_json()
-        self.write_pickle()
         self.write_toml()
         
     def write_dict(self):
         d = {}
         d['name'] = self.name
-        d['orders'] = self.orders
+        
         for key in self.weapons.keys():
                 weapon = self.weapons[key]
                 d.setdefault('weapons', {})
@@ -167,14 +229,6 @@ class Team():
             json.dump(d, outfile)
         
             
-    def write_pickle(self):
-        """save class as self.name.pcl"""
-        with open(self.name+'.pcl','wb') as fid:
-            pickle.dump(self, fid)
-
-    
-                
-            
     def append_unit(self, unit):
         self.units[unit.name] = unit
         
@@ -194,13 +248,13 @@ class Ability():
         self.race = team.name
         self.name = name
 
-        self.special = []
+        self.special = ''
 
         self.orders_gained = []
         self.orders_lost = []
         self.cost = ''
 
-        self.requiered_to_buy = ''
+        self.required_to_buy = ''
 
         self.operational_by = ''
         
@@ -268,6 +322,7 @@ class Weapon():
         self.team = team
         self.race = team.name
         self.name = name
+        self.template = ''         
         self.range_ = ''
         self.angle = ''
         self.special = ''
@@ -284,7 +339,7 @@ class Weapon():
         self.orders_gained = []
         self.orders_lost = []
         self.cost = ''
-        self.requiered_to_buy = ''
+        self.required_to_buy = ''
         #type = unit base, 1 handed, 2 handed, misc, etc...
         self.type_ = ''
         self.filters = ['team']
@@ -299,6 +354,7 @@ class Weapon():
                         continue
 
         #add filters if neccessary
+        
         
         return d
 
@@ -397,8 +453,11 @@ class Unit():
         d1 = self.write_dict()
         for key in d1:
                 try:
-                        setattr(self, key, d0[key])
+                    setattr(self, key, d0[key])
                 except KeyError:
+                    if key == 'orders':
+                        setattr(self, key, {})
+                    else:
                         setattr(self, key, '')
         
     def write_dict(self):
