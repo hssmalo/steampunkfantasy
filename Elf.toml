@@ -40,7 +40,7 @@ race = "Elf"
 damage = "-2, +2 when penetrating all armor (total 0)"
 name = "Gattle Gun"
 angle = "*/*/-/-"
-range_ = "2"
+range_ = "3"
 orders_lost = [ "",]
 ap = "0"
 assault_deflection_mod = ""
@@ -56,7 +56,7 @@ cost = "1xp to upgrade 2 velociraptor riders from same base"
 assault_deflection = "2/-/-/-"
 race = "Elf"
 assault_die = "5+"
-weapons_input = [ "SMG", "TwinGunns",]
+weapons_input = [ "SMG", "Twin Guns",]
 assault_special = "Poison[4]"
 name = "Elite Raptor Riders"
 assault = "4/2/2/1"
@@ -67,7 +67,7 @@ assault_deflection_die = "5+"
 filters = [ "weapons", "team",]
 armor = ""
 
-[weapons.twin_gun]
+[weapons."Twin Guns"]
 pen = ""
 cost = ""
 requiered_to_buy = ""
@@ -81,7 +81,7 @@ filters = [ "team",]
 assault_deflection_die_set_to = ""
 race = "Elf"
 damage = ""
-name = "twin_gun"
+name = "Twin Guns"
 angle = "*/-/-/-"
 range_ = "3"
 orders_lost = [ "",]
@@ -94,7 +94,7 @@ assault_ap = ""
 size = "Large"
 type_ = "Mechanical, Tank, Bio crew"
 assualt_pen = "-1"
-unit_special = "Forrester: moving through forrest cost 1 point \\ Camuflage[forrest] -1 to-be-hit"
+unit_special = "Forrester: moving through forrest cost 1 point \\\\ Camuflage[forrest] -1 to-be-hit\\\\ "
 cost = "8ip"
 assault_deflection = "2/-/-/-"
 race = "Elf"
@@ -182,7 +182,7 @@ cost = "2mp, 4cp, 2xp"
 assault_deflection = "1/-/-/-"
 race = "Elf"
 assault_die = "5+"
-weapons_input = [ "SMG", "TwinGunns",]
+weapons_input = [ "SMG", "Twin Guns",]
 assault_special = "poison[4], Cunning Assault[1 for 3]"
 name = "Veloci Rapotor Riders"
 assault = "3/2/2/1"
@@ -262,7 +262,7 @@ assault_deflection_mod = "+6/+6/+6/+6"
 assault_pen_set_to = ""
 assault_ap = ""
 
-[weapons.grenade]
+[weapons.Grenade]
 pen = ""
 cost = ""
 requiered_to_buy = ""
@@ -309,7 +309,7 @@ armor = "2/1/1/1"
 size = "medium"
 type_ = "Bio, Flying, Cavaleri"
 assualt_pen = "-1"
-unit_special = "If in the air, it may choose to assault if entering same hex as an enemy. If so, regardless of the outcome, the eagle lands. The following round the orders is replaced by the default if illegal. The default is 360^0 + TakeOff + F.\\ In chase, the eagle may choose to land for assault if it wishes. \\ Good Shot[At-Rifle] +1 to hit"
+unit_special = "If in the air, it may choose to assault if entering same hex as an enemy. If so, regardless of the outcome, the eagle lands. The following round the orders is replaced by the default if illegal. \\\\ In chase, the eagle may choose to land for assault if it wishes. \\\\ Good Shot[At-Rifle] +1 to hit"
 cost = "1mp, 4xp"
 assault_deflection = "2/2/2/1"
 race = "Elf"
@@ -329,7 +329,7 @@ armor = "1/1/1/1"
 pen = ""
 cost = "2cp to upgrade one unit base of velociraptor riders"
 requiered_to_buy = "Velciraptor Rider"
-orders_gained = [ "(stand still) A + A + F", "(fast) F + B + B,360^0", "(fast) F+ F + F", "F + F,360^0 + B,B",]
+orders_gained = [ "(stand still) A + A + F", "(fast) F + B + B,360$^0$", "(fast) F+ F + F", "F + F,360$^0$ + B,B",]
 assault_special = ""
 special = ""
 assault_mod = ""
@@ -400,7 +400,7 @@ cost = ""
 requiered_to_buy = ""
 orders_gained = [ "",]
 assault_special = ""
-special = "Fire once at all enemy units within range and within one angle of fire \\ If aim, use focus fire, roll 6 dice at same unit base"
+special = "Fire once at all enemy units within range and within one angle of fire \\\\ If aim, use focus fire, roll 6 dice at same unit base"
 assault_mod = ""
 assault_dam_set_to = ""
 type_ = "Special Cavalry weapon"
@@ -421,7 +421,7 @@ assault_ap = ""
 size = "Large"
 type_ = "Mechanical, Half-track, Bio Crew"
 assualt_pen = "-1"
-unit_special = "Gun Blazing: Ignore to-hit penalties when moving fast"
+unit_special = "Gun Blazing: Ignore to-hit penalties when moving fast\\\\ May fire SMG in addition to Gattle Gun any time a fire order is given, and SMG is always treated as loaded\\\\ SMG must fire in same angle as Gattle Gun"
 cost = "2ip"
 assault_deflection = "2/-/-/-"
 race = "Elf"
@@ -463,7 +463,7 @@ cost = "4cp to upgrade weapon of 1 elite unit"
 requiered_to_buy = "Elite inf."
 orders_gained = [ "",]
 assault_special = ""
-special = "Improves aim: +4 to hit, +2 to dam\\ May choose which unit in a unit base to kill if it kills 1 (or more) members."
+special = "Improves aim: +4 to hit, +2 to dam\\\\ May choose which unit in a unit base to kill if it kills 1 (or more) members."
 assault_mod = ""
 assault_dam_set_to = ""
 type_ = "2 handed infantry weapon"
@@ -505,67 +505,67 @@ assault_ap = ""
 
 [units."Tatto INK".damage_tables]
 "Regular Damage" = [ "1-3: Lightly Damaged", "4-6: Heavily Damaged, +1 on future damage", "7+ Destroyed",]
-"Lightly Damage" = [ "1-3: pinned", "4-6: +1 on future damage",]
-"Heavily Damage" = [ "1: +1 on future damage", "-1 to hit, +1 to be hit", "cannot rotate right", "cannot rotate left", "Treat all B and A as illegal. Replace with -", "Fire!",]
+"Lightly Damage" = [ "1-3: shaken", "4-6: +1 on future damage",]
+"Heavily Damage" = [ "1: +1 on future damage", "2: -1 to hit, +1 to be hit", "3: cannot rotate right", "4: cannot rotate left", "5: Treat all B and A as illegal. Replace with -", "6: Fire!",]
 
 [units."Elite Raptor Riders".orders]
 "" = [ "",]
 
 [units."Veloci Rapotor Riders".damage_tables]
 "Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1, stop bleeding, pcysic damage[1d6]",]
-"Psycic damage" = [ "4+: pinned",]
+"Psycic damage" = [ "4+: shaken",]
 
 [units."Elite Raptor Riders".damage_tables]
 "" = [ "",]
 
 [units."Sniper Tank".orders]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "R+ F + -", "L+ F + -",]
-Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only",]
+Fire = [ "- + Fire (all weapons)", "(stand-still) - + Aim", "(stand-still, slow) - + Load",]
 
 [units.Infantry.damage_tables]
 "Regular damage" = [ "0-6: kill 1 member", "7-8: kill 1 member, psycic damage[d6]", "9: kill all 4",]
-"Psycic damage" = [ "4+ pinned",]
+"Psycic damage" = [ "4+ shaken",]
 
 [units.E34.damage_tables]
 "Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on fire",]
 "Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
-"Lightly Damaged" = [ "1-3: pinned", "4-6: +1 on future damage",]
+"Lightly Damaged" = [ "1-3: shaken", "4-6: +1 on future damage",]
 
 [units."Veloci Rapotor Riders".orders]
 "Fire Actions" = [ "fire(smg) + fire(smg)", "load(5)(smg) + - ", "fire(twin-gun) + - (stand still only)", "load(twin-gun) + -", "- + load(twin gun)", "- + aim (twin gun)", "- + fire(twin gun) (stand still only)",]
-Movement = [ "(fast) 360^0 + F + F", "(fast) F + B + 360^0", "(fast) F + F + 360^0", "(slow) 360^0 + A + F", "B + 360^0 + -", "(stand still) - + -  + -", "(stand still) A + F + -", "(stand still) 360^0 + - + -",]
+Movement = [ "(fast) 360$^0$ + F + F", "(fast) F + B + 360$^0$", "(fast) F + F + 360$^0$", "(slow) 360$^0$ + A + F", "B + 360$^0$ + -", "(stand still) - + -  + -", "(stand still) A + F + -", "(stand still) 360$^0$ + - + -",]
 
 [units."Bear Rider".damage_tables]
-"Regular damage" = [ "2-4: +1 to future damage", "5-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[d], psycic damage[d6]", "10: killed",]
-"Psycic damage" = [ "6+: pinned",]
+"Regular damage" = [ "2: +1 to future damage", "3-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[6], psycic damage[d6]", "10: killed",]
+"Psycic damage" = [ "6+: shaken",]
 
 [units."Bear Rider".orders]
-Movement = [ "(slow) 360^0 + F + 360^0",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$",]
 "Fire orders" = [ "+ - load", "+ - fire", "+ - aim",]
 
 [units."Sniper Tank".damage_tables]
 "Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on fire",]
 "Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
-"Lightly Damaged" = [ "1-3: pinned", "4-6: +1 on future damage",]
+"Lightly Damaged" = [ "1-3: shaken", "4-6: +1 on future damage",]
 
 [units."Elk Cavalry".damage_tables]
-"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 memeber, psycic_damage[d6]", "9: kill unit base",]
-"psycic damage" = [ "4+ pinned",]
+"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 memeber, psycic damage[d6]", "9: kill unit base",]
+"psycic damage" = [ "4+ shaken",]
 
 [units.Infantry.orders]
-"Movement Orders" = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + 360^0 + 360^0", "(slow) 360^0 + B + -", "(stand-still) 360^0 + - + -", "(stand-still) A + 360^0 + F", "- + - + -", "(slow) 360^0,A + F + F", "(fast) rest + - + -", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360^0,A,A + F + F",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) A + 360$^0$ + F", "- + - + -", "(slow) 360$^0$,A + F + F", "(fast) rest + - + -", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F",]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units."Eagle Rider".damage_tables]
-"Regular Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to fuure damage, psycic damage[d6]", "6+: killed",]
-"psycic damage" = [ "6+ pinned",]
+"Regular Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to future damage, psycic damage[d6]", "6+: killed",]
+"psycic damage" = [ "6+ shaken",]
 
 [units."Eagle Rider".orders]
-Movement = [ "(fly, fast) 360^0 + F + F", "(fly, fast) 360^0,F + F + F,360^0", "(fly, fast) chase + chase + chase", "(fly, fast) 360^0,F + F + Land", "(on ground, slow) 360^0 + F + 360^0", "(on ground, slow) 360^0 + 360^0 + 360^0", "(on ground, slow) 360^0 + TakeOff + F",]
+Movement = [ "(fly, fast) 360$^0$ + F + F", "(fly, fast) 360$^0$,F + F + F,360$^0$", "(fly, fast) chase + chase + chase", "(fly, fast) 360$^0$,F + F + Land", "(on ground, slow) 360$^0$ + F + 360$^0$", "(on ground, slow) 360$^0$ + 360$^0$ + 360$^0$", "(on ground, slow) 360$^0$ + TakeOff + F", "(Default, on-ground slow) TakeOff + Flee + 360$^0$ ", "(Default, fly, fast) Flee + Flee + Flee"]
 "Fire Orders" = [ "- + Fire (AT-rifle)", "- + load (AT-rifle)", "- + Throw Grenade", "- + aim (AT-rifle) (on ground only)",]
 
 [units."Elk Cavalry".orders]
-Movement = [ "(slow) 360^0 + F + 360^0", "(slow) 360^0 + A + F", "(fast) F+F+B",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F+F+B",]
 "Fire orders" = [ "- + Throw Grenade",]
 
 [units."Elite Infantry".damage_tables]
