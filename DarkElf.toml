@@ -26,7 +26,7 @@ orders_gained = [ "",]
 
 [units.Assasin]
 name = "Assasin"
-unit_special = "Note that assasin qualifies for any elite weapon upgrade. "
+unit_special = "hidden (see DarkElf Abilities)\\\\ Note that assasin qualifies for any elite weapon upgrade. "
 weapons_input = [ "Rifle",]
 assault_damage = "d6-2"
 assault_ap = ""
@@ -42,11 +42,11 @@ assault_deflection_die = "6+"
 type_ = "Bio, Infantry, Elite"
 assault_pen = "-2"
 race = "DarkElf"
-assault_special = "poison[8], Cunning Assault[1 for 1], hidden (see DarkElf Abilities)\\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection"
+assault_special = "poison[8], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection"
 
 [units."Elite Infantry"]
 name = "Elite Infantry"
-unit_special = "Unit base gains Psychic resistance 1"
+unit_special = "This unit gains good shot: +1 to hit \\\\ Unit base gains Psychic resistance 1"
 weapons_input = [ "Rifle",]
 assault_damage = "d6-2"
 assault_ap = ""
@@ -57,7 +57,7 @@ size = "medium"
 filters = [ "weapons", "team",]
 cost = "1xp to upgrade 2 infantry from one or two unit bases"
 armor = ""
-assault_deflection = "3/3/3/3"
+assault_deflection = "4/2/-/-"
 assault_deflection_die = "6+"
 type_ = "Infantry, Bio, Elite"
 assault_pen = "-2"
@@ -97,8 +97,8 @@ size = "medium"
 filters = [ "weapons", "team",]
 cost = "1mp, 3xp"
 armor = ""
-assault_deflection = "4/2/-/-"
-assault_deflection_die = "5+"
+assault_deflection = "8/4/-/-"
+assault_deflection_die = "6+"
 type_ = "Bio, Cavalry"
 assault_pen = "-2"
 race = "DarkElf"
@@ -132,7 +132,7 @@ filters = [ "team",]
 race = "DarkElf"
 assault_deflection_die_set_to = ""
 ap = ""
-cost = "2cp, 1xp to give each memeber in unit base an mechanical imp"
+cost = "2cp, 1xp to give each memeber in a unit base an mechanical imp"
 assault_special = "Grants unit base poison[4] if it does not already have similar or better ability."
 template = "ra"
 range_ = ""
@@ -161,8 +161,8 @@ size = "medium"
 filters = [ "weapons", "team",]
 cost = "2ip"
 armor = "2/2/2/2"
-assault_deflection = "3/1/-/-"
-assault_deflection_die = "5+"
+assault_deflection = "6/2/-/-"
+assault_deflection_die = "6+"
 type_ = "Mechanical, droid"
 assault_pen = ""
 race = "DarkElf"
@@ -248,7 +248,7 @@ assault_damage = "d6-1"
 assault_ap = ""
 assault = "4/2/1/1"
 members = "2"
-assault_die = "5+/6+/6+/6+"
+assault_die = "5+"
 size = "medium"
 filters = [ "weapons", "team",]
 cost = "2mp, 4cp, 4xp"
@@ -292,7 +292,7 @@ assault_damage = "d6-1"
 assault_ap = ""
 assault = "3/2/1/1"
 members = "2"
-assault_die = "5+/6+/6+/6+/"
+assault_die = "5+"
 size = "medium"
 filters = [ "weapons", "team",]
 cost = "2mp, 4cp, 6xp"
@@ -341,8 +341,8 @@ size = "Large"
 filters = [ "weapons", "team",]
 cost = "8ip"
 armor = "5/4/2/1"
-assault_deflection = "2/-/-/-"
-assault_deflection_die = "5+"
+assault_deflection = "4/-/-/-"
+assault_deflection_die = "6+"
 type_ = "Mechanical, Bio Crew"
 assault_pen = "-1"
 race = "DarkElf"
@@ -435,7 +435,7 @@ filters = [ "team",]
 race = "DarkElf"
 assault_deflection_die_set_to = ""
 ap = ""
-cost = "1cp to upgrade weapon of one single elite \\\\ ps! for 2xp and 4cp you may have 4 elites with enhanced crossbows..."
+cost = "2cp to upgrade weapon of one single elite"
 assault_special = ""
 template = "r"
 range_ = "6"
@@ -454,7 +454,7 @@ orders_gained = [ "",]
 [abilities.Hidden]
 orders_lost = [ "",]
 name = "Hidden"
-special = "Hidden: while hidden you cannot be fired upon or be assaulted. If in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the infantry base with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have a speed of slow or stand-still in a clear hex with line of sight of enemy, or by the roll of 4+ by an enemy within point blank range, or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\ \\ \\\\ Hide action: remove your unit from the board, replace it with a hidden token. Only works if you are in swamp terrain. \\\\ Reveal: place your infantry within 2 hexes of the hidden token and gain reveal bonuses.\\\\ Infiltrate: may start up to 2 hex from normal starting area\\\\ Camuflage[swamp][-1]"
+special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden version of all movement orders: hidden stand-still, hidden slow and hidden crawl,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the infantry base with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have a speed of hidden-slow in a clear hex with line of sight of enemy, or by the roll of 4+ by an enemy within point blank range, or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Hide action: remove your unit from the board, replace it with a hidden token. Only works if you are in swamp terrain. \\\\ Reveal: place your infantry within 2 hexes of the hidden token and gain reveal bonuses.\\\\ Infiltrate: may start up to 2 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit base gains (hidden or not): Camuflage[swamp][-1]"
 operational_by = "1 choosen infantry base"
 orders_gained = [ "(stand still) Reveal + - + - ", "(slow) - + Reveal + Chase", "(stand-still, slow or crawl) Hide[swamp] + - + -",]
 filters = [ "team",]
@@ -462,8 +462,8 @@ required_to_buy = "Infantry base"
 cost = "2xp"
 race = "DarkElf"
 
-[units."Mechanical Horse Cavalry"]
-name = "Mechanical Horse Cavalry"
+[units."Mechanical Cavalry"]
+name = "Mechanical Cavalry"
 unit_special = ""
 weapons_input = [ "SMG",]
 assault_damage = "d6-1"
@@ -493,7 +493,7 @@ assault_special = "z=number of hits in assault"
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + F", "(slow) 360$^0$ + B + -", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + -", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -",]
 "Fire orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
-[units."Mechanical Horse Cavalry".damage_tables]
+[units."Mechanical Cavalry".damage_tables]
 "Psychic Damage" = [ "5+: unit shaken",]
 "Regular Damage" = [ "2-3: +1 on future damage", "4-6: Kill 1 member", "7+: Destroy 1 member, roll on psychic damage",]
 
@@ -516,7 +516,7 @@ assault_special = "z=number of hits in assault"
 [units."Elite Infantry".damage_tables]
 "" = [ "",]
 
-[units."Mechanical Horse Cavalry".orders]
+[units."Mechanical Cavalry".orders]
 Fire = [ "fire(smg) + fire(smg)", "load(5)(smg), + - ", "- + fire (crossbow)", "- + load (crossbow) (stand still, slow only",]
 Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F + F", "(fast) F + F + F,B", "(fast) F + B + 360$^0$", "(slow) 360$^0$ + - 0 -", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) 360$^0$ + F,B + 360$^0$", "(stand still) 360$^0$ + A + F", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(default slow) - + - + flee", "(default stand-still) - + A + flee", "(default fast) - + flee + flee",]
 

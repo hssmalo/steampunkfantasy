@@ -4,7 +4,7 @@ name = "Dwarf"
 
 [units."Dwarf Infantry"]
 unit_special = "Unit base abilities: Poison Resistance 2 \\\\ Fire Resistance 1"
-assault_die = "4+/5+/5+/6+"
+assault_die = "4+"
 size = "medium"
 assault_pen = "-2"
 members = "4"
@@ -163,23 +163,23 @@ type_ = "Mechanical, Bio Crew, Tank"
 armor = "3/5/5/3"
 
 [units."Elite SteamPowerArmor"]
-unit_special = "Unit base gains 1 psychic resistance."
-assault_die = "4+/5+/5+/6+"
+unit_special = "This unit gains good shot +1 to hit \\\\ Unit base gains 1 psychic resistance."
+assault_die = "4+"
 size = "medium"
-assault_pen = "-1"
+assault_pen = "-2"
 members = ""
 name = "Elite SteamPowerArmor"
 filters = [ "weapons", "team",]
 assault_special = ""
 assault_deflection_die = ""
 cost = "4xp to replace one regular SteamPowerArmor member with an elite"
-assault_damage = "d6 -1"
+assault_damage = "d6 -2"
 assault_deflection = "2/2/1/1"
 weapons_input = [ "Heavy Musket",]
 assault = "3/3/3/3"
 assault_ap = ""
 race = "Dwarf"
-type_ = "Bio"
+type_ = "Bio, Steampower Infantry"
 armor = "1/1/1/1"
 
 [weapons.Musket]
@@ -255,8 +255,8 @@ assault_ap = ""
 template = "r"
 
 [weapons."Musket With Spring Loaded Axe"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
+assault_pen_set_to = "-2"
+assault_deflection_die_set_to = "-"
 ap = ""
 damage = "-2"
 assault_special = ""
@@ -264,8 +264,8 @@ special = ""
 range_ = "3"
 cost = "1cp to replace all infantry weapons of one unit base."
 pen = "-2"
-assault_deflection_mod = ""
-assault_dam_set_to = ""
+assault_deflection_mod = "-"
+assault_dam_set_to = "d6-2"
 angle = "*/*/*/*"
 orders_gained = [ "",]
 orders_lost = [ "",]
@@ -280,7 +280,7 @@ template = "ra"
 
 [weapons."Blast Sticks"]
 assault_pen_set_to = "0"
-assault_deflection_die_set_to = "4+/-/-/-"
+assault_deflection_die_set_to = "4+"
 ap = ""
 damage = ""
 assault_special = ""
@@ -304,7 +304,7 @@ template = "a"
 
 [units.Zeppelin]
 unit_special = "Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Fire while shaken: if shaken, unit may still fire normaly, but it gets -1 to hit. \\\\ Fire 4 enhanched musket in each direction per fire order.\\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
-assault_die = "4+/4+/4+/4+"
+assault_die = "4+"
 size = "Huge, +1 to be hit"
 assault_pen = "-2"
 members = "1"
@@ -366,18 +366,18 @@ race = "Dwarf"
 type_ = "Bio, Monster"
 armor = "3/2/2/1"
 
-[units."Elite Dwarven Infantry"]
+[units."Elite Dwarf Infantry"]
 unit_special = "Good shot: +1 to hit. \\\\ Unit base gains 2 Psychic resistance \\\\"
-assault_die = "4+/5+/5+/6+"
+assault_die = "4+"
 size = "medium"
-assault_pen = "-1"
+assault_pen = "-2"
 members = ""
-name = "Elite Dwarven Infantry"
+name = "Elite Dwarf Infantry"
 filters = [ "weapons", "team",]
 assault_special = "Cunning Assault[1 for 2]"
 assault_deflection_die = "4+/-/-/-"
 cost = "1xp to replace up too 2 regular infantry from one or two unit bases"
-assault_damage = "d6-1"
+assault_damage = "d6-2"
 assault_deflection = "1/-/-/-"
 weapons_input = [ "Musket",]
 assault = "2/2/1/1/"
@@ -436,31 +436,31 @@ template = "r"
 
 [units."Mini Zeppelin"]
 unit_special = "Floats\\\\ Poison Resistance 2 \\\\ "
-assault_die = "3+/3+/4+/5+"
+assault_die = "4+"
 size = "medium"
 assault_pen = "-2"
 members = "2"
 name = "Mini Zeppelin"
 filters = [ "weapons", "team",]
 assault_special = ""
-assault_deflection_die = "3+/3+/4+/5+"
+assault_deflection_die = "4+"
 cost = "3cp, 4xp"
 assault_damage = "d6 -2 "
-assault_deflection = "3/2/1/1"
+assault_deflection = "4/3/1/1"
 weapons_input = [ "AxeThrower-Machine",]
-assault = "2/2/1/1"
+assault = "3/2/1/1"
 assault_ap = ""
 race = "Dwarf"
 type_ = "Biological, Floating Vehicle"
 armor = "1/-/-/-"
 
-[units."Dwarven AT-gun"]
+[units."Dwarf AT-gun"]
 unit_special = "Poison Resistance 2 \\\\ Fire resistance 1"
-assault_die = "6+/6+/6+/6+"
+assault_die = "6+"
 size = "Large"
 assault_pen = ""
 members = "1AT-gun, 4 crew"
-name = "Dwarven AT-gun"
+name = "Dwarf AT-gun"
 filters = [ "weapons", "team",]
 assault_special = ""
 assault_deflection_die = ""
@@ -476,19 +476,19 @@ armor = "2/-/-/-"
 
 [units.SteamPowerArmor]
 unit_special = "Poison resistance 4, Fire reistance 2\\\\ Take Cover[stand-still][-2]"
-assault_die = "4+/5+/5+/6+"
+assault_die = "4+"
 size = "medium"
-assault_pen = "-1"
+assault_pen = "-2"
 members = "4"
 name = "SteamPowerArmor"
 filters = [ "weapons", "team",]
 assault_special = "Cunning Assault[1 for 2]"
 assault_deflection_die = ""
 cost = "2mp, 1ip, 2cp"
-assault_damage = "d6 -1"
+assault_damage = "d6 -2"
 assault_deflection = ""
 weapons_input = [ "Heavy Musket",]
-assault = "3/3/3/3"
+assault = "3/2/2/1"
 assault_ap = ""
 race = "Dwarf"
 type_ = "Bio"
@@ -496,16 +496,16 @@ armor = "1/1/1/1"
 
 [units.Dw42]
 unit_special = "Fire Resistance 2"
-assault_die = "4+/5+/6+/6+"
+assault_die = "4+"
 size = "Large"
-assault_pen = ""
+assault_pen = "-1"
 members = "1"
 name = "Dw42"
 filters = [ "weapons", "team",]
 assault_special = "Fear[6]\\\\ Stuborn: when loosing an assault you may opt to roll for assault again. Apply damage, modify the assault stats if necessary, redo the assault."
 assault_deflection_die = "4+"
 cost = "6ip"
-assault_damage = "d6 + 0"
+assault_damage = "d6 - 1"
 assault_deflection = "2/-/-/-"
 weapons_input = [ "Tank Gun",]
 assault = "4/3/3/2/"
@@ -516,19 +516,19 @@ armor = "7/4/4/3"
 
 [units."Assault Bots"]
 unit_special = "Immune to all shaken effects."
-assault_die = "4+/5+/5+/6+/"
+assault_die = "4+"
 size = "medium"
 assault_pen = ""
 members = "4"
 name = "Assault Bots"
 filters = [ "weapons", "team",]
 assault_special = ""
-assault_deflection_die = "5+/-/-/-"
+assault_deflection_die = "4+/-/-/-"
 cost = "3ip, 6xp"
 assault_damage = "d6 + 0"
 assault_deflection = "1/-/-/-"
 weapons_input = [ "",]
-assault = "3/3/3/3"
+assault = "3/2/2/2"
 assault_ap = "2"
 race = "Dwarf"
 type_ = "Mechanical"
@@ -633,17 +633,17 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
 Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) - + - + flee",]
 
-[units."Elite Dwarven Infantry".damage_tables]
+[units."Elite Dwarf Infantry".damage_tables]
 "" = [ "",]
 
-[units."Dwarven AT-gun".orders]
+[units."Dwarf AT-gun".orders]
 Fire = [ "(stand-still) Fire + -", "(stand-still) Aim + -", "(stand-still) Load + -",]
 Movement = [ "(slow) 360$^0$ + F + B[Rest]", "(Rest) - + - + A[stand-still]", "(stand-still) - + - + -", "(stand-still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default stand-still) - + - + -",]
 
 [units."Assault Bots".damage_tables]
 "Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 memeber",]
 
-[units."Elite Dwarven Infantry".orders]
+[units."Elite Dwarf Infantry".orders]
 
 [units.GunBlasterWagon.orders]
 Fire = [ "(stand-still) load + -", "fire + -",]
@@ -653,7 +653,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 Fire = [ "Fire + -", "Load(2) + -",]
 Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$ + 360$^0$ + 360$^0$", "(Default slow) 360$^0$ + flee + 360$^0$",]
 
-[units."Dwarven AT-gun".damage_tables]
+[units."Dwarf AT-gun".damage_tables]
 "Psychic damage" = [ "4+: unit base shaken",]
 "Regular Damage" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psychic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
 
