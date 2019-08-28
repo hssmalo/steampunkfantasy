@@ -9,6 +9,29 @@ class Team():
         self.weapons = {}
         self.abilities = {}
 
+
+    def unit_sort(self, text):
+
+
+        
+        if text.startswith('Elite'):
+            used = text[6:] + ' ' + text[0:5]
+            text = text[6:]
+        else:
+            used = text
+        
+        members = self.units[text].members
+        try:
+            members = str(4-int(members) )
+        except:
+            print('Number of models not an int')
+            
+        type_   = self.units[text].type_
+
+        #print(members + type_+used)
+        return members + type_+used
+
+        
     def write_pdf(self):
 
         #Need to be able to read the inputlines
@@ -43,7 +66,7 @@ class Team():
         latex_unit = ""
         latex_equipment_upgrade = ""
     
-        for unit_name in self.units:
+        for unit_name in sorted(self.units, key=self.unit_sort):
             print('working on ', unit_name)
             unit = self.units[unit_name]
             latex_order = ""
@@ -76,7 +99,7 @@ class Team():
             latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
             #print(latex_unit)
 
-        for weapon_name in self.weapons.keys():
+        for weapon_name in sorted(self.weapons.keys()):
 
             if weapon_name:
                 weapon = self.weapons[weapon_name]
@@ -90,6 +113,8 @@ class Team():
                     if weapon.template == '':
                         template = ''
                         print('Missing weapon template', weapon_name)
+                    else:
+                        print('working on ', weapon_name)
                         
                     orders_gained = ''
                     orders_lost   = ''
@@ -236,7 +261,7 @@ class Team():
         self.weapons[weapon.name] = weapon
 
 
-    def append_weapon(self, ability):
+    def append_ability(self, ability):
         self.abilities[ability.name] = ability
 
 
