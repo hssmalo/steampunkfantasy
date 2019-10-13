@@ -1,563 +1,587 @@
 name = "Ork"
 
-[units.Halftrack]
-assault_damage = "d6-1"
-isReplacement = ""
-name = "Halftrack"
-assault_special = "May unload 1 infantry or grunt as part of assault"
-size = "large"
-armor = "2/1/1/1"
-members = "1"
-assault_pen = ""
-weapons_input = [ "Heavy MG",]
-assault = "4/3/2/1"
-cost = "2ip"
-assault_ap = ""
-race = "Ork"
-assault_deflection_die = "6+"
-assault_deflection = "2/-/-/-"
-unit_special = "Bad Shot (-1 to hit) \\\\ May transport up to 2 grunts or 1 infantry. "
-assault_die = "6+"
-filters = [ "weapons", "team",]
-type_ = "Mechanical"
-
-[weapons."Heavy MG"]
-name = "Heavy MG"
-assault_deflection_mod = ""
-ap = ""
-assault_pen_set_to = ""
-angle = "*/-/-/-"
+[weapons.Flame-covered-axe]
 filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "3"
-special = "Area(6+) or with aim, fire 6 times at same enemy unit base."
-cost = ""
-damage = "d6-1"
-pen = "-1"
-race = "Ork"
-orders_gained = [ "",]
-template = ""
-assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = ""
-type_ = ""
-assault_special = ""
-assault_dam_set_to = ""
-
-[weapons."Ork Musket"]
-name = "Ork Musket"
-assault_deflection_mod = ""
-ap = ""
-assault_pen_set_to = ""
-angle = "*/*/-/-"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "3"
+assault_special = "Fire"
 special = ""
-cost = ""
-damage = "d6-1"
-pen = "-2"
-race = "Ork"
-orders_gained = [ "",]
-template = ""
-assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = ""
-type_ = ""
-assault_special = ""
-assault_dam_set_to = ""
-
-[weapons.MG]
-name = "MG"
-assault_deflection_mod = ""
-ap = ""
-assault_pen_set_to = ""
-angle = "*/-/-/-"
-filters = [ "team",]
-orders_lost = [ "(stand-still) load", "(stand-still) fire",]
-assault_mod = ""
-range_ = "5"
-special = "Fire at ALL units (friend or foe) within fireing angle and range.\\\\ Unit base gains Take Cover[setup][-2] (see general rules)"
-cost = "6 cp to give MG to one infantry base"
-damage = "d6-2"
-pen = "-2"
-race = "Ork"
-orders_gained = [ "(stand still) B[Setup] + - + -", "(setup): - + - + A[stand-still]", "(setup): load MG + - ", "(setup): fire + -",]
-template = "r"
-assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = ""
-type_ = "Infantry base weapon."
-assault_special = ""
-assault_dam_set_to = ""
-
-[weapons.Pyro]
-name = "Pyro"
-assault_deflection_mod = ""
-ap = ""
-assault_pen_set_to = ""
-angle = "*/*/*/*"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "1"
-special = "Choose one hex within range, and each memember tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire. \\\\ Don't need to be loaded to be used.\\\\ Bonus weapon, can be added to any other combination of weapons.\\\\ "
-cost = "1cp, 1xp to give all units in unit base Pyro"
-damage = "special"
-pen = "special"
-race = "Ork"
-orders_gained = [ "(stand-still, slow) - + Throw",]
-template = "r"
-assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = "Infantry"
-type_ = "Misc Infantry Weapon"
-assault_special = ""
-assault_dam_set_to = ""
-
-[units."Elite Ork Infantry"]
-assault_damage = "d6"
-isReplacement = "yes"
-name = "Elite Ork Infantry"
-assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
-size = "medium"
-armor = ""
-members = ""
-assault_pen = "-2"
-weapons_input = [ "",]
-assault = "3/2/2/2"
-cost = "3xp to upgrade up to either 2 grunts or 2 regular infantry"
-assault_ap = ""
-race = "Ork"
-assault_deflection_die = "6+"
-assault_deflection = "1/-/-/-"
-unit_special = "Unit base gains: Not Yet dead: after all 4 infantry in the unit base are killed, there is one that is not dead jet afterall and becomes an {\\it awakened war hero} with the same equipment and orders available as the last infantry killed. Awakened War Hero has a seperate unit entry."
-assault_die = "6+"
-filters = [ "weapons", "team",]
-type_ = "Bio, Infantry, Elite, Walks"
-
-[weapons."Harpoon Gun"]
-name = "Harpoon Gun"
-assault_deflection_mod = ""
-ap = ""
-assault_pen_set_to = ""
-angle = "*/*/*/*"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "5"
-special = "If one single-member unit of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0. Keep the orientation of the unit. If there are multiple hexes which you can move the target to move it towards you, you may choose where to move the enemy. If this movement forces the target to move into a hex occupied by you, carry out an assault. If this movement turns the hex into an overcrowded hex, do not move target unit but turn it into a shaken unit instead"
-cost = "2 cp to give one infantry base this weapon"
-damage = "d6-2"
-pen = "-2"
-race = "Ork"
-orders_gained = [ "",]
-template = "r"
-assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = "Regular Infantry Base"
-type_ = "Infantry Base weapon, or vehicle/tank weapon."
-assault_special = ""
-assault_dam_set_to = ""
-
-[units.Troll]
-assault_damage = "d6+12"
-isReplacement = ""
-name = "Troll"
-assault_special = "Reduce damage by 2 for each successfull assault deflection rolled by enemy"
-size = "Huge"
-armor = ""
-members = "1"
-assault_pen = ""
-weapons_input = [ "",]
-assault = "10/8/6/4"
-cost = "8xp"
-assault_ap = ""
-race = "Ork"
-assault_deflection_die = ""
-assault_deflection = ""
-unit_special = "May have a maximum of twelve -1 counters to assault damage, and 1 temporarily killed token\\\\ At each aftermath phase, remove/downgrade up to three of the following: one +1 for future damage marker, downgrade one bleeding one step, one -1 counter to assault damage or 1 temporarily killed token.\\\\"
-assault_die = "5+"
-filters = [ "weapons", "team",]
-type_ = "Bio, Monster"
-
-[weapons."Pistol with Spear"]
-name = "Pistol with Spear"
-assault_deflection_mod = "-"
-ap = ""
-assault_pen_set_to = ""
-angle = "*/*/*/*"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = "unmodified"
-range_ = "3"
-special = "1 handed weapon. Pistol with a clockwork Spear."
-cost = "1 cp to upgrade the weapons of two single elite models (infantry or warg)"
-damage = "d6-1"
-pen = "-2"
-race = "Ork"
-orders_gained = [ "Load(2)",]
-template = "ra"
-assault_ap = ""
-assault_deflection_die_set_to = "unmodified"
-required_to_buy = "Elite Ork Infantry or Warg Rider"
-type_ = "Elite Infantry Weapon"
-assault_special = "Cunning[1 for 2]"
-assault_dam_set_to = "d8"
-
-[weapons."Clockwork Wings"]
-name = "Clockwork Wings"
-assault_deflection_mod = "unmodified"
-ap = ""
-assault_pen_set_to = ""
-angle = ""
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = "+1/-/-/-"
-range_ = ""
-special = "Flies for a short period of time."
-cost = "3 cp to upgrade one infantry base"
-damage = ""
-pen = ""
-race = "Ork"
-orders_gained = [ "(slow) A(fast, flying) + Chase + Chase", "(fast, flying) Chase + Chase + B(slow, land)",]
 template = "a"
-assault_ap = ""
-assault_deflection_die_set_to = "-"
-required_to_buy = "Infantry base"
-type_ = "Infantry Misc. May be added independent of other equipment."
-assault_special = ""
-assault_dam_set_to = "unmodified"
-
-[units.Grunt]
-assault_damage = "d6-2"
-isReplacement = ""
-name = "Grunt"
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (identical rules original die). (exploding die)"
-size = "medium"
-armor = ""
-members = "4"
-assault_pen = "-2"
-weapons_input = [ "",]
-assault = "2/2/2/2"
-cost = "1mp"
-assault_ap = ""
-race = "Ork"
-assault_deflection_die = ""
-assault_deflection = ""
-unit_special = "Cannot use ranged weapons"
-assault_die = "6+"
-filters = [ "weapons", "team",]
-type_ = "Bio, Infantry"
-
-[units.HammerHead]
-assault_damage = "d8+3/d8/d8/d8"
-isReplacement = ""
-name = "HammerHead"
-assault_special = "You may reroll up too 3 dice per 6 this unit roll in regular assaults. Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead"
-size = "Large"
-armor = "8/5/2/2"
-members = "1"
-assault_pen = ""
-weapons_input = [ "Harpoon Gun",]
-assault = "12/8/8/8"
-cost = "4ip"
-assault_ap = "5/-2/-2/-2"
-race = "Ork"
-assault_deflection_die = "6+"
-assault_deflection = "12/2/2/2"
-unit_special = "Has 4 Harpoon Guns which are all fired within same angle-sector when firing"
-assault_die = "6+"
-filters = [ "weapons", "team",]
-type_ = "Mechanical, Bio Crew, Tracked"
-
-[weapons."Ork Pistol"]
-name = "Ork Pistol"
-assault_deflection_mod = ""
+required_to_buy = ""
 ap = ""
-assault_pen_set_to = ""
-angle = "*/*/*/*"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "3"
-special = "1 handed weapon. Infantry may combine pistol with another 1-handed weapon."
-cost = "1 cp to upgrade  all weapons of up to 2 regular ork infantry base"
-damage = "d6-1"
-pen = "-2"
 race = "Ork"
-orders_gained = [ "(stand-still) load(2) + -", "(stand-still) - + load(2)", "(stand-still, slow) fire + -", "(stand-still, slow) - + fire",]
-template = "r"
+assault_pen_set_to = ""
 assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = "Infantry"
-type_ = "1 handed infantry weapon"
-assault_special = ""
-assault_dam_set_to = ""
+cost = "2 cp to upgrade the weapons of a single Elite Ork Infantry"
+name = "Flame-covered-axe"
+assault_dam_set_to = "d6+1"
+range_ = ""
+type_ = "1 handed elite infantry weapon"
+assault_mod = "unmodified"
+orders_lost = [ "",]
+angle = ""
+pen = ""
+assault_deflection_die_set_to = "n.a"
+assault_deflection_mod = "-"
+orders_gained = [ "",]
+damage = ""
 
 [weapons."Clockwork Shield"]
-name = "Clockwork Shield"
-assault_deflection_mod = "+1/-/-/-"
-ap = ""
-assault_pen_set_to = "unmodified"
-angle = ""
 filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = "unmodified"
-range_ = ""
+assault_special = ""
 special = "Unit base gains damage resistance 1"
-cost = "1 cp to give all units in one grunt or infantry unit shields"
-damage = ""
-pen = ""
-race = "Ork"
-orders_gained = [ "",]
 template = "a"
-assault_ap = ""
-assault_deflection_die_set_to = "6+"
 required_to_buy = "Infantry base"
-type_ = "1 handed infantry weapon"
-assault_special = ""
+ap = ""
+race = "Ork"
+assault_pen_set_to = "unmodified"
+assault_ap = ""
+cost = "1 cp to give all units in one grunt or infantry unit shields"
+name = "Clockwork Shield"
 assault_dam_set_to = "unmodified"
-
-[weapons."Grenade Sling"]
-name = "Grenade Sling"
-assault_deflection_mod = ""
-ap = "1"
-assault_pen_set_to = ""
-angle = "*/*/*/*"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "3"
-special = "Choose one hex within normal range, area(6+) \\\\ AP not reduced by distance\\\\ If combined with the pyro, the pyro gains standard range of 3 instead of 1"
-cost = "3 cp to give all units in unit base Grenade Sling"
-damage = "d6"
-pen = ""
-race = "Ork"
-orders_gained = [ "",]
-template = "r"
-assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = ""
-type_ = "1 handed infantry weapon."
-assault_special = ""
-assault_dam_set_to = ""
-
-[weapons.Flame-covered-axe]
-name = "Flame-covered-axe"
-assault_deflection_mod = "-"
-ap = ""
-assault_pen_set_to = ""
-angle = ""
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = "unmodified"
 range_ = ""
-special = ""
-cost = "2 cp to upgrade the weapons of a single Elite Ork Infantry"
-damage = ""
-pen = ""
-race = "Ork"
-orders_gained = [ "",]
-template = "a"
-assault_ap = ""
-assault_deflection_die_set_to = "n.a"
-required_to_buy = ""
-type_ = "1 handed elite infantry weapon"
-assault_special = "Fire"
-assault_dam_set_to = "d6+1"
-
-[units."Warg Rider"]
-assault_damage = "d6-2"
-isReplacement = ""
-name = "Warg Rider"
-assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
-size = "medium"
-armor = ""
-members = "2"
-assault_pen = ""
-weapons_input = [ "",]
-assault = "4/4/4/4"
-cost = "1mp, 2xp"
-assault_ap = ""
-race = "Ork"
-assault_deflection_die = "6+"
-assault_deflection = "2/2/1/1"
-unit_special = "May use crafts (both melee and ranges) which uses 1 hand. Fire orders only available if given ranged weapon"
-assault_die = "6+"
-filters = [ "weapons", "team",]
-type_ = "Bio, Cavalry, Walks"
-
-[weapons."Clockwork Power Spear"]
-name = "Clockwork Power Spear"
-assault_deflection_mod = "-"
-ap = ""
-assault_pen_set_to = "-1"
-angle = ""
-filters = [ "team",]
-orders_lost = [ "",]
+type_ = "1 handed infantry weapon"
 assault_mod = "unmodified"
-range_ = ""
-special = ""
-cost = "2 cp to give all infantry in one unit base the Power Spear"
-damage = ""
+orders_lost = [ "",]
+angle = ""
 pen = ""
-race = "Ork"
+assault_deflection_die_set_to = "6+"
+assault_deflection_mod = "+1/-/-/-"
 orders_gained = [ "",]
-template = "a"
-assault_ap = ""
-assault_deflection_die_set_to = "n.a"
-required_to_buy = "Infantry"
-type_ = "2-handed Infantry Weapon"
-assault_special = "Cunning[1 for 2]."
-assault_dam_set_to = "d12"
-
-[units."Awakened war hero"]
-assault_damage = "d6"
-isReplacement = ""
-name = "Awakened war hero"
-assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 6 dice (with identical rules to this one) (exploding die)"
-size = "medium"
-armor = ""
-members = "1"
-assault_pen = ""
-weapons_input = [ "",]
-assault = "6/3/3/3"
-cost = "N.A. Only comes into play through an Elite ork 'not yet dead' ability"
-assault_ap = ""
-race = "Ork"
-assault_deflection_die = "6+"
-assault_deflection = "2/-/-/-"
-unit_special = "has same orders available as the unit base it awakened from, and the same weapons as the last surviving member of the unit base"
-assault_die = "6+"
-filters = [ "weapons", "team",]
-type_ = "Bio, Infantry"
+damage = ""
 
 [weapons."Clockwork Spear"]
-name = "Clockwork Spear"
-assault_deflection_mod = "-"
-ap = ""
-assault_pen_set_to = ""
-angle = ""
 filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = "unmodified"
-range_ = ""
-special = ""
-cost = "1 cp to upgrade alle infantry in unit base"
-damage = ""
-pen = ""
-race = "Ork"
-orders_gained = [ "",]
-template = "a"
-assault_ap = ""
-assault_deflection_die_set_to = "-"
-required_to_buy = "Infantry base"
-type_ = "1 handed Infantry Weapon"
 assault_special = "Cunning[1 for 2]"
-assault_dam_set_to = "d8"
-
-[weapons."Hand Held Cannon"]
-name = "Hand Held Cannon"
-assault_deflection_mod = ""
-ap = "4"
-assault_pen_set_to = ""
-angle = "*/-/-/-"
-filters = [ "team",]
-orders_lost = [ "",]
-assault_mod = ""
-range_ = "4"
-special = "Unit base gets the option to fire this weapon instead of regular weapons. "
-cost = "4 cp to give this weapon to 1 unit base"
-damage = "+3 damage if penetrating armor"
-pen = "0"
+special = ""
+template = "a"
+required_to_buy = "Infantry base"
+ap = ""
 race = "Ork"
-orders_gained = [ "",]
-template = "r"
+assault_pen_set_to = ""
 assault_ap = ""
-assault_deflection_die_set_to = ""
-required_to_buy = ""
-type_ = "Infantry base weapon"
+cost = "1 cp to upgrade alle infantry in unit base"
+name = "Clockwork Spear"
+assault_dam_set_to = "d8"
+range_ = ""
+type_ = "1 handed Infantry Weapon"
+assault_mod = "unmodified"
+orders_lost = [ "",]
+angle = ""
+pen = ""
+assault_deflection_die_set_to = "-"
+assault_deflection_mod = "-"
+orders_gained = [ "",]
+damage = ""
+
+[weapons."Clockwork Power Spear"]
+filters = [ "team",]
+assault_special = "Cunning[1 for 2]."
+special = ""
+template = "a"
+required_to_buy = "Infantry"
+ap = ""
+race = "Ork"
+assault_pen_set_to = "-1"
+assault_ap = ""
+cost = "2 cp to give all infantry in one unit base the Power Spear"
+name = "Clockwork Power Spear"
+assault_dam_set_to = "d12"
+range_ = ""
+type_ = "2-handed Infantry Weapon"
+assault_mod = "unmodified"
+orders_lost = [ "",]
+angle = ""
+pen = ""
+assault_deflection_die_set_to = "n.a"
+assault_deflection_mod = "-"
+orders_gained = [ "",]
+damage = ""
+
+[weapons."Heavy MG"]
+filters = [ "team",]
 assault_special = ""
+special = "Area(6+) or with aim, fire 6 times at same enemy unit base."
+template = ""
+required_to_buy = ""
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = ""
+name = "Heavy MG"
 assault_dam_set_to = ""
+range_ = "3"
+type_ = ""
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/-/-/-"
+pen = "-1"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "",]
+damage = "d6-1"
+
+[units.Grunt]
+assault_deflection_die = ""
+assault = "2/2/2/2"
+isReplacement = ""
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (identical rules original die). (exploding die)"
+assault_deflection = ""
+assault_damage = "d6-2"
+race = "Ork"
+assault_ap = ""
+cost = "1mp"
+members = "4"
+name = "Grunt"
+type_ = "Bio, Infantry"
+armor = ""
+assault_pen = "-2"
+unit_special = "Cannot use ranged weapons"
+weapons_input = [ "",]
+size = "medium"
+filters = [ "weapons", "team",]
+assault_die = "6+"
+
+[units."Awakened war hero"]
+assault_deflection_die = "6+"
+assault = "6/3/3/3"
+isReplacement = ""
+assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 6 dice (with identical rules to this one) (exploding die)"
+assault_deflection = "2/-/-/-"
+assault_damage = "d6"
+race = "Ork"
+assault_ap = ""
+cost = "N.A. Only comes into play through an Elite ork 'not yet dead' ability"
+members = "1"
+name = "Awakened war hero"
+type_ = "Bio, Infantry"
+armor = ""
+assault_pen = ""
+unit_special = "has same orders available as the unit base it awakened from, and the same weapons as the last surviving member of the unit base"
+weapons_input = [ "",]
+size = "medium"
+filters = [ "weapons", "team",]
+assault_die = "6+"
+
+[units.HammerHead]
+assault_deflection_die = "6+"
+assault = "12/8/8/8"
+isReplacement = ""
+assault_special = "You may reroll up too 3 dice per 6 this unit roll in regular assaults. Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead"
+assault_deflection = "12/2/2/2"
+assault_damage = "d8+3/d8/d8/d8"
+race = "Ork"
+assault_ap = "5/-2/-2/-2"
+cost = "4ip"
+members = "1"
+name = "HammerHead"
+type_ = "Mechanical, Bio Crew, Tracked"
+armor = "8/5/2/2"
+assault_pen = ""
+unit_special = "Has 4 Harpoon Guns which are all fired within same angle-sector when firing"
+weapons_input = [ "Harpoon Gun",]
+size = "Large"
+filters = [ "weapons", "team",]
+assault_die = "6+"
+
+[weapons."Ork Pistol"]
+filters = [ "team",]
+assault_special = ""
+special = "1 handed weapon. Infantry may combine pistol with another 1-handed weapon."
+template = "r"
+required_to_buy = "Infantry"
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "1 cp to upgrade  all weapons of up to 2 regular ork infantry base"
+name = "Ork Pistol"
+assault_dam_set_to = ""
+range_ = "3"
+type_ = "1 handed infantry weapon"
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/*/*/*"
+pen = "-2"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "(stand-still) load(2) + -", "(stand-still) - + load(2)", "(stand-still, slow) fire + -", "(stand-still, slow) - + fire",]
+damage = "d6-1"
+
+[weapons."Clockwork Wings"]
+filters = [ "team",]
+assault_special = ""
+special = "Flies for a short period of time."
+template = "a"
+required_to_buy = "Infantry base"
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "3 cp to upgrade one infantry base"
+name = "Clockwork Wings"
+assault_dam_set_to = "unmodified"
+range_ = ""
+type_ = "Infantry Misc. May be added independent of other equipment."
+assault_mod = "+1/-/-/-"
+orders_lost = [ "",]
+angle = ""
+pen = ""
+assault_deflection_die_set_to = "-"
+assault_deflection_mod = "unmodified"
+orders_gained = [ "(slow) A(fast, flying) + Chase + Chase", "(fast, flying) Chase + Chase + B(slow, land)",]
+damage = ""
+
+[units."Warg Rider"]
+assault_deflection_die = "6+"
+assault = "4/4/4/4"
+isReplacement = ""
+assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
+assault_deflection = "2/2/1/1"
+assault_damage = "d6-2"
+race = "Ork"
+assault_ap = ""
+cost = "1mp, 2xp"
+members = "2"
+name = "Warg Rider"
+type_ = "Bio, Cavalry, Walks"
+armor = ""
+assault_pen = ""
+unit_special = "May use crafts (both melee and ranges) which uses 1 hand. Fire orders only available if given ranged weapon"
+weapons_input = [ "",]
+size = "medium"
+filters = [ "weapons", "team",]
+assault_die = "6+"
+
+[units.Troll]
+assault_deflection_die = ""
+assault = "10/8/6/4"
+isReplacement = ""
+assault_special = "Reduce damage by 2 for each successfull assault deflection rolled by enemy"
+assault_deflection = ""
+assault_damage = "d6+12"
+race = "Ork"
+assault_ap = ""
+cost = "8xp"
+members = "1"
+name = "Troll"
+type_ = "Bio, Monster"
+armor = ""
+assault_pen = ""
+unit_special = "May have a maximum of twelve -1 counters to assault damage, and 1 temporarily killed token\\\\ At each aftermath phase, remove/downgrade up to three of the following: one +1 for future damage marker, downgrade one bleeding one step, one -1 counter to assault damage or 1 temporarily killed token.\\\\"
+weapons_input = [ "",]
+size = "Huge"
+filters = [ "weapons", "team",]
+assault_die = "5+"
+
+[units.Halftrack]
+assault_deflection_die = "6+"
+assault = "4/3/2/1"
+isReplacement = ""
+assault_special = "May unload 1 infantry or grunt as part of assault"
+assault_deflection = "2/-/-/-"
+assault_damage = "d6-1"
+race = "Ork"
+assault_ap = ""
+cost = "2ip"
+members = "1"
+name = "Halftrack"
+type_ = "Mechanical"
+armor = "2/1/1/1"
+assault_pen = ""
+unit_special = "Bad Shot (-1 to hit) \\\\ May transport up to 2 grunts or 1 infantry. "
+weapons_input = [ "Heavy MG",]
+size = "large"
+filters = [ "weapons", "team",]
+assault_die = "6+"
+
+[weapons.Pyro]
+filters = [ "team",]
+assault_special = ""
+special = "Choose one hex within range, and each memember tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire. \\\\ Don't need to be loaded to be used.\\\\ Bonus weapon, can be added to any other combination of weapons.\\\\ "
+template = "r"
+required_to_buy = "Infantry"
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "1cp, 1xp to give all units in unit base Pyro"
+name = "Pyro"
+assault_dam_set_to = ""
+range_ = "1"
+type_ = "Misc Infantry Weapon"
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/*/*/*"
+pen = "special"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "(stand-still, slow) - + Throw",]
+damage = "special"
+
+[weapons.MG]
+filters = [ "team",]
+assault_special = ""
+special = "Fire at ALL units (friend or foe) within fireing angle and range.\\\\ Unit base gains Take Cover[setup][-2] (see general rules)"
+template = "r"
+required_to_buy = ""
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "6 cp to give MG to one infantry base"
+name = "MG"
+assault_dam_set_to = ""
+range_ = "5"
+type_ = "Infantry base weapon."
+assault_mod = ""
+orders_lost = [ "(stand-still) load", "(stand-still) fire",]
+angle = "*/-/-/-"
+pen = "-2"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "(stand still) B[Setup] + - + -", "(setup): - + - + A[stand-still]", "(setup): load MG + - ", "(setup): fire + -",]
+damage = "d6-2"
 
 [units."Ork Infantry"]
-assault_damage = "d6-2"
-isReplacement = ""
-name = "Ork Infantry"
-assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
-size = "medium"
-armor = ""
-members = "4"
-assault_pen = "-2"
-weapons_input = [ "Ork Musket",]
-assault = "2/2/2/2"
-cost = "2mp"
-assault_ap = ""
-race = "Ork"
 assault_deflection_die = ""
+assault = "2/2/2/2"
+isReplacement = ""
+assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
 assault_deflection = ""
-unit_special = "Generic Abilities (see general rules) \\\\Bad shot: -1 to hit with ranged weapons. \\\\ Take Cover[stand-still][-2]"
-assault_die = "6+"
-filters = [ "weapons", "team",]
+assault_damage = "d6-2"
+race = "Ork"
+assault_ap = ""
+cost = "2mp"
+members = "4"
+name = "Ork Infantry"
 type_ = "Bio, Infantry, walks"
+armor = ""
+assault_pen = "-2"
+unit_special = "Generic Abilities (see general rules) \\\\Bad shot: -1 to hit with ranged weapons. \\\\ Take Cover[stand-still][-2]"
+weapons_input = [ "Ork Musket",]
+size = "medium"
+filters = [ "weapons", "team",]
+assault_die = "6+"
 
-[units."Awakened war hero".damage_tables]
-"Regular Damage" = [ "2-3: Bleeding[4]", "4+ : Killed",]
+[weapons."Hand Held Cannon"]
+filters = [ "team",]
+assault_special = ""
+special = "Unit base gets the option to fire this weapon instead of regular weapons. "
+template = "r"
+required_to_buy = ""
+ap = "4"
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "4 cp to give this weapon to 1 unit base"
+name = "Hand Held Cannon"
+assault_dam_set_to = ""
+range_ = "4"
+type_ = "Infantry base weapon"
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/-/-/-"
+pen = "0"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "",]
+damage = "+3 damage if penetrating armor"
 
-[units."Elite Ork Infantry".orders]
-"" = [ "",]
+[weapons."War Drum"]
+filters = [ "team",]
+assault_special = ""
+special = "Allows any unit with 'chase' orders to follow this unit instead of chasing the enemy. If you choose to follow, move one hex towards this unit instead of the closet enemy unit. The choise can be made after orders are revealed."
+template = "a"
+required_to_buy = "Infantry unit"
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "1 xp"
+name = "War Drum"
+assault_dam_set_to = ""
+range_ = ""
+type_ = "Misc infantry equipment"
+assault_mod = ""
+orders_lost = [ "",]
+angle = ""
+pen = ""
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "",]
+damage = ""
+
+[weapons."Harpoon Gun"]
+filters = [ "team",]
+assault_special = ""
+special = "If one single-member unit of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0. Keep the orientation of the unit. If there are multiple hexes which you can move the target to move it towards you, you may choose where to move the enemy. If this movement forces the target to move into a hex occupied by you, carry out an assault. If this movement turns the hex into an overcrowded hex, do not move target unit but turn it into a shaken unit instead"
+template = "r"
+required_to_buy = "Regular Infantry Base"
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "2 cp to give one infantry base this weapon"
+name = "Harpoon Gun"
+assault_dam_set_to = ""
+range_ = "5"
+type_ = "Infantry Base weapon, or vehicle/tank weapon."
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/*/*/*"
+pen = "-2"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "",]
+damage = "d6-2"
+
+[weapons."Grenade Sling"]
+filters = [ "team",]
+assault_special = ""
+special = "Choose one hex within normal range, area(6+) \\\\ AP not reduced by distance\\\\ If combined with the pyro, the pyro gains standard range of 3 instead of 1"
+template = "r"
+required_to_buy = ""
+ap = "1"
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "3 cp to give all units in unit base Grenade Sling"
+name = "Grenade Sling"
+assault_dam_set_to = ""
+range_ = "3"
+type_ = "1 handed infantry weapon."
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/*/*/*"
+pen = ""
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "",]
+damage = "d6"
+
+[units."Elite Ork Infantry"]
+assault_deflection_die = "6+"
+assault = "3/2/2/2"
+isReplacement = "yes"
+assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
+assault_deflection = "1/-/-/-"
+assault_damage = "d6"
+race = "Ork"
+assault_ap = ""
+cost = "3xp to upgrade up to either 2 grunts or 2 regular infantry"
+members = ""
+name = "Elite Ork Infantry"
+type_ = "Bio, Infantry, Elite, Walks"
+armor = ""
+assault_pen = "-2"
+unit_special = "Unit base gains: Not Yet dead: after all 4 infantry in the unit base are killed, there is one that is not dead jet afterall and becomes an {\\it awakened war hero} with the same equipment and orders available as the last infantry killed. Awakened War Hero has a seperate unit entry."
+weapons_input = [ "",]
+size = "medium"
+filters = [ "weapons", "team",]
+assault_die = "6+"
+
+[weapons."Pistol with Spear"]
+filters = [ "team",]
+assault_special = "Cunning[1 for 2]"
+special = "1 handed weapon. Pistol with a clockwork Spear."
+template = "ra"
+required_to_buy = "Elite Ork Infantry or Warg Rider"
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = "1 cp to upgrade the weapons of two single elite models (infantry or warg)"
+name = "Pistol with Spear"
+assault_dam_set_to = "d8"
+range_ = "3"
+type_ = "Elite Infantry Weapon"
+assault_mod = "unmodified"
+orders_lost = [ "",]
+angle = "*/*/*/*"
+pen = "-2"
+assault_deflection_die_set_to = "unmodified"
+assault_deflection_mod = "-"
+orders_gained = [ "Load(2)",]
+damage = "d6-1"
+
+[weapons."Ork Musket"]
+filters = [ "team",]
+assault_special = ""
+special = ""
+template = ""
+required_to_buy = ""
+ap = ""
+race = "Ork"
+assault_pen_set_to = ""
+assault_ap = ""
+cost = ""
+name = "Ork Musket"
+assault_dam_set_to = ""
+range_ = "3"
+type_ = ""
+assault_mod = ""
+orders_lost = [ "",]
+angle = "*/*/-/-"
+pen = "-2"
+assault_deflection_die_set_to = ""
+assault_deflection_mod = ""
+orders_gained = [ "",]
+damage = "d6-1"
 
 [units."Awakened war hero".orders]
 "" = [ "",]
 
-[units."Elite Ork Infantry".damage_tables]
+[units."Elite Ork Infantry".orders]
 "" = [ "",]
 
-[units."Warg Rider".orders]
-"Fire Orders" = [ "load + -", "fire + -", "- + fire",]
-"Movement orders" = [ "Fast: 360$^0$ + F + F", "Fast: F + 360$^0$ + F", "Fast: F + F + 360$^0$", "Fast: F + B + 360$^0$", "Slow: 360$^0$ + 360$^0$ + 360$^0$", "Slow: 360$^0$ + A + F",]
-
-[units.HammerHead.damage_tables]
-"Regular Damage" = [ "1-5: Light damage[d6]", "6-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
-"Critical damage" = [ "1-3: Light damage[d6], 3 times", "4: Unit cannot rotate Left", "5: Unit Cannot rotate Right", "6: Harpoon guns destroyed.",]
-"Light Damage" = [ "1-3: unit shaken", "4-5: +1 on all future damage", "6: -2/-2/-2/-2 (cumulative) on assault values",]
-
-[units.Troll.damage_tables]
-"Regular Damage" = [ "1-3: +1 for future damage", "4-6: +1 for future damage, bleed[4]", "7-8: +2 for future damage, bleed[4]", "10-12: +2 for future damage, bleed[6]", "13-15: +3 for future damage, bleed[6]", "16-18: +3 for future damage, bleed[8]", "19-21: +4 for future damage, bleed[8]", "22-24: +4 for future damage, bleed[10], -1 (cumulative) on assault damage", "25-27: +5 for future damage, bleed[12], -2 (cumulative) on assault damage", "28-29: +10 for future damage, bleed[12], -4 (cumulative) on assault damage", "30-99: as 28-29 pluss Troll Momentarily killed", "100+: Troll permanently killed",]
-
-[units.Troll.orders]
-"Main orders" = [ "- + - + Chase",]
-
-[units."Warg Rider".damage_tables]
-"Psychic Damage" = [ "5+: unit shaken",]
-"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 member, psycic damage[d6]",]
-
-[units.HammerHead.orders]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
-Fire = [ "(stand still) load + -", "(stand still) load unstable + -", "(stand still) aim + -", "(all) fire + -",]
-
 [units.Halftrack.damage_tables]
+"Light damage" = [ "1-2: +1 on future damage", "3-4: Unit shaken", "5-6: Roll a d6 of regular damage to each transported unit base.",]
 "Regular Damage" = [ "1-4: roll on lightly damage [d6]", "5-8: +1 on future damage, roll for critical damage[d6]", "9+: Unit destroyed",]
 "Critical damage" = [ "1-2: Unit cannot accelerate any more. ", "3-4: unit cannot brake any more", "5-6: unit gains +1 to be hit and -1 to hit.",]
-"Light damage" = [ "1-2: +1 on future damage", "3-4: Unit shaken", "5-6: Roll a d6 of regular damage to each transported unit base.",]
-
-[units."Ork Infantry".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
-"Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ",]
-
-[units.Grunt.orders]
-
-[units.Grunt.damage_tables]
-"Psychic damage" = [ "4+: unit base shaken",]
-"Regular damage" = [ "1-5: kill 1 member", "6-8: kill 1 member, roll on psychic damage[d6]", "9+: destroy unit base",]
 
 [units."Ork Infantry".damage_tables]
 "Psychic Damage" = [ "4+: unit base shaken",]
 "Regular Damage" = [ "1-5: kill 1 member", "6-8: kill 1 member, roll on psychic damage [d6]", "9+ Destroy Unit Base",]
 
+[units.Grunt.damage_tables]
+"Regular damage" = [ "1-5: kill 1 member", "6-8: kill 1 member, roll on psychic damage[d6]", "9+: destroy unit base",]
+"Psychic damage" = [ "4+: unit base shaken",]
+
+[units."Warg Rider".orders]
+"Movement orders" = [ "Fast: 360$^0$ + F + F", "Fast: F + 360$^0$ + F", "Fast: F + F + 360$^0$", "Fast: F + B + 360$^0$", "Slow: 360$^0$ + 360$^0$ + 360$^0$", "Slow: 360$^0$ + A + F",]
+"Fire Orders" = [ "load + -", "fire + -", "- + fire",]
+
+[units.Grunt.orders]
+
+[units."Ork Infantry".orders]
+"Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
+
+[units.HammerHead.orders]
+Fire = [ "(stand still) load + -", "(stand still) load unstable + -", "(stand still) aim + -", "(all) fire + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+
+[units."Elite Ork Infantry".damage_tables]
+"" = [ "",]
+
+[units.Troll.orders]
+"Main orders" = [ "- + - + Chase",]
+
+[units."Awakened war hero".damage_tables]
+"Regular Damage" = [ "2-3: Bleeding[4]", "4+ : Killed",]
+
+[units.Troll.damage_tables]
+"Regular Damage" = [ "1-3: +1 for future damage", "4-6: +1 for future damage, bleed[4]", "7-8: +2 for future damage, bleed[4]", "10-12: +2 for future damage, bleed[6]", "13-15: +3 for future damage, bleed[6]", "16-18: +3 for future damage, bleed[8]", "19-21: +4 for future damage, bleed[8]", "22-24: +4 for future damage, bleed[10], -1 (cumulative) on assault damage", "25-27: +5 for future damage, bleed[12], -2 (cumulative) on assault damage", "28-29: +10 for future damage, bleed[12], -4 (cumulative) on assault damage", "30-99: as 28-29 pluss Troll Momentarily killed", "100+: Troll permanently killed",]
+
 [units.Halftrack.orders]
 Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-still or slow) aim + -", "(stand-still or slow) - + aim", "- + Load(2)",]
 "Movement orders" = [ "(fast): F + F + F", "(fast): F + F + R", "(fast): F + F + L", "(fast): F + F + Unload", "(stand-still): R + - + -", "(stand-still): L + - + -", "(stand-still): R + R + -", "(stand-still): R + R + R", "(stand-still): L + L + L", "(stand-still) L + L + -", "(stand-still): rev + - + -", "(stand-still): Unload + - + -", "(slow): A + F + R", "A + F + L", "(slow): A + F + -", "(slow): B + - + -", "(slow): B + rev + -", "(slow): L + L + -", "(slow): L + - + -", "(slow): R + R + -", "(slow): R + - + - ", "(slow): F + R + Unload", "(slow): F + L + Unload", "(slow): F + Unload + -",]
+
+[units.HammerHead.damage_tables]
+"Regular Damage" = [ "1-5: Light damage[d6]", "6-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
+"Light Damage" = [ "1-3: unit shaken", "4-5: +1 on all future damage", "6: -2/-2/-2/-2 (cumulative) on assault values",]
+"Critical damage" = [ "1-3: Light damage[d6], 3 times", "4: Unit cannot rotate Left", "5: Unit Cannot rotate Right", "6: Harpoon guns destroyed.",]
+
+[units."Warg Rider".damage_tables]
+"Psychic Damage" = [ "5+: unit shaken",]
+"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 member, psycic damage[d6]",]
