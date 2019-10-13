@@ -62,7 +62,10 @@ class Team():
 
         with open('ranged_template.tex', 'r') as fid:
             self.ranged_template = fid.read()
-                  
+
+        with open('model_replacement_template.tex', 'r') as fid:
+            self.model_replacement_template = fid.read()
+            
         latex_unit = ""
         latex_equipment_upgrade = ""
     
@@ -96,7 +99,11 @@ class Team():
             combined_dict['orders'] = latex_order
             combined_dict['damage'] = latex_damage
             combined_dict['weapon'] = latex_weapons
-            latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
+
+            if unit.isReplacement == 'yes':
+                latex_unit = latex_unit + self.model_replacement_template.format(**combined_dict)
+            else:
+                latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
             #print(latex_unit)
 
         for weapon_name in sorted(self.weapons.keys()):
@@ -438,7 +445,7 @@ class Unit():
         self.cost = ''
         self.armor = ''
         self.type_ = ''
-
+        self.isReplacement = ''
 
         self.weapons_input= []
         
