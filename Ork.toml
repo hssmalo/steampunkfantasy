@@ -1,9 +1,9 @@
 name = "Ork"
 
-[weapons."Mechanical Spear"]
+[weapons."Clockwork Spear"]
 pen = ""
 orders_gained = [ "",]
-name = "Mechanical Spear"
+name = "Clockwork Spear"
 race = "Ork"
 assault_dam_set_to = "d8"
 assault_mod = "unmodified"
@@ -275,7 +275,7 @@ name = "Pistol with Spear"
 race = "Ork"
 assault_dam_set_to = "d8"
 assault_mod = "unmodified"
-special = "1 handed weapon. Pistol with a mechanical Spear."
+special = "1 handed weapon. Pistol with a clockwork Spear."
 damage = "d6-1"
 assault_special = "Cunning[1 for 2]"
 assault_ap = ""
@@ -292,10 +292,10 @@ assault_pen_set_to = ""
 orders_lost = [ "",]
 range_ = "3"
 
-[weapons."Mechanical Wings"]
+[weapons."Clockwork Wings"]
 pen = ""
 orders_gained = [ "(slow) A + Chase + Chase", "(fast) Chase + Chase + B",]
-name = "Mechanical Wings"
+name = "Clockwork Wings"
 race = "Ork"
 assault_dam_set_to = "unmodified"
 assault_mod = "+1/-/-/-"
@@ -364,10 +364,10 @@ assault_pen_set_to = ""
 orders_lost = [ "",]
 range_ = "5"
 
-[weapons."Mechanical Shield"]
+[weapons."Clockwork Shield"]
 pen = ""
 orders_gained = [ "",]
-name = "Mechanical Shield"
+name = "Clockwork Shield"
 race = "Ork"
 assault_dam_set_to = "unmodified"
 assault_mod = "unmodified"
@@ -432,10 +432,10 @@ name = "Halftrack"
 weapons_input = [ "Heavy MG",]
 filters = [ "weapons", "team",]
 
-[weapons."Mechanical Power Spear"]
+[weapons."Clockwork Power Spear"]
 pen = ""
 orders_gained = [ "",]
-name = "Mechanical Power Spear"
+name = "Clockwork Power Spear"
 race = "Ork"
 assault_dam_set_to = "d12"
 assault_mod = "unmodified"
