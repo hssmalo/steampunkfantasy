@@ -558,7 +558,7 @@ damage = "d6-1"
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
 
 [units.HammerHead.orders]
-Fire = [ "(stand still) load + -", "(stand still) load unstable + -", "(stand still) aim + -", "(all) fire + -",]
+Fire = [ "(stand still) load + -", "(stand still) load unstable + -", "(all) fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
 
 [units."Elite Ork Infantry".damage_tables]
