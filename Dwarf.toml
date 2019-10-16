@@ -76,7 +76,7 @@ assault_deflection_die_set_to = ""
 ap = "4"
 damage = "+1"
 assault_special = ""
-special = "Load unstable: gains +1 AP, if it hits the target, it in addition gets a 3AP area(1hex, 5+) effect. But if loading an unstable round, it must be fired in next round. May fire at an empty hex"
+special = ""
 range_ = "5"
 cost = ""
 pen = ""
@@ -106,7 +106,7 @@ cost = ""
 pen = ""
 assault_deflection_mod = ""
 assault_dam_set_to = ""
-angle = "-/*/*/-"
+angle = "-/x1/x1/-"
 orders_gained = [ "",]
 orders_lost = [ "",]
 name = "Broadside Guns"
@@ -303,7 +303,7 @@ assault_ap = ""
 template = "a"
 
 [units.Zeppelin]
-unit_special = "Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Fire while shaken: if shaken, unit may still fire normaly, but it gets -1 to hit. \\\\ Fire 4 enhanched musket in each direction per fire order.\\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
+unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Fire while shaken: if shaken, Zepelin may fire all weapon system but at a -1 to hit. However, it may not load or aim\\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
 assault_die = "4+"
 size = "Huge, +1 to be hit"
 assault_pen = "-2"
@@ -315,7 +315,7 @@ assault_deflection_die = "4+/4+/4+/4+"
 cost = "12ip, 6xp"
 assault_damage = "d6-2"
 assault_deflection = "3/3/3/3"
-weapons_input = [ "Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
+weapons_input = [ "Array of Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
 assault = "6/6/6/6"
 assault_ap = ""
 race = "Dwarf"
@@ -410,6 +410,31 @@ race = "Dwarf"
 assault_ap = ""
 template = "r"
 
+
+[weapons."Array of Enhanced Heavy Musket"]
+assault_pen_set_to = ""
+assault_deflection_die_set_to = ""
+ap = ""
+damage = "-1"
+assault_special = ""
+special = ""
+range_ = "6"
+cost = ""
+pen = "-1"
+assault_deflection_mod = ""
+assault_dam_set_to = ""
+angle = "x4/x2/x2/-"
+orders_gained = [ "",]
+orders_lost = [ "",]
+name = "Array of Enhanced Heavy Musket"
+assault_mod = ""
+filters = [ "team",]
+type_ = "2 handed infantry weapon"
+requiered_to_buy = "Infantry, SteamPowerArmor"
+race = "Dwarf"
+assault_ap = ""
+template = "r"
+
 [weapons."Big Blaster"]
 assault_pen_set_to = ""
 assault_deflection_die_set_to = ""
@@ -464,7 +489,7 @@ name = "Dwarf AT-gun"
 filters = [ "weapons", "team",]
 assault_special = ""
 assault_deflection_die = ""
-cost = "5cp, 3xp"
+cost = "4cp, 2xp"
 assault_damage = "d6 -2"
 assault_deflection = ""
 weapons_input = [ "BIG AT-gun",]
@@ -658,8 +683,8 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 "Regular Damage" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psychic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
 
 [units.Zeppelin.damage_tables]
-"Regular Damage" = [ "1-6: roll on lightly damage table", "7-12: +1 to future damage, roll on lightly damage table", "13: Zeppelin Killed.",]
-"Lightly damage" = [ "1-4: shaken", "5-6: +1 on future damage",]
+"Regular Damage" = [ "1-6: roll on lightly damage table", "7-12: +1 to future damage, roll on light damage table", "13: Zeppelin Killed.",]
+"Light damage" = [ "1-4: shaken", "5-6: +1 on future damage",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1: -1 to-hit, +1 to-be-htt", "2: Cannot Rotate R", "3: Cannot Rotate L", "4: x3 Lightly Damage", "5: Cannot fire weapons to the left", "6: Cannot fire weapons to the right",]
