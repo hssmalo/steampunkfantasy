@@ -359,7 +359,6 @@ class Weapon():
         self.angle = ''
         self.special = ''
         self.damage = ''
-        self.pen    = ''
         self.ap = ''
         self.assault_mod = ''
         self.assault_deflection_mod = ''
@@ -458,7 +457,6 @@ class Unit():
         self.assault_deflection_die = ''
         self.assault_damage = ''
         self.assault_ap = ''
-        self.assault_pen = ''
         self.assault_deflection = ''
         self.assault_special = ''
  
