@@ -85,6 +85,11 @@ def pick_units(team, game="small", seed=42):
             del unit_costs[name]
             continue
 
+        if name.startswith("Elite "):
+            # Support for elite units not yet implemented, ignore them
+            del unit_costs[name]
+            continue
+
         # Add as many units as possible
         while cost <= funds:
             units.append(name)
