@@ -8,9 +8,9 @@ import re
 from data import Team
 
 ARMIES = dict(
-    small="12ip 12mp 12cp 12xp",
-    standard="12ip 24mp 12cp 12xp",
-    advanced="12ip 24mp 12cp 12xp 12command",
+    small="24ip 24mp 24cp 24xp",
+    standard="24ip 24mp 24cp 24xp",
+    advanced="24ip 48mp 24cp 24xp 24command",
 )
 
 
