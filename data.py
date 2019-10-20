@@ -364,7 +364,7 @@ class Weapon():
         self.assault_deflection_mod = ''
         self.assault_deflection_die_set_to = ''
         self.assault_dam_set_to = ''
-        self.assault_pen_set_to = ''
+        #self.assault_pen_set_to = ''
         self.assault_special = ''
         self.assault_ap = ''
         self.orders_gained = []
