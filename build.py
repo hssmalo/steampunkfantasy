@@ -1,5 +1,6 @@
 from collections import Counter
 from dataclasses import dataclass
+import pathlib
 import random
 import re
 
@@ -113,7 +114,13 @@ def print_units(team, units):
 # Ask for input, team name should correspond to a TOML file
 team_name = input("Choose team: ")
 team = Team(team_name)
-team.from_toml()
+try:
+    team.from_toml()
+except FileNotFoundError:
+    team_files = pathlib.Path.cwd().glob("[A-Z]*.toml")
+    teams = sorted(t.stem for t in team_files)
+    print(f"Unknown team {team_name!r}. Choose one of {', '.join(teams)}")
+    raise SystemExit()
 
 # Team numbers can be a list of numbers, pick a random team if none is given
 team_numbers = input("Choose team numbers: ")
