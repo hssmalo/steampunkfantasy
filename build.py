@@ -1,5 +1,6 @@
 from collections import Counter
 from dataclasses import dataclass
+import pathlib
 import random
 import re
 
@@ -84,6 +85,11 @@ def pick_units(team, game="small", seed=42):
             del unit_costs[name]
             continue
 
+        if name.startswith("Elite "):
+            # Support for elite units not yet implemented, ignore them
+            del unit_costs[name]
+            continue
+
         # Add as many units as possible
         while cost <= funds:
             units.append(name)
@@ -113,13 +119,21 @@ def print_units(team, units):
 # Ask for input, team name should correspond to a TOML file
 team_name = input("Choose team: ")
 team = Team(team_name)
-team.from_toml()
+try:
+    team.from_toml()
+except FileNotFoundError:
+    team_files = pathlib.Path.cwd().glob("[A-Z]*.toml")
+    teams = sorted(t.stem for t in team_files)
+    print(f"Unknown team {team_name!r}. Choose one of {', '.join(teams)}")
+    raise SystemExit()
 
-# Team numbers can be a list of numbers
+# Team numbers can be a list of numbers, pick a random team if none is given
 team_numbers = input("Choose team numbers: ")
-team_numbers = (
-    [int(n) for n in re.split(r"[\s,]+", team_numbers)] if team_numbers else [42]
-)
+if team_numbers:
+    team_numbers = [int(n) for n in re.split(r"[\s,]+", team_numbers)]
+else:
+    team_numbers = [random.randint(0, 1_000_000)]
+    print(f"Using team number {team_numbers[0]}")
 
 # Choose armies and print them out
 for team_number in team_numbers:
