@@ -74,7 +74,7 @@ template = "r"
 assault_pen_set_to = ""
 assault_deflection_die_set_to = ""
 ap = "4"
-damage = "+1"
+damage = "d6+1 (+3 if penetrating all armor)"
 assault_special = ""
 special = ""
 range_ = "5"
@@ -684,7 +684,7 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 
 [units.Zeppelin.damage_tables]
 "Regular Damage" = [ "1-6: roll on lightly damage table", "7-12: +1 to future damage, roll on light damage table", "13: Zeppelin Killed.",]
-"Light damage" = [ "1-2: Array of enhached Musket is shaken", "3: Zeppelin Gun is Shaken", "4 Fear Ray is Shaken", "5-6: +1 on future damage",]
+"Light damage" = [ "1: Array of enhached Musket is shaken", "2: Zeppelin Gun is Shaken", "3 Fear Ray is Shaken", "4-5: +1 on future damage", "6: Enigne on Fire (shaken movement and on fire)",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1: -1 to-hit, +1 to-be-htt", "2: Cannot Rotate R", "3: Cannot Rotate L", "4: x3 Lightly Damage", "5: Cannot fire weapons to the left", "6: Cannot fire weapons to the right",]
