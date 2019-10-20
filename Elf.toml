@@ -1,7 +1,7 @@
 name = "Elf"
 
 [weapons.Grenade]
-type_ = "Special Cavalery misc weapon. "
+type_ = "Cavalry, Independent Equipment"
 range_ = "1"
 cost = ""
 damage = "d6"
@@ -25,7 +25,7 @@ pen = ""
 orders_gained = [ "",]
 
 [weapons."Twin Guns"]
-type_ = "Special cavalry weapon"
+type_ = "Cavalry, Mounted weapon"
 range_ = "3"
 cost = ""
 damage = "d6"
@@ -70,7 +70,7 @@ assault = "4/3/3/2"
 assault_deflection_die = "5+"
 
 [weapons.AT-rifle]
-type_ = "Infantry 2-handed weapon"
+type_ = "Infantry, 2handed weapon"
 range_ = "5"
 cost = "12cp"
 damage = "d6"
@@ -224,7 +224,7 @@ assault = "4/4/2/2"
 assault_deflection_die = "5+"
 
 [weapons."Small grenade"]
-type_ = "Infantry misc weapon."
+type_ = "Infantry, Independent equipment"
 range_ = "1"
 cost = "2cp"
 damage = "d6"
@@ -312,7 +312,7 @@ assault = "3/2/2/1"
 assault_deflection_die = "5+"
 
 [weapons.SMG]
-type_ = "2 handed infantry weapon"
+type_ = "Infantry, 1handed weapon"
 range_ = "3"
 cost = "2cp"
 damage = "d6-3"
@@ -336,7 +336,7 @@ pen = ""
 orders_gained = [ "(stand-still, slow, fast) fire(smg) + fire(smg)", "(stand-still, slow) load(5) + -",]
 
 [weapons.Rifle]
-type_ = "2 handed infantry weapon"
+type_ = "Infantry, 2handed weapon"
 range_ = "5"
 cost = ""
 damage = "d6-2"
@@ -360,7 +360,7 @@ pen = ""
 orders_gained = [ "",]
 
 [weapons.MiniGun]
-type_ = "Special Cavalry weapon"
+type_ = "Cavalry, Mounted weapon"
 range_ = "2"
 cost = ""
 damage = "d6-1"
@@ -384,7 +384,7 @@ pen = ""
 orders_gained = [ "",]
 
 [weapons."Elk Bazooka"]
-type_ = "2 handed Special cavalery weapon."
+type_ = "Cavalery, 2handed weapon."
 range_ = "3"
 cost = "8cp"
 damage = "d6"
@@ -408,7 +408,7 @@ pen = ""
 orders_gained = [ "+ - fire", "+ - aim", "+ - load",]
 
 [weapons."Deflection Field"]
-type_ = "Mechanical upgrade"
+type_ = "Vehicle, Independent equipment"
 range_ = ""
 cost = "8cp"
 damage = ""
@@ -453,7 +453,7 @@ assault = "6/6/6/4"
 assault_deflection_die = "3+"
 
 [weapons."Gattle Gun"]
-type_ = "Vehicle mounted gun."
+type_ = "Vehicl gun."
 range_ = "3"
 cost = ""
 damage = "d6"
@@ -477,7 +477,7 @@ pen = ""
 orders_gained = [ "",]
 
 [weapons."Sniper rifle"]
-type_ = "2 handed infantry weapon"
+type_ = "Infantry, 2handed weapon"
 range_ = "8"
 cost = "8cp"
 damage = "d6-1"
@@ -522,7 +522,7 @@ assault = "1/1/1/1"
 assault_deflection_die = ""
 
 [weapons."Calibrated Gun"]
-type_ = "Tank gun"
+type_ = "Vehicle gun"
 range_ = "6"
 cost = ""
 damage = "d6 (+3 to damage when aiming), (+3 to damage if pentrating all armor)"
