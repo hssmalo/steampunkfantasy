@@ -576,5 +576,5 @@ class Unit():
         self.team.append_unit(self)            
                 
                 
-        
-import IPython; IPython.embed()
+if __name__ == "__main__":        
+    import IPython; IPython.embed()
