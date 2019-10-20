@@ -446,7 +446,8 @@ class Unit():
         self.armor = ''
         self.type_ = ''
         self.isReplacement = ''
-
+        self.replaces = ''
+        
         self.weapons_input= []
         
         self.unit_special = ''
