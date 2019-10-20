@@ -115,11 +115,13 @@ team_name = input("Choose team: ")
 team = Team(team_name)
 team.from_toml()
 
-# Team numbers can be a list of numbers
+# Team numbers can be a list of numbers, pick a random team if none is given
 team_numbers = input("Choose team numbers: ")
-team_numbers = (
-    [int(n) for n in re.split(r"[\s,]+", team_numbers)] if team_numbers else [42]
-)
+if team_numbers:
+    team_numbers = [int(n) for n in re.split(r"[\s,]+", team_numbers)]
+else:
+    team_numbers = [random.randint(0, 1_000_000)]
+    print(f"Using team number {team_numbers[0]}")
 
 # Choose armies and print them out
 for team_number in team_numbers:
