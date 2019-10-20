@@ -1,639 +1,609 @@
 name = "Dwarf"
 
-[abilities]
-
-[units."Dwarf Infantry"]
-unit_special = "Unit base abilities: Poison Resistance 2 \\\\ Fire Resistance 1"
-assault_die = "4+"
-size = "medium"
-assault_pen = ""
-members = "4"
-name = "Dwarf Infantry"
-filters = [ "weapons", "team",]
-assault_special = "Cunning Assault[1 for 2]"
-assault_deflection_die = ""
-cost = "4mp"
-assault_damage = "d6 -2"
-assault_deflection = ""
-weapons_input = [ "Musket",]
-assault = "1/1/1/1"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Bio, Infantry, Walks"
-armor = ""
-
 [weapons."Flaming Whip"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "1"
-damage = ""
-assault_special = ""
-special = "Fire"
+race = "Dwarf"
+name = "Flaming Whip"
+template = ""
 range_ = "1"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/-/-"
+special = "Fire"
+damage = ""
+ap = "1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Flaming Whip"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "specail unit weapon"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
+filters = [ "team",]
 
 [weapons."Super Blaster"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "4"
-damage = "d6+2"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Super Blaster"
+template = "r"
 range_ = "3"
-cost = "8cp"
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = ""
+damage = "d6+2"
+ap = "4"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Super Blaster"
-assault_mod = ""
-filters = [ "team",]
+cost = "8cp"
+required_to_buy = ""
 type_ = "SteamPowerArmor, 2handed weapon."
-requiered_to_buy = "Model: Elite SteamPowerArmor"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
+filters = [ "team",]
 
 [weapons."Zeppelin gun"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "4"
-damage = "d6+1 (+3 if penetrating all armor)"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Zeppelin gun"
+template = ""
 range_ = "5"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = ""
+damage = "d6+1 (+3 if penetrating all armor)"
+ap = "4"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Zeppelin gun"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "vehicle gun"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
+filters = [ "team",]
 
 [weapons."Broadside Guns"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "2"
-damage = ""
-assault_special = ""
-special = "May fire at one target to the right and one target to the left. Roll to-hit separately for different targets"
+race = "Dwarf"
+name = "Broadside Guns"
+template = ""
 range_ = "2"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "-/x1/x1/-"
+special = "May fire at one target to the right and one target to the left. Roll to-hit separately for different targets"
+damage = ""
+ap = "2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Broadside Guns"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "Tank Weapon"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
+filters = [ "team",]
 
 [weapons.AxeThrower-Machine]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-1"
-damage = "0"
-assault_special = ""
-special = "Area(1hex, 5+)"
+race = "Dwarf"
+name = "AxeThrower-Machine"
+template = ""
 range_ = "3"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/-/-/-"
+special = "Area(1hex, 5+)"
+damage = "0"
+ap = "-1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "AxeThrower-Machine"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "Special Vehicle Weapon"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
-
-[units.GunBlasterWagon]
-unit_special = "Fire resistance 2"
-assault_die = "4+"
-size = "Large"
-assault_pen = ""
-members = "1"
-name = "GunBlasterWagon"
-filters = [ "weapons", "team",]
-assault_special = "Fear[6]"
-assault_deflection_die = "2/-/-/-"
-cost = "6ip"
-assault_damage = "d6 -2"
-assault_deflection = ""
-weapons_input = [ "Broadside Guns",]
-assault = "2/2/2/2"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Mechanical, Bio Crew, Vehicle, Track"
-armor = "3/5/5/3"
-
-[units."Elite SteamPowerArmor"]
-unit_special = "This unit gains good shot +1 to hit \\\\ Unit base gains 1 psychic resistance."
-assault_die = "4+"
-size = "medium"
-assault_pen = ""
-members = ""
-name = "Elite SteamPowerArmor"
-filters = [ "weapons", "team",]
-assault_special = ""
-assault_deflection_die = ""
-cost = "8xp"
-assault_damage = "d6 -2"
-assault_deflection = "2/2/1/1"
-weapons_input = [ "Heavy Musket",]
-assault = "3/3/3/3"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Bio, SteamPowerArmor Infantry, Elite"
-armor = "1/1/1/1"
-isReplacement = 'yes'
-replaces = 'model: SteamPowerArmor'
+filters = [ "team",]
 
 [weapons.Musket]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-2"
-damage = "d6-2"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Musket"
+template = ""
 range_ = "3"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = ""
+damage = "d6-2"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Musket"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
+filters = [ "team",]
 
 [weapons.shotgun]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-2"
-damage = "-2"
-assault_special = ""
-special = "Choose one hex. Area(1hex, 5+) at point blank, Area(1hex, 6+) at range=2, Area(1hex, 8+) at range=3 or 4."
+race = "Dwarf"
+name = "shotgun"
+template = "r"
 range_ = "2"
-cost = "4cp"
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = "Choose one hex. Area(1hex, 5+) at point blank, Area(1hex, 6+) at range=2, Area(1hex, 8+) at range=3 or 4."
+damage = "-2"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "shotgun"
-assault_mod = ""
-filters = [ "team",]
+cost = "4cp"
+required_to_buy = ""
 type_ = "SteamPowerAromor, 2handed weapon."
-requiered_to_buy = "Unit Base: SteamPowerArmor"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
+filters = [ "team",]
 
 [weapons."Heavy SMG"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-2"
-damage = "-2"
-assault_special = ""
-special = "Unlimited Ammo \\\\ fires 3 shots (at same enemy unit base) per fire. \\\\ Threat any aim, load and single fire orders the unit base is given as an fire+fire order for this unit instead."
+race = "Dwarf"
+name = "Heavy SMG"
+template = "r"
 range_ = "3"
-cost = "8cp"
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = "Unlimited Ammo \\\\ fires 3 shots (at same enemy unit base) per fire. \\\\ Threat any aim, load and single fire orders the unit base is given as an fire+fire order for this unit instead."
+damage = "-2"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "fire + fire",]
 orders_lost = [ "",]
-name = "Heavy SMG"
-assault_mod = ""
-filters = [ "team",]
+cost = "8cp"
+required_to_buy = ""
 type_ = "SteamPowerArmor, 2handed weapon"
-requiered_to_buy = "Model: Elite SteamPowerArmor"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
+filters = [ "team",]
 
 [weapons."Musket With Spring Loaded Axe"]
-assault_pen_set_to = "-2"
-assault_deflection_die_set_to = "-"
-ap = "-2"
-damage = "-2"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Musket With Spring Loaded Axe"
+template = "ra"
 range_ = "3"
-cost = "2cp"
-pen = ""
-assault_deflection_mod = "-"
-assault_dam_set_to = "d6-2"
 angle = "*/*/*/*"
+special = ""
+damage = "-2"
+ap = "-2"
+assault_mod = "+1/+1/+1/+1"
+assault_deflection_mod = "-"
+assault_deflection_die_set_to = "-"
+assault_dam_set_to = "d6-2"
+assault_special = ""
+assault_ap = "-2"
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Musket With Spring Loaded Axe"
-assault_mod = "+1/+1/+1/+1"
-filters = [ "team",]
+cost = "2cp"
+required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
-requiered_to_buy = "Unit base: Infantry"
-race = "Dwarf"
-assault_ap = ""
-template = "ra"
+filters = [ "team",]
 
 [weapons."Blast Sticks"]
-assault_pen_set_to = "0"
-assault_deflection_die_set_to = "4+"
-ap = ""
-damage = ""
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Blast Sticks"
+template = "a"
 range_ = ""
-cost = "2cp"
-pen = ""
-assault_deflection_mod = "+1/-/-/-"
-assault_dam_set_to = "d6 +1"
 angle = ""
+special = ""
+damage = ""
+ap = ""
+assault_mod = ""
+assault_deflection_mod = "+1/-/-/-"
+assault_deflection_die_set_to = "4+"
+assault_dam_set_to = "d6 +1"
+assault_special = ""
+assault_ap = "0"
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Blast Sticks"
-assault_mod = ""
-filters = [ "team",]
+cost = "2cp"
+required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
-requiered_to_buy = "Unit Base: Infantry"
-race = "Dwarf"
-assault_ap = ""
-template = "a"
-
-[units.Zeppelin]
-unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
-assault_die = "4+"
-size = "Huge, +1 to be hit"
-assault_pen = ""
-members = "1"
-name = "Zeppelin"
-filters = [ "weapons", "team",]
-assault_special = "May only assault flying creatures, Fear(8)"
-assault_deflection_die = "4+/4+/4+/4+"
-cost = "24ip, 12xp"
-assault_damage = "d6-2"
-assault_deflection = "3/3/3/3"
-weapons_input = [ "Array of Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
-assault = "6/6/6/6"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Zeppelin, Flying"
-armor = "3/3/3/3"
+filters = [ "team",]
 
 [weapons."Fear Ray"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = ""
-damage = ""
-assault_special = ""
-special = "Does Psychic damage instead of normal damage. Ignore armor and roll on psychic damage table."
+race = "Dwarf"
+name = "Fear Ray"
+template = ""
 range_ = "4"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/-/-/-"
+special = "Does Psychic damage instead of normal damage. Ignore armor and roll on psychic damage table."
+damage = ""
+ap = ""
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Fear Ray"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "Vehicle Ray Weapon"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
-
-[units."Tamed Balrog"]
-unit_special = "Poison Resistance :4 \\\\ Fire Resistance 12 \\\\ Terror[8][range=2]"
-assault_die = "2+"
-size = "Huge, +1 to be hit"
-assault_pen = ""
-members = "1"
-name = "Tamed Balrog"
-filters = [ "weapons", "team",]
-assault_special = "Fire"
-assault_deflection_die = ""
-cost = "24xp"
-assault_damage = "d6"
-assault_deflection = ""
-weapons_input = [ "Flaming Whip",]
-assault = "6/4/3/2"
-assault_ap = "-1"
-race = "Dwarf"
-type_ = "Bio, Monster, Walks"
-armor = "3/2/2/1"
-
-[units."Elite Dwarf Infantry"]
-unit_special = "Good shot: +1 to hit. \\\\ Unit base gains 2 Psychic resistance \\\\"
-assault_die = "4+"
-size = "medium"
-assault_pen = ""
-members = ""
-name = "Elite Dwarf Infantry"
-filters = [ "weapons", "team",]
-assault_special = "Cunning Assault[1 for 2]"
-assault_deflection_die = "4+/-/-/-"
-cost = "1xp"
-assault_damage = "d6-2"
-assault_deflection = "1/-/-/-"
-weapons_input = [ "Musket",]
-assault = "2/2/1/1/"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Bio, Infantry, Elite, Walks"
-armor = ""
-isReplacement = "yes"
-replaces = "Model: Infantry"
+filters = [ "team",]
 
 [weapons."Enhanced Heavy Musket"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-1"
-damage = "-1"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Enhanced Heavy Musket"
+template = "r"
 range_ = "6"
-cost = "6cp"
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/-/-/-"
+special = ""
+damage = "-1"
+ap = "-1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Enhanced Heavy Musket"
-assault_mod = ""
-filters = [ "team",]
+cost = "6cp"
+required_to_buy = ""
 type_ = "Infantry or SteamPowerArmor, 2handed weapon"
-requiered_to_buy = "Unit Base: Infantry orSteamPowerArmor"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
-
+filters = [ "team",]
 
 [weapons."Array of Enhanced Heavy Musket"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-1"
-damage = "-1"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Array of Enhanced Heavy Musket"
+template = "r"
 range_ = "6"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "x4/x2/x2/-"
+special = ""
+damage = "-1"
+ap = "-1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Array of Enhanced Heavy Musket"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
-requiered_to_buy = "Infantry, SteamPowerArmor"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
+filters = [ "team",]
 
 [weapons."Big Blaster"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "3"
-damage = "+1"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Big Blaster"
+template = "r"
 range_ = "2"
-cost = "8cp"
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = ""
+damage = "+1"
+ap = "3"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Big Blaster"
-assault_mod = ""
-filters = [ "team",]
+cost = "8cp"
+required_to_buy = ""
 type_ = "Infantry, Unit Base weapon."
-requiered_to_buy = "Unit Base: Infantry"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
-
-[units."Mini Zeppelin"]
-unit_special = "Floats\\\\ Poison Resistance 2 \\\\ "
-assault_die = "4+"
-size = "medium"
-assault_pen = ""
-members = "2"
-name = "Mini Zeppelin"
-filters = [ "weapons", "team",]
-assault_special = ""
-assault_deflection_die = "4+"
-cost = "8cp, 6xp"
-assault_damage = "d6 -2 "
-assault_deflection = "4/3/1/1"
-weapons_input = [ "AxeThrower-Machine",]
-assault = "3/2/1/1"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Bio, Floating, Vehicle, Floats"
-armor = "1/-/-/-"
-
-[units."Dwarf AT-gun"]
-unit_special = "Poison Resistance 2 \\\\ Fire resistance 1"
-assault_die = "6+"
-size = "Large"
-assault_pen = ""
-members = "1AT-gun, 4 crew"
-name = "Dwarf AT-gun"
-filters = [ "weapons", "team",]
-assault_special = ""
-assault_deflection_die = ""
-cost = "8cp, 4xp"
-assault_damage = "d6 -2"
-assault_deflection = ""
-weapons_input = [ "BIG AT-gun",]
-assault = "1/1/1/1"
-assault_ap = ""
-race = "Dwarf"
-type_ = "Bio, Vehicle, Dragged"
-armor = "2/-/-/-"
-
-[units.SteamPowerArmor]
-unit_special = "Poison resistance 4, Fire reistance 2\\\\ Take Cover[stand-still][-2]"
-assault_die = "4+"
-size = "medium"
-assault_pen = ""
-members = "4"
-name = "SteamPowerArmor"
-filters = [ "weapons", "team",]
-assault_special = "Cunning Assault[1 for 2]"
-assault_deflection_die = ""
-cost = "4mp, 2ip, 4cp"
-assault_damage = "d6 -2"
-assault_deflection = ""
-weapons_input = [ "Heavy Musket",]
-assault = "3/2/2/1"
-assault_ap = "-2"
-race = "Dwarf"
-type_ = "Bio, SteamPowerArmor Infantry"
-armor = "1/1/1/1"
-
-[units.Dw42]
-unit_special = "Fire Resistance 2"
-assault_die = "4+"
-size = "Large"
-assault_pen = ""
-members = "1"
-name = "Dw42"
-filters = [ "weapons", "team",]
-assault_special = "Fear[6]\\\\ Stuborn: when loosing an assault you may opt to roll for assault again. Apply damage, modify the assault stats if necessary, redo the assault."
-assault_deflection_die = "4+"
-cost = "12ip"
-assault_damage = "d6 - 1"
-assault_deflection = "2/-/-/-"
-weapons_input = [ "Tank Gun",]
-assault = "4/3/3/2/"
-assault_ap = "-1"
-race = "Dwarf"
-type_ = "Mechanical, Bio Crew, Vehicle, Tracked"
-armor = "7/4/4/3"
-
-[units."Assault Bots"]
-unit_special = "Immune to all shaken effects."
-assault_die = "4+"
-size = "medium"
-assault_pen = ""
-members = "4"
-name = "Assault Bots"
-filters = [ "weapons", "team",]
-assault_special = ""
-assault_deflection_die = "4+/-/-/-"
-cost = "6ip, 12xp"
-assault_damage = "d6 + 0"
-assault_deflection = "1/-/-/-"
-weapons_input = [ "",]
-assault = "3/2/2/2"
-assault_ap = "2"
-race = "Dwarf"
-type_ = "Mechanical, Droid, Walks"
-armor = "2/2/2/2"
+filters = [ "team",]
 
 [weapons."Heavy Musket"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "-1"
-damage = "-1"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "Heavy Musket"
+template = "r"
 range_ = "3"
-cost = "2cp"
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/*/*/*"
+special = ""
+damage = "-1"
+ap = "-1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Heavy Musket"
-assault_mod = ""
-filters = [ "team",]
+cost = "2cp"
+required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
-requiered_to_buy = "Unit Base: Infantry"
-race = "Dwarf"
-assault_ap = ""
-template = "r"
+filters = [ "team",]
 
 [weapons."Tank Gun"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "4"
-damage = "d6+1 +3 (if penetrating all armor)"
-assault_special = ""
-special = "Load unstable: gains +1 AP, if it hits the target, it in addition gets a 3AP area(1hex, 5+) effect. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
+race = "Dwarf"
+name = "Tank Gun"
+template = ""
 range_ = "8"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/-/-/-"
+special = "Load unstable: gains +1 AP, if it hits the target, it in addition gets a 3AP area(1hex, 5+) effect. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
+damage = "d6+1 +3 (if penetrating all armor)"
+ap = "4"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "Tank Gun"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = "Tank Weapon"
-requiered_to_buy = ""
-race = "Dwarf"
-assault_ap = ""
-template = ""
+filters = [ "team",]
 
 [weapons."BIG AT-gun"]
-assault_pen_set_to = ""
-assault_deflection_die_set_to = ""
-ap = "5"
-damage = "d6+1 + 3(if penetrating all armor)"
-assault_special = ""
-special = ""
+race = "Dwarf"
+name = "BIG AT-gun"
+template = ""
 range_ = "6"
-cost = ""
-pen = ""
-assault_deflection_mod = ""
-assault_dam_set_to = ""
 angle = "*/-/-/-"
+special = ""
+damage = "d6+1 + 3(if penetrating all armor)"
+ap = "5"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-name = "BIG AT-gun"
-assault_mod = ""
-filters = [ "team",]
+cost = ""
+required_to_buy = ""
 type_ = ""
-requiered_to_buy = ""
+filters = [ "team",]
+
+[units."Dwarf Infantry"]
 race = "Dwarf"
+name = "Dwarf Infantry"
+members = "4"
+size = "medium"
+cost = "4mp"
+armor = ""
+type_ = "Bio, Infantry, Walks"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Musket",]
+unit_special = "Unit base abilities: Poison Resistance 2 \\\\ Fire Resistance 1"
+assault = "1/1/1/1"
+assault_die = "4+"
+assault_deflection_die = ""
+assault_damage = "d6 -2"
+assault_ap = "-2"
+assault_deflection = ""
+assault_special = "Cunning Assault[1 for 2]"
+filters = [ "weapons", "team",]
+
+[units.GunBlasterWagon]
+race = "Dwarf"
+name = "GunBlasterWagon"
+members = "1"
+size = "Large"
+cost = "6ip"
+armor = "3/5/5/3"
+type_ = "Mechanical, Bio Crew, Vehicle, Track"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Broadside Guns",]
+unit_special = "Fire resistance 2"
+assault = "2/2/2/2"
+assault_die = "4+"
+assault_deflection_die = "2/-/-/-"
+assault_damage = "d6 -2"
+assault_ap = "-2"
+assault_deflection = ""
+assault_special = "Fear[6]"
+filters = [ "weapons", "team",]
+
+[units."Elite SteamPowerArmor"]
+race = "Dwarf"
+name = "Elite SteamPowerArmor"
+members = ""
+size = "medium"
+cost = "8xp"
+armor = "1/1/1/1"
+type_ = "Bio, SteamPowerArmor Infantry, Elite"
+isReplacement = "yes"
+replaces = "model: SteamPowerArmor"
+weapons_input = [ "Heavy Musket",]
+unit_special = "This unit gains good shot +1 to hit \\\\ Unit base gains 1 psychic resistance."
+assault = "3/3/3/3"
+assault_die = "4+"
+assault_deflection_die = ""
+assault_damage = "d6 -2"
+assault_ap = "-2"
+assault_deflection = "2/2/1/1"
+assault_special = ""
+filters = [ "weapons", "team",]
+
+[units.Zeppelin]
+race = "Dwarf"
+name = "Zeppelin"
+members = "1"
+size = "Huge, +1 to be hit"
+cost = "24ip, 12xp"
+armor = "3/3/3/3"
+type_ = "Zeppelin, Flying"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Array of Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
+unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
+assault = "6/6/6/6"
+assault_die = "4+"
+assault_deflection_die = "4+/4+/4+/4+"
+assault_damage = "d6-2"
+assault_ap = "-2"
+assault_deflection = "3/3/3/3"
+assault_special = "May only assault flying creatures, Fear(8)"
+filters = [ "weapons", "team",]
+
+[units."Tamed Balrog"]
+race = "Dwarf"
+name = "Tamed Balrog"
+members = "1"
+size = "Huge, +1 to be hit"
+cost = "24xp"
+armor = "3/2/2/1"
+type_ = "Bio, Monster, Walks"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Flaming Whip",]
+unit_special = "Poison Resistance :4 \\\\ Fire Resistance 12 \\\\ Terror[8][range=2]"
+assault = "6/4/3/2"
+assault_die = "2+"
+assault_deflection_die = ""
+assault_damage = "d6"
+assault_ap = "-1"
+assault_deflection = ""
+assault_special = "Fire"
+filters = [ "weapons", "team",]
+
+[units."Elite Dwarf Infantry"]
+race = "Dwarf"
+name = "Elite Dwarf Infantry"
+members = ""
+size = "medium"
+cost = "1xp"
+armor = ""
+type_ = "Bio, Infantry, Elite, Walks"
+isReplacement = "yes"
+replaces = "Model: Infantry"
+weapons_input = [ "Musket",]
+unit_special = "Good shot: +1 to hit. \\\\ Unit base gains 2 Psychic resistance \\\\"
+assault = "2/2/1/1/"
+assault_die = "4+"
+assault_deflection_die = "4+/-/-/-"
+assault_damage = "d6-2"
+assault_ap = "-2"
+assault_deflection = "1/-/-/-"
+assault_special = "Cunning Assault[1 for 2]"
+filters = [ "weapons", "team",]
+
+[units."Mini Zeppelin"]
+race = "Dwarf"
+name = "Mini Zeppelin"
+members = "2"
+size = "medium"
+cost = "8cp, 6xp"
+armor = "1/-/-/-"
+type_ = "Bio, Floating, Vehicle, Floats"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "AxeThrower-Machine",]
+unit_special = "Floats\\\\ Poison Resistance 2 \\\\ "
+assault = "3/2/1/1"
+assault_die = "4+"
+assault_deflection_die = "4+"
+assault_damage = "d6 -2 "
+assault_ap = "-2"
+assault_deflection = "4/3/1/1"
+assault_special = ""
+filters = [ "weapons", "team",]
+
+[units."Dwarf AT-gun"]
+race = "Dwarf"
+name = "Dwarf AT-gun"
+members = "1AT-gun, 4 crew"
+size = "Large"
+cost = "8cp, 4xp"
+armor = "2/-/-/-"
+type_ = "Bio, Vehicle, Dragged"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "BIG AT-gun",]
+unit_special = "Poison Resistance 2 \\\\ Fire resistance 1"
+assault = "1/1/1/1"
+assault_die = "6+"
+assault_deflection_die = ""
+assault_damage = "d6 -2"
 assault_ap = ""
-template = ""
+assault_deflection = ""
+assault_special = ""
+filters = [ "weapons", "team",]
+
+[units.SteamPowerArmor]
+race = "Dwarf"
+name = "SteamPowerArmor"
+members = "4"
+size = "medium"
+cost = "4mp, 2ip, 4cp"
+armor = "1/1/1/1"
+type_ = "Bio, SteamPowerArmor Infantry"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Heavy Musket",]
+unit_special = "Poison resistance 4, Fire reistance 2\\\\ Take Cover[stand-still][-2]"
+assault = "3/2/2/1"
+assault_die = "4+"
+assault_deflection_die = ""
+assault_damage = "d6 -2"
+assault_ap = "-2"
+assault_deflection = ""
+assault_special = "Cunning Assault[1 for 2]"
+filters = [ "weapons", "team",]
+
+[units.Dw42]
+race = "Dwarf"
+name = "Dw42"
+members = "1"
+size = "Large"
+cost = "12ip"
+armor = "7/4/4/3"
+type_ = "Mechanical, Bio Crew, Vehicle, Tracked"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Tank Gun",]
+unit_special = "Fire Resistance 2"
+assault = "4/3/3/2/"
+assault_die = "4+"
+assault_deflection_die = "4+"
+assault_damage = "d6 - 1"
+assault_ap = "-1"
+assault_deflection = "2/-/-/-"
+assault_special = "Fear[6]\\\\ Stuborn: when loosing an assault you may opt to roll for assault again. Apply damage, modify the assault stats if necessary, redo the assault."
+filters = [ "weapons", "team",]
+
+[units."Assault Bots"]
+race = "Dwarf"
+name = "Assault Bots"
+members = "4"
+size = "medium"
+cost = "6ip, 12xp"
+armor = "2/2/2/2"
+type_ = "Mechanical, Droid, Walks"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "",]
+unit_special = "Immune to all shaken effects."
+assault = "3/2/2/2"
+assault_die = "4+"
+assault_deflection_die = "4+/-/-/-"
+assault_damage = "d6 + 0"
+assault_ap = "2"
+assault_deflection = "1/-/-/-"
+assault_special = ""
+filters = [ "weapons", "team",]
 
 [units."Dwarf Infantry".orders]
 Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
@@ -643,52 +613,9 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 "Psychic Damage" = [ "4+: shaken",]
 "Regular Damage" = [ "1-5: kill 1 member", "6-9: kill 1 member, roll on psychic damage[d6]", "10: kill all 4 members",]
 
-[units.SteamPowerArmor.orders]
-Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + A + F", "(default stand still) - + A + flee", "(slow) - + - + chase",]
-
-[units.Dw42.damage_tables]
-"Regular Damage" = [ "1-4: lightly damage", "5-8: Critical Damage, +1 on future damage rolls", "9+: Destroyed",]
-"Lightly damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage rolls",]
-"Critical Damage" = [ "1-2: 3x lightly damage", "3: +1 on future damage (+2 in total)", "4: Only Stand-Still option available and cannot reverse", "5: -1 to-hit, +1 to be hit", "6: Fire",]
-
-[units."Elite SteamPowerArmor".damage_tables]
-"" = [ "",]
-
-[units."Tamed Balrog".damage_tables]
-"Regular Damage" = [ "1-8: +1 on future damage", "9-10: +2 on future damage, Assault -1/-1/-1/-1 looses terror", "11-12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
-
-[units."Tamed Balrog".orders]
-Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
-Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) - + - + flee",]
-
-[units."Elite Dwarf Infantry".damage_tables]
-"" = [ "",]
-
-[units."Dwarf AT-gun".orders]
-Fire = [ "(stand-still) Fire + -", "(stand-still) Aim + -", "(stand-still) Load + -",]
-Movement = [ "(slow) 360$^0$ + F + B[Rest]", "(Rest) - + - + A[stand-still]", "(stand-still) - + - + -", "(stand-still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default stand-still) - + - + -",]
-
-[units."Assault Bots".damage_tables]
-"Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 memeber",]
-
-[units."Elite Dwarf Infantry".orders]
-
 [units.GunBlasterWagon.orders]
 Fire = [ "(stand-still) load + -", "fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
-
-[units."Mini Zeppelin".orders]
-Fire = [ "Fire + -", "Load(2) + -",]
-Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$ + 360$^0$ + 360$^0$", "(Default slow) 360$^0$ + flee + 360$^0$",]
-
-[units."Dwarf AT-gun".damage_tables]
-"Psychic damage" = [ "4+: unit base shaken",]
-"Regular Damage" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psychic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
-
-[units.Zeppelin.damage_tables]
-"Regular Damage" = [ "1-6: roll on lightly damage table", "7-12: +1 to future damage, roll on light damage table", "13: Zeppelin Killed.",]
-"Light damage" = [ "1: Array of enhached Musket is shaken", "2: Zeppelin Gun is Shaken", "3 Fear Ray is Shaken", "4-5: +1 on future damage", "6: Enigne on Fire (shaken movement and on fire)",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1: -1 to-hit, +1 to-be-htt", "2: Cannot Rotate R", "3: Cannot Rotate L", "4: x3 Lightly Damage", "5: Cannot fire weapons to the left", "6: Cannot fire weapons to the right",]
@@ -697,13 +624,8 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 
 [units."Elite SteamPowerArmor".orders]
 
-[units.Dw42.orders]
-Fire = [ "(stand-still) load + -", "fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - " ]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
-
-[units."Mini Zeppelin".damage_tables]
-"Psychic Damage" = [ "6+ unit shaken",]
-"Regular Damage" = [ "2-3: unit base shaken", "4: kill 1 member",]
+[units."Elite SteamPowerArmor".damage_tables]
+"" = [ "",]
 
 [units.Zeppelin.orders]
 "Fire Enhanced Muskets" = [ "Fire(all) + -", "Load(all) + -", "aim(all) + -",]
@@ -711,9 +633,57 @@ Movement = [ "(flying, slow) F + L + -", "(flying, slow) F + R + -", "(flying, s
 "Main Zeppelin Gun" = [ "Fire + -", "Load + -", "aim + -",]
 "Fire Fear Ray" = [ "Fire + -",]
 
+[units.Zeppelin.damage_tables]
+"Regular Damage" = [ "1-6: roll on lightly damage table", "7-12: +1 to future damage, roll on light damage table", "13: Zeppelin Killed.",]
+"Light damage" = [ "1: Array of enhached Musket is shaken", "2: Zeppelin Gun is Shaken", "3 Fear Ray is Shaken", "4-5: +1 on future damage", "6: Enigne on Fire (shaken movement and on fire)",]
+
+[units."Tamed Balrog".orders]
+Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
+Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) - + - + flee",]
+
+[units."Tamed Balrog".damage_tables]
+"Regular Damage" = [ "1-8: +1 on future damage", "9-10: +2 on future damage, Assault -1/-1/-1/-1 looses terror", "11-12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
+
+[units."Elite Dwarf Infantry".orders]
+
+[units."Elite Dwarf Infantry".damage_tables]
+"" = [ "",]
+
+[units."Mini Zeppelin".orders]
+Fire = [ "Fire + -", "Load(2) + -",]
+Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$ + 360$^0$ + 360$^0$", "(Default slow) 360$^0$ + flee + 360$^0$",]
+
+[units."Mini Zeppelin".damage_tables]
+"Psychic Damage" = [ "6+ unit shaken",]
+"Regular Damage" = [ "2-3: unit base shaken", "4: kill 1 member",]
+
+[units."Dwarf AT-gun".orders]
+Fire = [ "(stand-still) Fire + -", "(stand-still) Aim + -", "(stand-still) Load + -",]
+Movement = [ "(slow) 360$^0$ + F + B[Rest]", "(Rest) - + - + A[stand-still]", "(stand-still) - + - + -", "(stand-still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default stand-still) - + - + -",]
+
+[units."Dwarf AT-gun".damage_tables]
+"Psychic damage" = [ "4+: unit base shaken",]
+"Regular Damage" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psychic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
+
+[units.SteamPowerArmor.orders]
+Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + A + F", "(default stand still) - + A + flee", "(slow) - + - + chase",]
+
 [units.SteamPowerArmor.damage_tables]
 "Psychic damage" = [ "5+: unit base shaken",]
 "Regular Damage" = [ "1-5: 1 member killed", "6-9: 1 member killed, roll on psychic damage[d6]", "10+: all 4 members killed",]
 
+[units.Dw42.orders]
+Fire = [ "(stand-still) load + -", "fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - ",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+
+[units.Dw42.damage_tables]
+"Regular Damage" = [ "1-4: lightly damage", "5-8: Critical Damage, +1 on future damage rolls", "9+: Destroyed",]
+"Lightly damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage rolls",]
+"Critical Damage" = [ "1-2: 3x lightly damage", "3: +1 on future damage (+2 in total)", "4: Only Stand-Still option available and cannot reverse", "5: -1 to-hit, +1 to be hit", "6: Fire",]
+
 [units."Assault Bots".orders]
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + - + -",]
+
+[units."Assault Bots".damage_tables]
+"Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 memeber",]
