@@ -367,7 +367,7 @@ assault_deflection_die = "5+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "1/-/-/-"
-assault_special = "Cunning Assault[1 for 2]"
+assault_special = "Cunning Assault[1 for 2], Pre-Assault retreat[5+]"
 filters = [ "weapons", "team",]
 
 [units."Elite Elf Scout"]
@@ -377,11 +377,11 @@ members = "1"
 size = "medium"
 cost = "2mp, 4xp"
 armor = ""
-type_ = "Bio, Infantri, Elite, Walks"
+type_ = "Bio, Infantri, Elite, Walks, Scout"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Rifle",]
-unit_special = "Take Cover[stand-still][-3] \\\\ camouflage[forrest] \\\\ Good shot +1 \\\\ Scout"
+unit_special = "Take Cover[stand-still][-3] \\\\ camouflage[forrest] \\\\ Good shot +1 \\\\ "
 assault = "2/2/2/2"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -514,7 +514,7 @@ assault_deflection_die = ""
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = ""
-assault_special = "Cunning Assault[1 for 2]"
+assault_special = "Cunning Assault[1 for 2], Pre-Assualt retreat[5+]"
 filters = [ "weapons", "team",]
 
 [units."Elf Scout"]
@@ -524,7 +524,7 @@ members = "1"
 size = "medium"
 cost = "2mp"
 armor = ""
-type_ = "Infantry, Bio, Walks"
+type_ = "Infantry, Bio, Walks, Scout"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Rifle",]
