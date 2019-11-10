@@ -1,5 +1,16 @@
 name = "Dwarf"
 
+[abilities.Hidden]
+race = "Dwarf"
+name = "Hidden"
+special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of stand-still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than stand-still or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit base gains (hidden or not): Camuflage[hill][-1]"
+orders_gained = [ "(stand still) Reveal + - + - "]
+orders_lost = [ "",]
+cost = "8xp"
+required_to_buy = "AT-gun"
+operational_by = "1 AT-gun"
+filters = [ "team",]
+
 [weapons."Flaming Whip"]
 race = "Dwarf"
 name = "Flaming Whip"
