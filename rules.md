@@ -253,6 +253,8 @@ Gunnery orders are for example:\
 Aim + -\
 Load + -\
 Fire + -\
+Spot + spot \
+
 
 Default Gunnery: - + - \
 
@@ -268,8 +270,12 @@ Load: loads weapon. A weapon cannot fire without a load token available.
       Some weapons may load more than one ammo per loading. It is then noted as
       load[5] \
 Aim : optional: +2 to hit\
-Fire: fire at an enemy within line of sight and within a legal firing angle of tank.
+Fire: fire at an enemy within line of sight and within a legal firing angle of tank. \
+Spot: try to reveal a hidden unit. Roll a normal to-hit as if you where shooting. If successfull the hidden unit is revealed. \
 Default: - \
+
+
+
 
 The speed of the unit may restrict what options are available.
 
