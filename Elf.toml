@@ -286,6 +286,28 @@ required_to_buy = ""
 type_ = "Vehicle gun"
 filters = [ "team",]
 
+[weapons.Shriek]
+race = "Elf"
+name = "Shriek"
+template = "r"
+range_ = "3"
+angle = "*/*/*/*"
+special = ""
+damage = "d4-2 + d6 psycic damage"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "fire + fire", "load(5) + fire", "fire + load(5)",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Cavalery 1handed weapon"
+filters = [ "team",]
+
 [units.E34]
 race = "Elf"
 name = "E34"
@@ -538,8 +560,29 @@ assault_deflection = "1/-/-/-"
 assault_special = ""
 filters = [ "weapons", "team",]
 
+[units."Pegasus Rider"]
+race = "Elf"
+name = "Pegasus Rider"
+members = "2"
+size = "medium"
+cost = "2mp, 6xp"
+armor = ""
+type_ = "Bio, Cavalry, Walks"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Shriek",]
+unit_special = ""
+assault = "4/3/2/1"
+assault_die = "5+"
+assault_deflection_die = "5+"
+assault_damage = "d6-2"
+assault_ap = "-2"
+assault_deflection = "1"
+assault_special = "Pre-Assault throw fire (from lance): at 5+ set the enemy on fire, and if successful, you may retreat from the assault as the Pre-assault retreat ability"
+filters = [ "weapons", "team",]
+
 [units.E34.orders]
-Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only",]
+Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only)",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units.E34.damage_tables]
@@ -571,7 +614,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Elite Elf Scout".orders]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) A + 360$^0$ + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot+ spot"]
+"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot+ spot",]
 
 [units."Elite Elf Scout".damage_tables]
 "Regular Damage" = [ "0+ : unit killed",]
@@ -626,8 +669,16 @@ Movement = [ "(fly, fast) 360$^0$ + F + F", "(fly, fast) 360$^0$,F + F + F,360$^
 
 [units."Elf Scout".orders]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) A + 360$^0$ + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot + spot"]
+"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot + spot",]
 
 [units."Elf Scout".damage_tables]
 "Regular Damage" = [ "0+ : unit killed",]
 "Psycic Damage" = [ "3+: unit shaken",]
+
+[units."Pegasus Rider".orders]
+Movement = [ "(stand-still) 360$^0$ + 360$^0$ + 360$^0$", "(stand-still) 360$^0$ + A[slow, flying] + F", "(stand-still) 360$^0$ + A[slow] + F", "(default stand-still) 360$^0$ + A[slow] + flee", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(slow) 360$^0$ + A[slow, flying] + F", "(slow) 360$^0$ + A[fast, flying] + F", "(slow) 360$^0$ + A[fast] + F", "(default slow) 360$^0$ + A[fast, flying] + flee", "(fast) 360$^0$ + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + A[fly, fast] + F,F", "(fast) 360$^0$ + F + B[slow]", "(default fast) 360$^0$ + A[fly, fast] + flee,flee", "(slow, flying) L + F + -", "(slow, flying) R + F + -", "(slow, flying) F + R + -", "(slow, flying) F + L + -", "(slow, flying) F + - + -", "(slow, flying) F + B[stand-still] + -", "(slow, flying) F + A[fast, flying] + F", "(default slow flying) - + - + flee", "(fast flying) F + F + F", "(fast flying) F + R + F", "(fast flying) F + L + F", "(fast flying) F + F + B[slow]", "(fast flying) F + F + B[fast]", "(fast flying) L,L + F + F", "(fast flying) R,R + F + F", "(slow flying) L + L + F", "(slow flying) R + R + F", "(default fast flying) Flee + Flee + Flee",]
+Fire = [ "Fire + Fire", "Fire + Load(5)", "Load(5) + Fire",]
+
+[units."Pegasus Rider".damage_tables]
+"Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1 model",]
+"Psycic Damage" = [ "5+: unit shaken",]
