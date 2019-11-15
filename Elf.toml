@@ -680,5 +680,6 @@ Movement = [ "(stand-still) 360$^0$ + 360$^0$ + 360$^0$", "(stand-still) 360$^0$
 Fire = [ "Fire + Fire", "Fire + Load(5)", "Load(5) + Fire",]
 
 [units."Pegasus Rider".damage_tables]
-"Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1 model",]
+"Regular Damage" = [ "1: Unit lands (keeps speed, but removes flying)",
+"2-3: Unit Lands, Bleed[4]", "4+: kill 1 model",]
 "Psycic Damage" = [ "5+: unit shaken",]
