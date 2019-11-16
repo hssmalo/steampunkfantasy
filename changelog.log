@@ -3,6 +3,7 @@
 General: 
 	renamed members to models in pdf
 	Added rules for spotting.
+	template: assault die: instead of assault die set to:
 	
 Ork:
 	Pyro: Gained Fire resistance 2
@@ -16,8 +17,12 @@ DarkElf:
 
 Dwarf:
 	AT-Gun may start hidden.
-
+	Blast-sticks: gained cunning assault[1 for 1]
+	Fixed damage typos
+	EliteSteampower Armor: cost less, and slightly improved assault now
+	
 Elf:
 	Scout and elite scout gain spot
 	Added Pegasus Rider
 	Added Shriek weapon
+	Pegasus must land as part of damage table
