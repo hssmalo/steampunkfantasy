@@ -132,9 +132,9 @@ required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
-[weapons.shotgun]
+[weapons.Shotgun]
 race = "Dwarf"
-name = "shotgun"
+name = "Shotgun"
 template = "r"
 range_ = "2"
 angle = "*/*/*/*"
@@ -372,6 +372,50 @@ orders_lost = [ "",]
 cost = ""
 required_to_buy = ""
 type_ = ""
+filters = [ "team",]
+
+[weapons."Poison Purification"]
+race = "Dwarf"
+name = "Poison Purification"
+template = "misc"
+range_ = ""
+angle = ""
+special = "Improves poison resistance with 1."
+damage = ""
+ap = ""
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "1cp"
+required_to_buy = "Unit Base: Infantry"
+type_ = "Infantry Independent Equipment"
+filters = [ "team",]
+
+[weapons."Fire Retardant Coating"]
+race = "Dwarf"
+name = "Fire Retardant Coating"
+template = "misc"
+range_ = ""
+angle = ""
+special = "Imporve fire-resistance by 1."
+damage = ""
+ap = ""
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "1cp"
+required_to_buy = "Unit Base: Infantry"
+type_ = "Infantry independent equipment"
 filters = [ "team",]
 
 [units."Dwarf Infantry"]

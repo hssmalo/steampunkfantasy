@@ -25,7 +25,7 @@ filters = [ "team",]
 [weapons."Mechanical Imp"]
 race = "DarkElf"
 name = "Mechanical Imp"
-template = "ra"
+template = "misc"
 range_ = ""
 angle = ""
 special = "Mechanical robotic imps helps all memeber in unit base to reload it's crossbows. Threat any crossbow or enhanced crossbow as always loaded."
@@ -35,7 +35,7 @@ assault_mod = ""
 assault_deflection_mod = ""
 assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
-assault_special = "Grants unit base poison[4] if it does not already have similar or better ability."
+assault_special = "Grants unit base Poison[4] in assault if it does not already have similar or better ability."
 assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
@@ -128,7 +128,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "16cp, 8xp"
-required_to_buy = "Infantry base"
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, Unit base weapon"
 filters = [ "team",]
 
