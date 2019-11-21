@@ -1,16 +1,5 @@
 name = "Dwarf"
 
-[abilities.Hidden]
-race = "Dwarf"
-name = "Hidden"
-special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of stand-still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than stand-still or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit base gains (hidden or not): Camuflage[hill][-1]"
-orders_gained = [ "(stand still) Reveal + - + - "]
-orders_lost = [ "",]
-cost = "8xp"
-required_to_buy = "AT-gun"
-operational_by = "1 AT-gun"
-filters = [ "team",]
-
 [weapons."Flaming Whip"]
 race = "Dwarf"
 name = "Flaming Whip"
@@ -234,12 +223,12 @@ filters = [ "team",]
 [weapons."Fear Ray"]
 race = "Dwarf"
 name = "Fear Ray"
-template = ""
+template = "r"
 range_ = "4"
 angle = "*/-/-/-"
 special = "Does Psychic damage instead of normal damage. Ignore armor and roll on psychic damage table."
-damage = ""
-ap = ""
+damage = "d6 Psycic damage"
+ap = "n.a."
 assault_mod = ""
 assault_deflection_mod = ""
 assault_deflection_die_set_to = ""
@@ -248,9 +237,9 @@ assault_special = ""
 assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-cost = ""
-required_to_buy = ""
-type_ = "Vehicle Ray Weapon"
+cost = "2cp"
+required_to_buy = "Model: Elite SteamPowerArmor"
+type_ = "Vehicle or SteamPowerArmor Ray Weapon"
 filters = [ "team",]
 
 [weapons."Enhanced Heavy Musket"]
@@ -615,6 +604,17 @@ assault_ap = "2"
 assault_deflection = "1/-/-/-"
 assault_special = ""
 filters = [ "weapons", "team",]
+
+[abilities.Hidden]
+race = "Dwarf"
+name = "Hidden"
+special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of stand-still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than stand-still or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit base gains (hidden or not): Camuflage[hill][-1]"
+orders_gained = [ "(stand still) Reveal + - + - ",]
+orders_lost = [ "",]
+cost = "8xp"
+required_to_buy = "AT-gun"
+operational_by = "1 AT-gun"
+filters = [ "team",]
 
 [units."Dwarf Infantry".orders]
 Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
