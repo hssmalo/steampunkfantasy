@@ -63,6 +63,9 @@ class Team():
         with open('ranged_template.tex', 'r') as fid:
             self.ranged_template = fid.read()
 
+        with open('misc_template.tex', 'r') as fid:
+            self.misc_template = fid.read()
+
         with open('model_replacement_template.tex', 'r') as fid:
             self.model_replacement_template = fid.read()
             
@@ -117,6 +120,8 @@ class Team():
                         template = self.ranged_template
                     if weapon.template == 'ra':
                         template = self.combined_template
+                    if weapon.template == 'misc':
+                        template = self.misc_template
                     if weapon.template == '':
                         template = ''
                         print('Missing weapon template', weapon_name)
