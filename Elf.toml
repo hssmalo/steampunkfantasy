@@ -613,7 +613,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 [units."Elite Infantry".damage_tables]
 
 [units."Elite Elf Scout".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) A + 360$^0$ + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot+ spot",]
 
 [units."Elite Elf Scout".damage_tables]
@@ -660,7 +660,7 @@ Movement = [ "(fly, fast) 360$^0$ + F + F", "(fly, fast) 360$^0$,F + F + F,360$^
 "psychic damage" = [ "6+ shaken",]
 
 [units.Infantry.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) A + 360$^0$ + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Infantry.damage_tables]

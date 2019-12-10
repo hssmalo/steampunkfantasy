@@ -225,20 +225,20 @@ race = "DarkElf"
 name = "Assasin"
 members = "1"
 size = "Medium"
-cost = "2mp, 4xp"
+cost = "2mp, 6xp"
 armor = ""
 type_ = "Bio, Infantry, Elite, Walks"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Rifle",]
-unit_special = "Hidden (see DarkElf Abilities)\\\\ Note that assasin qualifies for any elite weapon upgrade. "
-assault = "4/3/2/1"
+unit_special = "Hidden (see DarkElf Abilities)\\\\ Take-Cover[Stand-still, crawl][-3]\\\\ Good Shot: +1 to hit"
+assault = "6/4/2/1"
 assault_die = "5+"
 assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
-assault_deflection = "6/3/-/-"
-assault_special = "Poison[8], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection"
+assault_deflection = "8/3/-/-"
+assault_special = "Poison[12], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection"
 filters = [ "weapons", "team",]
 
 [units."Elite Infantry"]
@@ -273,7 +273,7 @@ type_ = "Bio, Infantry, Walks, Scout"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Rifle",]
-unit_special = "Scout: may setup up too 2 hexes from normal setup."
+unit_special = "Scout: may setup up too 2 hexes from normal setup. \\\\ Take-Cover[stand-still, crawl][-3]"
 assault = "2/1/1/1"
 assault_die = "5+"
 assault_deflection_die = "6+"
@@ -474,7 +474,7 @@ operational_by = "1 choosen infantry base"
 filters = [ "team",]
 
 [units.Assasin.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + F", "(slow) 360$^0$ + B + -", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + -", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -", "(default slow) - + - + flee", "(default stand-still) - + A + flee", "(default crawl) - + A[slow] + flee",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + -", "(slow) 360$^0$ + F + B", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + F", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -", "(default slow) - + - + flee", "(default stand-still) - + A + flee", "(default crawl) - + A[slow] + flee",]
 "Fire orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Assasin.damage_tables]
@@ -488,7 +488,7 @@ filters = [ "team",]
 "" = [ "",]
 
 [units.Scout.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + F", "(slow) 360$^0$ + B + -", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + -", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + -", "(slow) 360$^0$ + F + B", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + F", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -",]
 "Fire orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ", "(stand-still, slow) spot + spot"  ]
 
 [units.Scout.damage_tables]
@@ -503,7 +503,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$
 "Regular Damage" = [ "2-3: Bleed[4]", "4-6: kill 1 model", "''",]
 
 [units.Infantry.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + F", "(slow) 360$^0$ + B + -", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + -", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -", "(default slow) - + - + flee", "(default stand-still) - + A + flee", "(default crawl) - + A[slow] + flee",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + -", "(slow) 360$^0$ + F + B", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + F", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -", "(default slow) - + - + flee", "(default stand-still) - + A + flee", "(default crawl) - + A[slow] + flee",]
 "Fire orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Infantry.damage_tables]

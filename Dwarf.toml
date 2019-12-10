@@ -40,7 +40,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
-required_to_buy = ""
+required_to_buy = "Model: Elite SteamPowerArmor"
 type_ = "SteamPowerArmor, 2handed weapon."
 filters = [ "team",]
 
@@ -72,7 +72,7 @@ name = "Broadside Guns"
 template = ""
 range_ = "2"
 angle = "-/x1/x1/-"
-special = "May fire at one target to the right and one target to the left. Roll to-hit separately for different targets"
+special = "May fire at one target to the right and one target to the left. Roll to-hit separately for different targets. In addition, place a Poison Cload[4]4+ at point blank range from any of the direction that fired."
 damage = ""
 ap = "2"
 assault_mod = ""
@@ -150,7 +150,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "4cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: SteamPowerArmor"
 type_ = "SteamPowerAromor, 2handed weapon."
 filters = [ "team",]
 
@@ -172,7 +172,7 @@ assault_ap = ""
 orders_gained = [ "fire + fire",]
 orders_lost = [ "",]
 cost = "8cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: SteamPowerArmor"
 type_ = "SteamPowerArmor, 2handed weapon"
 filters = [ "team",]
 
@@ -194,7 +194,7 @@ assault_ap = "-2"
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
@@ -216,7 +216,7 @@ assault_ap = "0"
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = ""
+required_to_buy = "Unit base: Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
@@ -260,7 +260,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "6cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: Infantry or SteamPowerArmor"
 type_ = "Infantry or SteamPowerArmor, 2handed weapon"
 filters = [ "team",]
 
@@ -282,7 +282,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = ""
-required_to_buy = ""
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
@@ -304,7 +304,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, Unit Base weapon."
 filters = [ "team",]
 
@@ -326,7 +326,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
@@ -669,7 +669,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 "Regular Damage" = [ "1-5: kill 1 member", "6-9: kill 1 member, roll on psychic damage[d6]", "10: kill all 4 members",]
 
 [units.GunBlasterWagon.orders]
-Fire = [ "(stand-still) load + -", "fire + -",]
+Fire = [ "(all) load + -", "(all) fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
 
 [units.GunBlasterWagon.damage_tables]
