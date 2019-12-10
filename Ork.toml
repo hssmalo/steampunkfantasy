@@ -545,7 +545,7 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 
 [units."Ork Infantry".orders]
 "Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ",]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
 
 [units."Ork Infantry".damage_tables]
 "Psychic Damage" = [ "4+: unit base shaken",]
