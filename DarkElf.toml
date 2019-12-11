@@ -451,17 +451,6 @@ assault_deflection = "2z/2z/2z/2z"
 assault_special = "z=number of hits in assault"
 filters = [ "weapons", "team",]
 
-[abilities.Crawl]
-race = "DarkElf"
-name = "Crawl"
-special = "Special speed gained: crawl. Retrain Take Cover benefis while moving. However, all terrain cost 2 movement points to enter."
-orders_gained = [ "",]
-orders_lost = [ "",]
-cost = "Free"
-required_to_buy = "None"
-operational_by = "All infantry bases"
-filters = [ "team",]
-
 [abilities.Hidden]
 race = "DarkElf"
 name = "Hidden"
