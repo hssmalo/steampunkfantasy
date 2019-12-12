@@ -116,7 +116,7 @@ name = "Mortar"
 template = "r"
 range_ = "10"
 angle = "*/*/*/*"
-special = "Choose a hex within range and rol a die, at 5+ place a Poison \\& Acid Cload [8, minor][4+] at target hex. Place a Poison Cload[6]  at all hexes surronding that initial hex\\\\ If you don't roll a 5+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
+special = "Choose a hex within range and rol a die, at 5+ place a Poison \\& Acid Cloud [8, minor][4+] at target hex. Place a Poison Cloud[6]  at all hexes surronding that initial hex\\\\ If you don't roll a 5+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
 damage = "N.A."
 ap = "N.A."
 assault_mod = ""
@@ -138,7 +138,7 @@ name = "Poison Gas Grenade"
 template = "r"
 range_ = "1"
 angle = "*/*/*/*"
-special = "Place a Poison Cload[6](4+) within normal range. "
+special = "Place a Poison Cloud[6](4+) within normal range. "
 damage = "N.A."
 ap = "N.A"
 assault_mod = ""
@@ -160,8 +160,8 @@ name = "Acid Cannon"
 template = ""
 range_ = "6"
 angle = "*/-/-/-"
-special = "Acid"
-damage = ""
+special = "On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor](5+) at target hex"
+damage = "d6"
 ap = "1"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -394,12 +394,12 @@ name = "Queen XXX"
 members = "1"
 size = "Large"
 cost = "16ip"
-armor = "5/4/2/1"
+armor = "5/4/2/2"
 type_ = "Mechanical, Bio Crew, Vehicle, Track"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Acid Cannon",]
-unit_special = "Immunity to poison cloads \\\\ Good shot +1 to hit"
+unit_special = "Immunity to poison clouds \\\\ Excelent shot +2 to hit"
 assault = "5/4/3/2"
 assault_die = "5+"
 assault_deflection_die = "6+"
@@ -451,6 +451,27 @@ assault_deflection = "2z/2z/2z/2z"
 assault_special = "z=number of hits in assault"
 filters = [ "weapons", "team",]
 
+[units."Queen XYX"]
+race = "DarkElf"
+name = "Queen XYX"
+members = "1"
+size = "Large"
+cost = "8ip"
+armor = "5/4/2/2"
+type_ = "Mechanical, Bio Crew, Vehicle, Track"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "",]
+unit_special = "Immunity to poison clouds"
+assault = "5/4/3/2"
+assault_die = "5+"
+assault_deflection_die = "6+"
+assault_damage = "d6-1"
+assault_ap = "-1"
+assault_deflection = "4/-/-/-"
+assault_special = "Poison[6], Fear[8] \\\\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
+filters = [ "weapons", "team",]
+
 [abilities.Hidden]
 race = "DarkElf"
 name = "Hidden"
@@ -478,7 +499,7 @@ filters = [ "team",]
 
 [units.Scout.orders]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + -", "(slow) 360$^0$ + F + B", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + F", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -",]
-"Fire orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ", "(stand-still, slow) spot + spot"  ]
+"Fire orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ", "(stand-still, slow) spot + spot",]
 
 [units.Scout.damage_tables]
 "Psycic Damage" = [ "3+: Shaken",]
@@ -527,7 +548,7 @@ Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F 
 "Regular Damage" = [ "2-3: +1 on future damage", "4-6: Destroy 1 memeber", "7+ : Destroy 1 model, roll on psychic damage",]
 
 [units."Queen XXX".orders]
-"Fire Orders" = [ "(stand still and slow) - + load", "(stand still and slow) - + aim", "(stand still, slow and fast) - + fire", "(stand still, slow and fast) - + Release Poison Cload[12](4+)",]
+"Fire Orders" = [ "(stand still and slow) - + aim", "(stand still and slow) - + load", "(all) - + fire", "(all) - + Release Poison Cloud[12](4+)",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R + F + -", "(fast) L + F + -",]
 
 [units."Queen XXX".damage_tables]
@@ -550,3 +571,12 @@ Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F 
 [units."Mechanical Cavalry".damage_tables]
 "Psychic Damage" = [ "5+: unit shaken",]
 "Regular Damage" = [ "2-3: +1 on future damage", "4-6: Kill 1 model", "7+: Destroy 1 model, roll on psychic damage",]
+
+[units."Queen XYX".orders]
+"Fire Orders" = [ "(all) - + - ",  "(all) - + Release Poison Cloud[12](4+)",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + F + -", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) F + - + -", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R + F + -", "(fast) L + F + -",]
+
+[units."Queen XYX".damage_tables]
+"Regular damage" = [ "1-5: Lightly Damaged", "6-8: Crittical Damaged, +1 on all future damage",]
+"Lightly Damage" = [ "1-3: Shaken", "4-6: +1 on future damage",]
+"Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in agony 0 step", "3: rotates left in agony 1 and in agony 3", "4: only stand-still available", "5: unit is covered in acid", "6: unit covered in acid x2",]
