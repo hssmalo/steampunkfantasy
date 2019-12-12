@@ -4,6 +4,9 @@ General:
 	renamed members to models in pdf
 	Added rules for spotting.
 	template: assault die: instead of assault die set to:
+
+All Teams:
+	Adjusted Infantry orders
 	
 Ork:
 	Pyro: Gained Fire resistance 2
@@ -13,8 +16,11 @@ DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
 	imp became multiple imps, no ingame effect
 	Scout gains spot
-
-
+	Assasin: Gains Take-Cover[...][-3], Good shot and improved assault stats.
+	Queen XXX: got 2 in armor in back, acid cannon gained psycic damage on hit, and minor
+	acid cloud, and got excelent shot.
+	Added Queen XYX: A cheaper version of Queen XXX without a cannon
+	
 Dwarf:
 	AT-Gun may start hidden.
 	Blast-sticks: gained cunning assault[1 for 1]
@@ -22,9 +28,11 @@ Dwarf:
 	EliteSteampower Armor: cost less, and slightly improved assault now
 	Elite SteamPowerArmor: can buy Fear Ray
 	FireRetardent Coating and Poison Purifications
+	Added requirements for buyable gear
+	GunBlasterWagon: added poison cload effect, and can load on all speeds.
 	
 Elf:
 	Scout and elite scout gain spot
 	Added Pegasus Rider
 	Added Shriek weapon
-	Pegasus must land as part of damage table
+	Hammered how Pegasus should work
