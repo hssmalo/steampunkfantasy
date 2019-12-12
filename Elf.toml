@@ -154,6 +154,29 @@ required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
+
+[weapons."Twin-Rifle"]
+race = "Elf"
+name = "Twin-Rifle"
+template = ""
+range_ = "5"
+angle = "*/*/*/*"
+special = "Fires two times at same unit base per shot."
+damage = "d6-2"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Addition tank weapon, tank mounted infantry weapon"
+filters = [ "team",]
+
 [weapons.MiniGun]
 race = "Elf"
 name = "MiniGun"
@@ -318,8 +341,8 @@ armor = "4/3/3/2"
 type_ = "Mechanical, Bio Crew, Vehicle, Track"
 isReplacement = ""
 replaces = ""
-weapons_input = [ "Main Tank Gun",]
-unit_special = "Forrester: moving through forrest cost 1 point (not 2)"
+weapons_input = [ "Main Tank Gun", "Twin-Rifle"]
+unit_special = "Forrester: moving through forrest cost 1 point (not 2)\\\\ Rifle fires in the same direction as the Main Tank Gun, And is always treated as loaded as long as the Main Tank gun is loaded"
 assault = "4/3/3/2"
 assault_die = "5+"
 assault_deflection_die = "5+"
