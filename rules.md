@@ -524,7 +524,9 @@ In pre-assault phase you may roll a die. At N+ you may retreat before the assaul
 The unit base have this ability if atleast one model in the unit has this spesicial ability.
 
 
+**Terror**[range=n][dN]
 
+In agony 0, roll a dN psycic damage on any enemy unit within range of this unit.
 
 **Fear**[N]
 
@@ -634,9 +636,11 @@ Roll 1 die per biological unit in hex. At n+, apply a poison[N] to target enemy 
 If placing a poison cloud in a hex with a poison cloud already,
 increase  the density of the most dense cloud one step, and set the level equal to the highest level: Ie Poison Cloud[8](4+) + Poison Cloud[4](5+) = Poison Cloud[8](3+)
 
-**Acid** **Cloud** [Minor/major] (n+)
+**Acid** **Cloud** [Minor] (n+)
 
-Roll a die per unit base in hex. At n+ place a minor or major acid on the unit base.
+Roll a die per unit base in hex. At n+ place a minor acid on the unit base.
+
+
 
 **Poison** & **Acid** **Cloud** [n, minor/major] = poison Cloud[n] + acid Cloud [minor/major]
 
