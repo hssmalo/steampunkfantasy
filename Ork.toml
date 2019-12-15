@@ -160,7 +160,7 @@ name = "Pyro"
 template = "r"
 range_ = "1"
 angle = "*/*/*/*"
-special = "Choose one hex within range, and each memember tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire. \\\\ Don't need to be loaded to be used.\\\\ Bonus weapon, can be added to any other combination of weapons.\\\\ Instead of targeting an enemy unit, you may target the hex you are standing in and place a the hex on fire.\\\\ In addition, the unit base gains Fire Resistance 2"
+special = "Choose one hex within range, and each model tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire. \\\\ Don't need to be loaded to be used.\\\\ Bonus weapon, can be added to any other combination of weapons.\\\\ Instead of targeting an enemy unit, you may target the hex you are standing in and place a the hex on fire.\\\\ In addition, the unit base gains Fire Resistance 2"
 damage = "special"
 ap = "N.A."
 assault_mod = ""
@@ -328,6 +328,94 @@ orders_lost = [ "",]
 cost = ""
 required_to_buy = ""
 type_ = ""
+filters = [ "team",]
+
+[weapons.Shriek]
+race = "Ork"
+name = "Shriek"
+template = "r"
+range_ = "2"
+angle = "-/-/*/*"
+special = "Burst(5) Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
+damage = "d4-2+ d6 psycic damage"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Vehicle support gun"
+filters = [ "team",]
+
+[weapons."Speed Cannon"]
+race = "Ork"
+name = "Speed Cannon"
+template = "r"
+range_ = "2"
+angle = "-/-/*/*"
+special = "Fire Burst(5): Requires 5 ammo to be shot, but each time it is shot, it fires 5 times"
+damage = "d6+1"
+ap = "1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Vehiclemounted Gun"
+filters = [ "team",]
+
+[weapons.Flamethrower]
+race = "Ork"
+name = "Flamethrower"
+template = "r"
+range_ = "1"
+angle = "*/-/-/-"
+special = "Fire at all hexes possible simultaniously: Area(4+) at point blank range, Area(5+) in the hex at long range directly ahead, and Area(6+) for the two hexes which is on long range and on edge of firing arc. \\\\ Any unit hit is set target on FIRE. \\\\ Limited Ammo: May be fired a maxium of 3 times. \\\\ Allways treated as loaded"
+damage = "d8"
+ap = "-1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Vehicle Mounted Flamethrower"
+filters = [ "team",]
+
+[weapons."Big Cannon"]
+race = "Ork"
+name = "Big Cannon"
+template = "r"
+range_ = "8"
+angle = "*/-/-/-"
+special = "Before firing this gun, roll a die, at 1: the gun damage itself: unit fired gains +1 to future damage, at 2-3: nothing specail, at 4: the orks uses poisonous ammo: gain Poison[6], at 5: the ork use acidic ammo: gain Minor Acid, at 6: uses incendiary ammo: gain Fire. \\\\ If the rolled ap is less than 0, the projectile used shatters on impact (if hitting enemy): target hex and all surronding hex is effected by area of effect: Area(5+) AP: -2, damage: d6-2. The area of effect retains the special effect of the main gun (poison, minor acid or fire).\\\\ In addition, after firing this weapon, the unit gains Terror[range=2][d6], which is removed in aftermath"
+damage = "d12"
+ap = "d8-3"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Main Tank Weapon"
 filters = [ "team",]
 
 [units.Grunt]
@@ -498,6 +586,48 @@ assault_deflection = "1/-/-/-"
 assault_special = "Any 6 on assault die roll (not assault deflection) count as two success and you get to reroll up to 3 dice (identical rules to the original die) (exploding die)"
 filters = [ "weapons", "team",]
 
+[units.Speedhead]
+race = "Ork"
+name = "Speedhead"
+members = "1"
+size = "Medium"
+cost = "6ip"
+armor = "3/2/2/2"
+type_ = "Mechanical, Bio Crew, Vehicle, Track"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Speed Cannon", "Shriek", "Flamethrower",]
+unit_special = "Flamethrower: may allways be fired in any shooting step as long as you still have ammo left. \\\\ Fire and load both Speed Cannont and Shriek simultatniously. All targets must be within the same angle."
+assault = "8/6/4/4"
+assault_die = "6+"
+assault_deflection_die = "6+"
+assault_damage = "d8"
+assault_ap = "-2"
+assault_deflection = "2/1/-/-"
+assault_special = "For each six, reroll 1 die of the from you initial assault pool, and each die may be rerolle a maximum of ont time (untill a new 6 is roll in the rerolls) Repeat process if you get more 6es."
+filters = [ "weapons", "team",]
+
+[units.Cannonhead]
+race = "ork"
+name = "Cannonhead"
+members = "1"
+size = "Medium"
+cost = "12ip"
+armor = "4/3/3/2"
+type_ = "Mechanical, Bio Crew, Vehicle, Track"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Big Cannon",]
+unit_special = ""
+assault = "8/6/4/2"
+assault_die = "6+"
+assault_deflection_die = "6+"
+assault_damage = "d8"
+assault_ap = "-2"
+assault_deflection = "2/1/-/-"
+assault_special = "For each 6 you roll in regular assault, reroll up too 3 dice from initial assault die pool (assault or assault deflection), rerolling each die a maximum of 1 times (untill new rounds of 6'es). Repeat the process if the rerolls become 6. \\\\ Fear(6)"
+filters = [ "weapons", "team",]
+
 [units.Grunt.orders]
 "Movement orders" = [ "- + - + Chase",]
 
@@ -512,7 +642,7 @@ filters = [ "weapons", "team",]
 "Regular Damage" = [ "2-3: Bleeding[4]", "4+ : Killed",]
 
 [units.HammerHead.orders]
-Fire = [ "(stand still) load + -", "(stand still) load unstable + -", "(all) fire + -",]
+Fire = [ "(stand still) load + -", "(all) fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
 
 [units.HammerHead.damage_tables]
@@ -556,3 +686,21 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 
 [units."Elite Ork Infantry".damage_tables]
 "" = [ "",]
+
+[units.Speedhead.orders]
+Movement = [ "(slow) L + F + L", "(slow) R + F + R", "(slow) F + - + -", "(default Slow) - + - + B", "(default stand-still) - + - + A", "(slow) A + F + F", "(fast) F + F + F", "(fast) L + F + F", "(fast) R + F + F", "(fast) F + F + L", "(fast) F + F + R", "(default fast) - + - + B", "(fast) B + L + F", "(fast) B + R + F", "(fast) B + F + -",]
+"Fire Orders" = [ "(all) load + load", "(all) load + Fire Burst(5)", "Fire Burst(5) + load",]
+
+[units.Speedhead.damage_tables]
+"Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
+"Light Damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage",]
+"Critical Damage " = [ "1-3: roll on lightly damage 3 times", "4: Cannot rotate left", "5: Cannot rotate right", "6: Unit set on fire",]
+
+[units.Cannonhead.orders]
+Fire = [ "(stand still) load + -", "(stand still) aim + -", "(all) fire + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+
+[units.Cannonhead.damage_tables]
+"Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
+"Light Damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage",]
+"Critical Damage " = [ "1: Reduce armor by 1.", "2: +1 on future damage", "3: Cannot brake", "4: Cannot rotate left", "5: Cannot rotate right", "6: Unit set on fire",]

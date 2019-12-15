@@ -154,8 +154,7 @@ required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
-
-[weapons."Twin-Rifle"]
+[weapons.Twin-Rifle]
 race = "Elf"
 name = "Twin-Rifle"
 template = ""
@@ -331,6 +330,50 @@ required_to_buy = ""
 type_ = "Cavalery 1handed weapon"
 filters = [ "team",]
 
+[weapons.Camuflouflage]
+race = "Elf"
+name = "Camuflouflage"
+template = "misc"
+range_ = ""
+angle = ""
+special = "Unit base gains camuflouge[forrest][-1]"
+damage = ""
+ap = ""
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "2cp, 2xp"
+required_to_buy = "Unit Base: Infantry"
+type_ = "Infantery, Independent Equipment"
+filters = [ "team",]
+
+[weapons."Enhanced Rifle"]
+race = "Elf"
+name = "Enhanced Rifle"
+template = "r"
+range_ = "6"
+angle = "*/*/*/*"
+special = "Unit gain +1 to hit (but only for this weapon)"
+damage = "d6-2"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "2cp"
+required_to_buy = "Unit Base, Infantry"
+type_ = "Infantry, 2handed weapon"
+filters = [ "team",]
+
 [units.E34]
 race = "Elf"
 name = "E34"
@@ -341,7 +384,7 @@ armor = "4/3/3/2"
 type_ = "Mechanical, Bio Crew, Vehicle, Track"
 isReplacement = ""
 replaces = ""
-weapons_input = [ "Main Tank Gun", "Twin-Rifle"]
+weapons_input = [ "Main Tank Gun", "Twin-Rifle",]
 unit_special = "Forrester: moving through forrest cost 1 point (not 2)"
 assault = "4/3/3/2"
 assault_die = "5+"
