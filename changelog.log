@@ -4,6 +4,7 @@ General:
 	renamed members to models in pdf
 	Added rules for spotting.
 	template: assault die: instead of assault die set to:
+	AP modified by long/normal/point blank to make weapon range more important
 
 All Teams:
 	Adjusted Infantry orders
@@ -40,3 +41,4 @@ Elf:
 	E34: added twin-rifles.
 	All Elf infantry can buy camuflouge upgrade. cost 2cp, 2xp.
 	Enhanced Rifles which gives +1 range and +1 hit, cost 2cp
+	Elk Cavlary now has access to F + F + F,B as fast to model sprints
