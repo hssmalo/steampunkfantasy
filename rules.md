@@ -342,9 +342,9 @@ Building		    0      -1
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
 *Range*
-Point-Blank                +1       0
-Normal range                0       0
-Long range                 -1       0         (max x2 range)
+Point-Blank                +1       0         (range =1)
+Normal range                0       0         (within weapon range)
+Long range                 -1       0         (within max x2 of weapon range)
 *Angle*
 On-edge of firing-angle    -1       0
 *Size*
@@ -371,12 +371,14 @@ The firing vehicles decides which hex side the shots come from and enter into.
 However, employing hexes at the edge of it's own firing angle gives a to-hit penalty.
 
 
+Long range: \
 
 
-Area To-Hit: \
+*Area* *To-Hit*: \
 Area(n+): roll 1 die per enemy model in hex. Apply damage per success.
 
 Area success modifiers: \
+
 +1 to success per extra identical area attack fired from same unit.
 
 Example: success for 4 x area(6+) attacks versus a single hex becomes 3+.
@@ -386,30 +388,46 @@ Example: success for 4 x area(6+) attacks versus a single hex becomes 3+.
 
 # Damage
 
-If you hit, roll for damage.
+If you hit, roll for damage. Apply the following modifiers to Armor Penetration (AP) and damage:
+
+                          AP,    Damage      special
+------------------------ ------- ---------- ---------------------
+*Range*
+Long Range                -1      -1          (within max x2 of weapon range)
+Normal Range              +0      +0          (within weapon range) 
+Point Blank               +1      +1          (Range=1)
+------------------------ -------  ---------- ---------------------
+
+
 
 Any specified damage is regular damage, and follow these rules:
+
+
+
 Before you roll damage, roll armor penetration first.
 
 How Armor penetration works is dependent on wether it is positive or negative.
-For positive AP, AP is reduced by 1 for each 3 hex between units, to a minimum of 0.
 
 If AP $\geq$ 0: \
-Roll (Armor - AP) number of dice. \
+Roll (Armor - AP) number of dice, minimum 0 \
 
 If AP < 0:
 Roll Armor number of dice.
 
 The target number N is:
 
-- N= 5 for weapons without any AP $qeq$ 0
-- N= 4 for weapons with -1 AP 
-- N= 3 for weapons with -2 AP
-- N= 2 for weapons with -3 AP
+- N= 5 for weapons with  AP $\geq$ 0
+- N= 4 for weapons with  AP = -1 AP 
+- N= 3 for weapons with  AP = -2 AP
+- N= 2 for weapons with  AP = -3 AP
+- N= 1 for weapons with  AP = -4 AP
 
-For each die above N, reduce damage by 3.
+For
+- 2 or more die above N, the armor prevents all damage \
+- exactly one die above N, roll on damage with a -3 modifier \
+- 0 die above N, roll on damage normaly. \\
 
-If armor_penetration = armor, count as no armor.
+
 
 Damage: Roll on regular damage table for the unit, add previous bonus and weapon modifiers if any. Any result less than the starting value of the damage table counts as no damage. 
 
@@ -540,6 +558,34 @@ You may replace N assault successes assigned to one unit-base for light damage[d
 Thus, for example Cunning Assault[1 per 2] would allow you to replace two assault-successes with one roll on light damage table (if enemy unit base has a light damage table, which typical is only for tanks and vehicles). Note that the replacements are done after asigning hits to different untis, and only hits versus targets with a light damage table can be replaced, not hits versus other units in the same assault. However, how to apply this is up to the one having cunning assault.
 
 This represent any cunning way to take out heavily armored units in assaults.
+
+**Fire**, ranged weapons
+
+If target is hit by a ranged weapon with this special ability, target is set on fire. See continous damage. Apply one fire per hit.
+
+**Fire**, assault weapons
+
+Any unit base hit atleast once in assault by a unit with this special is set on fire. See continous damage.
+
+**(minor) Acid**, ranged weapons
+
+If target is hit by a ranged weapon with this special ability, apply (minor) acid to target. See continous damage. Apply one (minor) acid per hit.
+
+**(minor)** **Acid**, assault weapons
+
+Apply (minor) acid to any unit base hit atleast once in assault by a unit with this special. See continous damage.
+
+
+**Poison[N]**, ranged weapons
+
+If target is hit by a ranged weapon with this special ability, apply Poison[N] to taget unit. See continous damage. Apply one Poison[n] per hit.
+
+**Poison[N]**, assault weapons
+
+Apply Poison[N] to any unit base hit atleast once in assault by a unit with this special. See continous damage.
+
+
+
 
 [type] **Resistances**[n]
 
