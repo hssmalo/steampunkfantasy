@@ -73,7 +73,7 @@ template = ""
 range_ = "2"
 angle = "-/x1/x1/-"
 special = "May fire at one target to the right and one target to the left. Roll to-hit separately for different targets. In addition, place a Poison Cload[4]4+ at point blank range from any of the direction that fired."
-damage = ""
+damage = "d6+1"
 ap = "2"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -95,7 +95,7 @@ template = ""
 range_ = "3"
 angle = "*/-/-/-"
 special = "Area(1hex, 5+)"
-damage = "0"
+damage = "d6"
 ap = "-1"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -226,7 +226,7 @@ name = "Fear Ray"
 template = "r"
 range_ = "4"
 angle = "*/-/-/-"
-special = "Does Psychic damage instead of normal damage. Ignore armor and roll on psychic damage table."
+special = "Does Psychic damage instead of normal damage. Ignore armor and roll on psychic damage table. \\\\ This weapon is always treated as loaded"
 damage = "d6 Psycic damage"
 ap = "n.a."
 assault_mod = ""
@@ -418,6 +418,28 @@ required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry independent equipment"
 filters = [ "team",]
 
+[weapons."Poison Gas Grenade"]
+race = "Dwarf"
+name = "Poison Gas Grenade"
+template = "r"
+range_ = "1"
+angle = "*/*/*/*"
+special = "Place a Poison Cload[6](4+) within normal range"
+damage = "N.A."
+ap = "N.A"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Throwable from special Vehicle"
+filters = [ "team",]
+
 [units."Dwarf Infantry"]
 race = "Dwarf"
 name = "Dwarf Infantry"
@@ -471,7 +493,7 @@ type_ = "Bio, SteamPowerArmor Infantry, Elite"
 isReplacement = "yes"
 replaces = "model: SteamPowerArmor"
 weapons_input = [ "Heavy Musket",]
-unit_special = "good shot: +1 to hit \\\\ Unit base gains 1 psychic resistance."
+unit_special = "good shot: +1 to hit \\\\ Unit base gains 1 psychic resistance while atleast one elite is alive."
 assault = "4/3/3/3"
 assault_die = "4+"
 assault_deflection_die = ""
@@ -492,7 +514,7 @@ type_ = "Zeppelin, Flying"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Array of Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
-unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
+unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 to the result for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
 assault = "6/6/6/6"
 assault_die = "4+"
 assault_deflection_die = "4+/4+/4+/4+"
@@ -534,7 +556,7 @@ type_ = "Bio, Infantry, Elite, Walks"
 isReplacement = "yes"
 replaces = "Model: Infantry"
 weapons_input = [ "Musket",]
-unit_special = "Good shot: +1 to hit. \\\\ Unit base gains 2 Psychic resistance \\\\"
+unit_special = "Good shot: +1 to hit. \\\\ Unit base gains 2 Psychic resistance while atleast one elite model is alive \\\\"
 assault = "2/2/1/1/"
 assault_die = "4+"
 assault_deflection_die = "4+/-/-/-"
@@ -554,7 +576,7 @@ armor = "1/-/-/-"
 type_ = "Bio, Floating, Vehicle, Floats"
 isReplacement = ""
 replaces = ""
-weapons_input = [ "AxeThrower-Machine",]
+weapons_input = [ "AxeThrower-Machine", "Poison Gas Grenade",]
 unit_special = "Floats\\\\ Poison Resistance 2 \\\\ "
 assault = "3/2/1/1"
 assault_die = "4+"
@@ -670,7 +692,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 
 [units.GunBlasterWagon.orders]
 Fire = [ "(all) load + -", "(all) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1: -1 to-hit, +1 to-be-htt", "2: Cannot Rotate R", "3: Cannot Rotate L", "4: x3 Lightly Damage", "5: Cannot fire weapons to the left", "6: Cannot fire weapons to the right",]
@@ -705,7 +727,7 @@ Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) -
 "" = [ "",]
 
 [units."Mini Zeppelin".orders]
-Fire = [ "Fire + -", "Load(2) + -",]
+Fire = [ "Fire + -", "Load(2) + -", "Throw Grenade" + -]
 Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$ + 360$^0$ + 360$^0$", "(Default slow) 360$^0$ + flee + 360$^0$",]
 
 [units."Mini Zeppelin".damage_tables]
@@ -730,7 +752,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 
 [units.Dw42.orders]
 Fire = [ "(stand-still) load + -", "fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - ",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) F + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + B + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
 
 [units.Dw42.damage_tables]
 "Regular Damage" = [ "1-4: lightly damage", "5-8: Critical Damage, +1 on future damage rolls", "9+: Destroyed",]
