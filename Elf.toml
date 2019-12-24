@@ -182,7 +182,7 @@ name = "MiniGun"
 template = ""
 range_ = "2"
 angle = "*/*/*/*"
-special = "Fire once at all enemy units within range and within one angle of fire \\\\ If aim, use focus fire, roll 6 dice at same unit base"
+special = "Fire once at all enemy units within range and within one angle of fire \\\\ If aim, instead use focus fire, roll 6 dice at same unit base"
 damage = "d6-1"
 ap = "-1"
 assault_mod = ""
@@ -270,7 +270,7 @@ name = "Sniper rifle"
 template = "r"
 range_ = "8"
 angle = "*/-/-/-"
-special = "Improves aim: +4 to hit, +2 to dam\\\\ May choose which unit in a unit base to kill if it kills 1 (or more) members."
+special = "Improves aim: +4 to hit, +2 to dam\\\\ May choose which model in a unit base to kill if it kills 1 (or more) models."
 damage = "d6-1"
 ap = "-1"
 assault_mod = ""
@@ -448,7 +448,7 @@ type_ = "Bio, Infantry, Elite, Walks"
 isReplacement = "yes"
 replaces = "model: infantry"
 weapons_input = [ "Rifle",]
-unit_special = "good shot +1 and Unit base gains psychic resistance 1"
+unit_special = "good shot +1\\\\ Unit base gains psychic resistance 1 as long as atleast one elite model is alive"
 assault = "2/1/1/1"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -532,7 +532,7 @@ type_ = "Mechanical, Bio Crew, Vehicle, Half-track"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Gattle Gun", "SMG",]
-unit_special = "Gun Blazing: Ignore to-hit penalties when moving fast\\\\ May fire SMG in addition to Gattle Gun any time a fire order is given, and SMG is always treated as loaded\\\\ SMG must fire in same angle as Gattle Gun\\\\ Movement: road: if on a road, you may move along a road using this order"
+unit_special = "Gun Blazing: Ignore to-hit penalties for moving fast\\\\ May fire SMG in addition to Gattle Gun any time a fire order is given, and SMG is always treated as loaded\\\\ SMG must fire in same angle as Gattle Gun\\\\ Movement: road: if on a road, you may move along a road using this order"
 assault = "3/2/2/2"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -648,8 +648,8 @@ assault_special = "Pre-Assault: throw fire (from lance): roll a die (once for th
 filters = [ "weapons", "team",]
 
 [units.E34.orders]
-Fire = [ "- + Fire", "- + Aim (stand still and slow only)", "- + Load (stand still and slow only)",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
+Fire = [ "(all) - + Fire", "(stand still, slow)- + Aim", "(stand still, slow) - + Load",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units.E34.damage_tables]
 "Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
@@ -666,7 +666,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + Flee + 360$^0$"
 
 [units."Sniper Tank".orders]
 Fire = [ "- + Fire (all weapons)", "(stand-still) - + Aim", "(stand-still, slow) - + Load",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -",]
 
 [units."Sniper Tank".damage_tables]
 "Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
@@ -679,7 +679,8 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 [units."Elite Infantry".damage_tables]
 
 [units."Elite Elf Scout".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + F + B,B", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -","(default stand still) - + A + flee",
+]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot+ spot",]
 
 [units."Elite Elf Scout".damage_tables]
@@ -688,7 +689,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Elk Cavalry".orders]
 "Fire orders" = [ "- + Throw Grenade",]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F+F+B", "(default slow) - + - +flee", "(default fast) - + flee +flee",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F+F+B", "(fast) F + F + F,B", "(default slow) - + - +flee", "(default fast) - + flee +flee",]
 
 [units."Elk Cavalry".damage_tables]
 "Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 memeber, psychic damage[d6]", "9: kill unit base",]
@@ -701,8 +702,8 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F
 "" = [ "",]
 
 [units."Tatto INK".orders]
-Fire = [ "fire + aim (stand still only)", "aim + fire (stand still only)", "fire + fire ", "load + aim (stand still only)", "load + load (stand still and slow only)",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
+Fire = [ "(stand-still) fire + aim", "(stand still) aim + fire", "(all) fire + fire ", "(stand still) load + aim", "(stand still, slow) load + load",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units."Tatto INK".damage_tables]
 "Heavily Damage" = [ "1: +1 on future damage", "2: -1 to hit, +1 to be hit", "3: cannot rotate right", "4: cannot rotate left", "5: Treat all B and A as illegal. Replace with -", "6: Fire!",]
@@ -711,7 +712,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."VelociRaptor Riders".orders]
 Movement = [ "(fast) 360$^0$ + F + F", "(fast) F + B + 360$^0$", "(fast) F + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) B + 360$^0$ + -", "(stand still) - + -  + -", "(stand still) A + F + -", "(stand still) 360$^0$ + - + -", "(stand still) A + A + F", "(fast) F + B + B,360$^0$", "(fast) F + F+ F", "(fast) F + F,360$^0$ + B,", "(default slow) - + - +flee", "(default fast) - + flee + flee",]
-"Fire Actions" = [ "fire(smg) + fire(smg)", "load(5)(smg) + - ", "fire(twin-gun) + - (stand still only)", "load(twin-gun) + -", "- + load(twin gun)", "- + aim (twin gun)", "- + fire(twin gun) (stand still only)",]
+"Fire Actions" = [ "fire(smg) + fire(smg)", "load(5)(smg) + - ", "(stand still) fire(twin-gun) + - ", "load(twin-gun) + -", "- + load(twin gun)", "- + aim (twin gun)", "(stand still) - + fire(twin gun)",]
 
 [units."VelociRaptor Riders".damage_tables]
 "Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1, stop bleeding, pcysic damage[1d6]",]
@@ -719,14 +720,14 @@ Movement = [ "(fast) 360$^0$ + F + F", "(fast) F + B + 360$^0$", "(fast) F + F +
 
 [units."Eagle Rider".orders]
 "Fire Orders" = [ "- + Fire (AT-rifle)", "- + load (AT-rifle)", "- + Throw Grenade", "- + aim (AT-rifle) (on ground only)",]
-Movement = [ "(fly, fast) 360$^0$ + F + F", "(fly, fast) 360$^0$,F + F + F,360$^0$", "(fly, fast) chase + chase + chase", "(fly, fast) 360$^0$,F + F + Land", "(on ground, slow) 360$^0$ + F + 360$^0$", "(on ground, slow) 360$^0$ + 360$^0$ + 360$^0$", "(on ground, slow) 360$^0$ + TakeOff + F", "(Default, on-ground slow) TakeOff + Flee + 360$^0$ ", "(Default, fly, fast) Flee + Flee + Flee",]
+Movement = [ "(fast flying) 360$^0$ + F + F", "(fast flying) 360$^0$,F + F + F,360$^0$", "(fast flying) chase + chase + chase", "(fast flying) 360$^0$,F + F + B[slow]", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + A[Fast flying] + F", "(Default slow) A[Fast flying] + Flee + 360$^0$ ", "(Default, fast flying) Flee + Flee + Flee",]
 
 [units."Eagle Rider".damage_tables]
 "Regular Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to future damage, psychic damage[d6]", "6+: killed",]
 "psychic damage" = [ "6+ shaken",]
 
 [units.Infantry.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee"]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Infantry.damage_tables]
@@ -734,8 +735,8 @@ Movement = [ "(fly, fast) 360$^0$ + F + F", "(fly, fast) 360$^0$,F + F + F,360$^
 "Psychic damage" = [ "4+ shaken",]
 
 [units."Elf Scout".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) A + 360$^0$ + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot + spot",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B ", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand still) - + A + flee",]
+"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(all) spot + spot",]
 
 [units."Elf Scout".damage_tables]
 "Regular Damage" = [ "0+ : unit killed",]

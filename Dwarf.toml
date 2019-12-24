@@ -402,7 +402,7 @@ name = "Fire Retardant Coating"
 template = "misc"
 range_ = ""
 angle = ""
-special = "Imporve fire-resistance by 1."
+special = "Improve fire-resistance by 1."
 damage = ""
 ap = ""
 assault_mod = ""
@@ -712,7 +712,7 @@ Movement = [ "(flying, slow) F + L + -", "(flying, slow) F + R + -", "(flying, s
 
 [units.Zeppelin.damage_tables]
 "Regular Damage" = [ "1-6: roll on lightly damage table", "7-12: +1 to future damage, roll on light damage table", "13: Zeppelin Killed.",]
-"Light damage" = [ "1: Array of enhached Musket is shaken", "2: Zeppelin Gun is Shaken", "3 Fear Ray is Shaken", "4-5: +1 on future damage", "6: Enigne on Fire (shaken movement and on fire)",]
+"Light damage" = [ "1: Array of enhached Musket is shaken", "2: Zeppelin Gun is Shaken", "3: Fear Ray is Shaken", "4-5: +1 on future damage", "6: Enigne on Fire (shaken movement and on fire)",]
 
 [units."Tamed Balrog".orders]
 Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
@@ -727,7 +727,7 @@ Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) -
 "" = [ "",]
 
 [units."Mini Zeppelin".orders]
-Fire = [ "Fire + -", "Load(2) + -", "Throw Grenade" + -]
+Fire = [ "Fire + -", "Load(2) + -", "Throw Grenade + -"]
 Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$ + 360$^0$ + 360$^0$", "(Default slow) 360$^0$ + flee + 360$^0$",]
 
 [units."Mini Zeppelin".damage_tables]
