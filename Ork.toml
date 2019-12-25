@@ -216,7 +216,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
-required_to_buy = ""
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, Unit base weapon"
 filters = [ "team",]
 
@@ -443,7 +443,7 @@ filters = [ "weapons", "team",]
 race = "Ork"
 name = "Awakened war hero"
 members = "1"
-size = "medium"
+size = "Medium"
 cost = "N.A. Only comes into play through an Elite ork 'not yet dead' ability"
 armor = ""
 type_ = "Bio, Infantry, Walks"

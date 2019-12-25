@@ -31,6 +31,49 @@ class Team():
         #print(members + type_+used)
         return members + type_+used
 
+    def find_upgrades(self, unit):
+        print()
+        for key, weapon in self.weapons.items():
+            if weapon.cost:
+                req = weapon.required_to_buy
+                req = req.split(':')
+                baseORmodel = req[0]
+                possible_unit_types = req[1].split('or')
+                if baseORmodel == 'Unit Base' and not unit.isReplacement:
+                    for p in possible_unit_types:
+                        p = p.strip()
+                        if p in unit.type_ or p in unit.name:
+                            print(key, 'possible addon for ', unit.name)
+
+                if baseORmodel == 'Model':
+                    for p in possible_unit_types:
+                        p = p.strip()
+                        p = p.split(' ')
+                        test = True
+                        for one in p:
+                            if not(one in unit.type_ or one in unit.name):
+                                test = False
+                                    
+                        if test:
+                            print(key, 'possible addon for ', unit.name)
+                            if unit.isReplacement:
+                                print('  1 possible upgrades')
+                            else:
+                                print('  ', unit.members, ' possible upgrades')
+
+        if not unit.isReplacement:
+            for key, other_u in self.units.items():
+                if other_u.isReplacement:
+                    replaces = other_u.replaces.split(':')
+                    if replaces[1].strip() in unit.name:
+                        print(key, 'possible upgrade for ', unit.name)
+                        print(unit.members, ' possible upgrades')
+
+
+    def link_all_upgrades(self):
+        for key, unit in self.units.items():
+            self.find_upgrades(unit)
+    
         
     def write_pdf(self):
 
