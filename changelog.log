@@ -14,6 +14,7 @@ Ork:
 	Speedhead: flamethrower ahead, shriek and speed cannon cover the rare
 	Cannonhead: CRAZY big badass cannon on wheels.
 	wings: slightly slower (in average 1.5 hexes per turn)
+	Not yet dead: became a model ability instead of a unit base ability.
 
 DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
@@ -23,6 +24,7 @@ DarkElf:
 	Queen XXX: got 2 in armor in back, acid cannon gained psycic damage on hit, and minor
 	acid cloud, and got excelent shot.
 	Added Queen XYX: A cheaper version of Queen XXX without a cannon
+	imp: now loads all weapons!
 	
 Dwarf:
 	AT-Gun may start hidden.

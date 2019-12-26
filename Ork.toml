@@ -62,7 +62,7 @@ assault_ap = "-2"
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = "Unit Base: Infantry or Grunt"
+required_to_buy = "Unit Base: Infantry or Grunt or Cavalry"
 type_ = "Infantry, 1handed Weapon"
 filters = [ "team",]
 
@@ -128,7 +128,7 @@ assault_ap = ""
 orders_gained = [ "(stand-still) load(2) + -", "(stand-still) - + load(2)", "(stand-still, slow) fire + -", "(stand-still, slow) - + fire",]
 orders_lost = [ "",]
 cost = "1cp"
-required_to_buy = "Unit Base: Infantry"
+required_to_buy = "Unit Base: Infantry or Cavalry"
 type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
@@ -172,7 +172,7 @@ assault_ap = ""
 orders_gained = [ "(stand-still, slow) - + Throw",]
 orders_lost = [ "",]
 cost = "4cp, 4xp"
-required_to_buy = "Unit Base: Infantry"
+required_to_buy = "Unit Base: Infantry or Cavalry"
 type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
@@ -576,7 +576,7 @@ type_ = "Bio, Infantry, Elite, Walks"
 isReplacement = "yes"
 replaces = "Model: Infantry or Grunt"
 weapons_input = [ "",]
-unit_special = "Unit base gains: Not Yet dead: after all 4 infantry in the unit base are killed, there is one that is not dead et afterall and becomes an {\\it awakened war hero} with the same equipment and orders available as the last infantry killed. Awakened War Hero does not retain any of the abilities from the unit base or the model, and has a seperate unit entry. See War Hero"
+unit_special = "Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an {\\it awakened war hero} with the same equipment as this model and orders available as the unit base this model is attached to . Awakened War Hero does not retain any of the abilities from the unit base or the model, and has a seperate model and unit base entry. See War Hero. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 bases in a hex), the war hero may spawn in one of the neighborhing hex which is furthest from an enemy unit"
 assault = "3/2/2/2"
 assault_die = "6+"
 assault_deflection_die = "6+"
