@@ -19,7 +19,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = ""
 required_to_buy = ""
-type_ = "Special Cavalery Breath Weapon"
+type_ = "Special Cavalry Breath Weapon"
 filters = [ "team",]
 
 [weapons."Mechanical Imp"]
@@ -28,7 +28,7 @@ name = "Mechanical Imp"
 template = "misc"
 range_ = ""
 angle = ""
-special = "Mechanical robotic imps helps all memeber in unit base to reload it's crossbows. Threat any crossbow or enhanced crossbow as always loaded."
+special = "Mechanical robotic imps helps all memeber in unit base to reload it's weapons. Threat any weapons as always loaded."
 damage = ""
 ap = ""
 assault_mod = ""
@@ -40,8 +40,8 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "4cp, 2xp"
-required_to_buy = "Unit base: Infantry OR Cavalery WITH crossbow or enhanced crossbow"
-type_ = "Infantry or Cavalery, Indepent equipment"
+required_to_buy = "Unit Base: Infantry or Cavalry"
+type_ = "Infantry or Cavalry, Indepent equipment"
 filters = [ "team",]
 
 [weapons.SMG]
@@ -62,7 +62,7 @@ assault_ap = ""
 orders_gained = [ "(stand-still, slow) fire + fire", "(stand-still, slow) load(5) + -",]
 orders_lost = [ "aim",]
 cost = "2cp"
-required_to_buy = "Unit base: Infantry"
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry or Cavalry, 1handed weapon"
 filters = [ "team",]
 
@@ -84,7 +84,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "4cp"
-required_to_buy = "Unit base: Infantry"
+required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry or Cavalry weapon. 2handed weapon"
 filters = [ "team",]
 
@@ -150,8 +150,8 @@ assault_ap = ""
 orders_gained = [ "(stand-still, slow) - + Throw Gas Grenade",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = "Unit base: Infantry or Cavalery"
-type_ = "Infantry or Cavalery, Unit base weapon."
+required_to_buy = "Unit Base: Infantry or Cavalry"
+type_ = "Infantry or Cavalry, Unit base weapon."
 filters = [ "team",]
 
 [weapons."Acid Cannon"]
@@ -220,6 +220,50 @@ required_to_buy = "Model: Elite Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
+[weapons."Breath Attack (Acid)"]
+race = "DarkElf"
+name = "Breath Attack (Acid)"
+template = "r"
+range_ = "3"
+angle = "*/-/-/-"
+special = "Any unit within normal range is covered in ACID. Any unit above normal range but within longrange is covered in Minor ACID. \\\\ In addition, all hexes within normal range: Area(5+) Poison[6]"
+damage = "N.A"
+ap = "N.A."
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Special Breath Weapon"
+filters = [ "team",]
+
+[weapons."Breath Attack (Shrapnell)"]
+race = "DarkElf"
+name = "Breath Attack (Shrapnell)"
+template = "r"
+range_ = "3"
+angle = "*/-/-/-"
+special = "Fire once at every model within LOS and range. (inlcuded all modifiers)"
+damage = "d6-2"
+ap = "-2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Specail Breath Attack"
+filters = [ "team",]
+
 [units.Assasin]
 race = "DarkElf"
 name = "Assasin"
@@ -250,7 +294,7 @@ cost = "1xp"
 armor = ""
 type_ = "Infantry, Bio, Elite, Walks"
 isReplacement = "yes"
-replaces = "Model: infantry or Dark RoboProsteric Elf"
+replaces = "Model: Infantry or Dark RoboProsthetic Elf"
 weapons_input = [ "Rifle",]
 unit_special = "Good shot: +1 to hit \\\\ Unit base gains Psychic resistance 1, while atleast one elite model is alive"
 assault = "2/2/2/2"
@@ -472,6 +516,27 @@ assault_deflection = "4/-/-/-"
 assault_special = "Poison[6], Fear[8] \\\\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
 filters = [ "weapons", "team",]
 
+[units."Mechanical Iron Dragon"]
+race = "DarkElf"
+name = "Mechanical Iron Dragon"
+members = "1"
+size = "Huge"
+cost = "12ip, 12xp"
+armor = "6/3/3/2"
+type_ = "Mechanical, Droid, Flying, Walks"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "Breath Attack (Acid)", "Breath Attack (Shrapnell)",]
+unit_special = "Fire Resistance 1"
+assault = "12/8/8/4"
+assault_die = "5+"
+assault_deflection_die = "6+"
+assault_damage = "d6+3"
+assault_ap = "2"
+assault_deflection = "12/8/8/4"
+assault_special = ""
+filters = [ "weapons", "team",]
+
 [abilities.Hidden]
 race = "DarkElf"
 name = "Hidden"
@@ -479,7 +544,7 @@ special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor ca
 orders_gained = [ "(stand still) Reveal + - + - ", "(slow) - + Reveal + Chase", "(stand-still, slow or crawl) Hide[swamp] + - + -",]
 orders_lost = [ "",]
 cost = "4xp"
-required_to_buy = "Infantry base"
+required_to_buy = "Unit Base: Infantry"
 operational_by = "1 choosen infantry base"
 filters = [ "team",]
 
@@ -580,3 +645,11 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Regular damage" = [ "1-5: Lightly Damaged", "6-8: Crittical Damaged, +1 on all future damage",]
 "Lightly Damage" = [ "1-3: Shaken", "4-6: +1 on future damage",]
 "Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in agony 0 step", "3: rotates left in agony 1 and in agony 3", "4: only stand-still available", "5: unit is covered in acid", "6: unit covered in acid x2",]
+
+[units."Mechanical Iron Dragon".orders]
+Movement = [ "(slow) F + - + -", "(slow) L + F + -", "(slow) L + L + F", "(slow) R + F + -", "(slow) R + R + F", "(slow) 360$^0$ + - + -", "(slow) A[slow, flying]+ F + 360$^0$", "(slow, flying) 360$^0$ + F + -", "(slow, flying) F + B[slow] + -", ]
+"Fire Orders" = [ "(slow) Breath Attack + - ", "(slow) - + Breath Attack", "(all) load Acid+ - ", "(all) load Shrapnell + - ",]
+
+[units."Mechanical Iron Dragon".damage_tables]
+"Regular Damage" = [ "1-5: +1 on future damage", "6-10: +1 on future damage, roll d6 on light damage", "11: +2 on future damage, roll d6 on lihgt damage", "12: as 11, and reduce assault and assault deflection by 3.", "13: unit killed",]
+"Light damage" = [ "1-4: +1 on future damage", "5: unit shaken.", "6: -1 on assault and assault deflection",]
