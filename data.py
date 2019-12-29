@@ -33,12 +33,14 @@ class Team():
 
     def find_upgrades(self, unit):
         print()
-        for key, weapon in self.weapons.items():
+        all = self.weapons.copy()
+        all.update(self.abilities)
+        for key, weapon in all.items():
             if weapon.cost:
                 req = weapon.required_to_buy
                 req = req.split(':')
                 baseORmodel = req[0]
-                possible_unit_types = req[1].split('or')
+                possible_unit_types = req[1].split(' or ')
                 if baseORmodel == 'Unit Base' and not unit.isReplacement:
                     for p in possible_unit_types:
                         p = p.strip()
@@ -57,17 +59,20 @@ class Team():
                         if test:
                             print(key, 'possible addon for ', unit.name)
                             if unit.isReplacement:
-                                print('  1 possible upgrades')
+                                print('  1 possible upgrades per model of this type')
                             else:
                                 print('  ', unit.members, ' possible upgrades')
 
         if not unit.isReplacement:
             for key, other_u in self.units.items():
                 if other_u.isReplacement:
+                    
                     replaces = other_u.replaces.split(':')
-                    if replaces[1].strip() in unit.name:
-                        print(key, 'possible upgrade for ', unit.name)
-                        print(unit.members, ' possible upgrades')
+                    replaces = replaces[1].split(' or ')
+                    for r in replaces:
+                         if r.strip() in unit.name:
+                            print(key, 'possible upgrade for ', unit.name)
+                            print('  ', unit.members, ' possible upgrades')
 
 
     def link_all_upgrades(self):
