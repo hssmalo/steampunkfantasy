@@ -281,7 +281,7 @@ assault_special = ""
 assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-cost = "8cp"
+cost = "6cp"
 required_to_buy = "Model: Elite Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
@@ -647,6 +647,27 @@ assault_deflection = "1"
 assault_special = "Pre-Assault: throw fire (from lance): roll a die (once for the entire unit), at 5+ set one enemy unit on fire, and if successful, you may retreat from the assault as the Pre-assault retreat ability"
 filters = [ "weapons", "team",]
 
+[units.Illusion]
+race = "Elf"
+name = "Illusion"
+members = "4"
+size = "Medium"
+cost = "1cp"
+armor = ""
+type_ = "Illusion"
+isReplacement = ""
+replaces = ""
+weapons_input = [ "",]
+unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 5 or above, for which the illusion is given away and is removed from play. Further, when firing your real infantry, you do not have to tell the enemy which unit is firing. Thus the enemy do not know which are illusions and which are real. "
+assault = "1/-/-/-"
+assault_die = ""
+assault_deflection_die = "5+"
+assault_damage = "d6 Psycic Damage"
+assault_ap = "N.A."
+assault_deflection = ""
+assault_special = ""
+filters = [ "weapons", "team",]
+
 [units.E34.orders]
 Fire = [ "(all) - + Fire", "(stand still, slow)- + Aim", "(stand still, slow) - + Load",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
@@ -679,8 +700,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 [units."Elite Infantry".damage_tables]
 
 [units."Elite Elf Scout".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + F + B,B", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -","(default stand still) - + A + flee",
-]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + F + B,B", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand still) - + A + flee",]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot+ spot",]
 
 [units."Elite Elf Scout".damage_tables]
@@ -727,7 +747,7 @@ Movement = [ "(fast flying) 360$^0$ + F + F", "(fast flying) 360$^0$,F + F + F,3
 "psychic damage" = [ "6+ shaken",]
 
 [units.Infantry.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee"]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee",]
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Infantry.damage_tables]
@@ -749,3 +769,10 @@ Fire = [ "Load(1) + Load(1)", "Fire Burst(5) + Load(1)", "Load(1) + Fire Burst(5
 [units."Pegasus Rider".damage_tables]
 "Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1 model",]
 "Psycic Damage" = [ "5+: Unit shaken",]
+
+[units.Illusion.orders]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee",]
+"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
+
+[units.Illusion.damage_tables]
+"Regular Damage" = [ "1-4: Eliminate 1 model", "5+: unit base destroyed",]
