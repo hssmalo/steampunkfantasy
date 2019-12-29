@@ -392,7 +392,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "1cp"
-required_to_buy = "Unit Base: Infantry"
+required_to_buy = "Unit Base: Infantry or SteamPowerArmor"
 type_ = "Infantry Independent Equipment"
 filters = [ "team",]
 
@@ -615,7 +615,7 @@ members = "4"
 size = "Medium"
 cost = "4mp, 2ip, 4cp"
 armor = "1/1/1/1"
-type_ = "Bio, SteamPowerArmor Infantry"
+type_ = "Bio, SteamPowerArmor"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "Heavy Musket",]
@@ -678,7 +678,7 @@ special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor ca
 orders_gained = [ "(stand still) Reveal + - + - ",]
 orders_lost = [ "",]
 cost = "8xp"
-required_to_buy = "AT-gun"
+required_to_buy = "Unit Base: AT-gun"
 operational_by = "1 AT-gun"
 filters = [ "team",]
 
