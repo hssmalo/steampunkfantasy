@@ -336,7 +336,7 @@ name = "Camuflouflage"
 template = "misc"
 range_ = ""
 angle = ""
-special = "Unit base gains camuflouge[forrest][-1]"
+special = "Unit base gains camuflouflage[forrest][-1]"
 damage = ""
 ap = ""
 assault_mod = ""
@@ -652,13 +652,13 @@ race = "Elf"
 name = "Illusion"
 members = "4"
 size = "Medium"
-cost = "1cp"
+cost = "2cp"
 armor = ""
 type_ = "Illusion"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "",]
-unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, when firing your real infantry, you do not have to tell the enemy which unit is firing. Thus the enemy do not know which are illusions and which are real. You may have the illusion look like any infantry you like"
+unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. \\\\ Further, the illusion is matched with one real infantry base, and always stays in the same hex as the real infantry, and the illusion looks exactly like the given real infantry (except you know it is not). \\\\ The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[stand-still][-2], Take Cover[stand-still][-3], and camufloulage[forrest][-1] as appropritate \\\\ Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is removed from play. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away. Then, remove it from play"
 assault = "1/-/-/-"
 assault_die = ""
 assault_deflection_die = "5+"
@@ -670,7 +670,7 @@ filters = [ "weapons", "team",]
 
 [units.E34.orders]
 Fire = [ "(all) - + Fire", "(stand still, slow)- + Aim", "(stand still, slow) - + Load",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
+Movement = ["(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units.E34.damage_tables]
 "Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
@@ -771,7 +771,7 @@ Fire = [ "Load(1) + Load(1)", "Fire Burst(5) + Load(1)", "Load(1) + Fire Burst(5
 "Psycic Damage" = [ "5+: Unit shaken",]
 
 [units.Illusion.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee",]
+"Movement Orders" = [ "follow + follow + follow"]
 
 [units.Illusion.damage_tables]
 "Regular Damage" = [ "0-3: Eliminate 1 model", "4+: unit base destroyed",]
