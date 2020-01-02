@@ -41,7 +41,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
 required_to_buy = "Model: Elite SteamPowerArmor"
-type_ = "SteamPowerArmor, 2handed weapon."
+type_ = "SteamPowerArmor, 2handed weapon"
 filters = [ "team",]
 
 [weapons."Zeppelin gun"]
@@ -95,7 +95,7 @@ template = ""
 range_ = "3"
 angle = "*/-/-/-"
 special = "Area(1hex, 5+)"
-damage = "d6"
+damage = "d6-1"
 ap = "-1"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -239,7 +239,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Model: Elite SteamPowerArmor"
-type_ = "Vehicle or SteamPowerArmor Ray Weapon"
+type_ = "SteamPowerArmor, 2handed weapon"
 filters = [ "team",]
 
 [weapons."Enhanced Heavy Musket"]
@@ -393,7 +393,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "1cp"
 required_to_buy = "Unit Base: Infantry or SteamPowerArmor"
-type_ = "Infantry Independent Equipment"
+type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
 [weapons."Fire Retardant Coating"]
@@ -414,8 +414,8 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "1cp"
-required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry independent equipment"
+required_to_buy = "Unit Base: Infantry or SteamPowerArmor"
+type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
 [weapons."Poison Gas Grenade"]
@@ -674,6 +674,7 @@ filters = [ "weapons", "team",]
 [abilities.Hidden]
 race = "Dwarf"
 name = "Hidden"
+type_ = "Vehicle, Trained Ability"
 special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of stand-still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than stand-still or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit base gains (hidden or not): Camuflage[hill][-1]"
 orders_gained = [ "(stand still) Reveal + - + - ",]
 orders_lost = [ "",]
@@ -688,7 +689,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 
 [units."Dwarf Infantry".damage_tables]
 "Psychic Damage" = [ "4+: shaken",]
-"Regular Damage" = [ "1-5: kill 1 member", "6-9: kill 1 member, roll on psychic damage[d6]", "10: kill all 4 members",]
+"Regular Damage" = [ "1-5: kill 1 model", "6-9: kill 1 model, roll on psychic damage[d6]", "10: Unit Base destoryed",]
 
 [units.GunBlasterWagon.orders]
 Fire = [ "(all) load + -", "(all) fire + -",]
@@ -727,7 +728,7 @@ Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) -
 "" = [ "",]
 
 [units."Mini Zeppelin".orders]
-Fire = [ "Fire + -", "Load(2) + -", "Throw Grenade + -"]
+Fire = [ "Fire + -", "Load(2) + -", "Throw Grenade + -",]
 Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$ + 360$^0$ + 360$^0$", "(Default slow) 360$^0$ + flee + 360$^0$",]
 
 [units."Mini Zeppelin".damage_tables]
@@ -736,7 +737,7 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 
 [units."Dwarf AT-gun".orders]
 Fire = [ "(stand-still) Fire + -", "(stand-still) Aim + -", "(stand-still) Load + -",]
-Movement = [ "(slow) 360$^0$ + F + B[Rest]", "(Rest) - + - + A[stand-still]", "(stand-still) - + - + -", "(stand-still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default stand-still) - + - + -",]
+Movement = [ "(slow) - + 360$^0$ + B[Rest]", "(Rest) - + - + A[stand-still]", "(stand-still) - + - + -", "(stand-still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default stand-still) - + - + -",]
 
 [units."Dwarf AT-gun".damage_tables]
 "Psychic damage" = [ "4+: unit base shaken",]
@@ -748,7 +749,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 
 [units.SteamPowerArmor.damage_tables]
 "Psychic damage" = [ "5+: unit base shaken",]
-"Regular Damage" = [ "1-5: 1 member killed", "6-9: 1 member killed, roll on psychic damage[d6]", "10+: all 4 members killed",]
+"Regular Damage" = [ "1-5: 1 model killed", "6-9: 1 model killed, roll on psychic damage[d6]", "10+: Unit Base Destroyed",]
 
 [units.Dw42.orders]
 Fire = [ "(stand-still) load + -", "fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - ",]
@@ -763,4 +764,4 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + - + -",]
 
 [units."Assault Bots".damage_tables]
-"Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 memeber",]
+"Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 model",]

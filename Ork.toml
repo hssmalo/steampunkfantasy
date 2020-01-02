@@ -63,7 +63,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry or Grunt or Cavalry"
-type_ = "Infantry, 1handed Weapon"
+type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
 [weapons."Clockwork Power Spear"]
@@ -195,7 +195,7 @@ orders_gained = [ "(stand still) B[Setup] + - + -", "(setup): - + - + A[stand-st
 orders_lost = [ "(stand-still) load", "(stand-still) fire",]
 cost = "12cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, Unit base weapon."
+type_ = "Infantry, Unit Base weapon"
 filters = [ "team",]
 
 [weapons."Hand Held Cannon"]
@@ -217,7 +217,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, Unit base weapon"
+type_ = "Infantry, Unit Base weapon"
 filters = [ "team",]
 
 [weapons."War Drum"]
@@ -238,8 +238,8 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2xp"
-required_to_buy = "Model: Infantry"
-type_ = "Misc infantry equipment"
+required_to_buy = "Model: Elite Infantry"
+type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
 [weapons."Harpoon Gun"]
@@ -248,7 +248,7 @@ name = "Harpoon Gun"
 template = "r"
 range_ = "5"
 angle = "*/*/*/*"
-special = "If one single-member unit of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0. Keep the orientation of the unit. If there are multiple hexes which you can move the target to move it towards you, you may choose where to move the enemy. If this movement forces the target to move into a hex occupied by you, carry out an assault. If this movement turns the hex into an overcrowded hex, or an impassable hex, do not move target unit but turn it into a shaken unit instead. If the enemy is flying, move the target to the ground"
+special = "If one single-model unit of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0. Keep the orientation of the unit. If there are multiple hexes which you can move the target to move it towards you, you may choose where to move the enemy. If this movement forces the target to move into a hex occupied by you, carry out an assault. If this movement turns the hex into an overcrowded hex, or an impassable hex, do not move target unit but turn it into a shaken unit instead. If the enemy is flying, move the target to the ground"
 damage = "d6-2"
 ap = "-2"
 assault_mod = ""
@@ -261,7 +261,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "4cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry vehicle/tank weapon: Unit Base Weapon"
+type_ = "Infantry vehicle/tank weapon, Unit Base weapon"
 filters = [ "team",]
 
 [weapons."Grenade Sling"]
@@ -283,7 +283,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "6cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, 1handed weapon."
+type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
 [weapons."Pistol with Spear"]
@@ -298,14 +298,14 @@ ap = "-2"
 assault_mod = "unmodified"
 assault_deflection_mod = "-"
 assault_deflection_die_set_to = "unmodified"
-assault_dam_set_to = "d8"
+assault_dam_set_to = "d10"
 assault_special = "Cunning[1 for 2]"
 assault_ap = "-2"
 orders_gained = [ "Load(2)",]
 orders_lost = [ "",]
 cost = "1cp"
 required_to_buy = "Model: Elite Infantry or Elite Cavalry"
-type_ = "Elite Infantry Weapon"
+type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
 [weapons."Ork Musket"]
@@ -450,7 +450,7 @@ type_ = "Bio, Infantry, Walks"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "",]
-unit_special = "Has same orders available as the unit base it awakened from, and the same weapons as the last surviving member of the unit base"
+unit_special = "Has same orders available as the unit base it awakened from, and the same weapons as the last surviving model of the unit base"
 assault = "6/3/3/3"
 assault_die = "6+"
 assault_deflection_die = "6+"
@@ -632,7 +632,7 @@ filters = [ "weapons", "team",]
 "Movement orders" = [ "- + - + Chase",]
 
 [units.Grunt.damage_tables]
-"Regular damage" = [ "1-5: kill 1 member", "6-8: kill 1 member, roll on psychic damage[d6]", "9+: destroy unit base",]
+"Regular damage" = [ "1-5: kill 1 model", "6-8: kill 1 model, roll on psychic damage[d6]", "9+: destroy unit base",]
 "Psychic damage" = [ "4+: unit base shaken",]
 
 [units."Awakened war hero".orders]

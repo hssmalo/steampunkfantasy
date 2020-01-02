@@ -85,7 +85,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "4cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry or Cavalry weapon. 2handed weapon"
+type_ = "Infantry or Cavalry weapon, 2handed weapon"
 filters = [ "team",]
 
 [weapons.Rifle]
@@ -151,7 +151,7 @@ orders_gained = [ "(stand-still, slow) - + Throw Gas Grenade",]
 orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry or Cavalry"
-type_ = "Infantry or Cavalry, Unit base weapon."
+type_ = "Infantry or Cavalry, Unit base weapon"
 filters = [ "team",]
 
 [weapons."Acid Cannon"]
@@ -540,6 +540,7 @@ filters = [ "weapons", "team",]
 [abilities.Hidden]
 race = "DarkElf"
 name = "Hidden"
+type_ = "Infantry, Trained Ability"
 special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden version of all movement orders: hidden stand-still, hidden slow and hidden crawl,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. Replace the infantry base with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. \\\\ \\ \\\\ You stay hidden until you reveal your self, have a speed of hidden-slow in a clear hex with line of sight of enemy, or in aftermath phase if an enemy is within point blank range, or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Hide action: remove your unit from the board, replace it with a hidden token. Only works if you are in swamp terrain. \\\\ Reveal: place your infantry within 2 hexes of the hidden token and gain reveal bonuses.\\\\ Infiltrate: may start up to 2 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit base gains (hidden or not): Camuflage[swamp][-1]"
 orders_gained = [ "(stand still) Reveal + - + - ", "(slow) - + Reveal + Chase", "(stand-still, slow or crawl) Hide[swamp] + - + -",]
 orders_lost = [ "",]
@@ -647,9 +648,9 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in agony 0 step", "3: rotates left in agony 1 and in agony 3", "4: only stand-still available", "5: unit is covered in acid", "6: unit covered in acid x2",]
 
 [units."Mechanical Iron Dragon".orders]
-Movement = [ "(slow) F + - + -", "(slow) L + F + -", "(slow) L + L + F", "(slow) R + F + -", "(slow) R + R + F", "(slow) 360$^0$ + - + -", "(slow) A[slow, flying]+ F + 360$^0$", "(slow, flying) 360$^0$ + F + -", "(slow, flying) F + B[slow] + -", ]
+Movement = [ "(slow) F + - + -", "(slow) L + F + -", "(slow) L + L + F", "(slow) R + F + -", "(slow) R + R + F", "(slow) 360$^0$ + - + -", "(slow) A[slow, flying]+ F + 360$^0$", "(slow, flying) 360$^0$ + F + -", "(slow, flying) F + B[slow] + -",]
 "Fire Orders" = [ "(slow) Breath Attack + - ", "(slow) - + Breath Attack", "(all) load Acid+ - ", "(all) load Shrapnell + - ",]
 
 [units."Mechanical Iron Dragon".damage_tables]
 "Regular Damage" = [ "1-5: +1 on future damage", "6-10: +1 on future damage, roll d6 on light damage", "11: +2 on future damage, roll d6 on lihgt damage", "12: as 11, and reduce assault and assault deflection by 3.", "13: unit killed",]
-"Light damage" = [ "1-4: +1 on future damage", "5: -1 on assault and assault deflection","6: unit shaken.",]
+"Light damage" = [ "1-4: +1 on future damage", "5: -1 on assault and assault deflection", "6: unit shaken.",]

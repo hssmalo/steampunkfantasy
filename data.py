@@ -35,17 +35,26 @@ class Team():
         print()
         all = self.weapons.copy()
         all.update(self.abilities)
+        upgrades = {}
+        
         for key, weapon in all.items():
             if weapon.cost:
                 req = weapon.required_to_buy
                 req = req.split(':')
                 baseORmodel = req[0]
                 possible_unit_types = req[1].split(' or ')
+                
+
+                type_ = weapon.type_.split(',')[1].strip()
+
                 if baseORmodel == 'Unit Base' and not unit.isReplacement:
                     for p in possible_unit_types:
                         p = p.strip()
                         if p in unit.type_ or p in unit.name:
                             print(key, 'possible addon for ', unit.name)
+                            upgrades.setdefault('Unit Base', {})
+                            upgrades['Unit Base'].setdefault(type_, [])
+                            upgrades['Unit Base'][type_].append(key)
 
                 if baseORmodel == 'Model':
                     for p in possible_unit_types:
@@ -58,6 +67,10 @@ class Team():
                                     
                         if test:
                             print(key, 'possible addon for ', unit.name)
+                            upgrades.setdefault('Model Weapon', {})
+                            upgrades['Model Weapon'].setdefault(type_, [])
+                            upgrades['Model Weapon'][type_].append(key)
+
                             if unit.isReplacement:
                                 print('  1 possible upgrades per model of this type')
                             else:
@@ -73,12 +86,23 @@ class Team():
                          if r.strip() in unit.name:
                             print(key, 'possible upgrade for ', unit.name)
                             print('  ', unit.members, ' possible upgrades')
+                            upgrades.setdefault('Model Replacement', {})
+                            upgrades['Model Replacement'].setdefault(key, {})
+                            upgrades['Model Replacement'][key] = unit.members
+                            
+        return upgrades
+
 
 
     def link_all_upgrades(self):
-        for key, unit in self.units.items():
-            self.find_upgrades(unit)
-    
+        all_upgrades = {}
+        for unit_name in sorted(self.units, key=self.unit_sort):
+            unit = self.units[unit_name]
+            
+            if self.find_upgrades(unit):
+                all_upgrades[unit_name] = self.find_upgrades(unit)
+
+        return all_upgrades
         
     def write_pdf(self):
 
@@ -332,7 +356,8 @@ class Ability():
         self.team = team
         self.race = team.name
         self.name = name
-
+        self.type_ = ''
+        
         self.special = ''
 
         self.orders_gained = []

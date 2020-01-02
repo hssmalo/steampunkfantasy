@@ -107,7 +107,7 @@ orders_gained = [ "(stand-still, slow, fast) - + throw grenade",]
 orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, Independent equipment"
+type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
 [weapons.SMG]
@@ -239,7 +239,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
 required_to_buy = "Unit Base: Vehicle"
-type_ = "Vehicle, Independent equipment"
+type_ = "Vehicle, Independent Equipment"
 filters = [ "team",]
 
 [weapons."Gattle Gun"]
@@ -658,13 +658,13 @@ type_ = "Illusion"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "",]
-unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 5 or above, for which the illusion is given away and is removed from play. Further, when firing your real infantry, you do not have to tell the enemy which unit is firing. Thus the enemy do not know which are illusions and which are real. "
+unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, when firing your real infantry, you do not have to tell the enemy which unit is firing. Thus the enemy do not know which are illusions and which are real. You may have the illusion look like any infantry you like"
 assault = "1/-/-/-"
 assault_die = ""
 assault_deflection_die = "5+"
 assault_damage = "d6 Psycic Damage"
 assault_ap = "N.A."
-assault_deflection = ""
+assault_deflection = "-"
 assault_special = ""
 filters = [ "weapons", "team",]
 
@@ -751,7 +751,7 @@ Movement = [ "(fast flying) 360$^0$ + F + F", "(fast flying) 360$^0$,F + F + F,3
 "Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Infantry.damage_tables]
-"Regular damage" = [ "0-6: kill 1 member", "7-8: kill 1 member, psychic damage[d6]", "9: kill all 4",]
+"Regular damage" = [ "0-6: kill 1 model", "7-8: kill 1 model, psychic damage[d6]", "9: kill all 4",]
 "Psychic damage" = [ "4+ shaken",]
 
 [units."Elf Scout".orders]
@@ -772,7 +772,6 @@ Fire = [ "Load(1) + Load(1)", "Fire Burst(5) + Load(1)", "Load(1) + Fire Burst(5
 
 [units.Illusion.orders]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + load", "(stand-still only) load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
 
 [units.Illusion.damage_tables]
-"Regular Damage" = [ "1-4: Eliminate 1 model", "5+: unit base destroyed",]
+"Regular Damage" = [ "0-3: Eliminate 1 model", "4+: unit base destroyed",]
