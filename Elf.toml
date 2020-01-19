@@ -400,13 +400,13 @@ race = "Elf"
 name = "Bear Rider"
 members = "1"
 size = "Medium"
-cost = "2mp, 8xp"
+cost = "2mp, 6xp"
 armor = "2/1/1/1"
 type_ = "Bio, Cavalry, Walks"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "MiniGun",]
-unit_special = ""
+unit_special = "Poison Resistance 2"
 assault = "6/4/2/1"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -574,7 +574,7 @@ type_ = "Bio, Flying, Cavalery, Walks"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "AT-rifle", "Grenade",]
-unit_special = "If in the air, it may choose to assault if entering same hex as an enemy. If so, regardless of the outcome, the eagle lands. The following round the orders is replaced by the default if illegal. \\\\ In chase, the eagle may choose to land for assault if it wishes. \\\\ Good Shot[At-Rifle] +1 to hit"
+unit_special = "If in the air, it may choose to assault if entering same hex as an enemy. If so, regardless of the outcome, the eagle lands. The following round the orders is replaced by the default if illegal. \\\\ In chase, the eagle may choose to land for assault if it wishes. \\\\ Good Shot[At-Rifle] +1 to hit\\\\ Poison Resistance 2"
 assault = "6/6/6/4"
 assault_die = "3+"
 assault_deflection_die = "3+"
@@ -658,7 +658,7 @@ type_ = "Illusion"
 isReplacement = ""
 replaces = ""
 weapons_input = [ "",]
-unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. \\\\ Further, the illusion is matched with one real infantry base, and always stays in the same hex as the real infantry, and the illusion looks exactly like the given real infantry (except you know it is not). \\\\ The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[stand-still][-2], Take Cover[stand-still][-3], and camufloulage[forrest][-1] as appropritate \\\\ Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is removed from play. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away. Then, remove it from play"
+unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. \\\\ Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it where ever the infantry goes. \\\\ The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[stand-still][-2], Take Cover[stand-still][-3], and camufloulage[forrest][-1] as appropritate \\\\ Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not given removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away. \\\\ If the illusion is not in a hex with a friendly infantry, it has only chase order available"
 assault = "1/-/-/-"
 assault_die = ""
 assault_deflection_die = "5+"
@@ -771,7 +771,7 @@ Fire = [ "Load(1) + Load(1)", "Fire Burst(5) + Load(1)", "Load(1) + Fire Burst(5
 "Psycic Damage" = [ "5+: Unit shaken",]
 
 [units.Illusion.orders]
-"Movement Orders" = [ "follow + follow + follow"]
+"Movement Orders" = [ "- + chase + chase"]
 
 [units.Illusion.damage_tables]
 "Regular Damage" = [ "0-3: Eliminate 1 model", "4+: unit base destroyed",]

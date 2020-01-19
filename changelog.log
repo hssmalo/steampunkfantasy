@@ -15,6 +15,7 @@ Ork:
 	Cannonhead: CRAZY big badass cannon on wheels.
 	wings: slightly slower (in average 1.5 hexes per turn)
 	Not yet dead: became a model ability instead of a unit base ability.
+	WarDrum: now an elite model equipment.
 
 DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
@@ -24,7 +25,8 @@ DarkElf:
 	Queen XXX: got 2 in armor in back, acid cannon gained psycic damage on hit, and minor
 	acid cloud, and got excelent shot.
 	Added Queen XYX: A cheaper version of Queen XXX without a cannon
-	imp: now loads all weapons!
+	Imp: now loads all weapons!
+	Added Mechanical Iron Dragon
 	
 Dwarf:
 	AT-Gun may start hidden.
@@ -45,3 +47,9 @@ Elf:
 	All Elf infantry can buy camuflouge upgrade. cost 2cp, 2xp.
 	Enhanced Rifles which gives +1 range and +1 hit, cost 2cp
 	Elk Cavlary now has access to F + F + F,B as fast to model sprints
+	Sniper Rifle now cost 6cp instead of 8cp
+	Added illusion
+	Adjusted Illusions
+	Illusions can mimic
+	Bearrider got poison resistance 2 and cost 3xp
+	Eagle rider får poison resistancd 2 den også
