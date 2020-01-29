@@ -13,7 +13,7 @@ assault_mod = "unmodified"
 assault_deflection_mod = "-"
 assault_deflection_die_set_to = "n.a"
 assault_dam_set_to = "d6+1"
-assault_special = "Fire"
+assault_special = "Fire, Minor Acid, Poison[4]"
 assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
@@ -125,7 +125,7 @@ assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
 assault_special = ""
 assault_ap = ""
-orders_gained = [ "(stand-still) load(2) + -", "(stand-still) - + load(2)", "(stand-still, slow) fire + -", "(stand-still, slow) - + fire",]
+orders_gained = [ "(stand-still) Load(2) + -", "(stand-still) - + Load(2)", "(stand-still, slow) fire + -", "(stand-still, slow) - + fire",]
 orders_lost = [ "",]
 cost = "1cp"
 required_to_buy = "Unit Base: Infantry or Cavalry"
@@ -160,7 +160,7 @@ name = "Pyro"
 template = "r"
 range_ = "1"
 angle = "*/*/*/*"
-special = "Choose one hex within range, and each model tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire. \\\\ Don't need to be loaded to be used.\\\\ Bonus weapon, can be added to any other combination of weapons.\\\\ Instead of targeting an enemy unit, you may target the hex you are standing in and place a the hex on fire.\\\\ In addition, the unit base gains Fire Resistance 2"
+special = "Choose one hex within range, and each model tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire. \\\\ Don't need to be loaded to be used.\\\\ Bonus weapon, can be added to any other combination of weapons.\\\\ Instead of targeting an enemy unit, you may target the hex you are standing in and place the hex on fire.\\\\ In addition, the unit base gains Fire Resistance 2"
 damage = "special"
 ap = "N.A."
 assault_mod = ""
@@ -191,8 +191,8 @@ assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
 assault_special = ""
 assault_ap = ""
-orders_gained = [ "(stand still) B[Setup] + - + -", "(setup): - + - + A[stand-still]", "(setup): load MG + - ", "(setup): fire + -",]
-orders_lost = [ "(stand-still) load", "(stand-still) fire",]
+orders_gained = [ "(stand still) B[Setup] + - + -", "(setup): - + - + A[stand-still]", "(setup): Load MG + - ", "(setup): fire + -",]
+orders_lost = [ "(stand-still) Load", "(stand-still) fire",]
 cost = "12cp"
 required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, Unit Base weapon"
@@ -226,7 +226,7 @@ name = "War Drum"
 template = "a"
 range_ = ""
 angle = ""
-special = "Allows any unit with 'chase' orders to follow this unit instead of chasing the enemy. If you choose to follow, move one hex towards any unit with war drums instead of the closest enemy unit. The choise can be made after orders are revealed."
+special = "Allows any unit with 'chase' orders to follow this unit instead of chasing the enemy. If you choose to follow, move one hex towards any unit with war drums instead of the closest enemy unit. The choise can be made after orders are revealed.\\\\ Unit Base gains Terror[6][range 1]"
 damage = ""
 ap = ""
 assault_mod = ""
@@ -270,7 +270,7 @@ name = "Grenade Sling"
 template = "r"
 range_ = "3"
 angle = "*/*/*/*"
-special = "Choose one hex within normal range, area(6+) \\\\ AP not reduced by distance\\\\ If combined with the pyro, the pyro gains standard range of 3 instead of 1"
+special = "Choose one hex within normal range, area(6+) \\\\ If combined with the pyro, the pyro gains standard range of 3 instead of 1"
 damage = "d6"
 ap = "1"
 assault_mod = ""
@@ -337,7 +337,7 @@ template = "r"
 range_ = "2"
 angle = "-/-/*/*"
 special = "Burst(5) Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
-damage = "d4-2+ d6 psycic damage"
+damage = "d4-2+ d6 psychic damage"
 ap = "-2"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -380,7 +380,7 @@ name = "Flamethrower"
 template = "r"
 range_ = "1"
 angle = "*/-/-/-"
-special = "Fire at all hexes possible simultaniously: Area(4+) at point blank range, Area(5+) in the hex at long range directly ahead, and Area(6+) for the two hexes which is on long range and on edge of firing arc. \\\\ Any target unit effected atleast once is set FIRE. \\\\ Limited Ammo: May be fired a maxium of 3 times. \\\\ Allways treated as loaded"
+special = "Fire at all hexes possible simultaniously: Area(4+) at point blank range, Area(5+) in the hex at long range directly ahead, and Area(6+) for the two hexes which is on long range and on edge of firing arc. \\\\ Any target unit effected atleast once is set FIRE. \\\\ Limited Ammo: May be fired a maximum of 3 times. \\\\ Starts the game with all 3 ammo loaded"
 damage = "d8"
 ap = "-1"
 assault_mod = ""
@@ -436,7 +436,7 @@ assault_deflection_die = ""
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = ""
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
 filters = [ "weapons", "team",]
 
 [units."Awakened war hero"]
@@ -457,7 +457,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6"
 assault_ap = ""
 assault_deflection = "2/-/-/-"
-assault_special ="Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 6 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special ="Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 6 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
 filters = [ "weapons", "team",]
 
 [units.HammerHead]
@@ -478,7 +478,7 @@ assault_deflection_die = "6+"
 assault_damage = "d8+3/d8/d8/d8"
 assault_ap = "5/-2/-2/-2"
 assault_deflection = "12/2/2/2"
-assault_special ="Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead"
+assault_special ="Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead"
 filters = [ "weapons", "team",]
 
 [units."Warg Rider"]
@@ -499,7 +499,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = ""
 assault_deflection = "2/2/1/1"
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
 filters = [ "weapons", "team",]
 
 [units.Troll]
@@ -520,7 +520,7 @@ assault_deflection_die = ""
 assault_damage = "d6+12"
 assault_ap = ""
 assault_deflection = ""
-assault_special = "Reduce damage by 2 for each successfull assault deflection rolled by enemy"
+assault_special = "Fear[8]\\\\ Reduce damage by 2 for each successfull assault deflection rolled by enemy1"
 filters = [ "weapons", "team",]
 
 [units.Halftrack]
@@ -541,7 +541,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-1"
 assault_ap = ""
 assault_deflection = "2/-/-/-"
-assault_special = "May unload 1 infantry or grunt as part of assault"
+assault_special = "May unload 1 infantry or grunt as part of assault in pre-assault phase. The unloaded unit joins the assault."
 filters = [ "weapons", "team",]
 
 [units."Ork Infantry"]
@@ -562,7 +562,7 @@ assault_deflection_die = ""
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = ""
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
 filters = [ "weapons", "team",]
 
 [units."Elite Ork Infantry"]
@@ -583,7 +583,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6"
 assault_ap = "-2"
 assault_deflection = "1/-/-/-"
-assault_special = "Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process."
+assault_special = "Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process."
 filters = [ "weapons", "team",]
 
 [units.Speedhead]
@@ -625,7 +625,7 @@ assault_deflection_die = "6+"
 assault_damage = "d8"
 assault_ap = "-2"
 assault_deflection = "2/1/-/-"
-assault_special ="Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maxium of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Fear(6)"
+assault_special ="Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Fear(6)"
 filters = [ "weapons", "team",]
 
 [units.Grunt.orders]
@@ -642,8 +642,8 @@ filters = [ "weapons", "team",]
 "Regular Damage" = [ "2-3: Bleeding[4]", "4+ : Killed",]
 
 [units.HammerHead.orders]
-Fire = [ "(stand still) load + -", "(all) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Fire = [ "(stand still) Load + -", "(all) fire + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) Aim + - + -",]
 
 [units.HammerHead.damage_tables]
 "Regular Damage" = [ "1-5: Light damage[d6]", "6-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
@@ -652,11 +652,11 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Warg Rider".orders]
 "Movement orders" = [ "Fast: 360$^0$ + F + F", "Fast: F + 360$^0$ + F", "Fast: F + F + 360$^0$", "Fast: F + B + 360$^0$", "Slow: 360$^0$ + 360$^0$ + 360$^0$", "Slow: 360$^0$ + A + F",]
-"Fire Orders" = [ "load + -", "fire + -", "- + fire",]
+"Fire Orders" = [ "Load + -", "fire + -", "- + fire",]
 
 [units."Warg Rider".damage_tables]
 "Psychic Damage" = [ "5+: unit shaken",]
-"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 member, psycic damage[d6]",]
+"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 member, psychic damage[d6]",]
 
 [units.Troll.orders]
 "Movement orders" = [ "- + - + Chase",]
@@ -665,7 +665,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Regular Damage" = [ "1-3: +1 for future damage", "4-6: +1 for future damage, bleed[4]", "7-8: +2 for future damage, bleed[4]", "10-12: +2 for future damage, bleed[6]", "13-15: +3 for future damage, bleed[6]", "16-18: +3 for future damage, bleed[8]", "19-21: +4 for future damage, bleed[8]", "22-24: +4 for future damage, bleed[10], -1 (cumulative) on assault damage", "25-27: +5 for future damage, bleed[12], -2 (cumulative) on assault damage", "28-29: +10 for future damage, bleed[12], -4 (cumulative) on assault damage", "30-99: as 28-29 pluss Troll temporarily killed", "100+: Troll permanently killed",]
 
 [units.Halftrack.orders]
-Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-still or slow) aim + -", "(stand-still or slow) - + aim", "- + Load(2)",]
+Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-still or slow) Aim + -", "(stand-still or slow) - + Aim", "- + Load(2)",]
 "Movement orders" = [ "(fast): F + F + F", "(fast): F + F + R", "(fast): F + F + L", "(fast): F + F + Unload", "(stand-still): R + - + -", "(stand-still): L + - + -", "(stand-still): R + R + -", "(stand-still): R + R + R", "(stand-still): L + L + L", "(stand-still) L + L + -", "(stand-still): rev + - + -", "(stand-still): Unload + - + -", "(slow): A + F + R", "A + F + L", "(slow): A + F + -", "(slow): B + - + -", "(slow): B + rev + -", "(slow): L + L + -", "(slow): L + - + -", "(slow): R + R + -", "(slow): R + - + - ", "(slow): F + R + Unload", "(slow): F + L + Unload", "(slow): F + Unload + -",]
 
 [units.Halftrack.damage_tables]
@@ -674,7 +674,7 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 "Critical damage" = [ "1-2: Unit cannot accelerate any more. ", "3-4: unit cannot brake any more", "5-6: unit gains +1 to be hit and -1 to hit.",]
 
 [units."Ork Infantry".orders]
-"Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + load", "(stand-still) load + -", "(stand-still) - + aim", "(stand-still) aim + - ",]
+"Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + Load", "(stand-still) Load + -", "(stand-still) - + Aim", "(stand-still) Aim + - ",]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
 
 [units."Ork Infantry".damage_tables]
@@ -689,7 +689,7 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 
 [units.Speedhead.orders]
 Movement = [ "(slow) L + F + L", "(slow) R + F + R", "(slow) F + - + -", "(default Slow) - + - + B", "(default stand-still) - + - + A", "(slow) A + F + F", "(fast) F + F + F", "(fast) L + F + F", "(fast) R + F + F", "(fast) F + F + L", "(fast) F + F + R", "(default fast) - + B + B", "(fast) B + L + F", "(fast) B + R + F", "(fast) B + F + -",]
-"Fire Orders" = [ "(all) load + load", "(all) load + Fire Burst(5)", "Fire Burst(5) + load",]
+"Fire Orders" = [ "(all) Load + Load", "(all) Load + Fire Burst(5)", "Fire Burst(5) + Load",]
 
 [units.Speedhead.damage_tables]
 "Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
@@ -697,8 +697,8 @@ Movement = [ "(slow) L + F + L", "(slow) R + F + R", "(slow) F + - + -", "(defau
 "Critical Damage " = [ "1-3: roll on lightly damage 3 times", "4: Cannot rotate left", "5: Cannot rotate right", "6: Unit set on fire",]
 
 [units.Cannonhead.orders]
-Fire = [ "(stand still) load + -", "(stand still) aim + -", "(all) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Fire = [ "(stand still) Load + -", "(stand still) Aim + -", "(all) fire + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) Aim + - + -",]
 
 [units.Cannonhead.damage_tables]
 "Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]

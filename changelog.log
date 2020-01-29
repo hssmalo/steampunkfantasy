@@ -16,14 +16,16 @@ Ork:
 	wings: slightly slower (in average 1.5 hexes per turn)
 	Not yet dead: became a model ability instead of a unit base ability.
 	WarDrum: now an elite model equipment.
+	Added terror[6][range=1] to wardrum
+	Added Fear to Troll
 
 DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
-	imp became multiple imps, no ingame effect
+	Imp became multiple imps, no ingame effect
 	Scout gains spot
 	Assasin: Gains Take-Cover[...][-3], Good shot and improved assault stats.
 	Queen XXX: got 2 in armor in back, acid cannon gained psycic damage on hit, and minor
-	acid cloud, and got excelent shot.
+	           acid cloud, and got excelent shot.
 	Added Queen XYX: A cheaper version of Queen XXX without a cannon
 	Imp: now loads all weapons!
 	Added Mechanical Iron Dragon
@@ -37,6 +39,7 @@ Dwarf:
 	FireRetardent Coating and Poison Purifications
 	Added requirements for buyable gear
 	GunBlasterWagon: added poison cload effect, and can load on all speeds.
+	Added 1d6 psychic damage to springloaded axe
 	
 Elf:
 	Scout and elite scout gain spot
@@ -51,5 +54,8 @@ Elf:
 	Added illusion
 	Adjusted Illusions
 	Illusions can mimic
-	Bearrider got poison resistance 2 and cost 3xp
+	Bearrider got poison resistance 2 and cost 6xp
 	Eagle rider får poison resistancd 2 den også
+	Sniper: does psycic damage while aiming
+	Added Armored Unicorn
+	Sniper tank: Calibrated gun now a sniper weapon!
