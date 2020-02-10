@@ -282,7 +282,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "8/3/-/-"
-assault_special = "Poison[12], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection"
+assault_special = "Poison[12], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection\\\\ Reroll all success in assault while crawling"
 filters = [ "weapons", "team",]
 
 [units."Elite Infantry"]
@@ -324,7 +324,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "2/1/1/1"
-assault_special = "Cunning assault[1 for 2]"
+assault_special = "Cunning assault[1 for 2]. Reroll all success in assault while crawling"
 filters = [ "weapons", "team",]
 
 [units."Gigant-Spider Rider"]
@@ -366,7 +366,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "1/1/1/1"
-assault_special = "Cunning Assault[1 for 2]"
+assault_special = "Cunning Assault[1 for 2]\\\\ Reroll all success in assault while crawling"
 filters = [ "weapons", "team",]
 
 [units."Mechanical Spider"]
@@ -395,7 +395,7 @@ race = "DarkElf"
 name = "Elite Mechanical Cavalry"
 members = "2"
 size = "Medium"
-cost = "4mp, 8cp, 8xp"
+cost = "4mp, 4cp, 6xp"
 armor = ""
 type_ = "Bio, Mechanical Mount, Cavalry, Elite, Walks"
 isReplacement = ""
@@ -408,7 +408,7 @@ assault_deflection_die = "5+"
 assault_damage = "d6-1"
 assault_ap = "-2"
 assault_deflection = "3z/2z/-/-"
-assault_special = "z is equal to the number of hits in the assault roll"
+assault_special = "z= number of hits this model rolls in assault"
 filters = [ "weapons", "team",]
 
 [units."Nightmare Mechanical Cavalry"]
@@ -429,7 +429,7 @@ assault_deflection_die = "5+"
 assault_damage = "d6-1"
 assault_ap = "-2"
 assault_deflection = "2z/1z/-/-"
-assault_special = "z is equal to the number of normal hits in assault"
+assault_special = "z= number of hits this model rolls in assault"
 filters = [ "weapons", "team",]
 
 [units."Queen XXX"]
@@ -471,7 +471,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "1/1/1/1"
-assault_special = "Cunning Assault[1 for 2]"
+assault_special = "Cunning Assault[1 for 2]\\\\ Reroll all success in assault while crawling"
 filters = [ "weapons", "team",]
 
 [units."Mechanical Cavalry"]
@@ -479,7 +479,7 @@ race = "DarkElf"
 name = "Mechanical Cavalry"
 members = "2"
 size = "Medium"
-cost = "4mp, 8cp"
+cost = "4mp, 4cp, 2xp"
 armor = ""
 type_ = "Bio, Mechanical Mount, Cavalry, Walks"
 isReplacement = ""
