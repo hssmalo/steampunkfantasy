@@ -736,7 +736,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Bear Rider".orders]
 "Fire orders" = [ "+ - Load", "+ - Fire", "+ - aim",]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + Flee + 360$^0$",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + Flee + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(stand-still) 360$^0$ + A + F", "(stand-still) 360$^0$ + - + -",]
 
 [units."Bear Rider".damage_tables]
 "Regular damage" = [ "2: +1 to future damage", "3-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[6], psychic damage[d6]", "10: killed",]
