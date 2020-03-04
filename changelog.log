@@ -29,6 +29,7 @@ DarkElf:
 	Added Queen XYX: A cheaper version of Queen XXX without a cannon
 	Imp: now loads all weapons!
 	Added Mechanical Iron Dragon
+	Mechenical cavalry: cost 4mp, 4cp, 2xp and 4mp, 4cp and 6xp for elite
 	
 Dwarf:
 	AT-Gun may start hidden.
@@ -40,6 +41,8 @@ Dwarf:
 	Added requirements for buyable gear
 	GunBlasterWagon: added poison cload effect, and can load on all speeds.
 	Added 1d6 psychic damage to springloaded axe
+	Added west of life support for dwarfs
+	Big Blaster requiers 2 models to be used now
 	
 Elf:
 	Scout and elite scout gain spot

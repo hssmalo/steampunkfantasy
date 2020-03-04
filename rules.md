@@ -52,7 +52,7 @@ Any huge unit is seen from long distance. Thus, if your army includes any huge u
 
 # Terrain 
 
-This game is played on a hex-based map. Each hex contains a given type of terrain, some blocks line of sight and hinders movement and gives cover. Forthe last, see to-hit table under the fire section.
+This game is played on a hex-based map. Each hex contains a given type of terrain, some blocks line of sight and hinders movement and gives cover. For the last, see to-hit table under the fire section.
 
 It is also possible that smoke, entrenchements etc. modify the default terrain.
 
@@ -131,7 +131,7 @@ keep track for your self to know which is which.
 
 
 
-Roll a die for each step. However wins as an setup advantage, and starts seting up second. The one with disadvantage set up one unit first, then players alternate setting up two units until the step is finished. One step must be finished for both sides before advancing to next step. Thus if a player runs out of units within one step, the other sets up all units in that steps before preciding with next step.
+Roll a die for each step. However wins has an setup advantage, and starts seting up second. The one with disadvantage set up one unit first, then players alternate setting up two units until the step is finished. One step must be finished for both sides before advancing to next step. Thus if a player runs out of units within one step, the other sets up all units in that steps before preciding with next step.
 
 
 
@@ -338,7 +338,8 @@ Flying                     -1      -1         (stacks with speed)
 *Terrain*
 Smoke                      -1      -1
 Forrest                     0      -1
-Building		    0      -1
+Building                    0      -1
+Ruints                      0      -1
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
 *Range*
@@ -356,6 +357,8 @@ Bad Shot  		   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
 Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed.
+*Weapon* *abilities*
+Enhanced Accurazy           +1      0
 ------------------------ -------  ---------- ---------------------
 
 Roll an open ended d6 for to-hit.
@@ -402,9 +405,9 @@ Point Blank               +1      +1          (Range=1)
 
 Any specified damage is regular damage, and follow these rules:
 
+## Armor
 
-
-Before you roll damage, roll armor penetration first.
+Before you roll damage, roll armor penetration first. 
 
 How Armor penetration works is dependent on wether it is positive or negative.
 
@@ -422,14 +425,33 @@ The target number N is:
 - N= 2 for weapons with  AP = -3 AP
 - N= 1 for weapons with  AP = -4 AP
 
+
+
+Let the shooter armor penetration be $AP$, and the target have an armor of $A$
+
+
+                          Number of armor dice     Success
+------------------------ ----------------------- -----------    
+$AP \geq 0$                 A-AP                     5+
+AP = -1                     A                        4+
+AP = -2                     A                        3+
+AP = -3                     A                        2+
+AP = -4                     A                        1+
+
+
+
 For
-- 2 or more die above N, the armor prevents all damage \
-- exactly one die above N, roll on damage with a -3 modifier \
-- 0 die above N, roll on damage normaly. \\
+
+- 2 or more die above the success number N, the armor prevents all damage 
+- exactly one die above the success number N, roll on damage with a -3 modifier 
+- 0 die above the success number N, roll on damage normaly. 
 
 
 
-Damage: Roll on regular damage table for the unit, add previous bonus and weapon modifiers if any. Any result less than the starting value of the damage table counts as no damage. 
+
+## Damage Table:
+
+Roll on regular damage table for the unit, add previous bonus and weapon modifiers if any. Any result less than the starting value of the damage table counts as no damage. 
 
 Whenever one member of a unit with multiple members die, half previous bonus to damage round down.
 
