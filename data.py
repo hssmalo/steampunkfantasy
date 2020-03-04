@@ -237,7 +237,7 @@ class Team():
 
             latex_abilities = latex_abilities + self.abilities_template.format(**combined)
             
-        latex = latex_abilities + latex_unit + latex_equipment_upgrade
+        latex = latex_abilities + latex_unit + '\pagebreak' + latex_equipment_upgrade
                                 
         with open(self.name +'.tex', 'w') as fid:
                 fid.write(latex)
