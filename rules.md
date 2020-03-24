@@ -17,10 +17,10 @@ XP represent extra training, and taming of fantastical creatures
 
 Build your army in any way you like, as long as the total cost is less than the total amount of points.
 Infantry, and some cavalry and special units may be upgraded with xp and crafts points (and command).
-Each upgrade has it requirements. Some upgrade the entire unit base, while some only upgrade one or a few members.
+Each upgrade has it requirements. Some upgrade the entire unit base, while some only upgrade one model.
 
 
-A unit base typically has 1,2 or 4 unit members. A unit base can be upgraded with as much as you like as long as you have the space.
+A unit base typically has 1,2 or 4 unit models. A unit base can be upgraded with as much as you like as long as you have the space.
 Unless otherwise stated, an infantry unit base may have
 
 - 1 2handed weapon or 2 1handed equipment (such as heavy musket, pistol&shield ...)
@@ -31,7 +31,7 @@ Unless otherwise stated, the standard weapons of an infantry is a 2handed weapon
 
 
 Each model of the unit base can fire it's weapons independently, and you add assault dice to the assault die pool for each unit. 
-But all model of a unit base gets the same order.
+But all models of a unit base gets the same order.
 
 Elites typically upgrades 1 regular model, which then replaces the regular in one unit bases.
 Weapons upgrades and aditions either replaces all weapons in all models in a unit base, replaces the weapon of a single model (typical elite), or the weapon is shared by the entire unit base. 
@@ -39,7 +39,7 @@ Weapons upgrades and aditions either replaces all weapons in all models in a uni
 In some cases some equipment reqiuers an elite and the cost is typically for one weapon and only one elite in the unit base gets that weapon. However, as long as you have more elites left in the unit base, you may pay the price multiple times to equip as many as you like with elite weapons.
 
 Unit base weapons:
-Unless other wise stated, if a unit is given a unit base weapon, the unit may fire the unit base weapon a single time, OR fire its normal weapon. When firing the base weapon, apply to-hit modifiers of the best model in the unit.
+Unless other wise stated, if a unit is given a unit base weapon, the unit may fire the unit base weapon a single time, OR fire its normal weapon. When firing the base weapon, apply to-hit modifiers of the best model in the unit. A unit base weapon requiers at least 2 alive models to be used.
 
 The requirements and cost of both model replacements and extra equipment should be clearly stated in the army list.
 
@@ -99,6 +99,8 @@ If trying to enter the same hex with MORE than that simultaneously, all from wit
 \pagebreak
 
 # Building battle ground.
+
+## Scenario: ENTRENCHED!
 
 For a standar game: \
 7x9 hexes.
@@ -182,11 +184,11 @@ Trigger Hex effect(if hex effect was fired in a hex you were standing) \
 Apply damage \
 
 
-- Agony 0 
-- Agony 1
-- Agony 2
-- Agony 3
-- Agony 4
+- Agony 0 (major acid)
+- Agony 1 (minor acid)
+- Agony 2 (fire)
+- Agony 3 (poison)
+- Agony 4 (bleeding)
 
 - Aftermath  (remove smoke, etc.)
 
@@ -234,6 +236,7 @@ Each unit has a set of available orders. Code:
 - Rev=reverse
 - - = no action
 - Chase: move towards nearest enemy.
+- Follow: Are only available through special unit ordering other units to follow, and all units under these orders move one hex closer to this unit. If multiple units are odering units to follow, you can chose which to follow.
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
 If still no such hex is available, let your enemy move your unit to any hex he/she likes
@@ -382,9 +385,10 @@ Area(n+): roll 1 die per enemy model in hex. Apply damage per success.
 
 Area success modifiers: \
 
-+1 to success per extra identical area attack fired from same unit.
++1 to success per extra identical area attack fired by models from the same unit.
 
-Example: success for 4 x area(6+) attacks versus a single hex becomes 3+.
+Example: A unit of 4 models, which each throws a grenade at success 6+ becomes:
+success for 4 x area(6+) attacks versus a single hex becomes 3+.
 
 
 \pagebreak
@@ -482,7 +486,7 @@ Assaults also is conducted if two or more units enters each other hex. Ie they a
 
 - Before any assault, any unit which has the ability to retreat before assault have the option to do so now.
 - Then trigger any hex effects (as poison cloud, fire in hex etc.) to all units trying to enter the hex.
-- Then apply any pre-assault special effects such as fear.
+- Then apply any pre-assault special effects such as fear, or other abilities.
 - After assault, trigger any hex effect again, but note that one unit may only be effected by the same hex effect once per turn.
 This is just in case a unit was forced into a hex with for example poison cloud.
 
@@ -495,12 +499,13 @@ Ork\
 Dwarf\
 Elf\
 
-The winner of the assault enters the hex it tried to enter, and loser is forced out of the hex, it then retreats. If loser was stationary, it moves out of the hex in the backward direction. If the loser was trying to enter a hex, it stays in the hex it was before trying to enter the hex (unless that hex is also being occupied by an enemy). In any way, during a retreat, the loser may rotate to Left or Right or 180$^0$ if you wish as part of the retreat.
+The one gaining the advantage of the assault enters the hex it tried to enter, and disadvantage is forced out of the hex, it then retreats. If one with disadvantage was stationary, it moves out of the hex in the backward direction. If the disadvantage was trying to enter a hex, it stays in the hex it was before trying to enter the hex. 
 
-If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest not possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to.
+If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, treat it as retreating to an hex with an enemy: thus move to the closest possible hex.
 
 If more than Stacking Limit number of units enters the hex after winning an assault, all winners are also shakened as if trying to move into a hex with friendly units only.
 
+In any way, during a retreat, the loser may rotate to Left or Right or 180$^0$ if you wish as part of the retreat. This is to make retreated unit able to flee the assault if it wants to.
 
 
 Assault: Each model have the followint stats for hitting the enemy in assault:\
@@ -523,7 +528,7 @@ Each succuessfull deflection remove one successful assault. (winner of assault c
 A good practice is to roll assault and assault deflections simultanieously but with different color. Choose for example green die for deflections.
 
 
-Whoever rolls the highest number of successfull assaults (after deflection) wins. If equal, use Nation assault winning-power order.
+Whoever rolls the highest number of successfull assaults (after deflection) gains the advantage. If equal, use Nation assault winning-power order.
 
 Spartan\
 Dark_Elf\
@@ -532,17 +537,27 @@ Dwarf\
 Elf\
 
 
-The winner may choose which hits are deflected and which are not as long as the losers deflection apply to the winners hits and vice versa. The winner may also choose how hits are assigned to whom, as long as hits from the losers target the winner and visa versa with the following restrictions: The winner must apply at least one hit to each unit base per model in unit if able, but also up to a maxium of 1 hit per model it a unit base. Any left over hits may be assigned to any damage roll and give +1 to damage per extra assigned hit this way. Thus with 4 successes versus a unit with 3 models you must assignt 3 hits to the unit base and one of the damage rolls gets +1 to damage.
+It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected.
 
-For each hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit.
+Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties. You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit base per alive model in the unit base. Further hits are applied as support to any one ore more damage. Keep track of which hit are from which source. 
+
+Thus, if you have ONE attack which is far stronger than other attacks, it's wise to gain the advantage so that you make sure that that attack does not get deflected.
+
+
+
+
+For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit.
 
 Example: \
-DarkElf: 1 tank, a infantry base with 4 unit member: 7 success, 3 deflections. \
-Elf: 1 tank, a infantry base with 3 alive member: 6 success\
+DarkElf: 1 tank, a infantry base with 4 models: 7 success, 3 deflections. \
+Elf: 1 tank, a infantry base with 3 alive modles: 6 success, 3 from the tank 3 from the infantry\
 Total: DarkElf 1 scored 7 hits, Elf scored 3. \
-Winner: DarkElf
+Advantage: DarkElf
 
-DarkElf assigns 7 hits to the elf and 3 hits to his own team. The DarkElf then must apply 3 hits to the elf infantry and 1 to the tank, but may choose where to apply the remaining 3 hits for extra damage. DarkElf choose to get +3 to the damage roll against the tank. For the 3 hits scored against the DarkElf, the DarkElf has the choise to apply 3 hits versus his infantry or to apply 2 hits to the infantry 1 to the tank. In this case the DarkElf chooses the later as he econs the tank will survive anyway, but infantry are likely
+Thus the DarkElf gained the advantage, and chooses to deflect the 3 attacks from the tank (they may or may not be nastier in the real game).
+Thus the elf assigns 3 hits to the darkelf and the darkelf choosed 7 hits to the elf. The elf choosed to assign 3 damaging results to the infantry.
+The Darkelf choosed to assign 4 damaging success to the infantry and 1 damaging + 2 support to the tank, in hope of doing some damage.
+
 
 
 Example:
@@ -575,15 +590,15 @@ Half number of dice rounded down from all enemy shaken unit bases entering assau
 
 **Cunning** **Assault**[1 per N]
 
-You may replace N assault successes assigned to one unit-base for light damage[d6].
+You may replace N assault successes assigned to one unit-base for light damage[d6]. 
 
-Thus, for example Cunning Assault[1 per 2] would allow you to replace two assault-successes with one roll on light damage table (if enemy unit base has a light damage table, which typical is only for tanks and vehicles). Note that the replacements are done after asigning hits to different untis, and only hits versus targets with a light damage table can be replaced, not hits versus other units in the same assault. However, how to apply this is up to the one having cunning assault.
+Thus, for example Cunning Assault[1 per 2] would allow you to replace two assault-successes with one roll on light damage table (if enemy unit base has a light damage table, which typical is only for tanks and vehicles). Note that the replacements are done after asigning hits to different untis, and only hits versus targets with a light damage table can be replaced, not hits versus other units in the same assault. 
 
 This represent any cunning way to take out heavily armored units in assaults.
 
 **Fire**, ranged weapons
 
-If target is hit by a ranged weapon with this special ability, target is set on fire. See continous damage. Apply one fire per hit.
+If target is hit atleast once by a ranged weapon with this special ability, target is set on fire. See continous damage. If already on fire, apply another fire token.
 
 **Fire**, assault weapons
 
@@ -595,8 +610,7 @@ If target is hit by a ranged weapon with this special ability, apply (minor) aci
 
 **(minor)** **Acid**, assault weapons
 
-Apply (minor) acid to any unit base hit atleast once in assault by a unit with this special. See continous damage.
-
+Apply minor Acid to a unit base per damaging assault success from this source. See continous damage.
 
 **Poison[N]**, ranged weapons
 
@@ -604,7 +618,7 @@ If target is hit by a ranged weapon with this special ability, apply Poison[N] t
 
 **Poison[N]**, assault weapons
 
-Apply Poison[N] to any unit base hit atleast once in assault by a unit with this special. See continous damage.
+Apply Poison[N] to a unit base per damaging assault success from this source. See continous damage.
 
 
 
@@ -640,15 +654,13 @@ Agony 0 to Agony 4.
 
 **Acid**: (roll by enemy)\ 
 
-- At agony step 1, unit gain +1 on future damage \
-- At agony step 2, roll a die: \
+- At agony step 0, roll a die: \
 			     at 1-: Downgrade from acid to minor acid.\
-    	      	      	     at 2 : Any unit in same hex as this unit get
-			     	    hited by minor acid.\
-			     at 3 : place a poison cloud \[4\](4+) at hex.\
-			     at 4 : if unit has armor, it is reduced by 1/1/1/1\
-			     at 5 : unit is set on fire.\
-			     at 6 : roll on this table twice, and gain +1 on future damage\
+    	      	      	     at 2 : +1 to future damge
+			     at 3 : as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
+                             at 4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
+			     at 5 : As 6 and unit is set on fire.\
+			     at 6 : Roll twice on this table., 
 
 - If you happen to get two (or more) downgrade in same round, you remove acid instead of downgrading it.
 
@@ -658,13 +670,11 @@ Agony 0 to Agony 4.
 
 Unit on Fire: (roll by enemy)
 
-- At agony step 3 Ignore armor and roll one d6 on damage table.
+- At agony step 2 Ignore armor and roll one d6 on damage table.
 Add bonus for previous damage (plus on future damage results). 
 Apply any fire resistance modifiers if any.
 Ignore armor.
 If the natural d6 roll minus fire resistance is 2 or lower, remove the fire
-
-
 
 
 
@@ -718,16 +728,20 @@ Roll a die per unit base in hex. At n+ place a minor acid on the unit base.
 When setting a hex on fire, place a smoke and fire token in the hex.
 When encountering a fire, Roll 1 die per unit base, at 5+ set that unit base on fire.
 
-- At agony step 4: Remove a Fire token in hex, and replace any forest with rough terrain.
+
 
 
 
 
 
 **AFTERMATH**: \
-Remove one Cloud or smoke marker of each type in hex
+Remove one Cloud or smoke in each hex
+
+Remove one fire token in a hex and replace any forest in such a hex with rough terrain.
 
 Remove one shaken token from each unit base.
+
+
 
 
 
