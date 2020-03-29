@@ -72,7 +72,7 @@ name = "Broadside Guns"
 template = ""
 range_ = "2"
 angle = "-/x1/x1/-"
-special = "Place a Poison Cload[4](4+) at point blank range from any of the direction that fired."
+special = "Burst(2), Place a Poison Cload[4](4+) at point blank range from any of the directions that fired."
 damage = "d6+1"
 ap = "2"
 assault_mod = ""
@@ -472,6 +472,9 @@ armor = ""
 type_ = "Bio, Infantry, Walks"
 isReplacement = ""
 replaces = ""
+unititems = "1 unit base weapon"
+modelitems = "2 hands, unlimited independent equipment"
+retired = ""
 weapons_input = [ "Musket",]
 unit_special = "Unit base abilities: Poison Resistance 2 \\\\ Fire Resistance 1"
 assault = "1/1/1/1"
@@ -493,6 +496,9 @@ armor = "3/5/5/3"
 type_ = "Mechanical, Bio Crew, Vehicle, Track"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "Broadside Guns",]
 unit_special = "Fire resistance 2"
 assault = "2/2/2/2"
@@ -514,6 +520,9 @@ armor = "1/1/1/1"
 type_ = "Bio, SteamPowerArmor Infantry, Elite"
 isReplacement = "yes"
 replaces = "model: SteamPowerArmor"
+unititems = ""
+modelitems = "2 hands, unlimited independent equipment"
+retired = ""
 weapons_input = [ "Heavy Musket",]
 unit_special = "good shot: +1 to hit \\\\ Unit base gains 1 psychic resistance while atleast one elite is alive."
 assault = "4/3/3/3"
@@ -535,6 +544,9 @@ armor = "3/3/3/3"
 type_ = "Zeppelin, Flying"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "Array of Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
 unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 to the result for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
 assault = "6/6/6/6"
@@ -556,6 +568,9 @@ armor = "3/2/2/1"
 type_ = "Bio, Monster, Walks"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "Flaming Whip",]
 unit_special = "Poison Resistance :4 \\\\ Fire Resistance 12 \\\\ Terror[8][range=2]"
 assault = "6/4/3/2"
@@ -577,6 +592,9 @@ armor = ""
 type_ = "Bio, Infantry, Elite, Walks"
 isReplacement = "yes"
 replaces = "Model: Infantry"
+unititems = ""
+modelitems = "2 hands, unlimited independent equipment"
+retired = ""
 weapons_input = [ "Musket",]
 unit_special = "Good shot: +1 to hit. \\\\ Unit base gains 2 Psychic resistance while atleast one elite model is alive \\\\"
 assault = "2/2/1/1/"
@@ -598,6 +616,9 @@ armor = "1/-/-/-"
 type_ = "Bio, Floating, Vehicle, Floats"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "AxeThrower-Machine", "Poison Gas Grenade",]
 unit_special = "Floats\\\\ Poison Resistance 2 \\\\ "
 assault = "3/2/1/1"
@@ -619,6 +640,9 @@ armor = "2/-/-/-"
 type_ = "Bio, Vehicle, Dragged"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "BIG AT-gun",]
 unit_special = "Poison Resistance 2 \\\\ Fire resistance 1"
 assault = "1/1/1/1"
@@ -640,6 +664,9 @@ armor = "1/1/1/1"
 type_ = "Bio, SteamPowerArmor"
 isReplacement = ""
 replaces = ""
+unititems = "1 unit base weapon"
+modelitems = "2 hands, unlimited independent equipment"
+retired = ""
 weapons_input = [ "Heavy Musket",]
 unit_special = "Poison resistance 4, Fire reistance 2\\\\ Take Cover[stand-still][-2]"
 assault = "3/2/2/1"
@@ -657,10 +684,13 @@ name = "Dw42"
 members = "1"
 size = "Large"
 cost = "12ip"
-armor = "7/4/4/3"
+armor = "8/5/5/4"
 type_ = "Mechanical, Bio Crew, Vehicle, Tracked"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "Tank Gun",]
 unit_special = "Fire Resistance 2"
 assault = "4/3/3/2/"
@@ -682,6 +712,9 @@ armor = "2/2/2/2"
 type_ = "Mechanical, Droid, Walks"
 isReplacement = ""
 replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
 weapons_input = [ "",]
 unit_special = "Immune to all shaken effects."
 assault = "3/2/2/2"
@@ -714,8 +747,8 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 "Regular Damage" = [ "1-5: kill 1 model", "6-9: kill 1 model, roll on psychic damage[d6]", "10: Unit Base destoryed",]
 
 [units.GunBlasterWagon.orders]
-Fire = [ "(all) load + -", "(all) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Fire = [ "(all) load + -", "(stand-still) fire + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) A + A + F",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1: -1 to-hit, +1 to-be-htt", "2: Cannot Rotate R", "3: Cannot Rotate L", "4: x3 Lightly Damage", "5: Cannot fire weapons to the left", "6: Cannot fire weapons to the right",]
@@ -723,6 +756,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Regular Damage" = [ "1-4: lightly damage", "5-8: Critical damage, +1 on future damage", "9+: Destroyed",]
 
 [units."Elite SteamPowerArmor".orders]
+"" = [ "",]
 
 [units."Elite SteamPowerArmor".damage_tables]
 "" = [ "",]
@@ -745,6 +779,7 @@ Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(default slow) -
 "Regular Damage" = [ "1-8: +1 on future damage", "9-10: +2 on future damage, Assault -1/-1/-1/-1 looses terror", "11-12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
 
 [units."Elite Dwarf Infantry".orders]
+"" = [ "",]
 
 [units."Elite Dwarf Infantry".damage_tables]
 "" = [ "",]
@@ -774,8 +809,8 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 "Regular Damage" = [ "1-5: 1 model killed", "6-9: 1 model killed, roll on psychic damage[d6]", "10+: Unit Base Destroyed",]
 
 [units.Dw42.orders]
-Fire = [ "(stand-still) load + -", "fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - ",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Fire = [ "(stand-still) load + -", "(all) fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - ",]
+Movement = [ "(fast) F+ F + F", "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
 
 [units.Dw42.damage_tables]
 "Regular Damage" = [ "1-4: lightly damage", "5-8: Critical Damage, +1 on future damage rolls", "9+: Destroyed",]

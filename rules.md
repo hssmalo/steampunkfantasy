@@ -59,7 +59,7 @@ It is also possible that smoke, entrenchements etc. modify the default terrain.
 For movement and line of sight, se table below:
 --------   --------------------------------------------------------------------------------------------------------------------------------------
 Clear      No modifiers
-Mountains  2 movement points up, 1 down. 2 hight level,, level 2 blocking terrain.
+Mountains  2 movement points up, 1 down. 2 hight level, level 2 blocking terrain.
 Hills      2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
 Forest     2 movement points to enter for vehicles, 1 for all other things. Level 0, Blocking terrain
 Swamp      1 movement point to enter for medium and smaller,
@@ -270,8 +270,7 @@ If an illegal order is given, do the default order instead.
 
 
 Load: loads weapon. A weapon cannot fire without a load token available.
-      Some weapons may load more than one ammo per loading. It is then noted as
-      load[5] \
+      Some weapons may load more than one ammo per loading. It is then noted as load[5] \
 Aim : optional: +2 to hit. Last 1 round, and may only be used versus targets within line of sight from the original hex where the aim was issued\
 Fire: fire at an enemy within line of sight and within a legal firing angle of tank. \
 Spot: try to reveal a hidden unit. Roll a normal to-hit as if you where shooting. If successfull the hidden unit is revealed. \
@@ -539,12 +538,9 @@ Elf\
 
 It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected.
 
-Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties. You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit base per alive model in the unit base. Further hits are applied as support to any one ore more damage. Keep track of which hit are from which source. 
+Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties. You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit base per alive model in the unit base. Further hits are applied as support to any one ore more damage. Keep track of which hit are from which source.
 
 Thus, if you have ONE attack which is far stronger than other attacks, it's wise to gain the advantage so that you make sure that that attack does not get deflected.
-
-
-
 
 For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit.
 
@@ -559,8 +555,13 @@ Thus the elf assigns 3 hits to the darkelf and the darkelf choosed 7 hits to the
 The Darkelf choosed to assign 4 damaging success to the infantry and 1 damaging + 2 support to the tank, in hope of doing some damage.
 
 
+If in the rare case that unit does not to real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing hits. Thus you may roll one real damage PER enemy model in unit base in addition to one psycic damage PER enemy model in unit base. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage, but not the psycic damage.
 
-Example:
+
+
+
+
+Examples:
 Standard Tank\
    Assault:     4/ 3 / 3 /2  5+: -1 on AP, damage d6-1.\
    Deflection:  2, 5+ / -, -  / -, -  /-, - : \
@@ -595,6 +596,15 @@ You may replace N assault successes assigned to one unit-base for light damage[d
 Thus, for example Cunning Assault[1 per 2] would allow you to replace two assault-successes with one roll on light damage table (if enemy unit base has a light damage table, which typical is only for tanks and vehicles). Note that the replacements are done after asigning hits to different untis, and only hits versus targets with a light damage table can be replaced, not hits versus other units in the same assault. 
 
 This represent any cunning way to take out heavily armored units in assaults.
+
+**Burst(N)**
+
+This weapon can have, and must be loaded with N ammo to be fired. However, when the weapon is fired, it is fired N times (per model) at the same enemy unit base.
+
+**Limited Ammo(N)**
+
+This weapon may be fired a maxium of N times in a match. Many of these weapons are allways treated as load special, but it only works as long as the total number of times used is less than N.
+
 
 **Fire**, ranged weapons
 

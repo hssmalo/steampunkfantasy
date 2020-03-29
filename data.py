@@ -147,6 +147,9 @@ class Team():
         for unit_name in sorted(self.units, key=self.unit_sort):
             print('working on ', unit_name)
             unit = self.units[unit_name]
+            if unit.retired == 'yes':
+                continue
+            
             latex_order = ""
             latex_damage = ""
             latex_weapons = ""
@@ -524,6 +527,9 @@ class Unit():
         self.type_ = ''
         self.isReplacement = ''
         self.replaces = ''
+        self.unititems = ''
+        self.modelitems = ''
+        self.retired = ''
         
         self.weapons_input= []
         
