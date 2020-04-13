@@ -17,8 +17,8 @@ assault_special = "Fire, Minor Acid, Poison[4]"
 assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
-cost = "4cp"
-required_to_buy = "Model: Elite Infantry"
+cost = "3cp"
+required_to_buy = "Model: Elite Infantry or Elite Cavalry"
 type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
@@ -270,7 +270,7 @@ name = "Grenade Sling"
 template = "r"
 range_ = "3"
 angle = "*/*/*/*"
-special = "Choose one hex within normal range, area(6+) \\\\ If combined with the pyro, the pyro gains standard range of 3 instead of 1"
+special = "Choose one hex within normal range, area(6+) \\\\ If combined with the pyro, the pyro gains standard range of 3 instead of 1. \\\\ It is a 1 handed weapon but may not be combined with another sling"
 damage = "d6"
 ap = "1"
 assault_mod = ""
@@ -505,7 +505,7 @@ modelitems = "1 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "",]
 unit_special = "Fire orders only available if given ranged weapons"
-assault = "4/4/4/4"
+assault = "4/4/3/2"
 assault_die = "6+"
 assault_deflection_die = "6+"
 assault_damage = "d6-2"
@@ -658,9 +658,9 @@ assault_deflection = "2/1/-/-"
 assault_special = "Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Fear(6)"
 filters = [ "weapons", "team",]
 
-[units."Bio Engineered Ork"]
+[units."BioEngineered Ork"]
 race = "Ork"
-name = "Bio Engineered Ork"
+name = "BioEngineered Ork"
 members = "4"
 size = "Medium"
 cost = "4mp, 2xp, 1cp"
@@ -672,7 +672,7 @@ unititems = "1 Unit Base Weapon"
 modelitems = "4 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "Ork Musket", "Ork Musket",]
-unit_special = "Bad Shot (-1 to-hit)\\\\ Poison Resistance 1, Fire Resistance 1, Immunity to Acid"
+unit_special = "Take Cover[stand-still][-2], May use multiple ranged weapons without any penalties\\\\ Poison Resistance 1, Fire Resistance 1, Immunity to Acid"
 assault = "3/2/2/2"
 assault_die = "6+"
 assault_deflection_die = "6+"
@@ -759,10 +759,10 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Light Damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage",]
 "Critical Damage " = [ "1: Reduce armor by 1.", "2: +1 on future damage", "3: Cannot brake", "4: Cannot rotate left", "5: Cannot rotate right", "6: Unit set on fire",]
 
-[units."Bio Engineered Ork".orders]
-"Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + Load", "(stand-still) Load + -", "(stand-still) - + Aim", "(stand-still) Aim + - ",]
+[units."BioEngineered Ork".orders]
+"Fire Orders" = [ "(stand-still) - + Fire", "(stand-still) Fire + - ", "(stand-still) - + Load", "(stand-still) Load + -", "(all) - + Aim", "(stand-still) Aim + - ",]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
 
-[units."Bio Engineered Ork".damage_tables]
+[units."BioEngineered Ork".damage_tables]
 "Regular Damage" = [ "1: Bleed[4]", "2-5: Kill 1 memeber", "6-8: Kill 1 Model, d6 Psycic damage", "9: Destroy unit base",]
 "Psycic Damage" = [ "5+: Unit Shaken",]
