@@ -30,6 +30,8 @@ DarkElf:
 	Imp: now loads all weapons!
 	Added Mechanical Iron Dragon
 	Mechenical cavalry: cost 4mp, 4cp, 2xp and 4mp, 4cp and 6xp for elite
+	Mechenical cavalry: cost 2mp, 4cp, 2xp and 2mp, 4cp and 6xp for elite
+	Mechanical Cavalery: now need 6 to die instead of 5.
 	
 Dwarf:
 	AT-Gun may start hidden.
@@ -43,6 +45,8 @@ Dwarf:
 	Added 1d6 psychic damage to springloaded axe
 	Added west of life support for dwarfs
 	Big Blaster requiers 2 models to be used now
+	Added Wheeled Shield Wall
+	Added Transport Zeppelin
 	
 Elf:
 	Scout and elite scout gain spot
@@ -62,3 +66,5 @@ Elf:
 	Sniper: does psycic damage while aiming
 	Added Armored Unicorn
 	Sniper tank: Calibrated gun now a sniper weapon!
+	Sniper tank: retired!!!
+	Bear: can now also stand still
