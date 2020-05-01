@@ -20,16 +20,16 @@ class Team():
         else:
             used = text
         
-        members = self.units[text].members
+        models = self.units[text].models
         try:
-            members = str(4-int(members) )
+            models = str(4-int(models) )
         except:
             print('Number of models not an int')
             
         type_   = self.units[text].type_
 
-        #print(members + type_+used)
-        return members + type_+used
+        #print(models + type_+used)
+        return models + type_+used
 
     def find_upgrades(self, unit):
         print()
@@ -74,7 +74,7 @@ class Team():
                             if unit.isReplacement:
                                 print('  1 possible upgrades per model of this type')
                             else:
-                                print('  ', unit.members, ' possible upgrades')
+                                print('  ', unit.models, ' possible upgrades')
 
         if not unit.isReplacement:
             for key, other_u in self.units.items():
@@ -85,10 +85,10 @@ class Team():
                     for r in replaces:
                          if r.strip() in unit.name:
                             print(key, 'possible upgrade for ', unit.name)
-                            print('  ', unit.members, ' possible upgrades')
+                            print('  ', unit.models, ' possible upgrades')
                             upgrades.setdefault('Model Replacement', {})
                             upgrades['Model Replacement'].setdefault(key, {})
-                            upgrades['Model Replacement'][key] = unit.members
+                            upgrades['Model Replacement'][key] = unit.models
                             
         return upgrades
 
@@ -520,7 +520,7 @@ class Unit():
         self.team = team
         self.race = team.name
         self.name = name
-        self.members = ''
+        self.models = ''
         self.size = ''
         self.cost = ''
         self.armor = ''
@@ -658,6 +658,30 @@ class Unit():
 
         self.team.append_unit(self)            
                 
-                
+
+class Costimized_unit(Unit):
+    def __init__(self, name, team):
+        super().__init__(name, team)
+        self.replacements = {}
+        self.replacements_types = {}
+
+    def write():
+        pass
+        
+    
+        
+    def add_replacement(self, replacement):
+
+       self.models = int(self.models)-1
+       try:
+           costimized_unit.replacements[replacement.name] = costimized_unit.replacements[replacement.name] +1 
+       except KeyError:
+           costimized_unit.replacements[replacement.name] = 1
+           costimized_unit.replacement_types[replacement.name] = replacement 
+
+
+
+
+        
 if __name__ == "__main__":        
     import IPython; IPython.embed()

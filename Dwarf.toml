@@ -487,7 +487,7 @@ filters = [ "team",]
 [units."Dwarf Infantry"]
 race = "Dwarf"
 name = "Dwarf Infantry"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "4mp"
 armor = ""
@@ -511,7 +511,7 @@ filters = [ "weapons", "team",]
 [units.GunBlasterWagon]
 race = "Dwarf"
 name = "GunBlasterWagon"
-members = "1"
+models = "1"
 size = "Large"
 cost = "6ip"
 armor = "3/5/5/3"
@@ -535,7 +535,7 @@ filters = [ "weapons", "team",]
 [units."Elite SteamPowerArmor"]
 race = "Dwarf"
 name = "Elite SteamPowerArmor"
-members = ""
+models = ""
 size = "Medium"
 cost = "3xp"
 armor = "1/1/1/1"
@@ -559,7 +559,7 @@ filters = [ "weapons", "team",]
 [units.Zeppelin]
 race = "Dwarf"
 name = "Zeppelin"
-members = "1"
+models = "1"
 size = "Huge, +1 to be hit"
 cost = "24ip, 12xp"
 armor = "3/3/3/3"
@@ -583,7 +583,7 @@ filters = [ "weapons", "team",]
 [units."Tamed Balrog"]
 race = "Dwarf"
 name = "Tamed Balrog"
-members = "1"
+models = "1"
 size = "Huge, +1 to be hit"
 cost = "24xp"
 armor = "3/2/2/1"
@@ -607,7 +607,7 @@ filters = [ "weapons", "team",]
 [units."Elite Dwarf Infantry"]
 race = "Dwarf"
 name = "Elite Dwarf Infantry"
-members = ""
+models = ""
 size = "Medium"
 cost = "1xp"
 armor = ""
@@ -631,7 +631,7 @@ filters = [ "weapons", "team",]
 [units."Mini Zeppelin"]
 race = "Dwarf"
 name = "Mini Zeppelin"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "8cp, 6xp"
 armor = "1/-/-/-"
@@ -655,7 +655,7 @@ filters = [ "weapons", "team",]
 [units."Dwarf AT-gun"]
 race = "Dwarf"
 name = "Dwarf AT-gun"
-members = "1AT-gun, 4 crew"
+models = "1AT-gun, 4 crew"
 size = "Large"
 cost = "8cp, 4xp"
 armor = "2/-/-/-"
@@ -679,7 +679,7 @@ filters = [ "weapons", "team",]
 [units.SteamPowerArmor]
 race = "Dwarf"
 name = "SteamPowerArmor"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "4mp, 2ip, 4cp"
 armor = "1/1/1/1"
@@ -703,7 +703,7 @@ filters = [ "weapons", "team",]
 [units.Dw42]
 race = "Dwarf"
 name = "Dw42"
-members = "1"
+models = "1"
 size = "Large"
 cost = "12ip"
 armor = "8/5/5/4"
@@ -727,7 +727,7 @@ filters = [ "weapons", "team",]
 [units."Assault Bots"]
 race = "Dwarf"
 name = "Assault Bots"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "6ip, 12xp"
 armor = "2/2/2/2"
@@ -751,7 +751,7 @@ filters = [ "weapons", "team",]
 [units."Transport Zeppelin"]
 race = "Dwarf"
 name = "Transport Zeppelin"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "4cp"
 armor = "1/-/-/-"
@@ -836,7 +836,7 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 
 [units."Mini Zeppelin".damage_tables]
 "Psychic Damage" = [ "6+ unit shaken",]
-"Regular Damage" = [ "2-3: unit base shaken", "4: kill 1 member",]
+"Regular Damage" = [ "2-3: unit base shaken", "4: kill 1 model",]
 
 [units."Dwarf AT-gun".orders]
 Fire = [ "(stand-still) Fire + -", "(stand-still) Aim + -", "(stand-still) Load + -",]

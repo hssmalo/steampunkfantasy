@@ -377,7 +377,7 @@ filters = [ "team",]
 [units.E34]
 race = "Elf"
 name = "E34"
-members = "1"
+models = "1"
 size = "Large"
 cost = "12ip"
 armor = "5/4/4/3"
@@ -401,7 +401,7 @@ filters = [ "weapons", "team",]
 [units."Bear Rider"]
 race = "Elf"
 name = "Bear Rider"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp, 6xp"
 armor = "2/1/1/1"
@@ -425,7 +425,7 @@ filters = [ "weapons", "team",]
 [units."Sniper Tank"]
 race = "Elf"
 name = "Sniper Tank"
-members = "1"
+models = "1"
 size = "Large"
 cost = "16ip"
 armor = "4/3/3/2"
@@ -449,7 +449,7 @@ filters = [ "weapons", "team",]
 [units."Elite Infantry"]
 race = "Elf"
 name = "Elite Infantry"
-members = ""
+models = ""
 size = "Medium"
 cost = "1xp"
 armor = ""
@@ -473,7 +473,7 @@ filters = [ "weapons", "team",]
 [units."Elite Elf Scout"]
 race = "Elf"
 name = "Elite Elf Scout"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp, 4xp"
 armor = ""
@@ -497,7 +497,7 @@ filters = [ "weapons", "team",]
 [units."Elk Cavalry"]
 race = "Elf"
 name = "Elk Cavalry"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "4mp, 2xp"
 armor = ""
@@ -521,7 +521,7 @@ filters = [ "weapons", "team",]
 [units."Elite VelociRaptor Riders"]
 race = "Elf"
 name = "Elite VelociRaptor Riders"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "1xp"
 armor = ""
@@ -545,7 +545,7 @@ filters = [ "weapons", "team",]
 [units."Tatto INK"]
 race = "Elf"
 name = "Tatto INK"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "4ip"
 armor = "3/1/1/1"
@@ -569,7 +569,7 @@ filters = [ "weapons", "team",]
 [units."VelociRaptor Riders"]
 race = "Elf"
 name = "VelociRaptor Riders"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "4mp, 8cp, 4xp"
 armor = ""
@@ -593,7 +593,7 @@ filters = [ "weapons", "team",]
 [units."Eagle Rider"]
 race = "Elf"
 name = "Eagle Rider"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp, 8xp"
 armor = "1/1/1/1"
@@ -617,7 +617,7 @@ filters = [ "weapons", "team",]
 [units.Infantry]
 race = "Elf"
 name = "Infantry"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "6mp"
 armor = ""
@@ -641,7 +641,7 @@ filters = [ "weapons", "team",]
 [units."Elf Scout"]
 race = "Elf"
 name = "Elf Scout"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp"
 armor = ""
@@ -665,7 +665,7 @@ filters = [ "weapons", "team",]
 [units."Pegasus Rider"]
 race = "Elf"
 name = "Pegasus Rider"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "4mp, 6xp"
 armor = ""
@@ -689,7 +689,7 @@ filters = [ "weapons", "team",]
 [units.Illusion]
 race = "Elf"
 name = "Illusion"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "2cp"
 armor = ""
@@ -713,7 +713,7 @@ filters = [ "weapons", "team",]
 [units."Armored Unicorn Rider"]
 race = "Elf"
 name = "Armored Unicorn Rider"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp, 8xp"
 armor = "1/1/1/1"

@@ -289,7 +289,7 @@ filters = [ "team",]
 [units.Assasin]
 race = "DarkElf"
 name = "Assasin"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp, 6xp"
 armor = ""
@@ -313,7 +313,7 @@ filters = [ "weapons", "team",]
 [units."Elite Infantry"]
 race = "DarkElf"
 name = "Elite Infantry"
-members = ""
+models = ""
 size = "Medium"
 cost = "1xp"
 armor = ""
@@ -337,7 +337,7 @@ filters = [ "weapons", "team",]
 [units.Scout]
 race = "DarkElf"
 name = "Scout"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "2mp"
 armor = ""
@@ -361,7 +361,7 @@ filters = [ "weapons", "team",]
 [units."Gigant-Spider Rider"]
 race = "DarkElf"
 name = "Gigant-Spider Rider"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "2mp, 6xp"
 armor = ""
@@ -385,7 +385,7 @@ filters = [ "weapons", "team",]
 [units.Infantry]
 race = "DarkElf"
 name = "Infantry"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "6mp"
 armor = ""
@@ -409,7 +409,7 @@ filters = [ "weapons", "team",]
 [units."Mechanical Spider"]
 race = "DarkElf"
 name = "Mechanical Spider"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "4ip"
 armor = "2/2/2/2"
@@ -433,7 +433,7 @@ filters = [ "weapons", "team",]
 [units."Elite Mechanical Cavalry"]
 race = "DarkElf"
 name = "Elite Mechanical Cavalry"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "2mp, 4cp, 6xp"
 armor = ""
@@ -457,7 +457,7 @@ filters = [ "weapons", "team",]
 [units."Nightmare Mechanical Cavalry"]
 race = "DarkElf"
 name = "Nightmare Mechanical Cavalry"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "2mp, 8cp, 12xp"
 armor = ""
@@ -481,7 +481,7 @@ filters = [ "weapons", "team",]
 [units."Queen XXX"]
 race = "DarkElf"
 name = "Queen XXX"
-members = "1"
+models = "1"
 size = "Large"
 cost = "16ip"
 armor = "6/5/3/2"
@@ -505,7 +505,7 @@ filters = [ "weapons", "team",]
 [units."Dark RoboProsthetic Elf"]
 race = "DarkElf"
 name = "Dark RoboProsthetic Elf"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "4mp, 2cp"
 armor = ""
@@ -529,7 +529,7 @@ filters = [ "weapons", "team",]
 [units."Mechanical Cavalry"]
 race = "DarkElf"
 name = "Mechanical Cavalry"
-members = "2"
+models = "2"
 size = "Medium"
 cost = "2mp, 4cp, 2xp"
 armor = ""
@@ -553,7 +553,7 @@ filters = [ "weapons", "team",]
 [units."Queen XYX"]
 race = "DarkElf"
 name = "Queen XYX"
-members = "1"
+models = "1"
 size = "Large"
 cost = "8ip"
 armor = "6/5/3/2"
@@ -577,7 +577,7 @@ filters = [ "weapons", "team",]
 [units."Mechanical Iron Dragon"]
 race = "DarkElf"
 name = "Mechanical Iron Dragon"
-members = "1"
+models = "1"
 size = "Huge"
 cost = "24ip, 24xp"
 armor = "6/3/3/2"

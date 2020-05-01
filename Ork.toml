@@ -421,7 +421,7 @@ filters = [ "team",]
 [units.Grunt]
 race = "Ork"
 name = "Grunt"
-members = "4"
+models = "4"
 size = "medium"
 cost = "2mp"
 armor = ""
@@ -445,7 +445,7 @@ filters = [ "weapons", "team",]
 [units."Awakened war hero"]
 race = "Ork"
 name = "Awakened war hero"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "N.A. Only comes into play through an Elite ork 'not yet dead' ability"
 armor = ""
@@ -469,7 +469,7 @@ filters = [ "weapons", "team",]
 [units.HammerHead]
 race = "Ork"
 name = "HammerHead"
-members = "1"
+models = "1"
 size = "Large"
 cost = "8ip"
 armor = "8/3/2/2"
@@ -493,7 +493,7 @@ filters = [ "weapons", "team",]
 [units."Warg Rider"]
 race = "Ork"
 name = "Warg Rider"
-members = "2"
+models = "2"
 size = "medium"
 cost = "2mp, 4xp"
 armor = ""
@@ -517,7 +517,7 @@ filters = [ "weapons", "team",]
 [units.Troll]
 race = "Ork"
 name = "Troll"
-members = "1"
+models = "1"
 size = "Huge"
 cost = "16xp"
 armor = ""
@@ -541,7 +541,7 @@ filters = [ "weapons", "team",]
 [units.Halftrack]
 race = "Ork"
 name = "Halftrack"
-members = "1"
+models = "1"
 size = "large"
 cost = "4ip"
 armor = "2/1/1/1"
@@ -565,7 +565,7 @@ filters = [ "weapons", "team",]
 [units."Ork Infantry"]
 race = "Ork"
 name = "Ork Infantry"
-members = "4"
+models = "4"
 size = "medium"
 cost = "4mp"
 armor = ""
@@ -589,7 +589,7 @@ filters = [ "weapons", "team",]
 [units."Elite Ork Infantry"]
 race = "Ork"
 name = "Elite Ork Infantry"
-members = ""
+models = ""
 size = "medium"
 cost = "4xp"
 armor = ""
@@ -613,7 +613,7 @@ filters = [ "weapons", "team",]
 [units.Speedhead]
 race = "Ork"
 name = "Speedhead"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "6ip"
 armor = "3/2/2/2"
@@ -637,7 +637,7 @@ filters = [ "weapons", "team",]
 [units.Cannonhead]
 race = "ork"
 name = "Cannonhead"
-members = "1"
+models = "1"
 size = "Medium"
 cost = "12ip"
 armor = "5/4/4/3"
@@ -661,7 +661,7 @@ filters = [ "weapons", "team",]
 [units."BioEngineered Ork"]
 race = "Ork"
 name = "BioEngineered Ork"
-members = "4"
+models = "4"
 size = "Medium"
 cost = "4mp, 2xp, 1cp"
 armor = ""
@@ -710,7 +710,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Warg Rider".damage_tables]
 "Psychic Damage" = [ "5+: unit shaken",]
-"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 member, psychic damage[d6]",]
+"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 model, psychic damage[d6]",]
 
 [units.Troll.orders]
 "Movement orders" = [ "- + - + Chase",]
@@ -733,7 +733,7 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 
 [units."Ork Infantry".damage_tables]
 "Psychic Damage" = [ "4+: unit base shaken",]
-"Regular Damage" = [ "1-5: kill 1 member", "6-8: kill 1 member, roll on psychic damage [d6]", "9+ Destroy Unit Base",]
+"Regular Damage" = [ "1-5: kill 1 model", "6-8: kill 1 model, roll on psychic damage [d6]", "9+ Destroy Unit Base",]
 
 [units."Elite Ork Infantry".orders]
 "" = [ "",]
