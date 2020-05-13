@@ -1,0 +1,205 @@
+\documentclass[frontgrid,a4,12pt]{flacards}
+
+
+% \usepackage[scaled=0.85]{beramono}
+\usepackage{color}
+
+%\usepackage{etoolbox}
+%\pretocmd{\card}{\def\curhint{#1}}{}{}
+
+\pagesetup{3}{3}
+
+\setlength{\cardwidth}{63mm}
+\setlength{\cardheight}{88mm}
+
+\renewcommand{\cardtextstylef}{\small}
+\renewcommand{\cardtextstyleb}{\small}
+
+\renewcommand{\brfoot}{}
+
+% Temporarily disable new lines when displaying the riddle on the back
+
+\renewcommand{\frfoot}{}
+% \renewcommand{\blfoot}{\footnotesize chris}
+% \renewcommand{\blfoot}{\footnotesize Ashley}
+% \renewcommand{\blfoot}{\footnotesize Casandra}
+% \renewcommand{\blfoot}{\footnotesize Jessica}
+
+\renewcommand{\flhead}{}
+\renewcommand{\brhead}{}
+
+\begin{document}
+\renewcommand{\frfoot}{Ork Infantry}
+
+
+\renewcommand{\frfoot}{BioEngineered Ork}
+\renewcommand{\flhead}{Movement}
+
+\card{\begin{tabular}{ll}
+    (slow) & 360$^0$ + F + 360$^0$ \\
+    (still) & 360$^0$ + 360$^0$ + 360$^0$ 
+  \end{tabular}
+}{BioEngineered Ork \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (slow) & 360$^0$ + B + 360$^0$ \\
+    (still) & 360$^0$ + A + F
+  \end{tabular}
+}{BioEngineered Ork \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (slow) & - + - + chase \\
+  \end{tabular}
+}{BioEngineered Ork \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (default slow) & - + - + flee \\
+    (default still)& - + A + flee
+  \end{tabular}
+}{BioEngineered Ork \\ Movement}
+
+\renewcommand{\frfoot}{BioEngineered Ork}
+\renewcommand{\flhead}{Fire Orders}
+
+\card{ (still) fire + -}{BioEngineered Ork \\ Fire Orders}
+
+\card{ (still) - + fire }{BioEngineered Ork \\ Fire Orders}
+
+\card{ (still) aim + - }{BioEngineered Ork \\ Fire Orders}
+
+\card{ (still) - + aim }{BioEngineered Ork \\ Fire Orders}
+
+\card{ (still) load + - }{BioEngineered Ork \\ Fire Orders}
+
+\card{ (still) - + load }{BioEngineered Ork \\ Fire Orders}
+
+
+\renewcommand{\frfoot}{WargRider}
+\renewcommand{\flhead}{Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & 360$^0$+ F + F \\
+    (slow) & 360$^0$ + F + 360$^0$\\
+  \end{tabular}
+}{WargRider \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + 360$^0$ + F \\
+    (slow) & 360$^0$ + A + F \\
+  \end{tabular}
+}{WargRider \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + F + 360$^0$\\
+    (slow) & 360$^0$ + 360$^0$ + 360$^0$\\
+  \end{tabular}
+}{WargRider \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & - + chase + chase\\
+    (slow) & - + - + chase\\
+  \end{tabular}
+}{WargRider \\ Movement}
+
+\card{\begin{tabular}{ll}
+    (fast) & F + B + 360$^0$\\
+  \end{tabular}
+}{WargRider \\ Movement}
+
+
+
+
+\card{\begin{tabular}{ll}
+    (default fast) & - + flee + flee \\
+    (default slow) & - + - + flee \\
+  \end{tabular}
+}{WargRider \\ Movement}
+
+\renewcommand{\frfoot}{Grunt}
+\renewcommand{\flhead}{Movement}
+
+\card{\begin{tabular}{ll}
+     (slow) & - + - + chase\\
+  \end{tabular}
+}{Grunt \\ Movement}
+
+
+\renewcommand{\frfoot}{Speedhead}
+\renewcommand{\flhead}{Movement}
+
+\card{\begin{tabular}{ll}
+    (fast) & F + F + F \\
+    (slow) & F + - + - \\
+  \end{tabular}
+}{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & L + F + F \\
+    (slow) & L + F + L \\
+  \end{tabular}
+}{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & R + F + F \\
+    (slow) & R + F + R \\
+  \end{tabular}
+  }{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & B + F + - \\
+    (slow) & A + F + F \\
+  \end{tabular}
+  }{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + F + L \\
+  \end{tabular}
+  }{Speedhead \\ Movement}
+
+\card{\begin{tabular}{ll}
+    (fast) & F + F + R \\
+  \end{tabular}
+}{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + R + F
+  \end{tabular}
+}{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + L + F
+  \end{tabular}
+}{Speedhead \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (default fast) & - + B + B \\
+    (default slow) & - + - + B \\
+    (default still) & - + - + A
+  \end{tabular}
+  }{Speedhead \\ Movement}
+
+
+\renewcommand{\frfoot}{Speedhead}
+\renewcommand{\flhead}{Fire Orders: rare guns}
+
+\card{(all) Load + Load }{Speedhead \\ Fire Orders: rare guns}
+
+\card{(all) Load + Fire Burst(5) }{Speedhead \\ Fire Orders: rare guns}
+
+\card{(all) Fire Burst(5) + Load }{Speedhead \\ Fire Orders: rare guns}
+
+\end{document}

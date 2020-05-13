@@ -18,6 +18,7 @@ Ork:
 	WarDrum: now an elite model equipment.
 	Added terror[6][range=1] to wardrum
 	Added Fear to Troll
+	Adjusted orders for warg
 
 DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
@@ -47,6 +48,7 @@ Dwarf:
 	Big Blaster requiers 2 models to be used now
 	Added Wheeled Shield Wall
 	Added Transport Zeppelin
+	GunBlasterWagon: takes to rounds to load, but fire twice as many shots
 	
 Elf:
 	Scout and elite scout gain spot

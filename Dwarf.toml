@@ -71,8 +71,8 @@ race = "Dwarf"
 name = "Broadside Guns"
 template = ""
 range_ = "2"
-angle = "-/x1/x1/-"
-special = "Burst(2), Place a Poison Cload[4](4+) at point blank range from any of the directions that fired."
+angle = "-/x2/x2/-"
+special = "Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 turns reloading before it can fire again\\\\ After firng these weapon, place a Poison Cload[4](4+) at point blank range from any of the directions that fired."
 damage = "d6+1"
 ap = "2"
 assault_mod = ""
@@ -305,7 +305,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "8cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, Unit Base weapon."
+type_ = "Infantry, Unit Base weapon"
 filters = [ "team",]
 
 [weapons."Heavy Musket"]
@@ -480,8 +480,8 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = "Unit Base, Infantry"
-type_ = "Infantry, Unib Base Equipment"
+required_to_buy = "Unit Base: Infantry"
+type_ = "Infantry, Unit Base Equipment"
 filters = [ "team",]
 
 [units."Dwarf Infantry"]

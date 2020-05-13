@@ -1,0 +1,319 @@
+\documentclass[frontgrid,a4,12pt]{flacards}
+
+
+% \usepackage[scaled=0.85]{beramono}
+\usepackage{color}
+
+%\usepackage{etoolbox}
+%\pretocmd{\card}{\def\curhint{#1}}{}{}
+
+\pagesetup{3}{3}
+
+\setlength{\cardwidth}{63mm}
+\setlength{\cardheight}{88mm}
+
+\renewcommand{\cardtextstylef}{\small}
+\renewcommand{\cardtextstyleb}{\small}
+
+\renewcommand{\brfoot}{}
+
+% Temporarily disable new lines when displaying the riddle on the back
+
+\renewcommand{\frfoot}{}
+% \renewcommand{\blfoot}{\footnotesize chris}
+% \renewcommand{\blfoot}{\footnotesize Ashley}
+% \renewcommand{\blfoot}{\footnotesize Casandra}
+% \renewcommand{\blfoot}{\footnotesize Jessica}
+
+\renewcommand{\flhead}{}
+\renewcommand{\brhead}{}
+
+\begin{document}
+\renewcommand{\frfoot}{Bear Rider}
+
+
+\renewcommand{\frfoot}{E34}
+\renewcommand{\flhead}{Movement}
+
+\card{\begin{tabular}{ll}
+    (fast) & F + F + - \\
+    (slow) & F + - + - \\
+    (stand-still) & - + - + -
+  \end{tabular}
+}{E34 \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + R + - \\
+    (slow) & R + - + - \\
+    (stand-still) & R + - + -
+  \end{tabular}
+}{E34 \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + L + - \\
+    (slow) & L + - + - \\
+    (stand-still) & L + - + -
+  \end{tabular}
+  }{E34 \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & F + B + - \\
+    (slow) & B + - + - \\
+    (stand-still) & A + F + -
+  \end{tabular}
+  }{E34 \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & B + B + - \\
+    (slow) & A + F + - \\
+    (stand-still) & rev + - + -
+  \end{tabular}
+  }{E34 \\ Movement}
+
+\card{\begin{tabular}{ll}
+    (fast) & L + F + - \\
+    (slow) & L + L + - \\
+    (stand-still) & L + L + -
+  \end{tabular}
+}{E34 \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) & R + F + - \\
+    (slow) & R + R + - \\
+    (stand-still) & R + R + -
+  \end{tabular}
+  }{E34 \\ Movement}
+
+\card{\begin{tabular}{ll}
+    (slow) & B + rev + - \\
+    (stand-still) & L + L + L
+  \end{tabular}
+  }{E34 \\ Movement}
+
+\card{\begin{tabular}{ll}
+    (stand-still) & R + R + R
+  \end{tabular}
+  }{E34 \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (default fast) & B + B + - \\
+    (default slow) & B + - + - \\
+    (default stand-still) & - + - + -
+  \end{tabular}
+  }{E34 \\ Movement}
+
+
+\renewcommand{\frfoot}{E34}
+\renewcommand{\flhead}{Fire orders}
+
+\card{(all) - + Fire}{E34\\ Fire Orders}
+\card{(stand still, slow) - + Aim}{E34\\ Fire Orders}
+\card{(stand still, slow) - + Load}{E34\\ Fire Orders}
+
+
+\renewcommand{\frfoot}{Bear Rider}
+\renewcommand{\flhead}{Movement}
+\card{\begin{tabular}{ll}
+  (slow) & 360$^0$ + F + 360$^0$ \\
+    (stand-still)& 360$^0$ + A + F
+  \end{tabular}
+}{Bear Rider\\ Movement}
+
+\card{\begin{tabular}{ll}
+    (slow) & 360$^0$ + B + 360$^0$ \\
+    (stand-still) & 360$^0$ + - + -
+  \end{tabular}
+}{Bear Rider\\ Movement}
+
+
+\card{
+  \begin{tabular}{ll}
+    (Default slow) & - + - + Flee \\
+    \tiny{(Default stand-still)} & - + A + Flee
+\end{tabular}}{Bear Rider\\ Default Movement}
+
+
+\renewcommand{\flhead}{Fire: Minigun}
+\card{(slow) - + Fire}{Bear Rider\\ Fire: Minigun}
+\card{(slow) - + Load}{Bear Rider\\ Fire: Minigun}
+\card{(slow) - + Aim}{Bear Rider\\ Fire: Minigun}
+
+
+\renewcommand{\frfoot}{Elf Infantry}
+\renewcommand{\flhead}{Movement}
+
+
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$ + F + 360$^0$ \\
+  (still) &360$^0$ + - + - \\
+  (fast) &360$^0$ + F + B[Rest]\\
+    (rest) &- + - + A[Slow]
+    \end{tabular}
+}{Elf Infantry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$ + 360$^0$ + 360$^0$ \\
+  (still) &360$^0$ + A + F \\
+    (rest) &- + - + A[still]
+    \end{tabular}
+}{Elf Infantry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$ + B + - \\
+  (still) &360$^0$A,A + F + F \\
+     \end{tabular}
+}{Elf Infantry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$,A + F + F 
+     \end{tabular}
+}{Elf Infantry\\ Movement}
+
+\renewcommand{\flhead}{Default Movement}
+\card{\begin{tabular}{ll}
+  (Default slow)& - + - + Flee \\
+  (Default still) & -+ A + Flee \\
+    (Default fast) &- + Flee + Flee\\
+    (Default rest) &- + - + - 
+  \end{tabular}
+}{DarkElf Infantry\\ Default Movement}
+
+
+\renewcommand{\flhead}{Fire}
+\card{(still) - + Fire}{Elf Infantry\\ Fire}
+\card{(still) - + Aim}{Elf Infantry\\ Fire}
+
+\card{(still) Fire + -}{Elf Infantry\\ Fire}
+\card{(still) Load + -}{Elf Infantry\\ Fire}
+\card{(still) Aim + -}{Elf Infantry\\ Fire}
+\card{(all) - + Throw}{Elf Infantry (With Hand-grenade)\\ Fire}
+
+\renewcommand{\frfoot}{DarkElf Infantry}
+\renewcommand{\flhead}{Fire}
+\card{(still) - + Fire}{DarkElf Infantry\\ Fire}
+\card{(still) - + Aim}{DarkElf Infantry\\ Fire}
+\card{(still) Fire + -}{DarkElf Infantry\\ Fire}
+\card{(still) Load + -}{DarkElf Infantry\\ Fire}
+\card{(still) Aim + -}{DarkElf Infantry\\ Fire}
+
+\renewcommand{\flhead}{Movement}
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$ + F + 360$^0$ \\
+  (still) &360$^0$ + - + - \\
+  (crawl) &360$^0$ + F + - 
+    \end{tabular}
+}{DarkElf Infantry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$ + B[Crawl] + - \\
+  (still) &360$^0$ + A[Crawl] + - \\
+    (crawl) &360$^0$ + A[Slow] + F
+  \end{tabular}
+}{DarkElf Infantry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+  (slow)& 360$^0$ + B + - \\
+  (still) &360$^0$ + A + F \\
+    (crawl) &360$^0$ + B + -
+  \end{tabular}
+}{DarkElf Infantry\\ Movement}
+
+
+\renewcommand{\flhead}{Default Movement}
+\card{\begin{tabular}{ll}
+  (Default slow)& - + - + Flee \\
+  (Default still) & - + A + Flee \\
+  (Default crawl) &- + A + Flee
+  \end{tabular}
+}{DarkElf Infantry\\ Default Movement}
+
+\renewcommand{\frfoot}{Elite Mechanical Cavalry}
+\renewcommand{\flhead}{Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast)&F + F + F \\
+    (slow)& 360$^0$ + F + 360$^0$ \\
+    (still) &360$^0$ + A + F \\
+  \end{tabular}
+}{Elite Mechanical Cavalry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast)&F + F + 360$^0$ \\
+    (slow)& 360$^0$ + A + F \\
+    (still) &360$^0$ + - + - \\
+  \end{tabular}
+}{Elite Mechanical Cavalry\\ Movement}
+
+\card{\begin{tabular}{ll}
+    (fast)&360$^0$ + F + F \\
+    (slow)& 360$^0$ + F,B + 360$^0$ \\
+   \end{tabular}
+}{Elite Mechanical Cavalry\\ Movement}
+
+\card{\begin{tabular}{ll}
+    (fast)&F+ F + F,B \\
+   \end{tabular}
+}{Elite Mechanical Cavalry\\ Movement}
+
+\card{\begin{tabular}{ll}
+    (fast)&F+ B + 360$^0$ \\
+   \end{tabular}
+}{Elite Mechanical Cavalry\\ Movement}
+
+
+
+\renewcommand{\flhead}{Movement}
+
+\card{\begin{tabular}{ll}
+    (default fast) -+ Flee + Flee \\
+    (default slow) - + - + Flee \\
+    (default still) - A + Flee
+   \end{tabular}
+}{Elite Mechanical Cavalry\\ Default Movement}
+
+\renewcommand{\flhead}{Fire:SMG}
+
+\card{(all) fire + fire}{Fire: SMG}
+\card{(all) load(5) + fire}{Fire: SMG}
+\card{(all) fire + load(5) }{Fire: SMG}
+
+\renewcommand{\flhead}{Fire: crossbow}
+\card{(all) - + fire}{Fire:crossbow}
+\card{(all) - + load}{Fire:crossbow}
+\card{(all) - + aim}{Fire:crossbow}
+
+
+
+\renewcommand{\frfoot}{Mechanical Spider}
+\renewcommand{\flhead}{Movement}
+
+\card{(slow) 360$^0$ + F + 360$^0$}{Mechanical Spider\\Movement}
+\card{(slow) 360$^0$ + 360$^0$ + 360$^0$}{Mechanical Spider\\Movement}
+
+\card{(default-slow) - + - + -}{Mechanical Spider\\Movement}
+
+
+\renewcommand{\frfoot}{Mechanical Spider}
+\renewcommand{\flhead}{Fire Orders}
+
+\card{ - + Fire}{Mechanical Spider\\Fire orders}
+\card{- + Load}{Mechanical Spider\\Fire orders}
+\card{- + Aim}{Mechanical Spider\\Fire orders}
+
+\end{document}
+
+  
+
