@@ -43,6 +43,10 @@ Unless other wise stated, if a unit is given a unit base weapon, the unit may fi
 
 The requirements and cost of both model replacements and extra equipment should be clearly stated in the army list.
 
+If not a unit base weapon, but the weapon requires a unit, the cost is for upgrading all models in the unit with given upgrade.
+If it is a model, the cost is for upgrading ONE model. Typically requiers the model to be elite.
+
+
 *Huge* units\
 
 Any huge unit is seen from long distance. Thus, if your army includes any huge unit, you must tell your enemy about which huge unit you include before the enemy builds its own army. Thus the enemy has some time to prepare.
@@ -69,7 +73,7 @@ Swamp      1 movement point to enter for medium and smaller,
            Does not block line of sight
 Building   2 movement points to enter for infantry, any other type cannot enter without a special rule
 Ruins	   2 movement points to enter. Does not block line of sight
-Rough      2 movement points to enter. Does not block line of sight
+Rough      1 movement points to enter. Does not block line of sight
 Smoke      +1 movement point to enter. Blocks line of sight 
            Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
 -------- --------------------------------------------------------------------------------------------------------------------------------------
@@ -124,7 +128,7 @@ Setup units according to this order:
 
 - Setup all units (except hidden and remaining scouts) within line of sigtht of an enemy scout 
 
-- Setup all other units (except hidden and remaining scouts).
+- Setup all other units (except hidden and remaining scouts) not in line of sight of an enemy scout.
 
 - Setup all remaining scouts.
 
@@ -135,6 +139,41 @@ keep track for your self to know which is which.
 
 Roll a die for each step. However wins has an setup advantage, and starts seting up second. The one with disadvantage set up one unit first, then players alternate setting up two units until the step is finished. One step must be finished for both sides before advancing to next step. Thus if a player runs out of units within one step, the other sets up all units in that steps before preciding with next step.
 
+
+# Victory Condition
+
+Choose which style to play:
+
+1. Friendly match
+
+All enemies are eliminated!
+
+
+2. Turnament style: FIXED TIME
+
+After an fixed amount of time, each player scores points according to the following:
+
+3pt for each surviving IP 
+1pt for each surviving MP, XP and CP
+6pt for each destroyed enemy IP
+2pt for each destroyed enemy MP,XP and CP
+---
+Only totally destroied units counts as destoied. An infantry unit with 1 out of 4 models standing counts as survived.
+
+In addition, the player in the match with most points, gets 24 bonus points. If a draw, no player gets the bonus points.
+
+Both the winner and the looser record points.
+
+Note that both players get more points by destroying each other. Thus it is possible that a looser of one match scores more points than a winner of another match. This rewards playing aggressive.
+
+The theoretical maximum a player can get in a standard game is thus: \
+6*24 + 2*(24+24+24) +3*24 + (24+24+24) + 24 = 456
+
+In a game where nobody has killed anything:\
+3*24 + (24+24+24) = 144
+
+In a game where BOTH players has eliminated each other:\ 
+6*24+2(24+24+24) = 288
 
 
 \pagebreak
@@ -382,13 +421,7 @@ Long range: \
 *Area* *To-Hit*: \
 Area(n+): roll 1 die per enemy model in hex. Apply damage per success.
 
-Area success modifiers: \
-
-+1 to success per extra identical area attack fired by models from the same unit.
-
-Example: A unit of 4 models, which each throws a grenade at success 6+ becomes:
-success for 4 x area(6+) attacks versus a single hex becomes 3+.
-
+Unless otherwise stated, area effects
 
 \pagebreak
 
@@ -406,7 +439,7 @@ Point Blank               +1      +1          (Range=1)
 
 
 
-Any specified damage is regular damage, and follow these rules:
+Unless the damage is of a specific type, any specified damage is regular damage, and follow these rules:
 
 ## Armor
 
@@ -451,6 +484,25 @@ For
 
 
 
+To summerize:
+
+                        damage modifier
+----------------------- ----------------
+*armor*
+Blocked by armor          $-\infty$
+Partly blocked by armor  -3
+Penetrated armor           0 (some weapons grants you +3 here)
+*previous results* 
+Previous damage          +1 per token
+*range*
+Long range               -1
+Normal range              0
+Point Blank              +1
+*Unit* *resistances*
+XXX Resistance           -N if damage type matches resistance.
+                            (damage type is regular if unspecified)
+
+
 
 ## Damage Table:
 
@@ -464,7 +516,12 @@ Whenever one member of a unit with multiple members die, half previous bonus to 
 Unless otherwise stated by the weapon, any weapon has regular damage. Some weapons and effects may have special damage in addition or instead of their normal damage. Some special damage types have special rules, which include
 - Poison
 - Fire
-for which details can be seen under continiuous damage.
+
+**Fire** **damage**:
+Treat it as regular damage, except for resistances. Fire damage does not ignore armor, but ignore regular damage resistances. However any fire resistance the  Roll on regular damage table.
+
+**Poison**:
+Details: see continious damage.
 
 Other, more generic damage types will be noted by the following in weapon stats:\
 - [type] damage[dN]
@@ -474,6 +531,8 @@ If so, and if the target has a damage table of name equal to the type of damage,
 - Psychic Damage[d6]
 Roll a d6 on psychic damage table of target.
 If the target don't have a psychic damage table, the unit is immune to this damage.
+
+
 
 
 \pagebreak
@@ -606,11 +665,11 @@ This weapon can have, and must be loaded with N ammo to be fired. However, when 
 This weapon may be fired a maxium of N times in a match. Many of these weapons are allways treated as load special, but it only works as long as the total number of times used is less than N.
 
 
-**Fire**, ranged weapons
+**Set** **on** **Fire**, ranged weapons
 
 If target is hit atleast once by a ranged weapon with this special ability, target is set on fire. See continous damage. If already on fire, apply another fire token.
 
-**Fire**, assault weapons
+**Set** *on* **Fire**, assault weapons
 
 Any unit base hit atleast once in assault by a unit with this special is set on fire. See continous damage.
 
@@ -618,17 +677,19 @@ Any unit base hit atleast once in assault by a unit with this special is set on 
 
 If target is hit by a ranged weapon with this special ability, apply (minor) acid to target. See continous damage. Apply one (minor) acid per hit.
 
-**(minor)** **Acid**, assault weapons
+**(minor)** **Acid** [1 for N] assault weapons
 
-Apply minor Acid to a unit base per damaging assault success from this source. See continous damage.
+Apply one minor Acid to an any enemy unit for each N successfull assault hits. If N=2 this means you may place one minor acid token for every 2nd successful assault die you do. For Minor acid, see continoius damage.
+
+
 
 **Poison[N]**, ranged weapons
 
 If target is hit by a ranged weapon with this special ability, apply Poison[N] to taget unit. See continous damage. Apply one Poison[n] per hit.
 
-**Poison[N]**, assault weapons
+**Poison[M]** [1 for N], assault weapons
 
-Apply Poison[N] to a unit base per damaging assault success from this source. See continous damage.
+Apply one Poison[M] to an enemy unit base for each N successful assault hits. If N=2 this means you may place one Poison[M] token per 2nd hit. For poison, see continous damage.
 
 
 
@@ -641,7 +702,7 @@ Default type of any shot is regular damage. Other types are always specified.
 Regular: any damage rolled on regular damage table of unspecified type. This does not include damage from any other type. \
 Psychic : any damage rolled on psychic damage table of unspecified type.\
 Poison : any damage rolled by poison effect\
-Fire   : any damage rolled by fire effect
+Fire   : any fire damage rolled 
 
 Any other resistance may be added in future. It then is effective only versus the spesific damage type.
 Damage type is either regular damage, or explisitly given by the firing unit or effect.
@@ -649,7 +710,7 @@ Damage type is either regular damage, or explisitly given by the firing unit or 
 
 **Shaken**:
 
-*Shaken*: when first shaken, place two pinned tokens. One is removed during each aftermath.
+*Shaken*: when first shaken, place two shaken tokens. One is removed during each aftermath.
 While shaken a unit carries out the default order for both movement and firing.
 For vehicles this represent temporarily mechanical problems.
 
@@ -680,11 +741,11 @@ Agony 0 to Agony 4.
 
 Unit on Fire: (roll by enemy)
 
-- At agony step 2 Ignore armor and roll one d6 on damage table.
-Add bonus for previous damage (plus on future damage results). 
-Apply any fire resistance modifiers if any.
-Ignore armor.
-If the natural d6 roll minus fire resistance is 2 or lower, remove the fire
+- At agony step 2, all units on fire takes AP $\infty$, d6 fire damage \
+Ignore armor. \
+Add bonus for previous damage (plus on future damage results).  \
+Apply any fire resistance modifiers if any. \
+If the natural d6 roll is 2 or lower, remove the fire from unit.
 
 
 

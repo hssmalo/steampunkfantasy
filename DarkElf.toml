@@ -293,7 +293,7 @@ models = "1"
 size = "Medium"
 cost = "2mp, 6xp"
 armor = ""
-type_ = "Bio, Infantry, Elite, Walks"
+type_ = "Bio, Elite Infantry, Walks"
 isReplacement = ""
 replaces = ""
 unititems = ""
@@ -307,7 +307,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "8/3/-/-"
-assault_special = "Poison[12], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection\\\\ Reroll all success in assault while crawling"
+assault_special = "Poison[12][1 for 2], Cunning Assault[1 for 1], \\\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection\\\\ Reroll all success in assault while crawling"
 filters = [ "weapons", "team",]
 
 [units."Elite Infantry"]
@@ -317,7 +317,7 @@ models = ""
 size = "Medium"
 cost = "1xp"
 armor = ""
-type_ = "Infantry, Bio, Elite, Walks"
+type_ = "Elite Infantry, Bio, Walks"
 isReplacement = "yes"
 replaces = "Model: Infantry or Dark RoboProsthetic Elf"
 unititems = ""
@@ -379,7 +379,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "8/4/-/-"
-assault_special = "Poison[12], minor acid, Fear[4]"
+assault_special = "Poison[12][1 for 1], minor acid[1 for 2], Fear[4]"
 filters = [ "weapons", "team",]
 
 [units.Infantry]
@@ -427,7 +427,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6+0"
 assault_ap = "2"
 assault_deflection = "6/2/-/-"
-assault_special = "Poison[6], Fear[6]"
+assault_special = "Poison[6][1 for 2], Fear[6]"
 filters = [ "weapons", "team",]
 
 [units."Elite Mechanical Cavalry"]
@@ -437,7 +437,7 @@ models = "2"
 size = "Medium"
 cost = "2mp, 4cp, 6xp"
 armor = ""
-type_ = "Bio, Mechanical Mount, Cavalry, Elite, Walks"
+type_ = "Bio, Mechanical Mount, Elite Cavalry, Walks"
 isReplacement = ""
 replaces = ""
 unititems = ""
@@ -499,7 +499,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-1"
 assault_ap = "-1"
 assault_deflection = "4/-/-/-"
-assault_special = "Poison[6], Fear[8] \\\\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
+assault_special = "Poison[6][1 for 1], Fear[8] \\\\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
 filters = [ "weapons", "team",]
 
 [units."Dark RoboProsthetic Elf"]
@@ -571,7 +571,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6-1"
 assault_ap = "-1"
 assault_deflection = "4/-/-/-"
-assault_special = "Poison[6], Fear[8] \\\\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
+assault_special = "Poison[6][1 for 1], Fear[8] \\\\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not..."
 filters = [ "weapons", "team",]
 
 [units."Mechanical Iron Dragon"]

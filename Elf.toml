@@ -94,7 +94,7 @@ name = "Small grenade"
 template = "r"
 range_ = "1"
 angle = "*/*/*/*"
-special = "Area(6+), limited ammo(3)"
+special = "Area(5+) if used by a unit with 1-2 alive models, Area(4+) if used by a unit with 3-4 alive models. May only target units within normal range. limited ammo(3)"
 damage = "d6"
 ap = "0"
 assault_mod = ""
@@ -538,8 +538,8 @@ assault_die = "5+"
 assault_deflection_die = "5+"
 assault_damage = "d6-2"
 assault_ap = "-2"
-assault_deflection = "2/-/-/-"
-assault_special = "Poison[4], Cunning Assault[1 for 3], Pre-Assault Retreat: 5+"
+assault_deflection = "3/-/-/-"
+assault_special = "Poison[4][1 for 2], Cunning Assault[1 for 3], Pre-Assault Retreat: 5+"
 filters = [ "weapons", "team",]
 
 [units."Tatto INK"]
@@ -586,8 +586,8 @@ assault_die = "5+"
 assault_deflection_die = "5+"
 assault_damage = "d6-2"
 assault_ap = "-2"
-assault_deflection = "1/-/-/-"
-assault_special = "poison[4], Cunning Assault[1 for 3]"
+assault_deflection = "2/-/-/-"
+assault_special = "poison[4][1 for 2], Cunning Assault[1 for 3]"
 filters = [ "weapons", "team",]
 
 [units."Eagle Rider"]
@@ -683,7 +683,7 @@ assault_deflection_die = "5+"
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = "1"
-assault_special = "Pre-Assault: throw fire (from lance): roll a die (once for the entire unit), at 5+ set one enemy unit on fire, and if successful, you may retreat from the assault as the Pre-assault retreat ability"
+assault_special = "Pre-Assault: throw fire (from lance): roll a die (once for the entire unit), at 5+ set one enemy unit on fire (see set on fire general rules), and if successful, you may retreat from the assault as the Pre-assault retreat ability"
 filters = [ "weapons", "team",]
 
 [units.Illusion]
@@ -772,7 +772,7 @@ filters = [ "team",]
 
 [units.E34.orders]
 Fire = [ "(all) - + Fire", "(stand still, slow)- + Aim", "(stand still, slow) - + Load",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) R + F + -", "(fast) L + F + - ", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units.E34.damage_tables]
 "Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]

@@ -668,7 +668,35 @@ class Costimized_unit(Unit):
     def write():
         pass
         
-    
+    def base_unit(self, unit):
+        self.baseunitname = unit.name
+        self.models = unit.models
+        self.size = unit.size
+        self.cost = unit.cost
+        self.armor = unit.armor
+        self.type_ = unit.type_
+        self.unititems = unit.unititems
+        self.modelitems = unit.modelitems
+        
+        self.weapons_input= unit.weapons_input
+        
+        self.unit_special = unit.unit_special
+
+
+        self.assault = unit.assault
+        self.assault_die = unit.assault_die 
+        self.assault_deflection_die = unit.assault_deflection_die 
+        self.assault_damage = unit.assault_damage 
+        self.assault_ap = unit.assault_ap 
+        self.assault_deflection = unit.assault_deflection
+        self.assault_special = unit.assault_special 
+ 
+        
+        self.orders = unit.orders
+
+        self.damage_tables = unit.damage_tables
+
+        self.filters = ['weapons', 'team']
         
     def add_replacement(self, replacement):
 
