@@ -439,7 +439,7 @@ assault_deflection_die = ""
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = ""
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Cunning assault[1 for 3]"
 filters = [ "weapons", "team",]
 
 [units."Awakened war hero"]
@@ -463,7 +463,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6"
 assault_ap = ""
 assault_deflection = "2/-/-/-"
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 6 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 6 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Cunning Assault[1 for 3]"
 filters = [ "weapons", "team",]
 
 [units.HammerHead]
@@ -583,7 +583,7 @@ assault_deflection_die = ""
 assault_damage = "d6-2"
 assault_ap = "-2"
 assault_deflection = ""
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Cunning Assault[1 for 3]"
 filters = [ "weapons", "team",]
 
 [units."Elite Ork Infantry"]
@@ -607,7 +607,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6"
 assault_ap = "-2"
 assault_deflection = "1/-/-/-"
-assault_special = "Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process."
+assault_special = "Any 6 on assult die roll (not assault deflection) you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Cunning Assault[1 for 3]"
 filters = [ "weapons", "team",]
 
 [units.Speedhead]
@@ -624,14 +624,14 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "Flamethrower", "Speed Cannon", "Shriek",]
-unit_special = "Flamethrower: may allways be fired in any shooting step as long as you still have ammo left. Do not need an order to do so \\\\ Fire and load both rare guns (Speed Cannon and Shriek) simultatniously. All targets of both weapons must be within the same angle, but not neccesarily same target."
+unit_special = "Flamethrower: may allways be fired in any shooting step as long as you still have ammo left. Do not need an order to do so \\\\ Fire and load both rear guns (Speed Cannon and Shriek) simultatniously. All targets of both weapons must be within the same angle, but not neccesarily same target."
 assault = "8/6/4/4"
 assault_die = "6+"
 assault_deflection_die = "6+"
 assault_damage = "d8"
 assault_ap = "-2"
 assault_deflection = "2/1/-/-"
-assault_special = "For each 6 you roll in regular assault, reroll up too 1 dice from initial assault die pool (assault or assault deflection), rerolling each die a maximum of 1 times (for each wave of rerolls)."
+assault_special = "For each 6 you roll in regular assault, reroll up too 1 dice from initial assault die pool (assault or assault deflection), rerolling each die a maximum of 1 times (for each wave of rerolls).\\\\ When moving fast, unit gains Fear[6]"
 filters = [ "weapons", "team",]
 
 [units.Cannonhead]
@@ -710,7 +710,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Warg Rider".damage_tables]
 "Psychic Damage" = [ "5+: unit shaken",]
-"Regular Damage" = [ "2-3: Bleeding[6]", "4-5: Bleeding[6], +1 to future damage, psychic damage[d6]", "6+: kill 1 model, psychic damage[d6]",]
+"Regular Damage" = [ "2-3: Bleeding[6]", "4-6: Bleeding[6], +1 to future damage, psychic damage[d6]", "7+: kill 1 model, psychic damage[d6]",]
 
 [units.Troll.orders]
 "Movement orders" = [ "- + - + Chase",]
@@ -743,7 +743,7 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 
 [units.Speedhead.orders]
 Movement = [ "(slow) L + F + L", "(slow) R + F + R", "(slow) F + - + -", "(default Slow) - + - + B", "(default stand-still) - + - + A", "(slow) A + F + F", "(fast) F + F + F", "(fast) L + F + F", "(fast) R + F + F", "(fast) F + F + L", "(fast) F + F + R", "(default fast) - + B + B", "(fast) B + L + F", "(fast) B + R + F", "(fast) B + F + -",]
-"Fire Orders" = [ "(all) Load + Load", "(all) Load + Fire Burst(5)", "Fire Burst(5) + Load",]
+"Fire Orders" = [ "(all) Load + Load", "(all) Load + Fire Burst(5)", "(all) Fire Burst(5) + Load",]
 
 [units.Speedhead.damage_tables]
 "Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
@@ -764,5 +764,5 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) - + - + chase",]
 
 [units."BioEngineered Ork".damage_tables]
-"Regular Damage" = [ "1: Bleed[4]", "2-5: Kill 1 memeber", "6-8: Kill 1 Model, d6 Psycic damage", "9: Destroy unit base",]
-"Psycic Damage" = [ "5+: Unit Shaken",]
+"Regular Damage" = [ "1: Bleed[4]", "2-5: Kill 1 model", "6-8: Kill 1 Model, d6 Psychic damage", "9: Destroy unit base",]
+"Psychic Damage" = [ "5+: Unit Shaken",]
