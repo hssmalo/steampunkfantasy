@@ -601,7 +601,7 @@ assault_deflection_die = ""
 assault_damage = "d6"
 assault_ap = "-1"
 assault_deflection = ""
-assault_special = "Fire"
+assault_special = "set on Fire"
 filters = [ "weapons", "team",]
 
 [units."Elite Dwarf Infantry"]
