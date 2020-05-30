@@ -509,9 +509,9 @@ assault = "4/4/3/2"
 assault_die = "6+"
 assault_deflection_die = "6+"
 assault_damage = "d6-2"
-assault_ap = ""
+assault_ap = "-2"
 assault_deflection = "2/2/1/1"
-assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. "
+assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ cunning assault[1 for 4]"
 filters = [ "weapons", "team",]
 
 [units.Troll]
