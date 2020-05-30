@@ -5,7 +5,10 @@ General:
 	Added rules for spotting.
 	template: assault die: instead of assault die set to:
 	AP modified by long/normal/point blank to make weapon range more important
-
+	Simplified area of effect. Now successrate is written in stats.
+	Poison & minor acid in assault now has a 1 for N in the stats.
+	Added fire damage
+	
 All Teams:
 	Adjusted Infantry orders
 	
@@ -19,6 +22,10 @@ Ork:
 	Added terror[6][range=1] to wardrum
 	Added Fear to Troll
 	Adjusted orders for warg
+	speadhead flamethrower now do fire damage
+	Added clockwork monocolar
+	Added poison spikes
+	Flamecovered axe now cost 2cp.
 
 DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
@@ -32,7 +39,7 @@ DarkElf:
 	Added Mechanical Iron Dragon
 	Mechenical cavalry: cost 4mp, 4cp, 2xp and 4mp, 4cp and 6xp for elite
 	Mechenical cavalry: cost 2mp, 4cp, 2xp and 2mp, 4cp and 6xp for elite
-	Mechanical Cavalery: now need 6 to die instead of 5.
+	Mechanical Cavalery: now need 5 to die instead of 4.
 	
 Dwarf:
 	AT-Gun may start hidden.
@@ -49,6 +56,8 @@ Dwarf:
 	Added Wheeled Shield Wall
 	Added Transport Zeppelin
 	GunBlasterWagon: takes to rounds to load, but fire twice as many shots
+	Simplified Wheeled Shield Wall.
+	GunBlasterWagon: broadsides now do d6+2 in damage! 
 	
 Elf:
 	Scout and elite scout gain spot
