@@ -61,22 +61,31 @@ This game is played on a hex-based map. Each hex contains a given type of terrai
 It is also possible that smoke, entrenchements etc. modify the default terrain.
 
 For movement and line of sight, se table below:
---------   --------------------------------------------------------------------------------------------------------------------------------------
-Clear      No modifiers
-Mountains  2 movement points up, 1 down. 2 hight level, level 2 blocking terrain.
-Hills      2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
-Forest     2 movement points to enter for vehicles, 1 for all other things. Level 0, Blocking terrain
-Swamp      1 movement point to enter for medium and smaller,
-           +1/+2 movement points to exit for large/huge size
-	   Units with track or wheel in description may get stuck,
-	   at 1 or 2, the unit cannot move this movement step
-           Does not block line of sight
-Building   2 movement points to enter for infantry, any other type cannot enter without a special rule
-Ruins	   2 movement points to enter. Does not block line of sight
-Rough      1 movement points to enter. Does not block line of sight
-Smoke      +1 movement point to enter. Blocks line of sight 
-           Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
--------- --------------------------------------------------------------------------------------------------------------------------------------
+--------              -----------------------------------------------------------------------------------------------------------------------------
+Clear                 No modifiers
+Mountains             2 movement points up, 1 down. 2 hight level, level 2 blocking terrain.
+Hills                 2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
+Forest                2 movement points to enter for vehicles, 1 for all other things.
+                      Level 0 blocking terrain
+Ruins	              2 movement points to enter. Does not block line of sight
+Rough                 1 movement points to enter. Does not block line of sight
+Sand Dunes            2 movement point to enter. Level 0 blocking terrain
+*Advanced* *terrain*
+Swamp                 1 movement point to enter for medium and smaller, 
+                      +1/+2 movement points to enter for large/huge size
+                      Units with track or wheel in description may get stuck,
+                      at 1 or 2 on a d6, the unit cannot move this movement step, regardless of order
+                      Does not block line of sight
+Building              2 movement points to enter for infantry,
+                      any other type cannot enter without a special rule
+		      Level 0 blocking terrain.
+Road                  If moving from a road to another hex with road, movement always cost 1.
+Smoke                 Blocks line of sight 
+                      Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
+River                 +1 movement point to enter		      
+Water                 1 movement point to enter for ships, floating or flying
+                      (and can only be entered while not flying). Cannot be entered by any other way.
+--------              -----------------------------------------------------------------------------------------------------------------------------
 
 
 If a unit tries to enter a hex which cost more than 1 to enter, place a 'entering difficult terrain token' for the unit base. It can only move into the hex if it already have enough of these tokens to enter the hex. An hex cost 2 movement points to enter needs 1 of these token already presents, while a hex costing 3 needs 2 of those tokens. (2 token then you spend the third action to enter). You lose all tokens if you do any movement not trying to enter the hex.
@@ -114,8 +123,8 @@ NoMansLand: 4 middle hex rows\
 Side 1: 3 hexes closest to side 1 of the board.\
 Side 2: 3 hexes closest to side 2 of the board.\
 
-NoMansLand cannot contain any blocking terrain. You may, if players both agree, place some other features in NoMansLand in some random matter.
-Side 1 completely designs it's own side of the board and similar to side 2.
+NoMansLand cannot contain any blocking or advanced terrain.
+Each side may design it's own terretory as you wish, but with a maximum of 5 advanced hexes.
 
 # Setup
 
@@ -380,7 +389,9 @@ Flying                     -1      -1         (stacks with speed)
 Smoke                      -1      -1
 Forrest                     0      -1
 Building                    0      -1
-Ruints                      0      -1
+Ruins                       0      -1
+Rough Terrain	            0      -1
+Sand Dunes                  0      -1
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
 *Range*
@@ -394,7 +405,7 @@ HUGE                        0      +1
 *unit* *abilities*
 Good Shot                  +1       0
 Excellent Shot             +2       0
-Bad Shot  		   -1       0
+Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
 Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed.
@@ -499,7 +510,7 @@ Long range               -1
 Normal range              0
 Point Blank              +1
 *Unit* *resistances*
-XXX Resistance           -N if damage type matches resistance.
+XXX Resistance N         -N if damage type matches resistance.
                             (damage type is regular if unspecified)
 
 
