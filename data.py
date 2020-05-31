@@ -9,10 +9,13 @@ class Team():
         self.weapons = {}
         self.abilities = {}
 
+    def copy_weapons_from(self, other_team):
+        for key, unit in self.units.items():
+            for weapon_name in unit.weapons_input:
+                self.weapons[weapon_name] = other_team.weapons[weapon_name]
+        
 
     def unit_sort(self, text):
-
-
         
         if text.startswith('Elite'):
             used = text[6:] + ' ' + text[0:5]
