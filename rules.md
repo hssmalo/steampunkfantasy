@@ -199,40 +199,42 @@ Trigger Hex effect(if hex effect was fired in a hex you were standing)\
  
 - Movement 1 \
 Pre assault retreat \
-Trigger hex effect (including all units in contested hexes)\ 
-Pre assault abilities
-
-- Assault 1 \
-Post assault retreat\
-Trigger hex effect \
-
-
-- Movement 2 \
-Pre assault retreat\
 Trigger hex effect (including all units in contested hexes) \
 Pre assault abilities
 
-- Assault 2 \ 
-Post Assault retreat \
-Trigger hex effect 
+- Assault 1 \
+Post assault retreat \
+Trigger hex effect \
+Apply damage \
 
+- Movement 2 \
+Pre assault retreat \
+Trigger hex effect (including all units in contested hexes) \
+Pre assault abilities\
+Apply damage \
+
+- Assault 2 \
+Post Assault retreat \
+Trigger hex effect \
+Apply damage \
 
 - Movement 3\
-Pre assault retreat\
-Trigger hex effect (including all units in contested hexes)\
+Pre assault retreat \
+Trigger hex effect (including all units in contested hexes) \
 Pre assault abilities \
+Apply damage \
 
 - Assault 3\
-Post assault retreat\
-Trigger hex effect 
-
+Post assault retreat \
+Trigger hex effect  \
+Apply damage \
 
 - Gunnery 2\
 Trigger Hex effect(if hex effect was fired in a hex you were standing) \
 Apply damage \
 
 
-- Agony 0 (major acid)
+- Agony 0 (major acid, terror)
 - Agony 1 (minor acid)
 - Agony 2 (fire)
 - Agony 3 (poison)
@@ -409,6 +411,7 @@ Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
 Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed.
+Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
 Enhanced Accurazy           +1      0
 ------------------------ -------  ---------- ---------------------

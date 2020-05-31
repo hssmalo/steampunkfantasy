@@ -746,7 +746,7 @@ Fire = [ "(stand still) Load + -", "(all) fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) Aim + - + -",]
 
 [units.HammerHead.damage_tables]
-"Regular Damage" = [ "1-5: Light damage[d6]", "6-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
+"Regular Damage" = [ "1-4: Light damage[d6]", "5-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
 "Light Damage" = [ "1-3: unit shaken", "4-5: +1 on all future damage", "6: -2/-2/-2/-2 (cumulative) on assault values",]
 "Critical damage" = [ "1-3: Light damage[d6], 3 times", "4: Unit cannot rotate Left", "5: Unit Cannot rotate Right", "6: Harpoon guns destroyed.",]
 
@@ -792,7 +792,7 @@ Movement = [ "(slow) L + F + L", "(slow) R + F + R", "(slow) F + - + -", "(defau
 "Fire Orders" = [ "(all) Load + Load", "(all) Load + Fire Burst(5)", "(all) Fire Burst(5) + Load",]
 
 [units.Speedhead.damage_tables]
-"Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
+"Regular Damage" = [ "1-4: Lightly damaged, roll d6 on light damage table", "5-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
 "Light Damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage",]
 "Critical Damage " = [ "1-3: roll on lightly damage 3 times", "4: Cannot rotate left", "5: Cannot rotate right", "6: Unit set on fire",]
 
@@ -801,7 +801,7 @@ Fire = [ "(stand still) Load + -", "(stand still) Aim + -", "(all) fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) Aim + - + -",]
 
 [units.Cannonhead.damage_tables]
-"Regular Damage" = [ "1-5: Lightly damaged, roll d6 on light damage table", "6-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
+"Regular Damage" = [ "1-4: Lightly damaged, roll d6 on light damage table", "5-8: +1 on future damage, roll d6 on critical damage table", "9+: unit destroied",]
 "Light Damage" = [ "1-3: Unit Shaken", "4-6: +1 on future damage",]
 "Critical Damage " = [ "1: Reduce armor by 1.", "2: +1 on future damage", "3: Cannot brake", "4: Cannot rotate left", "5: Cannot rotate right", "6: Unit set on fire",]
 

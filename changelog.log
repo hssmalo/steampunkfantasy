@@ -26,6 +26,7 @@ Ork:
 	Added clockwork monocolar
 	Added poison spikes
 	Flamecovered axe now cost 2cp.
+	Ork tanks in line with dwarf tanks for damage table
 
 DarkElf:
 	Enhanched crossbows: cost 5cp instead of 4.
@@ -57,7 +58,9 @@ Dwarf:
 	Added Transport Zeppelin
 	GunBlasterWagon: takes to rounds to load, but fire twice as many shots
 	Simplified Wheeled Shield Wall.
-	GunBlasterWagon: broadsides now do d6+2 in damage! 
+	GunBlasterWagon: broadsides now do d6+2 in damage!
+	GunBlasterWagon gained: optimal at point blank
+	Balrog gained +1 to hit for using whip.
 	
 Elf:
 	Scout and elite scout gain spot
