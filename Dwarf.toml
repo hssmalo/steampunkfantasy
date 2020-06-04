@@ -819,7 +819,7 @@ Movement = [ "(flying, slow) F + L + -", "(flying, slow) F + R + -", "(flying, s
 
 [units."Tamed Balrog".orders]
 Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
-Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(slow) chase" + - + -, "(default slow) - + - + flee",]
+Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(slow) chase + - + -", "(default slow) - + - + flee",]
 
 [units."Tamed Balrog".damage_tables]
 "Regular Damage" = [ "1-8: +1 on future damage", "9-10: +2 on future damage, Assault -1/-1/-1/-1 looses terror", "11-12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
