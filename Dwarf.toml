@@ -797,9 +797,9 @@ Fire = [ "(all) load + -", "(stand-still) fire + -",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + B,B", "(fast) F + F + F,B,B", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) A + A + F",]
 
 [units.GunBlasterWagon.damage_tables]
-"Critical damage" = [ "1: -1 to-hit, +1 to-be-htt", "2: Cannot Rotate R", "3: Cannot Rotate L", "4: x3 Lightly Damage", "5: Cannot fire weapons to the left", "6: Cannot fire weapons to the right",]
+"Critical damage" = [ "1-2: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot Rotate, Looses Fear", "3: Cannot Move", "4-5: x3 Light Damage[d6]", "6: set on Fire",]
 "Lightly Damage" = [ "1-3: unit shaken", "4-6: +1 on future damage",]
-"Regular Damage" = [ "1-4: lightly damage", "5-8: Critical damage, +1 on future damage", "9+: Destroyed",]
+"Regular Damage" = [ "1-4: lightly damage", "5-8: Critical damage[d6], +1 on future damage", "9+: Destroyed",]
 
 [units."Elite SteamPowerArmor".orders]
 "" = [ "",]

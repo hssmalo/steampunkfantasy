@@ -427,7 +427,7 @@ assault_deflection_die = "6+"
 assault_damage = "d6+0"
 assault_ap = "2"
 assault_deflection = "6/2/-/-"
-assault_special = "Poison[6][1 for 2], Fear[6]"
+assault_special = "Any number of supporting hits by this unit may incease AP by 1 instead of giving the usueuall +1 to damage. \\\\ Poison[6][1 for 2], Fear[6]  "
 filters = [ "weapons", "team",]
 
 [units."Elite Mechanical Cavalry"]
@@ -652,9 +652,9 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(default slow) - + - + -",]
 
 [units."Mechanical Spider".damage_tables]
-"Heavy Damage" = [ "1: +2 for future damage", "2: -1 to-hit, +1 to-be-hit", "3: Cannot move", "4: Cannot rotate", "5: Roll d6 on light damage table 3 times", "6: Fire",]
+"Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot move, looses fear", "3: Cannot rotate", "4-5: x3 Light damage[d6]", "6: set on Fire",]
 "Light Damage" = [ "1-2: unit shaken", "3-4: +1 on future damage", "5-6: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0)",]
-"Regular Damage" = [ "1-3: Light damaged[d6]", "4-6: Roll d6 on Heavily Damage, +1 on future damage", "7: Destroyed",]
+"Regular Damage" = [ "1-3: Light damaged[d6]", "4-6: Critical Damage[d6], +1 on future damage", "7: Destroyed",]
 
 [units."Elite Mechanical Cavalry".orders]
 Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F + F", "(fast) F + F + F,B", "(fast) F + B + 360$^0$", "(slow) 360$^0$ + - + -", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) 360$^0$ + F,B + 360$^0$", "(stand still) 360$^0$ + A + F", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(default slow) - + - + flee", "(default fast) - + flee + flee", "(default stand-still) - + A + flee", "(fast) F + 360$^0$ + F",]

@@ -775,8 +775,8 @@ Fire = [ "(all) - + Fire", "(stand still, slow)- + Aim", "(stand still, slow) - 
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) R + F + -", "(fast) L + F + - ", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units.E34.damage_tables]
-"Regular Damage" = [ "1-4: Lightly Damaged", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
-"Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in agony step 2", "4: rotates left in agony step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on Fire",]
+"Regular Damage" = [ "1-4: Light Damaged[d6]", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
+"Critical Damage" = [ "1: Cannot move, looses Fear", "2: -1 to hit, +1 to be hit(ranged and assault)", "3: Cannot Rotate", "4: x3 Light damage[d6]", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on Fire",]
 "Lightly Damaged" = [ "1-3: shaken", "4-6: +1 on future damage",]
 
 [units."Bear Rider".orders]
