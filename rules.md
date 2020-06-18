@@ -67,7 +67,7 @@ Mountains             2 movement points up, 1 down. 2 hight level, level 2 block
 Hills                 2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
 Forest                2 movement points to enter for vehicles, 1 for all other things.
                       Level 0 blocking terrain
-Ruins	              2 movement points to enter. Does not block line of sight
+Ruins	              1 movement points to enter. Does not block line of sight
 Rough                 1 movement points to enter. Does not block line of sight
 Sand Dunes            2 movement point to enter. Level 0 blocking terrain
 *Advanced* *terrain*
@@ -84,7 +84,7 @@ Smoke                 Blocks line of sight
                       Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
 River                 +1 movement point to enter		      
 Water                 1 movement point to enter for ships, floating or flying
-                      (and can only be entered while not flying). Cannot be entered by any other way.
+                      (and can only be entered while flying). Cannot be entered by any other way.
 --------              -----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -290,6 +290,8 @@ Each unit has a set of available orders. Code:
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
 If still no such hex is available, let your enemy move your unit to any hex he/she likes
+- Road: Move along the road. Facing is always along the road.
+
 
 
 Any order divided in 3 happens in movement step, where the first is executed in movement 1, the second in movement 2 and the third in movement 3.
@@ -320,18 +322,20 @@ If an illegal order is given, do the default order instead.
 
 
 Load: loads weapon. A weapon cannot fire without a load token available.
-      Some weapons may load more than one ammo per loading. It is then noted as load[5] \
+      Some weapons may load more than one ammo per loading. It is then noted as load[2] or load[5] \
 Aim : optional: +2 to hit. Last 1 round, and may only be used versus targets within line of sight from the original hex where the aim was issued\
 Fire: fire at an enemy within line of sight and within a legal firing angle of tank. \
 Spot: try to reveal a hidden unit. Roll a normal to-hit as if you where shooting. If successfull the hidden unit is revealed. \
 Default: - \
 
 
+The speed of the unit may restrict what options are available, which is given in paranthesis. For example \
+(still) load + - +
+means this unit only can load while standing still.
 
+If, for some reason or another, the given order for one step is not allowed, it does nothing.
 
-The speed of the unit may restrict what options are available.
-
-If, for some reason or another, the given order for one step is not allowed, it is replaced by default. If default for one reason or another is not allowed, replace it with -. Some units may override the default.
+Important, unless otherwise stated, a unit MUST not fire at any target if it does not wish to even if you give it fire orders. This may be the case if you want to save the ammo for a better shot later.
 
 \pagebreak
 
@@ -346,6 +350,7 @@ The first entry is front, the second is front-side (both left and right), the th
 
 \*/-/-/-   Can fire in front only \
 \*/\*/\*/\*   Can fire in any direction \
+
 
 *Armor*:
 Use the armor value which your target is using.
@@ -562,8 +567,7 @@ Assaults also is conducted if two or more units enters each other hex. Ie they a
 - After assault, trigger any hex effect again, but note that one unit may only be effected by the same hex effect once per turn.
 This is just in case a unit was forced into a hex with for example poison cloud.
 
-In the case where units facing each other are all moving forward, there might be two or more equally valid ways to conduct the assault. In this case,
-the team with the heighest melee skills determine which hex (or hexes) are being faught over:
+In the case where units facing each other are all moving forward, there might be two or more equally valid ways to conduct the assault. In this case, the team with the heighest melee skills determine which hex (or hexes) are being faught over:
 
 Spartan\
 Dark_Elf\
@@ -573,7 +577,7 @@ Elf\
 
 The one gaining the advantage of the assault enters the hex it tried to enter, and disadvantage is forced out of the hex, it then retreats. If one with disadvantage was stationary, it moves out of the hex in the backward direction. If the disadvantage was trying to enter a hex, it stays in the hex it was before trying to enter the hex. 
 
-If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, treat it as retreating to an hex with an enemy: thus move to the closest possible hex.
+If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, the unit gains stuborn trait. Which means that the unit is never forced to retreat from a hex it previously occupied, and it is the other unit which retreats instead. 
 
 If more than Stacking Limit number of units enters the hex after winning an assault, all winners are also shakened as if trying to move into a hex with friendly units only.
 
@@ -652,10 +656,13 @@ In pre-assault phase you may roll a die. At N+ you may retreat before the assaul
 
 The unit base have this ability if atleast one model in the unit has this spesicial ability.
 
+**Stuborn**
+
+After loosing an assualt, if you occupied the hex which fighting over in an assault before the assault, you never retreat, and the enemy retreats instead.
 
 **Terror**[range=n][dN]
 
-In agony 0, roll a dN psycic damage on any enemy unit within range of this unit.
+In agony 0, roll a dN psycic damage on any enemy unit within range of this unit. Half number of dice rounded down from all enemy shaken unit bases entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
 
 **Fear**[N]
 
