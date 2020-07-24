@@ -498,7 +498,7 @@ unititems = "1 unit base weapon, 1 unit base equipment"
 modelitems = "2 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "Musket",]
-unit_special = "Unit Base abilities: Poison Resistance 2 \\\\ Fire Resistance 1"
+unit_special = "Unit Base abilities: Poison Resistance 2, Fire Resistance 1\\\\ Take Cover[still][-2]"
 assault = "1/1/1/1"
 assault_die = "4+"
 assault_deflection_die = ""
@@ -522,7 +522,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "Broadside Guns",]
-unit_special = "Fire resistance 2 \\\\ Optimal Point blank: +1 to hit at point blank range"
+unit_special = "Fire resistance 2 \\\\ Optimal Point blank: +1 to hit at point blank range\\\\ Perfect Breaking: After 3rd movement step, it may apply an ,B or ,B,B. This may be applied regardless of what the movement order at step 3 is."
 assault = "2/2/2/2"
 assault_die = "4+"
 assault_deflection_die = "2/-/-/-"
@@ -586,7 +586,7 @@ name = "Tamed Balrog"
 models = "1"
 size = "Huge, +1 to be hit"
 cost = "24xp"
-armor = "3/2/2/1"
+armor = "3/3/2/1"
 type_ = "Bio, Monster, Walks"
 isReplacement = ""
 replaces = ""
@@ -594,12 +594,12 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "Flaming Whip",]
-unit_special = "Poison Resistance 4, Fire Resistance 12 \\\\ Terror[8][range=2\\\\ Good Whip Handeling (counts as good shot, +1 to hit)]"
+unit_special = "Poison Resistance 6, Fire Resistance 12 \\\\ Terror[8][range=2\\\\ Good Whip Handeling (counts as good shot, +1 to hit)] \\\\ Forward Position[1]"
 assault = "6/4/3/2"
 assault_die = "2+"
 assault_deflection_die = ""
 assault_damage = "d6"
-assault_ap = "-1"
+assault_ap = "1"
 assault_deflection = ""
 assault_special = "set on Fire"
 filters = [ "weapons", "team",]
@@ -794,7 +794,7 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 
 [units.GunBlasterWagon.orders]
 Fire = [ "(all) load + -", "(stand-still) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + B,B", "(fast) F + F + F,B,B", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) A + A + F",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + R", "(fast) F + F + L", "(fast) F + F + F,R", "(fast) F + F + F,L","(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) A + A + F",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1-2: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot Rotate, Looses Fear", "3: Cannot Move", "4-5: x3 Light Damage[d6]", "6: set on Fire",]
@@ -822,7 +822,7 @@ Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
 Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(slow) chase + - + -", "(default slow) - + - + flee",]
 
 [units."Tamed Balrog".damage_tables]
-"Regular Damage" = [ "1-8: +1 on future damage", "9-10: +2 on future damage, Assault -1/-1/-1/-1 looses terror", "11-12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
+"Regular Damage" = [ "1-9: +1 on future damage", "10-11: +2 on future damage, Assault -1/-1/-1/-1", "12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
 
 [units."Elite Dwarf Infantry".orders]
 "" = [ "",]

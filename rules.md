@@ -20,26 +20,25 @@ Infantry, and some cavalry and special units may be upgraded with xp and crafts 
 Each upgrade has it requirements. Some upgrade the entire unit base, while some only upgrade one model.
 
 
-A unit base typically has 1,2 or 4 unit models. A unit base can be upgraded with as much as you like as long as you have the space.
+A unit base typically has 1,2 or 4 unit models. A unit base can be upgraded with as much as you like as long as you have the space on your model.
 Unless otherwise stated, an infantry unit base may have
 
-- 1 2handed weapon or 2 1handed equipment (such as heavy musket, pistol&shield ...)
+- 1 twohanded weapon or 2 onehanded equipment (such as heavy musket, pistol&shield ...)
 - Any number of independent equipment (such as grenades, gas-masks, wings...)
 - A unit base may have a maximum of one unit-base weapon. (hand-held cannon)
 
 Unless otherwise stated, the standard weapons of an infantry is a 2handed weapon
 
 
-Each model of the unit base can fire it's weapons independently, and you add assault dice to the assault die pool for each unit. 
-But all models of a unit base gets the same order.
+Each model of the unit base can fire it's weapons independently, and you add assault dice to the assault die pool for each unit. But all models of a unit base gets the same order, and share the same damage table.
 
-Elites typically upgrades 1 regular model, which then replaces the regular in one unit bases.
-Weapons upgrades and aditions either replaces all weapons in all models in a unit base, replaces the weapon of a single model (typical elite), or the weapon is shared by the entire unit base. 
+Elites typically upgrades 1 regular model, which then replaces the regular model in the unit bases.
+Weapons upgrades and aditions either replaces all weapons in all models in a unit base, replaces the weapon of a single model (typical elite), or the weapon is shared by the entire unit base not replacing the normal weapon. However normaly you then must choose between firng a unit base weapon or the normal weapon of the model. 
 
 In some cases some equipment reqiuers an elite and the cost is typically for one weapon and only one elite in the unit base gets that weapon. However, as long as you have more elites left in the unit base, you may pay the price multiple times to equip as many as you like with elite weapons.
 
 Unit base weapons:
-Unless other wise stated, if a unit is given a unit base weapon, the unit may fire the unit base weapon a single time, OR fire its normal weapon. When firing the base weapon, apply to-hit modifiers of the best model in the unit. A unit base weapon requiers at least 2 alive models to be used.
+Unless other wise stated, if a unit is given a unit base weapon, the unit may fire the unit base weapon a single time, OR fire its normal weapon. When firing the base weapon, apply to-hit modifiers of the best model in the unit. A unit base weapon requiers at least 2 alive models to be used. Regardless which weapon you fired, threat any weapon as unloaded after firing with either a unit-base weapon or the standar weapons of the models in the unit.
 
 The requirements and cost of both model replacements and extra equipment should be clearly stated in the army list.
 
@@ -67,6 +66,7 @@ Mountains             2 movement points up, 1 down. 2 hight level, level 2 block
 Hills                 2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
 Forest                2 movement points to enter for vehicles, 1 for all other things.
                       Level 0 blocking terrain
+Burned Forrest        Level 0 blocking terrain
 Ruins	              1 movement points to enter. Does not block line of sight
 Rough                 1 movement points to enter. Does not block line of sight
 Sand Dunes            2 movement point to enter. Level 0 blocking terrain
@@ -105,7 +105,7 @@ Terrain also provide cover, which is given in the to-hit table later.
 
 *Stacking* *Limit*:\
 One hex may maximum hold either up two 2 units if at most one of them is large, or 1 huge unit.
-Flying units have the same stacking limits, but while flying is independent of stacking limit on ground.
+Flying units have the same stacking limits, but while flying is independent of stacking limit on ground. A flying unit may even share a hex with an enemy.
 
 If trying to enter the same hex with MORE than that simultaneously, all from within same team/faction, then all units trying to move into the hex stay put and are *shaken* (se unit abilities and conditions) next turn. 
 
@@ -119,35 +119,18 @@ For a standar game: \
 7x9 hexes.
 
 The battlefield is diveded into three parts: \
-NoMansLand: 4 middle hex rows\
-Side 1: 3 hexes closest to side 1 of the board.\
-Side 2: 3 hexes closest to side 2 of the board.\
+NoMansLand: 2.5 and 3 middle hex rows\
+Side 1: 2,5 and 3 hexes closest to side 1 of the board.\
+Side 2: 2,5 and 3 hexes closest to side 2 of the board.\
 
 NoMansLand cannot contain any blocking or advanced terrain.
-Each side may design it's own terretory as you wish, but with a maximum of 5 advanced hexes.
+Each side may design it's own terretory as you wish.
 
 # Setup
 
-Setup units according to this order:
-
-
-- Setup All HUGE units.
-
-- Setup ANY scout (any unit with scout in unit type) you wish to deploy
-
-- Setup all units (except hidden and remaining scouts) within line of sigtht of an enemy scout 
-
-- Setup all other units (except hidden and remaining scouts) not in line of sight of an enemy scout.
-
-- Setup all remaining scouts.
-
-- Setup one hidden token for each hidden unit not already deployed. You do not have to tell what is behind each hidden token, but you must
-keep track for your self to know which is which. 
-
-
-
-Roll a die for each step. However wins has an setup advantage, and starts seting up second. The one with disadvantage set up one unit first, then players alternate setting up two units until the step is finished. One step must be finished for both sides before advancing to next step. Thus if a player runs out of units within one step, the other sets up all units in that steps before preciding with next step.
-
+Blind Setup:
+Place a GM Screen (or something) between each side. Set up your units without know how the other side has set up. Set up simultainiusly.
+Place units in the hexes 2.5 and 3 hexes from the edge of your side. Remeber to give them the appropriate speed as you see fit.
 
 # Victory Condition
 
@@ -167,23 +150,19 @@ After an fixed amount of time, each player scores points according to the follow
 6pt for each destroyed enemy IP
 2pt for each destroyed enemy MP,XP and CP
 ---
-Only totally destroied units counts as destoied. An infantry unit with 1 out of 4 models standing counts as survived.
+Only totally destroied units counts as destroied. An infantry unit with 1 out of 4 models standing counts as survived.
+Note however that in the rare case units flee of the battlefield, they count as destroied. 
 
-In addition, the player in the match with most points, gets 24 bonus points. If a draw, no player gets the bonus points.
+In addition, the player in the match with most points, gets 16 bonus points. If a draw, no player gets the bonus points.
 
 Both the winner and the looser record points.
+This is now called Match Victory Points (MVP).
+
+The toruament victroy points are calculated as follows:
+
+$$TVP = (\| MVP \| )^0.75*MVP/\| MVP \| $$
 
 Note that both players get more points by destroying each other. Thus it is possible that a looser of one match scores more points than a winner of another match. This rewards playing aggressive.
-
-The theoretical maximum a player can get in a standard game is thus: \
-6*24 + 2*(24+24+24) +3*24 + (24+24+24) + 24 = 456
-
-In a game where nobody has killed anything:\
-3*24 + (24+24+24) = 144
-
-In a game where BOTH players has eliminated each other:\ 
-6*24+2(24+24+24) = 288
-
 
 \pagebreak
 
@@ -320,7 +299,6 @@ If a movement triggers a change in speed, it is possible that the first gunnery 
 If an illegal order is given, do the default order instead.
 
 
-
 Load: loads weapon. A weapon cannot fire without a load token available.
       Some weapons may load more than one ammo per loading. It is then noted as load[2] or load[5] \
 Aim : optional: +2 to hit. Last 1 round, and may only be used versus targets within line of sight from the original hex where the aim was issued\
@@ -395,6 +373,7 @@ Flying                     -1      -1         (stacks with speed)
 *Terrain*
 Smoke                      -1      -1
 Forrest                     0      -1
+Burned Forrest              0      -1
 Building                    0      -1
 Ruins                       0      -1
 Rough Terrain	            0      -1
@@ -527,7 +506,9 @@ XXX Resistance N         -N if damage type matches resistance.
 
 Roll on regular damage table for the unit, add previous bonus and weapon modifiers if any. Any result less than the starting value of the damage table counts as no damage. 
 
-Whenever one member of a unit with multiple members die, half previous bonus to damage round down.
+Whenever one model of a unit with multiple members model, half previous bonus to damage round down.
+If a model dies from poison, remove the poison afterwards
+If a model dies from bleeding, remove the bleeding.
 
 # Special Damage types
 
@@ -577,9 +558,9 @@ Elf\
 
 The one gaining the advantage of the assault enters the hex it tried to enter, and disadvantage is forced out of the hex, it then retreats. If one with disadvantage was stationary, it moves out of the hex in the backward direction. If the disadvantage was trying to enter a hex, it stays in the hex it was before trying to enter the hex. 
 
-If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, the unit gains stuborn trait. Which means that the unit is never forced to retreat from a hex it previously occupied, and it is the other unit which retreats instead. 
+If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, or becomes overcrowed by your own units, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, the unit gains stuborn trait. Which means that the unit is never forced to retreat from a hex it previously occupied, and it is the other unit which retreats instead. 
 
-If more than Stacking Limit number of units enters the hex after winning an assault, all winners are also shakened as if trying to move into a hex with friendly units only.
+If more than Stacking Limit number of units enters the hex after winning an assault, all winners are also shakened as if trying to move into a hex with friendly units only. Also, note that a maxium of 2 units may contribute it's firepower.
 
 In any way, during a retreat, the loser may rotate to Left or Right or 180$^0$ if you wish as part of the retreat. This is to make retreated unit able to flee the assault if it wants to.
 
@@ -588,7 +569,7 @@ Assault: Each model have the followint stats for hitting the enemy in assault:\
 Number of dice, to_hit, any Damage modifiers. \
 Facing : Use front assault values and armor for units entering the hex, with the exception, when reversing into an assault, set facing = back.
          For stationary units being assaulted, use assault and armor from the side which it is assaulted from.
-	 If being assaulted from more than one side, choose one.
+	 If being assaulted from more than one side, choose one. This unit may only deflect hits from this side.
 	 
 
 
@@ -599,7 +580,7 @@ Simillarly as for assault, some models may have assault deflection and is given 
 Assault Deflection: Number of dice, to_hit\
 Apply front/front-side/back-side/back values as appropriate similar to the assaults.
 Add the number of dice for all unit involved in the assault, roll separate dice if they have different to_hit stats.
-Each succuessfull deflection remove one successful assault. (winner of assault chooses which hits to deflect)
+Each succuessfull deflection remove one successful assault from the enemy. However, the one with advantage in the assault chooses which hits to deflect.
 
 A good practice is to roll assault and assault deflections simultanieously but with different color. Choose for example green die for deflections.
 
@@ -628,14 +609,11 @@ Total: DarkElf 1 scored 7 hits, Elf scored 3. \
 Advantage: DarkElf
 
 Thus the DarkElf gained the advantage, and chooses to deflect the 3 attacks from the tank (they may or may not be nastier in the real game).
-Thus the elf assigns 3 hits to the darkelf and the darkelf choosed 7 hits to the elf. The elf choosed to assign 3 damaging results to the infantry.
+Thus the Elf assigns 3 hits to the darkelf and the darkelf choosed 7 hits to the elf. The elf choosed to assign 3 damaging results to the infantry.
 The Darkelf choosed to assign 4 damaging success to the infantry and 1 damaging + 2 support to the tank, in hope of doing some damage.
 
 
-If in the rare case that unit does not to real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing hits. Thus you may roll one real damage PER enemy model in unit base in addition to one psycic damage PER enemy model in unit base. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage, but not the psycic damage.
-
-
-
+If in the rare case that unit does not to real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing hits. Thus you may roll one real damage PER enemy model in unit base in addition to one psycic damage PER enemy model in unit base. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage and +1 to psycic damage.
 
 
 Examples:
@@ -644,11 +622,15 @@ Standard Tank\
    Deflection:  2, 5+ / -, -  / -, -  /-, - : \
 
 This tank rolls 4 dice which hits on 5+ when assaulting a hex, and also when being assaulted from the front. Then it also gains 2 deflection die.
-If this tank is stationary and is assaulted from the sides it only gets 3 dice and no deflections.
+If this tank is stationary and is assaulted from the sides (front left, front right, back left, back right) it only gets 3 dice and no deflections.
 
 \pagebreak
 
 # Unit Abilities and conditions:
+
+**Forward Position**[N]
+
+At setup this unit may setup upt to N hexes away from normal setup area.
 
 **Pre-Assault** **retreat**[N+]
 
@@ -675,7 +657,7 @@ You may replace N assault successes assigned to one unit-base for light damage[d
 
 Thus, for example Cunning Assault[1 per 2] would allow you to replace two assault-successes with one roll on light damage table (if enemy unit base has a light damage table, which typical is only for tanks and vehicles). Note that the replacements are done after asigning hits to different untis, and only hits versus targets with a light damage table can be replaced, not hits versus other units in the same assault. 
 
-This represent any cunning way to take out heavily armored units in assaults.
+This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage.
 
 **Burst(N)**
 
@@ -762,12 +744,10 @@ Agony 0 to Agony 4.
 
 Unit on Fire: (roll by enemy)
 
-- At agony step 2, all units on fire takes AP $\infty$, d6 fire damage \
-Ignore armor. \
-Add bonus for previous damage (plus on future damage results).  \
-Apply any fire resistance modifiers if any. \
-If the natural d6 roll is 2 or lower, remove the fire from unit.
-
+- At agony step 2, roll a d6. \
+At 1, the fire stops and do no damage. Remove the fire from the unit. \
+Otherwise, that unit take that much fire damage, ignoring armor. But apply any fire resistance. \
+If a 1 was not rolled, the unit continues burning next round.
 
 
 **Poisoned**[n]\
@@ -796,23 +776,24 @@ Hex based effects are not cumulative. However the effect of acid, fire and poiso
 
 Follow the instructions for each hex based effect
 
-**Poison** **Cloud** [N] (4, 6, 8, 10 or 12) (n+)
-(n=1+, 2+, 3+, 4+, 5+ or 6+)
+**Poison** **Cloud** [N] 
 
 
-Roll 1 die per biological unit in hex. At n+, apply a poison[N] to target enemy base. Roll 1 die per unit. Thus one unit base with 4 units may get multiple poison markers.
--Roll 1 dN-die per unit base with either biological or biological crew description (without immunity from poison or immunity from poison cloud), if you get above (n+poison_resistance) of the unit, the unit base is pinned. 
-
-If placing a poison cloud in a hex with a poison cloud already,
-increase  the density of the most dense cloud one step, and set the level equal to the highest level: Ie Poison Cloud[8](4+) + Poison Cloud[4](5+) = Poison Cloud[8](3+)
-
-**Acid** **Cloud** [Minor] (n+)
-
-Roll a die per unit base in hex. At n+ place a minor acid on the unit base.
+Roll 1 die per biological unit in hex. At 4+, apply a poison[N] to target enemy base. Roll 1 die per unit. Thus one unit base with 4 units may get multiple poison markers.
 
 
+**Acid** **Cloud** [Minor] 
 
-**Poison** & **Acid** **Cloud** [n, minor/major] = poison Cloud[n] + acid Cloud [minor/major]
+Roll a die per unit base in hex. At 4+ place a minor acid on the unit base.
+
+
+**Acid** **Cloud** [Major] 
+
+Roll a die per unit base in hex. At 4+ place a regular acid on the unit base.
+
+
+
+**Poison** & **Acid** **Cloud** [N, minor/major] = poison Cloud[N] + acid Cloud [minor/major]
 
 
 
