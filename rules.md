@@ -640,7 +640,7 @@ The unit base have this ability if atleast one model in the unit has this spesic
 
 **Stuborn**
 
-After loosing an assualt, if you occupied the hex which fighting over in an assault before the assault, you never retreat, and the enemy retreats instead.
+After loosing an assualt, if you occupied the hex you where fighting over in an assault before the assault, you never retreat, and the enemy retreats instead.
 
 **Terror**[range=n][dN]
 
@@ -703,7 +703,7 @@ Reduce damage by [n] from damage of given type.
 Default type of any shot is regular damage. Other types are always specified.
 
 Regular: any damage rolled on regular damage table of unspecified type. This does not include damage from any other type. \
-Psychic : any damage rolled on psychic damage table of unspecified type.\
+Psychic : any damage rolled on psychic damage table.\
 Poison : any damage rolled by poison effect\
 Fire   : any fire damage rolled 
 
@@ -779,8 +779,9 @@ Follow the instructions for each hex based effect
 **Poison** **Cloud** [N] 
 
 
-Roll 1 die per biological unit in hex. At 4+, apply a poison[N] to target enemy base. Roll 1 die per unit. Thus one unit base with 4 units may get multiple poison markers.
+Roll 1 die per biological model in hex. At 4+, apply a poison[N] to target enemy unit base. A unit base with multiple models may get multiple poison markers (standard infantry units may thus get up to 4 poison markers)
 
+Units wich are not biological are immune to the poison. Tanks and other vehicles are immune to direct poison, but its crew may still be effected. For these units, at 4+, add dN crew damage.
 
 **Acid** **Cloud** [Minor] 
 
