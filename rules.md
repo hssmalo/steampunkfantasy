@@ -441,7 +441,7 @@ Unless the damage is of a specific type, any specified damage is regular damage,
 
 ## Armor
 
-Before you roll damage, roll armor penetration first. 
+Before you roll damage, roll armor penetration first. If unit does not have armor, skip this step, and threat shot as penetrated all armor.
 
 How Armor penetration works is dependent on wether it is positive or negative.
 
@@ -506,7 +506,7 @@ XXX Resistance N         -N if damage type matches resistance.
 
 Roll on regular damage table for the unit, add previous bonus and weapon modifiers if any. Any result less than the starting value of the damage table counts as no damage. 
 
-Whenever one model of a unit with multiple members model, half previous bonus to damage round down.
+Whenever one model of a unit with multiple models dies, half previous bonus to damage round down.
 If a model dies from poison, remove the poison afterwards
 If a model dies from bleeding, remove the bleeding.
 
@@ -518,7 +518,7 @@ Unless otherwise stated by the weapon, any weapon has regular damage. Some weapo
 - Fire
 
 **Fire** **damage**:
-Treat it as regular damage, except for resistances. Fire damage does not ignore armor, but ignore regular damage resistances. However any fire resistance the  Roll on regular damage table.
+Treat it as regular damage, except for resistances. Fire damage does not ignore armor, but ignore regular damage resistances, but not fire resistance.
 
 **Poison**:
 Details: see continious damage.
@@ -528,7 +528,7 @@ Other, more generic damage types will be noted by the following in weapon stats:
 For example, a weapon may have Psychic Damage in addition to regular damage.
 
 If so, and if the target has a damage table of name equal to the type of damage, roll a dN on that damage table. For example if you have
-- Psychic Damage[d6]
+- d6 psycic damage
 Roll a d6 on psychic damage table of target.
 If the target don't have a psychic damage table, the unit is immune to this damage.
 
@@ -542,7 +542,7 @@ If the target don't have a psychic damage table, the unit is immune to this dama
 If two or more units from different team/faction tries to enter the same hex simultaneously, use ASSAULT rules.
 Assaults also is conducted if two or more units enters each other hex. Ie they are facing each other and both moving forward.
 
-- Before any assault, any unit which has the ability to retreat before assault have the option to do so now.
+- Before any assault, any unit which has the ability to retreat before assault have the option to do so now. 
 - Then trigger any hex effects (as poison cloud, fire in hex etc.) to all units trying to enter the hex.
 - Then apply any pre-assault special effects such as fear, or other abilities.
 - After assault, trigger any hex effect again, but note that one unit may only be effected by the same hex effect once per turn.
@@ -634,7 +634,7 @@ At setup this unit may setup upt to N hexes away from normal setup area.
 
 **Pre-Assault** **retreat**[N+]
 
-In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. If speed is currently at stand-still it become slow afterwards.
+In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. If speed is currently at stand-still it become slow afterwards. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies.
 
 The unit base have this ability if atleast one model in the unit has this spesicial ability.
 
@@ -719,6 +719,10 @@ For vehicles this represent temporarily mechanical problems.
 
 Replace all movement orders with the default for the given speed (given in unit description), and no orders for gunnery action. 
 
+**Misfire[N-]**
+
+Before using any fire action, roll a die. At N- (N or below) replace the fire action with a do nothing action. (thus this action does not spend any ammo if it misfires)
+
 \pagebreak
 
 # Continuous Damage:
@@ -781,7 +785,7 @@ Follow the instructions for each hex based effect
 
 Roll 1 die per biological model in hex. At 4+, apply a poison[N] to target enemy unit base. A unit base with multiple models may get multiple poison markers (standard infantry units may thus get up to 4 poison markers)
 
-Units wich are not biological are immune to the poison. Tanks and other vehicles are immune to direct poison, but its crew may still be effected. For these units, at 4+, add dN crew damage.
+In addtion, roll a die for any unit with a crew damage table. At 4+ do dN crew damage to unit.
 
 **Acid** **Cloud** [Minor] 
 

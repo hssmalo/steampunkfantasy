@@ -110,13 +110,36 @@ required_to_buy = ""
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
 
-[weapons.Mortar]
+[weapons."Mortar 1A"]
 race = "DarkElf"
-name = "Mortar"
+name = "Mortar 1A"
 template = "r"
 range_ = "10"
 angle = "*/*/*/*"
-special = "Choose a hex within range and rol a die, at 5+ place a Poison \\& Acid Cloud [8, minor][4+] at target hex. Place a Poison Cloud[6]  at all hexes surronding that initial hex\\\\ If you don't roll a 5+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
+special = "Choose a hex within range and roll a die, at 5+ place a Poison \\& Acid Cloud [8, minor] at target hex. Place a Poison Cloud[6]  at all hexes surronding that initial hex\\\\ If you don't roll a 5+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
+damage = "N.A."
+ap = "N.A."
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "16cp, 8xp"
+required_to_buy = "Unit Base: Infantry"
+type_ = "Infantry, Unit base weapon"
+filters = [ "team",]
+
+
+[weapons."Mortar 1.1B"]
+race = "DarkElf"
+name = "Mortar 1.1B"
+template = "r"
+range_ = "10"
+angle = "*/*/*/*"
+special = "Choose a hex within range and roll a die, at 4+ place a Poison Cloud[12] and a smoke at target hex. \\\\ If you don't roll a 4+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
 damage = "N.A."
 ap = "N.A."
 assault_mod = ""
@@ -138,7 +161,7 @@ name = "Poison Gas Grenade"
 template = "r"
 range_ = "2"
 angle = "*/*/*/*"
-special = "Place a Poison Cloud[6](4+) within normal range. \\\\ Limited Ammo[2]"
+special = "Place a Poison Cloud[6] within normal range. \\\\ Limited Ammo[2]"
 damage = "N.A."
 ap = "N.A"
 assault_mod = ""
@@ -147,9 +170,9 @@ assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
 assault_special = ""
 assault_ap = ""
-orders_gained = [ "(stand-still, slow) - + Throw Gas Grenade",]
+orders_gained = [ "(still, slow, fast) - + Throw Gas Grenade",]
 orders_lost = [ "",]
-cost = "2cp"
+cost = "1cp"
 required_to_buy = "Unit Base: Infantry or Cavalry"
 type_ = "Infantry or Cavalry, Unit base weapon"
 filters = [ "team",]
@@ -161,7 +184,7 @@ template = ""
 range_ = "6"
 angle = "*/-/-/-"
 special = "On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor](5+) at target hex"
-damage = "d6+ d8 Pyscic damage"
+damage = "d6+ d8 Pyscic damage + d6 crew damage"
 ap = "1"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -406,9 +429,9 @@ assault_deflection = "1/1/1/1"
 assault_special = "Cunning Assault[1 for 2]\\\\ Reroll all success in assault while crawling"
 filters = [ "weapons", "team",]
 
-[units."Mechanical Spider"]
+[units."Mechanical Assault Spider"]
 race = "DarkElf"
-name = "Mechanical Spider"
+name = "Mechanical Assault Spider"
 models = "1"
 size = "Medium"
 cost = "4ip"
@@ -492,7 +515,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "Acid Cannon", "Heavy Rifle", "Heavy Rifle",]
-unit_special = "Immunity to poison clouds \\\\ Excelent shot +2 to hit"
+unit_special = "Immunity to poison clouds \\\\ Excelent shot +2 to hit. \\\\ Air tight: almost immune to crew damage, see damage table"
 assault = "5/4/3/2"
 assault_die = "5+"
 assault_deflection_die = "6+"
@@ -538,7 +561,7 @@ isReplacement = ""
 replaces = ""
 unititems = ""
 modelitems = "unlimited independent equipment"
-retired = ""
+retired = "yes"
 weapons_input = [ "SMG", "Crossbow",]
 unit_special = ""
 assault = "3/2/1/1"
@@ -564,7 +587,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "",]
-unit_special = "Immunity to poison clouds"
+unit_special = "Air tight: almost immune to crew damage, see damage table"
 assault = "5/4/3/2"
 assault_die = "5+"
 assault_deflection_die = "6+"
@@ -647,13 +670,13 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$
 "Regular damage" = [ "0-6: kill 1 model", "7-8: kill 1 model, psychic damage[d6]", "9+ Kill all 4 models",]
 "Psychic Damage" = [ "4+ Unit base shaken",]
 
-[units."Mechanical Spider".orders]
+[units."Mechanical Assault Spider".orders]
 "Fire " = [ "- + Fire", "- + Load", "- + Aim",]
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(default slow) - + - + -",]
 
-[units."Mechanical Spider".damage_tables]
+[units."Mechanical Assault Spider".damage_tables]
 "Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot move, looses fear", "3: Cannot rotate", "4-5: x3 Light damage[d6]", "6: set on Fire",]
-"Light Damage" = [ "1-2: unit shaken", "3-4: +1 on future damage", "5-6: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0)",]
+"Light Damage" = [ "1-2: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0)", "3-4: +1 on future damage",  "5-6: unit shaken",]
 "Regular Damage" = [ "1-3: Light damaged[d6]", "4-6: Critical Damage[d6], +1 on future damage", "7: Destroyed",]
 
 [units."Elite Mechanical Cavalry".orders]
@@ -680,8 +703,9 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Queen XXX".damage_tables]
 "Regular damage" = [ "1-5: Roll d6 on light Damaged", "6-8: Roll d6 on Crittical Damage, +1 on all future damage",]
-"Light Damage" = [ "1-3: Shaken", "4-6: +1 on future damage",]
+"Light Damage" = [ "1-3: +1 on future damage", "4-6: Shaken", ]
 "Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in agony 0 step", "3: rotates left in agony 1 and in agony 3", "4: only stand-still available", "5: unit is covered in acid", "6: unit covered in acid x2",]
+"Crew Damage" = ["10: Misfire[2-]", "11-12: as 10, +2 to future crew damage", "13: Crew Killed, unit destroyed"]
 
 [units."Dark RoboProsthetic Elf".orders]
 "Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B(crawl) + -", "(slow) 360$^0$ + B + -", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + - + - ", "(stand still) 360$^0$ + A(crawl) + -", "(stand still) 360$^0$ + A + F", "(crawl) 360$^0$ + F + -", "(crawl) 360$^0$ + A(slow) + F", "(crawl) 360$^0$ + B(stand-still) + -",]
@@ -705,8 +729,9 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."Queen XYX".damage_tables]
 "Regular damage" = [ "1-5: Roll d6 on Light Damaged", "6-8: Roll d6 on Crittical Damaged, +1 on all future damage",]
-"Light Damage" = [ "1-3: Shaken", "4-6: +1 on future damage",]
+"Light Damage" = ["1-3: +1 on future damage", "4-6: Shaken", ]
 "Critical Damage" = [ "1: -1 to-hit, +1 to-be-hit", "2: Rotates right in agony 0 step", "3: rotates left in agony 1 and in agony 3", "4: only stand-still available", "5: unit is covered in acid", "6: unit covered in acid x2",]
+"Crew Damage" = ["10: Misfire[2-]", "11-12: as 10, +2 to future crew damage", "13: Crew Killed, unit destroyed"]
 
 [units."Mechanical Iron Dragon".orders]
 Movement = [ "(slow) F + - + -", "(slow) L + F + -", "(slow) L + L + F", "(slow) R + F + -", "(slow) R + R + F", "(slow) 360$^0$ + - + -", "(slow) A[slow, flying]+ F + 360$^0$", "(slow, flying) 360$^0$ + F + -", "(slow, flying) F + B[slow] + -",]

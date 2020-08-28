@@ -1,3 +1,35 @@
+0.0.05
+
+General:
+	+1 to future damage is now 1-3 and shaken 4-6 on standar light damage
+	added crew damage to all vehicles
+	Poison Cloud now does Crew Damage
+	Add Misfire rule
+	
+Elf:
+	Added +1d6 crew damage to sniper rifle
+	Tattoo Ink's gattle gun now range 4
+	Tatto Ink now has 2 SMG.
+	Bear: improved to-hit while firing without aim
+	Tattoo Ink replaces E34 in default demo army
+	
+DarkElf:
+	renamed mechanical spider to mechanical assault spider
+	DarkElf: gained Mortar 1A and Mortar 1.1B
+	Poison Gas Grenade: reduced price to 1cp.
+	retired none elite mechancical cavlery
+	
+Dwarf:
+	GunBlasterWagon reduced armor in back from 3 to 2.
+	Balrog gained Forward position[1]
+	Balrog even better at using whip.
+
+Ork:
+	Flamecovered Axe now does d4 crew damage in addition.
+	Troll now does crew damage in assault.
+	Flamethrower now does d4 crew damage
+	Pop gun now got poison and crew damage if penetrating all armor
+	retired cannonhead
 0.0.04
 
 General: 
@@ -61,6 +93,8 @@ Dwarf:
 	GunBlasterWagon: broadsides now do d6+2 in damage!
 	GunBlasterWagon gained: optimal at point blank
 	Balrog gained +1 to hit for using whip.
+	Balrog gained Chase + - + - ordres
+	GunBlasterWagon got better break options
 	
 Elf:
 	Scout and elite scout gain spot
