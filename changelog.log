@@ -5,6 +5,7 @@ General:
 	added crew damage to all vehicles
 	Poison Cloud now does Crew Damage
 	Add Misfire rule
+	Redone crew damage table. Now need atleast 8 to gain + on future crew damage.
 	
 Elf:
 	Added +1d6 crew damage to sniper rifle
@@ -16,8 +17,10 @@ Elf:
 DarkElf:
 	renamed mechanical spider to mechanical assault spider
 	DarkElf: gained Mortar 1A and Mortar 1.1B
+	Mortar 1.1B more precise
 	Poison Gas Grenade: reduced price to 1cp.
 	retired none elite mechancical cavlery
+	Nightmare cavalry breath attack now does gives poison, fire and crew damage.
 	
 Dwarf:
 	GunBlasterWagon reduced armor in back from 3 to 2.
@@ -27,9 +30,13 @@ Dwarf:
 Ork:
 	Flamecovered Axe now does d4 crew damage in addition.
 	Troll now does crew damage in assault.
+	Replaced crew damage in assault with troll stench ability.
 	Flamethrower now does d4 crew damage
 	Pop gun now got poison and crew damage if penetrating all armor
-	retired cannonhead
+	Retired cannonhead
+	Gained Healin Syringe equipment.
+	Gained Tanksscalper equipment.
+	
 0.0.04
 
 General: 

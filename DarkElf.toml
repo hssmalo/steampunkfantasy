@@ -1,13 +1,13 @@
 name = "DarkElf"
 
-[weapons."Acid Breath"]
+[weapons."Nightmare Breath"]
 race = "DarkElf"
-name = "Acid Breath"
+name = "Nightmare Breath"
 template = ""
 range_ = "1"
 angle = "*/-/-/-"
-special = "Fires at everthing within range and angle of fire. \\\\ Acid"
-damage = ""
+special = "Fires at every model within range and angle of fire. \\\\ No regular damge, but Poison[8] and set on fire applies to anyone hit.\\\\ Always treated as loaded"
+damage = "d8 crew damage."
 ap = ""
 assault_mod = ""
 assault_deflection_mod = ""
@@ -139,7 +139,7 @@ name = "Mortar 1.1B"
 template = "r"
 range_ = "10"
 angle = "*/*/*/*"
-special = "Choose a hex within range and roll a die, at 4+ place a Poison Cloud[12] and a smoke at target hex. \\\\ If you don't roll a 4+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
+special = "Choose a hex within range and roll a die, at 3+ place a Poison Cloud[12] and a smoke at target hex. \\\\ If you don't roll a 3+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\\\ Indirect fire. may use line of sight of any friendly unit on the battle field."
 damage = "N.A."
 ap = "N.A."
 assault_mod = ""
@@ -490,7 +490,7 @@ replaces = ""
 unititems = ""
 modelitems = "unlimited independent equipment"
 retired = ""
-weapons_input = [ "SMG", "Acid Breath",]
+weapons_input = [ "SMG", "Nightmare Breath",]
 unit_special = ""
 assault = "3/2/1/1"
 assault_die = "5+"
@@ -690,8 +690,7 @@ Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F 
 
 [units."Nightmare Mechanical Cavalry".orders]
 Movement = [ "(fast) F + F + F ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + F + F", "(fast) F + F + F,B", "(fast) F + B + 360$^0$", "(slow) 360$^0$ + - 0 -", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) 360$^0$ + F,B + 360$^0$", "(stand still) 360$^0$ + A + F", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(fast) F + 360$^0$ + F", "(default slow) - + - + flee", "(default fast) - + flee + flee", "(default stand-still) - + A + flee",]
-"Breath Acid Orders" = [ "- + Breath Acid", "- + -",]
-"Fire(smg)" = [ "Fire + fire", "load(5) + -", "- + load(5)",]
+"Nightmare Breath Orders" = [ "- + Breath ", "- + -",]
 
 [units."Nightmare Mechanical Cavalry".damage_tables]
 "Psychic damage" = [ "6+: unit shaken",]
