@@ -80,7 +80,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "BombCannon", "Helicopter GattlingGun",]
-unit_special = "At start of game you get two smoke grenades which may be used in any gunnery 2 phase. Place 2 smoke markers in this hex and all surronding hexes. Note, all smoke block line of sight, but not until after the 2nd gunnery phase. Also note that one smoke marker is removed in every aftermath. \\\\ Quick fix: In aftermath it may either remove one shaken token or +1 to future damage token.\\\\ Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
+unit_special = "At start of game you get two smoke grenades which may be used in any gunnery 2 phase. Place 2 smoke markers in this hex and all surronding hexes. Note, all smoke block line of sight, but not until after the 2nd gunnery phase. Also note that one smoke marker is removed in every aftermath. \\\\ Quick fix: In aftermath it may either remove one shaken token or +1 to future damage token.\\\\ Fires, loads and aim both weapons simultaniously \\\\ Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
 assault = "1/1/1/1"
 assault_die = "3+"
 assault_deflection_die = "5+"
@@ -115,7 +115,7 @@ assault_special = "Pre-Assault Retreat[4+]"
 filters = [ "weapons", "team",]
 
 [units."Gnome Helicopter".orders]
-"Fire Orders" = [ "(all) Load + -", "(all, flying) Fire + -", "(all, flying) Aim + -",]
+"Fire Orders" = [ "(all) Load + -", "(all, flying) Fire + -", "(still, flying) Aim + -",]
 "Movement Orders" = [ "(still, ground) A[still flying] + 360$^0$ + - ", "(still, ground) A[slow flying] + 360$^0$ + F ", "(still, flying) 360$^0$ + - + -  ", "(slow flying)  L + F + - ", "(slow flying)  L + F + L ", "(slow flying)  R + F - ", "(slow flying)  R + F + R ", "(slow flying)  F + - + - ", "(slow flying)  A[fast flying] + F + F ", "(slow flying)  B[still flying] + - + - ", "(fast flying)  F + F - ", "(fast flying)  F + F + R ", "(fast flying)  F + F + L ", "(fast flying)  F + F + B[slow flying] ", "(still, flying) A[still flying] + 360$^0$ + - ", "(default all Flying) - + - + B[still ground]",]
 
 [units."Gnome Helicopter".damage_tables]
