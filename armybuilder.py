@@ -28,10 +28,22 @@ class Team():
         
         for weapon_name,weapon in self.weapons.items():
             #print(weapon_name)
+
+            #print(weapon.name)
+
             if weapon.cost == '':
                 continue
+
+            
+            
+            allreadyequiped = [a for a in unit.unit_base_weapons_inputs]            
+            if weapon.name in allreadyequiped:
+                continue
+            
             tmp = weapon.required_to_buy.split(':')
 
+            #print(weapon.name)
+            
             modelORunit = tmp[0]
             required = tmp[1].split(' or ')
 
@@ -40,21 +52,20 @@ class Team():
             types.append(unit.name.strip().lower())
 
             ##check if unit meets the requirements of the item.
-            print(modelORunit)
+            #print(modelORunit)
             if modelORunit.strip().lower() == 'unit base':
                 for r in required:
                     still_true = True
                     if r.strip().lower() not in types:
                         still_true = False
 
-                    #print(still_true)
                     if still_true:
                         break 
-
                         
                 if not still_true:
                     continue
 
+                
             if modelORunit.strip().lower() == 'model':
                 for m in unit.model_list:
                     for r in required:
@@ -98,7 +109,7 @@ class Team():
             if not type_ in modified_unit_items:
                 still_true = False
 
-            print('1', weapon.name)
+            #print('1', weapon.name)
             if not still_true:
                 still_true = True
                 if int(unit.models) > 0:
@@ -106,11 +117,15 @@ class Team():
                         model_items = model.modelitems.split(',')
                         model_items = [a.lower().strip() for a in model_items]
                         mod = []
+                        #print(model_items)
                         for m in model_items:
+                            
                             if m.strip()[-5:] == 'hands':
                                 mod.append(m)
                                 continue
 
+
+                            
                             if m[0].isdigit():
                                 if m[1].isdigit():
                                     mod.append(m[2:].strip())
@@ -126,14 +141,20 @@ class Team():
                         
                         if not type_ in model_items:
                             if type_ in handed:
+                            
                                 numberofhands_required = int(type_[0])
                                 numberof_modelhands  = 0
+                            
+                                
                                 for m in model_items:
                                     if m in hands:
                                         
                                         numberof_modelhands = int(m[0])
 
-
+                                print('required=', numberofhands_required)
+                                print('free=',numberof_modelhands)
+                                
+                                print('still_true = ',still_true)
                                 if numberofhands_required > numberof_modelhands:
                                     still_true = False
                             #print(still_true)
@@ -283,6 +304,7 @@ class Unit():
         self.retired = ''
 
         self.unit_base_weapons_inputs = []
+
         self.model_list = []
         
         self.orders = {}
@@ -292,17 +314,13 @@ class Unit():
         self.filters = ['weapons', 'team']
 
 
-    def add_to(self, key):
-        try:
-                self.__dict__[key]
-        except KeyError:
-                print('KeyError')
-                retrun
-
-        addision = input('Add extra line to ' + key + ':')
-        self.__dict__[key] = self.__dict__[key] + addision
-                
-        #import IPython; IPython.embed()
+    def add_equipment(self, equipment):
+        type_ = equipment.type_.split(',')[1]
+        if type_.lower().strip() == "unit base weapon":
+            self.unit_base_weapons_inputs.append(equipment)
+        else:
+            for model in self.model_list:
+                model.add_equipment(equipment)
 
     def from_dict(self, d0):
         d1 = self.write_dict()
@@ -313,6 +331,8 @@ class Unit():
                     if key == 'orders':
                         setattr(self, key, {})
                     elif key == 'model_list':
+                        setattr(self, key, [])
+                    elif key == 'unit_base_weapons_inputs':
                         setattr(self, key, [])
                     else:
                         setattr(self, key, '')
@@ -394,6 +414,7 @@ class Model():
         self.unit_name = unit.name
         self.type_ = ''
         self.weapons_input= []
+        self.extra_equipment = []
         
         self.special = ''
         self.modelitems = ''
@@ -419,7 +440,39 @@ class Model():
                         continue
        
         return d
+
+    def add_equipment(self, equipment):
+        type_ = equipment.type_.split(',')[1]
+        firstword = type_.strip().split(' ')[0]
+
+        print(firstword[0][1:5])
+
+        newmodelitems = []
+        if firstword[1:5] == 'hand':
+            self.weapons_input.append(equipment)
+            numberofhandsrequired = int(firstword[0])
+            for modelitem in self.modelitems.split(','):
+                if 'hands' in modelitem:
+                    handstouse = int(modelitem.strip()[0]) - numberofhandsrequired
+                    if handstouse < 1:
+                        continue
+                    else:
+                        modifiedmodelitem = str(handstouse) + ' hands'
+                else:
+                    modifiedmodelitem = modelitem
+
+                newmodelitems.append(modifiedmodelitem)
+
+                
+                    
+
+            self.modelitems = ','.join(newmodelitems).strip()
+        else:
+            self.extra_equipment.append(equipment)
         
+
+        
+    
     def from_dict(self, d0):
         d1 = self.write_dict()
         for key in d1:
@@ -428,6 +481,10 @@ class Model():
                 except KeyError:
                     if key == 'orders':
                         setattr(self, key, {})
+                    elif key == 'extra_equipment':
+                        setattr(self, key, [])
+                    elif key == 'weapons':
+                        setattr(self, key, [])
                     else:
                         setattr(self, key, '')
         
