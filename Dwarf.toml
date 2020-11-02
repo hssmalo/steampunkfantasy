@@ -6,7 +6,7 @@ name = "Flaming Whip"
 template = ""
 range_ = "1"
 angle = "*/*/-/-"
-special = "set on Fire. Move unit base one hex closer to Blarog if hit"
+special = "set on Fire"
 damage = "-"
 ap = "N.A."
 assault_mod = ""
@@ -616,7 +616,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "Flaming Whip",]
-unit_special = "Poison Resistance 6, Fire Resistance 12 \\\\ Terror[8][range=2]\\\\ Excelent Whip Handeling (counts as Excelent shot, +2 to hit)] \\\\ Forward Position[1]"
+unit_special = "Poison Resistance 6, Fire Resistance 12 \\\\ Terror[8][range=2]\\\\ Excelent Whip Handeling (counts as Excelent shot, +2 to hit)]"
 assault = "6/4/3/2"
 assault_die = "2+"
 assault_deflection_die = ""
@@ -843,7 +843,7 @@ Movement = [ "(flying, slow) F + L + -", "(flying, slow) F + R + -", "(flying, s
 
 [units."Tamed Balrog".orders]
 Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
-Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(slow) chase + - + -", "(default slow) - + - + flee",]
+Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(slow) chase + - + -", "(slow) A,chase + chase + chase,B[rest]", "(rest) - + - + A[slow]", "(default slow) - + - + flee",]
 
 [units."Tamed Balrog".damage_tables]
 "Regular Damage" = [ "1-9: +1 on future damage", "10-11: +2 on future damage, Assault -1/-1/-1/-1", "12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]

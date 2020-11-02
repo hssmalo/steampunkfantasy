@@ -1,7 +1,7 @@
 name = "Gnome"
 
 [weapons."Helicopter GattlingGun"]
-race = "Elf"
+race = "Gnome"
 name = "Helicopter GattlingGun"
 template = ""
 range_ = "2"
@@ -20,6 +20,29 @@ orders_lost = [ "",]
 cost = ""
 required_to_buy = ""
 type_ = "Helicopter Mounted GattlingGun"
+filters = [ "team",]
+
+
+[weapons."GattlingGun"]
+race = "Gnome"
+name = "GattlingGun"
+template = "r"
+range_ = "3"
+angle = "*/-/-/-"
+special = "Fire once at all enemy units within range and within one angle of fire \\\\ If aim, instead use focus fire, roll 6 dice at same unit base"
+damage = "d6-3"
+ap = "1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "2cp"
+required_to_buy = "Infantry: Unit Base"
+type_ = "Infantry, Unit Base Weapon"
 filters = [ "team",]
 
 [weapons."SplintBombGrenade Launcher"]
@@ -66,6 +89,50 @@ required_to_buy = ""
 type_ = "Helicopter Weapon"
 filters = [ "team",]
 
+[weapons.Ballista]
+race = "Gnome"
+name = "Ballista"
+template = "r"
+range_ = "5"
+angle = "*/-/-/-"
+special = ""
+damage = "d6"
+ap = "8"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Construct Weapon"
+filters = [ "team",]
+
+[weapons."Gnome Gun"]
+race = "Gnome"
+name = "Gnome Gun"
+template = "r"
+range_ = "4"
+angle = "*/*/*/*"
+special = ""
+damage = "d6-2"
+ap = "2"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Infantry, 2handed weapon"
+filters = [ "team",]
+
 [units."Gnome Helicopter"]
 race = "Gnome"
 name = "Gnome Helicopter"
@@ -95,7 +162,7 @@ race = "Gnome"
 name = "Gnome Motorcycle"
 models = "3"
 size = "medium"
-cost = "2mp, 8cp"
+cost = "2mp, 4cp, 4xp"
 armor = "4/3/-/-"
 type_ = "Bio, Motorcycle, Wheel"
 isReplacement = ""
@@ -114,6 +181,54 @@ assault_deflection = "2/1/-/-"
 assault_special = "Pre-Assault Retreat[4+]"
 filters = [ "weapons", "team",]
 
+[units."Ballista"]
+race = "Gnome"
+name = "Ballista"
+models = "1"
+size = "Large"
+cost = "4cp"
+armor = ""
+type_ = "Construct, Towed"
+isReplacement = "no"
+replaces = ""
+unititems = ""
+modelitems = ""
+retired = ""
+weapons_input = [ "Ballista",]
+unit_special = ""
+assault = "1/1/1/1"
+assault_die = "3+"
+assault_deflection_die = ""
+assault_damage = "d6-2"
+assault_ap = "2"
+assault_deflection = ""
+assault_special = ""
+filters = [ "weapons", "team",]
+
+[units."Gnome Infantry"]
+race = "Gnome"
+name = "Gnome Infantry"
+models = "4"
+size = "Medium"
+cost = "4mp"
+armor = ""
+type_ = "Bio, Infantry, Walks"
+isReplacement = ""
+replaces = ""
+unititems = "1 Unit Base Weapon"
+modelitems = "2 hands, unlimited independent equipment"
+retired = ""
+weapons_input = [ "Gnome Gun",]
+unit_special = "Take-Cover[still][-2]"
+assault = "1/1/1/1"
+assault_die = "3+"
+assault_deflection_die = ""
+assault_damage = "d4-2"
+assault_ap = "2"
+assault_deflection = ""
+assault_special = ""
+filters = [ "weapons", "team",]
+
 [units."Gnome Helicopter".orders]
 "Fire Orders" = [ "(all) Load + -", "(all, flying) Fire + -", "(still, flying) Aim + -",]
 "Movement Orders" = [ "(still, ground) A[still flying] + 360$^0$ + - ", "(still, ground) A[slow flying] + 360$^0$ + F ", "(still, flying) 360$^0$ + - + -  ", "(slow flying)  L + F + - ", "(slow flying)  L + F + L ", "(slow flying)  R + F - ", "(slow flying)  R + F + R ", "(slow flying)  F + - + - ", "(slow flying)  A[fast flying] + F + F ", "(slow flying)  B[still flying] + - + - ", "(fast flying)  F + F - ", "(fast flying)  F + F + R ", "(fast flying)  F + F + L ", "(fast flying)  F + F + B[slow flying] ", "(still, flying) A[still flying] + 360$^0$ + - ", "(default all Flying) - + - + B[still ground]",]
@@ -129,3 +244,20 @@ Movement = [ "(fast) F + F + F,B ", "(fast) F + F + 360$^0$", "(fast) 360$^0$ + 
 [units."Gnome Motorcycle".damage_tables]
 "Regular Damage" = [ "2-3: +1 on future damage", "4: Kill 1 model",]
 "Psycic Damage" = [ "6+: unit shaken",]
+
+[units.Ballista.orders]
+"Fire Orders" = [ "(still) load + -", "(still) - + load", "(still) fire + -", "(still) - + fire", "(still) - + aim", "(still) aim + - ",]
+Movement = [ "(still) L + -", "(still) R + - + - ", "(still) - + - + -", "(still) - + - + A", "(slow) 360$^0$ + F + -", "(slow) - + - + B",]
+
+[units.Ballista.damage_tables]
+"Regular Damage" = [ "2-3: +1 to future damage", "4-5: +1 on future damage, Light Damage[d6]", "6-7: +1 on future damage, Cannot move or Rotate, speed set to still", "9+: unit destroied",]
+"Light Damage" = [ "1-4: +1 to future damage", "5-6: Unit Shaken",]
+
+[units."Gnome Infantry".orders]
+Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + A + F", "(default stand still) - + A + flee", "(slow) - + - + chase",]
+
+[units."Gnome Infantry".damage_tables]
+"Psychic Damage" = [ "5+: shaken",]
+"Regular Damage" = [ "0-5: kill 1 model", "6-8: kill 1 model, roll on psychic damage[d6]", "9: Unit Base destoryed",]
+
