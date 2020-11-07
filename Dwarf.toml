@@ -481,7 +481,7 @@ orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, Unit Base Equipment"
+type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
 [weapons."Rocket JackHammer"]
@@ -502,7 +502,7 @@ assault_ap = "8"
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = "Model, Elite SteamPowerArmor"
+required_to_buy = "Model: Elite SteamPowerArmor"
 type_ = "SteamPowerArmor, 2handed"
 filters = [ "team",]
 
