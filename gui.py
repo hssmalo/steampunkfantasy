@@ -2,7 +2,7 @@
 import dash
 import dash_html_components as html
 import dash_core_components as dcc
-
+from copy import deepcopy
 
 
 import armybuilder
@@ -73,13 +73,17 @@ def update_output(n_clicks, newORmodify, unitname, upgradename, personalname):
     upgrade = ''
     cost = ''
     global FUNDS
+
+
     
     if unitname:
+        
         if newORmodify == 'new':
-            unit = TEAM.units[unitname]
+            unit = deepcopy(TEAM.units[unitname])
         if newORmodify == 'modify':
             try:
-                unit = TEAM.personal_team[unitname]
+                unit = deepcopy(TEAM.personal_team[unitname])
+                
             except:
                 unit = None
 
@@ -107,7 +111,8 @@ def update_output(n_clicks, newORmodify, unitname, upgradename, personalname):
             FUNDS = FUNDS - cost
             
             TEAM.personal_team[personalname] = unit
-
+            
+            
             txt = 'Unit Name: {},Upgrade Name {},Personal Name {}'.format(unitname, upgradename, personalname)
 
             showfunds = str(FUNDS)
@@ -141,18 +146,26 @@ def update_output(n_clicks, newORmodify, unitname, upgradename, personalname):
     [dash.dependencies.Input('newORmodify', 'value')],
 )
 def update_unitnames(team, newORmodify):
+    global TEAM
     chooseUnit = []
     unitname = ''
     if newORmodify == 'new':
-        global TEAM
-        TEAM = armybuilder.Team(team)
-        try:
-            TEAM.from_toml()
-            for unitname, unit in TEAM.units.items():
-                chooseUnit.append({'label' : unitname, 'value': unitname})
-        except FileNotFoundError:
-            chooseUnit = []
+
+        if TEAM is None:
+            TEAM = armybuilder.Team(team)
+            
+        if not TEAM.personal_team:
+            TEAM = armybuilder.Team(team)
+
+            try:
+                TEAM.from_toml()
+            except FileNotFoundError:
+                chooseUnit = []
         
+
+        for unitname, unit in TEAM.units.items():
+            chooseUnit.append({'label' : unitname, 'value': unitname})                
+
             
     if newORmodify == 'modify':
         #print(TEAM.personal_team)
@@ -190,7 +203,7 @@ def update_FUNDS(gametype):
 def update_upgrades(unitname, n_clicks, newORmodify):
 
     options = [{'label': 'nothing', 'value': 'nothing'}]
-    print(unitname, newORmodify, n_clicks)
+    #print(unitname, newORmodify, n_clicks)
    
     
     if unitname and TEAM is not None:
@@ -208,7 +221,7 @@ def update_upgrades(unitname, n_clicks, newORmodify):
         else:
             options = []
                 
-    print(options)
+    #print(options)
     return options
         
     
