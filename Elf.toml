@@ -28,7 +28,7 @@ name = "Twin Guns"
 template = ""
 range_ = "3"
 angle = "*/-/-/-"
-special = "x2 shots per shot"
+special = "x2 shots per shot (indicated by x2 in fire order)""
 damage = "d6"
 ap = "6"
 assault_mod = ""
@@ -116,7 +116,7 @@ name = "SMG"
 template = "r"
 range_ = "3"
 angle = "*/*/*/*"
-special = "Always treated as loaded. Fires twice two shot each time it is fired"
+special = "Always treated as loaded. x2 shots per shot (indicated by x2 in fire order)"
 damage = "d6-3"
 ap = "1"
 assault_mod = ""
@@ -125,7 +125,7 @@ assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
 assault_special = ""
 assault_ap = ""
-orders_gained = [ "(stand-still, slow, fast) Fire(smg) + Fire(smg)",]
+orders_gained = [ "(stand-still, slow, fast) Fire(smg) x2 + Fire(smg) x2",]
 orders_lost = [ "aim + -", "- + aim",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry or Elk Cavalery or Eagle Rider"
@@ -556,7 +556,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "Gattle Gun", "SMG",]
-unit_special = "Gun Blazing: Ignore to-hit penalties for moving fast\\\\ May fire two SMG in addition to Gattle Gun any time a fire order is given, and SMG is always treated as loaded\\\\ One SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction\\\\ Movement: road: if on a road, you may move along a road using this order"
+unit_special = "Gun Blazing: Ignore to-hit penalties for moving fast\\\\ May fire two SMG (and each SMG fire twice per shot) in addition to Gattle Gun any time a fire order is given\\\\ One SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction\\\\ Movement: road: if on a road, you may move along a road using this order"
 assault = "3/2/2/2"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -683,7 +683,7 @@ assault_deflection_die = "5+"
 assault_damage = "d6-2"
 assault_ap = "2"
 assault_deflection = "1"
-assault_special = "Pre-Assault: throw fire (from lance): roll a die (once for the entire unit), at 5+ set one enemy unit on fire (see set on fire general rules), and if successful, you may retreat from the assault as the Pre-assault retreat ability"
+assault_special = "Pre-Assault: throw fire (from lance): roll a die (once for the entire unit), at 5+ set one enemy unit on fire (see set on fire general rules), and if successful, you retreat from the assault as the Pre-assault retreat ability"
 filters = [ "weapons", "team",]
 
 [units.Illusion]
@@ -816,7 +816,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F+F+B", "(fast) F + F + F,B", "(default slow) - + - +flee", "(default fast) - + flee +flee",]
 
 [units."Elk Cavalry".damage_tables]
-"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 memeber, psychic damage[d6]", "9: kill unit base",]
+"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 model, psychic damage[d6]", "9: kill unit base",]
 "psychic damage" = [ "4+ shaken",]
 
 [units."Elite VelociRaptor Riders".orders]
@@ -840,7 +840,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 
 [units."VelociRaptor Riders".orders]
 Movement = [ "(fast) 360$^0$ + F + F", "(fast) F + B + 360$^0$", "(fast) F + F + 360$^0$", "(slow) 360$^0$ + A + F", "(slow) B + 360$^0$ + -", "(stand still) - + -  + -", "(stand still) A + F + -", "(stand still) 360$^0$ + - + -", "(stand still) A + A + F", "(fast) F + B + B,360$^0$", "(fast) F + F+ F", "(fast) F + F,360$^0$ + B,", "(default slow) - + - +flee", "(default fast) - + flee + flee",]
-"Fire Actions" = [ "(all) Fire(smg) + Fire(smg)", "Load(5)(smg) + - ", "(stand still) Fire(twin-gun) + - ", "Load(twin-gun) + -", "- + Load(twin gun)", "- + aim (twin gun)", "(stand still) - + Fire(twin gun)",]
+"Fire Actions" = [ "(all) Fire(smg) x2 + Fire(smg) x2", "(stand still) Fire(twin-gun) x2 + - ", "Load(twin-gun) + -", "- + Load(twin gun)", "- + aim (twin gun)", "(stand still) - + Fire(twin gun)",]
 
 [units."VelociRaptor Riders".damage_tables]
 "Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1, stop bleeding, pcysic damage[1d6]",]
