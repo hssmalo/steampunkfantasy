@@ -250,7 +250,7 @@ Movement orders may for example be:
 (fast) F + L + -\
 (fast) F + B + -\
 (slow) A + F + -\
-(satand-still) - + - + - \
+(still) - + - + - \
 
 Each unit has a set of available orders. Code:
 
@@ -282,7 +282,7 @@ Would read you could rotate 360$^0$ and accelerate in first movement, and forwar
 
 Gunnery orders are for example:\
 - + Aim \
-- + Load (stand still only) \
+- + Load (still) \
 - + Fire\
 Aim + -\
 Load + -\
@@ -391,6 +391,7 @@ HUGE                        0      +1
 *unit* *abilities*
 Good Shot                  +1       0
 Excellent Shot             +2       0
+Superb Shot                +3       0
 Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
@@ -413,13 +414,8 @@ The firing vehicles decides which hex side the shots come from and enter into.
 However, employing hexes at the edge of it's own firing angle gives a to-hit penalty.
 
 
-Long range: \
-
-
 *Area* *To-Hit*: \
 Area(n+): roll 1 die per enemy model in hex. Apply damage per success.
-
-Unless otherwise stated, area effects
 
 \pagebreak
 
@@ -443,53 +439,32 @@ Unless the damage is of a specific type, any specified damage is regular damage,
 
 Before you roll damage, roll armor penetration first. If unit does not have armor, skip this step, and threat shot as penetrated all armor.
 
-How Armor penetration works is dependent on wether it is positive or negative.
 
-If AP $\geq$ 0: \
-Roll (Armor - AP) number of dice, minimum 0 \
+Roll (Armor - AP) number of dice, minimum 0, where Armor is the armor of the target unit from the side you hare firing from, and AP is the armor penetration of the weapon.\
 
-If AP < 0:
-Roll Armor number of dice.
-
-The target number N is:
-
-- N= 5 for weapons with  AP $\geq$ 0
-- N= 4 for weapons with  AP = -1 AP 
-- N= 3 for weapons with  AP = -2 AP
-- N= 2 for weapons with  AP = -3 AP
-- N= 1 for weapons with  AP = -4 AP
-
-
-
-Let the shooter armor penetration be $AP$, and the target have an armor of $A$
 
 
                           Number of armor dice     Success
 ------------------------ ----------------------- -----------    
 $AP \geq 0$                 A-AP                     5+
-AP = -1                     A                        4+
-AP = -2                     A                        3+
-AP = -3                     A                        2+
-AP = -4                     A                        1+
-
 
 
 For
 
-- 2 or more die above the success number N, the armor prevents all damage 
-- exactly one die above the success number N, roll on damage with a -3 modifier 
-- 0 die above the success number N, roll on damage normaly. 
+- 2 or more die above 5, the armor prevents all damage 
+- exactly one die above 5, roll on damage with a -3 modifier 
+- 0 die above 5, roll on damage normaly. 
 
 
 
-To summerize:
+Roll the amount of damage indicated by the weapon, modified with the folling
 
                         damage modifier
 ----------------------- ----------------
 *armor*
 Blocked by armor          $-\infty$
 Partly blocked by armor  -3
-Penetrated armor           0 (some weapons grants you +3 here)
+Penetrated armor          0 (some weapons grants you +3 here)
 *previous results* 
 Previous damage          +1 per token
 *range*
@@ -504,49 +479,25 @@ XXX Resistance N         -N if damage type matches resistance.
 
 ## Damage Table:
 
-Roll on regular damage table for the unit, add previous bonus and weapon modifiers if any. Any result less than the starting value of the damage table counts as no damage. 
+Compare the result with the regular damage table of the unit.
+Any result less than the starting value of the damage table counts as no damage. 
+Else, read of the result and apply the damage from the damage table.
 
-Whenever one model of a unit with multiple models dies, half previous bonus to damage round down.
+
+Whenever a model in one unit dies, half previous bonus to damage round down.
 If a model dies from poison, remove the poison afterwards
 If a model dies from bleeding, remove the bleeding.
-
-# Special Damage types
-
-
-Unless otherwise stated by the weapon, any weapon has regular damage. Some weapons and effects may have special damage in addition or instead of their normal damage. Some special damage types have special rules, which include
-- Poison
-- Fire
-
-**Fire** **damage**:
-Treat it as regular damage, except for resistances. Fire damage does not ignore armor, but ignore regular damage resistances, but not fire resistance.
-
-**Poison**:
-Details: see continious damage.
-
-Other, more generic damage types will be noted by the following in weapon stats:\
-- [type] damage[dN]
-For example, a weapon may have Psychic Damage in addition to regular damage.
-
-If so, and if the target has a damage table of name equal to the type of damage, roll a dN on that damage table. For example if you have
-- d6 psycic damage
-Roll a d6 on psychic damage table of target.
-If the target don't have a psychic damage table, the unit is immune to this damage.
-
-
-
 
 \pagebreak
 
 # Assault
 
 If two or more units from different team/faction tries to enter the same hex simultaneously, use ASSAULT rules.
-Assaults also is conducted if two or more units enters each other hex. Ie they are facing each other and both moving forward.
+Assaults also is conducted if two or more units from different teams try to enter each others hex. Ie they are facing each other and both moving forward.
 
-- Before any assault, any unit which has the ability to retreat before assault have the option to do so now. 
+- Before any assault, any unit which has the ability to retreat before assault have the option to do so now. This includes ALL other pre-assault retreat abilities, such as Fear.
 - Then trigger any hex effects (as poison cloud, fire in hex etc.) to all units trying to enter the hex.
-- Then apply any pre-assault special effects such as fear, or other abilities.
-- After assault, trigger any hex effect again, but note that one unit may only be effected by the same hex effect once per turn.
-This is just in case a unit was forced into a hex with for example poison cloud.
+- After assault, trigger any hex effect for units forced to retreat to a hex with for example poison cloud.
 
 In the case where units facing each other are all moving forward, there might be two or more equally valid ways to conduct the assault. In this case, the team with the heighest melee skills determine which hex (or hexes) are being faught over:
 
@@ -558,7 +509,7 @@ Elf\
 
 The one gaining the advantage of the assault enters the hex it tried to enter, and disadvantage is forced out of the hex, it then retreats. If one with disadvantage was stationary, it moves out of the hex in the backward direction. If the disadvantage was trying to enter a hex, it stays in the hex it was before trying to enter the hex. 
 
-If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, or becomes overcrowed by your own units, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, the unit gains stuborn trait. Which means that the unit is never forced to retreat from a hex it previously occupied, and it is the other unit which retreats instead. 
+If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex, with the one controling the unit deciding where. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, or becomes overcrowed by your own units, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, the unit gains stuborn trait. Which means that the unit is never forced to retreat from a hex it previously occupied, and it is the other unit which retreats instead. 
 
 If more than Stacking Limit number of units enters the hex after winning an assault, all winners are also shakened as if trying to move into a hex with friendly units only. Also, note that a maxium of 2 units may contribute it's firepower.
 
@@ -596,24 +547,34 @@ Elf\
 
 It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected.
 
-Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties. You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit base per alive model in the unit base. Further hits are applied as support to any one ore more damage. Keep track of which hit are from which source.
+Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support.
+You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit base per alive model. Further hits are applied as support to any one ore more damage roll. Keep track of which hit are from which source. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties.
+
 
 Thus, if you have ONE attack which is far stronger than other attacks, it's wise to gain the advantage so that you make sure that that attack does not get deflected.
 
 For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit.
 
 Example: \
-DarkElf: 1 tank, a infantry base with 4 models: 7 success, 3 deflections. \
-Elf: 1 tank, a infantry base with 3 alive modles: 6 success, 3 from the tank 3 from the infantry\
-Total: DarkElf 1 scored 7 hits, Elf scored 3. \
-Advantage: DarkElf
+
+DarkElf: Tank + a infantry base with 4 models: total 9 assault dice with success at 5+ and 11 deflection dice with success at 6+\
+Elf: Tank + a infantry base with 3 alive modles: total 8 assault dice wth success at 5+, but no deflection.\
+
+DarkElf rolled 5 success and 3 deflection \
+Elf rolled 6 successes (3 from E34 and 3 from infantry)\
+DarkElf scores 5 hits and elf score 6-3 = 3 hits. Advantage DarkElf \
 
 Thus the DarkElf gained the advantage, and chooses to deflect the 3 attacks from the tank (they may or may not be nastier in the real game).
-Thus the Elf assigns 3 hits to the darkelf and the darkelf choosed 7 hits to the elf. The elf choosed to assign 3 damaging results to the infantry.
-The Darkelf choosed to assign 4 damaging success to the infantry and 1 damaging + 2 support to the tank, in hope of doing some damage.
+The elf choose to assign 3 damaging scores from his infantry to the enemy infantry, since he suspect that the DarkElfs armor is good enough to protect it. Might as well kill some infantry in the process.
+The Darkelf choosed to assign 3 damaging scores to the infantry and 1 damaging + 2 support to the tank, in hope of doing some damage. Thus the attack on the tank gets +2 to damage.
 
+Rolling for damage:\
+Elf rolls 3 times on infantry damage table, but manage to kill only 2 models. \
+Dakr Elf also rolled 3 times on infantry damage tabale, but managed to kill all 3 infantry. Then he roll for damage once versus the Elf's tanks, but the elf's armor provides to difficult to penetrate. \
 
-If in the rare case that unit does not to real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing hits. Thus you may roll one real damage PER enemy model in unit base in addition to one psycic damage PER enemy model in unit base. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage and +1 to psycic damage.
+Then the Elf retreats from the hex, but atleast it's tanks is unharmed. \
+
+If in the rare case that unit does not to real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing damaging and supporting hits. Thus you may roll one real damage PER enemy model in unit base in addition to one psycic damage PER enemy model in unit base. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage and +1 to psycic damage.
 
 
 Examples:
@@ -623,6 +584,90 @@ Standard Tank\
 
 This tank rolls 4 dice which hits on 5+ when assaulting a hex, and also when being assaulted from the front. Then it also gains 2 deflection die.
 If this tank is stationary and is assaulted from the sides (front left, front right, back left, back right) it only gets 3 dice and no deflections.
+
+# Special Damage types
+
+
+Unless otherwise stated by the weapon, any weapon has regular damage. Some weapons and effects may have special damage in addition or instead of their normal damage. 
+
+Generic damage types will be noted by the following in weapon stats:\
+- [type] damage[dN]
+For example, a weapon may have Psychic Damage in addition to regular damage.
+
+If so, and if the target has a damage table of name equal to the type of damage, roll a dN on that damage table. For example if you have
+- d6 psycic damage
+Roll a d6 on psychic damage table of target.
+If the target don't have a psychic damage table, the unit is immune to this damage.
+
+Some special damage types are listed below:
+
+**Direct** **Fire** **damage**:
+ 
+- Does not ignore armor 
+- Ignore regular damage resistances
+- Reduce damage by fire resistances of target
+- Apply bonus to damage based on the number +future damage tokens
+- Apply damage to the regular damage table.
+
+Most fire damage comes from the 'set on fire' ability of weapons, which is a continius damage.
+
+
+
+**Acid**: (roll by enemy)\ 
+
+- At agony step 0, roll a die: \
+			     at 1-: Downgrade from acid to minor acid.\
+    	      	      	     at 2 : +1 to future damge
+			     at 3 : as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
+                             at 4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
+			     at 5 : As 6 and unit is set on fire.\
+			     at 6 : Roll twice on this table., 
+
+- If you happen to get two (or more) downgrade in same round, you remove acid instead of downgrading it.
+
+- If not removed, roll again next turn.
+
+**Minor** **Acid**:
+
+- At agony step 1 roll a die, at 3+, unit base gets +1 on future damage. At 2-, remove minor acid
+
+**Contnius** **Fire** **Damage**
+
+- At agony step 2, roll a d6. \
+- At 1, the fire stops and do no damage. Remove the fire from the unit. \
+- Otherwise, that unit take that much fire damage, ignoring ALL armor. 
+- Reduce damage by fire resistances of target
+- Apply bonus to damage based on the number +future damage tokens
+- Apply damage to the regular damage table.
+
+- Ignor regular damage resistances
+- 
+If a 1 was not rolled, the unit continues burning next round.
+
+
+**Poisoned**[n]\
+Only biological units affected (with BIO in type). All other types ignore poison.
+
+- At agony step 3: Roll a dN (d4, d6, d8, d10 or d12) on regular damage.
+
+- Ignore armor and regular damage resistances
+- Reduce damage by poison resistances of target
+- Apply bonus to damage based on the number +future damage tokens
+- Apply damage to the regular damage table.
+
+If poison DID not kill a model of the unit, downgrade poison by one step (12 -> 10 -> 8 -> 6 -> 4 -> NONE)
+However if it did, remove that instance of poison from unit. If not, 
+
+
+**Bleeding**:
+
+- At agony step 4: Bleeding[n]: roll a dN.
+
+- If you get 1, remove the bleeding with no effect.
+- Ignore armor and regular damage resistances
+- Apply bonus to damage based on the number +future damage tokens
+- Apply damage to the regular damage table, with the exception that bleedid does not cause more bleeding.
+- If bleeding kills one model, remove this bleeding effect.
 
 \pagebreak
 
@@ -676,6 +721,7 @@ If target is hit atleast once by a ranged weapon with this special ability, targ
 
 Any unit base hit atleast once in assault by a unit with this special is set on fire. See continous damage.
 
+
 **(minor) Acid**, ranged weapons
 
 If target is hit by a ranged weapon with this special ability, apply (minor) acid to target. See continous damage. Apply one (minor) acid per hit.
@@ -713,60 +759,15 @@ Damage type is either regular damage, or explisitly given by the firing unit or 
 
 **Shaken**:
 
-*Shaken*: when first shaken, place two shaken tokens. One is removed during each aftermath.
-While shaken a unit carries out the default order for both movement and firing.
-For vehicles this represent temporarily mechanical problems.
+*Shaken*: when first shaken, place two shaken tokens. If further shaken is placed on a unit which is allready shaken, place only one. One shaken token is removed during each aftermath. While shaken a unit carries out the default order for movement, and do no actions in fireing pahses. For vehicles and robots this represent temporarily mechanical problems.
 
-Replace all movement orders with the default for the given speed (given in unit description), and no orders for gunnery action. 
+Replace all movement orders with the default for the given speed (given in unit description), and no orders for gunnery action while shaken. 
 
 **Misfire[N-]**
 
 Before using any fire action, roll a die. At N- (N or below) replace the fire action with a do nothing action. (thus this action does not spend any ammo if it misfires)
 
 \pagebreak
-
-# Continuous Damage:
-
-Applied in step: \
-Agony 0 to Agony 4.
-
-**Acid**: (roll by enemy)\ 
-
-- At agony step 0, roll a die: \
-			     at 1-: Downgrade from acid to minor acid.\
-    	      	      	     at 2 : +1 to future damge
-			     at 3 : as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
-                             at 4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
-			     at 5 : As 6 and unit is set on fire.\
-			     at 6 : Roll twice on this table., 
-
-- If you happen to get two (or more) downgrade in same round, you remove acid instead of downgrading it.
-
-**Minor** **Acid**:
-
-- At agony step 1 roll a die, at 3+, unit base gets +1 on future damage. At 2-, remove minor acid
-
-Unit on Fire: (roll by enemy)
-
-- At agony step 2, roll a d6. \
-At 1, the fire stops and do no damage. Remove the fire from the unit. \
-Otherwise, that unit take that much fire damage, ignoring armor. But apply any fire resistance. \
-If a 1 was not rolled, the unit continues burning next round.
-
-
-**Poisoned**[n]\
-Only biological units affected. All other types ignore poison.
-
-- At agony step 3: Roll a dN (d4, d6, d8, d10 or d12) on damage. Apply any poison-resistance and any plus on future damage modifiers if any.
-Ignore armor. Further, if poison killed one member from unit base, remove that instance of poison from unit. If not, downgrade poison by one step (12 -> 10 -> 8 -> 6 -> 4 -> NONE)
-
-
-**Bleeding**:
-
-- At agony step 4: Bleeding[n]: roll a dN. If you get 1, remove the bleeding with no effect.
-If not, count the result as damage, ignore armor but add bonus from previous damage as normal.
-Bleeding does not cause more bleeding, but all other effects of damage are applied to unit.
-If bleeding kills one member, remove this bleeding effect.
 
 
 # Hex based effect.

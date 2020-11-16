@@ -18,7 +18,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2cp"
-required_to_buy = "Model: Elite Ork Infantry or Elite Cavalry"
+required_to_buy = "Model: Elite Infantry or Elite Cavalry"
 type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
@@ -282,7 +282,7 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = "2xp"
-required_to_buy = "Model: Elite Ork Infantry"
+required_to_buy = "Model: Ork Elite Infantry"
 type_ = "Infantry, Independent Equipment"
 filters = [ "team",]
 
@@ -348,7 +348,7 @@ assault_ap = "2"
 orders_gained = [ "Load(2)",]
 orders_lost = [ "",]
 cost = "1cp"
-required_to_buy = "Model: Elite Ork Infantry or Elite Cavalry"
+required_to_buy = "Model: Ork Elite Infantry or Elite Cavalry"
 type_ = "Infantry, 1handed weapon"
 filters = [ "team",]
 
@@ -786,14 +786,14 @@ assault_deflection = ""
 assault_special = "Any 6 on assult die roll (not assault deflection) count as two success and you get to reroll 3 dice (assault or assault deflection) per 6. Each die may be rerolled a maximum of one time (for each wave of rerolls). If you get another 6, repeat the process. \\\\ Cunning Assault[1 for 3]"
 filters = [ "weapons", "team",]
 
-[units."Elite Ork Infantry"]
+[units."Ork Elite Infantry"]
 race = "Ork"
-name = "Elite Ork Infantry"
+name = "Ork Elite Infantry"
 models = ""
 size = "medium"
 cost = "4xp"
 armor = ""
-type_ = "Bio, Infantry, Elite, Walks"
+type_ = "Bio, Elite Infantry, Walks"
 isReplacement = "yes"
 replaces = "Model: Ork Infantry or Grunt"
 unititems = ""
@@ -947,10 +947,10 @@ Fire = [ "Fire (heavy MG) + -", "- + Fire (heavy MG)", "Load(2) + -", "(stand-st
 "Psychic Damage" = [ "4+: unit base shaken",]
 "Regular Damage" = [ "1-5: kill 1 model", "6-8: kill 1 model, roll on psychic damage [d6]", "9+ Destroy Unit Base",]
 
-[units."Elite Ork Infantry".orders]
+[units."Ork Elite Infantry".orders]
 "" = [ "",]
 
-[units."Elite Ork Infantry".damage_tables]
+[units."Ork Elite Infantry".damage_tables]
 "" = [ "",]
 
 [units.Speedhead.orders]
