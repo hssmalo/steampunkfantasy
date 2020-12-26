@@ -103,7 +103,7 @@ assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
 assault_special = ""
 assault_ap = ""
-orders_gained = [ "(stand-still, slow, fast) - + throw grenade",]
+orders_gained = [ "(still, slow, fast) - + throw grenade",]
 orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry"
@@ -125,7 +125,7 @@ assault_deflection_die_set_to = ""
 assault_dam_set_to = ""
 assault_special = ""
 assault_ap = ""
-orders_gained = [ "(stand-still, slow, fast) Fire(smg) x2 + Fire(smg) x2",]
+orders_gained = [ "(still, slow, fast) Fire(smg) x2 + Fire(smg) x2",]
 orders_lost = [ "aim + -", "- + aim",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry or Elk Cavalery or Eagle Rider"
@@ -470,6 +470,31 @@ assault_deflection = "1/-/-/-"
 assault_special = "Cunning Assault[1 for 2], Pre-Assault retreat[5+]"
 filters = [ "weapons", "team",]
 
+
+[units."Elf SuperElite Infantry"]
+race = "Elf"
+name = "Elf SuperElite Infantry"
+models = ""
+size = "Medium"
+cost = "2xp"
+armor = ""
+type_ = "Bio, Elite Infantry, Walks"
+isReplacement = "yes"
+replaces = "Model: Infantry"
+unititems = ""
+modelitems = "2 hands, unlimited independent equipment"
+retired = ""
+weapons_input = [ "Rifle",]
+unit_special = "Superb shot +3\\\\ Unit base gains psychic resistance 1 as long as atleast one elite model is alive"
+assault = "3/1/1/1"
+assault_die = "5+"
+assault_deflection_die = "5+"
+assault_damage = "d6-2"
+assault_ap = "2"
+assault_deflection = "1/-/-/-"
+assault_special = "Cunning Assault[1 for 2], Pre-Assault retreat[5+]"
+filters = [ "weapons", "team",]
+
 [units."Elite Elf Scout"]
 race = "Elf"
 name = "Elite Elf Scout"
@@ -484,7 +509,7 @@ unititems = ""
 modelitems = "2 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "Rifle",]
-unit_special = "Take Cover[stand-still][-3] \\\\ camouflage[forrest] \\\\ Good shot +1 \\\\ "
+unit_special = "Take Cover[still][-3] \\\\ camouflage[forrest] \\\\ Good shot +1 \\\\ "
 assault = "2/2/2/2"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -628,7 +653,7 @@ unititems = "1 Unit Base Weapon"
 modelitems = "2 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "Rifle",]
-unit_special = "Take Cover[stand-still][-2]"
+unit_special = "Take Cover[still][-2]"
 assault = "1/1/1/1"
 assault_die = "5+"
 assault_deflection_die = ""
@@ -652,7 +677,7 @@ unititems = ""
 modelitems = "2 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "Rifle",]
-unit_special = "Take Cover[stand-still][-2] \\\\ Scout"
+unit_special = "Take Cover[still][-2] \\\\ Scout"
 assault = "1/1/1/1"
 assault_die = "5+"
 assault_deflection_die = "5+"
@@ -700,7 +725,7 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "",]
-unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. \\\\ Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it where ever the infantry goes. \\\\ The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[stand-still][-2], Take Cover[stand-still][-3], and camufloulage[forrest][-1] as appropritate \\\\ Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away. \\\\ If the illusion is not in a hex with a friendly infantry, it has only chase order available"
+unit_special = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. \\\\ Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it where ever the infantry goes. \\\\ The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropritate \\\\ Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away. \\\\ If the illusion is not in a hex with a friendly infantry, it has only chase order available"
 assault = "1/-/-/-"
 assault_die = ""
 assault_deflection_die = "5+"
@@ -775,21 +800,21 @@ Fire = [ "(all) - + Fire", "(stand still, slow)- + Aim", "(stand still, slow) - 
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) R + F + -", "(fast) L + F + - ", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units.E34.damage_tables]
-"Regular Damage" = [ "1-4: Light Damaged[d6]", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
+"Regular (fire) Damage" = [ "1-4: Light Damaged[d6]", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
 "Critical Damage" = [ "1: Cannot move, looses Fear", "2: -1 to hit, +1 to be hit(ranged and assault)", "3: Cannot Rotate", "4: x3 Light damage[d6]", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on Fire",]
 "Light Damage" = [ "1-4: +1 on future damage", "5-6: shaken"]
 "Crew Damage" = ["3: Misfire[1-]", "4-5: replace any effect of Misfire[1-] with Misfire[2-]", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Crew Killed, Unit Destroyed"]
 
 [units."Bear Rider".orders]
 "Fire orders" = [ "+ - Load", "+ - Fire", "+ - aim",]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + Flee + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(stand-still) 360$^0$ + A + F", "(stand-still) 360$^0$ + - + -",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + Flee + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(still) 360$^0$ + A + F", "(still) 360$^0$ + - + -",]
 
 [units."Bear Rider".damage_tables]
-"Regular damage" = [ "2-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[6], psychic damage[d6]", "10: killed",]
+"Regular (fire, poison, bleeding) damage" = [ "2-6: +1 to future damage, Bleed[4]", "7-9: +2 to future damage, Bleed[6], psychic damage[d6]", "10: killed",]
 "Psychic damage" = [ "6+: shaken",]
 
 [units."Sniper Tank".orders]
-Fire = [ "- + Fire (all weapons)", "(stand-still) - + Aim", "(stand-still, slow) - + Load",]
+Fire = [ "- + Fire (all weapons)", "(still) - + Aim", "(still, slow) - + Load",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -",]
 
 [units."Sniper Tank".damage_tables]
@@ -797,18 +822,24 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Critical Damage" = [ "1: cannot move forward", "2: -1 to hit, +1 to be hit", "3: Rotates right in misc step 2", "4: rotates left in misc step 1 and 3", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on Fire",]
 "Lightly Damaged" = [ "1-3: shaken", "4-6: +1 on future damage",]
 
-[units."Elite Infantry".orders]
+[units."Elf Elite Infantry".orders]
 "" = [ "",]
 
-[units."Elite Infantry".damage_tables]
+[units."Elf Elite Infantry".damage_tables]
+"" = [ "",]
+
+[units."Elf SuperElite Infantry".orders]
+"" = [ "",]
+
+[units."Elf SuperElite Infantry".damage_tables]
 "" = [ "",]
 
 [units."Elite Elf Scout".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + F + B,B", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand still) - + A + flee",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + Load", "(stand-still only) Load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(stand-still, slow, fast) spot+ spot",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B", "(still) 360$^0$ + - + -", "(still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + F + B,B", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand still) - + A + flee",]
+"Fire Orders" = [ "(still only) - + Fire", "(still only) Fire + - ", "(still only) - + Load", "(still only) Load + -", "(still only) - + aim", "(still only) aim + - ", "(still, slow, fast) spot+ spot",]
 
 [units."Elite Elf Scout".damage_tables]
-"Regular Damage" = [ "0+ : unit killed",]
+"Regular (fire, bleeding, poison) Damage" = [ "0+ : unit killed",]
 "Psycic Damage" = [ "3+: unit shaken",]
 
 [units."Elk Cavalry".orders]
@@ -816,7 +847,7 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F+F+B", "(fast) F + F + F,B", "(default slow) - + - +flee", "(default fast) - + flee +flee",]
 
 [units."Elk Cavalry".damage_tables]
-"Regular damage" = [ "1-3: Bleed[4]", "4-8: kill 1 model, psychic damage[d6]", "9: kill unit base",]
+"Regular (fire, bleeding, poison) damage" = [ "1-3: Bleed[4]", "4-8: kill 1 model, pscychic damage[d6] \\\\ half + to future damage rounded down.", "9: kill unit base",]
 "psychic damage" = [ "4+ shaken",]
 
 [units."Elite VelociRaptor Riders".orders]
@@ -826,13 +857,13 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + A + F", "(fast) F
 "" = [ "",]
 
 [units."Tattoo Ink".orders]
-Fire = [ "(stand-still) Fire + aim", "(stand still) aim + Fire", "(all) Fire + Fire ", "(stand still) Load + aim", "(stand still, slow) Load + Load",]
+Fire = [ "(still) Fire + aim", "(stand still) aim + Fire", "(all) Fire + Fire ", "(stand still) Load + aim", "(stand still, slow) Load + Load",]
 Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(fast) R+ F + -", "(fast) L+ F + -", "(fast) road + road + road",]
 
 [units."Tattoo Ink".damage_tables]
 "Critical Damage" = [ "1: +1 on future damage", "2: -1 to hit, +1 to be hit", "3: cannot rotate", "4: Roll 3 times on light damage table", "5: Treat all B and A as illegal. Replace with -", "6: Fire!",]
 "Light Damage" = [ "1-4: +1 on future damage", "5-6: shaken", ]
-"Regular Damage" = [ "1-3: Light Damage[d6]", "4-6: Critical Damaged, +1 on future damage", "7+ Destroyed",]
+"Regular (fire) Damage" = [ "1-3: Light Damage[d6]", "4-6: Critical Damaged, +1 on future damage", "7+ Destroyed",]
 "Crew Damage" = ["3: Misfire[1-]", "4-5: replace any effect of Misfire[1-] with Misfire[3-]", "6-7: as 4-5, shaken", "8-9: as 6-7, +3 to future crew damage", "10: Crew Killed, Unit Destroyed"]
 
 
@@ -843,7 +874,7 @@ Movement = [ "(fast) 360$^0$ + F + F", "(fast) F + B + 360$^0$", "(fast) F + F +
 "Fire Actions" = [ "(all) Fire(smg) x2 + Fire(smg) x2", "(stand still) Fire(twin-gun) x2 + - ", "Load(twin-gun) + -", "- + Load(twin gun)", "- + aim (twin gun)", "(stand still) - + Fire(twin gun)",]
 
 [units."VelociRaptor Riders".damage_tables]
-"Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1, stop bleeding, pcysic damage[1d6]",]
+"Regular (fire, bleeding, poison) Damage" = [ "2-3: Bleed[4]", "4+: kill 1 model, pcysic damage[1d6]\\\\ half + to future damage rounded down. \\\\ If killed by poison/bleeding, remove that instance",]
 "Psychic damage" = [ "4+: shaken",]
 
 [units."Eagle Rider".orders]
@@ -851,42 +882,42 @@ Movement = [ "(fast) 360$^0$ + F + F", "(fast) F + B + 360$^0$", "(fast) F + F +
 Movement = [ "(fast flying) 360$^0$ + F + F", "(fast flying) 360$^0$,F + F + F,360$^0$", "(fast flying) chase + chase + chase", "(fast flying) 360$^0$,F + F + B[slow]", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + A[Fast flying] + F", "(Default slow) A[Fast flying] + Flee + 360$^0$ ", "(Default, fast flying) Flee + Flee + Flee",]
 
 [units."Eagle Rider".damage_tables]
-"Regular Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to future damage, psychic damage[d6]", "6+: killed",]
+"Regular (fire, bleeding, poison) Damage" = [ "2-3: bleeding[4], +1 to future damge", "4-5: bleeding[6], +2 to future damage, psychic damage[d6]", "6+: killed",]
 "psychic damage" = [ "6+ shaken",]
 
-[units.Infantry.orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand-still) - + A + flee",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + Load", "(stand-still only) Load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ",]
+[units."Elf Infantry".orders]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + B + -", "(still) 360$^0$ + - + -", "(still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default still) - + A + flee",]
+"Fire Orders" = [ "(still only) - + Fire", "(still only) Fire + - ", "(still only) - + Load", "(still only) Load + -", "(still only) - + aim", "(still only) aim + - ",]
 
-[units.Infantry.damage_tables]
-"Regular damage" = [ "0-6: kill 1 model", "7-8: kill 1 model, psychic damage[d6]", "9: kill all 4",]
+[units."Elf Infantry".damage_tables]
+"Regular (fire, poison) damage" = [ "0-6: kill 1 model\\\\ half + to future damage rounded down. \\\\ If killed by poison/bleeding, remove that instance", "7-8: kill 1 model, psychic damage[d6]\\\\ half + to future damage rounded down. \\\\If killed by poison/bleeding, remove that instance", "9: kill all 4",]
 "Psychic damage" = [ "4+ shaken",]
 
 [units."Elf Scout".orders]
-"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B ", "(stand-still) 360$^0$ + - + -", "(stand-still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(stand-still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand still) - + A + flee",]
-"Fire Orders" = [ "(stand-still only) - + Fire", "(stand-still only) Fire + - ", "(stand-still only) - + Load", "(stand-still only) Load + -", "(stand-still only) - + aim", "(stand-still only) aim + - ", "(all) spot + spot",]
+"Movement Orders" = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + 360$^0$ + 360$^0$", "(slow) 360$^0$ + F + B ", "(still) 360$^0$ + - + -", "(still) 360$^0$ + A + F", "(slow) 360$^0$,A + F + F", "(fast) 360$^0$ + F + B[rest]", "(rest) - + - + A(slow)", "(rest) - + - + A(still)", "(stand still) 360$^0$,A,A + F + F", "(default slow) - + - +flee", "(default fast) - +flee + B[rest]", "(default rest) - + - + -", "(default stand still) - + A + flee",]
+"Fire Orders" = [ "(still only) - + Fire", "(still only) Fire + - ", "(still only) - + Load", "(still only) Load + -", "(still only) - + aim", "(still only) aim + - ", "(all) spot + spot",]
 
 [units."Elf Scout".damage_tables]
-"Regular Damage" = [ "0+ : unit killed",]
+"Regular (fire) Damage" = [ "0+ : unit killed",]
 "Psycic Damage" = [ "3+: unit shaken",]
 
 [units."Pegasus Rider".orders]
-Movement = [ "(stand-still) 360$^0$ + 360$^0$ + 360$^0$", "(stand-still) 360$^0$ + A[slow, flying] + F", "(stand-still) 360$^0$ + A[slow] + F", "(default stand-still) 360$^0$ + A[slow] + flee", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(slow) 360$^0$ + A[slow, flying] + F", "(slow) 360$^0$ + A[fast, flying] + F", "(slow) 360$^0$ + A[fast] + F", "(default slow) 360$^0$ + A[fast, flying] + flee", "(fast) 360$^0$ + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + A[fly, fast] + F,F", "(fast) 360$^0$ + F + B[slow]", "(default fast) 360$^0$ + A[fly, fast] + flee,flee", "(slow, flying) L + F + -", "(slow, flying) R + F + -", "(slow, flying) F + R + -", "(slow, flying) F + L + -", "(slow, flying) F + - + -", "(slow, flying) F + B[stand-still] + -", "(slow, flying) F + A[fast, flying] + F", "(slow flying) L + L + F", "(slow flying) R + R + F", "(default slow flying) - + - + flee", "(fast flying) F + F + F", "(fast flying) F + R + F", "(fast flying) F + L + F", "(fast flying) F + F + B[slow]", "(fast flying) F + F + B[fast]", "(fast flying) L,L + F + F", "(fast flying) R,R + F + F", "(default fast flying) Flee + Flee + Flee",]
+Movement = [ "(still) 360$^0$ + 360$^0$ + 360$^0$", "(still) 360$^0$ + A[slow, flying] + F", "(still) 360$^0$ + A[slow] + F", "(default still) 360$^0$ + A[slow] + flee", "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(slow) 360$^0$ + A[slow, flying] + F", "(slow) 360$^0$ + A[fast, flying] + F", "(slow) 360$^0$ + A[fast] + F", "(default slow) 360$^0$ + A[fast, flying] + flee", "(fast) 360$^0$ + F + F", "(fast) 360$^0$ + F + B", "(fast) 360$^0$ + A[fly, fast] + F,F", "(fast) 360$^0$ + F + B[slow]", "(default fast) 360$^0$ + A[fly, fast] + flee,flee", "(slow, flying) L + F + -", "(slow, flying) R + F + -", "(slow, flying) F + R + -", "(slow, flying) F + L + -", "(slow, flying) F + - + -", "(slow, flying) F + B[still] + -", "(slow, flying) F + A[fast, flying] + F", "(slow flying) L + L + F", "(slow flying) R + R + F", "(default slow flying) - + - + flee", "(fast flying) F + F + F", "(fast flying) F + R + F", "(fast flying) F + L + F", "(fast flying) F + F + B[slow]", "(fast flying) F + F + B[fast]", "(fast flying) L,L + F + F", "(fast flying) R,R + F + F", "(default fast flying) Flee + Flee + Flee",]
 Fire = [ "Load(1) + Load(1)", "Fire Burst(5) + Load(1)", "Load(1) + Fire Burst(5)",]
 
 [units."Pegasus Rider".damage_tables]
-"Regular Damage" = [ "2-3: Bleed[4]", "4+: kill 1 model",]
+"Regular (fire, poison, bleed) Damage" = [ "2-3: Bleed[4]", "4+: kill 1 model\\\\ half + to future damage rounded down. \\\\ If killed by poison/bleeding, remove that instance",]
 "Psycic Damage" = [ "5+: Unit shaken",]
 
 [units.Illusion.orders]
 "Movement Orders" = [ "- + chase + chase",]
 
 [units.Illusion.damage_tables]
-"Regular Damage" = [ "0-3: Eliminate 1 model", "4+: unit base destroyed",]
+"Regular (fire) Damage" = [ "0-3: Eliminate 1 model\\\\ half + to future damage rounded down. \\\\ If killed by poison/bleeding, remove that instance", "4+: unit base destroyed",]
 
 [units."Armored Unicorn Rider".orders]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(slow) 360$^0$ + F + A", "(stand-still) 360$^0$ + 360$^+$ + 360$^0$", "(stand-still) 360$^0$ + F + A", "(fast) 360$^0$ + F + F", "(fast) 360$^0$ + F + B",]
-"Fire or Healing" = [ "(fast) - + Minor Healing", "(slow or stand-still) Minor Healing + Minor Healing", "(stand-still) - + Major Healing", "(stand-still) Major Healing + -", "(stand-still) Minor Healing, self + Load ", "(all) Load + Load", "(all) Fire Burst(5) + Load", "(all) Load + Fire Burst(5)",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(slow) 360$^0$ + F + A", "(still) 360$^0$ + 360$^+$ + 360$^0$", "(still) 360$^0$ + F + A", "(fast) 360$^0$ + F + F", "(fast) 360$^0$ + F + B",]
+"Fire or Healing" = [ "(fast) - + Minor Healing", "(slow or still) Minor Healing + Minor Healing", "(still) - + Major Healing", "(still) Major Healing + -", "(still) Minor Healing, self + Load ", "(all) Load + Load", "(all) Fire Burst(5) + Load", "(all) Load + Fire Burst(5)",]
 
 [units."Armored Unicorn Rider".damage_tables]
 "Regular Damage" = [ "2-3: Bleeding[4]", "4+: unit Killed",]

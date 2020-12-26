@@ -42,8 +42,7 @@ Unless other wise stated, if a unit is given a unit base weapon, the unit may fi
 
 The requirements and cost of both model replacements and extra equipment should be clearly stated in the army list.
 
-If not a unit base weapon, but the weapon requires a unit, the cost is for upgrading all models in the unit with given upgrade.
-If it is a model, the cost is for upgrading ONE model. Typically requiers the model to be elite.
+If not a unit base weapon, but the weapon requires a unit, the cost is for upgrading all models in the unit with given upgrade. If it is a model, the cost is for upgrading ONE model. Typically requiers the model to be elite.
 
 
 *Huge* units\
@@ -158,7 +157,7 @@ In addition, the player in the match with most points, gets 16 bonus points. If 
 Both the winner and the looser record points.
 This is now called Match Victory Points (MVP).
 
-The toruament victroy points are calculated as follows:
+The toruament victroy points (TVP) are calculated as follows:
 
 $$TVP = (\| MVP \| )^0.75*MVP/\| MVP \| $$
 
@@ -372,12 +371,12 @@ Fast                       -1      -1
 Flying                     -1      -1         (stacks with speed)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1
-Burned Forrest              0      -1
-Building                    0      -1
-Ruins                       0      -1
-Rough Terrain	            0      -1
-Sand Dunes                  0      -1
+Forrest                     0      -1         Grants Evation(6+) for any medium or smaller unit
+Burned Forrest              0      -1         Grants Evation(6+) for any medium or smaller unit
+Building                    0      -1         Grants Evation(6+) for any medium or smaller unit
+Ruins                       0      -1         Grants Evation(6+) for any medium or smaller unit
+Rough Terrain	            0      -1         Grants Evation(6+) for any medium or smaller unit
+Sand Dunes                  0      -1         Grants Evation(6+) for any medium or smaller unit
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
 *Range*
@@ -395,7 +394,7 @@ Superb Shot                +3       0
 Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
-Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed.
+Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. Improves Evation(+1)
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
 Enhanced Accurazy           +1      0
@@ -601,12 +600,12 @@ If the target don't have a psychic damage table, the unit is immune to this dama
 
 Some special damage types are listed below:
 
-**Direct** **Fire** **damage**:
+**Fire** **damage**:
  
 - Does not ignore armor 
 - Ignore regular damage resistances
 - Reduce damage by fire resistances of target
-- Apply bonus to damage based on the number +future damage tokens
+- Apply bonus to damage based on the number +to future damage tokens
 - Apply damage to the regular damage table.
 
 Most fire damage comes from the 'set on fire' ability of weapons, which is a continius damage.
@@ -673,6 +672,18 @@ However if it did, remove that instance of poison from unit. If not,
 
 # Unit Abilities and conditions:
 
+**Evation**[N+]
+
+If you are hit by an area effect, roll one die per hit. At N+ negate one hit.
+
+**Improve Evation**[+N]
+
+If a unit already have evation (from terrain for example), you get +N on each evation roll. If unit does not have evation, this does nothing.
+
+**Take Cover**[speed, -N]
+
+When unit is in given speed the unit is considered taking cover and gets -N to be hit, as indicated by to-hit table. Whenever this condition apply, the unit gains improve evation[+1]
+
 **Forward Position**[N]
 
 At setup this unit may setup upt to N hexes away from normal setup area.
@@ -696,11 +707,13 @@ In agony 0, roll a dN psycic damage on any enemy unit within range of this unit.
 In pre-assault phase, roll a dN on psychic damage for each enemy unit base which has a psychic damage table (ignore armor and regular damage modifiers)
 Half number of dice rounded down from all enemy shaken unit bases entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
 
+\pagebreak
+
 **Cunning** **Assault**[1 per N]
 
-You may replace N assault successes assigned to one unit-base for light damage[d6]. 
+For each N assault successes assigned to one unit-base (from sources with this ability), do one light damage[d6]. 
 
-Thus, for example Cunning Assault[1 per 2] would allow you to replace two assault-successes with one roll on light damage table (if enemy unit base has a light damage table, which typical is only for tanks and vehicles). Note that the replacements are done after asigning hits to different untis, and only hits versus targets with a light damage table can be replaced, not hits versus other units in the same assault. 
+Thus, for example Cunning Assault[1 per 2] would allow you to do d6 light damage if you hit it the unit two times, in addition to the regular damage. Note however, that light damage only does damage versus unit with a light damage table (vehicles only). 
 
 This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage.
 
@@ -726,7 +739,7 @@ Any unit base hit atleast once in assault by a unit with this special is set on 
 
 If target is hit by a ranged weapon with this special ability, apply (minor) acid to target. See continous damage. Apply one (minor) acid per hit.
 
-**(minor)** **Acid** [1 for N] assault weapons
+**(minor)** **Acid[1 for N]**, assault weapons
 
 Apply one minor Acid to an any enemy unit for each N successfull assault hits. If N=2 this means you may place one minor acid token for every 2nd successful assault die you do. For Minor acid, see continoius damage.
 
@@ -736,7 +749,9 @@ Apply one minor Acid to an any enemy unit for each N successfull assault hits. I
 
 If target is hit by a ranged weapon with this special ability, apply Poison[N] to taget unit. See continous damage. Apply one Poison[n] per hit.
 
-**Poison[M]** [1 for N], assault weapons
+\pagebreak
+
+**Poison[M][1 for N]**, assault weapons
 
 Apply one Poison[M] to an enemy unit base for each N successful assault hits. If N=2 this means you may place one Poison[M] token per 2nd hit. For poison, see continous damage.
 

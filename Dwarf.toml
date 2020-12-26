@@ -712,7 +712,7 @@ unititems = "1 unit base weapon, 1 unit base equipment"
 modelitems = "2 hands, unlimited independent equipment"
 retired = ""
 weapons_input = [ "Heavy Musket",]
-unit_special = "Poison resistance 4, Fire reistance 2\\\\ Take Cover[stand-still][-1]"
+unit_special = "Poison resistance 4, Fire reistance 2\\\\ Take Cover[still][-1]"
 assault = "3/2/2/1"
 assault_die = "4+"
 assault_deflection_die = ""
@@ -798,7 +798,7 @@ filters = [ "weapons", "team",]
 race = "Dwarf"
 name = "Hidden"
 type_ = "Vehicle, Trained Ability"
-special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of stand-still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than stand-still, an enemy is within point blank range in aftermath phase or if enemy reveal you by an special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit Base gains (hidden or not): Camuflage[hill][-1]"
+special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than still, an enemy is within point blank range in aftermath phase or if enemy reveal you by an special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit Base gains (hidden or not): Camuflage[hill][-1]"
 orders_gained = [ "(stand still) Reveal + - + - ",]
 orders_lost = [ "",]
 cost = "8xp"
@@ -815,8 +815,8 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 "Regular Damage" = [ "1-5: kill 1 model", "6-9: kill 1 model, roll on psychic damage[d6]", "10: Unit Base destoryed",]
 
 [units.GunBlasterWagon.orders]
-Fire = [ "(all) load + -", "(stand-still) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + R", "(fast) F + F + L", "(fast) F + F + F,R", "(fast) F + F + F,L", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) A + A + F",]
+Fire = [ "(all) load + -", "(still) fire + -",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + R", "(fast) F + F + L", "(fast) F + F + F,R", "(fast) F + F + F,L", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(still) A + A + F",]
 
 [units.GunBlasterWagon.damage_tables]
 "Critical damage" = [ "1-2: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot Rotate, Looses Fear", "3: Cannot Move", "4-5: x3 Light Damage(d6)", "6: set on Fire",]
@@ -863,8 +863,8 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 "Regular Damage" = [ "2-3: unit base shaken", "4: kill 1 model",]
 
 [units."Dwarf AT-gun".orders]
-Fire = [ "(stand-still) Fire + -", "(stand-still) Aim + -", "(stand-still) Load + -",]
-Movement = [ "(slow) - + 360$^0$ + B[Rest]", "(Rest) - + - + A[stand-still]", "(stand-still) - + - + -", "(stand-still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default stand-still) - + - + -",]
+Fire = [ "(still) Fire + -", "(still) Aim + -", "(still) Load + -",]
+Movement = [ "(slow) - + 360$^0$ + B[Rest]", "(Rest) - + - + A[still]", "(still) - + - + -", "(still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default still) - + - + -",]
 
 [units."Dwarf AT-gun".damage_tables]
 "Psychic damage" = [ "4+: unit base shaken",]
@@ -879,8 +879,8 @@ Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(d
 "Regular Damage" = [ "1-5: 1 model killed", "6-9: 1 model killed, roll on psychic damage[d6]", "10+: Unit Base Destroyed",]
 
 [units.Dw42.orders]
-Fire = [ "(stand-still) load + -", "(all) fire + -", "(stand-still) aim + -", "(stand-still) load unstable + - ",]
-Movement = [ "(fast) F+ F + F", "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(stand-still) aim + - + -",]
+Fire = [ "(still) load + -", "(all) fire + -", "(still) aim + -", "(still) load unstable + - ",]
+Movement = [ "(fast) F+ F + F", "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(still) aim + - + -",]
 
 [units.Dw42.damage_tables]
 "Regular Damage" = [ "1-4: Light damage[d6]", "5-8: Critical Damage[d6], +1 on future damage rolls", "9+: Destroyed",]
