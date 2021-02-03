@@ -94,7 +94,7 @@ name = "AxeThrower-Machine"
 template = ""
 range_ = "3"
 angle = "*/-/-/-"
-special = "Both fire at same hex. Normal Range: Area(4+), Long Range: Area(6+). Damage modified by range"
+special = "Both fire at same hex. Normal Range: Area(4+), Long Range: Area(6+). Damage modified by range as per regular shot."
 damage = "d6-1"
 ap = "3"
 assault_mod = ""
@@ -183,12 +183,12 @@ template = "ra"
 range_ = "3"
 angle = "*/*/*/*"
 special = ""
-damage = "d6-2 + d6 Psychic damage"
+damage = "d6-2"
 ap = "2"
 assault_mod = "+1/+1/+1/+1"
 assault_deflection_mod = "-"
 assault_deflection_die_set_to = "-"
-assault_dam_set_to = "d6-2"
+assault_dam_set_to = "d6-2 + d6 psycic damage"
 assault_special = ""
 assault_ap = "2"
 orders_gained = [ "",]
@@ -196,6 +196,52 @@ orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, 2handed weapon"
+filters = [ "team",]
+
+
+[weapons."Spring Loaded Vehicle Assault Weapons"]
+race = "Dwarf"
+name = "Spring Loaded Vehicle Assault Weapons"
+template = "a"
+range_ = ""
+angle = ""
+special = ""
+damage = ""
+ap = ""
+assault_mod = "+4/+2/+2/+0"
+assault_deflection_mod = "+2/+1/+1/+0"
+assault_deflection_die_set_to = "4+"
+assault_dam_set_to = "d6"
+assault_special = "Replace Fear[6] with Fear[8]"
+assault_ap = "2"
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "2ip, 2xp"
+required_to_buy = "Unit Base: Vehicle"
+type_ = "Vehicle, independent equipment"
+filters = [ "team",]
+
+
+[weapons."Elite Tank Crew"]
+race = "Dwarf"
+name = "Elite Tank Crew"
+template = "misc"
+range_ = ""
+angle = ""
+special = "Unit gain Good shot: +1 to hit"
+damage = ""
+ap = ""
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = "6xp"
+required_to_buy = "Unit Base: Vehicle"
+type_ = "Vehicle, crew"
 filters = [ "team",]
 
 [weapons."Blast Sticks"]
@@ -264,14 +310,14 @@ required_to_buy = "Unit Base: Infantry or SteamPowerArmor"
 type_ = "Infantry or SteamPowerArmor, 2handed weapon"
 filters = [ "team",]
 
-[weapons."Array of Enhanced Heavy Musket"]
+[weapons."Array of Enhanced Heavy Muskets"]
 race = "Dwarf"
-name = "Array of Enhanced Heavy Musket"
+name = "Array of Enhanced Heavy Muskets"
 template = "r"
 range_ = "6"
 angle = "x4/x2/x2/-"
 special = ""
-damage = "-1"
+damage = "d6-1"
 ap = "3"
 assault_mod = ""
 assault_deflection_mod = ""
@@ -282,8 +328,8 @@ assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
 cost = ""
-required_to_buy = "Unit Base: Infantry"
-type_ = "Infantry, 2handed weapon"
+required_to_buy = ""
+type_ = "Vehcile, weapon system"
 filters = [ "team",]
 
 [weapons."Big Blaster"]
@@ -380,29 +426,7 @@ name = "Poison Purification"
 template = "misc"
 range_ = ""
 angle = ""
-special = "Improves poison resistance with 1. May also use Endurence tokens in new way. See Vest of life support"
-damage = ""
-ap = ""
-assault_mod = ""
-assault_deflection_mod = ""
-assault_deflection_die_set_to = ""
-assault_dam_set_to = ""
-assault_special = ""
-assault_ap = ""
-orders_gained = [ "",]
-orders_lost = [ "",]
-cost = "1cp"
-required_to_buy = "Unit Base: Infantry or SteamPowerArmor"
-type_ = "Infantry, Independent Equipment"
-filters = [ "team",]
-
-[weapons."Fire Retardant Coating"]
-race = "Dwarf"
-name = "Fire Retardant Coating"
-template = "misc"
-range_ = ""
-angle = ""
-special = "Improve fire-resistance by 1."
+special = "Improves poison and fire resistances with 1, and gain immunity from minor acid. May also use Endurence tokens in new way. See Vest of life support"
 damage = ""
 ap = ""
 assault_mod = ""
@@ -446,7 +470,7 @@ name = "Vest of Life Support"
 template = "misc"
 range_ = ""
 angle = ""
-special = "Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. Endurence tokens may be spend in the following way: \\\\ 1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model') \\\\ 2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken infantry base gains Stuborn. \\\\ 3. If you also have the poison purification equipment you may spend one token to reroll any result of poison damage"
+special = "Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. Endurence tokens may be spend in the following way: \\\\ 1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model') \\\\ 2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken infantry base gains Stuborn. \\\\ 3. If you also have the Asbestos trenchcoat equipment you may spend one token to reroll any result of poison damage"
 damage = ""
 ap = ""
 assault_mod = ""
@@ -475,7 +499,7 @@ assault_mod = ""
 assault_deflection_mod = "+1/-/-/-"
 assault_deflection_die_set_to = "4+"
 assault_dam_set_to = ""
-assault_special = "Deflection bonus only applies if speed=still."
+assault_special = "Deflection bonus only applies if speed=still. \\\\ Don't get any armor bonuses in assault"
 assault_ap = ""
 orders_gained = [ "",]
 orders_lost = [ "",]
@@ -504,6 +528,50 @@ orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Model: Elite SteamPowerArmor"
 type_ = "SteamPowerArmor, 2handed"
+filters = [ "team",]
+
+[weapons."Array of Heavy Muskets"]
+race = "Dwarf"
+name = "Array of Heavy Muskets"
+template = "r"
+range_ = "3"
+angle = "x4/x2/x2/-"
+special = ""
+damage = "d6-1"
+ap = "3"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Vehicle, weapon system"
+filters = [ "team",]
+
+[weapons.Zap]
+race = "Dwarf"
+name = "Zap"
+template = "r"
+range_ = "2"
+angle = "*/-/-/-"
+special = ""
+damage = "d6+1"
+ap = "4"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Vehicle weapon"
 filters = [ "team",]
 
 [units."Dwarf Infantry"]
@@ -541,7 +609,7 @@ type_ = "Mechanical, Bio Crew, Vehicle, Track"
 isReplacement = ""
 replaces = ""
 unititems = ""
-modelitems = ""
+modelitems = "unlimited independent equipment"
 retired = ""
 weapons_input = [ "Broadside Guns",]
 unit_special = "Fire resistance 2 \\\\ Optimal Point blank: +1 to hit at point blank range\\\\ Perfect Breaking: After 3rd movement step, it may apply an ,B or ,B,B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."
@@ -591,8 +659,8 @@ replaces = ""
 unititems = ""
 modelitems = ""
 retired = ""
-weapons_input = [ "Array of Enhanced Heavy Musket", "Fear Ray", "Zeppelin gun",]
-unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 to the result for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
+weapons_input = [ "Array of Enhanced Heavy Muskets", "Fear Ray", "Zeppelin gun",]
+unit_special = "Steady: +1 to hit, +1 to be hit. \\\\ Repair: each aftermath phase, remove either one +1 to future damage token or one 1 shaken token. \\\\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\\\ When damaged, add 1 to the result for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\\\ Withering Ray: May replace forrest with rough terrain in the hex it is standing"
 assault = "6/6/6/6"
 assault_die = "4+"
 assault_deflection_die = "4+/4+/4+/4+"
@@ -677,7 +745,7 @@ filters = [ "weapons", "team",]
 [units."Dwarf AT-gun"]
 race = "Dwarf"
 name = "Dwarf AT-gun"
-models = "1AT-gun"
+models = "1+4"
 size = "Large"
 cost = "8cp, 4xp"
 armor = "7/-/-/-"
@@ -688,14 +756,14 @@ unititems = ""
 modelitems = ""
 retired = ""
 weapons_input = [ "BIG AT-gun",]
-unit_special = "Poison Resistance 2 \\\\ Fire resistance 1"
+unit_special = "Whenever fired at, your enemy either choose to hit the main gun or the crew. Area of effect try to damage both. Poison only effects the crew, while fire can effect both. An AT-gun on fire rolls for damage on both damage tables each rounds independent of each other, and all +1 to future damage applies to both damage tables, regadless how the +1 to future damage got applied. Note however that the same armor value and resistances apply. \\\\ Poison Resistance 2 \\\\ Fire resistance 1"
 assault = "1/1/1/1"
 assault_die = "6+"
-assault_deflection_die = ""
+assault_deflection_die = "4+"
 assault_damage = "d6 -2"
 assault_ap = ""
-assault_deflection = ""
-assault_special = ""
+assault_deflection = "1/-/-/-"
+assault_special = "Don't get any armor bonuses in assaults\\\\ Takes a d12 regular damage which ignore armor, if forced to retreat from an assault"
 filters = [ "weapons", "team",]
 
 [units.SteamPowerArmor]
@@ -732,8 +800,8 @@ armor = "13/10/10/9"
 type_ = "Mechanical, Bio Crew, Vehicle, Tracked"
 isReplacement = ""
 replaces = ""
-unititems = ""
-modelitems = ""
+unititems = "1 crew"
+modelitems = "unlimited independent equipment"
 retired = ""
 weapons_input = [ "Tank Gun",]
 unit_special = "Fire Resistance 2"
@@ -743,7 +811,7 @@ assault_deflection_die = "4+"
 assault_damage = "d6 - 1"
 assault_ap = "3"
 assault_deflection = "2/-/-/-"
-assault_special = "Fear[6]\\\\ Stuborn: when loosing an assault you may opt to roll for assault again. Apply damage, modify the assault stats if necessary, redo the assault."
+assault_special = "Fear[6]\\\\ Stuborn"
 filters = [ "weapons", "team",]
 
 [units."Assault Bots"]
@@ -758,9 +826,9 @@ isReplacement = ""
 replaces = ""
 unititems = ""
 modelitems = ""
-retired = ""
+retired = "yes"
 weapons_input = [ "",]
-unit_special = "Immune to all shaken effects."
+unit_special = "Forward Position[1]"
 assault = "3/2/2/2"
 assault_die = "4+"
 assault_deflection_die = "4+/-/-/-"
@@ -794,12 +862,37 @@ assault_deflection = "-"
 assault_special = ""
 filters = [ "weapons", "team",]
 
+[units.Zap]
+race = "Dwarf"
+name = "Zap"
+models = "1"
+size = "Large"
+cost = "6ip"
+armor = "10/8/8/7"
+type_ = "Mechanical, Bio Crew, Vehicle, Track"
+isReplacement = ""
+replaces = ""
+unititems = ""
+modelitems = "unlimited independent equipment"
+retired = ""
+weapons_input = [ "Array of Heavy Muskets", "Zap", "Fear Ray",]
+unit_special = "Fire and load all weapons at the same time\\\\ Loses aim if moving\\\\Fire resistance 2"
+
+assault = "4/3/3/2"
+assault_die = "4+"
+assault_deflection_die = "4+"
+assault_damage = "d6-2"
+assault_ap = "2"
+assault_deflection = "2/1/-/-"
+assault_special = "Fear[6]"
+filters = [ "weapons", "team",]
+
 [abilities.Hidden]
 race = "Dwarf"
 name = "Hidden"
 type_ = "Vehicle, Trained Ability"
 special = "Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than still, an enemy is within point blank range in aftermath phase or if enemy reveal you by an special action. You only get reveal bonuses while using the reveal order or in assaults. \\\\ \\ \\\\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only \\\\ \\ \\\\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\\\ Infiltrate: may start up to 1 hex from normal starting area\\\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\\\ Unit Base gains (hidden or not): Camuflage[hill][-1]"
-orders_gained = [ "(stand still) Reveal + - + - ",]
+orders_gained = [ "(still) Reveal + - + - ",]
 orders_lost = [ "",]
 cost = "8xp"
 required_to_buy = "Unit Base: AT-gun"
@@ -807,21 +900,21 @@ operational_by = "1 AT-gun"
 filters = [ "team",]
 
 [units."Dwarf Infantry".orders]
-Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + A + F", "(default stand still) - + A + flee", "(slow) - + - + chase",]
+Fire = [ "(still) fire + -", "(still) - + fire", "(still) aim + -", "(still) - + aim", "(still) load + -", "(still) - + load",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(still) 360$^0$ + 360$^0$ + 360$^0$", "(still) 360$^0$ + A + F", "(default still) - + A + flee", "(slow) - + - + chase",]
 
 [units."Dwarf Infantry".damage_tables]
 "Psychic Damage" = [ "4+: shaken",]
-"Regular Damage" = [ "1-5: kill 1 model", "6-9: kill 1 model, roll on psychic damage[d6]", "10: Unit Base destoryed",]
+"Regular Damage (bleeding, fire, poison)" = [ "1-5: kill 1 model", "6-9: kill 1 model, roll on psychic damage[d6]", "10: Unit Base destoryed",]
 
 [units.GunBlasterWagon.orders]
 Fire = [ "(all) load + -", "(still) fire + -",]
-Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + R", "(fast) F + F + L", "(fast) F + F + F,R", "(fast) F + F + F,L", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(still) A + A + F",]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + R", "(fast) F + F + L", "(fast) F + F + F,R", "(fast) F + F + F,L", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -", "(still) A + A + F",]
 
 [units.GunBlasterWagon.damage_tables]
-"Critical damage" = [ "1-2: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot Rotate, Looses Fear", "3: Cannot Move", "4-5: x3 Light Damage(d6)", "6: set on Fire",]
+"Critical damage" = [ "1: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot Rotate, Looses Fear", "3: Cannot Move", "4-5: x3 Light Damage(d6)", "6: set on Fire",]
 "Light Damage" = [ "1-4: +1 on future damage", "5-6: unit shaken",]
-"Regular Damage" = [ "1-4: light damage [d6]", "5-8: Critical damage[d6], +1 on future damage", "9+: Destroyed",]
+"Regular Damage (fire)" = [ "1-4: light damage [d6]", "5-8: Critical damage[d6], +1 on future damage", "9+: Destroyed",]
 "Crew Damage" = [ "4: Misfire[1-]", "5: Misfire[2-] (replace Misfire[1-] if neccessary)", "6-7: as 5, shaken", "8-12: as 6-7, +2 to future crew damage (stacks with 5, thus +3 in total)", "13: All crew killed, Unit destroyed",]
 
 [units."Elite SteamPowerArmor".orders]
@@ -837,16 +930,16 @@ Movement = [ "(flying, slow) F + L + -", "(flying, slow) F + R + -", "(flying, s
 "Fire Fear Ray" = [ "Fire + -",]
 
 [units.Zeppelin.damage_tables]
-"Regular Damage" = [ "1-6: ight damage[d6]", "7-12: +1 to future damage, roll on light damage table", "13: Zeppelin Killed.",]
+"Regular Damage (fire)" = [ "1-4: +1 to future damage", "5-8: +1 to future damage, d6 light damage", "9-12: +2 to future damage, d6 light damage", "13: Zeppelin Killed.",]
 "Light damage" = [ "1: Array of enhached Musket is shaken", "2: Zeppelin Gun is Shaken", "3: Fear Ray is Shaken", "4-5: +1 on future damage", "6: Enigne on Fire (shaken movement and on fire)",]
-"Crew Damage" = [ "4: Misfire[1-]", "5: Misfire[2-](replace Misfire[1-] if neccessary)", "6-7: as 5, shaken", "8-14: as 6-7, +3 to future crew damage", "15: All crew killed, Unit destroyed",]
+"Crew Damage" = [ "4: Misfire[1-]", "5: Misfire[2-](replace Misfire[1-] if neccessary)", "6-7: as 5 and shaken", "8-14: as 6-7 and +3 to future crew damage", "15: All crew killed, Unit destroyed",]
 
 [units."Tamed Balrog".orders]
 Fire = [ "Fire(whip) + -", "- + Fire(whip)",]
 Movement = [ "(slow) 360$^0$ + F + -", "(slow) - + - + chase", "(slow) chase + - + -", "(slow) A,chase + chase + chase,B[rest]", "(rest) - + - + A[slow]", "(default slow) - + - + flee",]
 
 [units."Tamed Balrog".damage_tables]
-"Regular Damage" = [ "1-9: +1 on future damage", "10-11: +2 on future damage, Assault -1/-1/-1/-1", "12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
+"Regular Damage (fire, poison)" = [ "1-9: +1 on future damage", "10-11: +2 on future damage, Assault -1/-1/-1/-1", "12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken", "13: Destroied/killed",]
 
 [units."Elite Dwarf Infantry".orders]
 "" = [ "",]
@@ -860,30 +953,31 @@ Movement = [ "(floating, slow) 360$^0$ + F + 360$^0$", "(floating, slow) 360$^0$
 
 [units."Mini Zeppelin".damage_tables]
 "Psychic Damage" = [ "6+ unit shaken",]
-"Regular Damage" = [ "2-3: unit base shaken", "4: kill 1 model",]
+"Regular Damage (poison)" = [ "2-3: unit base shaken", "4: kill 1 model",]
 
 [units."Dwarf AT-gun".orders]
 Fire = [ "(still) Fire + -", "(still) Aim + -", "(still) Load + -",]
 Movement = [ "(slow) - + 360$^0$ + B[Rest]", "(Rest) - + - + A[still]", "(still) - + - + -", "(still) - + - + A[slow]", "(slow) - + 360$^0$ + B[slow]", "(default slow) - + - + B[Rest]", "(default rest) - + - + -", "(default still) - + - + -",]
 
 [units."Dwarf AT-gun".damage_tables]
-"Psychic damage" = [ "4+: unit base shaken",]
-"Regular Damage" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psychic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
+"Psychic damage" = [ "5+: unit base shaken",]
+"Regular Damage (versus the crew) (poison)" = [ "1-6: kill 1 crew", "7-8: kill 1 crew, psychic damage[6]", "9+: unit destroied ", "Is destroied if all 4 crew are destroied",]
+"Regular Damage (versus the gun itself) (fire)" = [ "1-4: +1 to future damage", "5-8: +2 to future damage, AT-gun Jammed", "9+: unit destroied ",]
 
 [units.SteamPowerArmor.orders]
-Fire = [ "(stand still) fire + -", "(stand still) - + fire", "(stand still) aim + -", "(stand still) - + aim", "(stand still) load + -", "(stand still) - + load",]
-Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(stand still) 360$^0$ + 360$^0$ + 360$^0$", "(stand still) 360$^0$ + A + F", "(default stand still) - + A + flee", "(slow) - + - + chase",]
+Fire = [ "(still) fire + -", "(still) - + fire", "(still) aim + -", "(still) - + aim", "(still) load + -", "(still) - + load",]
+Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(still) 360$^0$ + 360$^0$ + 360$^0$", "(still) 360$^0$ + A + F", "(default still) - + A + flee", "(slow) - + - + chase",]
 
 [units.SteamPowerArmor.damage_tables]
 "Psychic damage" = [ "5+: unit base shaken",]
-"Regular Damage" = [ "1-5: 1 model killed", "6-9: 1 model killed, roll on psychic damage[d6]", "10+: Unit Base Destroyed",]
+"Regular Damage (bleeding, fire, poison)" = [ "1-5: 1 model killed", "6-9: 1 model killed, roll on psychic damage[d6]", "10+: Unit Base Destroyed",]
 
 [units.Dw42.orders]
 Fire = [ "(still) load + -", "(all) fire + -", "(still) aim + -", "(still) load unstable + - ",]
-Movement = [ "(fast) F+ F + F", "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(stand still) L + - + -", "(stand still) L + L + -", "(stand still) L + L + L", "(stand still) R + - + -", "(stand still) R + R + -", "(stand still) R + R + R", "(stand still) - + - + -", "(stand still) R + A + F", "(stand still) L + A + F", "(stand still) A + F + -", "(stand still) rev + - + -", "(default stand still) - + - + -", "(still) aim + - + -",]
+Movement = [ "(fast) F+ F + F", "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -", "(still) aim + - + -",]
 
 [units.Dw42.damage_tables]
-"Regular Damage" = [ "1-4: Light damage[d6]", "5-8: Critical Damage[d6], +1 on future damage rolls", "9+: Destroyed",]
+"Regular Damage (fire)" = [ "1-4: Light damage[d6]", "5-8: Critical Damage[d6], +1 on future damage rolls", "9+: Destroyed",]
 "Light damage" = [ "1-4: +1 on future damage rolls", "5-6: Unit Shaken",]
 "Critical Damage" = [ "1-2: 3x light damage(d6)", "3: +1 on future damage (+2 in total)", "4: cannot move", "5: -1 to-hit, +1 to be hit", "6: set Fire",]
 "Crew Damage" = [ "4: Misfire[1-]", "5: Misfire[2-] (replace Misfire[1-] if neccessary)", "6-7: as 5, shaken", "8-12: as 6-7, +3 to future crew damage", "13: All crew killed, Unit destroyed",]
@@ -892,11 +986,21 @@ Movement = [ "(fast) F+ F + F", "(fast) F+ F + -", "(fast) F + R + -", "(fast) F
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(default slow) - + - + -",]
 
 [units."Assault Bots".damage_tables]
-"Regular Damage" = [ "1-6: +1 on future damage", "7+ : kill 1 model",]
+"Regular Damage (fire)" = [ "1-6: +1 on future damage", "7+ : kill 1 model",]
 
 [units."Transport Zeppelin".orders]
 Movement = [ "(flying, fast): 360$^0$,F + F + unload(all)", "(flying, fast): 360$^0$ + F + F", "(flying, fast): F + F + 360$^0$ ", "(flying, fast): F + 360$^0$ + F",]
 
 [units."Transport Zeppelin".damage_tables]
-"Regular Damage" = [ "1-4: +1 on future damage", "5-8: +1 on future damage, d6 light damage", "9: unit and all transported units killed",]
+"Regular Damage (fire)" = [ "1-4: +1 on future damage", "5-8: +1 on future damage, d6 light damage", "9: unit and all transported units killed",]
 "Light Damage" = [ "1-3: +1 on future damage", "4-6: d6-2 damage to each unit base transported by this unit.",]
+
+[units.Zap.orders]
+Fire = [ "(all) load + -", "(all) fire + -", "(still) load + aim"]
+Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) F + B + -", "(fast) B + B + -", "(fast) F + B + B", "(fast) F + F + R", "(fast) F + F + L", "(fast) F + F + F,R", "(fast) F + F + F,L", "(default fast) - + B + B", "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) A + F + -", "(slow) B + - + -", "(default slow)  - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -", "(still) A + A + F",]
+
+[units.Zap.damage_tables]
+"Light Damage" = [ "1-4: +1 on future damage", "5-6: unit shaken",]
+"Regular Damage" = [ "1-5: d6 light damage", "6-9: d6 critical damage, +1 to future damage", "10: Destroied",]
+"Critical Damage" = [ "1: x2 jammed", "2: -1 to hit, +1 to-be-hit (randed and assault)", "3: Cannot Rotate", "4: Cannot Move, Looses Fear", "5: x3 d6 light damage", "6: set on fire",]
+"Crew Damage" = [ "4: Misfire[1-]", "5: Misfire[2-] (replace Misfire[1-] if neccessary)", "6-7: as 5, shaken", "8-12: as 6-7, +2 to future crew damage (stacks with 5, thus +3 in total)", "13: All crew killed, Unit destroyed",]

@@ -7,11 +7,11 @@
 
 \end{tabular}
 \ \\
-Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of stand-still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than stand-still, an enemy is within point blank range in aftermath phase or if enemy reveal you by an special action. You only get reveal bonuses while using the reveal order or in assaults. \\ \ \\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\% assault and assault deflection dice (rounded up). This round only \\ \ \\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\ Infiltrate: may start up to 1 hex from normal starting area\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\ Unit Base gains (hidden or not): Camuflage[hill][-1]
+Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire or assault. Gain hidden varriant of still movement,  but do not gain any fire orders available while hidden. However, if in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the unit with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have any other speed than still, an enemy is within point blank range in aftermath phase or if enemy reveal you by an special action. You only get reveal bonuses while using the reveal order or in assaults. \\ \ \\ Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\% assault and assault deflection dice (rounded up). This round only \\ \ \\ Reveal: place your unit in the hex of the hidden token, in any direction you desire and gain reveal bonuses.\\ Infiltrate: may start up to 1 hex from normal starting area\\ While Hidden or during phases with reveal bonuses the unit base gains Ignore[Fear] and Ignore[Terror] \\ Unit Base gains (hidden or not): Camuflage[hill][-1]
 
 {\bf Orders Gained    }
 
-\noindent (stand still) Reveal + - + - \\
+\noindent (still) Reveal + - + - \\
 
 {\bf Orders Lost }
 
@@ -32,16 +32,18 @@ Hidden: while hidden you cannot be fired upon or be assaulted, nor can you fire 
 \end{tabular}
 
 \ \\
-Assault: 1/1/1/1 Die: 4+ Armor Penetration: -2 Damage: d6 -2 \\
+Assault: 1/1/1/1 Die: 4+ Armor Penetration: 2 Damage: d6 -2 \\
 Assault Deflection:  Die: \\
 \indent Cunning Assault[1 for 2] \\
 \ \\
-Unit Base abilities: Poison Resistance 2 \\ Fire Resistance 1
+
+{\bf Unit Special} \\
+Unit Base abilities: Poison Resistance 2, Fire Resistance 1\\ Take Cover[still][-2]
 \ \\
 \ \\
 {\bf Musket } \\
 \ \\
-Angle: */*/*/* Range: 3 Armor Penetration: -2 Damage d6-2 \\
+Angle: */*/*/* Range: 3 Armor Penetration: 2 Damage d6-2 \\
 \indent  \\
 
 
@@ -49,19 +51,19 @@ Angle: */*/*/* Range: 3 Armor Penetration: -2 Damage d6-2 \\
 
 
 \ \\ {\bf Fire } \\
-(stand still) fire + - \\
-(stand still) - + fire \\
-(stand still) aim + - \\
-(stand still) - + aim \\
-(stand still) load + - \\
-(stand still) - + load \\
+(still) fire + - \\
+(still) - + fire \\
+(still) aim + - \\
+(still) - + aim \\
+(still) load + - \\
+(still) - + load \\
 \ \\ {\bf Movement } \\
 (slow) 360$^0$ + F + 360$^0$ \\
 (slow) 360$^0$ + B + 360$^0$ \\
 (default slow) - + - + flee \\
-(stand still) 360$^0$ + 360$^0$ + 360$^0$ \\
-(stand still) 360$^0$ + A + F \\
-(default stand still) - + A + flee \\
+(still) 360$^0$ + 360$^0$ + 360$^0$ \\
+(still) 360$^0$ + A + F \\
+(default still) - + A + flee \\
 (slow) - + - + chase \\
 
 
@@ -69,7 +71,7 @@ Angle: */*/*/* Range: 3 Armor Penetration: -2 Damage d6-2 \\
 {\bf Damage Tables} \\
 \ \\ {\bf Psychic Damage } \\
 4+: shaken \\
-\ \\ {\bf Regular Damage } \\
+\ \\ {\bf Regular Damage (bleeding, fire, poison) } \\
 1-5: kill 1 model \\
 6-9: kill 1 model, roll on psychic damage[d6] \\
 10: Unit Base destoryed \\
@@ -99,7 +101,7 @@ Angle: */*/*/* Range: 3 Armor Penetration: -2 Damage d6-2 \\
 
 
 
-Assault 2/2/1/1/ Die: 4+ Armor Penetration: -2, Damage: d6-2 \\
+Assault 2/2/1/1/ Die: 4+ Armor Penetration: 2, Damage: d6-2 \\
 Assault Deflection 1/-/-/- Die: 4+/-/-/-\\
 Cunning Assault[1 for 2]
 \ \\
@@ -109,7 +111,7 @@ Good shot: +1 to hit. \\ Unit Base gains 2 Psychic resistance while atleast one 
 \ \\
 {\bf Musket } \\
 \ \\
-Angle: */*/*/* Range: 3 Armor Penetration: -2 Damage d6-2 \\
+Angle: */*/*/* Range: 3 Armor Penetration: 2 Damage d6-2 \\
 \indent  \\
 
 
@@ -130,22 +132,24 @@ This only replaces models of existing units. For damage and orders available see
   Type & Bio, SteamPowerArmor\\
   Cost & 4mp, 2ip, 4cp\\
   Models & 4\\
-  Armor & 1/1/1/1\\
+  Armor & 7/6/6/5\\
   Available Model Items & 2 hands, unlimited independent equipment \\
   Available Unit Items & 1 unit base weapon, 1 unit base equipment \\
 \end{tabular}
 
 \ \\
-Assault: 3/2/2/1 Die: 4+ Armor Penetration: -2 Damage: d6 -2 \\
+Assault: 3/2/2/1 Die: 4+ Armor Penetration: 2 Damage: d6 -2 \\
 Assault Deflection:  Die: \\
 \indent Cunning Assault[1 for 2] \\
 \ \\
-Poison resistance 4, Fire reistance 2\\ Take Cover[stand-still][-2]
+
+{\bf Unit Special} \\
+Poison resistance 4, Fire reistance 2\\ Take Cover[still][-1]
 \ \\
 \ \\
 {\bf Heavy Musket } \\
 \ \\
-Angle: */*/*/* Range: 3 Armor Penetration: -1 Damage -1 \\
+Angle: */*/*/* Range: 3 Armor Penetration: 3 Damage -1 \\
 \indent  \\
 
 
@@ -153,19 +157,19 @@ Angle: */*/*/* Range: 3 Armor Penetration: -1 Damage -1 \\
 
 
 \ \\ {\bf Fire } \\
-(stand still) fire + - \\
-(stand still) - + fire \\
-(stand still) aim + - \\
-(stand still) - + aim \\
-(stand still) load + - \\
-(stand still) - + load \\
+(still) fire + - \\
+(still) - + fire \\
+(still) aim + - \\
+(still) - + aim \\
+(still) load + - \\
+(still) - + load \\
 \ \\ {\bf Movement } \\
 (slow) 360$^0$ + F + 360$^0$ \\
 (slow) 360$^0$ + B + 360$^0$ \\
 (default slow) - + - + flee \\
-(stand still) 360$^0$ + 360$^0$ + 360$^0$ \\
-(stand still) 360$^0$ + A + F \\
-(default stand still) - + A + flee \\
+(still) 360$^0$ + 360$^0$ + 360$^0$ \\
+(still) 360$^0$ + A + F \\
+(default still) - + A + flee \\
 (slow) - + - + chase \\
 
 
@@ -173,7 +177,7 @@ Angle: */*/*/* Range: 3 Armor Penetration: -1 Damage -1 \\
 {\bf Damage Tables} \\
 \ \\ {\bf Psychic damage } \\
 5+: unit base shaken \\
-\ \\ {\bf Regular Damage } \\
+\ \\ {\bf Regular Damage (bleeding, fire, poison) } \\
 1-5: 1 model killed \\
 6-9: 1 model killed, roll on psychic damage[d6] \\
 10+: Unit Base Destroyed \\
@@ -198,12 +202,12 @@ Angle: */*/*/* Range: 3 Armor Penetration: -1 Damage -1 \\
   Cost & 3xp\\
   Available Model Items : &2 hands, unlimited independent equipment\\
   Replaces & model: SteamPowerArmor\\
-  Armor & 1/1/1/1
+  Armor & 7/6/6/5
 \end{tabular}
 
 
 
-Assault 4/3/3/3 Die: 4+ Armor Penetration: -2, Damage: d6 -2 \\
+Assault 4/3/3/3 Die: 4+ Armor Penetration: 2, Damage: d6 -2 \\
 Assault Deflection 2/2/1/1 Die: \\
 
 \ \\
@@ -213,7 +217,7 @@ good shot: +1 to hit \\ Unit Base gains 1 psychic resistance while atleast one e
 \ \\
 {\bf Heavy Musket } \\
 \ \\
-Angle: */*/*/* Range: 3 Armor Penetration: -1 Damage -1 \\
+Angle: */*/*/* Range: 3 Armor Penetration: 3 Damage -1 \\
 \indent  \\
 
 
@@ -226,50 +230,6 @@ This only replaces models of existing units. For damage and orders available see
 
 \pagebreak
 
-\section{ Assault Bots }
-
-\begin{tabular}{ll}
-  Name & Assault Bots \\
-  Size & Medium\\
-  Type & Mechanical, Droid, Walks\\
-  Cost & 6ip, 12xp\\
-  Models & 4\\
-  Armor & 2/2/2/2\\
-  Available Model Items &  \\
-  Available Unit Items &  \\
-\end{tabular}
-
-\ \\
-Assault: 3/2/2/2 Die: 4+ Armor Penetration: 2 Damage: d6 + 0 \\
-Assault Deflection: 1/-/-/- Die: 4+/-/-/-\\
-\indent  \\
-\ \\
-Immune to all shaken effects.
-\ \\
-
-
-\ \\ {\bf Movement } \\
-(slow) 360$^0$ + F + 360$^0$ \\
-(default slow) - + - + - \\
-
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf Regular Damage } \\
-1-6: +1 on future damage \\
-7+ : kill 1 model \\
-
-
-%\inclue{damge}
-
-
-
-
-
-
-
-\pagebreak
-
 \section{ Dwarf AT-gun }
 
 \begin{tabular}{ll}
@@ -277,23 +237,25 @@ Immune to all shaken effects.
   Size & Large\\
   Type & Bio, Vehicle, Dragged\\
   Cost & 8cp, 4xp\\
-  Models & 1AT-gun, 4 crew\\
-  Armor & 2/-/-/-\\
+  Models & 1+4\\
+  Armor & 7/-/-/-\\
   Available Model Items &  \\
   Available Unit Items &  \\
 \end{tabular}
 
 \ \\
 Assault: 1/1/1/1 Die: 6+ Armor Penetration:  Damage: d6 -2 \\
-Assault Deflection:  Die: \\
-\indent  \\
+Assault Deflection: 1/-/-/- Die: 4+\\
+\indent Don't get any armor bonuses in assaults\\ Takes a d12 regular damage which ignore armor, if forced to retreat from an assault \\
 \ \\
-Poison Resistance 2 \\ Fire resistance 1
+
+{\bf Unit Special} \\
+Whenever fired at, your enemy either choose to hit the main gun or the crew. Area of effect try to damage both. Poison only effects the crew, while fire can effect both. An AT-gun on fire rolls for damage on both damage tables each rounds independent of each other, and all +1 to future damage applies to both damage tables, regadless how the +1 to future damage got applied. Note however that the same armor value and resistances apply. \\ Poison Resistance 2 \\ Fire resistance 1
 \ \\
 \ \\
 {\bf BIG AT-gun } \\
 \ \\
-Angle: */-/-/- Range: 6 Armor Penetration: 5 Damage d6+1 + 3(if penetrating all armor) \\
+Angle: */-/-/- Range: 6 Armor Penetration: 10 Damage d6+1 + 3(if penetrating all armor) \\
 \indent  \\
 
 
@@ -301,29 +263,33 @@ Angle: */-/-/- Range: 6 Armor Penetration: 5 Damage d6+1 + 3(if penetrating all 
 
 
 \ \\ {\bf Fire } \\
-(stand-still) Fire + - \\
-(stand-still) Aim + - \\
-(stand-still) Load + - \\
+(still) Fire + - \\
+(still) Aim + - \\
+(still) Load + - \\
 \ \\ {\bf Movement } \\
 (slow) - + 360$^0$ + B[Rest] \\
-(Rest) - + - + A[stand-still] \\
-(stand-still) - + - + - \\
-(stand-still) - + - + A[slow] \\
+(Rest) - + - + A[still] \\
+(still) - + - + - \\
+(still) - + - + A[slow] \\
 (slow) - + 360$^0$ + B[slow] \\
 (default slow) - + - + B[Rest] \\
 (default rest) - + - + - \\
-(default stand-still) - + - + - \\
+(default still) - + - + - \\
 
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf Psychic damage } \\
-4+: unit base shaken \\
-\ \\ {\bf Regular Damage } \\
+5+: unit base shaken \\
+\ \\ {\bf Regular Damage (versus the crew) (poison) } \\
 1-6: kill 1 crew \\
 7-8: kill 1 crew, psychic damage[6] \\
 9+: unit destroied  \\
 Is destroied if all 4 crew are destroied \\
+\ \\ {\bf Regular Damage (versus the gun itself) (fire) } \\
+1-4: +1 to future damage \\
+5-8: +2 to future damage, AT-gun Jammed \\
+9+: unit destroied  \\
 
 
 %\inclue{damge}
@@ -344,23 +310,25 @@ Is destroied if all 4 crew are destroied \\
   Type & Bio, Floating, Vehicle, Floats\\
   Cost & 8cp, 6xp\\
   Models & 2\\
-  Armor & 1/-/-/-\\
+  Armor & 6/-/-/-\\
   Available Model Items &  \\
   Available Unit Items &  \\
 \end{tabular}
 
 \ \\
-Assault: 3/2/1/1 Die: 4+ Armor Penetration: -2 Damage: d6 -2  \\
+Assault: 3/2/1/1 Die: 4+ Armor Penetration: 2 Damage: d6 -2  \\
 Assault Deflection: 4/3/1/1 Die: 4+\\
 \indent  \\
 \ \\
+
+{\bf Unit Special} \\
 Floats\\ Poison Resistance 2 \\ 
 \ \\
 \ \\
 {\bf AxeThrower-Machine } \\
 \ \\
-Angle: */-/-/- Range: 3 Armor Penetration: -1 Damage d6-1 \\
-\indent Both fire at same hex. Normal Range: Area(4+), Long Range: Area(6+). Damage modified by range \\
+Angle: */-/-/- Range: 3 Armor Penetration: 3 Damage d6-1 \\
+\indent Both fire at same hex. Normal Range: Area(4+), Long Range: Area(6+). Damage modified by range as per regular shot. \\
 
 
 
@@ -368,7 +336,7 @@ Angle: */-/-/- Range: 3 Armor Penetration: -1 Damage d6-1 \\
 {\bf Poison Gas Grenade } \\
 \ \\
 Angle: */*/*/* Range: 1 Armor Penetration: N.A Damage N.A. \\
-\indent Place a Poison Cload[6](4+) within normal range \\
+\indent Place a Poison Cloud[6] within normal range \\
 
 
 
@@ -388,7 +356,7 @@ Throw Grenade + - \\
 {\bf Damage Tables} \\
 \ \\ {\bf Psychic Damage } \\
 6+ unit shaken \\
-\ \\ {\bf Regular Damage } \\
+\ \\ {\bf Regular Damage (poison) } \\
 2-3: unit base shaken \\
 4: kill 1 model \\
 
@@ -411,22 +379,24 @@ Throw Grenade + - \\
   Type & Bio, Monster, Walks\\
   Cost & 24xp\\
   Models & 1\\
-  Armor & 3/2/2/1\\
+  Armor & 8/7/7/6\\
   Available Model Items &  \\
   Available Unit Items &  \\
 \end{tabular}
 
 \ \\
-Assault: 6/4/3/2 Die: 2+ Armor Penetration: -1 Damage: d6 \\
+Assault: 6/4/3/2 Die: 2+ Armor Penetration: 6 Damage: d6 \\
 Assault Deflection:  Die: \\
-\indent Fire \\
+\indent set on Fire \\
 \ \\
-Poison Resistance :4 \\ Fire Resistance 12 \\ Terror[8][range=2]
+
+{\bf Unit Special} \\
+Poison Resistance 6, Fire Resistance 12 \\ Terror[8][range=2]\\ Excelent Whip Handeling (counts as Excelent shot, +2 to hit)]
 \ \\
 \ \\
 {\bf Flaming Whip } \\
 \ \\
-Angle: */*/-/- Range: 1 Armor Penetration: 1 Damage  \\
+Angle: */*/-/- Range: 1 Armor Penetration: N.A. Damage - \\
 \indent set on Fire \\
 
 
@@ -439,15 +409,18 @@ Fire(whip) + - \\
 \ \\ {\bf Movement } \\
 (slow) 360$^0$ + F + - \\
 (slow) - + - + chase \\
+(slow) chase + - + - \\
+(slow) A,chase + chase + chase,B[rest] \\
+(rest) - + - + A[slow] \\
 (default slow) - + - + flee \\
 
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf Regular Damage } \\
-1-8: +1 on future damage \\
-9-10: +2 on future damage, Assault -1/-1/-1/-1 looses terror \\
-11-12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken \\
+\ \\ {\bf Regular Damage (fire, poison) } \\
+1-9: +1 on future damage \\
+10-11: +2 on future damage, Assault -1/-1/-1/-1 \\
+12: +3 on future damage, Assault -1/-1/-1/-1 Looses Terror, Shaken \\
 13: Destroied/killed \\
 
 
@@ -469,23 +442,25 @@ Fire(whip) + - \\
   Type & Mechanical, Bio Crew, Vehicle, Track\\
   Cost & 6ip\\
   Models & 1\\
-  Armor & 3/5/5/3\\
-  Available Model Items &  \\
+  Armor & 8/10/10/7\\
+  Available Model Items & unlimited independent equipment \\
   Available Unit Items &  \\
 \end{tabular}
 
 \ \\
-Assault: 2/2/2/2 Die: 4+ Armor Penetration: -2 Damage: d6 -2 \\
+Assault: 2/2/2/2 Die: 4+ Armor Penetration: 3 Damage: d6 -2 \\
 Assault Deflection:  Die: 2/-/-/-\\
 \indent Fear[6] \\
 \ \\
-Fire resistance 2
+
+{\bf Unit Special} \\
+Fire resistance 2 \\ Optimal Point blank: +1 to hit at point blank range\\ Perfect Breaking: After 3rd movement step, it may apply an ,B or ,B,B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is.
 \ \\
 \ \\
 {\bf Broadside Guns } \\
 \ \\
-Angle: -/x2/x2/- Range: 2 Armor Penetration: 2 Damage d6+1 \\
-\indent Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 turns reloading before it can fire again\\ After firng these weapon, place a Poison Cload[4](4+) at point blank range from any of the directions that fired. \\
+Angle: -/x2/x2/- Range: 2 Armor Penetration: 7 Damage d6+2 \\
+\indent Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 turns reloading before it can fire again\\ After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired. \\
 
 
 
@@ -493,7 +468,7 @@ Angle: -/x2/x2/- Range: 2 Armor Penetration: 2 Damage d6+1 \\
 
 \ \\ {\bf Fire } \\
 (all) load + - \\
-(stand-still) fire + - \\
+(still) fire + - \\
 \ \\ {\bf Movement } \\
 (fast) F+ F + - \\
 (fast) F + R + - \\
@@ -501,6 +476,10 @@ Angle: -/x2/x2/- Range: 2 Armor Penetration: 2 Damage d6+1 \\
 (fast) F + B + - \\
 (fast) B + B + - \\
 (fast) F + B + B \\
+(fast) F + F + R \\
+(fast) F + F + L \\
+(fast) F + F + F,R \\
+(fast) F + F + F,L \\
 (default fast) - + B + B \\
 (slow) L + - + - \\
 (slow) L + L + - \\
@@ -511,37 +490,164 @@ Angle: -/x2/x2/- Range: 2 Armor Penetration: 2 Damage d6+1 \\
 (default slow)  - + - + B \\
 (slow) F + - + - \\
 (slow) B + rev + - \\
-(stand still) L + - + - \\
-(stand still) L + L + - \\
-(stand still) L + L + L \\
-(stand still) R + - + - \\
-(stand still) R + R + - \\
-(stand still) R + R + R \\
-(stand still) - + - + - \\
-(stand still) R + A + F \\
-(stand still) L + A + F \\
-(stand still) A + F + - \\
-(stand still) rev + - + - \\
-(default stand still) - + - + - \\
-(stand-still) A + A + F \\
+(still) L + - + - \\
+(still) L + L + - \\
+(still) L + L + L \\
+(still) R + - + - \\
+(still) R + R + - \\
+(still) R + R + R \\
+(still) - + - + - \\
+(still) R + A + F \\
+(still) L + A + F \\
+(still) A + F + - \\
+(still) rev + - + - \\
+(default still) - + - + - \\
+(still) A + A + F \\
 
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf Critical damage } \\
-1: -1 to-hit, +1 to-be-htt \\
-2: Cannot Rotate R \\
-3: Cannot Rotate L \\
-4: x3 Lightly Damage \\
-5: Cannot fire weapons to the left \\
-6: Cannot fire weapons to the right \\
-\ \\ {\bf Lightly Damage } \\
-1-3: unit shaken \\
-4-6: +1 on future damage \\
-\ \\ {\bf Regular Damage } \\
-1-4: lightly damage \\
-5-8: Critical damage, +1 on future damage \\
+1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
+2: Cannot Rotate, Looses Fear \\
+3: Cannot Move \\
+4-5: x3 Light Damage(d6) \\
+6: set on Fire \\
+\ \\ {\bf Light Damage } \\
+1-4: +1 on future damage \\
+5-6: unit shaken \\
+\ \\ {\bf Regular Damage (fire) } \\
+1-4: light damage [d6] \\
+5-8: Critical damage[d6], +1 on future damage \\
 9+: Destroyed \\
+\ \\ {\bf Crew Damage } \\
+4: Misfire[1-] \\
+5: Misfire[2-] (replace Misfire[1-] if neccessary) \\
+6-7: as 5, shaken \\
+8-12: as 6-7, +2 to future crew damage (stacks with 5, thus +3 in total) \\
+13: All crew killed, Unit destroyed \\
+
+
+%\inclue{damge}
+
+
+
+
+
+
+
+\pagebreak
+
+\section{ Zap }
+
+\begin{tabular}{ll}
+  Name & Zap \\
+  Size & Large\\
+  Type & Mechanical, Bio Crew, Vehicle, Track\\
+  Cost & 6ip\\
+  Models & 1\\
+  Armor & 10/8/8/7\\
+  Available Model Items & unlimited independent equipment \\
+  Available Unit Items &  \\
+\end{tabular}
+
+\ \\
+Assault: 4/3/3/2 Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: 2/1/-/- Die: 4+\\
+\indent Fear[6] \\
+\ \\
+
+{\bf Unit Special} \\
+Fire and load all weapons at the same time\\ Loses aim if moving\\Fire resistance 2
+\ \\
+\ \\
+{\bf Array of Heavy Muskets } \\
+\ \\
+Angle: x4/x2/x2/- Range: 3 Armor Penetration: 3 Damage d6-1 \\
+\indent  \\
+
+
+
+\ \\
+{\bf Zap } \\
+\ \\
+Angle: */-/-/- Range: 2 Armor Penetration: 4 Damage d6+1 \\
+\indent  \\
+
+
+
+\ \\
+{\bf Fear Ray } \\
+\ \\
+Angle: */-/-/- Range: 4 Armor Penetration: n.a. Damage d6 Psycic damage \\
+\indent Does Psychic damage instead of normal damage. Ignore armor and roll on psychic damage table. \\ This weapon is always treated as loaded \\
+
+
+
+
+
+\ \\ {\bf Fire } \\
+(all) load + - \\
+(all) fire + - \\
+(still) load + aim \\
+\ \\ {\bf Movement } \\
+(fast) F+ F + - \\
+(fast) F + R + - \\
+(fast) F + L + - \\
+(fast) F + B + - \\
+(fast) B + B + - \\
+(fast) F + B + B \\
+(fast) F + F + R \\
+(fast) F + F + L \\
+(fast) F + F + F,R \\
+(fast) F + F + F,L \\
+(default fast) - + B + B \\
+(slow) L + - + - \\
+(slow) L + L + - \\
+(slow) R + - + - \\
+(slow) R + R + - \\
+(slow) A + F + - \\
+(slow) B + - + - \\
+(default slow)  - + - + B \\
+(slow) F + - + - \\
+(slow) B + rev + - \\
+(still) L + - + - \\
+(still) L + L + - \\
+(still) L + L + L \\
+(still) R + - + - \\
+(still) R + R + - \\
+(still) R + R + R \\
+(still) - + - + - \\
+(still) R + A + F \\
+(still) L + A + F \\
+(still) A + F + - \\
+(still) rev + - + - \\
+(default still) - + - + - \\
+(still) A + A + F \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Light Damage } \\
+1-4: +1 on future damage \\
+5-6: unit shaken \\
+\ \\ {\bf Regular Damage } \\
+1-5: d6 light damage \\
+6-9: d6 critical damage, +1 to future damage \\
+10: Destroied \\
+\ \\ {\bf Critical Damage } \\
+1: x2 jammed \\
+2: -1 to hit, +1 to-be-hit (randed and assault) \\
+3: Cannot Rotate \\
+4: Cannot Move, Looses Fear \\
+5: x3 d6 light damage \\
+6: set on fire \\
+\ \\ {\bf Crew Damage } \\
+4: Misfire[1-] \\
+5: Misfire[2-] (replace Misfire[1-] if neccessary) \\
+6-7: as 5, shaken \\
+8-12: as 6-7, +2 to future crew damage (stacks with 5, thus +3 in total) \\
+13: All crew killed, Unit destroyed \\
 
 
 %\inclue{damge}
@@ -562,22 +668,24 @@ Angle: -/x2/x2/- Range: 2 Armor Penetration: 2 Damage d6+1 \\
   Type & Mechanical, Bio Crew, Vehicle, Tracked\\
   Cost & 12ip\\
   Models & 1\\
-  Armor & 8/5/5/4\\
-  Available Model Items &  \\
-  Available Unit Items &  \\
+  Armor & 13/10/10/9\\
+  Available Model Items & unlimited independent equipment \\
+  Available Unit Items & 1 crew \\
 \end{tabular}
 
 \ \\
-Assault: 4/3/3/2/ Die: 4+ Armor Penetration: -1 Damage: d6 - 1 \\
+Assault: 4/3/3/2/ Die: 4+ Armor Penetration: 3 Damage: d6 - 1 \\
 Assault Deflection: 2/-/-/- Die: 4+\\
-\indent Fear[6]\\ Stuborn: when loosing an assault you may opt to roll for assault again. Apply damage, modify the assault stats if necessary, redo the assault. \\
+\indent Fear[6]\\ Stuborn \\
 \ \\
+
+{\bf Unit Special} \\
 Fire Resistance 2
 \ \\
 \ \\
 {\bf Tank Gun } \\
 \ \\
-Angle: */-/-/- Range: 8 Armor Penetration: 4 Damage d6+1 +3 (if penetrating all armor) \\
+Angle: */-/-/- Range: 8 Armor Penetration: 9 Damage d6+1 +3 (if penetrating all armor) \\
 \indent Load unstable: gains +1 AP, if it hits the target, it in addition gets a 3AP area(1hex, 5+) effect. But if loading an unstable round, it must be fired in next round. May fire at an empty hex. \\
 
 
@@ -585,10 +693,10 @@ Angle: */-/-/- Range: 8 Armor Penetration: 4 Damage d6+1 +3 (if penetrating all 
 
 
 \ \\ {\bf Fire } \\
-(stand-still) load + - \\
+(still) load + - \\
 (all) fire + - \\
-(stand-still) aim + - \\
-(stand-still) load unstable + -  \\
+(still) aim + - \\
+(still) load unstable + -  \\
 \ \\ {\bf Movement } \\
 (fast) F+ F + F \\
 (fast) F+ F + - \\
@@ -606,36 +714,42 @@ Angle: */-/-/- Range: 8 Armor Penetration: 4 Damage d6+1 +3 (if penetrating all 
 (default slow)  - + - + B \\
 (slow) F + - + - \\
 (slow) B + rev + - \\
-(stand still) L + - + - \\
-(stand still) L + L + - \\
-(stand still) L + L + L \\
-(stand still) R + - + - \\
-(stand still) R + R + - \\
-(stand still) R + R + R \\
-(stand still) - + - + - \\
-(stand still) R + A + F \\
-(stand still) L + A + F \\
-(stand still) A + F + - \\
-(stand still) rev + - + - \\
-(default stand still) - + - + - \\
-(stand-still) aim + - + - \\
+(still) L + - + - \\
+(still) L + L + - \\
+(still) L + L + L \\
+(still) R + - + - \\
+(still) R + R + - \\
+(still) R + R + R \\
+(still) - + - + - \\
+(still) R + A + F \\
+(still) L + A + F \\
+(still) A + F + - \\
+(still) rev + - + - \\
+(default still) - + - + - \\
+(still) aim + - + - \\
 
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf Regular Damage } \\
-1-4: lightly damage \\
-5-8: Critical Damage, +1 on future damage rolls \\
+\ \\ {\bf Regular Damage (fire) } \\
+1-4: Light damage[d6] \\
+5-8: Critical Damage[d6], +1 on future damage rolls \\
 9+: Destroyed \\
-\ \\ {\bf Lightly damage } \\
-1-3: Unit Shaken \\
-4-6: +1 on future damage rolls \\
+\ \\ {\bf Light damage } \\
+1-4: +1 on future damage rolls \\
+5-6: Unit Shaken \\
 \ \\ {\bf Critical Damage } \\
-1-2: 3x lightly damage \\
+1-2: 3x light damage(d6) \\
 3: +1 on future damage (+2 in total) \\
-4: Only Stand-Still option available and cannot reverse \\
+4: cannot move \\
 5: -1 to-hit, +1 to be hit \\
-6: Fire \\
+6: set Fire \\
+\ \\ {\bf Crew Damage } \\
+4: Misfire[1-] \\
+5: Misfire[2-] (replace Misfire[1-] if neccessary) \\
+6-7: as 5, shaken \\
+8-12: as 6-7, +3 to future crew damage \\
+13: All crew killed, Unit destroyed \\
 
 
 %\inclue{damge}
@@ -656,16 +770,18 @@ Angle: */-/-/- Range: 8 Armor Penetration: 4 Damage d6+1 +3 (if penetrating all 
   Type & Zeppelin, Flying\\
   Cost & 4cp\\
   Models & 1\\
-  Armor & 1/-/-/-\\
+  Armor & 6/-/-/-\\
   Available Model Items &  \\
   Available Unit Items &  \\
 \end{tabular}
 
 \ \\
-Assault: 2/1/1/1 Die: 4+ Armor Penetration: -2 Damage: d6-2 \\
+Assault: 2/1/1/1 Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: - Die: -\\
 \indent  \\
 \ \\
+
+{\bf Unit Special} \\
 May transport up to 2 unit base of Infantry. When unloading, the infantry uses hangliders and are placed up two hexes in any direction from this unit. May enter assault as part of this movement.
 \ \\
 
@@ -679,7 +795,7 @@ May transport up to 2 unit base of Infantry. When unloading, the infantry uses h
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf Regular Damage } \\
+\ \\ {\bf Regular Damage (fire) } \\
 1-4: +1 on future damage \\
 5-8: +1 on future damage, d6 light damage \\
 9: unit and all transported units killed \\
@@ -706,22 +822,24 @@ May transport up to 2 unit base of Infantry. When unloading, the infantry uses h
   Type & Zeppelin, Flying\\
   Cost & 24ip, 12xp\\
   Models & 1\\
-  Armor & 3/3/3/3\\
+  Armor & 8/8/8/8\\
   Available Model Items &  \\
   Available Unit Items &  \\
 \end{tabular}
 
 \ \\
-Assault: 6/6/6/6 Die: 4+ Armor Penetration: -2 Damage: d6-2 \\
+Assault: 6/6/6/6 Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: 3/3/3/3 Die: 4+/4+/4+/4+\\
 \indent May only assault flying creatures, Fear(8) \\
 \ \\
-Steady: +1 to hit, +1 to be hit. \\ Repair: each aftermath phase, remove either one +1 to future damage token or 1 shaken token. \\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\ When damaged, add 1 to the result for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\ Withering Ray: May replace forrest with rough terrain in the hex it is standing
+
+{\bf Unit Special} \\
+Steady: +1 to hit, +1 to be hit. \\ Repair: each aftermath phase, remove either one +1 to future damage token or one 1 shaken token. \\ Individual weapons may be shaken, which follows standard shaken rules, but apply only to the single weapon system stated. \\ When damaged, add 1 to the result for each shaken token (add all shaken tokens for all weapon systems) on the Zeppelin. \\ Withering Ray: May replace forrest with rough terrain in the hex it is standing
 \ \\
 \ \\
-{\bf Array of Enhanced Heavy Musket } \\
+{\bf Array of Enhanced Heavy Muskets } \\
 \ \\
-Angle: x4/x2/x2/- Range: 6 Armor Penetration: -1 Damage -1 \\
+Angle: x4/x2/x2/- Range: 6 Armor Penetration: 3 Damage d6-1 \\
 \indent  \\
 
 
@@ -737,7 +855,7 @@ Angle: */-/-/- Range: 4 Armor Penetration: n.a. Damage d6 Psycic damage \\
 \ \\
 {\bf Zeppelin gun } \\
 \ \\
-Angle: */*/*/* Range: 5 Armor Penetration: 4 Damage d6+1 (+3 if penetrating all armor) \\
+Angle: */*/*/* Range: 5 Armor Penetration: 9 Damage d6+1 (+3 if penetrating all armor) \\
 \indent  \\
 
 
@@ -768,9 +886,10 @@ Fire + - \\
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf Regular Damage } \\
-1-6: roll on lightly damage table \\
-7-12: +1 to future damage, roll on light damage table \\
+\ \\ {\bf Regular Damage (fire) } \\
+1-4: +1 to future damage \\
+5-8: +1 to future damage, d6 light damage \\
+9-12: +2 to future damage, d6 light damage \\
 13: Zeppelin Killed. \\
 \ \\ {\bf Light damage } \\
 1: Array of enhached Musket is shaken \\
@@ -778,6 +897,12 @@ Fire + - \\
 3: Fear Ray is Shaken \\
 4-5: +1 on future damage \\
 6: Enigne on Fire (shaken movement and on fire) \\
+\ \\ {\bf Crew Damage } \\
+4: Misfire[1-] \\
+5: Misfire[2-](replace Misfire[1-] if neccessary) \\
+6-7: as 5 and shaken \\
+8-14: as 6-7 and +3 to future crew damage \\
+15: All crew killed, Unit destroyed \\
 
 
 %\inclue{damge}
@@ -796,7 +921,7 @@ Fire + - \\
     Type & Infantry, Unit Base weapon\\
 \end{tabular}
 \ \\
-\indent Angle: */*/*/* Range: 2  AP: 3 Damage d6+1 \\
+\indent Angle: */*/*/* Range: 2  AP: 8 Damage d6+1 \\
 Requir atleast 2 alive models in unit base to be used.
 \ \\
 
@@ -813,11 +938,28 @@ Requir atleast 2 alive models in unit base to be used.
     Type & Infantry, 2handed weapon\\
 \end{tabular}
 \ \\
-Assault Modification: - Assault AP: 0 Assault Damage: d6 +1\\
+Assault Modification: - Assault AP: 5 Assault Damage: d6 +1\\
 Assault Deflection Modification: +1/-/-/-, Deflection die: 4+ \\
 Cunning Assault[1 for 1]
 
 
+
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']
+\section{ Elite Tank Crew }
+
+\begin{tabular}{ll}
+    Cost & 6xp \\
+    Required & Unit Base: Vehicle\\
+    Type & Vehicle, crew\\
+\end{tabular}
+\ \\
+Unit gain Good shot: +1 to hit \\
+
+\ \\
 
 {\bf Orders Gained}
 ['']
@@ -832,7 +974,7 @@ Cunning Assault[1 for 1]
     Type & Infantry or SteamPowerArmor, 2handed weapon\\
 \end{tabular}
 \ \\
-\indent Angle: */-/-/- Range: 6  AP: -1 Damage d6-1 \\
+\indent Angle: */-/-/- Range: 6  AP: 3 Damage d6-1 \\
 
 \ \\
 
@@ -858,23 +1000,6 @@ Does Psychic damage instead of normal damage. Ignore armor and roll on psychic d
 
 {\bf Orders Lost}
 ['']
-\section{ Fire Retardant Coating }
-
-\begin{tabular}{ll}
-    Cost & 1cp \\
-    Required & Unit Base: Infantry or SteamPowerArmor\\
-    Type & Infantry, Independent Equipment\\
-\end{tabular}
-\ \\
-Improve fire-resistance by 1. \\
-
-\ \\
-
-{\bf Orders Gained}
-['']
-
-{\bf Orders Lost}
-['']
 \section{ Heavy Musket }
 
 \begin{tabular}{ll}
@@ -883,7 +1008,7 @@ Improve fire-resistance by 1. \\
     Type & Infantry, 2handed weapon\\
 \end{tabular}
 \ \\
-\indent Angle: */*/*/* Range: 3  AP: -1 Damage -1 \\
+\indent Angle: */*/*/* Range: 3  AP: 3 Damage -1 \\
 
 \ \\
 
@@ -900,7 +1025,7 @@ Improve fire-resistance by 1. \\
     Type & SteamPowerArmor, 2handed weapon\\
 \end{tabular}
 \ \\
-\indent Angle: */*/*/* Range: 3  AP: -2 Damage d6-2 \\
+\indent Angle: */*/*/* Range: 3  AP: 2 Damage d6-2 \\
 Unlimited Ammo \\ fires 2 shots (at same enemy unit base) per fire. \\ 
 \ \\
 
@@ -917,10 +1042,10 @@ Unlimited Ammo \\ fires 2 shots (at same enemy unit base) per fire. \\
     Type & Infantry, 2handed weapon\\
 \end{tabular}
 \ \\
-\indent Angle: */*/*/* Range: 3  AP: -2 Damage d6-2 + d6 Psychic damage \\
+\indent Angle: */*/*/* Range: 3  AP: 2 Damage d6-2 \\
  \\
 \ \\
-Assault Modification: +1/+1/+1/+1 Assault AP: -2 Assault Damage: d6-2\\
+Assault Modification: +1/+1/+1/+1 Assault AP: 2 Assault Damage: d6-2 + d6 psycic damage\\
 Assault Deflection Modification: -, Deflection die: - \\
 
 
@@ -939,9 +1064,47 @@ Assault Deflection Modification: -, Deflection die: - \\
     Type & Infantry, Independent Equipment\\
 \end{tabular}
 \ \\
-Improves poison resistance with 1. May also use Endurence tokens in new way. See Vest of life support \\
+Improves poison and fire resistances with 1, and gain immunity from minor acid. May also use Endurence tokens in new way. See Vest of life support \\
 
 \ \\
+
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']
+\section{ Rocket JackHammer }
+
+\begin{tabular}{ll}
+    Cost & 2cp \\
+    Required & Model: Elite SteamPowerArmor\\
+    Type & SteamPowerArmor, 2handed\\
+\end{tabular}
+\ \\
+Assault Modification:  Assault AP: 8 Assault Damage: d6 (+3 if penetrating all armor)\\
+Assault Deflection Modification: , Deflection die:  \\
+
+
+
+
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']
+\section{ Spring Loaded Vehicle Assault Weapons }
+
+\begin{tabular}{ll}
+    Cost & 2ip, 2xp \\
+    Required & Unit Base: Vehicle\\
+    Type & Vehicle, independent equipment\\
+\end{tabular}
+\ \\
+Assault Modification: +4/+2/+2/+0 Assault AP: 2 Assault Damage: d6\\
+Assault Deflection Modification: +2/+1/+1/+0, Deflection die: 4+ \\
+Replace Fear[6] with Fear[8]
+
+
 
 {\bf Orders Gained}
 ['']
@@ -956,7 +1119,7 @@ Improves poison resistance with 1. May also use Endurence tokens in new way. See
     Type & SteamPowerAromor, 2handed weapon.\\
 \end{tabular}
 \ \\
-\indent Angle: */*/*/* Range: 2  AP: -2 Damage -2 \\
+\indent Angle: */*/*/* Range: 2  AP: 2 Damage d6-2 + d4 crew damage \\
 Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(1hex, 6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4
 \ \\
 
@@ -973,7 +1136,7 @@ Choose one hex which all models in this unit fire at. If fired from a unit with 
     Type & SteamPowerArmor, 2handed weapon\\
 \end{tabular}
 \ \\
-\indent Angle: */*/*/* Range: 3  AP: 4 Damage d6+2 \\
+\indent Angle: */*/*/* Range: 3  AP: 9 Damage d6+2 \\
 
 \ \\
 
@@ -990,7 +1153,7 @@ Choose one hex which all models in this unit fire at. If fired from a unit with 
     Type & Infantry, Independent Equipment\\
 \end{tabular}
 \ \\
-Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. Endurence tokens may be spend in the following way: \\ 1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model') \\ 2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken infantry base gains Stuborn. \\ 3. If you also have the poison purification equipment you may spend one token to reroll any result of poison damage \\
+Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. Endurence tokens may be spend in the following way: \\ 1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model') \\ 2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken infantry base gains Stuborn. \\ 3. If you also have the Asbestos trenchcoat equipment you may spend one token to reroll any result of poison damage \\
 
 \ \\
 
@@ -1004,14 +1167,14 @@ Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite
 \begin{tabular}{ll}
     Cost & 2cp \\
     Required & Unit Base: Infantry\\
-    Type & Infantry, Unit Base Equipment\\
+    Type & Infantry, Independent Equipment\\
 \end{tabular}
 \ \\
 Assault Modification:  Assault AP:  Assault Damage: \\
 Assault Deflection Modification: +1/-/-/-, Deflection die: 4+ \\
-Deflection bonus only applies if speed=still.
+Deflection bonus only applies if speed=still. \\ Don't get any armor bonuses in assault
 
-Unit gains armor = 1/-/-/-. 
+Unit gains armor = 5/-/-/-. 
 
 {\bf Orders Gained}
 ['']

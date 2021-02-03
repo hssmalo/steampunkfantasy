@@ -41,6 +41,8 @@ class Team():
         #print(models + type_+used)
         return models + type_+used
 
+
+
     def find_upgrades(self, unit):
         print()
         all = self.weapons.copy()
@@ -667,7 +669,8 @@ class Unit():
                 print(key, ': ', self.__dict__[key])
 
         self.team.append_unit(self)            
-                
+
+
 
 class Costimized_unit(Unit):
     def __init__(self, name, team):
@@ -688,11 +691,16 @@ class Costimized_unit(Unit):
         self.unititems = unit.unititems
         self.modelitems = unit.modelitems
         
-        self.weapons_input= unit.weapons_input
+        self.orders = unit.orders
+
+        self.damage_tables = unit.damage_tables
+
+        self.filters = ['weapons', 'team']
         
         self.unit_special = unit.unit_special
 
 
+        
         self.assault = unit.assault
         self.assault_die = unit.assault_die 
         self.assault_deflection_die = unit.assault_deflection_die 
@@ -701,12 +709,11 @@ class Costimized_unit(Unit):
         self.assault_deflection = unit.assault_deflection
         self.assault_special = unit.assault_special 
  
-        
-        self.orders = unit.orders
+        self.weapons_input= unit.weapons_input
 
-        self.damage_tables = unit.damage_tables
 
-        self.filters = ['weapons', 'team']
+
+
         
     def add_replacement(self, replacement):
 

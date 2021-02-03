@@ -1,4 +1,36 @@
-0.0.05
+	0.0.06
+General:
+	Introduced Jammed effect.
+	
+DarkElf:
+	Gigant-Spider Rider: got a faster slow action.
+	Dragon: choose between shrapnel and acid when firing, not when loading.
+	Dark Roboprotsteric elf cost increased by 1cp, but gained some armor protection versus normal hand-weapons.
+
+	Gained multicultural officer. Cost 12 com (command points)
+
+Dwarf:
+	Balrog lost forward position, but gained A,Chase+Chase+Case,B[rest] order.
+	Assault Bots got forward Position[1]
+	Gave AT-Gun crew damage table.
+	AT-Gun extremly wounderable to assaults. Changed damage tables.
+	Zeppelin: Needs some future simplifications
+
+	Added Zap
+	Added Springloade Vehicle Assault Weapons
+	Added Elite crew
+
+Elf
+	Velociraptors reworked: 3 models instead of 2, but slightly weaker.
+	Velociraptors: now has 3 in armor, just enough to give a tiny boost versus small-arms fire.
+	Velociraptors: All in all a buff
+	Armored Unicorn rider: Now has autoloader and superb shot.
+	BearRider: Gattling gun now always hits on 6 if you are not aiming.
+	Tattoo Ink: slightly less bad damage table.
+
+Gnomes  Team coming along nicely. Gained Helicotper, motorcycle, tractor ballista, assault bot mortar, acid splas. 
+	
+	0.0.05
 
 General:
 	+1 to future damage is now 1-3 and shaken 4-6 on standar light damage
@@ -6,6 +38,7 @@ General:
 	Poison Cloud now does Crew Damage
 	Add Misfire rule
 	Redone crew damage table. Now need atleast 8 to gain + on future crew damage.
+	Standar light damage is now 1-4: +1 to future damage, 5-6: shaken
 	
 Elf:
 	Added +1d6 crew damage to sniper rifle
@@ -36,9 +69,14 @@ Ork:
 	Flamethrower now does d4 crew damage
 	Pop gun now got poison and crew damage if penetrating all armor
 	Retired cannonhead
-	Gained Healin Syringe equipment.
+	Gained Healing Syringe equipment.
 	Gained Tanksscalper equipment.
-	
+	Tanksscalper now cheaper
+	Now makes some sence to have multiple shield on bioengineered ork
+	Ork gained Assault Musket
+	Ork gained Hand Catapult
+	Ork can now use pyro grenades in addition to normal weapons if it has a free hand
+	Poison spikes: now dropped the deflection bonus, but cost 1cp instead of 2.
 0.0.04
 
 General: 

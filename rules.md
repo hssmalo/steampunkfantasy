@@ -159,7 +159,7 @@ This is now called Match Victory Points (MVP).
 
 The toruament victroy points (TVP) are calculated as follows:
 
-$$TVP = (\| MVP \| )^0.75*MVP/\| MVP \| $$
+$$TVP = (\| MVP \| )^{0.75}*MVP/\| MVP \| $$
 
 Note that both players get more points by destroying each other. Thus it is possible that a looser of one match scores more points than a winner of another match. This rewards playing aggressive.
 
@@ -395,6 +395,7 @@ Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
 Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. Improves Evation(+1)
+Elusvie[speed, -N]          0      -N        
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
 Enhanced Accurazy           +1      0
@@ -422,13 +423,14 @@ Area(n+): roll 1 die per enemy model in hex. Apply damage per success.
 
 If you hit, roll for damage. Apply the following modifiers to Armor Penetration (AP) and damage:
 
-                          AP,    Damage      special
------------------------- ------- ---------- ---------------------
+                          AP                    Damage    special
+------------------------ -------------------- ---------- ---------------------
 *Range*
-Long Range                -1      -1          (within max x2 of weapon range)
-Normal Range              +0      +0          (within weapon range) 
-Point Blank               +1      +1          (Range=1)
------------------------- -------  ---------- ---------------------
+Long Range                Half(rounded down)    -1        (within max x2 of weapon range)
+Normal Range              +0                    +0        (within weapon range) 
+Point Blank               +1                    +1        (Range=1)
+------------------------ -------------------- ---------- ---------------------
+
 
 
 
@@ -616,7 +618,7 @@ Most fire damage comes from the 'set on fire' ability of weapons, which is a con
 
 - At agony step 0, roll a die: \
 			     at 1-: Downgrade from acid to minor acid.\
-    	      	      	     at 2 : +1 to future damge
+    	      	      	     at 2 : +1 to future damge\
 			     at 3 : as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
                              at 4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
 			     at 5 : As 6 and unit is set on fire.\
@@ -782,6 +784,10 @@ Replace all movement orders with the default for the given speed (given in unit 
 
 Before using any fire action, roll a die. At N- (N or below) replace the fire action with a do nothing action. (thus this action does not spend any ammo if it misfires)
 
+**Jammed**
+
+Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
+
 \pagebreak
 
 
@@ -820,7 +826,7 @@ Roll a die per unit base in hex. At 4+ place a regular acid on the unit base.
 
 **Hex** **on** **Fire**\
 When setting a hex on fire, place a smoke and fire token in the hex.
-When encountering a fire, Roll 1 die per unit base, at 5+ set that unit base on fire.
+When encountering a fire, Roll 1 die per unit base, at 4+ set that unit base on fire.
 
 
 
