@@ -12,7 +12,129 @@ class Team():
         self.abilities = {}
         self.models = {}
         self.personal_team = {}
+        
+    def unit_sort(self, text):
+        
+        if text.startswith('Elite'):
+            used = text[6:] + ' ' + text[0:5]
 
+            try:
+                self.units[text[6:]]
+                text = text[6:]
+            except KeyError:
+                used = text
+        else:
+            used = text
+
+        models = self.units[text].models
+                
+        try:
+            models = str(4-int(models) )
+        except:
+            print('Number of models not an int')
+            
+        type_   = self.units[text].type_
+
+        #print(models + type_+used)
+        return models + type_+used
+        
+
+    # misc equipment and unit base weapons are not supported yet...
+    # får 4 kopier av hver model...
+    def write_short_pdf(self):
+
+        #Need to be able to read the inputlines
+        with open('unit_base_template_short.tex', 'r') as fid:
+            self.unit_base_template = fid.read()
+            
+        with open('damage_template.tex', 'r') as fid:        
+            self.damage_name_line = fid.readline()
+            self.damage_line = fid.readline()
+
+        #weapon which are prepaid for by the unit
+        with open('assault_template_short.tex', 'r') as fid:
+            self.assault_template = fid.read()
+
+        with open('combined_template_short.tex', 'r') as fid:
+            self.combined_template = fid.read()
+
+        with open('weapon_template.tex', 'r') as fid:
+            self.ranged_template = fid.read()
+
+        with open('misc_template_short.tex', 'r') as fid:
+            self.misc_template = fid.read()
+
+        with open('model_template.tex', 'r') as fid:
+            self.model_template = fid.read()
+   
+        latex_unit = ""
+        latex_equipment_upgrade = ""
+    
+        for unit_name in sorted(self.units, key=self.unit_sort):
+            print('working on ', unit_name)
+            unit = self.units[unit_name]
+            
+            latex_damage = ""
+            latex_weapons = ""
+            latex_model = ""
+            
+            for damage_name in unit.__dict__['damage_tables'].keys():
+                d1 = {'damage_name' : damage_name}
+                latex_damage = latex_damage + self.damage_name_line.format(**d1)
+                for line in unit.__dict__['damage_tables'][damage_name]:
+                    d2 = {'damage_line': line}
+                    latex_damage = latex_damage + self.damage_line.format(**d2)
+
+                    
+            for model in unit.model_list:
+                                
+                for weapon_name in model.weapons_input:
+                    if weapon_name:
+                        weapon = self.weapons[weapon_name]
+                        if weapon.template == 'a':
+                            template = self.assault_template
+                        if weapon.template == 'r':
+                            template = self.ranged_template
+                        if weapon.template == 'ra':
+                            template = self.combined_template
+                        if weapon.template == 'misc':
+                            template = self.misc_template
+                        if weapon.template == '':
+                            template = ''
+                            print('Missing weapon template', weapon_name)
+                        else:
+                            print('working on ', weapon_name)
+
+                    
+                        weapon = self.weapons[weapon_name]
+                    
+                        latex_weapons = latex_weapons + template.format(**weapon.__dict__)
+
+                comb_model = model.__dict__.copy()
+                comb_model['weapon'] = latex_weapons
+                        
+                latex_model = latex_model + self.model_template.format(**comb_model)
+
+
+                  
+            combined_dict = unit.__dict__.copy()
+            combined_dict['damage'] = latex_damage
+            combined_dict['model'] = latex_model
+
+            latex_unit = latex_unit + self.unit_base_template.format(**combined_dict)
+
+            #print(latex_unit)
+
+
+            
+        latex = latex_unit 
+                                
+        with open(self.name +'_short.tex', 'w') as fid:
+                fid.write(latex)
+
+
+
+        
     def upgrades(self, unit):
 
         upgrades = {}

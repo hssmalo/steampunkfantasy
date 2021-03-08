@@ -129,7 +129,7 @@ Each side may design it's own terretory as you wish.
 
 Blind Setup:
 Place a GM Screen (or something) between each side. Set up your units without know how the other side has set up. Set up simultainiusly.
-Place units in the hexes 2.5 and 3 hexes from the edge of your side. Remeber to give them the appropriate speed as you see fit.
+Place units in the hexes 2.5 and 3 hexes from the edge of your side. Remeber to give them the appropriate starting speed as you see fit.
 
 # Victory Condition
 
@@ -173,23 +173,19 @@ Each turn contains the following steps:
 
 - Gunnery 1 \
 Trigger Hex effect(if hex effect was fired in a hex you were standing)\
-
+Apply damage \
  
 - Movement 1 \
-Pre assault retreat \
-Trigger hex effect (including all units in contested hexes) \
+Pre assault retreat/abilities\
 Pre assault abilities
 
 - Assault 1 \
-Post assault retreat \
+Post assault retreat\
 Trigger hex effect \
 Apply damage \
 
 - Movement 2 \
-Pre assault retreat \
-Trigger hex effect (including all units in contested hexes) \
-Pre assault abilities\
-Apply damage \
+Pre assault retreat/abilities \
 
 - Assault 2 \
 Post Assault retreat \
@@ -197,10 +193,8 @@ Trigger hex effect \
 Apply damage \
 
 - Movement 3\
-Pre assault retreat \
-Trigger hex effect (including all units in contested hexes) \
 Pre assault abilities \
-Apply damage \
+
 
 - Assault 3\
 Post assault retreat \
@@ -208,7 +202,7 @@ Trigger hex effect  \
 Apply damage \
 
 - Gunnery 2\
-Trigger Hex effect(if hex effect was fired in a hex you were standing) \
+Trigger Hex effect \
 Apply damage \
 
 
@@ -262,6 +256,7 @@ Each unit has a set of available orders. Code:
 - A = Accelerate, change to one speed faster
 - A[X] = As accelerate, but set speed to a special case, described by a X.
 - Rev=reverse
+- D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - - = no action
 - Chase: move towards nearest enemy.
 - Follow: Are only available through special unit ordering other units to follow, and all units under these orders move one hex closer to this unit. If multiple units are odering units to follow, you can chose which to follow.

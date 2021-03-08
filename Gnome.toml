@@ -160,7 +160,7 @@ name = "Light SMG"
 template = "r"
 range_ = "2"
 angle = "*/*/*/*"
-special = "Reserve weapon: may be used instead of the main weapon. Always treated as loaded, but only fire while during fire (smg) ordrs"
+special = "Reserve weapon: may use this weapon when fire (reserve) orders is given, but you may only use one reserve weapon at any given time. Always treated as loaded"
 damage = "d4-2"
 ap = "1"
 assault_mod = ""
@@ -197,7 +197,6 @@ cost = "2cp"
 required_to_buy = "Unit Base: Infantry"
 type_ = "Infantry, 2handed weapon"
 filters = [ "team",]
-
 
 [weapons."Array of Heavy Muskets"]
 race = "Gnome"
@@ -263,6 +262,94 @@ orders_lost = [ "",]
 cost = "2cp"
 required_to_buy = "Unit Base, Infantry"
 type_ = "Infantry, independent equipment"
+filters = [ "team",]
+
+[weapons."Master Crafted Frost Ray"]
+race = "Gnome"
+name = "Master Crafted Frost Ray"
+template = "r"
+range_ = "4"
+angle = "*/*/*/*"
+special = "If you use the 'amplified fire' order, fire the weapon as normal. But if you hit, the target must break if possible (if it has a lower speed available). Reduce the speed emidetely"
+damage = "d4-2 + d6 psycic damage + d4 crew damage"
+ap = "0"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "- + Amplified Fire",]
+orders_lost = [ "",]
+cost = "2cp, 4xp"
+required_to_buy = "Unit Base, Infantry"
+type_ = "Infantry, 2handed-weapon"
+filters = [ "team",]
+
+[weapons."Poison Dart"]
+race = "Gnome"
+name = "Poison Dart"
+template = "r"
+range_ = "1"
+angle = "*/*/*/*"
+special = "Poison[4]\\\\ Reserve weapon: may use this weapon when fire (reserve) orders is given, but you may only use one reserve weapon at any given time. Always treated as loaded"
+damage = "-"
+ap = "0"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Infantry, reserve weapon"
+filters = [ "team",]
+
+[weapons."Acid Balloon"]
+race = "Gnome"
+name = "Acid Balloon"
+template = "r"
+range_ = "1"
+angle = "*/*/*/*"
+special = "Minor Acid\\\\Reserve weapon: may use this weapon when fire (reserve) orders is given, but you may only use one reserve weapon at any given time. Always treated as loaded"
+damage = "-"
+ap = "0"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Infantry, reserve weapon"
+filters = [ "team",]
+
+[weapons.Grinder]
+race = "Gnome"
+name = "Grinder"
+template = "r"
+range_ = "1"
+angle = "*/-/-/-"
+special = "Reserve weapon: may use this weapon when fire (reserve) orders is given, but you may only use one reserve weapon at any given time. Only treated as loaded if your main gun is loaded."
+damage = "d8-2"
+ap = "1"
+assault_mod = ""
+assault_deflection_mod = ""
+assault_deflection_die_set_to = ""
+assault_dam_set_to = ""
+assault_special = ""
+assault_ap = ""
+orders_gained = [ "",]
+orders_lost = [ "",]
+cost = ""
+required_to_buy = ""
+type_ = "Infantry, Reserve Weapon"
 filters = [ "team",]
 
 [units."Gnome Helicopter"]
@@ -409,7 +496,6 @@ assault_deflection = "1/-/-/-"
 assault_special = "Fear(6)"
 filters = [ "weapons", "team",]
 
-
 [units."Ballista Tractor, Mark II"]
 race = "Gnome"
 name = "Ballista Tractor, Mark II"
@@ -434,7 +520,6 @@ assault_deflection = "2/-/-/-"
 assault_special = "Fear(6)"
 filters = [ "weapons", "team",]
 
-
 [units."Ballista Tractor, Mark III"]
 race = "Gnome"
 name = "Ballista Tractor, Mark III"
@@ -448,7 +533,7 @@ replaces = ""
 unititems = ""
 modelitems = ""
 retired = ""
-weapons_input = [ "Ballista", "Array of Heavy Muskets"]
+weapons_input = [ "Ballista", "Array of Heavy Muskets",]
 unit_special = "Fire and load all weapons with fire and load actions"
 assault = "3/2/2/1"
 assault_die = "3+"
@@ -459,9 +544,34 @@ assault_deflection = "2/-/-/-"
 assault_special = "Fear(6)"
 filters = [ "weapons", "team",]
 
+[units."Gnome Elite Infantry"]
+race = "Gnome"
+name = "Gnome Elite Infantry"
+models = ""
+size = "medium"
+cost = "1xp"
+armor = ""
+type_ = "Bio, Elite Infantry, Walks"
+isReplacement = "yes"
+replaces = "Model: Infantry"
+unititems = ""
+modelitems = "2 hands, unlimited reserve weapons, unlimited independent equipment"
+retired = ""
+weapons_input = [ "Gnome Gun", "Poison Dart", "Acid Balloon", "Light SMG", "Grinder",]
+unit_special = "Elite gnome infantry may also threat any gunnery phase without any other ordre as fire(reserve) order instead.\\\\ Unit base gains psycic resistance 1 as long as atleast one elite model is alive."
+
+assault = "1/1/1/1"
+assault_die = "3+"
+assault_deflection_die = ""
+assault_damage = "d6-2"
+assault_ap = "2"
+assault_deflection = ""
+assault_special = ""
+filters = [ "weapons", "team",]
+
 [units."Gnome Helicopter".orders]
 "Fire Orders" = [ "(all) Load + -", "(all, flying) Fire + -", "(still, flying) Aim + -",]
-"Movement Orders" = [ "(still, ground) A[still flying] + 360$^0$ + - ", "(still, ground) A[slow flying] + 360$^0$ + F ", "(still, flying) 360$^0$ + - + -  ", "(slow flying)  L + F + - ", "(slow flying)  L + F + L ", "(slow flying)  R + F - ", "(slow flying)  R + F + R ", "(slow flying)  F + - + - ", "(slow flying)  A[fast flying] + F + F ", "(slow flying)  B[still flying] + - + - ", "(fast flying)  F + F - ", "(fast flying)  F + F + R ", "(fast flying)  F + F + L ", "(fast flying)  F + F + B[slow flying] ", "(still, flying) A[still flying] + 360$^0$ + - ", "(default all Flying) - + - + B[still ground]",]
+"Movement Orders" = [ "(still, ground) A[still flying] + 360$^0$ + - ", "(still, ground) A[slow flying] + 360$^0$ + F ", "(still, flying) 360$^0$ + - + -  ", "(slow flying)  L + F + - ", "(slow flying)  L + F + L ", "(slow flying)  R + F - ", "(slow flying)  R + F + R ", "(slow flying)  - + - + D ", "(slow flying)  A[fast flying] + F + F ", "(slow flying)  B[still flying] + - + - ", "(fast flying)  F + F - ", "(fast flying)  F + F + R ", "(fast flying)  F + F + L ", "(fast flying)  F + F + B[slow flying] ", "(still, flying) A[still flying] + 360$^0$ + - ", "(default all Flying) - + - + B[still ground]",]
 
 [units."Gnome Helicopter".damage_tables]
 "Regular Damage (fire, poison)" = [ "1-4: Light Damage[d6]", "5-8: x3 Light Damage[d6]", "9+: unit Destroied",]
@@ -484,11 +594,11 @@ Movement = [ "(still) L + -", "(still) R + - + - ", "(still) - + - + -", "(still
 "Light Damage" = [ "1-4: +1 to future damage", "5-6: Unit Shaken",]
 
 [units."Gnome Infantry".orders]
-Fire = [ "(still) fire (main) + -", "(still) - + fire (main)", "(still) aim + -", "(still) - + aim", "(still) load + -", "(still) - + load", "(all) fire (smg) + fire (smg)",]
+Fire = [ "(still) fire (main) + -", "(still) - + fire (main)", "(still) aim + -", "(still) - + aim", "(still) load + -", "(still) - + load", "(all) fire (reserve) + fire (reserve)",]
 Movement = [ "(slow) 360$^0$ + F + 360$^0$", "(slow) 360$^0$ + B + 360$^0$", "(default slow) - + - + flee", "(still) 360$^0$ + 360$^0$ + 360$^0$", "(still) 360$^0$ + A + F", "(default still) - + A + flee", "(slow) - + - + chase",]
 
 [units."Gnome Infantry".damage_tables]
-"Psychic Damage" = [ "5+: shaken",]
+"Psychic Damage" = [ "4+: shaken",]
 "Regular Damage (fire, poison)" = [ "0-5: kill 1 model\\\\ Half + to future damage rounded down\\\\If killed by poison, remove that instance", "6-8: kill 1 model, roll on psychic damage[d6]", "9: Unit Base destoryed",]
 
 [units."Assault Bots".orders]
@@ -498,19 +608,8 @@ Movement = [ "(slow) chase + - + -",]
 "Regular Damage (fire)" = [ "0-7: Kill 1 model, half + to future damage rounded down", "8: Destroy Unit",]
 
 [units."Ballista Tractor, Mark I".orders]
-Fire = ["(all) - + Fire", "(still)- + Aim", "(still, slow) - + Load"]
-Movement= [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) F + L + -", "(slow) F + R", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -",]
-
-
-[units."Ballista Tractor, Mark II".orders]
-Fire = ["(all) - + Fire", "(still)- + Aim", "(still, slow) - + Load"]
-Movement= [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) F + L + -", "(slow) F + R", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -",]
-
-
-[units."Ballista Tractor, Mark III".orders]
-Fire = ["(all) - + Fire", "(still)- + Aim", "(still, slow) - + Load"]
-Movement= [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) F + L + -", "(slow) F + R", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -",]
-
+Fire = [ "(all) - + Fire", "(still)- + Aim", "(still, slow) - + Load",]
+Movement = [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) F + L + -", "(slow) F + R", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -",]
 
 [units."Ballista Tractor, Mark I".damage_tables]
 "Regular Damage (fire)" = [ "1-4: d6 Light Damage", "5-8: +1 to future damage, d6 critical damage", "9: Unit destroied",]
@@ -518,19 +617,28 @@ Movement= [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) 
 "Critical Damage" = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.",]
 "Crew Damage" = [ "4-5: Misfire[2-]", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
 
+[units."Ballista Tractor, Mark II".orders]
+Fire = [ "(all) - + Fire", "(still)- + Aim", "(still, slow) - + Load",]
+Movement = [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) F + L + -", "(slow) F + R", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -",]
 
 [units."Ballista Tractor, Mark II".damage_tables]
 "Regular Damage (fire)" = [ "1-4: d6 Light Damage", "5-8: +1 to future damage, d6 critical damage", "9: Unit destroied",]
 "Light Damage" = [ "1-4: +1 to future damage", "5-6: Shaken",]
-"Critical Damage" = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.", "6: Set on fire"]
+"Critical Damage" = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.", "6: Set on fire",]
 "Crew Damage" = [ "4-5: Misfire[2-]", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
 
-
+[units."Ballista Tractor, Mark III".orders]
+Fire = [ "(all) - + Fire", "(still)- + Aim", "(still, slow) - + Load",]
+Movement = [ "(slow) L + - + -", "(slow) L + L + -", "(slow) R + - + -", "(slow) R + R + -", "(slow) F + L + -", "(slow) F + R", "(slow) B + - + -", "(default slow) - + - + B", "(slow) F + - + -", "(slow) B + rev + -", "(still) L + - + -", "(still) L + L + -", "(still) L + L + L", "(still) R + - + -", "(still) R + R + -", "(still) R + R + R", "(still) - + - + -", "(still) R + A + F", "(still) L + A + F", "(still) A + F + -", "(still) rev + - + -", "(default still) - + - + -",]
 
 [units."Ballista Tractor, Mark III".damage_tables]
 "Regular Damage (fire)" = [ "1-4: d6 Light Damage", "5-8: +1 to future damage, d6 critical damage", "9: Unit destroied",]
 "Light Damage" = [ "1-4: +1 to future damage", "5-6: Shaken",]
-"Critical Damage" = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Unit covered in 3 minor acid", "6: set unit on fire"]
+"Critical Damage" = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Unit covered in 3 minor acid", "6: set unit on fire",]
 "Crew Damage" = [ "4-5: Misfire[2-]", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
 
+[units."Gnome Elite Infantry".orders]
+"" = [ "",]
 
+[units."Gnome Elite Infantry".damage_tables]
+"" = [ "",]
