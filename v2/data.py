@@ -102,6 +102,7 @@ class Race:
     units: munch.Munch = field(default_factory=munch.Munch)
     models: munch.Munch = field(default_factory=munch.Munch)
     equipments: munch.Munch = field(default_factory=munch.Munch)
+    info: Configuration = field(default_factory=Configuration, repr=False)
 
     @classmethod
     def from_toml(cls, race):
@@ -132,7 +133,13 @@ class Race:
             }
         )
 
-        return cls(race, units=units, models=models, equipments=equipments)
+        return cls(
+            race,
+            units=units,
+            models=models,
+            equipments=equipments,
+            info=toml.races[race],
+        )
 
     @property
     def name(self):

@@ -5,6 +5,58 @@
     special = []
 
 
+# Templates for units, models and equipments
+[races]
+
+    [races.template]
+    name = "Template"
+
+[units]
+
+    [units.template]
+    name = "Template"
+    race = "template"
+    models = ["template", "template", "template", "template"]
+    size = "medium"
+    cost.mp = 2
+    armor = [0, 0, 0, 0]
+    special = "Forward Position[2], Cannot use ranged weapons"
+
+        [units.template.orders.movement]
+        slow = [["Chase", "", ""], ["", "", "Chase"]]
+        default.slow = ["", "", "Flee"]
+
+        [units.template.damage_tables]
+        regular = [
+            "1-5: Kill 1 model",
+            "6-8: Kill 1 Model, d6 Psychic damage",
+            "9: Destroy unit base",
+        ]
+        psychic = [
+            "4+: Unit Shaken",
+        ]
+
+[models]
+
+    [models.template]
+    name = "Template"
+    race = "template"
+    equipment_limit = ["hands:2", "independent:∞"]
+    equipments = []
+    type = ["bio", "template", "walks"]
+    special = []
+
+        [models.template.assault]
+        strength = [2, 2, 2, 2]
+        strength_die = "6+"
+        deflection = [0, 0, 0, 0]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 3]"]
+
+
+
 [templates]
 
     [templates.ability]
