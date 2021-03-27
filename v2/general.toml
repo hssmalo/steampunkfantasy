@@ -1,0 +1,19 @@
+[types]
+
+    [types.bio]
+    name = "Bio"
+    special = []
+
+
+[templates]
+
+    [templates.ability]
+
+        [templates.ability.reroll_assault]
+        variables.num_dice = "int"
+        special = ["""
+            Any 6 on assult die roll (not assault deflection) count as two success and
+            you get to reroll {num_dice} dice (assault or assault deflection) per 6.
+            Each die may be rerolled a maximum of one time (for each wave of rerolls).
+            A new wave of rerolls starts when you get atleast one 6 in the rerolled assault dice.
+            """]
