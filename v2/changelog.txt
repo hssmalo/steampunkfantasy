@@ -1,7 +1,8 @@
-Removed pistol-spear
-Removed cannonhead
-Removed heavyMG
-Renamed Char ... Orques til Ork Char
-Removed Road+Road+Road movement from Ork char
-
-Removed Halftrack
+Ork:
+	
+	Removed pistol-spear
+	Removed cannonhead
+	Removed heavyMG
+	Renamed Char ... Orques til Ork Char B1
+	Removed Road+Road+Road movement from Ork char
+	Removed Halftrack
