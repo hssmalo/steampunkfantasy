@@ -25,8 +25,8 @@
     name = "Warg Rider"
     models = ["warg_rider", "warg_rider"]
     size = "medium"
-    unit_cost.mp = 2
-    unit_cost.xp = 4
+    cost.mp = 2
+    cost.xp = 4
     unit_special = "Fire orders only available if given ranged weapons"	    
 
     	[units.warg_rider.orders.movement]
@@ -47,7 +47,7 @@
     race = "ork"
     models = ["speedhead"]
     size = "Medium"
-    unit_cost.ip = 6
+    cost.ip = 6
     armor = [8, 7, 7, 7]
 
     	  [units.speedhead.orders.movement]
@@ -76,7 +76,7 @@
     name = "HammerHead"
     models = ["hammerhead"]
     size = "Large"
-    unit_cost.ip = 8    
+    cost.ip = 8    
     armor = [13,8,7,7]
 
     	  [units.hammerhead.damage_tables]
@@ -126,7 +126,7 @@
     race = "ork"
     models = ["grunt", "grunt", "grunt", "grunt"]
     size = "medium"
-    unit_cost.mp = 2
+    cost.mp = 2
     armor = [0, 0, 0, 0]
     special = ["Forward Position[2]", "Cannot use ranged weapons"]
 
@@ -149,7 +149,7 @@
     race = "ork"
     models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
     size = "medium"
-    unit_cost.mp = 4
+    cost.mp = 4
     armor = [0, 0, 0, 0]
 
     special = ["Take Cover[still][-2]", "Bad Shot: -1 to hit with range weapons"]
@@ -177,9 +177,9 @@
     race = "ork"
     models = ["bioengineered_ork", "bioengineered_ork", "bioengineered_ork", "bioengineered_ork"]
     size = "medium"
-    unit_cost.mp = 4
-    unit_cost.xp = 2
-    unit_cost.cp = 1
+    cost.mp = 4
+    cost.xp = 2
+    cost.cp = 1
     armor = [0, 0, 0, 0]
     special = [
         "Take Cover[still][-2], May use multiple ranged weapons without any penalties",
@@ -214,7 +214,7 @@
    name = "Ork Char B1"
    models = ["ork_char_b1"]
    size = "Large"
-   unit_cost.ip = 12
+   cost.ip = 12
    armor = [11,9,8,7]
 
    	 [units.ork_char_b1.orders.fire]
@@ -334,7 +334,7 @@
     [models.ork_elite_infantry]
     name="Ork Elite Infantry"
     race="ork"
-    unit_cost.xp = 4
+    cost.xp = 4
     equipment_limit = ["hands:2", "independent:∞"]
     equipments = []
     replaces = ["ork_infantry"]
@@ -453,7 +453,7 @@
     race = "ork"
     equipment_limit = ["hands:4", "independent:∞"]
     equipments = ["ork_musket", "ork_musket"]
-    unit_cost.xp = 1
+    cost.xp = 1
     type = ["bio", "infantry", "walks", "elite"]
     special = ["Good shot, +1 to hit"]
     replaces = ["bioengineered_ork"]
@@ -529,7 +529,7 @@
     name = "Clockwork Shield"
     race = "ork"
     special = ["Unit base gains damage resistance 1"]
-    unit_cost.cp = 2
+    cost.cp = 2
     requires = [
         ["type:infantry", "type:grunt"],
         ["hands:1"],
@@ -542,7 +542,7 @@
     [equipments.clockwork_wings]
     name = "Clockwork Wings"
     race = "ork"
-    unit_cost.cp = 4
+    cost.cp = 4
     requires = [
         ["type:infantry", "type:grunt"],
         ["independent:1"],
@@ -575,7 +575,7 @@
     [equipments.poison_spikes]
     name = "Poison Spikes"
     race = "ork"
-    unit_cost.cp = 1
+    cost.cp = 1
     requires = [
         ["type:infantry", "type:grunt"],
         ["independent:1"]
@@ -589,7 +589,7 @@
     name = "Clockwork Monocular"
     race = "ork"
     special = ["Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of wether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get atleast one 6 in the reolled dice."]
-    unit_cost.cp = 1
+    cost.cp = 1
     requires = [
         ["type:infantry"],
         ["independent:1"],
@@ -599,7 +599,7 @@
     [equipments.clockwork_spear]
     name = "Clockwork Spear"
     race = "ork"
-    unit_cost.cp = 2
+    cost.cp = 2
     requires = [
     	     ["type:infantry", "type:grunt", "type:cavalry"],
 	     ["hands:1"]
@@ -612,7 +612,7 @@
     [equipments.clockwork_power_spear]
     name = "Clockwork Power Spear"
     race = "ork"
-    unit_cost.cp = 4
+    cost.cp = 4
     requires = [
     	     ["type:infantry", "type:grunt"],
 	     ["hands:2"]
@@ -626,7 +626,7 @@
     [equipments.ork_pistol]
     name = "Ork Pistol"
     race = "ork"
-    unit_cost.cp = 1
+    cost.cp = 1
     requires = [
         ["type:infantry", "type:grunt", "type: cavalery"],
 	["hands:1"]
@@ -649,8 +649,8 @@
     [equipments.pyro]
     name = "Pyro"
     race = "ork"
-    unit_cost.cp = 4
-    unit_cost.xp = 4
+    cost.cp = 4
+    cost.xp = 4
     requires = [
         ["type:infantry", "type: cavalery"],
 	["independent:1"]
@@ -675,7 +675,7 @@
     [equipments.hand_held_cannon]
     name = "Hand Held Cannon"
     race = "ork"
-    unit_cost.cp = 8
+    cost.cp = 8
     requires = [
     	     ["type:infantry", "type:grunt", "type: cavalery"],
 	     ["shared:1"]
@@ -693,7 +693,7 @@
 	[equipments.war_drum]
 	name = "War Drum"
 	race = "ork"
-	unit_cost.xp = 2
+	cost.xp = 2
 	special = ["Allows any grunt be given (- + - follow) instead of chase. Move each unit with follow orders one step closer to this model.", "Unit Base gains Terror[6][range 1]]"]
 	requires = [
 		 ["type:infantry"],
@@ -705,7 +705,7 @@
    [equipments.harpoon_gun]
    name = "Harpoon Gun"
    race = "ork"
-   unit_cost.cp = 4
+   cost.cp = 4
    requires = [
    	    ["type:infantry"],
 	    ["shared:1"]
