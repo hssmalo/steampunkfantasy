@@ -256,6 +256,54 @@ class Unit:
     models: CounterList = field(default_factory=CounterList)
     info: Configuration = field(default_factory=Configuration, repr=False)
 
+    def generate_neat_dict(self):
+        self.neat_dict = {}
+        self.neat_dict['models'] = self.models
+        self.neat_dict['name'] = self.info.name
+        self.neat_dict['size'] = self.info.size
+        self.neat_dict['cost'] = self.cost
+        
+        try:
+            self.neat_dict['armor'] = self.info.armor
+        except AttributeError:
+            self.neat_dict['armor'] = 0
+        try:
+            for u in self.info.unit_special:
+                txt = txt + u + '\\\\ \n'              
+            self.neat_dict['unit_special'] = txt
+        except:
+            self.neat_dict['unit_special'] = ''
+
+        self.neat_dict['victory_points'] = self.cost.victory_points    
+
+        #to-Do: do some nesting and logic
+        self.neat_dict['models_info'] = ''
+        self.neat_dict['orders'] = ''
+        self.neat_dict['damage_table'] = ''
+
+    def write_long_tex(self):
+        with open('unit_long.tex', 'r') as fid:
+            unit_long = fid.read()
+
+        self.generate_neat_dict()
+
+        unit_long = unit_long.format(**self.neat_dict)
+
+        return unit_long
+
+
+
+    def write_short_tex(self):
+        with open('unit_short.tex', 'r') as fid:
+            unit_short = fid.read()
+
+        self.generate_neat_dict()
+
+        unit_short = unit_short.format(**self.neat_dict)
+
+        return unit_short
+                  
+        
     @classmethod
     def from_toml(cls, unit):
         toml = _all_tomls()

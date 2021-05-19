@@ -1,0 +1,200 @@
+[races]
+
+    [races.gnome]
+    name = "gnome"
+
+
+[units]
+
+    [units.gnome_infantry]
+    race = "gnome"
+    name = "Gnome Infantry"
+    models = ["gnome_infantry"]
+    size = "medium"
+    armor = [0, 0, 0, 0]
+    cost.mp = 2
+    special = ["Take-Cover[still][-2]"]
+
+
+        [units.gnome_infantry.orders.movement]
+        slow = [["Chase", "", ""],
+	     ["", "", "Chase"],
+	     ["360°", "F",  "360°"],
+	     ["360°", "360°", "360°"],
+	     ["360° + B + -"]]
+	still = [["360° + - + -"], ["360° + A + F"]]
+        default.slow = ["", "", "Flee"]
+
+        [units.gnome_infantry.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+	all   = [["fire (reserve)", "fire (reserve)"]]
+
+        [units.gnome_infantry.damage_tables]
+        regular = ["1-5: Kill 1 model",
+            "6-8: Kill 1 Model, d6 Psychic damage",
+            "9: Destroy unit base",
+        ]
+        psychic = [
+            "4+: Unit Shaken",
+        ]
+
+#
+# Models
+#
+[models]
+
+    [models.gnome_infantry]
+    name = "Gnome Infantry"
+    race = "gnome"
+    equipment_limit = ["hands:2", "reserve:1", "independent:∞"]
+    equipments = ["gnome_gun", "light_smg" ]
+    type = ["bio", "infantry", "walks"]
+    special = []
+
+        [models.gnome_infantry.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "5+"
+        deflection = [0, 0, 0, 0]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]"]
+
+    [models.gnome_elite_infantry]
+    name = "Gnome Elite Infantry"
+    race = "gnome"
+    equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+    equipments = ["gnome_gun", "light_smg", "poison_dart", "acid_ballon", "grinder" ]
+    type = ["bio", "elite", "infantry", "walks"]
+    replaces = ["gnome_infantry"]
+    special = ["Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.", "Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
+    cost.xp = 1
+
+    	[models.gnome_elite_infantry.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "3+"
+        deflection = [0, 0, 0, 0]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]"]
+
+    [models.gnome_tinkerer]
+    name = "Gnome Tinkerer"
+    race = "gnome"
+    equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+    equipments = ["tinkerer_gun", "light_smg" ]
+    type = ["bio", "infantry", "tinkerer", "walks"]
+    cost.xp = 4
+    cost.cp = -3
+    special = []
+
+        [models.gnome_tinkerer.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "5+"
+        deflection = [0, 0, 0, 0]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]"]
+
+
+[equipments]
+
+    [equipments.gnome_gun]
+    name = "Gnome Gun"
+    race = "gnome"
+    requires = [
+        ["hands:2"],
+    ]
+
+        [equipments.gnome_gun.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6-2"
+        ap = 2
+        special = []
+
+
+
+    [equipments.tinkerer_gun]
+    name = "Gnome Gun"
+    race = "gnome"
+    requires = [
+        ["hands:2"],
+	["type:infantry"],
+	["type:tinkerer"]
+    ]
+
+        [equipments.tinkerer_gun.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6"
+        ap = 2
+        special = []
+
+
+    [equipments.light_smg]
+    name = "gnome_gun"
+    race = "gnome"
+    requires = [
+        ["reserve:1"],
+    ]
+
+        [equipments.light_smg.range]
+        range = 2
+        angle = [true, true, true, true]
+        damage = "d4-2"
+        ap = 1
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
+
+
+
+    [equipments.poison_dart]
+    name = "Poison Dart"
+    race = "gnome"
+    requires = [
+        ["reserve:1"],
+    ]
+
+        [equipments.poison_dart.range]
+        range = 1
+        angle = [true, true, true, true]
+        damage = "-"
+        ap = 0
+        special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded. Poison[4]"]
+
+
+    [equipments.acid_ballon]
+    name = "Acid Ballon"
+    race = "gnome"
+    requires = [
+        ["reserve:1"],
+    ]
+
+        [equipments.acid_ballon.range]
+        range = 1
+        angle = [true, true, true, true]
+        damage = "-"
+        ap = 0
+        special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded. Minor Acid"]
+
+
+    [equipments.grinder]
+    name = "Grinder"
+    race = "gnome"
+    requires = [
+        ["reserve:1"],
+    ]
+
+        [equipments.grinder.range]
+        range = 1
+        angle = [true, true, true, true]
+        damage = "d8-2"
+        ap = 2
+        special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Only treated as loaded if your main gun is loaded. Minor Acid"]
