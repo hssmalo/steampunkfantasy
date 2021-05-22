@@ -16,8 +16,8 @@
     special = ["Forward Positon[1]", "Regneration: At each aftermath phase, remove/downgrade up to three of the following: one +1 for future damage marker, downgrade one bleeding one step or 1 temporarily killed token.", "May have a maximum of twelve -1 counters to assault damage, and 1 temporarily killed token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
 
         [units.troll.orders.movement]
-        slow = [["Chase", "", ""], ["", "", "Chase"]]
-        default.slow = ["", "", "Flee"]
+        slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
+        default.slow = ["-", "-", "Flee"]
 
         [units.troll.damage_tables]
         regular = ["1-3: +1 on future damage",
@@ -160,8 +160,8 @@
     special = ["Forward Position[2]", "Cannot use ranged weapons"]
 
         [units.grunt.orders.movement]
-        slow = [["Chase", "", ""], ["", "", "Chase"]]
-        default.slow = ["", "", "Flee"]
+        slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
+        default.slow = ["-", "-", "Flee"]
 
         [units.grunt.damage_tables]
         regular = ["1-5: Kill 1 model",
@@ -184,9 +184,9 @@
     special = ["Take Cover[still][-2]", "Bad Shot: -1 to hit with range weapons"]
 
         [units.ork_infantry.orders.movement]
-        slow = [["Chase", "", ""], ["", "", "Chase"], ["360°", "F",  "360°"], ["360°", "360°", "360°"], ["360° + B + -"]]
-	still = [["360° + - + -"], ["360° + A + F"]]
-        default.slow = ["", "", "Flee"]
+        slow = [["Chase", "-", "-"], ["-", "-", "Chase"], ["360°", "F",  "360°"], ["360°", "360°", "360°"], ["360° + B + -"]]
+	still = [["360°", "-", "-"], ["360°", "A", "F"]]
+        default.slow = ["-", "-", "Flee"]
 
         [units.ork_infantry.orders.fire]
 	still = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
@@ -216,14 +216,14 @@
     ]
 
         [units.bioengineered_ork.orders.fire]
-        still = [["", "Fire"], ["Fire", ""], ["", "Load"], ["Load", ""], ["Aim", ""]]
-        all = [["", "Aim"]]
+        still = [["-", "Fire"], ["Fire", "-"], ["-", "Load"], ["Load", "-"], ["Aim", "-"]]
+        all = [["-", "Aim"]]
 
         [units.bioengineered_ork.orders.movement]
-        still = [["360°", "", ""], ["360°", "A", "F"]]
-        slow = [["360°", "F", "360°"], ["360°", "360°", "360°"], ["360°", "B", ""], ["", "", "Chase"]]
-        default.still = ["", "", "A, Flee"]
-        default.slow = ["", "", "Flee"]
+        still = [["360°", "-", "-"], ["360°", "A", "F"]]
+        slow = [["360°", "F", "360°"], ["360°", "360°", "360°"], ["360°", "B", "-"], ["-", "-", "Chase"]]
+        default.still = ["-", "-", "A, Flee"]
+        default.slow = ["-", "-", "Flee"]
 
         [units.bioengineered_ork.damage_tables]
         regular = [
@@ -374,7 +374,7 @@
         strength = [2, 2, 2, 2]
         strength_die = "6+"
         deflection = [0, 0, 0, 0]
-        deflection_die = ""
+        deflection_die = "-"
         damage = "d6-2"
         ap = 2
         special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 3]"]
@@ -433,7 +433,7 @@
 	deflection_die = "6+"
 	deflection = [2, 0, 0, 0]
 	damage = "d6"
-	ap = ""
+	ap = "-"
 	special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 2]"]
 
 
@@ -442,7 +442,7 @@
    name = "Warg Rider"
    race = "ork"
    type =  ["bio", "cavalry", "elite", "Walks"]
-   equipment_limits = ["hands:1","independent:∞"]
+   equipment_limit = ["hands:1","independent:∞"]
 
 
    	[models.warg_rider.assault]
@@ -619,7 +619,7 @@
 
         [equipments.clockwork_wings.orders_gained.movement]
         slow = [["A(fast, fly)", "Chase", "Chase"]]
-        fast_fly = [["Chase", "B(slow, land)", ""]]
+        fast_fly = [["Chase", "B(slow, land)", "-"]]
 
 
     [equipments.flame_covered_axe]

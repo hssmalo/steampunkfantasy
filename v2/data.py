@@ -256,52 +256,121 @@ class Unit:
     models: CounterList = field(default_factory=CounterList)
     info: Configuration = field(default_factory=Configuration, repr=False)
 
-    def generate_neat_dict(self):
+    #generate info needed to create latex files
+    def generate_neat_dict(self, long_=True, format_='tex'):
+        translation = {39: None}
         self.neat_dict = {}
+        #self.neat_dict['race'] = self.race
         self.neat_dict['models'] = self.models
-        self.neat_dict['name'] = self.info.name
+        self.neat_dict['name'] = self.info.as_dict()['name']
         self.neat_dict['size'] = self.info.size
-        self.neat_dict['cost'] = self.cost
-        
         try:
-            self.neat_dict['armor'] = self.info.armor
+            self.neat_dict['cost'] = self.cost
+        except:
+            self.neat_dict['cost'] = 0
+            
+        try:
+            self.neat_dict['armor'] = str(self.info.armor).translate(translation)
         except AttributeError:
             self.neat_dict['armor'] = 0
-        try:
-            for u in self.info.unit_special:
-                txt = txt + u + '\\\\ \n'              
-            self.neat_dict['unit_special'] = txt
-        except:
-            self.neat_dict['unit_special'] = ''
 
+        txt = ''    
+        if format_ =='tex':
+            try:
+                for u in self.info.special:
+                    txt = txt + u + '\\\\ \n'              
+            except AttributeError:
+                txt = ''
+            self.neat_dict['special'] = txt
+
+                
+                
         self.neat_dict['victory_points'] = self.cost.victory_points    
 
-        #to-Do: do some nesting and logic
-        self.neat_dict['models_info'] = ''
-        self.neat_dict['orders'] = ''
-        self.neat_dict['damage_table'] = ''
+        txt = ''
+        for key, model  in self.models.as_dict().items():
+            #All models of same name should be identical
+            #import IPython; IPython.embed()
+            txt = txt + model[0].write_info(format_=format_, long_=long_)
 
-    def write_long_tex(self):
-        with open('unit_long.tex', 'r') as fid:
-            unit_long = fid.read()
+            
+        self.neat_dict['models_info'] = txt
 
-        self.generate_neat_dict()
+        #Generate Order table:
+        orders_txt = ''
 
-        unit_long = unit_long.format(**self.neat_dict)
+        if format_ =='tex':        
+            with open('ordersheadline_template.tex', 'r') as fid:
+                ordersheadline_template = fid.read()
 
-        return unit_long
+            with open('ordersline_template.tex', 'r') as fid:
+                ordersline_template = fid.read()
+            
+        ordersheadline = ''
+        orders = self.info.orders.as_dict()
+        for order_name in orders.keys():
+            ordersheadline = ordersheadline_template.format(order_name=order_name)
+            orderslines = ''
+            for speed in orders[order_name].keys():
+                for order in orders[order_name][speed]:
+                    orderslines = orderslines + ordersline_template.format(speed=speed, order=str(order).translate(translation))
+                
+            orders_txt = orders_txt + ordersheadline + orderslines
 
+                
+        self.neat_dict['orders'] = orders_txt
 
+        #Generate damage tables
 
-    def write_short_tex(self):
-        with open('unit_short.tex', 'r') as fid:
-            unit_short = fid.read()
+        damage_tables_txt = ''
 
-        self.generate_neat_dict()
+        if format_ =='tex':        
+            with open('damage_tableheadline_template.tex', 'r') as fid:
+                damage_tablesheadline_template = fid.read()
 
-        unit_short = unit_short.format(**self.neat_dict)
+            with open('damage_tablesline_template.tex', 'r') as fid:
+                damage_tablesline_template = fid.read()
+        
+        damage_tablesheadline = ''
+        damage_tables = self.info.damage_tables.as_dict()
+        for table_name in damage_tables.keys():
+            damage_tablesheadline = damage_tablesheadline_template.format(table_name=table_name)
+            damage_tableslines = ''
+            for line in damage_tables[table_name]:
+                    damage_tableslines = damage_tableslines + damage_tablesline_template.format(line=line)
+                
+            damage_tables_txt = damage_tables_txt + damage_tablesheadline + damage_tableslines
+        
+        self.neat_dict['damage_table'] = damage_tables_txt
 
-        return unit_short
+        
+    def write_info(self, long_=True, format_='tex'):
+        if format_ == 'tex':
+            if long_:
+                with open('unit_long.tex', 'r') as fid:
+                    unit_long = fid.read()
+
+                self.generate_neat_dict(long_ = True, format_='tex')
+
+                unit_long = unit_long.format(**self.neat_dict)
+
+                with open('long_test.tex', 'w') as fid:
+                    fid.write(unit_long)
+                
+                return unit_long
+            
+            else:
+                with open('unit_short.tex', 'r') as fid:
+                    unit_short = fid.read()
+                
+                self.generate_neat_dict(long_ = False, format_='tex')
+
+                unit_short = unit_short.format(**self.neat_dict)
+
+                with open('short_test.tex', 'w') as fid:
+                    fid.write(unit_short)
+        
+                return unit_short
                   
         
     @classmethod
@@ -440,6 +509,93 @@ class Model:
     equipments: CounterList = field(default_factory=CounterList)
     info: Configuration = field(default_factory=Configuration, repr=False)
 
+    def generate_neat_dict(self, long_ = True, format_ = 'tex'):
+        #Translation magic, don't know how it works, but I don't need to.
+        translation = {39: None}
+        
+        self.neat_dict = {}
+        self.neat_dict['race'] = self.info.race
+        self.neat_dict['name'] = self.info.as_dict()['name']
+        self.neat_dict['type'] = str(self.info.type).translate(translation)
+        try:
+            self.neat_dict['equipment_limit'] = str(self.info.equipment_limit).translate(translation)
+        except:
+            self.neat_dict['equipment_limit'] = ''
+        try:
+            self.neat_dict['cost'] = self.cost
+        except:
+            self.neat_dict['cost'] = ''
+
+            
+        self.neat_dict['strength'] = str(self.info.assault.strength).translate(translation)
+        self.neat_dict['strength_die'] = self.info.assault.strength_die
+        self.neat_dict['deflection_die'] = self.info.assault.deflection_die
+        self.neat_dict['deflection'] = str(self.info.assault.deflection).translate(translation)
+        self.neat_dict['assault_ap'] = self.info.assault.ap
+        self.neat_dict['assault_damage'] = self.info.assault.damage
+
+        try:
+            self.neat_dict['replaces'] = str(self.replaces).translate(translation)
+        except AttributeError:
+            self.neat_dict['replaces'] = 'Nothing'
+
+        try:
+            self.neat_dict['cost'] = e.info.cost
+        except:
+            self.neat_dict['cost'] = 0
+            
+        self.neat_dict['equipment'] = self.equipments
+
+        txt = ''
+        for key, equipment in self.equipments.as_dict().items():
+            #all equipment with same name should be indentical
+            #From model we only need the short information.
+            txt = txt + equipment[0].write_info(long_=False, format_=format_)
+
+        self.neat_dict['equipment_info'] = txt
+            
+        txt = ''
+        if format_ == 'tex':
+            try:
+                for u in self.info.assault.special:
+                    txt = txt + u + '\\\\ \n'              
+            except AttributeError:
+                txt = ''
+            self.neat_dict['assault_special'] = txt
+
+            txt = ''
+            try:
+                for u in self.info.special:
+                    txt = txt + u + '\\\\ \n'              
+            except AttributeError:
+                txt = ''
+            self.neat_dict['special'] = txt
+            
+    def write_info(self, long_=True, format_='tex'):
+        if format_ == 'tex':
+            if long_:
+                with open('model_long.tex', 'r') as fid:
+                    model_long = fid.read()
+
+                self.generate_neat_dict(long_ = True, format_='tex')
+
+                model_long = model_long.format(**self.neat_dict)
+
+                return model_long
+            
+            else:
+                with open('model_short.tex', 'r') as fid:
+                    model_short = fid.read()
+                
+                self.generate_neat_dict(long_ = False, format_='tex')
+
+                model_short = model_short.format(**self.neat_dict)
+
+                return model_short
+            
+
+
+    
     @classmethod
     def from_toml(cls, model):
         toml = _all_tomls()
@@ -554,6 +710,199 @@ class Equipment:
     label: str
     info: Configuration = field(default_factory=Configuration, repr=False)
 
+    def generate_neat_dict(self, long_=True, format_='tex'):
+        translation = {39: None}
+        self.neat_dict = {}
+        self.neat_dict['race'] = self.info.race
+        self.neat_dict['name'] = self.info.as_dict()['name']
+        self.neat_dict['requiers'] = str(self.info.requires).translate(translation)
+        try:
+            self.neat_dict['cost'] = 'Upgrade all models: ' + str(self.info.cost)
+        except:
+            self.neat_dict['cost'] = 0
+
+        try:
+            self.neat_dict['cost'] = 'Upgrade one model: ' + str(self.info.model_cost)
+        except:
+            self.neat_dict['cost'] = 0
+        
+            
+        try:
+            self.info.range
+            ranged = True
+        except AttributeError:
+            ranged = False
+
+        self.neat_dict['ranged'] = ranged
+
+        try:
+            special = self.info.special
+        except AttributeError:
+            special = []
+
+        txt = ''
+        if format_ == 'tex':
+            for s in special:
+                txt = txt + s + '\\\\ \n'
+
+        self.neat_dict['special'] = txt
+                
+        if format_ =='tex':        
+            with open('ordersheadline_template.tex', 'r') as fid:
+                ordersheadline_template = fid.read()
+
+            with open('ordersline_template.tex','r') as fid:
+                ordersline_template = fid.read()
+            
+        ordersheadline = ''
+        orders_txt = ''
+        try:
+            orders = self.info.orders_gained.as_dict()
+        except AttributeError:
+            orders = {}
+            
+        for order_name in orders.keys():
+            ordersheadline = ordersheadline_template.format(order_name=order_name)
+            orderslines = ''
+            for speed in orders[order_name].keys():
+                for order in orders[order_name][speed]:
+                    orderslines = orderslines + ordersline_template.format(speed=speed, order=str(order).translate(translation))
+                
+            orders_txt = orders_txt + ordersheadline + orderslines
+
+        self.neat_dict['orders'] = orders_txt
+
+        txt = ''
+        if ranged:
+            self.neat_dict['range'] = self.info.range.range
+            self.neat_dict['angle'] = self.info.range.angle
+            self.neat_dict['ranged_ap']  = self.info.range.ap
+            self.neat_dict['ranged_damage'] = self.info.range.damage
+            
+            
+            if format_ =='tex':
+                for s in self.info.range.special:
+                    txt  = txt + s + '\\\\ \n'              
+
+        self.neat_dict['range_special']  = txt
+
+
+
+        try:
+            self.info.assault
+            assault_weapon = True
+        except AttributeError:
+            assault_weapon = False
+
+        self.neat_dict['assault_weapon'] = assault_weapon
+
+
+        self.neat_dict['assault_special'] = ''
+        if assault_weapon:
+
+            txt = ''
+            self.assault_neat_dict = {}
+            try:
+                self.neat_dict['strength'] = self.info.assault.strength.add
+                
+            except AttributeError:
+                pass
+
+            
+            try:
+                self.neat_dict['deflection'] = self.info.info.assault.deflection.add
+                self.neat_dict['deflection_die'] = self.info.info.assault.deflection_die.replace
+            except AttributeError:
+                pass
+
+            try:
+                self.neat_dict['assault_damage'] = self.info.assault.damage.replace
+            except AttributeError:
+                pass
+
+            try:
+                self.neat_dict['ap'] = self.info.assault.ap.replace
+            except AttributeError:
+                pass
+
+            try:
+                assaultspecials = self.info.assault.special
+            except AttributeError:
+                assaultspecials = []
+
+            txt = ''
+            if format_ =='tex':
+                for a in assaultspecials:
+                    txt = txt + a + '\\\\ \n'
+            self.neat_dict['assault_special'] = txt
+
+
+            
+    def write_info(self, long_=True, format_='tex'):
+        if format_ == 'tex':
+            if long_:
+                with open('equipment_long.tex', 'r') as fid:
+                    equipment_long = fid.read()
+                
+                    
+                self.generate_neat_dict(long_ = True, format_='tex')
+
+                assault = ''
+                if 'assault_strength' in self.neat_dict.keys():
+                    if format=='tex':
+                        with open('assault_strength.tex', 'r') as fid:
+                            assault_strength = fid.read()
+                        assault = assault_strength.format(**self.neat_dict) + '\\\\ \n'
+                if 'assault_damage' in self.neat_dict.keys():
+                    if format=='tex':
+                        with open('assault_damage.tex', 'r') as fid:
+                                assault_damage = fid.read()
+                        assault = assault + assault_damage.format(**self.neat_dict) + '\\\\ \n'
+
+                if 'assault_ap' in self.neat_dict.keys():
+                    if format=='tex':
+                        with open('assault_ap.tex', 'r') as fid:
+                            assault_ap = fid.read()
+                        assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
+
+                if 'assault_deflection' in self.neat_dict.keys():
+                    if format=='tex':
+                        with open('assault_ap.tex', 'r') as fid:
+                            assault_ap = fid.read()
+                        assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
+
+                equipment_ranged = ''
+                if self.neat_dict['ranged']:
+                    with open('equipment_ranged.tex', 'r') as fid:
+                        equipment_ranged = fid.read()
+                        
+
+                        
+                self.neat_dict['range'] = equipment_ranged.format(**self.neat_dict)
+                        
+                self.neat_dict['assault'] = assault
+                        
+                equipment_long = equipment_long.format(**self.neat_dict)
+
+                return equipment_long
+            
+            else:
+                with open('equipment_short.tex', 'r') as fid:
+                    equipment_short = fid.read()
+                
+                self.generate_neat_dict(long_ = False, format_='tex')
+
+                if self.neat_dict['ranged']:
+                    with open('equipment_ranged.tex', 'r') as fid:
+                        equipment_ranged = fid.read()
+                    
+                self.neat_dict['range'] = equipment_ranged.format(**self.neat_dict)
+                
+                equipment_short = equipment_short.format(**self.neat_dict)
+
+                return equipment_short
+
+        
     @classmethod
     def from_toml(cls, equipment):
         toml = _all_tomls()
@@ -644,6 +993,7 @@ def _all_tomls():
     file_paths = pathlib.Path(__file__).parent.glob("*.toml")
     toml = Configuration()
     for path in file_paths:
+        print(path)
         toml.update_from_file(path)
 
     return toml
