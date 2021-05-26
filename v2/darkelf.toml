@@ -1,0 +1,365 @@
+[races]
+
+    [races.darkelf]
+    name = "Dark Elf"
+
+
+[units]
+
+    [units.darkelf_infantry]
+    race = "darkelf"
+    name = "Dark Elf Infantry"
+    models = ["darkelf_infantry"]
+    size = "medium"
+    armor = [0, 0, 0, 0]
+    cost.mp = 6
+    special = ["Take-Cover[still,crawl][-2]"]
+
+        [units.darkelf_infantry.orders.movement]
+        slow = [["Chase", "-", "-"],
+	       ["-", "-", "Chase"],
+	       ["360°", "F",  "360°"],
+	       ["360°", "360°", "360°"],
+	       ["360°",  "B", "-"],
+	       ["360°", "B[crawl]", "-"]]
+	     
+	still = [["360° + - + -"], ["360° + A + F"],["360°","A[crawl]", "F"]]
+	crawl = [["360°", "F",  "-"],
+	     	["360°", "B[still]", "-"],
+	     	["360°", "A[slow]", "F"]]
+
+	default.crawl = [["-", "-", "A,Flee"]]
+        default.still = [["-", "-", "-"]]
+        default.slow = [["-", "-", "Flee"]]
+
+        [units.darkelf_infantry.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+
+	
+        [units.darkelf_infantry.damage_tables]
+        regular = ["0-5: Kill 1 model",
+		"6-8: Kill 1 Model, d6 Psychic damage",
+            "9: Destroy unit base"
+        ]
+        psychic = [
+            "4+: Unit Shaken",
+        ]
+
+    [units.roboprosteric_darkelf]
+    race = "darkelf"
+    name = "Robopsteric DarkElf"
+    models = ["roboprosteric_darkelf"]
+    size = "medium"
+    armor = [3, 3, 3, 3]
+    cost.mp = 4
+    cost.cp = 3
+    special = ["Take-Cover[still,crawl][-2]"]
+
+        [units.roboprosteric_darkelf.orders.movement]
+        slow = [["Chase", "-", "-"],
+	       ["-", "-", "Chase"],
+	       ["360°", "F",  "360°"],
+	       ["360°", "360°", "360°"],
+	       ["360°",  "B", "-"],
+	       ["360°", "B[crawl]", "-"]]
+	     
+	still = [["360° + - + -"], ["360° + A + F"],["360°","A[crawl]", "F"]]
+	crawl = [["360°", "F",  "-"],
+	     	["360°", "B[still]", "-"],
+	     	["360°", "A[slow]", "F"]]
+
+	default.crawl = [["-", "-", "A,Flee"]]
+        default.still = [["-", "-", "-"]]
+        default.slow = [["-", "-", "Flee"]]
+
+        [units.roboprosteric_darkelf.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+
+	
+        [units.roboprosteric_darkelf.damage_tables]
+        regular = ["0-5: Kill 1 model",
+		"6-8: Kill 1 Model, d6 Psychic damage",
+            "9: Destroy unit base"
+        ]
+        psychic = [
+            "5+: Unit Shaken",
+        ]
+
+
+
+#
+# Models
+#
+[models]
+
+    [models.darkelf_infantry]
+    name = "Dark Elf Infantry"
+    race = "Dark Elf"
+    equipment_limit = ["hands:2", "training:1", "independent:∞"]
+    equipments = ["rifle"]
+    type = ["bio", "infantry", "walks"]
+    special = []
+
+        [models.darkelf_infantry.assault]
+        strength = [1, 1, 1, 2]
+        strength_die = "5+"
+        deflection = [1, 1, 0, 0]
+        deflection_die = "6+"
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]","Reroll all success in assault while crawling" ]
+
+    [models.darkelf_elite_infantry]
+    name = "DarkElf Elite Infantry"
+    race = "darkelf"
+    equipment_limit = ["hands:2", "training:1", "independent:∞"]
+    equipments = ["rifle"]
+    type = ["bio", "elite", "infantry", "walks"]
+    replaces = ["darkelf_infantry"]
+    special = [,
+    "Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
+    cost.xp = 1
+
+    	[models.darkelf_elite_infantry.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "3+"
+        deflection = [4, 2, 1, 1]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]","Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection", "Reroll all success in assault while crawling" ]
+
+
+
+    [models.roboprosteric_darkelf]
+    name = "Dark Elf Infantry"
+    race = "darkelf"
+    equipment_limit = ["hands:2", "training:1", "independent:∞"]
+    equipments = ["rifle"]
+    type = ["bio", "infantry", "walks", "roboprosteric"]
+    special = []
+
+        [models.roboprosteric_darkelf.assault]
+        strength = [1, 1, 1, 2]
+        strength_die = "5+"
+        deflection = [1, 1, 0, 0]
+        deflection_die = "6+"
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]","Reroll all success in assault while crawling" ]
+
+
+    [models.elite_roboprosteric_darkelf]
+    name = "Elite Roboprosteric DarkElf"
+    race = "darkelf"
+    equipment_limit = ["hands:2", "training:1", "independent:∞"]
+    equipments = ["rifle"]
+    type = ["bio", "elite", "infantry", "walks", "robprosteric"]
+    replaces = ["roboprosteric_darkelf"]
+    special = [,"Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
+    cost.xp = 1
+
+    	[models.elite_roboprosteric_darkelf.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "3+"
+        deflection = [4, 2, 1, 1]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]","Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection", "Reroll all success in assault while crawling" ]
+
+
+
+[equipments]
+
+    [equipments.rifle]
+    name = "Rifle"
+    race = "darkelf"
+    requires = [
+        ["hands:2"],
+	["type:infantry"]
+    ]
+
+        [equipments.rifle.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6-2"
+        ap = 2
+        special = []
+
+
+    [equipments.mechanical_imp]
+    name = "Mechanical Imp"
+    race = "darkelf"
+    cost.cp = 4
+    cost.xp = 2
+    requires = [
+        ["independent:1"],
+	["type:infantry"]
+    ]
+    special = ["Mechanical robotic imps helps all memeber in unit base to reload it's weapons. Threat any weapons as always loaded."]
+
+
+    [equipments.smg]
+    name = "SMG"
+    race = "darkelf"
+    cost.cp = 1
+    requires = [
+        ["hands:2"],
+	["type:infantry", "type:cavalry"]
+    ]
+
+        [equipments.smg.range]
+        range = 3
+        angle = [true, true, true, true]
+        damage = "d6-3"
+        ap = 1
+        special = ["Always treated as loded Fires two times (per model) each time it is fired"]
+
+        [equipments.smg.orders_gained.fire]
+        still= [["Fire", "Fire"]]
+	slow = [["Fire", "Fire"]]
+
+
+
+    [equipments.smg_free]
+    name = "SMG"
+    race = "darkelf"
+    requires = [
+        ["hands:2"],
+	["type:infantry"]
+    ]
+
+        [equipments.smg_free.range]
+        range = 3
+        angle = [true, true, true, true]
+        damage = "d6-3"
+        ap = 1
+        special = ["Always treated as loded Fires two times (per model) each time it is fired"]
+
+        [equipments.smg_free.orders_gained.fire]
+        still= [["Fire", "Fire"]]
+	slow = [["Fire", "Fire"]]
+
+
+    [equipments.crossbow]
+    name = "Crossbow"
+    race = "darkelf"
+    cost.cp = 2
+    requires = [
+        ["hands:2"],
+	["type:infantry", "type:cavalry"]
+    ]
+
+        [equipments.crossbow.range]
+        range = 2
+        angle = [true, true, true, true]
+        damage = "d6-2"
+        ap = 2
+        special = ["Poison[6], minor acid"]
+
+
+
+    [equipments.crossbow_free]
+    name = "Crossbow"
+    race = "darkelf"
+    requires = [
+        ["hands:2"],
+	["type:infantry", "type:cavalry"],
+    ]
+
+        [equipments.crossbow_free.range]
+        range = 2
+        angle = [true, true, true, true]
+        damage = "d6-2"
+        ap = 2
+        special = ["Poison[6], minor acid"]
+
+
+    [equipments.enhanced_crossbow]
+    name = "Enhanced Crossbow"
+    race = "darkelf"
+    model_cost.cp = 2
+    requires = [
+        ["hands:2"],
+	["type:infantry", "type:cavalry"],
+	["type:elite"],
+    ]
+
+        [equipments.enhanced_crossbow.range]
+        range = 6
+        angle = [true, true, true, true]
+        damage = "d6-2"
+        ap = 2
+        special = ["Poison[8], minor acid"]
+
+
+
+
+    [equipments.poison_gas_grenade]
+    name = "Poison Gas Grenade"
+    race = "darkelf"
+    cost.cp = 1
+    requires = [
+        ["independent:1"],
+	["type:infantry", "type:cavalry"]
+    ]
+
+        [equipments.poison_gas_grenade.range]
+        range = 2
+        angle = [true, true, true, true]
+        damage = "N.A."
+        ap = 0
+        special = ["Place a Poison Cloud[6] within normal range", "Limited Ammo[2]", "Always treated as loaded"]
+
+
+ 	[equipments.poison_gas_grenade.orders_gained.fire]
+        all = [["-", "Throw Gas Grenade"]]
+
+
+
+    [equipments.mortar1a]
+    name = "Mortar 1A"
+    race = "darkelf"
+    cost.cp = 16
+    cost.xp = 8
+    requires = [
+        ["shared:1"],
+	["type:infantry"],
+    ]
+
+        [equipments.mortar1a.range]
+        range = 10
+        angle = [true, true, true, true]
+        damage = "d6-2"
+        ap = 2
+        special = ["Choose a hex within range and roll a die, at 5+ place a Poison \\& Acid Cloud [8, minor] at target hex. Place a Poison Cloud[6]  at all hexes surronding that initial hex", "If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.", "Indirect fire: may use line of sight of any friendly unit on the battle field."]
+
+
+
+    [equipments.mortar11b]
+    name = "Mortar 1.1B"
+    race = "darkelf"
+    cost.cp = 16
+    cost.xp = 8
+    requires = [
+        ["shared:1"],
+	["type:infantry"]
+    ]
+
+        [equipments.mortar11b.range]
+        range = 10
+        angle = [true, true, true, true]
+        damage = "N.A"
+        ap = 0
+        special = ["Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.", "If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.", "Indirect fire: may use line of sight of any friendly unit on the battle field."]

@@ -12,7 +12,7 @@
     models = ["gnome_infantry"]
     size = "medium"
     armor = [0, 0, 0, 0]
-    cost.mp = 2
+    cost.mp = 4
     special = ["Take-Cover[still][-2]"]
 
 
@@ -72,7 +72,7 @@
     equipments = ["gnome_gun", "light_smg", "poison_dart", "acid_ballon", "grinder" ]
     type = ["bio", "elite", "infantry", "walks"]
     replaces = ["gnome_infantry"]
-    special = ["Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.", "Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
+    special = ["Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)", "Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
     cost.xp = 1
 
     	[models.gnome_elite_infantry.assault]
@@ -92,7 +92,7 @@
     type = ["bio", "infantry", "tinkerer", "walks"]
     cost.xp = 4
     cost.cp = -3
-    special = []
+    special = ["Once per game: May Launch Mechanical Badger: Place a mechanical badger unit in any of the surronding hexes. "]
 
         [models.gnome_tinkerer.assault]
         strength = [1, 1, 1, 1]
@@ -198,3 +198,66 @@
         damage = "d8-2"
         ap = 2
         special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Only treated as loaded if your main gun is loaded. Minor Acid"]
+
+
+    [equipments.mechanical_owl]
+    name = "Mechanical Owl"
+    race = "gnome"
+    unit.cost.cp = 2
+    special = ["Gives all weapons the enhanced accurazy trait"]
+    requiers = [["type: infantry"],["independent:1"]]
+
+    [equipments.master_crafted_frost_ray]
+    race = "gnome"
+    name = "Master Crafted Frost Ray"
+    unit.cost.xp = 4
+    unit.cost.cp = 2
+    requiers = [["type: infantry"],["hands:2"]]
+    
+
+    	     [equipments.master_crafted_frost_ray.range]
+	     range = 4
+             angle= [true, true, true, true]
+             damage = "d4-2+d6 psycic damge + d4 crew damage"
+             ap = 0
+	     special = [ "If you use the 'amplified fire, fire the gun at 1 enemy unit. If you hit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed emidetely"]
+	     
+	     [equipments.master_crafted_frost_ray.orders_gained.fire]
+	     still = ["-", "amplified fire"]
+
+
+    [equipments.green_gas_launcher]
+    race = "gnome"
+    name = "Green Gas Launcer"
+    unit.cost.cp = 2
+    requiers = [["type: tinkerer", "type: elite"],["type:infantry"],["reserve:1"]]
+
+    	     [equipments.green_gas_launcher.range]
+	     range = 3
+             angle= [true, true, true, true]
+             damage = "d6 psycic damage"
+             ap = 0
+	     special = ["Choose one hex within normal range: Area[5+]", "Poison[4]", "Reserve weapon: may use this weapon instead of main gun when either fire (reserve) orders is given or a regular fire order is given, but you may only use one weapon at any given time.", "Always treated as loaded"]
+
+
+
+    [equipments.experimental_plasma_gun]
+    race = "gnome"
+    name = "Experimental Plasma Gun"
+    unit.cost.cp = 6
+    requiers = [["type: tinkerer"],["type:infantry"],["hands:2"]]
+
+    	     [equipments.experimental_plasma_gun.range]
+	     range = 5
+             angle= [true, true, true, true]
+             damage = "d12-3"
+             ap = 6
+	     special = ["If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carring the plasma gun first."]
+
+
+    [equipments.assault_bot_mortar]
+    race = "gnome"
+    name = "Assault Bot Mortar"
+    unit.cost.cp = 6
+    requiers = [["type:infantry"],["hands:2"]]
+    special = ["No regular damage", "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."]
