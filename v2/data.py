@@ -104,6 +104,48 @@ class Race:
     equipments: munch.Munch = field(default_factory=munch.Munch)
     info: Configuration = field(default_factory=Configuration, repr=False)
 
+    def write_info(self, long_=True, format_='tex'):
+        txt = ''
+
+        for name, unit in self.units.items():
+
+                
+            txt = txt + unit.write_info(long_=long_, format_=format_)
+
+            if format_ == 'tex':
+                txt = txt + '\\pagebreak'
+
+        if format_ == 'tex':
+            txt = txt + '\\section{Upgradeable Units}'
+                
+        for name, model in self.models.items():
+
+            try:
+                model.info.cost
+            except AttributeError:
+                continue
+
+            txt = txt + model.write_info(long_, format_)
+
+        if format_ == 'tex':
+            txt = txt + '\\section{Equipment and training Upgrades}'
+            
+        for name, eq in self.equipments.items():
+
+            try:
+                eq.info.cost
+            except AttributeError:
+                continue
+
+            txt = txt + eq.write_info(long_, format_)
+            
+        if format_ =='tex':
+            filename = self.label +'.tex'
+
+            with open(filename, 'w') as fid:
+                fid.write(txt)
+  
+    
     @classmethod
     def from_toml(cls, race):
         toml = _all_tomls()
@@ -215,6 +257,7 @@ class Team:
     def available_equipment(self, unit_name, race):
         """List available equipment for the given unit"""
         self._assert_unit_exists(unit_name)
+
         return {
             k: e
             for k, e in self.units[unit_name].available_equipment(race).items()
@@ -266,7 +309,7 @@ class Unit:
         self.neat_dict['size'] = self.info.size
         try:
             self.neat_dict['cost'] = self.cost
-        except:
+        except AttributeError:
             self.neat_dict['cost'] = 0
             
         try:
@@ -290,8 +333,9 @@ class Unit:
         txt = ''
         for key, model  in self.models.as_dict().items():
             #All models of same name should be identical
-            #import IPython; IPython.embed()
-            txt = txt + model[0].write_info(format_=format_, long_=long_)
+            #Need only short version in unit section
+            
+            txt = txt + model[0].write_info(format_=format_, long_=False)
 
             
         self.neat_dict['models_info'] = txt
@@ -396,6 +440,7 @@ class Unit:
         }
         return (
             Costs.from_toml(self.info.get("cost", {}))
+            
             + sum((m.added_cost for m in self.models), start=Costs())
             + sum((e.added_unit_cost for e in unit_equipment.values()), start=Costs())
         )
@@ -512,7 +557,7 @@ class Model:
     def generate_neat_dict(self, long_ = True, format_ = 'tex'):
         #Translation magic, don't know how it works, but I don't need to.
         translation = {39: None}
-        
+
         self.neat_dict = {}
         self.neat_dict['race'] = self.info.race
         self.neat_dict['name'] = self.info.as_dict()['name']
@@ -522,25 +567,27 @@ class Model:
         except:
             self.neat_dict['equipment_limit'] = ''
         try:
-            self.neat_dict['cost'] = self.cost
-        except:
+            self.neat_dict['cost'] = Costs.from_toml(self.info.cost)
+        except AttributeError:
             self.neat_dict['cost'] = ''
 
             
-        self.neat_dict['strength'] = str(self.info.assault.strength).translate(translation)
-        self.neat_dict['strength_die'] = self.info.assault.strength_die
-        self.neat_dict['deflection_die'] = self.info.assault.deflection_die
-        self.neat_dict['deflection'] = str(self.info.assault.deflection).translate(translation)
-        self.neat_dict['assault_ap'] = self.info.assault.ap
+        self.neat_dict['strength'] = str(self.assault.strength).translate(translation)
+        self.neat_dict['strength_die'] = self.assault.strength_die
+        self.neat_dict['deflection_die'] = self.assault.deflection_die
+        self.neat_dict['deflection'] = str(self.assault.deflection).translate(translation)
+        self.neat_dict['assault_ap'] = self.assault.ap
         self.neat_dict['assault_damage'] = self.info.assault.damage
 
         try:
-            self.neat_dict['replaces'] = str(self.replaces).translate(translation)
+            replaces = str(self.info.replaces).translate(translation)
+            #ToDo: replace replaces (in python name) with name attribute of model it replaces
+            self.neat_dict['replaces'] = replaces
         except AttributeError:
             self.neat_dict['replaces'] = 'Nothing'
 
         try:
-            self.neat_dict['cost'] = e.info.cost
+            self.neat_dict['cost'] = Costs.from_toml(self.info.cost)
         except:
             self.neat_dict['cost'] = 0
             
@@ -641,10 +688,13 @@ class Model:
 
     def allows_equipment(self, equipment):
         # Check each requirement of the equipment
+        
         for requirement_strings in equipment.info.requires:
             requirement = parse_requirements(requirement_strings, as_list=True)
             for attribute, allowed_values in requirement.items():
                 if attribute in self.info.entry_keys:
+                    
+                    
                     value = (
                         [self.info[attribute]]
                         if isinstance(self.info[attribute], str)
@@ -715,16 +765,17 @@ class Equipment:
         self.neat_dict = {}
         self.neat_dict['race'] = self.info.race
         self.neat_dict['name'] = self.info.as_dict()['name']
-        self.neat_dict['requiers'] = str(self.info.requires).translate(translation)
-        try:
-            self.neat_dict['cost'] = 'Upgrade all models: ' + str(self.info.cost)
-        except:
-            self.neat_dict['cost'] = 0
+        if long_:
+            self.neat_dict['requiers'] = str(self.info.requires).translate(translation)
+        
 
         try:
-            self.neat_dict['cost'] = 'Upgrade one model: ' + str(self.info.model_cost)
-        except:
-            self.neat_dict['cost'] = 0
+            self.neat_dict['cost'] = 'Upgrade all models for: ' + str(Costs.from_toml(self.info.cost))
+        except AttributeError:
+            try:
+                self.neat_dict['cost'] = 'Upgrade one model for: ' + str(Costs.from_toml(self.info.model_cost))
+            except AttributeError:
+                self.neat_dict['cost'] = 0
         
             
         try:
@@ -798,8 +849,9 @@ class Equipment:
 
 
         self.neat_dict['assault_special'] = ''
+        self.neat_dict['assault_headline'] = ''
         if assault_weapon:
-
+            self.neat_dict['assault_headline'] = 'Assault \\\\'
             txt = ''
             self.assault_neat_dict = {}
             try:
@@ -892,6 +944,7 @@ class Equipment:
                 
                 self.generate_neat_dict(long_ = False, format_='tex')
 
+                equipment_ranged = ''
                 if self.neat_dict['ranged']:
                     with open('equipment_ranged.tex', 'r') as fid:
                         equipment_ranged = fid.read()
@@ -921,7 +974,7 @@ class Equipment:
 
     @property
     def is_free(self):
-        return not {"unit_cost", "model_cost"} & set(self.info.section_names)
+        return not {"cost", "model_cost"} & set(self.info.section_names)
 
     @property
     def added_unit_cost(self):

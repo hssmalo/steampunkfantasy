@@ -43,10 +43,17 @@
     special = ["Has same orders available as the unit base it awakened from, and the same weapons as the last surviving model of the unit base"]
 
     		 [units.champion.damage_tables]
-    		 regular = [
-    	    	 	 "2-3: Bleeding[4]",
+    		 regular = ["2-3: Bleeding[4]",
 	    		 "4+ : Killed"]
 
+
+   		[units.champion.orders.movement]
+		all = 'As unit it came from'
+
+		[units.champion.orders.fire]       
+		all = 'As unit it came from'
+
+		
 
 
     [units.warg_rider]
@@ -83,7 +90,7 @@
 	  slow = [["L","F","L"],
 	       ["R","F","R"],
 	       ["F","-","-"],
-	       ["A","F + F"],
+	       ["A","F", "F"],
 	       ]
 	  default.slow = ["-","-","B",]
 	  fast = [["F","F","F"],
@@ -100,19 +107,33 @@
 	  [units.speedhead.orders.fire]
 	  all = [["Load", "Load"], ["Load", "Fire Burst(5)"], ["Fire Burst(5)", "Load",]]
 
+	  [units.speedhead.damage_tables]
+	  regular = [ "1-4: Light damage[d6]",
+	  	  "5-8: Critical Damage[d6], +1 on future damage",
+		  "9+: unit destroied",]
+	  light= [ "1-4: +1 on future damage", "5-6: Unit Shaken", ]
+	  critical = [ "1-3: x3 light damage[d6]",
+	  	   "4: Cannot rotate",
+		   "5: -1 to hit, +1 to be hit (ranged and assault)",
+		   "6: Unit set on fire",]
+	   crew = [ "4-5: jammed",
+	   	"6-7: as 4-5, shaken",
+		"8-11: as 6-7, +3 to future crew damage",
+		"12: Unit destroied",]
+
     [units.hammerhead]
     race = "ork"
     name = "HammerHead"
     models = ["hammerhead"]
     size = "Large"
-    cost.ip = 8    
+    cost.ip = 8
     armor = [13,8,7,7]
 
     	  [units.hammerhead.damage_tables]
     	  regular = [ "1-4: Light damage[d6]", "5-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
     	  light = [ "1-4: +1 on all future damage", "5-6: unit shaken",]
     	  critical = [ "1-3: Light damage[d6], 3 times", "4: Unit cannot rotate Left", "5: Unit Cannot rotate Right", "6: Harpoon guns destroyed.",]
-    	  crew = [ "4-5: Misfire[2-]", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied"]
+    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied"]
 
     	  [units.hammerhead.orders.fire]
 	  still = [[ "Load", "-"]]
@@ -184,7 +205,7 @@
     special = ["Take Cover[still][-2]", "Bad Shot: -1 to hit with range weapons"]
 
         [units.ork_infantry.orders.movement]
-        slow = [["Chase", "-", "-"], ["-", "-", "Chase"], ["360°", "F",  "360°"], ["360°", "360°", "360°"], ["360° + B + -"]]
+        slow = [["Chase", "-", "-"], ["-", "-", "Chase"], ["360°", "F",  "360°"], ["360°", "360°", "360°"], ["360°", "B", ""]]
 	still = [["360°", "-", "-"], ["360°", "A", "F"]]
         default.slow = ["-", "-", "Flee"]
 
@@ -247,7 +268,7 @@
    armor = [11,9,8,7]
 
    	 [units.ork_char_b1.orders.fire]
-	 still_slow = [
+	 stillslow = [
 	 	    ["Fire (pop)","Load (heavy)"],
 	 	    ["Load (heavy)","Fire (pop)"],
 		    ["Fire (heavy) "," Load (pop)"],
@@ -329,7 +350,7 @@
 		 "4-5: x3 Light Damage[d6]",
 		 "6: Unit set on fire"]
 	crew = [
-	     "4-5: Misfire[2-]",
+	     "4-5: Jammed",
 	     "6-7: as 4-5, shaken",
 	     "8-11: as 6-7, +3 to future crew damage",
 	     "12: Unit destroied"]
@@ -426,6 +447,8 @@
     [models.champion]
     name = "Champion"
     race = "ork"
+    type = ["elite", "infantry", "walks"]	
+    special = []
 
    	[models.champion.assault]
 	strength = [6,3,3,3]
@@ -434,6 +457,7 @@
 	deflection = [2, 0, 0, 0]
 	damage = "d6"
 	ap = "-"
+	
 	special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 2]"]
 
 
@@ -452,7 +476,7 @@
 	damage = "d6-2"
 	ap = "2"
 	deflection = [2,2,1,1]
-	assault_special =["{template.ability.reroll_assault:6}", "Cunning assault[1 for 4]"]
+	special =["{template.ability.reroll_assault:6}", "Cunning assault[1 for 4]"]
 
 
 
@@ -462,7 +486,7 @@
    [models.hammerhead]
    name = "Hammerhead"
    race = "Ork"
-   
+   type    = ["vehicle", "mechanical", "bio crew", "tracks"]
 
    equipments = ["harpoon_gun","harpoon_gun","harpoon_gun","harpoon_gun",]
    equipments_limit = ["independent:∞"]
@@ -470,7 +494,7 @@
 
     	  [models.hammerhead.assault]
 	  strength = [12, 8, 8, 8]
-	  strenth_die = "6+"  
+	  strength_die = "6+"  
 	  deflection_die = "6+"
 	  damage = "d8+3 (from front), else d8"
 	  ap = "10 (from front), else 2"
@@ -703,7 +727,7 @@
 	angle = [true, true, false, false]
         damage = "d6-1"
         ap = 2
-        special = ["1 handed weapon. Infantry may combine pistol with another 1-handed weapon.", "If combined with another pistol, you may load and fire both pistol simultaniously"]
+        special = ["1-handed weapon. Infantry may combine pistol with another 1-handed weapon.", "If combined with another pistol, you may load and fire both pistol simultaneously", "Can be loaded with up too 2 ammo"]
 
 
 	[equipments.ork_pistol.orders_gained.fire]
@@ -789,6 +813,7 @@
    [equipments.harpoon_gun_free]
    name = "Harpoon Gun"
    race = "ork"
+   requires = []
 
 	[equipments.harpoon_gun_free.range]
 	range = 5
@@ -823,6 +848,8 @@
    [equipments.shriek]
    race = "ork"
    name = "Shriek"
+   requires = []
+
 
 	[equipments.shriek.range]
 	range = 2
@@ -835,6 +862,7 @@
    [equipments.speed_cannon]
    race = "ork"
    name = "Speed Cannon"
+   requires = []
 
 	[euipments.speed_cannon.range]
 	range = 2
@@ -848,9 +876,11 @@
    [equipments.flamethrower]
    race = "ork"
    name = "Flamethrower"
+   requires = []
+
 
    	[equipments.flamethrower.range]
-	range_ = 1
+	range = 1
 	angle = [true, false, false, false]
 	special = ["Fire at all hexes possible simultaniously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc. ", " Any target unit effected atleast once is set on FIRE. Fireresistance reduces base damage and crew damage from this weapon. ", " Limited Ammo: May be fired a maximum of 3 times. ", " Starts the game with all 3 ammo loaded"]
 damage = "d8 fire damage + d4 crew damage"
@@ -860,6 +890,8 @@ damage = "d8 fire damage + d4 crew damage"
    [equipments.rotating_pop_gun]
    race = "ork"
    name = "Rotating Pop Gun"
+   requires = []
+
 
    	[equipments.rotating_pop_gun.range]
 	range = 4
@@ -872,12 +904,15 @@ damage = "d8 fire damage + d4 crew damage"
    [equipments.heavy_forward_gun]
    race = "ork"
    name = "Heavy Forward Gun"
+   requires = []
+
 
    	[equipments.heavy_forward_gun.range]
 	range = 5
 	angle = [true, false, false, false]
 	damage = "d6 + 3 if penetrating all armor"
 	ap = 7
+	special = []
 
    [equipments.tanksscalper]
    race = "ork"
