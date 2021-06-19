@@ -8,7 +8,7 @@ knut = Team('StandarElf')
 
 knut.units['Tattoo Ink'] = elf.units['Tattoo Ink']
 knut.units['Bear Rider'] = elf.units['Bear Rider']
-knut.units['Infantry'] = elf.units['Infantry']
+knut.units['Elf Infantry'] = elf.units['Elf Infantry']
 knut.units['Illusion'] = elf.units['Illusion']
 
 knut.weapons['Camuflouflage'] = elf.weapons['Camuflouflage']
@@ -63,8 +63,25 @@ ga.units['Speedhead'] = ork.units['Speedhead']
 ga.weapons['Ork Pistol'] = ork.weapons['Ork Pistol']
 ga.weapons['Clockwork Monocular'] = ork.weapons['Clockwork Monocular']
 ga.weapons['Clockwork Shield'] = ork.weapons['Clockwork Shield']
+
 ga.weapons['Flame-covered-axe'] = ork.weapons['Flame-covered-axe']
 
 ga.copy_weapons_from(ork)
 
 ga.write_pdf()
+
+
+ole = Team('StandarGnome')
+
+gnome  = Team('Gnome')
+gnome.from_toml()
+
+ole.units['Gnome Infantry'] = gnome.units['Gnome Infantry']
+ole.units['Gnome Motorcycle'] = gnome.units['Gnome Motorcycle']
+ole.units['Gnome Helicopter'] = gnome.units['Gnome Helicopter']
+ole.weapons['Acid Splash'] = gnome.weapons['Acid Splash']
+
+ole.copy_weapons_from(gnome)
+
+
+ole.write_pdf()

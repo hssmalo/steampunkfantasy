@@ -1,0 +1,32 @@
+
+\begin{{tabular}}{{ll}}
+  Name & {name} \\
+  Size & {size}\\
+  Type & {type_}\\
+  Cost & {cost}\\
+  Members & {members}\\
+  Armor & {armor}
+\end{{tabular}}
+
+
+Assault {assault}, {assault_die} Armor Penetration: {assault_ap}, {assault_pen} Damage: {assault_damage} \\
+Assault Deflection {assault_deflection}, {assault_deflection_die}\\
+{assault_special}
+\ \\
+
+{unit_special}
+
+%{{\bf Weapons}}\\
+%\include{{weapons}}
+
+{{\bf Orders}}\\
+
+{orders}
+
+
+%{{\bf Damage Tables}} \\
+
+%\inclue{{damge}}
+
+
+\pagebreak

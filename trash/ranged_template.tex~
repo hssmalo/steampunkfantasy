@@ -1,0 +1,16 @@
+\section{{ {name} }}
+
+\begin{{tabular}}{{ll}}
+    Cost & {cost} \\
+    Required & {requiered_to_buy}\\
+    Type & {type_}\\
+\end{{tabular}}
+\ \\
+\indent Angle: {angle} Range: {range_}  AP: {ap}, {pen}  Damage {damage} \\
+{special}
+\ \\
+{{\bf Orders Gained}}
+{orders_gained}
+
+{{\bf Orders Lost}}
+{orders_lost}

@@ -1,6 +1,10 @@
 import data
 
 ork = data.Race.from_toml("ork")
+darkelf = data.Race.from_toml("darkelf")
+dwarf = data.Race.from_toml("dwarf")
+
+hss = data.Team("Hss den store")
 t = data.Team("Geir Arnes superorker")
 t.add_unit(ork.units.grunt, name="Hans Sverre")
 t.add_equipment("Hans Sverre", ork.equipments.clockwork_wings)

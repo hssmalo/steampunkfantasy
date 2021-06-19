@@ -1,0 +1,4 @@
+
+
+{{\bf Assault} \\\\ Strengt {strength}, Strength Die: {strength_die}, AP: {ap} Damage: {damage} \\\\ Deflection {deflection}, Deflection Die: {deflection_die} \\
+

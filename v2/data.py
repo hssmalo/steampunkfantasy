@@ -132,16 +132,27 @@ class Race:
             
         for name, eq in self.equipments.items():
 
+            tryagain = False
             try:
                 eq.info.cost
             except AttributeError:
-                continue
+                tryagain = True
 
+            if tryagain:
+                try:
+                    eq.info.model_cost
+                except:
+                    continue
+                
             txt = txt + eq.write_info(long_, format_)
             
         if format_ =='tex':
+            
             filename = self.label +'.tex'
 
+            txt = txt.replace('_', ' ')
+            
+            print('writting to', filename)
             with open(filename, 'w') as fid:
                 fid.write(txt)
   
@@ -851,42 +862,13 @@ class Equipment:
         self.neat_dict['assault_special'] = ''
         self.neat_dict['assault_headline'] = ''
         if assault_weapon:
-            self.neat_dict['assault_headline'] = 'Assault \\\\'
-            txt = ''
-            self.assault_neat_dict = {}
-            try:
-                self.neat_dict['strength'] = self.info.assault.strength.add
-                
-            except AttributeError:
-                pass
+            print(self.name)
+            for key,value in self.info.assault.items():
+                for k2,v2 in value.as_dict().items():
+                    text = str(k2) + ' ' +str(v2)
 
-            
-            try:
-                self.neat_dict['deflection'] = self.info.info.assault.deflection.add
-                self.neat_dict['deflection_die'] = self.info.info.assault.deflection_die.replace
-            except AttributeError:
-                pass
-
-            try:
-                self.neat_dict['assault_damage'] = self.info.assault.damage.replace
-            except AttributeError:
-                pass
-
-            try:
-                self.neat_dict['ap'] = self.info.assault.ap.replace
-            except AttributeError:
-                pass
-
-            try:
-                assaultspecials = self.info.assault.special
-            except AttributeError:
-                assaultspecials = []
-
-            txt = ''
-            if format_ =='tex':
-                for a in assaultspecials:
-                    txt = txt + a + '\\\\ \n'
-            self.neat_dict['assault_special'] = txt
+                key = 'assault_' + key
+                self.neat_dict[key] = text
 
 
             
@@ -901,28 +883,30 @@ class Equipment:
 
                 assault = ''
                 if 'assault_strength' in self.neat_dict.keys():
-                    if format=='tex':
+                    if format_=='tex':
                         with open('assault_strength.tex', 'r') as fid:
                             assault_strength = fid.read()
                         assault = assault_strength.format(**self.neat_dict) + '\\\\ \n'
+
                 if 'assault_damage' in self.neat_dict.keys():
-                    if format=='tex':
+                    if format_=='tex':
                         with open('assault_damage.tex', 'r') as fid:
                                 assault_damage = fid.read()
                         assault = assault + assault_damage.format(**self.neat_dict) + '\\\\ \n'
 
                 if 'assault_ap' in self.neat_dict.keys():
-                    if format=='tex':
+                    if format_=='tex':
                         with open('assault_ap.tex', 'r') as fid:
                             assault_ap = fid.read()
                         assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
-
-                if 'assault_deflection' in self.neat_dict.keys():
-                    if format=='tex':
-                        with open('assault_ap.tex', 'r') as fid:
+                        
+                if 'deflection' in self.neat_dict.keys():
+                    if format_=='tex':
+                        with open('assault_deflection.tex', 'r') as fid:
                             assault_ap = fid.read()
                         assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
 
+                
                 equipment_ranged = ''
                 if self.neat_dict['ranged']:
                     with open('equipment_ranged.tex', 'r') as fid:

@@ -1,0 +1,205 @@
+\documentclass[frontgrid,a4,12pt]{flacards}
+
+
+% \usepackage[scaled=0.85]{beramono}
+\usepackage{color}
+
+%\usepackage{etoolbox}
+%\pretocmd{\card}{\def\curhint{#1}}{}{}
+
+\pagesetup{3}{3}
+
+
+\setlength{\cardwidth}{63mm}
+\setlength{\cardheight}{88mm}
+
+\renewcommand{\cardtextstylef}{\small}
+\renewcommand{\cardtextstyleb}{\small}
+
+\renewcommand{\brfoot}{}
+
+% Temporarily disable new lines when displaying the riddle on the back
+
+\renewcommand{\frfoot}{}
+% \renewcommand{\blfoot}{\footnotesize chris}
+% \renewcommand{\blfoot}{\footnotesize Ashley}
+% \renewcommand{\blfoot}{\footnotesize Casandra}
+% \renewcommand{\blfoot}{\footnotesize Jessica}
+
+
+
+
+\renewcommand{\flhead}{}
+\renewcommand{\brhead}{}
+
+\begin{document}
+\renewcommand{\frfoot}{Gnome Infantry}
+
+
+\renewcommand{\frfoot}{Gnome Infantry}y
+\renewcommand{\flhead}{Movement}
+
+\card{\begin{tabular}{ll}
+    (slow) & 360$^0$ + F + 360$^0$ \\
+    (still) & 360$^0$ + 360$^0$ + 360$^0$ 
+  \end{tabular}
+}{Gnome Infantry \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (slow) & 360$^0$ + B + 360$^0$ \\
+    (still) & 360$^0$ + A + F
+  \end{tabular}
+}{Gnome Infantry \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (slow) & - + - + chase \\
+  \end{tabular}
+}{Gnome Infantry\\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (default slow) & - + - + flee \\
+    (default still)& - + A + flee
+  \end{tabular}
+}{Gnome Infantry \\ Movement}
+
+\renewcommand{\frfoot}{Gnome Infantry}
+\renewcommand{\flhead}{Fire Orders}
+
+\card{ (still) fire + -}{Gnome Infantry \\ Fire Orders}
+
+\card{ (still) - + fire }{Gnome Infantry \\ Fire Orders}
+
+\card{ (still) aim + - }{Gnome Infantry \\ Fire Orders}
+
+\card{ (still) - + aim }{Gnome Infantry \\ Fire Orders}
+
+\card{ (still) load + - }{Gnome Infantry \\ Fire Orders}
+
+\card{ (still) - + load }{Gnome Infantry \\ Fire Orders}
+
+\card{ (all) fire(reserve) + fire (reserve) }{Gnome Infantry \\ Fire Orders}
+
+
+\renewcommand{\frfoot}{Gnome Motorcycle}
+\renewcommand{\flhead}{Movement Orders}
+
+
+\card{\begin{tabular}{ll}
+    (fast) F + F + F,B \\
+    (slow) 360$^0$ + F,B + 360$^0$ \\
+    (still) 360$^0$ + A + F
+\end{tabular}
+}{Gnome Motorcycle \\ Movement}
+
+
+
+\card{\begin{tabular}{ll}
+    (fast) F + F + 360$^0$ \\
+    (slow) 360$^0$ + F + 360$^0$ \\
+    (still) 360$^0$ + - + -
+\end{tabular}
+}{Gnome Motorcycle \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) 360$^0$ + F + F  \\
+    (slow) 360$^0$ + A + F 
+\end{tabular}
+}{Gnome Motorcycle \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (fast) F + B + 360$^0$ 
+\end{tabular}
+}{Gnome Motorcycle \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+    (default slow) - + - + flee \\
+    (default fast) - + flee + flee
+\end{tabular}
+}{Gnome Motorcycle \\ Movement}
+
+
+\renewcommand{\flhead}{Fire Orders}
+
+
+
+\card{ (still, slow) - + load }{Gnome Motorcycle \\ Fire Orders}
+
+\card{ (all) - + fire }{Gnome Motorcycle \\ Fire Orders}
+
+
+
+
+\renewcommand{\frfoot}{Gnome Helicopter}
+\renewcommand{\flhead}{Movement Orders}
+
+
+\card{\begin{tabular}{ll}
+    (still) A[still fly] + 360$^0$ + - \\
+    (still fly) - + - + D \\
+    (slow fly) L + F + - \\
+    (fast fly) F + F + -
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+
+
+\card{\begin{tabular}{ll}
+    (still) A[slow fly] + 360$^0$ + F \\
+    (still fly) 360$^0$ +  + - \\
+    (slow fly) L + F + L \\
+    (fast fly) F + F + L
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+
+
+\card{\begin{tabular}{ll}
+    (still, fly) A[slow, fly] + 360$^0$ + F \\
+    (slow fly) R + F +  \\
+    (fast fly) F + F + R
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+\card{\begin{tabular}{ll}
+     (slow fly) R + F + R  \\
+    (fast fly) F + F + B[slow fly]
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+
+
+\card{\begin{tabular}{ll}
+     (slow fly) - + - + D
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+     (slow fly) - + R + D
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+
+\card{\begin{tabular}{ll}
+     (slow fly) - + L + D
+\end{tabular}
+}{Gnome Helicopter \\ Movement}
+
+
+\renewcommand{\frfoot}{Gnome Helicopter}
+\renewcommand{\flhead}{Fire Orders}
+
+\card{ (all fly) Fire + -}{Gnome Helicopter \\ Fire Orders}
+
+\card{ (all) Load + -}{Gnome Helicopter \\ Fire Orders}
+
+\card{ (still fly) Aim + -}{Gnome Helicopter \\ Fire Orders}
+
+
+\end{document}

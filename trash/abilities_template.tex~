@@ -1,0 +1,18 @@
+\section{{ {name} }}
+
+\begin{{tabular}}{{ll}}
+  cost & {cost}\\
+  Required To by & {required_to_buy}\\
+  Operational by & {operational_by}\\
+
+\end{{tabular}}
+\ \\
+{special}
+
+{{\bf Orders Gained    }}
+
+{orders_gained}
+
+{{\bf Orders Lost }}
+
+{orders_lost}

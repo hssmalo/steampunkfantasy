@@ -1,0 +1,34 @@
+General
+-Officers: cost command points.
+Different types of officers:
+Infantry (cheapest)
+Cavalery (next cheapest)
+Tank (most expensive)
+
+Officers: probability to remove shaken abilities.
+Give new command after assaults (?)
+
+
+
+-Engineers (infantry base upgrade)
+
+Build things.
+
+-Buildings/enhancements.
+
+
+
+ELF:
+
+Officer abilities:
+Healing abilities of different kind.
+Move and heal, stand-still and heal.
+Replace fire order.
+Heal and fire...
+
+Dire Wolfs: assault aid. Pets.
+
+Dwarf
+Enigneers: fix lightly damage and crit damage of tanks.
+
+

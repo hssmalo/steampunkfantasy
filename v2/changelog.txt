@@ -6,3 +6,17 @@ Ork:
 	Renamed Char ... Orques til Ork Char B1
 	Removed Road+Road+Road movement from Ork char
 	Removed Halftrack
+
+Darkelf
+	Removed Gigiant Spider riders
+	Added roboprothestic assasin
+	Roboprothestic elites now cost 1 craftpoint insted of 1xp
+	Added Some items to roboprothestic units
+	Queen XXX renamed to Queen YY
+
+
+Dwarf:
+	Made minizeppeling less powerfull but cheaper
+	Removed assault bots
+	Removed heavy SMG
+	Added some weapon options for steampowerarmor (double and multibarrled muskets)

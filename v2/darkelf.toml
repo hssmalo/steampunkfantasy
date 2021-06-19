@@ -333,7 +333,7 @@
     armor = [0, 0, 0, 0]
     cost.mp = 6
     special = ["Take-Cover[still,crawl][-2]"]
-    equipment = ['rifle']
+    
 
         [units.darkelf_infantry.orders.movement]
         slow = [["Chase", "-", "-"],
@@ -372,7 +372,7 @@
 
     [units.roboprosthetic_darkelf]
     race = "darkelf"
-    name = "Robopsteric DarkElf"
+    name = "Roboprosthetic DarkElf"
     models = ["roboprosthetic_darkelf","roboprosthetic_darkelf","roboprosthetic_darkelf","roboprosthetic_darkelf"]
     size = "medium"
     armor = [3, 3, 3, 3]
@@ -506,7 +506,7 @@
 
     [units.scout]
     race = "darkelf"
-    name = "Assasin"
+    name = "Scout"
     models = ["scout"]
     size = "medium"
     armor = [0, 0, 0, 0]
@@ -613,7 +613,7 @@
     name = "Queen XY"
     race = "darkelf"
     equipment_limit = ["independent:∞"]
-    equipments = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
+    equipments = []
     type = ["bio crew", "vehicle", "mechanical", "track"]
     special = ["If you have the order release poison cloud as an fireing option, you may place a poison cload[12] during any movment phase in any the hex you are in, including contested hexes for assaults"]  
 	  
@@ -785,7 +785,7 @@
     special = []
 
         [models.roboprosthetic_darkelf.assault]
-        strength = [1, 1, 1, 2]
+        strength = [1, 1, 1, 1]
         strength_die = "5+"
         deflection = [1, 1, 0, 0]
         deflection_die = "6+"
@@ -805,7 +805,7 @@
     cost.cp = 1
 
     	[models.elite_roboprosthetic_darkelf.assault]
-        strength = [1, 1, 1, 1]
+        strength = [2, 1, 1, 1]
         strength_die = "3+"
         deflection = [4, 2, 1, 1]
         deflection_die = ""
@@ -1033,7 +1033,7 @@
         angle = [true, true, true, true]
         damage = "N.A"
         ap = 0
-        special = ["Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.", "If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.", "Indirect fire: may use line of sight of any friendly unit on the battle field."]
+        special = ["Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.", "If you don't roll a 3+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.", "Indirect fire: may use line of sight of any friendly unit on the battle field."]
 
 
 
@@ -1048,7 +1048,7 @@
 
         [equipments.poison_claws.assault]
    	strenth.add = [1, 0, 0, 0]
-	special = ["Poison[4][1 for 1]"]
+	special.append = ["Poison[4][1 for 1]"]
 
 
     [equipments.integrated_pistol]

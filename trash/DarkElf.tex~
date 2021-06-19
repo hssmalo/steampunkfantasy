@@ -1,0 +1,870 @@
+\section{ Hidden }
+
+\begin{tabular}{ll}
+  cost & 2xp\\
+  Operational by & 1 choosen infantry base\\
+\end{tabular}
+\ \\
+['Hidden: while hidden you cannot be fired upon or be assaulted. If in an assault you may choose to reveal your self, gaining the reveal bonuses. If not, stay in same hex. Replace the infantry base with a hidden token, and you do not have to tell the enemy exactly what is under the hidden token. You may start hidden if you wish. You stay hidden until you reveal your self, have a speed of slow or stand-still in a clear hex with line of sight of enemy, or by the roll of 4+ by an enemy within point blank range, or by enemy special action. You only get reveal bonuses while using the reveal order or in assaults.', 'Reveal bonuses: +2 to hit, +1 to damage of ranged weapons, +50\\% assault and assault deflection dice (rounded up). This round only', 'Camuflage[swam] -1 to be hit in swamps', 'Hide action: remove your unit from the board, replace it with a hidden token. Only works if you are in swamp terrain.', 'Reveal: place your infantry within 2 hexes of the hidden token and gain reveal bonuses.', 'Infiltrate: may start up to 2 hex from normal starting area']
+
+{\bf Orders Gained    }
+
+\\(stand still) Reveal + - + - \\(slow) - + Reveal + Chase\\(stand-still, slow or crawl) Hide[swamp] + - + -\\
+
+{\bf Orders Lost }
+
+\\\\
+\section{ Crawl }
+
+\begin{tabular}{ll}
+  cost & \\
+  Operational by & All infantry bases\\
+\end{tabular}
+\ \\
+['Specail speed gained: crawl. Retrain Take Cover benefis while moving. However, all terrain cost 2 movement points to enter.']
+
+{\bf Orders Gained    }
+
+\\(stand still) Reveal + - + - \\(slow) - + Reveal + Chase\\(stand-still, slow or crawl) Hide[swamp] + - + -\\\\
+
+{\bf Orders Lost }
+
+\\\\\\
+\section{ Elite Infantry }
+
+\begin{tabular}{ll}
+  Name & Elite Infantry \\
+  Size & medium\\
+  Type & Infantry, Bio, Elite\\
+  Cost & 1xp to upgrade 2 infantry from one or two unit bases\\
+  Members & \\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 2/2/2/2 Die: 5+ Armor Penetration:  -2 Damage: d6-2 \\
+Assault Deflection: 3/3/3/3 Die: 6+\\
+\indent flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection \\
+\ \\
+Unit base gains Psychic resistance 1
+\ \\
+\ \\
+{\bf Rifle } \\
+\ \\
+Angle: */*/*/* Range: 4 Armor Penetration: ,-2 Damage d6-2 \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf  } \\
+ \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf  } \\
+ \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Elite Mechanical Cavalry }
+
+\begin{tabular}{ll}
+  Name & Elite Mechanical Cavalry \\
+  Size & medium\\
+  Type & Bio, Mechanical Mount, Cavalry\\
+  Cost & 2mp, 4cp, 4xp\\
+  Members & 2\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 4/2/1/1 Die: 5+/6+/6+/6+ Armor Penetration:  -2 Damage: d6-1 \\
+Assault Deflection: 3z/2z/-/- Die: 5+\\
+\indent z is equal to the number of hits in regular assault roll \\
+\ \\
+Good shot: +1 to hit \\ Negates to-hit penalty for shooting while moving fast
+\ \\
+\ \\
+{\bf SMG } \\
+\ \\
+Angle: */*/*/* Range: 3 Armor Penetration: ,-3 Damage d6-3 \\
+\indent  \\
+
+
+
+\ \\
+{\bf Crossbow } \\
+\ \\
+Angle: */*/*/* Range: 2 Armor Penetration: ,-2 Damage d6-2 \\
+\indent Poison[6], minor acid \\
+
+
+
+
+
+\ \\ {\bf Fire crossbow } \\
+- + fire \\
+- + load \\
+- + aim \\
+\ \\ {\bf Fire(smg) } \\
+fire + fire \\
+- + load(5) \\
+load(5) + - \\
+\ \\ {\bf Movement } \\
+(fast) F + F + F  \\
+(fast) F + F + 360$^0$ \\
+(fast) 360$^0$ + F + F \\
+(fast) F + F + F,B \\
+(fast) F + B + 360$^0$ \\
+(slow) 360$^0$ + - 0 - \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + A + F \\
+(slow) 360$^0$ + F,B + 360$^0$ \\
+(stand still) 360$^0$ + A + F \\
+(stand still) 360$^0$ + 360$^0$ + 360$^0$ \\
+(default slow) - + - + flee \\
+(default fast) - + flee + flee \\
+(default stand-still) - + A + flee \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Psychic Damage } \\
+5+: unit shaken \\
+\ \\ {\bf Regular Damage } \\
+2-3: +1 on future damage \\
+4-6: Kill 1 member \\
+7+: Destroy 1 member, roll on psychic damage \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Scout }
+
+\begin{tabular}{ll}
+  Name & Scout \\
+  Size & medium\\
+  Type & Bio, Infantry\\
+  Cost & 1mp\\
+  Members & 1\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 2/1/1/1 Die: 5+ Armor Penetration:  -2 Damage: d6-2 \\
+Assault Deflection: 2/1/1/1 Die: 6+\\
+\indent Cunning assault[1 for 2] \\
+\ \\
+Scout: may setup up too 2 hexes from normal setup.
+\ \\
+\ \\
+{\bf Rifle } \\
+\ \\
+Angle: */*/*/* Range: 4 Armor Penetration: ,-2 Damage d6-2 \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf Fire orders } \\
+(stand-still only) - + Fire \\
+(stand-still only) Fire + -  \\
+(stand-still only) - + load \\
+(stand-still only) load + - \\
+(stand-still only) - + aim \\
+(stand-still only) aim + -  \\
+\ \\ {\bf Movement Orders } \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + B(crawl) + F \\
+(slow) 360$^0$ + B + - \\
+(slow) 360$^0$ + 360$^0$ + 360$^0$ \\
+(stand still) 360$^0$ + - + -  \\
+(stand still) 360$^0$ + A(crawl) + - \\
+(stand still) 360$^0$ + A + - \\
+(crawl) 360$^0$ + F + - \\
+(crawl) 360$^0$ + A(slow) + F \\
+(crawl) 360$^0$ + B(stand-still) + - \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Psycic Damage } \\
+3+: Shaken \\
+\ \\ {\bf Regular Damage } \\
+0+: Unit killed \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Assasin }
+
+\begin{tabular}{ll}
+  Name & Assasin \\
+  Size & medium\\
+  Type & Bio, Infantry, Elite\\
+  Cost & 1mp, 2xp\\
+  Members & 1\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 4/3/2/1 Die: 5+ Armor Penetration:  -2 Damage: d6-2 \\
+Assault Deflection: 6/3/-/- Die: 6+\\
+\indent poison[8], Cunning Assault[1 for 1], hidden (see DarkElf Abilities)\\ Flexible deflection die: any deflection result may be choosen to add to assault value instead of deflection \\
+\ \\
+Note that assasin qualifies for any elite weapon upgrade. 
+\ \\
+\ \\
+{\bf Rifle } \\
+\ \\
+Angle: */*/*/* Range: 4 Armor Penetration: ,-2 Damage d6-2 \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf Fire orders } \\
+(stand-still only) - + Fire \\
+(stand-still only) Fire + -  \\
+(stand-still only) - + load \\
+(stand-still only) load + - \\
+(stand-still only) - + aim \\
+(stand-still only) aim + -  \\
+\ \\ {\bf Movement Orders } \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + B(crawl) + F \\
+(slow) 360$^0$ + B + - \\
+(slow) 360$^0$ + 360$^0$ + 360$^0$ \\
+(stand still) 360$^0$ + - + -  \\
+(stand still) 360$^0$ + A(crawl) + - \\
+(stand still) 360$^0$ + A + - \\
+(crawl) 360$^0$ + F + - \\
+(crawl) 360$^0$ + A(slow) + F \\
+(crawl) 360$^0$ + B(stand-still) + - \\
+(default slow) - + - + flee \\
+(default stand-still) - + A + flee \\
+(default crawl) - + A[slow] + flee \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Psychic Damage } \\
+6+: united shaken. \\
+\ \\ {\bf Regular Damage } \\
+1+: killed \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Mechanical Spider }
+
+\begin{tabular}{ll}
+  Name & Mechanical Spider \\
+  Size & medium\\
+  Type & Mechanical, droid\\
+  Cost & 2ip\\
+  Members & 1\\
+  Armor & 2/2/2/2\\
+\end{tabular}
+
+\ \\
+Assault: 6/4/2/1 Die: 5+ Armor Penetration: 2  Damage: d6+0 \\
+Assault Deflection: 3/1/-/- Die: 5+\\
+\indent Poison[6], Fear[6] \\
+\ \\
+Good Shot: +1 to hit\\ All terrain cost 1 movement point to enter
+\ \\
+\ \\
+{\bf Head Gun } \\
+\ \\
+Angle: */*/-/- Range: 3 Armor Penetration: 1, Damage d6-2, +2 (total 0) if penetrating all armor \\ poison[6] \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf Fire  } \\
+- + Fire \\
+- + Load \\
+- + Aim \\
+\ \\ {\bf Movement } \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + 360$^0$ + 360$^0$ \\
+(default slow) - + - + - \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Regular Damage } \\
+1-3: Lightly damaged[d6] \\
+4-6: Heavily Damage, +1 on future damage \\
+7: Destroyed \\
+\ \\ {\bf Heavy Damage } \\
+1: +1 for future damage \\
+2: -1 to-hit, +1 to-be-hit \\
+3: Cannot move \\
+4: Cannot rotate \\
+5: Roll on Lightly damage table 3 times \\
+6: Fire \\
+\ \\ {\bf Lightly Damage } \\
+1-2: unit shaken \\
+3-4: +1 on future damage \\
+5-6: -1/-1/-1/-1 to all assaults and assulat deflection values (cumulative, minimum 0) \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Queen XXX }
+
+\begin{tabular}{ll}
+  Name & Queen XXX \\
+  Size & Large\\
+  Type & Mechanical, Bio Crew\\
+  Cost & 8ip\\
+  Members & 1\\
+  Armor & 5/4/2/1\\
+\end{tabular}
+
+\ \\
+Assault: 5/4/3/2 Die: 5+ Armor Penetration:  -1 Damage: d6-1 \\
+Assault Deflection: 2/-/-/- Die: 5+\\
+\indent poison[6], Fear[8] \\ May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not... \\
+\ \\
+Immunity to poison cloads \\ Good shot +1 to hit
+\ \\
+\ \\
+{\bf Acid Cannon } \\
+\ \\
+Angle: */-/-/- Range: 6 Armor Penetration: 1, Damage  \\
+\indent Acid \\
+
+
+
+
+
+\ \\ {\bf Fire Orders } \\
+(stand still and slow) - + load \\
+(stand still and slow) - + aim \\
+(stand still, slow and fast) - + fire \\
+(stand still, slow and fast) - + Release Poison Cload[12](4+) \\
+\ \\ {\bf Movement } \\
+(fast) F+ F + - \\
+(fast) F + R + - \\
+(fast) F + L + - \\
+(fast) F + B + - \\
+(fast) B + B + - \\
+(default fast) F + F + - \\
+(slow) L + - + - \\
+(slow) L + L + - \\
+(slow) R + - + - \\
+(slow) R + R + - \\
+(slow) A + F + - \\
+(slow) B + - + - \\
+(default slow) F + - + - \\
+(slow) F + - + - \\
+(slow) B + rev + - \\
+(stand still) L + - + - \\
+(stand still) L + L + - \\
+(stand still) L + L + L \\
+(stand still) R + - + - \\
+(stand still) R + R + - \\
+(stand still) R + R + R \\
+(stand still) - + - + - \\
+(stand still) R + A + F \\
+(stand still) L + A + F \\
+(stand still) A + F + - \\
+(stand still) rev + - + - \\
+(default stand still) - + - + - \\
+(fast) R + F + - \\
+(fast) L + F + - \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Critical Damage } \\
+1: -1 to-hit, +1 to-be-hit \\
+2: Rotates right in misc 1 step \\
+3: rotates left in misc 2 and in misc 3 \\
+4: only stand-stil available \\
+5: unit is covered in acid \\
+6: unit covered in acid x2 \\
+\ \\ {\bf Regular damage } \\
+1-5: Lightly Damaged \\
+6-8: Crittical Damaged, +1 on all future damage \\
+\ \\ {\bf Lightly Damage } \\
+1-3: Shaken \\
+4-6: +1 on future damage \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Dark RoboProsthetic Elf }
+
+\begin{tabular}{ll}
+  Name & Dark RoboProsthetic Elf \\
+  Size & medium\\
+  Type & Bio, Infantry\\
+  Cost & 2mp, 1cp\\
+  Members & 4\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 1/1/1/1 Die: 5+ Armor Penetration:  -2 Damage: d6-2 \\
+Assault Deflection: 1/1/1/1 Die: 6+\\
+\indent Cunning Assault[1 for 2] \\
+\ \\
+Take Cover[stand-still,crawl][-2]
+\ \\
+\ \\
+{\bf Rifle } \\
+\ \\
+Angle: */*/*/* Range: 4 Armor Penetration: ,-2 Damage d6-2 \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf Fire orders } \\
+(stand-still only) - + Fire \\
+(stand-still only) Fire + -  \\
+(stand-still only) - + load \\
+(stand-still only) load + - \\
+(stand-still only) - + aim \\
+(stand-still only) aim + -  \\
+\ \\ {\bf Movement Orders } \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + B(crawl) + F \\
+(slow) 360$^0$ + B + - \\
+(slow) 360$^0$ + 360$^0$ + 360$^0$ \\
+(stand still) 360$^0$ + - + -  \\
+(stand still) 360$^0$ + A(crawl) + - \\
+(stand still) 360$^0$ + A + - \\
+(crawl) 360$^0$ + F + - \\
+(crawl) 360$^0$ + A(slow) + F \\
+(crawl) 360$^0$ + B(stand-still) + - \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Regular damage } \\
+0-6: kill 1 member \\
+7-8: kill 1 member, psychic damage[d6] \\
+9+ Kill all 4 members \\
+\ \\ {\bf Psychic Damage } \\
+4+ Unit base shaken \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Infantry }
+
+\begin{tabular}{ll}
+  Name & Infantry \\
+  Size & medium\\
+  Type & Bio, Infantry\\
+  Cost & 3mp\\
+  Members & 4\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 1/1/1/1 Die: 5+ Armor Penetration:  -2 Damage: d6-2 \\
+Assault Deflection: 1/1/1/1 Die: 6+\\
+\indent Cunning Assault[1 for 2] \\
+\ \\
+Take Cover[stand-still,crawl][-2]
+\ \\
+\ \\
+{\bf Rifle } \\
+\ \\
+Angle: */*/*/* Range: 4 Armor Penetration: ,-2 Damage d6-2 \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf Fire orders } \\
+(stand-still only) - + Fire \\
+(stand-still only) Fire + -  \\
+(stand-still only) - + load \\
+(stand-still only) load + - \\
+(stand-still only) - + aim \\
+(stand-still only) aim + -  \\
+\ \\ {\bf Movement Orders } \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + B(crawl) + F \\
+(slow) 360$^0$ + B + - \\
+(slow) 360$^0$ + 360$^0$ + 360$^0$ \\
+(stand still) 360$^0$ + - + -  \\
+(stand still) 360$^0$ + A(crawl) + - \\
+(stand still) 360$^0$ + A + - \\
+(crawl) 360$^0$ + F + - \\
+(crawl) 360$^0$ + A(slow) + F \\
+(crawl) 360$^0$ + B(stand-still) + - \\
+(default slow) - + - + flee \\
+(default stand-still) - + A + flee \\
+(default crawl) - + A[slow] + flee \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Regular damage } \\
+0-6: kill 1 member \\
+7-8: kill 1 member, psychic damage[d6] \\
+9+ Kill all 4 members \\
+\ \\ {\bf Psychic Damage } \\
+4+ Unit base shaken \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Gigant-Spider Rider }
+
+\begin{tabular}{ll}
+  Name & Gigant-Spider Rider \\
+  Size & medium\\
+  Type & Bio, Cavalry\\
+  Cost & 1mp, 3xp\\
+  Members & 2\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 6/4/2/1 Die: 5+ Armor Penetration:  -2 Damage: d6-2 \\
+Assault Deflection: 4/2/-/- Die: 5+\\
+\indent Poison[12], minor acid, Fear[4] \\
+\ \\
+GasMask: immune to poison gas
+\ \\
+
+
+\ \\ {\bf Movement } \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + 360$^0$ + 360$^0$ \\
+(default slow) - + - + flee \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Regular Damage } \\
+2-3: Bleed[4] \\
+4-6: kill 1 member \\
+'' \\
+\ \\ {\bf Psychic damage } \\
+8+: unit shaken \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Mechanical Horse Cavalry }
+
+\begin{tabular}{ll}
+  Name & Mechanical Horse Cavalry \\
+  Size & medium\\
+  Type & Bio, Mechanical Mount, Cavalry\\
+  Cost & 2mp, 4cp\\
+  Members & 2\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 3/2/1/1 Die: 5+ Armor Penetration:  -2 Damage: d6-1 \\
+Assault Deflection: 2z/2z/2z/2z Die: 5+\\
+\indent z=number of hits in assault \\
+\ \\
+
+\ \\
+\ \\
+{\bf SMG } \\
+\ \\
+Angle: */*/*/* Range: 3 Armor Penetration: ,-3 Damage d6-3 \\
+\indent  \\
+
+
+
+
+
+\ \\ {\bf Fire } \\
+fire(smg) + fire(smg) \\
+load(5)(smg), + -  \\
+- + fire (crossbow) \\
+- + load (crossbow) (stand still, slow only \\
+\ \\ {\bf Movement } \\
+(fast) F + F + F  \\
+(fast) F + F + 360$^0$ \\
+(fast) 360$^0$ + F + F \\
+(fast) F + F + F,B \\
+(fast) F + B + 360$^0$ \\
+(slow) 360$^0$ + - 0 - \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + A + F \\
+(slow) 360$^0$ + F,B + 360$^0$ \\
+(stand still) 360$^0$ + A + F \\
+(stand still) 360$^0$ + 360$^0$ + 360$^0$ \\
+(default slow) - + - + flee \\
+(default stand-still) - + A + flee \\
+(default fast) - + flee + flee \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Psychic Damage } \\
+5+: unit shaken \\
+\ \\ {\bf Regular Damage } \\
+2-3: +1 on future damage \\
+4-6: Kill 1 member \\
+7+: Destroy 1 member, roll on psychic damage \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ Nightmare Mechanical Cavalry }
+
+\begin{tabular}{ll}
+  Name & Nightmare Mechanical Cavalry \\
+  Size & medium\\
+  Type & Bio, Mechanical Mount, Cavalry\\
+  Cost & 2mp, 4cp, 6xp\\
+  Members & 2\\
+  Armor & \\
+\end{tabular}
+
+\ \\
+Assault: 3/2/1/1 Die: 5+/6+/6+/6+/ Armor Penetration:  -2 Damage: d6-1 \\
+Assault Deflection: 2z/1z/-/- Die: 5+\\
+\indent z is equal to the number of normal hits in assault \\
+\ \\
+
+\ \\
+\ \\
+{\bf SMG } \\
+\ \\
+Angle: */*/*/* Range: 3 Armor Penetration: ,-3 Damage d6-3 \\
+\indent  \\
+
+
+
+\ \\
+{\bf Acid Breath } \\
+\ \\
+Angle: */-/-/- Range: 1 Armor Penetration: , Damage  \\
+\indent Fires at everthing within range and angle of fire. \\ Acid \\
+
+
+
+
+
+\ \\ {\bf Breath Acid Orders } \\
+- + Breath Acid \\
+- + - \\
+\ \\ {\bf Fire(smg) } \\
+Fire + fire \\
+load(5) + - \\
+- + load(5) \\
+\ \\ {\bf Movement } \\
+(fast) F + F + F  \\
+(fast) F + F + 360$^0$ \\
+(fast) 360$^0$ + F + F \\
+(fast) F + F + F,B \\
+(fast) F + B + 360$^0$ \\
+(slow) 360$^0$ + - 0 - \\
+(slow) 360$^0$ + F + 360$^0$ \\
+(slow) 360$^0$ + A + F \\
+(slow) 360$^0$ + F,B + 360$^0$ \\
+(stand still) 360$^0$ + A + F \\
+(stand still) 360$^0$ + 360$^0$ + 360$^0$ \\
+(default slow) - + - + flee \\
+(default fast) - + flee + flee \\
+(default stand-still) - + A + flee \\
+
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf Regular Damage } \\
+2-3: +1 on future damage \\
+4-6: Destroy 1 memeber \\
+7+ : Destroy 1 member, roll on psychic damage \\
+\ \\ {\bf Psychic damage } \\
+6+: unit shaken \\
+
+
+%\inclue{damge}
+
+
+\pagebreak
+
+
+
+
+\section{ SMG }
+
+\begin{tabular}{ll}
+    Cost & 1cp to upgrade one base of infantry \\
+    Required & Infantry\\
+    Type & Infantry, cavalry weapon. 1 handed\\
+\end{tabular}
+\ \\
+\indent Angle: */*/*/* Range: 3  AP: , -3  Damage d6-3 \\
+
+\ \\
+{\bf Orders Gained}
+['(stand-still, slow) fire + fire', '(stand-still, slow) load(5) + -']
+
+{\bf Orders Lost}
+['aim']
+\section{ Poison Gas Grenade }
+
+\begin{tabular}{ll}
+    Cost & 1cp to upgrade base \\
+    Required & Infantry or Cavalery Base\\
+    Type & Infantry or Cavalery base weapon.\\
+\end{tabular}
+\ \\
+\indent Angle: */*/*/* Range: 1  AP: N.A, N.A.  Damage N.A. \\
+Place a Poison Cload[6](4+) within normal range. 
+\ \\
+{\bf Orders Gained}
+['(stand-still, slow) - + Throw Gas Grenade']
+
+{\bf Orders Lost}
+['']
+\section{ Mechanical Imp }
+
+\begin{tabular}{ll}
+    Cost & 2cp, 1xp to give each memeber in unit base an mechanical imp \\
+    Required & Any unit base with atleast one crossbow or enhanced crossbow\\
+    Type & Independent Infantry/Cavalery equipment\\
+\end{tabular}
+\ \\
+\indent Angle:  Range:   AP: ,   Damage  \\
+An mechanical robotic imp helps all memeber in unit base to reload it's crossbow. Threat any crossbow or enhanced crossbow as always loaded. \\
+\ \\
+Assault Modification:  Assault AP: ,  Assault Damage: \\
+Assault Deflection Modification: , Deflection die set to  \\
+Grants unit base poison[4] if it does not already have similar or better ability.
+
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']
+
+
+\section{ Enhanced Crossbow }
+
+\begin{tabular}{ll}
+    Cost & 1cp to upgrade weapon of one single elite \\ ps! for 2xp and 4cp you may have 4 elites with enhanced crossbows... \\
+    Required & Elite Infantry\\
+    Type & 2 handed infantry weapon\\
+\end{tabular}
+\ \\
+\indent Angle: */*/*/* Range: 6  AP: , -2  Damage d6-2 \\
+poison[8], minor acid
+\ \\
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']
+\section{ Crossbow }
+
+\begin{tabular}{ll}
+    Cost & 2cp to upgrade one base of infantry \\
+    Required & Infantry\\
+    Type & Infantry and cavalry weapon.\\
+\end{tabular}
+\ \\
+\indent Angle: */*/*/* Range: 2  AP: , -2  Damage d6-2 \\
+Poison[6], minor acid
+\ \\
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']
+\section{ Mortar }
+
+\begin{tabular}{ll}
+    Cost & 8cp, 4xp \\
+    Required & Infantry base\\
+    Type & Infantry base weapon\\
+\end{tabular}
+\ \\
+\indent Angle: */*/*/* Range: 10  AP: N.A., N.A  Damage N.A. \\
+Choose a hex within range and rol a die, at 5+ place a Poison \& Acid Cload [8, minor][4+] at target hex. Place a Poison Cload[6]  at all hexes surronding that initial hex\\ If you don't roll a 5+, move the target hex the result of the die number of hexes in a random direction from choosen hex.  \\ Indirect fire. may use line of sight of any friendly unit on the battle field.
+\ \\
+{\bf Orders Gained}
+['']
+
+{\bf Orders Lost}
+['']

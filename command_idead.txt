@@ -1,0 +1,41 @@
+Abilities:
+Forward Position[1]: 6 command
+
+
+Officer:
+AfterPhase: Remove extra shaken token (5+)
+Push through difficult terrain: at 5+ ignore difficult terrain.
+
+
+Elite officer:
+Elite + officer abilities.
+
+
+Engineer 12command:
+
+Quick fix shaken Tanks
+Fix critical effect
+fix +1 to future damage effects
+
+
+Dark Elf:
+
+24 command point to gain:
+6 manpower from Orc
+6 Craft points from Dwarf
+
+
+24 Command point to gain:
+
+1 DarkElf Bear Rider
+
+
+
+Elf:
+Requier Officer.
+  Healing actions
+
+
+
+Orc:
+12 command to gain 6 manpower

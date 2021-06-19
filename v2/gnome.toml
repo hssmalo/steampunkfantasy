@@ -237,7 +237,7 @@
              angle= [true, true, true, true]
              damage = "d6 psycic damage"
              ap = 0
-	     special = ["Choose one hex within normal range: Area[5+]", "Poison[4]", "Reserve weapon: may use this weapon instead of main gun when either fire (reserve) orders is given or a regular fire order is given, but you may only use one weapon at any given time.", "Always treated as loaded"]
+	     special = ["Choose one hex within range. Auto-hit for purpose of psycic damage (roll once per UNIT in hex). In addition, apply a Area(5+) effect, and apply Poison[4] once per model effected", "Reserve weapon: may use this weapon instead of main gun when either fire (reserve) orders is given or a regular fire order is given, but you may only use one weapon at any given time.", "Always treated as loaded"]
 
 
 

@@ -1,0 +1,21 @@
+Name: Gnome MotorSycle
+Size: medium (definitivt ikke large)
+Type: Bio, motorsycle (bio gjør at den ikke er immune til poison)
+Cost: ?
+
+Kostnad er enten industry points(ip), craftpoints(cp), også kan du vurdere om den skal ha manpower og experience. Vanligvis koster tanks bare IP mens cavalery koster mp og xp og cp. Og det er balansert slik at IP er mye mye mer verd en mp, xp og xp.
+
+Hvor dyre skal de være? Foreslår ikke alt for dyre iallfall.
+
+
+Models: (1, 2 eller 4 per unit)
+
+
+Armor: Her kan vi benytte oss av det nye armor systemmet. Cavalery med bittelitt armor er aldri benyttet før og kan bli unikt. 1 eller 2 kanskje?
+
+
+Spørsmål til bombekasteren: hvilken profil skal den ha? Vil du den skal være god mot tanks, infanteri, cavaleri eller en mix av alt?
+
+Assault: Hvis den ikke har noe spesielle assault våpen foreslår jeg tilsvarende armor penetration og skade som en rifle i nærkamp, men med grei antal terninger i både assault og assault deflection.
+
+Vi kan alltids finne opp add-ons for motorsykelen senere. Det er bare gøy å kunne oppgradree den.
