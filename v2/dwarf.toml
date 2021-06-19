@@ -670,7 +670,7 @@
 	deflection.add = [1, 1, 1, 1]
 	deflection_die.replace = "4+"
 	damage.replace = "d6-2 + d6 psycic damage"
-	special.replace = ["Cunning Assault[1 for 1]"]
+	special.append = ["Cunning Assault[1 for 1]"]
 
 
     [equipments.springloaded_vehicle_assault_weapons]
