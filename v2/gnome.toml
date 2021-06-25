@@ -44,6 +44,28 @@
         ]
 
 
+    [units.assault_bots]
+    race = "gnome"
+    name = "Assault Bots"
+    models = ["assault_bot", "assault_bot", "assault_bot", "assault_bot"]
+    size = "medium"
+    armor = [0, 0, 0, 0]
+    special = [""]
+
+
+        [units.assault_bots.orders.movement]
+        slow = [["Chase", "", ""]]
+        default.slow = ["", "", "-"]
+
+        [units.assault_bots.damage_tables]
+        regular = ["0-7: Kill 1 model",
+            "8: Destroy Unit"
+        ]
+        psychic = [
+            "4+: Unit Shaken",
+        ]
+
+
     [units.gnome_motorcycle]
     race = "gnome"
     name = "Gnome Motorcyle"
@@ -84,6 +106,174 @@
         psychic = [
             "6+: Unit Shaken",
         ]
+
+
+    [units.ballista]
+    race = "gnome"
+    name = "Ballista"
+    models = ["ballista"]
+    size = "lagre"
+    armor = [0, 0, 0, 0]
+    cost.mp = 2
+    cost.cp = 4
+    special = []
+
+
+        [units.ballista.orders.movement]
+	slow = [["360$^0$","F","-"],
+	     ["-","-","B"]]
+	still = [["L","-","-"], ["R","-","-"], ["-","-","-"], ["A","-","-"]] 
+	default_still = ["", "", "-"]  
+	default.slow = ["", "", "B"]
+
+        [units.ballista.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+
+
+        [units.ballista.damage_tables]
+        regular = ["2-3: +1 on future damge",
+            "4-5: +1 on future damage, d6 light damage",
+	    "6-7: +1 on future damage, annot move or rotate, speed set to still",
+	    "8: Unit destoried"]
+     
+        light = [
+            "1-4+: +1 on future damage",
+	    "5-6: Unit shaken"
+        ]
+
+
+
+    [units.ballista_tractor_markI]
+    race = "gnome"
+    name = "Ballista Tractor, Mark I"
+    models = ["ballista_tractor_markI"]
+    size = "lagre"
+    armor = [12, 8, 8, 7]
+    cost.ip = 8
+    special = ["Fires and loads both weapons at fire and load actions"]
+
+
+        [units.ballista_tractor_markI.orders.movement]
+	slow = [["L","-","-"],
+	     ["L","L","-"],
+	     ["R","-","-"],
+	     ["R","R","-"],
+	     ["F","L","-"],
+	     ["F","R"],
+	     ["B","-","-"],
+	     ["F","-","-"],
+	     ["B","rev","-"]]
+	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
+	default.still = ["-", "-", "-",]
+
+	defeault.slow = ["-", "-", "B"]
+
+        [units.ballista_tractor_markI.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+
+	[units.ballista_tractor_markI.damage_tables]
+	regular = [ "1-4: d6 Light Damage",
+		"5-8: +1 to future damage, d6 critical damage",
+		"9: Unit destroied",]
+	light = [ "1-4: +1 to future damage", "5-6: Shaken",]
+	critical = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.", "6: set on fire"]
+	crew = [ "4-5: Weapon Jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
+
+
+
+    [units.ballista_tractor_markII]
+    race = "gnome"
+    name = "Ballista Tractor, Mark II"
+    models = ["ballista_tractor_markII"]
+    size = "lagre"
+    armor = [12, 8, 8, 7]
+    cost.ip = 8
+    special = ["Fires and loads both weapons at fire and load actions"]
+
+
+        [units.ballista_tractor_markII.orders.movement]
+	slow = [["L","-","-"],
+	     ["L","L","-"],
+	     ["R","-","-"],
+	     ["R","R","-"],
+	     ["F","L","-"],
+	     ["F","R"],
+	     ["B","-","-"],
+	     ["F","-","-"],
+	     ["B","rev","-"]]
+	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
+	default.still = ["-", "-", "-",]
+
+	defeault.slow = ["-", "-", "B"]
+
+        [units.ballista_tractor_markII.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+
+	[units.ballista_tractor_markII.damage_tables]
+	regular = [ "1-4: d6 Light Damage",
+		"5-8: +1 to future damage, d6 critical damage",
+		"9: Unit destroied",]
+	light = [ "1-4: +1 to future damage", "5-6: Shaken",]
+	critical = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.","6: set on fire"]
+	crew = [ "4-5: Weapon Jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
+
+
+    [units.ballista_tractor_MarkIII]
+    race = "gnome"
+    name = "Ballista Tractor, Mark III"
+    models = ["ballista_tractor_markIII"]
+    size = "lagre"
+    armor = [12, 8, 8, 7]
+    cost.ip = 8
+    special = ["Fires and loads both weapons at fire and load actions"]
+
+
+        [units.ballista_tractor_MarkIII.orders.movement]
+	slow = [["L","-","-"],
+	     ["L","L","-"],
+	     ["R","-","-"],
+	     ["R","R","-"],
+	     ["F","L","-"],
+	     ["F","R"],
+	     ["B","-","-"],
+	     ["F","-","-"],
+	     ["B","rev","-"]]
+	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
+	default.still = ["-", "-", "-",]
+
+	defeault.slow = ["-", "-", "B"]
+
+        [units.ballista_tractor_MarkIII.orders.fire]
+	still = [["Load", "-"],
+	      ["-", "Load"],
+	      ["Fire", "-"],
+	      ["-", "Fire"],
+	      ["Aim", "-"],
+	      ["-", "Aim"]]
+
+	[units.ballista_tractor_MarkIII.damage_tables]
+	regular = [ "1-4: d6 Light Damage",
+		"5-8: +1 to future damage, d6 critical damage",
+		"9: Unit destroied",]
+	light = [ "1-4: +1 to future damage", "5-6: Shaken",]
+	critical = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.","6: set on fire"]
+	crew = [ "4-5: Weapon Jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
+   
 
     [units.gnome_helicopter]
     race = "gnome"
@@ -154,6 +344,94 @@
         ap = 2
         special = ["Cunning assault[1 for 2]"]
 
+
+    [models.assault_bot]
+    name = "Assault Bot"
+    race = "gnome"
+    equipment_limit = ["independent:∞"]
+    equipments = []
+    type = ["drone", "walks"]
+    special = ["Can only enter play through assault bot mortars"]
+
+        [models.assault_bot.assault]
+        strength = [1, 0, 0, 0]
+        strength_die = "3+"
+        deflection = [0, 0, 0, 0]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]"]
+
+    [models.ballista_tractor_markI]
+    name = "Ballista Tractor Mark I"
+    race = "gnome"
+    equipment_limit = ["ballista:1", "vehicle_mortar:1", "independent:∞"]
+    equipments = ["ballista", "assault_bot_mortar_vehicle" ]
+    type = ["mechanical, bio_crew", "vehicles", "wheeled"]
+    special = []
+
+        [models.ballista_tractor_markI.assault]
+        strength = [3, 2, 2, 1]
+        strength_die = "3+"
+        deflection = [1, 0, 0, 0]
+        deflection_die = "3+"
+        damage = "d6-1"
+        ap = 2
+        special = ["Fear(6)"]
+
+    [models.ballista_tractor_markII]
+    name = "Ballista Tractor Mark II"
+    race = "gnome"
+    equipment_limit = ["ballista:1", "independent:∞"]
+    equipments = ["enhanced_ballista"]
+    type = ["mechanical, bio_crew", "vehicles", "wheeled"]
+    special = []
+
+        [models.ballista_tractor_markII.assault]
+        strength = [3, 2, 2, 1]
+        strength_die = "3+"
+        deflection = [2, 0, 0, 0]
+        deflection_die = "3+"
+        damage = "d6-1"
+        ap = 2
+        special = ["Fear(6)"]
+
+
+    [models.ballista_tractor_markIII]
+    name = "Ballista Tractor Mark III"
+    race = "gnome"
+    equipment_limit = ["ballista:1", "array:1", "independent:∞"]
+    equipments = ["ballista", "array_of_heavy_muskets" ]
+    type = ["mechanical, bio_crew", "vehicles", "wheeled"]
+    special = []
+
+        [models.ballista_tractor_markIII.assault]
+        strength = [3, 2, 2, 1]
+        strength_die = "3+"
+        deflection = [2, 0, 0, 0]
+        deflection_die = "3+"
+        damage = "d6-1"
+        ap = 2
+        special = ["Fear(6)"]
+
+    [models.ballista]
+    name = "Ballista"
+    race = "gnome"
+    equipment_limit = ["ballista:1", "independent:∞"]
+    equipments = ["ballista" ]
+    type = ["construct", "towed"]
+    special = []
+
+        [models.ballista.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "3+"
+        deflection = [0, 0, 0, 0]
+        deflection_die = ""
+        damage = "d6-2"
+        ap = 2
+        special = ["Cunning assault[1 for 2]"]
+
+
     [models.gnome_motorcycle]
     name = "Gnome Motorcycle"
     race = "gnome"
@@ -189,7 +467,7 @@
         special = []
 
     [models.tinkerer_helicopter]
-    name = "Gnome Helicpoter"
+    name = "Tinkerer Helicpoter"
     race = "gnome"
     equipment_limit = ["helicopter_front:1", "helicopter_drop:1", "helicopter_side:1", "independent: ∞"]
     equipments = ["acidic_napalm_bomb", "helicopter_gattling_gun" ]
@@ -264,6 +542,51 @@
         angle = [true, true, true, true]
         damage = "d6-2"
         ap = 2
+        special = []
+
+
+    [equipments.ballista]
+    name = "Ballista"
+    race = "gnome"
+    requires = [
+        ["ballista:1"],
+    ]
+
+        [equipments.ballista.range]
+        range = 4
+        angle = [true, false, false, false]
+        damage = "d6 (+2 if penetrating all armor)"
+        ap = 8
+        special = []
+
+
+    [equipments.enhanced_ballista]
+    name = "Enhanced Ballista"
+    race = "gnome"
+    requires = [
+        ["ballista:1"],
+    ]
+
+        [equipments.enhanced_ballista.range]
+        range = 5
+        angle = [true, false, false, false]
+        damage = "d6 (+2 if penetrating all armor)"
+        ap = 8
+        special = ["Enhanced Accurazy: +1 to hit"]
+
+
+    [equipments.array_of_heavy_muskets]
+    name = "Array of Heavy Muskets"
+    race = "gnome"
+    requires = [
+        ["array:1"],
+    ]
+
+        [equipments.array_of_heavy_muskets.range]
+        range = 3
+        angle = ["x4", "x2", "x2", "-"]
+        damage = "d6 -1"
+        ap = 3
         special = []
 
 
@@ -366,25 +689,24 @@
     name = "Mechanical Owl"
     race = "gnome"
     unit.cost.cp = 2
-    special = ["Gives all weapons the enhanced accurazy trait"]
+    special = ["Gives all weapons the enhanced accurazy (+1 to hit) trait"]
     requires = [["type: infantry"],["independent:1"]]
 
-    [equipments.master_crafted_frost_ray]
+    [equipments.frost_ray]
     race = "gnome"
-    name = "Master Crafted Frost Ray"
-    cost.xp = 4
-    cost.cp = 2
+    name = "Frost Ray"
+    cost.cp = 6
     requires = [["type: infantry"],["hands:2"]]
     
 
-    	     [equipments.master_crafted_frost_ray.range]
+    	     [equipments.frost_ray.range]
 	     range = 4
              angle= [true, true, true, true]
              damage = "d4-2+d6 psycic damge + d4 crew damage"
              ap = 0
 	     special = [ "If you use the 'amplified fire' order, and if you hit the enemy unit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed emidetely"]
 	     
-	     [equipments.master_crafted_frost_ray.orders_gained.fire]
+	     [equipments.frost_ray.orders_gained.fire]
 	     still = ["-", "amplified fire"]
 
 
@@ -479,12 +801,43 @@
     special = ["No regular damage", "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."]
 
 
+    [equipments.assault_bot_mortar_vehicle]
+    race = "gnome"
+    name = "Assault Bot Mortar"
+    requires = [["type:infantry"],["hands:2"]]
+    special = ["No regular damage", "When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."]
+
+
+
     [equipments.assault_bot_dropper]
     race = "gnome"
     name = "Assault Bot Dropper"
     unit.cost.cp = 2
     requires = [["type:helicopter"],["helicopter_drop:1"]]
     special = ["No regular damage", "When firing, place two assault bot units with 4 models in an empty hex within range 1. Requires to be loaded to be used, just as a normal weapon."]
+
+    [equipments.medical_armor]
+    race = "gnome"
+    name = "Medical Armor"
+    unit.cost.cp = 2
+    requires = [["type: infantry"],["independent:1"]]
+    special = ["Unit gain Fire resistance 3, Poison Resistance 2, and Psycic resistance 1 (improve to 2 if unit has psycic resistance from another source)"]
+
+
+
+    [equipments.plasma_shield_generator]
+    race = "gnome"
+    name = "Plasma Shield Generator"
+    unit.cost.cp = 2
+    requires = [["type: infantry"],["independent:1"]]
+    special = ["Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)", "However, every time this units takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)"]
+
+
+    	    [equipments.plasma_shield_generator.assault]
+	    deflection.add = [1, 0, 0, 0]
+	    deflection_die.replaced = "5+"
+
+	    special.append = ["Any enemy which is hit atleast once in assault is set on fire"]
 
 
     [equipments.splintbombgrenade_launcher]
