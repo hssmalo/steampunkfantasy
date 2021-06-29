@@ -104,6 +104,7 @@ class Race:
     equipments: munch.Munch = field(default_factory=munch.Munch)
     info: Configuration = field(default_factory=Configuration, repr=False)
 
+
     def write_info(self, long_=True, format_='tex'):
         txt = ''
 
@@ -208,6 +209,28 @@ class Team:
     funds: Costs = Costs(ip=24, mp=24, cp=24, xp=24, command=0)
     units: munch.Munch = field(default_factory=munch.Munch)
 
+    def write_info(self, long_ = False, format_='tex'):
+        txt = ''
+
+        for name, unit in self.units.items():
+            print('Working on ', name)
+                
+            txt = txt + unit.write_info(long_=long_, format_=format_)
+
+            if format_ == 'tex':
+                txt = txt + '\\pagebreak'
+
+            if format_ =='tex':
+            
+                filename = self.name.replace(' ', '')  +'.tex'
+                txt = txt.replace('_', ' ')
+                txt = txt.replace('\\ \\\\', '')
+                
+        print('writting to', filename)
+        with open(filename, 'w') as fid:
+            fid.write(txt)
+                
+    
     def available_units(self, race):
         """List units that are available with the current funds"""
         return {k: v for k, v in race.units.items() if self.funds >= v.cost}
@@ -310,6 +333,84 @@ class Unit:
     models: CounterList = field(default_factory=CounterList)
     info: Configuration = field(default_factory=Configuration, repr=False)
 
+
+    def generate_orders_card(self):
+        cards = {}
+        translation = {39: None}
+        for ordertype, orderinfo in self.info.orders.as_dict().items():
+            cards[ordertype] = [{}]
+            for speed, orders in orderinfo.items():
+                if 'default' in speed:
+                    continue
+                for order in orders:
+                    
+                    i = 0
+                    while True:
+                        print('i=',i)
+
+                        print(order)
+                        print(len(order))
+                        if len(order) == 3:
+                            if speed in cards[ordertype][i].keys():
+                                if i+2 > len(cards[ordertype]):
+                                    cards[ordertype].append({})
+                                    i = i+1
+                                else:
+                                    i = i+1
+                                continue
+                        
+                            else:
+                                cards[ordertype][i][speed] = str(order).translate(translation)
+                                i = i+1
+                                break
+                            
+                        if len(order) == 2:
+                            i = len(cards[ordertype]) 
+                            cards[ordertype].append({})
+                            cards[ordertype][i][speed] = str(order).translate(translation)
+                            break
+                        else:
+                            print('something wrong, order should be length 2 or 3')
+                            i = i+1
+                            break
+
+
+        with open('tableline_template.tex', 'r') as fid:
+            tableline_template = fid.read()
+
+        with open('card_template.tex', 'r') as fid:
+            card_template = fid.read()
+    
+
+        cards_tex = ''    
+        for ordertype in cards.keys():
+            for card in cards[ordertype]:
+                tablelines = ''
+                for speed, order in card.items():
+                    tablelines = tablelines + tableline_template.format(speed=speed, order=order)
+                    
+                    
+                card['ordertype'] = ordertype
+                card['Ordertype'] = ordertype.capitalize()
+                card['name'] = self.name
+                
+
+                card['tablelines'] = tablelines
+               
+                cards_tex = cards_tex + card_template.format(**card)
+
+        cards_tex = cards_tex.replace('_', ' ')
+        
+        
+        with open(self.name.replace(' ', '_') + '_cards.tex', 'w') as fid:
+            fid.write(cards_tex)
+
+        return cards
+                        
+        
+    
+
+    
     #generate info needed to create latex files
     def generate_neat_dict(self, long_=True, format_='tex'):
         translation = {39: None}
@@ -346,7 +447,7 @@ class Unit:
             #All models of same name should be identical
             #Need only short version in unit section
             
-            txt = txt + model[0].write_info(format_=format_, long_=False)
+            txt = txt + model[0].write_info(format_=format_, long_=long_)
 
             
         self.neat_dict['models_info'] = txt
@@ -861,14 +962,17 @@ class Equipment:
 
         self.neat_dict['assault_special'] = ''
         self.neat_dict['assault_headline'] = ''
+        assault = ''
         if assault_weapon:
-            print(self.name)
+            if format_ =='tex':
+                self.neat_dict['assault_headline'] = '{\\bf Assault} \\ \\\\'
             for key,value in self.info.assault.items():
                 for k2,v2 in value.as_dict().items():
                     text = str(k2) + ' ' +str(v2)
 
                 key = 'assault_' + key
                 self.neat_dict[key] = text
+
 
 
             
@@ -900,11 +1004,12 @@ class Equipment:
                             assault_ap = fid.read()
                         assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
                         
-                if 'deflection' in self.neat_dict.keys():
+                if 'assault_deflection' in self.neat_dict.keys():
                     if format_=='tex':
                         with open('assault_deflection.tex', 'r') as fid:
-                            assault_ap = fid.read()
-                        assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
+                            assault_deflection = fid.read()
+
+                        assault = assault + assault_deflection.format(**self.neat_dict) + '\\\\ \n'
 
                 
                 equipment_ranged = ''
@@ -962,7 +1067,7 @@ class Equipment:
 
     @property
     def added_unit_cost(self):
-        return Costs.from_toml(self.info.get("unit_cost", {}))
+        return Costs.from_toml(self.info.get("cost", {}))
 
     @property
     def added_model_cost(self):

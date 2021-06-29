@@ -9,7 +9,7 @@
     [units.gnome_infantry]
     race = "gnome"
     name = "Gnome Infantry"
-    models = ["gnome_infantry"]
+    models = ["gnome_infantry", "gnome_infantry", "gnome_infantry", "gnome_infantry"]
     size = "medium"
     armor = [0, 0, 0, 0]
     cost.mp = 4
@@ -23,7 +23,8 @@
 	     ["360°", "360°", "360°"],
 	     ["360°", "B", "-"]]
 	still = [["360°", "-", "-"], ["360°", "A", "F"]]
-        default.slow = ["", "", "Flee"]
+        default_slow = [["-", "-", "Flee"]]
+	default_still = [["-", "-", "A+Flee"]]
 
         [units.gnome_infantry.orders.fire]
 	still = [["Load", "-"],
@@ -54,8 +55,8 @@
 
 
         [units.assault_bots.orders.movement]
-        slow = [["Chase", "", ""]]
-        default.slow = ["", "", "-"]
+        slow = [["-", "-", "Chase"]]
+        default_slow = [["-", "-", "-"]]
 
         [units.assault_bots.damage_tables]
         regular = ["0-7: Kill 1 model",
@@ -69,7 +70,7 @@
     [units.gnome_motorcycle]
     race = "gnome"
     name = "Gnome Motorcyle"
-    models = ["gnome_motorcycle"]
+    models = ["gnome_motorcycle","gnome_motorcycle", "gnome_motorcycle"]
     size = "medium"
     armor = [4, 3, 0, 0]
     cost.mp = 2
@@ -88,9 +89,9 @@
 	     ["360$^0$","A","F"],
 	     ["360$^0$","F,B","360$^0$"]]
 	still = [["360$^0$","A","F"], ["360$^0$","-", "-"]]
-	default_still = ["", "", "A,Flee"]  
-	default.slow = ["", "", "Flee"]
-	default.fast = ["", "Flee", "Flee"]	
+	default_still = [["-", "-", "A+Flee"]]
+	default_slow = [["-", "-", "Flee"]]
+	default_fast = [["-", "Flee", "Flee"]]
 
         [units.gnome_motorcycle.orders.fire]
 	still = [["-", "Load"],
@@ -108,25 +109,24 @@
         ]
 
 
-    [units.ballista]
+    [units.ballista_drone]
     race = "gnome"
-    name = "Ballista"
+    name = "Ballista Drone"
     models = ["ballista"]
     size = "lagre"
     armor = [0, 0, 0, 0]
-    cost.mp = 2
-    cost.cp = 4
+    cost.cp = 6
     special = []
 
 
-        [units.ballista.orders.movement]
+        [units.ballista_drone.orders.movement]
 	slow = [["360$^0$","F","-"],
 	     ["-","-","B"]]
 	still = [["L","-","-"], ["R","-","-"], ["-","-","-"], ["A","-","-"]] 
-	default_still = ["", "", "-"]  
-	default.slow = ["", "", "B"]
+	default_still = [["", "", "-"]  ]
+	default_slow = [["", "", "B"]]
 
-        [units.ballista.orders.fire]
+        [units.ballista_drone.orders.fire]
 	still = [["Load", "-"],
 	      ["-", "Load"],
 	      ["Fire", "-"],
@@ -135,7 +135,7 @@
 	      ["-", "Aim"]]
 
 
-        [units.ballista.damage_tables]
+        [units.ballista_drone.damage_tables]
         regular = ["2-3: +1 on future damge",
             "4-5: +1 on future damage, d6 light damage",
 	    "6-7: +1 on future damage, annot move or rotate, speed set to still",
@@ -169,9 +169,9 @@
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
-	default.still = ["-", "-", "-",]
+	default_still = [["-", "-", "-",]]
 
-	defeault.slow = ["-", "-", "B"]
+	default_slow = [["-", "-", "B"]]
 
         [units.ballista_tractor_markI.orders.fire]
 	still = [["Load", "-"],
@@ -212,9 +212,9 @@
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
-	default.still = ["-", "-", "-",]
+	default_still = [["-", "-", "-",]]
 
-	defeault.slow = ["-", "-", "B"]
+	default_slow = [["-", "-", "B"]]
 
         [units.ballista_tractor_markII.orders.fire]
 	still = [["Load", "-"],
@@ -254,9 +254,9 @@
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
-	default.still = ["-", "-", "-",]
+	default_still = [["-", "-", "-",]]
 
-	defeault.slow = ["-", "-", "B"]
+	default_slow = [["-", "-", "B"]]
 
         [units.ballista_tractor_MarkIII.orders.fire]
 	still = [["Load", "-"],
@@ -287,32 +287,31 @@
 
 
         [units.gnome_helicopter.orders.movement]
-	still_ground = [["A[still flying]", "360$^0$", "-"], ["A[slow flying]","360$^0$", "F"], ["A[still flying]","360$^0$", "-"]]
-	still_flying = [["360$^0$", "-", "-"],["-","-", "D"], ["A[slow flying]", "360$^0$", "F"], ["A[fast flying]", "360$^0$", "F"]]
+	still_ground = [["A[still]", "360$^0$", "-"], ["A[slow]","360$^0$", "F"], ["A[still]","360$^0$", "-"]]
+	still_flying = [["360$^0$", "-", "-"],["-","-", "D"], ["A[slow]", "360$^0$", "F"], ["A[fast]", "360$^0$", "F"]]
 	slow_flying =[["L","F","-"],
 		    ["L","F","L"],
-		    ["R","F-"],
+		    ["R","F", "-"],
 		    ["R","F","R"],
 		    ["-","-","D"],
 		    ["-","R","D"],
 		    ["-","L","D"],
-		    ["A[fastflying]","F","F"],
-		    ["F", "B[stillflying]","360$^0$" ]]
+		    ["A[fast]","F","F"],
+		    ["F", "B[still]","360$^0$" ]]
 	fast_flying = [["F", "F", "-"],
 		    ["F", "F",  "R"],
 		    ["F", "F", "L"],
-		    ["F", "F", "B[slow flying],360$^0$"],
-		    ["F", "F", "B[still flying],360$^0$"]]
+		    ["F", "F", "B[slow]+360$^0$"],
+		    ["F", "F", "B[still]+360$^0$"]]
 
-	default.still_flying = ["-", "-", "B[still ground]"]
-	default.slow_flying = ["-", "-", "B[still ground]"]
-	default.fast_flying = ["-", "-", "B[still ground]"]	
+	default_still_flying = [["-", "-", "B[ground]"]]
+	default_slow_flying = [["-", "-", "B[ground]"]]
+	default_fast_flying = [["-", "-", "B[ground]"]]
 
         [units.gnome_helicopter.orders.fire]
-	still_ground = [["-", "Load"]]
-	slow_flying = [["-", "Load"], ["-", "Fire", "-"]]
-	fast_flying = [["-", "Load"], ["-", "Fire"]]
-	still_flying = [["-", "Load"], ["Aim", "Fire"], ["Fire", "Aim"]]
+	all = [["-", "Load"]]
+	all_flying = [["-", "Fire"]]
+	still_flying = [["Aim", "Fire"], ["Fire", "Aim"]]
 
         [units.gnome_helicopter.damage_tables]
         regular = ["1-4: d6 light damage",
@@ -351,7 +350,7 @@
     equipment_limit = ["independent:∞"]
     equipments = []
     type = ["drone", "walks"]
-    special = ["Can only enter play through assault bot mortars"]
+    special = ["Can only enter play through mortars or drop weapons"]
 
         [models.assault_bot.assault]
         strength = [1, 0, 0, 0]
@@ -596,6 +595,7 @@
     cost.cp = 2
     requires = [
         ["hands:2"],
+	["type:infantry"]
     ]
 
         [equipments.acid_splash.range]
@@ -652,7 +652,7 @@
         angle = [true, true, true, true]
         damage = "-"
         ap = 0
-        special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded. Poison[4]"]
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded", "Poison[4]"]
 
 
     [equipments.acid_ballon]
@@ -667,7 +667,7 @@
         angle = [true, true, true, true]
         damage = "-"
         ap = 0
-        special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded. Minor Acid"]
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded", "Minor Acid"]
 
 
     [equipments.grinder]
@@ -682,21 +682,27 @@
         angle = [true, true, true, true]
         damage = "d8-2"
         ap = 2
-        special = ["Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Only treated as loaded if your main gun is loaded. Minor Acid"]
+        special = ["Reserve weapon: may use this weapon instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Only treated as loaded if your main gun is loaded."]
 
 
     [equipments.mechanical_owl]
     name = "Mechanical Owl"
     race = "gnome"
-    unit.cost.cp = 2
+    cost.cp = 2
     special = ["Gives all weapons the enhanced accurazy (+1 to hit) trait"]
-    requires = [["type: infantry"],["independent:1"]]
+    requires = [
+    	     ["type:infantry"],
+	     ["independent:1"]
+	     ]
 
     [equipments.frost_ray]
     race = "gnome"
     name = "Frost Ray"
     cost.cp = 6
-    requires = [["type: infantry"],["hands:2"]]
+    requires = [
+    	     ["type:infantry"],
+	     ["hands:2"]
+	     ]
     
 
     	     [equipments.frost_ray.range]
@@ -704,17 +710,22 @@
              angle= [true, true, true, true]
              damage = "d4-2+d6 psycic damge + d4 crew damage"
              ap = 0
-	     special = [ "If you use the 'amplified fire' order, and if you hit the enemy unit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed emidetely"]
+	     special = [ "If you use the 'amplified fire' order, and if you hit the enemy unit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed one step"]
 	     
 	     [equipments.frost_ray.orders_gained.fire]
-	     still = ["-", "amplified fire"]
+	     still = [["-", "amplified fire"]]
 
 
     [equipments.green_gas_launcher]
     race = "gnome"
     name = "Green Gas Launcer"
     model_cost.cp = 2
-    requires = [["type: tinkerer", "type: elite"],["type:infantry"],["reserve:1"]]
+    requires = [
+    	     ["type:tinkerer", "type:elite"],
+	     ["type:infantry"],
+	     ["reserve:1"]
+	     ]
+
 
     	     [equipments.green_gas_launcher.range]
 	     range = 3
@@ -742,7 +753,7 @@
     race = "gnome"
     name = "Experimental Plasma Gun"
     model_cost.cp = 6
-    requires = [["type: tinkerer"],["type:infantry"],["hands:2"]]
+    requires = [["type:tinkerer"],["type:infantry"],["hands:2"]]
 
     	     [equipments.experimental_plasma_gun.range]
 	     range = 4
@@ -756,7 +767,7 @@
     race = "gnome"
     name = "Helicopter Mounted Experimental Plasma Gun"
     cost.cp = 6
-    requires = [["type: tinkerer"],["type:helicopter"],["helicopter_side:1"]]
+    requires = [["type:tinkerer"],["type:helicopter"],["helicopter_side:1"]]
 
     	     [equipments.helicopter_mounted_experimental_plasma_gun.range]
 	     range = 6
@@ -819,25 +830,25 @@
     [equipments.medical_armor]
     race = "gnome"
     name = "Medical Armor"
-    unit.cost.cp = 2
-    requires = [["type: infantry"],["independent:1"]]
-    special = ["Unit gain Fire resistance 3, Poison Resistance 2, and Psycic resistance 1 (improve to 2 if unit has psycic resistance from another source)"]
+    cost.cp = 2
+    requires = [["type:infantry"],["independent:1"]]
+    special = ["Unit gain Fire resistance 3, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)"]
 
 
 
     [equipments.plasma_shield_generator]
     race = "gnome"
     name = "Plasma Shield Generator"
-    unit.cost.cp = 2
-    requires = [["type: infantry"],["independent:1"]]
-    special = ["Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)", "However, every time this units takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)"]
+    cost.cp = 2
+    requires = [["type:infantry"],["independent:1"]]
+    special = ["Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)", "However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)"]
 
 
     	    [equipments.plasma_shield_generator.assault]
 	    deflection.add = [1, 0, 0, 0]
-	    deflection_die.replaced = "5+"
+	    deflection_die.replace = "5+"
 
-	    special.append = ["Any enemy which is hit atleast once in assault is set on fire"]
+	    special.append = "Any enemy which is hit atleast once in assault is set on fire"
 
 
     [equipments.splintbombgrenade_launcher]

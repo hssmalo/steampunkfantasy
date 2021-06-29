@@ -223,11 +223,11 @@
 	     ["F", "F", "360°"],
 	     ["360°", "F", "F"],
 	     ["F", "360°", "F"],
-	     ["F", "F", "F,B"],
+	     ["F", "F", "F+B"],
 	     ["F", "B", "360°"]]
 	slow = [["360°", "F", "360°"],
 	     ["360°", "A", "F"],
-	     ["360°", "F,B", "360°"]]
+	     ["360°", "F+B", "360°"]]
 	still = [["360°", "360°", "360°"],  ["360°", "A", "F"]]
 	default.slow = [["-", "-", "Flee"]]
 	default.fast = [["-", "Flee", "Flee"]]
@@ -241,9 +241,9 @@
         regular = ["2-3: +1 on future damge",
 		"4: +2 on future damge",
             "5-6: kill 1 model",
-	    "7+: Kill 1 model, roll on psycic damage"
+	    "7+: Kill 1 model, roll on psychic damage"
         ]
-        psycic = ["6+: unit shaken",]
+        psychic = ["6+: unit shaken",]
 
 
    [units.elite_mechanical_cavalry]
@@ -262,11 +262,11 @@
 	     ["F", "F", "360°"],
 	     ["360°", "F", "F"],
 	     ["F", "360°", "F"],
-	     ["F", "F", "F,B"],
+	     ["F", "F", "F+B"],
 	     ["F", "B", "360°"]]
 	slow = [["360°", "F", "360°"],
 	     ["360°", "A", "F"],
-	     ["360°", "F,B", "360°"]]
+	     ["360°", "F+B", "360°"]]
 	still = [["360°", "360°", "360°"],  ["360°", "A", "F"]]
 	default.slow = [["-", "-", "Flee"]]
 	default.fast = [["-", "Flee", "Flee"]]
@@ -284,7 +284,7 @@
             "5-6: kill 1 model",
 	    "7+: Kill 1 model, roll on psycic damage"
         ]
-        psycicc = ["5+: unit shaken",]
+        psycic = ["5+: unit shaken",]
 
 
     [units.mechanical_assault_spider]
@@ -634,7 +634,7 @@
     equipment_limit = ["training:1", "independent:∞"]
     equipments = ["smg_free", "crossbow_free"]
     type = ["bio", "elite", "cavalry", "walks"]
-    special = ["Good Shot: +1 to hit", "negates to-hit penalty for shooting while moving fast", "Fires SMG independently of crossbow, and fires in all gunnery phases"]
+    special = ["Good Shot: +1 to hit", "negates to-hit penalty for shooting while moving fast", "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases"]
 
         [models.elite_mechanical_cavalry.assault]
         strength = [4, 2, 1, 1]
@@ -668,7 +668,7 @@
     name = "Mechanical Assault Spider"
     race = "darkelf"
     equipment_limit = ["training:1", "independent:∞"]
-    equipments = ["rifle"]
+    equipments = ["head_gun"]
     type = ["mechanical", "droid", "walks"]
     special = ["Good Shot: +1 to hit"]
 
@@ -706,7 +706,7 @@
     type = ["bio", "elite", "infantry", "walks"]
     replaces = ["darkelf_infantry"]
     special = [,
-    "Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
+    "Unit base gains psychic resistance 1 as long as atleast one elite model is alive."]
     cost.xp = 1
 
     	[models.darkelf_elite_infantry.assault]
@@ -723,7 +723,7 @@
     [models.assasin]
     name = "Assasin"
     race = "darkelf"
-    equipment_limit = ["hands:2", "training:1", "independent:∞"]
+    equipment_limit = ["shared: 1", "hands:2", "training:1", "independent:∞"]
     equipments = ["rifle", "hide_free"]
     type = ["bio", "elite", "infantry", "walks"]
     special = ["Good Shot: +1 to hit"]
@@ -801,7 +801,7 @@
     equipments = ["rifle"]
     type = ["bio", "elite", "infantry", "walks", "roboprosthetic"]
     replaces = ["roboprosthetic_darkelf"]
-    special = [,"Unit base gains psycic resistance 1 as long as atleast one elite model is alive."]
+    special = [,"Unit base gains psychic resistance 1 as long as atleast one elite model is alive."]
     cost.cp = 1
 
     	[models.elite_roboprosthetic_darkelf.assault]
@@ -833,6 +833,20 @@
         special = []
 
 
+    [equipments.head_gun]
+    name = "Head Gun"
+    race = "darkelf"
+    requires = [
+    ]
+
+        [equipments.head_gun.range]
+        range = 3
+        angle = [true, true, false, false]
+        damage = "d6"
+        ap = 6
+        special = ["Poison[6]"]
+
+
     [equipments.heavy_rifle]
     name = "Heavy Rifle"
     race = "darkelf"
@@ -854,7 +868,7 @@
         [equipments.acid_cannon.range]
         range = 6
         angle = [true, true, false, false]
-        damage = "d6+d8 Psycic damage + d6 crew damage"
+        damage = "d6+d8 Psychic damage + d6 crew damage"
         ap = 3
         special = ["On hit: apply Acid to target. In addition, if you hit target, place an Acid Clund[minor] at target hex"]
 
@@ -868,7 +882,7 @@
         ["independent:1"],
 	["type:infantry", "type:cavalry"]
     ]
-    special = ["Mechanical robotic imps helps all memeber in unit base to reload it's weapons. Threat any weapons as always loaded."]
+    special = ["Mechanical robotic imps helps all models in unit base to reload it's weapons. Threat any weapons as always loaded."]
 
 
     [equipments.smg]
@@ -1155,11 +1169,9 @@
     [equipments.hide_free]
     name = "Hide"
     race = "darkelf"
-	    
-    requires = [
-        ["training:1"],
-	["type:infantry"]
-    ]
+    requires = []
+
+
 
     special = ["While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror",
     	    "While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)",

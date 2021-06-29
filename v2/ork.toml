@@ -831,7 +831,7 @@
    name = "Grenade Sling"
    race = "ork"
    unit.cost.cp = 6	
-   requiers =[["type: infantry"],
+   requires =[["type: infantry"],
    	    ["hands:1"]]
 	    
 
@@ -917,7 +917,7 @@ damage = "d8 fire damage + d4 crew damage"
    race = "ork"
    name = "Tanksscalper"
    unit.cost.cp = 2
-   requiers = [["type: infantry", "type: grunt"],["hands: 1"]]
+   requires = [["type: infantry", "type: grunt"],["hands: 1"]]
    
 
    	[equipments.tanksscalper.assault]
@@ -929,7 +929,7 @@ damage = "d8 fire damage + d4 crew damage"
    name = "Healing Syringe"
    unit.cost.cp = 1
    special = ["In 2nd gunnery phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."]
-   requiers = [["type:infantry", "type: cavalry", "type: grunt"], ["hands: 1"]]
+   requires = [["type:infantry", "type: cavalry", "type: grunt"], ["hands: 1"]]
 
 
 
@@ -937,7 +937,7 @@ damage = "d8 fire damage + d4 crew damage"
    race = "ork"
    name = "Hand Catapult"
    unit.cost.cp = 9
-   requirs = [["type: infantry"], ["hands:3"]]
+   requires = [["type: infantry"], ["hands:3"]]
 
        [equipments.hand_catapult.range]
        range = 6
@@ -952,7 +952,7 @@ damage = "d8 fire damage + d4 crew damage"
    race = "ork"
    name = "Assault_Musket"
    unit.cost.cp = 2
-   requirs = [["type: infantry"], ["hands:2"]]
+   requires = [["type: infantry"], ["hands:2"]]
 
        [equipments.assault_musket.range]
        range = 2
