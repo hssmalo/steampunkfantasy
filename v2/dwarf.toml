@@ -936,6 +936,23 @@
         special = []
 
 
+    [equipments.enhanced_heavy_musket]
+    name = "Enhanced Heavy Musket"
+    race = "dwarf"
+    cost.cp = 6
+    requires = [
+        ["hands:2"],
+	["type:infantry"]
+    ]
+
+        [equipments.enhanced_heavy_musket.range]
+        range = 6
+        angle = [true, true, true, true]
+        damage = "d6-1"
+        ap = 3
+        special = []
+
+
     [equipments.double_barrled_empowered_heavy_musket]
     name = "Double Barrled Empowered Heavy Musket"
     race = "dwarf"

@@ -375,10 +375,10 @@ class Unit:
                             break
 
 
-        with open('tableline_template.tex', 'r') as fid:
+        with open('/home/smalo/steampunkfantasy/v2/tableline_template.tex', 'r') as fid:
             tableline_template = fid.read()
 
-        with open('card_template.tex', 'r') as fid:
+        with open('/home/smalo/steampunkfantasy/v2/card_template.tex', 'r') as fid:
             card_template = fid.read()
     
 
@@ -456,10 +456,10 @@ class Unit:
         orders_txt = ''
 
         if format_ =='tex':        
-            with open('ordersheadline_template.tex', 'r') as fid:
+            with open('/home/smalo/steampunkfantasy/v2/ordersheadline_template.tex', 'r') as fid:
                 ordersheadline_template = fid.read()
 
-            with open('ordersline_template.tex', 'r') as fid:
+            with open('/home/smalo/steampunkfantasy/v2/ordersline_template.tex', 'r') as fid:
                 ordersline_template = fid.read()
             
         ordersheadline = ''
@@ -481,10 +481,10 @@ class Unit:
         damage_tables_txt = ''
 
         if format_ =='tex':        
-            with open('damage_tableheadline_template.tex', 'r') as fid:
+            with open('/home/smalo/steampunkfantasy/v2/damage_tableheadline_template.tex', 'r') as fid:
                 damage_tablesheadline_template = fid.read()
 
-            with open('damage_tablesline_template.tex', 'r') as fid:
+            with open('/home/smalo/steampunkfantasy/v2/damage_tablesline_template.tex', 'r') as fid:
                 damage_tablesline_template = fid.read()
         
         damage_tablesheadline = ''
@@ -503,20 +503,20 @@ class Unit:
     def write_info(self, long_=True, format_='tex'):
         if format_ == 'tex':
             if long_:
-                with open('unit_long.tex', 'r') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/unit_long.tex', 'r') as fid:
                     unit_long = fid.read()
 
                 self.generate_neat_dict(long_ = True, format_='tex')
 
                 unit_long = unit_long.format(**self.neat_dict)
 
-                with open('long_test.tex', 'w') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/long_test.tex', 'w') as fid:
                     fid.write(unit_long)
                 
                 return unit_long
             
             else:
-                with open('unit_short.tex', 'r') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/unit_short.tex', 'r') as fid:
                     unit_short = fid.read()
                 
                 self.generate_neat_dict(long_ = False, format_='tex')
@@ -733,7 +733,7 @@ class Model:
     def write_info(self, long_=True, format_='tex'):
         if format_ == 'tex':
             if long_:
-                with open('model_long.tex', 'r') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/model_long.tex', 'r') as fid:
                     model_long = fid.read()
 
                 self.generate_neat_dict(long_ = True, format_='tex')
@@ -743,7 +743,7 @@ class Model:
                 return model_long
             
             else:
-                with open('model_short.tex', 'r') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/model_short.tex', 'r') as fid:
                     model_short = fid.read()
                 
                 self.generate_neat_dict(long_ = False, format_='tex')
@@ -911,10 +911,10 @@ class Equipment:
         self.neat_dict['special'] = txt
                 
         if format_ =='tex':        
-            with open('ordersheadline_template.tex', 'r') as fid:
+            with open('/home/smalo/steampunkfantasy/v2/ordersheadline_template.tex', 'r') as fid:
                 ordersheadline_template = fid.read()
 
-            with open('ordersline_template.tex','r') as fid:
+            with open('/home/smalo/steampunkfantasy/v2/ordersline_template.tex','r') as fid:
                 ordersline_template = fid.read()
             
         ordersheadline = ''
@@ -979,7 +979,7 @@ class Equipment:
     def write_info(self, long_=True, format_='tex'):
         if format_ == 'tex':
             if long_:
-                with open('equipment_long.tex', 'r') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/equipment_long.tex', 'r') as fid:
                     equipment_long = fid.read()
                 
                     
@@ -988,25 +988,25 @@ class Equipment:
                 assault = ''
                 if 'assault_strength' in self.neat_dict.keys():
                     if format_=='tex':
-                        with open('assault_strength.tex', 'r') as fid:
+                        with open('/home/smalo/steampunkfantasy/v2/assault_strength.tex', 'r') as fid:
                             assault_strength = fid.read()
                         assault = assault_strength.format(**self.neat_dict) + '\\\\ \n'
 
                 if 'assault_damage' in self.neat_dict.keys():
                     if format_=='tex':
-                        with open('assault_damage.tex', 'r') as fid:
+                        with open('/home/smalo/steampunkfantasy/v2/assault_damage.tex', 'r') as fid:
                                 assault_damage = fid.read()
                         assault = assault + assault_damage.format(**self.neat_dict) + '\\\\ \n'
 
                 if 'assault_ap' in self.neat_dict.keys():
                     if format_=='tex':
-                        with open('assault_ap.tex', 'r') as fid:
+                        with open('/home/smalo/steampunkfantasy/v2/assault_ap.tex', 'r') as fid:
                             assault_ap = fid.read()
                         assault = assault + assault_ap.format(**self.neat_dict) + '\\\\ \n'
                         
                 if 'assault_deflection' in self.neat_dict.keys():
                     if format_=='tex':
-                        with open('assault_deflection.tex', 'r') as fid:
+                        with open('/home/smalo/steampunkfantasy/v2/assault_deflection.tex', 'r') as fid:
                             assault_deflection = fid.read()
 
                         assault = assault + assault_deflection.format(**self.neat_dict) + '\\\\ \n'
@@ -1014,7 +1014,7 @@ class Equipment:
                 
                 equipment_ranged = ''
                 if self.neat_dict['ranged']:
-                    with open('equipment_ranged.tex', 'r') as fid:
+                    with open('/home/smalo/steampunkfantasy/v2/equipment_ranged.tex', 'r') as fid:
                         equipment_ranged = fid.read()
                         
 
@@ -1028,14 +1028,14 @@ class Equipment:
                 return equipment_long
             
             else:
-                with open('equipment_short.tex', 'r') as fid:
+                with open('/home/smalo/steampunkfantasy/v2/equipment_short.tex', 'r') as fid:
                     equipment_short = fid.read()
                 
                 self.generate_neat_dict(long_ = False, format_='tex')
 
                 equipment_ranged = ''
                 if self.neat_dict['ranged']:
-                    with open('equipment_ranged.tex', 'r') as fid:
+                    with open('/home/smalo/steampunkfantasy/v2/equipment_ranged.tex', 'r') as fid:
                         equipment_ranged = fid.read()
                     
                 self.neat_dict['range'] = equipment_ranged.format(**self.neat_dict)
