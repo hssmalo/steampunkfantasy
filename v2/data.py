@@ -168,24 +168,26 @@ class Race:
             races = ", ".join(toml.races.section_names)
             raise ValueError(f"Unknown race {race!r}. Use one of {races}")
 
+        #import IPython; IPython.embed()
+        
         units = munch.Munch(
             **{
-                k: Unit.from_toml(k)
-                for k, u in toml.units.section_items
+                k: Unit.from_toml(k, race)
+                for k, u in toml[race].units.section_items
                 if u.race == race
             }
         )
         models = munch.Munch(
             **{
-                k: Model.from_toml(k)
-                for k, m in toml.models.section_items
+                k: Model.from_toml(k, race)
+                for k, m in toml[race].models.section_items
                 if m.race == race
             }
         )
         equipments = munch.Munch(
             **{
-                k: Equipment.from_toml(k)
-                for k, e in toml.equipments.section_items
+                k: Equipment.from_toml(k, race)
+                for k, e in toml[race].equipments.section_items
                 if e.race == race
             }
         )
@@ -533,14 +535,17 @@ class Unit:
                   
         
     @classmethod
-    def from_toml(cls, unit):
+    def from_toml(cls, unit, race):
         toml = _all_tomls()
-        if unit not in toml.units.section_names:
+
+        if unit not in toml[race].units.section_names:
             units = ", ".join(toml.units.section_names)
             raise ValueError(f"Unknown unit {unit!r}. Use one of {units}")
 
-        unit_cfg = toml.units[unit]
-        models = CounterList([Model.from_toml(m) for m in unit_cfg.models])
+
+        
+        unit_cfg = toml[race].units[unit]
+        models = CounterList([Model.from_toml(m, race) for m in unit_cfg.models])
         return cls(unit, models=models, info=unit_cfg)
 
     @property
@@ -759,15 +764,15 @@ class Model:
 
     
     @classmethod
-    def from_toml(cls, model):
+    def from_toml(cls, model, race):
         toml = _all_tomls()
-        if model not in toml.models.section_names:
+        if model not in toml[race].models.section_names:
             models = ", ".join(toml.models.section_names)
             raise ValueError(f"Unknown model {model!r}. Use one of {models}")
 
-        model_cfg = toml.models[model]
+        model_cfg = toml[race].models[model]
         equipments = CounterList(
-            [Equipment.from_toml(e) for e in model_cfg.get("equipments", [])]
+            [Equipment.from_toml(e, race) for e in model_cfg.get("equipments", [])]
         )
         return cls(model, equipments=equipments, info=model_cfg)
 
@@ -1049,15 +1054,15 @@ class Equipment:
 
         
     @classmethod
-    def from_toml(cls, equipment):
+    def from_toml(cls, equipment, race):
         toml = _all_tomls()
-        if equipment not in toml.equipments.section_names:
+        if equipment not in toml[race].equipments.section_names:
             equipments = ", ".join(toml.equipments.section_names)
             raise ValueError(
                 f"Unknown equipment {equipment!r}. Use one of {equipments}"
             )
 
-        equipment_cfg = toml.equipments[equipment]
+        equipment_cfg = toml[race].equipments[equipment]
         return cls(equipment, info=equipment_cfg)
 
     @property

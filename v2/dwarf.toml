@@ -6,7 +6,7 @@
 
 [units]
 
-    [units.dwarf_infantry]
+    [dwarf.units.dwarf_infantry]
     race = "dwarf"
     name = "Dwarf Infantry"
     models = ["dwarf_infantry", "dwarf_infantry" ,"dwarf_infantry",  "dwarf_infantry"]
@@ -15,7 +15,7 @@
     cost.mp = 4
     special = ["Posion Resistance 2, Fire Resistance 1", "Take Cover[still][-2]"]
 
-        [units.dwarf_infantry.orders.movement]
+        [dwarf.units.dwarf_infantry.orders.movement]
 	slow = [["360°","F", "360°"],
 	     ["360°", "B", "360°"],
 	     ["360°", "A", "F"]]
@@ -23,11 +23,11 @@
 	default.slow = ["-", "-", "flee"]
 	default.still = ["-", "-", "A,flee"]
 
-        [units.dwarf_infantry.orders.fire]
+        [dwarf.units.dwarf_infantry.orders.fire]
 	still = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"], ["Load", "-"], ["-", "Load"]]
 
 	
-        [units.dwarf_infantry.damage_tables]
+        [dwarf.units.dwarf_infantry.damage_tables]
         regular = ["1-5: kill 1 model",
 		"6-9: Kil 1 model, roll d6 psychic damage",
 		"10+: Unit killed"]
@@ -35,7 +35,7 @@
 
 
 
-    [units.steampowerarmor]
+    [dwarf.units.steampowerarmor]
     race = "dwarf"
     name = "SteamPowerArmor"
     models = ["steampowerarmor", "steampowerarmor", "steampowerarmor", "steampowerarmor"]
@@ -46,7 +46,7 @@
     cost.ip = 2
     special = ["Posion Resistance 4, Fire Resistance 2", "Take Cover[still][-2]", "Stable: +1 to hit while slow"]
 
-        [units.steampowerarmor.orders.movement]
+        [dwarf.units.steampowerarmor.orders.movement]
 	slow = [["360°","F", "360°"],
 	     ["360°", "B", "360°"],
 	     ["360°", "A", "F"]]
@@ -54,12 +54,12 @@
 	default.slow = ["-", "-", "flee"]
 	default.still = ["-", "-", "A,flee"]
 
-        [units.steampowerarmor.orders.fire]
+        [dwarf.units.steampowerarmor.orders.fire]
 	slow = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"], ["Load", "-"], ["-", "Load"]]
 	still = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"], ["Load", "-"], ["-", "Load"]]
 
 	
-        [units.steampowerarmor.damage_tables]
+        [dwarf.units.steampowerarmor.damage_tables]
         regular = ["1-5: kill 1 model",
 		"6-9: Kil 1 model, roll d6 psychic damage",
 		"10+: Unit killed"]
@@ -67,7 +67,7 @@
 
 
 
-    [units.mini_zeppelin]
+    [dwarf.units.mini_zeppelin]
     race = "dwarf"
     name = "Mini Zeppelin"
     models = ["mini_zeppelin", "mini_zeppelin"]
@@ -78,22 +78,22 @@
     cost.mp = 2
     special = ["Posion Resistance 2","Floats", "May use fire orders while shaken"]
 
-        [units.mini_zeppelin.orders.movement]
+        [dwarf.units.mini_zeppelin.orders.movement]
 	slow = [["360°","F", "360°"],
 	     ["360°","360°","360°"]]
 	default.slow = ["-", "-", "flee"]
 	
 
-        [units.mini_zeppelin.orders.fire]
+        [dwarf.units.mini_zeppelin.orders.fire]
 	still = [["Fire", "-"], ["Load", "-"], ["Throw", "-"]]
 
 	
-        [units.mini_zeppelin.damage_tables]
+        [dwarf.units.mini_zeppelin.damage_tables]
         regular = ["2-3: shaken", "4+: kill 1 model"]
  	psychic    = ["6+: Unit shaken"]
 
 
-    [units.transport_zeppelin]
+    [dwarf.units.transport_zeppelin]
     race = "dwarf"
     name = "Transport Zeppelin"
     models = ["transport_zeppelin"]
@@ -102,17 +102,17 @@
     cost.cp = 4
     special = ["May transport up to 2 unit base of Infantry of SteamPowerArmor. When unloading they use hanggliders and are placed up to two hexes in any direction from the transport zeppelin. They may enter assault as part of unloading", "May not transport any infantry with wheeled shieldwall"]
 
-        [units.transport_zeppelin.orders.movement]
+        [dwarf.units.transport_zeppelin.orders.movement]
 	flying_fast = [["360°","F", "unload(all)"],["360°","F", "F"],["F", "F", "360°"], ["F", "360°", "F"]]
 	default.flying_fast = ["-", "-", "F"]
 	
 
-        [units.transport_zeppelin.damage_tables]
+        [dwarf.units.transport_zeppelin.damage_tables]
         regular = ["1-4: +1 on future damage", "5-7:+1 on future damage, d6 light damage", "8: as 5-7 pluss shaken", "9: unit and all transported units killed"]
 	light   = ["1-3: +1 on future damage", "4-6: d6-2 damage to each unit base transported by this unit. Ignore any armor if any"]
 
 
-    [units.dwarf_at_gun]
+    [dwarf.units.dwarf_at_gun]
     race = "dwarf"
     name = "Dwarf AT-gun"
     models = ["dwarf_at_gun"]
@@ -123,7 +123,7 @@
     cost.mp = 2
     special = ["Whenever fired at with regular damage, after rolling for armor protection as normal, your enemy may choose wether to roll on crew damage table or regular damage table. Poison only effects the crew, while an AT-gun on fire rolls for damage on both regular damage tables and crew damage table each rounds independent of each other. All +1 to future damage applies to both regular damage and crew damage, regadless how the +1 to future damage got applied.", " Poison Resistance 2, Fire resistance 1"]
 
-        [units.dwarf_at_gun.orders.movement]
+        [dwarf.units.dwarf_at_gun.orders.movement]
 	slow = [["-", "360°", "B[Rest]"],["-", "F", "B[Rest]"]]
 	still = [["-", "-", "A[slow]"]]
 	rest = [["-", "-", "A[slow]"], ["-", "-", "A[still]"]]
@@ -133,11 +133,11 @@
 	default.rest = ["-", "-", "-"]	
 	
 
-        [units.dwarf_at_gun.orders.fire]
+        [dwarf.units.dwarf_at_gun.orders.fire]
 	still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
 
 	
-        [units.dwarf_at_gun.damage_tables]
+        [dwarf.units.dwarf_at_gun.damage_tables]
         regular = ["1-4: +1 to future damage",
 		"5-8: +2 to future damage, AT-gun Jamed",
 		"9: Unit destroied"]
@@ -149,7 +149,7 @@
 
 
 
-    [units.gunblasterwagon]
+    [dwarf.units.gunblasterwagon]
     race = "dwarf"
     name = "GunBlasterWagon"
     models = ["gunblasterwagon"]
@@ -158,7 +158,7 @@
     cost.ip = 6
     special = ["Fire Resistance 2", "optimal Point blank: +1 to hit at point blank range", "Perfect Breaking: After 3rd movement step, it may apply an ,B or ,B,B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."]
 
-        [units.gunblasterwagon.orders.movement]
+        [dwarf.units.gunblasterwagon.orders.movement]
 	fast = [["F","F","-"],
 	     ["F","R","-"],
 	     ["F","L","-"],
@@ -189,11 +189,11 @@
 	default.slow = ["-", "-", "B"]
 	default.still = ["-", "-", "-"]
 
-        [units.gunblasterwagon.orders.fire]
+        [dwarf.units.gunblasterwagon.orders.fire]
 	still = [["Fire", "-"], ["Load", "-"]]
 
 	
-        [units.gunblasterwagon.damage_tables]
+        [dwarf.units.gunblasterwagon.damage_tables]
 
 	critical = [ "1: -1 to-hit, +1 to-be-hit (ranged and assault)", "2: Cannot Rotate, Looses Fear", "3: Cannot Move", "4-5: x3 Light Damage(d6)", "6: set on Fire",]
 	light = [ "1-4: +1 on future damage", "5-6: unit shaken",]
@@ -201,7 +201,7 @@
 	crew = [ "4-5: Weapon Jammed", "6-7: as 5, shaken", "8-12: as 6-7, +3 to future crew damage", "13: All crew killed, Unit destroyed"]
 
 
-    [units.dw42]
+    [dwarf.units.dw42]
     race = "dwarf"
     name = "Dw42"
     models = ["dw42"]
@@ -210,7 +210,7 @@
     cost.ip = 12
     special = ["Fire Resistance 2"]
 
-        [units.dw42.orders.movement]
+        [dwarf.units.dw42.orders.movement]
 	fast = [["F","F","-"],
 	     ["F","R","-"],
 	     ["F","L","-"],
@@ -245,11 +245,11 @@
 	default.slow = ["-", "-", "B"]
 	default.still = ["-", "-", "-"]
 
-        [units.dw42.orders.fire]
+        [dwarf.units.dw42.orders.fire]
 	all = [["Fire", "-"]]
 	still = [["Load", "-"], ["Aim", "-"], ["Load Unstable", "-"]]
 	
-        [units.dw42.damage_tables]
+        [dwarf.units.dw42.damage_tables]
 
 	critical = [ "1-2: 3x d6 light damage", "3: +1 on future damage (+2 in total)", "4: Cannot Move", "6: set on Fire",]
 	light = [ "1-4: +1 on future damage", "5-6: unit shaken",]
@@ -257,7 +257,7 @@
 	crew = [ "4-5: Weapon Jammed", "6-7: as 5, shaken", "8-12: as 6-7, +3 to future crew damage", "13: All crew killed, Unit destroyed"]
 
 
-    [units.zap]
+    [dwarf.units.zap]
     race = "dwarf"
     name = "Zap"
     models = ["zap"]
@@ -266,7 +266,7 @@
     cost.ip = 6
     special = ["Fire and load all weapons at the same time", "Loses aim if moving", "Fire Resistance 2"]
 
-        [units.zap.orders.movement]
+        [dwarf.units.zap.orders.movement]
 	fast = [["F","F","-"],
 	     ["F","R","-"],
 	     ["F","L","-"],
@@ -301,10 +301,10 @@
 	default.slow = ["-", "-", "B"]
 	default.still = ["-", "-", "-"]
 
-        [units.zap.orders.fire]
+        [dwarf.units.zap.orders.fire]
 	all = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
 	
-        [units.zap.damage_tables]
+        [dwarf.units.zap.damage_tables]
 
 	critical = ["1-2: -1 to hit, +1 to-be-hit (randed and assault)",
 		 "3: Cannot Rotate",
@@ -318,7 +318,7 @@
 
 
 
-    [units.zeppelin]
+    [dwarf.units.zeppelin]
     race = "dwarf"
     name = "Zeppelin"
     models = ["zeppelin"]
@@ -328,7 +328,7 @@
     cost.xp = 12
     special = ["Steady: +1 to hit, +1 to be hit.", "Repair: each aftermath phase, remove either one +1 to future damage token, one 1 shaken token or 1 cannot roate token.", "Fire, aim and load all weapon systems simultaniusly", "Limited shaken: when shaken, you may fire one less weapon systems per shaken token instead of the normal effect of being shaken"," When damaged, add 1 to the result for each shaken token on the Zeppelin.", "Withering Ray: May replace forrest with rough terrain in the hex it is standing"]
 
-        [units.zeppelin.orders.movement]
+        [dwarf.units.zeppelin.orders.movement]
 	slow_flying = [["L","-","-"],
 	      	    ["L","L","-"],
 	      	    ["R","-","-"],
@@ -339,11 +339,11 @@
 
 	default.slow_flying = ["-", "-", "F"]
 
-        [units.zeppelin.orders.fire]
+        [dwarf.units.zeppelin.orders.fire]
 	still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
 
 	
-        [units.zeppelin.damage_tables]
+        [dwarf.units.zeppelin.damage_tables]
 	light = [ "1-2: +1 to future damage",
 	      	"3-5: unit shaken",
 		"6: Engine on fire: set on fire, and cannot rotate"]
@@ -354,7 +354,7 @@
 		"14+: Unit destroied"]
 	crew = [ "4-7: shaken", "8-12: as 6-7, +2 to future crew damage", "13: All crew killed, Unit destroyed"]
 
-    [units.tamed_balrog]
+    [dwarf.units.tamed_balrog]
     race = "dwarf"
     name = "Tamed Balrog"
     models = ["tamed_balrog"]
@@ -363,18 +363,18 @@
     cost.xp = 24
     special = ["Fire Resistance 12, Poison Resistance 6", "Terror[8][range=2]","Excelent Whip Handeling (counts as Excelent shot, +2 to hit)"]
 
-        [units.tamed_balrog.orders.movement]
+        [dwarf.units.tamed_balrog.orders.movement]
 	slow = [["A,chase","chase","chase,B[rest]"],["chase", "-", "-"], ["-", "-", "chase"], ["360°", "-", "-"], ["360°", "F", "-"]]
 	rest = [["-", "-", "A"]]
 
 	default.slow = ["-", "-", "flee"]
 	default.rest = ["-", "-", "A"]
 
-        [units.tamed_balrog.orders.fire]
+        [dwarf.units.tamed_balrog.orders.fire]
 	still = [["Fire", "-"], ["-", "Fire"]]
 
 	
-        [units.tamed_balrog.damage_tables]
+        [dwarf.units.tamed_balrog.damage_tables]
 	regular = [ "1-9: +1 on future damage",
 		"10-11: +2 on future damage",
 		"12: +3 on future damage, assault -1, Looses Terror, Shaken",
@@ -386,7 +386,7 @@
 #
 [models]
 
-    [models.dwarf_infantry]
+    [dwarf.models.dwarf_infantry]
     name = "Dwarf Infantry"
     race = "dwarf"
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
@@ -395,7 +395,7 @@
     special = []
 	  
 
-        [models.dwarf_infantry.assault]
+        [dwarf.models.dwarf_infantry.assault]
         strength = [1, 1, 1, 1]
         strength_die = "4+"
 	deflection = [0, 0, 0, 0]
@@ -406,7 +406,7 @@
 
 
 
-    [models.elite_dwarf_infantry]
+    [dwarf.models.elite_dwarf_infantry]
     name = "Dwarf Elite Infantry"
     race = "dwarf"
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
@@ -417,7 +417,7 @@
     special = ["good shot: +1 to hit", "unit gains psycic resistance 2 as long as 1 elite model is alive"]
 	  
 
-        [models.elite_dwarf_infantry.assault]
+        [dwarf.models.elite_dwarf_infantry.assault]
         strength = [2, 2, 1, 1]
         strength_die = "4+"
 	deflection = [1, 0, 0, 0]
@@ -427,7 +427,7 @@
         special = ["cunning assault[1 for 2]"]
 
 
-    [models.elite_steampowerarmor]
+    [dwarf.models.elite_steampowerarmor]
     name = "Dwarf SteamPowerArmor"
     race = "dwarf"
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
@@ -438,7 +438,7 @@
     special = ["good shot: +1 to hit", "unit gains psycic resistance 1 as long as 1 elite model is alive"]
 	  
 
-        [models.elite_steampowerarmor.assault]
+        [dwarf.models.elite_steampowerarmor.assault]
         strength = [4, 3, 3, 3]
         strength_die = "4+"
 	deflection = [2, 1, 1, 1]
@@ -448,7 +448,7 @@
         special = ["cunning assault[1 for 2]"]
 
 
-    [models.steampowerarmor]
+    [dwarf.models.steampowerarmor]
     name = "SteamPowerArmor"
     race = "dwarf"
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
@@ -457,7 +457,7 @@
     special = []
 	  
 
-        [models.steampowerarmor.assault]
+        [dwarf.models.steampowerarmor.assault]
         strength = [3, 2, 2, 1]
         strength_die = "4+"
 	deflection = [0, 0, 0, 0]
@@ -467,7 +467,7 @@
         special = ["cunning assault[1 for 2]"]
 
 
-    [models.mini_zeppelin]
+    [dwarf.models.mini_zeppelin]
     name = "Mini Zeppelin"
     race = "dwarf"
     equipment_limit = ["independent:∞"]
@@ -476,7 +476,7 @@
     special = []
 	  
 
-        [models.mini_zeppelin.assault]
+        [dwarf.models.mini_zeppelin.assault]
         strength = [2, 1, 1, 1]
         strength_die = "4+"
 	deflection = [4, 3, 1, 1]
@@ -486,7 +486,7 @@
         special = []
 
 
-    [models.transport_zeppelin]
+    [dwarf.models.transport_zeppelin]
     name = "Transport Zeppelin"
     race = "dwarf"
     equipment_limit = ["independent:∞"]
@@ -494,7 +494,7 @@
     special = []
 	  
 
-        [models.transport_zeppelin.assault]
+        [dwarf.models.transport_zeppelin.assault]
         strength = [2, 1, 1, 1]
         strength_die = "4+"
 	deflection = [0, 0, 0, 0,]
@@ -503,7 +503,7 @@
         ap = 2
         special = ["May not assault ground units"]
 
-    [models.tamed_balrog]
+    [dwarf.models.tamed_balrog]
     name = "Tamed Balrog"
     race = "dwarf"
     equipment_limit = []
@@ -512,7 +512,7 @@
     special = []
 	  
 
-        [models.tamed_balrog.assault]
+        [dwarf.models.tamed_balrog.assault]
         strength = [6, 4, 3, 2]
         strength_die = "2+"
 	deflection = [0, 0, 0, 0]
@@ -521,7 +521,7 @@
         ap = 6
         special = ["Set on fire"]
 
-    [models.gunblasterwagon]
+    [dwarf.models.gunblasterwagon]
     name = "GunBlasterWagon"
     race = "dwarf"
     equipment_limit = ["crew:1", "independent:∞"]
@@ -530,7 +530,7 @@
     special = []
 	  
 
-        [models.gunblasterwagon.assault]
+        [dwarf.models.gunblasterwagon.assault]
         strength = [2, 2, 2, 2]
         strength_die = "4+"
 	deflection = [2, 0, 0, 0]
@@ -540,7 +540,7 @@
         special = ["Fear[6]"]
 
 
-    [models.dw42]
+    [dwarf.models.dw42]
     name = "dw42"
     race = "dwarf"
     equipment_limit = ["crew:1", "independent:∞"]
@@ -549,7 +549,7 @@
     special = []
 	  
 
-        [models.dw42.assault]
+        [dwarf.models.dw42.assault]
         strength = [4, 3, 3, 2]
         strength_die = "4+"
 	deflection = [2, 0, 0, 0]
@@ -559,7 +559,7 @@
         special = ["Fear[6]"]
 
 
-    [models.zap]
+    [dwarf.models.zap]
     name = "zap"
     race = "dwarf"
     equipment_limit = ["crew:1", "independent:∞"]
@@ -568,7 +568,7 @@
     special = []
 	  
 
-        [models.zap.assault]
+        [dwarf.models.zap.assault]
         strength = [4, 3, 3, 2]
         strength_die = "4+"
 	deflection = [2, 1, 0, 0]
@@ -579,7 +579,7 @@
 
 
 
-    [models.dwarf_at_gun]
+    [dwarf.models.dwarf_at_gun]
     name = "Dwarf AT-gun"
     race = "dwarf"
     equipment_limit = ["training: 1", "independent:∞"]
@@ -588,7 +588,7 @@
     special = []
 	  
 
-        [models.dwarf_at_gun.assault]
+        [dwarf.models.dwarf_at_gun.assault]
         strength = [1, 0, 0, 0]
         strength_die = "4+"
 	deflection = [0, 0, 0, 0]
@@ -598,7 +598,7 @@
         special = ["Is automaticly destroied if forced to retreat in an assault"]
 
 
-    [models.zeppelin]
+    [dwarf.models.zeppelin]
     name = "Zeppelin"
     race = "dwarf"
     equipment_limit = ["independent:∞"]
@@ -607,7 +607,7 @@
     special = []
 	  
 
-        [models.zeppelin.assault]
+        [dwarf.models.zeppelin.assault]
         strength = [6, 6, 6, 6]
         strength_die = "4+"
 	deflection = [3, 3, 3, 3]
@@ -620,7 +620,7 @@
 
 [equipments]
 
-    [equipments.musket]
+    [dwarf.equipments.musket]
     name = "Musket"
     race = "dwarf"
     requires = [
@@ -628,7 +628,7 @@
 	["type:infantry"]
     ]
 
-        [equipments.musket.range]
+        [dwarf.equipments.musket.range]
         range = 3
         angle = [true, true, true, true]
         damage = "d6-2"
@@ -636,7 +636,7 @@
         special = []
 
 
-    [equipments.musket_with_springloaded_axe]
+    [dwarf.equipments.musket_with_springloaded_axe]
     name = "Musket With Springloaded Axe"
     race = "dwarf"
     cost.cp = 2
@@ -645,19 +645,19 @@
 	["type:infantry"]
     ]
 
-        [equipments.musket_with_springloaded_axe.range]
+        [dwarf.equipments.musket_with_springloaded_axe.range]
         range = 3
         angle = [true, true, true, true]
         damage = "d6-2"
         ap = 2
         special = []
 
-        [equipments.musket_with_springloaded_axe.assault]
+        [dwarf.equipments.musket_with_springloaded_axe.assault]
 	strength.add = [1, 1, 1, 1]
 	damage.replace = "d6-2 + d6 psycic damage"
 
 
-    [equipments.blast_sticks]
+    [dwarf.equipments.blast_sticks]
     name = "Blast Sticks"
     race = "dwarf"
     cost.cp = 2
@@ -666,14 +666,14 @@
 	["type:infantry"]
     ]
 
-        [equipments.blast_sticks.assault]
+        [dwarf.equipments.blast_sticks.assault]
 	deflection.add = [1, 1, 1, 1]
 	deflection_die.replace = "4+"
 	damage.replace = "d6-2 + d6 psycic damage"
 	special.append = ["Cunning Assault[1 for 1]"]
 
 
-    [equipments.springloaded_vehicle_assault_weapons]
+    [dwarf.equipments.springloaded_vehicle_assault_weapons]
     name = "Springloaded Vehicle Assault Weapons"
     race = "dwarf"
     cost.cp = 2
@@ -683,14 +683,14 @@
 	["type:vehicle"]
     ]
 
-        [equipments.springloaded_vehicle_assault_weapons.assault]
+        [dwarf.equipments.springloaded_vehicle_assault_weapons.assault]
 	strength.add = [4, 2, 2, 0]
 	deflection.add = [2, 1, 1, 0]
 	deflection_die.replace = "4+"
 	damage.replace = "d6-2 + d6 psycic damage"
 
 
-    [equipments.wheeled_shieldwall]
+    [dwarf.equipments.wheeled_shieldwall]
     name = "Wheeled ShieldWall"
     race = "dwarf"
     cost.cp = 2
@@ -700,12 +700,12 @@
     ]
     special = ['Unit gain [5,0,0,0] in armor']
 
-        [equipments.wheeled_shieldwall.assault]
+        [dwarf.equipments.wheeled_shieldwall.assault]
 	deflection.add = [1, 0, 0, 0]
 	deflection_die.replace = "4+"
 	special.append = ["-1 in assault strength if speed is not still", "Don't get any armor bonus in assault"]
 
-    [equipments.elite_crew]
+    [dwarf.equipments.elite_crew]
     name = "Springloaded Vehicle Assault Weapons"
     race = "dwarf"
     cost.xp = 6
@@ -716,12 +716,12 @@
     special = ["Gains good shot: +1 to hit"]
 
 
-    [equipments.axethrower_machine]
+    [dwarf.equipments.axethrower_machine]
     name = "AxeThrower Machine"
     race = "dwarf"
     requires = []
 
-        [equipments.axethrower_machine.range]
+        [dwarf.equipments.axethrower_machine.range]
         range = 3
         angle = [true, true, false, false]
         damage = "d6-1"
@@ -729,13 +729,13 @@
         special = ["Fire x2 per fire order"]
 
 
-    [equipments.superblaster]
+    [dwarf.equipments.superblaster]
     name = "Super Blaster"
     race = "dwarf"
     model_cost.cp = 8
     requires = [["type: steampowerarmor"], ["type: elite"], ["hands:2"]]
 
-        [equipments.superblaster.range]
+        [dwarf.equipments.superblaster.range]
         range = 3
         angle = [true, true, true, true]
         damage = "d6+2"
@@ -743,20 +743,20 @@
         special = []
 
 
-    [equipments.bigblaster]
+    [dwarf.equipments.bigblaster]
     name = "Big Blaster"
     race = "dwarf"
     model_cost.cp = 8
     requires = [["type: infantry"], ["shared:1"]]
 
-        [equipments.bigblaster.range]
+        [dwarf.equipments.bigblaster.range]
         range = 2
         angle = [true, true, true, true]
         damage = "d6+1"
         ap = 8 
         special = ["Requir atleast 2 alive models in unit base to be used"]
 
-    [equipments.vest_of_life_support]
+    [dwarf.equipments.vest_of_life_support]
     name = "Vest of Life Support"
     race = "dwarf"
     cost.cp = 2
@@ -764,32 +764,32 @@
     special = ["Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. Endurence tokens may be spend in the following way:", "1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model')","2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.","3. If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage"]
 
 
-    [equipments.trenchcoat_of_resistance]
+    [dwarf.equipments.trenchcoat_of_resistance]
     name = "Trench Coat of Resistance"
     race = "dwarf"
     cost.cp = 1
     requires = [["type: infantry"], ["independent:1"]]
     special = ["Unit improves poison resistance and fire reistance with 1", "Unit gains imunity to minor acid"]
 
-    [equipments.steamblower]
+    [dwarf.equipments.steamblower]
     name = "Steamblower"
     race = "dwarf"
     cost.cp = 4
     requires = [["type: steampowerarmor"], ["hands:2"]]
 
-        [equipments.steamblower.range]
+        [dwarf.equipments.steamblower.range]
         range = 2
         angle = [true, true, true, true]
         damage = "d6-2+d4 crew damage"
         ap = 2
         special = ["Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4"]
 
-    [equipments.poison_gas_grenade]
+    [dwarf.equipments.poison_gas_grenade]
     name = "Poison Gas Grenade"
     race = "dwarf"
     requires = [["type: infantry"],["independent: 1"]]
 
-        [equipments.poison_gas_grenade.range]
+        [dwarf.equipments.poison_gas_grenade.range]
         range = 1
         angle = [true, true, true, true]
         damage = "N.A"
@@ -799,13 +799,13 @@
 
 
 
-    [equipments.flaming_whip]
+    [dwarf.equipments.flaming_whip]
     name = "Flaming Whip"
     race = "dwarf"
     requires = [
     ]
 
-        [equipments.flaming_whip.range]
+        [dwarf.equipments.flaming_whip.range]
         range = 1
         angle = [true, true, false, false]
         damage = "N.A"
@@ -813,39 +813,39 @@
         special = ["Set on fire"]
 
 
-    [equipments.fear_ray_free]
+    [dwarf.equipments.fear_ray_free]
     name = "Fear Ray"
     race = "dwarf"
     requires = [
     ]
 
-        [equipments.fear_ray_free.range]
+        [dwarf.equipments.fear_ray_free.range]
         range = 4
         angle = [true, false, false, false]
         damage = "d6 Psycic damage"
         ap = 0
         special = []
 
-    [equipments.fear_ray]
+    [dwarf.equipments.fear_ray]
     name = "Fear Ray"
     race = "dwarf"
     cost.cp = 2
     requires = [["type: steampowerarmor"], ['hands: 2']
     ]
 
-        [equipments.fear_ray.range]
+        [dwarf.equipments.fear_ray.range]
         range = 4
         angle = [true, false, false, false]
         damage = "d6 Psycic damage"
         ap = 0
         special = []
 
-    [equipments.zeppelin_gun]
+    [dwarf.equipments.zeppelin_gun]
     name = "Zeppelin Gun"
     race = "dwarf"
     requires = []
 
-        [equipments.zeppelin_gun.range]
+        [dwarf.equipments.zeppelin_gun.range]
         range = 6
         angle = [true, true, true, true]
         damage = "d6 +1 +(+3 if penetrating all armor)"
@@ -853,12 +853,12 @@
         special = []
 
 
-    [equipments.big_at_gun]
+    [dwarf.equipments.big_at_gun]
     name = "Big AT-Gun"
     race = "dwarf"
     requires = []
 
-        [equipments.big_at_gun.range]
+        [dwarf.equipments.big_at_gun.range]
         range = 6
         angle = [true, false, false, false]
         damage = "d6 +1 +(+3 if penetrating all armor)"
@@ -866,12 +866,12 @@
         special = []
 
 
-    [equipments.tank_gun]
+    [dwarf.equipments.tank_gun]
     name = "Tank-Gun"
     race = "dwarf"
     requires = []
 
-        [equipments.tank_gun.range]
+        [dwarf.equipments.tank_gun.range]
         range = 8
         angle = [true, false, false, false]
         damage = "d6 +1 +(+3 if penetrating all armor)"
@@ -879,13 +879,13 @@
 	special = ["Load unstable: If it hits the target, it in addition to normal damage it gets gets Area(5+) effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."]
 
 
-    [equipments.array_of_enhanced_heavy_muskets]
+    [dwarf.equipments.array_of_enhanced_heavy_muskets]
     name = "Array of Heavy Muskets"
     race = "dwarf"
     requires = [
     ]
 
-        [equipments.array_of_enhanced_heavy_muskets.range]
+        [dwarf.equipments.array_of_enhanced_heavy_muskets.range]
         range = 6
         angle = ["x4", "x2", "x2", "0"]
         damage = "d6-1"
@@ -893,33 +893,33 @@
         special = []
 
 
-    [equipments.array_of_heavy_muskets]
+    [dwarf.equipments.array_of_heavy_muskets]
     name = "Array of Enhanced Heavy Muskets"
     race = "dwarf"
     requires = [
     ]
 
-        [equipments.array_of_heavy_muskets.range]
+        [dwarf.equipments.array_of_heavy_muskets.range]
         range = 3
         angle = ["x4", "x2", "x2", "0"]
         damage = "d6-1"
         ap = 3
         special = []
 
-    [equipments.zap]
+    [dwarf.equipments.zap]
     name = "Zap"
     race = "dwarf"
     requires = [
     ]
 
-        [equipments.zap.range]
+        [dwarf.equipments.zap.range]
         range = 4
         angle = [true, false, false, false]
         damage = "d6+1"
         ap = 4
         special = []
 
-    [equipments.heavy_musket]
+    [dwarf.equipments.heavy_musket]
     name = "Heavy Musket"
     race = "dwarf"
     cost.cp = 2
@@ -928,7 +928,7 @@
 	["type:infantry"]
     ]
 
-        [equipments.heavy_musket.range]
+        [dwarf.equipments.heavy_musket.range]
         range = 3
         angle = [true, true, true, true]
         damage = "d6-1"
@@ -936,7 +936,7 @@
         special = []
 
 
-    [equipments.enhanced_heavy_musket]
+    [dwarf.equipments.enhanced_heavy_musket]
     name = "Enhanced Heavy Musket"
     race = "dwarf"
     cost.cp = 6
@@ -945,7 +945,7 @@
 	["type:infantry"]
     ]
 
-        [equipments.enhanced_heavy_musket.range]
+        [dwarf.equipments.enhanced_heavy_musket.range]
         range = 6
         angle = [true, true, true, true]
         damage = "d6-1"
@@ -953,7 +953,7 @@
         special = []
 
 
-    [equipments.double_barrled_empowered_heavy_musket]
+    [dwarf.equipments.double_barrled_empowered_heavy_musket]
     name = "Double Barrled Empowered Heavy Musket"
     race = "dwarf"
     cost.cp = 2
@@ -962,7 +962,7 @@
 	["type:steampowerarmor"]
     ]
 
-        [equipments.double_barrled_empowered_heavy_musket.range]
+        [dwarf.equipments.double_barrled_empowered_heavy_musket.range]
         range = 4
         angle = [true, true, true, true]
         damage = "d6"
@@ -970,7 +970,7 @@
         special = ["Fire two shots per fire order per model"]
 
 
-    [equipments.multi_barrled_heavy_musket]
+    [dwarf.equipments.multi_barrled_heavy_musket]
     name = "MultiBarrled Heavy Musket"
     race = "dwarf"
     cost.cp = 2
@@ -979,7 +979,7 @@
 	["type:steampowerarmor"]
     ]
 
-        [equipments.multi_barrled_heavy_musket.range]
+        [dwarf.equipments.multi_barrled_heavy_musket.range]
         range = 3
         angle = [true, true, true, true]
         damage = "d6-1"
@@ -987,7 +987,7 @@
         special = ["Fire three shots per fire order per model"]
 
 
-    [equipments.rocket_jackhammer]
+    [dwarf.equipments.rocket_jackhammer]
     name = "Rocket Jackhammer"
     race = "dwarf"
     model_cost.cp = 2
@@ -997,12 +997,12 @@
 	["type: elite"]
     ]
 
-        [equipments.rocket_jackhammer.assault]
+        [dwarf.equipments.rocket_jackhammer.assault]
 	damage.replace = "d6 (+3 if penetrating all armor)"
 	ap.replace = 8
 
 
-    [equipments.heavy_musket_free]
+    [dwarf.equipments.heavy_musket_free]
     name = "Heavy Musket"
     race = "dwarf"
     requires = [
@@ -1010,7 +1010,7 @@
 	["type:infantry"]
     ]
 
-        [equipments.heavy_musket_free.range]
+        [dwarf.equipments.heavy_musket_free.range]
         range = 3
         angle = [true, true, true, true]
         damage = "d6-1"
@@ -1018,7 +1018,7 @@
         special = []
 
 
-    [equipments.broadside_guns]
+    [dwarf.equipments.broadside_guns]
     name = "Broadside Guns"
     race = "dwarf"
     cost.cp = 2
@@ -1027,7 +1027,7 @@
 	["type:infantry"]
     ]
 
-        [equipments.broadside_guns.range]
+        [dwarf.equipments.broadside_guns.range]
         range = 2
         angle = ["0", "x2", "x2", "0"]
         damage = "d6+2"
@@ -1035,7 +1035,7 @@
         special = ["Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 turns reloading before it can fire again", "After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired."]
 
 
-    [equipments.hide]
+    [dwarf.equipments.hide]
     name = "Hide"
     race = "dwarf"
     cost.xp = 8
@@ -1054,6 +1054,6 @@
 	    "Camuflage[hill][-1]"]	
 
 
-        [equipments.hide.orders_gained.orders.movement]
+        [dwarf.equipments.hide.orders_gained.orders.movement]
         still= [["Reveal", "-", "-"]]
 	slow = [["Hide[hill]", "-", "B[rest]"]]
