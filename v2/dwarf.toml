@@ -706,7 +706,7 @@
 	special.append = ["-1 in assault strength if speed is not still", "Don't get any armor bonus in assault"]
 
     [dwarf.equipments.elite_crew]
-    name = "Springloaded Vehicle Assault Weapons"
+    name = "Elite Crew"
     race = "dwarf"
     cost.xp = 6
     requires = [

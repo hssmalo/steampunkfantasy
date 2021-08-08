@@ -342,7 +342,8 @@ class Unit:
     def generate_orders_card(self):
         cards = {}
         translation = {39: None}
-        for ordertype, orderinfo in self.info.orders.as_dict().items():
+        for ordertype, tmp in self.info.orders.as_dict().items():
+            orderinfo = self._orders(ordertype)
             cards[ordertype] = [{}]
             for speed, orders in orderinfo.items():
                 if 'default' in speed:
