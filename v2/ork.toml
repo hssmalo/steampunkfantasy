@@ -913,21 +913,24 @@ damage = "d8 fire damage + d4 crew damage"
 	ap = 7
 	special = []
 
+
+	
    [ork.equipments.tanksscalper]
    race = "ork"
    name = "Tanksscalper"
-   unit.cost.cp = 2
+   cost.cp = 2
    requires = [["type: infantry", "type: grunt"],["hands: 1"]]
    
 
    	[ork.equipments.tanksscalper.assault]
-	assault_special = ["May replace regular damage with d4-2 crew damage. If so, any supporting damage to this damage die adds +1 to crew damage instead of +1 to regular damage. It should be noted that other models within the same unit MAY choose different damage types. Thus only the hit and corresponding supporting hits versus a tank should be converted to crew damage. ", " You loose Cunning Assault if any"]
+	special.append = ["May replace regular damage with d4-2 crew damage. If so, any supporting damage to this damage die adds +1 to crew damage instead of +1 to regular damage. It should be noted that other models within the same unit MAY choose different damage types. Thus only the hit and corresponding supporting hits versus a tank should be converted to crew damage.", "You loose Cunning Assault if any"]
 
 
    [ork.equipments.healing_syringe]
+
    race = "ork"
    name = "Healing Syringe"
-   unit.cost.cp = 1
+   cost.cp = 1
    special = ["In 2nd gunnery phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."]
    requires = [["type:infantry", "type: cavalry", "type: grunt"], ["hands: 1"]]
 
@@ -936,7 +939,7 @@ damage = "d8 fire damage + d4 crew damage"
    [ork.equipments.hand_catapult]
    race = "ork"
    name = "Hand Catapult"
-   unit.cost.cp = 9
+   cost.cp = 9
    requires = [["type: infantry"], ["hands:3"]]
 
        [ork.equipments.hand_catapult.range]
@@ -951,7 +954,7 @@ damage = "d8 fire damage + d4 crew damage"
    [ork.equipments.assault_musket]
    race = "ork"
    name = "Assault_Musket"
-   unit.cost.cp = 2
+   cost.cp = 2
    requires = [["type: infantry"], ["hands:2"]]
 
        [ork.equipments.assault_musket.range]
