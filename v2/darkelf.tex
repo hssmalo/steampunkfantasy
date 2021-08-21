@@ -14,7 +14,10 @@
 
 {\bf Mechanical Red Dragon } \\
 Equipment: 1 x Fire breath \\
+Equipment Limits: [independent:∞] \\
 Type: [drone, flying, mechanical, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [12, 8, 8, 4] Die: 5+ Armor Penetration: 7 Damage: d6 \\
 Assault Deflection: [12, 8, 8, 4] Die: 6+\\
@@ -37,7 +40,6 @@ In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]\\
 
  
 \ \\
-
 
 
 
@@ -82,7 +84,10 @@ all [-, Load] \\
 
 {\bf Mechanical Iron Dragon } \\
 Equipment: 1 x Acid breath, 1 x Shrapnell breath \\
+Equipment Limits: [independent:∞] \\
 Type: [drone, flying, mechanical, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [12, 8, 8, 4] Die: 5+ Armor Penetration: 7 Damage: d6 \\
 Assault Deflection: [12, 8, 8, 4] Die: 6+\\
@@ -116,7 +121,6 @@ Always treated as loaded\\
 
  
 \ \\
-
 
 
 
@@ -162,7 +166,10 @@ all [-, Load] \\
 
 {\bf Queen YY } \\
 Equipment: 1 x Acid Cannon, 2 x Heavy Rifle \\
+Equipment Limits: [independent:∞] \\
 Type: [bio crew, vehicle, mechanical, track] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [5, 4, 3, 2] Die: 5+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [4, 0, 0, 0] Die: 6+\\
@@ -179,7 +186,7 @@ If you have the order release poison cloud as an fireing option, you may place t
 
 
 
-Range: 6  Angle: [True, True, False, False]: AP: 3: Damage:d6+d8 Psycic damage + d6 crew damage \\
+Range: 6  Angle: [True, True, False, False]: AP: 3: Damage:d6+d8 Psychic damage + d6 crew damage \\
 On hit: apply Acid to target. In addition, if you hit target, place an Acid Clund[minor] at target hex\\ 
 
 
@@ -196,7 +203,6 @@ Range: 4  Angle: [True, True, False, False]: AP: 3: Damage:d6-1 \\
 
  
 \ \\
-
 
 
 
@@ -258,7 +264,10 @@ fast [-, Release Poison] \\
 
 {\bf Queen XY } \\
 Equipment:  \\
+Equipment Limits: [independent:∞] \\
 Type: [bio crew, vehicle, mechanical, track] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [5, 4, 3, 2] Die: 5+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [4, 0, 0, 0] Die: 6+\\
@@ -271,7 +280,6 @@ If you have the order release poison cloud as an fireing option, you may place a
 \ \\
  
 \ \\
-
 
 
 
@@ -325,7 +333,10 @@ fast [-, Release Poison] \\
 
 {\bf Nightmare Mechanical Cavalry } \\
 Equipment: 1 x SMG, 1 x Nightmare Breath \\
+Equipment Limits: [training:1, independent:∞] \\
 Type: [bio, elite, cavalry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [3, 2, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [3, 2, 0, 0] Die: 5+\\
@@ -362,17 +373,16 @@ Always treated as loaded\\
 
 
 
-
 \ \\ {\bf movement } \\
 fast [F, F, F] \\
 fast [F, F, 360°] \\
 fast [360°, F, F] \\
 fast [F, 360°, F] \\
-fast [F, F, F,B] \\
+fast [F, F, F+B] \\
 fast [F, B, 360°] \\
 slow [360°, F, 360°] \\
 slow [360°, A, F] \\
-slow [360°, F,B, 360°] \\
+slow [360°, F+B, 360°] \\
 still [360°, 360°, 360°] \\
 still [360°, A, F] \\
 default slow \\
@@ -387,8 +397,8 @@ all [-, Breath Fire] \\
 2-3: +1 on future damge \\
 4: +2 on future damge \\
 5-6: kill 1 model \\
-7+: Kill 1 model, roll on psycic damage \\
-\ \\ {\bf psycic } \\
+7+: Kill 1 model, roll on psychic damage \\
+\ \\ {\bf psychic } \\
 6+: unit shaken \\
 
 
@@ -416,7 +426,10 @@ all [-, Breath Fire] \\
 
 {\bf Elite Mechanical Cavalry } \\
 Equipment: 1 x SMG, 1 x Crossbow \\
+Equipment Limits: [training:1, independent:∞] \\
 Type: [bio, elite, cavalry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [4, 2, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [4, 3, 0, 0] Die: 5+\\
@@ -424,7 +437,7 @@ Assault Deflection: [4, 3, 0, 0] Die: 5+\\
 \ \\
 Good Shot: +1 to hit\\ 
 negates to-hit penalty for shooting while moving fast\\ 
-Fires SMG independently of crossbow, and fires in all gunnery phases\\ 
+Fires SMG independently of crossbow, and the SMG fires in all gunnery phases\\ 
 
 \ \\
 {\bf SMG } \\
@@ -452,17 +465,16 @@ Poison[6], minor acid\\
 
 
 
-
 \ \\ {\bf movement } \\
 fast [F, F, F] \\
 fast [F, F, 360°] \\
 fast [360°, F, F] \\
 fast [F, 360°, F] \\
-fast [F, F, F,B] \\
+fast [F, F, F+B] \\
 fast [F, B, 360°] \\
 slow [360°, F, 360°] \\
 slow [360°, A, F] \\
-slow [360°, F,B, 360°] \\
+slow [360°, F+B, 360°] \\
 still [360°, 360°, 360°] \\
 still [360°, A, F] \\
 default slow \\
@@ -480,7 +492,7 @@ all [-, Aim] \\
 4: +2 on future damge \\
 5-6: kill 1 model \\
 7+: Kill 1 model, roll on psycic damage \\
-\ \\ {\bf psycicc } \\
+\ \\ {\bf psycic } \\
 5+: unit shaken \\
 
 
@@ -508,8 +520,11 @@ all [-, Aim] \\
 
 
 {\bf Mechanical Assault Spider } \\
-Equipment: 1 x Rifle \\
+Equipment: 1 x Head Gun \\
+Equipment Limits: [training:1, independent:∞] \\
 Type: [mechanical, droid, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [6, 4, 2, 1] Die: 5+ Armor Penetration: 7 Damage: d6 \\
 Assault Deflection: [6, 2, 0, 0] Die: 6+\\
@@ -520,18 +535,18 @@ Poison[6][1 for 2], Fear[6]\\
 Good Shot: +1 to hit\\ 
 
 \ \\
-{\bf Rifle } \\
+{\bf Head Gun } \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 3  Angle: [True, True, False, False]: AP: 6: Damage:d6 \\
+Poison[6]\\ 
 
 
 
 
  
 \ \\
-
 
 
 
@@ -587,7 +602,10 @@ still [-, Aim] \\
 
 {\bf Dark Elf Infantry } \\
 Equipment: 1 x Rifle \\
+Equipment Limits: [hands:2, training:1, independent:∞] \\
 Type: [bio, infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 1, 0, 0] Die: 6+\\
@@ -608,7 +626,6 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
 
  
 \ \\
-
 
 
 
@@ -671,7 +688,10 @@ still [-, Aim] \\
 
 {\bf Dark Elf Infantry } \\
 Equipment: 1 x Rifle \\
+Equipment Limits: [hands:2, training:1, independent:∞] \\
 Type: [bio, infantry, walks, roboprosthetic] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 1, 0, 0] Die: 6+\\
@@ -692,7 +712,6 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
 
  
 \ \\
-
 
 
 
@@ -755,7 +774,10 @@ still [-, Aim] \\
 
 {\bf Assasin } \\
 Equipment: 1 x Rifle, 1 x Hide \\
+Equipment Limits: [shared: 1, hands:2, training:1, independent:∞] \\
 Type: [bio, elite, infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [6, 4, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [8, 3, 0, 0] Die: 6+\\
@@ -794,7 +816,6 @@ Camuflage[swamp][-1]\\
 
  
 \ \\
-
 
 
 
@@ -855,7 +876,10 @@ still [-, Aim] \\
 
 {\bf Roboprosthetic Assasin } \\
 Equipment: 1 x Rifle, 1 x Hide \\
+Equipment Limits: [hands:2, training:1, independent:∞] \\
 Type: [bio, elite, infantry, roboprosthetic, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [6, 4, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [8, 3, 0, 0] Die: 6+\\
@@ -894,7 +918,6 @@ Camuflage[swamp][-1]\\
 
  
 \ \\
-
 
 
 
@@ -953,12 +976,15 @@ slow [Fire, -] \\
 \end{tabular}
 
 \noindent Forward Position[2], Take-Cover[still,crawl][-3]\\ 
-spot: detect enemy hidden units. See general rules\\ 
+spot: detect enemy hidden darkelf.units. See general rules\\ 
 
 
 {\bf Scout } \\
 Equipment: 1 x Rifle \\
+Equipment Limits: [hands:2, training:1, independent:∞] \\
 Type: [bio, infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [2, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 1, 0, 0] Die: 6+\\
@@ -979,7 +1005,6 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
 
  
 \ \\
-
 
 
 
@@ -1040,7 +1065,7 @@ Flexible deflection die: any deflection result from elites may be choosen to add
 Reroll all success in assault while crawling\\ 
  
 \ \\
-Unit base gains psycic resistance 1 as long as atleast one elite model is alive.\\ 
+Unit base gains psychic resistance 1 as long as atleast one elite model is alive.\\ 
 
 \ \\
 {\bf Rifle } \\
@@ -1069,7 +1094,7 @@ Flexible deflection die: any deflection result from elites may be choosen to add
 Reroll all success in assault while crawling\\ 
  
 \ \\
-Unit base gains psycic resistance 1 as long as atleast one elite model is alive.\\ 
+Unit base gains psychic resistance 1 as long as atleast one elite model is alive.\\ 
 
 \ \\
 {\bf Rifle } \\
@@ -1084,11 +1109,12 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
  
 \ \\
 
-\section{Equipment and training Upgrades}{\bf Mechanical Imp } \\
+\section{Equipment and training Upgrades}\ \\
+{\bf Mechanical Imp } \\
 
 Requiers: [[independent:1], [type:infantry, type:cavalry]] \\
 Cost: Upgrade all models for: 4cp, 2xp \\
-Mechanical robotic imps helps all memeber in unit base to reload it's weapons. Threat any weapons as always loaded.\\ 
+Mechanical robotic imps helps all models in unit base to reload it's weapons. Threat any weapons as always loaded.\\ 
 
 
 
@@ -1096,6 +1122,9 @@ Mechanical robotic imps helps all memeber in unit base to reload it's weapons. T
 
 
 
+
+
+\ \\
 {\bf SMG } \\
 
 Requiers: [[hands:2], [type:infantry, type:cavalry]] \\
@@ -1110,6 +1139,12 @@ Always treated as loded. Fires two times (per model) each time it is fired\\
 
 
 
+
+\ \\ {\bf fire } \\
+still [Fire, Fire] \\
+slow [Fire, Fire] \\
+
+\ \\
 {\bf Crossbow } \\
 
 Requiers: [[hands:2], [type:infantry, type:cavalry]] \\
@@ -1124,6 +1159,9 @@ Poison[6], minor acid\\
 
 
 
+
+
+\ \\
 {\bf Enhanced Crossbow } \\
 
 Requiers: [[hands:2], [type:infantry, type:cavalry], [type:elite]] \\
@@ -1138,6 +1176,9 @@ Poison[8], minor acid\\
 
 
 
+
+
+\ \\
 {\bf Poison Gas Grenade } \\
 
 Requiers: [[independent:1], [type:infantry, type:cavalry]] \\
@@ -1154,6 +1195,11 @@ Always treated as loaded\\
 
 
 
+
+\ \\ {\bf fire } \\
+all [-, Throw Gas Grenade] \\
+
+\ \\
 {\bf Mortar 1A } \\
 
 Requiers: [[shared:1], [type:infantry]] \\
@@ -1170,6 +1216,9 @@ Indirect fire: may use line of sight of any friendly unit on the battle field.\\
 
 
 
+
+
+\ \\
 {\bf Mortar 1.1B } \\
 
 Requiers: [[shared:1], [type:infantry]] \\
@@ -1186,6 +1235,9 @@ Indirect fire: may use line of sight of any friendly unit on the battle field.\\
 
 
 
+
+
+\ \\
 {\bf Poison Claws } \\
 
 Requiers: [[independent:1], [type:roboprosthetic]] \\
@@ -1194,9 +1246,12 @@ Cost: Upgrade all models for: 1cp \\
 
 
 
-
+{\bf Assault} \ \\
 
 append ['Poison[4][1 for 1]']
+
+
+\ \\
 {\bf Integrated Pistol } \\
 
 Requiers: [[independent:1], [type:roboprosthetic]] \\
@@ -1211,6 +1266,9 @@ Threated as loaded when main gun is loaded. May fire this weapon in addition to 
 
 
 
+
+
+\ \\
 {\bf Integrated GasMask } \\
 
 Requiers: [[independent:1], [type:roboprosthetic]] \\
@@ -1223,6 +1281,9 @@ Unit becomes immune to poison clouds\\
 
 
 
+
+
+\ \\
 {\bf Hide } \\
 
 Requiers: [[training:1], [type:infantry]] \\
@@ -1242,4 +1303,12 @@ Camuflage[swamp][-1]\\
 
 
 
+
+
+\ \\ {\bf movement } \\
+still [Reveal, -, -] \\
+still [Hide[swamp], -, -] \\
+slow [-, Reveal, Chase] \\
+slow [Hide[swamp], -, -] \\
+crawl [Hide[swamp], -, -] \\
 

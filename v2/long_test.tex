@@ -1,52 +1,40 @@
 \pagebreak
 
-\section{ Ork Char B1 }
+\section{ Tamed Balrog }
 
 \begin{tabular}{ll}
-  Name & Ork Char B1 \\
-  Size & Large\\
-  Cost & 12ip\\
-  Models & 1 x Ork Char B1\\
-  Armor & [11, 9, 8, 7]\\
+  Name & Tamed Balrog \\
+  Size & Huge\\
+  Cost & 24xp\\
+  Models & 1 x Tamed Balrog\\
+  Armor & [8, 7, 7, 6]\\
 \end{tabular}
 
-\noindent 
+\noindent Fire Resistance 12, Poison Resistance 6\\ 
+Terror[8][range=2]\\ 
+Excelent Whip Handeling (counts as Excelent shot, +2 to hit)\\ 
 
-{\bf Ork Char B1 } \\
-Equipment: 1 x Rotating Pop Gun, 1 x Heavy Forward Gun \\
-Type: [Mechancical, Bio Crew, Vehicle, Track] \\
+
+{\bf Tamed Balrog } \\
+Equipment: 1 x Flaming Whip \\
+Equipment Limits: [] \\
+Type: [monster, walks, bio] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
-Assault: [6, 4, 3, 2] Die: 6+ Armor Penetration: 3 Damage: d6 \\
-Assault Deflection: [2, 0, 0, 0] Die: 6+\\
-\indent {template.ability.reroll_assault:6}\\ 
-Fear[6]\\ 
+Assault: [6, 4, 3, 2] Die: 2+ Armor Penetration: 6 Damage: d6 \\
+Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
+\indent Set on fire\\ 
  
 \ \\
-Both weapons may be fired using the same orders, but track ammo for them sepeartely\\ 
 
 \ \\
-{\bf Rotating Pop Gun } \\
+{\bf Flaming Whip } \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 6: Damage:d6 + (d6 crew damage when penetrating all armor) \\
-P\\ 
-o\\ 
-i\\ 
-s\\ 
-o\\ 
-n\\ 
- \\ 
-6\\ 
-
-
-
-
-{\bf Heavy Forward Gun } \\
-
-
-
-Range: 5  Angle: [True, False, False, False]: AP: 7: Damage:d6 + 3 if penetrating all armor \\
+Range: 1  Angle: [True, True, False, False]: AP: 0: Damage:N.A \\
+Set on fire\\ 
 
 
 
@@ -56,73 +44,26 @@ Range: 5  Angle: [True, False, False, False]: AP: 7: Damage:d6 + 3 if penetratin
 
 
 
-
-\ \\ {\bf fire } \\
-stillslow [Fire (pop), Load (heavy)] \\
-stillslow [Load (heavy), Fire (pop)] \\
-stillslow [Fire (heavy) ,  Load (pop)] \\
-stillslow [Load (pop), Fire (heavy)] \\
-stillslow [Aim(pop) ,  Load (heavy)] \\
-stillslow [Aim(pop) ,  Fire (heavy)] \\
-stillslow [Load (heavy) ,  Aim (pop)] \\
-stillslow [Fire (heavy) ,  Aim (pop)] \\
-still [Aim (heavy), Fire (pop)] \\
-still [Aim (heavy), Load (pop)] \\
-still [Fire (pop), Aim (heavy)] \\
-still [Load (pop), Aim (heavy)] \\
 \ \\ {\bf movement } \\
-fast [F,  F ,  -] \\
-fast [F ,  R ,  -] \\
-fast [R ,  F ,  -] \\
-fast [L ,  F ,  -] \\
-fast [F ,  L ,  -] \\
-fast [F ,  B ,  -] \\
-fast [B ,  B ,  -] \\
-fast [R,  F ,  -] \\
-fast [L,  F ,  -] \\
-slow [L ,  - ,  -] \\
-slow [L ,  L ,  -] \\
-slow [R ,  - ,  -] \\
-slow [R ,  R ,  -] \\
-slow [A ,  F ,  -] \\
-slow [B ,  - ,  -] \\
-slow [F ,  - ,  -] \\
-slow [B ,  rev ,  -] \\
-still [L ,  - ,  -] \\
-still [L ,  L ,  -] \\
-still [L ,  L ,  L] \\
-still [R ,  - ,  -] \\
-still [R ,  R ,  -] \\
-still [R ,  R ,  R] \\
-still [-, -, -] \\
-still [R ,  A ,  F] \\
-still [L ,  A ,  F] \\
-still [A ,  F ,  -] \\
-still [rev ,  - ,  -] \\
-default still \\
+slow [A,chase, chase, chase,B[rest]] \\
+slow [chase, -, -] \\
+slow [-, -, chase] \\
+slow [360°, -, -] \\
+slow [360°, F, -] \\
+rest [-, -, A] \\
 default slow \\
-default fast \\
+default rest \\
+\ \\ {\bf fire } \\
+still [Fire, -] \\
+still [-, Fire] \\
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf Regular } \\
-1-4: Light Damage[d6] \\
-4-8: +1 to future damage, Critical Damage[d6] \\
-9+: Unit Destroied \\
-\ \\ {\bf Light } \\
-1-4: +1 to future damage \\
-5-6: Unit shaken \\
-\ \\ {\bf Critical } \\
-1: Cannot Rotate \\
-2: Cannot move, looses Fear \\
-3: -1 to hit, +1 to be hit (ranged and assault) \\
-4-5: x3 Light Damage[d6] \\
-6: Unit set on fire \\
-\ \\ {\bf crew } \\
-4-5: Jammed \\
-6-7: as 4-5, shaken \\
-8-11: as 6-7, +3 to future crew damage \\
-12: Unit destroied \\
+\ \\ {\bf regular } \\
+1-9: +1 on future damage \\
+10-11: +2 on future damage \\
+12: +3 on future damage, assault -1, Looses Terror, Shaken \\
+13: Unit Destroied \\
 
 
 

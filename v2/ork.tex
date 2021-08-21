@@ -20,7 +20,10 @@ Out of ammo: At the end of the game, the troll runs out of ammo\\
 
 {\bf Troll } \\
 Equipment: 1 x Troll Gattling Gun \\
+Equipment Limits: [hands:2, independent:∞] \\
 Type: [monster, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [18, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d12 \\
 Assault Deflection: [0, 0, 0, 0] Die: 6+\\
@@ -43,7 +46,6 @@ Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit
 
  
 \ \\
-
 
 
 
@@ -94,7 +96,10 @@ default slow \\
 
 {\bf Champion } \\
 Equipment:  \\
+Equipment Limits:  \\
 Type: [elite, infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [6, 3, 3, 3] Die: 6+ Armor Penetration: - Damage: d6 \\
 Assault Deflection: [2, 0, 0, 0] Die: 6+\\
@@ -109,49 +114,10 @@ Cunning assault[1 for 2]\\
 
 
 
-
 \ \\ {\bf movement } \\
-all A \\
-all s \\
-all   \\
-all u \\
-all n \\
-all i \\
-all t \\
-all   \\
-all i \\
-all t \\
-all   \\
-all c \\
-all a \\
-all m \\
-all e \\
-all   \\
-all f \\
-all r \\
-all o \\
-all m \\
+all As unit it came from \\
 \ \\ {\bf fire } \\
-all A \\
-all s \\
-all   \\
-all u \\
-all n \\
-all i \\
-all t \\
-all   \\
-all i \\
-all t \\
-all   \\
-all c \\
-all a \\
-all m \\
-all e \\
-all   \\
-all f \\
-all r \\
-all o \\
-all m \\
+all As unit it came from \\
 
 
 {\bf Damage Tables} \\
@@ -185,7 +151,10 @@ all m \\
 
 {\bf Warg Rider } \\
 Equipment:  \\
+Equipment Limits: [hands:1, independent:∞] \\
 Type: [bio, cavalry, elite, Walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [4, 4, 3, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 2, 1, 1] Die: 6+\\
@@ -197,7 +166,6 @@ Cunning assault[1 for 4]\\
 \ \\
  
 \ \\
-
 
 
 
@@ -252,7 +220,10 @@ If killed by poison or bleeding, remove that instance \\
 
 {\bf Speedhead } \\
 Equipment: 1 x Flamethrower, 1 x Speed Cannon, 1 x Shriek \\
+Equipment Limits:  \\
 Type: [Mechanical, Bio Crew, Vehicle, Track] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [8, 6, 4, 4] Die: 6+ Armor Penetration: 3 Damage: d8 \\
 Assault Deflection: [2, 1, 0, 0] Die: 6+\\
@@ -297,7 +268,6 @@ Burst(5) Must have loaded 5 ammo to be fired, but each time it is fired, it's fi
 
  
 \ \\
-
 
 
 
@@ -358,7 +328,7 @@ all [Fire Burst(5), Load] \\
 \begin{tabular}{ll}
   Name & HammerHead \\
   Size & Large\\
-  Cost & 8ip\\
+  Cost & 8ip, 4cp\\
   Models & 1 x Hammerhead\\
   Armor & [13, 8, 7, 7]\\
 \end{tabular}
@@ -367,7 +337,10 @@ all [Fire Burst(5), Load] \\
 
 {\bf Hammerhead } \\
 Equipment: 4 x Harpoon Gun \\
+Equipment Limits:  \\
 Type: [vehicle, mechanical, bio crew, tracks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [12, 8, 8, 8] Die: 6+ Armor Penetration: 10 (from front), else 2 Damage: d8+3 (from front), else d8 \\
 Assault Deflection: [12, 2, 2, 2] Die: 6+\\
@@ -391,7 +364,6 @@ If one unit-base of size large or smaller is hit by this weapon but not killed, 
 
  
 \ \\
-
 
 
 
@@ -474,7 +446,10 @@ Cannot use ranged weapons\\
 
 {\bf Grunt } \\
 Equipment:  \\
+Equipment Limits: [hands:2, independent:∞] \\
 Type: [bio, grunt, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [2, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: -\\
@@ -486,7 +461,6 @@ Cunning assault[1 for 3]\\
 \ \\
  
 \ \\
-
 
 
 
@@ -531,7 +505,10 @@ Bad Shot: -1 to hit with range weapons\\
 
 {\bf Ork Infantry } \\
 Equipment: 1 x Ork Musket \\
+Equipment Limits: [hands:2, independent:∞, shared:1] \\
 Type: [infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [2, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: 6+\\
@@ -552,7 +529,6 @@ Range: 3  Angle: [True, True, False, False]: AP: 2: Damage:d6-1 \\
 
  
 \ \\
-
 
 
 
@@ -609,7 +585,10 @@ Poison Resistance 1, Fire Resistance 1, Immunity to Acid\\
 
 {\bf BioEngineered Ork } \\
 Equipment: 2 x Ork Musket \\
+Equipment Limits: [hands:4, independent:∞, shared:1] \\
 Type: [bio, infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: 6+\\
@@ -630,7 +609,6 @@ Range: 3  Angle: [True, True, False, False]: AP: 2: Damage:d6-1 \\
 
  
 \ \\
-
 
 
 
@@ -686,7 +664,10 @@ default slow \\
 
 {\bf Ork Char B1 } \\
 Equipment: 1 x Rotating Pop Gun, 1 x Heavy Forward Gun \\
+Equipment Limits:  \\
 Type: [Mechancical, Bio Crew, Vehicle, Track] \\
+Replaces: Nothing \\
+Cost: 0\\
 \ \\
 Assault: [6, 4, 3, 2] Die: 6+ Armor Penetration: 3 Damage: d6 \\
 Assault Deflection: [2, 0, 0, 0] Die: 6+\\
@@ -702,14 +683,7 @@ Both weapons may be fired using the same orders, but track ammo for them sepeart
 
 
 Range: 4  Angle: [True, True, True, True]: AP: 6: Damage:d6 + (d6 crew damage when penetrating all armor) \\
-P\\ 
-o\\ 
-i\\ 
-s\\ 
-o\\ 
-n\\ 
- \\ 
-6\\ 
+Poison[6]\\ 
 
 
 
@@ -725,7 +699,6 @@ Range: 5  Angle: [True, False, False, False]: AP: 7: Damage:d6 + 3 if penetratin
 
  
 \ \\
-
 
 
 
@@ -818,7 +791,7 @@ Assault Deflection: [1, 0, 0, 0] Die: 6+\\
 Cunning assault[1 for 3]\\ 
  
 \ \\
-Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Awakened War Hero does not retain any of the abilities from the unit base or the model, and has a seperate model and unit base entry. See War Hero. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 bases in a hex), the war hero may spawn in one of the neighborhing hex which is furthest from an enemy unit\\ 
+Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a seperate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighborhing hex which is furthest from an enemy unit\\ 
 
 \ \\
  
@@ -852,7 +825,8 @@ Range: 3  Angle: [True, True, False, False]: AP: 2: Damage:d6-1 \\
  
 \ \\
 
-\section{Equipment and training Upgrades}{\bf Clockwork Shield } \\
+\section{Equipment and training Upgrades}\ \\
+{\bf Clockwork Shield } \\
 
 Requiers: [[type:infantry, type:grunt], [hands:1]] \\
 Cost: Upgrade all models for: 2cp \\
@@ -861,9 +835,14 @@ Unit base gains damage resistance 1\\
 
 
 
+{\bf Assault} \ \\
+Assault deflection: +add [1, 0, 0, 0], Deflection die: replace 6+
+\\ 
 
 
 
+
+\ \\
 {\bf Clockwork Wings } \\
 
 Requiers: [[type:infantry, type:grunt], [independent:1]] \\
@@ -873,11 +852,17 @@ Flies for a short period of time.\\
 
 
 
-
+{\bf Assault} \ \\
 Assault strength: +add [1, 0, 0, 0] 
 \\ 
 
 
+
+\ \\ {\bf movement } \\
+slow [A(fast, fly), Chase, Chase] \\
+fast fly [Chase, B(slow, land), -] \\
+
+\ \\
 {\bf Flame-covered-axe } \\
 
 Requiers: [[type:infantry, type:cavalry], [type:elite], [hands:1]] \\
@@ -886,11 +871,14 @@ Cost: Upgrade one model for: 2cp \\
 
 
 
-
+{\bf Assault} \ \\
 Assault Damage set to: replace d6+1 + d4 crew damage
 \\ 
 
 append ['Fire, Minor Acid[1 for 2], Poison[4][1 for 2]']
+
+
+\ \\
 {\bf Poison Spikes } \\
 
 Requiers: [[type:infantry, type:grunt], [independent:1]] \\
@@ -899,9 +887,12 @@ Cost: Upgrade all models for: 1cp \\
 
 
 
-
+{\bf Assault} \ \\
 
 append ['Place a poison[4] on any enemy which you deflected an attack from']
+
+
+\ \\
 {\bf Clockwork Monocular } \\
 
 Requiers: [[type:infantry], [independent:1]] \\
@@ -914,6 +905,9 @@ Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of we
 
 
 
+
+
+\ \\
 {\bf Clockwork Spear } \\
 
 Requiers: [[type:infantry, type:grunt, type:cavalry], [hands:1]] \\
@@ -922,11 +916,14 @@ Cost: Upgrade all models for: 2cp \\
 
 
 
-
+{\bf Assault} \ \\
 Assault Damage set to: replace d8
 \\ 
 
 append Cunning[1 for 2]
+
+
+\ \\
 {\bf Clockwork Power Spear } \\
 
 Requiers: [[type:infantry, type:grunt], [hands:2]] \\
@@ -935,13 +932,16 @@ Cost: Upgrade all models for: 4cp \\
 
 
 
-
+{\bf Assault} \ \\
 Assault Damage set to: replace d12
 \\ 
 Assault Armor penetration: replace 3 
 \\ 
 
 append Cunning[1 for 2]
+
+
+\ \\
 {\bf Ork Pistol } \\
 
 Requiers: [[type:infantry, type:grunt, type: cavalery], [hands:1]] \\
@@ -958,6 +958,14 @@ Can be loaded with up too 2 ammo\\
 
 
 
+
+\ \\ {\bf fire } \\
+still [Load(2), -] \\
+still [-, Load(2)] \\
+still slow [fire, -] \\
+still slow [-, fire] \\
+
+\ \\
 {\bf Pyro } \\
 
 Requiers: [[type:infantry, type: cavalery], [independent:1]] \\
@@ -976,6 +984,11 @@ In addition, the unit base gains Fire Resistance 2\\
 
 
 
+
+\ \\ {\bf fire } \\
+all [-, Throw] \\
+
+\ \\
 {\bf Hand Held Cannon } \\
 
 Requiers: [[type:infantry, type:grunt, type: cavalery], [shared:1]] \\
@@ -990,6 +1003,9 @@ Unit base gets the option to fire ONE of this weapon instead of regular weapons.
 
 
 
+
+
+\ \\
 {\bf War Drum } \\
 
 Requiers: [[type:infantry], [type:elite], [independent:1]] \\
@@ -1003,6 +1019,9 @@ Unit Base gains Terror[6][range 1]]\\
 
 
 
+
+
+\ \\
 {\bf Harpoon Gun } \\
 
 Requiers: [[type:infantry], [shared:1]] \\
@@ -1012,6 +1031,8 @@ Cost: Upgrade all models for: 4cp \\
 Range: 5  Angle: [True, False, False, False]: AP: 2: Damage:d6-2 \\
 Unit base gets the option to fire ONE of this weapon instead of regular weapons.\\ 
 If one unit-base of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0 phase. Keep orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot move the unit into an impassable hex, or overcrowded hex if possible. If this is not possible, the unit is shaken instead of moved. If the unit is flying, move the target to the ground instead. If this movement forces the target to move into a hex occupied by you, carry out an assault.\\ 
+
+
 
 
 
