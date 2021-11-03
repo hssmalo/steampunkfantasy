@@ -1,3 +1,59 @@
+
+# Turn
+
+# Turn
+
+
+Each turn contains the following steps:
+
+
+- Gunnery 1 \
+Apply damage \
+
+
+Trigger hex effect \
+- Movement 1 \
+
+Pre assault retreat/abilities\
+Pre assault abilities
+
+- Assault 1 \
+Post assault retreat\
+Apply damage \
+
+Trigger hex effect \
+- Movement 2 \
+Pre assault retreat/abilities \
+
+- Assault 2 \
+Post Assault retreat \
+Apply damage \
+
+Trigger hex effect \
+- Movement 3\
+Pre assault abilities \
+
+
+- Assault 3\
+Post assault retreat \
+Trigger hex effect  \
+Apply damage \
+
+- Gunnery 2\
+Apply damage \
+
+
+- Agony 0 (major acid, terror)
+- Agony 1 (minor acid)
+- Agony 2 (fire)
+- Agony 3 (poison)
+- Agony 4 (bleeding)
+
+- Aftermath  (remove smoke, etc.)
+
+---
+
+
 ## Build your army.
 
 
@@ -140,81 +196,40 @@ Choose which style to play:
 All enemies are eliminated!
 
 
-2. Turnament style: FIXED TIME
+2. Tournament style: FIXED TIME
 
-After an fixed amount of time, each player scores points according to the following:
+After a fixed amount of time, finish your last turn. However, do a special end-phase: Repeat agony phase 0 to agony phase 4 for all units until either a unit does not have any continues damage are gone OR the unit is killed. Units with healing or repair abilities may apply these in these end-phases.
+In addition, move shaken units a number of turns until they are not shaken any more. 
 
-3pt for each surviving IP 
-1pt for each surviving MP, XP and CP
+After a fixed amount of time, each player scores points according to the following:
+
 6pt for each destroyed enemy IP
-2pt for each destroyed enemy MP,XP and CP
+2pt for each destroyed enemy MP, XP and CP
+3pt for each crippled enemy IP
+1pt for each crippled enemy MP, XP and CP
+-3pt for each destroyed IP from your own team.
+-1pt for each destroyed MP, XP and CP from your own team.
++16pt bonus if you won the match (ie, score more points than your enemy from the above points)
 ---
-Only totally destroied units counts as destroied. An infantry unit with 1 out of 4 models standing counts as survived.
-Note however that in the rare case units flee of the battlefield, they count as destroied. 
+Only totally destroyed units counts as destroyed. A unit with only one model left AND a number of +1 to future damage token equal to half (rounded down) required to kill the last model counts as crippled. Note that you get points for crippling your enemy but lose none for your own crippled units.
+Note however that in the rare case units flee off the battlefield, they count as crippled. 
 
-In addition, the player in the match with most points, gets 16 bonus points. If a draw, no player gets the bonus points.
+Thus normally:
+An infantry unit with 1 out of 4 models standing counts as crippled since it requires only 0 or 1 to kill the last model.
+For tanks you normally need about 9 to kill the unit. Thus a tank with +4 to future damage counts as crippled.
 
-Both the winner and the looser record points.
+Both the winner and the loser record points.
 This is now called Match Victory Points (MVP).
 
-The toruament victroy points (TVP) are calculated as follows:
+The tournament victory points (TVP) are calculated as follows:
 
-$$TVP = (\| MVP \| )^{0.75}*MVP/\| MVP \| $$
+$$TVP = (| MVP | )^{0.5}*MVP/| MVP | $$
 
-Note that both players get more points by destroying each other. Thus it is possible that a looser of one match scores more points than a winner of another match. This rewards playing aggressive.
+Note that both players get more points by destroying each other. Thus it is possible that a loser of one match scores more points than a winner of another match. This rewards playing aggressive.
 
 \pagebreak
 
-# Turn
 
-
-Each turn contains the following steps:
-
-
-- Gunnery 1 \
-Trigger Hex effect(if hex effect was fired in a hex you were standing)\
-Apply damage \
- 
-- Movement 1 \
-Pre assault retreat/abilities\
-Pre assault abilities
-
-- Assault 1 \
-Post assault retreat\
-Trigger hex effect \
-Apply damage \
-
-- Movement 2 \
-Pre assault retreat/abilities \
-
-- Assault 2 \
-Post Assault retreat \
-Trigger hex effect \
-Apply damage \
-
-- Movement 3\
-Pre assault abilities \
-
-
-- Assault 3\
-Post assault retreat \
-Trigger hex effect  \
-Apply damage \
-
-- Gunnery 2\
-Trigger Hex effect \
-Apply damage \
-
-
-- Agony 0 (major acid, terror)
-- Agony 1 (minor acid)
-- Agony 2 (fire)
-- Agony 3 (poison)
-- Agony 4 (bleeding)
-
-- Aftermath  (remove smoke, etc.)
-
----
 
 
 Multiple things may happen in same step, but they happen simultaneously. The exception is damage, where any damage taken is rolled in sequence. Roll damage in any order the attacker wishes, apply damage before rolling for next damage. But the effect of the damage in total does not apply before the apply damage step.
@@ -233,17 +248,18 @@ Spartan \
 Elf \
 Dark-Elf \
 Dwarf \
+Gnome \
 Ork \
 
 
 Movement orders are dependent on whether you are fast, slow or stand-still (or possible other as special rules).
 
 Movement orders may for example be:
-(fast) F + F + -\
-(fast) F + L + -\
-(fast) F + B + -\
-(slow) A + F + -\
-(still) - + - + - \
+(fast) F, F, -\
+(fast) F, L, -\
+(fast) F, B, - -\
+(slow) A, F,  -\
+(still) -, -, - \
 
 Each unit has a set of available orders. Code:
 
@@ -268,23 +284,23 @@ If still no such hex is available, let your enemy move your unit to any hex he/s
 
 
 Any order divided in 3 happens in movement step, where the first is executed in movement 1, the second in movement 2 and the third in movement 3.
-If Two different letters are separated by comma instead of a +, they happen in same step. For example: \
--360$^0$,A + F + F \
+If Two different letters are separated by + instead of a comma, they happen in same step. For example: \
+-360$^0$+A, F, F \
 
 Would read you could rotate 360$^0$ and accelerate in first movement, and forward in movement 2 and 3.
 
 
 Gunnery orders are for example:\
-- + Aim \
-- + Load (still) \
-- + Fire\
-Aim + -\
-Load + -\
-Fire + -\
-Spot + spot \
+-, Aim \
+-, Load (still) \
+-, Fire\
+Aim, -\
+Load, -\
+Fire, -\
+Spot, spot \
 
 
-Default Gunnery: - + - \
+Default Gunnery: -, - \
 
 The first is executed in gunnery 1, the second in gunnery 2. 
 Some orders are only available during one or more specific speeds/movement modes.
@@ -302,7 +318,7 @@ Default: - \
 
 
 The speed of the unit may restrict what options are available, which is given in paranthesis. For example \
-(still) load + - +
+(still) load, - 
 means this unit only can load while standing still.
 
 If, for some reason or another, the given order for one step is not allowed, it does nothing.
@@ -366,12 +382,12 @@ Fast                       -1      -1
 Flying                     -1      -1         (stacks with speed)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1         Grants Evation(6+) for any medium or smaller unit
-Burned Forrest              0      -1         Grants Evation(6+) for any medium or smaller unit
-Building                    0      -1         Grants Evation(6+) for any medium or smaller unit
-Ruins                       0      -1         Grants Evation(6+) for any medium or smaller unit
-Rough Terrain	            0      -1         Grants Evation(6+) for any medium or smaller unit
-Sand Dunes                  0      -1         Grants Evation(6+) for any medium or smaller unit
+Forrest                     0      -1         Grants Evation(-1) for any unit with take cover benefit
+Burned Forrest              0      -1         Grants Evation(-1) for any unit with take cover benefit
+Building                    0      -1         Grants Evation(-1) for any unit with take cover benefit
+Ruins                       0      -1         Grants Evation(-1) for any unit with take cover benefit
+Rough Terrain	            0      -1         Grants Evation(-1) for any unit with take cover benefit
+Sand Dunes                  0      -1         Grants Evation(-1) for any unit with take cover benefit
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
 *Range*
@@ -389,7 +405,7 @@ Superb Shot                +3       0
 Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
-Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. Improves Evation(+1)
+Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. grants evation(-1) in some terrains
 Elusvie[speed, -N]          0      -N        
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
@@ -616,7 +632,7 @@ Most fire damage comes from the 'set on fire' ability of weapons, which is a con
     	      	      	     at 2 : +1 to future damge\
 			     at 3 : as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
                              at 4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
-			     at 5 : As 6 and unit is set on fire.\
+			     at 5 : As 4 and unit is set on fire.\
 			     at 6 : Roll twice on this table., 
 
 - If you happen to get two (or more) downgrade in same round, you remove acid instead of downgrading it.
@@ -669,13 +685,9 @@ However if it did, remove that instance of poison from unit. If not,
 
 # Unit Abilities and conditions:
 
-**Evation**[N+]
+**Evation**[-1]
 
-If you are hit by an area effect, roll one die per hit. At N+ negate one hit.
-
-**Improve Evation**[+N]
-
-If a unit already have evation (from terrain for example), you get +N on each evation roll. If unit does not have evation, this does nothing.
+Modified the success of an area of effect. For example, an Area(5+) effect will no be an Area(6+) effect. Furhter, an Area(6+) will now be an Area(7+), where you use the open ended d6 rules to get 6.
 
 **Take Cover**[speed, -N]
 
@@ -788,30 +800,27 @@ Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
 
 # Hex based effect.
 
-Hex based effects are triggered in any 'trigger hex based effects' step, and only triggers the first time a unit encounters the effect in that hex this turn. It only retriggers the same turn if entering the same hex for a second time.
-
+Hex based effects are triggered in all 'trigger hex based effects' steps. 
 When placing Clouds, smoke or fire on a hex for the first time, place two markers of the given type. Otherwise, place only one.
-
 Hex based effects are not cumulative. However the effect of acid, fire and poison on units are cumulative with both itself and each other. 
-
+In case of poison clouds with different strength, apply the strongest if overlapping.
 
 Follow the instructions for each hex based effect
 
 **Poison** **Cloud** [N] 
 
 
-Roll 1 die per biological model in hex. At 4+, apply a poison[N] to target enemy unit base. A unit base with multiple models may get multiple poison markers (standard infantry units may thus get up to 4 poison markers)
-
-In addtion, roll a die for any unit with a crew damage table. At 4+ do dN crew damage to unit.
+Area(6+): roll 1 die per model in hex. At 6+, apply a poison[N] to target, and do dN in crew damage.
+Note that 
 
 **Acid** **Cloud** [Minor] 
 
-Roll a die per unit base in hex. At 4+ place a minor acid on the unit base.
+Area(6+) roll 1 die per model in hex. At 6+ place a minor acid on the unit base.
 
 
 **Acid** **Cloud** [Major] 
 
-Roll a die per unit base in hex. At 4+ place a regular acid on the unit base.
+Roll a die per unit base in hex. At 6+ place a regular acid on the unit base.
 
 
 
@@ -821,7 +830,7 @@ Roll a die per unit base in hex. At 4+ place a regular acid on the unit base.
 
 **Hex** **on** **Fire**\
 When setting a hex on fire, place a smoke and fire token in the hex.
-When encountering a fire, Roll 1 die per unit base, at 4+ set that unit base on fire.
+When encountering a fire, Roll 1 die per unit base, at 6+ set that unit base on fire.
 
 
 
