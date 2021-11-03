@@ -339,9 +339,12 @@ class Unit:
     info: Configuration = field(default_factory=Configuration, repr=False)
 
 
-    def generate_orders_card(self):
+    def generate_orders_card(self, nickname = None):
+        name = f"{self.name} - {nickname}" if nickname else self.name
         cards = {}
         translation = {39: None}
+
+        
         for ordertype, tmp in self.info.orders.as_dict().items():
             orderinfo = self._orders(ordertype)
             cards[ordertype] = [{}]
@@ -356,26 +359,26 @@ class Unit:
 
                         print(order)
                         print(len(order))
-                        if len(order) == 3:
-                            if speed in cards[ordertype][i].keys():
-                                if i+2 > len(cards[ordertype]):
-                                    cards[ordertype].append({})
-                                    i = i+1
-                                else:
-                                    i = i+1
-                                continue
-                        
-                            else:
-                                cards[ordertype][i][speed] = str(order).translate(translation)
+                        #if len(order) == 3:
+                        if speed in cards[ordertype][i].keys():
+                            if i+2 > len(cards[ordertype]):
+                                cards[ordertype].append({})
                                 i = i+1
-                                break
-                            
-                        if len(order) == 2:
-                            i = len(cards[ordertype]) 
-                            cards[ordertype].append({})
-                            cards[ordertype][i][speed] = str(order).translate(translation)
-                            break
+                            else:
+                                i = i+1
+                            continue
+                        
                         else:
+                            cards[ordertype][i][speed] = str(order).translate(translation)
+                            i = i+1
+                            break
+                            
+                        #if len(order) == 2:
+                        #    i = len(cards[ordertype]) 
+                        #    cards[ordertype].append({})
+                        #    cards[ordertype][i][speed] = str(order).translate(translation)
+                        #    break
+                        if len(order) > 3:
                             print('something wrong, order should be length 2 or 3')
                             i = i+1
                             break
@@ -398,7 +401,7 @@ class Unit:
                     
                 card['ordertype'] = ordertype
                 card['Ordertype'] = ordertype.capitalize()
-                card['name'] = self.name
+                card['name'] = name
                 
 
                 card['tablelines'] = tablelines
@@ -407,8 +410,8 @@ class Unit:
 
         cards_tex = cards_tex.replace('_', ' ')
         
-        
-        with open(self.name.replace(' ', '_') + '_cards.tex', 'w') as fid:
+
+        with open(f"{name}_cards.tex".replace(" ", "_"), 'w') as fid:
             fid.write(cards_tex)
 
         return cards
@@ -557,13 +560,16 @@ class Unit:
     @property
     def cost(self):
         unit_equipment = {
-            k: v[0] for m in self.models for k, v in m.equipments.as_dict().items()
+            k: v for m in self.models for k, v in m.equipments.as_dict().items()
+            
         }
+        from pprint import pprint
+        pprint(unit_equipment)
         return (
             Costs.from_toml(self.info.get("cost", {}))
             
             + sum((m.added_cost for m in self.models), start=Costs())
-            + sum((e.added_unit_cost for e in unit_equipment.values()), start=Costs())
+            + sum((e.added_unit_cost for es in unit_equipment.values() for e in es), start=Costs())
         )
 
     @property
@@ -724,6 +730,8 @@ class Model:
             
         txt = ''
         if format_ == 'tex':
+            from pprint import pprint
+            pprint(self.info.assault.special)
             try:
                 for u in self.info.assault.special:
                     txt = txt + u + '\\\\ \n'              
@@ -822,10 +830,13 @@ class Model:
                         else self.info[attribute]
                     )
                     if not set(value) & set(allowed_values):
+                        print(f"{value} is not among {allowed_values}")
                         return False
                 else:
                     value = allowed_values[0]
-                    if value > self.remaining_equipment_limits().get(attribute, 0):
+                    tmp = self.remaining_equipment_limits().get(attribute, 0)
+                    if value > tmp:
+                        print(f"{value} is larger than {tmp}, for {attribute}")
                         return False
         return True
 

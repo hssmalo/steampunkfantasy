@@ -88,7 +88,7 @@
     cost.ip = 16
     special = []
 
-        [darkelf.units.queen_yy.movement]
+        [darkelf.units.queen_yy.orders.movement]
 	fast = [["F","F","-"],
 	     ["F","R","-"],
 	     ["F","L","-"],
