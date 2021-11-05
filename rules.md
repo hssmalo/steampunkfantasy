@@ -54,6 +54,12 @@ Apply damage \
 ---
 
 
+Multiple things may happen in same step, but they happen simultaneously. The exception is damage, where any damage taken is rolled in sequence. Roll damage in any order the attacker wishes, apply damage before rolling for next damage. But the effect of the damage in total does not apply before the apply damage step.
+
+
+\pagebreak
+
+
 ## Build your army.
 
 
@@ -117,8 +123,8 @@ It is also possible that smoke, entrenchements etc. modify the default terrain.
 For movement and line of sight, se table below:
 --------              -----------------------------------------------------------------------------------------------------------------------------
 Clear                 No modifiers
-Mountains             2 movement points up, 1 down. 2 hight level, level 2 blocking terrain.
-Hills                 2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
+Mountains             2 movement points up, 1 down. 2 hight level, level 2 
+Hills                 2 movement points up, 1 down. 1 hight level, level 1 
 Forest                2 movement points to enter for vehicles, 1 for all other things.
                       Level 0 blocking terrain
 Burned Forrest        Level 0 blocking terrain
@@ -132,8 +138,7 @@ Swamp                 1 movement point to enter for medium and smaller,
                       at 1 or 2 on a d6, the unit cannot move this movement step, regardless of order
                       Does not block line of sight
 Building              2 movement points to enter for infantry,
-                      any other type cannot enter without a special rule
-		      Level 0 blocking terrain.
+                      any other type cannot enter without a special rule. Level 0 blocking terrain.
 Road                  If moving from a road to another hex with road, movement always cost 1.
 Smoke                 Blocks line of sight 
                       Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
@@ -145,13 +150,7 @@ Water                 1 movement point to enter for ships, floating or flying
 
 If a unit tries to enter a hex which cost more than 1 to enter, place a 'entering difficult terrain token' for the unit base. It can only move into the hex if it already have enough of these tokens to enter the hex. An hex cost 2 movement points to enter needs 1 of these token already presents, while a hex costing 3 needs 2 of those tokens. (2 token then you spend the third action to enter). You lose all tokens if you do any movement not trying to enter the hex.
 
-Line of Sight, both hexes at ground level: trace a straight line between the center of two target hexes, if it crosses any blocking terrain (not counting the target hexes) line of sight is not obscured.
-
-Line of sight, both hexes at 1 height level: Treat any level 0 or level 1 blocking terrain as clear hexes, but treat level 2 blocking as blocking.
-
-Line of sight, one hex at 1 height level and one at level 0. Treat any level 1 blocking terrain as completely blocking, however any level 1 blocking terrain creates two blind hexes. Line of sight can not be traced to the blind hexes BUT can be traced beyond that.
-
-Line of sight, one hex at 2 height level and one at level 0. Treat any level 2 blocking terrain as completely blocking, any level 1 blocking terrain as gives two blind hexes as above, but any level 0 blocking terrain creates only 1 blind hex. Line of sight can not be traced to the blind hexes BUT can be traced beyond that.
+Line of sight between two hexes is blocked if it crosses over a hex of blocking terrain with a height level equal to or greater than both of the two hexes, or if it crosses over a hex of height heigher than both hexes. Treat any blocking terrain of lower height to create two blind hexes. Line of sight can not be traced to the blind hexes BUT can be traced beyond that.
 
 
 Terrain also provide cover, which is given in the to-hit table later.
@@ -203,14 +202,14 @@ In addition, move shaken units a number of turns until they are not shaken any m
 
 After a fixed amount of time, each player scores points according to the following:
 
-6pt for each destroyed enemy IP
-2pt for each destroyed enemy MP, XP and CP
-3pt for each crippled enemy IP
-1pt for each crippled enemy MP, XP and CP
--3pt for each destroyed IP from your own team.
--1pt for each destroyed MP, XP and CP from your own team.
-+16pt bonus if you won the match (ie, score more points than your enemy from the above points)
----
+6pt for each destroyed enemy IP \
+2pt for each destroyed enemy MP, XP and CP \
+3pt for each crippled enemy IP \
+1pt for each crippled enemy MP, XP and CP \
+-3pt for each destroyed IP from your own team. \
+-1pt for each destroyed MP, XP and CP from your own team. \
++16pt bonus if you won the match (ie, score more points than your enemy from the above points) \
+
 Only totally destroyed units counts as destroyed. A unit with only one model left AND a number of +1 to future damage token equal to half (rounded down) required to kill the last model counts as crippled. Note that you get points for crippling your enemy but lose none for your own crippled units.
 Note however that in the rare case units flee off the battlefield, they count as crippled. 
 
@@ -230,12 +229,6 @@ Note that both players get more points by destroying each other. Thus it is poss
 \pagebreak
 
 
-
-
-Multiple things may happen in same step, but they happen simultaneously. The exception is damage, where any damage taken is rolled in sequence. Roll damage in any order the attacker wishes, apply damage before rolling for next damage. But the effect of the damage in total does not apply before the apply damage step.
-
-
-\pagebreak
 
 # Orders
 
@@ -508,8 +501,6 @@ If two or more units from different team/faction tries to enter the same hex sim
 Assaults also is conducted if two or more units from different teams try to enter each others hex. Ie they are facing each other and both moving forward.
 
 - Before any assault, any unit which has the ability to retreat before assault have the option to do so now. This includes ALL other pre-assault retreat abilities, such as Fear.
-- Then trigger any hex effects (as poison cloud, fire in hex etc.) to all units trying to enter the hex.
-- After assault, trigger any hex effect for units forced to retreat to a hex with for example poison cloud.
 
 In the case where units facing each other are all moving forward, there might be two or more equally valid ways to conduct the assault. In this case, the team with the heighest melee skills determine which hex (or hexes) are being faught over:
 
@@ -668,7 +659,7 @@ Only biological units affected (with BIO in type). All other types ignore poison
 - Apply damage to the regular damage table.
 
 If poison DID not kill a model of the unit, downgrade poison by one step (12 -> 10 -> 8 -> 6 -> 4 -> NONE)
-However if it did, remove that instance of poison from unit. If not, 
+However if it did, remove that instance of poison from unit. 
 
 
 **Bleeding**:
