@@ -732,16 +732,19 @@ class Model:
         if format_ == 'tex':
             from pprint import pprint
             pprint(self.info.assault.special)
+            
             try:
                 for u in self.info.assault.special:
+                    print(u)
                     txt = txt + u + '\\\\ \n'              
             except AttributeError:
                 txt = ''
             self.neat_dict['assault_special'] = txt
-
+            
             txt = ''
             try:
                 for u in self.info.special:
+              
                     txt = txt + u + '\\\\ \n'              
             except AttributeError:
                 txt = ''

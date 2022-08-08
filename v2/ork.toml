@@ -135,8 +135,9 @@
     	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied"]
 
     	  [ork.units.hammerhead.orders.fire]
-	  still = [[ "Load", "-"]]
-	  all   = [[ "Fire", "-"]]
+	  still = [[ "Load", "-"], [ "Fire", "-"]]
+	  slow   = [[ "Load", "-"], [ "Fire", "-"]]
+	  fast = [[ "Load", "-"], [ "Fire", "-"]]
 
 	  [ork.units.hammerhead.orders.movement]
 	  fast = [["F","F","-"],
@@ -446,7 +447,8 @@
     [ork.models.champion]
     name = "Champion"
     race = "ork"
-    type = ["elite", "infantry", "walks"]	
+    equipment_limit = ["hands:2", "independent:∞"]
+    type = ["elite", "infantry", "walks"]
     special = []
 
    	[ork.models.champion.assault]
@@ -487,9 +489,9 @@
    race = "Ork"
    type    = ["vehicle", "mechanical", "bio crew", "tracks"]
 
-   equipments = ["harpoon_gun","harpoon_gun","harpoon_gun","harpoon_gun",]
+   equipments = ["harpoon_gun_free","harpoon_gun_free","harpoon_gun_free","harpoon_gun_free",]
    equipments_limit = ["independent:∞"]
-   special = ["All 4 harpoon gun must fire at same ange-sector"]
+   special = ["All 4 harpoon gun must fire at same ange-sector", "Destroy buildings: this tank may enter buildings. If so replace the building with a ruin and enter the hex. Carry out an assault if neccessary"]
 
     	  [ork.models.hammerhead.assault]
 	  strength = [12, 8, 8, 8]
@@ -627,6 +629,19 @@
         deflection.add = [1, 0, 0, 0]
         deflection_die.replace = "6+"
 
+    [ork.equipments.clockwork_shield_free]
+    name = "Clockwork Shield"
+    race = "ork"
+    special = ["Unit base gains damage resistance 1"]
+    requires = [
+        ["type:infantry", "type:grunt"],
+        ["hands:1"],
+    ]
+
+        [ork.equipments.clockwork_shield_free.assault]
+        deflection.add = [1, 0, 0, 0]
+        deflection_die.replace = "6+"
+
     [ork.equipments.clockwork_wings]
     name = "Clockwork Wings"
     race = "ork"
@@ -645,6 +660,22 @@
         fast_fly = [["Chase", "B(slow, land)", "-"]]
 
 
+    [ork.equipments.clockwork_wings_free]
+    name = "Clockwork Wings"
+    race = "ork"
+    requires = [
+        ["type:infantry", "type:grunt"],
+        ["independent:1"],
+    ]
+    special = ["Flies for a short period of time."]
+
+        [ork.equipments.clockwork_wings_free.assault]
+        strength.add = [1, 0, 0, 0]
+
+        [ork.equipments.clockwork_wings_free.orders_gained.movement]
+        slow = [["A(fast, fly)", "Chase", "Chase"]]
+        fast_fly = [["Chase", "B(slow, land)", "-"]]
+
     [ork.equipments.flame_covered_axe]
     name = "Flame-covered-axe"
     race = "ork"
@@ -657,7 +688,21 @@
 
         [ork.equipments.flame_covered_axe.assault]
         damage.replace = "d6+1 + d4 crew damage"
-        special.append = ["Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"]
+        special.append = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+
+
+    [ork.equipments.flame_covered_axe_free]
+    name = "Flame-covered-axe"
+    race = "ork"
+    requires = [
+        ["type:infantry", "type:cavalry"],
+        ["type:elite"],
+        ["hands:1"],
+    ]
+
+        [ork.equipments.flame_covered_axe_free.assault]
+        damage.replace = "d6+1 + d4 crew damage"
+        special.append = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 
     [ork.equipments.poison_spikes]
@@ -805,8 +850,7 @@
 	damage = "d6-2"
 	ap = 2
 	special = [
-		"Unit base gets the option to fire ONE of this weapon instead of regular weapons.",
-		"If one unit-base of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0 phase. Keep orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot move the unit into an impassable hex, or overcrowded hex if possible. If this is not possible, the unit is shaken instead of moved. If the unit is flying, move the target to the ground instead. If this movement forces the target to move into a hex occupied by you, carry out an assault."]
+		"Unit base gets the option to fire ONE of this weapon instead of regular weapons.","If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."]
 
 
    [ork.equipments.harpoon_gun_free]
@@ -819,9 +863,7 @@
 	angle = [true, false, false, false]
 	damage = "d6-2"
 	ap = 2
-	special = [
-		"Unit base gets the option to fire ONE of this weapon instead of regular weapons.",
-		"If one unit-base of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0 phase. Keep orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot move the unit into an impassable hex, or overcrowded hex if possible. If this is not possible, the unit is shaken instead of moved. If the unit is flying, move the target to the ground instead. If this movement forces the target to move into a hex occupied by you, carry out an assault."]
+	special = ["If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."]
 
 
 
@@ -923,7 +965,7 @@ damage = "d8 fire damage + d4 crew damage"
    
 
    	[ork.equipments.tanksscalper.assault]
-	special.append = ["May replace regular damage with d4-2 crew damage. If so, any supporting damage to this damage die adds +1 to crew damage instead of +1 to regular damage. It should be noted that other models within the same unit MAY choose different damage types. Thus only the hit and corresponding supporting hits versus a tank should be converted to crew damage.", "You loose Cunning Assault if any"]
+	special.append = "May replace regular damage with d4-2 crew damage. If so, any supporting damage to this damage die adds +1 to crew damage instead of +1 to regular damage. It should be noted that other models within the same unit MAY choose different damage types. Thus only the hit and corresponding supporting hits versus a tank should be converted to crew damage."
 
 
    [ork.equipments.healing_syringe]
@@ -940,7 +982,7 @@ damage = "d8 fire damage + d4 crew damage"
    race = "ork"
    name = "Hand Catapult"
    cost.cp = 9
-   requires = [["type: infantry"], ["hands:3"]]
+   requires = [["type:infantry"], ["hands:3"]]
 
        [ork.equipments.hand_catapult.range]
        range = 6
@@ -955,7 +997,7 @@ damage = "d8 fire damage + d4 crew damage"
    race = "ork"
    name = "Assault_Musket"
    cost.cp = 2
-   requires = [["type: infantry"], ["hands:2"]]
+   requires = [["type:infantry"], ["hands:2"]]
 
        [ork.equipments.assault_musket.range]
        range = 2

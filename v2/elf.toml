@@ -1,0 +1,288 @@
+[races]
+
+    [races.elf]
+    name = "Elf"
+
+[units]
+	[elf.units.elf_scout]
+	race = "elf"
+	name = "Elf Scout"
+	models = ["elf_scout"]
+	size = "medium"
+	cost.mp = 2
+	cost.xp = 4
+	unit_special =  ["Take Cover[still][-3]", "Camouflage[forrest]", "Good shot +1"]
+
+		     [elf.units.elf_scout.orders.fire]
+		     still = [["-", "Fire"],[ "-", "Load"], ["-", "Aim" ], ["Fire", "-"],["Load", "-"],["Aim", "-" ], ["spot", "spot"]]
+		     [elf.units.elf_scout.orders.movement]
+		     slow = [["360$^0$","F" ,"360$^0$"],[ " 360$^0$", "360$^0$" , "360$^0$"],[ " 360$^0$", "F" , "B"], [ " 360$^0$,A", "F" , "F"]]
+		     still =[["360$^0$ "," - "," -"],[ " 360$^0$ "," A "," F" ], [ " 360$^0$,A,A "," F "," F" ]]
+		     fast = [["360$^0$ ","F","B"],[ " 360$^0$ "," F","B,B" ]]
+
+		     default.fast = ["-", "-", "B, flee"]
+		     default.slow =  ["-", "-", "flee"]
+		     default.still = ["-", "-", "A, Flee"]
+
+		     [elf.units.elf_scout.damage_table]
+		     regular = ["0+: unit killed"]
+		     psychic = ["3+: shaken"]
+
+
+	[elf.units.e34]
+	race = "elf"
+	name = "E34"
+	models = ["e34"]
+	size = "large"
+	cost.ip = 12
+	armor = [10,9,9,8]
+	unit_special = "Forrester: moving through forrest cost 1 point (not 2)"	
+
+		     [elf.units.e34.orders.fire]
+		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
+		     slow =  [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
+		     fast =  [["-", "Fire"]]
+
+		     [elf.units.e34.orders.movement]
+		     fast =[["F","F","-"],
+	     	     	  ["F","R","-"],
+	     		  ["R","F","-"],
+	     		  ["L","F","-"],
+	     		  ["F","L","-"],
+	     		  ["F","B","-"],
+	     		  ["B","B","-"],
+	     		  ["R","F","-"],
+	     		  ["L","F","-"]]
+
+		     slow =[["L","-","-"],
+	     	     ["L","L","-"],
+	     	     ["R","-","-"],
+	     	     ["R","R","-"],
+	     	     ["A","F","-"],
+	     	     ["B","-","-"],
+	     	     ["F","-","-"],
+	     	     ["B","rev", "-"]]
+		     still = [
+	      	     ["L","-","-"],
+	      	     ["L","L","-"],
+	      	     ["L","L","L"],
+	      	     ["R","-","-"],
+	      	     ["R","R","-"],
+	     	     ["R","R","R"],
+	    	     ["-","-","-"],
+		     ["R","A","F"],
+	      	     ["L","A","F"],
+	      	     ["A","F","-"],
+	      	     ["rev","-","-"]]
+		     default.fast = ["-", "B", "B"]
+		     default.slow =  ["-", "-", "B"]
+		     default.still = ["-", "-", "-"]
+
+
+	[elf.units.bear_rider]
+	race = "elf"
+	name = "Bear Rider"
+	models = ["bear_rider"]
+	size = "medium"
+	cost.mp = 2
+	cost.xp = 6
+	armor = [7,6,6,6]
+	unit_special = ["Poison Resistance 3"]
+
+		     [elf.units.bear_rider.orders.fire]
+		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
+		     slow =  [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
+
+		     [elf.units.bear_rider.orders.movement]
+		     slow = [["360°","F", "360°"],
+	     	     	  ["360°", "B", "360°"]]
+		     still = [["360°", "A", "F"]]
+
+		     default_slow = ["-", "-", "flee"]
+		     default_still = ["-", "-", "A,flee"]
+
+		     [elf.units.bear_rider.damage_table]
+		     regular = ["2-7: +1 to future damage, Bleed[4]",
+		     	     "8:10: +2 to future damage, bleed[6], psycic damage[d6",
+			     "11+: killed"]
+		     psychic = ["6+: shaken"]
+
+	[elf.units.armored_unicorn_rider]
+	race = "elf"
+	name = "Armored Unicorn Rider"
+	models = ["armored_unicorn_rider"]
+	size = "medium"
+	cost.mp = 2
+	cost.xp = 6
+	cost.cp = 2
+	armor = [6,6,6,5]
+	unit_special = ["Poison Resistance 12", "Autoloader: any time the unitcorn does not fire it's gun in any gunnery phase, load the gun with 1 ammo."]
+
+
+		     [elf.units.armored_unicorn_rider.orders.fire]
+		     still = [["Major Healing", "Minor Healing (self)"],
+		     	   ["Minor Healing (self)", "Major Healing"],	
+		     	   ["Minor Healing (self)", "Fire Burst(5)"],
+			   ["Fire Burst(5)", "Minor Healing (self)"],
+			   ["Minor Healing", "Minor Healing"]]
+		     slow =  [["-", "Fire Burst(5)"],
+		     	  ["Fire Burst(5)", "-"],
+		     	  ["Minor Healing", "Minor Healing"]]
+		     fast =  [["-", "Fire Burst(5)"],
+		     	  ["Fire Burst(5)", "-"],
+			  ["-", "Minor Healing"],
+			  ["Minor Healing", "-"]]
+		     
+
+		     [elf.units.armored_unicorn_rider.orders.movement]
+		     slow = [["360°","F", "360°"],
+	     	     	  ["360°", "B", "360°"], ["360°", "A", "F"]]
+		     still = [["360°", "A", "F"], ["360°", "-", "-"]]
+		     fast = [["360°","F", "F"], ["F", "360°", "F"],["F", "F", "360°"],["360°","F", "B"]]
+
+		     default_slow = ["-", "-", "flee"]
+		     default_still = ["-", "-", "A,flee"]
+		     default_fast = ["-", "flee", "flee"]
+
+
+		     [elf.units.armored_unicorn_rider.damage_table]
+		     regular = ["2-5: bleed[6]",
+			     "6+: killed"]
+		     psychic = ["6+: shaken"]
+
+	
+
+[models]
+	[elf.models.e34]
+	name = "E24"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = [ "main_tank_gun", "twin_rifle",]
+	type = ["Mechanical, Bio Crew, Vehicle, Track"]
+
+
+	     [elf.models.e34.assault]
+	     strength = [4,3,3,2]
+	     strength_die = "5+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-1"
+	     ap  = 3
+	     special = ["Fear(6)"]
+
+	[elf.models.elf_scout]
+	name = "Elf scout"
+	race = "elf"
+	modelitems = ["independent:∞", "hands:2"]
+	equipments = ["rifle"]
+	type = ["Bio", "Cavalry", "Walks"]
+
+	     [elf.models.elf_scout.assault]
+	     strength = [2,2,2,2]
+	     strength_die = "5+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunnint Assault[1 for 2", "Pre-Assault Retreat[3+]"]
+
+
+	[elf.models.bear_rider]
+	name = "Bear Rider"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = ["gattling_gun"]
+	type = ["Bio", "Cavalry", "Walks"]
+
+	     [elf.models.bear_rider.assault]
+	     strength = [6,4,2,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6+1"
+	     ap = 2
+	     special = ["Cunnint Assault[1 for 3]"]
+
+
+	[elf.models.armored_unicorn_rider]
+	name = "Armored Unicorn Rider"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = ["shriek_smg"]
+	type = ["Bio", "Cavalry", "Walks"]
+	special = ["Suprb shot: +3 to hit"]
+
+	     [elf.models.armored_unicorn_rider.assault]
+	     strength = [9,6,3,2]
+	     strength_die = "5+"
+	     deflection = [4, 2, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunnint Assault[1 for 3]"]
+	
+[equipments]
+
+    [elf.equipments.main_tank_gun]
+    name = "Main_Tank-Gun"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.main_tank_gun.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6 + (+3 if penetrating all armor)"
+        ap = 8
+	special = ["double barraled: May load up to 2 shots, and fire them one at a time"]
+
+
+    [elf.equipments.twin_rifle]
+    name = "Twin Rifle"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.twin_rifle.range]
+        range = 5
+        angle = [true, true, true, true]
+        damage = "d6 -2"
+        ap = 2
+	special = ["Fires two times at same unit base per shot.\\\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"]
+
+    [elf.equipments.shriek_smg]
+    name = "Twin Rifle"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.shriek_smg.range]
+        range = 3
+        angle = [true, true, false, false]
+        damage = "d4 -2 + d6 psychic damage"
+        ap = 2
+	special = ["Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model"]
+
+
+    [elf.equipments.gattling_gun]
+    name = "GattlingGun"
+    race = "elf"
+    requiers = []
+
+    	     [elf.equipments.gattling_gun.range]
+	     range = 2
+	     angle = [true, true, true, true]
+	     damage = "d6-1"
+	     ap = "3"
+	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy units within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
+
+
+
+    [elf.equipments.rifle]
+    name = "Rifle"
+    race = "elf"
+    requiers = ["hands:2"]
+
+    	     [elf.equipments.rifle.range]
+	     range = 5
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = "2"
+	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy units within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]

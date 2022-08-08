@@ -206,6 +206,36 @@ Range: 4  Angle: [True, True, False, False]: AP: 3: Damage:d6-1 \\
 
 
 
+\ \\ {\bf movement } \\
+fast [F, F, -] \\
+fast [F, R, -] \\
+fast [F, L, -] \\
+fast [F, B, -] \\
+fast [B, B, -] \\
+fast [R, F, -] \\
+fast [L, F, -] \\
+slow [L, -, -] \\
+slow [L, L, -] \\
+slow [R, -, -] \\
+slow [R, R, -] \\
+slow [A, F, -] \\
+slow [B, -, -] \\
+slow [F, -, -] \\
+slow [B, rev, -] \\
+still [L, -, -] \\
+still [L, L, -] \\
+still [L, L, L] \\
+still [R, -, -] \\
+still [R, R, -] \\
+still [R, R, R] \\
+still [-, -, -] \\
+still [R, A, F] \\
+still [L, A, F] \\
+still [A, F, -] \\
+still [rev, -, -] \\
+default still \\
+default slow \\
+default fast \\
 \ \\ {\bf fire } \\
 still [-, aim] \\
 still [-, load] \\
@@ -636,8 +666,8 @@ slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, B, -] \\
 slow [360°, B[crawl], -] \\
-still [360° + - + -] \\
-still [360° + A + F] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
 still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
@@ -722,8 +752,8 @@ slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, B, -] \\
 slow [360°, B[crawl], -] \\
-still [360° + - + -] \\
-still [360° + A + F] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
 still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
@@ -826,8 +856,8 @@ slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, F, B] \\
 slow [360°, B[crawl], -] \\
-still [360° + - + -] \\
-still [360° + A + F] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
 still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
@@ -928,8 +958,8 @@ slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, F, B] \\
 slow [360°, B[crawl], -] \\
-still [360° + - + -] \\
-still [360° + A + F] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
 still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
@@ -1015,8 +1045,8 @@ slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, F, B] \\
 slow [360°, B[crawl], -] \\
-still [360° + - + -] \\
-still [360° + A + F] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
 still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
@@ -1032,8 +1062,7 @@ still [-, Fire] \\
 still [Aim, -] \\
 still [-, Aim] \\
 still [Spot, Spot] \\
-slow Spot \\
-slow spot \\
+slow [Spot, Spot] \\
 
 
 {\bf Damage Tables} \\
@@ -1269,11 +1298,13 @@ Threated as loaded when main gun is loaded. May fire this weapon in addition to 
 
 
 \ \\
-{\bf Integrated GasMask } \\
+{\bf GasMask and assault training in poison clouds } \\
 
-Requiers: [[independent:1], [type:roboprosthetic]] \\
-Cost: Upgrade all models for: 1cp \\
+Requiers: [[independent:1], [type:roboprosthetic, type:infantri, type:cavalery]] \\
+Cost: Upgrade all models for: 1xp \\
 Unit becomes immune to poison clouds\\ 
+Enemy units in an poison cloud gain -50% (rounded down) in assault and assault deflection\\ 
+In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas\\ 
 
 
 
@@ -1282,6 +1313,26 @@ Unit becomes immune to poison clouds\\
 
 
 
+
+\ \\
+{\bf Poison Fog Grenade } \\
+
+Requiers: [[independent:1], [type:roboprosthetic, type:infantri, type:cavalery]] \\
+Cost: Upgrade all models for: 2cp \\
+Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or am outside line of sight of any enemy unit. Note that this does not make you immune to the effect of your own grenade\\ 
+
+
+
+
+
+
+
+
+\ \\ {\bf fire } \\
+still [-, Throw] \\
+still [Throw, -] \\
+slow [-, Throw] \\
+slow [Throw, -] \\
 
 \ \\
 {\bf Hide } \\
@@ -1307,8 +1358,8 @@ Camuflage[swamp][-1]\\
 
 \ \\ {\bf movement } \\
 still [Reveal, -, -] \\
-still [Hide[swamp], -, -] \\
+still [Hide[ruins], -, -] \\
 slow [-, Reveal, Chase] \\
-slow [Hide[swamp], -, -] \\
-crawl [Hide[swamp], -, -] \\
+slow [Hide[ruins], -, -] \\
+crawl [Hide[ruins], -, -] \\
 

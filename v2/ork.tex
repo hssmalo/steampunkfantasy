@@ -96,7 +96,7 @@ default slow \\
 
 {\bf Champion } \\
 Equipment:  \\
-Equipment Limits:  \\
+Equipment Limits: [hands:2, independent:∞] \\
 Type: [elite, infantry, walks] \\
 Replaces: Nothing \\
 Cost: 0\\
@@ -328,7 +328,7 @@ all [Fire Burst(5), Load] \\
 \begin{tabular}{ll}
   Name & HammerHead \\
   Size & Large\\
-  Cost & 8ip, 4cp\\
+  Cost & 8ip\\
   Models & 1 x Hammerhead\\
   Armor & [13, 8, 7, 7]\\
 \end{tabular}
@@ -356,8 +356,7 @@ All 4 harpoon gun must fire at same ange-sector\\
 
 
 Range: 5  Angle: [True, False, False, False]: AP: 2: Damage:d6-2 \\
-Unit base gets the option to fire ONE of this weapon instead of regular weapons.\\ 
-If one unit-base of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0 phase. Keep orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot move the unit into an impassable hex, or overcrowded hex if possible. If this is not possible, the unit is shaken instead of moved. If the unit is flying, move the target to the ground instead. If this movement forces the target to move into a hex occupied by you, carry out an assault.\\ 
+If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault.\\ 
 
 
 
@@ -875,7 +874,7 @@ Cost: Upgrade one model for: 2cp \\
 Assault Damage set to: replace d6+1 + d4 crew damage
 \\ 
 
-append ['Fire, Minor Acid[1 for 2], Poison[4][1 for 2]']
+append Fire, Minor Acid[1 for 2], Poison[4][1 for 2]
 
 
 \ \\
@@ -1030,7 +1029,7 @@ Cost: Upgrade all models for: 4cp \\
 
 Range: 5  Angle: [True, False, False, False]: AP: 2: Damage:d6-2 \\
 Unit base gets the option to fire ONE of this weapon instead of regular weapons.\\ 
-If one unit-base of size large or smaller is hit by this weapon but not killed, move the target one hex towards you in agony 0 phase. Keep orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot move the unit into an impassable hex, or overcrowded hex if possible. If this is not possible, the unit is shaken instead of moved. If the unit is flying, move the target to the ground instead. If this movement forces the target to move into a hex occupied by you, carry out an assault.\\ 
+If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault.\\ 
 
 
 
@@ -1038,4 +1037,73 @@ If one unit-base of size large or smaller is hit by this weapon but not killed, 
 
 
 
+
+\ \\
+{\bf Tanksscalper } \\
+
+Requiers: [[type: infantry, type: grunt], [hands: 1]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+
+
+{\bf Assault} \ \\
+
+append May replace regular damage with d4-2 crew damage. If so, any supporting damage to this damage die adds +1 to crew damage instead of +1 to regular damage. It should be noted that other models within the same unit MAY choose different damage types. Thus only the hit and corresponding supporting hits versus a tank should be converted to crew damage.
+
+
+\ \\
+{\bf Healing Syringe } \\
+
+Requiers: [[type:infantry, type: cavalry, type: grunt], [hands: 1]] \\
+Cost: Upgrade all models for: 1cp \\
+In 2nd gunnery phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token.\\ 
+
+
+
+
+
+
+
+
+
+\ \\
+{\bf Hand Catapult } \\
+
+Requiers: [[type:infantry], [hands:3]] \\
+Cost: Upgrade all models for: 9cp \\
+
+
+Range: 6  Angle: [True, True, True, True]: AP: 6: Damage:d6 \\
+Choose one hex within normal range or one hex within long range. If fired from a unit with 3-4 models within normal range: Area(4+), if fired from a unit with 1-2 models at normal range: Area(5+), if fired from a unit withh 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area(6+)\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Assault Musket } \\
+
+Requiers: [[type:infantry], [hands:2]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+May have up to 4 ammo stored. Enhanced Accurazy: unit gain +1 to hit (but only when firing this weapon)\\ 
+If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' seting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1\\ 
+ ps! It is nor recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon seperately\\ 
+
+
+
+
+
+
+
+\ \\ {\bf fire } \\
+still [Load(2), -] \\
+still [-, Load(2)] \\
+all [fire, fire] \\
 

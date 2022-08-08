@@ -1,0 +1,98 @@
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [L, -, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [L, L, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [R, -, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [R, R, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [F, -, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [F, R, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow flying & [F, L, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Movement }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      
+  \end{tabular}
+}{ Zeppelin \\ Fire }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [Fire, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Fire }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [Load, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Fire }
+
+\renewcommand{\frfoot}{ Zeppelin }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [Aim, -] \\
+
+  \end{tabular}
+}{ Zeppelin \\ Fire }
+

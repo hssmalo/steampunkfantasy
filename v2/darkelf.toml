@@ -596,7 +596,7 @@
     equipment_limit = ["independent:∞"]
     equipments = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
     type = ["bio crew", "vehicle", "mechanical", "track"]
-    special = ["Excelent shot: +2 to hit","You fire 2 independt heavy rifles in addion to acid cannon each fire order", "If you have the order release poison cloud as an fireing option, you may place the poison cload[12] during any movment phase in any the hex you are in, including contested hexes for assaults"]  
+    special = ["Excelent shot: +2 to hit","You fire 2 independt heavy rifles in addion to acid cannon each fire order", "Dual ammo: all weapons may be loaded up to 2 times. Each shot still only uses 1 ammo", "If you have the order release poison cloud as an fireing option, you may place the poison cload[12] during any movment phase in any the hex you are in, including contested hexes for assaults"]  
 	  
 
         [darkelf.models.queen_yy.assault]
@@ -866,7 +866,7 @@
     requires = []
 
         [darkelf.equipments.acid_cannon.range]
-        range = 6
+        range = 4
         angle = [true, true, false, false]
         damage = "d6+d8 Psychic damage + d6 crew damage"
         ap = 3
@@ -1124,18 +1124,30 @@
 
 
 
-    [darkelf.equipments.integrated_gasmask]
-    name = "Integrated GasMask"
+    [darkelf.equipments.gasmask]
+    name = "GasMask and assault training in poison clouds"
     race = "darkelf"
-    cost.cp = 1
-    special = ["Unit becomes immune to poison clouds"]
+    cost.xp = 1
+    special = ["Unit becomes immune to poison clouds", "Enemy units in an poison cloud gain -50% (rounded down) in assault and assault deflection", "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas" ]
     requires = [
         ["independent:1"],
-	["type:roboprosthetic"]
+	["type:roboprosthetic", "type:infantri", "type:cavalery"]
     ]
 
 
+    [darkelf.equipments.poisonfog_grenade]
+    name = "Poison Fog Grenade"
+    race = "darkelf"
+    cost.cp = 2
+    special = ["Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.", "If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or am outside line of sight of any enemy unit. "]
+    requires = [
+        ["independent:1"],
+	["type:roboprosthetic", "type:infantri", "type:cavalery"]
+    ]
 
+        [darkelf.equipments.poisonfog_grenade.orders_gained.fire]
+	still = [["-", "Throw"], ["Throw", "-"]]
+	slow =  [["-", "Throw"], ["Throw", "-"]]
 
 
     [darkelf.equipments.hide]
@@ -1159,9 +1171,9 @@
 
 
         [darkelf.equipments.hide.orders_gained.movement]
-        still= [["Reveal", "-", "-"], ["Hide[swamp]", "-", "-"]]
-	slow = [["-", "Reveal", "Chase"], ["Hide[swamp]", "-", "-"]]
-	crawl = [["Hide[swamp]", "-", "-"]]
+        still= [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
+	slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
+	crawl = [["Hide[ruins]", "-", "-"]]
 
 
 
@@ -1184,6 +1196,6 @@
 
 
         [darkelf.equipments.hide_free.orders_gained.movement]
-        still= [["Reveal", "-", "-"], ["Hide[swamp]", "-", "-"]]
-	slow = [["-", "Reveal", "Chase"], ["Hide[swamp]", "-", "-"]]
-	crawl = [["Hide[swamp]", "-", "-"]]
+        still= [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
+	slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
+	crawl = [["Hide[ruins]", "-", "-"]]

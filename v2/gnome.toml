@@ -79,15 +79,10 @@
 	default_still = [["-", "-", "A+Flee"]]
 
         [gnome.units.quad_bike.orders.fire]
-	all = [["Load", "-"],
-	      ["-", "Load"],
-	      ["Fire", "-"],
-	      ["Fire", "Fire (reserve)"],
-	      ["Fire (reserve)", "Fire"],
-	      ["-", "Fire"],
-	      ["Aim", "-"],
-	      ["-", "Aim"],
-	      ["Fire (reserve)", "Fire (reserve)"]]
+	still = [["Fire (reserve)", "Fire (reserve)"]]
+
+	slow = [["Fire (reserve)", "Fire (reserve)"]]
+	fast = [["Fire (reserve)", "Fire (reserve)"]]
 
         [gnome.units.quad_bike.damage_tables]
         regular = ["1-5: Kill 1 model",
@@ -239,6 +234,9 @@
 	     ["F","L","-"],
 	     ["F","R"],
 	     ["B","-","-"],
+	     ["F","B","-"],
+	     ["L", "F","B"],
+	     ["R", "F","B"],
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
@@ -417,7 +415,7 @@
     name = "Quad Bike"
     race = "gnome"
     equipment_limit = ["hands: 2", "reserve:1", "independent:∞"]
-    equipments = ["gun_lance", "light_smg" ]
+    equipments = ["light_smg" ]
     type = ["bio", "quad_bike", "infantry", "walks"]
     special = []
 

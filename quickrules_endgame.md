@@ -66,13 +66,13 @@ Aftermath  Remove      Remove 1 shaken token, cloud marker etc.
 
 Poison damage: Applies ONLY to biological units! Apply damage to regular damage table, but apply poison resistances if any. Ignores armor. +1 future damage applies to poison damage as well.
 
-Fire damage: Apply damage to regular damage table, but apply poison resistances if any. Ignores armor and +1 future damage tokens applies to fire damage as well.
+Fire damage: Apply damage to regular damage table, but apply fire resistances if any. Ignores armor. +1 future damage tokens applies to fire damage as well.
 
-Bleeding damgage: Ignore armor, apply + to future damage if any, roll on regular damage table.
+Bleeding damage: Ignore armor, apply + to future damage if any, roll on regular damage table.
 
 Psychic damage: Only applies to units with a psychic damage table. Ignore regular + to future damage
 
-Crew damage: Only applies to units with a psychic damage table. Apply only + to future crew daamge
+Crew damage: Only applies to units with a crew damage table. Apply only + to future crew damage
 
 Any other special damage: only applies to units with given special damage table
 
@@ -180,6 +180,34 @@ Optimal at point blank     +1       0         Firing at enemies at point blank r
 *Weapon* *abilities*
 Enhanced Accuracy          +1       0
 ------------------------ -------  ---------- ---------------------
+
+\pagebreak
+
+                          AP                    Damage    special
+------------------------ -------------------- ---------- ---------------------
+*Range*
+Long Range                Half(rounded down)    -1        (within max x2 of weapon range)
+Normal Range              +0                    +0        (within weapon range) 
+Point Blank               +1                    +1        (Range=1)
+------------------------ -------------------- ---------- ---------------------
+
+
+
+                        damage modifier
+----------------------- ----------------
+*armor*
+Blocked by armor          $-\infty$
+Partly blocked by armor  -3
+Penetrated armor          0 (some weapons grants you +3 here)
+*previous results* 
+Previous damage          +1 per token
+*range*
+Long range               -1
+Normal range              0
+Point Blank              +1
+*Unit* *resistances*
+XXX Resistance N         -N if damage type matches resistance.
+                            (damage type is regular if unspecified)
 
 
 

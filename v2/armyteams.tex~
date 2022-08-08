@@ -1,0 +1,42 @@
+%\documentstyle[a4,12pt, color, hyperref]{scrbook}
+\documentclass[a4,12pt, color, hyperref]{book}
+
+\usepackage[utf8x]{inputenc}
+
+
+
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+
+
+
+
+\title{Steampunk Fantasy: Army Rules}
+\author{Hans Sverre Smalø}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Dark Elf}
+\include{darkelf}
+
+\chapter{Dwarf}
+\include{Dwarf}
+
+%\chapter{Elf}
+%\include{Elf}
+
+\chapter{Ork}
+\include{Ork}
+
+
+\chapter{Gnome}
+\include{Gnome}
+
+\end{document}

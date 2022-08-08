@@ -89,8 +89,9 @@ still [-, Load] \\
 \end{tabular}
 
 \noindent Posion Resistance 4, Fire Resistance 2\\ 
-Take Cover[still][-2]\\ 
+Take Cover[still][-1]\\ 
 Stable: +1 to hit while slow\\ 
+Internal healing: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, downgrade one poison marker one step or  extinguish on fire token\\ 
 
 
 {\bf SteamPowerArmor } \\
@@ -146,7 +147,8 @@ still [-, Load] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-5: kill 1 model \\
+1-2: bleed 4 \\
+3-5: kill 1 model \\
 6-9: Kil 1 model, roll d6 psychic damage \\
 10+: Unit killed \\
 \ \\ {\bf psychic } \\
@@ -176,6 +178,7 @@ still [-, Load] \\
 \noindent Posion Resistance 2\\ 
 Floats\\ 
 May use fire orders while shaken\\ 
+random movement: while fast it scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault. In slow mode the unit uses its enignes to neutrilize the effect of the wether\\ 
 
 
 {\bf Mini Zeppelin } \\
@@ -219,9 +222,15 @@ Activated by throw order\\
 
 
 \ \\ {\bf movement } \\
+fast [random, L+F, F] \\
+fast [random, R+F, F] \\
+fast [random, F, F] \\
+fast [random, F, B] \\
 slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
+slow [360°, A, F] \\
 default slow \\
+default fast \\
 \ \\ {\bf fire } \\
 still [Fire, -] \\
 still [Load, -] \\
@@ -393,7 +402,7 @@ still [Aim, -] \\
 \begin{tabular}{ll}
   Name & GunBlasterWagon \\
   Size & large\\
-  Cost & 6ip, 2cp\\
+  Cost & 6ip\\
   Models & 1 x GunBlasterWagon\\
   Armor & [8, 10, 10, 7]\\
 \end{tabular}
@@ -954,7 +963,7 @@ Range: 3  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
  
 \ \\
 
-{\bf Dwarf SteamPowerArmor } \\
+{\bf Dwarf Elite SteamPowerArmor } \\
 Equipment: 1 x Heavy Musket \\
 Equipment Limits: [hands:2, shared:1, independent:∞] \\
 Type: [elite, steampowerarmor, walks, bio] \\
@@ -987,6 +996,7 @@ Range: 3  Angle: [True, True, True, True]: AP: 3: Damage:d6-1 \\
 
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 2cp \\
+Gun automaticly loaded after an assault\\ 
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
@@ -1054,11 +1064,11 @@ Unit gain [5,0,0,0] in armor\\
 Assault deflection: +add [1, 0, 0, 0], Deflection die: replace 4+
 \\ 
 
-append ['-1 in assault strength if speed is not still', "Don't get any armor bonus in assault"]
+append -1 in assault strength if speed is not still. Don't get any armor bonus in assault
 
 
 \ \\
-{\bf Springloaded Vehicle Assault Weapons } \\
+{\bf Elite Crew } \\
 
 Requiers: [[crew:1], [type:vehicle]] \\
 Cost: Upgrade all models for: 6xp \\
@@ -1205,13 +1215,29 @@ Range: 6  Angle: [True, True, True, True]: AP: 3: Damage:d6-1 \\
 
 
 \ \\
+{\bf Ultra Heavy Musket } \\
+
+Requiers: [[hands:2], [type:steampowerarmor]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 4: Damage:d6 \\
+
+
+
+
+
+
+
+
+\ \\
 {\bf Double Barrled Empowered Heavy Musket } \\
 
 Requiers: [[hands:2], [type:steampowerarmor]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 3: Damage:d6 \\
+Range: 4  Angle: [True, True, True, True]: AP: 3: Damage:d6-1 \\
 Fire two shots per fire order per model\\ 
 
 
@@ -1252,24 +1278,6 @@ Assault Damage set to: replace d6 (+3 if penetrating all armor)
 \\ 
 Assault Armor penetration: replace 8 
 \\ 
-
-
-
-
-\ \\
-{\bf Broadside Guns } \\
-
-Requiers: [[hands:2], [type:infantry]] \\
-Cost: Upgrade all models for: 2cp \\
-
-
-Range: 2  Angle: ['0', 'x2', 'x2', '0']: AP: 7: Damage:d6+2 \\
-Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 turns reloading before it can fire again\\ 
-After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired.\\ 
-
-
-
-
 
 
 

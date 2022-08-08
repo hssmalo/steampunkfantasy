@@ -1,0 +1,103 @@
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      still_ground & [A[still flying], 360$^0$, -] \\
+still_flying & [360$^0$, -, -] \\
+slow_flying & [L, F, -] \\
+fast_flying & [F, F, -] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      still_ground & [A[slow flying], 360$^0$, F] \\
+still_flying & [-, -, D] \\
+slow_flying & [L, F, L] \\
+fast_flying & [F, F, R] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      still_ground & [A[still flying], 360$^0$, -] \\
+still_flying & [A[slow flying], 360$^0$, F] \\
+slow_flying & [R, F, -] \\
+fast_flying & [F, F, L] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      still_flying & [A[fast flying], 360$^0$, F] \\
+slow_flying & [R, F, R] \\
+fast_flying & [F, F, B[slow flying],360$^0$] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      slow_flying & [-, -, D] \\
+fast_flying & [F, F, B[still flying],360$^0$] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      slow_flying & [-, R, D] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      slow_flying & [-, L, D] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      slow_flying & [A[fastflying], F, F] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ movement }
+
+\card{\begin{ tabular }{ ll }
+      slow_flying & [F, B[stillflying], 360$^0$] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ movement }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ fire }
+
+\card{\begin{ tabular }{ ll }
+      still_ground & ['[-, Load]'] \\
+slow_flying & ['[-, Load]'] \\
+fast_flying & ['[-, Load]', '[-, Fire]'] \\
+still_flying & ['[-, Load]', '[Aim, Fire]', '[Fire, Aim]'] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ fire }
+\renewcommand{\frfoot}{ Gnome Helicopter }
+\renewcommand{\flhead}{ fire }
+
+\card{\begin{ tabular }{ ll }
+      slow_flying & [-, Fire, -] \\
+
+  \end{tabular}
+}{ Gnome Helicopter \\ fire }

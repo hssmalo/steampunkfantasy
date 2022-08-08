@@ -1,0 +1,118 @@
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow & [Chase, , ] \\
+still & [360°, -, -] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Movement }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow & [, , Chase] \\
+still & [360°, A, F] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Movement }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow & [360°, F, 360°] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Movement }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow & [360°, 360°, 360°] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Movement }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Movement }
+
+\card{\begin{tabular}{ll}
+      slow & [360°, B, -] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Movement }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [Load, -] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [-, Load] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [Fire, -] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [-, Fire] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [Aim, -] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      still & [-, Aim] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+
+\renewcommand{\frfoot}{ Gnome Infantry }
+\renewcommand{\flhead}{ Fire }
+
+\card{\begin{tabular}{ll}
+      all & [fire (reserve), fire (reserve)] \\
+
+  \end{tabular}
+}{ Gnome Infantry \\ Fire }
+

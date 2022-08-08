@@ -1,0 +1,210 @@
+\pagebreak
+
+\section{ Gnome Helicopter }
+
+\begin{tabular}{ll}
+  Name & Gnome Helicopter \\
+  Size & large\\
+  Models & 1 x Gnome Helicpoter\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 20\\
+\end{tabular}
+
+Fires, loads and aim all weapons simultaniously\\ 
+Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
+
+
+{\bf Gnome Helicpoter } \\
+Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
+Type: [bio crew, helicopter, flying] \\
+
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 0, 0, 0] Die: \\
+\indent  
+
+Quick fix: In aftermath this unit may either remove one shaken token or one +1 to future damage token\\ 
+
+
+{\bf Acidic Napalm Bomb } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:n.a \\
+Choose a hex within range 1: Area(4+): minor acid and set target unit on fire\\ 
+
+
+
+
+{\bf Helicopter Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False]: AP: 6: Damage:d6-1 \\
+Fire once at all enemy units within range and within one angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit base\\ 
+Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-4: d6 light damage \\
+5-8: x3 d6 light damge \\
+9: Destroy unit base \\
+ {\bf light } \\
+1-4: +1 to future damgage \\
+5-6: shaken \\
+ {\bf crew } \\
+as regular damage \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Gnome Infantry }
+
+\begin{tabular}{ll}
+  Name & Gnome Infantry \\
+  Size & medium\\
+  Models & 1 x Gnome Infantry\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 6\\
+\end{tabular}
+
+Take-Cover[still][-2]\\ 
+
+
+{\bf Gnome Infantry } \\
+Equipment: 1 x Gnome Gun, 1 x Light SMG, 1 x Plasma Shield Generator \\
+Type: [bio, infantry, walks] \\
+
+Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 0, 0, 0] Die: 5+\\
+\indent Cunning assault[1 for 2]\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+
+{\bf Gnome Gun } \\
+
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Plasma Shield Generator } \\
+
+Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)\\ 
+However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
+
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit base \\
+ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Gnome Motorcyle }
+
+\begin{tabular}{ll}
+  Name & Gnome Motorcyle \\
+  Size & medium\\
+  Models & 1 x Gnome Motorcycle\\
+  Armor & [4, 3, 0, 0]\\
+  Victory points & 10\\
+\end{tabular}
+
+Elusive[fast]: additional -1 to be hit while fast\\ 
+
+
+{\bf Gnome Motorcycle } \\
+Equipment: 1 x splintbombgrenade launcher \\
+Type: [bio, motorcycle, wheel] \\
+
+Assault: [2, 1, 1, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [2, 1, 0, 0] Die: 5+\\
+\indent Pre-Assault Retreat[4+]\\ 
+ 
+
+
+
+{\bf splintbombgrenade launcher } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6 \\
+Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+2-3: +1 on future damge \\
+4+: Kill 1 model \\
+ {\bf psychic } \\
+6+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak

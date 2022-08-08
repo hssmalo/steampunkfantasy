@@ -1,0 +1,47 @@
+\documentclass[frontgrid,a4,12pt]{flacards}
+
+
+% \usepackage[scaled=0.85]{beramono}
+\usepackage{color}
+
+%\usepackage{etoolbox}
+%\pretocmd{\card}{\def\curhint{#1}}{}{}
+
+\pagesetup{3}{3}
+
+
+\setlength{\cardwidth}{63mm}
+\setlength{\cardheight}{88mm}
+
+\renewcommand{\cardtextstylef}{\small}
+\renewcommand{\cardtextstyleb}{\small}
+
+\renewcommand{\brfoot}{}
+
+% Temporarily disable new lines when displaying the riddle on the back
+
+\renewcommand{\frfoot}{}
+% \renewcommand{\blfoot}{\footnotesize chris}
+% \renewcommand{\blfoot}{\footnotesize Ashley}
+% \renewcommand{\blfoot}{\footnotesize Casandra}
+% \renewcommand{\blfoot}{\footnotesize Jessica}
+
+
+
+
+\renewcommand{\flhead}{}
+\renewcommand{\brhead}{}
+
+\begin{document}
+
+\include{Gnome_Infantry_cards}
+\include{Assasin_cards}
+\include{Queen_YY_cards}
+\include{Scout_cards}
+\include{Mechanical_Assault_Spider_cards}
+
+
+
+
+
+\end{document}

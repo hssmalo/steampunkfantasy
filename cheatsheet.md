@@ -5,35 +5,31 @@ Each turn contains the following steps:
 
 
 - Gunnery 1 \
-Trigger Hex effect(if hex effect was fired in a hex you were standing)\
 Apply damage \
- 
+
+
+Trigger hex effect \
 - Movement 1 \
-Pre assault retreat \
-Trigger hex effect (including all units in contested hexes) \
+
+Pre assault retreat/abilities\
 Pre assault abilities
 
 - Assault 1 \
-Post assault retreat \
-Trigger hex effect \
+Post assault retreat\
 Apply damage \
 
+Trigger hex effect \
 - Movement 2 \
-Pre assault retreat \
-Trigger hex effect (including all units in contested hexes) \
-Pre assault abilities\
-Apply damage \
+Pre assault retreat/abilities \
 
 - Assault 2 \
 Post Assault retreat \
-Trigger hex effect \
 Apply damage \
 
+Trigger hex effect \
 - Movement 3\
-Pre assault retreat \
-Trigger hex effect (including all units in contested hexes) \
 Pre assault abilities \
-Apply damage \
+
 
 - Assault 3\
 Post assault retreat \
@@ -41,7 +37,6 @@ Trigger hex effect  \
 Apply damage \
 
 - Gunnery 2\
-Trigger Hex effect(if hex effect was fired in a hex you were standing) \
 Apply damage \
 
 
@@ -118,7 +113,6 @@ Water                 1 movement point to enter for ships, floating or flying
 
 
 
-
                           to hit, to be hit  special
 ------------------------ ------- ---------- ---------------------
 *Speeds*
@@ -131,12 +125,12 @@ Fast                       -1      -1
 Flying                     -1      -1         (stacks with speed)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1         Grants Evation(6+) for any medium or smaller unit
-Burned Forrest              0      -1         Grants Evation(6+) for any medium or smaller unit
-Building                    0      -1         Grants Evation(6+) for any medium or smaller unit
-Ruins                       0      -1         Grants Evation(6+) for any medium or smaller unit
-Rough Terrain	            0      -1         Grants Evation(6+) for any medium or smaller unit
-Sand Dunes                  0      -1         Grants Evation(6+) for any medium or smaller unit
+Forrest                     0      -1         Grants Evation(-1) with take cover benefit
+Burned Forrest              0      -1         Grants Evation(-1) with take cover benefit
+Building                    0      -1         Grants Evation(-1) with take cover benefit
+Ruins                       0      -1         Grants Evation(-1) with take cover benefit
+Rough Terrain	            0      -1         Grants Evation(-1) with take cover benefit
+Sand Dunes                  0      -1         Grants Evation(-1) with take cover benefit
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
 *Range*
@@ -154,7 +148,8 @@ Superb Shot                +3       0
 Bad Shot                   -1       0
 Steady                     +1       +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
-Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. Improves Evation(+1)
+Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. grants evation(-1) in some terrains
+Elusvie[speed, -N]          0      -N        
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
 Enhanced Accurazy           +1      0
@@ -162,14 +157,13 @@ Enhanced Accurazy           +1      0
 
 \pagebreak
 
-
-                          AP,    Damage      special
------------------------- ------- ---------- ---------------------
+                          AP                    Damage    special
+------------------------ -------------------- ---------- ---------------------
 *Range*
-Long Range                -1      -1          (within max x2 of weapon range)
-Normal Range              +0      +0          (within weapon range) 
-Point Blank               +1      +1          (Range=1)
------------------------- -------  ---------- ---------------------
+Long Range                Half(rounded down)    -1        (within max x2 of weapon range)
+Normal Range              +0                    +0        (within weapon range) 
+Point Blank               +1                    +1        (Range=1)
+------------------------ -------------------- ---------- ---------------------
 
 
 
@@ -198,6 +192,7 @@ Movement/order Initiative: (highest on the list makes choises last with regard t
 Elf \
 Dark-Elf \
 Dwarf \
+Gnome \
 Ork \
 
 
@@ -207,3 +202,4 @@ Dark_Elf\
 Ork\
 Dwarf\
 Elf\
+Gnome\

@@ -2,7 +2,7 @@ import data
 
 ork = data.Race.from_toml("ork")
 darkelf = data.Race.from_toml("darkelf")
-#dwarf = data.Race.from_toml("dwarf")
+dwarf = data.Race.from_toml("dwarf")
 gnome= data.Race.from_toml("gnome")
 
 hss = data.Team("Hss den store")
@@ -54,3 +54,15 @@ g.add_unit(gnome.units.gnome_helicopter)
 inf = g.add_unit(gnome.units.gnome_infantry, name = 'PlasmaShield Infantry')
 g.add_equipment(inf, gnome.equipments.plasma_shield_generator)
 g.add_unit(gnome.units.gnome_motorcycle)
+
+
+
+d = data.Team("Default Dwarf")
+d.add_unit(dwarf.units.gunblasterwagon)
+inf = d.add_unit(dwarf.units.dwarf_infantry)
+d.add_equipment(inf, dwarf.equipments.heavy_musket)
+d.add_equipment(inf, dwarf.equipments.wheeled_shieldwall)
+d.add_unit(dwarf.units.tamed_balrog)
+
+
+import IPython; IPython.embed()

@@ -1,0 +1,1058 @@
+\pagebreak
+
+\section{ Gnome Infantry }
+
+\begin{tabular}{ll}
+  Name & Gnome Infantry \\
+  Size & medium\\
+  Cost & 4mp\\
+  Models & 1 x Gnome Infantry\\
+  Armor & [0, 0, 0, 0]\\
+\end{tabular}
+
+\noindent Take-Cover[still][-2]\\ 
+
+
+{\bf Gnome Infantry } \\
+Equipment: 1 x Gnome Gun, 1 x Light SMG \\
+Equipment Limits: [hands:2, reserve:1, independent:∞] \\
+Type: [bio, infantry, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+\ \\
+
+\ \\
+{\bf Gnome Gun } \\
+
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [Chase, , ] \\
+slow [, , Chase] \\
+slow [360°, F, 360°] \\
+slow [360°, 360°, 360°] \\
+slow [360°, B, -] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
+default slow [-, -, Flee] \\
+default still [-, -, A+Flee] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+all [fire (reserve), fire (reserve)] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit base \\
+\ \\ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Assault Bots }
+
+\begin{tabular}{ll}
+  Name & Assault Bots \\
+  Size & medium\\
+  Cost & \\
+  Models & 4 x Assault Bot\\
+  Armor & [0, 0, 0, 0]\\
+\end{tabular}
+
+\noindent \\ 
+
+
+{\bf Assault Bot } \\
+Equipment:  \\
+Equipment Limits: [independent:∞] \\
+Type: [drone, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [1, 0, 0, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+\ \\
+Can only enter play through mortars or drop weapons\\ 
+
+\ \\
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [-, -, Chase] \\
+default slow [-, -, -] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+0-7: Kill 1 model \\
+8: Destroy Unit \\
+\ \\ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Gnome Motorcyle }
+
+\begin{tabular}{ll}
+  Name & Gnome Motorcyle \\
+  Size & medium\\
+  Cost & 2mp, 4cp, 4xp\\
+  Models & 1 x Gnome Motorcycle\\
+  Armor & [4, 3, 0, 0]\\
+\end{tabular}
+
+\noindent Elusive[fast]: additional -1 to be hit while fast\\ 
+
+
+{\bf Gnome Motorcycle } \\
+Equipment: 1 x splintbombgrenade launcher \\
+Equipment Limits: [motorcycle weapon:1, independent:∞] \\
+Type: [bio, motorcycle, wheel] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [2, 1, 1, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [2, 1, 0, 0] Die: 5+\\
+\indent Pre-Assault Retreat[4+]\\ 
+ 
+\ \\
+
+\ \\
+{\bf splintbombgrenade launcher } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6 \\
+Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+fast [F, F, F,B] \\
+fast [F, F, 360$^0$] \\
+fast [360$^0$, F, F] \\
+fast [F, 360$^0$, F] \\
+fast [F, B, 360$^0$] \\
+slow [360$^0$, F, 360$^0$] \\
+slow [360$^0$, A, F] \\
+slow [360$^0$, F,B, 360$^0$] \\
+still [360$^0$, A, F] \\
+still [360$^0$, -, -] \\
+default still [-, -, A+Flee] \\
+default slow [-, -, Flee] \\
+default fast [-, Flee, Flee] \\
+\ \\ {\bf fire } \\
+still [-, Load] \\
+still [-, Fire] \\
+slow [-, Load] \\
+slow [-, Fire] \\
+fast [-, Fire] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+2-3: +1 on future damge \\
+4+: Kill 1 model \\
+\ \\ {\bf psychic } \\
+6+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Ballista Drone }
+
+\begin{tabular}{ll}
+  Name & Ballista Drone \\
+  Size & lagre\\
+  Cost & 6cp\\
+  Models & 1 x Ballista\\
+  Armor & [0, 0, 0, 0]\\
+\end{tabular}
+
+\noindent 
+
+{\bf Ballista } \\
+Equipment: 1 x Ballista \\
+Equipment Limits: [ballista:1, independent:∞] \\
+Type: [construct, towed] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+\ \\
+
+\ \\
+{\bf Ballista } \\
+
+
+
+Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [360$^0$, F, -] \\
+slow [-, -, B] \\
+still [L, -, -] \\
+still [R, -, -] \\
+still [-, -, -] \\
+still [A, -, -] \\
+default still [, , -] \\
+default slow [, , B] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+2-3: +1 on future damge \\
+4-5: +1 on future damage, d6 light damage \\
+6-7: +1 on future damage, annot move or rotate, speed set to still \\
+8: Unit destoried \\
+\ \\ {\bf light } \\
+1-4+: +1 on future damage \\
+5-6: Unit shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Ballista Tractor, Mark I }
+
+\begin{tabular}{ll}
+  Name & Ballista Tractor, Mark I \\
+  Size & lagre\\
+  Cost & 8ip\\
+  Models & 1 x Ballista Tractor Mark I\\
+  Armor & [12, 8, 8, 7]\\
+\end{tabular}
+
+\noindent Fires and loads both weapons at fire and load actions\\ 
+
+
+{\bf Ballista Tractor Mark I } \\
+Equipment: 1 x Ballista, 1 x Assault Bot Mortar \\
+Equipment Limits: [ballista:1, vehicle mortar:1, independent:∞] \\
+Type: [mechanical, bio crew, vehicles, wheeled] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
+Assault Deflection: [1, 0, 0, 0] Die: 3+\\
+\indent Fear(6)\\ 
+ 
+\ \\
+
+\ \\
+{\bf Ballista } \\
+
+
+
+Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+
+
+
+
+{\bf Assault Bot Mortar } \\
+
+No regular damage\\ 
+When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon.\\ 
+
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [L, -, -] \\
+slow [L, L, -] \\
+slow [R, -, -] \\
+slow [R, R, -] \\
+slow [F, L, -] \\
+slow [F, R] \\
+slow [B, -, -] \\
+slow [F, -, -] \\
+slow [B, rev, -] \\
+still [L, -, -] \\
+still [L, L, -] \\
+still [L, L, L] \\
+still [R, -, -] \\
+still [R, R, -] \\
+still [R, R, R] \\
+still [-, -, -] \\
+still [R, A, F] \\
+still [L, A, F] \\
+still [A, F, -] \\
+still [rev, -, -] \\
+default still [-, -, -] \\
+default slow [-, -, B] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: d6 Light Damage \\
+5-8: +1 to future damage, d6 critical damage \\
+9: Unit destroied \\
+\ \\ {\bf light } \\
+1-4: +1 to future damage \\
+5-6: Shaken \\
+\ \\ {\bf critical } \\
+1-2: Shaken \\
+3: +1 to be hit, -1 to hit \\
+4: Rotate unit 180$^0$ \\
+5: Place Poison Cloud[8] and smoke in this and all surronding hexes. \\
+6: set on fire \\
+\ \\ {\bf crew } \\
+4-5: Weapon Jammed \\
+6-7: as 4-5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroied \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Ballista Tractor, Mark II }
+
+\begin{tabular}{ll}
+  Name & Ballista Tractor, Mark II \\
+  Size & lagre\\
+  Cost & 8ip\\
+  Models & 1 x Ballista Tractor Mark II\\
+  Armor & [12, 8, 8, 7]\\
+\end{tabular}
+
+\noindent Fires and loads both weapons at fire and load actions\\ 
+
+
+{\bf Ballista Tractor Mark II } \\
+Equipment: 1 x Enhanced Ballista \\
+Equipment Limits: [ballista:1, independent:∞] \\
+Type: [mechanical, bio crew, vehicles, wheeled] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
+Assault Deflection: [2, 0, 0, 0] Die: 3+\\
+\indent Fear(6)\\ 
+ 
+\ \\
+
+\ \\
+{\bf Enhanced Ballista } \\
+
+
+
+Range: 5  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+Enhanced Accurazy: +1 to hit\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [L, -, -] \\
+slow [L, L, -] \\
+slow [R, -, -] \\
+slow [R, R, -] \\
+slow [F, L, -] \\
+slow [F, R] \\
+slow [B, -, -] \\
+slow [F, -, -] \\
+slow [B, rev, -] \\
+still [L, -, -] \\
+still [L, L, -] \\
+still [L, L, L] \\
+still [R, -, -] \\
+still [R, R, -] \\
+still [R, R, R] \\
+still [-, -, -] \\
+still [R, A, F] \\
+still [L, A, F] \\
+still [A, F, -] \\
+still [rev, -, -] \\
+default still [-, -, -] \\
+default slow [-, -, B] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: d6 Light Damage \\
+5-8: +1 to future damage, d6 critical damage \\
+9: Unit destroied \\
+\ \\ {\bf light } \\
+1-4: +1 to future damage \\
+5-6: Shaken \\
+\ \\ {\bf critical } \\
+1-2: Shaken \\
+3: +1 to be hit, -1 to hit \\
+4: Rotate unit 180$^0$ \\
+5: Place Poison Cloud[8] and smoke in this and all surronding hexes. \\
+6: set on fire \\
+\ \\ {\bf crew } \\
+4-5: Weapon Jammed \\
+6-7: as 4-5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroied \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Ballista Tractor, Mark III }
+
+\begin{tabular}{ll}
+  Name & Ballista Tractor, Mark III \\
+  Size & lagre\\
+  Cost & 8ip\\
+  Models & 1 x Ballista Tractor Mark III\\
+  Armor & [12, 8, 8, 7]\\
+\end{tabular}
+
+\noindent Fires and loads both weapons at fire and load actions\\ 
+
+
+{\bf Ballista Tractor Mark III } \\
+Equipment: 1 x Ballista, 1 x Array of Heavy Muskets \\
+Equipment Limits: [ballista:1, array:1, independent:∞] \\
+Type: [mechanical, bio crew, vehicles, wheeled] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
+Assault Deflection: [2, 0, 0, 0] Die: 3+\\
+\indent Fear(6)\\ 
+ 
+\ \\
+
+\ \\
+{\bf Ballista } \\
+
+
+
+Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+
+
+
+
+{\bf Array of Heavy Muskets } \\
+
+
+
+Range: 3  Angle: ['x4', 'x2', 'x2', '-']: AP: 3: Damage:d6 -1 \\
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [L, -, -] \\
+slow [L, L, -] \\
+slow [R, -, -] \\
+slow [R, R, -] \\
+slow [F, L, -] \\
+slow [F, R] \\
+slow [B, -, -] \\
+slow [F, -, -] \\
+slow [B, rev, -] \\
+still [L, -, -] \\
+still [L, L, -] \\
+still [L, L, L] \\
+still [R, -, -] \\
+still [R, R, -] \\
+still [R, R, R] \\
+still [-, -, -] \\
+still [R, A, F] \\
+still [L, A, F] \\
+still [A, F, -] \\
+still [rev, -, -] \\
+default still [-, -, -] \\
+default slow [-, -, B] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: d6 Light Damage \\
+5-8: +1 to future damage, d6 critical damage \\
+9: Unit destroied \\
+\ \\ {\bf light } \\
+1-4: +1 to future damage \\
+5-6: Shaken \\
+\ \\ {\bf critical } \\
+1-2: Shaken \\
+3: +1 to be hit, -1 to hit \\
+4: Rotate unit 180$^0$ \\
+5: Place Poison Cloud[8] and smoke in this and all surronding hexes. \\
+6: set on fire \\
+\ \\ {\bf crew } \\
+4-5: Weapon Jammed \\
+6-7: as 4-5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroied \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Gnome Helicopter }
+
+\begin{tabular}{ll}
+  Name & Gnome Helicopter \\
+  Size & large\\
+  Cost & 6ip, 2xp\\
+  Models & 1 x Gnome Helicpoter\\
+  Armor & [0, 0, 0, 0]\\
+\end{tabular}
+
+\noindent Fires, loads and aim all weapons simultaniously\\ 
+Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
+
+
+{\bf Gnome Helicpoter } \\
+Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
+Equipment Limits: [helicopter front:1, helicopter drop:1, helicopter side:1, independent: ∞] \\
+Type: [bio crew, helicopter, flying] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 0, 0, 0] Die: \\
+\indent  
+\ \\
+Quick fix: In aftermath this unit may either remove one shaken token or one +1 to future damage token\\ 
+
+\ \\
+{\bf Acidic Napalm Bomb } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:n.a \\
+Choose a hex within range 1: Area(4+): minor acid and set target unit on fire\\ 
+
+
+
+
+{\bf Helicopter Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False]: AP: 6: Damage:d6-1 \\
+Fire once at all enemy units within range and within one angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit base\\ 
+Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+still ground [A[still flying], 360$^0$, -] \\
+still ground [A[slow flying], 360$^0$, F] \\
+still ground [A[still flying], 360$^0$, -] \\
+still flying [360$^0$, -, -] \\
+still flying [-, -, D] \\
+still flying [A[slow flying], 360$^0$, F] \\
+still flying [A[fast flying], 360$^0$, F] \\
+slow flying [L, F, -] \\
+slow flying [L, F, L] \\
+slow flying [R, F-] \\
+slow flying [R, F, R] \\
+slow flying [-, -, D] \\
+slow flying [-, R, D] \\
+slow flying [-, L, D] \\
+slow flying [A[fastflying], F, F] \\
+slow flying [F, B[stillflying], 360$^0$] \\
+fast flying [F, F, -] \\
+fast flying [F, F, R] \\
+fast flying [F, F, L] \\
+fast flying [F, F, B[slow flying],360$^0$] \\
+fast flying [F, F, B[still flying],360$^0$] \\
+default still flying [-, -, B[still ground]] \\
+default slow flying [-, -, B[still ground]] \\
+default fast flying [-, -, B[still ground]] \\
+\ \\ {\bf fire } \\
+still ground [-, Load] \\
+slow flying [-, Load] \\
+slow flying [-, Fire, -] \\
+fast flying [-, Load] \\
+fast flying [-, Fire] \\
+still flying [-, Load] \\
+still flying [Aim, Fire] \\
+still flying [Fire, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: d6 light damage \\
+5-8: x3 d6 light damge \\
+9: Destroy unit base \\
+\ \\ {\bf light } \\
+1-4: +1 to future damgage \\
+5-6: shaken \\
+\ \\ {\bf crew } \\
+as regular damage \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\section{Upgradeable Units}{\bf Tinkerer Helicpoter } \\
+Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
+Equipment Limits: [helicopter front:1, helicopter drop:1, helicopter side:1, independent: ∞] \\
+Type: [bio crew, helicopter, flying, tinkerer] \\
+Replaces: [gnome helicopter] \\
+Cost: -4cp, 8xp\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 0, 0, 0] Die: \\
+\indent  
+\ \\
+Improved Quick fix: In aftermath this unit may remove up to two shaken tokens, two +1 to future damage token or one of each\\ 
+
+\ \\
+{\bf Acidic Napalm Bomb } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:n.a \\
+Choose a hex within range 1: Area(4+): minor acid and set target unit on fire\\ 
+
+
+
+
+{\bf Helicopter Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False]: AP: 6: Damage:d6-1 \\
+Fire once at all enemy units within range and within one angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit base\\ 
+Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
+
+
+
+
+ 
+\ \\
+
+{\bf Gnome Elite Infantry } \\
+Equipment: 1 x Gnome Gun, 1 x Light SMG, 1 x Poison Dart, 1 x Acid Ballon, 1 x Grinder \\
+Equipment Limits: [hands:2, reserve:∞, independent:∞] \\
+Type: [bio, elite, infantry, walks] \\
+Replaces: [gnome infantry] \\
+Cost: 1xp\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+\ \\
+Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)\\ 
+Unit base gains psycic resistance 1 as long as atleast one elite model is alive.\\ 
+
+\ \\
+{\bf Gnome Gun } \\
+
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Poison Dart } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:- \\
+Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded. Poison[4]\\ 
+
+
+
+
+{\bf Acid Ballon } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:- \\
+Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded. Minor Acid\\ 
+
+
+
+
+{\bf Grinder } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 2: Damage:d8-2 \\
+Reserve weapon: may use this weapon instead of main gun when instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Only treated as loaded if your main gun is loaded. Minor Acid\\ 
+
+
+
+
+ 
+\ \\
+
+{\bf Gnome Tinkerer } \\
+Equipment: 1 x Gnome Gun, 1 x Light SMG \\
+Equipment Limits: [hands:2, reserve:∞, independent:∞] \\
+Type: [bio, infantry, tinkerer, walks] \\
+Replaces: [gnome infantry] \\
+Cost: -3cp, 4xp\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+\ \\
+Once per game: May Launch Mechanical Badger: Place a mechanical badger unit in any of the surronding hexes. \\ 
+
+\ \\
+{\bf Gnome Gun } \\
+
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6 \\
+
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+ 
+\ \\
+
+\section{Equipment and training Upgrades}\ \\
+{\bf Acid Splash } \\
+
+Requiers: [[hands:2]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 0: Damage:- \\
+No regular damage\\ 
+Minor Acid\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Mechanical Owl } \\
+
+Requiers: [[type: infantry], [independent:1]] \\
+Cost: Upgrade all models for: 2cp \\
+Gives all weapons the enhanced accurazy (+1 to hit) trait\\ 
+
+
+
+
+
+
+
+
+
+\ \\
+{\bf Frost Ray } \\
+
+Requiers: [[type: infantry], [hands:2]] \\
+Cost: Upgrade all models for: 6cp \\
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 0: Damage:d4-2+d6 psycic damge + d4 crew damage \\
+If you use the 'amplified fire' order, and if you hit the enemy unit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed one step\\ 
+
+
+
+
+
+
+
+\ \\ {\bf fire } \\
+still [-, amplified fire] \\
+
+\ \\
+{\bf Green Gas Launcer } \\
+
+Requiers: [[type: tinkerer, type: elite], [type:infantry], [reserve:1]] \\
+Cost: Upgrade one model for: 2cp \\
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 0: Damage:d6 psycic damage + d4 crew damage \\
+Choose one hex within ragne: Area(5+)\\ 
+Poison[4]\\ 
+Reserve weapon: may use this weapon instead of main gun when either fire (reserve) orders is given or a regular fire order is given, but you may only use one weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Helicopter mounted Green Gas Launcer } \\
+
+Requiers: [[type: tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 0: Damage:d6 psycic damage + d4 crew damage \\
+Choose one hex within ragne: Area(5+)\\ 
+Poison[4]\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Experimental Plasma Gun } \\
+
+Requiers: [[type: tinkerer], [type:infantry], [hands:2]] \\
+Cost: Upgrade one model for: 6cp \\
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 6: Damage:d12-3 \\
+If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carring the plasma gun first.\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Helicopter Mounted Experimental Plasma Gun } \\
+
+Requiers: [[type: tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: Upgrade all models for: 6cp \\
+
+
+Range: 6  Angle: [False, True, True, False]: AP: 6: Damage:d12-3 \\
+If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the wielder\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Medical Armor } \\
+
+Requiers: [[type: infantry], [independent:1]] \\
+Cost: Upgrade all models for: 2cp \\
+Unit gain Fire resistance 3, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
+
+
+
+
+
+
+
+
+
+\ \\
+{\bf Plasma Shield Generator } \\
+
+Requiers: [[type: infantry], [independent:1]] \\
+Cost: Upgrade all models for: 2cp \\
+Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)\\ 
+However, every time this units takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
+
+
+
+
+{\bf Assault} \ \\
+Assault deflection: +add [1, 0, 0, 0], Deflection die: replace 5+
+\\ 
+
+append ['Any enemy which is hit atleast once in assault is set on fire']
+
+

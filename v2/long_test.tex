@@ -1,40 +1,39 @@
 \pagebreak
 
-\section{ Tamed Balrog }
+\section{ Scout }
 
 \begin{tabular}{ll}
-  Name & Tamed Balrog \\
-  Size & Huge\\
-  Cost & 24xp\\
-  Models & 1 x Tamed Balrog\\
-  Armor & [8, 7, 7, 6]\\
+  Name & Scout \\
+  Size & medium\\
+  Cost & 2mp\\
+  Models & 1 x Scout\\
+  Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
-\noindent Fire Resistance 12, Poison Resistance 6\\ 
-Terror[8][range=2]\\ 
-Excelent Whip Handeling (counts as Excelent shot, +2 to hit)\\ 
+\noindent Forward Position[2], Take-Cover[still,crawl][-3]\\ 
+spot: detect enemy hidden darkelf.units. See general rules\\ 
 
 
-{\bf Tamed Balrog } \\
-Equipment: 1 x Flaming Whip \\
-Equipment Limits: [] \\
-Type: [monster, walks, bio] \\
+{\bf Scout } \\
+Equipment: 1 x Rifle \\
+Equipment Limits: [hands:2, training:1, independent:∞] \\
+Type: [bio, infantry, walks] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
-Assault: [6, 4, 3, 2] Die: 2+ Armor Penetration: 6 Damage: d6 \\
-Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
-\indent Set on fire\\ 
+Assault: [2, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [2, 1, 0, 0] Die: 6+\\
+\indent Cunning assault[1 for 1]\\ 
+Reroll all success in assault while crawling\\ 
  
 \ \\
 
 \ \\
-{\bf Flaming Whip } \\
+{\bf Rifle } \\
 
 
 
-Range: 1  Angle: [True, True, False, False]: AP: 0: Damage:N.A \\
-Set on fire\\ 
+Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
 
 
 
@@ -45,25 +44,37 @@ Set on fire\\
 
 
 \ \\ {\bf movement } \\
-slow [A,chase, chase, chase,B[rest]] \\
-slow [chase, -, -] \\
-slow [-, -, chase] \\
-slow [360°, -, -] \\
-slow [360°, F, -] \\
-rest [-, -, A] \\
+slow [Chase, -, -] \\
+slow [-, -, Chase] \\
+slow [360°, F, 360°] \\
+slow [360°, 360°, 360°] \\
+slow [360°, F, B] \\
+slow [360°, B[crawl], -] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
+still [360°, A[crawl], F] \\
+crawl [360°, F, -] \\
+crawl [360°, B[still], -] \\
+crawl [360°, A[slow], F] \\
+default crawl \\
+default still \\
 default slow \\
-default rest \\
 \ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
 still [Fire, -] \\
 still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+still [Spot, Spot] \\
+slow [Spot, Spot] \\
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-9: +1 on future damage \\
-10-11: +2 on future damage \\
-12: +3 on future damage, assault -1, Looses Terror, Shaken \\
-13: Unit Destroied \\
+0+: unit killed \\
+\ \\ {\bf psychic } \\
+3+: Unit Shaken \\
 
 
 

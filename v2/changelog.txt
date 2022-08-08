@@ -6,6 +6,9 @@ Ork:
 	Renamed Char ... Orques til Ork Char B1
 	Removed Road+Road+Road movement from Ork char
 	Removed Halftrack
+	Reworded harpoon gun special
+	HammerHead may now load and fire on still, slow and fast
+	HammerHead May now destroy buildings by entering the hex.
 
 Darkelf
 	Removed Gigiant Spider riders
@@ -13,10 +16,28 @@ Darkelf
 	Roboprothestic elites now cost 1 craftpoint insted of 1xp
 	Added Some items to roboprothestic units
 	Queen XXX renamed to Queen YY
-
+	Added gasmask with poison-cloud assault training equipment
+	Added poison-gas-fog grenade (a hide and trick once per game weapon)
+	Acid Cannon: range reduced to 4.
+	Acid Cannon: can now be stored with up to 2 ammo each.
 
 Dwarf:
 	Made minizeppeling less powerfull but cheaper
 	Removed assault bots
 	Removed heavy SMG
 	Added some weapon options for steampowerarmor (double and multibarrled muskets)
+	improved fire part of musket with springloaded axe
+	Steampowerarmor: take cover[-1] instead of take cover[-2]. Gained nicer damage table
+	Mini zeppelin: gained fast with random movement first movement in fast mode
+	Ultra Heavy Musket: steampowerarmor equipment. Cost cp. Better damage compared to heavy musket
+	Zeppelin gun: reduced range to 5.
+	Tank Gun reduced range to 6.
+
+
+Elf:
+	e34: range of main gun reduced to 4.
+	bear rider: slightly more robust.
+	Decision: remove elk riders.
+
+
+Gnome: removed main weapon from quad bike. Now only has reserve weapons

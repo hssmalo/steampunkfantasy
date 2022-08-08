@@ -99,12 +99,10 @@ Weapons upgrades and aditions either replaces all weapons in all models in a uni
 
 In some cases some equipment reqiuers an elite and the cost is typically for one weapon and only one elite in the unit base gets that weapon. However, as long as you have more elites left in the unit base, you may pay the price multiple times to equip as many as you like with elite weapons.
 
-Unit base weapons:
-Unless other wise stated, if a unit is given a unit base weapon, the unit may fire the unit base weapon a single time, OR fire its normal weapon. When firing the base weapon, apply to-hit modifiers of the best model in the unit. A unit base weapon requiers at least 2 alive models to be used. Regardless which weapon you fired, threat any weapon as unloaded after firing with either a unit-base weapon or the standar weapons of the models in the unit.
+Shared weapons:
+Unless other wise stated, if a unit is given a shared weapon, the unit may fire the shared weapon a single time, OR fire its normal weapon. When firing the shared weapon, apply to-hit modifiers of the best model in the unit. Regardless which weapon you fired, threat any weapon as unloaded after firing with either a shared weapon or the standar weapons of the models in the unit.
 
 The requirements and cost of both model replacements and extra equipment should be clearly stated in the army list.
-
-If not a unit base weapon, but the weapon requires a unit, the cost is for upgrading all models in the unit with given upgrade. If it is a model, the cost is for upgrading ONE model. Typically requiers the model to be elite.
 
 
 *Huge* units\
@@ -123,32 +121,32 @@ It is also possible that smoke, entrenchements etc. modify the default terrain.
 For movement and line of sight, se table below:
 --------              -----------------------------------------------------------------------------------------------------------------------------
 Clear                 No modifiers
-Mountains             2 movement points up, 1 down. 2 hight level, level 2 
-Hills                 2 movement points up, 1 down. 1 hight level, level 1 
-Forest                2 movement points to enter for vehicles, 1 for all other things.
+Mountains             walks: enter at 3+, tracked and wheeled: cannot enter
+Hills                 enter at 2+.
+Forest                walks: enter freely, tracked and wheeled: enter at 2+
                       Level 0 blocking terrain
 Burned Forrest        Level 0 blocking terrain
-Ruins	              1 movement points to enter. Does not block line of sight
-Rough                 1 movement points to enter. Does not block line of sight
-Sand Dunes            2 movement point to enter. Level 0 blocking terrain
+Ruins	              Enter freely. Does not block line of sight
+Rough                 Enter freely. Does not block line of sight
+Sand Dunes            Enter at 2+. Level 0 blocking terrain
 *Advanced* *terrain*
-Swamp                 1 movement point to enter for medium and smaller, 
-                      +1/+2 movement points to enter for large/huge size
+Swamp                 medium and smaller enter and exit freely.
+		      large and huge: enter at 2+
                       Units with track or wheel in description may get stuck,
-                      at 1 or 2 on a d6, the unit cannot move this movement step, regardless of order
+                      exit: 3+
                       Does not block line of sight
-Building              2 movement points to enter for infantry,
+Building              Infantry enter at 2+
                       any other type cannot enter without a special rule. Level 0 blocking terrain.
-Road                  If moving from a road to another hex with road, movement always cost 1.
+Road                  If moving from a road to another hex with road, movement is always freely.
 Smoke                 Blocks line of sight 
                       Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
-River                 +1 movement point to enter		      
+River                 enters at 4+		      
 Water                 1 movement point to enter for ships, floating or flying
                       (and can only be entered while flying). Cannot be entered by any other way.
 --------              -----------------------------------------------------------------------------------------------------------------------------
 
 
-If a unit tries to enter a hex which cost more than 1 to enter, place a 'entering difficult terrain token' for the unit base. It can only move into the hex if it already have enough of these tokens to enter the hex. An hex cost 2 movement points to enter needs 1 of these token already presents, while a hex costing 3 needs 2 of those tokens. (2 token then you spend the third action to enter). You lose all tokens if you do any movement not trying to enter the hex.
+If a unit tries to enter a difficult terrain hex, roll a die. If you don't roll below the requirement, do not enter the hex but stay in the hex you are. 
 
 Line of sight between two hexes is blocked if it crosses over a hex of blocking terrain with a height level equal to or greater than both of the two hexes, or if it crosses over a hex of height heigher than both hexes. Treat any blocking terrain of lower height to create two blind hexes. Line of sight can not be traced to the blind hexes BUT can be traced beyond that.
 
@@ -161,7 +159,8 @@ Terrain also provide cover, which is given in the to-hit table later.
 One hex may maximum hold either up two 2 units if at most one of them is large, or 1 huge unit.
 Flying units have the same stacking limits, but while flying is independent of stacking limit on ground. A flying unit may even share a hex with an enemy.
 
-If trying to enter the same hex with MORE than that simultaneously, all from within same team/faction, then all units trying to move into the hex stay put and are *shaken* (se unit abilities and conditions) next turn. 
+If trying to enter the same hex with MORE than that simultaneously, all from within same team/faction, then all units trying to move into the hex stay put.
+If done on purpose by the commander, they are also *shaken* (se unit abilities and conditions) next turn. 
 
 \pagebreak
 
@@ -222,7 +221,7 @@ This is now called Match Victory Points (MVP).
 
 The tournament victory points (TVP) are calculated as follows:
 
-$$TVP = (| MVP | )^{0.5}*MVP/| MVP | $$
+$$TVP = (| MVP | )^{0.5}*MVP/| MVP | $$ sdf
 
 Note that both players get more points by destroying each other. Thus it is possible that a loser of one match scores more points than a winner of another match. This rewards playing aggressive.
 
@@ -386,7 +385,7 @@ Aim                        +2       0         (aim bonus last 1 round. If not ap
 *Range*
 Point-Blank                +1       0         (range =1)
 Normal range                0       0         (within weapon range)
-Long range                 -1       0         (within max x2 of weapon range)
+Long range                 -2       0         (within max x2 of weapon range)
 *Angle*
 On-edge of firing-angle    -1       0
 *Size*
@@ -396,13 +395,14 @@ Good Shot                  +1       0
 Excellent Shot             +2       0
 Superb Shot                +3       0
 Bad Shot                   -1       0
-Steady                     +1       +1
+Crap Long range            -1       0         To-hit penalty at long range.
+Steady                     +1      +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
 Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. grants evation(-1) in some terrains
 Elusvie[speed, -N]          0      -N        
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
-Enhanced Accurazy           +1      0
+Enhanced Accurazy          +1       0
 ------------------------ -------  ---------- ---------------------
 
 Roll an open ended d6 for to-hit.
@@ -509,6 +509,7 @@ Dark_Elf\
 Ork\
 Dwarf\
 Elf\
+Gnome \
 
 The one gaining the advantage of the assault enters the hex it tried to enter, and disadvantage is forced out of the hex, it then retreats. If one with disadvantage was stationary, it moves out of the hex in the backward direction. If the disadvantage was trying to enter a hex, it stays in the hex it was before trying to enter the hex. 
 
