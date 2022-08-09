@@ -11,9 +11,8 @@ Each turn contains the following steps:
 Apply damage \
 
 
-Trigger hex effect \
-- Movement 1 \
-
+- Trigger hex effect \
+Movement 1 \
 Pre assault retreat/abilities\
 Pre assault abilities
 
@@ -21,16 +20,16 @@ Pre assault abilities
 Post assault retreat\
 Apply damage \
 
-Trigger hex effect \
-- Movement 2 \
+- Trigger hex effect \
+Movement 2 \
 Pre assault retreat/abilities \
 
 - Assault 2 \
 Post Assault retreat \
 Apply damage \
 
-Trigger hex effect \
-- Movement 3\
+- Trigger hex effect \
+Movement 3\
 Pre assault abilities \
 
 
