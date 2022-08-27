@@ -13,25 +13,17 @@
     size = "huge"
     cost.xp = 16
     armor = [0, 0, 0, 0]
-    special = ["Forward Positon[1]", "Regneration: At each aftermath phase, remove/downgrade up to three of the following: one +1 for future damage marker, downgrade one bleeding one step or 1 temporarily killed token.", "May have a maximum of twelve -1 counters to assault damage, and 1 temporarily killed token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
+    special = ["Forward Positon[1]", "Regneration[3]: At each aftermath phase, remove/downgrade up to three of the following: one +1 for future damage marker, downgrade one bleeding one step. If there you have no +1 for future damage tokens, you may also remove unconcious marker.", "While unconcious, you gain regeneration[6] instead of regenration[3]. But troll does no action while unconcious (and do not fire its weapon). Count as crippled for victory purposes while unconcious", "Acid resistance[5+]", "May have a maximum of 1 unconcious token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
 
         [ork.units.troll.orders.movement]
         slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
         default.slow = ["-", "-", "Flee"]
 
         [ork.units.troll.damage_tables]
-        regular = ["1-3: +1 on future damage",
-		"4-6: +1 for future damge, bleed[4]",
-		"7-9: +2 for future damge, bleed[4]",
-		"10-12: +2 for future damge, bleed[6]",
-		"13-15: +3 for future damge, bleed[6]",
-		"16-18: +3 for future damge, bleed[8]",
-		"19-21: +4 for future damge, bleed[8]",
-		"22-24: +4 for future damge, bleed[10]",
-		"25-27: +5 for future damge, bleed[12]",
-		"28-29: +10 for future damge, bleed[12]",
-		"30: as 28-29 pluss Troll temporarily killed",
-		"100: as 28-29 pluss Troll permanently killed"
+        regular = ["4-9: +1 on future damage",
+		"10-14: +1 for future damge, bleed[12]",
+		"15-19: as 10-14 plus Troll unconscious",
+		"20+: permanent dead"
 		]
 		
     [ork.units.champion]
@@ -368,14 +360,14 @@
     race="ork"
     equipments = ['troll_gatling_gun']
     type = ["monster", "walks"]
-    equipment_limit = ["hands:2", "independent:∞"]		
+    equipment_limit = ["hands:2","independent:∞"]		
     special = []
 
 
     	    [ork.models.troll.assault]
 	    strength = [18,2,2,2]
 	    strength_die = "6+"
-	    deflection = [0,0,0,0]
+	    deflection = [6,0,0,0]
 	    deflection_die = "6+"
 	    damage = "d12"
 	    ap = 2
@@ -598,7 +590,7 @@
         angle = [true, false, false, false]
         damage = "d8"
         ap = 3
-        special = ["Fires once at all units, friends or foe, within long-range and within forward arc.", "Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"]
+        special = ["Fires once at all models, friends or foe, within long-range and within forward arc.", "Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"]
 
 
     [ork.equipments.ork_musket]

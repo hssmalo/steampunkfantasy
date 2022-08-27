@@ -743,7 +743,7 @@ If target is hit by a ranged weapon with this special ability, apply (minor) aci
 
 Apply one minor Acid to an any enemy unit for each N successfull assault hits. If N=2 this means you may place one minor acid token for every 2nd successful assault die you do. For Minor acid, see continoius damage.
 
-
+**Acid Resistance[N+]** Before taking damage from acid of any kind, roll a die per acid token. Remove one acid token per die above N.
 
 **Poison[N]**, ranged weapons
 
@@ -788,6 +788,24 @@ Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
 
 \pagebreak
 
+**Hidden**
+
+While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror,
+
+While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden),
+
+You stay hidden until you reveal your self, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. Cloacking devices stay hidden even if in clear terrain, while all others sources of hidden abilities are revealed if they are in slow or fast in clear terrain within line of sight to an enemy.
+
+If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection.,
+
+Reveal order: Place your unit within 2 hexes of the hidden token and gain reveal bonuses. In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses"
+
+**Hide[terrain]**
+If your unit have a hide action order available: remove your unit from the board, replace it with a hidden token. Only works in given terrain", 
+
+	    
+
+\pagebreak
 
 # Hex based effect.
 

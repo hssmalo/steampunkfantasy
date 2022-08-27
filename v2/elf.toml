@@ -271,7 +271,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d6-1"
 	     ap = "3"
-	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy units within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
+	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
 
 
 

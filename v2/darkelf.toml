@@ -84,7 +84,7 @@
     name = "Queen YY"
     models = ["queen_yy"]
     size = "large"
-    armor = [11, 10, 8 ,7]
+    armor = [12, 10, 8 ,7]
     cost.ip = 16
     special = []
 
@@ -294,7 +294,7 @@
     size = "medium"
     armor = [7, 7, 7, 7]
     cost.ip = 4 
-    special = ["All terrain cost 1 movement to enter"]
+    special = ["Ignore difficult terrain"]
 
         [darkelf.units.mechanical_assault_spider.orders.movement]
 	slow = [["360°", "F",  "360°"],
@@ -315,6 +315,44 @@
         ]
         light = ["1-2: -1 to all assaults strength and deflection values (cumulative, minimum 0)",
 	      "3-4:+1 on future damage",
+	      "5-6: unit shaken"]
+	critical =  [ "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
+		 "2: Cannot move, looses fear",
+		 "3: Cannot rotate",
+		 "4-5: x3 Light damage[d6]",
+		 "6: Unit set on Fire"]
+
+
+    [darkelf.units.mechanical_scorpion]
+    race = "darkelf"
+    name = "Mechanical Scorpion"
+    models = ["mechanical_scorpion"]
+    size = "medium"
+    armor = [9, 7, 6, 5]
+    cost.ip = 4 
+    special = []
+
+        [darkelf.units.mechanical_scorpion.orders.movement]
+	still = [["360°", "360°",  "360°"], ["A", "360°",  "360°"] ]
+	slow = [["360°", "F",  "360°"], ["B", "360°",  "360°"], ["A", "F",  "F"]]
+	fast = [["360°", "F",  "B"]]
+	     
+	default.still = [["-", "-", "-"]]
+	default.slow = [["-", "-", "B"]]
+	default.fast = [["-", "-", "B,B"]]	
+
+        [darkelf.units.mechanical_scorpion.orders.fire]
+	still = [["-", "Load"],
+	      ["-", "Fire"],
+	      ["Load", "Aim"]]
+
+	
+        [darkelf.units.mechanical_scorpion.damage_tables]
+        regular = ["1-3: Light damaged[d6]",
+		"4-6: critical damage[d6]",
+            "7+: Destroy unit base"
+        ]
+        light = ["1-4:+1 on future damage",
 	      "5-6: unit shaken"]
 	critical =  [ "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
 		 "2: Cannot move, looses fear",
@@ -559,7 +597,7 @@
     race = "darkelf"
     equipment_limit = ["independent:∞"]
     equipments = ["fire_breath"]
-    type = ["drone", "flying", "mechanical", "walks"]
+    type = ["flying", "mechanical", "walks"]
     special = ["Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing", "Fire Resistance 2, Immunity to acid"]
 	  
 
@@ -577,7 +615,7 @@
     race = "darkelf"
     equipment_limit = ["independent:∞"]
     equipments = ["acid_breath", "shrapnell_breath"]
-    type = ["drone", "flying", "mechanical", "walks"]
+    type = ["flying", "mechanical", "walks"]
     special = ["Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing", "Fire Resistance 2, Immunity to acid"]
 	  
 
@@ -680,6 +718,24 @@
         damage = "d6"
         ap = 7
         special = ["Any number of supporting hits by this unit may incease AP by 1 instead of giving the normal +1 to damage.", "Poison[6][1 for 2], Fear[6]"]
+
+
+   [darkelf.models.mechanical_scorpion]
+    name = "Mechanical Scorpion"
+    race = "darkelf"
+    equipment_limit = ["training:1", "independent:∞"]
+    equipments = ["tail_gattling_gun"]
+    type = ["mechanical", "droid", "walks"]
+    special = []
+
+        [darkelf.models.mechanical_scorpion.assault]
+        strength = [8, 4, 2, 1]
+        strength_die = "5+"
+        deflection = [6, 2, 0, 0]
+        deflection_die = "6+"
+        damage = "d6"
+        ap = 3
+        special = ["Poison[12][1 for 2], Fear[6]"]
 
     [darkelf.models.darkelf_infantry]
     name = "Dark Elf Infantry"
@@ -847,6 +903,20 @@
         special = ["Poison[6]"]
 
 
+    [darkelf.equipments.tail_gattling_gun]
+    name = "Tail Gattling Gun"
+    race = "darkelf"
+    requires = [
+    ]
+
+        [darkelf.equipments.tail_gattling_gun.range]
+        range = 3
+        angle = [true, false, false, false]
+        damage = "d8"
+        ap = 4
+        special = ["Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within fron arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used", "May only use aim versus targets within normal range"]
+
+
     [darkelf.equipments.heavy_rifle]
     name = "Heavy Rifle"
     race = "darkelf"
@@ -870,7 +940,7 @@
         angle = [true, true, false, false]
         damage = "d6+d8 Psychic damage + d6 crew damage"
         ap = 3
-        special = ["On hit: apply Acid to target. In addition, if you hit target, place an Acid Clund[minor] at target hex"]
+        special = ["On hit: apply Acid to target. In addition, if you hit target, place an Acid Clund[minor] at target hex", "Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)"]
 
 
     [darkelf.equipments.mechanical_imp]
@@ -1160,12 +1230,7 @@
 	["type:infantry"]
     ]
 
-    special = ["While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror",
-    	    "While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)",
-	    "You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location",
-	    "If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection.",
-	    "Hide action: remove your unit from the board, replace it with a hidden token. Only works in swamp terrain", "Reveal: Place your infantry within 2 hexes of the hidden token and gain reveal bonuses",
-	    "In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses",
+    special = ["Gains the Hidden and Hide[ruins] special effects",
 	    "Forward positon[1]",
 	    "Camuflage[swamp][-1]"]	
 
@@ -1178,6 +1243,29 @@
 
 
 
+
+    [darkelf.equipments.cloacking_device]
+    name = "Hide"
+    race = "darkelf"
+    cost.ip = 2
+	    
+    requires = [
+        ["independent:1"],
+	["type:droid"]
+    ]
+
+    special = ["Gains the Hidden and Hide[ruins] special effects",
+	    "Forward positon[1]",
+	    "Camuflage[swamp][-1]"]	
+
+
+        [darkelf.equipments.cloacking_device.orders_gained.movement]
+        still= [["Reveal", "-", "-"]]
+	slow = [["-", "Reveal", "Chase"]]
+
+
+
+
     [darkelf.equipments.hide_free]
     name = "Hide"
     race = "darkelf"
@@ -1185,12 +1273,7 @@
 
 
 
-    special = ["While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror",
-    	    "While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)",
-	    "You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location",
-	    "If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection.",
-	    "Hide action: remove your unit from the board, replace it with a hidden token. Only works in swamp terrain", "Reveal: Place your infantry within 2 hexes of the hidden token and gain reveal bonuses",
-	    "In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses",
+    special = ["Gains the Hidden and Hide[ruins] special effects",
 	    "Forward positon[1]",
 	    "Camuflage[swamp][-1]"]	
 

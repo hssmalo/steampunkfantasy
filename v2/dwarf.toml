@@ -44,7 +44,7 @@
     cost.mp = 4
     cost.cp = 2
     cost.ip = 2
-    special = ["Posion Resistance 4, Fire Resistance 2" , "Take Cover[still][-1]", "Stable: +1 to hit while slow","Internal healing: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, downgrade one poison marker one step or  extinguish on fire token"]
+    special = ["Posion Resistance 4, Fire Resistance 2" , "Take Cover[still][-1]", "Stable: +1 to hit while slow","Acid resistance[5+]","Automatic Internal healing: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, downgrade one poison marker one step or  extinguish one fire token"]
 
         [dwarf.units.steampowerarmor.orders.movement]
 	slow = [["360°","F", "360°"],
@@ -310,7 +310,9 @@
 	default.still = ["-", "-", "-"]
 
         [dwarf.units.zap.orders.fire]
-	all = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
+	fast = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
+	slow = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
+	still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
 	
         [dwarf.units.zap.damage_tables]
 
