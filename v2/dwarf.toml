@@ -271,7 +271,7 @@
     models = ["zap"]
     size = "large"
     armor = [10, 8, 8 ,7]
-    cost.ip = 6
+    cost.ip = 8
     special = ["Fire and load all weapons at the same time", "Loses aim if moving", "Fire Resistance 2"]
 
         [dwarf.units.zap.orders.movement]
@@ -596,7 +596,7 @@
     name = "zap"
     race = "dwarf"
     equipment_limit = ["crew:1", "independent:∞"]
-    equipments = ["array_of_heavy_muskets", "zap", "fear_ray"]
+    equipments = ["array_of_heavy_muskets", "zap", "fear_ray_free"]
     type = ["mechanical", "bio_crew", "track", "vehicle"]
     special = []
 	  
@@ -918,7 +918,7 @@
 
 
     [dwarf.equipments.array_of_enhanced_heavy_muskets]
-    name = "Array of Heavy Muskets"
+    name = "Array of Enhanced Heavy Muskets"
     race = "dwarf"
     requires = [
     ]
@@ -932,7 +932,7 @@
 
 
     [dwarf.equipments.array_of_heavy_muskets]
-    name = "Array of Enhanced Heavy Muskets"
+    name = "Array of Heavy Muskets"
     race = "dwarf"
     requires = [
     ]
