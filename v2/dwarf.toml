@@ -44,7 +44,7 @@
     cost.mp = 4
     cost.cp = 2
     cost.ip = 2
-    special = ["Posion Resistance 4, Fire Resistance 2" , "Take Cover[still][-1]", "Stable: +1 to hit while slow","Acid resistance[5+]","Automatic Internal healing: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, downgrade one poison marker one step or  extinguish one fire token"]
+    special = ["Posion Resistance 4, Fire Resistance 2" , "Take Cover[still][-1]", "Stable: +1 to hit while slow","Acid resistance[5+]","Automatic Repair: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, remove one +1 to future damage token or  extinguish one fire token"]
 
         [dwarf.units.steampowerarmor.orders.movement]
 	slow = [["360°","F", "360°"],
@@ -443,7 +443,7 @@
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
     equipments = ["heavy_musket_free"]
     type = ["elite", "steampowerarmor", "walks", "bio"]
-    cost.xp = 2
+    cost.xp = 4
     replaces = ["steampowerarmor"]
     special = ["good shot: +1 to hit", "unit gains psycic resistance 1 as long as 1 elite model is alive"]
 	  
@@ -451,11 +451,34 @@
         [dwarf.models.elite_steampowerarmor.assault]
         strength = [4, 3, 3, 3]
         strength_die = "4+"
+	deflection = [4, 1, 1, 1]
+        deflection_die = "4+"
+        damage = "d6-2"
+        ap = 2
+        special = ["cunning assault[1 for 2]"]
+
+
+
+    [dwarf.models.battle_medic]
+    name = "Dwarf Battle Medic"
+    race = "dwarf"
+    equipment_limit = ["hands:2", "shared:1", "independent:∞"]
+    equipments = ["heavy_musket_free"]
+    type = ["elite", "steampowerarmor", "walks", "bio"]
+    cost.xp = 2
+    replaces = ["steampowerarmor"]
+    special = ["unit gains psycic resistance 2 as long as 1 battle medic is alive", "Instead of firing a weapon, or in addition to aim/loading, the battle medic model may use Heal[1] on any ally: downgrade one poison marker 1 step, downgrade 1 bleeding token 1 step, remove one +1 to future damage token, neutrilize one minor acid token"]
+	  
+
+        [dwarf.models.battle_medic.assault]
+        strength = [4, 3, 3, 3]
+        strength_die = "4+"
 	deflection = [2, 1, 1, 1]
         deflection_die = "4+"
         damage = "d6-2"
         ap = 2
         special = ["cunning assault[1 for 2]"]
+
 
 
     [dwarf.models.steampowerarmor]

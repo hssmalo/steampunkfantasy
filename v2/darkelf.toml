@@ -595,7 +595,7 @@
     [darkelf.models.mechanical_red_dragon]
     name = "Mechanical Red Dragon"
     race = "darkelf"
-    equipment_limit = ["independent:∞"]
+    equipment_limit = []
     equipments = ["fire_breath"]
     type = ["flying", "mechanical", "walks"]
     special = ["Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing", "Fire Resistance 2, Immunity to acid"]
@@ -613,7 +613,7 @@
     [darkelf.models.mechanical_iron_dragon]
     name = "Mechanical Iron Dragon"
     race = "darkelf"
-    equipment_limit = ["independent:∞"]
+    equipment_limit = []
     equipments = ["acid_breath", "shrapnell_breath"]
     type = ["flying", "mechanical", "walks"]
     special = ["Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing", "Fire Resistance 2, Immunity to acid"]
@@ -735,7 +735,7 @@
         deflection_die = "6+"
         damage = "d6"
         ap = 3
-        special = ["Poison[12][1 for 2], Fear[6]"]
+        special = ["Poison[12][1 for 2], Fear[8]"]
 
     [darkelf.models.darkelf_infantry]
     name = "Dark Elf Infantry"
@@ -912,9 +912,9 @@
         [darkelf.equipments.tail_gattling_gun.range]
         range = 3
         angle = [true, false, false, false]
-        damage = "d8"
+        damage = "d8+d6 psycic damage"
         ap = 4
-        special = ["Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within fron arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used", "May only use aim versus targets within normal range"]
+        special = ["Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within front arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used", "May only use aim versus targets within normal range"]
 
 
     [darkelf.equipments.heavy_rifle]
@@ -1163,7 +1163,7 @@
         angle = [true, false, false, false]
         damage = "-"
         ap = 0
-	special = ["No normal damge, but any unit within normal range and front arc is covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]"]
+	special = ["No normal damge, but any unit within normal range and front arc is covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"]
 
 
     [darkelf.equipments.fire_breath]
@@ -1198,7 +1198,7 @@
     name = "GasMask and assault training in poison clouds"
     race = "darkelf"
     cost.xp = 1
-    special = ["Unit becomes immune to poison clouds", "Enemy units in an poison cloud gain -50% (rounded down) in assault and assault deflection", "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas" ]
+    special = ["Unit becomes immune to poison clouds", "Enemy units in an poison cloud gain -50\\% (rounded down) in assault and assault deflection", "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas" ]
     requires = [
         ["independent:1"],
 	["type:roboprosthetic", "type:infantri", "type:cavalery"]
@@ -1251,7 +1251,7 @@
 	    
     requires = [
         ["independent:1"],
-	["type:droid"]
+	["type:mechanical"]
     ]
 
     special = ["Gains the Hidden and Hide[ruins] special effects",
