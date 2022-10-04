@@ -451,7 +451,7 @@
         [dwarf.models.elite_steampowerarmor.assault]
         strength = [4, 3, 3, 3]
         strength_die = "4+"
-	deflection = [4, 1, 1, 1]
+	deflection = [2, 1, 1, 1]
         deflection_die = "4+"
         damage = "d6-2"
         ap = 2
@@ -473,7 +473,7 @@
         [dwarf.models.battle_medic.assault]
         strength = [4, 3, 3, 3]
         strength_die = "4+"
-	deflection = [2, 1, 1, 1]
+	deflection = [4, 1, 1, 1]
         deflection_die = "4+"
         damage = "d6-2"
         ap = 2
