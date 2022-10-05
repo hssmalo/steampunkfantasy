@@ -462,7 +462,7 @@
         deflection_die = ""
         damage = "d6-2"
         ap = 2
-        special = ["Cunning assault[1 for 1]"]
+        special = ["Cunning assault[1 for 2]"]
 
     [gnome.models.ballista_tractor_markI]
     name = "Ballista Tractor Mark I"

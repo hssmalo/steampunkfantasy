@@ -307,6 +307,10 @@
 	      ["-", "Fire"],
 	      ["-", "Aim"]]
 
+	slow = [["-", "Load"],
+	      ["-", "Fire"],
+	      ["-", "Aim"]]
+
 	
         [darkelf.units.mechanical_assault_spider.damage_tables]
         regular = ["1-3: Light damaged[d6]",
@@ -345,6 +349,9 @@
 	still = [["-", "Load"],
 	      ["-", "Fire"],
 	      ["Load", "Aim"]]
+	slow = [["-", "Load"],
+	      ["-", "Fire"],
+	      ["-", "Aim"]]
 
 	
         [darkelf.units.mechanical_scorpion.damage_tables]
@@ -912,9 +919,9 @@
         [darkelf.equipments.tail_gattling_gun.range]
         range = 3
         angle = [true, false, false, false]
-        damage = "d8+d6 psycic damage"
-        ap = 4
-        special = ["Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within front arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used", "May only use aim versus targets within normal range"]
+        damage = "d8 + d6 Psycic damage"
+        ap = 3
+        special = ["Focus Fire[aim]: roll 6 dice at same unit.","May only use aim versus targets within normal range", "If not using aim, fire once at all enemy models within range and within front arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used"]
 
 
     [darkelf.equipments.heavy_rifle]
@@ -1245,7 +1252,7 @@
 
 
     [darkelf.equipments.cloacking_device]
-    name = "Hide"
+    name = "Cloacking Device"
     race = "darkelf"
     cost.ip = 2
 	    
@@ -1254,9 +1261,8 @@
 	["type:mechanical"]
     ]
 
-    special = ["Gains the Hidden and Hide[ruins] special effects",
-	    "Forward positon[1]",
-	    "Camuflage[swamp][-1]"]	
+    special = ["Gains the Hidden special effects",
+	    "Forward positon[1]"]	
 
 
         [darkelf.equipments.cloacking_device.orders_gained.movement]
