@@ -822,9 +822,10 @@ class Model:
         # Check each requirement of the equipment
         
         for requirement_strings in equipment.info.requires:
+            
             requirement = parse_requirements(requirement_strings, as_list=True)
             for attribute, allowed_values in requirement.items():
-                if attribute in self.info.entry_keys:
+                 if attribute in self.info.entry_keys:
                     
                     
                     value = (
@@ -835,7 +836,7 @@ class Model:
                     if not set(value) & set(allowed_values):
                         print(f"{value} is not among {allowed_values}")
                         return False
-                else:
+                 else:
                     value = allowed_values[0]
                     tmp = self.remaining_equipment_limits().get(attribute, 0)
                     if value > tmp:
