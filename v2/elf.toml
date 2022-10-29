@@ -24,7 +24,7 @@
 		     default.slow =  ["-", "-", "flee"]
 		     default.still = ["-", "-", "A, Flee"]
 
-		     [elf.units.elf_scout.damage_table]
+		     [elf.units.elf_scout.damage_tables]
 		     regular = ["0+: unit killed"]
 		     psychic = ["3+: shaken"]
 
@@ -77,6 +77,40 @@
 		     default.fast = ["-", "B", "B"]
 		     default.slow =  ["-", "-", "B"]
 		     default.still = ["-", "-", "-"]
+		     [elf.units.e34.damage_tables]	
+		     regular = [ "1-4: Light Damaged[d6]", "4-8: Crittical Damage, +1 on future damage", "9+ Destoryed",]
+		     critical = [ "1: Cannot move, looses Fear", "2: -1 to hit, +1 to be hit(ranged and assault)", "3: Cannot Rotate", "4: x3 Light damage[d6]", "5: Stuck turret: firing angle is now */-/-/-", "6: Unit is set on Fire",]
+		     light = [ "1-4: +1 on future damage", "5-6: shaken"]
+		     crew = ["3-5: weapon jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Crew Killed, Unit Destroyed"]
+
+	[elf.units.tattoo_ink]
+	race = "elf"
+	name = "Tattoo Ink"
+	models = ["tattoo_ink"]
+	size = "medium"
+	cost.ip = 4
+	armor = [8,6,6,6]
+	unit_special = "Forrester: ignore difficult terrain"   
+
+		     [elf.units.tattoo_ink.orders.fire]
+		     still = [["Fire", "Aim"],[ "Aim", "Fire"],["Load", "Aim"], ["Load", "Load"], [ "Fire", "Fire" ] ]
+		     slow =  [["Load", "Load"], [ "Fire", "Fire" ]]
+		     fast =  [[ "Fire", "Fire" ]]
+
+		     [elf.units.tattoo_ink.orders.movement]
+		     fast = [["F","F","-"],["F","R","-"],["F","L","-"],["F","B","-"],["B","B","-"],["R","F","-"],["L","F","-"],["road","road","road"]]
+		     slow =[["L","-","-"],["L","L","-"],["R","-","-"],["R","R","-"],["A","F","-"],["B","-","-"],["F","-","-"],["B","rev","-"]]
+		     still =[["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
+		     default.still = ["-", "-", "-"]
+		     default.slow = ["-", "-", "B"]	
+		     default.fast = ["-", "B", "B"]
+
+
+		     [elf.units.tattoo_ink.damage_tables]
+		     critical = [ "1: Shaken", "2: -1 to hit, +1 to be hit", "3: Cannot rotate", "4: Roll 3 times on light damage table", "5: unit cannot change speed.", "6: Set unit on Fire!",]
+		     light = [ "1-4: +1 on future damage", "5-6: shaken", ]
+		     regular = [ "1-4: Light Damage[d6]", "5-7: d6 Critical Damage, +1 on future damage", "8+ Destroyed",]
+		     crew = ["3-5: weapon jammed", "6-7: as 4-5, shaken", "8-9: as 6-7, +3 to future crew damage", "10: Crew Killed, Unit Destroyed"]
 
 
 	[elf.units.bear_rider]
@@ -101,10 +135,8 @@
 		     default_slow = ["-", "-", "flee"]
 		     default_still = ["-", "-", "A,flee"]
 
-		     [elf.units.bear_rider.damage_table]
-		     regular = ["2-7: +1 to future damage, Bleed[4]",
-		     	     "8:10: +2 to future damage, bleed[6], psycic damage[d6",
-			     "11+: killed"]
+		     [elf.units.bear_rider.damage_tables]
+		     regular = ["2-7: +1 to future damage, Bleed[4]","8:10: +2 to future damage, bleed[6], psycic damage[d6]","11+: killed"]
 		     psychic = ["6+: shaken"]
 
 	[elf.units.armored_unicorn_rider]
@@ -145,9 +177,8 @@
 		     default_fast = ["-", "flee", "flee"]
 
 
-		     [elf.units.armored_unicorn_rider.damage_table]
-		     regular = ["2-5: bleed[6]",
-			     "6+: killed"]
+		     [elf.units.armored_unicorn_rider.damage_tables]
+		     regular = ["2-5: bleed[6]", "6+: killed"]
 		     psychic = ["6+: shaken"]
 
 	
@@ -169,6 +200,24 @@
 	     damage = "d6-1"
 	     ap  = 3
 	     special = ["Fear(6)"]
+
+
+	[elf.models.tattoo_ink]
+	name = "Tattoo Ink"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = [ "gattle_gun", "tank_smg",]
+	type = ["Mechanical, Bio Crew, Vehicle, Half-Track"]
+	special = ["Gun Blazing: Ignore to-hit penalties for moving fast", "May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do." ]
+
+	     [elf.models.tattoo_ink.assault]
+	     strength = [3,2,2,2]
+	     strength_die = "5+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-1"
+	     ap  = 3
+	     special = []
 
 	[elf.models.elf_scout]
 	name = "Elf scout"
@@ -234,6 +283,49 @@
         damage = "d6 + (+3 if penetrating all armor)"
         ap = 8
 	special = ["double barraled: May load up to 2 shots, and fire them one at a time"]
+
+
+    [elf.equipments.gattle_gun]
+    name = "Gattle_gun"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.gattle_gun.range]
+        range = 3
+        angle = [true, true, true, true]
+        damage = "d6-3"
+        ap = 5
+	special = ["May load up to 5 shots"]
+
+
+    [elf.equipments.tank_smg]
+    name = "Gattle_gun"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.tank_smg.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6"
+        ap = 1
+	special = ["Fire two shot per fire order (per smg in the unit)"]
+
+
+    [elf.equipments.smg]
+    name = "Gattle_gun"
+    race = "elf"
+    cost.cp = 2 
+    requires = [
+    	     ["type: infantry"],
+	     ["hands:2"]
+	     ]	     
+
+        [elf.equipments.smg.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6"
+        ap = 1
+	special = ["Fire two shot per fire order (per smg in the unit)", "always treated as loaded"]
 
 
     [elf.equipments.twin_rifle]

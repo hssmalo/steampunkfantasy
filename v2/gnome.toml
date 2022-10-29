@@ -32,8 +32,9 @@
 	      ["Fire", "-"],
 	      ["-", "Fire"],
 	      ["Aim", "-"],
-	      ["-", "Aim"]]
-	all   = [["fire (reserve)", "fire (reserve)"]]
+	      ["-", "Aim"],
+	      ["fire (reserve)", "fire (reserve)"]]
+	slow   = [["fire (reserve)", "fire (reserve)"]]
 
         [gnome.units.gnome_infantry.damage_tables]
         regular = ["1-5: Kill 1 model",
@@ -54,7 +55,7 @@
     armor = [0, 0, 0, 0]
     cost.mp = 4
     cost.cp = 4	
-    special = []
+    special = ["May move into difficult terrain without problem. However, may not enter buildings"]
 
 
         [gnome.units.quad_bike.orders.movement]
@@ -416,7 +417,7 @@
     race = "gnome"
     equipment_limit = ["hands: 2", "reserve:1", "independent:∞"]
     equipments = ["light_smg" ]
-    type = ["bio", "quad_bike", "infantry", "walks"]
+    type = ["bio", "quad_bike", "infantry", "wheeled"]
     special = []
 
         [gnome.models.quad_bike.assault]
@@ -571,10 +572,10 @@
     [gnome.models.tinkerer_helicopter]
     name = "Tinkerer Helicpoter"
     race = "gnome"
-    equipment_limit = ["helicopter_front:1", "helicopter_drop:1", "helicopter_side:1", "independent: ∞"]
+    equipment_limit = ["helicopter_front:1", "helicopter_drop:1", "helicopter_side:2", "independent: ∞"]
     equipments = ["acidic_napalm_bomb", "helicopter_gattling_gun" ]
     type = ["bio_crew", "helicopter", "flying", "tinkerer"]
-    special = ["Improved Quick fix: In aftermath this unit may remove up to two shaken tokens, two +1 to future damage token or one of each"]
+    special = ["Improved Quick fix: In aftermath this unit may do two of the following: remove one +1 to future damage token, remove one shaken token, neutrilize one minor acid, extinguish one fire on self."]
     replaces = ["gnome_helicopter"]
     cost.xp = 8
     cost.cp = -4
@@ -618,7 +619,7 @@
     cost.xp = 4
     cost.cp = -3
     replaces = ["gnome_infantry"]
-    special = ["Once per game: May Launch Mechanical Badger: Place a mechanical badger unit in any of the surronding hexes. "]
+    special = ["Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the surronding hexes which is not overcrowded. May not be put directly into close combat. "]
 
         [gnome.models.gnome_tinkerer.assault]
         strength = [1, 1, 1, 1]
@@ -655,9 +656,9 @@
     ]
 
         [gnome.equipments.gun_lance.range]
-        range = 5
+        range = 3
         angle = [true, true, true, true]
-        damage = "d6-1"
+        damage = "d6"
         ap = 3
         special = []
 
@@ -687,7 +688,7 @@
         [gnome.equipments.enhanced_ballista.range]
         range = 5
         angle = [true, false, false, false]
-        damage = "d6 (+2 if penetrating all armor)"
+        damage = "d6 (+3 if penetrating all armor)"
         ap = 8
         special = ["Enhanced Accurazy: +1 to hit"]
 
@@ -701,7 +702,7 @@
 
         [gnome.equipments.array_of_heavy_muskets.range]
         range = 3
-        angle = ["x4", "x2", "x2", "-"]
+        angle = ["x4", "x3", "x3", "-"]
         damage = "d6 -1"
         ap = 3
         special = []
@@ -850,7 +851,7 @@
              angle= [true, true, true, true]
              damage = "d6 psycic damage + d4 crew damage"
              ap = 0
-	     special = ["Choose one hex (per model firing this weapon) within range: Area(5+)", "Poison[4]", "Reserve weapon: may use this weapon instead of main gun if fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
+	     special = ["Choose one hex (per model firing this weapon) within range: Area(5+)", "Poison[6]", "Reserve weapon: may use this weapon instead of main gun if fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
 
 
     [gnome.equipments.helicopter_mounted_green_gas_launcher]
@@ -864,7 +865,7 @@
              angle= [true, true, true, true]
              damage = "d6 psycic damage + d4 crew damage"
              ap = 0
-	     special = ["Choose one hex within ragne: Area(5+)", "Poison[4]"]
+	     special = ["Choose one hex within range: Area(5+)", "Poison[4]"]
 
 
     [gnome.equipments.experimental_plasma_gun]
@@ -878,7 +879,7 @@
              angle= [true, true, true, true]
              damage = "d12-3"
              ap = 6
-	     special = ["If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carring the plasma gun first."]
+	     special = ["If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carring the plasma gun first.", "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire"]
 
 
     [gnome.equipments.helicopter_mounted_experimental_plasma_gun]
@@ -889,10 +890,10 @@
 
     	     [gnome.equipments.helicopter_mounted_experimental_plasma_gun.range]
 	     range = 6
-             angle= [false, true, true, false]
+             angle= [true, true, true, false]
              damage = "d12-3"
              ap = 6
-	     special = ["If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the helicopter"]
+	     special = ["If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter", "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire", "Difficutly firing forward: Get -1 to hit in forward direction"]
 
 
     [gnome.equipments.helicopter_gattling_gun]
@@ -905,7 +906,7 @@
              angle= [true, false, false, false]
              damage = "d6-1"
              ap = 6
-	     special = [ "Fire once at all enemy units within range and within one angle of fire", "If aim, instead use focus fire, roll 6 dice at same unit base", "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"]
+	     special = [ "Fire once at all enemy units within range and within angle of fire", "If aim, instead use focus fire, roll 6 dice at same unit base", "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"]
 
 
     [gnome.equipments.acidic_napalm_bomb]
@@ -918,7 +919,7 @@
              angle= [true, true, true, true]
              damage = "n.a"
              ap = 0
-	     special = [ "Choose a hex within range 2: Area(4+): minor acid and set target unit on fire"]
+	     special = [ "Choose a hex within range: Area(4+): minor acid and set target unit on fire"]
 
 
 
@@ -950,7 +951,7 @@
     name = "Medical Armor"
     cost.cp = 2
     requires = [["type:infantry"],["independent:1"]]
-    special = ["Unit gain Fire resistance 3, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)"]
+    special = ["Unit gain Fire resistance 2, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)"]
 
 
 
@@ -969,6 +970,21 @@
 	    special.append = "Any enemy which is hit atleast once in assault is set on fire"
 
 
+    [gnome.equipments.improved_plasma_shield_generator]
+    race = "gnome"
+    name = "Improved Plasma Shield Generator"
+    cost.cp = 4
+    requires = [["type:infantry"],["independent:1"]]
+    special = ["Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)", "However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)"]
+
+
+    	    [gnome.equipments.improved_plasma_shield_generator.assault]
+	    deflection.add = [2, 0, 0, 0]
+	    deflection_die.replace = "5+"
+
+	    special.append = "Any enemy which is hit atleast once in assault is set on fire"
+
+
     [gnome.equipments.splintbombgrenade_launcher]
     race = "gnome"
     name = "splintbombgrenade_launcher"
@@ -980,4 +996,48 @@
              damage = "d6"
              ap = 2
 	     special = ["Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)"]
+
+
+    [gnome.equipments.experimental_guided_missile]
+    race = "gnome"
+    name = "Experimental guided missile"
+    cost.cp = 2
+    requires = [["type:tinkerer"],["type:helicopter"],["helicopter_side:1"]]
+
+    	     [gnome.equipments.experimental_guided_missile.range]
+	     range = "d4+12"
+             angle= [true, true, true, true]
+             damage = "d6 + d6 psycic"
+             ap = 5
+	     special = ["Minor Acid", "Guided: +4 to hit", "Do not need line of sight to target", "If you try to hit something longer than normal range, the missile hit the closed friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)", "If you roll a 1 on to hit, (regardeless of wether you hit or not), you are covered in minor acid"]
+
+
+
+    [gnome.equipments.helicopter_mounted_experimental_nailgun]
+    race = "gnome"
+    name = "Helicopter Mounted Experimental Nail Gun"
+    cost.cp = 2
+    requires = [["type:tinkerer"],["type:helicopter"],["helicopter_side:1"]]
+
+    	     [gnome.equipments.helicopter_mounted_experimental_nailgun.range]
+	     range = 4
+             angle= [true, true, true, false]
+             damage = "d6-2"
+             ap = 3
+	     special = ["Fire d12 shots each time it is fired at the same unit", "Add +1 to future damage token each time a 1 is rolled for to-hit", "If you roll only a 1 for the number of shots you fire, the gun is destroied", "Gun can be repeared by tinkerer crew in end phase as one of the possible repears he can do"]
+
+
+
+    [gnome.equipments.experimental_nailgun]
+    race = "gnome"
+    name = "Experimental Nail Gun"
+    cost.cp = 2
+    requires = [["type:tinkerer"],["type:infantry"]]
+
+    	     [gnome.equipments.experimental_nailgun.rage]
+	     range = 4
+             angle= [true, true, true, false]
+             damage = "d6-2"
+             ap = 3
+	     special = ["Fire d12 shots each time it is fired at the same unit", "Add +1 to future damage token each time a 1 is rolled for to-hit", "If you roll only a 1 for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun"]
 

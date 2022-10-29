@@ -298,7 +298,8 @@
 
         [darkelf.units.mechanical_assault_spider.orders.movement]
 	slow = [["360°", "F",  "360°"],
-	     ["360°", "360°",  "360°"]]
+	     ["360°", "B",  "360°"]]
+	still = [["360°",  "360°", "360°"],["360°",  "A", "360°"]]
 
 	default.slow = [["-", "-", "-"]]
 
@@ -919,7 +920,7 @@
         [darkelf.equipments.tail_gattling_gun.range]
         range = 3
         angle = [true, false, false, false]
-        damage = "d8 + d6 Psycic damage"
+        damage = "d6 + d6 Psycic damage"
         ap = 3
         special = ["Focus Fire[aim]: roll 6 dice at same unit.","May only use aim versus targets within normal range", "If not using aim, fire once at all enemy models within range and within front arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used"]
 

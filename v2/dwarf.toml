@@ -44,7 +44,7 @@
     cost.mp = 4
     cost.cp = 2
     cost.ip = 2
-    special = ["Posion Resistance 4, Fire Resistance 2", "Stable: +1 to hit while slow","Acid resistance[5+]","Automatic Repair: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, remove one +1 to future damage token or  extinguish one fire token"]
+    special = ["Posion Resistance 4, Fire Resistance 2", "Steady[slow]: +1 to hit, +1 to-be hit while slow","Acid resistance[5+]","Automatic Repair: in aftermath do one of the following per live model (on self only): neutrilize one minor acid, remove one +1 to future damage token or  extinguish one fire token"]
 
         [dwarf.units.steampowerarmor.orders.movement]
 	slow = [["360°","F", "360°"],
@@ -310,9 +310,9 @@
 	default.still = ["-", "-", "-"]
 
         [dwarf.units.zap.orders.fire]
-	fast = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
-	slow = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
-	still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
+	fast = [["Fire", "-"], ["Load", "Aim"]]
+	slow = [["Fire", "-"], ["Load", "Aim"]]
+	still = [["Fire", "-"], ["Load", "Aim"]]
 	
         [dwarf.units.zap.damage_tables]
 
@@ -485,7 +485,7 @@
     name = "SteamPowerArmor"
     race = "dwarf"
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-    equipments = ["heavy_musket"]
+    equipments = ["heavy_musket_free"]
     type = ["steampowerarmor", "walks", "bio"]
     special = []
 	  
@@ -1000,7 +1000,7 @@
     ]
 
         [dwarf.equipments.ultra_heavy_musket.range]
-        range = 3
+        range = 4
         angle = [true, true, true, true]
         damage = "d6"
         ap = 4
@@ -1079,7 +1079,7 @@
          ]
 
         [dwarf.equipments.broadside_guns.range]
-        range = 2
+        range = 3
         angle = ["0", "x2", "x2", "0"]
         damage = "d6+2"
         ap = 7
