@@ -10,8 +10,7 @@
 	models = ["elf_scout"]
 	size = "medium"
 	cost.mp = 2
-	cost.xp = 4
-	unit_special =  ["Take Cover[still][-3]", "Camouflage[forrest]", "Good shot +1"]
+	special =  ["Take Cover[still][-3]"]
 
 		     [elf.units.elf_scout.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"], ["-", "Aim" ], ["Fire", "-"],["Load", "-"],["Aim", "-" ], ["spot", "spot"]]
@@ -29,6 +28,31 @@
 		     psychic = ["3+: shaken"]
 
 
+	[elf.units.elite_elf_scout]
+	race = "elf"
+	name = "Elf Scout"
+	models = ["elite_elf_scout"]
+	size = "medium"
+	cost.mp = 2
+	cost.xp = 2
+	special =  ["Take Cover[still][-3]", "Camouflage[forrest]", "Good shot +1", "Pre-Assault Retreat[3+]"]
+
+		     [elf.units.elite_elf_scout.orders.fire]
+		     still = [["-", "Fire"],[ "-", "Load"], ["-", "Aim" ], ["Fire", "-"],["Load", "-"],["Aim", "-" ], ["spot", "spot"]]
+		     [elf.units.elite_elf_scout.orders.movement]
+		     slow = [["360$^0$","F" ,"360$^0$"],[ " 360$^0$", "360$^0$" , "360$^0$"],[ " 360$^0$", "F" , "B"], [ " 360$^0$,A", "F" , "F"]]
+		     still =[["360$^0$ "," - "," -"],[ " 360$^0$ "," A "," F" ], [ " 360$^0$,A,A "," F "," F" ]]
+		     fast = [["360$^0$ ","F","B"],[ " 360$^0$ "," F","B,B" ]]
+
+		     default.fast = ["-", "-", "B, flee"]
+		     default.slow =  ["-", "-", "flee"]
+		     default.still = ["-", "-", "A, Flee"]
+
+		     [elf.units.elite_elf_scout.damage_tables]
+		     regular = ["0+: unit killed"]
+		     psychic = ["3+: shaken"]
+
+
 	[elf.units.e34]
 	race = "elf"
 	name = "E34"
@@ -36,7 +60,7 @@
 	size = "large"
 	cost.ip = 12
 	armor = [10,9,9,8]
-	unit_special = "Forrester: moving through forrest cost 1 point (not 2)"	
+	special = ["Forrester: forrest not difficult terrain"]
 
 		     [elf.units.e34.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
@@ -90,7 +114,7 @@
 	size = "medium"
 	cost.ip = 4
 	armor = [8,6,6,6]
-	unit_special = "Forrester: ignore difficult terrain"   
+	special = ["Forrester: ignore difficult terrain"]
 
 		     [elf.units.tattoo_ink.orders.fire]
 		     still = [["Fire", "Aim"],[ "Aim", "Fire"],["Load", "Aim"], ["Load", "Load"], [ "Fire", "Fire" ] ]
@@ -121,7 +145,7 @@
 	cost.mp = 2
 	cost.xp = 6
 	armor = [7,6,6,6]
-	unit_special = ["Poison Resistance 3"]
+	special = ["Poison Resistance 3"]
 
 		     [elf.units.bear_rider.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
@@ -139,6 +163,34 @@
 		     regular = ["2-7: +1 to future damage, Bleed[4]","8:10: +2 to future damage, bleed[6], psycic damage[d6]","11+: killed"]
 		     psychic = ["6+: shaken"]
 
+
+
+	[elf.units.eagle_rider]
+	race = "elf"
+	name = "Eagle Rider"
+	models = ["eagle_rider"]
+	size = "medium"
+	cost.mp = 2
+	cost.xp = 8
+	armor = [6,6,6,6]
+	special = ["Poison Resistance 2", "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault", "In fast it is considered flying, in slow it considered on the ground.", "Good shot: +1 to hit", "Pre-assualt retreat: 3+"]
+
+		     [elf.units.eagle_rider.orders.fire]
+		     fast= [["-", "Fire"],[ "-", "Load"], ["-", "Throw Grenade"]]
+		     slow =  [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
+
+		     [elf.units.eagle_rider.orders.movement]
+		     fast = [["360$^0$,F","360$^0$,F,360$^0$","F,360$^0$"],["360$^0$,F ","F","B"]]
+		     slow = [[" 360$^0$ "," F "," 360$^0$"],[ "360$^0$","360$^0$","360$^0$"],["360$^0$","A","F"]]
+
+		     default_slow = ["-", "-", "flee"]
+		     default_fast = ["-", "flee", "flee"]
+
+		     [elf.units.eagle_rider.damage_tables]
+		     regular = ["2-3: +1 to future damage, Bleed[4]","4-6: +2 to future damage, bleed[6], psycic damage[d6]","7+: killed"]
+		     psychic = ["6+: shaken"]
+
+
 	[elf.units.armored_unicorn_rider]
 	race = "elf"
 	name = "Armored Unicorn Rider"
@@ -148,7 +200,7 @@
 	cost.xp = 6
 	cost.cp = 2
 	armor = [6,6,6,5]
-	unit_special = ["Poison Resistance 12", "Autoloader: any time the unitcorn does not fire it's gun in any gunnery phase, load the gun with 1 ammo."]
+	special = ["Poison Resistance 12", "Autoloader: any time the unitcorn does not fire it's gun in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 5+"]
 
 
 		     [elf.units.armored_unicorn_rider.orders.fire]
@@ -181,7 +233,38 @@
 		     regular = ["2-5: bleed[6]", "6+: killed"]
 		     psychic = ["6+: shaken"]
 
-	
+
+
+        [elf.units.velociraptor_riders]		
+	race = "elf"
+	name = "VelociRaptor Riders"
+	models = ["velociraptor_rider", "velociraptor_rider", "velociraptor_rider"]
+	size = "medium"
+	cost.mp = 4
+	cost.xp = 3
+	cost.cp = 8
+	armor = [3,0,0,0]
+	special = ["Poison Resistance 2", "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only.", "May always use Load in 2nd gunnery phase if using [Fire, Load] order even if you have accelerated to slow or fast", "Pre-assault retreat: 5+"]
+
+		     [elf.units.velociraptor_riders.orders.fire]
+		     still = [["Fire", "Load"],["Load", "-"],[ "-", "Aim" ], ["-", "Fire"]]
+		     slow =  [[ "-", "Load"],["Load", "-"],[ "-", "Aim" ]]
+		     fast =  [[ "-", "Load"],["Load", "-"],[ "-", "Aim" ]]
+
+		     [elf.units.velociraptor_riders.orders.movement]
+		     fast = [["360$^0$","F","F"],["F","B","360$^0$"],["F","F","360$^0$"],["F","360$^0$", "F"],["F","B","B,360$^0$"],["F","F","F"],["F","F,360$^0$","B"]]
+		     slow = [[ "360$^0$","A","F"],[ "B","360$^0$","-"]]
+		     still =[["360$^0$","A","F"],["A","A","F"]]
+
+
+
+		     default_slow = ["-", "-", "flee"]
+		     default_still = ["-", "-", "A,flee"]
+		     default_fast = ["-", "flee", "flee"]
+
+		     [elf.units.velociraptor_riders.damage_tables]
+		     regular = ["2-3: Bleed[4]","4+: kill 1 model, d4 psychic damage"]
+		     psychic = ["4+: shaken"]
 
 [models]
 	[elf.models.e34]
@@ -206,7 +289,7 @@
 	name = "Tattoo Ink"
 	race = "elf"
 	modelitems = ["independent:∞"]
-	equipments = [ "gattle_gun", "tank_smg",]
+	equipments = [ "gattle_gun", "smg_free",]
 	type = ["Mechanical, Bio Crew, Vehicle, Half-Track"]
 	special = ["Gun Blazing: Ignore to-hit penalties for moving fast", "May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do." ]
 
@@ -219,21 +302,38 @@
 	     ap  = 3
 	     special = []
 
-	[elf.models.elf_scout]
-	name = "Elf scout"
+	[elf.models.elite_elf_scout]
+	name = "Elite Elf scout"
 	race = "elf"
 	modelitems = ["independent:∞", "hands:2"]
 	equipments = ["rifle"]
-	type = ["Bio", "Cavalry", "Walks"]
+	type = ["Bio", "Cavalry", "Walks", "Elite"]
 
-	     [elf.models.elf_scout.assault]
+	     [elf.models.elite_elf_scout.assault]
 	     strength = [2,2,2,2]
 	     strength_die = "5+"
 	     deflection = [2, 0, 0, 0]
 	     deflection_die = "5+"
 	     damage = "d6-2"
 	     ap = 2
-	     special = ["Cunnint Assault[1 for 2", "Pre-Assault Retreat[3+]"]
+	     special = ["Cunnint Assault[1 for 2"]
+
+
+	[elf.models.elf_scout]
+	name = "Elite Elf scout"
+	race = "elf"
+	modelitems = ["independent:∞", "hands:2"]
+	equipments = ["rifle"]
+	type = ["Bio", "Cavalry", "Walks"]
+
+	     [elf.models.elf_scout.assault]
+	     strength = [1,1,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunnint Assault[1 for 2"]
 
 
 	[elf.models.bear_rider]
@@ -253,13 +353,67 @@
 	     special = ["Cunnint Assault[1 for 3]"]
 
 
+	[elf.models.eagle_rider]
+	name = "Eagle Rider"
+	race = "elf"
+	modelitems = ["independent:∞", "hands:2"]
+	equipments = ["at_rifle", "grenade"]
+	type = ["Bio", "Cavalry", "Flying", "Walks"]
+
+	     [elf.models.eagle_rider.assault]
+	     strength = [6,6,6,4]
+	     strength_die = "3+"
+	     deflection = [2, 2, 2, 1]
+	     deflection_die = "3+"
+	     damage = "d6-1"
+	     ap = 3
+	     special = ["Always attacks weakest point of armor", "Cunnint Assault[1 for 3]"]
+
+
+	[elf.models.velociraptor_rider]
+	name = "Velociraptor Rider"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = ["smg_free", "twin_guns"]
+	type = ["Bio", "Cavalry", "Walks"]
+
+	     [elf.models.velociraptor_rider.assault]
+	     strength = [2,1,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["poison[4][1 for 2]", "Cunnint Assault[1 for 3]"]
+
+
+	[elf.models.elite_velociraptor_rider]
+	name = "Velociraptor Rider"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = ["smg_free", "twin_guns"]
+	type = ["Bio", "Cavalry", "Walks"]
+	replaces = ["velociraptor_rider"]
+	cost.xp = 1
+	special = ["Good shot: +1", "Unit gain psycic resistance 1 while atleast one elite is alive"]
+
+	     [elf.models.elite_velociraptor_rider.assault]
+	     strength = [4,2,2,1]
+	     strength_die = "5+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["poison[4][1 for 2]", "Cunnint Assault[1 for 3]", "+1 to pre-assault retreat (per elite)"]
+
+
 	[elf.models.armored_unicorn_rider]
 	name = "Armored Unicorn Rider"
 	race = "elf"
 	modelitems = ["independent:∞"]
 	equipments = ["shriek_smg"]
 	type = ["Bio", "Cavalry", "Walks"]
-	special = ["Suprb shot: +3 to hit"]
+	special = ["Superb shot: +3 to hit"]
 
 	     [elf.models.armored_unicorn_rider.assault]
 	     strength = [9,6,3,2]
@@ -298,12 +452,12 @@
 	special = ["May load up to 5 shots"]
 
 
-    [elf.equipments.tank_smg]
-    name = "Gattle_gun"
+    [elf.equipments.smg_free]
+    name = "SMG"
     race = "elf"
     requires = []
 
-        [elf.equipments.tank_smg.range]
+        [elf.equipments.smg_free.range]
         range = 4
         angle = [true, true, true, true]
         damage = "d6"
@@ -312,7 +466,7 @@
 
 
     [elf.equipments.smg]
-    name = "Gattle_gun"
+    name = "SMG"
     race = "elf"
     cost.cp = 2 
     requires = [
@@ -328,6 +482,21 @@
 	special = ["Fire two shot per fire order (per smg in the unit)", "always treated as loaded"]
 
 
+    [elf.equipments.twin_guns]
+    name = "Twin Guns"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.twin_guns.range]
+        range = 3
+        angle = [true, false, false, false]
+        damage = "d6"
+        ap = 4
+	special = ["x2 shots per model"]
+
+
+
+
     [elf.equipments.twin_rifle]
     name = "Twin Rifle"
     race = "elf"
@@ -341,7 +510,7 @@
 	special = ["Fires two times at same unit base per shot.\\\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"]
 
     [elf.equipments.shriek_smg]
-    name = "Twin Rifle"
+    name = "Shriek SMG"
     race = "elf"
     requires = []
 
@@ -350,13 +519,13 @@
         angle = [true, true, false, false]
         damage = "d4 -2 + d6 psychic damage"
         ap = 2
-	special = ["Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model"]
+	special = ["Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)"]
 
 
     [elf.equipments.gattling_gun]
     name = "GattlingGun"
     race = "elf"
-    requiers = []
+    requires = []
 
     	     [elf.equipments.gattling_gun.range]
 	     range = 2
@@ -366,15 +535,102 @@
 	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
 
 
+    [elf.equipments.at_rifle_free]
+    name = "AT Rifle"
+    race = "elf"
+    requires = [["hands:2"]]
+
+    	     [elf.equipments.at_rifle_free.range]
+	     range = 5
+	     angle = [true, false, false, false]
+	     damage = "d6"
+	     ap = "6"
+	     special = []
+
+    [elf.equipments.at_rifle]
+    name = "AT Rifle"
+    race = "elf"
+    requires = [["hands:2"], ["type:infantry"]]
+    cost.cp  = 12
+
+    	     [elf.equipments.at_rifle.range]
+	     range = 5
+	     angle = [true, false, false, false]
+	     damage = "d6"
+	     ap = "6"
+	     special = []
+
+
 
     [elf.equipments.rifle]
     name = "Rifle"
     race = "elf"
-    requiers = ["hands:2"]
+    requires = [["hands:2"]]
 
     	     [elf.equipments.rifle.range]
 	     range = 5
 	     angle = [true, true, true, true]
 	     damage = "d6-2"
 	     ap = "2"
-	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy units within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
+	     special = []
+
+
+
+    [elf.equipments.enhanced_rifle]
+    name = "Enhanced Rifle"
+    race = "elf"
+    cost.cp = 2
+    requires = [["hands:2"], ["type: infantry"]
+
+    	     [elf.equipments.enhanced_rifle.range]
+	     range = 6
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = "2"
+	     special = ["enhanced accurazy: +1 to hit"]
+
+
+
+    [elf.equipments.sniper_rifle]
+    name = "Rifle"
+    race = "elf"
+    cost.cp = 6
+    requires = [["hands:2"], ["type: infantry"], ["type: elite"]]
+
+    	     [elf.equipments.sniper_rifle.range]
+	     range = 8
+	     angle = [true, false, false, true]
+	     damage = "d6-1"
+	     ap = "3"
+	     special = ["improved aim: +4 to hit instead of +2. Gain +d6 psycic damage and +d6 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
+
+
+    [elf.equipments.grenade]
+    name = "Grenade"
+    race = "elf"
+    requires = [["independent:1"]]
+
+    	     [elf.equipments.grenade.range]
+	     range = 1
+	     angle = [true, true, true, true]
+	     damage = "d6"
+	     ap = "7"
+	     special = ["Area(5+)", "Target any hex within normal range", "Always loaded"]
+
+    [elf.equipments.hand_grenade]
+    name = "Grenade"
+    race = "elf"
+    requires = [["independent:1"], ["type: infantry", "type: cavalery"]]
+    cost.cp = 2
+
+    	     [elf.equipments.hand_grenade.range]
+	     range = 1
+	     angle = [true, true, true, true]
+	     damage = "d8"
+	     ap = "5"
+	     special = ["Area(5+) if used by a unit with 1-2 alive models. Area(4+) if used by a unit with 3-4 models", "Target any hex within normal range", "Always loaded"]
+
+	     [elf.equipments.hand_grenade.orders_gained.fire]
+	     still = [["-", "Throw grenade"]]
+	     slow = [["-", "Throw grenade"]]
+	     fast = [["-", "Throw grenade"]]
