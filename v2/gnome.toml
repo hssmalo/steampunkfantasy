@@ -577,8 +577,8 @@
     type = ["bio_crew", "helicopter", "flying", "tinkerer"]
     special = ["Improved Quick fix: In aftermath this unit may do two of the following: remove one +1 to future damage token, remove one shaken token, neutrilize one minor acid, extinguish one fire on self."]
     replaces = ["gnome_helicopter"]
-    cost.xp = 8
-    cost.cp = -4
+    cost.xp = 6
+    cost.cp = -2
 
 
         [gnome.models.tinkerer_helicopter.assault]
@@ -871,7 +871,7 @@
     [gnome.equipments.experimental_plasma_gun]
     race = "gnome"
     name = "Experimental Plasma Gun"
-    model_cost.cp = 6
+    model_cost.cp = 4
     requires = [["type:tinkerer"],["type:infantry"],["hands:2"]]
 
     	     [gnome.equipments.experimental_plasma_gun.range]
@@ -885,7 +885,7 @@
     [gnome.equipments.helicopter_mounted_experimental_plasma_gun]
     race = "gnome"
     name = "Helicopter Mounted Experimental Plasma Gun"
-    cost.cp = 6
+    cost.cp = 4
     requires = [["type:tinkerer"],["type:helicopter"],["helicopter_side:1"]]
 
     	     [gnome.equipments.helicopter_mounted_experimental_plasma_gun.range]
@@ -1024,7 +1024,7 @@
              angle= [true, true, true, false]
              damage = "d6-2"
              ap = 3
-	     special = ["Fire d12 shots each time it is fired at the same unit", "Add +1 to future damage token each time a 1 is rolled for to-hit", "If you roll only a 1 for the number of shots you fire, the gun is destroied", "Gun can be repeared by tinkerer crew in end phase as one of the possible repears he can do"]
+	     special = ["Fire d12 shots each time it is fired at the same unit", "If you rolled atleast one 1 for to-hit, add +1 to future damage", "If you roll only a 1 for the number of shots you fire, the gun is destroied","Difficult to fire forward: -1 to hit fireing forward"]
 
 
 
@@ -1034,10 +1034,26 @@
     cost.cp = 2
     requires = [["type:tinkerer"],["type:infantry"]]
 
-    	     [gnome.equipments.experimental_nailgun.rage]
+    	     [gnome.equipments.experimental_nailgun.range]
 	     range = 4
              angle= [true, true, true, false]
              damage = "d6-2"
              ap = 3
-	     special = ["Fire d12 shots each time it is fired at the same unit", "Add +1 to future damage token each time a 1 is rolled for to-hit", "If you roll only a 1 for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun"]
+	     special = ["Fire d12 shots each time it is fired at the same unit", "If you rolled atleast one 1 for to-hit, add +1 to future damage", "If you roll only a 1 for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun"]
+
+
+    [gnome.equipments.experimental_death_ray]
+    race = "gnome"
+    name = "Experimental Death Ray"
+    cost.cp = 2
+    requires = [["type:tinkerer"],["type:helicopter"],["helicopter_side:1"]]
+
+    	     [gnome.equipments.experimental_death_ray.range]
+	     range = 5
+             angle= [true, true, true, false]
+             damage = "d6-6"
+             ap = 2
+	     special = ["Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token", "May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens", "In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add +1 to future damage to self, if you rolled atleast two 1, add 3 minor acid to selv, if you rolled atleast three 1, the helicopter explodes and is destroied", "Difficult to fire forward: -1 to hit fireing forward"]
+
+
 

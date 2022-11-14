@@ -580,7 +580,7 @@
     name = "Enhanced Rifle"
     race = "elf"
     cost.cp = 2
-    requires = [["hands:2"], ["type: infantry"]
+    requires = [["hands:2"], ["type: infantry"]]
 
     	     [elf.equipments.enhanced_rifle.range]
 	     range = 6
