@@ -200,22 +200,13 @@
 	cost.xp = 6
 	cost.cp = 2
 	armor = [6,6,6,5]
-	special = ["Poison Resistance 12", "Autoloader: any time the unitcorn does not fire it's gun in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 5+"]
 
+	special = ["Poison Resistance 12", "Minor Acid resistance[4+]", "Fire Resistance[2]", "Autoloader: any time unit does not fire it's shriek SMGT in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 5+", "Grants psycic resitance 1 to all units in hex", "Healing: Either: heal[2, self, healing 2] or heal[1, any, healing 2] at any speed, heal[2, any, healing 2] at slow or heal[3, any, healing 1] at still"]
 
 		     [elf.units.armored_unicorn_rider.orders.fire]
-		     still = [["Major Healing", "Minor Healing (self)"],
-		     	   ["Minor Healing (self)", "Major Healing"],	
-		     	   ["Minor Healing (self)", "Fire Burst(5)"],
-			   ["Fire Burst(5)", "Minor Healing (self)"],
-			   ["Minor Healing", "Minor Healing"]]
-		     slow =  [["-", "Fire Burst(5)"],
-		     	  ["Fire Burst(5)", "-"],
-		     	  ["Minor Healing", "Minor Healing"]]
-		     fast =  [["-", "Fire Burst(5)"],
-		     	  ["Fire Burst(5)", "-"],
-			  ["-", "Minor Healing"],
-			  ["Minor Healing", "-"]]
+		     still = [["-", "-"] , ["-", "Fire Burst(5)"],["Fire Burst(5)", "-"]]
+		     slow = [["-", "-"] , ["-", "Fire Burst(5)"],["Fire Burst(5)", "-"]]
+		     fast = [["-", "-"] , ["-", "Fire Burst(5)"],["Fire Burst(5)", "-"]]
 		     
 
 		     [elf.units.armored_unicorn_rider.orders.movement]
@@ -244,7 +235,7 @@
 	cost.xp = 3
 	cost.cp = 8
 	armor = [3,0,0,0]
-	special = ["Poison Resistance 2", "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only.", "May always use Load in 2nd gunnery phase if using [Fire, Load] order even if you have accelerated to slow or fast", "Pre-assault retreat: 5+"]
+	special = ["Poison Resistance 2", "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only.", "Pre-assault retreat: 5+"]
 
 		     [elf.units.velociraptor_riders.orders.fire]
 		     still = [["Fire", "Load"],["Load", "-"],[ "-", "Aim" ], ["-", "Fire"]]
@@ -265,6 +256,77 @@
 		     [elf.units.velociraptor_riders.damage_tables]
 		     regular = ["2-3: Bleed[4]","4+: kill 1 model, d4 psychic damage"]
 		     psychic = ["4+: shaken"]
+
+
+
+        [elf.units.elk_cavalery]		
+	race = "elf"
+	name = "Elk Cavalery"
+	models = ["elk_cavalery", "elk_cavalery", "elk_cavalery",, "elk_cavalery"]
+	size = "medium"
+	cost.mp = 6
+	cost.xp = 2
+	special = []
+
+		     [elf.units.elk_cavalery.orders.fire]
+		     still = [["Fire", "Fire"]]
+		     slow =  [["Fire", "Fire"]]
+		     fast =  [["Fire", "Fire"]]
+
+		     [elf.units.elk_cavalery.orders.movement]
+		     slow = [["360°","F", "360°"],
+	     	     	  ["360°", "B", "360°"], ["360°", "A", "F"]]
+		     still = [["360°", "A", "F"], ["360°", "-", "-"]]
+		     fast = [["360°","F", "F"], ["F", "360°", "F"],["F", "F", "360°"],["360°","F", "B"]]
+
+		     default_slow = ["-", "-", "flee"]
+		     default_still = ["-", "-", "A,flee"]
+		     default_fast = ["-", "flee", "flee"]
+
+
+		     [elf.units.elk_cavalery.damage_tables]
+		     regular = ["2-3: Bleed[4]","4+: kill 1 model, d4 psychic damage"]
+		     psychic = ["4+: shaken"]
+
+
+        [elf.units.pegasus_rider]		
+	race = "elf"
+	name = "Pegasus Rider"
+	models = ["pegasus_rider", "pegasus_rider"]
+	size = "medium"
+	cost.mp = 4
+	cost.xp = 6
+	special = ["Pre-Assault: throw fire (from lance): roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault", "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.", "poison resistance 2"]
+
+		     [elf.units.pegasus_rider.orders.fire]
+		     still = [["Fire(bow)", "Fire(bow)"], ["Fire Burst(5)", "Fire (bow)"], ["Fire (bow)", "Fire Burst(5)"]]
+		     slow =  [["Fire(bow)", "Fire(bow)"], ["Fire Burst(5)", "Fire (bow)"], ["Fire (bow)", "Fire Burst(5)"]]
+		     fast =  [["Fire(bow)", "Fire(bow)"], ["Fire Burst(5)", "Fire (bow)"], ["Fire (bow)", "Fire Burst(5)"]]
+
+		     [elf.units.pegasus_rider.orders.movement]
+		     still = [["360$^0$","360$^0$","360$^0$"],["360$^0$","A[slow]","[flying]","F"],["360$^0$","A[slow]","F"]]
+		     slow = [["360$^0$","F","360$^0$"],["360$^0$","B","360$^0$"],["360$^0$","A[slow,flying]","F"],["360$^0$","A[fast,flying]","F"],["360$^0$","A[fast]","F"]]
+
+		     slow_flying =[["L","F","-"],["R","F","-"],["F","R","-"],["F","L","-"],["F","-","-"],["F","B[still]","-"],["F","A[fast,flying]","F"],["L","L","F"],["R","R","F"]]
+		     fast = [["360$^0$","F","F"],["360$^0$","F","B"],["360$^0$","A[flyfast],F","F"],["360$^0$","F","B[slow]"]]
+		     fast_flying = [["F","F","F"],["F","R","F"],["F","L","F"],["F","F","B[slow]"],["F","F","B[fast]"],["L,L","F","F"],["R,R","F","F"], ["F","F", "B[still]"]]
+
+		     default_still = ["-","A[slow]", "flee"]
+		     default_slow = ["-", "A[fast, flying]", "flee"]
+		     default_fast = ["-", "A[fly, fast],flee","flee"]
+		     default_slow_flying = ["-","A,flee","flee"]
+		     default_fast_flying = ["flee", "flee", "flee"]
+
+
+
+		     [elf.units.pegasus_rider.damage_tables]
+		     regular = ["2-3: Bleed[4]","4+: kill 1 model"]
+		     psychic = ["5+: shaken"]
+
+
+
+
+
 
 [models]
 	[elf.models.e34]
@@ -384,7 +446,42 @@
 	     deflection_die = "5+"
 	     damage = "d6-2"
 	     ap = 2
-	     special = ["poison[4][1 for 2]", "Cunnint Assault[1 for 3]"]
+	     special = ["poison[4][1 for 2]", "Cunning Assault[1 for 3]"]
+
+
+	[elf.models.elk_cavalery]
+	name = "Elk Cavalery"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = ["bow_free"]
+	type = ["Bio", "Cavalry", "Walks"]
+
+	     [elf.models.elk_cavalery.assault]
+	     strength = [2,1,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 4]"]
+
+
+	[elf.models.pegasus_rider]
+	name = "Pegasus_rider"
+	race = "elf"
+	modelitems = ["independent:∞"]
+	equipments = ["bow_free", "shriek_smg_free"]
+	type = ["Bio", "Cavalry", "Walks", "Fly"]
+	special = ["good shot: +1 to hit"]
+
+	     [elf.models.pegasus_rider.assault]
+	     strength = [4,3,2,1]
+	     strength_die = "5+"
+	     deflection = [2, 1, 1, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 3]"]
 
 
 	[elf.models.elite_velociraptor_rider]
@@ -522,6 +619,19 @@
 	special = ["Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)"]
 
 
+    [elf.equipments.shriek_smg_free]
+    name = "Shriek SMG"
+    race = "elf"
+    requires = []
+
+        [elf.equipments.shriek_smg_free.range]
+        range = 3
+        angle = [true, true, false, false]
+        damage = "d4 -2 + d6 psychic damage"
+        ap = 2
+	special = ["Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)"]
+
+
     [elf.equipments.gattling_gun]
     name = "GattlingGun"
     race = "elf"
@@ -559,6 +669,33 @@
 	     damage = "d6"
 	     ap = "6"
 	     special = []
+
+
+    [elf.equipments.bow]
+    name = "Elf Bow"
+    race = "elf"
+    requires = [["hands:2"], ["type:infantry", "type:cavalery"]]
+    cost.cp  = 2
+
+    	     [elf.equipments.bow.range]
+	     range = 5
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = "0"
+	     special = ["Ignore to-hit penalty (both self and taget) moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range"]
+
+
+    [elf.equipments.bow_free]
+    name = "Elf Bow"
+    race = "elf"
+    requires = [["hands:2"], ["type:infantry", "type:cavalery"]]
+
+    	     [elf.equipments.bow_free.range]
+	     range = 2
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = "0"
+	     special = ["Ignore to-hit penalty (both self and taget) moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range"]
 
 
 
