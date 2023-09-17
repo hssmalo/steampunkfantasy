@@ -336,7 +336,7 @@
     armor = [8, 8, 8 ,8]
     cost.ip = 24
     cost.xp = 12
-    special = ["Steady: +1 to hit, +1 to be hit.", "Repair: each aftermath phase, remove either one +1 to future damage token, one 1 shaken token or 1 cannot roate token.", "Fire, aim and load all weapon systems simultaniusly", "Limited shaken: when shaken, you may fire one less weapon systems per shaken token instead of the normal effect of being shaken"," When damaged, add 1 to the result for each shaken token on the Zeppelin.", "Withering Ray: May replace forrest with rough terrain in the hex it is standing"]
+    special = ["Steady: +1 to hit, +1 to be hit.", "Repair[2, self, healing 1]", "Limited shaken: when shaken, you may fire one less weapon systems per shaken token instead of the normal effect of being shaken"," When damaged, add 1 to the result for each shaken token on the Zeppelin.", "Withering Ray: May replace forrest with rough terrain in the hex it is standing"]
 
         [dwarf.units.zeppelin.orders.movement]
 	slow_flying = [["L","-","-"],
@@ -360,7 +360,7 @@
 
 	regular = [ "1-4: +1 on future damage,",
 		"5-8: +1 to future damage, d6 light damage",
-		"9-13: +2 to future damage",
+		"9-13: +2 to future damage, d6 light damage",
 		"14+: Unit destroied"]
 	crew = [ "4-7: shaken", "8-12: as 6-7, +2 to future crew damage", "13: All crew killed, Unit destroyed"]
 
@@ -445,7 +445,7 @@
     type = ["elite", "steampowerarmor", "walks", "bio"]
     cost.xp = 4
     replaces = ["steampowerarmor"]
-    special = ["good shot: +1 to hit", "unit gains psycic resistance 1 as long as 1 elite model is alive"]
+    special = ["good shot: +1 to hit", "unit gains psycic resistance 1 as long as 1 elite model is alive", "Unit gains 1 endurence token. See general rules for effect"]
 	  
 
         [dwarf.models.elite_steampowerarmor.assault]
@@ -467,13 +467,34 @@
     type = ["elite", "steampowerarmor", "walks", "bio"]
     cost.xp = 2
     replaces = ["steampowerarmor"]
-    special = ["unit gains psycic resistance 2 as long as 1 battle medic is alive", "Instead of firing a weapon, or in addition to aim/loading, the battle medic model may use Heal[1] on any ally: downgrade one poison marker 1 step, downgrade 1 bleeding token 1 step, remove one +1 to future damage token, neutrilize one minor acid token"]
+    special = ["unit gains psycic resistance 2 as long as 1 battle medic is alive", "Unit gains: Heal[1, any, Healing 1]"]
 	  
 
         [dwarf.models.battle_medic.assault]
         strength = [4, 3, 3, 3]
         strength_die = "4+"
 	deflection = [4, 1, 1, 1]
+        deflection_die = "4+"
+        damage = "d6-2"
+        ap = 2
+        special = ["cunning assault[1 for 2]"]
+
+
+    [dwarf.models.engineer]
+    name = "Dwarf Steampowerarmor Engineer"
+    race = "dwarf"
+    equipment_limit = ["hands:2", "shared:1", "independent:∞"]
+    equipments = ["heavy_musket_free"]
+    type = ["steampowerarmor", "walks", "bio"]
+    cost.xp = 6
+    replaces = ["steampowerarmor"]
+    special = ["Unit gains: Repair[3, any, Healing 1]", "Repair armor: may use repair ability on self or other SteamPowerArmor units in same hex, even if they are biological units"]
+	  
+
+        [dwarf.models.engineer.assault]
+        strength = [3, 2, 2, 1]
+        strength_die = "4+"
+	deflection = [0, 0, 0, 0]
         deflection_die = "4+"
         damage = "d6-2"
         ap = 2
@@ -798,15 +819,15 @@
     name = "Vest of Life Support"
     race = "dwarf"
     cost.cp = 2
-    requires = [["type: infantry"], ["independent:1"]]
-    special = ["Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. Endurence tokens may be spend in the following way:", "1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model')","2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.","3. If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage"]
+    requires = [["type: infantry", "type: steampowerarmor"], ["independent:1"]]
+    special = ["Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit base. See general rules for effect" ]
 
 
     [dwarf.equipments.trenchcoat_of_resistance]
     name = "Trench Coat of Resistance"
     race = "dwarf"
     cost.cp = 1
-    requires = [["type: infantry"], ["independent:1"]]
+    requires = [["type: infantry", "type:steampowerarmor"], ["independent:1"]]
     special = ["Unit improves poison resistance and fire reistance with 1", "Unit gains imunity to minor acid"]
 
     [dwarf.equipments.steamblower]

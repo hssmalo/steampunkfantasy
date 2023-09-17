@@ -11,9 +11,10 @@
     race = "ork"
     models = ["troll"]
     size = "huge"
-    cost.xp = 16
+    cost.xp = 12
+    cost.cp = 2
     armor = [0, 0, 0, 0]
-    special = ["Forward Positon[1]", "Regneration[3]: At each aftermath phase, remove/downgrade up to three of the following: one +1 for future damage marker, downgrade one bleeding one step. If there you have no +1 for future damage tokens, you may also remove unconcious marker.", "While unconcious, you gain regeneration[6] instead of regenration[3]. But troll does no action while unconcious (and do not fire its weapon). Count as crippled for victory purposes while unconcious", "Acid resistance[5+]", "May have a maximum of 1 unconcious token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
+    special = ["Forward Positon[1]", "Regneration[3]: Heal[3, self, Healing 2]", "While unconcious, you gain  Improved Regeneration[6]=Heal[6, self, Healing 1] of regenration[3]. But troll does no action while unconcious (and do not fire its weapon). Count as crippled for victory purposes while unconcious. In addition, if not dead: remove unconcious in Healing 2 phase if", "Acid resistance[5+]", "Poison Resistance[2]", "May have a maximum of 1 unconcious token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
 
         [ork.units.troll.orders.movement]
         slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
@@ -260,22 +261,30 @@
    armor = [11,9,8,7]
 
    	 [ork.units.ork_char_b1.orders.fire]
-	 stillslow = [
-	 	    ["Fire (pop)","Load (heavy)"],
-	 	    ["Load (heavy)","Fire (pop)"],
-		    ["Fire (heavy) "," Load (pop)"],
-		    ["Load (pop)","Fire (heavy)"],
-		    ["Aim(pop) "," Load (heavy)"],
-		    ["Aim(pop) "," Fire (heavy)"],
-		    ["Load (heavy) "," Aim (pop)"],
-		    ["Fire (heavy) "," Aim (pop)"]
+	 slow = [
+	 	    ["Fire (p)","Load (h)"],
+	 	    ["Load (h)","Fire (p)"],
+		    ["Fire (h) "," Load (p)"],
+		    ["Load (p)","Fire (h)"],
+		    ["Aim(p) "," Load (h)"],
+		    ["Aim(p) "," Fire (h)"],
+		    ["Load (h) "," Aim (p)"],
+		    ["Fire (h) "," Aim (p)"]
 		    ]
 
 	 still = [
-	       ["Aim (heavy)","Fire (pop)"],
-	       ["Aim (heavy)","Load (pop)"],
-	       ["Fire (pop)","Aim (heavy)"],
-	       ["Load (pop)","Aim (heavy)"]
+	 	    ["Fire (p)","Load (h)"],
+	 	    ["Load (h)","Fire (p)"],
+		    ["Fire (h)","Load (p)"],
+		    ["Load (p)","Fire (h)"],
+		    ["Aim(p)","Load (h)"],
+		    ["Aim(p)","Fire (h)"],
+		    ["Load (h)","Aim (p)"],
+		    ["Fire (h)","Aim (p)"],
+		    ["Aim (h)","Fire (p)"],
+	       	    ["Aim (h)","Load (p)"],
+	       	    ["Fire (p)","Aim (h)"],
+	       	    ["Load (p)","Aim (h)"]
 	       ]
 	 
 	 [ork.units.ork_char_b1.orders.movement]
@@ -539,8 +548,8 @@
    name = "Ork Char B1"
    race = "ork"
    type = ["Mechancical","Bio Crew","Vehicle","Track"]
-   equipments = [ "rotating_pop_gun", "heavy_forward_gun",]
-   special = ["Both weapons may be fired using the same orders, but track ammo for them sepeartely"]
+   equipments = ["rotating_pop_gun", "heavy_forward_gun",]
+   special = ["Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them sepeartely"]
    	   
 	   [ork.models.ork_char_b1.assault]
 	   strength = [6,4,3,2]
@@ -586,9 +595,9 @@
     ]
 
         [ork.equipments.troll_gatling_gun.range]
-        range = 3
+        range = 4
         angle = [true, false, false, false]
-        damage = "d8"
+        damage = "d10"
         ap = 3
         special = ["Fires once at all models, friends or foe, within long-range and within forward arc.", "Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"]
 
@@ -746,6 +755,9 @@
 	damage.replace = "d12"
 	special.append = "Cunning[1 for 2]"
 	ap.replace = 3
+        deflection.add = [1, 0, 0, 0]
+        deflection_die.replace = "6+"
+
 
 
     [ork.equipments.ork_pistol]
@@ -789,8 +801,8 @@
         ap = 0
 	special = ["Choose one hex within range, and each model tries to throw one grenade at an enemy in that hex. If enemy base is hit atleast once, that enemy is set on fire.",
 	"Don't need to be loaded to be used.",
+	"Expert throw: +2 to hit while throwing pyro grenade",
 	"Bonus weapon, can be added to any other combination of weapons, but if you don't have any free hands you must choose between normal weapons and using the pyro grenades",
-	"Instead of targeting an enemy unit, you may target the hex you are standing in and place the hex on fire.",
 	"In addition, the unit base gains Fire Resistance 2"]
 
 
@@ -999,7 +1011,8 @@ damage = "d8 fire damage + d4 crew damage"
        ap = 2
 
        [ork.equipments.assault_musket.orders_gained.fire]
-       still = [["Load(2)", "-"], ["-", "Load(2)"]]
-       all = [["fire", "fire"]]
+       still = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "fire"]]
+       slow = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "fire"]]
+       
 
 
