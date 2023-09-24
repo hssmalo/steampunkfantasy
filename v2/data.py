@@ -10,7 +10,7 @@ from pyconfs import Configuration
 
 
 
-basic_path = '/home/smalo/steampunkfantasy/'
+basic_path = '/home/smalo/steampunkfantazy/steampunkfantasy/'
 
 class CounterList(collections.UserList):
     @property

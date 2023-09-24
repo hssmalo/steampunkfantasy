@@ -14,7 +14,7 @@
     cost.xp = 12
     cost.cp = 2
     armor = [0, 0, 0, 0]
-    special = ["Forward Positon[1]", "Regneration[3]: Heal[3, self, Healing 2]", "While unconcious, you gain  Improved Regeneration[6]=Heal[6, self, Healing 1] of regenration[3]. But troll does no action while unconcious (and do not fire its weapon). Count as crippled for victory purposes while unconcious. In addition, if not dead: remove unconcious in Healing 2 phase if", "Acid resistance[5+]", "Poison Resistance[2]", "May have a maximum of 1 unconcious token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
+    special = ["Forward Positon[1]", "Regneration[3]: Heal[3, self, Healing 2]", "While unconcious, you gain  Improved Regeneration[6]=Heal[6, self, Healing 1] of regenration[3]. But troll does no action while unconcious (and do not fire its weapon). Count as crippled for victory purposes while unconcious. In addition, if not dead: remove unconcious in Healing 2 phase", "Acid resistance[5+]", "Poison Resistance[2]", "May have a maximum of 1 unconcious token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
 
         [ork.units.troll.orders.movement]
         slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
@@ -93,7 +93,7 @@
 	       ["B","L","F"],
 	       ["B","R","F"],
 	       ["B","F","-"]]
-	  default.fast = ["-","-","B,B"]
+	  default.fast = ["-","-","B+B"]
 	  default.still = ["-","-","A"]
 
 	  [ork.units.speedhead.orders.fire]
@@ -164,6 +164,43 @@
 	  default.fast = ["-","-","B,B"]
 
 
+
+   [ork.units.battlewagon]
+    race = "ork"
+    name = "Battlewagon"
+    models = ["battlewagon"]
+    size = "Large"
+    cost.ip = 8
+    armor = [8,7,7,6]
+    special = ["Transport[2]: may transport up too 2 infanteri", "unload all infanteri in any gunnery phase: place up to 1 infantri in the same, and the rest in an empty adject hex"]
+
+    	  [ork.units.battlewagon.damage_tables]
+    	  regular = [ "1-4: Light damage[d6]", "5-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
+    	  light = [ "1-4: +1 on all future damage", "5-6: unit shaken",]
+    	  critical = [ "1-3: Light damage[d6], 3 times", "4-5: Unit shaken", "6: Unit set on fire",]
+    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied"]
+
+    	  [ork.units.battlewagon.orders.fire]
+	  still = [[ "Load", "-"], [ "Fire", "-"], ["-", "Fire"],["-", "Aim"], ["Aim", "-"]]
+	  slow   = [[ "Load", "-"], [ "Fire", "-"], ["-", "Fire"]]
+	  fast = [[ "Load", "-"], [ "Fire", "-"], ["-", "Fire"]]
+
+	  [ork.units.battlewagon.orders.movement]
+	  fast = [["F","F","F"],
+	      ["F","F","-"],
+	      ["F","B","360°"]]
+	  slow = [["A+F","F","F"],
+	      	["360°","F","360°"],
+	     	["B","rev","-"],
+	     	["B","-","-"]]
+	  still=  [["360°", "A","F"],
+	      	["360°","-","-"]]  	
+
+	  default.still = ["-", "-", "-"]
+	  default.slow= ["-", "-", "B"]	
+	  default.fast = ["-","-","B,B"]
+
+
     [ork.units.grunt]
     name = "Grunt"
     race = "ork"
@@ -198,7 +235,7 @@
     special = ["Take Cover[still][-2]", "Bad Shot: -1 to hit with range weapons"]
 
         [ork.units.ork_infantry.orders.movement]
-        slow = [["Chase", "-", "-"], ["-", "-", "Chase"], ["360°", "F",  "360°"], ["360°", "360°", "360°"], ["360°", "B", ""]]
+        slow = [["Chase", "-", "-"], ["-", "-", "Chase"], ["360°","F",  "360°"], ["360°", "360°", "360°"], ["360°", "B", ""]]
 	still = [["360°", "-", "-"], ["360°", "A", "F"]]
         default.slow = ["-", "-", "Flee"]
 
@@ -399,7 +436,7 @@
         deflection_die = "-"
         damage = "d6-2"
         ap = 2
-        special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 3]"]
+        special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
 
 
     [ork.models.ork_elite_infantry]
@@ -420,7 +457,7 @@
 	    deflection_die = "6+"
 	    damage = "d6"
 	    ap = 2
-            special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 3]"]
+            special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
 
 
 
@@ -441,7 +478,7 @@
 	    deflection_die = "6+"
 	    damage = "d6-2"
 	    ap = 2
-            special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 3]"]
+            special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
 
 
 
@@ -478,7 +515,7 @@
 	damage = "d6-2"
 	ap = "2"
 	deflection = [2,2,1,1]
-	special =["{template.ability.reroll_assault:6}", "Cunning assault[1 for 4]"]
+	special =["{template.ability.reroll_assault:3}", "Cunning assault[1 for 4]"]
 
 
 
@@ -502,7 +539,27 @@
 	  ap = "10 (from front), else 2"
 	  deflection = [12,2,2,2]
 	  special = ["{templates.ability.reroll_assault:6}","Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead"]
-	  
+
+
+
+   [ork.models.battlewagon]
+   name = "Battlewagon"
+   race = "Ork"
+   type    = ["vehicle", "mechanical", "bio crew", "tracks"]
+
+   equipments = ["spear_shooter", "big_gun", "grenade_launcher"]
+   equipments_limit = ["independent:∞"]
+   special = ["Fire all weapons simultainiusly"]
+
+    	  [ork.models.battlewagon.assault]
+	  strength = [10, 8, 8, 8]
+	  strength_die = "6+"  
+	  deflection_die = "6+"
+	  damage = "d6"
+	  ap = "2"
+	  deflection = [0,0,0, 0]
+	  special = ["{templates.ability.reroll_assault:3}"]
+
 
 
 
@@ -559,7 +616,7 @@
 	   damage = "d6"
 	   ap = "3"
 
-	   special = ["{template.ability.reroll_assault:6}", "Fear[6]"]
+	   special = ["{template.ability.reroll_assault:3}", "Fear[6]"]
 
    
    [ork.models.speedhead]
@@ -786,7 +843,7 @@
     [ork.equipments.pyro]
     name = "Pyro"
     race = "ork"
-    cost.cp = 4
+    cost.cp = 2
     cost.xp = 4
     requires = [
         ["type:infantry", "type: cavalery"],
@@ -872,15 +929,13 @@
 
 
 
-   [ork.equipments.grenade_sling]
-    
+   [ork.equipments.grenade_sling]    
    name = "Grenade Sling"
    race = "ork"
-   unit.cost.cp = 6	
+   cost.cp = 6	
    requires =[["type: infantry"],
    	    ["hands:1"]]
 	    
-
    	[ork.equipments.grenade_sling.range]
 	range = 3
 	angle = [true, true, true, true]
@@ -897,7 +952,7 @@
 
 
 	[ork.equipments.shriek.range]
-	range = 2
+	range = 3
 	angle = [false, false, true, true]
 	special = ["Burst(5) Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"]
 	damage = "d4-2+ d6 psychic damage"
@@ -909,10 +964,10 @@
    name = "Speed Cannon"
    requires = []
 
-	[euipments.speed_cannon.range]
+   	[ork.equipments.speed_cannon.range]
 	range = 2
 	angle = [false, false, true, true]
-	special = ["Burst(5): Requires 5 ammo to be shot, but each time it is shot, it fires 5 times"]
+	special = ["Burst(5) Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"]
 	damage = "d6+1"
 	ap = 6
 
@@ -953,7 +1008,7 @@ damage = "d8 fire damage + d4 crew damage"
 
 
    	[ork.equipments.heavy_forward_gun.range]
-	range = 5
+	range = 4
 	angle = [true, false, false, false]
 	damage = "d6 + 3 if penetrating all armor"
 	ap = 7
@@ -977,7 +1032,7 @@ damage = "d8 fire damage + d4 crew damage"
    race = "ork"
    name = "Healing Syringe"
    cost.cp = 1
-   special = ["In 2nd gunnery phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."]
+   special = ["In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."]
    requires = [["type:infantry", "type: cavalry", "type: grunt"], ["hands: 1"]]
 
 
@@ -994,6 +1049,44 @@ damage = "d8 fire damage + d4 crew damage"
        special = ["Choose one hex within normal range or one hex within long range. If fired from a unit with 3-4 models within normal range: Area(4+), if fired from a unit with 1-2 models at normal range: Area(5+), if fired from a unit withh 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area(6+)"]
        damage = "d6"
        ap = 6
+
+
+   [ork.equipments.big_gun]
+   race = "ork"
+   name = "Big Gun"
+
+       [ork.equipments.big_gun.range]
+       range = 2
+       angle = [true, false, false, false]
+       special = ["Place two smoke tokens in the hex directly ahead of this unit"]
+       damage = "d12"
+       ap = 5
+
+
+   [ork.equipments.spear_shooter]
+   race = "ork"
+   name = "Spear Shooter"
+
+       [ork.equipments.spear_shooter.range]
+       range = 3
+       angle = ["x2", "x2", "x2", "x2"]
+       special = []
+       damage = "d6-2"
+       ap = 2
+
+
+   [ork.equipments.grenade_launcher]
+   race = "ork"
+   name = "Grenade Launcher"
+
+       [ork.equipments.grenade_launcher.range]
+       range = 4
+       angle = [true, true, true, true]	
+       special = ["Choose a hex within normal range, roll a die. At 5+ target the choosen hex, otherwise target a random adjent hex", "Area[2+]"]
+       damage = "d6"
+       ap = 3
+
+
 
 
 

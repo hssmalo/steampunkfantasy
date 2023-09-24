@@ -41,19 +41,20 @@ Apply damage \
 - Gunnery 2\
 Apply damage \
 
-
+- Healing/repear 1
 - Agony 0 (major acid, terror)
 - Agony 1 (minor acid)
 - Agony 2 (fire)
 - Agony 3 (poison)
 - Agony 4 (bleeding)
+- Healing/repair 2
 
 - Aftermath  (remove smoke, etc.)
 
 ---
 
 
-Multiple things may happen in same step, but they happen simultaneously. The exception is damage, where any damage taken is rolled in sequence. Roll damage in any order the attacker wishes, apply damage before rolling for next damage. But the effect of the damage in total does not apply before the apply damage step.
+Multiple things may happen in same step, but they happen simultaneously, including damage. In principle you can roll for all damage simultainiusly, and apply the damage in the apply damage step.
 
 
 \pagebreak
@@ -86,7 +87,7 @@ Unless otherwise stated, an infantry unit base may have
 
 - 1 twohanded weapon or 2 onehanded equipment (such as heavy musket, pistol&shield ...)
 - Any number of independent equipment (such as grenades, gas-masks, wings...)
-- A unit base may have a maximum of one unit-base weapon. (hand-held cannon)
+- A unit base may have a maximum of one shared weapon. (hand-held cannon)
 
 Unless otherwise stated, the standard weapons of an infantry is a 2handed weapon
 
@@ -266,6 +267,7 @@ Each unit has a set of available orders. Code:
 - D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - - = no action
 - Chase: move towards nearest enemy.
+- Help: move towards the nearest wounded friendly unit. If there are no wounded friendly units, move towards the nearest friendly unit. You may choose to ignore damaged vehicles when considering where to move. The decision of where you move is decided after all other assault are carried out.  
 - Follow: Are only available through special unit ordering other units to follow, and all units under these orders move one hex closer to this unit. If multiple units are odering units to follow, you can chose which to follow.
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
@@ -725,6 +727,36 @@ This weapon can have, and must be loaded with N ammo to be fired. However, when 
 
 This weapon may be fired a maxium of N times in a match. Many of these weapons are allways treated as load special, but it only works as long as the total number of times used is less than N.
 
+**Heal(N, unit, phase)**
+
+N: a number \\
+Unit: self or any unit in same hex \\
+Phase: Either first or second healing phase\\
+
+Healing only works on biological units. You have N points to spend on the following actions:
+- Degrade one poison token one step. (ie. d6 becomes d4). Cost 1.
+- Degrade one bleeding token one step. (ie d6 becomes d4). Cost 1.
+- Remove one +1 to future damage token. Cost 1.
+- Neutrilize one minor acid. Cost 1.
+- Degrade one acid to minor acid. Cost 2.
+- Extinguish one fire. Cost 2.
+- Neutrilize one poison token: Cost 3.
+- Remove one bleeding token: Cost 3.
+
+**Repair(N, unit, phase)**
+
+N: a number \\
+Unit: self or any unit in same hex \\
+Phase: Either first or second healing phase\\
+
+Repear do not work on biological units. You have N points to spend on the following actions:
+- Remove one +1 to future damage token. Cost 1.
+- Neutrilize one minor acid. Cost 1
+- Remove 1 shaken token. Cost 1
+- Degrade one acid to minor acid. Cost 2.
+- Extinguish one fire. Cost 2.
+- Remove 1 crittical damage effect. Cost 3.
+
 
 **Set** **on** **Fire**, ranged weapons
 
@@ -743,7 +775,7 @@ If target is hit by a ranged weapon with this special ability, apply (minor) aci
 
 Apply one minor Acid to an any enemy unit for each N successfull assault hits. If N=2 this means you may place one minor acid token for every 2nd successful assault die you do. For Minor acid, see continoius damage.
 
-**Acid Resistance[N+]** Before taking damage from acid of any kind, roll a die per acid token. Remove one acid token per die above N.
+**Acid Resistance[N+]** Before taking damage from acid of any kind, roll a die per acid token. Remove one minor acid token or reduce one acid to minor acid, per die above N.
 
 **Poison[N]**, ranged weapons
 
@@ -857,4 +889,15 @@ Remove one shaken token from each unit base.
 
 
 
+**Special Team abilities**
+
+*Orks*
+
+Reroll Assault:N
+Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll N dice per wave of rerolls. Thus N may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls.
+
+
+*Dwarfs*
+
+Endurence tokens may be spend in the following way:", "1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model')","2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.","3. If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage"]
 

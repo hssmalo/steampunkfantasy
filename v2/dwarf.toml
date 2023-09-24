@@ -151,7 +151,8 @@
 		"9: Unit destroied"]
 	crew = ["1-6: kill 1 crew",
 	     "7-8: kill 1 crew, d6 psychic damage",
-	     "9+: Unit destroied"]
+	     "9+: Unit destroied",
+	     "Destroied when 4 crew is killed"]
 	     
  	psychic    = ["5+: Unit shaken"]
 
@@ -164,7 +165,7 @@
     size = "large"
     armor = [8, 10, 10 ,7]
     cost.ip = 6
-    special = ["Fire Resistance 2", "optimal Point blank: +1 to hit at point blank range", "Perfect Breaking: After 3rd movement step, it may apply an ,B or ,B,B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."]
+    special = ["Fire Resistance 2", "optimal Point blank: +1 to hit at point blank range", "Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."]
 
         [dwarf.units.gunblasterwagon.orders.movement]
 	fast = [["F","F","-"],
@@ -175,8 +176,8 @@
 	     ["F","B","B"],
 	     ["F","F","R"],
 	     ["F","F","L"],
-	     ["F","F","F,R"],
-	     ["F","F","F,L"],
+	     ["F","F","F+R"],
+	     ["F","F","F+L"],
 	     ["F","F", "F"]]
 	slow = [["L","-","-"],["L","L","-"],["R","-","-"],["R","R","-"],["A","F","-"],["B","-","-"],["F","-","-"],["B","rev","-"]]
 	still = [["L","-","-"],
@@ -198,7 +199,8 @@
 	default.still = ["-", "-", "-"]
 
         [dwarf.units.gunblasterwagon.orders.fire]
-	still = [["Fire", "-"], ["Load", "-"]]
+	still = [["Fire", "-"], ["Load", "-"], ["-", "Load"]]
+
 
 	
         [dwarf.units.gunblasterwagon.damage_tables]
@@ -215,7 +217,7 @@
     models = ["dw42"]
     size = "large"
     armor = [13, 10, 10 ,9]
-    cost.ip = 12
+    cost.ip = 18
     special = ["Fire Resistance 2"]
 
         [dwarf.units.dw42.orders.movement]
@@ -272,7 +274,7 @@
     size = "large"
     armor = [10, 8, 8 ,7]
     cost.ip = 8
-    special = ["Fire and load all weapons at the same time", "Loses aim if moving", "Fire Resistance 2"]
+    special = ["Fire and load all weapons at the same time", "Loses aim when moving away from the hex where it aimed", "Fire Resistance 2"]
 
         [dwarf.units.zap.orders.movement]
 	fast = [["F","F","-"],
@@ -336,7 +338,7 @@
     armor = [8, 8, 8 ,8]
     cost.ip = 24
     cost.xp = 12
-    special = ["Steady: +1 to hit, +1 to be hit.", "Repair[2, self, healing 1]", "Limited shaken: when shaken, you may fire one less weapon systems per shaken token instead of the normal effect of being shaken"," When damaged, add 1 to the result for each shaken token on the Zeppelin.", "Withering Ray: May replace forrest with rough terrain in the hex it is standing"]
+    special = ["Steady: +1 to hit, +1 to be hit.", "Repair[2, self, healing 2]", "Limited shaken: when shaken, you may fire one less weapon systems per shaken token instead of the normal effect of being shaken"," When damaged, add 1 to the result for each shaken token on the Zeppelin.", "Withering Ray: May replace forrest with rough terrain in the hex it is standing"]
 
         [dwarf.units.zeppelin.orders.movement]
 	slow_flying = [["L","-","-"],
@@ -443,9 +445,9 @@
     equipment_limit = ["hands:2", "shared:1", "independent:∞"]
     equipments = ["heavy_musket_free"]
     type = ["elite", "steampowerarmor", "walks", "bio"]
-    cost.xp = 4
+    cost.xp = 3
     replaces = ["steampowerarmor"]
-    special = ["good shot: +1 to hit", "unit gains psycic resistance 1 as long as 1 elite model is alive", "Unit gains 1 endurence token. See general rules for effect"]
+    special = ["good shot: +1 to hit", "unit gains psycic resistance 1 as long as 1 elite model is alive", "Unit gains 1 endurence token per elite in unit. See general rules for effect"]
 	  
 
         [dwarf.models.elite_steampowerarmor.assault]
@@ -617,7 +619,7 @@
     name = "zap"
     race = "dwarf"
     equipment_limit = ["crew:1", "independent:∞"]
-    equipments = ["array_of_heavy_muskets", "zap", "fear_ray_free"]
+    equipments = ["array_of_heavy_muskets", "zap", "twin_fear_ray_free"]
     type = ["mechanical", "bio_crew", "track", "vehicle"]
     special = []
 	  
@@ -788,6 +790,17 @@
         special = ["Fire x2 per fire order"]
 
 
+    [dwarf.equipments.jet_pack]
+    name = "Jet Pack"
+    race = "dwarf"
+    cost.cp = 2
+    cost.xp = 2
+    special = ["Once per game in any single movement phase, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex. This may initialize an assault if the hex is occupied by enemy forces."]
+    requires = [
+        ["independent:1"],
+	["type:steampowerarmor"]
+    ]
+
     [dwarf.equipments.superblaster]
     name = "Super Blaster"
     race = "dwarf"
@@ -853,7 +866,7 @@
         angle = [true, true, true, true]
         damage = "N.A"
         ap = 0
-        special = ["Place a poison clouad within normal range", "Always treated as loaded", "Activated by throw order"]
+        special = ["Place a poison cloud within normal range", "Always treated as loaded", "Activated by throw order"]
 
 
 
@@ -884,6 +897,20 @@
         damage = "d6 Psycic damage"
         ap = 0
         special = []
+
+
+    [dwarf.equipments.twin_fear_ray_free]
+    name = "Twin Fear Ray"
+    race = "dwarf"
+    requires = [
+    ]
+
+        [dwarf.equipments.twin_fear_ray_free.range]
+        range = 4
+        angle = [true, false, false, false]
+        damage = "d6 Psycic damage"
+        ap = 0
+        special = ["Fire two times per shot at same target"]
 
     [dwarf.equipments.fear_ray]
     name = "Fear Ray"
@@ -946,7 +973,7 @@
 
         [dwarf.equipments.array_of_enhanced_heavy_muskets.range]
         range = 6
-        angle = ["x4", "x2", "x2", "0"]
+        angle = ["x4", "x3", "x2", "0"]
         damage = "d6-1"
         ap = 3
         special = []
@@ -960,7 +987,7 @@
 
         [dwarf.equipments.array_of_heavy_muskets.range]
         range = 3
-        angle = ["x4", "x2", "x2", "0"]
+        angle = ["x4", "x3", "x2", "0"]
         damage = "d6-1"
         ap = 3
         special = []
