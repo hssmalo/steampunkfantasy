@@ -1,80 +1,131 @@
 \pagebreak
 
-\section{ Scout }
+\section{ Ork Char B1 }
 
 \begin{tabular}{ll}
-  Name & Scout \\
-  Size & medium\\
-  Cost & 2mp\\
-  Models & 1 x Scout\\
-  Armor & [0, 0, 0, 0]\\
+  Name & Ork Char B1 \\
+  Size & Large\\
+  Cost & 12ip\\
+  Models & 1 x Ork Char B1\\
+  Armor & [11, 9, 8, 7]\\
 \end{tabular}
 
-\noindent Forward Position[2], Take-Cover[still,crawl][-3]\\ 
-spot: detect enemy hidden darkelf.units. See general rules\\ 
+\noindent 
 
-
-{\bf Scout } \\
-Equipment: 1 x Rifle \\
-Equipment Limits: [hands:2, training:1, independent:∞] \\
-Type: [bio, infantry, walks] \\
+{\bf Ork Char B1 } \\
+Equipment: 1 x Rotating Pop Gun, 1 x Heavy Forward Gun \\
+Equipment Limits:  \\
+Type: [Mechancical, Bio Crew, Vehicle, Track] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
-Assault: [2, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [2, 1, 0, 0] Die: 6+\\
-\indent Cunning assault[1 for 1]\\ 
-Reroll all success in assault while crawling\\ 
+Assault: [6, 4, 3, 2] Die: 6+ Armor Penetration: 3 Damage: d6 \\
+Assault Deflection: [2, 0, 0, 0] Die: 6+\\
+\indent {template.ability.reroll_assault:3}\\ 
+Fear[6]\\ 
+ 
+\ \\
+Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them sepeartely\\ 
+
+\ \\
+{\bf Rotating Pop Gun } \\
+
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 6 Damage:d6 + (d6 crew damage when penetrating all armor) \\
+Poison[6]\\ 
+
+
+
+
+{\bf Heavy Forward Gun } \\
+
+
+
+Range: 4  Angle: [True, False, False, False]: AP: 7 Damage:d6 + 3 if penetrating all armor \\
+
+
+
+
  
 \ \\
 
-\ \\
-{\bf Rifle } \\
 
 
-
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
-
-
-
-
- 
-\ \\
-
-
-
+\ \\ {\bf fire } \\
+slow [Fire (p), Load (h)] \\
+slow [Load (h), Fire (p)] \\
+slow [Fire (h) ,  Load (p)] \\
+slow [Load (p), Fire (h)] \\
+slow [Aim(p) ,  Load (h)] \\
+slow [Aim(p) ,  Fire (h)] \\
+slow [Load (h) ,  Aim (p)] \\
+slow [Fire (h) ,  Aim (p)] \\
+still [Fire (p), Load (h)] \\
+still [Load (h), Fire (p)] \\
+still [Fire (h), Load (p)] \\
+still [Load (p), Fire (h)] \\
+still [Aim(p), Load (h)] \\
+still [Aim(p), Fire (h)] \\
+still [Load (h), Aim (p)] \\
+still [Fire (h), Aim (p)] \\
+still [Aim (h), Fire (p)] \\
+still [Aim (h), Load (p)] \\
+still [Fire (p), Aim (h)] \\
+still [Load (p), Aim (h)] \\
 \ \\ {\bf movement } \\
-slow [Chase, -, -] \\
-slow [-, -, Chase] \\
-slow [360°, F, 360°] \\
-slow [360°, 360°, 360°] \\
-slow [360°, F, B] \\
-slow [360°, B[crawl], -] \\
-still [360°, -, -] \\
-still [360°, A, F] \\
-still [360°, A[crawl], F] \\
-crawl [360°, F, -] \\
-crawl [360°, B[still], -] \\
-crawl [360°, A[slow], F] \\
-default crawl \\
+fast [F,  F ,  -] \\
+fast [F ,  R ,  -] \\
+fast [R ,  F ,  -] \\
+fast [L ,  F ,  -] \\
+fast [F ,  L ,  -] \\
+fast [F ,  B ,  -] \\
+fast [B ,  B ,  -] \\
+fast [R,  F ,  -] \\
+fast [L,  F ,  -] \\
+slow [L ,  - ,  -] \\
+slow [L ,  L ,  -] \\
+slow [R ,  - ,  -] \\
+slow [R ,  R ,  -] \\
+slow [A ,  F ,  -] \\
+slow [B ,  - ,  -] \\
+slow [F ,  - ,  -] \\
+slow [B ,  rev ,  -] \\
+still [L ,  - ,  -] \\
+still [L ,  L ,  -] \\
+still [L ,  L ,  L] \\
+still [R ,  - ,  -] \\
+still [R ,  R ,  -] \\
+still [R ,  R ,  R] \\
+still [-, -, -] \\
+still [R ,  A ,  F] \\
+still [L ,  A ,  F] \\
+still [A ,  F ,  -] \\
+still [rev ,  - ,  -] \\
 default still \\
 default slow \\
-\ \\ {\bf fire } \\
-still [Load, -] \\
-still [-, Load] \\
-still [Fire, -] \\
-still [-, Fire] \\
-still [Aim, -] \\
-still [-, Aim] \\
-still [Spot, Spot] \\
-slow [Spot, Spot] \\
+default fast \\
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-0+: unit killed \\
-\ \\ {\bf psychic } \\
-3+: Unit Shaken \\
+\ \\ {\bf Regular } \\
+1-4: Light Damage[d6] \\
+4-8: +1 to future damage, Critical Damage[d6] \\
+9+: Unit Destroyed \\
+\ \\ {\bf Light } \\
+1-4: +1 to future damage \\
+5-6: Unit shaken \\
+\ \\ {\bf Critical } \\
+1: Cannot Rotate \\
+2: Cannot move, looses Fear \\
+3: -1 to hit, +1 to be hit (ranged and assault) \\
+4-5: x3 Light Damage[d6] \\
+6: Unit set on fire \\
+\ \\ {\bf crew } \\
+4-5: Jammed \\
+6-7: as 4-5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroyed \\
 
 
 

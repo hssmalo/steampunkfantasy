@@ -42,11 +42,21 @@ Apply damage \
 Apply damage \
 
 - Healing/repear 1
-- Agony 0 (major acid, terror)
-- Agony 1 (minor acid)
-- Agony 2 (fire)
-- Agony 3 (poison)
-- Agony 4 (bleeding)
+- Agony 0 (major acid, terror)\
+Apply damage 
+
+- Agony 1 (minor acid)\
+Apply damage
+
+- Agony 2 (fire)\
+Apply damage
+
+- Agony 3 (poison)\
+Apply damage
+
+- Agony 4 (bleeding)\
+Apply damage
+
 - Healing/repair 2
 
 - Aftermath  (remove smoke, etc.)
@@ -54,7 +64,7 @@ Apply damage \
 ---
 
 
-Multiple things may happen in same step, but they happen simultaneously, including damage. In principle you can roll for all damage simultainiusly, and apply the damage in the apply damage step.
+Multiple things may happen in same step, but they happen simultaneously, including damage. Thus You can roll for all damage simultainiusly.
 
 
 \pagebreak
@@ -66,41 +76,38 @@ Multiple things may happen in same step, but they happen simultaneously, includi
 - A pure tank game consists of 24 industry points(ip)
 - An infantry battle consists of 24manpower (mp), 24crafts points and 24xp.
 - A standar game consists of 24industry points(ip), 24manpower (mp), 24crafts points (cp) and 24xp.
-- An asymetric game consists of one side having 48ip and a combination of 6 points in mp, xp or cp, while the other team chooses between
-48mp, 48cp and 48xp and 36mp, 36cp, 36xp and 12ip.
-- In advanced games, add 24command (com) and 12mp for each side.
+- An asymetric game consists of one side having 36ip and a combination of 12 points in mp, xp and cp, while the other team chooses between
+48mp, 48cp, 48xp and 36mp, 36cp, 36xp, 12ip.
 
 
-Industry represent heavy equipment production. Tanks and vehicles.
+Industry represent heavy equipment production such as tanks and vehicles.
 Manpower: Represent the manpower needed to form infantry and cavalry.
-Craft points represent small arms production, and which is hand crafted.
-XP represent extra training, and taming of fantastical creatures
-(Command: gives you officers, officers abilities and engineering etc. Advanced games only. Not yet implemented.)
+Craft points represent small arms production, and everything which is hand crafted by a smith or that alike. XP represent extra training, and taming of fantastical creatures (Command: gives you officers, officers abilities and engineering etc. Advanced games only. Not yet implemented.)
 
 Build your army in any way you like, as long as the total cost is less than the total amount of points.
 Infantry, and some cavalry and special units may be upgraded with xp and crafts points (and command).
-Each upgrade has it requirements. Some upgrade the entire unit base, while some only upgrade one model.
+Each upgrade has it requirements. Some upgrade the entire unit, while some only upgrade one model.
 
 
-A unit base typically has 1,2 or 4 unit models. A unit base can be upgraded with as much as you like as long as you have the space on your model.
-Unless otherwise stated, an infantry unit base may have
+A unit typically has 1,2 or 4 unit models. A unit can be upgraded with as much as you like as long as you have the space on your model.
+Unless otherwise stated, an infantry unit may have
 
 - 1 twohanded weapon or 2 onehanded equipment (such as heavy musket, pistol&shield ...)
 - Any number of independent equipment (such as grenades, gas-masks, wings...)
-- A unit base may have a maximum of one shared weapon. (hand-held cannon)
+- A unit may have a maximum of one shared weapon. (hand-held cannon)
 
 Unless otherwise stated, the standard weapons of an infantry is a 2handed weapon
 
 
-Each model of the unit base can fire it's weapons independently, and you add assault dice to the assault die pool for each unit. But all models of a unit base gets the same order, and share the same damage table.
+Each model of the unit can fire it's weapons independently, and you add assault dice to the assault die pool for each unit. But all models of a unit gets the same order, and share the same damage table.
 
-Elites typically upgrades 1 regular model, which then replaces the regular model in the unit bases.
-Weapons upgrades and aditions either replaces all weapons in all models in a unit base, replaces the weapon of a single model (typical elite), or the weapon is shared by the entire unit base not replacing the normal weapon. However normaly you then must choose between firng a unit base weapon or the normal weapon of the model. 
+Elites typically upgrades 1 regular model, which then replaces the regular model in the units.
+Weapons upgrades and aditions either replaces all weapons in all models in a unit, replaces the weapon of a single model (typical elite), or the weapon is shared by the entire unit not replacing the normal weapon. However normaly you then must choose between firng a unit weapon or the normal weapon of the model. 
 
-In some cases some equipment reqiuers an elite and the cost is typically for one weapon and only one elite in the unit base gets that weapon. However, as long as you have more elites left in the unit base, you may pay the price multiple times to equip as many as you like with elite weapons.
+In some cases some equipment reqiuers an elite and the cost is typically for one weapon and only one elite in the unit gets that weapon. However, as long as you have more elites left in the unit, you may pay the price multiple times to equip as many as you like with elite weapons.
 
 Shared weapons:
-Unless other wise stated, if a unit is given a shared weapon, the unit may fire the shared weapon a single time, OR fire its normal weapon. When firing the shared weapon, apply to-hit modifiers of the best model in the unit. Regardless which weapon you fired, threat any weapon as unloaded after firing with either a shared weapon or the standar weapons of the models in the unit.
+Unless otherwise stated, if a unit is given a shared weapon, the unit may fire the shared weapon a single time, OR fire its normal weapon. When firing the shared weapon, apply to-hit modifiers of the best model in the unit. Regardless which weapon you fired, threat any weapon as unloaded after firing with either a shared weapon or the standar weapons of the models in the unit.
 
 The requirements and cost of both model replacements and extra equipment should be clearly stated in the army list.
 
@@ -131,11 +138,11 @@ Rough                 Enter freely. Does not block line of sight
 Sand Dunes            Enter at 2+. Level 0 blocking terrain
 *Advanced* *terrain*
 Swamp                 medium and smaller enter and exit freely.
-		      large and huge: enter at 2+
+                      large and huge: enter at 2+
                       Units with track or wheel in description may get stuck,
                       exit: 3+
                       Does not block line of sight
-Building              Infantry enter at 2+
+Building              Infantry enter freely
                       any other type cannot enter without a special rule. Level 0 blocking terrain.
 Road                  If moving from a road to another hex with road, movement is always freely.
 Smoke                 Blocks line of sight 
@@ -148,12 +155,12 @@ Water                 1 movement point to enter for ships, floating or flying
 
 If a unit tries to enter a difficult terrain hex, roll a die. If you don't roll below the requirement, do not enter the hex but stay in the hex you are. 
 
-Line of sight between two hexes is blocked if it crosses over a hex of blocking terrain with a height level equal to or greater than both of the two hexes, or if it crosses over a hex of height heigher than both hexes. Treat any blocking terrain of lower height to create two blind hexes. Line of sight can not be traced to the blind hexes BUT can be traced beyond that.
+Line of sight from one hex to another: place a line from the center of the heighest level to the center of the lowest level hex in question. If the line crosses a hex with blocking terrain equal or greater height both hexes in question, line of sight is blocked. This is the normal case when everything is on the ground. In the case of line of sight to heigher elevation some special rules apply. If the line crosses paths with blocking terrain less than both hexes in question, ignore the blocking terrain (flying units can thus fire at all flying units). If the line is traced through a hex with blocking terrain heigher or equal to the end hex, but not the start hex, place a blind hex directly behind the hex with blocking terrain. Line of sight cannot be traced to or from the blind hex, but can be traced to hexes behind that. (flying units has a line of sight advantage)
 
-
-Terrain also provide cover, which is given in the to-hit table later.
 
 *Flying* Count as being at height level 2.
+
+Terrain also provide cover, which is given in the to-hit table later.
 
 *Stacking* *Limit*:\
 One hex may maximum hold either up two 2 units if at most one of them is large, or 1 huge unit.
@@ -205,8 +212,8 @@ After a fixed amount of time, each player scores points according to the followi
 2pt for each destroyed enemy MP, XP and CP \
 3pt for each crippled enemy IP \
 1pt for each crippled enemy MP, XP and CP \
--3pt for each destroyed IP from your own team. \
--1pt for each destroyed MP, XP and CP from your own team. \
+3pt for each remaning IP from your own team. \
+1pt for each remaning MP, XP and CP from your own team. \
 +16pt bonus if you won the match (ie, score more points than your enemy from the above points) \
 
 Only totally destroyed units counts as destroyed. A unit with only one model left AND a number of +1 to future damage token equal to half (rounded down) required to kill the last model counts as crippled. Note that you get points for crippling your enemy but lose none for your own crippled units.
@@ -221,7 +228,7 @@ This is now called Match Victory Points (MVP).
 
 The tournament victory points (TVP) are calculated as follows:
 
-$$TVP = (| MVP | )^{0.5}*MVP/| MVP | $$ sdf
+$$TVP = (| MVP | )^{0.5} $$ 
 
 Note that both players get more points by destroying each other. Thus it is possible that a loser of one match scores more points than a winner of another match. This rewards playing aggressive.
 
@@ -231,7 +238,7 @@ Note that both players get more points by destroying each other. Thus it is poss
 
 # Orders
 
-Give each unit base at least one movement order and the number of fire orders dictated by the unit stats. At any time you should have orders 1 round of orders ahead of time. For most units, this means you should have 1 movement order and one fire order on the table when making a new order. Then, after setting up orders, you should follow those orders.
+Give each unit at least one movement order and the number of fire orders dictated by the unit stats. At any time you should have orders 1 round of orders ahead of time. For most units, this means you should have 1 movement order and one fire order on the table when making a new order. Then, after setting up orders, you should follow those orders.
 
 
 Action are ordered in advance, and in principal everything in one step is done simultaneously. However, if the orders include choices as for example who to fire at etc. and that choice depends on what the enemy choice is, then resolve it as follows: Any unit which MAY enter an assault depending on the choices it does in movement (if existing), declares whether it want to enter an assault or not. The ones not entering assaults must choose first, and the ones entering assault second, and they must then enter assault (if possible). If there are still choices which depends on what the other chooses, the ones choosing last according to this table. The highest rank choices last:
@@ -266,14 +273,13 @@ Each unit has a set of available orders. Code:
 - Rev=reverse
 - D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - - = no action
-- Chase: move towards nearest enemy.
-- Help: move towards the nearest wounded friendly unit. If there are no wounded friendly units, move towards the nearest friendly unit. You may choose to ignore damaged vehicles when considering where to move. The decision of where you move is decided after all other assault are carried out.  
+- Chase: move towards nearest enemy, taking current orders into account. Thus the unit moves one step closer to where the enemy is going to be this turn.
 - Follow: Are only available through special unit ordering other units to follow, and all units under these orders move one hex closer to this unit. If multiple units are odering units to follow, you can chose which to follow.
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
 If still no such hex is available, let your enemy move your unit to any hex he/she likes
 - Road: Move along the road. Facing is always along the road.
-
+- Help: Move in any hex as long as you move 1 step closer to an injured ally which you can heal/repair. As with chase, take current orders into account.
 
 
 Any order divided in 3 happens in movement step, where the first is executed in movement 1, the second in movement 2 and the third in movement 3.
@@ -305,7 +311,7 @@ If an illegal order is given, do the default order instead.
 Load: loads weapon. A weapon cannot fire without a load token available.
       Some weapons may load more than one ammo per loading. It is then noted as load[2] or load[5] \
 Aim : optional: +2 to hit. Last 1 round, and may only be used versus targets within line of sight from the original hex where the aim was issued\
-Fire: fire at an enemy within line of sight and within a legal firing angle of tank. \
+Fire: fire at an enemy within line of sight and within a legal firing angle of a unit. \
 Spot: try to reveal a hidden unit. Roll a normal to-hit as if you where shooting. If successfull the hidden unit is revealed. \
 Default: - \
 
@@ -323,30 +329,30 @@ Important, unless otherwise stated, a unit MUST not fire at any target if it doe
 # Angles
 All units are always facing one specific direction, noted as forward. Then all units has a front, front-side (Right), frond-side (left), back-side (Right), back-side(left) and and back angle.
 
-Some values and stats depend on the angle you are using. All stats dependent on angles is divided into 4, separated by /-symbol.
+Some values and stats depend on the angle you are using. All stats dependent on angles is divided into 4, noted as [4,3,2,1].
 The first entry is front, the second is front-side (both left and right), the third entry is back-side(both left and right) and fourth is back.
 
 *Firing* *angles*:
 \* indicates firing angle is allowed, - indicates firing with that weapon is not allowed in that angle. Anything going to the front hex-side is considered in front, and anything tracing line of sight through side-front hex-side is considered front-side etc. Shots directly inbetween front and front-side are considered on-edge of firing angle, and can be used but at a penalty (see to-hit table).
 
-\*/-/-/-   Can fire in front only \
-\*/\*/\*/\*   Can fire in any direction \
+[true, false, false, false] Can fire in front only \
+[true, true, true, true]   Can fire in any direction \
 
 
 *Armor*:
 Use the armor value which your target is using.
-4/3/3/2   has 4 armor in front, 3 in front-side, 3 in back-side and 2 in back.
+[4,3,3,2]   has 4 armor in front, 3 in front-side, 3 in back-side and 2 in back.
 
 Any shot where line of sight can be traced through the front of the target is considered hitting the target in front and so forth. If a shot can be traced on the exact border between two angles, the attacker may choose where to apply the hit.
 
-Any stat which is not divided in 4 groups is assumed to be identical for all 6 angles.
+Any stat which is not divided in 4 groups is assumed to be identical for all angles.
 
 *Fixed* *Weapons*
 
 Some models, instead of having onr raotating gun have multiple guns pointing at different dirrections. In this case, each gun is treated as only being able to fire  in the given direction, but when the weapon system is fired, all are fired simultainiously at different direction. In this case a number indicated the number of shots/weapons being able to fire in the given dirrection.
 
 For example \
-x2/x1/x1/-
+[x2,x1,x1/-]
 indicates that the unit may fire 2 times in front, one in front-side left, once in front-side right, once in back side right and once in back side left.
 
 
@@ -372,17 +378,17 @@ Rest                       +1      +1
 Setup speed                +1      +1
 Slow                        0       0
 Fast                       -1      -1
-Flying                     -1      -1         (stacks with speed)
+Flying                     -1      -1         (stacks with still, slow and fast)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1         Grants Evation(-1) for any unit with take cover benefit
-Burned Forrest              0      -1         Grants Evation(-1) for any unit with take cover benefit
-Building                    0      -1         Grants Evation(-1) for any unit with take cover benefit
-Ruins                       0      -1         Grants Evation(-1) for any unit with take cover benefit
-Rough Terrain	            0      -1         Grants Evation(-1) for any unit with take cover benefit
-Sand Dunes                  0      -1         Grants Evation(-1) for any unit with take cover benefit
+Forrest                     0      -1         Grants Evation(-2) with take cover benefit
+Burned Forrest              0      -1         Grants Evation(-2) with take cover benefit
+Building                    0      -1         Grants Evation(-2) with take cover benefit
+Ruins                       0      -1         Grants Evation(-2) with take cover benefit
+Rough Terrain	            0      -1         Grants Evation(-2) with take cover benefit
+Sand Dunes                  0      -1         Grants Evation(-2) with take cover benefit
 *Orders*
-Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
+Aim                        +2       0         (aim bonus last 1 round.)
 *Range*
 Point-Blank                +1       0         (range =1)
 Normal range                0       0         (within weapon range)
@@ -390,17 +396,19 @@ Long range                 -2       0         (within max x2 of weapon range)
 *Angle*
 On-edge of firing-angle    -1       0
 *Size*
+Tiny                        0      -1
 HUGE                        0      +1
 *unit* *abilities*
 Good Shot                  +1       0
 Excellent Shot             +2       0
 Superb Shot                +3       0
 Bad Shot                   -1       0
-Crap Long range            -1       0         To-hit penalty at long range.
+Terrible shot              -2       0
+Bad at long range          -2       0         To-hit penalty at long range.
 Steady                     +1      +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
-Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. grants evation(-1) in some terrains
-Elusvie[speed, -N]          0      -N        
+Take Cover[speed, -N]       0      -N         When in given speed. 
+Elusvie[speed, -N]          0      -N         When in given speed        
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
 Enhanced Accurazy          +1       0
@@ -457,8 +465,8 @@ $AP \geq 0$                 A-AP                     5+
 
 For
 
-- 2 or more die above 5, the armor prevents all damage 
-- exactly one die above 5, roll on damage with a -3 modifier 
+- 2 or more dice above 5, the armor prevents all damage 
+- Exactly one dice above 5, roll on damage with a -3 modifier 
 - 0 die above 5, roll on damage normaly. 
 
 
@@ -529,7 +537,7 @@ Facing : Use front assault values and armor for units entering the hex, with the
 	 
 
 
-Multiple Units: add all dice for up to stacking_limit number of unit bases, roll separate dice if necessary, both if the different units have different to_hit value for the assault and if they have different damage output.
+Multiple Units: add all dice for up to stacking_limit number of units, roll separate dice if necessary, both if the different units have different to_hit value for the assault and if they have different damage output.
 It may be the case that some units involved have better damage, it is then necessary to track which unit did hit and which did not. If you for example have an orc-warhero with a flaming waraxe in a mix with 3 ork-grunts, roll all dice for the warhero with red dice and the grunts with blue die. If a red die hits, you may employ the flaming waraxe special damage, but if only blue dice hit, you may not.
 
 Simillarly as for assault, some models may have assault deflection and is given in the stats of a model by
@@ -547,13 +555,15 @@ Spartan\
 Dark_Elf\
 Ork\
 Dwarf\
+Gnome\
 Elf\
+
 
 
 It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected.
 
 Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support.
-You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit base per alive model. Further hits are applied as support to any one ore more damage roll. Keep track of which hit are from which source. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties.
+You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit per alive model. Further hits are applied as support to any one ore more damage roll. Keep track of which hit are from which source. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties.
 
 
 Thus, if you have ONE attack which is far stronger than other attacks, it's wise to gain the advantage so that you make sure that that attack does not get deflected.
@@ -575,20 +585,20 @@ The Darkelf choosed to assign 3 damaging scores to the infantry and 1 damaging +
 
 Rolling for damage:\
 Elf rolls 3 times on infantry damage table, but manage to kill only 2 models. \
-Dakr Elf also rolled 3 times on infantry damage tabale, but managed to kill all 3 infantry. Then he roll for damage once versus the Elf's tanks, but the elf's armor provides to difficult to penetrate. \
+Dakr Elf also rolled 3 times on infantry damage tabale, but managed to kill all 3 infantry. Then he roll for damage once versus the Elf's tanks, but the elf's armor proves to be difficult to penetrate. No damage done\
 
 Then the Elf retreats from the hex, but atleast it's tanks is unharmed. \
 
-If in the rare case that unit does not to real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing damaging and supporting hits. Thus you may roll one real damage PER enemy model in unit base in addition to one psycic damage PER enemy model in unit base. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage and +1 to psycic damage.
+If in the rare case that unit does not do real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing damaging and supporting hits. Thus you may roll one real damage PER enemy model in unit in addition to one psycic damage PER enemy model in unit. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage and +1 to psycic damage.
 
 
 Examples:
 Standard Tank\
-   Assault:     4/ 3 / 3 /2  5+: -1 on AP, damage d6-1.\
-   Deflection:  2, 5+ / -, -  / -, -  /-, - : \
+   Assault:     [4, 3, 3, 2]  Die 5+: Armor Penetration 3, damage d6-1.\
+   Deflection:  [2, 0, 0, 0]  Die: 5+
 
 This tank rolls 4 dice which hits on 5+ when assaulting a hex, and also when being assaulted from the front. Then it also gains 2 deflection die.
-If this tank is stationary and is assaulted from the sides (front left, front right, back left, back right) it only gets 3 dice and no deflections.
+If this tank is stationary and is assaulted from the sides (front left, front right, back left, back right) it only gets 3 dice and no deflections, while if it assault from behind it only gets 2 dice..
 
 # Special Damage types
 
@@ -606,7 +616,7 @@ If the target don't have a psychic damage table, the unit is immune to this dama
 
 Some special damage types are listed below:
 
-**Fire** **damage**:
+**Direct** **Fire** **damage**:
  
 - Does not ignore armor 
 - Ignore regular damage resistances
@@ -634,7 +644,7 @@ Most fire damage comes from the 'set on fire' ability of weapons, which is a con
 
 **Minor** **Acid**:
 
-- At agony step 1 roll a die, at 3+, unit base gets +1 on future damage. At 2-, remove minor acid
+- At agony step 1 roll a die, at 3+, unit gets +1 on future damage. At 2-, remove minor acid
 
 **Contnius** **Fire** **Damage**
 
@@ -678,13 +688,13 @@ However if it did, remove that instance of poison from unit.
 
 # Unit Abilities and conditions:
 
-**Evation**[-1]
+**Evation**[-N]
 
-Modified the success of an area of effect. For example, an Area(5+) effect will no be an Area(6+) effect. Furhter, an Area(6+) will now be an Area(7+), where you use the open ended d6 rules to get 6.
+Modified the success of an area of effect. For example, an Area(5+) effect will no be an Area(6+) effect if N=-1. Furhter, an Area(6+) will now be an Area(7+), where you use the open ended d6 rules to get 6.
 
 **Take Cover**[speed, -N]
 
-When unit is in given speed the unit is considered taking cover and gets -N to be hit, as indicated by to-hit table. Whenever this condition apply, the unit gains improve evation[+1]
+When unit is in given speed the unit is considered taking cover and gets -N to be hit, as indicated by to-hit table. Whenever this condition apply, the unit gains evation[-1], or evation[-2] in cover providing terrain. 
 
 **Forward Position**[N]
 
@@ -694,20 +704,20 @@ At setup this unit may setup upt to N hexes away from normal setup area.
 
 In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. If speed is currently at stand-still it become slow afterwards. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies.
 
-The unit base have this ability if atleast one model in the unit has this spesicial ability.
+The unit have this ability if atleast one model in the unit has this spesicial ability.
 
 **Stuborn**
 
-After loosing an assualt, if you occupied the hex you where fighting over in an assault before the assault, you never retreat, and the enemy retreats instead.
+After loosing an assualt, you never retreat, and the enemy retreats instead. If both units have stuborn, fight assault again.
 
 **Terror**[range=n][dN]
 
-In agony 0, roll a dN psycic damage on any enemy unit within range of this unit. Half number of dice rounded down from all enemy shaken unit bases entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
+In agony 0, roll a dN psycic damage on any enemy unit within range of this unit. Half number of dice rounded down from all enemy shaken units entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
 
 **Fear**[N]
 
-In pre-assault phase, roll a dN on psychic damage for each enemy unit base which has a psychic damage table (ignore armor and regular damage modifiers)
-Half number of dice rounded down from all enemy shaken unit bases entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
+In pre-assault phase, roll a dN on psychic damage for each enemy unit which has a psychic damage table (ignore armor and regular damage modifiers)
+Half number of dice rounded down from all enemy shaken units entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
 
 \pagebreak
 
@@ -715,13 +725,13 @@ Half number of dice rounded down from all enemy shaken unit bases entering assau
 
 For each N assault successes assigned to one unit-base (from sources with this ability), do one light damage[d6]. 
 
-Thus, for example Cunning Assault[1 per 2] would allow you to do d6 light damage if you hit it the unit two times, in addition to the regular damage. Note however, that light damage only does damage versus unit with a light damage table (vehicles only). 
+Thus, for example Cunning Assault[1 per 2] would allow you to do d6 light damage if you hit the unit two times, in addition to the regular damage. Note however, that light damage only does damage versus unit with a light damage table (vehicles only). 
 
 This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage.
 
 **Burst(N)**
 
-This weapon can have, and must be loaded with N ammo to be fired. However, when the weapon is fired, it is fired N times (per model) at the same enemy unit base.
+This weapon can have, and must be loaded with N ammo to be fired. However, when the weapon is fired, it is fired N times (per model) at the same enemy unit.
 
 **Limited Ammo(N)**
 
@@ -734,6 +744,7 @@ Unit: self or any unit in same hex \\
 Phase: Either first or second healing phase\\
 
 Healing only works on biological units. You have N points to spend on the following actions:
+
 - Degrade one poison token one step. (ie. d6 becomes d4). Cost 1.
 - Degrade one bleeding token one step. (ie d6 becomes d4). Cost 1.
 - Remove one +1 to future damage token. Cost 1.
@@ -750,12 +761,13 @@ Unit: self or any unit in same hex \\
 Phase: Either first or second healing phase\\
 
 Repear do not work on biological units. You have N points to spend on the following actions:
-- Remove one +1 to future damage token. Cost 1.
-- Neutrilize one minor acid. Cost 1
-- Remove 1 shaken token. Cost 1
-- Degrade one acid to minor acid. Cost 2.
-- Extinguish one fire. Cost 2.
-- Remove 1 crittical damage effect. Cost 3.
+
+- Remove one +1 to future damage token. Cost 1. 
+- Neutrilize one minor acid. Cost 1 
+- Remove 1 shaken token to any non-biological unit. Cost 1 
+- Degrade one acid to minor acid. Cost 2. 
+- Extinguish one fire. Cost 2. 
+- Remove 1 crittical damage effect. Cost 3. 
 
 
 **Set** **on** **Fire**, ranged weapons
@@ -764,7 +776,7 @@ If target is hit atleast once by a ranged weapon with this special ability, targ
 
 **Set** *on* **Fire**, assault weapons
 
-Any unit base hit atleast once in assault by a unit with this special is set on fire. See continous damage.
+Any unit hit atleast once in assault by a unit with this special is set on fire. See continous damage.
 
 
 **(minor) Acid**, ranged weapons
@@ -775,7 +787,7 @@ If target is hit by a ranged weapon with this special ability, apply (minor) aci
 
 Apply one minor Acid to an any enemy unit for each N successfull assault hits. If N=2 this means you may place one minor acid token for every 2nd successful assault die you do. For Minor acid, see continoius damage.
 
-**Acid Resistance[N+]** Before taking damage from acid of any kind, roll a die per acid token. Remove one minor acid token or reduce one acid to minor acid, per die above N.
+**Acid Resistance[N+]** In 1st healing phase, roll a die per acid token. Remove one minor acid token or reduce one acid to minor acid, per die above N.
 
 **Poison[N]**, ranged weapons
 
@@ -785,7 +797,7 @@ If target is hit by a ranged weapon with this special ability, apply Poison[N] t
 
 **Poison[M][1 for N]**, assault weapons
 
-Apply one Poison[M] to an enemy unit base for each N successful assault hits. If N=2 this means you may place one Poison[M] token per 2nd hit. For poison, see continous damage.
+Apply one Poison[M] to an enemy unit for each N successful assault hits. If N=2 this means you may place one Poison[M] token per 2nd hit. For poison, see continous damage.
 
 
 
@@ -824,7 +836,7 @@ Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
 
 While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror,
 
-While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden),
+While hidden replace the unit with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden),
 
 You stay hidden until you reveal your self, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. Cloacking devices stay hidden even if in clear terrain, while all others sources of hidden abilities are revealed if they are in slow or fast in clear terrain within line of sight to an enemy.
 
@@ -832,7 +844,7 @@ If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of range
 
 Reveal order: Place your unit within 2 hexes of the hidden token and gain reveal bonuses. In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses"
 
-**Hide[terrain]**
+**Hide\[terrain\]**
 If your unit have a hide action order available: remove your unit from the board, replace it with a hidden token. Only works in given terrain", 
 
 	    
@@ -856,12 +868,12 @@ Note that
 
 **Acid** **Cloud** [Minor] 
 
-Area(6+) roll 1 die per model in hex. At 6+ place a minor acid on the unit base.
+Area(6+) roll 1 die per model in hex. At 6+ place a minor acid on the unit.
 
 
 **Acid** **Cloud** [Major] 
 
-Roll a die per unit base in hex. At 6+ place a regular acid on the unit base.
+Roll a die per unit in hex. At 6+ place a regular acid on the unit.
 
 
 
@@ -871,9 +883,10 @@ Roll a die per unit base in hex. At 6+ place a regular acid on the unit base.
 
 **Hex** **on** **Fire**\
 When setting a hex on fire, place a smoke and fire token in the hex.
-When encountering a fire, Roll 1 die per unit base, at 6+ set that unit base on fire.
+When encountering a fire, Roll 1 die per unit, at 6+ set that unit on fire.
 
-
+**Smoke**
+Blocks line of sight and gives to-hit penalties, which stacks with other terrain features.
 
 
 
@@ -884,7 +897,7 @@ Remove one Cloud or smoke in each hex
 
 Remove one fire token in a hex and replace any forest in such a hex with rough terrain.
 
-Remove one shaken token from each unit base.
+Remove one shaken token from each unit.
 
 
 
@@ -893,11 +906,16 @@ Remove one shaken token from each unit base.
 
 *Orks*
 
-Reroll Assault:N
+**Reroll** **Assault[N]**
 Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll N dice per wave of rerolls. Thus N may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls.
 
 
 *Dwarfs*
 
-Endurence tokens may be spend in the following way:", "1. Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model')","2. After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.","3. If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage"]
+**Endurence tokens**
+Endurence tokens may be spend in the following way:", 
+
+- Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model'. Note that the original bleed[4] is removed when you get the 'kill 1 model', and it is then replaced with a fresh bleed from you other use of the endurence token). 
+- After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.
+- If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage
 

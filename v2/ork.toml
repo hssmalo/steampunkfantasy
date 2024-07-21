@@ -14,7 +14,7 @@
     cost.xp = 12
     cost.cp = 2
     armor = [0, 0, 0, 0]
-    special = ["Forward Positon[1]", "Regneration[3]: Heal[3, self, Healing 2]", "While unconcious, you gain  Improved Regeneration[6]=Heal[6, self, Healing 1] of regenration[3]. But troll does no action while unconcious (and do not fire its weapon). Count as crippled for victory purposes while unconcious. In addition, if not dead: remove unconcious in Healing 2 phase", "Acid resistance[5+]", "Poison Resistance[2]", "May have a maximum of 1 unconcious token", "Always fire: The troll Allways fire its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase.", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
+    special = ["Forward Position[1]", "Regeneration[3]: Heal[3, self, 1st Healing]", "While unconscious, you gain imporeved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase", "Acid resistance[5+]", "Poison Resistance[2]", "May have a maximum of 1 unconscious token", "Always fire: The troll Always fires its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it unconcious", "Terrible Shot: -2 to hit with ranged weapons", "Out of ammo: At the end of the game, the troll runs out of ammo"]
 
         [ork.units.troll.orders.movement]
         slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
@@ -102,7 +102,7 @@
 	  [ork.units.speedhead.damage_tables]
 	  regular = [ "1-4: Light damage[d6]",
 	  	  "5-8: Critical Damage[d6], +1 on future damage",
-		  "9+: unit destroied",]
+		  "9+: unit destroyed",]
 	  light= [ "1-4: +1 on future damage", "5-6: Unit Shaken", ]
 	  critical = [ "1-3: x3 light damage[d6]",
 	  	   "4: Cannot rotate",
@@ -111,7 +111,7 @@
 	   crew = [ "4-5: jammed",
 	   	"6-7: as 4-5, shaken",
 		"8-11: as 6-7, +3 to future crew damage",
-		"12: Unit destroied",]
+		"12: Unit destroyed",]
 
     [ork.units.hammerhead]
     race = "ork"
@@ -125,7 +125,7 @@
     	  regular = [ "1-4: Light damage[d6]", "5-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
     	  light = [ "1-4: +1 on all future damage", "5-6: unit shaken",]
     	  critical = [ "1-3: Light damage[d6], 3 times", "4: Unit cannot rotate Left", "5: Unit Cannot rotate Right", "6: Harpoon guns destroyed.",]
-    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied"]
+    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed"]
 
     	  [ork.units.hammerhead.orders.fire]
 	  still = [[ "Load", "-"], [ "Fire", "-"]]
@@ -172,13 +172,13 @@
     size = "Large"
     cost.ip = 8
     armor = [8,7,7,6]
-    special = ["Transport[2]: may transport up too 2 infanteri", "unload all infanteri in any gunnery phase: place up to 1 infantri in the same, and the rest in an empty adject hex"]
+    special = ["Transport[2]: may transport up to 2 infantry", "unload all infantry in any movement phase: place up to 1 infantry in the same hex as the ending hex of the battlewagon, and the rest in an adjacent hex. Enter assault if occupied by en enemy. Put the infantry in either slow or still. Threat all movement order up to this point as - for the unloaded infantery."]
 
     	  [ork.units.battlewagon.damage_tables]
     	  regular = [ "1-4: Light damage[d6]", "5-8: Critical Damage, +1 on all future damage", "9+: unit destroyed",]
     	  light = [ "1-4: +1 on all future damage", "5-6: unit shaken",]
     	  critical = [ "1-3: Light damage[d6], 3 times", "4-5: Unit shaken", "6: Unit set on fire",]
-    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied"]
+    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed"]
 
     	  [ork.units.battlewagon.orders.fire]
 	  still = [[ "Load", "-"], [ "Fire", "-"], ["-", "Fire"],["-", "Aim"], ["Aim", "-"]]
@@ -378,7 +378,7 @@
 	Regular = [
 		  "1-4: Light Damage[d6]",
 	 	  "4-8: +1 to future damage, Critical Damage[d6]",
-		  "9+: Unit Destroied"]
+		  "9+: Unit Destroyed"]
 	Light = [ "1-4: +1 to future damage",
 	      "5-6: Unit shaken"]
 	Critical = [
@@ -391,7 +391,7 @@
 	     "4-5: Jammed",
 	     "6-7: as 4-5, shaken",
 	     "8-11: as 6-7, +3 to future crew damage",
-	     "12: Unit destroied"]
+	     "12: Unit destroyed"]
 	
 
 
@@ -529,7 +529,7 @@
 
    equipments = ["harpoon_gun_free","harpoon_gun_free","harpoon_gun_free","harpoon_gun_free",]
    equipments_limit = ["independent:∞"]
-   special = ["All 4 harpoon gun must fire at same ange-sector", "Destroy buildings: this tank may enter buildings. If so replace the building with a ruin and enter the hex. Carry out an assault if neccessary"]
+   special = ["All 4 harpoon gun must fire at same sector", "Destroy buildings: If entering a hex with a bilding, replace the building with a ruin and enter the hex. Carry out an assault if neccessary"]
 
     	  [ork.models.hammerhead.assault]
 	  strength = [12, 8, 8, 8]
@@ -549,7 +549,7 @@
 
    equipments = ["spear_shooter", "big_gun", "grenade_launcher"]
    equipments_limit = ["independent:∞"]
-   special = ["Fire all weapons simultainiusly"]
+   special = ["Fire all weapons simultaneously"]
 
     	  [ork.models.battlewagon.assault]
 	  strength = [10, 8, 8, 8]
@@ -656,7 +656,7 @@
         angle = [true, false, false, false]
         damage = "d10"
         ap = 3
-        special = ["Fires once at all models, friends or foe, within long-range and within forward arc.", "Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"]
+        special = ["Fires once at all models, friends or foe, within long-range and within forward arc.", "Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers", "Replace any forrest at point blank range with a Rough terrain"]
 
 
     [ork.equipments.ork_musket]
@@ -797,7 +797,7 @@
     ]
     	[ork.equipments.clockwork_spear.assault]
 	damage.replace = "d8"
-	special.append = "Cunning[1 for 2]"
+	special.append = "Cunning assault[1 for 2]"
 
 
     [ork.equipments.clockwork_power_spear]
@@ -810,7 +810,7 @@
     ]
     	[ork.equipments.clockwork_power_spear.assault]
 	damage.replace = "d12"
-	special.append = "Cunning[1 for 2]"
+	special.append = "Cunning assault[1 for 2]"
 	ap.replace = 3
         deflection.add = [1, 0, 0, 0]
         deflection_die.replace = "6+"
@@ -933,13 +933,15 @@
    name = "Grenade Sling"
    race = "ork"
    cost.cp = 6	
-   requires =[["type: infantry"],
-   	    ["hands:1"]]
+   requires = [
+        ["type:infantry", "type: cavalery"],
+	["hands:1"]
+	]
 	    
    	[ork.equipments.grenade_sling.range]
 	range = 3
 	angle = [true, true, true, true]
-	special = ["Choose one hex within normal range, if fired from a unit with 3-4 models: Area(4+), if fired from a unit with 1-2 modesl: Area(5+)", "If combined with the pyro, the pyro gains standard range of 3 instead of 1.", "It is a 1 handed weapon but may not be combined with another sling"]
+	special = ["Choose one hex within normal range, if fired from a unit with 3-4 models: Area(4+), if fired from a unit with 1-2 models: Area(5+)", "If combined with the pyro, the pyro gains standard range of 3 instead of 1.", "It is a 1 handed weapon but may not be combined with another sling"]
 	damage = "d6"
 	ap = 6
 
@@ -1082,7 +1084,7 @@ damage = "d8 fire damage + d4 crew damage"
        [ork.equipments.grenade_launcher.range]
        range = 4
        angle = [true, true, true, true]	
-       special = ["Choose a hex within normal range, roll a die. At 5+ target the choosen hex, otherwise target a random adjent hex", "Area[2+]"]
+       special = ["Choose a hex within normal range, roll a die. At 5+ target the choosen hex, otherwise target a random adjacent hex", "Area[2+]"]
        damage = "d6"
        ap = 3
 

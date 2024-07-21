@@ -31,7 +31,7 @@ Assault Deflection: [0, 0, 0, 0] Die: \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -40,7 +40,7 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
 Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
@@ -69,14 +69,15 @@ still [Fire, -] \\
 still [-, Fire] \\
 still [Aim, -] \\
 still [-, Aim] \\
-all [fire (reserve), fire (reserve)] \\
+still [fire (res), fire (res)] \\
+slow [fire (res), fire (res)] \\
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 1-5: Kill 1 model \\
 6-8: Kill 1 Model, d6 Psychic damage \\
-9: Destroy unit base \\
+9: Destroy unit \\
 \ \\ {\bf psychic } \\
 4+: Unit Shaken \\
 
@@ -101,12 +102,13 @@ all [fire (reserve), fire (reserve)] \\
   Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
-\noindent 
+\noindent May move into difficult terrain without problem. However, may not enter buildings\\ 
+
 
 {\bf Quad Bike } \\
-Equipment: 1 x Gnome Gun, 1 x Light SMG \\
+Equipment: 1 x Light SMG \\
 Equipment Limits: [hands: 2, reserve:1, independent:∞] \\
-Type: [bio, quad bike, infantry, walks] \\
+Type: [bio, quad bike, infantry, wheeled] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
@@ -116,20 +118,11 @@ Assault Deflection: [1, 0, 0, 0] Die: 5+\\
 \ \\
 
 \ \\
-{\bf Gnome Gun } \\
-
-
-
-Range: 5  Angle: [True, True, True, True]: AP: 3: Damage:d6-1 \\
-
-
-
-
 {\bf Light SMG } \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
 Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
@@ -163,22 +156,16 @@ default fast [-, Flee, Flee] \\
 default slow [-, -, Flee] \\
 default still [-, -, A+Flee] \\
 \ \\ {\bf fire } \\
-all [Load, -] \\
-all [-, Load] \\
-all [Fire, -] \\
-all [Fire, Fire (reserve)] \\
-all [Fire (reserve), Fire] \\
-all [-, Fire] \\
-all [Aim, -] \\
-all [-, Aim] \\
-all [Fire (reserve), Fire (reserve)] \\
+still [Fire (res), Fire (res)] \\
+slow [Fire (res), Fire (res)] \\
+fast [Fire (res), Fire (res)] \\
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 1-5: Kill 1 model \\
 6-8: Kill 1 Model, d6 Psychic damage \\
-9: Destroy unit base \\
+9: Destroy unit \\
 \ \\ {\bf psychic } \\
 6+: Unit Shaken \\
 
@@ -249,20 +236,20 @@ default slow [-, -, -] \\
 
 \pagebreak\pagebreak
 
-\section{ Mechanical Badger }
+\section{ Mechanical Rat }
 
 \begin{tabular}{ll}
-  Name & Mechanical Badger \\
-  Size & medium\\
+  Name & Mechanical Rat \\
+  Size & small\\
   Cost & \\
-  Models & 1 x Mechanical Badger\\
+  Models & 1 x Mechanical Rat\\
   Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
 \noindent \\ 
 
 
-{\bf Mechanical Badger } \\
+{\bf Mechanical Rat } \\
 Equipment:  \\
 Equipment Limits: [independent:∞] \\
 Type: [drone, walks] \\
@@ -271,7 +258,7 @@ Cost: 0\\
 \ \\
 Assault: [3, 0, 0, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
-\indent Cunning assault[1 for 1]\\ 
+\indent Cunning assault[1 for 2]\\ 
  
 \ \\
 Can only enter play through tinkerer ability\\ 
@@ -333,7 +320,7 @@ Assault Deflection: [2, 1, 0, 0] Die: 5+\\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6 \\
+Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6 \\
 Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)\\ 
 
 
@@ -414,7 +401,7 @@ Assault Deflection: [0, 0, 0, 0] Die: \\
 
 
 
-Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+Range: 4  Angle: [True, False, False, False]: AP: 8 Damage:d6 (+2 if penetrating all armor) \\
 
 
 
@@ -494,7 +481,7 @@ Assault Deflection: [2, 0, 0, 0] Die: 5+\\
 
 
 
-Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+Range: 4  Angle: [True, False, False, False]: AP: 8 Damage:d6 (+2 if penetrating all armor) \\
 
 
 
@@ -521,6 +508,9 @@ slow [R, R, -] \\
 slow [F, L, -] \\
 slow [F, R] \\
 slow [B, -, -] \\
+slow [F, B, -] \\
+slow [L, F, B] \\
+slow [R, F, B] \\
 slow [F, -, -] \\
 slow [B, rev, -] \\
 still [L, -, -] \\
@@ -604,7 +594,7 @@ Assault Deflection: [4, 0, 0, 0] Die: 5+\\
 
 
 
-Range: 5  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+Range: 5  Angle: [True, False, False, False]: AP: 8 Damage:d6 (+3 if penetrating all armor) \\
 Enhanced Accurazy: +1 to hit\\ 
 
 
@@ -706,7 +696,7 @@ Assault Deflection: [2, 0, 0, 0] Die: 5+\\
 
 
 
-Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetrating all armor) \\
+Range: 4  Angle: [True, False, False, False]: AP: 8 Damage:d6 (+2 if penetrating all armor) \\
 
 
 
@@ -715,7 +705,7 @@ Range: 4  Angle: [True, False, False, False]: AP: 8: Damage:d6 (+2 if penetratin
 
 
 
-Range: 3  Angle: ['x4', 'x2', 'x2', '-']: AP: 3: Damage:d6 -1 \\
+Range: 3  Angle: ['x4', 'x3', 'x3', '-']: AP: 3 Damage:d6 -1 \\
 
 
 
@@ -810,15 +800,15 @@ Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: \\
 \indent  
 \ \\
-Quick fix: In aftermath this unit may either remove one shaken token or one +1 to future damage token\\ 
+Quick fix: Repair[1, self, 1st healing phase]\\ 
 
 \ \\
 {\bf Acidic Napalm Bomb } \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 0: Damage:n.a \\
-Choose a hex within range 2: Area(4+): minor acid and set target unit on fire\\ 
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
+Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
 
 
 
@@ -827,9 +817,9 @@ Choose a hex within range 2: Area(4+): minor acid and set target unit on fire\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 6: Damage:d6-1 \\
-Fire once at all enemy units within range and within one angle of fire\\ 
-If aim, instead use focus fire, roll 6 dice at same unit base\\ 
+Range: 3  Angle: [True, False, False, False]: AP: 6 Damage:d6-1 \\
+Fire once at all enemy units within range and within angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit\\ 
 Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
 
 
@@ -880,9 +870,9 @@ still flying [Fire, Aim] \\
 \ \\ {\bf regular } \\
 1-4: d6 light damage \\
 5-8: x3 d6 light damge \\
-9: Destroy unit base \\
+9: Destroy unit \\
 \ \\ {\bf light } \\
-1-4: +1 to future damgage \\
+1-4: +1 to future damage \\
 5-6: shaken \\
 \ \\ {\bf crew } \\
 as regular damage \\
@@ -898,24 +888,24 @@ as regular damage \\
 
 \pagebreak\section{Upgradeable Units}{\bf Tinkerer Helicpoter } \\
 Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
-Equipment Limits: [helicopter front:1, helicopter drop:1, helicopter side:1, independent: ∞] \\
+Equipment Limits: [helicopter front:1, helicopter drop:1, helicopter side:2, independent: ∞] \\
 Type: [bio crew, helicopter, flying, tinkerer] \\
 Replaces: [gnome helicopter] \\
-Cost: -4cp, 8xp\\
+Cost: -2cp, 6xp\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: \\
 \indent  
 \ \\
-Improved Quick fix: In aftermath this unit may remove up to two shaken tokens, two +1 to future damage token or one of each\\ 
+Improved Quick fix: In aftermath this unit may do two of the following: remove one +1 to future damage token, remove one shaken token, neutrilize one minor acid, extinguish one fire on self.\\ 
 
 \ \\
 {\bf Acidic Napalm Bomb } \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 0: Damage:n.a \\
-Choose a hex within range 2: Area(4+): minor acid and set target unit on fire\\ 
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
+Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
 
 
 
@@ -924,9 +914,9 @@ Choose a hex within range 2: Area(4+): minor acid and set target unit on fire\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 6: Damage:d6-1 \\
-Fire once at all enemy units within range and within one angle of fire\\ 
-If aim, instead use focus fire, roll 6 dice at same unit base\\ 
+Range: 3  Angle: [True, False, False, False]: AP: 6 Damage:d6-1 \\
+Fire once at all enemy units within range and within angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit\\ 
 Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
 
 
@@ -948,14 +938,14 @@ Assault Deflection: [0, 0, 0, 0] Die: \\
  
 \ \\
 Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)\\ 
-Unit base gains psycic resistance 1 as long as atleast one elite model is alive.\\ 
+Unit gains psycic resistance 1 as long as atleast one elite model is alive.\\ 
 
 \ \\
 {\bf Gnome Gun } \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -964,7 +954,7 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
 Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
@@ -975,7 +965,7 @@ Always treated as loaded\\
 
 
 
-Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:- \\
+Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:- \\
 Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 Poison[4]\\ 
@@ -987,7 +977,7 @@ Poison[4]\\
 
 
 
-Range: 1  Angle: [True, True, True, True]: AP: 0: Damage:- \\
+Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:- \\
 Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 Minor Acid\\ 
@@ -999,7 +989,7 @@ Minor Acid\\
 
 
 
-Range: 1  Angle: [True, True, True, True]: AP: 2: Damage:d8-2 \\
+Range: 1  Angle: [True, True, True, True]: AP: 2 Damage:d8-2 \\
 Reserve weapon: may use this weapon instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Only treated as loaded if your main gun is loaded.\\ 
 
@@ -1021,14 +1011,14 @@ Assault Deflection: [0, 0, 0, 0] Die: \\
 \indent Cunning assault[1 for 2]\\ 
  
 \ \\
-Once per game: May Launch Mechanical Badger: Place a mechanical badger unit in any of the surronding hexes. \\ 
+Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the surronding hexes which is not overcrowded. May not be put directly into close combat. \\ 
 
 \ \\
 {\bf Gnome Gun } \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6 \\
 
 
 
@@ -1037,7 +1027,36 @@ Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6 \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 1: Damage:d4-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+ 
+\ \\
+
+{\bf QuadBike Tinkerer } \\
+Equipment: 1 x Light SMG \\
+Equipment Limits: [hands:2, reserve:∞, independent:∞] \\
+Type: [bio, infantry, tinkerer, walks] \\
+Replaces: [quad bike] \\
+Cost: -3cp, 4xp\\
+\ \\
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [3, 0, 0, 0] Die: 5+\\
+\indent Cunning assault[1 for 2]\\ 
+ 
+\ \\
+Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the surronding hexes which is not overcrowded. May not be put directly into close combat. \\ 
+
+\ \\
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
 Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
@@ -1054,7 +1073,7 @@ Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 0: Damage:- \\
+Range: 4  Angle: [True, True, True, True]: AP: 0 Damage:- \\
 No regular damage\\ 
 Minor Acid\\ 
 
@@ -1087,7 +1106,7 @@ Requiers: [[type:infantry], [hands:2]] \\
 Cost: Upgrade all models for: 6cp \\
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 0: Damage:d4-2+d6 psycic damge + d4 crew damage \\
+Range: 4  Angle: [True, True, True, True]: AP: 0 Damage:d4-2+d6 psycic damge + d4 crew damage \\
 If you use the 'amplified fire' order, and if you hit the enemy unit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed one step\\ 
 
 
@@ -1106,9 +1125,9 @@ Requiers: [[type:tinkerer, type:elite], [type:infantry], [reserve:1]] \\
 Cost: Upgrade one model for: 2cp \\
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 0: Damage:d6 psycic damage + d4 crew damage \\
-Choose one hex (per model firing this weapon) within range: Area(5+)\\ 
-Poison[4]\\ 
+Range: 3  Angle: [True, True, True, True]: AP: 0 Damage:d6 psycic damage + d4 crew damage \\
+Choose one hex (per model firing this weapon) within normal range: Area(5+)\\ 
+Poison[6]\\ 
 Reserve weapon: may use this weapon instead of main gun if fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
@@ -1126,8 +1145,8 @@ Requiers: [[type: tinkerer], [type:helicopter], [helicopter side:1]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 0: Damage:d6 psycic damage + d4 crew damage \\
-Choose one hex within ragne: Area(5+)\\ 
+Range: 3  Angle: [True, True, True, True]: AP: 0 Damage:d6 psycic damage + d4 crew damage \\
+Choose one hex within range: Area(5+)\\ 
 Poison[4]\\ 
 
 
@@ -1141,11 +1160,12 @@ Poison[4]\\
 {\bf Experimental Plasma Gun } \\
 
 Requiers: [[type:tinkerer], [type:infantry], [hands:2]] \\
-Cost: Upgrade one model for: 6cp \\
+Cost: Upgrade one model for: 4cp \\
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 6: Damage:d12-3 \\
-If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carring the plasma gun first.\\ 
+Range: 4  Angle: [True, True, True, True]: AP: 6 Damage:d12-3 \\
+If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carring the plasma gun first.\\ 
+If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire\\ 
 
 
 
@@ -1158,11 +1178,13 @@ If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gu
 {\bf Helicopter Mounted Experimental Plasma Gun } \\
 
 Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
-Cost: Upgrade all models for: 6cp \\
+Cost: Upgrade all models for: 4cp \\
 
 
-Range: 6  Angle: [False, True, True, False]: AP: 6: Damage:d12-3 \\
-If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d6 fire damage to the helicopter\\ 
+Range: 6  Angle: [True, True, True, False]: AP: 6 Damage:d12-3 \\
+If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter\\ 
+If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire\\ 
+Difficutly firing forward: Get -1 to hit in forward direction\\ 
 
 
 
@@ -1177,7 +1199,7 @@ If the natural to-hit die is a 1 or 2 (regardless wether you hit or not), the gu
 Requiers: [[type:infantry], [hands:2]] \\
 Cost: Upgrade all models for: 6cp \\
 No regular damage\\ 
-When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon.\\ 
+When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon.\\ 
 
 
 
@@ -1204,11 +1226,26 @@ When firing, place three assault bot units with 4 models in an empty hex within 
 
 
 \ \\
-{\bf Medical Armor } \\
+{\bf Improved Medical Armor } \\
 
 Requiers: [[type:infantry], [independent:1]] \\
 Cost: Upgrade all models for: 2cp \\
-Unit gain Fire resistance 3, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
+Unit gain Fire resistance 6, Poison Resistance 6, minor acid resitance and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
+
+
+
+
+
+
+
+
+
+\ \\
+{\bf Medical Armor } \\
+
+Requiers: [[type:infantry], [independent:1]] \\
+Cost: Upgrade all models for: 1cp \\
+Unit gain Fire resistance 2, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
 
 
 
@@ -1234,5 +1271,103 @@ Assault deflection: +add [1, 0, 0, 0], Deflection die: replace 5+
 \\ 
 
 append Any enemy which is hit atleast once in assault is set on fire
+
+
+\ \\
+{\bf Improved Plasma Shield Generator } \\
+
+Requiers: [[type:infantry], [independent:1]] \\
+Cost: Upgrade all models for: 4cp \\
+Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)\\ 
+However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
+
+
+
+
+{\bf Assault} \ \\
+Assault deflection: +add [2, 0, 0, 0], Deflection die: replace 5+
+\\ 
+
+append Any enemy which is hit atleast once in assault is set on fire
+
+
+\ \\
+{\bf Experimental guided missile } \\
+
+Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: d4+d12  Angle: [True, True, True, True]: AP: 5 Damage:d6 + d6 psycic \\
+Minor Acid\\ 
+Guided: +4 to hit\\ 
+Do not need line of sight to target\\ 
+If you try to hit something longer than normal range, the missile hit the closed friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)\\ 
+If you roll a 1 on to hit, (regardeless of wether you hit or not), you are covered in minor acid\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Helicopter Mounted Experimental Nail Gun } \\
+
+Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 4  Angle: [True, True, True, False]: AP: 3 Damage:d6-2 \\
+Fire d12 shots each time it is fired at the same unit\\ 
+If you rolled atleast one 1 for to-hit, add +1 to future damage to self\\ 
+If you roll only a 1 for the number of shots you fire, the gun is destroied\\ 
+Difficult to fire forward: -1 to hit fireing forward\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Experimental Nail Gun } \\
+
+Requiers: [[type:tinkerer], [type:infantry]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 4  Angle: [True, True, True, False]: AP: 3 Damage:d6-2 \\
+Fire d12 shots each time it is fired at the same unit\\ 
+If you rolled atleast one 1 for to-hit, add +1 to future damage\\ 
+If you roll only a 1 for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Experimental Death Ray } \\
+
+Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 5  Angle: [True, True, True, False]: AP: 2 Damage:d6-6 \\
+Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token\\ 
+May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens\\ 
+In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add +1 to future damage to self, if you rolled atleast two 1, add 3 minor acid to selv, if you rolled atleast three 1, the helicopter explodes and is destroied\\ 
+Difficult to fire forward: -1 to hit fireing forward\\ 
+
+
+
+
+
+
 
 

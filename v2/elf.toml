@@ -257,7 +257,7 @@
 		     slow = [["360°","F", "360°"],
 	     	     	  ["360°", "B", "360°"], ["360°", "A", "F"], ["-", "-", "Help"]]
 		     still = [["360°", "A", "F"], ["360°", "-", "-"]]
-		     fast = [["360°","F", "F"], ["F", "360°", "F"],["F", "F", "360°"],["360°","F", "B"],["-", "Help", "Help"]]
+		     fast = [["360°","F", "F"], ["F", "360°", "F"],["F", "F", "360°"],["360°","F", "B"],["Help", "Help", "Help"]]
 
 		     default_slow = ["-", "-", "flee"]
 		     default_still = ["-", "-", "A,flee"]
@@ -270,10 +270,10 @@
 
 
 
-        [elf.units.velociraptor_riders]		
+        [elf.units.pachyephalosaurus_riders]		
 	race = "elf"
-	name = "VelociRaptor Riders"
-	models = ["velociraptor_rider", "velociraptor_rider", "velociraptor_rider"]
+	name = "Pachyephalosaurus Riders"
+	models = ["pachyephalosaurus_rider", "pachyephalosaurus_rider", "pachyephalosaurus_rider"]
 	size = "medium"
 	cost.mp = 4
 	cost.xp = 3
@@ -281,12 +281,12 @@
 	armor = [3,0,0,0]
 	special = ["Poison Resistance 2", "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only.", "Pre-assault retreat: 5+"]
 
-		     [elf.units.velociraptor_riders.orders.fire]
+		     [elf.units.pachyephalosaurus_riders.orders.fire]
 		     still = [["Fire", "Load"],["Load", "-"],[ "-", "Aim" ], ["-", "Fire"]]
 		     slow =  [[ "-", "Load"],["Load", "-"],[ "-", "Aim" ]]
 		     fast =  [[ "-", "Load"],["Load", "-"],[ "-", "Aim" ]]
 
-		     [elf.units.velociraptor_riders.orders.movement]
+		     [elf.units.pachyephalosaurus_riders.orders.movement]
 		     fast = [["360°","F","F"],["F","B","360°"],["F","F","360°"],["F","360°", "F"],["F","B","B,360°"],["F","F","F"],["F","F,360°","B"]]
 		     slow = [[ "360°","A","F"],[ "B","360°","-"]]
 		     still =[["360°","A","F"],["A","A","F"]]
@@ -297,7 +297,7 @@
 		     default_still = ["-", "-", "A+flee"]
 		     default_fast = ["-", "flee", "flee"]
 
-		     [elf.units.velociraptor_riders.damage_tables]
+		     [elf.units.pachyephalosaurus_riders.damage_tables]
 		     regular = ["2-3: bleed[4]","4+: kill 1 model, d4 psychic damage"]
 		     psychic = ["4+: shaken"]
 
@@ -439,7 +439,7 @@
 	     deflection_die = "5+"
 	     damage = "d6-2"
 	     ap = 2
-	     special = ["Cunnint Assault[1 for 2"]
+	     special = ["Cunning Assault[1 for 2"]
 
 
 	[elf.models.elf_infantry]
@@ -547,14 +547,14 @@
 	     special = ["Always attacks weakest point of armor", "Cunning Assault[1 for 3]"]
 
 
-	[elf.models.velociraptor_rider]
-	name = "Velociraptor Rider"
+	[elf.models.pachyephalosaurus_rider]
+	name = "Pachyephalosaurus Rider"
 	race = "elf"
 	modelitems = ["independent:∞"]
 	equipments = ["smg_free", "twin_guns"]
 	type = ["Bio", "Cavalry", "Walks"]
 
-	     [elf.models.velociraptor_rider.assault]
+	     [elf.models.pachyephalosaurus_rider.assault]
 	     strength = [2,1,1,1]
 	     strength_die = "5+"
 	     deflection = [1, 0, 0, 0]
@@ -599,17 +599,17 @@
 	     special = ["Cunning Assault[1 for 3]"]
 
 
-	[elf.models.elite_velociraptor_rider]
-	name = "Elite Velociraptor Rider"
+	[elf.models.elite_pachyephalosaurus_rider]
+	name = "Elite Pachyephalosaurus Rider"
 	race = "elf"
 	modelitems = ["independent:∞"]
 	equipments = ["smg_free", "twin_guns"]
 	type = ["Bio", "Cavalry", "Walks"]
-	replaces = ["velociraptor_rider"]
+	replaces = ["pachyephalosaurus_rider"]
 	cost.xp = 1
 	special = ["Good shot: +1", "Unit gain psycic resistance 1 while atleast one elite is alive"]
 
-	     [elf.models.elite_velociraptor_rider.assault]
+	     [elf.models.elite_pachyephalosaurus_rider.assault]
 	     strength = [4,2,2,1]
 	     strength_die = "5+"
 	     deflection = [2, 0, 0, 0]
@@ -731,6 +731,7 @@
     name = "Shriek SMG"
     race = "elf"
     requires = []
+    cost.cp = 2
 
         [elf.equipments.shriek_smg.range]
         range = 3
@@ -748,7 +749,6 @@
     name = "Shriek SMG"
     race = "elf"
     requires = []
-    cost.cp = 2
 
         [elf.equipments.shriek_smg_free.range]
         range = 3
@@ -808,7 +808,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d6-2"
 	     ap = "0"
-	     special = ["Ignore to-hit penalty (both self and taget) for moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range"]
+	     special = ["Ignore to-hit penalty (both self and taget) for moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded"]
 
 	     [elf.equipments.bow.orders_gained_fire]
 	     still= [['Fire', 'Fire']]
@@ -826,7 +826,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d6-2"
 	     ap = "0"
-	     special = ["Ignore to-hit penalty (both self and taget) moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range"]
+	     special = ["Ignore to-hit penalty (both self and taget) moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range", "Always treated as loaded"]
 
 
 
