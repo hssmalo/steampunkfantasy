@@ -1,0 +1,417 @@
+\pagebreak
+
+\section{ Troll }
+
+\begin{tabular}{ll}
+  Name & Troll \\
+  Size & huge\\
+  Models & 1 x Troll\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 14\\
+\end{tabular}
+
+Forward Position[1]\\ 
+Regeneration[3]: Heal[3, self, 1st Healing]\\ 
+While unconscious, you gain imporeved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase\\ 
+Acid resistance[5+]\\ 
+Poison Resistance[2]\\ 
+May have a maximum of 1 unconscious token\\ 
+Always fire: The troll Always fires its Troll Gattling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it unconcious\\ 
+Terrible Shot: -2 to hit with ranged weapons\\ 
+Out of ammo: At the end of the game, the troll runs out of ammo\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Troll } \\
+Equipment: 1 x Troll Gattling Gun \\
+Type: [monster, walks] \\
+
+Assault: [18, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d12 \\
+Assault Deflection: [6, 0, 0, 0] Die: 6+\\
+\indent Fear[8]\\ 
+Troll stench: Any unit entering assault with a troll gains one Poison[6] counter and takes d8 crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and crew damage only to units with a crew damage table\\ 
+ 
+
+
+
+{\bf Troll Gattling Gun } \\
+
+
+
+Range: 4  Angle: [True, False, False, False]: AP: 3 Damage:d10 \\
+Fires once at all models, friends or foe, within long-range and within forward arc.\\ 
+Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
+Replace any forrest at point blank range with a Rough terrain\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+4-9: +1 on future damage \\
+10-14: +1 for future damge, bleed[12] \\
+15-19: as 10-14 plus Troll unconscious \\
+20+: permanent dead \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ PowerSpear }
+
+\begin{tabular}{ll}
+  Name & Ork Infantry \\
+  Size & medium\\
+  Models & 4 x Ork Infantry\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 8\\
+\end{tabular}
+
+Take Cover[still][-2]\\ 
+Bad Shot: -1 to hit with range weapons\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Ork Infantry } \\
+Equipment: 1 x Clockwork Power Spear \\
+Type: [infantry, walks] \\
+
+Assault: [2, 2, 2, 2] Die: 6+ Armor Penetration: 3 Damage: d12 \\
+Assault Deflection: [1, 0, 0, 0] Die: 6+\\
+\indent {template.ability.reroll assault:3}\\ 
+Cunning assault[1 for 2]\\ 
+ 
+
+
+
+{\bf Clockwork Power Spear } \\
+
+
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit base \\
+ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ GrenadeSling }
+
+\begin{tabular}{ll}
+  Name & Ork Infantry \\
+  Size & medium\\
+  Models & 4 x Ork Infantry\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 10\\
+\end{tabular}
+
+Take Cover[still][-2]\\ 
+Bad Shot: -1 to hit with range weapons\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Ork Infantry } \\
+Equipment: 1 x Grenade Sling \\
+Type: [infantry, walks] \\
+
+Assault: [2, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: 6+\\
+\indent {template.ability.reroll assault:3}\\ 
+Cunning assault[1 for 2]\\ 
+ 
+
+
+
+{\bf Grenade Sling } \\
+
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 6 Damage:d6 \\
+Choose one hex within normal range, if fired from a unit with 3-4 models: Area(4+), if fired from a unit with 1-2 models: Area(5+)\\ 
+If combined with the pyro, the pyro gains standard range of 3 instead of 1.\\ 
+It is a 1 handed weapon but may not be combined with another sling\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit base \\
+ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ BattleWagon }
+
+\begin{tabular}{ll}
+  Name & Battlewagon \\
+  Size & Large\\
+  Models & 1 x Battlewagon\\
+  Armor & [8, 7, 7, 6]\\
+  Victory points & 24\\
+\end{tabular}
+
+Transport[2]: may transport up to 2 infantry\\ 
+unload all infantry in any movement phase: place up to 1 infantry in the same hex as the ending hex of the battlewagon, and the rest in an adjacent hex. Enter assault if occupied by en enemy. Put the infantry in either slow or still. Threat all movement order up to this point as - for the unloaded infantery.\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Battlewagon } \\
+Equipment: 1 x Spear Shooter, 1 x Big Gun, 1 x Grenade Launcher \\
+Type: [vehicle, mechanical, bio crew, tracks] \\
+
+Assault: [10, 8, 8, 8] Die: 6+ Armor Penetration: 2 Damage: d6 \\
+Assault Deflection: [0, 0, 0, 0] Die: 6+\\
+\indent {templates.ability.reroll assault:3}\\ 
+ 
+
+Fire all weapons simultaneously\\ 
+
+
+{\bf Spear Shooter } \\
+
+
+
+Range: 3  Angle: ['x2', 'x2', 'x2', 'x2']: AP: 2 Damage:d6-2 \\
+
+
+
+
+{\bf Big Gun } \\
+
+
+
+Range: 2  Angle: [True, False, False, False]: AP: 5 Damage:d12 \\
+Place two smoke tokens in the hex directly ahead of this unit\\ 
+
+
+
+
+{\bf Grenade Launcher } \\
+
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 3 Damage:d6 \\
+Choose a hex within normal range, roll a die. At 5+ target the choosen hex, otherwise target a random adjacent hex\\ 
+Area[2+]\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-4: Light damage[d6] \\
+5-8: Critical Damage, +1 on all future damage \\
+9+: unit destroyed, any transported units takes d6 regular damage and exit the vehicle \\
+ {\bf light } \\
+1-4: +1 on all future damage \\
+5-6: unit shaken \\
+ {\bf critical } \\
+1-3: Light damage[d6], 3 times \\
+4-5: Unit shaken \\
+6: Unit set on fire \\
+ {\bf crew } \\
+4-5: Jammed \\
+6-7: as 5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroyed \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Crushing HammerHead }
+
+\begin{tabular}{ll}
+  Name & HammerHead \\
+  Size & Large\\
+  Models & 1 x Hammerhead\\
+  Armor & [13, 8, 7, 7]\\
+  Victory points & 24\\
+\end{tabular}
+
+
+
+\subsection{ Models }
+
+\noindent {\bf Hammerhead } \\
+Equipment: 4 x Harpoon Gun \\
+Type: [vehicle, mechanical, bio crew, tracks] \\
+
+Assault: [12, 8, 8, 8] Die: 6+ Armor Penetration: 10 (from front), else 2 Damage: d8+3 (from front), else d8 \\
+Assault Deflection: [12, 2, 2, 2] Die: 6+\\
+\indent {templates.ability.reroll assault:6}\\ 
+Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead\\ 
+ 
+
+All 4 harpoon gun must fire at same sector\\ 
+Destroy buildings: If entering a hex with a bilding, replace the building with a ruin and enter the hex. Carry out an assault if neccessary\\ 
+
+
+{\bf Harpoon Gun } \\
+
+
+
+Range: 5  Angle: [True, False, False, False]: AP: 2 Damage:d6-2 \\
+If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault.\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-4: Light damage[d6] \\
+5-8: Critical Damage, +1 on all future damage \\
+9+: unit destroyed \\
+ {\bf light } \\
+1-4: +1 on all future damage \\
+5-6: unit shaken \\
+ {\bf critical } \\
+1-3: Light damage[d6], 3 times \\
+4: Unit cannot rotate \\
+5: Unit Cannot Move \\
+6: -5 to assault strength. \\
+ {\bf crew } \\
+4-5: Jammed \\
+6-7: as 5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroyed \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Grunt }
+
+\begin{tabular}{ll}
+  Name & Grunt \\
+  Size & medium\\
+  Models & 4 x Grunt\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 2\\
+\end{tabular}
+
+Forward Position[2]\\ 
+Cannot use ranged weapons\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Grunt } \\
+Equipment:  \\
+Type: [bio, grunt, walks] \\
+
+Assault: [2, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: -\\
+\indent {template.ability.reroll assault:3}\\ 
+Cunning assault[1 for 3]\\ 
+ 
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit base \\
+ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak

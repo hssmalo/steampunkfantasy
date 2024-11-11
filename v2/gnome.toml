@@ -206,15 +206,10 @@
 
         [gnome.units.ballista_drone.damage_tables]
         regular = ["2-3: +1 on future damge",
-            "4-5: +1 on future damage, d6 light damage",
-	    "6-7: +1 on future damage, annot move or rotate, speed set to still",
+            "4-5: +1 on future damage, shaken",
+	    "6-7: +1 on future damage, cannot move or rotate, speed set to still",
 	    "8: Unit destoried"]
      
-        light = [
-            "1-4+: +1 on future damage",
-	    "5-6: Unit shaken"
-        ]
-
 
 
     [gnome.units.ballista_tractor_markI]
@@ -252,10 +247,10 @@
 	      
 
 	[gnome.units.ballista_tractor_markI.damage_tables]
-	regular = [ "1-4: d6 Light Damage",
-		"5-8: +1 to future damage, d6 critical damage",
+	regular = [ "1-3: +1 to future damage",
+		"4: as below, shaken",
+		"5-8: as below, d6 critical damage",
 		"9: Unit destroied",]
-	light = [ "1-4: +1 to future damage", "5-6: Shaken",]
 	critical = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.", "6: set on fire"]
 	crew = [ "4-5: Weapon Jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
 
@@ -292,10 +287,10 @@
 	still = [["-", "Aim"]] 
 
 	[gnome.units.ballista_tractor_markII.damage_tables]
-	regular = [ "1-4: d6 Light Damage",
-		"5-8: +1 to future damage, d6 critical damage",
+	regular = [ "1-3: +1 to future damage",
+		"4: as below, shaken",
+		"5-8: as below, d6 critical damage",
 		"9: Unit destroied",]
-	light = [ "1-4: +1 to future damage", "5-6: Shaken",]
 	critical = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.","6: set on fire"]
 	crew = [ "4-5: Weapon Jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
 
@@ -331,10 +326,10 @@
 	still = [["-", "Aim"]] 
 
 	[gnome.units.ballista_tractor_MarkIII.damage_tables]
-	regular = [ "1-4: d6 Light Damage",
+	regular = [ "1-3: +1 to future damage",
+		"4: as below, shaken", 
 		"5-8: +1 to future damage, d6 critical damage",
 		"9: Unit destroied",]
-	light = [ "1-4: +1 to future damage", "5-6: Shaken",]
 	critical = [ "1-2: Shaken", "3: +1 to be hit, -1 to hit", "4: Rotate unit 180$^0$", "5: Place Poison Cloud[8] and smoke in this and all surronding hexes.","6: set on fire"]
 	crew = [ "4-5: Weapon Jammed", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
    
@@ -370,7 +365,9 @@
 		    ["L", "F", "F"],
 		    ["R", "F", "F"],
 		    ["F", "F", "B[slow]+360$^0$"],
-		    ["F", "F", "B[still]+360$^0$"]]
+		    ["F", "F", "B[still]+360$^0$"],
+		    ["F", "F", "F"],["F", "F", "F+D"], ["F", "D+F", "F"], ["F+D", "F", "F"],
+		    ["F", "F", "D"]]
 
 	default_still_flying = [["-", "-", "B[ground]"]]
 	default_slow_flying = [["-", "-", "B[ground]"]]
@@ -382,11 +379,7 @@
 	still_flying = [["Aim", "Fire"], ["Fire", "Aim"]]
 
         [gnome.units.gnome_helicopter.damage_tables]
-        regular = ["1-4: d6 light damage",
-            "5-8: x3 d6 light damge",
-            "9: Destroy unit",
-        ]
-	light = ["1-4: +1 to future damage", "5-6: shaken"]
+        regular = ["1-3: +1 to future damage", "4-5: as below, shaken", "6-8: +3 to future damage, shaken", "9: Destroy unit"]
 	crew  = ["as regular damage"]
 
 #
@@ -575,7 +568,7 @@
     equipment_limit = ["helicopter_front:1", "helicopter_drop:1", "helicopter_side:2", "independent: ∞"]
     equipments = ["acidic_napalm_bomb", "helicopter_gattling_gun" ]
     type = ["bio_crew", "helicopter", "flying", "tinkerer"]
-    special = ["Improved Quick fix: In aftermath this unit may do two of the following: remove one +1 to future damage token, remove one shaken token, neutrilize one minor acid, extinguish one fire on self."]
+    special = ["Improved Quick fix: In aftermath this unit may do two of the following: remove one +1 to future damage token, remove one shaken token, neutrilize one minor acid, extinguish one fire on self.", "Immunity to shaken condition"]
     replaces = ["gnome_helicopter"]
     cost.xp = 6
     cost.cp = -2
@@ -949,7 +942,7 @@
     name = "Assault Bot Mortar"
     cost.cp = 6
     requires = [["type:infantry"],["hands:2"]]
-    special = ["No regular damage", "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."]
+    special = ["No regular damage", "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 6 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."]
 
 
     [gnome.equipments.assault_bot_mortar_vehicle]
@@ -1039,7 +1032,7 @@
              angle= [true, true, true, true]
              damage = "d6 + d6 psycic"
              ap = 5
-	     special = ["Minor Acid", "Guided: +4 to hit", "Do not need line of sight to target", "If you try to hit something longer than normal range, the missile hit the closed friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)", "If you roll a 1 on to hit, (regardeless of wether you hit or not), you are covered in minor acid"]
+	     special = ["Minor Acid", "Guided: +4 to hit", "Do not need line of sight to target", "If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)", "If you roll a 1 on to hit, (regardeless of wether you hit or not), you are covered in minor acid"]
 
 
 
@@ -1054,7 +1047,7 @@
              angle= [true, true, true, false]
              damage = "d6-2"
              ap = 3
-	     special = ["Fire d12 shots each time it is fired at the same unit", "If you rolled atleast one 1 for to-hit, add +1 to future damage to self", "If you roll only a 1 for the number of shots you fire, the gun is destroied","Difficult to fire forward: -1 to hit fireing forward"]
+	     special = ["Fire d12 shots each time it is fired at the same unit", "If you rolled atleast x1 one for to-hit, add +1 to future damage to self", "If you roll only a 1 for the number of shots you fire, the gun is destroied","Difficult to fire forward: -1 to hit fireing forward"]
 
 
 
@@ -1069,21 +1062,20 @@
              angle= [true, true, true, false]
              damage = "d6-2"
              ap = 3
-	     special = ["Fire d12 shots each time it is fired at the same unit", "If you rolled atleast one 1 for to-hit, add +1 to future damage", "If you roll only a 1 for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun"]
+	     special = ["Fire d12 shots each time and all at the same unit", "If you rolled atleast x1 one for to-hit, add +1 to future damage", "If you roll only a one for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun"]
 
 
     [gnome.equipments.experimental_death_ray]
     race = "gnome"
     name = "Experimental Death Ray"
     cost.cp = 2
-    requires = [["type:tinkerer"],["type:helicopter"],["helicopter_side:1"]]
+    requires = [["type:tinkerer"],["type:infantry"]]
 
     	     [gnome.equipments.experimental_death_ray.range]
-	     range = 5
+	     range = 8
              angle= [true, true, true, false]
              damage = "d6-6"
              ap = 2
-	     special = ["Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token", "May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens", "In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add +1 to future damage to self, if you rolled atleast two 1, add 3 minor acid to selv, if you rolled atleast three 1, the helicopter explodes and is destroied", "Difficult to fire forward: -1 to hit fireing forward"]
-
+	     special = ["Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token", "May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens", "If you hit your enemy, roll for damage 4 times", "In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast x1 one, add minor accid to self, if you rolled atleast x2 ones, death ray explodes and unit is killed."]
 
 

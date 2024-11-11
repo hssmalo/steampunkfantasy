@@ -1,0 +1,60 @@
+\documentclass[frontgrid,a4,12pt]{flacards}
+
+
+% \usepackage[scaled=0.85]{beramono}
+\usepackage{color}
+
+%\usepackage{etoolbox}
+%\pretocmd{\card}{\def\curhint{#1}}{}{}
+
+\pagesetup{3}{3}
+
+
+\setlength{\cardwidth}{63mm}
+\setlength{\cardheight}{88mm}
+
+\renewcommand{\cardtextstylef}{\small}
+\renewcommand{\cardtextstyleb}{\small}
+
+\renewcommand{\brfoot}{}
+
+% Temporarily disable new lines when displaying the riddle on the back
+
+\renewcommand{\frfoot}{}
+% \renewcommand{\blfoot}{\footnotesize chris}
+% \renewcommand{\blfoot}{\footnotesize Ashley}
+% \renewcommand{\blfoot}{\footnotesize Casandra}
+% \renewcommand{\blfoot}{\footnotesize Jessica}
+
+
+
+
+\renewcommand{\flhead}{}
+\renewcommand{\brhead}{}
+
+\begin{document}
+
+%\include{Gnome_Infantry_cards}
+%\include{Quad_Bike_cards}
+%\include{Gnome_Helicopter_cards}
+%\include{Mechanical_Rat_cards}
+%\include{Assault_bots_cards}
+
+\include{Armored_Unicorn_Rider_cards}
+\include{Elf_infantry_cards}
+\include{Tattoo_Ink_cards}
+\include{Pachyephalosaurus_Riders_cards}
+\include{Pegasus_Rider_cards}
+
+%\include{Battlewagon_cards}
+%\include{Grunt_cards}
+%\include{HammerHead_cards}
+%\include{Ork_infantry_cards}
+%\include{Troll_cards}
+
+%\include{Dwarf_infantry_cards}
+%\include{SteamPowerArmor_Cards}
+%\include{Tamed_Balrog_cards}
+%\include{Zap_cards}
+
+\end{document}

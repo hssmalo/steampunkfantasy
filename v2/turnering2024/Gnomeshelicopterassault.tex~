@@ -1,0 +1,462 @@
+\pagebreak
+
+\section{ Gnome Helicopter }
+
+\begin{tabular}{ll}
+  Name & Gnome Helicopter \\
+  Size & large\\
+  Models & 1 x Gnome Helicpoter\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 20\\
+\end{tabular}
+
+Fires, loads and aim all weapons simultaniously\\ 
+Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Gnome Helicpoter } \\
+Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
+Type: [bio crew, helicopter, flying] \\
+
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 0, 0, 0] Die: \\
+\indent  
+
+Quick fix: Repair[1, self, 1st healing phase]\\ 
+
+
+{\bf Acidic Napalm Bomb } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
+Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
+
+
+
+
+{\bf Helicopter Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False]: AP: 6 Damage:d6-1 \\
+Fire once at all enemy units within range and within angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit\\ 
+Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-4: d6 light damage \\
+5-8: x3 d6 light damge \\
+9: Destroy unit \\
+ {\bf light } \\
+1-4: +1 to future damage \\
+5-6: shaken \\
+ {\bf crew } \\
+as regular damage \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Green Hell Riders }
+
+\begin{tabular}{ll}
+  Name & Quad Bike \\
+  Size & medium\\
+  Models & 1 x QuadBike Tinkerer, 3 x Quad Bike\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 11\\
+\end{tabular}
+
+May move into difficult terrain without problem. However, may not enter buildings\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf QuadBike Tinkerer } \\
+Equipment: 1 x Light SMG, 1 x Green Gas Launcer \\
+Type: [bio, infantry, tinkerer, walks] \\
+
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [3, 0, 0, 0] Die: 5+\\
+\indent Cunning assault[1 for 2]\\ 
+ 
+
+Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the surronding hexes which is not overcrowded. May not be put directly into close combat. \\ 
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Green Gas Launcer } \\
+
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 0 Damage:d6 psycic damage + d4 crew damage \\
+Choose one hex (per model firing this weapon) within normal range: Area(5+)\\ 
+Poison[6]\\ 
+Reserve weapon: may use this weapon instead of main gun if fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+ 
+
+
+
+\noindent {\bf Quad Bike } \\
+Equipment: 1 x Light SMG \\
+Type: [bio, quad bike, infantry, wheeled] \\
+
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 3 Damage: d6-1 \\
+Assault Deflection: [1, 0, 0, 0] Die: 5+\\
+\indent  
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit \\
+ {\bf psychic } \\
+6+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ PlasmaShield Riders }
+
+\begin{tabular}{ll}
+  Name & Quad Bike \\
+  Size & medium\\
+  Models & 1 x QuadBike Tinkerer, 3 x Quad Bike\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 11\\
+\end{tabular}
+
+May move into difficult terrain without problem. However, may not enter buildings\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf QuadBike Tinkerer } \\
+Equipment: 1 x Light SMG, 1 x Plasma Shield Generator \\
+Type: [bio, infantry, tinkerer, walks] \\
+
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [4, 0, 0, 0] Die: 5+\\
+\indent Cunning assault[1 for 2]\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+ 
+
+Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the surronding hexes which is not overcrowded. May not be put directly into close combat. \\ 
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Plasma Shield Generator } \\
+
+Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)\\ 
+However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
+
+
+
+
+
+ 
+
+
+
+\noindent {\bf Quad Bike } \\
+Equipment: 1 x Light SMG, 1 x Plasma Shield Generator \\
+Type: [bio, quad bike, infantry, wheeled] \\
+
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 3 Damage: d6-1 \\
+Assault Deflection: [2, 0, 0, 0] Die: 5+\\
+\indent Any enemy which is hit atleast once in assault is set on fire\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+Any enemy which is hit atleast once in assault is set on fire\\ 
+ 
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Plasma Shield Generator } \\
+
+Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)\\ 
+However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
+
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit \\
+ {\bf psychic } \\
+6+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Gnome Infantry 1 }
+
+\begin{tabular}{ll}
+  Name & Gnome Infantry \\
+  Size & medium\\
+  Models & 4 x Gnome Infantry\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 10\\
+\end{tabular}
+
+Take-Cover[still][-2]\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Gnome Infantry } \\
+Equipment: 1 x Light SMG, 1 x Assault Bot Mortar \\
+Type: [bio, infantry, walks] \\
+
+Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+
+
+
+{\bf Light SMG } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
+Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Assault Bot Mortar } \\
+
+No regular damage\\ 
+When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 6 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon.\\ 
+
+
+
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+1-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit \\
+ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Assault Bots 1 }
+
+\begin{tabular}{ll}
+  Name & Assault Bots \\
+  Size & medium\\
+  Models & 4 x Assault Bot\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 0\\
+\end{tabular}
+
+\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Assault Bot } \\
+Equipment:  \\
+Type: [drone, walks] \\
+
+Assault: [1, 0, 0, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+
+Can only enter play through mortars or drop weapons\\ 
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+0-7: Kill 1 model \\
+8: Destroy Unit \\
+ {\bf psychic } \\
+4+: Unit Shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Mechanical Rat 1 }
+
+\begin{tabular}{ll}
+  Name & Mechanical Rat \\
+  Size & small\\
+  Models & 1 x Mechanical Rat\\
+  Armor & [0, 0, 0, 0]\\
+  Victory points & 0\\
+\end{tabular}
+
+\\ 
+
+
+\subsection{ Models }
+
+\noindent {\bf Mechanical Rat } \\
+Equipment:  \\
+Type: [drone, walks] \\
+
+Assault: [3, 0, 0, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: \\
+\indent Cunning assault[1 for 2]\\ 
+ 
+
+Can only enter play through tinkerer ability\\ 
+
+
+ 
+
+
+
+
+
+{\bf Damage Tables} \\
+ {\bf regular } \\
+0+: Destroy Unit \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak

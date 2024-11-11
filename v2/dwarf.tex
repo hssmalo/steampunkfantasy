@@ -211,8 +211,6 @@ default still \\
 \ \\ {\bf fire } \\
 slow [Fire, -] \\
 slow [-, Fire] \\
-slow [Aim, -] \\
-slow [-, Aim] \\
 slow [Load, -] \\
 slow [-, Load] \\
 still [Fire, -] \\
@@ -225,7 +223,7 @@ still [-, Load] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-2: bleed 4 \\
+1-2: bleed[4] \\
 3-5: kill 1 model \\
 6-9: Kill 1 model, roll d6 psychic damage \\
 10+: Unit killed \\
@@ -376,12 +374,8 @@ default flying fast \\
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 1-4: +1 on future damage \\
-5-7:+1 on future damage, d6 light damage \\
-8: as 5-7 pluss shaken \\
+5-8:as below, d6-2 damage to each unit transported by this unit. \\
 9: unit and all transported units killed \\
-\ \\ {\bf light } \\
-1-3: +1 on future damage \\
-4-6: d6-2 damage to each unit transported by this unit. Ignore any armor if any \\
 
 
 
@@ -499,8 +493,7 @@ Cost: 0\\
 \ \\
 Assault: [2, 2, 2, 2] Die: 4+ Armor Penetration: 3 Damage: d6-2 \\
 Assault Deflection: [2, 0, 0, 0] Die: 4+\\
-\indent Fear[6]\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -563,17 +556,15 @@ still [-, Load] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf critical } \\
-1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
-2: Cannot Rotate, Looses Fear \\
+1: -1 to-hit, +1 to-be-hit \\
+2: Cannot Rotate \\
 3: Cannot Move \\
-4-5: x3 Light Damage(d6) \\
+4-5: +3 to future damage \\
 6: set on Fire \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: unit shaken \\
 \ \\ {\bf regular } \\
-1-4: light damage [d6] \\
-5-8: Critical damage[d6], +1 on future damage \\
+1-3: +1 to future damge \\
+4: as below, shaken \\
+5-8: as below, Critical damage[d6] \\
 9+: Destroyed \\
 \ \\ {\bf crew } \\
 4-5: Weapon Jammed \\
@@ -614,8 +605,7 @@ Cost: 0\\
 \ \\
 Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 4+\\
-\indent Fear[6]\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -676,15 +666,12 @@ still [Load Unstable, -] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf critical } \\
-1-2: 3x d6 light damage \\
-3: +1 on future damage (+2 in total) \\
-4: Cannot Move \\
+1-4: +3 to futre damage \\
+5: Cannot Move \\
 6: set on Fire \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: unit shaken \\
 \ \\ {\bf regular } \\
-1-4: light damage [d6] \\
+1-3: +1 on future damage \\
+4: as below, shaken \\
 5-8: Critical damage[d6], +1 on future damage \\
 9+: Destroyed \\
 \ \\ {\bf crew } \\
@@ -728,8 +715,7 @@ Cost: 0\\
 \ \\
 Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 1, 0, 0] Die: 4+\\
-\indent Fear[6]\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -809,17 +795,15 @@ still [Load, Aim] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf critical } \\
-1-2: -1 to hit, +1 to-be-hit (randed and assault) \\
+1-2: -1 to hit, +1 to-be-hit \\
 3: Cannot Rotate \\
-4: Cannot Move, Looses Fear \\
-5: x3 d6 light damage \\
+4: Cannot Move \\
+5: +3 to future damage \\
 6: set on fire \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: unit shaken \\
 \ \\ {\bf regular } \\
-1-5: d6 light damage \\
-6-9: d6 critical damage, +1 on future damage \\
+1-4: +1 to future damage \\
+5: as below, shaken \\
+6-9: as below, d6 critical damage \\
 10+: Destroyed \\
 \ \\ {\bf crew } \\
 4-5: Weapon Jammed \\
@@ -918,14 +902,10 @@ still [Aim, -] \\
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf light } \\
-1-2: +1 to future damage \\
-3-5: unit shaken \\
-6: Engine on fire: set on fire, and cannot rotate \\
 \ \\ {\bf regular } \\
 1-4: +1 on future damage, \\
-5-8: +1 to future damage, d6 light damage \\
-9-13: +2 to future damage, d6 light damage \\
+5-8: +1 to future damge, shaken \\
+9-13: +2 to future damage, unit shaken, set on fire \\
 14+: Unit destroied \\
 \ \\ {\bf crew } \\
 4-7: shaken \\
@@ -1050,7 +1030,7 @@ Equipment: 1 x Heavy Musket \\
 Equipment Limits: [hands:2, shared:1, independent:∞] \\
 Type: [elite, steampowerarmor, walks, bio] \\
 Replaces: [steampowerarmor] \\
-Cost: 3xp\\
+Cost: 6xp\\
 \ \\
 Assault: [4, 3, 3, 3] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 1, 1, 1] Die: 4+\\
@@ -1079,7 +1059,7 @@ Equipment: 1 x Heavy Musket \\
 Equipment Limits: [hands:2, shared:1, independent:∞] \\
 Type: [elite, steampowerarmor, walks, bio] \\
 Replaces: [steampowerarmor] \\
-Cost: 2xp\\
+Cost: 6xp\\
 \ \\
 Assault: [4, 3, 3, 3] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [4, 1, 1, 1] Die: 4+\\
@@ -1088,6 +1068,7 @@ Assault Deflection: [4, 1, 1, 1] Die: 4+\\
 \ \\
 unit gains psycic resistance 2 as long as 1 battle medic is alive\\ 
 Unit gains: Heal[1, any, Healing 1]\\ 
+Unit gains 1 endurence token and this model counts as elites for life of vest suport. See general rules for effect\\ 
 
 \ \\
 {\bf Heavy Musket } \\
@@ -1380,6 +1361,21 @@ Requir atleast 2 alive models in unit to be used\\
 Requiers: [[type: infantry, type:steampowerarmor], [independent:1]] \\
 Cost: Upgrade all models for: 2cp \\
 Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
+
+
+
+
+
+
+
+
+
+\ \\
+{\bf Stabilizer } \\
+
+Requiers: [[type: infantry, type:steampowerarmor], [independent:1]] \\
+Cost: Upgrade all models for: 4cp \\
+All guns gain Enhanced accurazy. +1 to hit\\ 
 
 
 

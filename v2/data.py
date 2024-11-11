@@ -220,7 +220,7 @@ class Team:
         for name, unit in self.units.items():
             print('Working on ', name)
                 
-            txt = txt + unit.write_info(long_=long_, format_=format_)
+            txt = txt + unit.write_info(long_=long_, format_=format_, nickname=name)
 
             if format_ == 'tex':
                 txt = txt + '\\pagebreak'
@@ -421,12 +421,20 @@ class Unit:
 
     
     #generate info needed to create latex files
-    def generate_neat_dict(self, long_=True, format_='tex'):
+    def generate_neat_dict(self, long_=True, format_='tex', nickname=None):
         translation = {39: None}
         self.neat_dict = {}
         #self.neat_dict['race'] = self.race
         self.neat_dict['models'] = self.models
         self.neat_dict['name'] = self.info.as_dict()['name']
+        if nickname:
+            self.neat_dict['nickname'] = nickname
+        else:
+            self.neat_dict['nickname'] = self.info.as_dict()['name']
+            
+        #self.neat_dict['nickname'] = self.nickname
+
+            
         self.neat_dict['size'] = self.info.size
         try:
             self.neat_dict['cost'] = self.cost
@@ -509,7 +517,7 @@ class Unit:
         self.neat_dict['damage_table'] = damage_tables_txt
 
         
-    def write_info(self, long_=True, format_='tex'):
+    def write_info(self, long_=True, format_='tex', nickname=None):
         if format_ == 'tex':
             if long_:
                 with open(basic_path +'v2/unit_long.tex', 'r') as fid:
@@ -528,7 +536,7 @@ class Unit:
                 with open(basic_path +'v2/unit_short.tex', 'r') as fid:
                     unit_short = fid.read()
                 
-                self.generate_neat_dict(long_ = False, format_='tex')
+                self.generate_neat_dict(long_ = False, format_='tex', nickname = nickname)
 
                 unit_short = unit_short.format(**self.neat_dict)
 
@@ -704,7 +712,7 @@ class Model:
         self.neat_dict['deflection_die'] = self.assault.deflection_die
         self.neat_dict['deflection'] = str(self.assault.deflection).translate(translation)
         self.neat_dict['assault_ap'] = self.assault.ap
-        self.neat_dict['assault_damage'] = self.info.assault.damage
+        self.neat_dict['assault_damage'] = self.assault.damage
 
         try:
             replaces = str(self.info.replaces).translate(translation)

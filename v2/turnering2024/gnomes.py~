@@ -1,0 +1,16 @@
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+
+import data
+
+gnome = data.Race.from_toml("gnome")
+
+morten = data.Team("Mortens Gnomes")
+morten.add_unit(gnome.units.gnome_helicopter)
+morten.add_unit(gnome.units.quad_bike, name = "Green Hell Riders")
+morten.add_unit(gnome.units.quad_bike, name = "Plasma Shield")
+
+
+import IPython; IPython.embed()

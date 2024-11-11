@@ -29,8 +29,8 @@
 \chapter{Dwarf}
 \include{Dwarf}
 
-%\chapter{Elf}
-%\include{Elf}
+\chapter{Elf}
+\include{Elf}
 
 \chapter{Ork}
 \include{Ork}

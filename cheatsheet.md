@@ -8,43 +8,54 @@ Each turn contains the following steps:
 Apply damage \
 
 
-Trigger hex effect \
-- Movement 1 \
-
-Pre assault retreat/abilities\
+- Trigger hex effect \
+Movement 1 \
+Pre assault retreat\
 Pre assault abilities
 
 - Assault 1 \
 Post assault retreat\
 Apply damage \
 
-Trigger hex effect \
-- Movement 2 \
-Pre assault retreat/abilities \
+- Trigger hex effect \
+Movement 2 \
+Pre assault retreat \
+Pre assault abilities
 
 - Assault 2 \
 Post Assault retreat \
 Apply damage \
 
-Trigger hex effect \
-- Movement 3\
+- Trigger hex effect \
+Movement 3\
+Pre assault retreat \
 Pre assault abilities \
 
 
 - Assault 3\
 Post assault retreat \
-Trigger hex effect  \
 Apply damage \
 
 - Gunnery 2\
 Apply damage \
 
+- Healing/repear 1
+- Agony 0 (major acid, terror)\
+Apply damage 
 
-- Agony 0 (major acid, terror)
-- Agony 1 (minor acid)
-- Agony 2 (fire)
-- Agony 3 (poison)
-- Agony 4 (bleeding)
+- Agony 1 (minor acid)\
+Apply damage
+
+- Agony 2 (fire)\
+Apply damage
+
+- Agony 3 (poison)\
+Apply damage
+
+- Agony 4 (bleeding)\
+Apply damage
+
+- Healing/repair 2
 
 - Aftermath  (remove smoke, etc.)
 
@@ -79,39 +90,34 @@ Poison[N]: dN poison damage. Reduce poiosn one die step (12, 10, 8,6,4, 0)
 \pagebreak
 
 
-
-
-Terrain
+For movement and line of sight, se table below:
 --------              -----------------------------------------------------------------------------------------------------------------------------
 Clear                 No modifiers
-Mountains             2 movement points up, 1 down. 2 hight level, level 2 blocking terrain.
-Hills                 2 movement points up, 1 down. 1 hight level, level 1 blocking terrain.
-Forest                2 movement points to enter for vehicles, 1 for all other things.
+Mountains             tracked and wheeled: cannot enter
+Hills                 Level 1 blocking terrain 
+Forest                walks: enter freely, tracked and wheeled: enter at 2+
                       Level 0 blocking terrain
 Burned Forrest        Level 0 blocking terrain
-Ruins	              1 movement points to enter. Does not block line of sight
-Rough                 1 movement points to enter. Does not block line of sight
-Sand Dunes            2 movement point to enter. Level 0 blocking terrain
+Ruins	              Does not block line of sight
+Rough                 Does not block line of sight
+Sand Dunes            ELevel 0 blocking terrain
 *Advanced* *terrain*
-Swamp                 1 movement point to enter for medium and smaller, 
-                      +1/+2 movement points to enter for large/huge size
+Swamp                 medium and smaller enter and exit freely.
+                      large and huge: enter at 2+
                       Units with track or wheel in description may get stuck,
-                      at 1 or 2 on a d6, the unit cannot move this movement step, regardless of order
+                      exit: 3+
                       Does not block line of sight
-Building              2 movement points to enter for infantry,
-                      any other type cannot enter without a special rule
-		      Level 0 blocking terrain.
-Road                  If moving from a road to another hex with road, movement always cost 1.
+Building              Infantry enter freely
+                      any other type cannot enter without a special rule. Level 0 blocking terrain.
+Road                  If moving from a road to another hex with road, movement is always freely.
 Smoke                 Blocks line of sight 
                       Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
-River                 +1 movement point to enter		      
+River                 ???		      
 Water                 1 movement point to enter for ships, floating or flying
                       (and can only be entered while flying). Cannot be entered by any other way.
 --------              -----------------------------------------------------------------------------------------------------------------------------
 
-
-
-
+\pagebreak
 
                           to hit, to be hit  special
 ------------------------ ------- ---------- ---------------------
@@ -122,38 +128,43 @@ Rest                       +1      +1
 Setup speed                +1      +1
 Slow                        0       0
 Fast                       -1      -1
-Flying                     -1      -1         (stacks with speed)
+Flying                     -1      -1         (stacks with still, slow and fast)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1         Grants Evation(-1) with take cover benefit
-Burned Forrest              0      -1         Grants Evation(-1) with take cover benefit
-Building                    0      -1         Grants Evation(-1) with take cover benefit
-Ruins                       0      -1         Grants Evation(-1) with take cover benefit
-Rough Terrain	            0      -1         Grants Evation(-1) with take cover benefit
-Sand Dunes                  0      -1         Grants Evation(-1) with take cover benefit
+Forrest                     0      -1         Grants Evation(-2) with take cover benefit
+Burned Forrest              0      -1         Grants Evation(-2) with take cover benefit
+Building                    0      -1         Grants Evation(-2) with take cover benefit
+Ruins                       0      -1         Grants Evation(-2) with take cover benefit
+Rough Terrain	            0      -1         Grants Evation(-2) with take cover benefit
+Sand Dunes                  0      -1         Grants Evation(-2) with take cover benefit
 *Orders*
-Aim                        +2       0         (aim bonus last 1 round. If not applied next turn)
+Aim                        +2       0         (aim bonus last 1 round.)
 *Range*
 Point-Blank                +1       0         (range =1)
 Normal range                0       0         (within weapon range)
-Long range                 -1       0         (within max x2 of weapon range)
+Long range                 -2       0         (within max x2 of weapon range)
 *Angle*
 On-edge of firing-angle    -1       0
 *Size*
+Tiny                        0      -1
 HUGE                        0      +1
 *unit* *abilities*
 Good Shot                  +1       0
 Excellent Shot             +2       0
 Superb Shot                +3       0
 Bad Shot                   -1       0
-Steady                     +1       +1
+Terrible shot              -2       0
+Bad at long range          -2       0         To-hit penalty at long range.
+Steady                     +1      +1
 Camouflage\[terrain\]       0      -1         when unit is in given terrain
-Take Cover[speed, -N]       0      -N         When in given speed, stacks with speed. grants evation(-1) in some terrains
-Elusvie[speed, -N]          0      -N        
+Take Cover[speed, -N]       0      -N         When in given speed. 
+Elusvie[speed, -N]          0      -N         When in given speed        
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
-Enhanced Accurazy           +1      0
+Enhanced Accurazy          +1       0
 ------------------------ -------  ---------- ---------------------
+
+
 
 \pagebreak
 
@@ -190,7 +201,7 @@ XXX Resistance N         -N if damage type matches resistance.
 Movement/order Initiative: (highest on the list makes choises last with regard to ambigious orders) \
 
 Elf \
-Dark-Elf \
+Dark Elf \
 Dwarf \
 Gnome \
 Ork \
@@ -198,8 +209,64 @@ Ork \
 
 Assault tie-breaker (wins ties, and chooses how to conduct assault if it is ambigious) \
 
-Dark_Elf\
+Dark Elf\
 Ork\
 Dwarf\
 Elf\
 Gnome\
+
+\pagebreak
+
+
+
+**Special Team abilities**
+
+*Orks*
+
+**Reroll** **Assault[N]**
+Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll N dice per wave of rerolls. Thus N may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls.
+
+
+*Dwarfs*
+
+**Endurence tokens**
+Endurence tokens may be spend in the following way:", 
+
+- Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model'. Note that the original bleed[4] is removed when you get the 'kill 1 model', and it is then replaced with a fresh bleed from you other use of the endurence token). 
+- After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.
+- If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage
+
+
+\pagebreak
+
+**Heal(N, unit, phase)**
+
+N: a number \\
+Unit: self or any unit in same hex \\
+Phase: Either first or second healing phase\\
+
+Healing only works on biological units. You have N points to spend on the following actions:
+
+- Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
+- Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
+- Remove one +1 to future damage token. Cost 1.
+- Neutrilize one minor acid. Cost 1.
+- Degrade one acid to minor acid. Cost 2.
+- Extinguish one fire. Cost 2.
+- Neutrilize one poison token: Cost 3.
+- Remove one bleeding token: Cost 3.
+
+**Repair(N, unit, phase)**
+
+N: a number \\
+Unit: self or any unit in same hex \\
+Phase: Either first or second healing phase\\
+
+Repear do not work on biological units. You have N points to spend on the following actions:
+
+- Remove one +1 to future damage token. Cost 1. 
+- Neutrilize one minor acid. Cost 1 
+- Remove 1 shaken token to any non-biological unit. Cost 1 
+- Degrade one acid to minor acid. Cost 2. 
+- Extinguish one fire. Cost 2. 
+- Remove 1 crittical damage effect. Cost 3. 

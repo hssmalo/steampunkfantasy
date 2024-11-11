@@ -310,8 +310,7 @@ default still \\
   Armor & [10, 9, 9, 8]\\
 \end{tabular}
 
-\noindent Forrester: forrest not difficult terrain\\ 
-
+\noindent 
 
 {\bf E24 } \\
 Equipment: 1 x Main Tank-Gun, 1 x Twin Rifle \\
@@ -322,8 +321,7 @@ Cost: 0\\
 \ \\
 Assault: [4, 3, 3, 2] Die: 5+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 5+\\
-\indent Fear(6)\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -396,19 +394,17 @@ default still \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-4: Light Damaged[d6] \\
-4-8: Crittical Damage, +1 on future damage \\
+1-2: +1 on future damage \\
+3-4: as below, shaken \\
+5-8: as below, Crittical Damage \\
 9+ Destoryed \\
 \ \\ {\bf critical } \\
 1: Cannot move, looses Fear \\
 2: -1 to hit, +1 to be hit(ranged and assault) \\
 3: Cannot Rotate \\
-4: x3 Light damage[d6] \\
-5: Stuck turret: firing angle is now */-/-/- \\
+4: +3 on future damage \\
+5: Stuck turret: firing angle is now only forward \\
 6: Unit is set on Fire \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: shaken \\
 \ \\ {\bf crew } \\
 3-5: weapon jammed \\
 6-7: as 4-5, shaken \\
@@ -436,8 +432,7 @@ default still \\
   Armor & [8, 6, 6, 6]\\
 \end{tabular}
 
-\noindent Forrester: ignore difficult terrain\\ 
-
+\noindent 
 
 {\bf Tattoo Ink } \\
 Equipment: 1 x Gattle gun, 1 x SMG \\
@@ -451,7 +446,7 @@ Assault Deflection: [2, 0, 0, 0] Die: 5+\\
 \indent  
 \ \\
 Gun Blazing: Ignore to-hit penalties for moving fast\\ 
-May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do.\\ 
+May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One of the SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do.\\ 
 
 \ \\
 {\bf Gattle gun } \\
@@ -526,15 +521,13 @@ default fast \\
 1: Shaken \\
 2: -1 to hit, +1 to be hit \\
 3: Cannot rotate \\
-4: Roll 3 times on light damage table \\
+4: +3 on future damage \\
 5: unit cannot change speed. \\
 6: Set unit on Fire! \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: shaken \\
 \ \\ {\bf regular } \\
-1-4: Light Damage[d6] \\
-5-7: d6 Critical Damage, +1 on future damage \\
+1-2: +1 on future damage \\
+3-4 as below, shaken \\
+5-7: as below, d6 Critical Damage \\
 8+ Destroyed \\
 \ \\ {\bf crew } \\
 3-5: weapon jammed \\
@@ -635,12 +628,231 @@ default still A,flee \\
 
 \pagebreak\pagebreak
 
+\section{ Saouropods Rider }
+
+\begin{tabular}{ll}
+  Name & Saouropods Rider \\
+  Size & huge\\
+  Cost & 2mp, 12cp, 12xp\\
+  Models & 1 x Sauropod Rider\\
+  Armor & [4, 3, 3, 3]\\
+\end{tabular}
+
+\noindent Poison Resistance 4\\ 
+Amplify bleeding: Bleed[4] becomes Bleed[6], etc up to max Bleed[12]\\ 
+Fire and load all weapons simultainiously\\ 
+
+
+{\bf Sauropod Rider } \\
+Equipment: 1 x Snipe Rifle, 1 x Short range Mortar, 1 x Towed Main-Gun \\
+Equipment Limits:  \\
+Type: [Bio, Cavalry, Walks] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [2, 0, 0, 0] Die: 5+ Armor Penetration: 2 Damage: d8 \\
+Assault Deflection: [0, 0, 0, 0] Die: 5+\\
+\indent  
+\ \\
+
+\ \\
+{\bf Snipe Rifle } \\
+
+
+
+Range: 8  Angle: [True, False, False, True]: AP: 3 Damage:d6-2 \\
+improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d6 crew damage when aiming\\ 
+After eliminating one model with the use of aim, you get to choose which model to destroy\\ 
+
+
+
+
+{\bf Short range Mortar } \\
+
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 5 Damage:d6 \\
+Target one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of target hex with Area(4+)\\ 
+Place a poison cloud[6] in target hex\\ 
+
+
+
+
+{\bf Towed Main-Gun } \\
+
+
+
+Range: 3  Angle: [False, False, True, True]: AP: 8 Damage:d6 (+3 if penetrating all armor) \\
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf fire } \\
+still [-, Fire] \\
+still [-, Load] \\
+still [-, Aim] \\
+slow [-, Fire] \\
+slow [-, Load] \\
+slow [-, Aim] \\
+\ \\ {\bf movement } \\
+slow [360°, F, 360°] \\
+slow [360°, B, 360°] \\
+still [360°, A, F] \\
+default slow - \\
+default slow - \\
+default slow flee \\
+default still - \\
+default still - \\
+default still A,flee \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+2-3: Bleed[4] \\
+4-8: Bleed[6], If caused by bleeding, amplify bleeding \\
+9-11: as below, +1 to future damage \\
+12-19: as below, d8 Psychic damage \\
+20: Sauropod Rider dead \\
+\ \\ {\bf psychic } \\
+8+: shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Olifant Rider }
+
+\begin{tabular}{ll}
+  Name & Olifant Rider \\
+  Size & Large\\
+  Cost & 2mp, 6cp, 6xp\\
+  Models & 1 x Sauropod Rider, 4 x Crew\\
+  Armor & [8, 6, 4, 3]\\
+\end{tabular}
+
+\noindent Poison Resistance 2\\ 
+Proteced crew: area of effets only target Olifant (one model)\\ 
+Fire(crew): the crew fires either a bow or a handgrandes. Other fire orders are for the gattling gun. Only the gattling gun needs to be reloaded\\ 
+When Olifant dies, replace it with an infantry unit using models of the still alive crew. The infantry are armed with bows and hand grenades\\ 
+
+
+{\bf Sauropod Rider } \\
+Equipment:  \\
+Equipment Limits:  \\
+Type: [Bio, Cavalry, Walks] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [9, 6, 6, 2] Die: 5+ Armor Penetration: 4 Damage: d6 \\
+Assault Deflection: [6, 2, 2, 2] Die: 5+\\
+\indent  
+\ \\
+olifant gattling gun\\ 
+
+\ \\
+ 
+\ \\
+
+{\bf Crew } \\
+Equipment: 1 x Elf Bow, 1 x Grenade \\
+Equipment Limits:  \\
+Type: [Bio, crew, Walks] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [1, 0, 0, 0] Die: 5+ Armor Penetration: - Damage: - \\
+Assault Deflection: [0, 0, 0, 0] Die: 5+\\
+\indent  
+\ \\
+
+\ \\
+{\bf Elf Bow } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6-2 \\
+Ignore to-hit penalty (both self and taget) moving fast and flying\\ 
++1 range if you are flying\\ 
+enhanced accurazy: +1 to hit\\ 
+Bad at long range: double to-hit penalties at long range\\ 
+Always treated as loaded\\ 
+
+
+
+
+{\bf Grenade } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 5 Damage:d8 \\
+Area(5+) if used by a unit with 1-2 alive models. Area(4+) if used by a unit with 3-4 models\\ 
+Target any hex within normal range\\ 
+Always loaded\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+slow [360°, F, 360°] \\
+slow [360°, B, 360°] \\
+slow [360°, A, F] \\
+still [360°, A, F] \\
+fast [F, F, -] \\
+fast [B, 360°, F] \\
+default slow - \\
+default slow - \\
+default slow flee \\
+default still - \\
+default still - \\
+default still A,flee \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+2-7: Bleed[8] \\
+8: Olifant Killed \\
+\ \\ {\bf crew } \\
+2+: kill one crew \\
+3-4: kill two crew \\
+5-6: kill three crew \\
+7-8: crew killed, unit destroied \\
+\ \\ {\bf psychic } \\
+6+: shaken \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
 \section{ Eagle Rider }
 
 \begin{tabular}{ll}
   Name & Eagle Rider \\
   Size & medium\\
-  Cost & 2mp, 12cp, 8xp\\
+  Cost & 2mp, 8cp, 8xp\\
   Models & 1 x Eagle Rider\\
   Armor & [6, 6, 6, 6]\\
 \end{tabular}
@@ -749,7 +961,9 @@ Minor Acid resistance[4+]\\
 Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.\\ 
 Pre-assault retreat: 3+\\ 
 Grants psycic resitance 1 to all units in hex\\ 
-Healing: Either: heal[2, self, 2nd healing] or heal[1, any, 2nd healing] at any speed, heal[2, any, 2nd healing] at slow or heal[3, any, 1st healing ] at still\\ 
+Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]\\ 
+Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you are standing in a hex with an wounded unit, you may execute an heal[1, any, movement X] instead of moving\\ 
+May share a hex with a huge unit\\ 
 Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase\\ 
 
 
@@ -841,7 +1055,7 @@ default fast flee \\
   Size & medium\\
   Cost & 4mp, 8cp, 3xp\\
   Models & 3 x Pachyephalosaurus Rider\\
-  Armor & [3, 0, 0, 0]\\
+  Armor & [3, 3, 0, 0]\\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
@@ -925,8 +1139,8 @@ default fast flee \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-2-3: bleed[4] \\
-4+: kill 1 model, d4 psychic damage \\
+2-3: bleed[6] \\
+6+: kill 1 model, d4 psychic damage \\
 \ \\ {\bf psychic } \\
 4+: shaken \\
 
@@ -1100,34 +1314,34 @@ fast [Fire Burst(5), Fire (bow)] \\
 fast [Fire (bow), Fire Burst(5)] \\
 \ \\ {\bf movement } \\
 still [360°, 360°, 360°] \\
-still [360°, A[slow], [flying], F] \\
-still [360°, A[slow], F] \\
+still [360°, A[fly], F] \\
+still [360°, A, F] \\
 slow [360°, F, 360°] \\
 slow [360°, B, 360°] \\
-slow [360°, A[slow,flying], F] \\
-slow [360°, A[fast,flying], F] \\
-slow [360°, A[fast], F] \\
+slow [360°, A[fly], F] \\
+slow [360°, A[f,fly], F] \\
+slow [360°, A, F] \\
 slow flying [L, F, -] \\
 slow flying [R, F, -] \\
 slow flying [F, R, -] \\
 slow flying [F, L, -] \\
 slow flying [F, -, -] \\
 slow flying [F, B[still], -] \\
-slow flying [F, A[fast,flying], F] \\
+slow flying [F, A[f,fly], F] \\
 slow flying [L, L, F] \\
 slow flying [R, R, F] \\
 fast [360°, F, F] \\
 fast [360°, F, B] \\
-fast [360°, A[flyfast],F, F] \\
-fast [360°, F, B[slow]] \\
+fast [360°, A[f, fly],F, F] \\
+fast [360°, F, B] \\
 fast flying [F, F, F] \\
 fast flying [F, R, F] \\
 fast flying [F, L, F] \\
-fast flying [F, F, B[slow]] \\
-fast flying [F, F, B[slow flying]] \\
-fast flying [F, F, B[fast]] \\
-fast flying [L,L, F, F] \\
-fast flying [R,R, F, F] \\
+fast flying [F, F, B] \\
+fast flying [F, F, B[fly]] \\
+fast flying [F, F, B[f]] \\
+fast flying [L+L, F, F] \\
+fast flying [R+R, F, F] \\
 fast flying [F, F, B[still]] \\
 default still - \\
 default still A[slow] \\
@@ -1227,8 +1441,8 @@ Type: [Bio, Cavalry, Walks] \\
 Replaces: [pachyephalosaurus rider] \\
 Cost: 1xp\\
 \ \\
-Assault: [4, 2, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [2, 0, 0, 0] Die: 5+\\
+Assault: [6, 2, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [3, 0, 0, 0] Die: 5+\\
 \indent poison[4][1 for 2]\\ 
 Cunnint Assault[1 for 3]\\ 
 +1 to pre-assault retreat (per elite)\\ 
@@ -1264,7 +1478,7 @@ x2 shots per model\\
 \section{Equipment and training Upgrades}\ \\
 {\bf SMG } \\
 
-Requiers: [[type: infantry], [hands:2]] \\
+Requiers: [[type: infantry, type:crew], [hands:2]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
@@ -1278,6 +1492,10 @@ always treated as loaded\\
 
 
 
+\ \\ {\bf fire } \\
+still [Fire, Fire] \\
+slow [Fire, Fire] \\
+fast [Fire, Fire] \\
 
 \ \\
 {\bf Shriek SMG } \\
@@ -1305,7 +1523,7 @@ fast [Fire, -] \\
 {\bf AT Rifle } \\
 
 Requiers: [[hands:2], [type:infantry]] \\
-Cost: Upgrade all models for: 12cp \\
+Cost: Upgrade all models for: 8cp \\
 
 
 Range: 5  Angle: [True, False, False, False]: AP: 6 Damage:d6 \\
@@ -1324,12 +1542,34 @@ Requiers: [[hands:2], [type:infantry, type:cavalery]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
-Range: 5  Angle: [True, True, True, True]: AP: 0 Damage:d6-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6-2 \\
 Ignore to-hit penalty (both self and taget) for moving fast and flying\\ 
 +1 range if you are flying\\ 
 enhanced accurazy: +1 to hit\\ 
 Bad at long range: double to-hit penalties at long range.\\ 
 Always treated as loaded\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Elf Fire Bow } \\
+
+Requiers: [[hands:2], [type:infantry, type:cavalery]] \\
+Cost: Upgrade all models for: 6cp \\
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6-2 \\
+Ignore to-hit penalty (both self and taget) for moving fast and flying\\ 
++1 range if you are flying\\ 
+enhanced accurazy: +1 to hit\\ 
+Bad at long range: double to-hit penalties at long range.\\ 
+Always treated as loaded\\ 
+set enemy on fire\\ 
 
 
 
@@ -1362,8 +1602,8 @@ Requiers: [[hands:2], [type: infantry], [type: elite]] \\
 Cost: Upgrade one model for: 6cp \\
 
 
-Range: 8  Angle: [True, False, False, True]: AP: 3 Damage:d6-1 \\
-improved aim: +4 to hit instead of +2. Gain additional +d6 psycic damage and +d6 crew damage when aiming\\ 
+Range: 8  Angle: [True, False, False, True]: AP: 3 Damage:d6-2 \\
+improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d6 crew damage when aiming\\ 
 After eliminating one model with the use of aim, you get to choose which model to destroy\\ 
 
 
@@ -1413,7 +1653,7 @@ Assault deflection: +add [6, 6, 6, 6], Deflection die: replace 5+
 
 
 \ \\
-{\bf Elite Crew } \\
+{\bf Elite Tank Crew } \\
 
 Requiers: [[independent:1], [type: vehicle]] \\
 Cost: Upgrade all models for: 4xp \\

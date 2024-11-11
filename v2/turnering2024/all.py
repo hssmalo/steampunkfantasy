@@ -1,0 +1,76 @@
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+
+import data
+
+gnome = data.Race.from_toml("gnome")
+dwarf = data.Race.from_toml("dwarf")
+ork = data.Race.from_toml("ork")
+elf = data.Race.from_toml("elf")
+
+
+morten = data.Team("Gnomes helicopter assault")
+morten.add_unit(gnome.units.gnome_helicopter, name = "Gnome Helicopter")
+ghr = morten.add_unit(gnome.units.quad_bike, name = "Green Hell Riders")
+
+plasma = morten.add_unit(gnome.units.quad_bike, name = "PlasmaShield Riders")
+
+
+morten.upgrade_model("Green Hell Riders", gnome.models.quadbike_tinkerer)
+morten.upgrade_model("PlasmaShield Riders", gnome.models.quadbike_tinkerer)             
+
+morten.add_equipment(ghr, gnome.equipments.green_gas_launcher)
+morten.add_equipment(plasma, gnome.equipments.plasma_shield_generator)
+
+inf = morten.add_unit(gnome.units.gnome_infantry)
+morten.add_equipment(inf, gnome.equipments.assault_bot_mortar)
+
+assault_bot = morten.add_unit(gnome.units.assault_bots)
+mechanical_badger = morten.add_unit(gnome.units.mechanical_rat)
+
+
+op1 = data.Team("Dwarf SteamPowerArmor with Balrog Assault")
+
+sp = op1.add_unit(dwarf.units.steampowerarmor, name = 'SteamPowerArmor')
+op1.add_equipment(sp, dwarf.equipments.vest_of_life_support)
+op1.add_equipment(sp, dwarf.equipments.multi_barrled_heavy_musket)
+
+op1.add_unit(dwarf.units.tamed_balrog, name='Tamed Balrog')
+
+op1.add_unit(dwarf.units.zap)
+op1.add_unit(dwarf.units.dwarf_infantry, name ='Dwarf Infantry')
+
+troll = data.Team("Ork Send the Trolls")
+troll.add_unit(ork.units.troll, name='Troll')
+
+ps = troll.add_unit(ork.units.ork_infantry, name='PowerSpear')
+troll.add_equipment(ps, ork.equipments.clockwork_power_spear)
+
+
+
+gs = troll.add_unit(ork.units.ork_infantry, name='GrenadeSling')
+troll.add_equipment(gs, ork.equipments.grenade_sling)
+
+troll.add_unit(ork.units.battlewagon, name='BattleWagon')
+troll.add_unit(ork.units.hammerhead, name='Crushing HammerHead')
+
+troll.add_unit(ork.units.grunt, name='Grunt')
+
+
+
+cav  = data.Team("Elf super Cavalery")
+
+cav.add_unit(elf.units.tattoo_ink, name='Tattoo Ink')
+cav.add_unit(elf.units.armored_unicorn_rider, name ='Armored Unicorn Rider')
+cav.add_unit(elf.units.pegasus_rider, name= 'Pegasus Riders')
+cav.add_unit(elf.units.pachyephalosaurus_riders, name = 'Pachycephalosaurs Riders')
+cav.add_unit(elf.units.elf_infantry, name = 'Elf Infantry')
+
+
+
+
+import IPython; IPython.embed()
+
+

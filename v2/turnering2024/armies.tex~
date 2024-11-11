@@ -1,0 +1,82 @@
+%\documentstyle[a4,12pt, color, hyperref]{scrbook}
+\documentclass[a4,12pt, color, hyperref]{book}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[yyyymmdd]{datetime}
+\renewcommand{\dateseparator}{-}
+\usepackage{censor}
+
+
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+
+
+
+
+\title{Steampunk Fantasy: Army rules}
+\author{Hans Sverre Smalø}
+\date{\today}
+
+\begin{document}
+\maketitle
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+{\bf Gnomes}
+\begin{itemize}
+\item 4 helicopters (20vp each)
+\item 2 Green Hell Riders (11vp each)
+\item 2 PlasmaShield Riders (11vp each)
+\item 2 Infantry with Assault Bot Mortar (10vp each)
+\end{itemize}
+
+{\bf Dwarf}
+\begin{itemize}
+\item 2 Zap (24vp each)
+\item 1 Balrog (24vp)
+\item 4 SteampowerArmor (16vp each)
+\item 2 Dwarf Infantry (4vp each)
+\end{itemize}
+
+{\bf Ork}
+\begin{itemize}
+\item 2 Battlewagon (24vp each)
+\item 1 Crushing Hammerhead (24vp)
+\item 2 Troll (14vp each)
+\item 2 PowerSpear Infantry (8vp)
+\item 2 Grenade sling Infantry (10vp each)
+\item 4 Grunts (2vp each)  
+\end{itemize}  
+
+{\bf Elf}
+\begin{itemize}
+\item 6 Tatto Ink (12vp each)
+\item 1 Armored Unicron (10vp)
+\item 2 Pegasus Riders (10vp each)
+\item 2 Pachycepholosours Riders (15vp each)
+\item 2 Elf infantry (6vp each)
+\end{itemize}
+
+
+\chapter{Gnomes: Helicopter Assault}
+\include{Gnomeshelicopterassault.tex}
+
+%\include{KnutsDarkElf}
+%
+
+\chapter{Dwarfs: SteamPowerArmor with Balrog Assault.tex}
+\include{DwarfSteamPowerArmorwithBalrogAssault.tex}
+
+\chapter{Ork: Send the Trolls}
+\include{OrkSendtheTrolls.tex}
+
+\chapter{Elf Super Cavalry}
+\include{ElfsuperCavalery}
+
+
+\end{document}

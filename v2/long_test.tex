@@ -1,48 +1,55 @@
 \pagebreak
 
-\section{ Ork Char B1 }
+\section{ Pegasus Rider }
 
 \begin{tabular}{ll}
-  Name & Ork Char B1 \\
-  Size & Large\\
-  Cost & 12ip\\
-  Models & 1 x Ork Char B1\\
-  Armor & [11, 9, 8, 7]\\
+  Name & Pegasus Rider \\
+  Size & medium\\
+  Cost & 4mp, 6xp\\
+  Models & 2 x Pegasus_rider\\
+  Armor & 0\\
 \end{tabular}
 
-\noindent 
+\noindent Pre-Assault: throw fire (from lance): roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault\\ 
+Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.\\ 
+poison resistance 2\\ 
 
-{\bf Ork Char B1 } \\
-Equipment: 1 x Rotating Pop Gun, 1 x Heavy Forward Gun \\
+
+{\bf Pegasus_rider } \\
+Equipment: 1 x Elf Bow, 1 x Shriek SMG \\
 Equipment Limits:  \\
-Type: [Mechancical, Bio Crew, Vehicle, Track] \\
+Type: [Bio, Cavalry, Walks, Fly] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
-Assault: [6, 4, 3, 2] Die: 6+ Armor Penetration: 3 Damage: d6 \\
-Assault Deflection: [2, 0, 0, 0] Die: 6+\\
-\indent {template.ability.reroll_assault:3}\\ 
-Fear[6]\\ 
+Assault: [4, 3, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [2, 1, 1, 0] Die: 5+\\
+\indent Cunning Assault[1 for 3]\\ 
  
 \ \\
-Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them sepeartely\\ 
+good shot: +1 to hit\\ 
 
 \ \\
-{\bf Rotating Pop Gun } \\
+{\bf Elf Bow } \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 6 Damage:d6 + (d6 crew damage when penetrating all armor) \\
-Poison[6]\\ 
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6-2 \\
+Ignore to-hit penalty (both self and taget) moving fast and flying\\ 
++1 range if you are flying\\ 
+enhanced accurazy: +1 to hit\\ 
+Bad at long range: double to-hit penalties at long range\\ 
+Always treated as loaded\\ 
 
 
 
 
-{\bf Heavy Forward Gun } \\
+{\bf Shriek SMG } \\
 
 
 
-Range: 4  Angle: [True, False, False, False]: AP: 7 Damage:d6 + 3 if penetrating all armor \\
+Range: 3  Angle: [True, True, False, False]: AP: 2 Damage:d4 -2 + d6 psychic damage \\
+Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)\\ 
 
 
 
@@ -53,79 +60,69 @@ Range: 4  Angle: [True, False, False, False]: AP: 7 Damage:d6 + 3 if penetrating
 
 
 \ \\ {\bf fire } \\
-slow [Fire (p), Load (h)] \\
-slow [Load (h), Fire (p)] \\
-slow [Fire (h) ,  Load (p)] \\
-slow [Load (p), Fire (h)] \\
-slow [Aim(p) ,  Load (h)] \\
-slow [Aim(p) ,  Fire (h)] \\
-slow [Load (h) ,  Aim (p)] \\
-slow [Fire (h) ,  Aim (p)] \\
-still [Fire (p), Load (h)] \\
-still [Load (h), Fire (p)] \\
-still [Fire (h), Load (p)] \\
-still [Load (p), Fire (h)] \\
-still [Aim(p), Load (h)] \\
-still [Aim(p), Fire (h)] \\
-still [Load (h), Aim (p)] \\
-still [Fire (h), Aim (p)] \\
-still [Aim (h), Fire (p)] \\
-still [Aim (h), Load (p)] \\
-still [Fire (p), Aim (h)] \\
-still [Load (p), Aim (h)] \\
+still [Fire(bow), Fire(bow)] \\
+still [Fire Burst(5), Fire (bow)] \\
+still [Fire (bow), Fire Burst(5)] \\
+slow [Fire(bow), Fire(bow)] \\
+slow [Fire Burst(5), Fire (bow)] \\
+slow [Fire (bow), Fire Burst(5)] \\
+fast [Fire(bow), Fire(bow)] \\
+fast [Fire Burst(5), Fire (bow)] \\
+fast [Fire (bow), Fire Burst(5)] \\
 \ \\ {\bf movement } \\
-fast [F,  F ,  -] \\
-fast [F ,  R ,  -] \\
-fast [R ,  F ,  -] \\
-fast [L ,  F ,  -] \\
-fast [F ,  L ,  -] \\
-fast [F ,  B ,  -] \\
-fast [B ,  B ,  -] \\
-fast [R,  F ,  -] \\
-fast [L,  F ,  -] \\
-slow [L ,  - ,  -] \\
-slow [L ,  L ,  -] \\
-slow [R ,  - ,  -] \\
-slow [R ,  R ,  -] \\
-slow [A ,  F ,  -] \\
-slow [B ,  - ,  -] \\
-slow [F ,  - ,  -] \\
-slow [B ,  rev ,  -] \\
-still [L ,  - ,  -] \\
-still [L ,  L ,  -] \\
-still [L ,  L ,  L] \\
-still [R ,  - ,  -] \\
-still [R ,  R ,  -] \\
-still [R ,  R ,  R] \\
-still [-, -, -] \\
-still [R ,  A ,  F] \\
-still [L ,  A ,  F] \\
-still [A ,  F ,  -] \\
-still [rev ,  - ,  -] \\
-default still \\
-default slow \\
-default fast \\
+still [360°, 360°, 360°] \\
+still [360°, A[fly], F] \\
+still [360°, A, F] \\
+slow [360°, F, 360°] \\
+slow [360°, B, 360°] \\
+slow [360°, A[fly], F] \\
+slow [360°, A[f,fly], F] \\
+slow [360°, A, F] \\
+slow_flying [L, F, -] \\
+slow_flying [R, F, -] \\
+slow_flying [F, R, -] \\
+slow_flying [F, L, -] \\
+slow_flying [F, -, -] \\
+slow_flying [F, B[still], -] \\
+slow_flying [F, A[f,fly], F] \\
+slow_flying [L, L, F] \\
+slow_flying [R, R, F] \\
+fast [360°, F, F] \\
+fast [360°, F, B] \\
+fast [360°, A[f, fly],F, F] \\
+fast [360°, F, B] \\
+fast_flying [F, F, F] \\
+fast_flying [F, R, F] \\
+fast_flying [F, L, F] \\
+fast_flying [F, F, B] \\
+fast_flying [F, F, B[fly]] \\
+fast_flying [F, F, B[f]] \\
+fast_flying [L+L, F, F] \\
+fast_flying [R+R, F, F] \\
+fast_flying [F, F, B[still]] \\
+default_still - \\
+default_still A[slow] \\
+default_still flee \\
+default_slow - \\
+default_slow A[fast, flying] \\
+default_slow flee \\
+default_fast - \\
+default_fast A[fly, fast],flee \\
+default_fast flee \\
+default_slow_flying - \\
+default_slow_flying A,flee \\
+default_slow_flying flee \\
+default_fast_flying flee \\
+default_fast_flying flee \\
+default_fast_flying flee \\
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf Regular } \\
-1-4: Light Damage[d6] \\
-4-8: +1 to future damage, Critical Damage[d6] \\
-9+: Unit Destroyed \\
-\ \\ {\bf Light } \\
-1-4: +1 to future damage \\
-5-6: Unit shaken \\
-\ \\ {\bf Critical } \\
-1: Cannot Rotate \\
-2: Cannot move, looses Fear \\
-3: -1 to hit, +1 to be hit (ranged and assault) \\
-4-5: x3 Light Damage[d6] \\
-6: Unit set on fire \\
-\ \\ {\bf crew } \\
-4-5: Jammed \\
-6-7: as 4-5, shaken \\
-8-11: as 6-7, +3 to future crew damage \\
-12: Unit destroyed \\
+\ \\ {\bf regular } \\
+2-3: Bleed[4] \\
+4+: kill 1 model \\
+\ \\ {\bf psychic } \\
+5+: shaken \\
 
 
 

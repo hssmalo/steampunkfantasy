@@ -1,8 +1,6 @@
 
 # Turn
 
-# Turn
-
 
 Each turn contains the following steps:
 
@@ -13,7 +11,7 @@ Apply damage \
 
 - Trigger hex effect \
 Movement 1 \
-Pre assault retreat/abilities\
+Pre assault retreat\
 Pre assault abilities
 
 - Assault 1 \
@@ -22,7 +20,8 @@ Apply damage \
 
 - Trigger hex effect \
 Movement 2 \
-Pre assault retreat/abilities \
+Pre assault retreat \
+Pre assault abilities
 
 - Assault 2 \
 Post Assault retreat \
@@ -30,12 +29,12 @@ Apply damage \
 
 - Trigger hex effect \
 Movement 3\
+Pre assault retreat \
 Pre assault abilities \
 
 
 - Assault 3\
 Post assault retreat \
-Trigger hex effect  \
 Apply damage \
 
 - Gunnery 2\
@@ -128,14 +127,14 @@ It is also possible that smoke, entrenchements etc. modify the default terrain.
 For movement and line of sight, se table below:
 --------              -----------------------------------------------------------------------------------------------------------------------------
 Clear                 No modifiers
-Mountains             walks: enter at 3+, tracked and wheeled: cannot enter
-Hills                 enter at 2+.
+Mountains             tracked and wheeled: cannot enter
+Hills                 Level 1 blocking terrain 
 Forest                walks: enter freely, tracked and wheeled: enter at 2+
                       Level 0 blocking terrain
 Burned Forrest        Level 0 blocking terrain
-Ruins	              Enter freely. Does not block line of sight
-Rough                 Enter freely. Does not block line of sight
-Sand Dunes            Enter at 2+. Level 0 blocking terrain
+Ruins	              Does not block line of sight
+Rough                 Does not block line of sight
+Sand Dunes            ELevel 0 blocking terrain
 *Advanced* *terrain*
 Swamp                 medium and smaller enter and exit freely.
                       large and huge: enter at 2+
@@ -147,13 +146,11 @@ Building              Infantry enter freely
 Road                  If moving from a road to another hex with road, movement is always freely.
 Smoke                 Blocks line of sight 
                       Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
-River                 enters at 4+		      
+River                 ???		      
 Water                 1 movement point to enter for ships, floating or flying
                       (and can only be entered while flying). Cannot be entered by any other way.
 --------              -----------------------------------------------------------------------------------------------------------------------------
 
-
-If a unit tries to enter a difficult terrain hex, roll a die. If you don't roll below the requirement, do not enter the hex but stay in the hex you are. 
 
 Line of sight from one hex to another: place a line from the center of the heighest level to the center of the lowest level hex in question. If the line crosses a hex with blocking terrain equal or greater height both hexes in question, line of sight is blocked. This is the normal case when everything is on the ground. In the case of line of sight to heigher elevation some special rules apply. If the line crosses paths with blocking terrain less than both hexes in question, ignore the blocking terrain (flying units can thus fire at all flying units). If the line is traced through a hex with blocking terrain heigher or equal to the end hex, but not the start hex, place a blind hex directly behind the hex with blocking terrain. Line of sight cannot be traced to or from the blind hex, but can be traced to hexes behind that. (flying units has a line of sight advantage)
 
@@ -245,7 +242,7 @@ Action are ordered in advance, and in principal everything in one step is done s
 
 Spartan \
 Elf \
-Dark-Elf \
+Dark Elf \
 Dwarf \
 Gnome \
 Ork \
@@ -465,8 +462,8 @@ $AP \geq 0$                 A-AP                     5+
 
 For
 
-- 2 or more dice above 5, the armor prevents all damage 
-- Exactly one dice above 5, roll on damage with a -3 modifier 
+- 2 or more dice equal or above 5, the armor prevents all damage 
+- Exactly one dice equal or above 5, roll on damage with a -3 modifier 
 - 0 die above 5, roll on damage normaly. 
 
 
@@ -514,7 +511,7 @@ Assaults also is conducted if two or more units from different teams try to ente
 In the case where units facing each other are all moving forward, there might be two or more equally valid ways to conduct the assault. In this case, the team with the heighest melee skills determine which hex (or hexes) are being faught over:
 
 Spartan\
-Dark_Elf\
+Dark Elf\
 Ork\
 Dwarf\
 Elf\
@@ -745,8 +742,8 @@ Phase: Either first or second healing phase\\
 
 Healing only works on biological units. You have N points to spend on the following actions:
 
-- Degrade one poison token one step. (ie. d6 becomes d4). Cost 1.
-- Degrade one bleeding token one step. (ie d6 becomes d4). Cost 1.
+- Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
+- Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
 - Remove one +1 to future damage token. Cost 1.
 - Neutrilize one minor acid. Cost 1.
 - Degrade one acid to minor acid. Cost 2.
