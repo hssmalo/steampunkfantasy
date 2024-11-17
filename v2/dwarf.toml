@@ -135,7 +135,7 @@
     name = "Transport Zeppelin"
     models = ["transport_zeppelin"]
     size = "medium"
-    armor = [6, 0, 0 ,0]
+    armor = [6, 5, 0 ,0]
     cost.cp = 4
     special = ["May transport up to 2 unit of Infantry of SteamPowerArmor. Unload in any movement phase. When unloading they use hanggliders and are placed up to two hexes in any direction from the transport zeppelin end hex in that movement phase. They may enter assault as part of unloading. Place all infanteri in slow after unloading and treat any movement order up to this point as -", "May not transport any infantri with wheeled shieldwall"]
 
@@ -774,7 +774,7 @@
 
 
     [dwarf.equipments.industrial_heavy_musket]
-    name = "Industrial Muskets"
+    name = "Industrial Heavy Muskets"
     race = "dwarf"
     cost.ip = 1
     cost.cp = -1

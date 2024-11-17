@@ -207,22 +207,22 @@
 
 
 
-	[elf.units.sauropods_riders]
+	[elf.units.sauropod_riders]
 	race = "elf"
-	name = "Saouropods Rider"
+	name = "Saouropod Rider"
 	models = ["sauropod"]
 	size = "huge"
 	cost.mp = 2
 	cost.xp = 12
 	cost.cp = 12
 	armor = [4,3,3,3]
-	special = ["Poison Resistance 4", "Amplify bleeding: Bleed[4] becomes Bleed[6], etc up to max Bleed[12]", "Fire and load all weapons simultainiously"]
+	special = ["Poison Resistance 4", "When told to Amplify bleeding in damage tables: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]", "Fire and load all weapons simultainiously"]
 
-		     [elf.units.sauropods_riders.orders.fire]
+		     [elf.units.sauropod_riders.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
 		     slow =  [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
 
-		     [elf.units.sauropods_riders.orders.movement]
+		     [elf.units.sauropod_riders.orders.movement]
 		     slow = [["360°","F", "360°"],
 	     	     	  ["360°", "B", "360°"]]
 		     still = [["360°", "A", "F"]]
@@ -230,7 +230,7 @@
 		     default_slow = ["-", "-", "flee"]
 		     default_still = ["-", "-", "A,flee"]
 
-		     [elf.units.sauropods_riders.damage_tables]
+		     [elf.units.sauropod_riders.damage_tables]
 		     regular = ["2-3: Bleed[4]", "4-8: Bleed[6], If caused by bleeding, amplify bleeding", "9-11: as below, +1 to future damage", "12-19: as below, d8 Psychic damage", "20: Sauropod Rider dead"]
 		     psychic = ["8+: shaken"]
 
@@ -243,7 +243,7 @@
 	cost.xp = 6
 	cost.cp = 4
 	armor = [8,6,4,3]
-	special = ["Poison Resistance 2", "Proteced crew: area of effets only target Olifant (one model)", "Fire(crew): the crew fires either a bow or a handgrandes. Other fire orders are for the gattling gun. Only the gattling gun needs to be reloaded", "When Olifant dies, replace it with an infantry unit using models of the still alive crew. The infantry are armed with bows and hand grenades"]
+	special = ["Poison Resistance 2", "Proteced crew: area of effets only target Olifant (one model)", "Fire: the crew fires either a bow or a handgrandes, while Fire(g), aim(g) and load(g) orders are for the gattling gun only. Only the gattling gun needs to be reloaded"]
 
 		     [elf.units.armored_olifant_riders.orders.movement]
 		     slow = [["360°","F", "360°"],
@@ -254,10 +254,10 @@
 		     default_slow = ["-", "-", "flee"]
 		     default_still = ["-", "-", "A,flee"]
 
-		     [elf.units.armored_olifant_riders.fire]
-		     still = [["fire(crew)", "fire(crew)"],["-", "aim"], ["-", "load"],["-", "fire"]]
-		     slow = [["fire(crew)", "fire(crew)"],["-", "aim"], ["-", "load"],["-", "fire"]]
-		     fast = [["fire(crew)", "fire(crew)"],["-", "aim"], ["-", "load"],["-", "fire"]]
+		     [elf.units.armored_olifant_riders.orders.fire]
+		     still = [["fire", "fire"],["fire", "aim(g)"], ["fire", "load(g)"],["fire", "fire(g)"]]
+		     slow = [["fire", "fire"],["fire", "aim(g)"], ["fire", "load(g)"],["fire", "fire(g)"]]
+		     fast = [["fire", "fire"],["fire", "aim(g)"], ["fire", "load(g)"],["fire", "fire(g)"]]
 
 		     [elf.units.armored_olifant_riders.damage_tables]
 		     regular = ["2-7: Bleed[8]", "8: Olifant Killed"]
@@ -609,12 +609,12 @@
 
 
 	[elf.models.olifant]
-	name = "Sauropod Rider"
+	name = "Olifant Rider"
 	race = "elf"
 	modelitems = ["independent:∞"]
-	equipments = []
+	equipments = ["olifant_gattling_guns"]
 	type = ["Bio", "Cavalry", "Walks"]
-	special = ["olifant_gattling_gun"]
+	special = []
 
 
 	     [elf.models.olifant.assault]
@@ -803,28 +803,6 @@
 	special = ["Fire two shot per fire order (per smg in the unit)"]
 
 
-    [elf.equipments.smg]
-    name = "SMG"
-    race = "elf"
-    cost.cp = 2 
-    requires = [
-    	     ["type: infantry", "type:crew"],
-	     ["hands:2"]
-	     ]	     
-
-        [elf.equipments.smg.range]
-        range = 4
-        angle = [true, true, true, true]
-        damage = "d6"
-        ap = 1
-	special = ["Fire two shot per fire order (per smg in the unit)", "always treated as loaded"]
-
-	[elf.equipments.smg.orders_gained.fire]
-	still = [['Fire', 'Fire']]
-	slow  = [['Fire', 'Fire']]
-	fast  = [['Fire', 'Fire']]
-	
-
     [elf.equipments.twin_guns]
     name = "Twin Guns"
     race = "elf"
@@ -851,12 +829,15 @@
         angle = [true, true, true, true]
         damage = "d6 -2"
         ap = 2
-	special = ["Fires two times at same unit base per shot.\\\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"]
+	special = ["Fires two times at same unit per shot.\\\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"]
 
     [elf.equipments.shriek_smg]
     name = "Shriek SMG"
     race = "elf"
-    requires = []
+    requires = [
+    	     ["type: infantry"],
+	     ["hands:2"]
+	     ]	     
     cost.cp = 2
 
         [elf.equipments.shriek_smg.range]
@@ -894,11 +875,11 @@
 	     angle = [true, true, true, true]
 	     damage = "d6-1"
 	     ap = "3"
-	     special = ["Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."
+	     special = ["Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."
 ]
 
     [elf.equipments.olifant_gattling_guns]
-    name = "GattlingGun"
+    name = "Olifant GattlingGuns"
     race = "elf"
     requires = []
 
@@ -907,7 +888,7 @@
 	     angle = [false, true, true, false]
 	     damage = "d6-1"
 	     ap = "3"
-	     special = ["Represent one gattling gun firing to the left and one firing to the rigth. May fire at both sides with each fire order", "Focus Fire[aim]: roll 6 dice at same unit base.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
+	     special = ["Represent one gattling gun firing to the left and one firing to the rigth. May fire at both sides with each fire order", "Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
 
 
     [elf.equipments.at_rifle_free]
@@ -936,6 +917,32 @@
 	     special = []
 
 
+    [elf.equipments.smg]
+    name = "SMG"
+    race = "elf"
+    cost.cp = 2 
+    requires = [
+    	     ["type: infantry", "type:crew"],
+	     ["hands:2"]
+	     ]	     
+
+        [elf.equipments.smg.range]
+        range = 4
+        angle = [true, true, true, true]
+        damage = "d6"
+        ap = 1
+	special = ["Fire two shot per fire order (per smg in the unit)", "always treated as loaded"]
+
+	[elf.equipments.smg.orders_gained.fire]
+	still = [['Fire', 'Fire']]
+	slow  = [['Fire', 'Fire']]
+	fast  = [['Fire', 'Fire']]
+	
+
+
+
+
+
     [elf.equipments.bow]
     name = "Elf Bow"
     race = "elf"
@@ -949,17 +956,15 @@
 	     ap = "0"
 	     special = ["Ignore to-hit penalty (both self and taget) for moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded"]
 
-	     [elf.equipments.bow.orders_gained_fire]
+	     [elf.equipments.bow.orders_gained.fire]
 	     still= [['Fire', 'Fire']]
 	     slow  = [['Fire', 'Fire']]
 	     fast  = [['Fire', 'Fire']]
 
-
-
     [elf.equipments.fire_bow]
     name = "Elf Fire Bow"
     race = "elf"
-    requires = [["hands:2"], ["type:infantry", "type:cavalery"]]
+    requires = [["hands:2"], ["type:infantry", "type:cavalery", "type:crew"]]
     cost.cp  = 6
 
     	     [elf.equipments.fire_bow.range]
@@ -969,7 +974,7 @@
 	     ap = "0"
 	     special = ["Ignore to-hit penalty (both self and taget) for moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded", "set enemy on fire"]
 
-	     [elf.equipments.fire_bow.orders_gained_fire]
+	     [elf.equipments.fire_bow.orders_gained.fire]
 	     still= [['Fire', 'Fire']]
 	     slow  = [['Fire', 'Fire']]
 	     fast  = [['Fire', 'Fire']]
@@ -1019,7 +1024,7 @@
 
 
     [elf.equipments.sniper_rifle]
-    name = "Snipe Rifle"
+    name = "Sniper Rifle"
     race = "elf"
     model_cost.cp = 6
     requires = [["hands:2"], ["type: infantry"], ["type: elite"]]

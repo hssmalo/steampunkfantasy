@@ -340,7 +340,7 @@ double barraled: May load up to 2 shots, and fire them one at a time\\
 
 
 Range: 5  Angle: [True, True, True, True]: AP: 2 Damage:d6 -2 \\
-Fires two times at same unit base per shot.\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded\\ 
+Fires two times at same unit per shot.\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded\\ 
 
 
 
@@ -578,7 +578,7 @@ Assault Deflection: [1, 0, 0, 0] Die: 5+\\
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
-Focus Fire[aim]: roll 6 dice at same unit base.\\ 
+Focus Fire[aim]: roll 6 dice at same unit.\\ 
 If not using aim, fire once at all enemy models within range and within one angle of fire\\ 
 Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
 
@@ -628,10 +628,10 @@ default still A,flee \\
 
 \pagebreak\pagebreak
 
-\section{ Saouropods Rider }
+\section{ Saouropod Rider }
 
 \begin{tabular}{ll}
-  Name & Saouropods Rider \\
+  Name & Saouropod Rider \\
   Size & huge\\
   Cost & 2mp, 12cp, 12xp\\
   Models & 1 x Sauropod Rider\\
@@ -639,7 +639,7 @@ default still A,flee \\
 \end{tabular}
 
 \noindent Poison Resistance 4\\ 
-Amplify bleeding: Bleed[4] becomes Bleed[6], etc up to max Bleed[12]\\ 
+When told to Amplify bleeding in damage tables: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]\\ 
 Fire and load all weapons simultainiously\\ 
 
 
@@ -738,18 +738,17 @@ default still A,flee \\
   Name & Olifant Rider \\
   Size & Large\\
   Cost & 2mp, 6cp, 6xp\\
-  Models & 1 x Sauropod Rider, 4 x Crew\\
+  Models & 1 x Olifant Rider, 4 x Crew\\
   Armor & [8, 6, 4, 3]\\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
 Proteced crew: area of effets only target Olifant (one model)\\ 
 Fire(crew): the crew fires either a bow or a handgrandes. Other fire orders are for the gattling gun. Only the gattling gun needs to be reloaded\\ 
-When Olifant dies, replace it with an infantry unit using models of the still alive crew. The infantry are armed with bows and hand grenades\\ 
 
 
-{\bf Sauropod Rider } \\
-Equipment:  \\
+{\bf Olifant Rider } \\
+Equipment: 1 x Olifant GattlingGuns \\
 Equipment Limits:  \\
 Type: [Bio, Cavalry, Walks] \\
 Replaces: Nothing \\
@@ -759,9 +758,21 @@ Assault: [9, 6, 6, 2] Die: 5+ Armor Penetration: 4 Damage: d6 \\
 Assault Deflection: [6, 2, 2, 2] Die: 5+\\
 \indent  
 \ \\
-olifant gattling gun\\ 
 
 \ \\
+{\bf Olifant GattlingGuns } \\
+
+
+
+Range: 2  Angle: [False, True, True, False]: AP: 3 Damage:d6-1 \\
+Represent one gattling gun firing to the left and one firing to the rigth. May fire at both sides with each fire order\\ 
+Focus Fire[aim]: roll 6 dice at same unit.\\ 
+If not using aim, fire once at all enemy models within range and within one angle of fire\\ 
+Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
+
+
+
+
  
 \ \\
 
@@ -822,6 +833,19 @@ default slow flee \\
 default still - \\
 default still - \\
 default still A,flee \\
+\ \\ {\bf fire } \\
+still [fire(crew), fire(crew)] \\
+still [fire(crew), aim] \\
+still [fire(crew), load] \\
+still [fire(crew), fire] \\
+slow [fire(crew), fire(crew)] \\
+slow [fire(crew), aim] \\
+slow [fire(crew), load] \\
+slow [fire(crew), fire] \\
+fast [fire(crew), fire(crew)] \\
+fast [fire(crew), aim] \\
+fast [fire(crew), load] \\
+fast [fire(crew), fire] \\
 
 
 {\bf Damage Tables} \\
@@ -1476,31 +1500,9 @@ x2 shots per model\\
 \ \\
 
 \section{Equipment and training Upgrades}\ \\
-{\bf SMG } \\
-
-Requiers: [[type: infantry, type:crew], [hands:2]] \\
-Cost: Upgrade all models for: 2cp \\
-
-
-Range: 4  Angle: [True, True, True, True]: AP: 1 Damage:d6 \\
-Fire two shot per fire order (per smg in the unit)\\ 
-always treated as loaded\\ 
-
-
-
-
-
-
-
-\ \\ {\bf fire } \\
-still [Fire, Fire] \\
-slow [Fire, Fire] \\
-fast [Fire, Fire] \\
-
-\ \\
 {\bf Shriek SMG } \\
 
-Requiers: [] \\
+Requiers: [[type: infantry], [hands:2]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
@@ -1536,6 +1538,28 @@ Range: 5  Angle: [True, False, False, False]: AP: 6 Damage:d6 \\
 
 
 \ \\
+{\bf SMG } \\
+
+Requiers: [[type: infantry, type:crew], [hands:2]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+Range: 4  Angle: [True, True, True, True]: AP: 1 Damage:d6 \\
+Fire two shot per fire order (per smg in the unit)\\ 
+always treated as loaded\\ 
+
+
+
+
+
+
+
+\ \\ {\bf fire } \\
+still [Fire, Fire] \\
+slow [Fire, Fire] \\
+fast [Fire, Fire] \\
+
+\ \\
 {\bf Elf Bow } \\
 
 Requiers: [[hands:2], [type:infantry, type:cavalery]] \\
@@ -1559,7 +1583,7 @@ Always treated as loaded\\
 \ \\
 {\bf Elf Fire Bow } \\
 
-Requiers: [[hands:2], [type:infantry, type:cavalery]] \\
+Requiers: [[hands:2], [type:infantry, type:cavalery, type:crew]] \\
 Cost: Upgrade all models for: 6cp \\
 
 
@@ -1596,7 +1620,7 @@ enhanced accurazy: +1 to hit\\
 
 
 \ \\
-{\bf Snipe Rifle } \\
+{\bf Sniper Rifle } \\
 
 Requiers: [[hands:2], [type: infantry], [type: elite]] \\
 Cost: Upgrade one model for: 6cp \\

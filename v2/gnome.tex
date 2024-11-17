@@ -102,7 +102,7 @@ slow [fire (res), fire (res)] \\
   Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
-\noindent May move into difficult terrain without problem. However, may not enter buildings\\ 
+\noindent May not enter buildings\\ 
 
 
 {\bf Quad Bike } \\
@@ -332,14 +332,14 @@ Choose one hex within range. If fired from 3 models it has Area(4+), if fired fr
 
 
 \ \\ {\bf movement } \\
-fast [F, F, F,B] \\
+fast [F, F, F+B] \\
 fast [F, F, 360$^0$] \\
 fast [360$^0$, F, F] \\
 fast [F, 360$^0$, F] \\
 fast [F, B, 360$^0$] \\
 slow [360$^0$, F, 360$^0$] \\
 slow [360$^0$, A, F] \\
-slow [360$^0$, F,B, 360$^0$] \\
+slow [360$^0$, F+B, 360$^0$] \\
 still [360$^0$, A, F] \\
 still [360$^0$, -, -] \\
 default still [-, -, A+Flee] \\
@@ -433,7 +433,7 @@ still [-, Aim] \\
 \ \\ {\bf regular } \\
 2-3: +1 on future damge \\
 4-5: +1 on future damage, shaken \\
-6-7: +1 on future damage, cannot move or rotate, speed set to still \\
+6-7: as below, cannot move or rotate, speed set to still \\
 8: Unit destoried \\
 
 
@@ -469,8 +469,7 @@ Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 5+\\
-\indent Fear(6)\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -536,13 +535,13 @@ still [-, Aim] \\
 5-8: as below, d6 critical damage \\
 9: Unit destroied \\
 \ \\ {\bf critical } \\
-1-2: Shaken \\
+1-2: +3 to future damage \\
 3: +1 to be hit, -1 to hit \\
 4: Rotate unit 180$^0$ \\
 5: Place Poison Cloud[8] and smoke in this and all surronding hexes. \\
 6: set on fire \\
 \ \\ {\bf crew } \\
-4-5: Weapon Jammed \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-11: as 6-7, +3 to future crew damage \\
 12: Unit destroied \\
@@ -568,8 +567,7 @@ still [-, Aim] \\
   Armor & [12, 8, 8, 7]\\
 \end{tabular}
 
-\noindent Fires and loads both weapons at fire and load actions\\ 
-
+\noindent 
 
 {\bf Ballista Tractor Mark II } \\
 Equipment: 1 x Enhanced Ballista \\
@@ -580,8 +578,7 @@ Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [4, 0, 0, 0] Die: 5+\\
-\indent Fear(6)\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -636,13 +633,13 @@ still [-, Aim] \\
 5-8: as below, d6 critical damage \\
 9: Unit destroied \\
 \ \\ {\bf critical } \\
-1-2: Shaken \\
+1-2: +3 to future damage \\
 3: +1 to be hit, -1 to hit \\
 4: Rotate unit 180$^0$ \\
 5: Place Poison Cloud[8] and smoke in this and all surronding hexes. \\
 6: set on fire \\
 \ \\ {\bf crew } \\
-4-5: Weapon Jammed \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-11: as 6-7, +3 to future crew damage \\
 12: Unit destroied \\
@@ -680,8 +677,7 @@ Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 5+\\
-\indent Fear(6)\\ 
- 
+\indent  
 \ \\
 
 \ \\
@@ -732,9 +728,13 @@ still [rev, -, -] \\
 default still [-, -, -] \\
 default slow [-, -, B] \\
 \ \\ {\bf fire } \\
-all [-, Load] \\
-all [-, Fire] \\
+still [-, Load] \\
+still [-, Fire] \\
 still [-, Aim] \\
+slow [-, Load] \\
+slow [-, Fire] \\
+fast [-, Load] \\
+fast [-, Fire] \\
 
 
 {\bf Damage Tables} \\
@@ -744,13 +744,13 @@ still [-, Aim] \\
 5-8: +1 to future damage, d6 critical damage \\
 9: Unit destroied \\
 \ \\ {\bf critical } \\
-1-2: Shaken \\
+1-2: +3 to future damage \\
 3: +1 to be hit, -1 to hit \\
 4: Rotate unit 180$^0$ \\
 5: Place Poison Cloud[8] and smoke in this and all surronding hexes. \\
 6: set on fire \\
 \ \\ {\bf crew } \\
-4-5: Weapon Jammed \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-11: as 6-7, +3 to future crew damage \\
 12: Unit destroied \\
@@ -776,7 +776,7 @@ still [-, Aim] \\
   Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
-\noindent Fires, loads and aim all weapons simultaniously\\ 
+\noindent Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaniously\\ 
 Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
 
 
@@ -800,6 +800,7 @@ Quick fix: Repair[1, self, 1st healing phase]\\
 
 Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
 Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
+Limited Ammo[2]\\ 
 
 
 
@@ -847,14 +848,25 @@ fast flying [L, F, F] \\
 fast flying [R, F, F] \\
 fast flying [F, F, B[slow]+360$^0$] \\
 fast flying [F, F, B[still]+360$^0$] \\
-fast flying [F, F, F+360$^0$] \\
+fast flying [F, F, F] \\
+fast flying [F, F, F+D] \\
+fast flying [F, D+F, F] \\
+fast flying [F+D, F, F] \\
 fast flying [F, F, D] \\
 default still flying [-, -, B[ground]] \\
 default slow flying [-, -, B[ground]] \\
 default fast flying [-, -, B[ground]] \\
 \ \\ {\bf fire } \\
-all [-, Load] \\
-all flying [-, Fire] \\
+still [-, Load] \\
+fast flying [Throw(d), Fire] \\
+fast flying [Load, Throw(d)] \\
+fast flying [Throw(d), Load] \\
+slow flying [Throw(d), Fire] \\
+slow flying [Load, Throw(d)] \\
+slow flying [Throw(d), Load] \\
+still flying [Throw(d), Fire] \\
+still flying [Load, Throw(d)] \\
+still flying [Throw(d), Load] \\
 still flying [Aim, Fire] \\
 still flying [Fire, Aim] \\
 
@@ -888,8 +900,8 @@ Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: \\
 \indent  
 \ \\
-Improved Quick fix: In aftermath this unit may do two of the following: remove one +1 to future damage token, remove one shaken token, neutrilize one minor acid, extinguish one fire on self.\\ 
-Immunity to shaken condition\\ 
+Improved Quick fix: Repair[2, self, 1st healing phase]\\ 
+May move normaly even if shaken\\ 
 
 \ \\
 {\bf Acidic Napalm Bomb } \\
@@ -898,6 +910,7 @@ Immunity to shaken condition\\
 
 Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
 Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
+Limited Ammo[2]\\ 
 
 
 
@@ -1186,6 +1199,42 @@ Difficutly firing forward: Get -1 to hit in forward direction\\
 
 
 \ \\
+{\bf Acidic Napalm Bomb } \\
+
+Requiers: [[type:helicopter], [helicopter drop:1]] \\
+Cost: Upgrade all models for: 1cp \\
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
+Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
+Limited Ammo[3]\\ 
+
+
+
+
+
+
+
+
+\ \\
+{\bf Major Acidic Napalm Bomb } \\
+
+Requiers: [[type:helicopter], [helicopter drop:1]] \\
+Cost: Upgrade all models for: 4cp \\
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
+Choose a hex within normal range: Area(4+): major acid and any unit hit atleast one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)\\ 
+Limited Ammo[2]\\ 
+
+
+
+
+
+
+
+
+\ \\
 {\bf Assault Bot Mortar } \\
 
 Requiers: [[type:infantry], [hands:2]] \\
@@ -1208,6 +1257,7 @@ Requiers: [[type:helicopter], [helicopter drop:1]] \\
 Cost: Upgrade all models for: 2cp \\
 No regular damage\\ 
 When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon.\\ 
+Limited Ammo[3]\\ 
 
 
 
@@ -1222,7 +1272,7 @@ When firing, place three assault bot units with 4 models in an empty hex within 
 
 Requiers: [[type:infantry], [independent:1]] \\
 Cost: Upgrade all models for: 2cp \\
-Unit gain Fire resistance 6, Poison Resistance 6, minor acid resitance and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
+Unit gain Fire resistance 6, Poison Resistance 6, minor acid resitance[4+] and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
 
 
 
@@ -1263,6 +1313,22 @@ Assault deflection: +add [1, 0, 0, 0], Deflection die: replace 5+
 \\ 
 
 append Any enemy which is hit atleast once in assault is set on fire
+
+
+\ \\
+{\bf Quadbike Lance } \\
+
+Requiers: [[type:quadbike], [hands:2]] \\
+Cost: Upgrade all models for: 2cp \\
+
+
+
+
+{\bf Assault} \ \\
+Assault strength: +add [1, 0, 0, 0] 
+\\ 
+
+
 
 
 \ \\
@@ -1313,7 +1379,7 @@ Cost: Upgrade all models for: 2cp \\
 
 Range: 4  Angle: [True, True, True, False]: AP: 3 Damage:d6-2 \\
 Fire d12 shots each time it is fired at the same unit\\ 
-If you rolled atleast x1 one for to-hit, add +1 to future damage to self\\ 
+If you rolled atleast one 1 for to-hit, add +1 to future damage to self\\ 
 If you roll only a 1 for the number of shots you fire, the gun is destroied\\ 
 Difficult to fire forward: -1 to hit fireing forward\\ 
 
@@ -1333,7 +1399,7 @@ Cost: Upgrade all models for: 2cp \\
 
 Range: 4  Angle: [True, True, True, False]: AP: 3 Damage:d6-2 \\
 Fire d12 shots each time and all at the same unit\\ 
-If you rolled atleast x1 one for to-hit, add +1 to future damage\\ 
+If you rolled atleast one 1 for to-hit, add +1 to future damage\\ 
 If you roll only a one for the number of shots you fire, the gun is destroied. Replace it with a regular gnome gun\\ 
 
 
@@ -1354,7 +1420,7 @@ Range: 8  Angle: [True, True, True, False]: AP: 2 Damage:d6-6 \\
 Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token\\ 
 May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens\\ 
 If you hit your enemy, roll for damage 4 times\\ 
-In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast x1 one, add minor accid to self, if you rolled atleast x2 ones, death ray explodes and unit is killed.\\ 
+In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add minor accid to self, if you rolled atleast x2 ones, death ray explodes and unit is killed.\\ 
 
 
 

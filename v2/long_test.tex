@@ -1,128 +1,118 @@
 \pagebreak
 
-\section{ Pegasus Rider }
+\section{ Gnome Helicopter }
 
 \begin{tabular}{ll}
-  Name & Pegasus Rider \\
-  Size & medium\\
-  Cost & 4mp, 6xp\\
-  Models & 2 x Pegasus_rider\\
-  Armor & 0\\
+  Name & Gnome Helicopter \\
+  Size & large\\
+  Cost & 6ip, 2xp\\
+  Models & 1 x Gnome Helicpoter\\
+  Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
-\noindent Pre-Assault: throw fire (from lance): roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault\\ 
-Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.\\ 
-poison resistance 2\\ 
+\noindent Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaniously\\ 
+Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
 
 
-{\bf Pegasus_rider } \\
-Equipment: 1 x Elf Bow, 1 x Shriek SMG \\
-Equipment Limits:  \\
-Type: [Bio, Cavalry, Walks, Fly] \\
+{\bf Gnome Helicpoter } \\
+Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
+Equipment Limits: [helicopter_front:1, helicopter_drop:1, helicopter_side:1, independent: ∞] \\
+Type: [bio_crew, helicopter, flying] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
-Assault: [4, 3, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [2, 1, 1, 0] Die: 5+\\
-\indent Cunning Assault[1 for 3]\\ 
+Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 0, 0, 0] Die: \\
+\indent  
+\ \\
+Quick fix: Repair[1, self, 1st healing phase]\\ 
+
+\ \\
+{\bf Acidic Napalm Bomb } \\
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
+Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)\\ 
+Limited Ammo[2]\\ 
+
+
+
+
+{\bf Helicopter Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False]: AP: 6 Damage:d6-1 \\
+Fire once at all enemy units within range and within angle of fire\\ 
+If aim, instead use focus fire, roll 6 dice at same unit\\ 
+Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers\\ 
+
+
+
+
  
 \ \\
-good shot: +1 to hit\\ 
-
-\ \\
-{\bf Elf Bow } \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6-2 \\
-Ignore to-hit penalty (both self and taget) moving fast and flying\\ 
-+1 range if you are flying\\ 
-enhanced accurazy: +1 to hit\\ 
-Bad at long range: double to-hit penalties at long range\\ 
-Always treated as loaded\\ 
-
-
-
-
-{\bf Shriek SMG } \\
-
-
-
-Range: 3  Angle: [True, True, False, False]: AP: 2 Damage:d4 -2 + d6 psychic damage \\
-Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)\\ 
-
-
-
-
- 
-\ \\
-
-
-
-\ \\ {\bf fire } \\
-still [Fire(bow), Fire(bow)] \\
-still [Fire Burst(5), Fire (bow)] \\
-still [Fire (bow), Fire Burst(5)] \\
-slow [Fire(bow), Fire(bow)] \\
-slow [Fire Burst(5), Fire (bow)] \\
-slow [Fire (bow), Fire Burst(5)] \\
-fast [Fire(bow), Fire(bow)] \\
-fast [Fire Burst(5), Fire (bow)] \\
-fast [Fire (bow), Fire Burst(5)] \\
 \ \\ {\bf movement } \\
-still [360°, 360°, 360°] \\
-still [360°, A[fly], F] \\
-still [360°, A, F] \\
-slow [360°, F, 360°] \\
-slow [360°, B, 360°] \\
-slow [360°, A[fly], F] \\
-slow [360°, A[f,fly], F] \\
-slow [360°, A, F] \\
+still_ground [A[still], 360$^0$, -] \\
+still_ground [A[slow], 360$^0$, F] \\
+still_ground [A[still], 360$^0$, -] \\
+still_flying [360$^0$, -, -] \\
+still_flying [-, -, D] \\
+still_flying [A[slow], 360$^0$, F] \\
+still_flying [A[fast], 360$^0$, F] \\
 slow_flying [L, F, -] \\
+slow_flying [L, F, L] \\
 slow_flying [R, F, -] \\
-slow_flying [F, R, -] \\
-slow_flying [F, L, -] \\
-slow_flying [F, -, -] \\
-slow_flying [F, B[still], -] \\
-slow_flying [F, A[f,fly], F] \\
-slow_flying [L, L, F] \\
-slow_flying [R, R, F] \\
-fast [360°, F, F] \\
-fast [360°, F, B] \\
-fast [360°, A[f, fly],F, F] \\
-fast [360°, F, B] \\
-fast_flying [F, F, F] \\
+slow_flying [R, F, R] \\
+slow_flying [-, -, D] \\
+slow_flying [-, R, D] \\
+slow_flying [-, L, D] \\
+slow_flying [A[fast], F, F] \\
+slow_flying [F, B[still], 360$^0$] \\
+fast_flying [F, F, -] \\
+fast_flying [F, F, R] \\
+fast_flying [F, F, L] \\
 fast_flying [F, R, F] \\
 fast_flying [F, L, F] \\
-fast_flying [F, F, B] \\
-fast_flying [F, F, B[fly]] \\
-fast_flying [F, F, B[f]] \\
-fast_flying [L+L, F, F] \\
-fast_flying [R+R, F, F] \\
-fast_flying [F, F, B[still]] \\
-default_still - \\
-default_still A[slow] \\
-default_still flee \\
-default_slow - \\
-default_slow A[fast, flying] \\
-default_slow flee \\
-default_fast - \\
-default_fast A[fly, fast],flee \\
-default_fast flee \\
-default_slow_flying - \\
-default_slow_flying A,flee \\
-default_slow_flying flee \\
-default_fast_flying flee \\
-default_fast_flying flee \\
-default_fast_flying flee \\
+fast_flying [L, F, F] \\
+fast_flying [R, F, F] \\
+fast_flying [F, F, B[slow]+360$^0$] \\
+fast_flying [F, F, B[still]+360$^0$] \\
+fast_flying [F, F, F] \\
+fast_flying [F, F, F+D] \\
+fast_flying [F, D+F, F] \\
+fast_flying [F+D, F, F] \\
+fast_flying [F, F, D] \\
+default_still_flying [-, -, B[ground]] \\
+default_slow_flying [-, -, B[ground]] \\
+default_fast_flying [-, -, B[ground]] \\
+\ \\ {\bf fire } \\
+still [-, Load] \\
+fast_flying [Throw(d), Fire] \\
+fast_flying [Load, Throw(d)] \\
+fast_flying [Throw(d), Load] \\
+slow_flying [Throw(d), Fire] \\
+slow_flying [Load, Throw(d)] \\
+slow_flying [Throw(d), Load] \\
+still_flying [Throw(d), Fire] \\
+still_flying [Load, Throw(d)] \\
+still_flying [Throw(d), Load] \\
+still_flying [Aim, Fire] \\
+still_flying [Fire, Aim] \\
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-2-3: Bleed[4] \\
-4+: kill 1 model \\
-\ \\ {\bf psychic } \\
-5+: shaken \\
+1-3: +1 to future damage \\
+4-5: as below, shaken \\
+6-8: +3 to future damage, shaken \\
+9: Destroy unit \\
+\ \\ {\bf crew } \\
+as regular damage \\
 
 
 

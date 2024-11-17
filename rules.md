@@ -630,7 +630,8 @@ Most fire damage comes from the 'set on fire' ability of weapons, which is a con
 - At agony step 0, roll a die: \
 			     at 1-: Downgrade from acid to minor acid.\
     	      	      	     at 2 : +1 to future damge\
-			     at 3 : as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
+			     at 3 : as 2, and place a poison cload [4] at hex.\
+			          : and all units in this hex gets a minor acid token. \
                              at 4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
 			     at 5 : As 4 and unit is set on fire.\
 			     at 6 : Roll twice on this table., 
@@ -720,9 +721,10 @@ Half number of dice rounded down from all enemy shaken units entering assault wi
 
 **Cunning** **Assault**[1 per N]
 
-For each N assault successes assigned to one unit-base (from sources with this ability), do one light damage[d6]. 
+For each N assault successes assigned to one unit-base (from sources with this ability), add +1 to all future damage token to all units whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken.
 
-Thus, for example Cunning Assault[1 per 2] would allow you to do d6 light damage if you hit the unit two times, in addition to the regular damage. Note however, that light damage only does damage versus unit with a light damage table (vehicles only). 
+Thus, for example if you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken. 
+
 
 This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage.
 
@@ -746,10 +748,11 @@ Healing only works on biological units. You have N points to spend on the follow
 - Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
 - Remove one +1 to future damage token. Cost 1.
 - Neutrilize one minor acid. Cost 1.
-- Degrade one acid to minor acid. Cost 2.
-- Extinguish one fire. Cost 2.
+- Extinguish one fire. Cost 3.
 - Neutrilize one poison token: Cost 3.
 - Remove one bleeding token: Cost 3.
+- Degrade one acid to minor acid. Cost 4.
+
 
 **Repair(N, unit, phase)**
 
@@ -762,9 +765,9 @@ Repear do not work on biological units. You have N points to spend on the follow
 - Remove one +1 to future damage token. Cost 1. 
 - Neutrilize one minor acid. Cost 1 
 - Remove 1 shaken token to any non-biological unit. Cost 1 
-- Degrade one acid to minor acid. Cost 2. 
-- Extinguish one fire. Cost 2. 
+- Extinguish one fire. Cost 3. 
 - Remove 1 crittical damage effect. Cost 3. 
+- Degrade one acid to minor acid. Cost 4. 
 
 
 **Set** **on** **Fire**, ranged weapons
@@ -826,6 +829,12 @@ Before using any fire action, roll a die. At N- (N or below) replace the fire ac
 **Jammed**
 
 Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
+
+
+**Crippled Crew**
+
+Unit gets -1 on all dice assosiated with range to-hit, assault strength and assault deflection dice. In addition, if unit is also shaken, any source of psycic damage now rolls on crew damage even though the unit is normaly immune to psycic damage. 
+
 
 \pagebreak
 

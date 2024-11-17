@@ -948,7 +948,7 @@
         angle = [true, true, false, false]
         damage = "d6+d8 Psychic damage + d6 crew damage"
         ap = 3
-        special = ["On hit: apply Acid to target. In addition, if you hit target, place an Acid Clund[minor] at target hex", "Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)"]
+        special = ["On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor] at target hex", "Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)"]
 
 
     [darkelf.equipments.mechanical_imp]

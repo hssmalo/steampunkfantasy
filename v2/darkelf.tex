@@ -14,8 +14,8 @@
 
 {\bf Mechanical Red Dragon } \\
 Equipment: 1 x Fire breath \\
-Equipment Limits: [independent:∞] \\
-Type: [drone, flying, mechanical, walks] \\
+Equipment Limits: [] \\
+Type: [flying, mechanical, walks] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
@@ -31,7 +31,7 @@ Fire Resistance 2, Immunity to acid\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 0: Damage:- \\
+Range: 3  Angle: [True, False, False, False]: AP: 0 Damage:- \\
 No normal damge, but any unit within normal range and front arc is set on fire. Any unit within long range and in front arc is covered in minor acid\\ 
 In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]\\ 
 
@@ -84,8 +84,8 @@ all [-, Load] \\
 
 {\bf Mechanical Iron Dragon } \\
 Equipment: 1 x Acid breath, 1 x Shrapnell breath \\
-Equipment Limits: [independent:∞] \\
-Type: [drone, flying, mechanical, walks] \\
+Equipment Limits: [] \\
+Type: [flying, mechanical, walks] \\
 Replaces: Nothing \\
 Cost: 0\\
 \ \\
@@ -101,9 +101,9 @@ Fire Resistance 2, Immunity to acid\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 0: Damage:- \\
+Range: 3  Angle: [True, False, False, False]: AP: 0 Damage:- \\
 No normal damge, but any unit within normal range and front arc is covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid\\ 
-In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]\\ 
+In addition, all hexes within normal range and front arc: Area(5+) Poison[6]\\ 
 
 
 
@@ -112,7 +112,7 @@ In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 2: Damage:d6-2 \\
+Range: 3  Angle: [True, False, False, False]: AP: 2 Damage:d6-2 \\
 Fire once at every model within front arc, line of sight and range. Include all to-hit modifiers\\ 
 Always treated as loaded\\ 
 
@@ -159,7 +159,7 @@ all [-, Load] \\
   Size & large\\
   Cost & 16ip\\
   Models & 1 x Queen YY\\
-  Armor & [11, 10, 8, 7]\\
+  Armor & [12, 10, 8, 7]\\
 \end{tabular}
 
 \noindent 
@@ -179,6 +179,7 @@ May also choose to retreat even if winning the assault. The enemy occupies the h
 \ \\
 Excelent shot: +2 to hit\\ 
 You fire 2 independt heavy rifles in addion to acid cannon each fire order\\ 
+Dual ammo: all weapons may be loaded up to 2 times. Each shot still only uses 1 ammo\\ 
 If you have the order release poison cloud as an fireing option, you may place the poison cload[12] during any movment phase in any the hex you are in, including contested hexes for assaults\\ 
 
 \ \\
@@ -186,8 +187,9 @@ If you have the order release poison cloud as an fireing option, you may place t
 
 
 
-Range: 6  Angle: [True, True, False, False]: AP: 3: Damage:d6+d8 Psychic damage + d6 crew damage \\
-On hit: apply Acid to target. In addition, if you hit target, place an Acid Clund[minor] at target hex\\ 
+Range: 4  Angle: [True, True, False, False]: AP: 3 Damage:d6+d8 Psychic damage + d6 crew damage \\
+On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor] at target hex\\ 
+Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)\\ 
 
 
 
@@ -196,7 +198,7 @@ On hit: apply Acid to target. In addition, if you hit target, place an Acid Clun
 
 
 
-Range: 4  Angle: [True, True, False, False]: AP: 3: Damage:d6-1 \\
+Range: 4  Angle: [True, True, False, False]: AP: 3 Damage:d6-1 \\
 
 
 
@@ -380,7 +382,7 @@ Fires SMG independently of breath weapon, and fires it in all gunnery phases\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 1: Damage:d6-3 \\
+Range: 3  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
 Always treated as loded. Fires two times (per model) each time it is fired\\ 
 
 
@@ -390,7 +392,7 @@ Always treated as loded. Fires two times (per model) each time it is fired\\
 
 
 
-Range: 2  Angle: [True, False, False, False]: AP: 0: Damage:d8 crew damage \\
+Range: 2  Angle: [True, False, False, False]: AP: 0 Damage:d8 crew damage \\
 Fires at all models once within range and within front arc, and always hits on a natural 6\\ 
 No regular damage, but Poison[8] and set on fire applies to anyone hit\\ 
 Always treated as loaded\\ 
@@ -474,7 +476,7 @@ Fires SMG independently of crossbow, and the SMG fires in all gunnery phases\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 1: Damage:d6-3 \\
+Range: 3  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
 Always treated as loded. Fires two times (per model) each time it is fired\\ 
 
 
@@ -484,7 +486,7 @@ Always treated as loded. Fires two times (per model) each time it is fired\\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 Poison[6], minor acid\\ 
 
 
@@ -546,7 +548,7 @@ all [-, Aim] \\
   Armor & [7, 7, 7, 7]\\
 \end{tabular}
 
-\noindent All terrain cost 1 movement to enter\\ 
+\noindent Ignore difficult terrain\\ 
 
 
 {\bf Mechanical Assault Spider } \\
@@ -569,7 +571,7 @@ Good Shot: +1 to hit\\
 
 
 
-Range: 3  Angle: [True, True, False, False]: AP: 6: Damage:d6 \\
+Range: 3  Angle: [True, True, False, False]: AP: 6 Damage:d6 \\
 Poison[6]\\ 
 
 
@@ -582,12 +584,17 @@ Poison[6]\\
 
 \ \\ {\bf movement } \\
 slow [360°, F, 360°] \\
-slow [360°, 360°, 360°] \\
+slow [360°, B, 360°] \\
+still [360°, 360°, 360°] \\
+still [360°, A, 360°] \\
 default slow \\
 \ \\ {\bf fire } \\
 still [-, Load] \\
 still [-, Fire] \\
 still [-, Aim] \\
+slow [-, Load] \\
+slow [-, Fire] \\
+slow [-, Aim] \\
 
 
 {\bf Damage Tables} \\
@@ -598,6 +605,98 @@ still [-, Aim] \\
 \ \\ {\bf light } \\
 1-2: -1 to all assaults strength and deflection values (cumulative, minimum 0) \\
 3-4:+1 on future damage \\
+5-6: unit shaken \\
+\ \\ {\bf critical } \\
+1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
+2: Cannot move, looses fear \\
+3: Cannot rotate \\
+4-5: x3 Light damage[d6] \\
+6: Unit set on Fire \\
+
+
+
+
+
+
+
+
+
+
+\pagebreak\pagebreak
+
+\section{ Mechanical Scorpion }
+
+\begin{tabular}{ll}
+  Name & Mechanical Scorpion \\
+  Size & medium\\
+  Cost & 4ip\\
+  Models & 1 x Mechanical Scorpion\\
+  Armor & [9, 7, 6, 5]\\
+\end{tabular}
+
+\noindent 
+
+{\bf Mechanical Scorpion } \\
+Equipment: 1 x Tail Gattling Gun \\
+Equipment Limits: [training:1, independent:∞] \\
+Type: [mechanical, droid, walks] \\
+Replaces: Nothing \\
+Cost: 0\\
+\ \\
+Assault: [8, 4, 2, 1] Die: 5+ Armor Penetration: 3 Damage: d6 \\
+Assault Deflection: [6, 2, 0, 0] Die: 6+\\
+\indent Poison[12][1 for 2], Fear[8]\\ 
+ 
+\ \\
+
+\ \\
+{\bf Tail Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False]: AP: 3 Damage:d6 + d6 Psycic damage \\
+Focus Fire[aim]: roll 6 dice at same unit.\\ 
+May only use aim versus targets within normal range\\ 
+If not using aim, fire once at all enemy models within range and within front arc\\ 
+Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
+Minor acid\\ 
+May load up to 4 ammo\\ 
+Requiers 2 ammo to be used\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+\ \\ {\bf movement } \\
+still [360°, 360°, 360°] \\
+still [A, 360°, 360°] \\
+slow [360°, F, 360°] \\
+slow [B, 360°, 360°] \\
+slow [A, F, F] \\
+fast [360°, F, B] \\
+default still \\
+default slow \\
+default fast \\
+\ \\ {\bf fire } \\
+still [-, Load] \\
+still [-, Fire] \\
+still [Load, Aim] \\
+slow [-, Load] \\
+slow [-, Fire] \\
+slow [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-3: Light damaged[d6] \\
+4-6: critical damage[d6] \\
+7+: Destroy unit base \\
+\ \\ {\bf light } \\
+1-4:+1 on future damage \\
 5-6: unit shaken \\
 \ \\ {\bf critical } \\
 1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
@@ -649,7 +748,7 @@ Reroll all success in assault while crawling\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -735,7 +834,7 @@ Reroll all success in assault while crawling\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -823,20 +922,14 @@ Good Shot: +1 to hit\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
 
 {\bf Hide } \\
 
-While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror\\ 
-While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)\\ 
-You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location\\ 
-If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection.\\ 
-Hide action: remove your unit from the board, replace it with a hidden token. Only works in swamp terrain\\ 
-Reveal: Place your infantry within 2 hexes of the hidden token and gain reveal bonuses\\ 
-In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses\\ 
+Gains the Hidden and Hide[ruins] special effects\\ 
 Forward positon[1]\\ 
 Camuflage[swamp][-1]\\ 
 
@@ -925,20 +1018,14 @@ Good Shot: +1 to hit\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
 
 {\bf Hide } \\
 
-While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror\\ 
-While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)\\ 
-You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location\\ 
-If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection.\\ 
-Hide action: remove your unit from the board, replace it with a hidden token. Only works in swamp terrain\\ 
-Reveal: Place your infantry within 2 hexes of the hidden token and gain reveal bonuses\\ 
-In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses\\ 
+Gains the Hidden and Hide[ruins] special effects\\ 
 Forward positon[1]\\ 
 Camuflage[swamp][-1]\\ 
 
@@ -1028,7 +1115,7 @@ Reroll all success in assault while crawling\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -1101,7 +1188,7 @@ Unit base gains psychic resistance 1 as long as atleast one elite model is alive
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -1130,7 +1217,7 @@ Unit base gains psychic resistance 1 as long as atleast one elite model is alive
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
@@ -1160,7 +1247,7 @@ Requiers: [[hands:2], [type:infantry, type:cavalry]] \\
 Cost: Upgrade all models for: 1cp \\
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 1: Damage:d6-3 \\
+Range: 3  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
 Always treated as loded. Fires two times (per model) each time it is fired\\ 
 
 
@@ -1180,7 +1267,7 @@ Requiers: [[hands:2], [type:infantry, type:cavalry]] \\
 Cost: Upgrade all models for: 2cp \\
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 Poison[6], minor acid\\ 
 
 
@@ -1197,7 +1284,7 @@ Requiers: [[hands:2], [type:infantry, type:cavalry], [type:elite]] \\
 Cost: Upgrade one model for: 2cp \\
 
 
-Range: 6  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 6  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 Poison[8], minor acid\\ 
 
 
@@ -1214,7 +1301,7 @@ Requiers: [[independent:1], [type:infantry, type:cavalry]] \\
 Cost: Upgrade all models for: 1cp \\
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 0: Damage:N.A. \\
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:N.A. \\
 Place a Poison Cloud[6] within normal range\\ 
 Limited Ammo[2]\\ 
 Always treated as loaded\\ 
@@ -1235,7 +1322,7 @@ Requiers: [[shared:1], [type:infantry]] \\
 Cost: Upgrade all models for: 16cp, 8xp \\
 
 
-Range: 10  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 10  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 Choose a hex within range and roll a die, at 5+ place a Poison \& Acid Cloud [8, minor] at target hex. Place a Poison Cloud[6]  at all hexes surronding that initial hex\\ 
 If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.\\ 
 Indirect fire: may use line of sight of any friendly unit on the battle field.\\ 
@@ -1254,7 +1341,7 @@ Requiers: [[shared:1], [type:infantry]] \\
 Cost: Upgrade all models for: 16cp, 8xp \\
 
 
-Range: 10  Angle: [True, True, True, True]: AP: 0: Damage:N.A \\
+Range: 10  Angle: [True, True, True, True]: AP: 0 Damage:N.A \\
 Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.\\ 
 If you don't roll a 3+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.\\ 
 Indirect fire: may use line of sight of any friendly unit on the battle field.\\ 
@@ -1287,7 +1374,7 @@ Requiers: [[independent:1], [type:roboprosthetic]] \\
 Cost: Upgrade all models for: 1cp \\
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2: Damage:d6-2 \\
+Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 Threated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon\\ 
 
 
@@ -1303,7 +1390,7 @@ Threated as loaded when main gun is loaded. May fire this weapon in addition to 
 Requiers: [[independent:1], [type:roboprosthetic, type:infantri, type:cavalery]] \\
 Cost: Upgrade all models for: 1xp \\
 Unit becomes immune to poison clouds\\ 
-Enemy units in an poison cloud gain -50% (rounded down) in assault and assault deflection\\ 
+Enemy units in an poison cloud gain -50\% (rounded down) in assault and assault deflection\\ 
 In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas\\ 
 
 
@@ -1319,7 +1406,8 @@ In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas
 
 Requiers: [[independent:1], [type:roboprosthetic, type:infantri, type:cavalery]] \\
 Cost: Upgrade all models for: 2cp \\
-Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or am outside line of sight of any enemy unit. Note that this does not make you immune to the effect of your own grenade\\ 
+Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.\\ 
+If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or am outside line of sight of any enemy unit. \\ 
 
 
 
@@ -1339,13 +1427,7 @@ slow [Throw, -] \\
 
 Requiers: [[training:1], [type:infantry]] \\
 Cost: Upgrade all models for: 4xp \\
-While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror\\ 
-While hidden replace the unit base with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)\\ 
-You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location\\ 
-If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection.\\ 
-Hide action: remove your unit from the board, replace it with a hidden token. Only works in swamp terrain\\ 
-Reveal: Place your infantry within 2 hexes of the hidden token and gain reveal bonuses\\ 
-In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses\\ 
+Gains the Hidden and Hide[ruins] special effects\\ 
 Forward positon[1]\\ 
 Camuflage[swamp][-1]\\ 
 
@@ -1362,4 +1444,23 @@ still [Hide[ruins], -, -] \\
 slow [-, Reveal, Chase] \\
 slow [Hide[ruins], -, -] \\
 crawl [Hide[ruins], -, -] \\
+
+\ \\
+{\bf Cloacking Device } \\
+
+Requiers: [[independent:1], [type:mechanical]] \\
+Cost: Upgrade all models for: 2ip \\
+Gains the Hidden special effects\\ 
+Forward positon[1]\\ 
+
+
+
+
+
+
+
+
+\ \\ {\bf movement } \\
+still [Reveal, -, -] \\
+slow [-, Reveal, Chase] \\
 
