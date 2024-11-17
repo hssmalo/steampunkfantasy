@@ -8,18 +8,23 @@
   Cost & 6ip, 2xp\\
   Models & 1 x Gnome Helicpoter\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & Speed set to still_ground, move order: [- - -]. May not fire weapons\\
 \end{tabular}
 
 \noindent Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaniously\\ 
 Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
 
 
-{\bf Gnome Helicpoter } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Gnome Helicpoter } \\
+Equipment Limits: &[helicopter_front:1, helicopter_drop:1, helicopter_side:1, independent: ∞] \\
+Type: &[bio_crew, helicopter, flying] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
-Equipment Limits: [helicopter_front:1, helicopter_drop:1, helicopter_side:1, independent: ∞] \\
-Type: [bio_crew, helicopter, flying] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: \\
@@ -87,11 +92,8 @@ fast_flying [F, F, F+D] \\
 fast_flying [F, D+F, F] \\
 fast_flying [F+D, F, F] \\
 fast_flying [F, F, D] \\
-default_still_flying [-, -, B[ground]] \\
-default_slow_flying [-, -, B[ground]] \\
-default_fast_flying [-, -, B[ground]] \\
 \ \\ {\bf fire } \\
-still [-, Load] \\
+still_ground [-, Load] \\
 fast_flying [Throw(d), Fire] \\
 fast_flying [Load, Throw(d)] \\
 fast_flying [Throw(d), Load] \\

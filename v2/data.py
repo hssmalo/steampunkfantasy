@@ -427,6 +427,12 @@ class Unit:
         #self.neat_dict['race'] = self.race
         self.neat_dict['models'] = self.models
         self.neat_dict['name'] = self.info.as_dict()['name']
+
+        try:
+            self.neat_dict['shaken'] = self.info.as_dict()['shaken']
+        except KeyError:
+            self.neat_dict['shaken'] = ''
+            
         if nickname:
             self.neat_dict['nickname'] = nickname
         else:

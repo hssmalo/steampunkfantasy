@@ -14,12 +14,16 @@
 Take Cover[still][-2]\\ 
 
 
-{\bf Dwarf Infantry } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Infantry } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[infantry, walks, bio] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [infantry, walks, bio] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
@@ -92,12 +96,16 @@ still [-, Load] \\
 Take Cover[still][-1]\\ 
 
 
-{\bf Dwarf Brother in Arms } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Brother in Arms } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[infantry, walks, bio, brotherinarms, elite] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [infantry, walks, bio, brotherinarms, elite] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [3, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6 \\
 Assault Deflection: [1, 0, 0, 0] Die: n.a.\\
@@ -172,12 +180,16 @@ Acid resistance[5+]\\
 Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of alive models\\ 
 
 
-{\bf SteamPowerArmor } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf SteamPowerArmor } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[steampowerarmor, walks, bio] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Heavy Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [steampowerarmor, walks, bio] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
@@ -247,22 +259,26 @@ still [-, Load] \\
   Name & Mini Zeppelin \\
   Size & medium\\
   Cost & 2mp, 4cp, 4xp\\
-  Models & 2 x Mini Zeppelin\\
+  Models & 3 x Mini Zeppelin\\
   Armor & [0, 0, 0, 0]\\
 \end{tabular}
 
 \noindent Posion Resistance 2\\ 
 Floats\\ 
 May use fire orders while shaken\\ 
-random movement: while fast it scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault. In slow mode the unit uses its enignes to neutrilize the effect of the wether\\ 
+random movement: while fast or shaken it scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault. In slow mode the unit uses its enignes to neutrilize the effect of the wether\\ 
 
 
-{\bf Mini Zeppelin } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Mini Zeppelin } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[open vehicle, floats, bio] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x AxeThrower Machine, 1 x Poison Gas Grenade \\
-Equipment Limits: [independent:∞] \\
-Type: [open vehicle, floats, bio] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [2, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [4, 3, 1, 1] Die: 4+\\
@@ -316,7 +332,8 @@ still [Throw, Throw] \\
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 2-3: shaken \\
-4+: kill 1 model \\
+4-9: kill 1 model \\
+10+: unit destroyed \\
 \ \\ {\bf psychic } \\
 6+: Unit shaken \\
 
@@ -338,19 +355,23 @@ still [Throw, Throw] \\
   Size & medium\\
   Cost & 4cp\\
   Models & 1 x Transport Zeppelin\\
-  Armor & [6, 0, 0, 0]\\
+  Armor & [6, 5, 0, 0]\\
 \end{tabular}
 
 \noindent May transport up to 2 unit of Infantry of SteamPowerArmor. Unload in any movement phase. When unloading they use hanggliders and are placed up to two hexes in any direction from the transport zeppelin end hex in that movement phase. They may enter assault as part of unloading. Place all infanteri in slow after unloading and treat any movement order up to this point as -\\ 
 May not transport any infantri with wheeled shieldwall\\ 
 
 
-{\bf Transport Zeppelin } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Transport Zeppelin } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[zeppelin, flying] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment:  \\
-Equipment Limits: [independent:∞] \\
-Type: [zeppelin, flying] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [2, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: n.a\\
@@ -402,12 +423,16 @@ default flying fast \\
  Poison Resistance 2, Fire resistance 1\\ 
 
 
-{\bf Dwarf AT-gun } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf AT-gun } \\
+Equipment Limits: &[training: 1, independent:∞] \\
+Type: &[bio crew, dragged, open topp, vehicle, at gun] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Big AT-Gun \\
-Equipment Limits: [training: 1, independent:∞] \\
-Type: [bio crew, dragged, open topp, vehicle, at gun] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 0, 0, 0] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: n.a\\
@@ -484,12 +509,16 @@ optimal Point blank: +1 to hit at point blank range\\
 Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is.\\ 
 
 
-{\bf GunBlasterWagon } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf GunBlasterWagon } \\
+Equipment Limits: &[crew:1, independent:∞] \\
+Type: &[mechanical, bio crew, track, vehicle] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Broadside Guns \\
-Equipment Limits: [crew:1, independent:∞] \\
-Type: [mechanical, bio crew, track, vehicle] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [2, 2, 2, 2] Die: 4+ Armor Penetration: 3 Damage: d6-2 \\
 Assault Deflection: [2, 0, 0, 0] Die: 4+\\
@@ -596,12 +625,16 @@ still [-, Load] \\
 \noindent Fire Resistance 2\\ 
 
 
-{\bf dw42 } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf dw42 } \\
+Equipment Limits: &[crew:1, independent:∞] \\
+Type: &[mechanical, bio crew, track, vehicle] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Tank-Gun \\
-Equipment Limits: [crew:1, independent:∞] \\
-Type: [mechanical, bio crew, track, vehicle] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 4+\\
@@ -706,12 +739,16 @@ Loses aim when moving away from the hex where it aimed\\
 Fire Resistance 2\\ 
 
 
-{\bf zap } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf zap } \\
+Equipment Limits: &[crew:1, independent:∞] \\
+Type: &[mechanical, bio crew, track, vehicle] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Array of Heavy Muskets, 1 x Zap, 1 x Twin Fear Ray \\
-Equipment Limits: [crew:1, independent:∞] \\
-Type: [mechanical, bio crew, track, vehicle] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 1, 0, 0] Die: 4+\\
@@ -839,12 +876,16 @@ Limited shaken: when shaken, you may fire one less weapon systems per shaken tok
 Withering Ray: May replace forrest with rough terrain in the hex it is standing\\ 
 
 
-{\bf Zeppelin } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Zeppelin } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[flying, zeppelin] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Array of Enhanced Heavy Muskets, 1 x Fear Ray, 1 x Zeppelin Gun \\
-Equipment Limits: [independent:∞] \\
-Type: [flying, zeppelin] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [6, 6, 6, 6] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [3, 3, 3, 3] Die: 4+\\
@@ -938,12 +979,16 @@ Terror[8][range=2]\\
 Excelent Whip Handeling (counts as Excelent shot, +2 to hit)\\ 
 
 
-{\bf Tamed Balrog } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Tamed Balrog } \\
+Equipment Limits: &[] \\
+Type: &[monster, walks, bio] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Flaming Whip \\
-Equipment Limits: [] \\
-Type: [monster, walks, bio] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [6, 4, 3, 2] Die: 2+ Armor Penetration: 6 Damage: d6 \\
 Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
@@ -997,12 +1042,16 @@ still [-, Fire] \\
 
 
 
-\pagebreak\section{Upgradeable Units}{\bf Dwarf Elite Infantry } \\
+\pagebreak\section{Upgradeable Units}\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Elite Infantry } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[elite, infantry, walks, bio] \\
+Replaces: &[dwarf infantry] \\
+Cost: & 1xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [elite, infantry, walks, bio] \\
-Replaces: [dwarf infantry] \\
-Cost: 1xp\\
 \ \\
 Assault: [2, 2, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: 4+\\
@@ -1025,12 +1074,16 @@ Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
  
 \ \\
 
-{\bf Dwarf Elite SteamPowerArmor } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Elite SteamPowerArmor } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[elite, steampowerarmor, walks, bio] \\
+Replaces: &[steampowerarmor] \\
+Cost: & 6xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Heavy Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [elite, steampowerarmor, walks, bio] \\
-Replaces: [steampowerarmor] \\
-Cost: 6xp\\
 \ \\
 Assault: [4, 3, 3, 3] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 1, 1, 1] Die: 4+\\
@@ -1054,12 +1107,16 @@ Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
  
 \ \\
 
-{\bf Dwarf Battle Medic } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Battle Medic } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[elite, steampowerarmor, walks, bio] \\
+Replaces: &[steampowerarmor] \\
+Cost: & 6xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Heavy Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [elite, steampowerarmor, walks, bio] \\
-Replaces: [steampowerarmor] \\
-Cost: 6xp\\
 \ \\
 Assault: [4, 3, 3, 3] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [4, 1, 1, 1] Die: 4+\\
@@ -1083,12 +1140,16 @@ Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
  
 \ \\
 
-{\bf Dwarf Steampowerarmor Engineer } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Steampowerarmor Engineer } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[steampowerarmor, walks, bio] \\
+Replaces: &[steampowerarmor] \\
+Cost: & 6xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Heavy Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [steampowerarmor, walks, bio] \\
-Replaces: [steampowerarmor] \\
-Cost: 6xp\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: 4+\\
@@ -1110,12 +1171,16 @@ Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
  
 \ \\
 
-{\bf Dwarf Engineer } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Dwarf Engineer } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[infantry, walks, bio] \\
+Replaces: &[dwarf infantry] \\
+Cost: & 4xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Musket \\
-Equipment Limits: [hands:2, shared:1, independent:∞] \\
-Type: [infantry, walks, bio] \\
-Replaces: [dwarf infantry] \\
-Cost: 4xp\\
 \ \\
 Assault: [2, 0, 0, 0] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: 4+\\
@@ -1137,12 +1202,16 @@ Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
  
 \ \\
 
-{\bf Mini Zeppelin } \\
+\noindent
+\begin{tabular}{ll}
+name: &{\bf Mini Zeppelin } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[open vehicle, floats, bio] \\
+Replaces: &[mini zeppelin] \\
+Cost: & 2cp, 4xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x AxeThrower Machine, 1 x Poison Gas Grenade \\
-Equipment Limits: [independent:∞] \\
-Type: [open vehicle, floats, bio] \\
-Replaces: [mini zeppelin] \\
-Cost: 2cp, 4xp\\
 \ \\
 Assault: [4, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [4, 3, 1, 1] Die: 4+\\
@@ -1177,10 +1246,12 @@ Activated by throw order\\
 \ \\
 
 \section{Equipment and training Upgrades}\ \\
-{\bf Industrial Muskets } \\
-
+\begin{tabular}{ll}
+name: & {\bf Industrial Heavy Muskets } \\
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 1ip, -1cp \\
+\end{tabular}
+
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
@@ -1193,10 +1264,12 @@ Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
 
 
 \ \\
-{\bf Musket With Springloaded Axe } \\
-
+\begin{tabular}{ll}
+name: & {\bf Musket With Springloaded Axe } \\
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 Gun automaticly loaded after an assault\\ 
 
 
@@ -1214,10 +1287,12 @@ Assault Damage set to: replace d6-2 + d6 psycic damage
 
 
 \ \\
-{\bf Doubled Barrled Musket With Springloaded Axe } \\
-
+\begin{tabular}{ll}
+name: & {\bf Doubled Barrled Musket With Springloaded Axe } \\
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 4cp \\
+\end{tabular}
+
 Gun automaticly loaded after an assault\\ 
 
 
@@ -1236,10 +1311,12 @@ Assault Damage set to: replace d6-2 + d6 psycic damage
 
 
 \ \\
-{\bf Blast Sticks } \\
-
+\begin{tabular}{ll}
+name: & {\bf Blast Sticks } \\
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 
 
 
@@ -1256,10 +1333,12 @@ append ['Cunning Assault[1 for 1]']
 
 
 \ \\
-{\bf Springloaded Vehicle Assault Weapons } \\
-
+\begin{tabular}{ll}
+name: & {\bf Springloaded Vehicle Assault Weapons } \\
 Requiers: [[independent:1], [type:vehicle]] \\
 Cost: Upgrade all models for: 2ip, 2cp \\
+\end{tabular}
+
 
 
 
@@ -1276,10 +1355,12 @@ Assault deflection: +add [2, 1, 1, 0], Deflection die: replace 4+
 
 
 \ \\
-{\bf Wheeled ShieldWall } \\
-
+\begin{tabular}{ll}
+name: & {\bf Wheeled ShieldWall } \\
 Requiers: [[independent:1], [type:infantry]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 Unit gain [5,0,0,0] in armor\\ 
 
 
@@ -1293,10 +1374,12 @@ append -1 in assault strength (per model) if speed is not still. Don't get any a
 
 
 \ \\
-{\bf Elite Crew } \\
-
+\begin{tabular}{ll}
+name: & {\bf Elite Crew } \\
 Requiers: [[crew:1], [type:vehicle]] \\
 Cost: Upgrade all models for: 6xp \\
+\end{tabular}
+
 Gains good shot: +1 to hit\\ 
 
 
@@ -1308,10 +1391,12 @@ Gains good shot: +1 to hit\\
 
 
 \ \\
-{\bf Jet Pack } \\
-
+\begin{tabular}{ll}
+name: & {\bf Jet Pack } \\
 Requiers: [[independent:1], [type:steampowerarmor]] \\
 Cost: Upgrade all models for: 2cp, 2xp \\
+\end{tabular}
+
 Once per game in any single movement phase, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex. This may initialize an assault if the hex is occupied by enemy forces.\\ 
 
 
@@ -1323,10 +1408,12 @@ Once per game in any single movement phase, jump your unit up to 3 hexes from yo
 
 
 \ \\
-{\bf Super Blaster } \\
-
+\begin{tabular}{ll}
+name: & {\bf Super Blaster } \\
 Requiers: [[type: steampowerarmor], [type: elite], [hands:2]] \\
 Cost: Upgrade one model for: 8cp \\
+\end{tabular}
+
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 9 Damage:d6+2 \\
@@ -1339,10 +1426,12 @@ Range: 3  Angle: [True, True, True, True]: AP: 9 Damage:d6+2 \\
 
 
 \ \\
-{\bf Big Blaster } \\
-
+\begin{tabular}{ll}
+name: & {\bf Big Blaster } \\
 Requiers: [[type: infantry], [shared:1]] \\
 Cost: Upgrade one model for: 8cp \\
+\end{tabular}
+
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 8 Damage:d6+1 \\
@@ -1356,10 +1445,12 @@ Requir atleast 2 alive models in unit to be used\\
 
 
 \ \\
-{\bf Vest of Life Support } \\
-
+\begin{tabular}{ll}
+name: & {\bf Vest of Life Support } \\
 Requiers: [[type: infantry, type:steampowerarmor], [independent:1]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
 
 
@@ -1371,10 +1462,12 @@ Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite
 
 
 \ \\
-{\bf Stabilizer } \\
-
+\begin{tabular}{ll}
+name: & {\bf Stabilizer } \\
 Requiers: [[type: infantry, type:steampowerarmor], [independent:1]] \\
 Cost: Upgrade all models for: 4cp \\
+\end{tabular}
+
 All guns gain Enhanced accurazy. +1 to hit\\ 
 
 
@@ -1384,12 +1477,17 @@ All guns gain Enhanced accurazy. +1 to hit\\
 
 
 
+\ \\ {\bf fire } \\
+slow [-, aim] \\
+slow [aim, -] \\
 
 \ \\
-{\bf Trench Coat of Resistance } \\
-
+\begin{tabular}{ll}
+name: & {\bf Trench Coat of Resistance } \\
 Requiers: [[type: infantry, type:steampowerarmor], [independent:1]] \\
 Cost: Upgrade all models for: 1cp \\
+\end{tabular}
+
 Unit improves poison resistance and fire reistance with 1\\ 
 Unit gains imunity to minor acid\\ 
 
@@ -1402,10 +1500,12 @@ Unit gains imunity to minor acid\\
 
 
 \ \\
-{\bf Brother in Arms Armor } \\
-
+\begin{tabular}{ll}
+name: & {\bf Brother in Arms Armor } \\
 Requiers: [[type: brotherinarms], [independent:1]] \\
 Cost: Upgrade all models for: 1ip \\
+\end{tabular}
+
 Unit gain 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
 Stacks with vest of life support\\ 
 In addition to the normal rules for endurence tokens, the unit may use one endurence token in healing phase 1, to replace any bleeding with poison[6]\\ 
@@ -1421,10 +1521,12 @@ unit gain good shot[+1]\\
 
 
 \ \\
-{\bf Steamblower } \\
-
+\begin{tabular}{ll}
+name: & {\bf Steamblower } \\
 Requiers: [[type: steampowerarmor], [hands:2]] \\
 Cost: Upgrade all models for: 4cp \\
+\end{tabular}
+
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2+d4 crew damage \\
@@ -1438,10 +1540,12 @@ Choose one hex which all models in this unit fire at. If fired from a unit with 
 
 
 \ \\
-{\bf Fear Ray } \\
-
+\begin{tabular}{ll}
+name: & {\bf Fear Ray } \\
 Requiers: [[type: steampowerarmor], [hands: 2]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 
 
 Range: 4  Angle: [True, False, False, False]: AP: 0 Damage:d6 Psycic damage \\
@@ -1454,10 +1558,12 @@ Range: 4  Angle: [True, False, False, False]: AP: 0 Damage:d6 Psycic damage \\
 
 
 \ \\
-{\bf Heavy Musket } \\
-
+\begin{tabular}{ll}
+name: & {\bf Heavy Musket } \\
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
@@ -1470,10 +1576,12 @@ Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
 
 
 \ \\
-{\bf Enhanced Heavy Musket } \\
-
+\begin{tabular}{ll}
+name: & {\bf Enhanced Heavy Musket } \\
 Requiers: [[hands:2], [type:infantry]] \\
 Cost: Upgrade all models for: 6cp \\
+\end{tabular}
+
 
 
 Range: 6  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
@@ -1486,10 +1594,12 @@ Range: 6  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
 
 
 \ \\
-{\bf Ultra Heavy Musket } \\
-
+\begin{tabular}{ll}
+name: & {\bf Ultra Heavy Musket } \\
 Requiers: [[hands:2], [type:steampowerarmor]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 
 
 Range: 4  Angle: [True, True, True, True]: AP: 4 Damage:d6 \\
@@ -1502,10 +1612,12 @@ Range: 4  Angle: [True, True, True, True]: AP: 4 Damage:d6 \\
 
 
 \ \\
-{\bf Double Barrled Empowered Heavy Musket } \\
-
+\begin{tabular}{ll}
+name: & {\bf Double Barrled Empowered Heavy Musket } \\
 Requiers: [[hands:2], [type:steampowerarmor]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 
 
 Range: 4  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
@@ -1519,10 +1631,12 @@ Fire two shots per fire order per model\\
 
 
 \ \\
-{\bf MultiBarrled Heavy Musket } \\
-
+\begin{tabular}{ll}
+name: & {\bf MultiBarrled Heavy Musket } \\
 Requiers: [[hands:2], [type:steampowerarmor]] \\
 Cost: Upgrade all models for: 2cp \\
+\end{tabular}
+
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
@@ -1536,10 +1650,12 @@ Fire three shots per fire order per model\\
 
 
 \ \\
-{\bf Rocket Jackhammer } \\
-
+\begin{tabular}{ll}
+name: & {\bf Rocket Jackhammer } \\
 Requiers: [[hands:2], [type:steampowerarmor], [type: elite]] \\
 Cost: Upgrade one model for: 2cp \\
+\end{tabular}
+
 
 
 
@@ -1554,10 +1670,12 @@ Assault Armor penetration: replace 8
 
 
 \ \\
-{\bf Hide } \\
-
+\begin{tabular}{ll}
+name: & {\bf Hide } \\
 Requiers: [[training:1], [type:at gun]] \\
 Cost: Upgrade all models for: 8xp \\
+\end{tabular}
+
 While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror\\ 
 While hidden replace the unit with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden)\\ 
 You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location\\ 

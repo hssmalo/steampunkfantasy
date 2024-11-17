@@ -14,8 +14,8 @@
     armor = [0, 0, 0, 0]
     cost.mp = 4
     special = ["Take-Cover[still][-2]"]
-
-
+    shaken  = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+ 
         [gnome.units.gnome_infantry.orders.movement]
         slow = [["Chase", "", ""],
 	     ["", "", "Chase"],
@@ -23,8 +23,6 @@
 	     ["360°", "360°", "360°"],
 	     ["360°", "B", "-"]]
 	still = [["360°", "-", "-"], ["360°", "A", "F"]]
-        default_slow = [["-", "-", "Flee"]]
-	default_still = [["-", "-", "A+Flee"]]
 
         [gnome.units.gnome_infantry.orders.fire]
 	still = [["Load", "-"],
@@ -33,8 +31,8 @@
 	      ["-", "Fire"],
 	      ["Aim", "-"],
 	      ["-", "Aim"],
-	      ["fire (res)", "fire (res)"]]
-	slow   = [["fire (res)", "fire (res)"]]
+	      ["Fire (res)", "Fire (res)"]]
+	slow   = [["Fire (res)", "Fire (res)"]]
 
         [gnome.units.gnome_infantry.damage_tables]
         regular = ["1-5: Kill 1 model",
@@ -56,7 +54,7 @@
     cost.mp = 4
     cost.cp = 4	
     special = ["May not enter buildings"]
-
+    shaken  = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
 
         [gnome.units.quad_bike.orders.movement]
 	fast = [["F", "F", "-"],
@@ -75,9 +73,6 @@
 	     ["360°", "360°", "360°"],
 	     ["360°", "B", "-"]]
 	still = [["360°", "-", "-"], ["360°", "A", "F"]]
-	default_fast = [["-", "Flee", "Flee"]]
-	default_slow = [["-", "-", "Flee"]]
-	default_still = [["-", "-", "A+Flee"]]
 
         [gnome.units.quad_bike.orders.fire]
 	still = [["Fire (res)", "Fire (res)"]]
@@ -103,17 +98,13 @@
     armor = [0, 0, 0, 0]
     special = [""]
 
-
         [gnome.units.assault_bots.orders.movement]
         slow = [["-", "-", "Chase"]]
-        default_slow = [["-", "-", "-"]]
+ 
 
         [gnome.units.assault_bots.damage_tables]
         regular = ["0-7: Kill 1 model",
             "8: Destroy Unit"
-        ]
-        psychic = [
-            "4+: Unit Shaken",
         ]
 
 
@@ -128,7 +119,6 @@
 
         [gnome.units.mechanical_rat.orders.movement]
         slow = [["-", "-", "Chase"]]
-        default_slow = [["-", "-", "-"]]
 
         [gnome.units.mechanical_rat.damage_tables]
         regular = ["0+: Destroy Unit"
@@ -146,6 +136,7 @@
     cost.xp = 4
     cost.cp = 4
     special = ["Elusive[fast]: additional -1 to be hit while fast"]
+    shaken  = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
 
 
         [gnome.units.gnome_motorcycle.orders.movement]
@@ -158,9 +149,6 @@
 	     ["360$^0$","A","F"],
 	     ["360$^0$","F+B","360$^0$"]]
 	still = [["360$^0$","A","F"], ["360$^0$","-", "-"]]
-	default_still = [["-", "-", "A+Flee"]]
-	default_slow = [["-", "-", "Flee"]]
-	default_fast = [["-", "Flee", "Flee"]]
 
         [gnome.units.gnome_motorcycle.orders.fire]
 	still = [["-", "Load"],
@@ -186,14 +174,12 @@
     armor = [0, 0, 0, 0]
     cost.cp = 6
     special = []
-
+    shaken  = "Speed set to still, move order: [- - -]. May not fire weapons"
 
         [gnome.units.ballista_drone.orders.movement]
 	slow = [["360$^0$","F","-"],
 	     ["-","-","B"]]
 	still = [["L","-","-"], ["R","-","-"], ["-","-","-"], ["A","-","-"]] 
-	default_still = [["", "", "-"]  ]
-	default_slow = [["", "", "B"]]
 
         [gnome.units.ballista_drone.orders.fire]
 	still = [["Load", "-"],
@@ -220,7 +206,7 @@
     armor = [12, 8, 8, 7]
     cost.ip = 8
     special = ["Fires and loads both weapons at fire and load actions"]
-
+    shaken  = "Speed set to still, move order: [- - -]. May not fire weapons"
 
         [gnome.units.ballista_tractor_markI.orders.movement]
 	slow = [["L","-","-"],
@@ -236,9 +222,6 @@
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
-	default_still = [["-", "-", "-",]]
-
-	default_slow = [["-", "-", "B"]]
 
         [gnome.units.ballista_tractor_markI.orders.fire]
 	all = [["-", "Load"],
@@ -265,7 +248,7 @@
     armor = [12, 8, 8, 7]
     cost.ip = 8
     special = []
-
+    shaken  = "Speed set to still, move order: [- - -]. May not fire weapons"
 
         [gnome.units.ballista_tractor_markII.orders.movement]
 	slow = [["L","-","-"],
@@ -278,9 +261,6 @@
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
-	default_still = [["-", "-", "-",]]
-
-	default_slow = [["-", "-", "B"]]
 
         [gnome.units.ballista_tractor_markII.orders.fire]
 	all = [["-", "Load"],
@@ -304,7 +284,7 @@
     armor = [12, 8, 8, 7]
     cost.ip = 8
     special = ["Fires and loads both weapons at fire and load actions"]
-
+    shaken  = "Speed set to still, move order: [- - -]. May not fire weapons"
 
         [gnome.units.ballista_tractor_MarkIII.orders.movement]
 	slow = [["L","-","-"],
@@ -317,9 +297,7 @@
 	     ["F","-","-"],
 	     ["B","rev","-"]]
 	still = [["L","-","-"],["L","L","-"],["L","L","L"],["R","-","-"],["R","R","-"],["R","R","R"],["-","-","-"],["R","A","F"],["L","A","F"],["A","F","-"],["rev","-","-"]]
-	default_still = [["-", "-", "-",]]
 
-	default_slow = [["-", "-", "B"]]
 
         [gnome.units.ballista_tractor_MarkIII.orders.fire]
 	still = [["-", "Load"],
@@ -347,7 +325,7 @@
     cost.ip = 6
     cost.xp = 2
     special = ["Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaniously", "Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."]
-
+    shaken  = "Speed set to still_ground, move order: [- - -]. May not fire weapons"
 
         [gnome.units.gnome_helicopter.orders.movement]
 	still_ground = [["A[still]", "360$^0$", "-"], ["A[slow]","360$^0$", "F"], ["A[still]","360$^0$", "-"]]
@@ -373,12 +351,8 @@
 		    ["F", "F", "F"],["F", "F", "F+D"], ["F", "D+F", "F"], ["F+D", "F", "F"],
 		    ["F", "F", "D"]]
 
-	default_still_flying = [["-", "-", "B[ground]"]]
-	default_slow_flying = [["-", "-", "B[ground]"]]
-	default_fast_flying = [["-", "-", "B[ground]"]]
-
         [gnome.units.gnome_helicopter.orders.fire]
-	still = [["-", "Load"]]	
+	still_ground = [["-", "Load"]]	
 	fast_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"],["Throw(d)", "Load"]]
 	slow_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"],["Throw(d)", "Load"]]
 	still_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"],["Throw(d)", "Load"],["Aim", "Fire"], ["Fire", "Aim"]]
@@ -593,7 +567,7 @@
     name = "Gnome Elite Infantry"
     race = "gnome"
     equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
-    equipments = ["gnome_gun", "light_smg", "poison_dart", "acid_ballon", "grinder" ]
+    equipments = ["gnome_gun", "smg", "poison_dart", "acid_ballon", "grinder" ]
     type = ["bio", "elite", "infantry", "walks"]
     replaces = ["gnome_infantry"]
     special = ["Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)", "Unit gains psycic resistance 1 as long as atleast one elite model is alive."]
@@ -760,7 +734,22 @@
         angle = [true, true, true, true]
         damage = "d4-2"
         ap = 1
-        special = ["Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
+
+
+    [gnome.equipments.smg]
+    name = "SMG"
+    race = "gnome"
+    requires = [
+        ["reserve:1"],
+    ]
+
+        [gnome.equipments.smg.range]
+        range = 2
+        angle = [true, true, true, true]
+        damage = "d6-3"
+        ap = 1
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.", "Fire two shots per fire reserve order", "Always treated as loaded"]
 
 
 
@@ -772,11 +761,11 @@
     ]
 
         [gnome.equipments.poison_dart.range]
-        range = 1
+        range = 2
         angle = [true, true, true, true]
         damage = "-"
         ap = 0
-        special = ["Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded", "Poison[4]"]
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded", "Poison[4]"]
 
 
     [gnome.equipments.acid_ballon]
@@ -791,7 +780,7 @@
         angle = [true, true, true, true]
         damage = "-"
         ap = 0
-        special = ["Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded", "Minor Acid"]
+        special = ["Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded", "Minor Acid"]
 
 
     [gnome.equipments.grinder]
@@ -802,11 +791,11 @@
     ]
 
         [gnome.equipments.grinder.range]
-        range = 1
+        range = 2
         angle = [true, true, true, true]
         damage = "d8-2"
         ap = 2
-        special = ["Reserve weapon: may use this weapon instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Only treated as loaded if your main gun is loaded."]
+        special = ["Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time.", "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used"]
 
 
     [gnome.equipments.mechanical_owl]
@@ -822,7 +811,7 @@
     [gnome.equipments.frost_ray]
     race = "gnome"
     name = "Frost Ray"
-    cost.cp = 6
+    cost.cp = 4
     requires = [
     	     ["type:infantry"],
 	     ["hands:2"]
@@ -856,7 +845,7 @@
              angle= [true, true, true, true]
              damage = "d6 psycic damage + d4 crew damage"
              ap = 0
-	     special = ["Choose one hex (per model firing this weapon) within normal range: Area(5+)", "Poison[6]", "Reserve weapon: may use this weapon instead of main gun if fire (reserve) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
+	     special = ["Choose one hex (per model firing this weapon) within normal range: Area(5+)", "Poison[6]", "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time.", "Always treated as loaded"]
 
 
     [gnome.equipments.helicopter_mounted_green_gas_launcher]
@@ -927,13 +916,13 @@
 	     special = [ "Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)", "Limited Ammo[2]"]
 
 
-    [gnome.equipments.acidic_napalm_bomb_ii]
+    [gnome.equipments.extra_acidic_napalm_bomb]
     race = "gnome"
-    name = "Acidic Napalm Bomb"
+    name = "(extra) Acidic Napalm Bomb"
     cost.cp = 1
     requires = [["type:helicopter"],["helicopter_drop:1"]]
 
-    	     [gnome.equipments.acidic_napalm_bomb_ii.range]
+    	     [gnome.equipments.extra_acidic_napalm_bomb.range]
 	     range = 2
              angle= [true, true, true, true]
              damage = "n.a"
@@ -944,7 +933,7 @@
     [gnome.equipments.major_acidic_napalm_bomb]
     race = "gnome"
     name = "Major Acidic Napalm Bomb"
-    cost.cp = 4
+    cost.cp = 6
     requires = [["type:helicopter"],["helicopter_drop:1"]]
 
     	     [gnome.equipments.major_acidic_napalm_bomb.range]
@@ -952,7 +941,7 @@
              angle= [true, true, true, true]
              damage = "n.a"
              ap = 0
-	     special = [ "Choose a hex within normal range: Area(4+): major acid and any unit hit atleast one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)", "Limited Ammo[2]"]
+	     special = [ "Choose a hex within normal range: Area(4+): acid and any unit hit atleast one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)", "Limited Ammo[2]"]
 
 
 
@@ -1041,7 +1030,7 @@
 
     [gnome.equipments.splintbombgrenade_launcher]
     race = "gnome"
-    name = "splintbombgrenade_launcher"
+    name = "Splintbombgrenade_launcher"
     requires = [["type:motorcycle"],["motorcycle:1"]]
 
     	     [gnome.equipments.splintbombgrenade_launcher.range]
@@ -1099,7 +1088,7 @@
     [gnome.equipments.experimental_death_ray]
     race = "gnome"
     name = "Experimental Death Ray"
-    cost.cp = 2
+    cost.cp = 4
     requires = [["type:tinkerer"],["type:infantry"]]
 
     	     [gnome.equipments.experimental_death_ray.range]
@@ -1107,6 +1096,6 @@
              angle= [true, true, true, false]
              damage = "d6-6"
              ap = 2
-	     special = ["Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token", "May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens", "If you hit your enemy, roll for damage 4 times", "In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add minor accid to self, if you rolled atleast x2 ones, death ray explodes and unit is killed."]
+	     special = ["Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token", "May keep aiming instead of firing or loading.", "If you hit your enemy, roll for damage 4 times", "In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add minor accid to self, if you rolled atleast two ones, death ray explodes and unit is killed."]
 
 

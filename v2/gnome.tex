@@ -8,17 +8,22 @@
   Cost & 4mp\\
   Models & 4 x Gnome Infantry\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & Speed set to slow, move order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Take-Cover[still][-2]\\ 
 
 
-{\bf Gnome Infantry } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Gnome Infantry } \\
+Equipment Limits: &[hands:2, reserve:1, independent:∞] \\
+Type: &[bio, infantry, walks] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Gnome Gun, 1 x Light SMG \\
-Equipment Limits: [hands:2, reserve:1, independent:∞] \\
-Type: [bio, infantry, walks] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
@@ -41,7 +46,7 @@ Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
 
@@ -60,8 +65,6 @@ slow [360°, 360°, 360°] \\
 slow [360°, B, -] \\
 still [360°, -, -] \\
 still [360°, A, F] \\
-default slow [-, -, Flee] \\
-default still [-, -, A+Flee] \\
 \ \\ {\bf fire } \\
 still [Load, -] \\
 still [-, Load] \\
@@ -69,8 +72,8 @@ still [Fire, -] \\
 still [-, Fire] \\
 still [Aim, -] \\
 still [-, Aim] \\
-still [fire (res), fire (res)] \\
-slow [fire (res), fire (res)] \\
+still [Fire (res), Fire (res)] \\
+slow [Fire (res), Fire (res)] \\
 
 
 {\bf Damage Tables} \\
@@ -100,17 +103,22 @@ slow [fire (res), fire (res)] \\
   Cost & 4mp, 4cp\\
   Models & 4 x Quad Bike\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & Speed set to slow, move order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent May not enter buildings\\ 
 
 
-{\bf Quad Bike } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Quad Bike } \\
+Equipment Limits: &[hands: 2, reserve:1, independent:∞] \\
+Type: &[bio, quad bike, infantry, wheeled] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Light SMG \\
-Equipment Limits: [hands: 2, reserve:1, independent:∞] \\
-Type: [bio, quad bike, infantry, wheeled] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [1, 0, 0, 0] Die: 5+\\
@@ -123,7 +131,7 @@ Assault Deflection: [1, 0, 0, 0] Die: 5+\\
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
 
@@ -152,9 +160,6 @@ slow [360°, 360°, 360°] \\
 slow [360°, B, -] \\
 still [360°, -, -] \\
 still [360°, A, F] \\
-default fast [-, Flee, Flee] \\
-default slow [-, -, Flee] \\
-default still [-, -, A+Flee] \\
 \ \\ {\bf fire } \\
 still [Fire (res), Fire (res)] \\
 slow [Fire (res), Fire (res)] \\
@@ -188,17 +193,22 @@ fast [Fire (res), Fire (res)] \\
   Cost & \\
   Models & 4 x Assault Bot\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & \\
 \end{tabular}
 
 \noindent \\ 
 
 
-{\bf Assault Bot } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Assault Bot } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[drone, walks] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment:  \\
-Equipment Limits: [independent:∞] \\
-Type: [drone, walks] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 0, 0, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
@@ -215,15 +225,12 @@ Can only enter play through mortars or drop weapons\\
 
 \ \\ {\bf movement } \\
 slow [-, -, Chase] \\
-default slow [-, -, -] \\
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 0-7: Kill 1 model \\
 8: Destroy Unit \\
-\ \\ {\bf psychic } \\
-4+: Unit Shaken \\
 
 
 
@@ -244,17 +251,22 @@ default slow [-, -, -] \\
   Cost & \\
   Models & 1 x Mechanical Rat\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & \\
 \end{tabular}
 
 \noindent \\ 
 
 
-{\bf Mechanical Rat } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Mechanical Rat } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[drone, walks] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment:  \\
-Equipment Limits: [independent:∞] \\
-Type: [drone, walks] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [3, 0, 0, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
@@ -271,7 +283,6 @@ Can only enter play through tinkerer ability\\
 
 \ \\ {\bf movement } \\
 slow [-, -, Chase] \\
-default slow [-, -, -] \\
 
 
 {\bf Damage Tables} \\
@@ -297,17 +308,22 @@ default slow [-, -, -] \\
   Cost & 2mp, 4cp, 4xp\\
   Models & 3 x Gnome Motorcycle\\
   Armor & [4, 3, 0, 0]\\
+  Shaken & Speed set to slow, move order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Elusive[fast]: additional -1 to be hit while fast\\ 
 
 
-{\bf Gnome Motorcycle } \\
-Equipment: 1 x splintbombgrenade launcher \\
-Equipment Limits: [motorcycle weapon:1, independent:∞] \\
-Type: [bio, motorcycle, wheel] \\
-Replaces: Nothing \\
-Cost: 0\\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Gnome Motorcycle } \\
+Equipment Limits: &[motorcycle weapon:1, independent:∞] \\
+Type: &[bio, motorcycle, wheel] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Splintbombgrenade launcher \\
 \ \\
 Assault: [2, 1, 1, 0] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 1, 0, 0] Die: 5+\\
@@ -316,7 +332,7 @@ Assault Deflection: [2, 1, 0, 0] Die: 5+\\
 \ \\
 
 \ \\
-{\bf splintbombgrenade launcher } \\
+{\bf Splintbombgrenade launcher } \\
 
 
 
@@ -342,9 +358,6 @@ slow [360$^0$, A, F] \\
 slow [360$^0$, F+B, 360$^0$] \\
 still [360$^0$, A, F] \\
 still [360$^0$, -, -] \\
-default still [-, -, A+Flee] \\
-default slow [-, -, Flee] \\
-default fast [-, Flee, Flee] \\
 \ \\ {\bf fire } \\
 still [-, Load] \\
 still [-, Fire] \\
@@ -379,16 +392,21 @@ fast [-, Fire] \\
   Cost & 6cp\\
   Models & 1 x Ballista\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & Speed set to still, move order: [- - -]. May not fire weapons\\
 \end{tabular}
 
 \noindent 
 
-{\bf Ballista } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Ballista } \\
+Equipment Limits: &[ballista:1, independent:∞] \\
+Type: &[construct, towed] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Ballista \\
-Equipment Limits: [ballista:1, independent:∞] \\
-Type: [construct, towed] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
@@ -418,8 +436,6 @@ still [L, -, -] \\
 still [R, -, -] \\
 still [-, -, -] \\
 still [A, -, -] \\
-default still [, , -] \\
-default slow [, , B] \\
 \ \\ {\bf fire } \\
 still [Load, -] \\
 still [-, Load] \\
@@ -455,17 +471,22 @@ still [-, Aim] \\
   Cost & 8ip\\
   Models & 1 x Ballista Tractor Mark I\\
   Armor & [12, 8, 8, 7]\\
+  Shaken & Speed set to still, move order: [- - -]. May not fire weapons\\
 \end{tabular}
 
 \noindent Fires and loads both weapons at fire and load actions\\ 
 
 
-{\bf Ballista Tractor Mark I } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Ballista Tractor Mark I } \\
+Equipment Limits: &[ballista:1, vehicle mortar:1, independent:∞] \\
+Type: &[mechanical, bio crew, vehicles, wheeled] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Ballista, 1 x Assault Bot Mortar \\
-Equipment Limits: [ballista:1, vehicle mortar:1, independent:∞] \\
-Type: [mechanical, bio crew, vehicles, wheeled] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 5+\\
@@ -520,8 +541,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default still [-, -, -] \\
-default slow [-, -, B] \\
 \ \\ {\bf fire } \\
 all [-, Load] \\
 all [-, Fire] \\
@@ -565,16 +584,21 @@ still [-, Aim] \\
   Cost & 8ip\\
   Models & 1 x Ballista Tractor Mark II\\
   Armor & [12, 8, 8, 7]\\
+  Shaken & Speed set to still, move order: [- - -]. May not fire weapons\\
 \end{tabular}
 
 \noindent 
 
-{\bf Ballista Tractor Mark II } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Ballista Tractor Mark II } \\
+Equipment Limits: &[ballista:1, independent:∞] \\
+Type: &[mechanical, bio crew, vehicles, wheeled] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Enhanced Ballista \\
-Equipment Limits: [ballista:1, independent:∞] \\
-Type: [mechanical, bio crew, vehicles, wheeled] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [4, 0, 0, 0] Die: 5+\\
@@ -618,8 +642,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default still [-, -, -] \\
-default slow [-, -, B] \\
 \ \\ {\bf fire } \\
 all [-, Load] \\
 all [-, Fire] \\
@@ -663,17 +685,22 @@ still [-, Aim] \\
   Cost & 8ip\\
   Models & 1 x Ballista Tractor Mark III\\
   Armor & [12, 8, 8, 7]\\
+  Shaken & Speed set to still, move order: [- - -]. May not fire weapons\\
 \end{tabular}
 
 \noindent Fires and loads both weapons at fire and load actions\\ 
 
 
-{\bf Ballista Tractor Mark III } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Ballista Tractor Mark III } \\
+Equipment Limits: &[ballista:1, array:1, independent:∞] \\
+Type: &[mechanical, bio crew, vehicles, wheeled] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Ballista, 1 x Array of Heavy Muskets \\
-Equipment Limits: [ballista:1, array:1, independent:∞] \\
-Type: [mechanical, bio crew, vehicles, wheeled] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [3, 2, 2, 1] Die: 3+ Armor Penetration: 2 Damage: d6-1 \\
 Assault Deflection: [2, 0, 0, 0] Die: 5+\\
@@ -725,8 +752,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default still [-, -, -] \\
-default slow [-, -, B] \\
 \ \\ {\bf fire } \\
 still [-, Load] \\
 still [-, Fire] \\
@@ -774,18 +799,23 @@ fast [-, Fire] \\
   Cost & 6ip, 2xp\\
   Models & 1 x Gnome Helicpoter\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & Speed set to still ground, move order: [- - -]. May not fire weapons\\
 \end{tabular}
 
 \noindent Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaniously\\ 
 Good Shot: +1 to hit or Excelent Shot: +2 to hit if helicopter is hovering still in the air (still flying).\\ 
 
 
-{\bf Gnome Helicpoter } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Gnome Helicpoter } \\
+Equipment Limits: &[helicopter front:1, helicopter drop:1, helicopter side:1, independent: ∞] \\
+Type: &[bio crew, helicopter, flying] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
 Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
-Equipment Limits: [helicopter front:1, helicopter drop:1, helicopter side:1, independent: ∞] \\
-Type: [bio crew, helicopter, flying] \\
-Replaces: Nothing \\
-Cost: 0\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: \\
@@ -853,11 +883,8 @@ fast flying [F, F, F+D] \\
 fast flying [F, D+F, F] \\
 fast flying [F+D, F, F] \\
 fast flying [F, F, D] \\
-default still flying [-, -, B[ground]] \\
-default slow flying [-, -, B[ground]] \\
-default fast flying [-, -, B[ground]] \\
 \ \\ {\bf fire } \\
-still [-, Load] \\
+still ground [-, Load] \\
 fast flying [Throw(d), Fire] \\
 fast flying [Load, Throw(d)] \\
 fast flying [Throw(d), Load] \\
@@ -889,12 +916,16 @@ as regular damage \\
 
 
 
-\pagebreak\section{Upgradeable Units}{\bf Tinkerer Helicpoter } \\
+\pagebreak\section{Upgradeable Units}\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Tinkerer Helicpoter } \\
+Equipment Limits: &[helicopter front:1, helicopter drop:1, helicopter side:2, independent: ∞] \\
+Type: &[bio crew, helicopter, flying, tinkerer] \\
+Replaces: &[gnome helicopter] \\
+Cost: & -2cp, 6xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Acidic Napalm Bomb, 1 x Helicopter Gattling Gun \\
-Equipment Limits: [helicopter front:1, helicopter drop:1, helicopter side:2, independent: ∞] \\
-Type: [bio crew, helicopter, flying, tinkerer] \\
-Replaces: [gnome helicopter] \\
-Cost: -2cp, 6xp\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: \\
@@ -930,12 +961,16 @@ Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit re
  
 \ \\
 
-{\bf Gnome Elite Infantry } \\
-Equipment: 1 x Gnome Gun, 1 x Light SMG, 1 x Poison Dart, 1 x Acid Ballon, 1 x Grinder \\
-Equipment Limits: [hands:2, reserve:∞, independent:∞] \\
-Type: [bio, elite, infantry, walks] \\
-Replaces: [gnome infantry] \\
-Cost: 1xp\\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Gnome Elite Infantry } \\
+Equipment Limits: &[hands:2, reserve:∞, independent:∞] \\
+Type: &[bio, elite, infantry, walks] \\
+Replaces: &[gnome infantry] \\
+Cost: & 1xp\\
+\end{tabular}
+\ \\
+Equipment: 1 x Gnome Gun, 1 x SMG, 1 x Poison Dart, 1 x Acid Ballon, 1 x Grinder \\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
@@ -955,12 +990,13 @@ Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
-{\bf Light SMG } \\
+{\bf SMG } \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Fire two shots per fire reserve order\\ 
 Always treated as loaded\\ 
 
 
@@ -970,8 +1006,8 @@ Always treated as loaded\\
 
 
 
-Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:- \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:- \\
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 Poison[4]\\ 
 
@@ -983,7 +1019,7 @@ Poison[4]\\
 
 
 Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:- \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 Minor Acid\\ 
 
@@ -994,9 +1030,9 @@ Minor Acid\\
 
 
 
-Range: 1  Angle: [True, True, True, True]: AP: 2 Damage:d8-2 \\
-Reserve weapon: may use this weapon instead of main gun fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
-Only treated as loaded if your main gun is loaded.\\ 
+Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d8-2 \\
+Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used\\ 
 
 
 
@@ -1004,12 +1040,16 @@ Only treated as loaded if your main gun is loaded.\\
  
 \ \\
 
-{\bf Gnome Tinkerer } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Gnome Tinkerer } \\
+Equipment Limits: &[hands:2, reserve:∞, independent:∞] \\
+Type: &[bio, infantry, tinkerer, walks] \\
+Replaces: &[gnome infantry] \\
+Cost: & -3cp, 4xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Gnome Gun, 1 x Light SMG \\
-Equipment Limits: [hands:2, reserve:∞, independent:∞] \\
-Type: [bio, infantry, tinkerer, walks] \\
-Replaces: [gnome infantry] \\
-Cost: -3cp, 4xp\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [0, 0, 0, 0] Die: \\
@@ -1033,7 +1073,7 @@ Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6 \\
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
 
@@ -1042,12 +1082,16 @@ Always treated as loaded\\
  
 \ \\
 
-{\bf QuadBike Tinkerer } \\
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf QuadBike Tinkerer } \\
+Equipment Limits: &[hands:2, reserve:∞, independent:∞] \\
+Type: &[bio, infantry, tinkerer, walks] \\
+Replaces: &[quad bike] \\
+Cost: & -3cp, 4xp\\
+\end{tabular}
+\ \\
 Equipment: 1 x Light SMG \\
-Equipment Limits: [hands:2, reserve:∞, independent:∞] \\
-Type: [bio, infantry, tinkerer, walks] \\
-Replaces: [quad bike] \\
-Cost: -3cp, 4xp\\
 \ \\
 Assault: [1, 1, 1, 1] Die: 3+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [3, 0, 0, 0] Die: 5+\\
@@ -1062,7 +1106,7 @@ Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanic
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 1 Damage:d4-2 \\
-Reserve weapon: may use this weapon instead of main gun when fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
 
@@ -1072,10 +1116,12 @@ Always treated as loaded\\
 \ \\
 
 \section{Equipment and training Upgrades}\ \\
-{\bf Acid Splash } \\
+\begin{tabular}{ll}
+name: & {\bf Acid Splash } \\
+Requiers: & [[hands:2], [type:infantry]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[hands:2], [type:infantry]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 Range: 4  Angle: [True, True, True, True]: AP: 0 Damage:- \\
@@ -1090,10 +1136,12 @@ Minor Acid\\
 
 
 \ \\
-{\bf Mechanical Owl } \\
+\begin{tabular}{ll}
+name: & {\bf Mechanical Owl } \\
+Requiers: & [[type:infantry], [independent:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [independent:1]] \\
-Cost: Upgrade all models for: 2cp \\
 Gives all weapons the enhanced accurazy (+1 to hit) trait\\ 
 
 
@@ -1105,10 +1153,12 @@ Gives all weapons the enhanced accurazy (+1 to hit) trait\\
 
 
 \ \\
-{\bf Frost Ray } \\
+\begin{tabular}{ll}
+name: & {\bf Frost Ray } \\
+Requiers: & [[type:infantry], [hands:2]] \\
+Cost: & Upgrade all models for: 6cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [hands:2]] \\
-Cost: Upgrade all models for: 6cp \\
 
 
 Range: 4  Angle: [True, True, True, True]: AP: 0 Damage:d4-2+d6 psycic damge + d4 crew damage \\
@@ -1124,16 +1174,18 @@ If you use the 'amplified fire' order, and if you hit the enemy unit atleast onc
 still [-, amplified fire] \\
 
 \ \\
-{\bf Green Gas Launcer } \\
+\begin{tabular}{ll}
+name: & {\bf Green Gas Launcer } \\
+Requiers: & [[type:tinkerer, type:elite], [type:infantry], [reserve:1]] \\
+Cost: & Upgrade one model for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer, type:elite], [type:infantry], [reserve:1]] \\
-Cost: Upgrade one model for: 2cp \\
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 0 Damage:d6 psycic damage + d4 crew damage \\
 Choose one hex (per model firing this weapon) within normal range: Area(5+)\\ 
 Poison[6]\\ 
-Reserve weapon: may use this weapon instead of main gun if fire (reserve) orders is given, but you may only use one reserve weapon at any given time.\\ 
+Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time.\\ 
 Always treated as loaded\\ 
 
 
@@ -1144,10 +1196,12 @@ Always treated as loaded\\
 
 
 \ \\
-{\bf Helicopter mounted Green Gas Launcer } \\
+\begin{tabular}{ll}
+name: & {\bf Helicopter mounted Green Gas Launcer } \\
+Requiers: & [[type: tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type: tinkerer], [type:helicopter], [helicopter side:1]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 Range: 3  Angle: [True, True, True, True]: AP: 0 Damage:d6 psycic damage + d4 crew damage \\
@@ -1162,10 +1216,12 @@ Poison[4]\\
 
 
 \ \\
-{\bf Experimental Plasma Gun } \\
+\begin{tabular}{ll}
+name: & {\bf Experimental Plasma Gun } \\
+Requiers: & [[type:tinkerer], [type:infantry], [hands:2]] \\
+Cost: & Upgrade one model for: 4cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer], [type:infantry], [hands:2]] \\
-Cost: Upgrade one model for: 4cp \\
 
 
 Range: 4  Angle: [True, True, True, True]: AP: 6 Damage:d12-3 \\
@@ -1180,10 +1236,12 @@ If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire
 
 
 \ \\
-{\bf Helicopter Mounted Experimental Plasma Gun } \\
+\begin{tabular}{ll}
+name: & {\bf Helicopter Mounted Experimental Plasma Gun } \\
+Requiers: & [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: & Upgrade all models for: 4cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
-Cost: Upgrade all models for: 4cp \\
 
 
 Range: 6  Angle: [True, True, True, False]: AP: 6 Damage:d12-3 \\
@@ -1199,10 +1257,12 @@ Difficutly firing forward: Get -1 to hit in forward direction\\
 
 
 \ \\
-{\bf Acidic Napalm Bomb } \\
+\begin{tabular}{ll}
+name: & {\bf (extra) Acidic Napalm Bomb } \\
+Requiers: & [[type:helicopter], [helicopter drop:1]] \\
+Cost: & Upgrade all models for: 1cp \\
+\end{tabular}
 
-Requiers: [[type:helicopter], [helicopter drop:1]] \\
-Cost: Upgrade all models for: 1cp \\
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
@@ -1217,10 +1277,12 @@ Limited Ammo[3]\\
 
 
 \ \\
-{\bf Major Acidic Napalm Bomb } \\
+\begin{tabular}{ll}
+name: & {\bf Major Acidic Napalm Bomb } \\
+Requiers: & [[type:helicopter], [helicopter drop:1]] \\
+Cost: & Upgrade all models for: 4cp \\
+\end{tabular}
 
-Requiers: [[type:helicopter], [helicopter drop:1]] \\
-Cost: Upgrade all models for: 4cp \\
 
 
 Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:n.a \\
@@ -1235,10 +1297,12 @@ Limited Ammo[2]\\
 
 
 \ \\
-{\bf Assault Bot Mortar } \\
+\begin{tabular}{ll}
+name: & {\bf Assault Bot Mortar } \\
+Requiers: & [[type:infantry], [hands:2]] \\
+Cost: & Upgrade all models for: 6cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [hands:2]] \\
-Cost: Upgrade all models for: 6cp \\
 No regular damage\\ 
 When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 6 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon.\\ 
 
@@ -1251,10 +1315,12 @@ When firing, place an assault bot with number of models equal to the number of m
 
 
 \ \\
-{\bf Assault Bot Dropper } \\
+\begin{tabular}{ll}
+name: & {\bf Assault Bot Dropper } \\
+Requiers: & [[type:helicopter], [helicopter drop:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:helicopter], [helicopter drop:1]] \\
-Cost: Upgrade all models for: 2cp \\
 No regular damage\\ 
 When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon.\\ 
 Limited Ammo[3]\\ 
@@ -1268,10 +1334,12 @@ Limited Ammo[3]\\
 
 
 \ \\
-{\bf Improved Medical Armor } \\
+\begin{tabular}{ll}
+name: & {\bf Improved Medical Armor } \\
+Requiers: & [[type:infantry], [independent:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [independent:1]] \\
-Cost: Upgrade all models for: 2cp \\
 Unit gain Fire resistance 6, Poison Resistance 6, minor acid resitance[4+] and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
 
 
@@ -1283,10 +1351,12 @@ Unit gain Fire resistance 6, Poison Resistance 6, minor acid resitance[4+] and P
 
 
 \ \\
-{\bf Medical Armor } \\
+\begin{tabular}{ll}
+name: & {\bf Medical Armor } \\
+Requiers: & [[type:infantry], [independent:1]] \\
+Cost: & Upgrade all models for: 1cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [independent:1]] \\
-Cost: Upgrade all models for: 1cp \\
 Unit gain Fire resistance 2, Poison Resistance 2, and Psycic resistance 1 (improve by 1 if unit has psycic resistance from another source)\\ 
 
 
@@ -1298,10 +1368,12 @@ Unit gain Fire resistance 2, Poison Resistance 2, and Psycic resistance 1 (impro
 
 
 \ \\
-{\bf Plasma Shield Generator } \\
+\begin{tabular}{ll}
+name: & {\bf Plasma Shield Generator } \\
+Requiers: & [[type:infantry], [independent:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [independent:1]] \\
-Cost: Upgrade all models for: 2cp \\
 Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)\\ 
 However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
 
@@ -1316,10 +1388,12 @@ append Any enemy which is hit atleast once in assault is set on fire
 
 
 \ \\
-{\bf Quadbike Lance } \\
+\begin{tabular}{ll}
+name: & {\bf Quadbike Lance } \\
+Requiers: & [[type:quadbike], [hands:2]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:quadbike], [hands:2]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 
@@ -1332,10 +1406,12 @@ Assault strength: +add [1, 0, 0, 0]
 
 
 \ \\
-{\bf Improved Plasma Shield Generator } \\
+\begin{tabular}{ll}
+name: & {\bf Improved Plasma Shield Generator } \\
+Requiers: & [[type:infantry], [independent:1]] \\
+Cost: & Upgrade all models for: 4cp \\
+\end{tabular}
 
-Requiers: [[type:infantry], [independent:1]] \\
-Cost: Upgrade all models for: 4cp \\
 Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)\\ 
 However, every time this unit takes atleast 1 point of regular damage after resistanes, it also takes an additional d4 fire damage (apply fire resistance if any)\\ 
 
@@ -1350,10 +1426,12 @@ append Any enemy which is hit atleast once in assault is set on fire
 
 
 \ \\
-{\bf Experimental guided missile } \\
+\begin{tabular}{ll}
+name: & {\bf Experimental guided missile } \\
+Requiers: & [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 Range: d4+d12  Angle: [True, True, True, True]: AP: 5 Damage:d6 + d6 psycic \\
@@ -1371,10 +1449,12 @@ If you roll a 1 on to hit, (regardeless of wether you hit or not), you are cover
 
 
 \ \\
-{\bf Helicopter Mounted Experimental Nail Gun } \\
+\begin{tabular}{ll}
+name: & {\bf Helicopter Mounted Experimental Nail Gun } \\
+Requiers: & [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer], [type:helicopter], [helicopter side:1]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 Range: 4  Angle: [True, True, True, False]: AP: 3 Damage:d6-2 \\
@@ -1391,10 +1471,12 @@ Difficult to fire forward: -1 to hit fireing forward\\
 
 
 \ \\
-{\bf Experimental Nail Gun } \\
+\begin{tabular}{ll}
+name: & {\bf Experimental Nail Gun } \\
+Requiers: & [[type:tinkerer], [type:infantry]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer], [type:infantry]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 Range: 4  Angle: [True, True, True, False]: AP: 3 Damage:d6-2 \\
@@ -1410,17 +1492,19 @@ If you roll only a one for the number of shots you fire, the gun is destroied. R
 
 
 \ \\
-{\bf Experimental Death Ray } \\
+\begin{tabular}{ll}
+name: & {\bf Experimental Death Ray } \\
+Requiers: & [[type:tinkerer], [type:infantry]] \\
+Cost: & Upgrade all models for: 4cp \\
+\end{tabular}
 
-Requiers: [[type:tinkerer], [type:infantry]] \\
-Cost: Upgrade all models for: 2cp \\
 
 
 Range: 8  Angle: [True, True, True, False]: AP: 2 Damage:d6-6 \\
 Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token\\ 
-May keep aiming instead of firing or loading. Keep track of death-ray aims seperately from other aim tokens\\ 
+May keep aiming instead of firing or loading.\\ 
 If you hit your enemy, roll for damage 4 times\\ 
-In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add minor accid to self, if you rolled atleast x2 ones, death ray explodes and unit is killed.\\ 
+In aggony phase 0, roll a die per aim-token for death ray. If you roll atleast one 1, add minor accid to self, if you rolled atleast two ones, death ray explodes and unit is killed.\\ 
 
 
 
