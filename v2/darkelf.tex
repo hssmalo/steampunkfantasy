@@ -8,13 +8,14 @@
   Cost & 24ip, 24xp\\
   Models & 1 x Mechanical Red Dragon\\
   Armor & [11, 8, 8, 7]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Mechanical Red Dragon } \\
+Model name: &{\bf Mechanical Red Dragon } \\
 Equipment Limits: &[] \\
 Type: &[flying, mechanical, walks] \\
 Replaces: &Nothing \\
@@ -56,12 +57,8 @@ all [-, Load] \\
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 1-5: +1 on future damage \\
-6-10: +1 on future damage, light damage[d6] \\
+6-10: +1 on future damage, shaken \\
 13+: Unit destroied \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5: -1 on assault and assault deflection \\
-6: Unit shaken \\
 
 
 
@@ -82,13 +79,14 @@ all [-, Load] \\
   Cost & 24ip, 24xp\\
   Models & 1 x Mechanical Iron Dragon\\
   Armor & [11, 8, 8, 7]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Mechanical Iron Dragon } \\
+Model name: &{\bf Mechanical Iron Dragon } \\
 Equipment Limits: &[] \\
 Type: &[flying, mechanical, walks] \\
 Replaces: &Nothing \\
@@ -142,12 +140,8 @@ all [-, Load] \\
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 1-5: +1 on future damage \\
-6-10: +1 on future damage, light damage[d6] \\
+6-10: +1 on future damage, shaken \\
 13+: Unit destroied \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5: -1 on assault and assault deflection \\
-6: Unit shaken \\
 
 
 
@@ -168,13 +162,14 @@ all [-, Load] \\
   Cost & 16ip\\
   Models & 1 x Queen YY\\
   Armor & [12, 10, 8, 7]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Queen YY } \\
+Model name: &{\bf Queen YY } \\
 Equipment Limits: &[independent:∞] \\
 Type: &[bio crew, vehicle, mechanical, track] \\
 Replaces: &Nothing \\
@@ -247,9 +242,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default still \\
-default slow \\
-default fast \\
 \ \\ {\bf fire } \\
 still [-, aim] \\
 still [-, load] \\
@@ -265,12 +257,10 @@ fast [-, Release Poison] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-5: Light damage[d6] \\
-6-8: Critical damage[d6], +1 on future damage \\
+1-3: +1 to future damage \\
+4-5:as 1-4, shaken \\
+6-8: 4-5, Critical damage[d6] \\
 9+: Unit destroied \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: Unit shaken \\
 \ \\ {\bf critical } \\
 1: -1 to-hit, +1 to-be-hit \\
 2: Rotates right in agony 0 step \\
@@ -279,7 +269,7 @@ fast [-, Release Poison] \\
 5: unit is covered in acid \\
 6: unit covered in acid x2 \\
 \ \\ {\bf crew } \\
-10: Weapons Jammed \\
+10: Crippled Crew \\
 11-12: as 10, +2 to future crew damage \\
 13: Crew Killed, unit destroyed \\
 
@@ -302,13 +292,14 @@ fast [-, Release Poison] \\
   Cost & 8ip\\
   Models & 1 x Queen XY\\
   Armor & [11, 10, 8, 7]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Queen XY } \\
+Model name: &{\bf Queen XY } \\
 Equipment Limits: &[independent:∞] \\
 Type: &[bio crew, vehicle, mechanical, track] \\
 Replaces: &Nothing \\
@@ -339,12 +330,10 @@ fast [-, Release Poison] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-5: Light damage[d6] \\
-6-8: Critical damage[d6], +1 on future damage \\
+1-3: +1 to future damage \\
+4-5:as 1-4, shaken \\
+6-8: 4-5, Critical damage[d6] \\
 9+: Unit destroied \\
-\ \\ {\bf light } \\
-1-4: +1 on future damage \\
-5-6: Unit shaken \\
 \ \\ {\bf critical } \\
 1: -1 to-hit, +1 to-be-hit \\
 2: Rotates right in agony 0 step \\
@@ -353,7 +342,7 @@ fast [-, Release Poison] \\
 5: unit is covered in acid \\
 6: unit covered in acid x2 \\
 \ \\ {\bf crew } \\
-11-12: +2 to future crew damage \\
+11-12: Crippled Crew, +2 to future crew damage \\
 13: Crew Killed, unit destroyed \\
 
 
@@ -375,13 +364,14 @@ fast [-, Release Poison] \\
   Cost & 2mp, 4cp, 12xp\\
   Models & 2 x Nightmare Mechanical Cavalry\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & speed set to slow, move order: [-,-,Flee]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Nightmare Mechanical Cavalry } \\
+Model name: &{\bf Nightmare Mechanical Cavalry } \\
 Equipment Limits: &[training:1, independent:∞] \\
 Type: &[bio, elite, cavalry, walks] \\
 Replaces: &Nothing \\
@@ -472,13 +462,14 @@ all [-, Breath Fire] \\
   Cost & 2mp, 4cp, 6xp\\
   Models & 2 x Elite Mechanical Cavalry\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & speed set to slow, move order: [-,-,Flee]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elite Mechanical Cavalry } \\
+Model name: &{\bf Elite Mechanical Cavalry } \\
 Equipment Limits: &[training:1, independent:∞] \\
 Type: &[bio, elite, cavalry, walks] \\
 Replaces: &Nothing \\
@@ -533,9 +524,6 @@ slow [360°, A, F] \\
 slow [360°, F+B, 360°] \\
 still [360°, 360°, 360°] \\
 still [360°, A, F] \\
-default slow \\
-default fast \\
-default still \\
 \ \\ {\bf fire } \\
 all [-, Load] \\
 all [-, Fire] \\
@@ -570,14 +558,14 @@ all [-, Aim] \\
   Cost & 4ip\\
   Models & 1 x Mechanical Assault Spider\\
   Armor & [7, 7, 7, 7]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
 \end{tabular}
 
-\noindent Ignore difficult terrain\\ 
-
+\noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Mechanical Assault Spider } \\
+Model name: &{\bf Mechanical Assault Spider } \\
 Equipment Limits: &[training:1, independent:∞] \\
 Type: &[mechanical, droid, walks] \\
 Replaces: &Nothing \\
@@ -589,7 +577,7 @@ Equipment: 1 x Head Gun \\
 Assault: [6, 4, 2, 1] Die: 5+ Armor Penetration: 7 Damage: d6 \\
 Assault Deflection: [6, 2, 0, 0] Die: 6+\\
 \indent Any number of supporting hits by this unit may incease AP by 1 instead of giving the normal +1 to damage.\\ 
-Poison[6][1 for 2], Fear[6]\\ 
+Poison[6][1 for 2]\\ 
  
 \ \\
 Good Shot: +1 to hit\\ 
@@ -627,18 +615,16 @@ slow [-, Aim] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-3: Light damaged[d6] \\
-4-6: critical damage[d6] \\
-7+: Destroy unit base \\
-\ \\ {\bf light } \\
-1-2: -1 to all assaults strength and deflection values (cumulative, minimum 0) \\
-3-4:+1 on future damage \\
-5-6: unit shaken \\
+1-2: +1 to future damage \\
+3: as below, shaken \\
+4-6: as below, critical damage[d6] \\
+7+: Destroy unit \\
 \ \\ {\bf critical } \\
 1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
-2: Cannot move, looses fear \\
+2: Cannot move \\
 3: Cannot rotate \\
-4-5: x3 Light damage[d6] \\
+4: x3 +3 to future damage \\
+5: half, rounded down, all assault strength and deflection values \\
 6: Unit set on Fire \\
 
 
@@ -660,13 +646,14 @@ slow [-, Aim] \\
   Cost & 4ip\\
   Models & 1 x Mechanical Scorpion\\
   Armor & [9, 7, 6, 5]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Mechanical Scorpion } \\
+Model name: &{\bf Mechanical Scorpion } \\
 Equipment Limits: &[training:1, independent:∞] \\
 Type: &[mechanical, droid, walks] \\
 Replaces: &Nothing \\
@@ -724,12 +711,10 @@ slow [-, Aim] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-3: Light damaged[d6] \\
-4-6: critical damage[d6] \\
-7+: Destroy unit base \\
-\ \\ {\bf light } \\
-1-4:+1 on future damage \\
-5-6: unit shaken \\
+1-2: +1 to future damage \\
+3: as below, shaken \\
+4-6: as below, critical damage[d6] \\
+7+: Destroy unit \\
 \ \\ {\bf critical } \\
 1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
 2: Cannot move, looses fear \\
@@ -756,6 +741,7 @@ slow [-, Aim] \\
   Cost & 6mp\\
   Models & 4 x Dark Elf Infantry\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-2]\\ 
@@ -763,7 +749,7 @@ slow [-, Aim] \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Dark Elf Infantry } \\
+Model name: &{\bf Dark Elf Infantry } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
 Type: &[bio, infantry, walks] \\
 Replaces: &Nothing \\
@@ -846,6 +832,7 @@ still [-, Aim] \\
   Cost & 4mp, 3cp\\
   Models & 4 x Dark Elf Infantry\\
   Armor & [3, 3, 3, 3]\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-2]\\ 
@@ -853,7 +840,7 @@ still [-, Aim] \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Dark Elf Infantry } \\
+Model name: &{\bf Dark Elf Infantry } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
 Type: &[bio, infantry, walks, roboprosthetic] \\
 Replaces: &Nothing \\
@@ -897,9 +884,6 @@ still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
 crawl [360°, A[slow], F] \\
-default crawl \\
-default still \\
-default slow \\
 \ \\ {\bf fire } \\
 still [Load, -] \\
 still [-, Load] \\
@@ -936,6 +920,7 @@ still [-, Aim] \\
   Cost & 2mp, 6xp\\
   Models & 1 x Assasin\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-3]\\ 
@@ -943,7 +928,7 @@ still [-, Aim] \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Assasin } \\
+Model name: &{\bf Assasin } \\
 Equipment Limits: &[shared: 1, hands:2, training:1, independent:∞] \\
 Type: &[bio, elite, infantry, walks] \\
 Replaces: &Nothing \\
@@ -999,9 +984,6 @@ still [360°, A[crawl], F] \\
 crawl [360°, F, -] \\
 crawl [360°, B[still], -] \\
 crawl [360°, A[slow], F] \\
-default crawl \\
-default still \\
-default slow \\
 \ \\ {\bf fire } \\
 still [Load, -] \\
 still [-, Load] \\
@@ -1036,6 +1018,7 @@ still [-, Aim] \\
   Cost & 2mp, 7cp\\
   Models & 1 x Roboprosthetic Assasin\\
   Armor & [3, 3, 3, 3]\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-3]\\ 
@@ -1043,7 +1026,7 @@ still [-, Aim] \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Roboprosthetic Assasin } \\
+Model name: &{\bf Roboprosthetic Assasin } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
 Type: &[bio, elite, infantry, roboprosthetic, walks] \\
 Replaces: &Nothing \\
@@ -1138,6 +1121,7 @@ slow [Fire, -] \\
   Cost & 2mp\\
   Models & 1 x Scout\\
   Armor & [0, 0, 0, 0]\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
 \end{tabular}
 
 \noindent Forward Position[2], Take-Cover[still,crawl][-3]\\ 
@@ -1146,7 +1130,7 @@ spot: detect enemy hidden darkelf.units. See general rules\\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Scout } \\
+Model name: &{\bf Scout } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
 Type: &[bio, infantry, walks] \\
 Replaces: &Nothing \\
@@ -1221,7 +1205,7 @@ slow [Spot, Spot] \\
 
 \pagebreak\section{Upgradeable Units}\noindent
 \begin{tabular}{ll}
-name: &{\bf DarkElf Elite Infantry } \\
+Model name: &{\bf DarkElf Elite Infantry } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
 Type: &[bio, elite, infantry, walks] \\
 Replaces: &[darkelf infantry] \\
@@ -1254,7 +1238,7 @@ Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elite Roboprosthetic DarkElf } \\
+Model name: &{\bf Elite Roboprosthetic DarkElf } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
 Type: &[bio, elite, infantry, walks, roboprosthetic] \\
 Replaces: &[roboprosthetic darkelf] \\
@@ -1445,6 +1429,27 @@ append ['Poison[4][1 for 1]']
 
 \ \\
 \begin{tabular}{ll}
+name: & {\bf Poison Spray } \\
+Requiers: & [[hands:2], [type:roboprosthetic, type: infantri]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
+
+
+
+Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6 crew damage \\
+Poison[6]\\ 
+
+
+
+{\bf Assault} \ \\
+Assault Damage set to: replace d6 + d6 crew damage
+\\ 
+
+append ['Poison[6][1 for 2]']
+
+
+\ \\
+\begin{tabular}{ll}
 name: & {\bf Integrated Pistol } \\
 Requiers: & [[independent:1], [type:roboprosthetic]] \\
 Cost: & Upgrade all models for: 1cp \\
@@ -1464,14 +1469,14 @@ Threated as loaded when main gun is loaded. May fire this weapon in addition to 
 
 \ \\
 \begin{tabular}{ll}
-name: & {\bf GasMask and assault training in poison clouds } \\
+name: & {\bf GasMask assault training } \\
 Requiers: & [[independent:1], [type:roboprosthetic, type:infantri, type:cavalery]] \\
 Cost: & Upgrade all models for: 1xp \\
 \end{tabular}
 
 Unit becomes immune to poison clouds\\ 
 Enemy units in an poison cloud gain -50\% (rounded down) in assault and assault deflection\\ 
-In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas\\ 
+In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults\\ 
 
 
 

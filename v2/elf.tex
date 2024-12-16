@@ -8,6 +8,7 @@
   Cost & 6mp\\
   Models & 4 x Elf Infantry\\
   Armor & 0\\
+  Shaken & Movment set to slow. Movement order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Take Cover[still][-2]\\ 
@@ -15,8 +16,8 @@
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elf Infantry } \\
-Equipment Limits: & \\
+Model name: &{\bf Elf Infantry } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, infantry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -61,9 +62,6 @@ still [360°, A , F] \\
 still [360°+A+A , F , F] \\
 fast [360°, F, B] \\
 fast [ 360°,  F, B+B] \\
-default fast \\
-default slow \\
-default still \\
 
 
 {\bf Damage Tables} \\
@@ -93,10 +91,11 @@ default still \\
   Cost & 2cp\\
   Models & 4 x Illusion\\
   Armor & 0\\
+  Shaken & \\
 \end{tabular}
 
 \noindent When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play.\\ 
-Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it whereever the infantry goes. \\ 
+Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it whereever the infantry goes.\\ 
 The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropritate \\ 
  Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away.\\ 
 If the illusion is not in a hex with a friendly infantry, it has only chase order available\\ 
@@ -104,7 +103,7 @@ If the illusion is not in a hex with a friendly infantry, it has only chase orde
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Illusion } \\
+Model name: &{\bf Illusion } \\
 Equipment Limits: & \\
 Type: &[illusion] \\
 Replaces: &Nothing \\
@@ -126,7 +125,6 @@ Assault Deflection: [0, 0, 0, 0] Die: 5+\\
 
 \ \\ {\bf movement } \\
 slow [-, -, chase°] \\
-default slow \\
 
 
 {\bf Damage Tables} \\
@@ -153,6 +151,7 @@ default slow \\
   Cost & 2mp\\
   Models & 1 x Elite Elf scout\\
   Armor & 0\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Take Cover[still][-3]\\ 
@@ -160,8 +159,8 @@ default slow \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elite Elf scout } \\
-Equipment Limits: & \\
+Model name: &{\bf Elite Elf scout } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, infantry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -207,9 +206,6 @@ still [360°, A , F] \\
 still [360°+A+A , F , F] \\
 fast [360°, F, B] \\
 fast [ 360°,  F, B+B] \\
-default fast \\
-default slow \\
-default still \\
 
 
 {\bf Damage Tables} \\
@@ -237,6 +233,7 @@ default still \\
   Cost & 2mp, 2xp\\
   Models & 1 x Elite Elf scout\\
   Armor & 0\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Take Cover[still][-3]\\ 
@@ -247,9 +244,9 @@ Pre-Assault Retreat[3+]\\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elite Elf scout } \\
-Equipment Limits: & \\
-Type: &[Bio, Cavalry, Walks, Elite] \\
+Model name: &{\bf Elite Elf scout } \\
+Equipment Limits: &[independent:∞, hands:2] \\
+Type: &[Bio, Walks, Elite] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -294,9 +291,6 @@ still [360°, A , F] \\
 still [360°+A+A , F , F] \\
 fast [360°, F, B] \\
 fast [ 360°,  F, B+B] \\
-default fast \\
-default slow \\
-default still \\
 
 
 {\bf Damage Tables} \\
@@ -324,14 +318,15 @@ default still \\
   Cost & 12ip\\
   Models & 1 x E24\\
   Armor & [10, 9, 9, 8]\\
+  Shaken & speed set to still. Movement order: [-,-,-]. may not use fire orders \ \\ Any psycic damage do crew damage instead\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf E24 } \\
-Equipment Limits: & \\
+Model name: &{\bf E24 } \\
+Equipment Limits: &[independent:∞] \\
 Type: &[Mechanical, Bio Crew, Vehicle, Track] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -407,9 +402,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default fast \\
-default slow \\
-default still \\
 
 
 {\bf Damage Tables} \\
@@ -426,10 +418,10 @@ default still \\
 5: Stuck turret: firing angle is now only forward \\
 6: Unit is set on Fire \\
 \ \\ {\bf crew } \\
-3-5: weapon jammed \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-11: as 6-7, +3 to future crew damage \\
-12: Crew Killed, Unit Destroyed \\
+12: Unit destroied \\
 
 
 
@@ -450,14 +442,15 @@ default still \\
   Cost & 4ip\\
   Models & 1 x Tattoo Ink\\
   Armor & [8, 6, 6, 6]\\
+  Shaken & Speed set to still. Movement order: [-,-,-]. may not use fire orders \ \\ Any Psycic damage do crew damage instead\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Tattoo Ink } \\
-Equipment Limits: & \\
+Model name: &{\bf Tattoo Ink } \\
+Equipment Limits: &[independent:∞, minor gun:1] \\
 Type: &[Mechanical, Bio Crew, Vehicle, Half-Track] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -535,9 +528,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default still \\
-default slow \\
-default fast \\
 
 
 {\bf Damage Tables} \\
@@ -578,6 +568,7 @@ default fast \\
   Cost & 2mp, 6xp\\
   Models & 1 x Bear Rider\\
   Armor & [7, 6, 6, 6]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Poison Resistance 3\\ 
@@ -585,8 +576,8 @@ default fast \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Bear Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Bear Rider } \\
+Equipment Limits: &[independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -629,12 +620,6 @@ slow [-, Aim] \\
 slow [360°, F, 360°] \\
 slow [360°, B, 360°] \\
 still [360°, A, F] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default still - \\
-default still - \\
-default still A,flee \\
 
 
 {\bf Damage Tables} \\
@@ -664,23 +649,25 @@ default still A,flee \\
   Cost & 2mp, 12cp, 12xp\\
   Models & 1 x Sauropod Rider\\
   Armor & [4, 3, 3, 3]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Poison Resistance 4\\ 
 When told to Amplify bleeding in damage tables: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]\\ 
 Fire and load all weapons simultainiously\\ 
+Stats battle with one aim token. (note that it is lost if you don't fire first round)\\ 
 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Sauropod Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Sauropod Rider } \\
+Equipment Limits: &[independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
 \ \\
-Equipment: 1 x Snipe Rifle, 1 x Short range Mortar, 1 x Towed Main-Gun \\
+Equipment: 1 x Sniper Rifle, 1 x Short range Mortar, 1 x Towed Main-Gun \\
 \ \\
 Assault: [2, 0, 0, 0] Die: 5+ Armor Penetration: 2 Damage: d8 \\
 Assault Deflection: [0, 0, 0, 0] Die: 5+\\
@@ -688,12 +675,12 @@ Assault Deflection: [0, 0, 0, 0] Die: 5+\\
 \ \\
 
 \ \\
-{\bf Snipe Rifle } \\
+{\bf Sniper Rifle } \\
 
 
 
 Range: 8  Angle: [True, False, False, True]: AP: 3 Damage:d6-2 \\
-improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d6 crew damage when aiming\\ 
+improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d4 crew damage when aiming\\ 
 After eliminating one model with the use of aim, you get to choose which model to destroy\\ 
 
 
@@ -735,12 +722,6 @@ slow [-, Aim] \\
 slow [360°, F, 360°] \\
 slow [360°, B, 360°] \\
 still [360°, A, F] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default still - \\
-default still - \\
-default still A,flee \\
 
 
 {\bf Damage Tables} \\
@@ -772,17 +753,18 @@ default still A,flee \\
   Cost & 2mp, 6cp, 6xp\\
   Models & 1 x Olifant Rider, 4 x Crew\\
   Armor & [8, 6, 4, 3]\\
+  Shaken & Speed set to slow. Movement order: [-,-,chase]. May not fire wapons\ \\ &Chases closet unit, friend or foe. Assaults friendly units if shaken\\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
-Proteced crew: area of effets only target Olifant (one model)\\ 
-Fire: the crew fires either a bow or a handgrandes, while Fire(g), aim(g) and load(g) orders are for the gattling gun only. Only the gattling gun needs to be reloaded\\ 
+When fired upon, the enemy may decide wether to target the olifant or crew with regular damage. For area of effects, roll once per alive crew for crew and once on olifant. Note that both targets are protected by armor\\ 
+Fire: the crew fires either a bow or throws hand grenandes, while Fire(g), aim(g) and load(g) orders are for the gattling guns only. Only the gattling gun needs to be reloaded\\ 
 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Olifant Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Olifant Rider } \\
+Equipment Limits: &[independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -814,8 +796,8 @@ Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Crew } \\
-Equipment Limits: & \\
+Model name: &{\bf Crew } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, crew, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -867,12 +849,6 @@ slow [360°, A, F] \\
 still [360°, A, F] \\
 fast [F, F, -] \\
 fast [B, 360°, F] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default still - \\
-default still - \\
-default still A,flee \\
 \ \\ {\bf fire } \\
 still [fire, fire] \\
 still [fire, aim(g)] \\
@@ -889,14 +865,12 @@ fast [fire, fire(g)] \\
 
 
 {\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-2-7: Bleed[8] \\
+\ \\ {\bf regular olifant } \\
+2-6: Bleed[8] \\
+7: As below,  d6 psycic damage \\
 8: Olifant Killed \\
-\ \\ {\bf crew } \\
-2+: kill one crew \\
-3-4: kill two crew \\
-5-6: kill three crew \\
-7-8: crew killed, unit destroied \\
+\ \\ {\bf regular crew } \\
+2+: kill one crew. If the last crew is killed, roll d8 psycic damage and you may no longer fire any weapons \\
 \ \\ {\bf psychic } \\
 6+: shaken \\
 
@@ -919,6 +893,7 @@ fast [fire, fire(g)] \\
   Cost & 2mp, 8cp, 8xp\\
   Models & 1 x Eagle Rider\\
   Armor & [6, 6, 6, 6]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
@@ -930,8 +905,8 @@ Pre-assualt retreat: 3+\\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Eagle Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Eagle Rider } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, Cavalry, Flying, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -986,12 +961,6 @@ fast [360°,F , F, B] \\
 slow [ 360° ,  F ,  360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, A, F] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default fast - \\
-default fast flee \\
-default fast flee \\
 
 
 {\bf Damage Tables} \\
@@ -1021,6 +990,7 @@ default fast flee \\
   Cost & 2mp, 2cp, 6xp\\
   Models & 1 x Armored Unicorn Rider\\
   Armor & [6, 6, 6, 5]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Poison Resistance 12\\ 
@@ -1030,15 +1000,15 @@ Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, lo
 Pre-assault retreat: 3+\\ 
 Grants psycic resitance 1 to all units in hex\\ 
 Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]\\ 
-Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you are standing in a hex with an wounded unit, you may execute an heal[1, any, movement X] instead of moving\\ 
+Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to stand in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving\\ 
 May share a hex with a huge unit\\ 
 Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase\\ 
 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Armored Unicorn Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Armored Unicorn Rider } \\
+Equipment Limits: &[independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1091,15 +1061,6 @@ fast [F, 360°, F] \\
 fast [F, F, 360°] \\
 fast [360°, F, B] \\
 fast [Help, Help, Help] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default still - \\
-default still - \\
-default still A,flee \\
-default fast - \\
-default fast flee \\
-default fast flee \\
 
 
 {\bf Damage Tables} \\
@@ -1128,6 +1089,7 @@ default fast flee \\
   Cost & 4mp, 8cp, 3xp\\
   Models & 3 x Pachyephalosaurus Rider\\
   Armor & [3, 3, 0, 0]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
@@ -1137,8 +1099,8 @@ Pre-assault retreat: 5+\\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Pachyephalosaurus Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Pachyephalosaurus Rider } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1170,6 +1132,7 @@ Fire two shot per fire order (per smg in the unit)\\
 
 Range: 3  Angle: [True, False, False, False]: AP: 4 Damage:d6 \\
 x2 shots per model\\ 
+Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range\\ 
 
 
 
@@ -1202,15 +1165,6 @@ slow [360°, A, F] \\
 slow [B, 360°, -] \\
 still [360°, A, F] \\
 still [A, A, F] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default still - \\
-default still - \\
-default still A+flee \\
-default fast - \\
-default fast flee \\
-default fast flee \\
 
 
 {\bf Damage Tables} \\
@@ -1239,14 +1193,15 @@ default fast flee \\
   Cost & 6mp, 2xp\\
   Models & 4 x Elk Cavalery\\
   Armor & 0\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent 
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elk Cavalery } \\
-Equipment Limits: & \\
+Model name: &{\bf Elk Cavalery } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1294,15 +1249,6 @@ fast [360°, F, F] \\
 fast [F, 360°, F] \\
 fast [F, F, 360°] \\
 fast [360°, F, B] \\
-default slow - \\
-default slow - \\
-default slow flee \\
-default still - \\
-default still - \\
-default still A,flee \\
-default fast - \\
-default fast flee \\
-default fast flee \\
 
 
 {\bf Damage Tables} \\
@@ -1331,6 +1277,7 @@ default fast flee \\
   Cost & 4mp, 6xp\\
   Models & 2 x Pegasus rider\\
   Armor & 0\\
+  Shaken & Speed set to slow flyingt. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
 \noindent Pre-Assault: throw fire (from lance): roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault\\ 
@@ -1340,8 +1287,8 @@ poison resistance 2\\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Pegasus rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Pegasus rider } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, Cavalry, Walks, Fly] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1427,21 +1374,6 @@ fast flying [F, F, B[f]] \\
 fast flying [L+L, F, F] \\
 fast flying [R+R, F, F] \\
 fast flying [F, F, B[still]] \\
-default still - \\
-default still A[slow] \\
-default still flee \\
-default slow - \\
-default slow A[fast, flying] \\
-default slow flee \\
-default fast - \\
-default fast A[fly, fast],flee \\
-default fast flee \\
-default slow flying - \\
-default slow flying A,flee \\
-default slow flying flee \\
-default fast flying flee \\
-default fast flying flee \\
-default fast flying flee \\
 
 
 {\bf Damage Tables} \\
@@ -1462,8 +1394,8 @@ default fast flying flee \\
 
 \pagebreak\section{Upgradeable Units}\noindent
 \begin{tabular}{ll}
-name: &{\bf SuperElite Elf Infantry } \\
-Equipment Limits: & \\
+Model name: &{\bf SuperElite Elf Infantry } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, infantry, Walks, Elite, SuperElite] \\
 Replaces: &[elf infantry] \\
 Cost: & 2xp\\
@@ -1495,8 +1427,8 @@ Range: 5  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elite Elf Infantry } \\
-Equipment Limits: & \\
+Model name: &{\bf Elite Elf Infantry } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, infantry, Walks, Elite] \\
 Replaces: &[elf infantry] \\
 Cost: & 1xp\\
@@ -1528,8 +1460,8 @@ Range: 5  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 \noindent
 \begin{tabular}{ll}
-name: &{\bf Elite Pachyephalosaurus Rider } \\
-Equipment Limits: & \\
+Model name: &{\bf Elite Pachyephalosaurus Rider } \\
+Equipment Limits: &[independent:∞, hands:2] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &[pachyephalosaurus rider] \\
 Cost: & 1xp\\
@@ -1564,6 +1496,7 @@ Fire two shot per fire order (per smg in the unit)\\
 
 Range: 3  Angle: [True, False, False, False]: AP: 4 Damage:d6 \\
 x2 shots per model\\ 
+Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range\\ 
 
 
 
@@ -1572,6 +1505,26 @@ x2 shots per model\\
 \ \\
 
 \section{Equipment and training Upgrades}\ \\
+\begin{tabular}{ll}
+name: & {\bf Teslaburstlaster } \\
+Requiers: & [[type: vehicle], [minor gun:1]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
+
+
+
+Range: 3  Angle: [True, True, True, True]: AP: 5 Damage:d6-1 \\
+May load up to 5 shots\\ 
+If a natural 6 is rolle for too hit (and you hit the enemy): the enemy is shaken, in addition to it's normal effect.\\ 
+
+
+
+
+
+
+
+
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Shriek SMG } \\
 Requiers: & [[type: infantry], [hands:2]] \\
@@ -1611,6 +1564,26 @@ Range: 5  Angle: [True, False, False, False]: AP: 6 Damage:d6 \\
 
 
 
+
+
+\ \\
+\begin{tabular}{ll}
+name: & {\bf Teslacoil Lance } \\
+Requiers: & [[independent:1], [type:cavalery]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
+
+
+
+
+
+{\bf Assault} \ \\
+Assault strength: +add [1, 0, 0, 0] 
+\\ 
+Assault deflection: +add [1, 0, 0, 0], Deflection die: replace 5+
+\\ 
+
+append If you win the assault, roll a die per enemy model. At 6+ the enemy unit is shaken
 
 
 \ \\
@@ -1721,7 +1694,7 @@ Cost: & Upgrade one model for: 6cp \\
 
 
 Range: 8  Angle: [True, False, False, True]: AP: 3 Damage:d6-2 \\
-improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d6 crew damage when aiming\\ 
+improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d4 crew damage when aiming\\ 
 After eliminating one model with the use of aim, you get to choose which model to destroy\\ 
 
 

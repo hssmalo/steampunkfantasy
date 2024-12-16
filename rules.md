@@ -213,12 +213,10 @@ After a fixed amount of time, each player scores points according to the followi
 1pt for each remaning MP, XP and CP from your own team. \
 +16pt bonus if you won the match (ie, score more points than your enemy from the above points) \
 
-Only totally destroyed units counts as destroyed. A unit with only one model left AND a number of +1 to future damage token equal to half (rounded down) required to kill the last model counts as crippled. Note that you get points for crippling your enemy but lose none for your own crippled units.
-Note however that in the rare case units flee off the battlefield, they count as crippled. 
+Only totally destroyed units counts as destroyed. A unit is crippled when: the game ends and it is shaken, has lost atleast half of the starting number of models, has any critticle damage token or crippled crew effect, have a number of +1 to future damage token equal to half (rounded down) required to kill the entire unit or the units flees the battlefield. Note that you get points for crippling your enemy but lose none for your own crippled units. 
 
 Thus normally:
-An infantry unit with 1 out of 4 models standing counts as crippled since it requires only 0 or 1 to kill the last model.
-For tanks you normally need about 9 to kill the unit. Thus a tank with +4 to future damage counts as crippled.
+An infantry unit with 2 out of 4 models standing counts as crippled. For tanks you normally need about 9 to kill the unit, thus a tank with +4 to future damage counts as crippled. 
 
 Both the winner and the loser record points.
 This is now called Match Victory Points (MVP).
@@ -721,7 +719,7 @@ Half number of dice rounded down from all enemy shaken units entering assault wi
 
 **Cunning** **Assault**[1 per N]
 
-For each N assault successes assigned to one unit-base (from sources with this ability), add +1 to all future damage token to all units whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken.
+For each N assault successes assigned to one vehicle (model with type vehicle) in assault (assault damage and supporting hits), add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken.
 
 Thus, for example if you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken. 
 
