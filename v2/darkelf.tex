@@ -38,7 +38,7 @@ Fire Resistance 2, Immunity to acid\\
 
 Range: 3  Angle: [True, False, False, False]: AP: 0 Damage:- \\
 No normal damge, but any unit within normal range and front arc is set on fire. Any unit within long range and in front arc is covered in minor acid\\ 
-In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]\\ 
+In addition, all hexes within normal range and front arc: Area(5+) Poison[6]\\ 
 
 
 
@@ -939,7 +939,7 @@ Equipment: 1 x Rifle, 1 x Hide \\
 \ \\
 Assault: [6, 4, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [8, 3, 0, 0] Die: 6+\\
-\indent Cunning assault[1 for 1], Poison[12][1 for 2]\\ 
+\indent Cunning assault[1 for 2], Poison[12][1 for 1]\\ 
 Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection\\ 
 Reroll all success in assault while crawling\\ 
  
@@ -1037,7 +1037,7 @@ Equipment: 1 x Rifle, 1 x Hide \\
 \ \\
 Assault: [6, 4, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [8, 3, 0, 0] Die: 6+\\
-\indent Cunning assault[1 for 1], Poison[12][1 for 2]\\ 
+\indent Cunning assault[1 for 2], Poison[12][1 for 1]\\ 
 Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection\\ 
 Reroll all success in assault while crawling\\ 
  
@@ -1442,10 +1442,10 @@ Poison[6]\\
 
 
 {\bf Assault} \ \\
-Assault Damage set to: replace d6 + d6 crew damage
+Assault Damage set to: replace d6-2 + d6 crew damage
 \\ 
 
-append ['Poison[6][1 for 2]']
+append Poison[6][1 for 2]
 
 
 \ \\
@@ -1475,7 +1475,7 @@ Cost: & Upgrade all models for: 1xp \\
 \end{tabular}
 
 Unit becomes immune to poison clouds\\ 
-Enemy units in an poison cloud gain -50\% (rounded down) in assault and assault deflection\\ 
+Enemy units in an poison cloud gain -50\% (rounded down) in assault and assault deflection when facing this unit\\ 
 In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults\\ 
 
 
@@ -1494,7 +1494,7 @@ Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
 Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.\\ 
-If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or am outside line of sight of any enemy unit. \\ 
+If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or you are outside line of sight of any enemy unit. \\ 
 
 
 

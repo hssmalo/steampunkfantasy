@@ -533,9 +533,9 @@
     special = ["Quick fix: Repair[1, self, 1st healing phase]"]
 
         [gnome.models.gnome_helicopter.assault]
-        strength = [1, 1, 1, 1]
+        strength = [1, 0, 0, 0]
         strength_die = "3+"
-        deflection = [1, 0, 0, 0]
+        deflection = [0, 0, 0, 0]
         deflection_die = ""
         damage = "d6-2"
         ap = 2
@@ -554,9 +554,9 @@
 
 
         [gnome.models.tinkerer_helicopter.assault]
-        strength = [1, 1, 1, 1]
+        strength = [1, 0, 0, 0]
         strength_die = "3+"
-        deflection = [1, 0, 0, 0]
+        deflection = [0, 0, 0, 0]
         deflection_die = ""
         damage = "d6-2"
         ap = 2

@@ -8,7 +8,7 @@
   Cost & 4mp\\
   Models & 4 x Dwarf Infantry\\
   Armor & [0, 0, 0, 0]\\
-  Shaken & \\
+  Shaken & Movment set to slow. Movement order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Posion Resistance 2, Fire Resistance 1\\ 
@@ -91,7 +91,7 @@ still [-, Load] \\
   Cost & 2mp\\
   Models & 2 x Dwarf Brother in Arms\\
   Armor & [0, 0, 0, 0]\\
-  Shaken & \\
+  Shaken & Movment set to slow. Movement order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Posion Resistance 3, Fire Resistance 2\\ 
@@ -136,8 +136,6 @@ slow [360°, B, 360°] \\
 slow [360°, A, F] \\
 still [360°, 360°, 360°] \\
 still [360°, A, F] \\
-default slow \\
-default still \\
 \ \\ {\bf fire } \\
 still [Fire, -] \\
 still [-, Fire] \\
@@ -174,7 +172,7 @@ still [-, Load] \\
   Cost & 2ip, 4mp, 2cp\\
   Models & 4 x SteamPowerArmor\\
   Armor & [7, 6, 6, 5]\\
-  Shaken & \\
+  Shaken & Movment set to slow. Movement order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Posion Resistance 4, Fire Resistance 2\\ 
@@ -221,8 +219,6 @@ slow [360°, B, 360°] \\
 slow [360°, A, F] \\
 still [360°, 360°, 360°] \\
 still [360°, A, F] \\
-default slow \\
-default still \\
 \ \\ {\bf fire } \\
 slow [Fire, -] \\
 slow [-, Fire] \\
@@ -264,13 +260,12 @@ still [-, Load] \\
   Cost & 2mp, 4cp, 4xp\\
   Models & 3 x Mini Zeppelin\\
   Armor & [0, 0, 0, 0]\\
-  Shaken & \\
+  Shaken & Movment set to slow. Movement order: [random,-,-]. May fire weapons\\
 \end{tabular}
 
-\noindent Posion Resistance 2\\ 
+\noindent Posion Resistance 3\\ 
 Floats\\ 
-May use fire orders while shaken\\ 
-random movement: while fast or shaken it scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault. In slow mode the unit uses its enignes to neutrilize the effect of the wether\\ 
+random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault. In slow mode the unit uses its enignes to neutrilize the effect of the wether\\ 
 
 
 \noindent
@@ -285,7 +280,7 @@ Cost: & 0\\
 Equipment: 1 x AxeThrower Machine, 1 x Poison Gas Grenade \\
 \ \\
 Assault: [2, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [4, 3, 1, 1] Die: 4+\\
+Assault Deflection: [3, 2, 1, 1] Die: 4+\\
 \indent  
 \ \\
 
@@ -294,8 +289,9 @@ Assault Deflection: [4, 3, 1, 1] Die: 4+\\
 
 
 
-Range: 3  Angle: [True, True, False, False]: AP: 3 Damage:d6-1 \\
+Range: 4  Angle: [True, True, False, False]: AP: 2 Damage:d6-2 \\
 Fire x2 per fire order\\ 
++1 to hit if range to enemy is an even number, -1 to hit if it is an odd number\\ 
 
 
 
@@ -305,7 +301,7 @@ Fire x2 per fire order\\
 
 
 Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:N.A \\
-Place a poison cloud[6] within normal range\\ 
+Place a poison cloud[4] within normal range\\ 
 Always treated as loaded\\ 
 Activated by throw order\\ 
 
@@ -325,8 +321,6 @@ fast [random, F, B] \\
 slow [360°, F, 360°] \\
 slow [360°, 360°, 360°] \\
 slow [360°, A, F] \\
-default slow \\
-default fast \\
 \ \\ {\bf fire } \\
 still [Fire, -] \\
 still [Load, -] \\
@@ -336,8 +330,7 @@ still [Throw, Throw] \\
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 2-3: shaken \\
-4-9: kill 1 model \\
-10+: unit destroyed \\
+4+: kill 1 model \\
 \ \\ {\bf psychic } \\
 6+: Unit shaken \\
 
@@ -360,10 +353,10 @@ still [Throw, Throw] \\
   Cost & 4cp\\
   Models & 1 x Transport Zeppelin\\
   Armor & [6, 5, 0, 0]\\
-  Shaken & \\
+  Shaken & Movment set to fast flying. Movement order: [-,F,F].\\
 \end{tabular}
 
-\noindent May transport up to 2 unit of Infantry of SteamPowerArmor. Unload in any movement phase. When unloading they use hanggliders and are placed up to two hexes in any direction from the transport zeppelin end hex in that movement phase. They may enter assault as part of unloading. Place all infanteri in slow after unloading and treat any movement order up to this point as -\\ 
+\noindent May transport up to 2 unit of Infantry or SteamPowerArmor. Unload in any movement phase. When unloading they use hanggliders and are placed up to two hexes in any direction from the transport zeppelin end hex in that movement phase. They may enter assault as part of unloading. Place all infanteri in slow after unloading and treat any movement order up to this point as -\\ 
 May not transport any infantri with wheeled shieldwall\\ 
 
 
@@ -394,7 +387,6 @@ Assault Deflection: [0, 0, 0, 0] Die: n.a\\
 flying fast [360°, F, F] \\
 flying fast [F, F, 360°] \\
 flying fast [F, 360°, F] \\
-default flying fast \\
 
 
 {\bf Damage Tables} \\
@@ -422,18 +414,17 @@ default flying fast \\
   Cost & 2mp, 6cp, 4xp\\
   Models & 1 x Dwarf AT-gun\\
   Armor & [7, 0, 0, 0]\\
-  Shaken & \\
+  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
 \end{tabular}
 
-\noindent Whenever fired at with regular damage, after rolling for armor protection as normal, your enemy may choose wether to roll on crew damage table or regular damage table. Poison only effects the crew, while an AT-gun on fire rolls for damage on both regular damage tables and crew damage table each rounds independent of each other. All +1 to future damage applies to both regular damage and crew damage, regadless how the +1 to future damage got applied.\\ 
- Poison Resistance 2, Fire resistance 1\\ 
+\noindent Poison Resistance 2, Fire resistance 1\\ 
 
 
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Dwarf AT-gun } \\
 Equipment Limits: &[training: 1, independent:∞] \\
-Type: &[bio crew, dragged, open topp, vehicle, at gun] \\
+Type: &[bio, dragged, open topp, vehicle, at gun] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -465,11 +456,9 @@ Range: 6  Angle: [True, False, False, False]: AP: 10 Damage:d6 +1 +(+3 if penetr
 slow [-, 360°, B[Rest]] \\
 slow [-, F, B[Rest]] \\
 still [-, -, A[slow]] \\
+still [-, -, -] \\
 rest [-, -, A[slow]] \\
 rest [-, -, A[still]] \\
-default slow \\
-default still \\
-default rest \\
 \ \\ {\bf fire } \\
 still [Fire, -] \\
 still [Load, -] \\
@@ -478,12 +467,8 @@ still [Aim, -] \\
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-4: +1 to future damage \\
-5-8: +2 to future damage, AT-gun Jamed \\
-9: Unit destroied \\
-\ \\ {\bf crew } \\
-1-6: kill 1 crew \\
-7-8: kill 1 crew, d6 psychic damage \\
+1-6: kill 1 crew, +1 to future damage \\
+7-8: as 1-6, d6 psychic damage \\
 9+: Unit destroied \\
 Destroied when 4 crew is killed \\
 \ \\ {\bf psychic } \\
@@ -508,7 +493,7 @@ Destroied when 4 crew is killed \\
   Cost & 6ip\\
   Models & 1 x GunBlasterWagon\\
   Armor & [8, 10, 10, 7]\\
-  Shaken & \\
+  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
 \end{tabular}
 
 \noindent Fire Resistance 2\\ 
@@ -538,7 +523,7 @@ Assault Deflection: [2, 0, 0, 0] Die: 4+\\
 
 
 Range: 3  Angle: ['0', 'x2', 'x2', '0']: AP: 7 Damage:d6+2 \\
-Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 turns reloading before it can fire again\\ 
+Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 reloading actions before it can fire again\\ 
 After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired.\\ 
 
 
@@ -580,14 +565,12 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-still [A, A, F] \\
-default fast \\
-default slow \\
-default still \\
+still [A+A, F, F] \\
+still [A+A+L, F, F] \\
+still [A+A+R, F, F] \\
 \ \\ {\bf fire } \\
-still [Fire, -] \\
+still [Fire, Load] \\
 still [Load, -] \\
-still [-, Load] \\
 
 
 {\bf Damage Tables} \\
@@ -603,10 +586,10 @@ still [-, Load] \\
 5-8: as below, Critical damage[d6] \\
 9+: Destroyed \\
 \ \\ {\bf crew } \\
-4-5: Weapon Jammed \\
-6-7: as 5, shaken \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+6-7: as 4-5, shaken \\
 8-12: as 6-7, +3 to future crew damage \\
-13: All crew killed, Unit destroyed \\
+13: Unit destroied \\
 
 
 
@@ -627,7 +610,7 @@ still [-, Load] \\
   Cost & 18ip\\
   Models & 1 x dw42\\
   Armor & [13, 10, 10, 9]\\
-  Shaken & \\
+  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
 \end{tabular}
 
 \noindent Fire Resistance 2\\ 
@@ -695,9 +678,6 @@ still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
 still [Aim, -, -] \\
-default fast \\
-default slow \\
-default still \\
 \ \\ {\bf fire } \\
 all [Fire, -] \\
 still [Load, -] \\
@@ -716,10 +696,10 @@ still [Load Unstable, -] \\
 5-8: Critical damage[d6], +1 on future damage \\
 9+: Destroyed \\
 \ \\ {\bf crew } \\
-4-5: Weapon Jammed \\
-6-7: as 5, shaken \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+6-7: as 4-5, shaken \\
 8-12: as 6-7, +3 to future crew damage \\
-13: All crew killed, Unit destroyed \\
+13: Unit destroied \\
 
 
 
@@ -740,7 +720,7 @@ still [Load Unstable, -] \\
   Cost & 8ip\\
   Models & 1 x zap\\
   Armor & [10, 8, 8, 7]\\
-  Shaken & \\
+  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
 \end{tabular}
 
 \noindent Fire and load all weapons at the same time\\ 
@@ -827,9 +807,6 @@ still [R, A, F] \\
 still [L, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
-default fast \\
-default slow \\
-default still \\
 \ \\ {\bf fire } \\
 fast [Fire, -] \\
 fast [Load, Aim] \\
@@ -852,10 +829,10 @@ still [Load, Aim] \\
 6-9: as below, d6 critical damage \\
 10+: Destroyed \\
 \ \\ {\bf crew } \\
-4-5: Weapon Jammed \\
-6-7: as 5, shaken \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+6-7: as 4-5, shaken \\
 8-12: as 6-7, +3 to future crew damage \\
-13: All crew killed, Unit destroyed \\
+13: Unit destroied \\
 
 
 
@@ -876,12 +853,11 @@ still [Load, Aim] \\
   Cost & 24ip, 2cp, 12xp\\
   Models & 1 x Zeppelin\\
   Armor & [8, 8, 8, 8]\\
-  Shaken & \\
+  Shaken & Movment set to slow flying. Movement order: [-,-,F]. \ \\ &Fire one less weapon system per shaken token. \ \\ &Each Shaken token counts as +1 to future damage token.\\
 \end{tabular}
 
 \noindent Steady: +1 to hit, +1 to be hit.\\ 
 Repair[2, self, healing 2]\\ 
-Limited shaken: when shaken, you may fire one less weapon systems per shaken token instead of the normal effect of being shaken\\ 
  When damaged, add 1 to the result for each shaken token on the Zeppelin.\\ 
 Withering Ray: May replace forrest with rough terrain in the hex it is standing\\ 
 
@@ -945,7 +921,6 @@ slow flying [R, R, -] \\
 slow flying [F, -, -] \\
 slow flying [F, R, -] \\
 slow flying [F, L, -] \\
-default slow flying \\
 \ \\ {\bf fire } \\
 still [Fire, -] \\
 still [Load, -] \\
@@ -959,9 +934,10 @@ still [Aim, -] \\
 9-13: +2 to future damage, unit shaken, set on fire \\
 14+: Unit destroied \\
 \ \\ {\bf crew } \\
-4-7: shaken \\
-8-12: as 6-7, +2 to future crew damage \\
-13: All crew killed, Unit destroyed \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+6-7: as 4-5, shaken \\
+8-12: as 6-7, +1 to future crew damage \\
+13: Unit destroied \\
 
 
 
@@ -982,7 +958,7 @@ still [Aim, -] \\
   Cost & 24xp\\
   Models & 1 x Tamed Balrog\\
   Armor & [8, 7, 7, 6]\\
-  Shaken & \\
+  Shaken & Speed set to slow. Movement order [-, -, flee]. May not use whip\\
 \end{tabular}
 
 \noindent Fire Resistance 12, Poison Resistance 6\\ 
@@ -1030,8 +1006,6 @@ slow [-, -, chase] \\
 slow [360°, -, -] \\
 slow [360°, F, -] \\
 rest [-, -, A] \\
-default slow \\
-default rest \\
 \ \\ {\bf fire } \\
 still [Fire, -] \\
 still [-, Fire] \\
@@ -1215,11 +1189,11 @@ Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf Mini Zeppelin } \\
+Model name: &{\bf Enigneer Mini Zeppelin } \\
 Equipment Limits: &[independent:∞] \\
 Type: &[open vehicle, floats, bio] \\
 Replaces: &[mini zeppelin] \\
-Cost: & 2cp, 4xp\\
+Cost: & 2xp\\
 \end{tabular}
 \ \\
 Equipment: 1 x AxeThrower Machine, 1 x Poison Gas Grenade \\
@@ -1228,15 +1202,16 @@ Assault: [4, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [4, 3, 1, 1] Die: 4+\\
 \indent  
 \ \\
-Unit gains: Repair[3, any, Healing 1]\\ 
+Unit gains: Repair[2, self, Healing 1]\\ 
 
 \ \\
 {\bf AxeThrower Machine } \\
 
 
 
-Range: 3  Angle: [True, True, False, False]: AP: 3 Damage:d6-1 \\
+Range: 4  Angle: [True, True, False, False]: AP: 2 Damage:d6-2 \\
 Fire x2 per fire order\\ 
++1 to hit if range to enemy is an even number, -1 to hit if it is an odd number\\ 
 
 
 
@@ -1246,7 +1221,7 @@ Fire x2 per fire order\\
 
 
 Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:N.A \\
-Place a poison cloud[6] within normal range\\ 
+Place a poison cloud[4] within normal range\\ 
 Always treated as loaded\\ 
 Activated by throw order\\ 
 
@@ -1258,14 +1233,12 @@ Activated by throw order\\
 
 \section{Equipment and training Upgrades}\ \\
 \begin{tabular}{ll}
-name: & {\bf Industrial Heavy Muskets } \\
-Requiers: & [[hands:2], [type:infantry]] \\
-Cost: & Upgrade all models for: 1ip, -1cp \\
+name: & {\bf Industrial Small Arms production } \\
+Requiers: & [[type:infantry, type:steampowerarmor]] \\
+Cost: & Upgrade all models for: 1ip, -3cp \\
 \end{tabular}
 
 
-
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
 
 
 
@@ -1296,6 +1269,11 @@ Assault Damage set to: replace d6-2 + d6 psycic damage
 
 
 
+\ \\ {\bf fire } \\
+slow [-, load] \\
+slow [load, -] \\
+slow [fire, -] \\
+slow [-, fire] \\
 
 \ \\
 \begin{tabular}{ll}
@@ -1320,6 +1298,11 @@ Assault Damage set to: replace d6-2 + d6 psycic damage
 
 
 
+\ \\ {\bf fire } \\
+slow [-, load] \\
+slow [load, -] \\
+slow [fire, -] \\
+slow [-, fire] \\
 
 \ \\
 \begin{tabular}{ll}
@@ -1345,9 +1328,26 @@ append ['Cunning Assault[1 for 1]']
 
 \ \\
 \begin{tabular}{ll}
+name: & {\bf Infantry Platform } \\
+Requiers: & [[independent:1], [type:vehicle]] \\
+Cost: & Upgrade all models for: 2cp \\
+\end{tabular}
+
+Tank Riders: While an infantry is in slow, and sharing a hex with this vehicle, you may use the movement order of the vehicle instead of your infantry movement when placing orders. Speed of infantry is set to slow after movement\\ 
+
+
+
+
+
+
+
+
+
+\ \\
+\begin{tabular}{ll}
 name: & {\bf Springloaded Vehicle Assault Weapons } \\
 Requiers: & [[independent:1], [type:vehicle]] \\
-Cost: & Upgrade all models for: 2ip, 2cp \\
+Cost: & Upgrade all models for: 4cp \\
 \end{tabular}
 
 
@@ -1388,7 +1388,7 @@ append -1 in assault strength (per model) if speed is not still. Don't get any a
 \begin{tabular}{ll}
 name: & {\bf Elite Crew } \\
 Requiers: & [[crew:1], [type:vehicle]] \\
-Cost: & Upgrade all models for: 6xp \\
+Cost: & Upgrade all models for: 4xp \\
 \end{tabular}
 
 Gains good shot: +1 to hit\\ 
@@ -1408,7 +1408,7 @@ Requiers: & [[independent:1], [type:steampowerarmor]] \\
 Cost: & Upgrade all models for: 2cp, 2xp \\
 \end{tabular}
 
-Once per game in any single movement phase, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex. This may initialize an assault if the hex is occupied by enemy forces.\\ 
+Once per game in any single movement phase, instead of your normal movement, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex. This may initialize an assault if the hex is occupied by enemy forces.\\ 
 
 
 
@@ -1440,12 +1440,12 @@ Range: 3  Angle: [True, True, True, True]: AP: 9 Damage:d6+2 \\
 \begin{tabular}{ll}
 name: & {\bf Big Blaster } \\
 Requiers: & [[type: infantry], [shared:1]] \\
-Cost: & Upgrade one model for: 8cp \\
+Cost: & Upgrade one model for: 4cp \\
 \end{tabular}
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 8 Damage:d6+1 \\
+Range: 2  Angle: [True, True, True, True]: AP: 7 Damage:d6+1 \\
 Requir atleast 2 alive models in unit to be used\\ 
 
 
@@ -1520,8 +1520,7 @@ Cost: & Upgrade all models for: 1ip \\
 Unit gain 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
 Stacks with vest of life support\\ 
 In addition to the normal rules for endurence tokens, the unit may use one endurence token in healing phase 1, to replace any bleeding with poison[6]\\ 
-Unit gain [3,3,3,3] in armor\\ 
-unit gain good shot[+1]\\ 
+Unit gain [4,3,3,3] in armor\\ 
 
 
 
@@ -1624,7 +1623,7 @@ Range: 4  Angle: [True, True, True, True]: AP: 4 Damage:d6 \\
 
 \ \\
 \begin{tabular}{ll}
-name: & {\bf Double Barrled Empowered Heavy Musket } \\
+name: & {\bf Double Barrled Long Range Heavy Musket } \\
 Requiers: & [[hands:2], [type:steampowerarmor]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}

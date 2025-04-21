@@ -781,7 +781,7 @@
         deflection_die = "6+"
         damage = "d6-2"
         ap = 2
-        special = ["Cunning assault[1 for 1], Poison[12][1 for 2]","Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection", "Reroll all success in assault while crawling" ]
+        special = ["Cunning assault[1 for 2], Poison[12][1 for 1]","Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection", "Reroll all success in assault while crawling" ]
 
 
 
@@ -800,7 +800,7 @@
         deflection_die = "6+"
         damage = "d6-2"
         ap = 2
-        special = ["Cunning assault[1 for 1], Poison[12][1 for 2]","Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection", "Reroll all success in assault while crawling" ]
+        special = ["Cunning assault[1 for 2], Poison[12][1 for 1]","Flexible deflection die: any deflection result from elites may be choosen to add to assault value instead of deflection", "Reroll all success in assault while crawling" ]
 
 
     [darkelf.models.scout]
@@ -1186,7 +1186,7 @@
         angle = [true, false, false, false]
         damage = "-"
         ap = 0
-	special = ["No normal damge, but any unit within normal range and front arc is set on fire. Any unit within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and ront arc: Area(5+) Poison[6]"]
+	special = ["No normal damge, but any unit within normal range and front arc is set on fire. Any unit within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"]
 
 
     [darkelf.equipments.shrapnell_breath]
@@ -1221,7 +1221,7 @@
     name = "Poison Fog Grenade"
     race = "darkelf"
     cost.cp = 2
-    special = ["Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.", "If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or am outside line of sight of any enemy unit. "]
+    special = ["Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.", "If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or you are outside line of sight of any enemy unit. "]
     requires = [
         ["independent:1"],
 	["type:roboprosthetic", "type:infantri", "type:cavalery"]

@@ -1,45 +1,59 @@
 \pagebreak
 
-\section{ Tamed Balrog }
+\section{ Eagle Rider }
 
 \begin{tabular}{ll}
-  Name & Tamed Balrog \\
-  Size & Huge\\
-  Cost & 24xp\\
-  Models & 1 x Tamed Balrog\\
-  Armor & [8, 7, 7, 6]\\
-  Shaken & \\
+  Name & Eagle Rider \\
+  Size & medium\\
+  Cost & 2mp, 8cp, 8xp\\
+  Models & 1 x Eagle Rider\\
+  Armor & [6, 6, 6, 6]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
-\noindent Fire Resistance 12, Poison Resistance 6\\ 
-Terror[8][range=2]\\ 
-Excelent Whip Handeling (counts as Excelent shot, +2 to hit)\\ 
+\noindent Poison Resistance 2\\ 
+If in the air, it may choose to assault a ground enemy. If so, it flies up after assault\\ 
+In fast it is considered flying, in slow it considered on the ground.\\ 
+Good shot: +1 to hit\\ 
+Pre-assualt retreat: 3+\\ 
 
 
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf Tamed Balrog } \\
-Equipment Limits: &[] \\
-Type: &[monster, walks, bio] \\
+Model name: &{\bf Eagle Rider } \\
+Equipment Limits: &[independent:∞, hands:2] \\
+Type: &[Bio, Cavalry, Flying, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
 \ \\
-Equipment: 1 x Flaming Whip \\
+Equipment: 1 x AT Rifle, 1 x Grenade \\
 \ \\
-Assault: [6, 4, 3, 2] Die: 2+ Armor Penetration: 6 Damage: d6 \\
-Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
-\indent Set on fire\\ 
+Assault: [6, 6, 6, 4] Die: 3+ Armor Penetration: 3 Damage: d6-1 \\
+Assault Deflection: [2, 2, 2, 1] Die: 3+\\
+\indent Always attacks weakest point of armor\\ 
+Cunning Assault[1 for 3]\\ 
  
 \ \\
 
 \ \\
-{\bf Flaming Whip } \\
+{\bf AT Rifle } \\
 
 
 
-Range: 1  Angle: [True, True, False, False]: AP: 0 Damage:N.A \\
-Set on fire\\ 
+Range: 5  Angle: [True, False, False, False]: AP: 5 Damage:d6 \\
+
+
+
+
+{\bf Grenade } \\
+
+
+
+Range: 1  Angle: [True, True, True, True]: AP: 7 Damage:d6 \\
+Area(5+)\\ 
+Target any hex within normal range\\ 
+Always loaded\\ 
 
 
 
@@ -49,26 +63,29 @@ Set on fire\\
 
 
 
-\ \\ {\bf movement } \\
-slow [A,chase, chase, chase,B[rest]] \\
-slow [chase, -, -] \\
-slow [-, -, chase] \\
-slow [360°, -, -] \\
-slow [360°, F, -] \\
-rest [-, -, A] \\
-default slow \\
-default rest \\
 \ \\ {\bf fire } \\
-still [Fire, -] \\
-still [-, Fire] \\
+fast [-, Fire] \\
+fast [-, Load] \\
+fast [-, Throw Grenade] \\
+slow [-, Fire] \\
+slow [-, Load] \\
+slow [-, Aim] \\
+\ \\ {\bf movement } \\
+fast [360°,F, 360°,F,360°, F,360°] \\
+fast [360°,F , F, B] \\
+slow [ 360° ,  F ,  360°] \\
+slow [360°, 360°, 360°] \\
+slow [360°, A, F] \\
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-9: +1 on future damage \\
-10-11: +2 on future damage \\
-12: +3 on future damage, assault -1, Looses Terror, Shaken \\
-13: Unit Destroied \\
+2-3: +1 to future damage, Bleed[4] \\
+4-6: +2 to future damage, bleed[6], psycic damage[d6] \\
+7+: killed \\
+Note: bleeding does not cause more bleeding \\
+\ \\ {\bf psychic } \\
+6+: shaken \\
 
 
 
