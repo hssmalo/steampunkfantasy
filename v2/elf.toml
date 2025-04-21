@@ -21,7 +21,7 @@
 		     fast = [["360°","F","B"],[ " 360°"," F","B+B"]]
 
 		     [elf.units.elf_infantry.damage_tables]
-		     regular = ["0-6: kill 1 model", "7-8: kill 1 model, psycid damage[d6]","9+: unit destroyed","Note: if one model is killed by bleeding/poison, remove that intance bleeding/poison, \\\\ and remove up to half + to future token"]
+		     regular = ["0-6: kill 1 model", "7-8: kill 1 model, psycid damage[d6]","9+: unit destroyed","Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
 		     psychic = ["4+: shaken"]
 
 
@@ -98,7 +98,7 @@
 	cost.ip = 12
 	armor = [10,9,9,8]
 	special = []
-	shaken = "speed set to still. Movement order: [-,-,-]. may not use fire orders \\\\ & Any psycic damage do crew damage instead"
+	shaken = "speed set to still. Movement order: [-,-,-]. may not use fire orders"
 	
 		     [elf.units.e34.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
@@ -139,7 +139,7 @@
 
 		     [elf.units.e34.damage_tables]	
 		     regular = [ "1-2: +1 on future damage", "3-4: as below, shaken", "5-8: as below, Crittical Damage", "9+ Destoryed",]
-		     critical = [ "1: Cannot move, looses Fear", "2: -1 to hit, +1 to be hit(ranged and assault)", "3: Cannot Rotate", "4: +3 on future damage", "5: Stuck turret: firing angle is now only forward", "6: Unit is set on Fire",]
+		     critical = [ "1: Cannot move", "2: -1 to hit, +1 to be hit(ranged and assault)", "3: Cannot Rotate", "4: +3 on future damage", "5: Stuck turret: firing angle is now only forward", "6: Unit is set on Fire",]
 	crew = [ "4-5: Crippled Crew, if aleady shaken double initial crew damage",
 	     "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
 
@@ -151,7 +151,7 @@
 	cost.ip = 4
 	armor = [8,6,6,6]
 	special = []
-	shaken = "Speed set to still. Movement order: [-,-,-]. may not use fire orders \\\\ & Any Psycic damage do crew damage instead"
+	shaken = "Speed set to still. Movement order: [-,-,-]. may not use fire orders"
 		     [elf.units.tattoo_ink.orders.fire]
 		     still = [["Fire", "Aim"],[ "Aim", "Fire"],["Load", "Aim"], ["Load", "Load"], [ "Fire", "Fire" ] ]
 		     slow =  [["Load", "Load"], [ "Fire", "Fire" ]]
@@ -190,7 +190,7 @@
 		     still = [["360°", "A", "F"]]
 
 		     [elf.units.bear_rider.damage_tables]
-		     regular = ["2-7: +1 to future damage, bleed[4]","8:10: +2 to future damage, bleed[6], psycic damage[d6]","11+: killed", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance bleeding/poison, \\\\ and remove up to half + to future token"]
+		     regular = ["2-7: +1 to future damage, bleed[4]","8:10: +2 to future damage, bleed[6], psycic damage[d6]","11+: killed", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
 		     psychic = ["6+: shaken"]
 
 
@@ -225,7 +225,7 @@
 
 
 		     [elf.units.armored_unicorn_rider.damage_tables]
-		     regular = ["2-5: bleed[6]", "6+: killed", "Note: bleeding does not cause more bleeding"]
+		     regular = ["2-5: Bleed[6]", "6+: killed", "Note: bleeding does not cause more bleeding"]
 		     psychic = ["6+: shaken"]
 
 
@@ -254,7 +254,7 @@
 
 
 		     [elf.units.pachyephalosaurus_riders.damage_tables]
-		     regular = ["2-3: bleed[6]","6+: kill 1 model, d4 psychic damage", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance bleeding/poison, \\\\ and remove up to half + to future token"]
+		     regular = ["2-3: bleed[6]","6+: kill 1 model, d4 psychic damage", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
 		     psychic = ["4+: shaken"]
 
 
@@ -282,7 +282,7 @@
 
 
 		     [elf.units.elk_cavalery.damage_tables]
-		     regular = ["2-3: Bleed[4]","4+: kill 1 model, d4 psychic damage", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance bleeding/poison, \\\\ and remove up to half + to future token"]
+		     regular = ["2-3: Bleed[4]","4+: kill 1 model, d4 psychic damage", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
 		     psychic = ["4+: shaken"]
 
 
@@ -641,7 +641,7 @@
 		     still = [["360°", "A", "F"]]
 
 		     [elf.units.sauropod_riders.damage_tables]
-		     regular = ["2-3: Bleed[4]", "4-8: As below, If caused by bleeding, amplify bleeding", "9-11: as below, +1 to future damage", "12-19: as below, d8 Psychic damage", "20: Sauropod Rider dead", "Note: Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]", "Note: bleeding does not cause more bleeding"]
+		     regular = ["2-3: Bleed[4]", "4-8: As below, If caused by bleeding, amplify bleeding", "9-11: as below, +1 to future damage", "12-19: as below, d8 Psychic damage", "20: Unit killed", "Note: Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]", "Note: bleeding does not cause more bleeding"]
 		     psychic = ["8+: shaken"]
 
 
@@ -670,7 +670,7 @@
 		     fast = [["fire", "fire"],["fire", "aim(g)"], ["fire", "load(g)"],["fire", "fire(g)"]]
 
 		     [elf.units.armored_oliphant_riders.damage_tables]
-		     regular = ["2-7: +1 to future damage, bleed[4]","8:10: +2 to future damage, bleed[6], psycic damage[d6]","11+: killed", "Note: bleeding does not cause more bleeding"]
+		     regular = ["2-6: Bleed[8] ","7: As below, d6 psycic damage", "8: Unit killed", "Note: bleeding does not cause more bleeding"]
  		     psychic = ["6+: shaken"]
  
  
