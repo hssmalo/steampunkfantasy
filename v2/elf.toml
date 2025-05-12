@@ -653,7 +653,7 @@
 	size = "Large"
 	cost.mp = 2
 	cost.xp = 6
-	cost.cp = 4
+	cost.cp = 6
 	armor = [8,6,4,3]
 	special = ["Poison Resistance 2", "Fire (bow): the crew fires a bow, Throw grenade: Crew throws hand grenandes, while Fire(g), aim(g) and load(g) orders are for the gattling guns only. Only the gattling gun needs to be reloaded"]
 	shaken = "Speed set to slow. Movement order: [-,-,chase]. May not fire wapons\\\\ &Chases closet unit, friend or foe. Assaults friendly units if shaken"
