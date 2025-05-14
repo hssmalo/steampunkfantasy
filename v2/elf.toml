@@ -11,7 +11,7 @@
 	size = "medium"
 	cost.mp = 6
 	special =  ["Take Cover[still][-2]"]
-	shaken = "Movment set to slow. Movement order: [-,-,flee]. May not fire weapons"
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
 
 	[elf.units.elf_infantry.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"], ["-", "Aim" ], ["Fire", "-"],["Load", "-"],["Aim", "-" ]]
@@ -21,7 +21,7 @@
 		     fast = [["360°","F","B"],[ " 360°"," F","B+B"]]
 
 		     [elf.units.elf_infantry.damage_tables]
-		     regular = ["0-6: kill 1 model", "7-8: kill 1 model, psycid damage[d6]","9+: unit destroyed","Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
+		     regular = ["0-6: Kill 1 model", "7-8: Kill 1 model, psychic damage[d6]","9+: Unit destroyed \\\\ {\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}"]]
 		     psychic = ["4+: shaken"]
 
 
@@ -36,7 +36,7 @@
 	models = ["illusion","illusion","illusion","illusion"]
 	size = "medium"
 	cost.cp = 2
-	special =  ["When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play.","Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it whereever the infantry goes.","The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropritate "," Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psycic damage, it would require you to tell the enemy that this unit does not have a psycic damage table, which would give the illusion away.","If the illusion is not in a hex with a friendly infantry, it has only chase order available"]
+	special =  ["When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play.","Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it whereever the infantry goes.","The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicing. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropritate "," Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away.","If the illusion is not in a hex with a friendly infantry, it has only chase order available"]
 
 
 		     [elf.units.illusion.orders.movement]
@@ -94,7 +94,7 @@
 	race = "elf"
 	name = "E34"
 	models = ["e34"]
-	size = "large"
+	size = "Large"
 	cost.ip = 12
 	armor = [10,9,9,8]
 	special = []
@@ -138,10 +138,10 @@
 	      	     ["rev","-","-"]]
 
 		     [elf.units.e34.damage_tables]	
-		     regular = [ "1-2: +1 on future damage", "3-4: as below, shaken", "5-8: as below, Crittical Damage", "9+ Destoryed",]
+		     regular = [ "1-3: +1 on future damage", "4: as below, shaken", "5-8: as below, Critical Damage", "9+: Destroyed",]
 		     critical = [ "1: Cannot move", "2: -1 to hit, +1 to be hit(ranged and assault)", "3: Cannot Rotate", "4: +3 on future damage", "5: Stuck turret: firing angle is now only forward", "6: Unit is set on Fire",]
-	crew = [ "4-5: Crippled Crew, if aleady shaken double initial crew damage",
-	     "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroied",]
+	crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage",
+	     "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
 	[elf.units.tattoo_ink]
 	race = "elf"
@@ -190,7 +190,7 @@
 		     still = [["360°", "A", "F"]]
 
 		     [elf.units.bear_rider.damage_tables]
-		     regular = ["2-7: +1 to future damage, bleed[4]","8:10: +2 to future damage, bleed[6], psycic damage[d6]","11+: killed", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
+		     regular = ["2-7: +1 to future damage, bleed[4]","8:10: +2 to future damage, bleed[6], psychic damage[d6]","11+: killed", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
 		     psychic = ["6+: shaken"]
 
 
@@ -208,7 +208,7 @@
 	armor = [6,6,6,5]
 	shaken = "Speed set to slow. Movement order: [-,-,flee]. may not use fire orders"
 
-	special = ["Poison Resistance 12", "Fire Resistance 3","Minor Acid resistance[4+]", "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 3+", "Grants psycic resitance 1 to all units in hex", "Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]", "Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving", "May share a hex with a huge unit", "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"]
+	special = ["Poison Resistance 12", "Fire Resistance 3","Minor Acid resistance[4+]", "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 3+", "Grants psychic resitance 1 to all units in hex", "Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]", "Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving", "May share a hex with a huge unit", "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"]
 
 		     [elf.units.armored_unicorn_rider.orders.fire]
 		     still = [["-", "-"] , ["-", "Fire Burst(5)"],["Fire Burst(5)", "-"]]
@@ -320,7 +320,7 @@
 
 [models]
 	[elf.models.e34]
-	name = "E24"
+	name = "E34"
 	race = "elf"
 	equipment_limit = ["independent:∞"]
 	equipments = [ "main_tank_gun", "twin_rifle",]
@@ -402,7 +402,7 @@
 	     deflection_die = "5+"
 	     damage = "d6-2"
 	     ap = 2
-	     special = ["Cunnint Assault[1 for 2]"]
+	     special = ["Cunning Assault[1 for 2]"]
 
 
 	[elf.models.illusion]
@@ -415,7 +415,7 @@
 	     strength_die = "5+"
 	     deflection = [0, 0, 0, 0]
 	     deflection_die = "5+"
-	     damage = "d6 psycic damge"
+	     damage = "d6 psychic damge"
 	     ap = 'n.a'
 	     special = []
 
@@ -427,7 +427,7 @@
 	cost.xp = 2
 	replaces = ["elf_infantry"]	
 	type = ["Bio", "infantry", "Walks", "Elite", "SuperElite"]
-	special = ["Superb Shot: +3 to hit", "Unit base gains psycic resitance 2 as long as atleast one superelite model is alive", "unit gains Pre-assault retreat[4+] as long as atleast 1 superelite is alive"]
+	special = ["Superb Shot: +3 to hit", "Unit base gains psychic resitance 2 as long as atleast one superelite model is alive", "unit gains Pre-assault retreat[4+] as long as atleast 1 superelite is alive"]
 
 	     [elf.models.superelite_elf_infantry.assault]
 	     strength = [3,1,1,1]
@@ -447,7 +447,7 @@
 	cost.xp    = 1
 	replaces = ["elf_infantry"]	
 	type = ["Bio", "infantry", "Walks", "Elite"]
-	special = ["Good Shot: +1 to hit", "Unit base gains psycic resitance 1 as long as atleast one elite model is alive", "unit gains Pre-assault retreat[5+] as long as atleast 1 elite is alive"]
+	special = ["Good Shot: +1 to hit", "Unit base gains psychic resitance 1 as long as atleast one elite model is alive", "unit gains Pre-assault retreat[5+] as long as atleast 1 elite is alive"]
 
 	     [elf.models.elite_elf_infantry.assault]
 	     strength = [2,1,1,1]
@@ -497,7 +497,7 @@
 
 
 	[elf.models.oliphant]
-	name = "Oliphant Rider"
+	name = "Oliphant"
 	race = "elf"
 	equipment_limit = ["independent:∞"]
 	equipments = ["oliphant_gattling_guns"]
@@ -608,7 +608,7 @@
 	type = ["Bio", "Cavalry", "Walks"]
 	replaces = ["pachyephalosaurus_rider"]
 	cost.xp = 1
-	special = ["Good shot: +1", "Unit gain psycic resistance 1 while atleast one elite is alive"]
+	special = ["Good shot: +1", "Unit gain psychic resistance 1 while atleast one elite is alive"]
 
 	     [elf.models.elite_pachyephalosaurus_rider.assault]
 	     strength = [6,2,2,1]
@@ -655,8 +655,9 @@
 	cost.xp = 6
 	cost.cp = 6
 	armor = [8,6,4,3]
-	special = ["Poison Resistance 2", "Fire (bow): the crew fires a bow, Throw grenade: Crew throws hand grenandes, while Fire(g), aim(g) and load(g) orders are for the gattling guns only. Only the gattling gun needs to be reloaded"]
-	shaken = "Speed set to slow. Movement order: [-,-,chase]. May not fire wapons\\\\ &Chases closet unit, friend or foe. Assaults friendly units if shaken"
+	#Note to self: make itemize, eller bold, eller linjeskift..
+	special = ["Poison Resistance 2", "Orders: Fire (bow): the crew fires a bow. Throw grenade: Crew throws hand grenades, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"]
+	shaken = "Speed set to slow. Movement order: [-,-,chase]. May not fire weapons\\\\ &Chases closest unit, friend or foe. Assaults friendly units"
 
 		     [elf.units.armored_oliphant_riders.orders.movement]
 		     slow = [["360°","F", "360°"],
@@ -670,7 +671,7 @@
 		     fast = [["fire", "fire"],["fire", "aim(g)"], ["fire", "load(g)"],["fire", "fire(g)"]]
 
 		     [elf.units.armored_oliphant_riders.damage_tables]
-		     regular = ["2-6: Bleed[8] ","7: As below, d6 psycic damage", "8: Unit killed", "Note: bleeding does not cause more bleeding"]
+		     regular = ["2-6: Bleed[8] ","7: As below, d6 psychic damage", "8+: Unit killed", "Note: bleeding does not cause more bleeding"]
  		     psychic = ["6+: shaken"]
  
  
@@ -696,7 +697,7 @@
 		     slow = [[" 360° "," F "," 360°"],[ "360°","360°","360°"],["360°","A","F"]]
 
 		     [elf.units.eagle_rider.damage_tables]
-		     regular = ["2-3: +1 to future damage, Bleed[4]","4-6: +2 to future damage, bleed[6], psycic damage[d6]","7+: killed", "Note: bleeding does not cause more bleeding"]
+		     regular = ["2-3: +1 to future damage, Bleed[4]","4-6: +2 to future damage, bleed[6], psychic damage[d6]","7+: killed", "Note: bleeding does not cause more bleeding"]
 		     psychic = ["6+: shaken"]
 
 
@@ -721,20 +722,20 @@
 [equipments]
 
     [elf.equipments.main_tank_gun]
-    name = "Main_Tank-Gun"
+    name = "Main Tank Gun"
     race = "elf"
     requires = []
 
         [elf.equipments.main_tank_gun.range]
         range = 4
         angle = [true, true, true, true]
-        damage = "d6 + (+3 if penetrating all armor)"
+        damage = "d6 (+3 if penetrating all armor)"
         ap = 8
-	special = ["double barraled: May load up to 2 shots, and fire them one at a time"]
+	special = ["Double barreled: May load up to 2 shots, and fire them one at a time"]
 
 
     [elf.equipments.towed_main_gun]
-    name = "Towed Main-Gun"
+    name = "Towed Main Gun"
     race = "elf"
     requires = []
 
@@ -825,7 +826,7 @@
         angle = [true, true, true, true]
         damage = "d6 -2"
         ap = 2
-	special = ["Fires two times at same unit per shot.\\\\Twin-Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"]
+	special = ["Fires two times at same unit per shot.\\\\Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"]
 
     [elf.equipments.shriek_smg]
     name = "Shriek SMG"
@@ -848,7 +849,7 @@
 
 
     [elf.equipments.gattling_gun]
-    name = "GattlingGun"
+    name = "GatlingGun"
     race = "elf"
     requires = []
 
@@ -876,7 +877,7 @@
 
 
     [elf.equipments.oliphant_gattling_guns]
-    name = "Oliphant GattlingGuns"
+    name = "Oliphant GatlingGuns"
     race = "elf"
     requires = []
 
@@ -885,7 +886,7 @@
 	     angle = [false, true, true, false]
 	     damage = "d6-1"
 	     ap = "3"
-	     special = ["Represent one gattling gun firing to the left and one firing to the rigth. May fire at both sides with each fire order", "Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and within one angle of fire", "Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
+	     special = ["Represent one gatling gun firing to the left and one firing to the rigth. May fire at both sides with each fire order", "Focus Fire[aim]: roll 6 dice at same unit.","If not using aim, fire once at all enemy models within range and allowed firing angles", "Covered in bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers."]
 
 
     [elf.equipments.at_rifle_free]
@@ -963,7 +964,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d6-2"
 	     ap = "0"
-	     special = ["Ignore to-hit penalty (both self and taget) for moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded"]
+	     special = ["Ignore to-hit penalty (both self and target) for moving fast and flying", "+1 range if you are flying", "enhanced accurasy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded"]
 
 	     [elf.equipments.bow.orders_gained.fire]
 	     still= [['Fire', 'Fire']]
@@ -981,7 +982,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d6-2"
 	     ap = "0"
-	     special = ["Ignore to-hit penalty (both self and taget) for moving fast and flying", "+1 range if you are flying", "enhanced accurazy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded", "set enemy on fire"]
+	     special = ["Ignore to-hit penalty (both self and target) for moving fast and flying", "+1 range if you are flying", "enhanced accurasy: +1 to hit", "Bad at long range: double to-hit penalties at long range.", "Always treated as loaded", "set enemy on fire"]
 
 	     [elf.equipments.fire_bow.orders_gained.fire]
 	     still= [['Fire', 'Fire']]
@@ -1043,7 +1044,7 @@
 	     angle = [true, false, false, true]
 	     damage = "d6-2"
 	     ap = "3"
-	     special = ["improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d4 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
+	     special = ["improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psychic damage and +d4 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
 
 
     [elf.equipments.sniper_rifle_free]
@@ -1055,7 +1056,7 @@
 	     angle = [true, false, false, true]
 	     damage = "d6-2"
 	     ap = "3"
-	     special = ["improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psycic damage and +d4 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
+	     special = ["improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psychic damage and +d4 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
 
 
     [elf.equipments.grenade]
@@ -1099,7 +1100,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d6"
 	     ap = "5"
-	     special = ["All crew target one hex which gives: Area(4+)", "Target any hex within normal range", "Always loaded"]
+	     special = ["All crew target one hex. Area(4+)", "Target any hex within normal range", "Always loaded"]
 
 	     [elf.equipments.crew_hand_grenade.orders_gained.fire]
 	     still = [["-", "Throw grenade"]]

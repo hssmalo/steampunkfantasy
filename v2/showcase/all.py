@@ -35,7 +35,7 @@ oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders')
 #oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders4')
 
 
-oliphant.add_unit(elf.units.e34, name = 'Main Elf Battletank')
+oliphant.add_unit(elf.units.e34, name = 'Elf Main Battle Tank')
 #oliphant.add_unit(elf.units.e34, name = 'Main Elf Battletank2')
 
 
