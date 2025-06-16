@@ -124,8 +124,6 @@
         regular = ["0+: Destroy Unit"
         ]
 
-
-
     [gnome.units.gnome_motorcycle]
     race = "gnome"
     name = "Gnome Motorcyle"
@@ -164,6 +162,8 @@
         psychic = [
             "6+: Unit Shaken",
         ]
+
+
 
 
     [gnome.units.ballista_drone]

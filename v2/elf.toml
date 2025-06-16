@@ -663,7 +663,7 @@
 		     slow = [["360°","F", "360°"],
 	     	     	  ["360°", "B", "360°"], ["360°", "A", "F"]]
 		     still = [["360°", "A", "F"]]
-		     fast = [["F", "F", "-"], ["B", "360°", "F"]]
+		     fast = [["F", "F", "-"],["F", "L", "F"], ["F", "R", "F"], ["B", "360°", "F"]]
 
 	     [elf.units.armored_oliphant_riders.orders.fire]
 		     still = [["fire", "fire"],["fire", "aim(g)"], ["fire", "load(g)"],["fire", "fire(g)"]]
