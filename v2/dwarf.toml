@@ -219,6 +219,8 @@
 
         [dwarf.units.gunblasterwagon.orders.fire]
 	still = [["Fire", "Load"], ["Load", "-"]]
+	slow = [["-", "Load"], ["Load", "-"]]
+	fast = [["-", "Load"], ["Load", "-"]]	
 	
         [dwarf.units.gunblasterwagon.damage_tables]
 

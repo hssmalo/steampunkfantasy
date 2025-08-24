@@ -108,10 +108,7 @@
 	  	   "4: Cannot rotate",
 		   "5: -1 to hit, +1 to be hit (ranged and assault)",
 		   "6: Unit set on fire",]
-	   crew = [ "4-5: jammed",
-	   	"6-7: as 4-5, shaken",
-		"8-11: as 6-7, +3 to future crew damage",
-		"12: Unit destroyed",]
+    	  crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
     [ork.units.hammerhead]
     race = "ork"
@@ -124,7 +121,7 @@
     	  [ork.units.hammerhead.damage_tables]
     	  regular = [ "1-3: +1 to future damage", "4: as below, shaken", "5-8: Critical Damage", "9+: unit destroyed",]
        	  critical = [ "1-3: +3 to future damage", "4: Unit cannot rotate", "5: Unit Cannot Move", "6: -5 to assault strength.",]
-    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed"]
+    	  crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
     	  [ork.units.hammerhead.orders.fire]
 	  still = [[ "Load", "-"], [ "Fire", "-"]]
@@ -176,7 +173,7 @@
     	  [ork.units.battlewagon.damage_tables]
     	  regular = [ "1-3: +1 to future damge", "4: as below, shaken", "5-8: As below, Critical Damage", "9+: unit destroyed, any transported units takes d6 regular damage and exit the vehicle",]
       	  critical = [ "1-3: +3 to future damage", "4-5: gain on extra shaken token", "6: Unit set on fire",]
-    	  crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed"]
+    	  crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
     	  [ork.units.battlewagon.orders.fire]
 	  still = [[ "Load", "-"], [ "Fire", "-"], ["-", "Fire"],["-", "Aim"], ["Aim", "-"]]
@@ -384,12 +381,7 @@
 		 "3: -1 to hit, +1 to be hit (ranged and assault)",
 		 "4-5: +3 to future damage",
 		 "6: Unit set on fire"]
-	crew = [
-	     "4-5: Jammed",
-	     "6-7: as 4-5, shaken",
-	     "8-11: as 6-7, +3 to future crew damage",
-	     "12: Unit destroyed"]
-	
+	crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed"]
 
 
 
@@ -613,7 +605,7 @@
 	   damage = "d6"
 	   ap = "3"
 
-	   special = ["{template.ability.reroll_assault:3}", "Fear[6]"]
+	   special = ["{template.ability.reroll_assault:3}"]
 
    
    [ork.models.speedhead]
@@ -875,7 +867,7 @@
 	[ork.equipments.hand_held_cannon.range]		
 	range = 4
 	angle = [true, false, false, false]
-	special = ["Unit base gets the option to fire ONE of this weapon instead of regular weapons."]
+	special = ["Unit gets the option to fire ONE of this weapon instead of regular weapons."]
 	damage = "d6 +3 if penetrating armor"
 	ap = 9
 
@@ -981,8 +973,8 @@
    	[ork.equipments.flamethrower.range]
 	range = 1
 	angle = [true, false, false, false]
-	special = ["Fire at all hexes possible simultaniously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc. ", " Any target unit effected atleast once is set on FIRE. Fireresistance reduces base damage and crew damage from this weapon. ", " Limited Ammo: May be fired a maximum of 3 times. ", " Starts the game with all 3 ammo loaded"]
-damage = "d8 fire damage + d4 crew damage"
+	special = ["Fire at all hexes possible simultaniously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc. ", " Any target unit effected atleast once is set on FIRE. Fireresistance reduces crew damage from this weapon. ", " Limited Ammo: May be fired a maximum of 3 times. ", " Starts the game with all 3 ammo loaded"]
+damage = "d4 crew damage"
        ap = 3
 
 
@@ -995,7 +987,7 @@ damage = "d8 fire damage + d4 crew damage"
    	[ork.equipments.rotating_pop_gun.range]
 	range = 4
 	angle = [true, true, true, true]
-	special = ["Poison[6]"]
+	special = ["Poison[8]"]
 	damage = "d6 + (d8 crew damage when penetrating all armor)"
 	ap = 6
 
@@ -1023,7 +1015,7 @@ damage = "d8 fire damage + d4 crew damage"
    
 
    	[ork.equipments.tanksscalper.assault]
-	special.append = "May replace regular damage with d4-2 crew damage. If so, any supporting damage to this damage die adds +1 to crew damage instead of +1 to regular damage. It should be noted that other models within the same unit MAY choose different damage types. Thus only the hit and corresponding supporting hits versus a tank should be converted to crew damage."
+	special.append = "May replace regular damage with d8 crew damage. Note: crew damage ignore armor"
 
 
    [ork.equipments.healing_syringe]

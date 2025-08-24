@@ -15,11 +15,11 @@
     cost.ip = 24
     cost.xp = 24
     special = []
-    shaken= "speed set to still, move order: [-,-,-]"
+    shaken= "speed set to still (lands if flying), move order: [-,-,-]. Speed set to slow when shaken ends"
 
 
-        [darkelf.units.mechanical_red_dragon.movement]
-	fastflying =[["L","F","F"],
+        [darkelf.units.mechanical_red_dragon.orders.movement]
+	"fast flying" =[["L","F","F"],
 		   ["R","F","F"],
 		   ["L,L","F","F"],
 		   ["R,R","F","F"],
@@ -30,13 +30,13 @@
 	     ["360°", "A", "F"]]
 
         [darkelf.units.mechanical_red_dragon.orders.fire]
-	slow = [["-", "Breath(fire)"], ["Breath(fire)", "-"]]
-	all = [["-", "Load"]]
+	slow = [["-", "Breath(fire)"], ["Breath(fire)", "-"], ["-", "Load"]]
+	fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
 
 	
         [darkelf.units.mechanical_red_dragon.damage_tables]
-        regular = ["1-5: +1 on future damage",
-		"6-10: +1 on future damage, shaken",
+        regular = ["1-4: +1 on future damage",
+		"5-10: +1 on future damage, shaken",
             "13+: Unit destroied"]
 
 
@@ -50,27 +50,30 @@
     cost.ip = 24
     cost.xp = 24
     special = []
-    shaken= "speed set to still, move order: [-,-,-]"
+    shaken= "speed set to still (lands if flying), move order: [-,-,-]. Speed set to slow when shaken ends"
+
     
-        [darkelf.units.mechanical_iron_dragon.movement]
-	fastflying =[["L","F","F"],
+        [darkelf.units.mechanical_iron_dragon.orders.movement]
+	slow = [["360°", "-", "-"],	
+	     ["360°", "F", "-"],
+	     ["360°", "A", "F"]]
+	"fast flying" =[["L","F","F"],
 		   ["R","F","F"],
 		   ["L,L","F","F"],
 		   ["R,R","F","F"],
 		   ["F", "F", "-"],
 		   ["B[slow]", "360°","F"]]
-	slow = [["360°", "-", "-"],
-	     ["360°", "F", "-"],
-	     ["360°", "A", "F"]]
+	
 
         [darkelf.units.mechanical_iron_dragon.orders.fire]
-	slow = [["-", "Breath(acid)"], ["Breath(acid)", "-"]]
-	all = [["-", "Breath(shrapnell)"], ["-", "Load"]]
+	slow = [["-", "Breath(acid)"], ["Breath(acid)", "-"],["-", "Breath(shrapnell)"], ["-", "Load"]]
+	"fast flying" = [["-", "-"],["-", "-"],["-", "Breath(shrapnell)"], ["-", "Load"]]
+
 
 	
         [darkelf.units.mechanical_iron_dragon.damage_tables]
-        regular = ["1-5: +1 on future damage",
-		"6-10: +1 on future damage, shaken",
+        regular = ["1-4: +1 on future damage",
+		"5-10: +1 on future damage, shaken",
             "13+: Unit destroied"]
 
 
@@ -115,7 +118,7 @@
         [darkelf.units.queen_yy.orders.fire]
 	still = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release Poison"]]
 	slow  = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release Poison"]]
-	fast  = [["-", "fire"], ["-", "Release Poison"]]
+	fast  = [["-", "fire"], ["-", "fire"], ["-", "fire"],["-", "Release Poison"]]
 
 	
         [darkelf.units.queen_yy.damage_tables]
@@ -126,7 +129,7 @@
         ]
 	critical = [ "1: -1 to-hit, +1 to-be-hit",
 		 "2: Rotates right in agony 0 step",
-		 "3: rotates left in agony 1 and in agony 3",
+		 "3: Rotates left in agony 1 and in agony 3",
 		 "4: only still available",
 		 "5: unit is covered in acid",
 		 "6: unit covered in acid x2",]
@@ -218,19 +221,19 @@
 	     ["360°", "A", "F"],
 	     ["360°", "F+B", "360°"]]
 	still = [["360°", "360°", "360°"],  ["360°", "A", "F"]]
-	default.slow = [["-", "-", "Flee"]]
-	default.fast = [["-", "Flee", "Flee"]]
-	default.still = [["-", "-", "A,Flee"]]
 
         [darkelf.units.nightmare_mechanical_cavalry.orders.fire]
-	all = [["-", "Breath Fire"]]
+	still = [["-", "Breath Fire"]]
+	slow  = [["-", "Breath Fire"]]
+	fast  = [["-", "Breath Fire"]]
 
 	
         [darkelf.units.nightmare_mechanical_cavalry.damage_tables]
         regular = ["2-3: +1 on future damge",
 		"4: +2 on future damge",
             "5-6: kill 1 model",
-	    "7+: Kill 1 model, roll on psychic damage"
+	    "7+: Kill 1 model, roll on psychic damage",
+	    "{{\\it Note: half (rounded down) number of + to future damage when one model is killed}}"
         ]
         psychic = ["6+: unit shaken",]
 
@@ -269,7 +272,8 @@
         regular = ["2-3: +1 on future damge",
 		"4: +2 on future damge",
             "5-6: kill 1 model",
-	    "7+: Kill 1 model, roll on psycic damage"
+	    "7+: Kill 1 model, roll on psycic damage",
+    	    "{{\\it Note: half (rounded down) number of + to future damage when one model is killed}}"
         ]
         psycic = ["5+: unit shaken",]
 
@@ -288,8 +292,6 @@
 	slow = [["360°", "F",  "360°"],
 	     ["360°", "B",  "360°"]]
 	still = [["360°",  "360°", "360°"],["360°",  "A", "360°"]]
-
-	default.slow = [["-", "-", "-"]]
 
         [darkelf.units.mechanical_assault_spider.orders.fire]
 	still = [["-", "Load"],
@@ -330,10 +332,6 @@
 	slow = [["360°", "F",  "360°"], ["B", "360°",  "360°"], ["A", "F",  "F"]]
 	fast = [["360°", "F",  "B"]]
 	     
-	default.still = [["-", "-", "-"]]
-	default.slow = [["-", "-", "B"]]
-	default.fast = [["-", "-", "B,B"]]	
-
         [darkelf.units.mechanical_scorpion.orders.fire]
 	still = [["-", "Load"],
 	      ["-", "Fire"],
@@ -380,10 +378,6 @@
 	crawl = [["360°", "F",  "-"],
 	     	["360°", "B[still]", "-"],
 	     	["360°", "A[slow]", "F"]]
-
-	default.crawl = [["-", "-", "A,Flee"]]
-        default.still = [["-", "-", "-"]]
-        default.slow = [["-", "-", "Flee"]]
 
         [darkelf.units.darkelf_infantry.orders.fire]
 	still = [["Load", "-"],
@@ -512,10 +506,6 @@
 	     	["360°", "B[still]", "-"],
 	     	["360°", "A[slow]", "F"]]
 
-	default.crawl = [["-", "-", "A,Flee"]]
-        default.still = [["-", "-", "-"]]
-        default.slow = [["-", "-", "Flee"]]
-
         [darkelf.units.roboprosthetic_assasin.orders.fire]
 	still = [["Load", "-"],
 	      ["-", "Load"],
@@ -554,10 +544,6 @@
 	crawl = [["360°", "F",  "-"],
 	     	["360°", "B[still]", "-"],
 	     	["360°", "A[slow]", "F"]]
-
-	default.crawl = [["-", "-", "A,Flee"]]
-        default.still = [["-", "-", "-"]]
-        default.slow = [["-", "-", "Flee"]]
 
         [darkelf.units.scout.orders.fire]
 	still = [["Load", "-"],
