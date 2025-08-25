@@ -737,7 +737,7 @@
     equipments = ["rifle"]
     type = ["bio", "elite", "infantry", "walks"]
     replaces = ["darkelf_infantry"]
-    special = [,
+    special = [
     "Unit base gains psychic resistance 1 as long as atleast one elite model is alive."]
     cost.xp = 1
 
@@ -833,7 +833,7 @@
     equipments = ["rifle"]
     type = ["bio", "elite", "infantry", "walks", "roboprosthetic"]
     replaces = ["roboprosthetic_darkelf"]
-    special = [,"Unit base gains psychic resistance 1 as long as atleast one elite model is alive."]
+    special = ["Unit base gains psychic resistance 1 as long as atleast one elite model is alive."]
     cost.cp = 1
 
     	[darkelf.models.elite_roboprosthetic_darkelf.assault]

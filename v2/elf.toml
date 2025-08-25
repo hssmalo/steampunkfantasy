@@ -262,7 +262,7 @@
         [elf.units.elk_cavalery]		
 	race = "elf"
 	name = "Elk Cavalery"
-	models = ["elk_cavalery", "elk_cavalery", "elk_cavalery",, "elk_cavalery"]
+	models = ["elk_cavalery", "elk_cavalery", "elk_cavalery", "elk_cavalery"]
 	size = "medium"
 	cost.mp = 6
 	cost.xp = 2
