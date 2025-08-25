@@ -8,7 +8,8 @@ from dataclasses import dataclass, field
 import munch
 from pyconfs import Configuration
 
-basic_path = "/home/smalo/steampunkfantazy/steampunkfantasy/"
+# basic_path = "/home/smalo/steampunkfantazy/steampunkfantasy/"
+basic_path = str(pathlib.Path(__file__).parent.parent) + "/"
 
 
 class CounterList(collections.UserList):
