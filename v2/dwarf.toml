@@ -835,7 +835,7 @@
 	deflection_die.replace = "4+"
 	damage.replace = "d6+1"
 	ap.replace = 5
-	special.append = ["Cunning Assault[1 for 1]"]
+	special.append = "Cunning Assault[1 for 1]"
 
 
     [dwarf.equipments.infantry_platform]
@@ -947,7 +947,7 @@
     name = "Vest of Life Support"
     race = "dwarf"
     cost.cp = 2
-    requires = [["type: infantry", "type:steampowerarmor"], ["independent:1"]]
+    requires = [["type:infantry", "type:steampowerarmor"], ["independent:1"]]
     special = ["Unit gains 1 endurence token per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect" ]
 
 
@@ -966,7 +966,7 @@
     name = "Trench Coat of Resistance"
     race = "dwarf"
     cost.cp = 1
-    requires = [["type: infantry", "type:steampowerarmor"], ["independent:1"]]
+    requires = [["type:infantry", "type:steampowerarmor"], ["independent:1"]]
     special = ["Unit improves poison resistance and fire reistance with 1", "Unit gains imunity to minor acid"]
 
     [dwarf.equipments.brotherinarms_armor]

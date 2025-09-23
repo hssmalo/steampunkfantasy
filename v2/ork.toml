@@ -58,7 +58,7 @@
     special = ["Fire orders only available if given ranged weapons"]
 
     	[ork.units.warg_rider.orders.movement]
-	fast = [["360°","F","F"],["F","360°","F"],["F","F","360°"],["F","B","360°"],["-","-","chase"]]		
+	fast = [["360°","F","F"],["F","360°","F"],["F","F","360°"],["F","B","360°"],["-","chase","chase"]]		
 	slow=[["360°","360°","360°"],["360°","F","360°"],["-","-","chase"],["360°","A","F"]]
 
 	[ork.units.warg_rider.orders.fire]
@@ -67,7 +67,7 @@
 
 	[ork.units.warg_rider.damage_tables]
 	psycic = [ "5+: unit shaken",]
-	regular = [ "2-3: Bleeding[6]", "4-6: Bleeding[6], +1 to future damage, psychic damage[d6]", "7+: kill 1 model, psychic damage[d6]","When one model is killed, half all +1 to future damage rounded down","If killed by poison or bleeding, remove that instance"]
+	regular = [ "2-3: Bleeding[6]", "4-6: Bleeding[6], +1 to future damage, psychic damage[d6]", "7+: kill 1 model, psychic damage[d6]","{{\\it When one model is killed, half all +1 to future damage rounded down}}","{{\\it If killed by poison or bleeding, remove that instance}}"]
 
 
     [ork.units.speedhead]
@@ -101,13 +101,13 @@
 
 	  [ork.units.speedhead.damage_tables]
 	  regular = [ "1-3: +1 to future damage",
-	  	  "4: as below, shaken",
-	  	  "5-8: as below, Critical Damage[d6]",
+	  	  "4: as 1-3, shaken",
+	  	  "5-8: 4, Critical Damage[d6]",
 		  "9+: unit destroyed",]
 	  critical = [ "1-3: +3 to future damage",
 	  	   "4: Cannot rotate",
 		   "5: -1 to hit, +1 to be hit (ranged and assault)",
-		   "6: Unit set on fire",]
+		   "6: Unit set on fire",]	   
     	  crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
     [ork.units.hammerhead]
@@ -119,7 +119,7 @@
     armor = [13,8,7,7]
 
     	  [ork.units.hammerhead.damage_tables]
-    	  regular = [ "1-3: +1 to future damage", "4: as below, shaken", "5-8: Critical Damage", "9+: unit destroyed",]
+    	  regular = [ "1-3: +1 to future damage", "4: 1-3, shaken", "as 4, 5-8: Critical Damage", "9+: unit destroyed",]
        	  critical = [ "1-3: +3 to future damage", "4: Unit cannot rotate", "5: Unit Cannot Move", "6: -5 to assault strength.",]
     	  crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
@@ -171,7 +171,7 @@
     special = ["Transport[2]: may transport up to 2 infantry", "unload all infantry in any movement phase: place up to 1 infantry in the same hex as the ending hex of the battlewagon, and the rest in an adjacent hex. Enter assault if occupied by en enemy. Put the infantry in either slow or still. Threat all movement order up to this point as - for the unloaded infantery."]
 
     	  [ork.units.battlewagon.damage_tables]
-    	  regular = [ "1-3: +1 to future damge", "4: as below, shaken", "5-8: As below, Critical Damage", "9+: unit destroyed, any transported units takes d6 regular damage and exit the vehicle",]
+    	  regular = [ "1-3: +1 to future damge", "4: as 1-3, shaken", "5-8:,  as 4, Critical Damage", "9+: unit destroyed, any transported units takes d6 regular damage and exit the vehicle",]
       	  critical = [ "1-3: +3 to future damage", "4-5: gain on extra shaken token", "6: Unit set on fire",]
     	  crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
 
@@ -212,7 +212,7 @@
         [ork.units.grunt.damage_tables]
         regular = ["1-5: Kill 1 model",
             "6-8: Kill 1 Model, d6 Psychic damage",
-            "9: Destroy unit base",
+            "9: Destroy unit",
         ]
         psychic = [
             "4+: Unit Shaken",
@@ -240,8 +240,8 @@
         [ork.units.ork_infantry.damage_tables]
         regular = ["1-5: Kill 1 model",
             "6-8: Kill 1 Model, d6 Psychic damage",
-            "9: Destroy unit base",
-        ]
+            "9: Destroy unit",
+        ,"{{\\it When one model is killed, half all +1 to future damage rounded down}}","{{\\it If killed by poison, remove that instance}}"]
         psychic = [
             "4+: Unit Shaken",
         ]
@@ -276,8 +276,8 @@
             "1: Bleed[4]",
             "2-5: Kill 1 model",
             "6-8: Kill 1 Model, d6 Psychic damage",
-            "9: Destroy unit base",
-        ]
+            "9: Destroy unit",
+        ,"{{\\it When one model is killed, half all +1 to future damage rounded down}}","{{\\it If killed by poison or bleeding, remove that instance}}"]
         psychic = [
             "5+: Unit Shaken",
         ]
@@ -291,6 +291,7 @@
    size = "Large"
    cost.ip = 12
    armor = [11,9,8,7]
+   shaken = "Speed set to still, cannot use weapons"
 
    	 [ork.units.ork_char_b1.orders.fire]
 	 slow = [
@@ -372,16 +373,17 @@
 	[ork.units.ork_char_b1.damage_tables]
 	Regular = [
 		  "1-3: +1 to future damage",
-		  "4: as below, shaken",
-	 	  "5-8: as below, Critical Damage[d6]",
+		  "4: as 1-3, shaken",
+	 	  "5-8: as 4, Critical Damage[d6]",
 		  "9+: Unit Destroyed"]
 	Critical = [
 		 "1: Cannot Rotate",
-		 "2: Cannot move, looses Fear",
+		 "2: Cannot move",
 		 "3: -1 to hit, +1 to be hit (ranged and assault)",
 		 "4-5: +3 to future damage",
 		 "6: Unit set on fire"]
-	crew = [ "4-5: Jammed", "6-7: as 5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed"]
+	crew = [ "4-5: Crippled Crew, if already shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12+: Unit destroyed",]
+
 
 
 

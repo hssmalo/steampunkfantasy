@@ -1,0 +1,41 @@
+%\documentstyle[a4,12pt, color, hyperref]{scrbook}
+\documentclass[a4,12pt, color, hyperref]{book}
+%\documentclass[a4,12pt, color, hyperref]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[yyyymmdd]{datetime}
+\renewcommand{\dateseparator}{-}
+\usepackage{censor}
+
+
+\pagestyle{plain}
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+
+
+
+
+\title{Steampunk Fantasy: Army rules}
+\author{Hans Sverre Smalø}
+\date{\today}
+
+\begin{document}
+\maketitle
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+%
+
+\chapter{Dwarfs: SteamPowerArmor with Balrog Assault}
+\include{DwarfSteamPowerArmorwithBalrogAssault.tex}
+
+\chapter{Elf Oliphants}
+\include{Oliphantattack}
+
+
+\end{document}

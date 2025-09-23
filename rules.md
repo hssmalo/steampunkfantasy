@@ -163,10 +163,11 @@ Terrain also provide cover, which is given in the to-hit table later.
 One hex may maximum hold either up two 2 units if at most one of them is large, or 1 huge unit.
 Flying units have the same stacking limits, but while flying is independent of stacking limit on ground. A flying unit may even share a hex with an enemy.
 
-If trying to enter the same hex with MORE than that simultaneously, all from within same team/faction, then all units trying to move into the hex stay put.
-If done on purpose by the commander, they are also *shaken* (se unit abilities and conditions) next turn. 
+If trying to enter the same hex with MORE than that simultaneously, all from within same team/faction, then stay in the hex instead of moving with a number of units such that a maximum of the stacking limit enter the hex. The controlling player may deside which units stay put. Note that this also applies in assaults. (see later) In the case of movement outside your own controll such as flee or chase, treat the hex as an impassable hex, and continue movement procedures. 
 
-\pagebreak
+If done on purpose by the commander, all units trying to enter the hex are also *shaken* (se unit abilities and conditions) next turn. 
+
+\clearpage
 
 # Building battle ground.
 
@@ -211,6 +212,7 @@ After a fixed amount of time, each player scores points according to the followi
 1pt for each crippled enemy MP, XP and CP \
 3pt for each remaning IP from your own team. \
 1pt for each remaning MP, XP and CP from your own team. \
+These points are summed as victory points for short pdf. Thus, you get x2 the number of stated victory points for enemy killed units, x1 for your own surviving units, and x1 for enemy crippled units. \
 +16pt bonus if you won the match (ie, score more points than your enemy from the above points) \
 
 Only totally destroyed units counts as destroyed. A unit is crippled when: the game ends and it is shaken, has lost atleast half of the starting number of models, has any critticle damage token or crippled crew effect, have a number of +1 to future damage token equal to half (rounded down) required to kill the entire unit or the units flees the battlefield. Note that you get points for crippling your enemy but lose none for your own crippled units. 
@@ -238,7 +240,6 @@ Give each unit at least one movement order and the number of fire orders dictate
 
 Action are ordered in advance, and in principal everything in one step is done simultaneously. However, if the orders include choices as for example who to fire at etc. and that choice depends on what the enemy choice is, then resolve it as follows: Any unit which MAY enter an assault depending on the choices it does in movement (if existing), declares whether it want to enter an assault or not. The ones not entering assaults must choose first, and the ones entering assault second, and they must then enter assault (if possible). If there are still choices which depends on what the other chooses, the ones choosing last according to this table. The highest rank choices last:
 
-Spartan \
 Elf \
 Dark Elf \
 Dwarf \
@@ -268,7 +269,7 @@ Each unit has a set of available orders. Code:
 - Rev=reverse
 - D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - - = no action
-- Chase: move towards nearest enemy, taking current orders into account. Thus the unit moves one step closer to where the enemy is going to be this turn.
+- Chase: move towards nearest enemy, taking current orders into account. Thus the unit moves one step closer to where the enemy is going to be this turn. Where a unit chases is  determined after all decisions and special movement have been planed. However, ignore any enemy units which cannot be reached even if it stood still. Thus a land unit without having a flying speed available, ignore flying units when determining where it chases.
 - Follow: Are only available through special unit ordering other units to follow, and all units under these orders move one hex closer to this unit. If multiple units are odering units to follow, you can chose which to follow.
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
@@ -286,22 +287,18 @@ Would read you could rotate 360$^0$ and accelerate in first movement, and forwar
 
 Gunnery orders are for example:\
 -, Aim \
--, Load (still) \
+-, Load \
 -, Fire\
 Aim, -\
 Load, -\
 Fire, -\
 Spot, spot \
 
-
-Default Gunnery: -, - \
-
 The first is executed in gunnery 1, the second in gunnery 2. 
 Some orders are only available during one or more specific speeds/movement modes.
-If a movement triggers a change in speed, it is possible that the first gunnery order (part 1) is not allowed, but part 2 is. If a unit brakes and goes from fast to slow, gunnery part 1 does not allow gunnery orders associated with slow but gunnery part 2 do.
 
-If an illegal order is given, do the default order instead.
 
+If a movement triggers a change in speed, it is possible that the first gunnery order (part 1) is not allowed, but part 2 is. If a unit brakes and goes from fast to slow, gunnery part 1 does not allow gunnery orders associated with slow but gunnery part 2 do. In these cases, use the order for the appropriate speed at each gunnery phase, but use the order on the same card for both. If the given speed isn't listed on the card, treat it as doing nothing.
 
 Load: loads weapon. A weapon cannot fire without a load token available.
       Some weapons may load more than one ammo per loading. It is then noted as load[2] or load[5] \
@@ -344,7 +341,7 @@ Any stat which is not divided in 4 groups is assumed to be identical for all ang
 
 *Fixed* *Weapons*
 
-Some models, instead of having onr raotating gun have multiple guns pointing at different dirrections. In this case, each gun is treated as only being able to fire  in the given direction, but when the weapon system is fired, all are fired simultainiously at different direction. In this case a number indicated the number of shots/weapons being able to fire in the given dirrection.
+Some models, instead of having one rotating gun have multiple guns pointing at different dirrections. In this case, each gun is treated as only being able to fire  in the given direction, but when the weapon system is fired, all are fired simultainiously at different direction. In this case a number indicated the number of shots/weapons being able to fire in the given dirrection.
 
 For example \
 [x2,x1,x1/-]
@@ -376,12 +373,12 @@ Fast                       -1      -1
 Flying                     -1      -1         (stacks with still, slow and fast)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1         Grants Evation(-2) with take cover benefit
-Burned Forrest              0      -1         Grants Evation(-2) with take cover benefit
-Building                    0      -1         Grants Evation(-2) with take cover benefit
-Ruins                       0      -1         Grants Evation(-2) with take cover benefit
-Rough Terrain	            0      -1         Grants Evation(-2) with take cover benefit
-Sand Dunes                  0      -1         Grants Evation(-2) with take cover benefit
+Forrest                     0      -1         
+Burned Forrest              0      -1         
+Building                    0      -1         
+Ruins                       0      -1         
+Rough Terrain	            0      -1         
+Sand Dunes                  0      -1         
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round.)
 *Range*
@@ -508,7 +505,6 @@ Assaults also is conducted if two or more units from different teams try to ente
 
 In the case where units facing each other are all moving forward, there might be two or more equally valid ways to conduct the assault. In this case, the team with the heighest melee skills determine which hex (or hexes) are being faught over:
 
-Spartan\
 Dark Elf\
 Ork\
 Dwarf\
@@ -517,14 +513,14 @@ Gnome \
 
 The one gaining the advantage of the assault enters the hex it tried to enter, and disadvantage is forced out of the hex, it then retreats. If one with disadvantage was stationary, it moves out of the hex in the backward direction. If the disadvantage was trying to enter a hex, it stays in the hex it was before trying to enter the hex. 
 
-If trying to retreat into a overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex, with the one controling the unit deciding where. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, or becomes overcrowed by your own units, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, the unit gains stuborn trait. Which means that the unit is never forced to retreat from a hex it previously occupied, and it is the other unit which retreats instead. 
+If trying to retreat into an overcrowded hex, or an enemy, or an impassable hex, retreat to the closest possible hex, with the one controling the unit deciding where. If, in the rare case you are completely surronded by  enemies, conduct another assault into the hex you normaly would have reatreated to. If you tried to enter a hex, and failed to do so, but the hex you where before is occupied by the enemy, or becomes overcrowed by your own units, treat it as retreating to an impassable hex: thus move to the closest possible hex. If you are at the edge of the battlefield, you are pushed out of the battlefield and may not return. Treat the unit as crippled for victory points purposes
 
-If more than Stacking Limit number of units enters the hex after winning an assault, all winners are also shakened as if trying to move into a hex with friendly units only. Also, note that a maxium of 2 units may contribute it's firepower.
+Note that a maxium of stacking limit number of units may contribute it's firepower in assault, and only stack limit number of units end up in the hex after an assault.
 
 In any way, during a retreat, the loser may rotate to Left or Right or 180$^0$ if you wish as part of the retreat. This is to make retreated unit able to flee the assault if it wants to.
 
 
-Assault: Each model have the followint stats for hitting the enemy in assault:\
+Assault: Each model have the following stats for hitting the enemy in assault:\
 Number of dice, to_hit, any Damage modifiers. \
 Facing : Use front assault values and armor for units entering the hex, with the exception, when reversing into an assault, set facing = back.
          For stationary units being assaulted, use assault and armor from the side which it is assaulted from.
@@ -533,7 +529,7 @@ Facing : Use front assault values and armor for units entering the hex, with the
 
 
 Multiple Units: add all dice for up to stacking_limit number of units, roll separate dice if necessary, both if the different units have different to_hit value for the assault and if they have different damage output.
-It may be the case that some units involved have better damage, it is then necessary to track which unit did hit and which did not. If you for example have an orc-warhero with a flaming waraxe in a mix with 3 ork-grunts, roll all dice for the warhero with red dice and the grunts with blue die. If a red die hits, you may employ the flaming waraxe special damage, but if only blue dice hit, you may not.
+It may be the case that some units involved have better damage, it is then necessary to track which unit did hit and which did not. If you for example have an orc-warhero with a flaming waraxe in a mix with 3 ork-grunts, roll all dice for the warhero with red dice and the grunts with blue die for example. If a red die hits, you may employ the flaming waraxe special damage, but if only blue dice hit, you may not.
 
 Simillarly as for assault, some models may have assault deflection and is given in the stats of a model by
 Assault Deflection: Number of dice, to_hit\
@@ -546,7 +542,6 @@ A good practice is to roll assault and assault deflections simultanieously but w
 
 Whoever rolls the highest number of successfull assaults (after deflection) gains the advantage. If equal, use Nation assault winning-power order.
 
-Spartan\
 Dark_Elf\
 Ork\
 Dwarf\
@@ -557,13 +552,7 @@ Elf\
 
 It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected.
 
-Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. Assault successes are either damage or support.
-You start of by distributing the damaging hits, up to a maxium one damaging hit to a unit per alive model. Further hits are applied as support to any one ore more damage roll. Keep track of which hit are from which source. Support gives you +1 damage to the result per support given, and only damage rolls potentially causes cassualties.
-
-
-Thus, if you have ONE attack which is far stronger than other attacks, it's wise to gain the advantage so that you make sure that that attack does not get deflected.
-
-For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit.
+Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. All hits are distributed among the units enemies, with the player with the advantage chooses how. The player with the advantage may choose how to distribute his/her enemies hits among his/her own units, but must apply one hit per model on each unit if able. For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit. 
 
 Example: \
 
@@ -575,17 +564,13 @@ Elf rolled 6 successes (3 from E34 and 3 from infantry)\
 DarkElf scores 5 hits and elf score 6-3 = 3 hits. Advantage DarkElf \
 
 Thus the DarkElf gained the advantage, and chooses to deflect the 3 attacks from the tank (they may or may not be nastier in the real game).
-The elf choose to assign 3 damaging scores from his infantry to the enemy infantry, since he suspect that the DarkElfs armor is good enough to protect it. Might as well kill some infantry in the process.
-The Darkelf choosed to assign 3 damaging scores to the infantry and 1 damaging + 2 support to the tank, in hope of doing some damage. Thus the attack on the tank gets +2 to damage.
+The DarkElf choose to assign 3 hits to the DarkElf infantry, and not risk damaging his precious tank, even though the tank most probable would have managed to shrug of melee attacks from regular infantry. (tanks are normaly well protected from regular melee attacks, but a tank is also very valuable)
+The Darkelf choosed to assign 3 damaging scores to the infantry and 3 to the tank, in hope of doing some damage. 
 
 Rolling for damage:\
 Elf rolls 3 times on infantry damage table, but manage to kill only 2 models. \
-Dakr Elf also rolled 3 times on infantry damage tabale, but managed to kill all 3 infantry. Then he roll for damage once versus the Elf's tanks, but the elf's armor proves to be difficult to penetrate. No damage done\
-
+Dakr Elf also rolled 3 times on infantry damage tabale and managed to kill all 3 infantry. Then he roll for damage versus the Elf's tanks 3 times, but the elf's armor proves to be difficult to penetrate. But the DarkElf infantry has cunning Assault[1 for 2] spesial ability which causes the elf tank to get +1 to future damage\
 Then the Elf retreats from the hex, but atleast it's tanks is unharmed. \
-
-If in the rare case that unit does not do real damage in assault, but does only psycic damage instead, and this unit is mixed with units that does real damage, threat real and psycic as seperate entries with respect to distributing damaging and supporting hits. Thus you may roll one real damage PER enemy model in unit in addition to one psycic damage PER enemy model in unit. Units with real damage support attacks from real damage, while support from unit with psycic damage support attacks with psycic damage. If a model does both regular and psycic damage, support gives +1 to regular damage and +1 to psycic damage.
-
 
 Examples:
 Standard Tank\
@@ -604,23 +589,16 @@ Generic damage types will be noted by the following in weapon stats:\
 - [type] damage[dN]
 For example, a weapon may have Psychic Damage in addition to regular damage.
 
-If so, and if the target has a damage table of name equal to the type of damage, roll a dN on that damage table. For example if you have
+If so, and if the target has a damage table of name equal to the type of damage, roll a dN on that damage table, ignoring armor if any. For example if you have
 - d6 psycic damage
 Roll a d6 on psychic damage table of target.
 If the target don't have a psychic damage table, the unit is immune to this damage.
 
+
++1 to future damage tokens only applies to damage versus the regular damage tables.
+
+
 Some special damage types are listed below:
-
-**Direct** **Fire** **damage**:
- 
-- Does not ignore armor 
-- Ignore regular damage resistances
-- Reduce damage by fire resistances of target
-- Apply bonus to damage based on the number +to future damage tokens
-- Apply damage to the regular damage table.
-
-Most fire damage comes from the 'set on fire' ability of weapons, which is a continius damage.
-
 
 
 **Acid**: (roll by enemy)\ 
@@ -642,19 +620,19 @@ Most fire damage comes from the 'set on fire' ability of weapons, which is a con
 
 - At agony step 1 roll a die, at 3+, unit gets +1 on future damage. At 2-, remove minor acid
 
-**Contnius** **Fire** **Damage**
+
+**Continius** **Fire** **Damage**
 
 - At agony step 2, roll a d6. \
 - At 1, the fire stops and do no damage. Remove the fire from the unit. \
-- Otherwise, that unit take that much fire damage, ignoring ALL armor. 
+- Otherwise, treat the result as damage.
+- Ignore armor 
+- Ignore regular damage resistances
 - Reduce damage by fire resistances of target
-- Apply bonus to damage based on the number +future damage tokens
+- Apply bonus to damage based on the number +to future damage tokens
 - Apply damage to the regular damage table.
 
-- Ignor regular damage resistances
-- 
-If a 1 was not rolled, the unit continues burning next round.
-
+Most fire damage comes from the 'set on fire' ability of weapons, which is a continius damage.
 
 **Poisoned**[n]\
 Only biological units affected (with BIO in type). All other types ignore poison.
@@ -665,9 +643,9 @@ Only biological units affected (with BIO in type). All other types ignore poison
 - Reduce damage by poison resistances of target
 - Apply bonus to damage based on the number +future damage tokens
 - Apply damage to the regular damage table.
+- If poison killed a model, remove poison.
 
 If poison DID not kill a model of the unit, downgrade poison by one step (12 -> 10 -> 8 -> 6 -> 4 -> NONE)
-However if it did, remove that instance of poison from unit. 
 
 
 **Bleeding**:
@@ -684,13 +662,9 @@ However if it did, remove that instance of poison from unit.
 
 # Unit Abilities and conditions:
 
-**Evation**[-N]
-
-Modified the success of an area of effect. For example, an Area(5+) effect will no be an Area(6+) effect if N=-1. Furhter, an Area(6+) will now be an Area(7+), where you use the open ended d6 rules to get 6.
-
 **Take Cover**[speed, -N]
 
-When unit is in given speed the unit is considered taking cover and gets -N to be hit, as indicated by to-hit table. Whenever this condition apply, the unit gains evation[-1], or evation[-2] in cover providing terrain. 
+When unit is in given speed the unit is considered taking cover and gets -N to be hit, as indicated by to-hit table. 
 
 **Forward Position**[N]
 
@@ -722,7 +696,6 @@ Half number of dice rounded down from all enemy shaken units entering assault wi
 For each N assault successes assigned to one vehicle (model with type vehicle) in assault (assault damage and supporting hits), add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken.
 
 Thus, for example if you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken. 
-
 
 This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage.
 
@@ -867,17 +840,17 @@ Follow the instructions for each hex based effect
 **Poison** **Cloud** [N] 
 
 
-Area(6+): roll 1 die per model in hex. At 6+, apply a poison[N] to target, and do dN in crew damage.
+Area(12+): roll a d12 per model in hex. At 12, apply a poison[N] to target, and do dN in crew damage.
 Note that 
 
 **Acid** **Cloud** [Minor] 
 
-Area(6+) roll 1 die per model in hex. At 6+ place a minor acid on the unit.
+Area(12+) roll a d12 per model in hex. At 12 place a minor acid on the unit.
 
 
 **Acid** **Cloud** [Major] 
 
-Roll a die per unit in hex. At 6+ place a regular acid on the unit.
+Roll a die per unit in hex. At 12 place a regular acid on the unit.
 
 
 
@@ -887,7 +860,7 @@ Roll a die per unit in hex. At 6+ place a regular acid on the unit.
 
 **Hex** **on** **Fire**\
 When setting a hex on fire, place a smoke and fire token in the hex.
-When encountering a fire, Roll 1 die per unit, at 6+ set that unit on fire.
+When encountering a fire, Roll a d12 per unit, at 12+ set that unit on fire.
 
 **Smoke**
 Blocks line of sight and gives to-hit penalties, which stacks with other terrain features.

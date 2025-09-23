@@ -1,0 +1,84 @@
+%\documentstyle[a4,12pt, color, hyperref]{scrbook}
+\documentclass[a4,12pt, color, hyperref]{book}
+%\documentclass[a4,12pt, color, hyperref]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[yyyymmdd]{datetime}
+\renewcommand{\dateseparator}{-}
+\usepackage{censor}
+
+
+\pagestyle{plain}
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+
+
+
+
+\title{Steampunk Fantasy: Army rules}
+\author{Hans Sverre Smalø}
+\date{\today}
+
+\begin{document}
+\maketitle
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\clearpage
+
+{\bf Ork}
+\begin{itemize}
+\item 2 Ork Char B1 (36vp each)
+\item 2 PowerSpear Infantry (15vp each)
+\item 2 BioEngineered Ork (11vp each)
+\item 3 Warg Riders (6vp each)  
+\item 1 Grunts (2vp)  
+\end{itemize}  
+
+
+{\bf Gnome}
+\begin{itemize}
+\item 3 Ballista Tractor with assaultbot mortars (24vp each)
+\item 4 Mortar Infantry ( 13vp each)
+\item 1 DeathRay Infantery with Mechanical Owl (11vp each)
+\item 1 DeathRay Infantery with Mechanical Owl (9vp each)
+\item N\footnote{Hvor $N >> 1$ \label{large}} Mechanical rats (0vp)
+\item N\footref{large} Assaultbots (0vp)  
+\end{itemize}  
+
+{\bf DarkElf}
+\begin{itemize}  
+\item 1 Queen YY (48vp)
+\item 2 Mechanical Scorpion (12vp)
+\item 2 Nightmare Mechanical Cavalry (18vp)
+\item 2 SMG Roboprosthetic Infantry (9vp)
+\item 2 SMG Infantry with Poison Fog Grenades (9vp)
+\end{itemize}  
+
+
+{\bf Dwarf}
+\begin{itemize}
+\item x3 GunBlasterWagon (18vp each)
+\item x3 Transport Zepelin (4vp each)
+\item x6 Blast Stick Infantry (13vp each)
+\end{itemize}
+
+
+\chapter{Ork: Charge!}
+\include{Orkerikke}
+
+\chapter{Gnome:Assaultbots}
+\include{Assaultbots}
+
+\chapter{DarkElf: Acid}
+\include{DarkElf}
+
+\chapter{Dwarf: Blast Sticks}
+\include{BlastStick}
+
+\end{document}

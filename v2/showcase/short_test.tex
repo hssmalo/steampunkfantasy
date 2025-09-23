@@ -1,28 +1,32 @@
-\pagebreak
+\clearpage
 
-\section{ Dwarf Infantry }
+\section{ Eagle Rider }
 
 \begin{tabular}{ll}
-  Name & Dwarf Infantry \\
+  Name & Eagle Rider \\
   Size & medium\\
-  Models & 4 x Dwarf Infantry\\
-  Armor & [0, 0, 0, 0]\\
-  Victory points & 4\\
-  Shaken & Movement set to slow. Movement order: [-,-,flee]. May not fire weapons\\
+  Models & 1 x Eagle Rider\\
+  Armor & [6, 6, 6, 6]\\
+  Victory points & 18\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
 \end{tabular}
 
-Posion Resistance 2, Fire Resistance 1\\ 
-Take Cover[still][-2]\\ 
+Poison Resistance 2\\ 
+If in the air, it may choose to assault a ground enemy. If so, it flies up after assault\\ 
+In fast it is considered flying, in slow it considered on the ground.\\ 
+Good shot: +1 to hit\\ 
+Pre-assualt retreat: 3+\\ 
 
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-5: Kill 1 model \\
-6-9: Kill 1 model, roll d6 psychic damage \\
-10+: Unit killed \\
+2-3: +1 to future damage, Bleed[4] \\
+4-6: +2 to future damage, bleed[6], psychic damage[d6] \\
+7+: killed \\
+Note: bleeding does not cause more bleeding \\
 \ \\ {\bf psychic } \\
-4+: Unit shaken \\
+6+: shaken \\
 
 
 \pagebreak
@@ -30,24 +34,37 @@ Take Cover[still][-2]\\
 \subsection{ Models }
 
 \begin{tabular}{ll}
-Model name: & {\bf Dwarf Infantry } \\
-Type: & [infantry, walks, bio] \\
+Model name: & {\bf Eagle Rider } \\
+Type: & [Bio, Cavalry, Flying, Walks] \\
 \end{tabular}
 \ \\
-Equipment: 1 x Musket \\
+Equipment: 1 x AT Rifle, 1 x Grenade \\
 \ \\
-Assault: [1, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
-\indent cunning assault[1 for 2]\\ 
+Assault: [6, 6, 6, 4] Die: 3+ Armor Penetration: 3 Damage: d6-1 \\
+Assault Deflection: [2, 2, 2, 1] Die: 3+\\
+\indent Always attacks weakest point of armor\\ 
+Cunning Assault[1 for 3]\\ 
  
 \ \\
 
 \ \\
-{\bf Musket } \\
+{\bf AT Rifle } \\
 
 
 
-Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
+Range: 5  Angle: [True, False, False, False] AP: 5 Damage: d6 \\
+
+
+
+
+{\bf Grenade } \\
+
+
+
+Range: 1  Angle: [True, True, True, True] AP: 7 Damage: d6 \\
+Area(5+)\\ 
+Target any hex within normal range\\ 
+Always loaded\\ 
 
 
 

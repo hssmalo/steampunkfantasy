@@ -39,8 +39,10 @@ Apply damage \
 - Gunnery 2\
 Apply damage \
 
+\clearpage
+
 - Healing/repear 1
-- Agony 0 (major acid, terror)\
+- Agony 0 (acid, terror)\
 Apply damage 
 
 - Agony 1 (minor acid)\
@@ -59,65 +61,39 @@ Apply damage
 
 - Aftermath  (remove smoke, etc.)
 
----
+\clearpage
+
+Triger Hex effects: roll a d12 per model. At a 12, the unit is effectd.
 
 Terror[N]: roll a dN versus psycic damage of everyone within range.
 
 
 Acid: \
-      1: degrade to minor acid, 2:
-      2: +1 to future damage,
-      3: as 2 as 2, and place a poison \& acid  cloud \[4, minor\](4+) at hex.\
+      1: degrade to minor acid, \
+      2: +1 to future damage, \
+      3: as 2 as 2, and place a poison cloud [4] at hex. In addition, all units in hex gains minor acid.\
       4:  As 3, and if unit has armor, it is reduced by 1 (all directions) \
       5 : As 6 and unit is set on fire.\
       6 : Roll twice on this table.,
 
-Minor Acid:
+Minor Acid: \
       1-2: remove minor acid token
       3+: +1 to future damage
 
-Fire:
+Fire: \
       1: remove fire token, no damage
       2+: ignor armor, take fire damage equal to the die roll
 
-Bleeding:
+Bleeding: \
       1: remove bleed token, no damage.
       2+: Ignore armor, take bleed damage equal to the die roll. 
       Ps! bleed damage do not cause more bleeding.
 
-Poison[N]: dN poison damage. Reduce poiosn one die step (12, 10, 8,6,4, 0)
+Poison[N]: \
+Ignore armor, dN poison damage. If no model removed, reduce poiosn one die step (12, 10, 8,6,4, 0). Else remove poison.
 
-\pagebreak
+\clearpage
 
-
-For movement and line of sight, se table below:
---------              -----------------------------------------------------------------------------------------------------------------------------
-Clear                 No modifiers
-Mountains             tracked and wheeled: cannot enter
-Hills                 Level 1 blocking terrain 
-Forest                walks: enter freely, tracked and wheeled: enter at 2+
-                      Level 0 blocking terrain
-Burned Forrest        Level 0 blocking terrain
-Ruins	              Does not block line of sight
-Rough                 Does not block line of sight
-Sand Dunes            ELevel 0 blocking terrain
-*Advanced* *terrain*
-Swamp                 medium and smaller enter and exit freely.
-                      large and huge: enter at 2+
-                      Units with track or wheel in description may get stuck,
-                      exit: 3+
-                      Does not block line of sight
-Building              Infantry enter freely
-                      any other type cannot enter without a special rule. Level 0 blocking terrain.
-Road                  If moving from a road to another hex with road, movement is always freely.
-Smoke                 Blocks line of sight 
-                      Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
-River                 ???		      
-Water                 1 movement point to enter for ships, floating or flying
-                      (and can only be entered while flying). Cannot be entered by any other way.
---------              -----------------------------------------------------------------------------------------------------------------------------
-
-\pagebreak
 
                           to hit, to be hit  special
 ------------------------ ------- ---------- ---------------------
@@ -131,12 +107,12 @@ Fast                       -1      -1
 Flying                     -1      -1         (stacks with still, slow and fast)
 *Terrain*
 Smoke                      -1      -1
-Forrest                     0      -1         Grants Evation(-2) with take cover benefit
-Burned Forrest              0      -1         Grants Evation(-2) with take cover benefit
-Building                    0      -1         Grants Evation(-2) with take cover benefit
-Ruins                       0      -1         Grants Evation(-2) with take cover benefit
-Rough Terrain	            0      -1         Grants Evation(-2) with take cover benefit
-Sand Dunes                  0      -1         Grants Evation(-2) with take cover benefit
+Forrest                     0      -1         
+Burned Forrest              0      -1         
+Building                    0      -1         
+Ruins                       0      -1         
+Rough Terrain	            0      -1         
+Sand Dunes                  0      -1         
 *Orders*
 Aim                        +2       0         (aim bonus last 1 round.)
 *Range*
@@ -166,7 +142,7 @@ Enhanced Accurazy          +1       0
 
 
 
-\pagebreak
+\clearpage
 
                           AP                    Damage    special
 ------------------------ -------------------- ---------- ---------------------
@@ -196,9 +172,9 @@ XXX Resistance N         -N if damage type matches resistance.
 
 
 
-\pagebreak
+\clearpage
 
-Movement/order Initiative: (highest on the list makes choises last with regard to ambigious orders) \
+Movement/order Initiative: (highest on the list makes chooses last with regard to ambigious orders) \
 
 Elf \
 Dark Elf \
@@ -219,7 +195,14 @@ Gnome\
 
 
 
-**Special Team abilities**
+**Special Team and Unit abilities**
+
+*General*
+
+**Cunning** **Assault[1 for N]**
+
+For each N assault successes assigned to one vehicle (model with type vehicle) in assault (assault damage and supporting hits), add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken.
+
 
 *Orks*
 
@@ -230,14 +213,14 @@ Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled 
 *Dwarfs*
 
 **Endurence tokens**
-Endurence tokens may be spend in the following way:", 
+Endurence tokens may be spend in the following way: 
 
 - Spend one endurence token to replace 'kill 1 model' with 'bleed[4]'. (note that you may spend another token if the result of the bleed damage is 'kill 1 model'. Note that the original bleed[4] is removed when you get the 'kill 1 model', and it is then replaced with a fresh bleed from you other use of the endurence token). 
 - After loosing an assault, you may spend one endurence token AND take a d6 psycic damage. If you are not shaken afterward infantry base gains Stuborn.
 - If you also have the trenchcoat of resistance equipment you may spend one token to reroll any result of poison damage
 
 
-\pagebreak
+\clearpage
 
 **Heal(N, unit, phase)**
 

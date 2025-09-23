@@ -1,4 +1,4 @@
-\pagebreak
+\clearpage
 
 \section{ Dwarf Infantry }
 
@@ -8,11 +8,37 @@
   Cost & 4mp\\
   Models & 4 x Dwarf Infantry\\
   Armor & [0, 0, 0, 0]\\
-  Shaken & Movment set to slow. Movement order: [-,-,flee]. May not fire weapons\\
+  Shaken & Movement set to slow. Movement order: [-,-,flee]. May not fire weapons\\
 \end{tabular}
 
 \noindent Posion Resistance 2, Fire Resistance 1\\ 
 Take Cover[still][-2]\\ 
+
+
+\ \\ {\bf movement } \\
+slow [360°, F, 360°] \\
+slow [360°, B, 360°] \\
+slow [360°, 360°, F] \\
+still [360°, 360°, 360°] \\
+still [360°, A, F] \\
+default slow \\
+default still \\
+\ \\ {\bf fire } \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+still [Load, -] \\
+still [-, Load] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-5: Kill 1 model \\
+6-9: Kill 1 model, roll d6 psychic damage \\
+10+: Unit killed \\
+\ \\ {\bf psychic } \\
+4+: Unit shaken \\
 
 
 \noindent
@@ -37,7 +63,7 @@ Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -47,30 +73,6 @@ Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
-\ \\ {\bf movement } \\
-slow [360°, F, 360°] \\
-slow [360°, B, 360°] \\
-slow [360°, 360°, F] \\
-still [360°, 360°, 360°] \\
-still [360°, A, F] \\
-default slow \\
-default still \\
-\ \\ {\bf fire } \\
-still [Fire, -] \\
-still [-, Fire] \\
-still [Aim, -] \\
-still [-, Aim] \\
-still [Load, -] \\
-still [-, Load] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-5: kill 1 model \\
-6-9: Kill 1 model, roll d6 psychic damage \\
-10+: Unit killed \\
-\ \\ {\bf psychic } \\
-4+: Unit shaken \\
 
 
 
@@ -81,7 +83,7 @@ still [-, Load] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Dwarf Brother in arms }
 
@@ -96,38 +98,6 @@ still [-, Load] \\
 
 \noindent Posion Resistance 3, Fire Resistance 2\\ 
 Take Cover[still][-1]\\ 
-
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Dwarf Brother in Arms } \\
-Equipment Limits: &[hands:2, shared:1, independent:∞] \\
-Type: &[infantry, walks, bio, brotherinarms, elite] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x Musket \\
-\ \\
-Assault: [3, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6 \\
-Assault Deflection: [1, 0, 0, 0] Die: n.a.\\
-\indent cunning assault[1 for 2]\\ 
- 
-\ \\
-
-\ \\
-{\bf Musket } \\
-
-
-
-Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
-
-
-
-
- 
-\ \\
-
 
 
 \ \\ {\bf movement } \\
@@ -154,56 +124,29 @@ still [-, Load] \\
 5+: Unit shaken \\
 
 
-
-
-
-
-
-
-
-
-\pagebreak\pagebreak
-
-\section{ SteamPowerArmor }
-
-\begin{tabular}{ll}
-  Name & SteamPowerArmor \\
-  Size & medium\\
-  Cost & 2ip, 4mp, 2cp\\
-  Models & 4 x SteamPowerArmor\\
-  Armor & [7, 6, 6, 5]\\
-  Shaken & Movment set to slow. Movement order: [-,-,flee]. May not fire weapons\\
-\end{tabular}
-
-\noindent Posion Resistance 4, Fire Resistance 2\\ 
-Steady[slow]: +1 to hit, +1 to-be hit while slow\\ 
-Acid resistance[5+]\\ 
-Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of alive models\\ 
-
-
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf SteamPowerArmor } \\
+Model name: &{\bf Dwarf Brother in Arms } \\
 Equipment Limits: &[hands:2, shared:1, independent:∞] \\
-Type: &[steampowerarmor, walks, bio] \\
+Type: &[infantry, walks, bio, brotherinarms, elite] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
 \ \\
-Equipment: 1 x Heavy Musket \\
+Equipment: 1 x Musket \\
 \ \\
-Assault: [3, 2, 2, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
+Assault: [3, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6 \\
+Assault Deflection: [1, 0, 0, 0] Die: n.a.\\
 \indent cunning assault[1 for 2]\\ 
  
 \ \\
 
 \ \\
-{\bf Heavy Musket } \\
+{\bf Musket } \\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -211,6 +154,35 @@ Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
  
 \ \\
 
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\section{ SteamPowerArmor }
+
+\begin{tabular}{ll}
+  Name & SteamPowerArmor \\
+  Size & Medium\\
+  Cost & 2ip, 4mp, 2cp\\
+  Models & 4 x SteamPowerArmor\\
+  Armor & [7, 6, 6, 5]\\
+  Shaken & Movement set to slow. Movement order: [-,-,flee]. May not fire weapons\\
+\end{tabular}
+
+\noindent Posion Resistance 4, Fire Resistance 2\\ 
+Steady[slow]: +1 to hit, +1 to-be hit while slow\\ 
+Acid resistance[5+]\\ 
+Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of models alive\\ 
 
 
 \ \\ {\bf movement } \\
@@ -235,13 +207,42 @@ still [-, Load] \\
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
 1-2: bleed[4] \\
-3-5: kill 1 model \\
+3-5: Kill 1 model \\
 6-9: Kill 1 model, roll d6 psychic damage \\
-10+: Unit killed \\
+10+: Unit killed \\ Note: bleeding does not cause more bleeding \\ If one model is killed by bleeding/poison, remove that bleeding/poison \\ token and remove half of the +1 future damage tokens \\
 \ \\ {\bf psychic } \\
 5+: Unit shaken \\
 
 
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf SteamPowerArmor } \\
+Equipment Limits: &[hands:2, shared:1, independent:∞] \\
+Type: &[steampowerarmor, walks, bio] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Heavy Musket \\
+\ \\
+Assault: [3, 2, 2, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
+\indent cunning assault[1 for 2]\\ 
+ 
+\ \\
+
+\ \\
+{\bf Heavy Musket } \\
+
+
+
+Range: 3  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
+
+
+
+
+ 
+\ \\
 
 
 
@@ -250,7 +251,12 @@ still [-, Load] \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+
+
+\clearpage
 
 \section{ Mini Zeppelin }
 
@@ -266,51 +272,6 @@ still [-, Load] \\
 \noindent Posion Resistance 3\\ 
 Floats\\ 
 random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault. In slow mode the unit uses its enignes to neutrilize the effect of the wether\\ 
-
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Mini Zeppelin } \\
-Equipment Limits: &[independent:∞] \\
-Type: &[open vehicle, floats, bio] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x AxeThrower Machine, 1 x Poison Gas Grenade \\
-\ \\
-Assault: [2, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [3, 2, 1, 1] Die: 4+\\
-\indent  
-\ \\
-
-\ \\
-{\bf AxeThrower Machine } \\
-
-
-
-Range: 4  Angle: [True, True, False, False]: AP: 2 Damage:d6-2 \\
-Fire x2 per fire order\\ 
-+1 to hit if range to enemy is an even number, -1 to hit if it is an odd number\\ 
-
-
-
-
-{\bf Poison Gas Grenade } \\
-
-
-
-Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:N.A \\
-Place a poison cloud[4] within normal range\\ 
-Always treated as loaded\\ 
-Activated by throw order\\ 
-
-
-
-
- 
-\ \\
-
 
 
 \ \\ {\bf movement } \\
@@ -335,6 +296,48 @@ still [Throw, Throw] \\
 6+: Unit shaken \\
 
 
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Mini Zeppelin } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[open vehicle, floats, bio] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x AxeThrower Machine, 1 x Poison Gas Grenade \\
+\ \\
+Assault: [2, 1, 1, 1] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [3, 2, 1, 1] Die: 4+\\
+\indent  
+\ \\
+
+\ \\
+{\bf AxeThrower Machine } \\
+
+
+
+Range: 4  Angle: [True, True, False, False] AP: 2 Damage: d6-2 \\
+Fire x2 per fire order\\ 
++1 to hit if range to enemy is an even number, -1 to hit if it is an odd number\\ 
+
+
+
+
+{\bf Poison Gas Grenade } \\
+
+
+
+Range: 1  Angle: [True, True, True, True] AP: 0 Damage: N.A \\
+Place a poison cloud[4] within normal range\\ 
+Always treated as loaded\\ 
+Activated by throw order\\ 
+
+
+
+
+ 
+\ \\
 
 
 
@@ -343,7 +346,12 @@ still [Throw, Throw] \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+
+
+\clearpage
 
 \section{ Transport Zeppelin }
 
@@ -358,6 +366,19 @@ still [Throw, Throw] \\
 
 \noindent May transport up to 2 unit of Infantry or SteamPowerArmor. Unload in any movement phase. When unloading they use hanggliders and are placed up to two hexes in any direction from the transport zeppelin end hex in that movement phase. They may enter assault as part of unloading. Place all infanteri in slow after unloading and treat any movement order up to this point as -\\ 
 May not transport any infantri with wheeled shieldwall\\ 
+
+
+\ \\ {\bf movement } \\
+flying fast [360°, F, F] \\
+flying fast [F, F, 360°] \\
+flying fast [F, 360°, F] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: +1 on future damage \\
+5-8:as below, d6-2 damage to each unit transported by this unit. \\
+9: unit and all transported units killed \\
 
 
 \noindent
@@ -383,17 +404,6 @@ Assault Deflection: [0, 0, 0, 0] Die: n.a\\
 
 
 
-\ \\ {\bf movement } \\
-flying fast [360°, F, F] \\
-flying fast [F, F, 360°] \\
-flying fast [F, 360°, F] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-4: +1 on future damage \\
-5-8:as below, d6-2 damage to each unit transported by this unit. \\
-9: unit and all transported units killed \\
 
 
 
@@ -404,13 +414,13 @@ flying fast [F, 360°, F] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Dwarf AT-gun }
 
 \begin{tabular}{ll}
   Name & Dwarf AT-gun \\
-  Size & large\\
+  Size & Large\\
   Cost & 2mp, 6cp, 4xp\\
   Models & 1 x Dwarf AT-gun\\
   Armor & [7, 0, 0, 0]\\
@@ -418,38 +428,6 @@ flying fast [F, 360°, F] \\
 \end{tabular}
 
 \noindent Poison Resistance 2, Fire resistance 1\\ 
-
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Dwarf AT-gun } \\
-Equipment Limits: &[training: 1, independent:∞] \\
-Type: &[bio, dragged, open topp, vehicle, at gun] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x Big AT-Gun \\
-\ \\
-Assault: [1, 0, 0, 0] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [0, 0, 0, 0] Die: n.a\\
-\indent Is automaticly destroied if forced to retreat in an assault\\ 
- 
-\ \\
-
-\ \\
-{\bf Big AT-Gun } \\
-
-
-
-Range: 6  Angle: [True, False, False, False]: AP: 10 Damage:d6 +1 +(+3 if penetrating all armor) \\
-
-
-
-
- 
-\ \\
-
 
 
 \ \\ {\bf movement } \\
@@ -469,12 +447,41 @@ still [Aim, -] \\
 \ \\ {\bf regular } \\
 1-6: kill 1 crew, +1 to future damage \\
 7-8: as 1-6, d6 psychic damage \\
-9+: Unit destroied \\
-Destroied when 4 crew is killed \\
+9+: Unit destroyed \\
+Destroyed when 4 crew is killed \\
 \ \\ {\bf psychic } \\
 5+: Unit shaken \\
 
 
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Dwarf AT-gun } \\
+Equipment Limits: &[training: 1, independent:∞] \\
+Type: &[bio, dragged, open topp, vehicle, at gun] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Big AT-Gun \\
+\ \\
+Assault: [1, 0, 0, 0] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [0, 0, 0, 0] Die: n.a\\
+\indent Is automaticly destroyed if forced to retreat in an assault\\ 
+ 
+\ \\
+
+\ \\
+{\bf Big AT-Gun } \\
+
+
+
+Range: 6  Angle: [True, False, False, False] AP: 10 Damage: d6 +1 +(+3 if penetrating all armor) \\
+
+
+
+
+ 
+\ \\
 
 
 
@@ -483,13 +490,18 @@ Destroied when 4 crew is killed \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+
+
+\clearpage
 
 \section{ GunBlasterWagon }
 
 \begin{tabular}{ll}
   Name & GunBlasterWagon \\
-  Size & large\\
+  Size & Large\\
   Cost & 6ip\\
   Models & 1 x GunBlasterWagon\\
   Armor & [8, 10, 10, 7]\\
@@ -499,39 +511,6 @@ Destroied when 4 crew is killed \\
 \noindent Fire Resistance 2\\ 
 optimal Point blank: +1 to hit at point blank range\\ 
 Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is.\\ 
-
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf GunBlasterWagon } \\
-Equipment Limits: &[crew:1, independent:∞] \\
-Type: &[mechanical, bio crew, track, vehicle] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x Broadside Guns \\
-\ \\
-Assault: [2, 2, 2, 2] Die: 4+ Armor Penetration: 3 Damage: d6-2 \\
-Assault Deflection: [2, 0, 0, 0] Die: 4+\\
-\indent  
-\ \\
-
-\ \\
-{\bf Broadside Guns } \\
-
-
-
-Range: 3  Angle: ['0', 'x2', 'x2', '0']: AP: 7 Damage:d6+2 \\
-Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 reloading actions before it can fire again\\ 
-After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired.\\ 
-
-
-
-
- 
-\ \\
-
 
 
 \ \\ {\bf movement } \\
@@ -571,6 +550,10 @@ still [A+A+R, F, F] \\
 \ \\ {\bf fire } \\
 still [Fire, Load] \\
 still [Load, -] \\
+slow [-, Load] \\
+slow [Load, -] \\
+fast [-, Load] \\
+fast [Load, -] \\
 
 
 {\bf Damage Tables} \\
@@ -589,56 +572,33 @@ still [Load, -] \\
 4-5: Crippled Crew, if aleady shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-12: as 6-7, +3 to future crew damage \\
-13: Unit destroied \\
-
-
-
-
-
-
-
-
-
-
-\pagebreak\pagebreak
-
-\section{ Dw42 }
-
-\begin{tabular}{ll}
-  Name & Dw42 \\
-  Size & large\\
-  Cost & 18ip\\
-  Models & 1 x dw42\\
-  Armor & [13, 10, 10, 9]\\
-  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
-\end{tabular}
-
-\noindent Fire Resistance 2\\ 
+13: Unit destroyed \\
 
 
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf dw42 } \\
+Model name: &{\bf GunBlasterWagon } \\
 Equipment Limits: &[crew:1, independent:∞] \\
 Type: &[mechanical, bio crew, track, vehicle] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
 \ \\
-Equipment: 1 x Tank-Gun \\
+Equipment: 1 x Broadside Guns \\
 \ \\
-Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 3 Damage: d6-1 \\
+Assault: [2, 2, 2, 2] Die: 4+ Armor Penetration: 3 Damage: d6-2 \\
 Assault Deflection: [2, 0, 0, 0] Die: 4+\\
 \indent  
 \ \\
 
 \ \\
-{\bf Tank-Gun } \\
+{\bf Broadside Guns } \\
 
 
 
-Range: 6  Angle: [True, False, False, False]: AP: 9 Damage:d6 +1 +(+3 if penetrating all armor) \\
-Load unstable: If it hits the target, it in addition to normal damage it gets gets Area(5+) effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex.\\ 
+Range: 3  Angle: ['0', 'x2', 'x2', '0'] AP: 7 Damage: d6+2 \\
+Must be loaded with 2 ammo before these guns can be fired. Can have 2 ammo stored at any given time. Each time it is loaded it is loaded with 1 ammo, thus you need to spend 2 reloading actions before it can fire again\\ 
+After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired.\\ 
 
 
 
@@ -646,6 +606,32 @@ Load unstable: If it hits the target, it in addition to normal damage it gets ge
  
 \ \\
 
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\section{ Dw42 }
+
+\begin{tabular}{ll}
+  Name & Dw42 \\
+  Size & Large\\
+  Cost & 18ip\\
+  Models & 1 x dw42\\
+  Armor & [13, 10, 10, 9]\\
+  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
+\end{tabular}
+
+\noindent Fire Resistance 2\\ 
 
 
 \ \\ {\bf movement } \\
@@ -699,76 +685,32 @@ still [Load Unstable, -] \\
 4-5: Crippled Crew, if aleady shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-12: as 6-7, +3 to future crew damage \\
-13: Unit destroied \\
-
-
-
-
-
-
-
-
-
-
-\pagebreak\pagebreak
-
-\section{ Zap }
-
-\begin{tabular}{ll}
-  Name & Zap \\
-  Size & large\\
-  Cost & 8ip\\
-  Models & 1 x zap\\
-  Armor & [10, 8, 8, 7]\\
-  Shaken & Movment set to still. Movement order: [-,-,-]. May not fire weapons\\
-\end{tabular}
-
-\noindent Fire and load all weapons at the same time\\ 
-Loses aim when moving away from the hex where it aimed\\ 
-Fire Resistance 2\\ 
+13: Unit destroyed \\
 
 
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf zap } \\
+Model name: &{\bf dw42 } \\
 Equipment Limits: &[crew:1, independent:∞] \\
 Type: &[mechanical, bio crew, track, vehicle] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
 \ \\
-Equipment: 1 x Array of Heavy Muskets, 1 x Zap, 1 x Twin Fear Ray \\
+Equipment: 1 x Tank-Gun \\
 \ \\
-Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [2, 1, 0, 0] Die: 4+\\
+Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 3 Damage: d6-1 \\
+Assault Deflection: [2, 0, 0, 0] Die: 4+\\
 \indent  
 \ \\
 
 \ \\
-{\bf Array of Heavy Muskets } \\
+{\bf Tank-Gun } \\
 
 
 
-Range: 3  Angle: ['x4', 'x3', 'x2', '0']: AP: 3 Damage:d6-1 \\
-
-
-
-
-{\bf Zap } \\
-
-
-
-Range: 4  Angle: [True, False, False, False]: AP: 4 Damage:d6+1 \\
-
-
-
-
-{\bf Twin Fear Ray } \\
-
-
-
-Range: 4  Angle: [True, False, False, False]: AP: 0 Damage:d6 Psycic damage \\
-Fire two times per shot at same target\\ 
+Range: 6  Angle: [True, False, False, False] AP: 9 Damage: d6 +1 +(+3 if penetrating all armor) \\
+Load unstable: If it hits the target, it in addition to normal damage it gets gets Area(5+) effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex.\\ 
 
 
 
@@ -776,6 +718,34 @@ Fire two times per shot at same target\\
  
 \ \\
 
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\section{ Zap }
+
+\begin{tabular}{ll}
+  Name & Zap \\
+  Size & Large\\
+  Cost & 8ip\\
+  Models & 1 x Zap\\
+  Armor & [10, 8, 8, 7]\\
+  Shaken & Movement set to still. Movement order: [-,-,-]. May not fire weapons\\
+\end{tabular}
+
+\noindent Fire and load all weapons at the same time\\ 
+Loses aim when moving away from the hex where it aimed\\ 
+Fire Resistance 2\\ 
 
 
 \ \\ {\bf movement } \\
@@ -829,10 +799,59 @@ still [Load, Aim] \\
 6-9: as below, d6 critical damage \\
 10+: Destroyed \\
 \ \\ {\bf crew } \\
-4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+4-5: Crippled Crew, if already shaken double initial crew damage \\
 6-7: as 4-5, shaken \\
 8-12: as 6-7, +3 to future crew damage \\
-13: Unit destroied \\
+13: Unit destroyed \\
+
+
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Zap } \\
+Equipment Limits: &[crew:1, independent:∞] \\
+Type: &[mechanical, bio crew, track, vehicle] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Array of Heavy Muskets, 1 x Zap, 1 x Twin Fear Ray \\
+\ \\
+Assault: [4, 3, 3, 2] Die: 4+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [2, 1, 0, 0] Die: 4+\\
+\indent  
+\ \\
+
+\ \\
+{\bf Array of Heavy Muskets } \\
+
+
+
+Range: 3  Angle: ['x4', 'x3', 'x2', '0'] AP: 3 Damage: d6-1 \\
+
+
+
+
+{\bf Zap } \\
+
+
+
+Range: 4  Angle: [True, False, False, False] AP: 4 Damage: d6+1 \\
+
+
+
+
+{\bf Twin Fear Ray } \\
+
+
+
+Range: 4  Angle: [True, False, False, False] AP: 0 Damage: d6 Psychic damage \\
+Fire two times at same target\\ 
+
+
+
+
+ 
+\ \\
 
 
 
@@ -843,7 +862,10 @@ still [Load, Aim] \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+\clearpage
 
 \section{ Zeppelin }
 
@@ -860,6 +882,33 @@ still [Load, Aim] \\
 Repair[2, self, healing 2]\\ 
  When damaged, add 1 to the result for each shaken token on the Zeppelin.\\ 
 Withering Ray: May replace forrest with rough terrain in the hex it is standing\\ 
+
+
+\ \\ {\bf movement } \\
+slow flying [L, -, -] \\
+slow flying [L, L, -] \\
+slow flying [R, -, -] \\
+slow flying [R, R, -] \\
+slow flying [F, -, -] \\
+slow flying [F, R, -] \\
+slow flying [F, L, -] \\
+\ \\ {\bf fire } \\
+still [Fire, -] \\
+still [Load, -] \\
+still [Aim, -] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: +1 on future damage, \\
+5-8: +1 to future damge, shaken \\
+9-13: +2 to future damage, unit shaken, set on fire \\
+14+: Unit destroyed \\
+\ \\ {\bf crew } \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+6-7: as 4-5, shaken \\
+8-12: as 6-7, +1 to future crew damage \\
+13: Unit destroyed \\
 
 
 \noindent
@@ -885,7 +934,7 @@ Can only assault flying enemies\\
 
 
 
-Range: 6  Angle: ['x4', 'x3', 'x2', '0']: AP: 3 Damage:d6-1 \\
+Range: 6  Angle: ['x4', 'x3', 'x2', '0'] AP: 3 Damage: d6-1 \\
 
 
 
@@ -894,7 +943,7 @@ Range: 6  Angle: ['x4', 'x3', 'x2', '0']: AP: 3 Damage:d6-1 \\
 
 
 
-Range: 4  Angle: [True, False, False, False]: AP: 0 Damage:d6 Psycic damage \\
+Range: 4  Angle: [True, False, False, False] AP: 0 Damage: d6 Psycic damage \\
 
 
 
@@ -903,7 +952,7 @@ Range: 4  Angle: [True, False, False, False]: AP: 0 Damage:d6 Psycic damage \\
 
 
 
-Range: 5  Angle: [True, True, True, True]: AP: 9 Damage:d6 +1 +(+3 if penetrating all armor) \\
+Range: 5  Angle: [True, True, True, True] AP: 9 Damage: d6 +1 +(+3 if penetrating all armor) \\
 
 
 
@@ -913,31 +962,6 @@ Range: 5  Angle: [True, True, True, True]: AP: 9 Damage:d6 +1 +(+3 if penetratin
 
 
 
-\ \\ {\bf movement } \\
-slow flying [L, -, -] \\
-slow flying [L, L, -] \\
-slow flying [R, -, -] \\
-slow flying [R, R, -] \\
-slow flying [F, -, -] \\
-slow flying [F, R, -] \\
-slow flying [F, L, -] \\
-\ \\ {\bf fire } \\
-still [Fire, -] \\
-still [Load, -] \\
-still [Aim, -] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-4: +1 on future damage, \\
-5-8: +1 to future damge, shaken \\
-9-13: +2 to future damage, unit shaken, set on fire \\
-14+: Unit destroied \\
-\ \\ {\bf crew } \\
-4-5: Crippled Crew, if aleady shaken double initial crew damage \\
-6-7: as 4-5, shaken \\
-8-12: as 6-7, +1 to future crew damage \\
-13: Unit destroied \\
 
 
 
@@ -948,7 +972,7 @@ still [Aim, -] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Tamed Balrog }
 
@@ -963,7 +987,27 @@ still [Aim, -] \\
 
 \noindent Fire Resistance 12, Poison Resistance 6\\ 
 Terror[8][range=2]\\ 
-Excelent Whip Handeling (counts as Excelent shot, +2 to hit)\\ 
+Excellent Whip Handling (counts as Excellent shot, +2 to hit)\\ 
+
+
+\ \\ {\bf movement } \\
+slow [A,chase, chase, chase,B[rest]] \\
+slow [chase, -, -] \\
+slow [-, -, chase] \\
+slow [360°, -, -] \\
+slow [360°, F, -] \\
+rest [-, -, A] \\
+\ \\ {\bf fire } \\
+still [Fire, -] \\
+still [-, Fire] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-9: +1 on future damage \\
+10-11: +2 on future damage \\
+12: +3 on future damage, assault -3, Loses Terror, Shaken \\
+13+: Unit Destroyed \\
 
 
 \noindent
@@ -988,7 +1032,7 @@ Assault Deflection: [0, 0, 0, 0] Die: n.a.\\
 
 
 
-Range: 1  Angle: [True, True, False, False]: AP: 0 Damage:N.A \\
+Range: 1  Angle: [True, True, False, False] AP: 0 Damage: N.A \\
 Set on fire\\ 
 
 
@@ -999,24 +1043,6 @@ Set on fire\\
 
 
 
-\ \\ {\bf movement } \\
-slow [A,chase, chase, chase,B[rest]] \\
-slow [chase, -, -] \\
-slow [-, -, chase] \\
-slow [360°, -, -] \\
-slow [360°, F, -] \\
-rest [-, -, A] \\
-\ \\ {\bf fire } \\
-still [Fire, -] \\
-still [-, Fire] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-9: +1 on future damage \\
-10-11: +2 on future damage \\
-12: +3 on future damage, assault -1, Looses Terror, Shaken \\
-13: Unit Destroied \\
 
 
 
@@ -1027,7 +1053,7 @@ still [-, Fire] \\
 
 
 
-\pagebreak\section{Upgradeable Units}\noindent
+\section{Upgradeable Units}\noindent
 \begin{tabular}{ll}
 Model name: &{\bf Dwarf Elite Infantry } \\
 Equipment Limits: &[hands:2, shared:1, independent:∞] \\
@@ -1051,7 +1077,7 @@ unit gains psycic resistance 2 as long as 1 elite model is alive\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1084,7 +1110,7 @@ Unit gains 1 endurence token per elite in unit. See general rules for effect\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 3  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 
 
 
@@ -1117,7 +1143,7 @@ Unit gains 1 endurence token and this model counts as elites for life of vest su
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 3  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 
 
 
@@ -1148,7 +1174,7 @@ Unit gains: Repair[3, any, Healing 1]\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 3  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 
 
 
@@ -1179,7 +1205,7 @@ Unit gains: Repair[3, any, Healing 1]\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1209,7 +1235,7 @@ Unit gains: Repair[2, self, Healing 1]\\
 
 
 
-Range: 4  Angle: [True, True, False, False]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, False, False] AP: 2 Damage: d6-2 \\
 Fire x2 per fire order\\ 
 +1 to hit if range to enemy is an even number, -1 to hit if it is an odd number\\ 
 
@@ -1220,7 +1246,7 @@ Fire x2 per fire order\\
 
 
 
-Range: 1  Angle: [True, True, True, True]: AP: 0 Damage:N.A \\
+Range: 1  Angle: [True, True, True, True] AP: 0 Damage: N.A \\
 Place a poison cloud[4] within normal range\\ 
 Always treated as loaded\\ 
 Activated by throw order\\ 
@@ -1257,7 +1283,7 @@ Cost: & Upgrade all models for: 2cp \\
 Gun automaticly loaded after an assault\\ 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1277,7 +1303,7 @@ slow [-, fire] \\
 
 \ \\
 \begin{tabular}{ll}
-name: & {\bf Doubled Barrled Musket With Springloaded Axe } \\
+name: & {\bf Doubled Barreled Musket With Springloaded Axe } \\
 Requiers: & [[hands:2], [type:infantry]] \\
 Cost: & Upgrade all models for: 4cp \\
 \end{tabular}
@@ -1285,7 +1311,7 @@ Cost: & Upgrade all models for: 4cp \\
 Gun automaticly loaded after an assault\\ 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 Fire two shots (per model) for each shot\\ 
 
 
@@ -1372,7 +1398,7 @@ Requiers: & [[independent:1], [type:infantry]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
-Unit gain [5,0,0,0] in armor\\ 
+Unit gains [5,0,0,0] in armor\\ 
 
 
 
@@ -1427,7 +1453,7 @@ Cost: & Upgrade one model for: 8cp \\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 9 Damage:d6+2 \\
+Range: 3  Angle: [True, True, True, True] AP: 9 Damage: d6+2 \\
 
 
 
@@ -1445,7 +1471,7 @@ Cost: & Upgrade one model for: 4cp \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 7 Damage:d6+1 \\
+Range: 2  Angle: [True, True, True, True] AP: 7 Damage: d6+1 \\
 Requir atleast 2 alive models in unit to be used\\ 
 
 
@@ -1462,7 +1488,7 @@ Requiers: & [[type: infantry, type:steampowerarmor], [independent:1]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
-Unit gain 1 endurence tokens per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
+Unit gains 1 endurence token per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
 
 
 
@@ -1517,10 +1543,10 @@ Requiers: & [[type: brotherinarms], [independent:1]] \\
 Cost: & Upgrade all models for: 1ip \\
 \end{tabular}
 
-Unit gain 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
+Unit gains 2 endurence tokens per elite model in the unit. See general rules for effect\\ 
 Stacks with vest of life support\\ 
 In addition to the normal rules for endurence tokens, the unit may use one endurence token in healing phase 1, to replace any bleeding with poison[6]\\ 
-Unit gain [4,3,3,3] in armor\\ 
+Unit gains [4,3,3,3] in armor\\ 
 
 
 
@@ -1539,7 +1565,7 @@ Cost: & Upgrade all models for: 4cp \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2+d4 crew damage \\
+Range: 2  Angle: [True, True, True, True] AP: 2 Damage: d6-2+d4 crew damage \\
 Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4\\ 
 
 
@@ -1558,7 +1584,7 @@ Cost: & Upgrade all models for: 2cp \\
 
 
 
-Range: 4  Angle: [True, False, False, False]: AP: 0 Damage:d6 Psycic damage \\
+Range: 4  Angle: [True, False, False, False] AP: 0 Damage: d6 Psycic damage \\
 
 
 
@@ -1576,7 +1602,7 @@ Cost: & Upgrade all models for: 2cp \\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 3  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 
 
 
@@ -1594,7 +1620,7 @@ Cost: & Upgrade all models for: 6cp \\
 
 
 
-Range: 6  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 6  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 
 
 
@@ -1612,7 +1638,7 @@ Cost: & Upgrade all models for: 2cp \\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 4 Damage:d6 \\
+Range: 4  Angle: [True, True, True, True] AP: 4 Damage: d6 \\
 
 
 
@@ -1623,14 +1649,14 @@ Range: 4  Angle: [True, True, True, True]: AP: 4 Damage:d6 \\
 
 \ \\
 \begin{tabular}{ll}
-name: & {\bf Double Barrled Long Range Heavy Musket } \\
+name: & {\bf Double Barreled Long Range Heavy Musket } \\
 Requiers: & [[hands:2], [type:steampowerarmor]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
+Range: 4  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 Fire two shots per fire order per model\\ 
 
 
@@ -1642,15 +1668,15 @@ Fire two shots per fire order per model\\
 
 \ \\
 \begin{tabular}{ll}
-name: & {\bf MultiBarrled Heavy Musket } \\
+name: & {\bf Multibarreled Heavy Musket } \\
 Requiers: & [[hands:2], [type:steampowerarmor]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 3 Damage:d6-1 \\
-Fire three shots per fire order per model\\ 
+Range: 3  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
+Fire three shots per model\\ 
 
 
 

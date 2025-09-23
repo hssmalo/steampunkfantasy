@@ -1,4 +1,4 @@
-\pagebreak
+\clearpage
 
 \section{ Mechanical red Dragon }
 
@@ -8,10 +8,36 @@
   Cost & 24ip, 24xp\\
   Models & 1 x Mechanical Red Dragon\\
   Armor & [11, 8, 8, 7]\\
-  Shaken & speed set to still, move order: [-,-,-]\\
+  Shaken & speed set to still (lands if flying), move order: [-,-,-]. Speed set to slow when shaken ends\\
 \end{tabular}
 
 \noindent 
+
+\ \\ {\bf movement } \\
+fast flying [L, F, F] \\
+fast flying [R, F, F] \\
+fast flying [L,L, F, F] \\
+fast flying [R,R, F, F] \\
+fast flying [F, F, -] \\
+fast flying [B[slow], 360°, F] \\
+slow [360°, -, -] \\
+slow [360°, F, -] \\
+slow [360°, A, F] \\
+\ \\ {\bf fire } \\
+slow [-, Breath(fire)] \\
+slow [Breath(fire), -] \\
+slow [-, Load] \\
+fast [-, -] \\
+fast [-, -] \\
+fast [-, Load] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: +1 on future damage \\
+5-10: +1 on future damage, shaken \\
+13+: Unit destroied \\
+
 
 \noindent
 \begin{tabular}{ll}
@@ -36,7 +62,7 @@ Fire Resistance 2, Immunity to acid\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 0 Damage:- \\
+Range: 3  Angle: [True, False, False, False] AP: 0 Damage: - \\
 No normal damge, but any unit within normal range and front arc is set on fire. Any unit within long range and in front arc is covered in minor acid\\ 
 In addition, all hexes within normal range and front arc: Area(5+) Poison[6]\\ 
 
@@ -48,17 +74,6 @@ In addition, all hexes within normal range and front arc: Area(5+) Poison[6]\\
 
 
 
-\ \\ {\bf fire } \\
-slow [-, Breath(fire)] \\
-slow [Breath(fire), -] \\
-all [-, Load] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-5: +1 on future damage \\
-6-10: +1 on future damage, shaken \\
-13+: Unit destroied \\
 
 
 
@@ -69,7 +84,7 @@ all [-, Load] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Mechanical Iron Dragon }
 
@@ -79,10 +94,38 @@ all [-, Load] \\
   Cost & 24ip, 24xp\\
   Models & 1 x Mechanical Iron Dragon\\
   Armor & [11, 8, 8, 7]\\
-  Shaken & speed set to still, move order: [-,-,-]\\
+  Shaken & speed set to still (lands if flying), move order: [-,-,-]. Speed set to slow when shaken ends\\
 \end{tabular}
 
 \noindent 
+
+\ \\ {\bf movement } \\
+slow [360°, -, -] \\
+slow [360°, F, -] \\
+slow [360°, A, F] \\
+fast flying [L, F, F] \\
+fast flying [R, F, F] \\
+fast flying [L,L, F, F] \\
+fast flying [R,R, F, F] \\
+fast flying [F, F, -] \\
+fast flying [B[slow], 360°, F] \\
+\ \\ {\bf fire } \\
+slow [-, Breath(acid)] \\
+slow [Breath(acid), -] \\
+slow [-, Breath(shrapnell)] \\
+slow [-, Load] \\
+fast flying [-, -] \\
+fast flying [-, -] \\
+fast flying [-, Breath(shrapnell)] \\
+fast flying [-, Load] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-4: +1 on future damage \\
+5-10: +1 on future damage, shaken \\
+13+: Unit destroied \\
+
 
 \noindent
 \begin{tabular}{ll}
@@ -107,7 +150,7 @@ Fire Resistance 2, Immunity to acid\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 0 Damage:- \\
+Range: 3  Angle: [True, False, False, False] AP: 0 Damage: - \\
 No normal damge, but any unit within normal range and front arc is covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid\\ 
 In addition, all hexes within normal range and front arc: Area(5+) Poison[6]\\ 
 
@@ -118,7 +161,7 @@ In addition, all hexes within normal range and front arc: Area(5+) Poison[6]\\
 
 
 
-Range: 3  Angle: [True, False, False, False]: AP: 2 Damage:d6-2 \\
+Range: 3  Angle: [True, False, False, False] AP: 2 Damage: d6-2 \\
 Fire once at every model within front arc, line of sight and range. Include all to-hit modifiers\\ 
 Always treated as loaded\\ 
 
@@ -130,18 +173,6 @@ Always treated as loaded\\
 
 
 
-\ \\ {\bf fire } \\
-slow [-, Breath(acid)] \\
-slow [Breath(acid), -] \\
-all [-, Breath(shrapnell)] \\
-all [-, Load] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-5: +1 on future damage \\
-6-10: +1 on future damage, shaken \\
-13+: Unit destroied \\
 
 
 
@@ -152,7 +183,7 @@ all [-, Load] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Queen YY }
 
@@ -166,54 +197,6 @@ all [-, Load] \\
 \end{tabular}
 
 \noindent 
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Queen YY } \\
-Equipment Limits: &[independent:∞] \\
-Type: &[bio crew, vehicle, mechanical, track] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x Acid Cannon, 2 x Heavy Rifle \\
-\ \\
-Assault: [5, 4, 3, 2] Die: 5+ Armor Penetration: 3 Damage: d6-1 \\
-Assault Deflection: [4, 0, 0, 0] Die: 6+\\
-\indent Poison[6][1 for 1], Fear[8]\\ 
-May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not...\\ 
- 
-\ \\
-Excelent shot: +2 to hit\\ 
-You fire 2 independt heavy rifles in addion to acid cannon each fire order\\ 
-Dual ammo: all weapons may be loaded up to 2 times. Each shot still only uses 1 ammo\\ 
-If you have the order release poison cloud as an fireing option, you may place the poison cload[12] during any movment phase in any the hex you are in, including contested hexes for assaults\\ 
-
-\ \\
-{\bf Acid Cannon } \\
-
-
-
-Range: 4  Angle: [True, True, False, False]: AP: 3 Damage:d6+d8 Psychic damage + d6 crew damage \\
-On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor] at target hex\\ 
-Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)\\ 
-
-
-
-
-{\bf Heavy Rifle } \\
-
-
-
-Range: 4  Angle: [True, True, False, False]: AP: 3 Damage:d6-1 \\
-
-
-
-
- 
-\ \\
-
-
 
 \ \\ {\bf movement } \\
 fast [F, F, -] \\
@@ -252,6 +235,106 @@ slow [-, load] \\
 slow [-, fire] \\
 slow [-, Release Poison] \\
 fast [-, fire] \\
+fast [-, fire] \\
+fast [-, fire] \\
+fast [-, Release Poison] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-3: +1 to future damage \\
+4-5:as 1-4, shaken \\
+6-8: 4-5, Critical damage[d6] \\
+9+: Unit destroied \\
+\ \\ {\bf critical } \\
+1: -1 to-hit, +1 to-be-hit \\
+2: Rotates right in agony 0 step \\
+3: Rotates left in agony 1 and in agony 3 \\
+4: only still available \\
+5: unit is covered in acid \\
+6: unit covered in acid x2 \\
+\ \\ {\bf crew } \\
+10: Crippled Crew \\
+11-12: as 10, +2 to future crew damage \\
+13: Crew Killed, unit destroyed \\
+
+
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Queen YY } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[bio crew, vehicle, mechanical, track] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Acid Cannon, 2 x Heavy Rifle \\
+\ \\
+Assault: [5, 4, 3, 2] Die: 5+ Armor Penetration: 3 Damage: d6-1 \\
+Assault Deflection: [4, 0, 0, 0] Die: 6+\\
+\indent Poison[6][1 for 1], Fear[8]\\ 
+May also choose to retreat even if winning the assault. The enemy occupies the hex, wether it wants to or not...\\ 
+ 
+\ \\
+Excelent shot: +2 to hit\\ 
+You fire 2 independt heavy rifles in addion to acid cannon each fire order\\ 
+Dual ammo: all weapons may be loaded up to 2 times. Each shot still only uses 1 ammo\\ 
+If you have the order release poison cloud as an fireing option, you may place the poison cload[12] during any movment phase in any the hex you are in, including contested hexes for assaults\\ 
+
+\ \\
+{\bf Acid Cannon } \\
+
+
+
+Range: 4  Angle: [True, True, False, False] AP: 3 Damage: d6+d8 Psychic damage + d6 crew damage \\
+On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor] at target hex\\ 
+Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)\\ 
+
+
+
+
+{\bf Heavy Rifle } \\
+
+
+
+Range: 4  Angle: [True, True, False, False] AP: 3 Damage: d6-1 \\
+
+
+
+
+ 
+\ \\
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\section{ Queen XY }
+
+\begin{tabular}{ll}
+  Name & Queen XY \\
+  Size & large\\
+  Cost & 8ip\\
+  Models & 1 x Queen XY\\
+  Armor & [11, 10, 8, 7]\\
+  Shaken & speed set to still, move order: [-,-,-]\\
+\end{tabular}
+
+\noindent 
+
+\ \\ {\bf fire } \\
+still [-, Release Poison] \\
+slow [-, Release Poison] \\
 fast [-, Release Poison] \\
 
 
@@ -269,33 +352,9 @@ fast [-, Release Poison] \\
 5: unit is covered in acid \\
 6: unit covered in acid x2 \\
 \ \\ {\bf crew } \\
-10: Crippled Crew \\
-11-12: as 10, +2 to future crew damage \\
+11-12: Crippled Crew, +2 to future crew damage \\
 13: Crew Killed, unit destroyed \\
 
-
-
-
-
-
-
-
-
-
-\pagebreak\pagebreak
-
-\section{ Queen XY }
-
-\begin{tabular}{ll}
-  Name & Queen XY \\
-  Size & large\\
-  Cost & 8ip\\
-  Models & 1 x Queen XY\\
-  Armor & [11, 10, 8, 7]\\
-  Shaken & speed set to still, move order: [-,-,-]\\
-\end{tabular}
-
-\noindent 
 
 \noindent
 \begin{tabular}{ll}
@@ -322,28 +381,6 @@ If you have the order release poison cloud as an fireing option, you may place a
 
 
 
-\ \\ {\bf fire } \\
-still [-, Release Poison] \\
-slow [-, Release Poison] \\
-fast [-, Release Poison] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-3: +1 to future damage \\
-4-5:as 1-4, shaken \\
-6-8: 4-5, Critical damage[d6] \\
-9+: Unit destroied \\
-\ \\ {\bf critical } \\
-1: -1 to-hit, +1 to-be-hit \\
-2: Rotates right in agony 0 step \\
-3: rotates left in agony 1 and in agony 3 \\
-4: only still available \\
-5: unit is covered in acid \\
-6: unit covered in acid x2 \\
-\ \\ {\bf crew } \\
-11-12: Crippled Crew, +2 to future crew damage \\
-13: Crew Killed, unit destroyed \\
 
 
 
@@ -354,7 +391,7 @@ fast [-, Release Poison] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Nightmare Mechanical Cavalry }
 
@@ -368,6 +405,35 @@ fast [-, Release Poison] \\
 \end{tabular}
 
 \noindent 
+
+\ \\ {\bf movement } \\
+fast [F, F, F] \\
+fast [F, F, 360°] \\
+fast [360°, F, F] \\
+fast [F, 360°, F] \\
+fast [F, F, F+B] \\
+fast [F, B, 360°] \\
+slow [360°, F, 360°] \\
+slow [360°, A, F] \\
+slow [360°, F+B, 360°] \\
+still [360°, 360°, 360°] \\
+still [360°, A, F] \\
+\ \\ {\bf fire } \\
+still [-, Breath Fire] \\
+slow [-, Breath Fire] \\
+fast [-, Breath Fire] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+2-3: +1 on future damge \\
+4: +2 on future damge \\
+5-6: kill 1 model \\
+7+: Kill 1 model, roll on psychic damage \\
+{{\it Note: half (rounded down) number of + to future damage when one model is killed}} \\
+\ \\ {\bf psychic } \\
+6+: unit shaken \\
+
 
 \noindent
 \begin{tabular}{ll}
@@ -392,7 +458,7 @@ Fires SMG independently of breath weapon, and fires it in all gunnery phases\\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
+Range: 3  Angle: [True, True, True, True] AP: 1 Damage: d6-3 \\
 Always treated as loded. Fires two times (per model) each time it is fired\\ 
 
 
@@ -402,7 +468,7 @@ Always treated as loded. Fires two times (per model) each time it is fired\\
 
 
 
-Range: 2  Angle: [True, False, False, False]: AP: 0 Damage:d8 crew damage \\
+Range: 2  Angle: [True, False, False, False] AP: 0 Damage: d8 crew damage \\
 Fires at all models once within range and within front arc, and always hits on a natural 6\\ 
 No regular damage, but Poison[8] and set on fire applies to anyone hit\\ 
 Always treated as loaded\\ 
@@ -415,33 +481,6 @@ Always treated as loaded\\
 
 
 
-\ \\ {\bf movement } \\
-fast [F, F, F] \\
-fast [F, F, 360°] \\
-fast [360°, F, F] \\
-fast [F, 360°, F] \\
-fast [F, F, F+B] \\
-fast [F, B, 360°] \\
-slow [360°, F, 360°] \\
-slow [360°, A, F] \\
-slow [360°, F+B, 360°] \\
-still [360°, 360°, 360°] \\
-still [360°, A, F] \\
-default slow \\
-default fast \\
-default still \\
-\ \\ {\bf fire } \\
-all [-, Breath Fire] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-2-3: +1 on future damge \\
-4: +2 on future damge \\
-5-6: kill 1 model \\
-7+: Kill 1 model, roll on psychic damage \\
-\ \\ {\bf psychic } \\
-6+: unit shaken \\
 
 
 
@@ -452,7 +491,7 @@ all [-, Breath Fire] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Elite Mechanical Cavalry }
 
@@ -466,51 +505,6 @@ all [-, Breath Fire] \\
 \end{tabular}
 
 \noindent 
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Elite Mechanical Cavalry } \\
-Equipment Limits: &[training:1, independent:∞] \\
-Type: &[bio, elite, cavalry, walks] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x SMG, 1 x Crossbow \\
-\ \\
-Assault: [4, 2, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-1 \\
-Assault Deflection: [4, 3, 0, 0] Die: 5+\\
-\indent  
-\ \\
-Good Shot: +1 to hit\\ 
-negates to-hit penalty for shooting while moving fast\\ 
-Fires SMG independently of crossbow, and the SMG fires in all gunnery phases\\ 
-
-\ \\
-{\bf SMG } \\
-
-
-
-Range: 3  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
-Always treated as loded. Fires two times (per model) each time it is fired\\ 
-
-
-
-
-{\bf Crossbow } \\
-
-
-
-Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
-Poison[6], minor acid\\ 
-
-
-
-
- 
-\ \\
-
-
 
 \ \\ {\bf movement } \\
 fast [F, F, F] \\
@@ -536,10 +530,53 @@ all [-, Aim] \\
 4: +2 on future damge \\
 5-6: kill 1 model \\
 7+: Kill 1 model, roll on psycic damage \\
+{{\it Note: half (rounded down) number of + to future damage when one model is killed}} \\
 \ \\ {\bf psycic } \\
 5+: unit shaken \\
 
 
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Elite Mechanical Cavalry } \\
+Equipment Limits: &[training:1, independent:∞] \\
+Type: &[bio, elite, cavalry, walks] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x SMG, 1 x Crossbow \\
+\ \\
+Assault: [4, 2, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-1 \\
+Assault Deflection: [4, 3, 0, 0] Die: 5+\\
+\indent  
+\ \\
+Good Shot: +1 to hit\\ 
+negates to-hit penalty for shooting while moving fast\\ 
+Fires SMG independently of crossbow, and the SMG fires in all gunnery phases\\ 
+
+\ \\
+{\bf SMG } \\
+
+
+
+Range: 3  Angle: [True, True, True, True] AP: 1 Damage: d6-3 \\
+Always treated as loded. Fires two times (per model) each time it is fired\\ 
+
+
+
+
+{\bf Crossbow } \\
+
+
+
+Range: 2  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
+Poison[6], minor acid\\ 
+
+
+
+
+ 
+\ \\
 
 
 
@@ -548,7 +585,12 @@ all [-, Aim] \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+
+
+\clearpage
 
 \section{ Mechanical Assault Spider }
 
@@ -562,6 +604,35 @@ all [-, Aim] \\
 \end{tabular}
 
 \noindent 
+
+\ \\ {\bf movement } \\
+slow [360°, F, 360°] \\
+slow [360°, B, 360°] \\
+still [360°, 360°, 360°] \\
+still [360°, A, 360°] \\
+\ \\ {\bf fire } \\
+still [-, Load] \\
+still [-, Fire] \\
+still [-, Aim] \\
+slow [-, Load] \\
+slow [-, Fire] \\
+slow [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-2: +1 to future damage \\
+3: as below, shaken \\
+4-6: as below, critical damage[d6] \\
+7+: Destroy unit \\
+\ \\ {\bf critical } \\
+1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
+2: Cannot move \\
+3: Cannot rotate \\
+4: x3 +3 to future damage \\
+5: half, rounded down, all assault strength and deflection values \\
+6: Unit set on Fire \\
+
 
 \noindent
 \begin{tabular}{ll}
@@ -587,7 +658,7 @@ Good Shot: +1 to hit\\
 
 
 
-Range: 3  Angle: [True, True, False, False]: AP: 6 Damage:d6 \\
+Range: 3  Angle: [True, True, False, False] AP: 6 Damage: d6 \\
 Poison[6]\\ 
 
 
@@ -598,34 +669,6 @@ Poison[6]\\
 
 
 
-\ \\ {\bf movement } \\
-slow [360°, F, 360°] \\
-slow [360°, B, 360°] \\
-still [360°, 360°, 360°] \\
-still [360°, A, 360°] \\
-default slow \\
-\ \\ {\bf fire } \\
-still [-, Load] \\
-still [-, Fire] \\
-still [-, Aim] \\
-slow [-, Load] \\
-slow [-, Fire] \\
-slow [-, Aim] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1-2: +1 to future damage \\
-3: as below, shaken \\
-4-6: as below, critical damage[d6] \\
-7+: Destroy unit \\
-\ \\ {\bf critical } \\
-1: -1 to-hit, +1 to-be-hit (ranged and assault) \\
-2: Cannot move \\
-3: Cannot rotate \\
-4: x3 +3 to future damage \\
-5: half, rounded down, all assault strength and deflection values \\
-6: Unit set on Fire \\
 
 
 
@@ -636,7 +679,7 @@ slow [-, Aim] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Mechanical Scorpion }
 
@@ -651,45 +694,6 @@ slow [-, Aim] \\
 
 \noindent 
 
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Mechanical Scorpion } \\
-Equipment Limits: &[training:1, independent:∞] \\
-Type: &[mechanical, droid, walks] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x Tail Gattling Gun \\
-\ \\
-Assault: [8, 4, 2, 1] Die: 5+ Armor Penetration: 3 Damage: d6 \\
-Assault Deflection: [6, 2, 0, 0] Die: 6+\\
-\indent Poison[12][1 for 2], Fear[8]\\ 
- 
-\ \\
-
-\ \\
-{\bf Tail Gattling Gun } \\
-
-
-
-Range: 3  Angle: [True, False, False, False]: AP: 3 Damage:d6 + d6 Psycic damage \\
-Focus Fire[aim]: roll 6 dice at same unit.\\ 
-May only use aim versus targets within normal range\\ 
-If not using aim, fire once at all enemy models within range and within front arc\\ 
-Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
-Minor acid\\ 
-May load up to 4 ammo\\ 
-Requiers 2 ammo to be used\\ 
-
-
-
-
- 
-\ \\
-
-
-
 \ \\ {\bf movement } \\
 still [360°, 360°, 360°] \\
 still [A, 360°, 360°] \\
@@ -697,9 +701,6 @@ slow [360°, F, 360°] \\
 slow [B, 360°, 360°] \\
 slow [A, F, F] \\
 fast [360°, F, B] \\
-default still \\
-default slow \\
-default fast \\
 \ \\ {\bf fire } \\
 still [-, Load] \\
 still [-, Fire] \\
@@ -723,6 +724,42 @@ slow [-, Aim] \\
 6: Unit set on Fire \\
 
 
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Mechanical Scorpion } \\
+Equipment Limits: &[training:1, independent:∞] \\
+Type: &[mechanical, droid, walks] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Tail Gattling Gun \\
+\ \\
+Assault: [8, 4, 2, 1] Die: 5+ Armor Penetration: 3 Damage: d6 \\
+Assault Deflection: [6, 2, 0, 0] Die: 6+\\
+\indent Poison[12][1 for 2], Fear[8]\\ 
+ 
+\ \\
+
+\ \\
+{\bf Tail Gattling Gun } \\
+
+
+
+Range: 3  Angle: [True, False, False, False] AP: 3 Damage: d6 + d6 Psycic damage \\
+Focus Fire[aim]: roll 6 dice at same unit.\\ 
+May only use aim versus targets within normal range\\ 
+If not using aim, fire once at all enemy models within range and within front arc\\ 
+Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
+Minor acid\\ 
+May load up to 4 ammo\\ 
+Requiers 2 ammo to be used\\ 
+
+
+
+
+ 
+\ \\
 
 
 
@@ -731,7 +768,12 @@ slow [-, Aim] \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+
+
+\clearpage
 
 \section{ Dark Elf Infantry }
 
@@ -745,6 +787,37 @@ slow [-, Aim] \\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-2]\\ 
+
+
+\ \\ {\bf movement } \\
+slow [Chase, -, -] \\
+slow [-, -, Chase] \\
+slow [360°, F, 360°] \\
+slow [360°, 360°, 360°] \\
+slow [360°, B, -] \\
+slow [360°, B[crawl], -] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
+still [360°, A[crawl], F] \\
+crawl [360°, F, -] \\
+crawl [360°, B[still], -] \\
+crawl [360°, A[slow], F] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+0-5: Kill 1 model \\
+6-8: Kill 1 Model, d6 Psychic damage \\
+9: Destroy unit base \\
+\ \\ {\bf psychic } \\
+4+: Unit Shaken \\
 
 
 \noindent
@@ -770,7 +843,7 @@ Reroll all success in assault while crawling\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -780,38 +853,6 @@ Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
-\ \\ {\bf movement } \\
-slow [Chase, -, -] \\
-slow [-, -, Chase] \\
-slow [360°, F, 360°] \\
-slow [360°, 360°, 360°] \\
-slow [360°, B, -] \\
-slow [360°, B[crawl], -] \\
-still [360°, -, -] \\
-still [360°, A, F] \\
-still [360°, A[crawl], F] \\
-crawl [360°, F, -] \\
-crawl [360°, B[still], -] \\
-crawl [360°, A[slow], F] \\
-default crawl \\
-default still \\
-default slow \\
-\ \\ {\bf fire } \\
-still [Load, -] \\
-still [-, Load] \\
-still [Fire, -] \\
-still [-, Fire] \\
-still [Aim, -] \\
-still [-, Aim] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-0-5: Kill 1 model \\
-6-8: Kill 1 Model, d6 Psychic damage \\
-9: Destroy unit base \\
-\ \\ {\bf psychic } \\
-4+: Unit Shaken \\
 
 
 
@@ -822,7 +863,7 @@ still [-, Aim] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Roboprosthetic DarkElf }
 
@@ -836,39 +877,6 @@ still [-, Aim] \\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-2]\\ 
-
-
-\noindent
-\begin{tabular}{ll}
-Model name: &{\bf Dark Elf Infantry } \\
-Equipment Limits: &[hands:2, training:1, independent:∞] \\
-Type: &[bio, infantry, walks, roboprosthetic] \\
-Replaces: &Nothing \\
-Cost: & 0\\
-\end{tabular}
-\ \\
-Equipment: 1 x Rifle \\
-\ \\
-Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [1, 1, 0, 0] Die: 6+\\
-\indent Cunning assault[1 for 2]\\ 
-Reroll all success in assault while crawling\\ 
- 
-\ \\
-
-\ \\
-{\bf Rifle } \\
-
-
-
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
-
-
-
-
- 
-\ \\
-
 
 
 \ \\ {\bf movement } \\
@@ -902,6 +910,36 @@ still [-, Aim] \\
 5+: Unit Shaken \\
 
 
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Dark Elf Infantry } \\
+Equipment Limits: &[hands:2, training:1, independent:∞] \\
+Type: &[bio, infantry, walks, roboprosthetic] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Rifle \\
+\ \\
+Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 1, 0, 0] Die: 6+\\
+\indent Cunning assault[1 for 2]\\ 
+Reroll all success in assault while crawling\\ 
+ 
+\ \\
+
+\ \\
+{\bf Rifle } \\
+
+
+
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
+
+
+
+
+ 
+\ \\
 
 
 
@@ -910,7 +948,12 @@ still [-, Aim] \\
 
 
 
-\pagebreak\pagebreak
+
+
+
+
+
+\clearpage
 
 \section{ Assasin }
 
@@ -924,6 +967,35 @@ still [-, Aim] \\
 \end{tabular}
 
 \noindent Take-Cover[still,crawl][-3]\\ 
+
+
+\ \\ {\bf movement } \\
+slow [Chase, -, -] \\
+slow [-, -, Chase] \\
+slow [360°, F, 360°] \\
+slow [360°, 360°, 360°] \\
+slow [360°, F, B] \\
+slow [360°, B[crawl], -] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
+still [360°, A[crawl], F] \\
+crawl [360°, F, -] \\
+crawl [360°, B[still], -] \\
+crawl [360°, A[slow], F] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1+: unit killed \\
+\ \\ {\bf psychic } \\
+6+: Unit Shaken \\
 
 
 \noindent
@@ -951,7 +1023,7 @@ Good Shot: +1 to hit\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -969,6 +1041,32 @@ Camuflage[swamp][-1]\\
  
 \ \\
 
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\section{ Roboprosthetic Assasin }
+
+\begin{tabular}{ll}
+  Name & Roboprosthetic Assasin \\
+  Size & medium\\
+  Cost & 2mp, 7cp\\
+  Models & 1 x Roboprosthetic Assasin\\
+  Armor & [3, 3, 3, 3]\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
+\end{tabular}
+
+\noindent Take-Cover[still,crawl][-3]\\ 
 
 
 \ \\ {\bf movement } \\
@@ -991,6 +1089,8 @@ still [Fire, -] \\
 still [-, Fire] \\
 still [Aim, -] \\
 still [-, Aim] \\
+slow [-, Fire] \\
+slow [Fire, -] \\
 
 
 {\bf Damage Tables} \\
@@ -998,30 +1098,6 @@ still [-, Aim] \\
 1+: unit killed \\
 \ \\ {\bf psychic } \\
 6+: Unit Shaken \\
-
-
-
-
-
-
-
-
-
-
-\pagebreak\pagebreak
-
-\section{ Roboprosthetic Assasin }
-
-\begin{tabular}{ll}
-  Name & Roboprosthetic Assasin \\
-  Size & medium\\
-  Cost & 2mp, 7cp\\
-  Models & 1 x Roboprosthetic Assasin\\
-  Armor & [3, 3, 3, 3]\\
-  Shaken & speed set to slow, move order: [-,-,flee]\\
-\end{tabular}
-
-\noindent Take-Cover[still,crawl][-3]\\ 
 
 
 \noindent
@@ -1049,7 +1125,7 @@ Good Shot: +1 to hit\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1069,38 +1145,6 @@ Camuflage[swamp][-1]\\
 
 
 
-\ \\ {\bf movement } \\
-slow [Chase, -, -] \\
-slow [-, -, Chase] \\
-slow [360°, F, 360°] \\
-slow [360°, 360°, 360°] \\
-slow [360°, F, B] \\
-slow [360°, B[crawl], -] \\
-still [360°, -, -] \\
-still [360°, A, F] \\
-still [360°, A[crawl], F] \\
-crawl [360°, F, -] \\
-crawl [360°, B[still], -] \\
-crawl [360°, A[slow], F] \\
-default crawl \\
-default still \\
-default slow \\
-\ \\ {\bf fire } \\
-still [Load, -] \\
-still [-, Load] \\
-still [Fire, -] \\
-still [-, Fire] \\
-still [Aim, -] \\
-still [-, Aim] \\
-slow [-, Fire] \\
-slow [Fire, -] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-1+: unit killed \\
-\ \\ {\bf psychic } \\
-6+: Unit Shaken \\
 
 
 
@@ -1111,7 +1155,7 @@ slow [Fire, -] \\
 
 
 
-\pagebreak\pagebreak
+\clearpage
 
 \section{ Scout }
 
@@ -1126,6 +1170,37 @@ slow [Fire, -] \\
 
 \noindent Forward Position[2], Take-Cover[still,crawl][-3]\\ 
 spot: detect enemy hidden darkelf.units. See general rules\\ 
+
+
+\ \\ {\bf movement } \\
+slow [Chase, -, -] \\
+slow [-, -, Chase] \\
+slow [360°, F, 360°] \\
+slow [360°, 360°, 360°] \\
+slow [360°, F, B] \\
+slow [360°, B[crawl], -] \\
+still [360°, -, -] \\
+still [360°, A, F] \\
+still [360°, A[crawl], F] \\
+crawl [360°, F, -] \\
+crawl [360°, B[still], -] \\
+crawl [360°, A[slow], F] \\
+\ \\ {\bf fire } \\
+still [Load, -] \\
+still [-, Load] \\
+still [Fire, -] \\
+still [-, Fire] \\
+still [Aim, -] \\
+still [-, Aim] \\
+still [Spot, Spot] \\
+slow [Spot, Spot] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+0+: unit killed \\
+\ \\ {\bf psychic } \\
+3+: Unit Shaken \\
 
 
 \noindent
@@ -1151,7 +1226,7 @@ Reroll all success in assault while crawling\\
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1161,38 +1236,6 @@ Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
 
 
 
-\ \\ {\bf movement } \\
-slow [Chase, -, -] \\
-slow [-, -, Chase] \\
-slow [360°, F, 360°] \\
-slow [360°, 360°, 360°] \\
-slow [360°, F, B] \\
-slow [360°, B[crawl], -] \\
-still [360°, -, -] \\
-still [360°, A, F] \\
-still [360°, A[crawl], F] \\
-crawl [360°, F, -] \\
-crawl [360°, B[still], -] \\
-crawl [360°, A[slow], F] \\
-default crawl \\
-default still \\
-default slow \\
-\ \\ {\bf fire } \\
-still [Load, -] \\
-still [-, Load] \\
-still [Fire, -] \\
-still [-, Fire] \\
-still [Aim, -] \\
-still [-, Aim] \\
-still [Spot, Spot] \\
-slow [Spot, Spot] \\
-
-
-{\bf Damage Tables} \\
-\ \\ {\bf regular } \\
-0+: unit killed \\
-\ \\ {\bf psychic } \\
-3+: Unit Shaken \\
 
 
 
@@ -1203,7 +1246,7 @@ slow [Spot, Spot] \\
 
 
 
-\pagebreak\section{Upgradeable Units}\noindent
+\section{Upgradeable Units}\noindent
 \begin{tabular}{ll}
 Model name: &{\bf DarkElf Elite Infantry } \\
 Equipment Limits: &[hands:2, training:1, independent:∞] \\
@@ -1228,7 +1271,7 @@ Unit base gains psychic resistance 1 as long as atleast one elite model is alive
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1261,7 +1304,7 @@ Unit base gains psychic resistance 1 as long as atleast one elite model is alive
 
 
 
-Range: 4  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 4  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 
 
@@ -1295,7 +1338,7 @@ Cost: & Upgrade all models for: 1cp \\
 
 
 
-Range: 3  Angle: [True, True, True, True]: AP: 1 Damage:d6-3 \\
+Range: 3  Angle: [True, True, True, True] AP: 1 Damage: d6-3 \\
 Always treated as loded. Fires two times (per model) each time it is fired\\ 
 
 
@@ -1317,7 +1360,7 @@ Cost: & Upgrade all models for: 2cp \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 2  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 Poison[6], minor acid\\ 
 
 
@@ -1336,7 +1379,7 @@ Cost: & Upgrade one model for: 2cp \\
 
 
 
-Range: 6  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 6  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 Poison[8], minor acid\\ 
 
 
@@ -1355,7 +1398,7 @@ Cost: & Upgrade all models for: 1cp \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:N.A. \\
+Range: 2  Angle: [True, True, True, True] AP: 0 Damage: N.A. \\
 Place a Poison Cloud[6] within normal range\\ 
 Limited Ammo[2]\\ 
 Always treated as loaded\\ 
@@ -1378,7 +1421,7 @@ Cost: & Upgrade all models for: 16cp, 8xp \\
 
 
 
-Range: 10  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 10  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 Choose a hex within range and roll a die, at 5+ place a Poison \& Acid Cloud [8, minor] at target hex. Place a Poison Cloud[6]  at all hexes surronding that initial hex\\ 
 If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.\\ 
 Indirect fire: may use line of sight of any friendly unit on the battle field.\\ 
@@ -1399,7 +1442,7 @@ Cost: & Upgrade all models for: 16cp, 8xp \\
 
 
 
-Range: 10  Angle: [True, True, True, True]: AP: 0 Damage:N.A \\
+Range: 10  Angle: [True, True, True, True] AP: 0 Damage: N.A \\
 Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.\\ 
 If you don't roll a 3+, move the target hex the result of the die, a number of hexes in a random direction from choosen hex.\\ 
 Indirect fire: may use line of sight of any friendly unit on the battle field.\\ 
@@ -1436,7 +1479,7 @@ Cost: & Upgrade all models for: 2cp \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 0 Damage:d6 crew damage \\
+Range: 2  Angle: [True, True, True, True] AP: 0 Damage: d6 crew damage \\
 Poison[6]\\ 
 
 
@@ -1457,7 +1500,7 @@ Cost: & Upgrade all models for: 1cp \\
 
 
 
-Range: 2  Angle: [True, True, True, True]: AP: 2 Damage:d6-2 \\
+Range: 2  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 Threated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon\\ 
 
 
