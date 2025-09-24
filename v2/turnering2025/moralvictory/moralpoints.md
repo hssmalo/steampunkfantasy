@@ -1,4 +1,8 @@
-You gain moral points:
+Secundary price goes to the player with most moral points at end of turnament.
+Moral points are indepentent of the real point system for the turnament.
+
+You gain moral points in the following way:
+
 - are darkelf, +1 per turnament
 - you have a grunt in your army, +1 per turnament
 - you have flying Zeppelins in you army, +1 per turnament
@@ -8,6 +12,7 @@ You gain moral points:
 - kill a tank with crew damage, +3 per turnament
 - Having the most fun, +5 per turnament
 - Winning the turnament, -100 per turnament
+- Wrath of Hans Sverre $\pm$ 10 per turnament :)
 
 - you end the game with more units than you started with +1 per game
 - experimental death rays explodes by firing the gun +1 per game
