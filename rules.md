@@ -801,10 +801,9 @@ Before using any fire action, roll a die. At N- (N or below) replace the fire ac
 
 Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
 
+*Crippled Crew*
 
-**Crippled Crew**
-
-Unit gets -1 on all dice assosiated with range to-hit, assault strength and assault deflection dice. In addition, if unit is also shaken, any source of psycic damage now rolls on crew damage even though the unit is normaly immune to psycic damage. 
+Unit gets -1 on all die roll for its range to-hit, assault strength and assault deflection. In addition, if unit is also shaken, any source of psychic damage now rolls on crew damage even though the unit is normally immune to psychic damage. 
 
 
 \pagebreak
