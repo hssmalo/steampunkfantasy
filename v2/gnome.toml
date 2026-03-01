@@ -950,7 +950,7 @@
     name = "Assault Bot Mortar"
     cost.cp = 6
     requires = [["type:infantry"],["hands:2"]]
-    special = ["No regular damage", "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 6 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."]
+    special = ["No regular damage", "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."]
 
 
     [gnome.equipments.assault_bot_mortar_vehicle]

@@ -1,0 +1,370 @@
+[races]
+
+    [races.abomination]
+    name = "Abominatioon"
+
+[units]
+	[abomination.units.abomination_infantry]
+	race = "abomination"
+	name = "Abomination Infantry"
+	models = ["abomination_infantry","abomination_infantry","abomination_infantry","abomination_infantry"]
+	size = "medium"
+	cost.mp = 8
+	special =  ["Take Cover[still][-2]", "Terror[Range=1][d6]", "Fog: dobble to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog) hexes. If given additional tentacle weapons, they fire simultainiusly with on fire order"]
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+	[abomination.units.abomination_infantry.orders.fire]
+		     still = [["Fire(b)", "Fire"],["Fire", "Fire(b)"],[ "-", "Load(2)"], ["-", "Aim" ]]
+	[abomination.units.abomination_infantry.orders.movement]
+		     slow = [["360°","F" ,"360°"],[ "360°", "F" , "B"]]
+		     still =[["360°","360°","360°"],[ "360°","A ","F" ]]
+		   
+	[abomination.units.abomination_infantry.damage_tables]
+		     regular = ["1-6: Kill 1 model", "7-8: Kill 1 model, psychic damage[d6]", "9+: Unit destroyed", "{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}"]
+
+		     psychic = ["4+: shaken"]
+
+	[abomination.units.horror]
+	race = "abomination"
+	name = "Abomination Infantry"
+	models = ["horror"]
+	size = "huge"
+	cost.xp = 8
+	armor = [6, 4, 2, 1]
+	special =  ["While in fog (in aftermath phase): Terror[Range=1][d12], Insanity[range=1][d6]","Insanity works like Terror, except it only effects biological units which are already shaken, and if it inflicts any psychic damage, enemy becomes insane in addition to its normal effect", "Treat any squares within range 2 of Horror as being a poison cloud[4]", "Note horror is tecnacaly not immune to it's own poison cloud", "Immunity to acid and fire, poison resistance 12", "Forward Position[3]"]
+	shaken = "Movement set to still. Movement order: [-,-,-]. "
+
+	[abomination.units.horror.orders.movement]
+		     slow = [["360°","F" ,"360°"],[ "360°", "F" , "B"]]
+		     still =[["360°","360°","360°"],[ "360°","A ","F" ]]
+		   
+	[abomination.units.horror.damage_tables]
+		     regular = ["1-4: Bleed[6]", "4-5: As below, +1 to future damage", "6-8: As below, if caused by bleeding, amplify bleeding", "9+: Unit destroyed", "Note:  Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]", "Note: bleeding does not cause more bleeding"]
+
+		     psychic = ["6+: shaken"]
+
+
+
+
+	[abomination.units.robot_crab]
+	race = "abomination"
+	name = "Robot Crab"
+	models = ["robot_crab","robot_crab","robot_crab","robot_crab","robot_crab", "robot_crab"]
+	size = "tiny"
+	cost.cp = 1
+	armor = [3, 3, 3, 3]
+	special =  ["Primary target for all chase orders are enemies robots (unit which are not biological and are not biological crew). Move towarders neares robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"]
+	shaken = "Movement order: [-,-,-]."
+
+	[abomination.units.robot_crab.orders.movement]
+		     fast = [["chase", "chase", "chase"]]
+
+	[abomination.units.robot_crab.damage_tables]
+		     regular = ["1-8: Kill 1 model", "9+: Unit destroyed"]
+
+
+
+        [abomination.units.gigant_frog_riders]		
+	race = "abomination"
+	name = "Gigant Frog Riders"
+	models = ["gigant_frog_rider", "gigant_frog_rider"]
+	size = "medium"
+	cost.mp = 2
+	cost.xp = 4
+	special = ["Poison Resistance 4", "Terror[range=1][d8]", "Fog: dobble to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"]
+	shaken = "Speed set to slow. Movement order: [-,-,flee]. may not use fire orders"	 
+
+		     [abomination.units.gigant_frog_riders.orders.fire]
+		     still = [["-", "Load"], ["Load", "-"]]
+		     slow =  [[ "-", "Load"],["Load", "-"]]
+		     fast =  [[ "-", "Load"],["Load", "-"]]
+
+		     [abomination.units.gigant_frog_riders.orders.movement]
+		     fast = [["360°","F","F"],["F","F","360°"],["F","360°", "F"],["F","B","-"]]
+		     slow = [[ "360°","A","F"],[ "B","360°","-"],[ "360°","F","360°"]]
+		     still =[["360°","A","F"], ["360°", "360°", "360°"]]
+
+
+		     [abomination.units.gigant_frog_riders.damage_tables]
+		     regular = ["2-3: bleed[4]","4+: kill 1 model", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
+		     psychic = ["6+: shaken"]
+
+
+   [abomination.units.squ]
+    race = "abomination"
+    name = "Squ"
+    models = ["squ"]
+    size = "lagre"
+    armor = [8, 6, 5, 4]
+    cost.ip = 6
+    special = ["Fog: dobble to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"]
+    shaken  = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+        [abomination.units.squ.orders.movement]
+	slow = [["L/R","-","-"],
+	     ["L/R","L/R","-"],
+	     ["F","L/R","-"],
+	     ["B","-","-"],
+	     ["A", "-", "-"],
+	     ["F","-","-"],
+	     ["B","rev","-"]]
+	     
+	still = [["L/R","-","-"],["L/R","L/R","-"],["L/R","L/R","L/R"],["-","-","-"],["L/R","A","F"],["A","F","-"],["rev","-","-"]]
+	fast = [["F", "F", "-"], ["F", "B", "-"]]
+
+        [abomination.units.squ.orders.fire]
+	all = [["-", "Load"],
+	      ["-", "Fire"]]
+	still = [["-", "Aim"]] 
+
+	[abomination.units.squ.damage_tables]
+	regular = [ "1-3: +1 to future damage",
+		"4: as below, shaken",
+		"5-8: as below, d6 critical damage",
+		"9: Unit destroyed",]
+	critical = [ "1-2: +3 to future damage", "3: +1 to be hit, -1 to hit", "4: Cannot rotate", "5: Unit cannot Move ","6: set on fire"]
+	crew = [ "4-5: Crippled Crew, if aleady shaken double initial crew damage", "6-7: as 4-5, shaken", "8-11: as 6-7, +3 to future crew damage", "12: Unit destroyed",]
+
+
+[models]
+	[abomination.models.abomination_infantry]
+	name = "Abomination Infantry"
+	race = "abomination"
+	equipment_limit = ["independent:∞", "hands:2", "tentacles:4"]
+	equipments = ["multipurpose_gun"]
+	type = ["Bio", "infantry", "Walks", "Amphibian"]
+
+	     [abomination.models.abomination_infantry.assault]
+	     strength = [1,1,1,1]
+	     strength_die = "6+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "6+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]", "+100\\% strength and deflections versus shaken units"]
+
+	[abomination.models.horror]
+	name = "Horror"
+	race = "abomination"
+	equipment_limit = ["independent:∞"]
+	equipments = []
+	type = ["Bio", "Monster", "Walks", "Amphibian"]
+
+	     [abomination.models.horror.assault]
+	     strength = [6,4,4,2]
+	     strength_die = "4+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "4+"
+	     damage = "d6"
+	     ap = 2
+	     special = ["+100\\% strength and deflections versus shaken units"]
+
+	[abomination.models.robot_crab]
+	name = "Robot Crab"
+	race = "abomination"
+	equipment_limit = []
+	equipments = []
+	type = ["Robot", "Walks"]
+
+	     [abomination.models.robot_crab.assault]
+	     strength = [1,1,1,1]
+	     strength_die = "6+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "6+"
+	     damage = "d6"
+	     ap = 0
+	     special = ["Cunning Assault[1 for 1]", "Cunning assault also works versus robots", "+100\\% strength and deflections versus shaken units"]
+
+
+	[abomination.models.squ]
+	name = "Squ"
+	race = "abomination"
+	equipments = ["confution_gas_launcher"]
+	equipment_limit = ["independent:∞", "mechanical_tentacles:2"]
+	type = ["Vehicle", "Tank", "Track"]
+
+	     [abomination.models.squ.assault]
+	     strength = [12,1,1,1]
+	     strength_die = "6+"
+	     deflection = [6, 0, 0, 0]
+	     deflection_die = "6+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["+100\\% strength and deflections versus shaken units"]
+
+
+
+
+	[abomination.models.elite_abomination_infantry]
+	name = "Elite Abomination Infantry"
+	race = "abomination"
+	cost.xp = 1
+	equipment_limit = ["independent:∞", "hands:2", "tentacles:8"]
+	equipments = ["multipurpose_gun"]
+	type = ["Bio", "infantry", "elite","Walks"]
+	replaces = ["abomination:infantry"]
+	special = ["good shot: +1 to hit", "All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack"]
+
+	     [abomination.models.elite_abomination_infantry.assault]
+	     strength = [2,1,1,1]
+	     strength_die = "6+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "6+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]", "+100\\% strength and deflections versus shaken units"]
+
+
+
+	[abomination.models.gigant_frog_rider]
+	name = "Gigant Frog Rider"
+	race = "abomination"
+	equipment_limit = ["independent:∞", "hands:2", "tentacles:4"]
+	equipments = ["frog_spit", "mechanical_melee_contraption"]
+	type = ["Bio", "Cavalry", "Walks", "Amphibian"]
+
+	     [abomination.models.gigant_frog_rider.assault]
+	     strength = [4,1,1,1]
+	     strength_die = "6+"
+	     deflection = [4, 0, 0, 0]
+	     deflection_die = "6+"
+	     damage = "d6"
+	     ap = 2
+	     special = ["poison[4]", "Cunning Assault[1 for 3]", "+100\\% strength and deflections versus shaken units"]
+
+
+[equipments]
+
+   [abomination.equipments.confution_gas_launcher]
+    name = "Confution Gas launcher"
+    race = "abomination"
+
+    	     [abomination.equipments.confution_gas_launcher.range]
+	     range = 4
+	     angle = [true, true, false, false]
+	     damage = "d6 psychic"
+	     ap = "n.a"
+	     special = ["Fires 3 shot per fire order. Each hit gives one confution token of any biological unit or a unit with biological crew. Treat enemy as confused (se general rules)"]
+
+
+
+   [abomination.equipments.multipurpose_gun]
+    name = "Multipurpose Gun"
+    race = "abomination"
+    requires = [["hands:2"]]
+
+    	     [abomination.equipments.multipurpose_gun.range]
+	     range = 5
+	     angle = [true, true, true, true]
+	     damage = "d6 psychic"
+	     ap = "n.a"
+	     special = ["Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shakenh biological units. All other units are immune. However, if you manage to cause psycic damage the unit becomes insane in addition to the normal effects of the psycic damage table"]
+
+    [abomination.equipments.tentacle_craclespears]
+    name = "Tentacle CracleSpears"
+    race = "abomination"
+    cost.cp = 2
+    requires = [["tentacles:2"],["type:infantry", "type:cavalry"]]
+
+    	     [abomination.equipments.tentacle_craclespears.assault]
+
+	     strength.add = [1, 0, 0, 0]
+	     deflection.add = [1, 0, 0, 0]
+	     deflection_die.replace = "6+"
+
+	     special.append = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
+
+
+   [abomination.equipments.tentacle_axes]
+    name = "Tentacle Axes"
+    race = "abomination"
+    cost.cp = 1
+    requires = [["tentacles:2"],["type:infantry", "type:cavalry"]]
+
+    	     [abomination.equipments.tentacle_axes.assault]
+
+	     strength.add = [2, 0, 0, 0]
+
+
+   [abomination.equipments.tentacle_shield]
+    name = "Tentacle Shield"
+    race = "abomination"
+    cost.cp = 2
+    requires = [["tentacles:1"],["type: infantry"]]
+    special = ["Unit gain [3, 0, 0, 0] in armor. Do not stack"]    
+
+    	     [abomination.equipments.tentacle_shield.assault]
+
+	     deflection.add = [2, 0, 0, 0]
+	     deflection_die.replace = "5+"
+
+
+
+
+
+
+   [abomination.equipments.cavalry_armor]
+    name = "Cavalry Armor"
+    race = "abomination"
+    cost.cp = 2
+    requires = [["type:cavalry"]]
+    special = ["Unit gain [4, 3, 3, 0] in armor."]    
+
+
+
+
+
+
+    [abomination.equipments.smokegrenade_mortar]
+    name = "Smokegrenade Mortar"
+    race = "abomination"
+    cost.cp = 4
+    requires = [["tentacles:4"], ["type:infantry"]]
+
+
+    	     [abomination.equipments.smokegrenade_mortar.range]
+	     range = 3
+	     angle = [true, true, true, true]
+	     damage = "n.a"
+	     ap = "n.a"
+	     special = ["Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal. May start the game without ammo, but instead place two smoke tokens in 4 hexes within range 3 of this unit at start of game (part of setup)"]	   
+
+
+
+    [abomination.equipments.tentacle_dart]
+    name = "Tentacle Dart"
+    race = "abomination"
+    cost.cp = 1
+    requires = [["tentacles:1"], ["type:infantry", "type:cavalry"]]
+
+
+    	     [abomination.equipments.tentacle_dart.range]
+	     range = 2
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = 1
+	     special = []
+
+
+ 
+
+    [abomination.equipments.frog_spit]
+    name = "Frog spit"
+    race = "abomination"
+
+    	     [abomination.equipments.frog_spit.range]
+	     range = 1
+	     angle = [true, true, false, false]
+	     damage = "n.a"
+	     ap = "n.a"
+	     special = ["Poison[4]", "Always treated as loaded, and fire in both first and second gunnery phase independent of other weapons"]
+
+
+    [abomination.equipments.mechanical_melee_contraption]
+    name = "Mechanical Melee Contraption"
+    race = "abomination"
+    special = ["Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"]
+
+
+
+

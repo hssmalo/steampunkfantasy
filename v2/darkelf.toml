@@ -21,12 +21,9 @@
 
 
         [darkelf.units.mechanical_red_dragon.orders.movement]
-	"fast flying" =[["L","F","F"],
-		   ["R","F","F"],
-		   ["L,L","F","F"],
-		   ["R,R","F","F"],
-		   ["F", "F", "-"],
-		   ["B[slow]", "360°","F"]]
+	"fast flying" =[["L/R","F","F"],
+		        ["F", "F", "-"],
+		        ["B[slow]", "360°","F"]]
 	slow = [["360°", "-", "-"],
 	     ["360°", "F", "-"],
 	     ["360°", "A", "F"]]
@@ -40,7 +37,6 @@
         regular = ["1-4: +1 on future damage",
 		"5-10: +1 on future damage, shaken",
             "13+: Unit destroied"]
-
 
 
     [darkelf.units.mechanical_iron_dragon]
@@ -59,12 +55,9 @@
 	slow = [["360°", "-", "-"],	
 	     ["360°", "F", "-"],
 	     ["360°", "A", "F"]]
-	"fast flying" =[["L","F","F"],
-		   ["R","F","F"],
-		   ["L,L","F","F"],
-		   ["R,R","F","F"],
-		   ["F", "F", "-"],
-		   ["B[slow]", "360°","F"]]
+	"fast flying" =[["L/R","F","F"],
+			["F", "F", "-"],
+		        ["B[slow]", "360°","F"]]
 	
 
         [darkelf.units.mechanical_iron_dragon.orders.fire]
@@ -91,29 +84,21 @@
     
         [darkelf.units.queen_yy.orders.movement]
 	fast = [["F","F","-"],
-	     ["F","R","-"],
-	     ["F","L","-"],
-	     ["F","B","-"],
-	     ["B","B","-"],
-	     ["R","F","-"],
-	     ["L","F","-"]]
-	slow = [["L","-","-"],
-	     ["L","L","-"],
-	     ["R","-","-"],
-	     ["R","R","-"],
-	     ["A","F","-"],
-	     ["B","-","-"],
-	     ["F","-","-"],
-	     ["B","rev","-"]]
-	still = [["L","-","-"],
-	      ["L","L","-"],
-	      ["L","L","L"],
-	      ["R","-","-"],
-	      ["R","R","-"],
-	      ["R","R","R"],
+	        ["F","L/R","-"],
+	        ["F","B","-"],
+	        ["B","B","-"],
+	        ["L/R","F","-"]]
+	slow = [["L/R","-","-"],
+	        ["L/R","L/R","-"],
+	        ["A","F","-"],
+	        ["B","-","-"],
+	        ["F","-","-"],
+	        ["B","rev","-"]]
+	still = [["L/R","-","-"],
+	      ["L/R","L/R","-"],
+	      ["L/R","L/R","L/R"],
 	      ["-","-","-"],
-	      ["R","A","F"],
-	      ["L","A","F"],
+	      ["L/R","A","F"],
 	      ["A","F","-"],
 	      ["rev","-","-"]]
 
@@ -154,29 +139,21 @@
 
         [darkelf.units.queen_xy.movement]
 	fast = [["F","F","-"],
-	     ["F","R","-"],
-	     ["F","L","-"],
-	     ["F","B","-"],
-	     ["B","B","-"],
-	     ["R","F","-"],
-	     ["L","F","-"]]
-	slow = [["L","-","-"],
-	     ["L","L","-"],
-	     ["R","-","-"],
-	     ["R","R","-"],
+	       ["F","L/R","-"],
+	       ["F","B","-"],
+	       ["B","B","-"],
+	       ["L/R","F","-"]]
+	slow = [["L/R","-","-"],
+	     ["L/R","L/R","-"],
 	     ["A","F","-"],
 	     ["B","-","-"],
 	     ["F","-","-"],
 	     ["B","rev","-"]]
-	still = [["L","-","-"],
-	      ["L","L","-"],
-	      ["L","L","L"],
-	      ["R","-","-"],
-	      ["R","R","-"],
-	      ["R","R","R"],
+	still = [["L/R","-","-"],
+	      ["L/R","L/R","-"],
+	      ["L/R","L/R","L/R"],
 	      ["-","-","-"],
-	      ["R","A","F"],
-	      ["L","A","F"],
+	      ["L/R","A","F"],
 	      ["A","F","-"],
 	      ["rev","-","-"]]
         [darkelf.units.queen_xy.orders.fire]
@@ -209,7 +186,7 @@
     cost.mp = 2
     cost.cp = 4
     cost.xp = 12
-    special = []
+    special = ["Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"]
     shaken= "speed set to slow, move order: [-,-,Flee]"	
 
         [darkelf.units.nightmare_mechanical_cavalry.orders.movement]
@@ -237,7 +214,7 @@
 	    "7+: Kill 1 model, roll on psychic damage",
 	    "{{\\it Note: half (rounded down) number of + to future damage when one model is killed}}"
         ]
-        psychic = ["6+: unit shaken",]
+        psychic = ["6+: unit shaken"]
 
 
    [darkelf.units.elite_mechanical_cavalry]
@@ -319,6 +296,7 @@
 		 "6: Unit set on Fire"]
 
 
+
     [darkelf.units.mechanical_scorpion]
     race = "darkelf"
     name = "Mechanical Scorpion"
@@ -393,11 +371,81 @@
         [darkelf.units.darkelf_infantry.damage_tables]
         regular = ["0-5: Kill 1 model",
 		"6-8: Kill 1 Model, d6 Psychic damage",
-            "9: Destroy unit base"
-        ]
+                 "9: Destroy unit",
+    	    "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
+	    "{{\\it If killed by poison, remove that instance}}"
+
+	    ]
+     
         psychic = [
             "4+: Unit Shaken",
         ]
+
+
+    [darkelf.units.multicultural_infantry]
+    race = "darkelf"
+    name = "Multicultural Infantry"
+    models = ["darkelf_officer", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry"]
+
+    size = "medium"
+    armor = [0, 0, 0, 0]
+    cost.mp = 2
+    cost.xp = 6
+    special = ["If number of alive models in this unit is less than 10, you may transfer models from mutlicultural_trainee in aftermath phase, such that you have a maxium of 10 models in this unit", "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural_trainee units rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving", "Forward Potion[2]", "At start of battle, place two Multicultural Trainee units directly in front of this unit", "Activate order only available while officer is alive"]
+
+    shaken= "speed set to slow, move order: [-,-,flee]"		
+
+        [darkelf.units.multicultural_infantry.orders.movement]
+        slow = [["Chase", "-", "-"],
+	       ["-", "-", "Chase"],
+	       ["360°", "F",  "360°"],
+	       ["360°", "360°", "360°"]]
+
+	[darkelf.units.multicultural_infantry.orders.fire]
+	slow = [["Activate", "-"]]
+
+        [darkelf.units.multicultural_infantry.damage_tables]
+        regular = ["0-1: If number of alive models is more than 2, Kill 1 model",
+		   "2-5: Kill 1 model",
+		  "6-8: Kill 1 Model, d6 Psychic damage",
+            	  "9: Destroy unit",
+	          "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
+	          "{{\\it If killed by poison, remove that instance}}",
+	          "{{\\it Count the number of alive models before the apply damage step}}"
+        	  ]
+	
+
+          psychic = [
+            "5+: Unit Shaken"
+        ]
+
+
+
+   [darkelf.units.multicultural_trainee]
+    race = "darkelf"
+    name = "Multicultural Trainee"
+    models = ["multicultural_infantry", "multicultural_infantry", "multicultural_infantry", "multicultural_infantry","multicultural_infantry","multicultural_infantry"]
+
+    size = "medium"
+    armor = [0, 0, 0, 0]
+    cost.mp = 0
+    cost.xp = 0
+    special = ["May only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules", "If there are no Darkelf officer on the game map, this unit rebel and switch sides", "Consists of Dwarfs, Elfs, Orks and Gnomes"]
+
+    shaken= "speed set to slow, move order: [-,-,flee]"		
+
+        [darkelf.units.multicultural_trainee.orders.movement]
+        slow = [["-", "-", "Chase"]]
+	       
+
+        [darkelf.units.multicultural_trainee.damage_tables]
+        regular = ["1-8: Kill 1 model",
+		    "9: Destroy Unit"]
+
+	psychic = [
+            "3+: Unit Shaken",
+        ]
+
 
     [darkelf.units.roboprosthetic_darkelf]
     race = "darkelf"
@@ -732,6 +780,43 @@
         ap = 2
         special = ["Cunning assault[1 for 2]","Reroll all success in assault while crawling" ]
 
+
+    [darkelf.models.multicultural_infantry]
+    name = "Multicultural Infantry"
+    race = "darkelf"
+    equipment_limit = []
+    equipments = ["collar"]
+    type = ["bio", "infantry", "walks"]
+    special = []
+
+        [darkelf.models.multicultural_infantry.assault]
+        strength = [1, 1, 1, 1]
+        strength_die = "5+"
+	deflection = [0, 0, 0, 0]
+	deflection_die = "6+"
+        damage = "d6-2"
+        ap = 2
+        special = []
+
+
+    [darkelf.models.darkelf_officer]
+    name = "Dark Elf Officer"
+    race = "darkelf"
+    equipment_limit = ["hands:2", "training:1", "independent:∞"]
+    equipments = ["tesla_whip", "remote_controll", "officers_mask"]
+    type = ["bio", "infantry", "walks", "elite", "officer"]
+    special = ["Forced Movement: Twice per game, the darkelf officer may use force movment and replace any 360° movement order with either F or chase. This may be used on any all infantry in this hex, and any  multicultural trainee unit within range 3.",  "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase", "Escape artist: in any aftermath phase, remove this unit from the board. Treat it as survived for vitory points purposes"]
+
+        [darkelf.models.darkelf_officer.assault]
+        strength = [3, 2, 1, 1]
+        strength_die = "5+"
+        deflection = [6, 3, 0, 0]
+        deflection_die = "6+"
+        damage = "d6"
+        ap = 0
+        special = ["Cunning assault[1 for 3]", "Each deflections counts as both a hit and a deflection"]
+
+
     [darkelf.models.darkelf_elite_infantry]
     name = "DarkElf Elite Infantry"
     race = "darkelf"
@@ -744,8 +829,8 @@
     cost.xp = 1
 
     	[darkelf.models.darkelf_elite_infantry.assault]
-        strength = [1, 1, 1, 1]
-        strength_die = "3+"
+        strength = [2, 2, 1, 1]
+        strength_die = "5+"
         deflection = [4, 2, 1, 1]
         deflection_die = ""
         damage = "d6-2"
@@ -881,6 +966,42 @@
         special = ["Poison[6]"]
 
 
+ 
+   [darkelf.equipments.tesla_whip]
+    name = "Tesla Whip"
+    race = "darkelf"
+    requires = [""]
+
+        [darkelf.equipments.tesla_whip.assault]
+	
+        special.append = "Poison[4], and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
+
+
+   [darkelf.equipments.remote_controll]
+    name = "Remote controll"
+    race = "darkelf"
+    requires = []
+    special = ["Activate posion cloud collars by an fire order, on all multicultural trainee or multicultural infantry you have. Whenever one of the activated infantry enters tries to enter an hex, place a Poison Cloud[6] in that hex with atleast one multicultural_infantry model. This happens in all pre-assault phase this round", "Note, neither this unit or the trainee units are imune to poison clouds"]
+
+   [darkelf.equipments.officers_mask]
+    name = "Officer Mask"
+    race = "darkelf"
+    requires = []
+    special = ["If the officer is the only alive model, this unit becomes immun to poisons and poison clouds"]
+
+
+
+
+
+
+    [darkelf.equipments.collar]
+    name = "Collar"
+    race = "darkelf"
+    requires = [
+    ]
+    special = ["Keeps multicultural Infantry loyal while there is a Darkelf officer on the battlefield", "If triggered by a multicultural officer, place a poison cloud[8] in this hex."] 
+
+
     [darkelf.equipments.tail_gattling_gun]
     name = "Tail Gattling Gun"
     race = "darkelf"
@@ -892,7 +1013,7 @@
         angle = [true, false, false, false]
         damage = "d6 + d6 Psycic damage"
         ap = 3
-        special = ["Focus Fire[aim]: roll 6 dice at same unit.","May only use aim versus targets within normal range", "If not using aim, fire once at all enemy models within range and within front arc", "Bullet-Storm: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used"]
+        special = ["Focus Fire[aim]: roll 6 dice at same unit.","May only use aim versus targets within normal range", "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range", "Minor acid", "May load up to 4 ammo", "Requiers 2 ammo to be used"]
 
 
     [darkelf.equipments.heavy_rifle]
@@ -918,7 +1039,7 @@
         angle = [true, true, false, false]
         damage = "d6+d8 Psychic damage + d6 crew damage"
         ap = 3
-        special = ["On hit: apply Acid to target. In addition, if you hit target, place an Acid Cloud[minor] at target hex", "Bad at long range: double to-hit penalites for long range (-4 to hit instead of -2)"]
+        special = ["On hit: apply Acid to target. In addition, if you hit target, place an minor acid on all units in hex"]
 
 
     [darkelf.equipments.mechanical_imp]
@@ -1034,7 +1155,7 @@
         angle = [true, false, false, false]
         damage = "d8 crew damage"
         ap = 0
-        special = ["Fires at all models once within range and within front arc, and always hits on a natural 6",  "No regular damage, but Poison[8] and set on fire applies to anyone hit", "Always treated as loaded" ]
+        special = ["Fires at all models once within range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range",  "No regular damage, but Poison[8] and set on fire applies to anyone hit", "Always treated as loaded" ]
 
 
 
@@ -1161,7 +1282,7 @@
         angle = [true, false, false, false]
         damage = "-"
         ap = 0
-	special = ["No normal damge, but any unit within normal range and front arc is covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"]
+	special = ["No normal damge, but any unit within normal range and front arc is automaticly covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"]
 
 
     [darkelf.equipments.fire_breath]
@@ -1174,7 +1295,7 @@
         angle = [true, false, false, false]
         damage = "-"
         ap = 0
-	special = ["No normal damge, but any unit within normal range and front arc is set on fire. Any unit within long range and in front arc is covered in minor acid", "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"]
+	special = ["Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range. No regular damage, but Poisn[6] and any unit hit atleast once is set on fire. Any unit within long range and in front arc is covered in minor acid"]
 
 
     [darkelf.equipments.shrapnell_breath]
@@ -1187,7 +1308,7 @@
         angle = [true, false, false, false]
         damage = "d6-2"
         ap = 2
-	special = ["Fire once at every model within front arc, line of sight and range. Include all to-hit modifiers", "Always treated as loaded"]
+	special = ["Fire once at every model within front arc, line of sight and range. Area[4+] at point blank range, Area[6+] at normal and long range", "Always treated as loaded"]
 
 
 
