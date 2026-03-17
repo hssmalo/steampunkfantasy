@@ -267,22 +267,24 @@ Each unit has a set of available orders. Code:
 - A = Accelerate, change to one speed faster
 - A[X] = As accelerate, but set speed to a special case, described by a X.
 - Rev=reverse
-- D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - - = no action
 - Chase: move towards nearest enemy, taking current orders into account. Thus the unit moves one step closer to where the enemy is going to be this turn. Where a unit chases is  determined after all decisions and special movement have been planed. However, ignore any enemy units which cannot be reached even if it stood still. Thus a land unit without having a flying speed available, ignore flying units when determining where it chases.
 - Follow: Are only available through special unit ordering other units to follow, and all units under these orders move one hex closer to this unit. If multiple units are odering units to follow, you can chose which to follow.
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
 If still no such hex is available, let your enemy move your unit to any hex he/she likes
-- Road: Move along the road. Facing is always along the road.
-- Help: Move in any hex as long as you move 1 step closer to an injured ally which you can heal/repair. As with chase, take current orders into account.
-
 
 Any order divided in 3 happens in movement step, where the first is executed in movement 1, the second in movement 2 and the third in movement 3.
 If Two different letters are separated by + instead of a comma, they happen in same step. For example: \
 -360$^0$+A, F, F \
+Would read you could rotate 360$^0$ and accelerate in first movement, and forward in movement 2 and 3. 
 
-Would read you could rotate 360$^0$ and accelerate in first movement, and forward in movement 2 and 3.
+Some special orders:
+- D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
+- Road: Move along the road. Facing is always along the road.
+- Help: Move in any hex as long as you move 1 step closer to an injured ally which you can heal/repair. As with chase, take current orders into account.
+- Deploy: Place a transported unit within the speified range of the unit. Place the transported units facing away from this unit. Enter an assault if hex is occupied. If the deploy part is after a + and the unit is assaulted, the deployment is halted and assault is carried out. If the unit has the quick deploy treat, the transported units may deploy automaticly as part of an assault.
+
 
 
 Gunnery orders are for example:\
@@ -517,7 +519,7 @@ If trying to retreat into an overcrowded hex, or an enemy, or an impassable hex,
 
 Note that a maxium of stacking limit number of units may contribute it's firepower in assault, and only stack limit number of units end up in the hex after an assault.
 
-In any way, during a retreat, the loser may rotate to Left or Right or 180$^0$ if you wish as part of the retreat. This is to make retreated unit able to flee the assault if it wants to.
+In any way, during a retreat, the loser may to face away from the contested hex, or towards the contested hex after an assault. The looser may also choose to treat an 'F' as '-' if the movement leads to more assaults this round.
 
 
 Assault: Each model have the following stats for hitting the enemy in assault:\
@@ -537,6 +539,8 @@ Apply front/front-side/back-side/back values as appropriate similar to the assau
 Add the number of dice for all unit involved in the assault, roll separate dice if they have different to_hit stats.
 Each succuessfull deflection remove one successful assault from the enemy. However, the one with advantage in the assault chooses which hits to deflect.
 
+If you are being assaulted from two sides simultainiously, each unit is only allowd to focus on one side at a time. Choose focus, and assault and assault deflections only work versus the unit facing you in that direction, while ignoring all the other directions.
+
 A good practice is to roll assault and assault deflections simultanieously but with different color. Choose for example green die for deflections.
 
 
@@ -550,9 +554,9 @@ Elf\
 
 
 
-It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected.
+It is the one who have the advantage of the assault which are preveliged to choose which enemy hits he deflects, and which of his own successes are deflected. 
 
-Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. All hits are distributed among the units enemies, with the player with the advantage chooses how. The player with the advantage may choose how to distribute his/her enemies hits among his/her own units, but must apply one hit per model on each unit if able. For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit. 
+Now, both sides, both the disadvantage and the advantage applies assault success to the enemy. All hits are distributed among the units enemies, but you may not distribute more hits than the number of models on a unit before you have applied atleast one hit per model in the assult. For each damage hit, apply damage similar to ranged combat. Apply assault damage, roll for assault AP versus armor, add any special effect and roll on the damage table of the unit. 
 
 Example: \
 
@@ -564,8 +568,8 @@ Elf rolled 6 successes (3 from E34 and 3 from infantry)\
 DarkElf scores 5 hits and elf score 6-3 = 3 hits. Advantage DarkElf \
 
 Thus the DarkElf gained the advantage, and chooses to deflect the 3 attacks from the tank (they may or may not be nastier in the real game).
-The DarkElf choose to assign 3 hits to the DarkElf infantry, and not risk damaging his precious tank, even though the tank most probable would have managed to shrug of melee attacks from regular infantry. (tanks are normaly well protected from regular melee attacks, but a tank is also very valuable)
-The Darkelf choosed to assign 3 damaging scores to the infantry and 3 to the tank, in hope of doing some damage. 
+The DarkElf applies 3 hits to the Elf infantry, and 1 to the elf tank, leaving the DarkElf 2 hits to distribute as the players sees fit. In this case Darkelf choosed to apply does hits the Elf Tank in hopes of doing some damage
+The Elf choosed to assign 3 hits to the infantry, in hope of doing some damage. 
 
 Rolling for damage:\
 Elf rolls 3 times on infantry damage table, but manage to kill only 2 models. \
@@ -707,6 +711,11 @@ This weapon can have, and must be loaded with N ammo to be fired. However, when 
 
 This weapon may be fired a maxium of N times in a match. Many of these weapons are allways treated as load special, but it only works as long as the total number of times used is less than N.
 
+**Gear Disruption[N+]**
+
+Only applies when target is a robot. Roll 1 + one die per minor acid token on target. The robot gets one shaken token per roll of N+. Major acid counts as 3 minor acid tokens in this regard. (1st shaken token is duplicated as always)
+
+
 **Heal(N, unit, phase)**
 
 N: a number \\
@@ -801,10 +810,22 @@ Before using any fire action, roll a die. At N- (N or below) replace the fire ac
 
 Cannot fire any weapon while jammed. Requirs an 'load' action to remove.
 
-*Crippled Crew*
+**Crippled Crew**
 
 Unit gets -1 on all die roll for its range to-hit, assault strength and assault deflection. In addition, if unit is also shaken, any source of psychic damage now rolls on crew damage even though the unit is normally immune to psychic damage. 
 
+**Insane**
+
+Only effects biological units. While shaken, any flee orders are instead chase closet unit, friend or foe. Enter assault with friendly units if in same hex.
+
+Insane is removed when unit is no longer shaken.
+
+**Confused**
+
+Only effects biological units or units with biological crew.
+While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. 
+
+Remove one confusion token every pre-assault step.
 
 \pagebreak
 
