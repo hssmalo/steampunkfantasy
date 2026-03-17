@@ -1,0 +1,162 @@
+[races]
+
+    [races.oger]
+    name = "Oger"
+
+[units]
+	[oger.units.oger_infantry]
+	race = "oger"
+	name = "Oger Infantry"
+	models = ["oger_infantry","oger_infantry"]
+	size = "large"
+	cost.mp = 4
+	special =  ["Take Cover[still][-1]"]
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+	[oger.units.oger_infantry.orders.fire]
+		     still = [["Fire", "-",],["-", "Fire"],
+		     	       ["Load", "-"],["-", "Load"],
+			       ["Aim", "-"],["-", "Aim"]]
+
+
+	[oger.units.oger_infantry.orders.movement]
+		     still =[["360°","360°","360°"],["A+360°","F","360°"]]
+		     slow = [["360°","F","360°"], ["360°","B","360°"]]
+
+	[oger.units.oger_infantry.damage_tables]
+                     regular = ["2-3: Bleed[4]", "4-6: Kill 1 model", "7-10: Kill 1 model, psychic damage[d6]", "11+: Unit destroyed", "{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}"]
+		   
+
+		     psychic = ["6+: shaken"]
+
+	[oger.units.oger_assault_scout]
+	race = "oger"
+	name = "Oger Infantry"
+	models = ["oger_assault_scout"]
+	size = "large"
+	cost.mp = 1
+	cost.xp = 4
+	special =  ["Take Cover[still][-2]"]
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+	[oger.units.oger_assault_scout.orders.fire]
+		     still = [["Fire", "-",],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
+     		     slow = [["Load", "-"],["-", "Load"], ["spot", "spot"]]
+		     fast = [["spot", "spot"]]
+
+	[oger.units.oger_assault_scout.orders.movement]
+		     still =[["360°","360°","360°"],["A+360°","F","360°"]]
+		     slow = [["360°","F","360°"], ["360°","B","360°"], ["A+360°","F","F"]]
+		     fast = [["360°","F","F"], ["F", "360°","F"], ["F","F", "360°"], ["chase", "chase","chase"], ["360°", "F", "B"]]
+
+		   
+	[oger.units.oger_assault_scout.damage_tables]
+                     regular = ["2-3: Bleed[6]", "6: unit destoried", "{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}"]
+
+
+		     psychic = ["6+: shaken"]
+
+
+
+
+[models]
+	[oger.models.oger_infantry]
+	name = "Oger Infantry"
+	race = "oger"
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["oger_rifle"]
+	type = ["Bio", "infantry", "Walks"]
+
+	     [oger.models.oger_infantry.assault]
+	     strength = [3,2,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]"]
+
+
+	[oger.models.oger_assault_scout]
+	name = "Oger Scout"
+	race = "oger"
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["oger_rifle"]
+	type = ["Bio", "infantry", "Walks", "elite"]
+
+	     [oger.models.oger_assault_scout.assault]
+	     strength = [6,2,1,1]
+	     strength_die = "5+"
+	     deflection = [3, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 3
+	     special = ["Cunning Assault[1 for 2]", "If you fight one or more units with multiple models, add +1 assault strength per enemy model in the assault"]
+
+
+	[oger.models.elite_oger_infantry]
+	name = "Oger Elite Infantry"
+	race = "oger"
+	replaces = ["oger_infantry"]
+	cost.xp = 1 
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["oger_rifle"]
+	type = ["Bio", "infantry", "Walks", "elite"]
+
+	     [oger.models.elite_oger_infantry.assault]
+	     strength = [6,2,1,1]
+	     strength_die = "5+"
+	     deflection = [3, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]", "Good shot: +1 to hit"]
+
+
+	[oger.models.oger_medic]
+	name = "Oger Medic"
+	race = "oger"
+	replaces = ["oger_infantry"]
+	cost.xp = 1 
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["oger_rifle"]
+	type = ["Bio", "infantry", "Walks", "medic"]
+
+	     [oger.models.oger_medic.assault]
+	     strength = [3,2,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]", "Healing[1, self, 2nd healing]"]
+
+
+[equipments]
+
+   [oger.equipments.oger_sniper_rifle]
+    name = "Oger Sniper Rifle"
+    race = "oger"
+    model_cost.cp = 6 
+    requires = [["hands:2"], ["type:infantry"],["type:elite"]]
+
+    	     [oger.equipments.oger_sniper_rifle.range]
+	     range = 8
+	     angle = [true, true, true, true]
+	     damage = "d8-2"
+	     ap = "3"
+	     special = ["improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 psychic damage and +d6 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
+
+
+   [oger.equipments.oger_rifle]
+    name = "Oger Rifle"
+    race = "oger"
+     
+
+    	     [oger.equipments.oger_rifle.range]
+	     range = 4
+	     angle = [true, true, true, true]
+	     damage = "d8"
+	     ap = "2"
+	     special = []
+
