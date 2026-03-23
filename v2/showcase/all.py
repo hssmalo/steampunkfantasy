@@ -10,7 +10,7 @@ dwarf = data.Race.from_toml("dwarf")
 ork = data.Race.from_toml("ork")
 elf = data.Race.from_toml("elf")
 darkelf = data.Race.from_toml("darkelf")
-
+abomination = data.Race.from_toml("abomination")
 
 
 
@@ -44,7 +44,34 @@ inf = oliphant.add_unit(elf.units.elf_infantry, name='Elf Infantry')
 #oliphant.add_equipment(inf, elf.equipments.at_rifle)
 
 
+insanity = data.Team('Insanity')
 
+inf1 = insanity.add_unit(abomination.units.abomination_infantry)
+insanity.add_equipment(inf1, abomination.equipments.fog_grenade_mortar)
+
+#inf2 = insanity.add_unit(abomination.units.abomination_infantry)
+#insanity.add_equipment(inf2, abomination.equipments.fog_grenade_mortar)
+
+insanity.add_unit(abomination.units.horror)
+
+frog1 = insanity.add_unit(abomination.units.gigant_frog_riders)
+#frog2 = insanity.add_unit(abomination.units.gigant_frog_riders)
+#frog3 = insanity.add_unit(abomination.units.gigant_frog_riders)
+#frog4 = insanity.add_unit(abomination.units.gigant_frog_riders)
+
+insanity.add_equipment(frog1, abomination.equipments.frog_armor)
+insanity.add_equipment(frog1, abomination.equipments.tentacle_craclespears)
+#insanity.add_equipment(frog2, abomination.equipments.frog_armor)
+#insanity.add_equipment(frog2, abomination.equipments.tentacle_craclespears)
+#insanity.add_equipment(frog3, abomination.equipments.frog_armor)
+#insanity.add_equipment(frog3, abomination.equipments.tentacle_craclespears)
+#insanity.add_equipment(frog4, abomination.equipments.frog_armor)
+#insanity.add_equipment(frog4, abomination.equipments.tentacle_craclespears)
+
+insanity.add_unit(abomination.units.squ)
+#insanity.add_unit(abomination.units.squ)
+#insanity.add_unit(abomination.units.squ)
+#insanity.add_unit(abomination.units.squ)
 
 import IPython; IPython.embed()
 
