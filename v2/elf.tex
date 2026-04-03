@@ -9,6 +9,7 @@
   Models & 4 x Elf Infantry\\
   Armor & 0\\
   Shaken & Movement set to slow. Movement order: [-,-,flee]. May not fire weapons\\
+  Special: \\
 \end{tabular}
 
 \noindent Take Cover[still][-2]\\ 
@@ -45,8 +46,8 @@ fast [ 360°,  F, B+B] \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Elf Infantry } \\
-Equipment Limits: &[independent:∞, hands:2] \\
-Type: &[Bio, infantry, Walks] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
+Type: &[Bio, Infantry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -95,6 +96,7 @@ Range: 5  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
   Models & 4 x Illusion\\
   Armor & 0\\
   Shaken & \\
+  Special: \\
 \end{tabular}
 
 \noindent When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play.\\ 
@@ -119,7 +121,7 @@ Note: immune to poison \\
 \begin{tabular}{ll}
 Model name: &{\bf Illusion } \\
 Equipment Limits: & \\
-Type: &[illusion] \\
+Type: &[Illusion, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -158,6 +160,7 @@ Assault Deflection: [0, 0, 0, 0] Die: 5+\\
   Models & 1 x Elite Elf scout\\
   Armor & 0\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Take Cover[still][-3]\\ 
@@ -192,8 +195,8 @@ fast [ 360°,  F, B+B] \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Elite Elf scout } \\
-Equipment Limits: &[independent:∞, hands:2] \\
-Type: &[Bio, infantry, Walks] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
+Type: &[Bio, Infantry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -242,6 +245,7 @@ Range: 5  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
   Models & 1 x Elite Elf scout\\
   Armor & 0\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Take Cover[still][-3]\\ 
@@ -279,7 +283,7 @@ fast [ 360°,  F, B+B] \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Elite Elf scout } \\
-Equipment Limits: &[independent:∞, hands:2] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
 Type: &[Bio, Walks, Elite] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -329,6 +333,7 @@ Range: 5  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
   Models & 1 x E34\\
   Armor & [10, 9, 9, 8]\\
   Shaken & speed set to still. Movement order: [-,-,-]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent 
@@ -344,30 +349,21 @@ fast [-, Fire] \\
 \ \\ {\bf movement } \\
 fast [F, F, -] \\
 fast [F, R, -] \\
-fast [R, F, -] \\
-fast [L, F, -] \\
-fast [F, L, -] \\
+fast [L/R, F, -] \\
+fast [F, L/R, -] \\
 fast [F, B, -] \\
 fast [B, B, -] \\
-fast [R, F, -] \\
-fast [L, F, -] \\
-slow [L, -, -] \\
-slow [L, L, -] \\
-slow [R, -, -] \\
-slow [R, R, -] \\
+slow [L/R, -, -] \\
+slow [L/R, L/R, -] \\
 slow [A, F, -] \\
 slow [B, -, -] \\
 slow [F, -, -] \\
 slow [B, rev, -] \\
-still [L, -, -] \\
-still [L, L, -] \\
-still [L, L, L] \\
-still [R, -, -] \\
-still [R, R, -] \\
-still [R, R, R] \\
+still [L/R, -, -] \\
+still [L/R, L/R, -] \\
+still [L/R, L/R, L/R] \\
 still [-, -, -] \\
-still [R, A, F] \\
-still [L, A, F] \\
+still [L/R, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
 
@@ -395,7 +391,7 @@ still [rev, -, -] \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf E34 } \\
-Equipment Limits: &[independent:∞] \\
+Equipment Limits: &[Independent:∞] \\
 Type: &[Mechanical, Bio Crew, Vehicle, Track] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -455,6 +451,7 @@ Fires two times at same unit per shot.\\Twin Rifle fires in the same direction a
   Models & 1 x Tattoo Ink\\
   Armor & [8, 6, 6, 6]\\
   Shaken & Speed set to still. Movement order: [-,-,-]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent 
@@ -470,30 +467,22 @@ slow [Fire, Fire] \\
 fast [Fire, Fire] \\
 \ \\ {\bf movement } \\
 fast [F, F, -] \\
-fast [F, R, -] \\
-fast [F, L, -] \\
+fast [F, L/R, -] \\
 fast [F, B, -] \\
 fast [B, B, -] \\
-fast [R, F, -] \\
-fast [L, F, -] \\
+fast [L/R, F, -] \\
 fast [road, road, road] \\
-slow [L, -, -] \\
-slow [L, L, -] \\
-slow [R, -, -] \\
-slow [R, R, -] \\
+slow [L/R, -, -] \\
+slow [L/R, L/R, -] \\
 slow [A, F, -] \\
 slow [B, -, -] \\
 slow [F, -, -] \\
 slow [B, rev, -] \\
-still [L, -, -] \\
-still [L, L, -] \\
-still [L, L, L] \\
-still [R, -, -] \\
-still [R, R, -] \\
-still [R, R, R] \\
+still [L/R, -, -] \\
+still [L/R, L/R, -] \\
+still [L/R, L/R, L/R] \\
 still [-, -, -] \\
-still [R, A, F] \\
-still [L, A, F] \\
+still [L/R, A, F] \\
 still [A, F, -] \\
 still [rev, -, -] \\
 
@@ -521,8 +510,8 @@ still [rev, -, -] \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Tattoo Ink } \\
-Equipment Limits: &[independent:∞, minor gun:1] \\
-Type: &[Mechanical, Bio Crew, Vehicle, Half-Track] \\
+Equipment Limits: &[Independent:∞, minor gun:1] \\
+Type: &[Mechanical, Bio Crew, Vehicle, Track] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -583,6 +572,7 @@ Fire two shot per fire order (per smg in the unit)\\
   Models & 1 x Bear Rider\\
   Armor & [7, 6, 6, 6]\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Poison Resistance 3\\ 
@@ -615,7 +605,7 @@ Note: if one model is killed by bleeding/poison, remove that intance \\ bleeding
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Bear Rider } \\
-Equipment Limits: &[independent:∞] \\
+Equipment Limits: &[Independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -636,8 +626,107 @@ Assault Deflection: [1, 0, 0, 0] Die: 5+\\
 
 Range: 2  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
 Focus Fire[aim]: roll 6 dice at same unit.\\ 
-If not using aim, fire once at all enemy models within range and within one angle of fire\\ 
-Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
+If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one choosen direction. Avoids firing at hexes with friendly units\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+\section{ Dire Polar Bear Riders }
+
+\begin{tabular}{ll}
+  Name & Dire Polar Bear Riders \\
+  Size & medium\\
+  Cost & 2mp, 6cp, 8xp\\
+  Models & 1 x Dire Polar Bear Riders\\
+  Armor & [8, 6, 6, 6]\\
+  Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
+\end{tabular}
+
+\noindent Poison Resistance 3\\ 
+Flame arrow fires every gunnrey phase independent of gattling gun. Always treated as loaded\\ 
+
+
+\ \\ {\bf fire } \\
+still [-, Fire] \\
+still [-, Load] \\
+still [-, Aim] \\
+slow [-, Fire] \\
+slow [-, Load] \\
+slow [-, Aim] \\
+\ \\ {\bf movement } \\
+slow [360°, F, 360°] \\
+slow [360°, B, 360°] \\
+still [360°, A, F] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+2-7: +1 to future damage, bleed[4] \\
+8:10: +2 to future damage, bleed[6], psychic damage[d6] \\
+11+: killed \\
+Note: bleeding does not cause more bleeding \\
+Note: if one model is killed by bleeding/poison, remove that intance \\ bleeding/poison and remove up to half + to future token \\
+\ \\ {\bf psychic } \\
+6+: shaken \\
+
+
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Dire Polar Bear Riders } \\
+Equipment Limits: &[Independent:∞] \\
+Type: &[Bio, Cavalry, Walks] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x GatlingGun, 1 x Elf Flame Arrow \\
+\ \\
+Assault: [9, 6, 3, 1] Die: 5+ Armor Penetration: 2 Damage: d6+2 \\
+Assault Deflection: [2, 0, 0, 0] Die: 5+\\
+\indent  
+\ \\
+
+\ \\
+{\bf GatlingGun } \\
+
+
+
+Range: 2  Angle: [True, True, True, True] AP: 3 Damage: d6-1 \\
+Focus Fire[aim]: roll 6 dice at same unit.\\ 
+If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one choosen direction. Avoids firing at hexes with friendly units\\ 
+
+
+
+
+{\bf Elf Flame Arrow } \\
+
+
+
+Range: 2  Angle: [True, True, True, True] AP: 0 Damage: d6-2 \\
+Ignore to-hit penalty (both self and target) for moving fast and flying\\ 
++1 range if you are flying\\ 
+enhanced accurasy: +1 to hit\\ 
+Bad at long range: double to-hit penalties at long range.\\ 
+Always treated as loaded\\ 
+set enemy on fire\\ 
 
 
 
@@ -668,6 +757,7 @@ Covered In bullets: if not using aim, a natural 6 on a to-hit die is considered 
   Models & 1 x Armored Unicorn Rider\\
   Armor & [6, 6, 6, 5]\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Poison Resistance 12\\ 
@@ -675,7 +765,7 @@ Fire Resistance 3\\
 Minor Acid resistance[4+]\\ 
 Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.\\ 
 Pre-assault retreat: 3+\\ 
-Grants psychic resitance 1 to all units in hex\\ 
+Grants psychic resitance 1 to the other unit in this hex\\ 
 Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]\\ 
 Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving\\ 
 May share a hex with a huge unit\\ 
@@ -718,7 +808,7 @@ Note: bleeding does not cause more bleeding \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Armored Unicorn Rider } \\
-Equipment Limits: &[independent:∞] \\
+Equipment Limits: &[Independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -770,6 +860,7 @@ Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fi
   Models & 3 x Pachyephalosaurus Rider\\
   Armor & [3, 3, 0, 0]\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
@@ -778,7 +869,7 @@ Pre-assault retreat: 5+\\
 
 
 \ \\ {\bf fire } \\
-still [Fire, Load] \\
+still [Fire, -] \\
 still [Load, -] \\
 still [-, Aim] \\
 still [-, Fire] \\
@@ -793,13 +884,14 @@ fast [360°, F, F] \\
 fast [F, B, 360°] \\
 fast [F, F, 360°] \\
 fast [F, 360°, F] \\
-fast [F, B, B,360°] \\
+fast [F, B, B+360°] \\
 fast [F, F, F] \\
-fast [F, F,360°, B] \\
+fast [F, F,360°, B+B] \\
 slow [360°, A, F] \\
 slow [B, 360°, -] \\
 still [360°, A, F] \\
-still [A, A, F] \\
+still [A+A, 360°+F, F] \\
+still [A+A, 360°, F] \\
 
 
 {\bf Damage Tables} \\
@@ -815,7 +907,7 @@ Note: if one model is killed by bleeding/poison, remove that intance \\ bleeding
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Pachyephalosaurus Rider } \\
-Equipment Limits: &[independent:∞, hands:2] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -875,9 +967,10 @@ Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blan
   Name & Elk Cavalery \\
   Size & medium\\
   Cost & 6mp, 2xp\\
-  Models & 4 x Elk Cavalery\\
+  Models & 4 x Elk Cavalry\\
   Armor & 0\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent 
@@ -910,9 +1003,9 @@ Note: if one model is killed by bleeding/poison, remove that intance \\ bleeding
 
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf Elk Cavalery } \\
-Equipment Limits: &[independent:∞, hands:2] \\
-Type: &[Bio, Cavalry, Walks] \\
+Model name: &{\bf Elk Cavalry } \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
+Type: &[Bio, Cavalry, Walks, Elk] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -966,6 +1059,7 @@ Always treated as loaded\\
   Models & 2 x Pegasus rider\\
   Armor & 0\\
   Shaken & Speed set to slow flyingt. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Pre-Assault: throw fire (from lance): roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault\\ 
@@ -992,27 +1086,22 @@ slow [360°, B, 360°] \\
 slow [360°, A[fly], F] \\
 slow [360°, A[f,fly], F] \\
 slow [360°, A, F] \\
-slow flying [L, F, -] \\
-slow flying [R, F, -] \\
-slow flying [F, R, -] \\
-slow flying [F, L, -] \\
+slow flying [L/R, F, -] \\
+slow flying [F, L/R, -] \\
 slow flying [F, -, -] \\
 slow flying [F, B[still], -] \\
 slow flying [F, A[f,fly], F] \\
-slow flying [L, L, F] \\
-slow flying [R, R, F] \\
+slow flying [L/R, L/R, F] \\
 fast [360°, F, F] \\
 fast [360°, F, B] \\
 fast [360°, A[f, fly],F, F] \\
 fast [360°, F, B] \\
 fast flying [F, F, F] \\
-fast flying [F, R, F] \\
-fast flying [F, L, F] \\
+fast flying [F, L/R, F] \\
 fast flying [F, F, B] \\
 fast flying [F, F, B[fly]] \\
 fast flying [F, F, B[f]] \\
-fast flying [L+L, F, F] \\
-fast flying [R+R, F, F] \\
+fast flying [L/R+L/R, F, F] \\
 fast flying [F, F, B[still]] \\
 
 
@@ -1029,7 +1118,7 @@ Note: if one model is killed by bleeding/poison, remove that intance bleeding/po
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Pegasus rider } \\
-Equipment Limits: &[independent:∞, hands:2] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
 Type: &[Bio, Cavalry, Walks, Fly] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1092,14 +1181,15 @@ Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fi
   Name & Saouropod Rider \\
   Size & huge\\
   Cost & 2mp, 12cp, 12xp\\
-  Models & 1 x Sauropod Rider\\
+  Models & 1 x Sauropod Riders\\
   Armor & [4, 3, 3, 3]\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Poison Resistance 4\\ 
 Fire and load all weapons simultainiously\\ 
-Stats battle with one aim token. (note that it is lost if you don't fire first round)\\ 
+Starts battle with one aim token. (note that it is lost if you don't fire first round)\\ 
 
 
 \ \\ {\bf fire } \\
@@ -1130,14 +1220,14 @@ Note: bleeding does not cause more bleeding \\
 
 \noindent
 \begin{tabular}{ll}
-Model name: &{\bf Sauropod Rider } \\
-Equipment Limits: &[independent:∞] \\
+Model name: &{\bf Sauropod Riders } \\
+Equipment Limits: &[Independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
 \ \\
-Equipment: 1 x Sniper Rifle, 1 x Short range Mortar, 1 x Towed Main Gun \\
+Equipment: 1 x Sniper Rifle, 1 x Heavy Mortar, 1 x Towed Main Gun, 1 x ThunderRoar, 1 x Light Mortar \\
 \ \\
 Assault: [2, 0, 0, 0] Die: 5+ Armor Penetration: 2 Damage: d8 \\
 Assault Deflection: [0, 0, 0, 0] Die: 5+\\
@@ -1149,20 +1239,19 @@ Assault Deflection: [0, 0, 0, 0] Die: 5+\\
 
 
 
-Range: 8  Angle: [True, False, False, True] AP: 3 Damage: d6-2 \\
+Range: 8  Angle: [True, False, False, False] AP: 3 Damage: d6-2 \\
 improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psychic damage and +d4 crew damage when aiming\\ 
 After eliminating one model with the use of aim, you get to choose which model to destroy\\ 
 
 
 
 
-{\bf Short range Mortar } \\
+{\bf Heavy Mortar } \\
 
 
 
-Range: 3  Angle: [True, True, True, True] AP: 5 Damage: d6 \\
+Range: 3  Angle: [True, True, False, False] AP: 5 Damage: d6 \\
 Target one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of target hex with Area(4+)\\ 
-Place a poison cloud[6] in target hex\\ 
 
 
 
@@ -1171,7 +1260,27 @@ Place a poison cloud[6] in target hex\\
 
 
 
-Range: 3  Angle: [False, False, True, True] AP: 8 Damage: d6 (+3 if penetrating all armor) \\
+Range: 3  Angle: [False, False, False, True] AP: 8 Damage: d6 (+3 if penetrating all armor) \\
+
+
+
+
+{\bf ThunderRoar } \\
+
+
+
+Range: 5  Angle: [False, True, False, False] AP: n.a Damage: d6 psycic \\
+May fire once to the right and once to the left each time you fire\\ 
+
+
+
+
+{\bf Light Mortar } \\
+
+
+
+Range: 5  Angle: [False, False, True, False] AP: 2 Damage: d6-2 \\
+Area[5] on a hex within normal range\\ 
 
 
 
@@ -1202,6 +1311,7 @@ Range: 3  Angle: [False, False, True, True] AP: 8 Damage: d6 (+3 if penetrating 
   Models & 1 x Oliphant, 4 x Crew\\
   Armor & [8, 6, 4, 3]\\
   Shaken & Speed set to slow. Movement order: [-,-,chase]. May not fire weapons\\ &Chases closest unit, friend or foe. Assaults friendly units\\
+  Special: \\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
@@ -1214,8 +1324,7 @@ slow [360°, B, 360°] \\
 slow [360°, A, F] \\
 still [360°, A, F] \\
 fast [F, F, -] \\
-fast [F, L, F] \\
-fast [F, R, F] \\
+fast [F, L/R, F] \\
 fast [B, 360°, F] \\
 \ \\ {\bf fire } \\
 still [fire, fire] \\
@@ -1245,7 +1354,7 @@ Note: bleeding does not cause more bleeding \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Oliphant } \\
-Equipment Limits: &[independent:∞] \\
+Equipment Limits: &[Independent:∞] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1266,8 +1375,7 @@ Assault Deflection: [6, 2, 2, 2] Die: 5+\\
 Range: 2  Angle: [False, True, True, False] AP: 3 Damage: d6-1 \\
 Represent one gatling gun firing to the left and one firing to the rigth. May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles\\ 
 Focus Fire[aim]: roll 6 dice at same unit.\\ 
-If not using aim, fire once at all enemy models within range and allowed firing angles\\ 
-Covered in bullets: if not using aim, a natural 6 on a to-hit die is considered a hit regardless of to-hit modifiers.\\ 
+If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units.\\ 
 
 
 
@@ -1278,8 +1386,8 @@ Covered in bullets: if not using aim, a natural 6 on a to-hit die is considered 
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Crew } \\
-Equipment Limits: &[independent:∞, hands:2] \\
-Type: &[Bio, crew, Walks] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
+Type: &[Bio, Crew, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
 \end{tabular}
@@ -1344,6 +1452,7 @@ Always loaded\\
   Models & 1 x Eagle Rider\\
   Armor & [6, 6, 6, 6]\\
   Shaken & Speed set to slow. Movement order: [-,-,flee]. may not use fire orders\\
+  Special: \\
 \end{tabular}
 
 \noindent Poison Resistance 2\\ 
@@ -1381,7 +1490,7 @@ Note: bleeding does not cause more bleeding \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Eagle Rider } \\
-Equipment Limits: &[independent:∞, hands:2] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
 Type: &[Bio, Cavalry, Flying, Walks] \\
 Replaces: &Nothing \\
 Cost: & 0\\
@@ -1391,8 +1500,8 @@ Equipment: 1 x AT Rifle, 1 x Grenade \\
 \ \\
 Assault: [6, 6, 6, 4] Die: 3+ Armor Penetration: 3 Damage: d6-1 \\
 Assault Deflection: [2, 2, 2, 1] Die: 3+\\
-\indent Always attacks weakest point of armor\\ 
-Cunning Assault[1 for 3]\\ 
+\indent Cunning Assault[1 for 3]\\ 
+Always attacks weakest point of armor\\ 
  
 \ \\
 
@@ -1436,8 +1545,8 @@ Always loaded\\
 \section{Upgradeable Units}\noindent
 \begin{tabular}{ll}
 Model name: &{\bf SuperElite Elf Infantry } \\
-Equipment Limits: &[independent:∞, hands:2] \\
-Type: &[Bio, infantry, Walks, Elite, SuperElite] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
+Type: &[Bio, Infantry, Walks, Elite, SuperElite] \\
 Replaces: &[elf infantry] \\
 Cost: & 2xp\\
 \end{tabular}
@@ -1469,8 +1578,8 @@ Range: 5  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Elite Elf Infantry } \\
-Equipment Limits: &[independent:∞, hands:2] \\
-Type: &[Bio, infantry, Walks, Elite] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
+Type: &[Bio, Infantry, Walks, Elite] \\
 Replaces: &[elf infantry] \\
 Cost: & 1xp\\
 \end{tabular}
@@ -1502,7 +1611,7 @@ Range: 5  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 \noindent
 \begin{tabular}{ll}
 Model name: &{\bf Elite Pachyephalosaurus Rider } \\
-Equipment Limits: &[independent:∞, hands:2] \\
+Equipment Limits: &[Independent:∞, Hands:2] \\
 Type: &[Bio, Cavalry, Walks] \\
 Replaces: &[pachyephalosaurus rider] \\
 Cost: & 1xp\\
@@ -1513,8 +1622,8 @@ Equipment: 1 x SMG, 1 x Twin Guns \\
 Assault: [6, 2, 2, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [3, 0, 0, 0] Die: 5+\\
 \indent poison[4][1 for 2]\\ 
-Cunnint Assault[1 for 3]\\ 
 +1 to pre-assault retreat (per elite)\\ 
+Cunnint Assault[1 for 3]\\ 
  
 \ \\
 Good shot: +1\\ 
@@ -1548,7 +1657,7 @@ Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blan
 \section{Equipment and training Upgrades}\ \\
 \begin{tabular}{ll}
 name: & {\bf TeslaBurstLaster } \\
-Requiers: & [[type: vehicle], [minor gun:1]] \\
+Requiers: & [[type:Vehicle], [minor gun:1]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1566,9 +1675,10 @@ If a natural 6 is rolle for too hit (and you hit the enemy): the enemy is shaken
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Shriek SMG } \\
-Requiers: & [[type: infantry], [hands:2]] \\
+Requiers: & [[type:Infantry], [Hands:2]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1590,9 +1700,10 @@ fast [-, Fire] \\
 fast [Fire, -] \\
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf AT Rifle } \\
-Requiers: & [[hands:2], [type:infantry]] \\
+Requiers: & [[Hands:2], [type:Infantry]] \\
 Cost: & Upgrade all models for: 8cp \\
 \end{tabular}
 
@@ -1608,9 +1719,10 @@ Range: 5  Angle: [True, False, False, False] AP: 5 Damage: d6 \\
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Teslacoil Lance } \\
-Requiers: & [[independent:1], [type:cavalery]] \\
+Requiers: & [[Independent:1], [type:Elk]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1628,9 +1740,10 @@ append If you win the assault, roll a die per surviving enemy model in the unit.
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf SMG } \\
-Requiers: & [[type: infantry, type:crew], [hands:2]] \\
+Requiers: & [[type:Infantry, type:Crew], [Hands:2]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1652,9 +1765,10 @@ slow [Fire, Fire] \\
 fast [Fire, Fire] \\
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Elf Bow } \\
-Requiers: & [[hands:2], [type:infantry, type:cavalery]] \\
+Requiers: & [[Hands:2], [type:Infantry, type:Cavalry]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1679,10 +1793,11 @@ slow [Fire, Fire] \\
 fast [Fire, Fire] \\
 
 \ \\
+\ \\
 \begin{tabular}{ll}
-name: & {\bf Elf Fire Bow } \\
-Requiers: & [[hands:2], [type:infantry, type:cavalery, type:crew]] \\
-Cost: & Upgrade all models for: 6cp \\
+name: & {\bf Elf Flame Arrow } \\
+Requiers: & [[Hands:2], [type:Infantry, type:Cavalry, type:Crew]] \\
+Cost: & Upgrade all models for: 8cp \\
 \end{tabular}
 
 
@@ -1707,9 +1822,10 @@ slow [Fire, Fire] \\
 fast [Fire, Fire] \\
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Enhanced Rifle } \\
-Requiers: & [[hands:2], [type: infantry]] \\
+Requiers: & [[Hands:2], [type:Infantry]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1726,9 +1842,10 @@ enhanced accurazy: +1 to hit\\
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Sniper Rifle } \\
-Requiers: & [[hands:2], [type: infantry], [type: elite]] \\
+Requiers: & [[Hands:2], [type:Infantry], [type:Elite]] \\
 Cost: & Upgrade one model for: 6cp \\
 \end{tabular}
 
@@ -1746,9 +1863,10 @@ After eliminating one model with the use of aim, you get to choose which model t
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Grenade } \\
-Requiers: & [[independent:1], [type: infantry, type: cavalery]] \\
+Requiers: & [[Independent:1], [type:Infantry, type:Cavalry]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1757,7 +1875,7 @@ Cost: & Upgrade all models for: 2cp \\
 Range: 1  Angle: [True, True, True, True] AP: 5 Damage: d6 \\
 Area(5+) if used by a unit with 1-2 alive models. Area(4+) if used by a unit with 3-4 models\\ 
 Target any hex within normal range\\ 
-Always loaded\\ 
+Always loaded, used with Throw order\\ 
 
 
 
@@ -1766,14 +1884,15 @@ Always loaded\\
 
 
 \ \\ {\bf fire } \\
-still [-, Throw grenade] \\
-slow [-, Throw grenade] \\
-fast [-, Throw grenade] \\
+still [-, Throw] \\
+slow [-, Throw] \\
+fast [-, Throw] \\
 
+\ \\
 \ \\
 \begin{tabular}{ll}
 name: & {\bf Deflection field } \\
-Requiers: & [[independent:1], [type: vehicle]] \\
+Requiers: & [[Independent:1], [type:Vehicle]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1789,9 +1908,10 @@ Assault deflection: +add [6, 6, 6, 6], Deflection die: replace 5+
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Elite Tank Crew } \\
-Requiers: & [[independent:1], [type: vehicle]] \\
+Requiers: & [[Independent:1], [type:Vehicle]] \\
 Cost: & Upgrade all models for: 4xp \\
 \end{tabular}
 
@@ -1806,9 +1926,10 @@ unit gain good shoot: +1 to hit\\
 
 
 \ \\
+\ \\
 \begin{tabular}{ll}
 name: & {\bf Camouflage } \\
-Requiers: & [[independent:1], [type: infantry]] \\
+Requiers: & [[Independent:1], [type:Infantry]] \\
 Cost: & Upgrade all models for: 2cp \\
 \end{tabular}
 
@@ -1822,3 +1943,4 @@ unit gain gaings camouflage[forrest][-1]\\
 
 
 
+\ \\

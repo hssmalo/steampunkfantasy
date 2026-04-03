@@ -201,10 +201,10 @@
 
 
 
-	[elf.units.grizzly_bear_riders]
+	[elf.units.polar_bear_riders]
 	race = "elf"
-	name = "Dire Grizzly Bear Riders"
-	models = ["grizzly_bear_riders"]
+	name = "Dire Polar Bear Riders"
+	models = ["polar_bear_riders"]
 	size = "medium"
 	cost.mp = 2
 	cost.xp = 8
@@ -213,16 +213,16 @@
 	special = ["Poison Resistance 3", "Flame arrow fires every gunnrey phase independent of gattling gun. Always treated as loaded"]
 	shaken = "Speed set to slow. Movement order: [-,-,flee]. may not use fire orders"
 
-		     [elf.units.grizzly_bear_riders.orders.fire]
+		     [elf.units.polar_bear_riders.orders.fire]
 		     still = [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
 		     slow =  [["-", "Fire"],[ "-", "Load"],[ "-", "Aim" ]]
 
-		     [elf.units.grizzly_bear_riders.orders.movement]
+		     [elf.units.polar_bear_riders.orders.movement]
 		     slow = [["360°","F", "360°"],
 	     	     	  ["360°", "B", "360°"]]
 		     still = [["360°", "A", "F"]]
 
-		     [elf.units.grizzly_bear_riders.damage_tables]
+		     [elf.units.polar_bear_riders.damage_tables]
 		     regular = ["2-7: +1 to future damage, bleed[4]","8:10: +2 to future damage, bleed[6], psychic damage[d6]","11+: killed", "Note: bleeding does not cause more bleeding" ,"Note: if one model is killed by bleeding/poison, remove that intance \\\\ bleeding/poison and remove up to half + to future token"]
 		     psychic = ["6+: shaken"]
 
@@ -241,7 +241,7 @@
 	armor = [6,6,6,5]
 	shaken = "Speed set to slow. Movement order: [-,-,flee]. may not use fire orders"
 
-	special = ["Poison Resistance 12", "Fire Resistance 3","Minor Acid resistance[4+]", "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 3+", "Grants psychic resitance 1 to all units in hex", "Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]", "Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving", "May share a hex with a huge unit", "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"]
+	special = ["Poison Resistance 12", "Fire Resistance 3","Minor Acid resistance[4+]", "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo.", "Pre-assault retreat: 3+", "Grants psychic resitance 1 to the other unit in this hex", "Healing: Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]", "Help orders: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving", "May share a hex with a huge unit", "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"]
 
 		     [elf.units.armored_unicorn_rider.orders.fire]
 		     still = [["-", "-"] , ["-", "Fire Burst(5)"],["Fire Burst(5)", "-"]]
@@ -363,7 +363,7 @@
 	[elf.models.e34]
 	name = "E34"
 	race = "elf"
-	equipment_limit = ["independent:∞"]
+	equipment_limit = ["Independent:∞"]
 	equipments = [ "main_tank_gun", "twin_rifle",]
 	type = ["Mechanical", "Bio Crew", "Vehicle", "Track"]
 
@@ -381,9 +381,9 @@
 	[elf.models.tattoo_ink]
 	name = "Tattoo Ink"
 	race = "elf"
-	equipment_limit = ["independent:∞", "minor_gun:1"]
+	equipment_limit = ["Independent:∞", "minor_gun:1"]
 	equipments = [ "gattle_gun", "smg_reserve",]
-	type = ["Mechanical", "Bio Crew", "Vehicle", "Half-Track"]
+	type = ["Mechanical", "Bio Crew", "Vehicle", "Track"]
 	special = ["Gun Blazing: Ignore to-hit penalties for moving fast", "May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One of the SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do." ]
 
 	     [elf.models.tattoo_ink.assault]
@@ -398,7 +398,7 @@
 	[elf.models.elite_elf_scout]
 	name = "Elite Elf scout"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["rifle"]
 	type = ["Bio", "Walks", "Elite"]
 
@@ -415,9 +415,9 @@
 	[elf.models.elf_scout]
 	name = "Elite Elf scout"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["rifle"]
-	type = ["Bio", "infantry", "Walks"]
+	type = ["Bio", "Infantry", "Walks"]
 
 	     [elf.models.elf_scout.assault]
 	     strength = [1,1,1,1]
@@ -432,9 +432,9 @@
 	[elf.models.elf_infantry]
 	name = "Elf Infantry"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["rifle"]
-	type = ["Bio", "infantry", "Walks"]
+	type = ["Bio", "Infantry", "Walks"]
 
 	     [elf.models.elf_infantry.assault]
 	     strength = [1,1,1,1]
@@ -449,7 +449,7 @@
 	[elf.models.illusion]
 	name = "Illusion"
 	race = "elf"
-	type = ["illusion"]
+	type = ["Illusion", "Walks"]
 
 	     [elf.models.illusion.assault]
 	     strength = [1,0,0,0]
@@ -463,11 +463,11 @@
 	[elf.models.superelite_elf_infantry]
 	name = "SuperElite Elf Infantry"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["rifle"]
 	cost.xp = 2
 	replaces = ["elf_infantry"]	
-	type = ["Bio", "infantry", "Walks", "Elite", "SuperElite"]
+	type = ["Bio", "Infantry", "Walks", "Elite", "SuperElite"]
 	special = ["Superb Shot: +3 to hit", "Unit base gains psychic resitance 2 as long as atleast one superelite model is alive", "unit gains Pre-assault retreat[4+] as long as atleast 1 superelite is alive"]
 
 	     [elf.models.superelite_elf_infantry.assault]
@@ -483,11 +483,11 @@
 	[elf.models.elite_elf_infantry]
 	name = "Elite Elf Infantry"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["rifle"]
 	cost.xp    = 1
 	replaces = ["elf_infantry"]	
-	type = ["Bio", "infantry", "Walks", "Elite"]
+	type = ["Bio", "Infantry", "Walks", "Elite"]
 	special = ["Good Shot: +1 to hit", "Unit base gains psychic resitance 1 as long as atleast one elite model is alive", "unit gains Pre-assault retreat[5+] as long as atleast 1 elite is alive"]
 
 	     [elf.models.elite_elf_infantry.assault]
@@ -503,7 +503,7 @@
 	[elf.models.bear_rider]
 	name = "Bear Rider"
 	race = "elf"
-	equipment_limit = ["independent:∞"]
+	equipment_limit = ["Independent:∞"]
 	equipments = ["gattling_gun"]
 	type = ["Bio", "Cavalry", "Walks"]
 
@@ -517,14 +517,14 @@
 	     special = ["Cunnig Assault[1 for 3]"]
 
 
-	[elf.models.grizzly_bear_riders]
-	name = "Grizzly Bear Riderr"
+	[elf.models.polar_bear_riders]
+	name = "Dire Polar Bear Riders"
 	race = "elf"
-	equipment_limit = ["independent:∞"]
+	equipment_limit = ["Independent:∞"]
 	equipments = ["gattling_gun", "elf_flame_arrow_free"]
 	type = ["Bio", "Cavalry", "Walks"]
 
-	     [elf.models.grizzly_bear_riders.assault]
+	     [elf.models.polar_bear_riders.assault]
 	     strength = [9,6,3,1]
 	     strength_die = "5+"
 	     deflection = [2, 0, 0, 0]
@@ -537,9 +537,9 @@
 
 
 	[elf.models.sauropod]
-	name = "Sauropod Rider"
+	name = "Sauropod Riders"
 	race = "elf"
-	equipment_limit = ["independent:∞"]
+	equipment_limit = ["Independent:∞"]
 	equipments = ["sniper_rifle_free", "heavy_mortar", "towed_main_gun", "thunderroar", "light_mortar"]
 	type = ["Bio", "Cavalry", "Walks"]
 	special = []
@@ -558,7 +558,7 @@
 	[elf.models.oliphant]
 	name = "Oliphant"
 	race = "elf"
-	equipment_limit = ["independent:∞"]
+	equipment_limit = ["Independent:∞"]
 	equipments = ["oliphant_gattling_guns"]
 	type = ["Bio", "Cavalry", "Walks"]
 	special = []
@@ -577,9 +577,9 @@
 	[elf.models.crew]
 	name = "Crew"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["bow_free", "crew_hand_grenade"]
-	type = ["Bio", "crew", "Walks"]
+	type = ["Bio", "Crew", "Walks"]
 
 	     [elf.models.crew.assault]
 	     strength = [1,0,0,0]
@@ -593,7 +593,7 @@
 	[elf.models.eagle_rider]
 	name = "Eagle Rider"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["at_rifle", "grenade"]
 	type = ["Bio", "Cavalry", "Flying", "Walks"]
 
@@ -610,7 +610,7 @@
 	[elf.models.pachyephalosaurus_rider]
 	name = "Pachyephalosaurus Rider"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["smg_free", "twin_guns"]
 	type = ["Bio", "Cavalry", "Walks"]
 
@@ -625,9 +625,9 @@
 
 
 	[elf.models.elk_cavalery]
-	name = "Elk Cavalery"
+	name = "Elk Cavalry"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["bow_free"]
 	type = ["Bio", "Cavalry", "Walks", "Elk"]
 
@@ -644,7 +644,7 @@
 	[elf.models.pegasus_rider]
 	name = "Pegasus_rider"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["bow_free", "shriek_smg_free"]
 	type = ["Bio", "Cavalry", "Walks", "Fly"]
 	special = ["good shot: +1 to hit"]
@@ -662,7 +662,7 @@
 	[elf.models.elite_pachyephalosaurus_rider]
 	name = "Elite Pachyephalosaurus Rider"
 	race = "elf"
-	equipment_limit = ["independent:∞", "hands:2"]
+	equipment_limit = ["Independent:∞", "Hands:2"]
 	equipments = ["smg_free", "twin_guns"]
 	type = ["Bio", "Cavalry", "Walks"]
 	replaces = ["pachyephalosaurus_rider"]
@@ -764,7 +764,7 @@
 	[elf.models.armored_unicorn_rider]
 	name = "Armored Unicorn Rider"
 	race = "elf"
-	equipment_limit = ["independent:∞"]
+	equipment_limit = ["Independent:∞"]
 	equipments = ["shriek_smg_free"]
 	type = ["Bio", "Cavalry", "Walks"]
 	special = ["Superb shot: +3 to hit"]
@@ -828,13 +828,13 @@
         angle = [false, false, true, false]
         damage = "d6-2"
         ap = 2
-	special = ["Area[5] with a hex within normal range"]
+	special = ["Area[5] on a hex within normal range"]
 
 
     [elf.equipments.gattle_gun]
     name = "Gattle_gun"
     race = "elf"
-    requires = [["type: vehicle"],["minor_gun:1"]]
+    requires = [["type:Vehicle"],["minor_gun:1"]]
     
         [elf.equipments.gattle_gun.range]
         range = 3
@@ -847,7 +847,7 @@
     [elf.equipments.teslaburstlaser]
     name = "TeslaBurstLaster"
     race = "elf"
-    requires = [["type: vehicle"],["minor_gun:1"]]
+    requires = [["type:Vehicle"],["minor_gun:1"]]
     cost.cp = 2
 
         [elf.equipments.teslaburstlaser.range]
@@ -861,7 +861,7 @@
     [elf.equipments.smg_free]
     name = "SMG"
     race = "elf"
-    requires = [["hands:2"]]	     
+    requires = [["Hands:2"]]	     
 
         [elf.equipments.smg_free.range]
         range = 4
@@ -916,8 +916,8 @@
     name = "Shriek SMG"
     race = "elf"
     requires = [
-    	     ["type: infantry"],
-	     ["hands:2"]]
+    	     ["type:Infantry"],
+	     ["Hands:2"]]
     cost.cp = 2
 
         [elf.equipments.shriek_smg.range]
@@ -976,7 +976,7 @@
     [elf.equipments.at_rifle_free]
     name = "AT Rifle"
     race = "elf"
-    requires = [["hands:2"]]
+    requires = [["Hands:2"]]
 
     	     [elf.equipments.at_rifle_free.range]
 	     range = 5
@@ -988,7 +988,7 @@
     [elf.equipments.at_rifle]
     name = "AT Rifle"
     race = "elf"
-    requires = [["hands:2"], ["type:infantry"]]
+    requires = [["Hands:2"], ["type:Infantry"]]
     cost.cp  = 8
 
     	     [elf.equipments.at_rifle.range]
@@ -1002,7 +1002,7 @@
     [elf.equipments.teslacoil_lance]
     name = "Teslacoil Lance"
     race = "elf"
-    requires = [["independent:1"], ["type:elk"]]
+    requires = [["Independent:1"], ["type:Elk"]]
     cost.cp  = 2
 
     	     [elf.equipments.teslacoil_lance.assault]
@@ -1017,8 +1017,8 @@
     race = "elf"
     cost.cp = 2 
     requires = [
-    	     ["type: infantry", "type:crew"],
-	     ["hands:2"]]   
+    	     ["type:Infantry", "type:Crew"],
+	     ["Hands:2"]]   
 
         [elf.equipments.smg.range]
         range = 4
@@ -1040,7 +1040,7 @@
     [elf.equipments.bow]
     name = "Elf Bow"
     race = "elf"
-    requires = [["hands:2"], ["type:infantry", "type:cavalery"]]
+    requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
     cost.cp  = 2
 
     	     [elf.equipments.bow.range]
@@ -1058,7 +1058,7 @@
     [elf.equipments.elf_flame_arrow]
     name = "Elf Flame Arrow"
     race = "elf"
-    requires = [["hands:2"], ["type:infantry", "type:cavalery", "type:crew"]]
+    requires = [["Hands:2"], ["type:Infantry", "type:Cavalry", "type:Crew"]]
     cost.cp  = 8
 
     	     [elf.equipments.elf_flame_arrow.range]
@@ -1077,6 +1077,7 @@
     [elf.equipments.elf_flame_arrow_free]
     name = "Elf Flame Arrow"
     race = "elf"
+    requires = []
 
     	     [elf.equipments.elf_flame_arrow_free.range]
 	     range = 2
@@ -1090,7 +1091,7 @@
     [elf.equipments.bow_free]
     name = "Elf Bow"
     race = "elf"
-    requires = [["hands:2"], ["type:infantry", "type:cavalery"]]
+    requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
     	     [elf.equipments.bow_free.range]
 	     range = 2
@@ -1104,7 +1105,7 @@
     [elf.equipments.rifle]
     name = "Rifle"
     race = "elf"
-    requires = [["hands:2"]]
+    requires = [["Hands:2"]]
 
     	     [elf.equipments.rifle.range]
 	     range = 5
@@ -1119,7 +1120,7 @@
     name = "Enhanced Rifle"
     race = "elf"
     cost.cp = 2
-    requires = [["hands:2"], ["type: infantry"]]
+    requires = [["Hands:2"], ["type:Infantry"]]
 
     	     [elf.equipments.enhanced_rifle.range]
 	     range = 6
@@ -1134,7 +1135,7 @@
     name = "Sniper Rifle"
     race = "elf"
     model_cost.cp = 6
-    requires = [["hands:2"], ["type: infantry"], ["type: elite"]]
+    requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
     	     [elf.equipments.sniper_rifle.range]
 	     range = 8
@@ -1147,6 +1148,7 @@
     [elf.equipments.sniper_rifle_free]
     name = "Sniper Rifle"
     race = "elf"
+    requires = []
 
     	     [elf.equipments.sniper_rifle_free.range]
 	     range = 8
@@ -1159,7 +1161,7 @@
     [elf.equipments.grenade]
     name = "Grenade"
     race = "elf"
-    requires = [["independent:1"]]
+    requires = [["Independent:1"]]
 
     	     [elf.equipments.grenade.range]
 	     range = 1
@@ -1172,7 +1174,7 @@
     [elf.equipments.hand_grenade]
     name = "Grenade"
     race = "elf"
-    requires = [["independent:1"], ["type: infantry", "type: cavalery"]]
+    requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
     cost.cp = 2
 
     	     [elf.equipments.hand_grenade.range]
@@ -1180,17 +1182,18 @@
 	     angle = [true, true, true, true]
 	     damage = "d6"
 	     ap = "5"
-	     special = ["Area(5+) if used by a unit with 1-2 alive models. Area(4+) if used by a unit with 3-4 models", "Target any hex within normal range", "Always loaded"]
+	     special = ["Area(5+) if used by a unit with 1-2 alive models. Area(4+) if used by a unit with 3-4 models", "Target any hex within normal range", "Always loaded, used with Throw order"]
 
 	     [elf.equipments.hand_grenade.orders_gained.fire]
-	     still = [["-", "Throw grenade"]]
-	     slow = [["-", "Throw grenade"]]
-	     fast = [["-", "Throw grenade"]]
+	     still = [["-", "Throw"]]
+	     slow = [["-", "Throw"]]
+	     fast = [["-", "Throw"]]
 
 
     [elf.equipments.crew_hand_grenade]
     name = "Grenade"
     race = "elf"
+    requires = []
 
     	     [elf.equipments.crew_hand_grenade.range]
 	     range = 1
@@ -1207,6 +1210,7 @@
     [elf.equipments.heavy_mortar]
     name = "Heavy Mortar"
     race = "elf"
+    requires = []
 
     	     [elf.equipments.heavy_mortar.range]
 	     range = 3
@@ -1220,7 +1224,7 @@
     [elf.equipments.deflection_field]
     name = "Deflection_field"
     race = "elf"
-    requires = [["independent:1"], ["type: vehicle"]]
+    requires = [["Independent:1"], ["type:Vehicle"]]
     cost.cp = 2
 
     	     [elf.equipments.deflection_field.assault]
@@ -1230,7 +1234,7 @@
     [elf.equipments.elite_tank_crew]
     name = "Elite Tank Crew"
     race = "elf"
-    requires = [["independent:1"], ["type: vehicle"]]
+    requires = [["Independent:1"], ["type:Vehicle"]]
     cost.xp = 4
     special = ["unit gain good shoot: +1 to hit"]
 
@@ -1239,6 +1243,6 @@
     [elf.equipments.camouflage]
     name = "Camouflage"
     race = "elf"
-    requires = [["independent:1"], ["type: infantry"]]
+    requires = [["Independent:1"], ["type:Infantry"]]
     cost.cp = 2
     special = ["unit gain gaings camouflage[forrest][-1]"]    

@@ -283,7 +283,7 @@ Some special orders:
 - D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - Road: Move along the road. Facing is always along the road.
 - Help: Move in any hex as long as you move 1 step closer to an injured ally which you can heal/repair. As with chase, take current orders into account.
-- Deploy: Place a transported unit within the speified range of the unit. Place the transported units facing away from this unit. Enter an assault if hex is occupied. If the deploy part is after a + and the unit is assaulted, the deployment is halted and assault is carried out. If the unit has the quick deploy treat, the transported units may deploy automaticly as part of an assault.
+- Deploy: Place a transported unit within the speified range of the unit. Place the transported units facing away from this unit. Enter an assault if hex is occupied. If the deploy part is after a + and the unit is assaulted, the deployment is halted and assault is carried out. If the unit has the quick threat, the transported units may deploy automaticly as part of an assault.
 
 
 
@@ -691,7 +691,7 @@ In agony 0, roll a dN psycic damage on any enemy unit within range of this unit.
 **Fear**[N]
 
 In pre-assault phase, roll a dN on psychic damage for each enemy unit which has a psychic damage table (ignore armor and regular damage modifiers)
-Half number of dice rounded down from all enemy shaken units entering assault with you. Your enemy chooses which dice to remove if they represent different attacks
+In addition, double assault deflection dice versus shaken units.
 
 \pagebreak
 
@@ -715,6 +715,10 @@ This weapon may be fired a maxium of N times in a match. Many of these weapons a
 
 Only applies when target is a robot. Roll 1 + one die per minor acid token on target. The robot gets one shaken token per roll of N+. Major acid counts as 3 minor acid tokens in this regard. (1st shaken token is duplicated as always)
 
+**Evation[N+]**
+
+Ignore area attacks at N+. 
+
 
 **Heal(N, unit, phase)**
 
@@ -737,7 +741,7 @@ Healing only works on biological units. You have N points to spend on the follow
 **Repair(N, unit, phase)**
 
 N: a number \\
-Unit: self or any unit in same hex \\
+Unit: self, other or any unit in same hex \\
 Phase: Either first or second healing phase\\
 
 Repear do not work on biological units. You have N points to spend on the following actions:
@@ -860,18 +864,17 @@ Follow the instructions for each hex based effect
 **Poison** **Cloud** [N] 
 
 
-Area(12+): roll a d12 per model in hex. At 12, apply a poison[N] to target, and do dN in crew damage.
-Note that 
+Area(5+): roll a die per unit, at 5+, target unit gets a poison[N], and take dN in crew damage. 
+
 
 **Acid** **Cloud** [Minor] 
 
-Area(12+) roll a d12 per model in hex. At 12 place a minor acid on the unit.
+Area(5+) roll a die per unit, at 5+ target units get a minor acid token.
 
 
 **Acid** **Cloud** [Major] 
 
-Roll a die per unit in hex. At 12 place a regular acid on the unit.
-
+Area(5+) roll a die per unit, at 5+ target units get a acid token.
 
 
 **Poison** & **Acid** **Cloud** [N, minor/major] = poison Cloud[N] + acid Cloud [minor/major]
@@ -880,7 +883,7 @@ Roll a die per unit in hex. At 12 place a regular acid on the unit.
 
 **Hex** **on** **Fire**\
 When setting a hex on fire, place a smoke and fire token in the hex.
-When encountering a fire, Roll a d12 per unit, at 12+ set that unit on fire.
+When encountering a fire, Roll a d6 per unit, at 6+ set that unit on fire.
 
 **Smoke**
 Blocks line of sight and gives to-hit penalties, which stacks with other terrain features.
