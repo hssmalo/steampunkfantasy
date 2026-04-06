@@ -1,0 +1,125 @@
+"""Type aliases for SteamPunkFantasy."""
+
+from typing import Annotated, Literal, cast
+
+from pydantic import BeforeValidator
+
+from spf.schemas import StrictModel
+
+type Angles[T] = list[T]
+type DieResult = str
+type Die = str
+type FireOrder = list[str]
+type MovementOrder = list[str]
+type ArmorPenetration = int | Literal["N/A"]
+type UnitName = str
+type ModelName = str
+type EquipmentName = str
+type DamageTable = list[str]
+
+type DamageTableName = Literal["crew", "critical", "inner", "psychic", "regular"]
+type EquipmentHolder = Literal[
+    "independent",
+    "grenades",
+    "hands",
+    "mechanical_tentacles",
+    "specialization",
+    "tentacles",
+]
+type ArmyName = Literal[
+    "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"
+]
+type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
+type UnitSpecial = Literal[
+    "Hans Sverre's favorite rules",
+    "Forward Position",
+    "Take Cover",
+    "Fire Order",
+    "To Hit",
+    "Evation",
+    "Chase",
+    "Transport",
+    "Tow",
+    "Resistance",
+    "Immunity",
+    "Repair",
+    "Heal",
+    "Repairing",
+    "Suicide",
+    "LoS",
+    "Terror",
+    "Poison Cloud",
+    "Fog",
+]
+type ModelType = Literal[
+    "Elite",
+    "Bio",
+    "Bio Crew",
+    "Crew",
+    "Mechanical",
+    "Illusion",
+    "Infantry",
+    "Cavalry",
+    "Vehicle",
+    "Motorcycle",
+    "Helicopter",
+    "Zeppelin",
+    "Steampowerarmor",
+    "Walking",
+    "Floating",
+    "Flying",
+    "Tracked",
+    "Wheeled",
+    "Scout",
+    "Elk",
+    "Frog",
+    "Drone",
+    "Carrier",
+    "Towed",
+    "Monster",
+    "Tinkerer",
+    "Brother in Arms",
+    "Roboprosthetic",
+    "Amphibian",
+    "Engineer",
+    "Medic",
+]
+
+
+class Cost(StrictModel):
+    mp: int = 0
+    cp: int = 0
+    xp: int = 0
+    ip: int = 0
+
+
+class EquipmentLimit(StrictModel):
+    holder: EquipmentHolder
+    limit: int
+
+
+def _parse_equipment_limit(equipment_limit: str) -> EquipmentLimit:
+    """Parse an equipment limit string into a model."""
+    holder, _, number = equipment_limit.partition(":")
+    limit = 999 if number == "∞" else int(number)
+    return EquipmentLimit(holder=cast("EquipmentHolder", holder), limit=limit)
+
+
+type ParsedEquipmentLimit = Annotated[
+    EquipmentLimit, BeforeValidator(_parse_equipment_limit)
+]
+
+
+class Requirement(StrictModel):
+    key: str
+    value: int | ModelType
+
+
+def _parse_requirement(requirement: str) -> Requirement:
+    """Parse a requirement string into a model."""
+    key, _, value_or_type = requirement.partition(":")
+    value = cast("ModelType", value_or_type) if key == "type" else int(value_or_type)
+    return Requirement(key=key, value=value)
+
+
+type ParsedRequirement = Annotated[Requirement, BeforeValidator(_parse_requirement)]
