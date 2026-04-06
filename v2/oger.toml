@@ -86,7 +86,7 @@
 	models = ["drone_swarm", "drone_swarm","drone_swarm","drone_swarm","drone_swarm"]
 	size = "tiny"
 	cost.cp = 1
-	special =  ["Once speed is rest, considered this unit destroied without enemy gaining victory points for it", "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"]
+	special =  ["Once speed is rest, considered this unit destroied without enemy gaining victory points for it", "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points", "Evation[3+]"]
 	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
 
 	[oger.units.drone_swarm.orders.fire]
@@ -112,7 +112,7 @@
 	models = ["repair_drone", "repair_drone","repair_drone","repair_drone"]
 	size = "tiny"
 	cost.cp = 4
-	special =  ["Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models", "May share hex with a huge unit", "If this unit shares a hex with another unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"]
+	special =  ["Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models", "May share hex with a huge unit", "If this unit shares a hex with another unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points", "Evation[3+]"]
 	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
 
 
@@ -132,7 +132,7 @@
 	size = "tiny"
 	cost.cp = 2
 	cost.xp = 2
-	special =  ["Heal[N, other, 2nd healing] where N is the number of alive medic drones models", "May share hex with a huge unit", "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"]
+	special =  ["Heal[N, other, 2nd healing] where N is the number of alive medic drones models", "May share hex with a huge unit", "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points", "Evation[3+]"]
 	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
 
 
@@ -529,7 +529,7 @@
     race = "oger"
     cost.ip = 1
     requires = [["independent:1"], ["type:carrier"]]
-    special = ["Gives a supply of 4 {{\\it drone swarm}} units which this model carries"]
+    special = ["Gives a supply of 3 {{\\it drone swarm}} units which this model carries"]
 
 
 
@@ -556,7 +556,7 @@
 	     angle = [true, true, true, true]
 	     damage = "d8+3 if penetrating all armor"
 	     ap = 6
-	     special = ["Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit", "Place poison cloud[6] in the target hex"]
+	     special = ["Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit", "In addition, wether you hit or not, Area[5+], AP=4, damage=d8 in the target hex"]
 
 
    [oger.equipments.fancy_oger_rifle]

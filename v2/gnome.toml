@@ -823,7 +823,7 @@
              angle= [true, true, true, true]
              damage = "d4-2+d6 psychic damge + d4 crew damage"
              ap = 0
-	     special = [ "If you use the 'amplified fire' order, and if you hit the enemy unit atleast once, the target must break if possible (if it has a lower speed available). Reduce the speed one step"]
+	     special = ["If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step"]
 	     
 	     [gnome.equipments.frost_ray.orders_gained.fire]
 	     still = [["-", "amplified fire"]]
