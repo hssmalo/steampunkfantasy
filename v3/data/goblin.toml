@@ -559,13 +559,13 @@ slow_flying = [["rev", "-", "B[still]"]]
 still = [["Load", "-"], ["-", "Load"]]
 
 
-[equipments.poison_dager]
-name = "Poison Deflection Dager"
+[equipments.poison_dagger]
+name = "Poison Deflection Dagger"
 race = "goblin"
 cost.cp = 2
 requires = [["Independent:1"], ["type:Infantry"]]
 
-[equipments.poison_dager.assault]
+[equipments.poison_dagger.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 special.append = ["Each deflected hit gives enemy poison[4]"]
