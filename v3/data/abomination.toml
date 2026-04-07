@@ -453,7 +453,7 @@ crew = [
 [models.abomination_infantry]
 name = "Abomination Infantry"
 race = "abomination"
-equipment_limit = ["independent:∞", "hands:2", "tentacles:4"]
+equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
 equipments = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
@@ -472,7 +472,7 @@ special = [
 [models.hippopotamus_riders]
 name = "Hippopotamus Riders"
 race = "abomination"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = ["multipurpose_mortar", "oversized_musket"]
 type = ["Bio", "Walking", "Amphibian"]
 
@@ -488,7 +488,7 @@ special = ["+100\\% strength and deflections versus shaken units"]
 [models.horror]
 name = "Horror"
 race = "abomination"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = []
 type = ["Bio", "Monster", "Walking", "Amphibian"]
 
@@ -525,7 +525,7 @@ special = [
 name = "Squ"
 race = "abomination"
 equipments = ["confution_gas_launcher"]
-equipment_limit = ["independent:∞", "mechanical_tentacles:2"]
+equipment_limit = ["Independent:∞", "Mechanical Tentacles:2"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
 [models.squ.assault]
@@ -542,7 +542,7 @@ special = ["+100\\% strength and deflections versus shaken units"]
 name = "Frost88"
 race = "abomination"
 equipments = ["twin_frost_ray", "main_gun"]
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
 [models.frost88.assault]
@@ -559,7 +559,7 @@ special = ["+100\\% strength and deflections versus shaken units"]
 name = "Elite Abomination Infantry"
 race = "abomination"
 cost.xp = 1
-equipment_limit = ["independent:∞", "hands:2", "tentacles:8"]
+equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:8"]
 equipments = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = ["abomination:infantry"]
@@ -584,7 +584,7 @@ special = [
 [models.giant_frog_rider]
 name = "Giant Frog Rider"
 race = "abomination"
-equipment_limit = ["independent:∞", "hands:2", "tentacles:4"]
+equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
 equipments = ["frog_spit", "mechanical_melee_contraption"]
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
 
@@ -621,7 +621,7 @@ special = [
 [equipments.multipurpose_gun]
 name = "Multipurpose Gun"
 race = "abomination"
-requires = [["hands:2"]]
+requires = [["Hands:2"]]
 
 [equipments.multipurpose_gun.range]
 range = 5
@@ -636,7 +636,7 @@ special = [
 name = "Tentacle CracleSpears"
 race = "abomination"
 cost.cp = 2
-requires = [["tentacles:2"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 #requires = [["type:Infantry","type:Cavalry"]]
 
 [equipments.tentacle_craclespears.assault]
@@ -654,7 +654,7 @@ special.append = [
 name = "Tentacle Axes"
 race = "abomination"
 cost.cp = 1
-requires = [["tentacles:2"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipments.tentacle_axes.assault]
 
@@ -665,7 +665,7 @@ strength.add = [2, 0, 0, 0]
 name = "Tentacle Shield"
 race = "abomination"
 cost.cp = 2
-requires = [["tentacles:1"], ["type:Infantry"]]
+requires = [["Tentacles:1"], ["type:Infantry"]]
 special = ["Unit gain [3, 0, 0, 0] in armor. Do not stack"]
 
 [equipments.tentacle_shield.assault]
@@ -686,7 +686,7 @@ special = ["Unit gain [4, 3, 3, 0] in armor."]
 name = "Fog grenade Mortar"
 race = "abomination"
 cost.cp = 4
-requires = [["tentacles:4"], ["type:Infantry"]]
+requires = [["Tentacles:4"], ["type:Infantry"]]
 
 
 [equipments.fog_grenade_mortar.range]
@@ -731,7 +731,7 @@ special = ["Fire two shot per fire order", "Gear disruption[6+]"]
 name = "Tentacle Dart"
 race = "abomination"
 cost.cp = 1
-requires = [["tentacles:1"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Tentacles:1"], ["type:Infantry", "type:Cavalry"]]
 
 
 [equipments.tentacle_dart.range]

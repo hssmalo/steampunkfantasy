@@ -19,12 +19,12 @@ type DamageTable = list[str]
 
 type DamageTableName = Literal["crew", "critical", "inner", "psychic", "regular"]
 type EquipmentHolder = Literal[
-    "independent",
-    "grenades",
-    "hands",
-    "mechanical_tentacles",
-    "specialization",
-    "tentacles",
+    "Independent",
+    "Grenades",
+    "Hands",
+    "Mechanical Tentacles",
+    "Specialization",
+    "Tentacles",
 ]
 type ArmyName = Literal[
     "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"
@@ -111,7 +111,7 @@ type ParsedEquipmentLimit = Annotated[
 
 
 class Requirement(StrictModel):
-    key: str
+    key: EquipmentHolder | Literal["type"]
     value: int | ModelType
 
 

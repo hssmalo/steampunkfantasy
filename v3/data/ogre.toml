@@ -597,7 +597,7 @@ crew = [
 [models.ogre_infantry]
 name = "Ogre Infantry"
 race = "ogre"
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking"]
 
@@ -613,7 +613,7 @@ special = []
 [models.ogre_robot]
 name = "Ogre Robot"
 race = "ogre"
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Mechanical"]
 
@@ -630,7 +630,7 @@ special = []
 [models.ogre_assault_scout]
 name = "Ogre Scout"
 race = "ogre"
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["gear_pistol", "ogre_helbard_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 
@@ -649,7 +649,7 @@ name = "Ogre Scout Engineer"
 race = "ogre"
 cost.xp = 4
 replaces = ["ogre_assault_scout"]
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["gear_pistol", "ogre_helbard_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 special = [
@@ -671,7 +671,7 @@ special = []
 [models.drone_swarm]
 name = "Drone Swarm"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = ["tiny_fancy_gear_pistol"]
 type = ["Mechanical", "Floating", "Drone"]
 
@@ -687,7 +687,7 @@ special = ["Pre Assault escape: 4+"]
 [models.repair_drone]
 name = "Repair Drone"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = []
 type = ["Mechanical", "Floating", "Drone"]
 
@@ -704,7 +704,7 @@ special = ["Pre Assault escape: 4+"]
 [models.medic_drone]
 name = "Medic Drone"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = []
 type = ["Mechanical", "Floating", "Drone"]
 
@@ -721,7 +721,7 @@ special = ["Pre Assault escape: 4+"]
 [models.healing_drone]
 name = "Repair Drone"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = []
 type = ["Mechanical", "Floating", "Drone"]
 
@@ -738,7 +738,7 @@ special = ["Pre Assault escape: 4+"]
 [models.main_engine]
 name = "Main Engine"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = ["ogre_gun"]
 type = ["Mechanical", "Tracked", "Drone", "Carrier"]
 
@@ -757,7 +757,7 @@ special = [
 [models.artillery_wagon]
 name = "Artillery Wagon"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = ["ogre_artillery"]
 type = ["Mechanical", "Towed", "Drone"]
 special = ["Need command: -2 to hit if unit is not connected to a main engine"]
@@ -777,7 +777,7 @@ special = [
 [models.broadside_wagon]
 name = "Broadside Wagon"
 race = "ogre"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipments = ["ogre_broadside"]
 type = ["Mechanical", "Towed", "Drone", "Scout"]
 
@@ -798,7 +798,7 @@ name = "Ogre Elite Infantry"
 race = "ogre"
 replaces = ["ogre_infantry"]
 cost.xp = 1
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
 special = ["Good shot: +1 to hit"]
@@ -817,7 +817,7 @@ name = "Elite Ogre Robot"
 race = "ogre"
 replaces = ["ogre_robot"]
 cost.xp = 1
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
 special = ["Good shot: +1 to hit"]
@@ -837,7 +837,7 @@ name = "Ogre Medic"
 race = "ogre"
 replaces = ["ogre_infantry"]
 cost.xp = 1
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Medic"]
 special = ["Healing[1, any, 1st healing]"]
@@ -857,7 +857,7 @@ name = "Ogre Engineer"
 race = "ogre"
 replaces = ["ogre_infantry"]
 cost.xp = 2
-equipment_limit = ["independent:∞", "hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 special = [
@@ -882,7 +882,7 @@ special = ["Cunning Assault[1 for 2]"]
 name = "Ogre Sniper Rifle"
 race = "ogre"
 model_cost.cp = 6
-requires = [["hands:2"], ["type:Infantry"], ["type:Elite"]]
+requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
 [equipments.ogre_sniper_rifle.range]
 range = 8
@@ -898,7 +898,7 @@ special = [
 [equipments.ogre_rifle]
 name = "Ogre Rifle"
 race = "ogre"
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.ogre_rifle.range]
 range = 4
@@ -912,7 +912,7 @@ special = []
 name = "Drone Supply"
 race = "ogre"
 cost.ip = 1
-requires = [["independent:1"], ["type:Carrier"]]
+requires = [["Independent:1"], ["type:Carrier"]]
 special = ["Gives a supply of 3 {{\\it drone swarm}} units which this model carries"]
 
 
@@ -949,7 +949,7 @@ special = [
 name = "Fancy Ogre Rifle"
 race = "ogre"
 cost.cp = 2
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.fancy_ogre_rifle.range]
 range = 4
@@ -976,7 +976,7 @@ special = []
 name = "Fancy Arquebus"
 race = "ogre"
 cost.cp = 4
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.fancy_arquebus.range]
 range = 3
@@ -989,7 +989,7 @@ special = []
 [equipments.gear_pistol]
 name = "Gear Pistol"
 race = "ogre"
-requires = [["hands:2"], ["type:Scout"]]
+requires = [["Hands:2"], ["type:Scout"]]
 
 [equipments.gear_pistol.range]
 range = 3
@@ -1003,7 +1003,7 @@ special = []
 name = "Fancy Gear Pistol"
 race = "ogre"
 cost.cp = 1
-requires = [["hands:1"], ["type:Scout", "type:Infantry"]]
+requires = [["Hands:1"], ["type:Scout", "type:Infantry"]]
 
 [equipments.fancy_gear_pistol.range]
 range = 3
@@ -1032,7 +1032,7 @@ special = ["minor acid", "+3 to hit", "Start with two ammo"]
 [equipments.ogre_helbard_free]
 name = "Ogre Helbard"
 race = "ogre"
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.ogre_helbard_free.assault]
 special.append = [
@@ -1044,7 +1044,7 @@ special.append = [
 name = "Ogre Helbard"
 race = "ogre"
 cost.cp = 2
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.ogre_helbard.assault]
 special.append = [
@@ -1056,7 +1056,7 @@ special.append = [
 name = "Fancy Ogre Helbard with integrated fancy pistol"
 race = "ogre"
 model_cost.cp = 4
-requires = [["hands:2"], ["type:Scout", "type:Scout"], ["type:Elite"]]
+requires = [["Hands:2"], ["type:Scout", "type:Scout"], ["type:Elite"]]
 
 [equipments.fancy_ogre_helbard.assault]
 special.append = [

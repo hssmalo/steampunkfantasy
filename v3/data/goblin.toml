@@ -365,7 +365,7 @@ inner = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
 [models.goblin_infantry]
 name = "Goblin Infantry"
 race = "goblin"
-equipment_limit = ["independent:∞", "hands:2", "grenades:3", "specialization:1"]
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1"]
 equipments = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Walking"]
 
@@ -383,7 +383,7 @@ special = ["Cunning Assault[1 for 1]", "Pre assault retreat: 6+"]
 name = "Goblin Infantry Carrier"
 race = "goblin"
 equipments = ["light_mortar"]
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
 [models.goblin_infantry_carrier.assault]
@@ -400,7 +400,7 @@ special = []
 name = "Heavy Carrier"
 race = "goblin"
 equipments = ["goblin_bow_battery", "heavy_crossbow"]
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
 [models.heavy_carrier.assault]
@@ -417,7 +417,7 @@ special = []
 name = "Mechanical Fire Bird"
 race = "goblin"
 equipments = ["ring_of_fire"]
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 type = ["Drone", "Flying", "Mechanical"]
 
 [models.mechanical_fire_bird.assault]
@@ -434,7 +434,7 @@ special = ["Enemy hit at least once is set on fire"]
 name = "Elite Goblin Infantry"
 race = "goblin"
 cost.xp = 1
-equipment_limit = ["independent:∞", "hands:2", "grenades:2"]
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2"]
 equipments = ["goblin_bow"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = ["goblin:infantry"]
@@ -458,7 +458,7 @@ special = ["Cunning Assault[1 for 1]"]
 [equipments.goblin_bow]
 name = "Goblin bow"
 race = "goblin"
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.goblin_bow.range]
 range = 2
@@ -472,7 +472,7 @@ special = ["Always treated as loaded"]
 name = "Gear bow"
 race = "goblin"
 cost.cp = 2
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.gear_bow.range]
 range = 3
@@ -485,7 +485,7 @@ special = ["Always treated as loaded", "Gear Disruption[6+]"]
 name = "Clockwork Wings"
 race = "goblin"
 cost.cp = 6
-requires = [["type:Infantry"], ["independent:1"]]
+requires = [["type:Infantry"], ["Independent:1"]]
 special = []
 
 [equipments.clockwork_wings.assault]
@@ -521,7 +521,7 @@ fast_fly = [
 name = "Poison bow"
 race = "goblin"
 cost.cp = 4
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.poison_bow.range]
 range = 2
@@ -539,7 +539,7 @@ special = [
 name = "Ogre Rifle"
 race = "goblin"
 cost.cp = 2
-requires = [["hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipments.ogre_rifle.range]
 range = 2
@@ -563,7 +563,7 @@ still = [["Load", "-"], ["-", "Load"]]
 name = "Poison Deflection Dager"
 race = "goblin"
 cost.cp = 2
-requires = [["independent:1"], ["type:Infantry"]]
+requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipments.poison_dager.assault]
 deflection.add = [1, 0, 0, 0]
@@ -575,7 +575,7 @@ special.append = ["Each deflected hit gives enemy poison[4]"]
 name = "Combat Screw Driver"
 race = "goblin"
 cost.cp = 2
-requires = [["independent:1"], ["type:Infantry"]]
+requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipments.combat_screw_driver.assault]
 deflection.add = [1, 0, 0, 0]
@@ -588,7 +588,7 @@ special.append = [
 [equipments.goblin_grenade]
 name = "Goblin Grenade"
 race = "goblin"
-requires = [["grenades:1"], ["type:Infantry"]]
+requires = [["Grenades:1"], ["type:Infantry"]]
 
 [equipments.goblin_grenade.range]
 range = 1
@@ -601,7 +601,7 @@ special = ["Thrown weapon", "Always treated as loaded"]
 name = "Grenadier specialization"
 race = "goblin"
 cost.xp = 2
-requires = [["specialization:1"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 special = [
 	"For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)",
 	"Get +1 to hit for thrown weapons",
@@ -612,7 +612,7 @@ special = [
 name = "Archer spesialization"
 race = "goblin"
 cost.xp = 2
-requires = [["specialization:1"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 special = [
 	"For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit",
 ]
@@ -622,7 +622,7 @@ special = [
 name = "Acid Grenade"
 race = "goblin"
 cost.cp = 2
-requires = [["grenades:1"], ["type:Infantry"]]
+requires = [["Grenades:1"], ["type:Infantry"]]
 
 [equipments.acid_grenade.range]
 range = 1
@@ -640,7 +640,7 @@ special = [
 name = "Poison Grenade"
 race = "goblin"
 cost.cp = 2
-requires = [["grenades:1"], ["type:Infantry"]]
+requires = [["Grenades:1"], ["type:Infantry"]]
 
 [equipments.poison_grenade.range]
 range = 1
