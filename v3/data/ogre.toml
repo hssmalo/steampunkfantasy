@@ -116,6 +116,32 @@ regular = [
 ]
 
 
+[units.pet_panther]
+race = "ogre"
+name = "Pet Panther"
+models = ["pet_panther", "pet_panther"]
+size = "Medium"
+cost.xp = 3
+shaken = "Movement set to slow. Movement order: [-,-,flee]."
+
+[units.pet_panther.special]
+"Forward Position" = "[1]"
+"Evation" = "[4+]"
+
+[units.pet_panther.orders.movement]
+still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["A+360°", "chase", "chase"]]
+fast = [["chase", "chase", "chase"], ["360°", "F", "B"]]
+
+[units.pet_panther.damage_tables]
+regular = [
+	"2-3: Bleed[4]",
+	"4-5: As below, +1 to future damage",
+	"6: unit destroyed",
+	"{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}",
+]
+psychic = ["4+: shaken"]
+
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
@@ -624,6 +650,23 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-2"
 ap = 2
+special = []
+
+
+[models.pet_panther]
+name = "Pet Panther"
+race = "ogre"
+equipment_limit = ["Independent:∞"]
+equipments = []
+type = ["Bio", "Monster", "Walking", "Scout"]
+
+[models.pet_panther.assault]
+strength = [4, 2, 1, 1]
+strength_die = "5+"
+deflection = [1, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6"
+ap = 1
 special = []
 
 
