@@ -51,7 +51,7 @@ class ModelConfig(StrictModel):
     type: list[t.ModelType]
     assault: AssaultConfig
     cost: t.Cost | None = None
-    replaces: list[t.ModelName] | None = None  # TODO: remove list
+    replaces: t.ModelName | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     special: list[str] = Field(default_factory=list)
 
@@ -106,7 +106,7 @@ class RaceConfig(StrictModel):
         model_names = self.models.keys()
         for unit in self.units.values():
             if any((failed := model) not in model_names for model in unit.models):
-                msg = f"'{failed}' not a valid model name for {unit.name}"  # type: ignore[ty:unresolved-reference]
+                msg = f"'{failed}' not a valid model name for {unit.name}"
                 raise ValueError(msg)
         return self
 
@@ -119,7 +119,7 @@ class RaceConfig(StrictModel):
                 (failed := equipment) not in equipment_names
                 for equipment in model.equipments
             ):
-                msg = f"'{failed}' not a valid model name for {model.name}"  # type: ignore[ty:unresolved-reference]
+                msg = f"'{failed}' not a valid model name for {model.name}"
                 raise ValueError(msg)
         return self
 
@@ -128,13 +128,10 @@ class RaceConfig(StrictModel):
         """Check names of model upgrades is model name."""
         model_names = self.models.keys()
         for model in self.models.values():
-            if any(
-                (failed := model_name) not in model_names
-                for model_name in model.replaces or []
-            ):
+            if model.replaces is not None and model.replaces not in model_names:
                 msg = (
-                    f"'{failed}' not a valid model"  # type: ignore[ty:unresolved-reference]
-                    f" name in {model.name} replacement list"
+                    f"'{model.replaces}' is not a valid model"
+                    f" name for {model.name} replacement"
                 )
                 raise ValueError(msg)
         return self

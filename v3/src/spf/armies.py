@@ -166,7 +166,7 @@ def upgrade_unit(
     model_idx, existing = _resolve_model(unit, model_key)
 
     upgrade_config = race_config.models[upgrade_model_name]
-    if upgrade_config.replaces is None or existing.name not in upgrade_config.replaces:
+    if upgrade_config.replaces is None or existing.name != upgrade_config.replaces:
         msg = (
             f"Model '{upgrade_model_name}' cannot replace '{existing.name}': "
             f"not listed in its replaces field"
@@ -225,7 +225,7 @@ def available_models(
     return [
         cfg
         for cfg in race_config.models.values()
-        if cfg.replaces is not None and model.name in cfg.replaces
+        if cfg.replaces is not None and model.name == cfg.replaces
     ]
 
 
@@ -273,13 +273,11 @@ def validate_team(army: Army, race_config: RaceConfig) -> list[str]:
         for i, team_model in enumerate(unit.models):
             default_model_name = unit.config.models[i]
             # Validate model replacement
-            if team_model.name != default_model_name:
-                replaces = team_model.config.replaces or []
-                if default_model_name not in replaces:
-                    errors.append(
-                        f"Unit '{unit.name}': model '{team_model.name}' cannot replace "
-                        f"'{default_model_name}' (not in its replaces list)"
-                    )
+            if default_model_name not in {team_model.name, team_model.config.replaces}:
+                errors.append(
+                    f"Unit '{unit.name}': model '{team_model.name}' cannot replace "
+                    f"'{default_model_name}' (not in its replaces list)"
+                )
             # Validate equipment upgrades
             for equip_key in team_model.upgrades:
                 equip = race_config.equipments[equip_key]

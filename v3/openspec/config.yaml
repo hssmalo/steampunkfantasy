@@ -15,4 +15,4 @@ rules:
     - Always include a "Non-goals" section
   tasks:
     - Break tasks into short, actionable chunks
-    - Always include a task section running tests, linters, formatters, and type checkers
+    - Always include a task section running tests, linters, formatters, type checkers, and spell checkers

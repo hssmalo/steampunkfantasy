@@ -19,9 +19,9 @@ uv run ruff check src/
 uv run ruff format src/
 
 # Type checking
-uv run ty check src/
+uv run pyright
 
-# Check typos
+# Spell checking
 uv run typos
 ```
 

@@ -693,7 +693,7 @@ special = []
 name = "Ogre Scout Engineer"
 race = "ogre"
 cost.xp = 4
-replaces = ["ogre_assault_scout"]
+replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["gear_pistol", "ogre_helbard_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
@@ -841,7 +841,7 @@ special = [
 [models.elite_ogre_infantry]
 name = "Ogre Elite Infantry"
 race = "ogre"
-replaces = ["ogre_infantry"]
+replaces = "ogre_infantry"
 cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
@@ -860,7 +860,7 @@ special = []
 [models.elite_ogre_robot]
 name = "Elite Ogre Robot"
 race = "ogre"
-replaces = ["ogre_robot"]
+replaces = "ogre_robot"
 cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
@@ -880,7 +880,7 @@ special = []
 [models.ogre_medic]
 name = "Ogre Medic"
 race = "ogre"
-replaces = ["ogre_infantry"]
+replaces = "ogre_infantry"
 cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
@@ -900,7 +900,7 @@ special = ["Cunning Assault[1 for 2]"]
 [models.ogre_engineer]
 name = "Ogre Engineer"
 race = "ogre"
-replaces = ["ogre_infantry"]
+replaces = "ogre_infantry"
 cost.xp = 2
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
@@ -986,7 +986,7 @@ damage = "d8+3 if penetrating all armor"
 ap = 6
 special = [
 	"Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit",
-	"In addition, wether you hit or not, Area[5+], AP=4, damage=d8 in the target hex",
+	"In addition, whether you hit or not, Area[5+], AP=4, damage=d8 in the target hex",
 ]
 
 

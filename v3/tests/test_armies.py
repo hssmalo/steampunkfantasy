@@ -65,7 +65,7 @@ def simple_race() -> RaceConfig:
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2", "Grenades:1"],
+                equipment_limit=["Hands:2", "Grenades:1"],  # pyright: ignore[reportArgumentType]
                 equipments=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -74,12 +74,12 @@ def simple_race() -> RaceConfig:
             "elite_soldier": ModelConfig(
                 race="goblin",
                 name="Elite Soldier",
-                equipment_limit=["Hands:2"],
+                equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
                 equipments=[],
                 type=["Infantry", "Elite"],
                 assault=_ASSAULT,
                 cost=t.Cost(xp=1),
-                replaces=["soldier"],
+                replaces="soldier",
             ),
         },
         equipments={
@@ -87,7 +87,7 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Sword",
                 cost=t.Cost(cp=2),
-                requires=[["Hands:1"], ["type:Infantry"]],
+                requires=[["Hands:1"], ["type:Infantry"]],  # pyright: ignore[reportArgumentType]
             ),
             "shield": EquipmentConfig(
                 race="goblin",
@@ -132,7 +132,7 @@ def test_team_model_default_upgrades(simple_race: RaceConfig) -> None:
 def test_team_model_is_frozen(simple_race: RaceConfig) -> None:
     model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=())
     with pytest.raises((AttributeError, TypeError)):
-        model.upgrades = ("sword",)  # type: ignore[misc]
+        model.upgrades = ("sword",)  # pyright: ignore[reportAttributeAccessIssue]
 
 
 def test_team_unit_default_models_match_config(one_unit_army: Army) -> None:
@@ -142,7 +142,7 @@ def test_team_unit_default_models_match_config(one_unit_army: Army) -> None:
 
 def test_team_is_frozen(empty_army: Army) -> None:
     with pytest.raises((AttributeError, TypeError)):
-        empty_army.units = ()  # type: ignore[misc]
+        empty_army.units = ()  # pyright: ignore[reportAttributeAccessIssue]
 
 
 def test_team_allows_duplicate_unit_in_army(simple_race: RaceConfig) -> None:
@@ -376,7 +376,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         race="goblin",
         name="Elite Sword",
         cost=t.Cost(cp=3),
-        requires=[["type:Elite"]],  # requires Elite type, soldier is not Elite
+        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
     )
     army = RaceConfig(
         races=simple_race.races,
@@ -547,7 +547,7 @@ def test_validate_team_detects_unsatisfied_equipment_requires(
         race="goblin",
         name="Elite Sword",
         cost=t.Cost(cp=3),
-        requires=[["type:Elite"]],
+        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
     )
     army = RaceConfig(
         races=simple_race.races,

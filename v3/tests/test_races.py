@@ -42,7 +42,7 @@ def test_get_race_goblin_name() -> None:
 
 def test_get_race_invalid_raises_value_error() -> None:
     with pytest.raises(ValueError, match="Unknown race"):
-        get_metadata("invalid_army")  # type: ignore[arg-type]
+        get_metadata("invalid_army")  # pyright: ignore[reportArgumentType]
 
 
 def test_get_units_returns_dict_of_unit_configs() -> None:
