@@ -7,6 +7,7 @@ from spf.schemas import StrictModel
 
 class PathsConfig(StrictModel):
     data: Path
+    templates: Path
 
 
 class SteamPunkFantasyConfig(StrictModel):

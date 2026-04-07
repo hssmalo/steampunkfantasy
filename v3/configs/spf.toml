@@ -1,2 +1,3 @@
 [paths]
 data = "{project_path}/data"
+templates = "{project_path}/templates"

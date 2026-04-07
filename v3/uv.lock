@@ -181,6 +181,15 @@ wheels = [
 ]
 
 [[package]]
+name = "munch"
+version = "4.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/2b/45098135b5f9f13221820d90f9e0516e11a2a0f55012c13b081d202b782a/munch-4.0.0.tar.gz", hash = "sha256:542cb151461263216a4e37c3fd9afc425feeaf38aaa3025cd2a981fadb422235", size = 19089, upload-time = "2023-07-01T09:49:35.98Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/56/b3/7c69b37f03260a061883bec0e7b05be7117c1b1c85f5212c72c8c2bc3c8c/munch-4.0.0-py2.py3-none-any.whl", hash = "sha256:71033c45db9fb677a0b7eb517a4ce70ae09258490e419b0e7f00d1e386ecb1b4", size = 9950, upload-time = "2023-07-01T09:49:34.472Z" },
+]
+
+[[package]]
 name = "parso"
 version = "0.8.6"
 source = { registry = "https://pypi.org/simple" }
@@ -253,6 +262,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/cd/05/0a34433a064256a578f1783a10da6df098ceaa4a57bbeaa96a6c0352786b/pure_eval-0.2.3.tar.gz", hash = "sha256:5f4e983f40564c576c7c8635ae88db5956bb2229d7e9237d03b3c0b0190eaf42", size = 19752, upload-time = "2024-07-21T12:58:21.801Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8e/37/efad0257dc6e593a18957422533ff0f87ede7c9c6ea010a2177d738fb82f/pure_eval-0.2.3-py3-none-any.whl", hash = "sha256:1db8e35b67b3d218d818ae653e27f06c3aa420901fa7b081ca98cbedc874e0d0", size = 11842, upload-time = "2024-07-21T12:58:20.04Z" },
+]
+
+[[package]]
+name = "pyconfs"
+version = "0.5.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyplugs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c3/b3/902399a6e6b8066ba7649fc0b666aca5b0405233d7a8edd4814b16380d8d/pyconfs-0.5.7.tar.gz", hash = "sha256:10becfdf0f2087db66cad6e1e9243cee25db92a08d8cc0eba0df8d773569963b", size = 22184, upload-time = "2025-08-25T16:40:29.225Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/08/fa/0855f478d5e270fdb9a14c62ba018534ca1f9963ceaf5b3b095672572ce5/pyconfs-0.5.7-py3-none-any.whl", hash = "sha256:e13011ec1c99db838ba437730962a5ee9b79cad2b9b91bf84c3bf7b7d69af92c", size = 19592, upload-time = "2025-08-25T16:40:28.028Z" },
 ]
 
 [[package]]
@@ -417,6 +438,8 @@ source = { editable = "." }
 dependencies = [
     { name = "configaroo" },
     { name = "cyclopts" },
+    { name = "munch" },
+    { name = "pyconfs" },
     { name = "pydantic" },
 ]
 
@@ -432,6 +455,8 @@ dev = [
 requires-dist = [
     { name = "configaroo", specifier = ">=0.6.1" },
     { name = "cyclopts", specifier = ">=4.10.1" },
+    { name = "munch", specifier = ">=4.0.0" },
+    { name = "pyconfs", specifier = ">=0.5.7" },
     { name = "pydantic", specifier = ">=2.12.5" },
 ]
 
