@@ -1,4 +1,4 @@
-"""Team data structures and builder functions for SteamPunkFantasy."""
+"""Army data structures and builder functions for SteamPunkFantasy."""
 
 from dataclasses import dataclass, field
 
@@ -7,7 +7,7 @@ from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig, UnitConfi
 
 
 @dataclass(frozen=True)
-class TeamModel:
+class ArmyModel:
     """One model slot within a team unit, with any equipment upgrades applied."""
 
     name: str
@@ -17,21 +17,21 @@ class TeamModel:
 
 
 @dataclass(frozen=True)
-class TeamUnit:
+class ArmyUnit:
     """One unit instance within a team, with its (possibly upgraded) model slots."""
 
     name: str
     config: UnitConfig = field(repr=False)
     # Positionally matches config.models; entries may be upgrade replacements.
-    models: tuple[TeamModel, ...]
+    models: tuple[ArmyModel, ...]
 
 
 @dataclass(frozen=True)
-class Team:
+class Army:
     """A player's assembled force from a single army."""
 
-    army: t.RaceName
-    units: tuple[TeamUnit, ...]
+    race: t.RaceName
+    units: tuple[ArmyUnit, ...]
 
 
 # ---------------------------------------------------------------------------
@@ -41,19 +41,19 @@ class Team:
 
 def _make_default_team_model(
     model_name: t.ModelName, race_config: RaceConfig
-) -> TeamModel:
-    return TeamModel(
+) -> ArmyModel:
+    return ArmyModel(
         name=model_name, config=race_config.models[model_name], upgrades=()
     )
 
 
-def _make_default_team_unit(unit_name: t.UnitName, race_config: RaceConfig) -> TeamUnit:
+def _make_default_team_unit(unit_name: t.UnitName, race_config: RaceConfig) -> ArmyUnit:
     unit_config = race_config.units[unit_name]
     models = tuple(
         _make_default_team_model(model_name, race_config)
         for model_name in unit_config.models
     )
-    return TeamUnit(name=unit_name, config=unit_config, models=models)
+    return ArmyUnit(name=unit_name, config=unit_config, models=models)
 
 
 def _add_cost(a: t.Cost, b: t.Cost | None) -> t.Cost:
@@ -63,7 +63,7 @@ def _add_cost(a: t.Cost, b: t.Cost | None) -> t.Cost:
 
 
 def _remaining_slots(
-    model: TeamModel, race_config: RaceConfig
+    model: ArmyModel, race_config: RaceConfig
 ) -> dict[t.EquipmentHolder, int]:
     """Compute remaining holder slots after all current equipment (defaults + upgrades).
 
@@ -89,7 +89,7 @@ def _remaining_slots(
 
 def _satisfies_requirement(
     req: t.Requirement,
-    model: TeamModel,
+    model: ArmyModel,
     remaining_slots: dict[t.EquipmentHolder, int],
 ) -> bool:
     if req.key == "type":
@@ -100,7 +100,7 @@ def _satisfies_requirement(
 
 def _satisfies_requires(
     requires: list[list[t.Requirement]],
-    model: TeamModel,
+    model: ArmyModel,
     race_config: RaceConfig,
 ) -> bool:
     """Evaluate CNF requires: every outer group must have ≥1 satisfied inner requirement."""
@@ -111,8 +111,8 @@ def _satisfies_requires(
     )
 
 
-def _resolve_unit(team: Team, unit_key: tuple[t.UnitName, int]) -> tuple[int, TeamUnit]:
-    """Return (position_in_tuple, TeamUnit) for the given (name, occurrence_index) key."""
+def _resolve_unit(team: Army, unit_key: tuple[t.UnitName, int]) -> tuple[int, ArmyUnit]:
+    """Return (position_in_tuple, ArmyUnit) for the given (name, occurrence_index) key."""
     name, occurrence = unit_key
     count = 0
     for i, unit in enumerate(team.units):
@@ -124,9 +124,9 @@ def _resolve_unit(team: Team, unit_key: tuple[t.UnitName, int]) -> tuple[int, Te
 
 
 def _resolve_model(
-    unit: TeamUnit, model_key: tuple[t.ModelName, int]
-) -> tuple[int, TeamModel]:
-    """Return (position_in_tuple, TeamModel) for the given (name, occurrence_index) key."""
+    unit: ArmyUnit, model_key: tuple[t.ModelName, int]
+) -> tuple[int, ArmyModel]:
+    """Return (position_in_tuple, ArmyModel) for the given (name, occurrence_index) key."""
     name, occurrence = model_key
     count = 0
     for i, model in enumerate(unit.models):
@@ -142,22 +142,22 @@ def _resolve_model(
 # ---------------------------------------------------------------------------
 
 
-def add_unit(team: Team, unit_name: t.UnitName, race_config: RaceConfig) -> Team:
-    """Return a new Team with a unit (and its default models) appended."""
+def add_unit(team: Army, unit_name: t.UnitName, race_config: RaceConfig) -> Army:
+    """Return a new Army with a unit (and its default models) appended."""
     if unit_name not in race_config.units:
         raise ValueError(f"Unknown unit {unit_name!r}")
     new_unit = _make_default_team_unit(unit_name, race_config)
-    return Team(army=team.army, units=(*team.units, new_unit))
+    return Army(race=team.race, units=(*team.units, new_unit))
 
 
 def upgrade_unit(
-    team: Team,
+    team: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     upgrade_model_name: t.ModelName,
     race_config: RaceConfig,
-) -> Team:
-    """Return a new Team with one model slot replaced by an upgrade model.
+) -> Army:
+    """Return a new Army with one model slot replaced by an upgrade model.
 
     The upgrade model's replaces list must include the name of the model being replaced.
     """
@@ -171,21 +171,21 @@ def upgrade_unit(
             f"not listed in its replaces field"
         )
 
-    new_model = TeamModel(name=upgrade_model_name, config=upgrade_config, upgrades=())
+    new_model = ArmyModel(name=upgrade_model_name, config=upgrade_config, upgrades=())
     new_models = (*unit.models[:model_idx], new_model, *unit.models[model_idx + 1 :])
-    new_unit = TeamUnit(name=unit.name, config=unit.config, models=new_models)
+    new_unit = ArmyUnit(name=unit.name, config=unit.config, models=new_models)
     new_units = (*team.units[:unit_idx], new_unit, *team.units[unit_idx + 1 :])
-    return Team(army=team.army, units=new_units)
+    return Army(race=team.race, units=new_units)
 
 
 def upgrade_model(
-    team: Team,
+    team: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     equipment_name: t.EquipmentName,
     race_config: RaceConfig,
-) -> Team:
-    """Return a new Team with one equipment upgrade added to a model slot."""
+) -> Army:
+    """Return a new Army with one equipment upgrade added to a model slot."""
     unit_idx, unit = _resolve_unit(team, unit_key)
     model_idx, model = _resolve_model(unit, model_key)
 
@@ -199,17 +199,17 @@ def upgrade_model(
             f"Equipment {equipment_name!r} requires are not satisfied by model {model.name!r}"
         )
 
-    new_model = TeamModel(
+    new_model = ArmyModel(
         name=model.name, config=model.config, upgrades=(*model.upgrades, equipment_name)
     )
     new_models = (*unit.models[:model_idx], new_model, *unit.models[model_idx + 1 :])
-    new_unit = TeamUnit(name=unit.name, config=unit.config, models=new_models)
+    new_unit = ArmyUnit(name=unit.name, config=unit.config, models=new_models)
     new_units = (*team.units[:unit_idx], new_unit, *team.units[unit_idx + 1 :])
-    return Team(army=team.army, units=new_units)
+    return Army(race=team.race, units=new_units)
 
 
 def available_models(
-    team: Team,
+    team: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
@@ -225,7 +225,7 @@ def available_models(
 
 
 def available_equipment(
-    team: Team,
+    team: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
@@ -241,7 +241,7 @@ def available_equipment(
     ]
 
 
-def total_cost(team: Team, race_config: RaceConfig) -> t.Cost:
+def total_cost(team: Army, race_config: RaceConfig) -> t.Cost:
     """Return the total cost: unit base costs + upgrade model costs + upgrade equipment costs."""
     cost = t.Cost()
     for unit in team.units:
@@ -255,7 +255,7 @@ def total_cost(team: Team, race_config: RaceConfig) -> t.Cost:
     return cost
 
 
-def validate_team(team: Team, race_config: RaceConfig) -> list[str]:
+def validate_team(team: Army, race_config: RaceConfig) -> list[str]:
     """Return all rule violations in the team. Empty list means the team is valid."""
     errors: list[str] = []
     for unit in team.units:
