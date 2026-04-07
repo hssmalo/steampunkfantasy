@@ -6,7 +6,7 @@ from spf.schemas import StrictModel
 
 
 class PathsConfig(StrictModel):
-    data: Path
+    races: Path
     templates: Path
 
 

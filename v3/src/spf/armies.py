@@ -8,21 +8,19 @@ from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig, UnitConfi
 
 @dataclass(frozen=True)
 class ArmyModel:
-    """One model slot within a team unit, with any equipment upgrades applied."""
+    """One model slot within a army unit, with any equipment upgrades applied."""
 
     name: str
     config: ModelConfig = field(repr=False)
-    # Equipment keys added by the player as upgrades; excludes config.equipments defaults.
     upgrades: tuple[str, ...]
 
 
 @dataclass(frozen=True)
 class ArmyUnit:
-    """One unit instance within a team, with its (possibly upgraded) model slots."""
+    """One unit instance within a army, with its (possibly upgraded) model slots."""
 
     name: str
     config: UnitConfig = field(repr=False)
-    # Positionally matches config.models; entries may be upgrade replacements.
     models: tuple[ArmyModel, ...]
 
 
@@ -103,7 +101,7 @@ def _satisfies_requires(
     model: ArmyModel,
     race_config: RaceConfig,
 ) -> bool:
-    """Evaluate CNF requires: every outer group must have ≥1 satisfied inner requirement."""
+    """Evaluate CNF requires: every outer group must have ≥1 satisfied inner req."""
     remaining = _remaining_slots(model, race_config)
     return all(
         any(_satisfies_requirement(req, model, remaining) for req in group)
@@ -111,22 +109,23 @@ def _satisfies_requires(
     )
 
 
-def _resolve_unit(team: Army, unit_key: tuple[t.UnitName, int]) -> tuple[int, ArmyUnit]:
-    """Return (position_in_tuple, ArmyUnit) for the given (name, occurrence_index) key."""
+def _resolve_unit(army: Army, unit_key: tuple[t.UnitName, int]) -> tuple[int, ArmyUnit]:
+    """Return (index_in_tuple, ArmyUnit) for the given (name, occurrence_index) key."""
     name, occurrence = unit_key
     count = 0
-    for i, unit in enumerate(team.units):
+    for i, unit in enumerate(army.units):
         if unit.name == name:
             if count == occurrence:
                 return i, unit
             count += 1
-    raise KeyError(f"Unit {unit_key!r} not found in team")
+    msg = f"Unit '{unit_key}' not found in army"
+    raise KeyError(msg)
 
 
 def _resolve_model(
     unit: ArmyUnit, model_key: tuple[t.ModelName, int]
 ) -> tuple[int, ArmyModel]:
-    """Return (position_in_tuple, ArmyModel) for the given (name, occurrence_index) key."""
+    """Return (index_in_tuple, ArmyModel) for the given (name, occurrence_index) key."""
     name, occurrence = model_key
     count = 0
     for i, model in enumerate(unit.models):
@@ -134,7 +133,8 @@ def _resolve_model(
             if count == occurrence:
                 return i, model
             count += 1
-    raise KeyError(f"Model {model_key!r} not found in unit {unit.name!r}")
+    msg = f"Model '{model_key}' not found in unit '{unit.name}'"
+    raise KeyError(msg)
 
 
 # ---------------------------------------------------------------------------
@@ -142,16 +142,17 @@ def _resolve_model(
 # ---------------------------------------------------------------------------
 
 
-def add_unit(team: Army, unit_name: t.UnitName, race_config: RaceConfig) -> Army:
+def add_unit(army: Army, unit_name: t.UnitName, race_config: RaceConfig) -> Army:
     """Return a new Army with a unit (and its default models) appended."""
     if unit_name not in race_config.units:
-        raise ValueError(f"Unknown unit {unit_name!r}")
+        msg = f"Unknown unit '{unit_name}'"
+        raise ValueError(msg)
     new_unit = _make_default_team_unit(unit_name, race_config)
-    return Army(race=team.race, units=(*team.units, new_unit))
+    return Army(race=army.race, units=(*army.units, new_unit))
 
 
 def upgrade_unit(
-    team: Army,
+    army: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     upgrade_model_name: t.ModelName,
@@ -161,61 +162,65 @@ def upgrade_unit(
 
     The upgrade model's replaces list must include the name of the model being replaced.
     """
-    unit_idx, unit = _resolve_unit(team, unit_key)
+    unit_idx, unit = _resolve_unit(army, unit_key)
     model_idx, existing = _resolve_model(unit, model_key)
 
     upgrade_config = race_config.models[upgrade_model_name]
     if upgrade_config.replaces is None or existing.name not in upgrade_config.replaces:
-        raise ValueError(
-            f"Model {upgrade_model_name!r} cannot replace {existing.name!r}: "
+        msg = (
+            f"Model '{upgrade_model_name}' cannot replace '{existing.name}': "
             f"not listed in its replaces field"
         )
+        raise ValueError(msg)
 
     new_model = ArmyModel(name=upgrade_model_name, config=upgrade_config, upgrades=())
     new_models = (*unit.models[:model_idx], new_model, *unit.models[model_idx + 1 :])
     new_unit = ArmyUnit(name=unit.name, config=unit.config, models=new_models)
-    new_units = (*team.units[:unit_idx], new_unit, *team.units[unit_idx + 1 :])
-    return Army(race=team.race, units=new_units)
+    new_units = (*army.units[:unit_idx], new_unit, *army.units[unit_idx + 1 :])
+    return Army(race=army.race, units=new_units)
 
 
 def upgrade_model(
-    team: Army,
+    army: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     equipment_name: t.EquipmentName,
     race_config: RaceConfig,
 ) -> Army:
     """Return a new Army with one equipment upgrade added to a model slot."""
-    unit_idx, unit = _resolve_unit(team, unit_key)
+    unit_idx, unit = _resolve_unit(army, unit_key)
     model_idx, model = _resolve_model(unit, model_key)
 
     equip = race_config.equipments[equipment_name]
     if equip.cost is None:
-        raise ValueError(
-            f"Equipment {equipment_name!r} has no cost and cannot be used as an upgrade"
+        msg = (
+            f"Equipment '{equipment_name}' has no cost and cannot be used as an upgrade"
         )
+        raise ValueError(msg)
     if not _satisfies_requires(equip.requires, model, race_config):
-        raise ValueError(
-            f"Equipment {equipment_name!r} requires are not satisfied by model {model.name!r}"
+        msg = (
+            f"Equipment '{equipment_name}' requires are not satisfied"
+            f" by model '{model.name}'"
         )
+        raise ValueError(msg)
 
     new_model = ArmyModel(
         name=model.name, config=model.config, upgrades=(*model.upgrades, equipment_name)
     )
     new_models = (*unit.models[:model_idx], new_model, *unit.models[model_idx + 1 :])
     new_unit = ArmyUnit(name=unit.name, config=unit.config, models=new_models)
-    new_units = (*team.units[:unit_idx], new_unit, *team.units[unit_idx + 1 :])
-    return Army(race=team.race, units=new_units)
+    new_units = (*army.units[:unit_idx], new_unit, *army.units[unit_idx + 1 :])
+    return Army(race=army.race, units=new_units)
 
 
 def available_models(
-    team: Army,
+    army: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
 ) -> list[ModelConfig]:
     """Return army models whose replaces list includes the given model's name."""
-    _, unit = _resolve_unit(team, unit_key)
+    _, unit = _resolve_unit(army, unit_key)
     _, model = _resolve_model(unit, model_key)
     return [
         cfg
@@ -225,13 +230,16 @@ def available_models(
 
 
 def available_equipment(
-    team: Army,
+    army: Army,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
 ) -> list[EquipmentConfig]:
-    """Return equipment upgrades valid for the given model (have cost, satisfies requires)."""
-    _, unit = _resolve_unit(team, unit_key)
+    """Return equipment upgrades valid for the given model.
+
+    The upgrade has a cost and satisfies requires.
+    """
+    _, unit = _resolve_unit(army, unit_key)
     _, model = _resolve_model(unit, model_key)
     return [
         cfg
@@ -241,13 +249,16 @@ def available_equipment(
     ]
 
 
-def total_cost(team: Army, race_config: RaceConfig) -> t.Cost:
-    """Return the total cost: unit base costs + upgrade model costs + upgrade equipment costs."""
+def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
+    """Return the total cost.
+
+    Unit base costs + upgrade model costs + upgrade equipment costs.
+    """
     cost = t.Cost()
-    for unit in team.units:
+    for unit in army.units:
         cost = _add_cost(cost, unit.config.cost)
         for i, team_model in enumerate(unit.models):
-            # A model is an upgrade when its name differs from the unit's default at this position.
+            # A model is an upgrade when its name differs from the default.
             if team_model.name != unit.config.models[i]:
                 cost = _add_cost(cost, team_model.config.cost)
             for equip_key in team_model.upgrades:
@@ -255,10 +266,10 @@ def total_cost(team: Army, race_config: RaceConfig) -> t.Cost:
     return cost
 
 
-def validate_team(team: Army, race_config: RaceConfig) -> list[str]:
-    """Return all rule violations in the team. Empty list means the team is valid."""
+def validate_team(army: Army, race_config: RaceConfig) -> list[str]:
+    """Return all rule violations in the army. Empty list means the army is valid."""
     errors: list[str] = []
-    for unit in team.units:
+    for unit in army.units:
         for i, team_model in enumerate(unit.models):
             default_model_name = unit.config.models[i]
             # Validate model replacement
@@ -266,20 +277,21 @@ def validate_team(team: Army, race_config: RaceConfig) -> list[str]:
                 replaces = team_model.config.replaces or []
                 if default_model_name not in replaces:
                     errors.append(
-                        f"Unit {unit.name!r}: model {team_model.name!r} cannot replace "
-                        f"{default_model_name!r} (not in its replaces list)"
+                        f"Unit '{unit.name}': model '{team_model.name}' cannot replace "
+                        f"'{default_model_name}' (not in its replaces list)"
                     )
             # Validate equipment upgrades
             for equip_key in team_model.upgrades:
                 equip = race_config.equipments[equip_key]
                 if equip.cost is None:
                     errors.append(
-                        f"Unit {unit.name!r}, model {team_model.name!r}: "
-                        f"equipment {equip_key!r} has no cost and cannot be used as upgrade"
+                        f"Unit '{unit.name}', model '{team_model.name}': "
+                        f"equipment '{equip_key}' has no cost"
+                        " and cannot be used as upgrade"
                     )
                 elif not _satisfies_requires(equip.requires, team_model, race_config):
                     errors.append(
-                        f"Unit {unit.name!r}, model {team_model.name!r}: "
-                        f"equipment {equip_key!r} requires are not satisfied"
+                        f"Unit '{unit.name}', model '{team_model.name}': "
+                        f"equipment '{equip_key}' requires are not satisfied"
                     )
     return errors

@@ -118,8 +118,10 @@ class Requirement(StrictModel):
 def _parse_requirement(requirement: str) -> Requirement:
     """Parse a requirement string into a model."""
     key, _, value_or_type = requirement.partition(":")
-    value = cast("ModelType", value_or_type) if key == "type" else int(value_or_type)
-    return Requirement(key=key, value=value)
+    if key == "type":
+        return Requirement(key="type", value=cast("ModelType", value_or_type))
+
+    return Requirement(key=cast("EquipmentHolder", key), value=int(value_or_type))
 
 
 type ParsedRequirement = Annotated[Requirement, BeforeValidator(_parse_requirement)]

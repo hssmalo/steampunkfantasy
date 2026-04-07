@@ -2,7 +2,7 @@
 
 from typing import Self
 
-from pydantic import model_validator
+from pydantic import Field, model_validator
 
 from spf.schemas import StrictModel
 from spf.schemas import type_aliases as t
@@ -26,7 +26,7 @@ class UnitConfig(StrictModel):
     size: t.Size
     cost: t.Cost | None = None
     shaken: str
-    special: dict[t.UnitSpecial, str] = {}
+    special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     orders: OrdersConfig
     armor: t.Angles[int] | None = None
     damage_tables: dict[t.DamageTableName, t.DamageTable]
@@ -39,7 +39,7 @@ class AssaultConfig(StrictModel):
     deflection_die: t.DieResult
     damage: t.Die
     ap: t.ArmorPenetration
-    special: list[str] = []
+    special: list[str] = Field(default_factory=list)
 
 
 class ModelConfig(StrictModel):
@@ -51,9 +51,9 @@ class ModelConfig(StrictModel):
     type: list[t.ModelType]
     assault: AssaultConfig
     cost: t.Cost | None = None
-    replaces: list[t.ModelName] | None = None  # Todo: remove list
-    unit_special: dict[t.UnitSpecial, str] = {}
-    special: list[str] = []
+    replaces: list[t.ModelName] | None = None  # TODO: remove list
+    unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
+    special: list[str] = Field(default_factory=list)
 
 
 class Stacker[T](StrictModel):
@@ -77,7 +77,7 @@ class EquipmentRangeConfig(StrictModel):
     angle: t.Angles[bool | str]
     damage: t.Die
     ap: t.ArmorPenetration
-    special: list[str] = []
+    special: list[str] = Field(default_factory=list)
 
 
 class EquipmentConfig(StrictModel):
@@ -86,11 +86,11 @@ class EquipmentConfig(StrictModel):
     description: str = ""
     cost: t.Cost | None = None
     model_cost: t.Cost | None = None
-    requires: list[list[t.ParsedRequirement]] = []
+    requires: list[list[t.ParsedRequirement]] = Field(default_factory=list)
     assault: EquipmentAssaultConfig | None = None
     range: EquipmentRangeConfig | None = None
-    unit_special: dict[t.UnitSpecial, str] = {}
-    special: list[str] = []
+    unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
+    special: list[str] = Field(default_factory=list)
     orders_gained: OrdersConfig | None = None
 
 
@@ -106,7 +106,7 @@ class RaceConfig(StrictModel):
         model_names = self.models.keys()
         for unit in self.units.values():
             if any((failed := model) not in model_names for model in unit.models):
-                msg = f"'{failed}' not a valid model name for {unit.name}"
+                msg = f"'{failed}' not a valid model name for {unit.name}"  # type: ignore[ty:unresolved-reference]
                 raise ValueError(msg)
         return self
 
@@ -119,7 +119,7 @@ class RaceConfig(StrictModel):
                 (failed := equipment) not in equipment_names
                 for equipment in model.equipments
             ):
-                msg = f"'{failed}' not a valid model name for {model.name}"
+                msg = f"'{failed}' not a valid model name for {model.name}"  # type: ignore[ty:unresolved-reference]
                 raise ValueError(msg)
         return self
 
@@ -133,8 +133,8 @@ class RaceConfig(StrictModel):
                 for model_name in model.replaces or []
             ):
                 msg = (
-                    f"'{failed}' not a valid model name in {model.name}"
-                    " replacement list"
+                    f"'{failed}' not a valid model"  # type: ignore[ty:unresolved-reference]
+                    f" name in {model.name} replacement list"
                 )
                 raise ValueError(msg)
         return self

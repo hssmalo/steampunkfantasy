@@ -13,19 +13,19 @@ def list_races() -> list[t.RaceName]:
     """List race names available in the data directory."""
     return [
         cast("t.RaceName", path.stem)
-        for path in sorted(config.paths.data.glob("*.toml"))
+        for path in sorted(config.paths.races.glob("*.toml"))
     ]
 
 
 def get_race(race: t.RaceName) -> r.RaceConfig:
     """Get the definition of one race."""
     try:
-        path = config.paths.data / f"{race}.toml"
+        path = config.paths.races / f"{race}.toml"
         return Configuration.from_file(path).convert_model(r.RaceConfig)
     except FileNotFoundError:
         available = ", ".join(list_races())
         msg = f"Unknown race '{race}'. Available races: {available}"
-        raise ValueError(msg)
+        raise ValueError(msg) from None
 
 
 def get_metadata(race: t.RaceName) -> r.RaceMetadata:
