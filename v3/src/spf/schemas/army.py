@@ -10,6 +10,7 @@ from spf.schemas import type_aliases as t
 
 class RaceConfig(StrictModel):
     name: str
+    description: str = ""
 
 
 class OrdersConfig(StrictModel):
@@ -20,6 +21,7 @@ class OrdersConfig(StrictModel):
 class UnitConfig(StrictModel):
     race: t.ArmyName
     name: t.UnitName
+    description: str = ""
     models: list[str]
     size: t.Size
     cost: t.Cost | None = None
@@ -43,6 +45,7 @@ class AssaultConfig(StrictModel):
 class ModelConfig(StrictModel):
     race: t.ArmyName
     name: t.ModelName
+    description: str = ""
     equipment_limit: list[t.ParsedEquipmentLimit]
     equipments: list[str]
     type: list[t.ModelType]
@@ -80,6 +83,7 @@ class EquipmentRangeConfig(StrictModel):
 class EquipmentConfig(StrictModel):
     race: t.ArmyName
     name: t.EquipmentName
+    description: str = ""
     cost: t.Cost | None = None
     model_cost: t.Cost | None = None
     requires: list[list[t.ParsedRequirement]] = []

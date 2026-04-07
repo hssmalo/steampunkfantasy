@@ -2,11 +2,13 @@
 
 [races.ogre]
 name = "Ogre"
+description = "Yellow, tiny, little men"
 
 [units]
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
+description = "Group of four ogres fighting each other"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 4
