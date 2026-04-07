@@ -2,7 +2,7 @@
 
 import pytest
 
-from spf.data import (
+from spf.armies import (
     get_army,
     get_equipments,
     get_models,

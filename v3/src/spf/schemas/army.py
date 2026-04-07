@@ -118,3 +118,19 @@ class ArmyConfig(StrictModel):
                 msg = f"'{failed}' not a valid model name for {model.name}"
                 raise ValueError(msg)
         return self
+
+    @model_validator(mode="after")
+    def check_model_replaces(self) -> Self:
+        """Check names of model upgrades is model name."""
+        model_names = self.models.keys()
+        for model in self.models.values():
+            if any(
+                (failed := model_name) not in model_names
+                for model_name in model.replaces or []
+            ):
+                msg = (
+                    f"'{failed}' not a valid model name in {model.name}"
+                    " replacement list"
+                )
+                raise ValueError(msg)
+        return self

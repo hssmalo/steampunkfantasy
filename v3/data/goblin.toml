@@ -437,7 +437,7 @@ cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2"]
 equipments = ["goblin_bow"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
-replaces = ["goblin:infantry"]
+replaces = ["goblin_infantry"]
 special = [
 	"good shot: +3 to hit with thrown weapons",
 	"+1 to pre-assault retreat (per elite in unit)",

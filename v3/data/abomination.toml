@@ -562,7 +562,7 @@ cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:8"]
 equipments = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
-replaces = ["abomination:infantry"]
+replaces = ["abomination_infantry"]
 special = [
 	"good shot: +1 to hit",
 	"All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack",
