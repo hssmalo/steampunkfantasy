@@ -3,7 +3,7 @@
 import configaroo
 import cyclopts
 
-from spf import armies
+from spf import races
 from spf.config import config
 from spf.schemas import type_aliases as t
 
@@ -22,6 +22,6 @@ def show_config(section: str | None = None) -> None:
 
 
 @app.command
-def show_army(army: t.ArmyName, section: str | None = None) -> None:
-    """Show one army."""
-    configaroo.print_configuration(armies.get_army(army), section=section)
+def show_race(race: t.RaceName, section: str | None = None) -> None:
+    """Show one race."""
+    configaroo.print_configuration(races.get_race(race), section=section)

@@ -17,6 +17,9 @@ type ModelName = str
 type EquipmentName = str
 type DamageTable = list[str]
 
+type RaceName = Literal[
+    "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"
+]
 type DamageTableName = Literal["crew", "critical", "inner", "psychic", "regular"]
 type EquipmentHolder = Literal[
     "Independent",
@@ -26,12 +29,9 @@ type EquipmentHolder = Literal[
     "Specialization",
     "Tentacles",
 ]
-type ArmyName = Literal[
-    "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"
-]
 type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
 type UnitSpecial = Literal[
-    "Hans Sverre's favorite rules",
+    "Hans Sverre's favorite rule",
     "Forward Position",
     "Take Cover",
     "Fire Order",

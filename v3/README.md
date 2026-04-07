@@ -10,8 +10,16 @@ Run the `spf` command line interface (CLI):
 uv run spf --help
 ```
 
-## Show and Validate an Army File
+## Show and Validate a Race File
 
 ```console
-uv run spf show-army goblin
+uv run spf show-race goblin
+```
+
+You can also filter down to specific units, models, or equipments:
+
+```console
+uv run spf show-race goblin units.goblin_infantry
+uv run spf show-race goblin models.goblin_infantry
+uv run spf show-race goblin equipments.goblin_bow
 ```

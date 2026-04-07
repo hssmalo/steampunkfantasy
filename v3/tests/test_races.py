@@ -2,47 +2,47 @@
 
 import pytest
 
-from spf.armies import (
-    get_army,
+from spf.races import (
     get_equipments,
+    get_metadata,
     get_models,
     get_race,
     get_units,
-    list_armies,
+    list_races,
 )
-from spf.schemas.army import EquipmentConfig, ModelConfig, RaceConfig, UnitConfig
+from spf.schemas.race import EquipmentConfig, ModelConfig, RaceMetadata, UnitConfig
 
 
-def test_list_armies_includes_known_armies() -> None:
-    armies = list_armies()
-    assert "ogre" in armies
-    assert "goblin" in armies
-    assert "abomination" in armies
+def test_list_races_includes_known_races() -> None:
+    races = list_races()
+    assert "ogre" in races
+    assert "goblin" in races
+    assert "abomination" in races
 
 
-def test_list_armies_returns_strings() -> None:
-    armies = list_armies()
-    assert all(isinstance(name, str) for name in armies)
+def test_list_races_returns_strings() -> None:
+    races = list_races()
+    assert all(isinstance(name, str) for name in races)
 
 
 def test_get_race_returns_race_config() -> None:
-    race = get_race("ogre")
-    assert isinstance(race, RaceConfig)
+    race = get_metadata("ogre")
+    assert isinstance(race, RaceMetadata)
 
 
 def test_get_race_ogre_name() -> None:
-    race = get_race("ogre")
+    race = get_metadata("ogre")
     assert race.name == "Ogre"
 
 
 def test_get_race_goblin_name() -> None:
-    race = get_race("goblin")
+    race = get_metadata("goblin")
     assert race.name == "Goblin"
 
 
 def test_get_race_invalid_raises_value_error() -> None:
-    with pytest.raises(ValueError, match="Unknown army"):
-        get_race("invalid_army")  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="Unknown race"):
+        get_metadata("invalid_army")  # type: ignore[arg-type]
 
 
 def test_get_units_returns_dict_of_unit_configs() -> None:
@@ -92,6 +92,6 @@ def test_get_equipments_not_empty() -> None:
 
 
 def test_get_army_reexported() -> None:
-    # get_army is re-exported from armies.py via data.py
-    army = get_army("ogre")
+    # get_race is re-exported from races.py via data.py
+    army = get_race("ogre")
     assert army.races["ogre"].name == "Ogre"

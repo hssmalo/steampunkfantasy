@@ -1,6 +1,6 @@
 """Schema for SteamPunkFantasy armies."""
 
-from typing import Any, Self
+from typing import Self
 
 from pydantic import model_validator
 
@@ -8,7 +8,7 @@ from spf.schemas import StrictModel
 from spf.schemas import type_aliases as t
 
 
-class RaceConfig(StrictModel):
+class RaceMetadata(StrictModel):
     name: str
     description: str = ""
 
@@ -19,7 +19,7 @@ class OrdersConfig(StrictModel):
 
 
 class UnitConfig(StrictModel):
-    race: t.ArmyName
+    race: t.RaceName
     name: t.UnitName
     description: str = ""
     models: list[str]
@@ -43,7 +43,7 @@ class AssaultConfig(StrictModel):
 
 
 class ModelConfig(StrictModel):
-    race: t.ArmyName
+    race: t.RaceName
     name: t.ModelName
     description: str = ""
     equipment_limit: list[t.ParsedEquipmentLimit]
@@ -81,7 +81,7 @@ class EquipmentRangeConfig(StrictModel):
 
 
 class EquipmentConfig(StrictModel):
-    race: t.ArmyName
+    race: t.RaceName
     name: t.EquipmentName
     description: str = ""
     cost: t.Cost | None = None
@@ -94,8 +94,8 @@ class EquipmentConfig(StrictModel):
     orders_gained: OrdersConfig | None = None
 
 
-class ArmyConfig(StrictModel):
-    races: dict[t.ArmyName, RaceConfig]
+class RaceConfig(StrictModel):
+    races: dict[t.RaceName, RaceMetadata]
     units: dict[str, UnitConfig]
     models: dict[str, ModelConfig]
     equipments: dict[str, EquipmentConfig]
