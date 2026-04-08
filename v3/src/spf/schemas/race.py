@@ -14,8 +14,8 @@ class RaceMetadata(StrictModel):
 
 
 class OrdersConfig(StrictModel):
-    fire: dict[str, list[t.FireOrder]] | None = None
-    movement: dict[str, list[t.MovementOrder]] | None = None
+    fire: dict[t.Speed, list[t.FireOrder]] | None = None
+    movement: dict[t.Speed, list[t.MovementOrder]] | None = None
 
 
 class UnitConfig(StrictModel):

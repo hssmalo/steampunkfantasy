@@ -494,7 +494,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipments.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "F", "F"]]
-fast_fly = [
+fast_flying = [
 	[
 		"360°",
 		"F",

@@ -30,6 +30,17 @@ type EquipmentHolder = Literal[
     "Specialization",
     "Tentacles",
 ]
+type Speed = Literal[
+    "all",
+    "rest",
+    "still",
+    "crawl",
+    "slow",
+    "fast",
+    "still_flying",
+    "slow_flying",
+    "fast_flying",
+]
 type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
 type UnitSpecial = Literal[
     "Hans Sverre's favorite rule",
@@ -55,7 +66,7 @@ type UnitSpecial = Literal[
     "Fog",
     "Psychic",
     "Movement",
-    "Pet"
+    "Pet",
 ]
 type ModelType = Literal[
     "Elite",

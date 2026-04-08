@@ -16,30 +16,30 @@ shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons
 
 [units.ork_infantry.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
 ]
 
 
@@ -49,10 +49,10 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 
 [units.ork_infantry.damage_tables]
 regular = [
-	"1-5: Kill 1 model",
-	"6-7: Kill 1 model, psychic damage[d6]",
-	"8+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+    "1-5: Kill 1 model",
+    "6-7: Kill 1 model, psychic damage[d6]",
+    "8+: Unit destroyed",
+    "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
 
 psychic = ["4+: shaken"]
@@ -366,9 +366,8 @@ still = [
 ]
 
 [units.hammerhead.special]
-    "Fire Order" = "All 4 harpoon gun must fire at same sector"
-    "Movement" = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
-
+"Fire Order" = "All 4 harpoon gun must fire at same sector"
+"Movement" = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
 
 
 [units.battlewagon]
@@ -868,11 +867,12 @@ equipments = []
 replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 special = [
-    "Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"]
+    "Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit",
+]
 
 
 [models.ork_elite_infantry.unit_special]
-"Psychic"="Unit gains Psychic resistance 1"
+"Psychic" = "Unit gains Psychic resistance 1"
 
 
 [models.ork_elite_infantry.assault]
@@ -1151,7 +1151,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipments.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_fly = [["Chase", "B(slow, land)", "-"]]
+fast_flying = [["Chase", "B(slow, land)", "-"]]
 
 
 [equipments.clockwork_wings_free]
@@ -1165,7 +1165,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipments.clockwork_wings_free.orders_gained.movement]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_fly = [["Chase", "B(slow, land)", "-"]]
+fast_flying = [["Chase", "B(slow, land)", "-"]]
 
 [equipments.flame_covered_axe]
 name = "Flame-covered-axe"
