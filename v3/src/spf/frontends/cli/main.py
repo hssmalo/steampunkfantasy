@@ -5,9 +5,14 @@ import cyclopts
 
 from spf import races
 from spf.config import config
+from spf.frontends import cli
 from spf.schemas import type_aliases as t
 
 app = cyclopts.App(help="SteamPunkFantasy")
+
+# Subcommands
+army_app = app.command(cyclopts.App(name="army", help="Work with a specific army"))
+cli.army.add_commands(army_app)
 
 
 @app.command

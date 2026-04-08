@@ -12,7 +12,12 @@ authors = [
     { name = "Geir Arne Hjelle", email = "geirarne@gmail.com" },
 ]
 requires-python = ">=3.12"
-dependencies = ["configaroo>=0.6.1", "cyclopts>=4.10.1", "pydantic>=2.12.5"]
+dependencies = [
+    "configaroo>=0.6.1",
+    "cyclopts>=4.10.1",
+    "pydantic>=2.12.5",
+    "rich>=13",
+]
 
 [project.scripts]
 spf = "spf.__main__:main"
@@ -47,4 +52,5 @@ ignore = [
 # SLF001: Private member accessed (OK for tests)
 # UP018: Replace with string/integer/... literal (OK for typed tests)
 "src/spf/schemas/*.py" = ["D101"]
+"tests/**/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]
 "tests/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]

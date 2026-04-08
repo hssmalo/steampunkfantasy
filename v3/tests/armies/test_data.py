@@ -1,8 +1,8 @@
-"""Tests for spf.armies module."""
+"""Tests for spf.armies.data module."""
 
 import pytest
 
-from spf.armies import (
+from spf.armies.data import (
     Army,
     ArmyModel,
     ArmyUnit,

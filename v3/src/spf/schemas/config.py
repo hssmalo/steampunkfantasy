@@ -6,6 +6,8 @@ from spf.schemas import StrictModel
 
 
 class PathsConfig(StrictModel):
+    project: Path
+    armies: Path
     races: Path
     templates: Path
 

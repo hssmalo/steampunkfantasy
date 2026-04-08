@@ -483,6 +483,7 @@ dependencies = [
     { name = "configaroo" },
     { name = "cyclopts" },
     { name = "pydantic" },
+    { name = "rich" },
 ]
 
 [package.dev-dependencies]
@@ -500,6 +501,7 @@ requires-dist = [
     { name = "configaroo", specifier = ">=0.6.1" },
     { name = "cyclopts", specifier = ">=4.10.1" },
     { name = "pydantic", specifier = ">=2.12.5" },
+    { name = "rich", specifier = ">=13" },
 ]
 
 [package.metadata.requires-dev]
