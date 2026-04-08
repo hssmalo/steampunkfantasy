@@ -121,19 +121,19 @@ regular = [
 [units.pet_panther]
 race = "ogre"
 name = "Pet Panther"
-models = ["pet_panther", "pet_panther"]
+models = ["pet_panther"]
 size = "Medium"
-cost.xp = 3
+cost.xp = 2
 shaken = "Movement set to slow. Movement order: [-,-,flee]."
 
 [units.pet_panther.special]
-"Forward Position" = "[1]"
+"Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infangry), you may order it to follow the movement orders and follow the unit it shares its hex with, even if shaken. If so it gets the same speed as the Infantry"
 "Evation" = "[4+]"
 
 [units.pet_panther.orders.movement]
-still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
-slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["A+360°", "chase", "chase"]]
-fast = [["chase", "chase", "chase"], ["360°", "F", "B"]]
+still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"], ["Follow", "Follow", "Follow"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["A+360°", "chase", "chase"], ["Follow", "Follow", "Follow"]]
+fast = [["chase", "chase", "chase"], ["360°", "F", "B"], ["Follow", "Follow", "Follow"]]
 
 [units.pet_panther.damage_tables]
 regular = [
@@ -665,7 +665,7 @@ type = ["Bio", "Monster", "Walking", "Scout"]
 [models.pet_panther.assault]
 strength = [4, 2, 1, 1]
 strength_die = "5+"
-deflection = [1, 0, 0, 0]
+deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6"
 ap = 1
