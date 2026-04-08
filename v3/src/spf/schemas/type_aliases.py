@@ -26,13 +26,16 @@ type EquipmentHolder = Literal[
     "Grenades",
     "Hands",
     "Mechanical Tentacles",
+    "Shared",
     "Specialization",
     "Tentacles",
 ]
 type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
 type UnitSpecial = Literal[
     "Hans Sverre's favorite rule",
+    "Hans Sverre's second favorite rule",
     "Forward Position",
+    "Regeneration",
     "Take Cover",
     "Fire Order",
     "To Hit",
@@ -82,6 +85,7 @@ type ModelType = Literal[
     "Roboprosthetic",
     "Amphibian",
     "Engineer",
+    "Grunt",
     "Medic",
 ]
 

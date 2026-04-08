@@ -37,3 +37,9 @@ Show the units, models, and equipment in a given army:
 ```console
 uv run spf army show demo
 ```
+
+# Development
+
+There is a prompt available to update TOML files. You can ask your coding assistant:
+
+> Follow the instructions in @MIGRATE_TOML.md to update @races/elf.toml

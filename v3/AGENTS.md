@@ -2,7 +2,7 @@
 
 This file provides guidance to AI agents when working with code in this repository.
 
-> **Note:** Currently only abomination, goblin, and ogre are playable races
+> **Note:** Currently only abomination, goblin, ogre, and ork are working TOML files. The other races use a legacy format.
 
 ## Commands
 
