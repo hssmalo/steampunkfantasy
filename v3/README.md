@@ -12,16 +12,24 @@ uv run spf --help
 
 ## Show and Validate a Race File
 
+List all races:
+
 ```console
-uv run spf show-race goblin
+uv run spf race list
+```
+
+Validate and show one race:
+
+```console
+uv run spf race show goblin
 ```
 
 You can also filter down to specific units, models, or equipments:
 
 ```console
-uv run spf show-race goblin units.goblin_infantry
-uv run spf show-race goblin models.goblin_infantry
-uv run spf show-race goblin equipments.goblin_bow
+uv run spf race show goblin units.goblin_infantry
+uv run spf race show goblin models.goblin_infantry
+uv run spf race show goblin equipments.goblin_bow
 ```
 
 ## List and Show Army Files
