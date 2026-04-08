@@ -23,3 +23,17 @@ uv run spf show-race goblin units.goblin_infantry
 uv run spf show-race goblin models.goblin_infantry
 uv run spf show-race goblin equipments.goblin_bow
 ```
+
+## List and Show Army Files
+
+Armies are teams created from a race. List all armies:
+
+```console
+uv run spf army list
+```
+
+Show the units, models, and equipment in a given army:
+
+```console
+uv run spf army show demo
+```
