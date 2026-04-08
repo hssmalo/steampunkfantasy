@@ -756,8 +756,10 @@ Movement = [ "(fast) F+ F + -", "(fast) F + R + -", "(fast) F + L + -", "(fast) 
 "Crew Damage" = [ "10: Misfire[2-]", "11-12: as 10, +2 to future crew damage", "13: Crew Killed, unit destroyed",]
 
 [units."Mechanical Iron Dragon".orders]
-Movement = [ "(slow) F + - + -", "(slow) L + F + -", "(slow) L + L + F", "(slow) R + F + -", "(slow) R + R + F", "(slow) 360$^0$ + - + -", "(slow) A[fast, flying]+ F + 360$^0$", "(fast, flying) 360$^0$ + F + F", "(fast, flying) F + B[slow] + -",]
 "Fire Orders" = [ "(slow) Breath(acid)+ - ", "(all) Breath(shrapnell) + -", "(slow) - + Breath(acid)", "(all) - + Breath(shrapnell)", "(all) load+ - ",]
+Movement = [ "(slow) F + - + -", "(slow) L + F + -", "(slow) L + L + F", "(slow) R + F + -", "(slow) R + R + F", "(slow) 360$^0$ + - + -", "(slow) A[fast, flying]+ F + 360$^0$",
+             "(fast, flying) 360$^0$ + F + F", "(fast, flying) F + B[slow] + -",]
+
 
 [units."Mechanical Iron Dragon".damage_tables]
 "Regular Damage" = [ "1-5: +1 on future damage", "6-10: +1 on future damage, roll d6 on light damage", "11: +2 on future damage, roll d6 on light damage", "12: as 11, and reduce assault and assault deflection by 3.", "13: unit killed",]

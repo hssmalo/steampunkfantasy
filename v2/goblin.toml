@@ -153,7 +153,7 @@
 	type = ["Bio", "infantry", "Walks"]
 
 	     [goblin.models.goblin_infantry.assault]
-	     strength = [2,1,1,1]
+	     strength = [1,1,1,1]
 	     strength_die = "6+"
 	     deflection = [0, 0, 0, 0]
 	     deflection_die = "6+"
