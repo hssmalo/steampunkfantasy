@@ -9,7 +9,9 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
 cost.mp = 4
-shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+[units.ork_infantry.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.ork_infantry.special]
 "Take Cover" = "[still][-2]"
@@ -67,7 +69,10 @@ size = "Huge"
 cost.xp = 12
 cost.cp = 2
 armor = [0, 0, 0, 0]
-shaken = ""
+
+[units.troll.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.troll.special]
 "Forward Position" = "[1]"
@@ -96,7 +101,10 @@ name = "Champion"
 models = ["champion"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-shaken = ""
+
+[units.champion.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.champion.special]
 "Hans Sverre's favorite rule" = "Has same orders available as the unit base it awakened from, and the same weapons as the last surviving model of the unit base"
@@ -118,7 +126,10 @@ models = ["warg_rider", "warg_rider"]
 size = "Medium"
 cost.mp = 2
 cost.xp = 4
-shaken = ""
+
+[units.warg_rider.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.warg_rider.special]
 "Fire Order" = "only available if given ranged weapons"
@@ -197,7 +208,10 @@ models = ["speedhead"]
 size = "Medium"
 cost.ip = 6
 armor = [8, 7, 7, 7]
-shaken = ""
+
+[units.speedhead.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.speedhead.special]
 "Fire Order" = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so"
@@ -265,7 +279,10 @@ models = ["hammerhead"]
 size = "Large"
 cost.ip = 8
 armor = [13, 8, 7, 7]
-shaken = ""
+
+[units.hammerhead.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.hammerhead.damage_tables]
 regular = [
@@ -377,7 +394,10 @@ models = ["battlewagon"]
 size = "Large"
 cost.ip = 8
 armor = [8, 7, 7, 6]
-shaken = ""
+
+[units.battlewagon.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.battlewagon.special]
 "Transport" = "[2]: may transport up to 2 infantry. Treat any movement order as including an optional Deploy[range=0, quick] order"
@@ -418,7 +438,10 @@ models = ["grunt", "grunt", "grunt", "grunt"]
 size = "Medium"
 cost.mp = 2
 armor = [0, 0, 0, 0]
-shaken = ""
+
+[units.grunt.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.grunt.special]
 "Forward Position" = "[2]"
@@ -445,7 +468,9 @@ size = "Medium"
 cost.mp = 2
 cost.xp = 12
 armor = [0, 0, 0, 0]
-shaken = "May not fire weapons. Movement set to slow: -, -, flee"
+[units.ork_werewarg.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.ork_werewarg.special]
 "Take Cover" = "[still][-2]"
@@ -542,7 +567,10 @@ cost.mp = 4
 cost.xp = 2
 cost.cp = 1
 armor = [0, 0, 0, 0]
-shaken = ""
+
+[units.bioengineered_ork.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.bioengineered_ork.special]
 "Take Cover" = "[still][-2]"
@@ -598,7 +626,9 @@ models = ["ork_char_b1"]
 size = "Large"
 cost.ip = 12
 armor = [12, 10, 8, 7]
-shaken = "Speed set to still, cannot use weapons"
+[units.ork_char_b1.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.ork_char_b1.orders.fire]
 slow = [

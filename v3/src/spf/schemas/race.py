@@ -18,6 +18,13 @@ class OrdersConfig(StrictModel):
     movement: dict[t.Speed, list[t.MovementOrder]] | None = None
 
 
+class ShakenConfig(StrictModel):
+    speed: t.Speed
+    movement_order: t.MovementOrder
+    fire_order: str = "Can't use weapons"
+    comment: str = ""
+
+
 class UnitConfig(StrictModel):
     race: t.RaceName
     name: t.UnitName
@@ -25,7 +32,7 @@ class UnitConfig(StrictModel):
     models: list[str]
     size: t.Size
     cost: t.Cost | None = None
-    shaken: str
+    shaken: ShakenConfig
     special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     orders: OrdersConfig
     armor: t.Angles[int] | None = None

@@ -15,7 +15,9 @@ models = [
 ]
 size = "Medium"
 cost.mp = 8
-shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+[units.abomination_infantry.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.abomination_infantry.special]
 "Take Cover" = "[still][-2]"
@@ -45,7 +47,9 @@ models = ["horror"]
 size = "Huge"
 cost.xp = 8
 armor = [6, 4, 2, 1]
-shaken = "Movement set to still. Movement order: [-,-,-]. "
+[units.horror.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.horror.special]
 "Terror" = "While in fog (in agony phases): Terror[Range=1][d12], Insanity Filed[range=1][d6]"
@@ -85,7 +89,9 @@ models = [
 size = "Tiny"
 cost.cp = 1
 armor = [3, 3, 3, 3]
-shaken = "Movement order: [-,-,-]."
+[units.robot_crab.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.robot_crab.special]
 "Chase" = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"
@@ -104,7 +110,9 @@ models = ["giant_frog_rider", "giant_frog_rider"]
 size = "Medium"
 cost.mp = 2
 cost.xp = 4
-shaken = "Speed set to slow. Movement order: [-,-,flee]. may not use fire orders"
+[units.giant_frog_riders.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.giant_frog_riders.special]
 "Resistance" = "Poison [4]"
@@ -140,7 +148,10 @@ size = "Large"
 cost.mp = 2
 cost.xp = 8
 armor = [6, 5, 4, 2]
-shaken = "Speed set to fast. Movement order: [-,chase,chase]. However, you may use fire orders"
+[units.hippopotamus_riders.shaken]
+speed = "fast"
+movement_order = ["-", "chase", "chase"]
+fire_order = "Normal"
 
 [units.hippopotamus_riders.special]
 "Resistance" = "Poison [6]"
@@ -202,7 +213,9 @@ models = ["squ"]
 size = "Large"
 armor = [8, 6, 5, 4]
 cost.ip = 6
-shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+[units.squ.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.squ.special]
 "Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
@@ -319,7 +332,9 @@ models = ["frost88"]
 size = "Large"
 armor = [10, 8, 7, 6]
 cost.ip = 12
-shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+[units.frost88.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.frost88.special]
 "Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"

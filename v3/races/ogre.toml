@@ -12,7 +12,9 @@ description = "Group of four ogres fighting each other"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 4
-shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+[units.ogre_infantry.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.ogre_infantry.special]
 "Take Cover" = "[still][-1]"
@@ -70,7 +72,9 @@ models = ["ogre_robot", "ogre_robot"]
 size = "Medium"
 cost.cp = 4
 armor = [3, 3, 0, 0]
-shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+[units.ogre_robot.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.ogre_robot.special]
 "Take Cover" = "[still][-2]"
@@ -124,7 +128,9 @@ name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 2
-shaken = "Movement set to slow. Movement order: [-,-,flee]."
+[units.pet_panther.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.pet_panther.special]
 "Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infangry), you may order it to follow the movement orders and follow the unit it shares its hex with, even if shaken. If so it gets the same speed as the Infantry"
@@ -151,7 +157,9 @@ models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 2
 cost.xp = 4
-shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+[units.ogre_assault_scout.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.ogre_assault_scout.special]
 "Take Cover" = "[still][-2]"
@@ -237,7 +245,9 @@ name = "Drone_swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.cp = 1
-shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+[units.drone_swarm.shaken]
+speed = "slow"
+movement_order = ["-", "-", "-"]
 
 [units.drone_swarm.special]
 "Suicide" = "Once speed is rest, considered this unit destroyed without enemy gaining victory points for it"
@@ -267,7 +277,9 @@ name = "Repair Drone"
 models = ["repair_drone", "repair_drone", "repair_drone", "repair_drone"]
 size = "Tiny"
 cost.cp = 4
-shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+[units.repair_drone.shaken]
+speed = "slow"
+movement_order = ["-", "-", "-"]
 
 [units.repair_drone.special]
 "Repair" = "Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models"
@@ -289,7 +301,9 @@ models = ["medic_drone", "medic_drone", "medic_drone", "medic_drone"]
 size = "Tiny"
 cost.cp = 2
 cost.xp = 2
-shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+[units.medic_drone.shaken]
+speed = "slow"
+movement_order = ["-", "-", "-"]
 
 [units.medic_drone.special]
 "Heal" = "Heal[N, other, 2nd healing] where N is the number of alive medic drones models"
@@ -311,7 +325,9 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 8
 armor = [12, 10, 10, 8]
-shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+[units.main_engine.shaken]
+speed = "slow"
+movement_order = ["-", "-", "-"]
 
 [units.main_engine.special]
 "LoS" = "Blocks Line of Sight"
@@ -410,7 +426,9 @@ models = ["broadside_wagon"]
 size = "Large"
 cost.ip = 4
 armor = [2, 10, 10, 8]
-shaken = "May not fire weapons"
+[units.broadside_wagon.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.broadside_wagon.special]
 "Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. Has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
@@ -519,7 +537,9 @@ models = ["artillery_wagon"]
 size = "Large"
 cost.ip = 4
 armor = [2, 10, 10, 8]
-shaken = "May not fire weapons"
+[units.artillery_wagon.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.artillery_wagon.special]
 "Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. Has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."

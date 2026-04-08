@@ -12,6 +12,7 @@ from spf.schemas.race import (
     OrdersConfig,
     RaceConfig,
     RaceMetadata,
+    ShakenConfig,
     UnitConfig,
 )
 
@@ -37,7 +38,7 @@ def simple_race() -> RaceConfig:
                 models=["soldier"],
                 size="Small",
                 cost=t.Cost(mp=3),
-                shaken="Shaken",
+                shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
                 special={},
                 orders=OrdersConfig(),
                 armor=None,

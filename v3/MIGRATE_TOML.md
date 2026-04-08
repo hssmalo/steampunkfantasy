@@ -44,7 +44,7 @@ special = ["Forward Position[2]", "Cannot use ranged weapons"]
 
 Units with no specials need no subtable (the field defaults to an empty dict).
 
-Always ask if the key is ambigous or is missing from `UnitSpecial`. It's possible to add new literals, but only do so if the user confirms.
+Always ask if the key is ambiguous or is missing from `UnitSpecial`. It's possible to add new literals, but only do so if the user confirms.
 
 ## 3. Fix `size` casing
 

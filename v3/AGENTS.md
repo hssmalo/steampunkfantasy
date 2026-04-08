@@ -9,7 +9,7 @@ This file provides guidance to AI agents when working with code in this reposito
 ```bash
 # Run CLI
 uv run spf --help
-uv run spf show-race goblin
+uv run spf race show goblin
 
 # Run tests
 uv run pytest
