@@ -18,16 +18,15 @@ shaken = ""
 
 [units.troll.special]
 "Forward Position" = "[1]"
-"Regeneration" = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase"
+"Regeneration" = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
 "Resistance" = "Acid [5+], Poison [2]"
-"Hans Sverre's second favorite rule" = "May have a maximum of 1 unconscious token"
 "Fire Order" = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
 "To Hit" = "Terrible Shot: -2 to hit with ranged weapons"
 "Hans Sverre's favorite rule" = "Out of ammo: At the end of the game, the troll runs out of ammo"
 
 [units.troll.orders.movement]
 slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
-# default.slow = ["-", "-", "Flee"]
+
 
 [units.troll.damage_tables]
 regular = [
@@ -123,7 +122,9 @@ slow = [
 ]
 
 [units.warg_rider.orders.fire]
-all = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
+still = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
+slow = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
+fast = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
 
 [units.warg_rider.damage_tables]
 psychic = ["5+: unit shaken"]
@@ -145,9 +146,11 @@ cost.ip = 6
 armor = [8, 7, 7, 7]
 shaken = ""
 
+[units.speedhead.special]
+"Fire Order" = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so"
+
 [units.speedhead.orders.movement]
 slow = [["L/R", "F", "L/R"], ["F", "-", "-"], ["A", "F", "F"]]
-# default.slow = ["-", "-", "B"]
 fast = [
     [
         "F",
@@ -175,11 +178,11 @@ fast = [
         "-",
     ],
 ]
-# default.fast = ["-", "-", "B+B"]
-# default.still = ["-", "-", "A"]
 
 [units.speedhead.orders.fire]
-all = [["Load", "Load"], ["Load", "Fire Burst(5)"], ["Fire Burst(5)", "Load"]]
+still = [["Load", "Load"], ["Load", "Fire Burst(5)"], ["Fire Burst(5)", "Load"]]
+slow = [["Load", "Load"], ["Load", "Fire Burst(5)"], ["Fire Burst(5)", "Load"]]
+fast = [["Load", "Load"], ["Load", "Fire Burst(5)"], ["Fire Burst(5)", "Load"]]
 
 [units.speedhead.damage_tables]
 regular = [
@@ -194,13 +197,13 @@ critical = [
     "5: -1 to hit, +1 to be hit (ranged and assault)",
     "6: Unit set on fire",
 ]
+
 crew = [
     "4-5: Crippled Crew, if already shaken double initial crew damage",
     "6-7: as 4-5, shaken",
     "8-11: as 6-7, +3 to future crew damage",
     "12+: Unit destroyed",
 ]
-
 
 [units.hammerhead]
 race = "ork"
@@ -309,9 +312,10 @@ still = [
     ],
 ]
 
-# default.still = ["-", "-", "-"]
-# default.slow = ["-", "-", "B"]
-# default.fast = ["-", "-", "B,B"]
+[units.hammerhead.special]
+    "Fire Order" = "All 4 harpoon gun must fire at same sector"
+    "Movement" = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
+
 
 
 [units.battlewagon]
@@ -324,7 +328,7 @@ armor = [8, 7, 7, 6]
 shaken = ""
 
 [units.battlewagon.special]
-"Transport" = "[2]: may transport up to 2 infantry. unload all infantry in any movement phase: place up to 1 infantry in the same hex as the ending hex of the battlewagon, and the rest in an adjacent hex. Enter assault if occupied by an enemy. Put the infantry in either slow or still. Treat all movement order up to this point as - for the unloaded infantry."
+"Transport" = "[2]: may transport up to 2 infantry. Treat any movement order as including an optional Deploy[range=0, quick] order"
 
 [units.battlewagon.damage_tables]
 regular = [
@@ -355,11 +359,6 @@ fast = [["F", "F", "F"], ["F", "F", "-"], ["F", "B", "360°"]]
 slow = [["A+F", "F", "F"], ["360°", "F", "360°"], ["B", "rev", "-"], ["B", "-", "-"]]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
 
-# default.still = ["-", "-", "-"]
-# default.slow = ["-", "-", "B"]
-# default.fast = ["-", "-", "B,B"]
-
-
 [units.grunt]
 name = "Grunt"
 race = "ork"
@@ -375,7 +374,7 @@ shaken = ""
 
 [units.grunt.orders.movement]
 slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
-# default.slow = ["-", "-", "Flee"]
+
 
 [units.grunt.damage_tables]
 regular = [
@@ -398,8 +397,8 @@ shaken = "May not fire weapons. Movement set to slow: -, -, flee"
 
 [units.ork_werewarg.special]
 "Take Cover" = "[still][-2]"
-"Regeneration" = "[2] = Healing[2, self, 2nd Healing]. Instead of Healing normal effect, use 2 healing points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed."
-"Resistance" = "Poison [2]. When all models are killed, treat unit as still for to-hit penalties."
+"Regeneration" = "[2] = Healing[2, self, 2nd Healing]. Instead of Healing normal effect, use 2 healing points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
+"Resistance" = "Poison [2]."
 
 [units.ork_werewarg.orders.movement]
 slow = [
@@ -494,9 +493,9 @@ armor = [0, 0, 0, 0]
 shaken = ""
 
 [units.bioengineered_ork.special]
-# "Take Cover" = "[still][-2], May use multiple ranged weapons without any penalties"
-# "Resistance" = "Poison 1, Fire 1"
-# "Immunity" = "Acid"
+"Take Cover" = "[still][-2]"
+"Resistance" = "Poison 1, Fire 1"
+"Immunity" = "Minor Acid"
 
 
 [units.bioengineered_ork.orders.fire]
@@ -527,8 +526,6 @@ slow = [
         "Chase",
     ],
 ]
-# default.still = ["-", "-", "A, Flee"]
-# default.slow = ["-", "-", "Flee"]
 
 [units.bioengineered_ork.damage_tables]
 regular = [
@@ -741,10 +738,6 @@ still = [
     ],
 ]
 
-# default.still = ["-", "-", "-"]
-# default.slow = ["-", "-", "B"]
-# default.fast = ["-", "B", "B"]
-
 
 [units.ork_char_b1.damage_tables]
 regular = [
@@ -822,9 +815,11 @@ equipments = []
 replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 special = [
-    "Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit",
-    "Unit gains Psychic resistance 1",
-]
+    "Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"]
+
+
+[models.ork_elite_infantry.unit_special]
+"Psychic"="Unit gains Psychic resistance 1"
 
 
 [models.ork_elite_infantry.assault]
@@ -924,10 +919,7 @@ equipments = [
     "harpoon_gun_free",
 ]
 equipment_limit = ["Independent:∞"]
-special = [
-    "All 4 harpoon gun must fire at same sector",
-    "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary",
-]
+
 
 [models.hammerhead.assault]
 strength = [12, 8, 8, 8]
@@ -1026,10 +1018,7 @@ race = "ork"
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 equipment_limit = ["Independent:∞"]
 equipments = ["flamethrower", "speed_cannon", "shriek"]
-special = [
-    "Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so",
-    "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target.",
-]
+
 
 [models.speedhead.assault]
 strength = [8, 6, 4, 4]

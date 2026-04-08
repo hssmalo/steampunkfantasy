@@ -53,6 +53,9 @@ type UnitSpecial = Literal[
     "Terror",
     "Poison Cloud",
     "Fog",
+    "Psychic",
+    "Movement",
+    "Pet"
 ]
 type ModelType = Literal[
     "Elite",
