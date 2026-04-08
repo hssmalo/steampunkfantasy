@@ -3,6 +3,59 @@
 [races.ork]
 name = "Ork"
 
+[units.ork_infantry]
+race = "ork"
+name = "Ork Infantry"
+models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
+size = "Medium"
+cost.mp = 4
+shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+[units.ork_infantry.special]
+"Take Cover" = "[still][-2]"
+
+[units.ork_infantry.orders.fire]
+still = [
+	[
+		"Fire",
+		"-",
+	],
+	[
+		"-",
+		"Fire",
+	],
+	[
+		"Load",
+		"-",
+	],
+	[
+		"-",
+		"Load",
+	],
+	[
+		"Aim",
+		"-",
+	],
+	[
+		"-",
+		"Aim",
+	],
+]
+
+
+[units.ork_infantry.orders.movement]
+still = [["360°", "360°", "360°"], ["360°", "A+F", "360°"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
+
+[units.ork_infantry.damage_tables]
+regular = [
+	"1-5: Kill 1 model",
+	"6-7: Kill 1 model, psychic damage[d6]",
+	"8+: Unit destroyed",
+	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+]
+
+psychic = ["4+: shaken"]
 
 [units]
 
