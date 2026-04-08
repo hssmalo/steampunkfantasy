@@ -1,0 +1,722 @@
+[races]
+
+[races.goblin]
+name = "Goblin"
+
+[units]
+[units.goblin_infantry]
+race = "goblin"
+name = "Goblin Infantry"
+models = ["goblin_infantry", "goblin_infantry", "goblin_infantry", "goblin_infantry"]
+size = "Small"
+cost.mp = 2
+shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+[units.goblin_infantry.special]
+"Take Cover" = "[still][-3]"
+"Fire Order" = "You may either fire an arrow or use one thrown weapon with each fire order."
+"Evation" = "[4+]"
+
+[units.goblin_infantry.orders.fire]
+still = [["Fire", "Fire"]]
+
+[units.goblin_infantry.orders.movement]
+still = [["360°", "360°", "360°"], ["A+360°", "F", "B+360°"]]
+
+[units.goblin_infantry.damage_tables]
+regular = [
+	"0-5: Kill 1 model",
+	"6-7: Kill 1 model, psychic damage[d6]",
+	"8+: Unit destroyed",
+	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+]
+
+psychic = ["4+: shaken"]
+
+[units.goblin_infantry_carrier]
+race = "goblin"
+name = "Goblin Infantry carrier"
+models = ["goblin_infantry_carrier"]
+size = "Large"
+armor = [10, 6, 5, 4]
+cost.ip = 4
+shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+[units.goblin_infantry_carrier.special]
+"Transport" = "May transport up to 3 Goblin infantry. Has Deploy[range=1] which may be used with Deploy orders"
+"Forward Position" = "[1]"
+
+[units.goblin_infantry_carrier.orders.movement]
+slow = [
+	[
+		"L/R",
+		"-",
+		"-",
+	],
+	[
+		"L/R",
+		"L/R",
+		"-",
+	],
+	[
+		"F",
+		"L/R",
+		"-",
+	],
+	[
+		"B",
+		"-",
+		"-",
+	],
+	[
+		"A+F",
+		"F",
+		"F+Deploy+B",
+	],
+	[
+		"F",
+		"-",
+		"-",
+	],
+	[
+		"B",
+		"-",
+		"-",
+	],
+]
+
+still = [
+	[
+		"L/R",
+		"-",
+		"-",
+	],
+	[
+		"L/R",
+		"L/R",
+		"-",
+	],
+	[
+		"L/R",
+		"L/R",
+		"L/R",
+	],
+	[
+		"-",
+		"-",
+		"-",
+	],
+	[
+		"L/R",
+		"A",
+		"F",
+	],
+	[
+		"A",
+		"F",
+		"-",
+	],
+	[
+		"rev",
+		"-",
+		"-",
+	],
+]
+
+[units.goblin_infantry_carrier.orders.fire]
+slow = [["-", "Load"], ["-", "Fire"]]
+still = [["-", "Load"], ["-", "Fire"]]
+
+[units.goblin_infantry_carrier.damage_tables]
+regular = [
+	"1-3: +1 to future damage",
+	"4: as below, shaken",
+	"5-8: as below, d6 critical damage",
+	"9: Unit destroyed",
+]
+critical = [
+	"1-2: 1d4 damage to all transported units",
+	"3: Forced Deploy (all units, empty hexes only)",
+	"4: Cannot rotate",
+	"5: Unit cannot Move ",
+	"6: set on fire",
+]
+crew = [
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
+	"6-7: as 4-5, shaken",
+	"8-11: as 6-7, +3 to future crew damage",
+	"12: Unit destroyed",
+]
+
+
+[units.heavy_carrier]
+race = "goblin"
+name = "Heavy carrier"
+models = ["heavy_carrier"]
+size = "Large"
+armor = [10, 8, 6, 4]
+cost.ip = 8
+shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[units.heavy_carrier.special]
+"Transport" = "May transport up to 1 Goblin infantry. Has Deploy[range=1, quick] which may be used with Deploy orders"
+"Forward Position" = "[1]"
+"Fire Order" = "Fire and load all weapons simultaniusly, with identical ammo usage for all weapons"
+
+[units.heavy_carrier.orders.movement]
+slow = [
+	[
+		"L/R",
+		"-",
+		"-",
+	],
+	[
+		"L/R",
+		"L/R",
+		"-",
+	],
+	[
+		"F",
+		"L/R",
+		"-",
+	],
+	[
+		"F",
+		"L/R",
+		"Deploy",
+	],
+	[
+		"L/R",
+		"F",
+		"-",
+	],
+	[
+		"L/R",
+		"F",
+		"Deploy",
+	],
+	[
+		"B",
+		"-",
+		"-",
+	],
+	[
+		"A",
+		"F",
+		"-",
+	],
+	[
+		"F",
+		"-",
+		"-",
+	],
+	[
+		"B",
+		"-",
+		"-",
+	],
+]
+fast = [
+	[
+		'F',
+		'F',
+		'F+Deploy',
+	],
+	[
+		'F',
+		'F',
+		'F',
+	],
+	[
+		'F',
+		'L/R',
+		'F+Deploy',
+	],
+	[
+		'F',
+		'L/R',
+		'F',
+	],
+	[
+		'L/R',
+		'F',
+		'F',
+	],
+	[
+		'L/R',
+		'F',
+		'F+Deploy',
+	],
+	[
+		'F',
+		'F',
+		'L/R',
+	],
+	[
+		'F',
+		'F+Deploy',
+		'L/R',
+	],
+	[
+		'F',
+		"B",
+		"-",
+	],
+]
+
+still = [
+	[
+		"L/R",
+		"-",
+		"-",
+	],
+	[
+		"L/R",
+		"L/R",
+		"-",
+	],
+	[
+		"L/R",
+		"L/R",
+		"L/R",
+	],
+	[
+		"-",
+		"-",
+		"-",
+	],
+	[
+		"L/R",
+		"A",
+		"F",
+	],
+	[
+		"A",
+		"F",
+		"-",
+	],
+	[
+		"rev",
+		"-",
+		"-",
+	],
+]
+
+[units.heavy_carrier.orders.fire]
+fast = [["Load", "Fire"]]
+slow = [["Load", "Load"]]
+still = [["Load", "Load"]]
+
+[units.heavy_carrier.damage_tables]
+regular = [
+	"1-3: +1 to future damage",
+	"4: as below, shaken",
+	"5-8: as below, d6 critical damage",
+	"9: Unit destroyed",
+]
+critical = [
+	"1: 1d4 damage to all transported units",
+	"2: Forced Deploy (empty hexes only)",
+	"3: +1 to be hit, -1 to hit",
+	"4: Cannot rotate",
+	"5: Unit cannot Move ",
+	"6: set on fire",
+]
+crew = [
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
+	"6-7: as 4-5, shaken",
+	"8-11: as 6-7, +3 to future crew damage",
+	"12: Unit destroyed",
+]
+
+
+[units.mechanical_fire_bird]
+race = "goblin"
+name = "Mechanical Fire Bird"
+models = ["mechanical_fire_bird"]
+size = "Medium"
+armor = [5, 4, 4, 3]
+cost.ip = 6
+shaken = "Speed set to fast flying, move order: [- F F]. May not fire weapons"
+
+[units.mechanical_fire_bird.special]
+"Hans Sverre's favorite rule" = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_flying. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
+"Immunity" = "fire"
+
+[units.mechanical_fire_bird.orders.movement]
+fast_flying = [["L/R+F", "F", "F+L/R"], ["F", "F", "F"], ["F", "L/R+F+L/R", "F"]]
+
+[units.mechanical_fire_bird.orders.fire]
+fast = [["-", "Load"], ["-", "Fire"]]
+
+[units.mechanical_fire_bird.damage_tables]
+regular = [
+	"1-3: +1 to future damage",
+	"4-5: +2 to future damage",
+	"6+: As below, temporarily destroyed",
+	"While temporarily destroyed, all regular damage do inner damage instead",
+	"{{\\it Note: + to future damage does not apply to inner damage}}",
+	"{{\\it Note that it does not get the status temporarily destroyed before the apply damage step}}",
+]
+
+
+inner = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
+
+
+[models]
+[models.goblin_infantry]
+name = "Goblin Infantry"
+race = "goblin"
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1"]
+equipments = ["goblin_bow", "goblin_grenade"]
+type = ["Bio", "Infantry", "Walking"]
+
+[models.goblin_infantry.assault]
+strength = [2, 1, 1, 1]
+strength_die = "6+"
+deflection = [0, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = ["Cunning Assault[1 for 1]", "Pre assault retreat: 6+"]
+
+
+[models.goblin_infantry_carrier]
+name = "Goblin Infantry Carrier"
+race = "goblin"
+equipments = ["light_mortar"]
+equipment_limit = ["Independent:∞"]
+type = ["Vehicle", "Tracked", "Mechanical"]
+
+[models.goblin_infantry_carrier.assault]
+strength = [12, 1, 1, 1]
+strength_die = "6+"
+deflection = [12, 0, 0, 0]
+deflection_die = "6+"
+damage = "d4-2"
+ap = 2
+special = []
+
+
+[models.heavy_carrier]
+name = "Heavy Carrier"
+race = "goblin"
+equipments = ["goblin_bow_battery", "heavy_crossbow"]
+equipment_limit = ["Independent:∞"]
+type = ["Vehicle", "Tracked", "Mechanical"]
+
+[models.heavy_carrier.assault]
+strength = [16, 8, 1, 1]
+strength_die = "6+"
+deflection = [16, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = []
+
+
+[models.mechanical_fire_bird]
+name = "Mechanical Fire Bird"
+race = "goblin"
+equipments = ["ring_of_fire"]
+equipment_limit = ["Independent:∞"]
+type = ["Drone", "Flying", "Mechanical"]
+
+[models.mechanical_fire_bird.assault]
+strength = [6, 4, 1, 1]
+strength_die = "6+"
+deflection = [16, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 1
+special = ["Enemy hit at least once is set on fire"]
+
+
+[models.elite_goblin_infantry]
+name = "Elite Goblin Infantry"
+race = "goblin"
+cost.xp = 1
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2"]
+equipments = ["goblin_bow"]
+type = ["Bio", "Infantry", "Elite", "Walking"]
+replaces = "goblin_infantry"
+special = [
+	"good shot: +3 to hit with thrown weapons",
+	"+1 to pre-assault retreat (per elite in unit)",
+	"If unit contains at least one elite, gain Psycic resistance[1]",
+]
+
+[models.elite_goblin_infantry.assault]
+strength = [2, 1, 1, 1]
+strength_die = "6+"
+deflection = [4, 0, 0, 0]
+deflection_die = "6+"
+damage = "d4-2"
+ap = 2
+special = ["Cunning Assault[1 for 1]"]
+
+[equipments]
+
+[equipments.goblin_bow]
+name = "Goblin bow"
+race = "goblin"
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipments.goblin_bow.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d4-2"
+ap = "1"
+special = ["Always treated as loaded"]
+
+
+[equipments.gear_bow]
+name = "Gear bow"
+race = "goblin"
+cost.cp = 2
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipments.gear_bow.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d4-2"
+ap = "1"
+special = ["Always treated as loaded", "Gear Disruption[6+]"]
+
+[equipments.clockwork_wings]
+name = "Clockwork Wings"
+race = "goblin"
+cost.cp = 6
+requires = [["type:Infantry"], ["Independent:1"]]
+special = []
+
+[equipments.clockwork_wings.assault]
+strength.add = [1, 0, 0, 0]
+
+[equipments.clockwork_wings.orders_gained.movement]
+slow = [["A(fast, fly)", "F", "F"]]
+fast_fly = [
+	[
+		"360°",
+		"F",
+		"B(slow, land)",
+	],
+	[
+		"F",
+		"360°",
+		"F",
+	],
+	[
+		"360°",
+		"F",
+		"F",
+	],
+	[
+		"F",
+		"F",
+		"360°",
+	],
+]
+
+
+[equipments.poison_bow]
+name = "Poison bow"
+race = "goblin"
+cost.cp = 4
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipments.poison_bow.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d4-2 + d4 crew damage"
+ap = "1"
+special = [
+	"Always treated as loaded",
+	"Poison[4]",
+	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
+]
+
+
+[equipments.ogre_rifle]
+name = "Ogre Rifle"
+race = "goblin"
+cost.cp = 2
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipments.ogre_rifle.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d8-2"
+ap = "2"
+special = [
+	"After firing this weapon, set speed to slow flying",
+	"remember to track ammo",
+	"Unit is destroyed if trying to land in an impassible or overcrowded hex",
+]
+
+[equipments.ogre_rifle.orders_gained.movement]
+slow_flying = [["rev", "-", "B[still]"]]
+
+[equipments.ogre_rifle.orders_gained.fire]
+still = [["Load", "-"], ["-", "Load"]]
+
+
+[equipments.poison_dagger]
+name = "Poison Deflection Dagger"
+race = "goblin"
+cost.cp = 2
+requires = [["Independent:1"], ["type:Infantry"]]
+
+[equipments.poison_dagger.assault]
+deflection.add = [1, 0, 0, 0]
+deflection_die.replace = "6+"
+special.append = ["Each deflected hit gives enemy poison[4]"]
+
+
+[equipments.combat_screw_driver]
+name = "Combat Screw Driver"
+race = "goblin"
+cost.cp = 2
+requires = [["Independent:1"], ["type:Infantry"]]
+
+[equipments.combat_screw_driver.assault]
+deflection.add = [1, 0, 0, 0]
+deflection_die.replace = "6+"
+special.append = [
+	"Cunning Deflection: Each deflected hit counts as hits for cunning assault purposes.",
+]
+
+
+[equipments.goblin_grenade]
+name = "Goblin Grenade"
+race = "goblin"
+requires = [["Grenades:1"], ["type:Infantry"]]
+
+[equipments.goblin_grenade.range]
+range = 1
+angle = [true, true, true, true]
+damage = "d6"
+ap = 2
+special = ["Thrown weapon", "Always treated as loaded"]
+
+[equipments.grenadier]
+name = "Grenadier specialization"
+race = "goblin"
+cost.xp = 2
+requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
+special = [
+	"For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)",
+	"Get +1 to hit for thrown weapons",
+]
+
+
+[equipments.archer]
+name = "Archer spesialization"
+race = "goblin"
+cost.xp = 2
+requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
+special = [
+	"For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit",
+]
+
+
+[equipments.acid_grenade]
+name = "Acid Grenade"
+race = "goblin"
+cost.cp = 2
+requires = [["Grenades:1"], ["type:Infantry"]]
+
+[equipments.acid_grenade.range]
+range = 1
+angle = [true, true, true, true]
+damage = "n.a."
+ap = 0
+special = [
+	"Thrown wapon",
+	"Always treated as loaded",
+	"No regular damage, but Minor Acid",
+]
+
+
+[equipments.poison_grenade]
+name = "Poison Grenade"
+race = "goblin"
+cost.cp = 2
+requires = [["Grenades:1"], ["type:Infantry"]]
+
+[equipments.poison_grenade.range]
+range = 1
+angle = [true, true, true, true]
+damage = "d4 crew damage"
+ap = 0
+special = [
+	"Thrown wapon",
+	"Always treated as loaded",
+	"Poison[4]",
+	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
+]
+
+
+[equipments.light_mortar]
+name = "Light Mortar"
+race = "goblin"
+
+
+[equipments.light_mortar.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d6 + d4 crew damage"
+ap = 2
+special = [
+	"Poison[4]",
+	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
+]
+
+
+[equipments.goblin_bow_battery]
+name = "Goblin Bow Battery"
+race = "goblin"
+requires = []
+
+[equipments.goblin_bow_battery.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d4 -2"
+ap = 2
+special = [
+	"May be loaded with up to 3 ammo",
+	"Fire d12 shots per fire order per ammo spent, all targeted the same unit.",
+	"In addition to normal damage, choose one: add Minor Acid, Poison[6] or Gear Disruption[6+]",
+	"imprecise weapon: -1 to hit",
+]
+
+
+[equipments.heavy_crossbow]
+name = "Heavy Crossbow"
+race = "goblin"
+requires = []
+
+[equipments.heavy_crossbow.range]
+range = 4
+angle = [true, false, false, false]
+damage = "d6"
+ap = 4
+special = [
+	"May be loaded with up to 3 ammo",
+	"Fire once per ammo spend per fire order",
+	"enhanced accuracy: +1 to hit",
+]
+
+
+[equipments.ring_of_fire]
+name = "Ring of Fire"
+race = "goblin"
+requires = []
+
+[equipments.ring_of_fire.range]
+range = 2
+angle = [true, true, true, true]
+damage = "n.a"
+ap = 0
+special = [
+	"Area[6+] at all enemies within exacatly range 2. All units hit at least once is set on fire",
+]

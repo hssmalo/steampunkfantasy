@@ -426,7 +426,7 @@
     armor = [0, 0, 0, 0]
     cost.mp = 0
     cost.xp = 0
-    special = ["May only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules", "If there are no Darkelf officer on the game map, this unit rebel and switch sides", "Consists of Dwarfs, Elfs, Orks, Goblin, Ogers, Abominations and Gnomes"]
+    special = ["May only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules", "If there are no Darkelf officer on the game map, this unit rebel and switch sides", "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes"]
 
     shaken= "speed set to slow, move order: [-,-,flee]"		
 

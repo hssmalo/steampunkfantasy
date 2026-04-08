@@ -1,0 +1,676 @@
+[races]
+
+    [races.ogre]
+    name = "Ogre"
+
+[units]
+	[ogre.units.ogre_infantry]
+	race = "ogre"
+	name = "Ogre Infantry"
+	models = ["ogre_infantry","ogre_infantry"]
+	size = "large"
+	cost.mp = 4
+	special =  ["Take Cover[still][-1]"]
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+	[ogre.units.ogre_infantry.orders.fire]
+		     still = [["Fire", "-",],["-", "Fire"],
+		     	       ["Load", "-"],["-", "Load"],
+			       ["Aim", "-"],["-", "Aim"]]
+
+
+	[ogre.units.ogre_infantry.orders.movement]
+		     still =[["360°","360°","360°"],["A+360°","F","360°"]]
+		     slow = [["360°","F","360°"], ["360°","B","360°"]]
+
+
+	[ogre.units.ogre_infantry.damage_tables]
+		regular = ["2-3: Bleed[4]", , "4-6: Kill 1 model", "7-10: Kill 1 model, psychic damage[d6]", "11+: Unit destroyed","{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}"]
+   
+                psychic = ["6+: shaken"]
+
+
+	[ogre.units.ogre_robot]
+	race = "ogre"
+	name = "Ogre Robot"
+	models = ["ogre_robot","ogre_robot"]
+	size = "medium"
+	cost.cp = 4
+	armor = [3,3,0,0]
+	special =  ["Take Cover[still][-2]"]
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+	[ogre.units.ogre_robot.orders.fire]
+		     still = [["Fire", "-",],["-", "Fire"],
+		     	       ["Load", "-"],["-", "Load"],
+			       ["Aim", "-"],["-", "Aim"]]
+
+
+	[ogre.units.ogre_robot.orders.movement]
+		     still =[["360°","360°","360°"],["A+360°","F","360°"]]
+		     slow = [["360°","F","360°"], ["360°","B","360°"]]
+
+	[ogre.units.ogre_robot.damage_tables]
+                     regular = ["2-3: +1 to future damge", "4-6: +2 to future damage", "7-10: Kill 1 model", "11+: Unit destroyed", "{{\\it Note: remove half of the +1 future damage tokens when one robots dies}}"]
+
+
+	[ogre.units.ogre_assault_scout]
+	race = "ogre"
+	name = "Ogre Assault Scout"
+	models = ["ogre_assault_scout"]
+	size = "large"
+	cost.mp = 2
+	cost.xp = 4
+	special =  ["Take Cover[still][-2]"]
+	shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+	[ogre.units.ogre_assault_scout.orders.fire]
+		     still = [["Fire", "-",],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
+     		     slow = [["Fire", "-"],["-", "Fire"], ["spot", "spot"]]
+		     fast = [["Fire", "-"],["-", "Fire"],["spot", "spot"]]
+
+	[ogre.units.ogre_assault_scout.orders.movement]
+		     still =[["360°","360°","360°"],["A+360°","F","360°"]]
+		     slow = [["360°","F","360°"], ["360°","B","360°"], ["A+360°","F","F"]]
+		     fast = [["360°","F","F"], ["F", "360°","F"], ["F","F", "360°"], ["chase", "chase","chase"], ["360°", "F", "B"]]
+
+	[ogre.units.ogre_assault_scout.damage_tables]
+		regular = ["2-5: Bleed[8]", "6-7: As below, +1 to future damage", "8: unit destoried", "{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}"]
+		psychic = ["6+: shaken"]
+
+
+
+	[ogre.units.drone_swarm]
+	race = "ogre"
+	name = "Drone_swarm"
+	models = ["drone_swarm", "drone_swarm","drone_swarm","drone_swarm","drone_swarm"]
+	size = "tiny"
+	cost.cp = 1
+	special =  ["Once speed is rest, considered this unit destroied without enemy gaining victory points for it", "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points", "Evation[3+]"]
+	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+
+	[ogre.units.drone_swarm.orders.fire]
+		     still = [["Fire", "-",],["-", "Fire"],["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
+     		     slow = [["Fire", "-",],["-", "Fire"],["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
+		     fast = [["Fire", "-",],["-", "Fire"],["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
+
+	[ogre.units.drone_swarm.orders.movement]
+		rest = [["-", "-", "-"]]
+		still =[["360°","360°","B[rest]"]]
+		slow = [["360°","F","B"]]
+		fast = [["chase", "chase", "chase + B"]]
+
+
+		   
+	[ogre.units.drone_swarm.damage_tables]
+                     regular = ["1+: Destroy one model"]
+
+
+	[ogre.units.repair_drone]
+	race = "ogre"
+	name = "Repair Drone"
+	models = ["repair_drone", "repair_drone","repair_drone","repair_drone"]
+	size = "tiny"
+	cost.cp = 4
+	special =  ["Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models", "May share hex with a huge unit", "If this unit shares a hex with another unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points", "Evation[3+]"]
+	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+
+
+	[ogre.units.repair_drone.orders.movement]
+		slow = [["360°","F","360°"]]
+
+
+		   
+	[ogre.units.repair_drone.damage_tables]
+                     regular = ["1+: destroy one model"]
+
+
+	[ogre.units.medic_drone]
+	race = "ogre"
+	name = "Medic Drone"
+	models = ["medic_drone", "medic_drone","medic_drone","medic_drone"]
+	size = "tiny"
+	cost.cp = 2
+	cost.xp = 2
+	special =  ["Heal[N, other, 2nd healing] where N is the number of alive medic drones models", "May share hex with a huge unit", "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points", "Evation[3+]"]
+	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+
+
+	[ogre.units.medic_drone.orders.movement]
+		fast = [["Help","Help","Help"]]
+
+
+		   
+	[ogre.units.medic_drone.damage_tables]
+                     regular = ["1+: destroy one model"]
+
+
+
+	[ogre.units.main_engine]
+	race = "ogre"
+	name = "Main engine"
+	models = ["main_engine"]
+	size = "Huge"
+	cost.ip = 8
+	armor = [12, 10, 10, 8]
+	special =  ["Blocks Line of Sight","May tow one wagon. Towed wagon always faces the main engine, and when the engine leavs its hex, the towed wagon enters the hex the engine exited, and conduct assault if neccessary.","May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order, but you may deploy a maximum of 2 tiny drone units each time"]
+	shaken = "Movement set to slow. Movement order: [-,-,-]. May not fire weapons"
+
+
+	[ogre.units.main_engine.orders.fire]
+		     still = [["Fire", "-"],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+     		     slow = [["Fire", "-",],["-", "Fire"],["Aim", "-"], ["-", "Aim"]]
+		     fast = [["Fire", "-",],["-", "Fire"],["Aim", "-"], ["-", "Aim"]]
+
+
+	[ogre.units.main_engine.orders.movement]
+		still =[["L/R", "-", "-"],["L/R", "-", "A"]]
+		slow = [["L/R", "F", "L/R"], ["L/R", "F", "A"], ["F", "L/R", "-"]]
+		fast = [["F", "F", "-"], ["L/R", "F", "F"], ["F", "L/R", "F"],["F", "F", "L/R"], ["F", "L/R", "B"]]
+
+		   
+
+	[ogre.units.main_engine.damage_tables]
+		critical = [ "1-3: +3 to futre damage", "4: Cannot rotate", "5: Cannot Move", "6: set on Fire",]
+		regular = [ "1-3: +1 on future damage", "4: as below, shaken", "5-8: Critical damage[d6], +1 on future damage", "9+: Destroyed",]
+		crew = [ "4-5: Crippled Crew, if aleady shaken double initial crew damage", "6-7: as 4-5, shaken", "8-12: as 6-7, +3 to future crew damage", "13: Unit destroyed"]
+
+
+
+	[ogre.units.broadside_wagon]
+	race = "ogre"
+	name = "Broadside Wagon"
+	models = ["broadside_wagon"]
+	size = "Large"
+	cost.ip = 4
+	armor = [2, 10, 10, 8]
+	special =  ["Must be towed by an main enigne, or an other wagon which is connected to a main engine to move. If so, this unit is concidered to be connected with a main engine. Has the same speed as the main engine if connected, otherwise it is still", "A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if neccessary."]
+	shaken = "May not fire weapons"
+
+	[ogre.units.broadside_wagon.orders.fire]
+		     still = [["Fire", "-"],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+     		     slow = [["Fire", "-",],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+		     fast = [["Fire", "-",],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+
+		   
+	[ogre.units.broadside_wagon.damage_tables]
+		critical = [ "1-5: +3 to futre damage", "6: set on Fire",]
+		regular = [ "1-3: +1 on future damage", "4: as below, shaken", "5-8: Critical damage[d6], +1 on future damage", "9+: Destroyed",]
+		crew = [ "4-5: Crippled Crew, if aleady shaken double initial crew damage", "6-7: as 4-5, shaken", "8-12: as 6-7, +3 to future crew damage", "13: Unit destroyed"]
+
+
+	[ogre.units.artillery_wagon]
+	race = "ogre"
+	name = "Artillery Wagon"
+	models = ["artillery_wagon"]
+	size = "Large"
+	cost.ip = 4
+	armor = [2, 10, 10, 8]
+	special =  ["Must be towed by an main enigne, or an other wagon which is connected to a main engine to move. If so, this unit is concidered to be connected with a main engine. Has the same speed as the main engine if towed if connected, else it is still", "A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if neccessary."]
+	shaken = "May not fire weapons"
+
+	[ogre.units.artillery_wagon.orders.fire]
+		     still = [["Fire", "-"],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+     		     slow = [["Fire", "-",],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+		     fast = [["Fire", "-",],["-", "Fire"],["Load", "-"],["-", "Load"], ["Aim", "-"], ["-", "Aim"]]
+
+		   
+	[ogre.units.artillery_wagon.damage_tables]
+		critical = [ "1-5: +3 to futre damage", "6: set on Fire",]
+		regular = [ "1-3: +1 on future damage", "4: as below, shaken", "5-8: Critical damage[d6], +1 on future damage", "9+: Destroyed",]
+		crew = [ "4-5: Crippled Crew, if aleady shaken double initial crew damage", "6-7: as 4-5, shaken", "8-12: as 6-7, +3 to future crew damage", "13: Unit destroyed"]
+
+
+
+
+
+
+[models]
+	[ogre.models.ogre_infantry]
+	name = "Ogre Infantry"
+	race = "ogre"
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["ogre_rifle"]
+	type = ["Bio", "infantry", "Walks"]
+
+	     [ogre.models.ogre_infantry.assault]
+	     strength = [3,2,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = []
+
+	[ogre.models.ogre_robot]
+	name = "Ogre Robot"
+	race = "ogre"
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["ogre_rifle"]
+	type = ["Bio", "infantry", "Walks", "Mechanical"]
+
+	     [ogre.models.ogre_robot.assault]
+	     strength = [1,1,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d6-2"
+	     ap = 2
+	     special = []
+
+
+	[ogre.models.ogre_assault_scout]
+	name = "Ogre Scout"
+	race = "ogre"
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["gear_pistol", "ogre_helbard_free"]
+	type = ["Bio", "infantry", "Walks", "elite", "scout"]
+
+	     [ogre.models.ogre_assault_scout.assault]
+	     strength = [6,2,1,1]
+	     strength_die = "5+"
+	     deflection = [3, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 3
+	     special = []
+
+
+	[ogre.models.ogre_scout_engineer]
+	name = "Ogre Scout Engineer"
+	race = "ogre"
+	cost.xp = 4
+	replaces = ["ogre_assault_scout"]
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["gear_pistol", "ogre_helbard_free"]
+	type = ["Bio", "infantry", "Walks", "elite", "scout"]
+	special = ["May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maxium of 2 tiny drones each time", "Repair[2, other, 1st healing]", "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaler units"]
+
+	     [ogre.models.ogre_scout_engineer.assault]
+	     strength = [6,2,1,1]
+	     strength_die = "5+"
+	     deflection = [3, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 3
+	     special = []
+
+
+	[ogre.models.drone_swarm]
+	name = "Drone Swarm"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = ["tiny_fancy_gear_pistol"]
+	type = ["Mechanical", "Floats", "Drone"]
+
+	     [ogre.models.drone_swarm.assault]
+	     strength = [1,0,0,0]
+	     strength_die = "5+"
+     	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d4-2"
+	     ap = 0
+	     special = ["Pre Assault escape: 4+"]
+
+	[ogre.models.repair_drone]
+	name = "Repair Drone"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = []
+	type = ["Mechanical", "Floats", "Drone"]
+
+	     [ogre.models.repair_drone.assault]
+	     strength = [1,0,0,0]
+	     strength_die = "5+"
+     	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d4-2"
+	     ap = 0
+	     special = ["Pre Assault escape: 4+"]
+
+
+	[ogre.models.medic_drone]
+	name = "Medic Drone"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = []
+	type = ["Mechanical", "Floats", "Drone"]
+
+	     [ogre.models.medic_drone.assault]
+	     strength = [1,0,0,0]
+	     strength_die = "5+"
+     	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d4-2"
+	     ap = 0
+	     special = ["Pre Assault escape: 4+"]
+
+
+	[ogre.models.healing_drone]
+	name = "Repair Drone"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = []
+	type = ["Mechanical", "Floats", "Drone"]
+
+	     [ogre.models.healing_drone.assault]
+	     strength = [1,0,0,0]
+	     strength_die = "5+"
+     	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d4-2"
+	     ap = 0
+	     special = ["Pre Assault escape: 4+"]
+
+
+
+	[ogre.models.main_engine]
+	name = "Main Engine"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = ["ogre_gun"]
+	type = ["Mechanical", "Tracks", "Drone", "Carrier"]
+
+	     [ogre.models.main_engine.assault]
+	     strength = [9,6,3,0]
+	     strength_die = "5+"
+     	     deflection = [9, 6, 3, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 3
+	     special = ["If after all assault, a wagon the engine is towing cannot enter the hex it should, the wagon is detached from the engine and cannot move"]
+
+
+	[ogre.models.artillery_wagon]
+	name = "Artillery Wagon"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = ["ogre_artillery"]
+	type = ["Mechanical", "Towed", "Drone"]
+	special = ["Need command: -2 to hit if unit is not connected to a main engine"]
+
+	     [ogre.models.artillery_wagon.assault]
+	     strength = [9,9,9,6]
+	     strength_die = "5+"
+     	     deflection = [9, 9, 9, 6]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 3
+	     special = ["If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroied instead"]
+
+
+	[ogre.models.broadside_wagon]
+	name = "Broadside Wagon"
+	race = "ogre"
+	equipment_limit = ["independent:∞"]
+	equipments = ["ogre_broadside"]
+	type = ["Mechanical", "Towed", "Drone", "scout"]
+
+	     [ogre.models.broadside_wagon.assault]
+	     strength = [9,9,9,6]
+	     strength_die = "5+"
+     	     deflection = [9, 9, 9, 6]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 3
+	     special = ["If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroied instead"]
+
+
+	[ogre.models.elite_ogre_infantry]
+	name = "Ogre Elite Infantry"
+	race = "ogre"
+	replaces = ["ogre_infantry"]
+	cost.xp = 1 
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["ogre_rifle"]
+	type = ["Bio", "infantry", "Walks", "elite"]
+	special = ["Good shot: +1 to hit"]
+
+	     [ogre.models.elite_ogre_infantry.assault]
+	     strength = [4,2,1,1]
+	     strength_die = "5+"
+	     deflection = [3, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = []
+
+	[ogre.models.elite_ogre_robot]
+	name = "Elite Ogre Robot"
+	race = "ogre"
+	replaces = ["ogre_robot"]
+	cost.xp = 1 
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["ogre_rifle"]
+	type = ["Bio", "infantry", "Walks", "elite"]
+	special = ["Good shot: +1 to hit"]
+
+	     [ogre.models.elite_ogre_robot.assault]
+	     strength = [2,1,1,1]
+	     strength_die = "5+"
+	     deflection = [2, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = []
+
+
+	[ogre.models.ogre_medic]
+	name = "Ogre Medic"
+	race = "ogre"
+	replaces = ["ogre_infantry"]
+	cost.xp = 1 
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["ogre_rifle"]
+	type = ["Bio", "infantry", "Walks", "medic"]
+	special = ["Healing[1, any, 1st healing]"]
+
+	     [ogre.models.ogre_medic.assault]
+	     strength = [3,2,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]"]
+
+
+	[ogre.models.ogre_engineer]
+	name = "Ogre Engineer"
+	race = "ogre"
+	replaces = ["ogre_infantry"]
+	cost.xp = 2
+	equipment_limit = ["independent:∞", "hands:2"]
+	equipments = ["ogre_rifle"]
+	type = ["Bio", "infantry", "Walks", "Engineer", "Carrier"]
+	special = ["May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maxium of 2 tiny drones per model each time", "Repair[2, other, 1st healing]", "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaler units"]
+
+	     [ogre.models.ogre_engineer.assault]
+	     strength = [3,2,1,1]
+	     strength_die = "5+"
+	     deflection = [1, 0, 0, 0]
+	     deflection_die = "5+"
+	     damage = "d8"
+	     ap = 2
+	     special = ["Cunning Assault[1 for 2]"]
+
+
+[equipments]
+
+   [ogre.equipments.ogre_sniper_rifle]
+    name = "Ogre Sniper Rifle"
+    race = "ogre"
+    model_cost.cp = 6 
+    requires = [["hands:2"], ["type:infantry"],["type:elite"]]
+
+    	     [ogre.equipments.ogre_sniper_rifle.range]
+	     range = 8
+	     angle = [true, true, true, true]
+	     damage = "d8-2"
+	     ap = 3
+	     special = ["improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 psychic damage and +d6 crew damage when aiming", "After eliminating one model with the use of aim, you get to choose which model to destroy"]
+
+
+    [ogre.equipments.ogre_rifle]
+    name = "Ogre Rifle"
+    race = "ogre"
+    requires = [["hands:2"], ["type:infantry"]]
+
+    	     [ogre.equipments.ogre_rifle.range]
+	     range = 4
+	     angle = [true, true, true, true]
+	     damage = "d8-2"
+	     ap = 2
+	     special = []
+
+
+    [ogre.equipments.drone_supply]
+    name = "Drone Supply"
+    race = "ogre"
+    cost.ip = 1
+    requires = [["independent:1"], ["type:carrier"]]
+    special = ["Gives a supply of 3 {{\\it drone swarm}} units which this model carries"]
+
+
+
+   [ogre.equipments.ogre_gun]
+    name = "Ogre gun"
+    race = "ogre"
+    requires = []
+
+    	     [ogre.equipments.ogre_gun.range]
+	     range = 3
+	     angle = [true, false, false, false]
+	     damage = "d8+2 if penetrating all armor"
+	     ap = 5
+	     special = []
+
+
+   [ogre.equipments.ogre_artillery]
+    name = "Ogre Artillery"
+    race = "ogre"
+    requires = []
+
+    	     [ogre.equipments.ogre_artillery.range]
+	     range = 5
+	     angle = [true, true, true, true]
+	     damage = "d8+3 if penetrating all armor"
+	     ap = 6
+	     special = ["Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit", "In addition, wether you hit or not, Area[5+], AP=4, damage=d8 in the target hex"]
+
+
+   [ogre.equipments.fancy_ogre_rifle]
+    name = "Fancy Ogre Rifle"
+    race = "ogre"
+    cost.cp = 2
+    requires = [["hands:2"], ["type:infantry"]]
+
+    	     [ogre.equipments.fancy_ogre_rifle.range]
+	     range = 4
+	     angle = [true, true, true, true]
+	     damage = "d8"
+	     ap = 2
+	     special = []
+
+
+   [ogre.equipments.ogre_broadside]
+    name = "Ogre broadside"
+    race = "ogre"
+    requires = []
+
+    	     [ogre.equipments.ogre_broadside.range]
+	     range = 4
+	     angle = ["-", "x4", "x4", "-"]
+	     damage = "d8-2"
+	     ap = 2
+	     special = []
+
+
+   [ogre.equipments.fancy_arquebus]
+    name = "Fancy Arquebus"
+    race = "ogre"
+    cost.cp = 4
+    requires = [["hands:2"], ["type:infantry"]]
+
+    	     [ogre.equipments.fancy_arquebus.range]
+	     range = 3
+	     angle = [true, true, true, true]
+	     damage = "d8+2"
+	     ap = 4
+	     special = []
+
+
+   [ogre.equipments.gear_pistol]
+    name = "Gear Pistol"
+    race = "ogre"
+    requires = [["hands:2"], ["type:scout"]]
+
+    	     [ogre.equipments.gear_pistol.range]
+	     range = 3
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = 2
+	     special = []
+
+
+   [ogre.equipments.fancy_gear_pistol]
+    name = "Fancy Gear Pistol"
+    race = "ogre"
+    cost.cp = 1 
+    requires = [["hands:1"], ["type:scout", "type:infantry"]]
+
+    	     [ogre.equipments.fancy_gear_pistol.range]
+	     range = 3
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = "2"
+	     special = ["minor acid", "+1 to hit", "May be loaded up to 2 times. Start with two ammo"]
+
+
+   [ogre.equipments.tiny_fancy_gear_pistol]
+    name = "Tiny Fancy Gear Pistol"
+    race = "ogre"
+    requires = []
+
+    	     [ogre.equipments.tiny_fancy_gear_pistol.range]
+	     range = 1
+	     angle = [true, true, true, true]
+	     damage = "d4-2"
+	     ap = "0"
+	     special = ["minor acid", "+3 to hit", "Start with two ammo"]
+
+   [ogre.equipments.ogre_helbard_free]
+    name = "Ogre Helbard"
+    race = "ogre"
+    requires = [["hands:2"], ["type:infantry"]]
+
+    	     [ogre.equipments.ogre_helbard_free.assault]
+    	     special.append = "+1 assault strenth per enemy model in assault (forward direction only)"
+
+
+   [ogre.equipments.ogre_helbard]
+    name = "Ogre Helbard"
+    race = "ogre"
+    cost.cp = 2
+    requires = [["hands:2"], ["type:infantry"]]
+
+    	     [ogre.equipments.ogre_helbard.assault]
+    	     special.append = "+1 assault strenth per enemy model in assault (forward direction only)"
+
+
+
+   [ogre.equipments.fancy_ogre_helbard]
+    name = "Fancy Ogre Helbard with integrated fancy pistol"
+    race = "ogre"
+    model_cost.cp = 4
+    requires = [["hands:2"], ["type:scout", "type:scout"], ["type:elite"]]
+
+    	     [ogre.equipments.fancy_ogre_helbard.assault]
+    	     special.append = "+1 assault strenth and deflection per enemy model in assault (forward direction only)"
+
+    	     [ogre.equipments.fancy_ogre_helbard.range]
+	     range = 3
+	     angle = [true, true, true, true]
+	     damage = "d6-2"
+	     ap = "2"
+	     special = ["minor acid", "+1 to hit", "May be loaded up to 2 times. Start with two ammo"]

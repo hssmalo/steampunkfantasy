@@ -1,0 +1,58 @@
+{
+  "race": "goblin",
+  "units": [
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "combat_screw_driver"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "heavy_carrier",
+      "models": [
+        {
+          "name": "heavy_carrier",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1801 @@
+[races]
+
+[races.gnome]
+name = "gnome"
+
+
+[units]
+
+[gnome.units.gnome_infantry]
+race = "gnome"
+name = "Gnome Infantry"
+models = ["gnome_infantry", "gnome_infantry", "gnome_infantry", "gnome_infantry"]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 4
+special = ["Take-Cover[still][-2]"]
+shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+
+[gnome.units.gnome_infantry.orders.movement]
+slow = [
+    [
+        "Chase",
+        "",
+        "",
+    ],
+    [
+        "",
+        "",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "B",
+        "-",
+    ],
+]
+still = [["360°", "-", "-"], ["360°", "A", "F"]]
+
+[gnome.units.gnome_infantry.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+    [
+        "Fire (res)",
+        "Fire (res)",
+    ],
+]
+slow = [["Fire (res)", "Fire (res)"]]
+
+[gnome.units.gnome_infantry.damage_tables]
+regular = [
+    "1-5: Kill 1 model",
+    "6-8: Kill 1 model, d6 Psychic damage",
+    "9: Destroy unit",
+]
+psychic = ["4+: Unit Shaken"]
+
+
+[gnome.units.quad_bike]
+race = "gnome"
+name = "Quad Bike"
+models = ["quad_bike", "quad_bike", "quad_bike", "quad_bike"]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 4
+cost.cp = 4
+special = ["May not enter buildings"]
+shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+
+[gnome.units.quad_bike.orders.movement]
+fast = [
+    [
+        "F",
+        "F",
+        "-",
+    ],
+    [
+        "F",
+        "F",
+        "R",
+    ],
+    [
+        "F",
+        "F",
+        "L",
+    ],
+    [
+        "F",
+        "R",
+        "F",
+    ],
+    [
+        "F",
+        "L",
+        "F",
+    ],
+    [
+        "L",
+        "F",
+        "F",
+    ],
+    [
+        "R",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "B",
+    ],
+    [
+        "F",
+        "B",
+        "-",
+    ],
+]
+slow = [
+    [
+        "360°",
+        "A",
+        "F",
+    ],
+    [
+        "Chase",
+        "",
+        "",
+    ],
+    [
+        "",
+        "",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "B",
+        "-",
+    ],
+]
+still = [["360°", "-", "-"], ["360°", "A", "F"]]
+
+[gnome.units.quad_bike.orders.fire]
+still = [["Fire (res)", "Fire (res)"]]
+
+slow = [["Fire (res)", "Fire (res)"]]
+fast = [["Fire (res)", "Fire (res)"]]
+
+[gnome.units.quad_bike.damage_tables]
+regular = [
+    "1-5: Kill 1 model",
+    "6-8: Kill 1 Model, d6 Psychic damage",
+    "9: Destroy unit",
+]
+psychic = ["6+: Unit Shaken"]
+
+
+[gnome.units.assault_bots]
+race = "gnome"
+name = "Assault Bots"
+models = ["assault_bot", "assault_bot", "assault_bot", "assault_bot"]
+size = "medium"
+armor = [0, 0, 0, 0]
+special = [""]
+
+[gnome.units.assault_bots.orders.movement]
+slow = [["-", "-", "Chase"]]
+
+
+[gnome.units.assault_bots.damage_tables]
+regular = ["0-7: Kill 1 model", "8: Destroy Unit"]
+
+
+[gnome.units.mechanical_rat]
+race = "gnome"
+name = "Mechanical Rat"
+models = ["mechanical_rat"]
+size = "tiny"
+armor = [0, 0, 0, 0]
+special = [""]
+
+
+[gnome.units.mechanical_rat.orders.movement]
+slow = [["-", "-", "Chase"]]
+
+[gnome.units.mechanical_rat.damage_tables]
+regular = ["0+: Destroy Unit"]
+
+[gnome.units.gnome_motorcycle]
+race = "gnome"
+name = "Gnome Motorcyle"
+models = ["gnome_motorcycle", "gnome_motorcycle", "gnome_motorcycle"]
+size = "medium"
+armor = [4, 3, 0, 0]
+cost.mp = 2
+cost.xp = 4
+cost.cp = 4
+special = ["Elusive[fast]: additional -1 to be hit while fast"]
+shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+
+
+[gnome.units.gnome_motorcycle.orders.movement]
+fast = [
+    [
+        "F",
+        "F",
+        "F+B",
+    ],
+    [
+        "F",
+        "F",
+        "360$^0$",
+    ],
+    [
+        "360$^0$",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "360$^0$",
+        "F",
+    ],
+    [
+        "F",
+        "B",
+        "360$^0$",
+    ],
+]
+slow = [
+    [
+        "360$^0$",
+        "F",
+        "360$^0$",
+    ],
+    [
+        "360$^0$",
+        "A",
+        "F",
+    ],
+    [
+        "360$^0$",
+        "F+B",
+        "360$^0$",
+    ],
+]
+still = [["360$^0$", "A", "F"], ["360$^0$", "-", "-"]]
+
+[gnome.units.gnome_motorcycle.orders.fire]
+still = [["-", "Load"], ["-", "Fire"]]
+slow = [["-", "Load"], ["-", "Fire"]]
+fast = [["-", "Fire"]]
+
+[gnome.units.gnome_motorcycle.damage_tables]
+regular = ["2-3: +1 on future damage", "4+: Kill 1 model"]
+
+psychic = ["6+: Unit Shaken"]
+
+
+[gnome.units.ballista_drone]
+race = "gnome"
+name = "Ballista Drone"
+models = ["ballista"]
+size = "lagre"
+armor = [0, 0, 0, 0]
+cost.cp = 6
+special = []
+shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[gnome.units.ballista_drone.orders.movement]
+slow = [["360$^0$", "F", "-"], ["-", "-", "B"]]
+still = [["L", "-", "-"], ["R", "-", "-"], ["-", "-", "-"], ["A", "-", "-"]]
+
+[gnome.units.ballista_drone.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+]
+
+
+[gnome.units.ballista_drone.damage_tables]
+regular = [
+    "2-3: +1 on future damage",
+    "4-5: +1 on future damage, shaken",
+    "6-7: as below, cannot move or rotate, speed set to still",
+    "8: Unit destroyed",
+]
+
+
+[gnome.units.ballista_tractor_markI]
+race = "gnome"
+name = "Ballista Tractor, Mark I"
+models = ["ballista_tractor_markI"]
+size = "lagre"
+armor = [12, 8, 8, 7]
+cost.ip = 8
+special = ["Fires and loads both weapons at fire and load actions"]
+shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[gnome.units.ballista_tractor_markI.orders.movement]
+slow = [
+    [
+        "L",
+        "-",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "-",
+    ],
+    [
+        "R",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "-",
+    ],
+    [
+        "F",
+        "L",
+        "-",
+    ],
+    [
+        "F",
+        "R",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "B",
+        "-",
+    ],
+    [
+        "L",
+        "F",
+        "B",
+    ],
+    [
+        "R",
+        "F",
+        "B",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
+]
+still = [
+    [
+        "L",
+        "-",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "L",
+    ],
+    [
+        "R",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "A",
+        "F",
+    ],
+    [
+        "L",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
+]
+
+[gnome.units.ballista_tractor_markI.orders.fire]
+all = [["-", "Load"], ["-", "Fire"]]
+still = [["-", "Aim"]]
+
+
+[gnome.units.ballista_tractor_markI.damage_tables]
+regular = [
+    "1-3: +1 to future damage",
+    "4: as 1-3, shaken",
+    "5-8: as 4, d6 critical damage",
+    "9: Unit destroyed",
+]
+critical = [
+    "1-2: +3 to future damage",
+    "3: +1 to be hit, -1 to hit",
+    "4: Rotate unit 180$^0$",
+    "5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
+    "6: set on fire",
+]
+crew = [
+    "4-5: Crippled Crew, if already shaken double initial crew damage",
+    "6-7: as 4-5, shaken",
+    "8-11: as 6-7, +3 to future crew damage",
+    "12: Unit destroyed",
+]
+
+
+[gnome.units.ballista_tractor_markII]
+race = "gnome"
+name = "Ballista Tractor, Mark II"
+models = ["ballista_tractor_markII"]
+size = "lagre"
+armor = [12, 8, 8, 7]
+cost.ip = 8
+special = []
+shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[gnome.units.ballista_tractor_markII.orders.movement]
+slow = [
+    [
+        "L",
+        "-",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "-",
+    ],
+    [
+        "R",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "-",
+    ],
+    [
+        "F",
+        "L",
+        "-",
+    ],
+    [
+        "F",
+        "R",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
+]
+still = [
+    [
+        "L",
+        "-",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "L",
+    ],
+    [
+        "R",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "A",
+        "F",
+    ],
+    [
+        "L",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
+]
+
+[gnome.units.ballista_tractor_markII.orders.fire]
+all = [["-", "Load"], ["-", "Fire"]]
+still = [["-", "Aim"]]
+
+[gnome.units.ballista_tractor_markII.damage_tables]
+regular = [
+    "1-3: +1 to future damage",
+    "4: as below, shaken",
+    "5-8: as below, d6 critical damage",
+    "9: Unit destroyed",
+]
+critical = [
+    "1-2: +3 to future damage",
+    "3: +1 to be hit, -1 to hit",
+    "4: Rotate unit 180$^0$",
+    "5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
+    "6: set on fire",
+]
+crew = [
+    "4-5: Crippled Crew, if already shaken double initial crew damage",
+    "6-7: as 4-5, shaken",
+    "8-11: as 6-7, +3 to future crew damage",
+    "12: Unit destroyed",
+]
+
+
+[gnome.units.ballista_tractor_MarkIII]
+race = "gnome"
+name = "Ballista Tractor, Mark III"
+models = ["ballista_tractor_markIII"]
+size = "lagre"
+armor = [12, 8, 8, 7]
+cost.ip = 8
+special = ["Fires and loads both weapons at fire and load actions"]
+shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[gnome.units.ballista_tractor_MarkIII.orders.movement]
+slow = [
+    [
+        "L",
+        "-",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "-",
+    ],
+    [
+        "R",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "-",
+    ],
+    [
+        "F",
+        "L",
+        "-",
+    ],
+    [
+        "F",
+        "R",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
+]
+still = [
+    [
+        "L",
+        "-",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "-",
+    ],
+    [
+        "L",
+        "L",
+        "L",
+    ],
+    [
+        "R",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "-",
+    ],
+    [
+        "R",
+        "R",
+        "R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "R",
+        "A",
+        "F",
+    ],
+    [
+        "L",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
+]
+
+
+[gnome.units.ballista_tractor_MarkIII.orders.fire]
+still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+slow = [["-", "Load"], ["-", "Fire"]]
+fast = [["-", "Load"], ["-", "Fire"]]
+
+[gnome.units.ballista_tractor_MarkIII.damage_tables]
+regular = [
+    "1-3: +1 to future damage",
+    "4: as below, shaken",
+    "5-8: +1 to future damage, d6 critical damage",
+    "9: Unit destroyed",
+]
+critical = [
+    "1-2: +3 to future damage",
+    "3: +1 to be hit, -1 to hit",
+    "4: Rotate unit 180$^0$",
+    "5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
+    "6: set on fire",
+]
+crew = [
+    "4-5: Crippled Crew, if already shaken double initial crew damage",
+    "6-7: as 4-5, shaken",
+    "8-11: as 6-7, +3 to future crew damage",
+    "12: Unit destroyed",
+]
+
+
+[gnome.units.gnome_helicopter]
+race = "gnome"
+name = "Gnome Helicopter"
+models = ["gnome_helicopter"]
+size = "large"
+armor = [0, 0, 0, 0]
+cost.ip = 6
+cost.xp = 2
+special = [
+    "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously",
+    "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying).",
+]
+shaken = "Speed set to still_ground, move order: [- - -]. May not fire weapons"
+
+[gnome.units.gnome_helicopter.orders.movement]
+still_ground = [
+    [
+        "A[still]",
+        "360$^0$",
+        "-",
+    ],
+    [
+        "A[slow]",
+        "360$^0$",
+        "F",
+    ],
+    [
+        "A[still]",
+        "360$^0$",
+        "-",
+    ],
+]
+still_flying = [
+    [
+        "360$^0$",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "D",
+    ],
+    [
+        "A[slow]",
+        "360$^0$",
+        "F",
+    ],
+    [
+        "A[fast]",
+        "360$^0$",
+        "F",
+    ],
+]
+slow_flying = [
+    [
+        "L",
+        "F",
+        "-",
+    ],
+    [
+        "L",
+        "F",
+        "L",
+    ],
+    [
+        "R",
+        "F",
+        "-",
+    ],
+    [
+        "R",
+        "F",
+        "R",
+    ],
+    [
+        "-",
+        "-",
+        "D",
+    ],
+    [
+        "-",
+        "R",
+        "D",
+    ],
+    [
+        "-",
+        "L",
+        "D",
+    ],
+    [
+        "A[fast]",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "B[still]",
+        "360$^0$",
+    ],
+]
+fast_flying = [
+    [
+        "F",
+        "F",
+        "-",
+    ],
+    [
+        "F",
+        "F",
+        "R",
+    ],
+    [
+        "F",
+        "F",
+        "L",
+    ],
+    [
+        "F",
+        "R",
+        "F",
+    ],
+    [
+        "F",
+        "L",
+        "F",
+    ],
+    [
+        "L",
+        "F",
+        "F",
+    ],
+    [
+        "R",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "B[slow]+360$^0$",
+    ],
+    [
+        "F",
+        "F",
+        "B[still]+360$^0$",
+    ],
+    [
+        "F",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "F+D",
+    ],
+    [
+        "F",
+        "D+F",
+        "F",
+    ],
+    [
+        "F+D",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "D",
+    ],
+]
+
+[gnome.units.gnome_helicopter.orders.fire]
+still_ground = [["-", "Load"]]
+fast_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
+slow_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
+still_flying = [
+    [
+        "Throw(d)",
+        "Fire",
+    ],
+    [
+        "Load",
+        "Throw(d)",
+    ],
+    [
+        "Throw(d)",
+        "Load",
+    ],
+    [
+        "Aim",
+        "Fire",
+    ],
+    [
+        "Fire",
+        "Aim",
+    ],
+]
+
+[gnome.units.gnome_helicopter.damage_tables]
+regular = [
+    "1-3: +1 to future damage",
+    "4-5: as below, shaken",
+    "6-8: +3 to future damage, shaken",
+    "9: Destroy unit",
+]
+crew = ["as regular damage"]
+
+#
+# Models
+#
+[models]
+
+[gnome.models.gnome_infantry]
+name = "Gnome Infantry"
+race = "gnome"
+equipment_limit = ["hands:2", "reserve:1", "independent:∞"]
+equipments = ["gnome_gun", "light_smg"]
+type = ["bio", "infantry", "walks"]
+special = []
+
+[gnome.models.gnome_infantry.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+
+[gnome.models.quad_bike]
+name = "Quad Bike"
+race = "gnome"
+equipment_limit = ["hands: 2", "reserve:1", "independent:∞"]
+equipments = ["light_smg"]
+type = ["bio", "quad_bike", "infantry", "wheeled"]
+special = []
+
+[gnome.models.quad_bike.assault]
+strength = [1, 1, 1, 1]
+strength_die = "3+"
+deflection = [1, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6-1"
+ap = 3
+special = []
+
+
+[gnome.models.assault_bot]
+name = "Assault Bot"
+race = "gnome"
+equipment_limit = ["independent:∞"]
+equipments = []
+type = ["drone", "walks"]
+special = ["Can only enter play through mortars or drop weapons"]
+
+[gnome.models.assault_bot.assault]
+strength = [1, 0, 0, 0]
+strength_die = "3+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+
+[gnome.models.mechanical_rat]
+name = "Mechanical Rat"
+race = "gnome"
+equipment_limit = ["independent:∞"]
+equipments = []
+type = ["drone", "walks"]
+special = ["Can only enter play through tinkerer ability"]
+
+[gnome.models.mechanical_rat.assault]
+strength = [3, 0, 0, 0]
+strength_die = "3+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+[gnome.models.ballista_tractor_markI]
+name = "Ballista Tractor Mark I"
+race = "gnome"
+equipment_limit = ["ballista:1", "vehicle_mortar:1", "independent:∞"]
+equipments = ["ballista", "assault_bot_mortar_vehicle"]
+type = ["mechanical, bio_crew", "vehicles", "wheeled"]
+special = []
+
+[gnome.models.ballista_tractor_markI.assault]
+strength = [3, 2, 2, 1]
+strength_die = "3+"
+deflection = [2, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6-1"
+ap = 2
+special = []
+
+[gnome.models.ballista_tractor_markII]
+name = "Ballista Tractor Mark II"
+race = "gnome"
+equipment_limit = ["ballista:1", "independent:∞"]
+equipments = ["enhanced_ballista"]
+type = ["mechanical, bio_crew", "vehicles", "wheeled"]
+special = []
+
+[gnome.models.ballista_tractor_markII.assault]
+strength = [3, 2, 2, 1]
+strength_die = "3+"
+deflection = [4, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6-1"
+ap = 2
+special = []
+
+
+[gnome.models.ballista_tractor_markIII]
+name = "Ballista Tractor Mark III"
+race = "gnome"
+equipment_limit = ["ballista:1", "array:1", "independent:∞"]
+equipments = ["ballista", "array_of_heavy_muskets"]
+type = ["mechanical, bio_crew", "vehicles", "wheeled"]
+special = []
+
+[gnome.models.ballista_tractor_markIII.assault]
+strength = [3, 2, 2, 1]
+strength_die = "3+"
+deflection = [2, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6-1"
+ap = 2
+special = []
+
+[gnome.models.ballista]
+name = "Ballista"
+race = "gnome"
+equipment_limit = ["ballista:1", "independent:∞"]
+equipments = ["ballista"]
+type = ["construct", "towed"]
+special = []
+
+[gnome.models.ballista.assault]
+strength = [1, 1, 1, 1]
+strength_die = "3+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+
+[gnome.models.gnome_motorcycle]
+name = "Gnome Motorcycle"
+race = "gnome"
+equipment_limit = ["motorcycle_weapon:1", "independent:∞"]
+equipments = ["splintbombgrenade_launcher"]
+type = ["bio", "motorcycle", "wheel"]
+special = []
+
+[gnome.models.gnome_motorcycle.assault]
+strength = [2, 1, 1, 0]
+strength_die = "3+"
+deflection = [2, 1, 0, 0]
+deflection_die = "5+"
+damage = "d6-2"
+ap = 2
+special = ["Pre-Assault Retreat[4+]"]
+
+[gnome.models.gnome_helicopter]
+name = "Gnome Helicopter"
+race = "gnome"
+equipment_limit = [
+    "helicopter_front:1",
+    "helicopter_drop:1",
+    "helicopter_side:1",
+    "independent: ∞",
+]
+equipments = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
+type = ["bio_crew", "helicopter", "flying"]
+special = ["Quick fix: Repair[1, self, 1st healing phase]"]
+
+[gnome.models.gnome_helicopter.assault]
+strength = [1, 0, 0, 0]
+strength_die = "3+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = []
+
+[gnome.models.tinkerer_helicopter]
+name = "Tinkerer Helicopter"
+race = "gnome"
+equipment_limit = [
+    "helicopter_front:1",
+    "helicopter_drop:1",
+    "helicopter_side:2",
+    "independent: ∞",
+]
+equipments = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
+type = ["bio_crew", "helicopter", "flying", "tinkerer"]
+special = [
+    "Improved Quick fix: Repair[2, self, 1st healing phase]",
+    "May move normally even if shaken",
+]
+replaces = ["gnome_helicopter"]
+cost.xp = 6
+cost.cp = -2
+
+
+[gnome.models.tinkerer_helicopter.assault]
+strength = [1, 0, 0, 0]
+strength_die = "3+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = []
+
+
+[gnome.models.gnome_elite_infantry]
+name = "Gnome Elite Infantry"
+race = "gnome"
+equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+equipments = ["gnome_gun", "smg", "poison_dart", "acid_ballon", "grinder"]
+type = ["bio", "elite", "infantry", "walks"]
+replaces = ["gnome_infantry"]
+special = [
+    "Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)",
+    "Unit gains psycic resistance 1 as long as atleast one elite model is alive.",
+]
+cost.xp = 1
+
+[gnome.models.gnome_elite_infantry.assault]
+strength = [1, 1, 1, 1]
+strength_die = "3+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+[gnome.models.gnome_tinkerer]
+name = "Gnome Tinkerer"
+race = "gnome"
+equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+equipments = ["tinkerer_gun", "light_smg"]
+type = ["bio", "infantry", "tinkerer", "walks"]
+cost.xp = 4
+cost.cp = -3
+replaces = ["gnome_infantry"]
+special = [
+    "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat. ",
+]
+
+[gnome.models.gnome_tinkerer.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [0, 0, 0, 0]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+
+[gnome.models.quadbike_tinkerer]
+name = "QuadBike Tinkerer"
+race = "gnome"
+equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+equipments = ["light_smg"]
+type = ["bio", "infantry", "tinkerer", "walks"]
+cost.xp = 4
+cost.cp = -3
+replaces = ["quad_bike"]
+special = [
+    "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat. ",
+]
+
+[gnome.models.quadbike_tinkerer.assault]
+strength = [1, 1, 1, 1]
+strength_die = "3+"
+deflection = [3, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]"]
+
+
+[equipments]
+
+[gnome.equipments.gnome_gun]
+name = "Gnome Gun"
+race = "gnome"
+requires = [["hands:2"]]
+
+[gnome.equipments.gnome_gun.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = []
+
+
+[gnome.equipments.ballista]
+name = "Ballista"
+race = "gnome"
+requires = [["ballista:1"]]
+
+[gnome.equipments.ballista.range]
+range = 4
+angle = [true, false, false, false]
+damage = "d6 (+2 if penetrating all armor)"
+ap = 8
+special = []
+
+
+[gnome.equipments.enhanced_ballista]
+name = "Enhanced Ballista"
+race = "gnome"
+requires = [["ballista:1"]]
+
+[gnome.equipments.enhanced_ballista.range]
+range = 5
+angle = [true, false, false, false]
+damage = "d6 (+3 if penetrating all armor)"
+ap = 8
+special = ["Enhanced Accurazy: +1 to hit"]
+
+
+[gnome.equipments.array_of_heavy_muskets]
+name = "Array of Heavy Muskets"
+race = "gnome"
+requires = [["array:1"]]
+
+[gnome.equipments.array_of_heavy_muskets.range]
+range = 3
+angle = ["x4", "x3", "x3", "-"]
+damage = "d6 -1"
+ap = 3
+special = []
+
+
+[gnome.equipments.acid_splash]
+name = "Acid Splash"
+race = "gnome"
+cost.cp = 2
+requires = [["hands:2"], ["type:infantry"]]
+
+[gnome.equipments.acid_splash.range]
+range = 4
+angle = [true, true, true, true]
+damage = "-"
+ap = 0
+special = ["No regular damage", "Minor Acid"]
+
+
+[gnome.equipments.tinkerer_gun]
+name = "Gnome Gun"
+race = "gnome"
+requires = [["hands:2"], ["type:infantry"], ["type:tinkerer"]]
+
+[gnome.equipments.tinkerer_gun.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d6"
+ap = 2
+special = []
+
+
+[gnome.equipments.light_smg]
+name = "Light SMG"
+race = "gnome"
+requires = [["reserve:1"]]
+
+[gnome.equipments.light_smg.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d4-2"
+ap = 1
+special = [
+    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
+    "Always treated as loaded",
+]
+
+
+[gnome.equipments.smg]
+name = "SMG"
+race = "gnome"
+requires = [["reserve:1"]]
+
+[gnome.equipments.smg.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6-3"
+ap = 1
+special = [
+    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
+    "Fire two shots per fire reserve order",
+    "Always treated as loaded",
+]
+
+
+[gnome.equipments.poison_dart]
+name = "Poison Dart"
+race = "gnome"
+requires = [["reserve:1"]]
+
+[gnome.equipments.poison_dart.range]
+range = 2
+angle = [true, true, true, true]
+damage = "-"
+ap = 0
+special = [
+    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
+    "Always treated as loaded",
+    "Poison[4]",
+]
+
+
+[gnome.equipments.acid_ballon]
+name = "Acid Ballon"
+race = "gnome"
+requires = [["reserve:1"]]
+
+[gnome.equipments.acid_ballon.range]
+range = 1
+angle = [true, true, true, true]
+damage = "-"
+ap = 0
+special = [
+    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
+    "Always treated as loaded",
+    "Minor Acid",
+]
+
+
+[gnome.equipments.grinder]
+name = "Grinder"
+race = "gnome"
+requires = [["reserve:1"]]
+
+[gnome.equipments.grinder.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d8-2"
+ap = 2
+special = [
+    "Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time.",
+    "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used",
+]
+
+
+[gnome.equipments.mechanical_owl]
+name = "Mechanical Owl"
+race = "gnome"
+cost.cp = 2
+special = ["Gives all weapons the enhanced accurazy (+1 to hit) trait"]
+requires = [["type:infantry"], ["independent:1"]]
+
+[gnome.equipments.frost_ray]
+race = "gnome"
+name = "Frost Ray"
+cost.cp = 4
+requires = [["type:infantry"], ["hands:2"]]
+
+
+[gnome.equipments.frost_ray.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d4-2+d6 psychic damage + d4 crew damage"
+ap = 0
+special = [
+    "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step",
+]
+
+[gnome.equipments.frost_ray.orders_gained.fire]
+still = [["-", "amplified fire"]]
+
+
+[gnome.equipments.green_gas_launcher]
+race = "gnome"
+name = "Green Gas Launcer"
+model_cost.cp = 2
+requires = [["type:tinkerer", "type:elite"], ["type:infantry"], ["reserve:1"]]
+
+
+[gnome.equipments.green_gas_launcher.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d6 psychic damage + d4 crew damage"
+ap = 0
+special = [
+    "Choose one hex (per model firing this weapon) within normal range: Area(5+)",
+    "Poison[6]",
+    "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time.",
+    "Always treated as loaded",
+]
+
+
+[gnome.equipments.helicopter_mounted_green_gas_launcher]
+race = "gnome"
+name = "Helicopter mounted Green Gas Launcer"
+cost.cp = 2
+requires = [["type: tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+
+[gnome.equipments.helicopter_mounted_green_gas_launcher.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d6 psychic damage + d4 crew damage"
+ap = 0
+special = ["Choose one hex within range: Area(5+)", "Poison[4]"]
+
+
+[gnome.equipments.experimental_plasma_gun]
+race = "gnome"
+name = "Experimental Plasma Gun"
+model_cost.cp = 4
+requires = [["type:tinkerer"], ["type:infantry"], ["hands:2"]]
+
+[gnome.equipments.experimental_plasma_gun.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d12-3"
+ap = 6
+special = [
+    "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carrying the plasma gun first.",
+    "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire",
+]
+
+
+[gnome.equipments.helicopter_mounted_experimental_plasma_gun]
+race = "gnome"
+name = "Helicopter Mounted Experimental Plasma Gun"
+cost.cp = 4
+requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+
+[gnome.equipments.helicopter_mounted_experimental_plasma_gun.range]
+range = 6
+angle = [true, true, true, false]
+damage = "d12-3"
+ap = 6
+special = [
+    "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter",
+    "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire",
+    "Difficulty firing forward: Get -1 to hit in forward direction",
+]
+
+
+[gnome.equipments.helicopter_gatling_gun]
+race = "gnome"
+name = "Helicopter Gatling Gun"
+requires = [["type:helicopter"], ["helicopter_front:1"]]
+
+[gnome.equipments.helicopter_gatling_gun.range]
+range = 3
+angle = [true, false, false, false]
+damage = "d6-1"
+ap = 6
+special = [
+    "Fire once at all enemy units within range and within angle of fire",
+    "If aim, instead use focus fire, roll 6 dice at same unit",
+    "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers",
+]
+
+
+[gnome.equipments.acidic_napalm_bomb]
+race = "gnome"
+name = "Acidic Napalm Bomb"
+requires = [["type:helicopter"], ["helicopter_drop:1"]]
+
+[gnome.equipments.acidic_napalm_bomb.range]
+range = 2
+angle = [true, true, true, true]
+damage = "n.a"
+ap = 0
+special = [
+    "Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)",
+    "Limited Ammo[2]",
+]
+
+
+[gnome.equipments.extra_acidic_napalm_bomb]
+race = "gnome"
+name = "(extra) Acidic Napalm Bomb"
+cost.cp = 1
+requires = [["type:helicopter"], ["helicopter_drop:1"]]
+
+[gnome.equipments.extra_acidic_napalm_bomb.range]
+range = 2
+angle = [true, true, true, true]
+damage = "n.a"
+ap = 0
+special = [
+    "Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)",
+    "Limited Ammo[3]",
+]
+
+
+[gnome.equipments.major_acidic_napalm_bomb]
+race = "gnome"
+name = "Major Acidic Napalm Bomb"
+cost.cp = 6
+requires = [["type:helicopter"], ["helicopter_drop:1"]]
+
+[gnome.equipments.major_acidic_napalm_bomb.range]
+range = 2
+angle = [true, true, true, true]
+damage = "n.a"
+ap = 0
+special = [
+    "Choose a hex within normal range: Area(4+): acid and any unit hit atleast one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)",
+    "Limited Ammo[2]",
+]
+
+
+[gnome.equipments.assault_bot_mortar]
+race = "gnome"
+name = "Assault Bot Mortar"
+cost.cp = 6
+requires = [["type:infantry"], ["hands:2"]]
+special = [
+    "No regular damage",
+    "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon.",
+]
+
+
+[gnome.equipments.assault_bot_mortar_vehicle]
+race = "gnome"
+name = "Assault Bot Mortar"
+requires = [["type:infantry"], ["hands:2"]]
+special = [
+    "No regular damage",
+    "When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon.",
+]
+
+
+[gnome.equipments.assault_bot_dropper]
+race = "gnome"
+name = "Assault Bot Dropper"
+cost.cp = 2
+requires = [["type:helicopter"], ["helicopter_drop:1"]]
+special = [
+    "No regular damage",
+    "When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon.",
+    "Limited Ammo[3]",
+]
+
+[gnome.equipments.improved_medical_armor]
+race = "gnome"
+name = "Improved Medical Armor"
+cost.cp = 2
+requires = [["type:infantry"], ["independent:1"]]
+special = [
+    "Unit gain Fire resistance 6, Poison Resistance 6, minor acid resistance[4+] and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
+]
+
+[gnome.equipments.medical_armor]
+race = "gnome"
+name = "Medical Armor"
+cost.cp = 1
+requires = [["type:infantry"], ["independent:1"]]
+special = [
+    "Unit gain Fire resistance 2, Poison Resistance 2, and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
+]
+
+
+[gnome.equipments.plasma_shield_generator]
+race = "gnome"
+name = "Plasma Shield Generator"
+cost.cp = 2
+requires = [["type:infantry"], ["independent:1"]]
+special = [
+    "Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)",
+    "However, every time this unit takes atleast 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)",
+]
+
+
+[gnome.equipments.plasma_shield_generator.assault]
+deflection.add = [1, 0, 0, 0]
+deflection_die.replace = "5+"
+
+special.append = "Any enemy which is hit atleast once in assault is set on fire"
+
+
+[gnome.equipments.quadbike_lance]
+race = "gnome"
+name = "Quadbike Lance"
+cost.cp = 2
+requires = [["type:quadbike"], ["hands:2"]]
+special = []
+
+
+[gnome.equipments.quadbike_lance.assault]
+strength.add = [1, 0, 0, 0]
+
+
+[gnome.equipments.improved_plasma_shield_generator]
+race = "gnome"
+name = "Improved Plasma Shield Generator"
+cost.cp = 4
+requires = [["type:infantry"], ["independent:1"]]
+special = [
+    "Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)",
+    "However, every time this unit takes atleast 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)",
+]
+
+
+[gnome.equipments.improved_plasma_shield_generator.assault]
+deflection.add = [2, 0, 0, 0]
+deflection_die.replace = "5+"
+
+special.append = "Any enemy which is hit atleast once in assault is set on fire"
+
+
+[gnome.equipments.splintbombgrenade_launcher]
+race = "gnome"
+name = "Splintbombgrenade_launcher"
+requires = [["type:motorcycle"], ["motorcycle:1"]]
+
+[gnome.equipments.splintbombgrenade_launcher.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6"
+ap = 2
+special = [
+    "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)",
+]
+
+
+[gnome.equipments.experimental_guided_missile]
+race = "gnome"
+name = "Experimental guided missile"
+cost.cp = 2
+requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+
+[gnome.equipments.experimental_guided_missile.range]
+range = "d4+d12"
+angle = [true, true, true, true]
+damage = "d6 + d6 psychic"
+ap = 5
+special = [
+    "Minor Acid",
+    "Guided: +4 to hit",
+    "Do not need line of sight to target",
+    "If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)",
+    "If you roll a 1 on to hit, (regardless of whether you hit or not), you are covered in minor acid",
+]
+
+
+[gnome.equipments.helicopter_mounted_experimental_nailgun]
+race = "gnome"
+name = "Helicopter Mounted Experimental Nail Gun"
+cost.cp = 2
+requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+
+[gnome.equipments.helicopter_mounted_experimental_nailgun.range]
+range = 4
+angle = [true, true, true, false]
+damage = "d6-2"
+ap = 3
+special = [
+    "Fire d12 shots each time it is fired at the same unit",
+    "If you rolled atleast one 1 for to-hit, add +1 to future damage to self",
+    "If you roll only a 1 for the number of shots you fire, the gun is destroyed",
+    "Difficult to fire forward: -1 to hit firing forward",
+]
+
+
+[gnome.equipments.experimental_nailgun]
+race = "gnome"
+name = "Experimental Nail Gun"
+cost.cp = 2
+requires = [["type:tinkerer"], ["type:infantry"]]
+
+[gnome.equipments.experimental_nailgun.range]
+range = 4
+angle = [true, true, true, false]
+damage = "d6-2"
+ap = 3
+special = [
+    "Fire d12 shots each time and all at the same unit",
+    "If you rolled atleast one 1 for to-hit, add +1 to future damage",
+    "If you roll only a one for the number of shots you fire, the gun is destroyed. Replace it with a regular gnome gun",
+]
+
+
+[gnome.equipments.experimental_death_ray]
+race = "gnome"
+name = "Experimental Death Ray"
+cost.cp = 4
+requires = [["type:tinkerer"], ["type:infantry"]]
+
+[gnome.equipments.experimental_death_ray.range]
+range = 8
+angle = [true, true, true, false]
+damage = "d6-6"
+ap = 2
+special = [
+    "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token",
+    "May keep aiming instead of firing or loading.",
+    "If you hit your enemy, roll for damage 4 times",
+    "In agony phase 0, roll a die per aim-token for death ray. If you roll at least one 1, add minor acid to self, if you rolled at least two 1s, death ray explodes and unit is killed.",
+]

@@ -1,0 +1,1933 @@
+[races]
+
+[races.darkelf]
+name = "Dark Elf"
+
+
+#cload => cloud
+
+[units]
+
+[darkelf.units.mechanical_red_dragon]
+race = "darkelf"
+name = "Mechanical Red Dragon"
+models = ["mechanical_red_dragon"]
+size = "huge"
+armor = [11, 8, 8, 7]
+cost.ip = 24
+cost.xp = 24
+special = []
+shaken = "speed set to slow (lands if flying), move order: [-,-,-]."
+
+
+[darkelf.units.mechanical_red_dragon.orders.movement]
+"fast flying" = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
+slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
+
+[darkelf.units.mechanical_red_dragon.orders.fire]
+slow = [["-", "Breath(fire)"], ["Breath(fire)", "-"], ["-", "Load"]]
+fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
+
+
+[darkelf.units.mechanical_red_dragon.damage_tables]
+regular = [
+    "1-4: +1 on future damage",
+    "5-10: +1 on future damage, shaken",
+    "13+: Unit destroyed",
+]
+
+
+[darkelf.units.mechanical_iron_dragon]
+race = "darkelf"
+name = "Mechanical Iron Dragon"
+models = ["mechanical_iron_dragon"]
+size = "huge"
+armor = [11, 8, 8, 7]
+cost.ip = 24
+cost.xp = 24
+special = []
+shaken = "speed set to slow (lands if flying), move order: [-,-,-]."
+
+
+[darkelf.units.mechanical_iron_dragon.orders.movement]
+slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
+"fast flying" = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
+
+
+[darkelf.units.mechanical_iron_dragon.orders.fire]
+slow = [
+    [
+        "-",
+        "Breath(acid)",
+    ],
+    [
+        "Breath(acid)",
+        "-",
+    ],
+    [
+        "Load",
+        "Breath(shrapnell)",
+    ],
+    [
+        "Breath(shrapnell)",
+        "Load",
+    ],
+]
+"fast flying" = [["-", "-"], ["-", "-"], ["Load", "Breath(shrapnell)"], ["-", "Load"]]
+
+
+[darkelf.units.mechanical_iron_dragon.damage_tables]
+regular = [
+    "1-4: +1 on future damage",
+    "5-10: +1 on future damage, shaken",
+    "13+: Unit destroyed",
+]
+
+
+[darkelf.units.queen_yy]
+race = "darkelf"
+name = "Queen YY"
+models = ["queen_yy"]
+size = "large"
+armor = [12, 10, 8, 7]
+cost.ip = 16
+special = []
+shaken = "speed set to still, move order: [-,-,-]"
+
+[darkelf.units.queen_yy.orders.movement]
+fast = [
+    [
+        "F",
+        "F",
+        "-",
+    ],
+    [
+        "F",
+        "L/R",
+        "-",
+    ],
+    [
+        "F",
+        "B",
+        "-",
+    ],
+    [
+        "B",
+        "B",
+        "-",
+    ],
+    [
+        "L/R",
+        "F",
+        "-",
+    ],
+]
+slow = [
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
+]
+still = [
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "L/R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
+]
+[darkelf.units.queen_yy.orders.fire]
+still = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release"]]
+slow = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release"]]
+fast = [["-", "fire"], ["-", "fire"], ["-", "fire"], ["-", "Release"]]
+
+
+[darkelf.units.queen_yy.damage_tables]
+regular = [
+    "1-3: +1 to future damage",
+    "4-5: as 1-3, shaken",
+    "6-8: as 4-5, Critical damage[d6]",
+    "9+: Unit destroyed",
+]
+critical = [
+    "1: -1 to-hit, +1 to-be-hit",
+    "2: Rotates right in agony 0 step",
+    "3: Rotates left in agony 1 and in agony 3",
+    "4: cannot move",
+    "5: unit is covered in acid",
+    "6: unit is set on fire",
+]
+crew = [
+    "4-7: Double initial crew damage if already shaken",
+    "8-10: As below, Crippled Crew",
+    "11-12: as 10, +3 to future crew damage",
+    "13: Crew Killed, unit destroyed",
+]
+
+
+[darkelf.units.queen_xy]
+race = "darkelf"
+name = "Queen XY"
+models = ["queen_xy"]
+size = "large"
+armor = [11, 10, 8, 7]
+cost.ip = 6
+special = []
+shaken = "speed set to still, move order: [-,-,-]"
+
+[darkelf.units.queen_xy.orders.movement]
+fast = [
+    [
+        "F",
+        "F",
+        "-",
+    ],
+    [
+        "F",
+        "L/R",
+        "-",
+    ],
+    [
+        "F",
+        "B",
+        "-",
+    ],
+    [
+        "B",
+        "B",
+        "-",
+    ],
+    [
+        "L/R",
+        "F",
+        "-",
+    ],
+]
+slow = [
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
+]
+still = [
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "L/R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
+]
+[darkelf.units.queen_xy.orders.fire]
+still = [["-", "Release"]]
+slow = [["-", "Release"]]
+fast = [["-", "Release"]]
+
+
+[darkelf.units.queen_xy.damage_tables]
+regular = [
+    "1-3: +1 to future damage",
+    "4-5:as 1-4, shaken",
+    "6-8: 4-5, Critical damage[d6]",
+    "9+: Unit destroyed",
+]
+critical = [
+    "1: -1 to-hit, +1 to-be-hit",
+    "2: Rotates right in agony 0 step",
+    "3: rotates left in agony 1 and in agony 3",
+    "4: only still available",
+    "5: unit is covered in acid",
+    "6: unit is set on fire",
+]
+crew = [
+    "4-7: double initial crew damage if already shaken",
+    "9-10: As below, Crippled Crew",
+    "11-12: As below, +3 to future crew damage",
+    "13: Crew Killed, unit destroyed",
+]
+
+
+[darkelf.units.nightmare_mechanical_cavalry]
+race = "darkelf"
+name = "Nightmare Mechanical Cavalry"
+models = ["nightmare_mechanical_cavalry", "nightmare_mechanical_cavalry"]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 2
+cost.cp = 4
+cost.xp = 12
+special = ["Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"]
+shaken = "speed set to slow, move order: [-,-,Flee]"
+
+[darkelf.units.nightmare_mechanical_cavalry.orders.movement]
+fast = [
+    [
+        "F",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "360°",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "F+B",
+    ],
+    [
+        "F",
+        "B",
+        "360°",
+    ],
+]
+slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
+
+[darkelf.units.nightmare_mechanical_cavalry.damage_tables]
+regular = [
+    "2-3: +1 on future damage",
+    "4: +2 on future damage",
+    "5-6: Kill 1 model",
+    "7+: Kill 1 model, d6 psychic damage",
+    "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by poison, remove that poison token}}",
+]
+
+psychic = ["6+: unit shaken"]
+
+
+[darkelf.units.elite_mechanical_cavalry]
+race = "darkelf"
+name = "Elite Mechanical Cavalry"
+models = ["elite_mechanical_cavalry", "elite_mechanical_cavalry"]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 2
+cost.cp = 4
+cost.xp = 6
+special = []
+shaken = "speed set to slow, move order: [-,-,Flee]"
+
+[darkelf.units.elite_mechanical_cavalry.orders.movement]
+fast = [
+    [
+        "F",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "360°",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "F+B",
+    ],
+    [
+        "F",
+        "B",
+        "360°",
+    ],
+]
+slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
+
+[darkelf.units.elite_mechanical_cavalry.orders.fire]
+all = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+
+
+[darkelf.units.elite_mechanical_cavalry.damage_tables]
+regular = [
+    "2-3: +1 on future damage",
+    "4: +2 on future damage",
+    "5-6: kill 1 model",
+    "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by poison, remove that poison token}}",
+]
+
+psycic = ["5+: unit shaken"]
+
+
+[darkelf.units.mechanical_assault_spider]
+race = "darkelf"
+name = "Mechanical Assault Spider"
+models = ["mechanical_assault_spider"]
+size = "medium"
+armor = [7, 7, 7, 7]
+cost.ip = 4
+special = []
+shaken = "speed set to still, move order: [-,-,-]"
+
+[darkelf.units.mechanical_assault_spider.orders.movement]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "360°"]]
+
+[darkelf.units.mechanical_assault_spider.orders.fire]
+still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+
+slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+
+
+[darkelf.units.mechanical_assault_spider.damage_tables]
+regular = [
+    "1-2: +1 to future damage",
+    "3: as below, shaken",
+    "4-6: as below, critical damage[d6]",
+    "7+: Destroy unit",
+]
+critical = [
+    "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
+    "2: Cannot move",
+    "3: Cannot rotate",
+    "4: x3 +3 to future damage",
+    "5: half, rounded down, all assault strength and deflection values",
+    "6: Unit set on Fire",
+]
+
+
+[darkelf.units.mechanical_scorpion]
+race = "darkelf"
+name = "Mechanical Scorpion"
+models = ["mechanical_scorpion"]
+size = "medium"
+armor = [9, 7, 6, 5]
+cost.ip = 4
+special = []
+shaken = "speed set to still, move order: [-,-,-]"
+
+[darkelf.units.mechanical_scorpion.orders.movement]
+still = [["360°", "360°", "360°"], ["A", "360°", "360°"]]
+slow = [["360°", "F", "360°"], ["B", "360°", "360°"], ["A", "F", "F"]]
+fast = [["360°", "F", "B"]]
+
+[darkelf.units.mechanical_scorpion.orders.fire]
+still = [["-", "Load"], ["-", "Fire"], ["Load", "Aim"]]
+slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+
+
+[darkelf.units.mechanical_scorpion.damage_tables]
+regular = [
+    "1-2: +1 to future damage",
+    "3: as below, shaken",
+    "4-6: as below, critical damage[d6]",
+    "7+: Destroy unit",
+]
+critical = [
+    "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
+    "2: Cannot move, looses fear",
+    "3: Cannot rotate",
+    "4-5: x3 Light damage[d6]",
+    "6: Unit set on Fire",
+]
+
+
+[darkelf.units.darkelf_infantry]
+race = "darkelf"
+name = "Dark Elf Infantry"
+models = [
+    "darkelf_infantry",
+    "darkelf_infantry",
+    "darkelf_infantry",
+    "darkelf_infantry",
+]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 6
+special = ["Take-Cover[still,crawl][-2]"]
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.darkelf_infantry.orders.movement]
+slow = [
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "B",
+        "-",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
+]
+
+still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+
+[darkelf.units.darkelf_infantry.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+]
+
+
+[darkelf.units.darkelf_infantry.damage_tables]
+regular = [
+    "0-5: Kill 1 model",
+    "6-8: Kill 1 Model, d6 Psychic damage",
+    "9: Destroy unit",
+    "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
+    "{{\\it If killed by poison, remove that instance}}",
+
+]
+
+psychic = ["4+: Unit Shaken"]
+
+
+[darkelf.units.multicultural_infantry]
+race = "darkelf"
+name = "Multicultural Infantry"
+models = [
+    "darkelf_officer",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+]
+
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 2
+cost.xp = 6
+special = [
+    "If number of alive models in this unit is less than 10, you may transfer models from multicultural_trainee in aftermath phase, such that you have a maximum of 10 models in this unit",
+    "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural_trainee units rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving",
+    "Forward Potion[2]",
+    "At start of battle, place two Multicultural Trainee units directly in front of this unit",
+    "Activate order only available while officer is alive",
+]
+
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.multicultural_infantry.orders.movement]
+slow = [
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+]
+
+[darkelf.units.multicultural_infantry.orders.fire]
+slow = [["Activate", "-"]]
+
+[darkelf.units.multicultural_infantry.damage_tables]
+regular = [
+    "0-1: If number of alive models is more than 2, Kill 1 model",
+    "2-5: Kill 1 model",
+    "6-8: Kill 1 Model, d6 Psychic damage",
+    "9: Destroy unit",
+    "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
+    "{{\\it If killed by poison, remove that instance}}",
+    "{{\\it Count the number of alive models before the apply damage step}}",
+]
+
+
+psychic = ["5+: Unit Shaken"]
+
+
+[darkelf.units.multicultural_trainee]
+race = "darkelf"
+name = "Multicultural Trainee"
+models = [
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+    "multicultural_infantry",
+]
+
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 0
+cost.xp = 0
+special = [
+    "May only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules",
+    "If there are no Darkelf officer on the game map, this unit rebel and switch sides",
+    "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes",
+]
+
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.multicultural_trainee.orders.movement]
+slow = [["-", "-", "Chase"]]
+
+
+[darkelf.units.multicultural_trainee.damage_tables]
+regular = ["1-8: Kill 1 model", "9: Destroy Unit"]
+
+psychic = ["3+: Unit Shaken"]
+
+
+[darkelf.units.roboprosthetic_darkelf]
+race = "darkelf"
+name = "Roboprosthetic DarkElf"
+models = [
+    "roboprosthetic_darkelf",
+    "roboprosthetic_darkelf",
+    "roboprosthetic_darkelf",
+    "roboprosthetic_darkelf",
+]
+size = "medium"
+armor = [3, 3, 3, 3]
+cost.mp = 4
+cost.cp = 3
+special = ["Take-Cover[still,crawl][-2]"]
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.roboprosthetic_darkelf.orders.movement]
+slow = [
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "B",
+        "-",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
+]
+
+still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+
+
+[darkelf.units.roboprosthetic_darkelf.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+]
+
+
+[darkelf.units.roboprosthetic_darkelf.damage_tables]
+regular = [
+    "0-5: Kill 1 model",
+    "6-8: Kill 1 Model, d6 Psychic damage",
+    "9: Destroy unit base",
+    "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
+    "{{\\it If killed by poison, remove that instance}}",
+]
+psychic = ["5+: Unit Shaken"]
+
+[darkelf.units.assassin]
+race = "darkelf"
+name = "Assassin"
+models = ["assassin"]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 2
+cost.xp = 6
+special = ["Take-Cover[still,crawl][-3]"]
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.assassin.orders.movement]
+slow = [
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "B",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
+]
+
+still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+
+
+[darkelf.units.assassin.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+]
+
+
+[darkelf.units.assassin.damage_tables]
+regular = ["1+: unit killed"]
+psychic = ["6+: Unit Shaken"]
+
+
+[darkelf.units.roboprosthetic_assassin]
+race = "darkelf"
+name = "Roboprosthetic Assassin"
+models = ["roboprosthetic_assassin"]
+size = "medium"
+armor = [3, 3, 3, 3]
+cost.mp = 2
+cost.cp = 7
+special = ["Take-Cover[still,crawl][-3]"]
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.roboprosthetic_assassin.orders.movement]
+slow = [
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "B",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
+]
+
+still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+
+[darkelf.units.roboprosthetic_assassin.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+]
+slow = [["-", "Fire"], ["Fire", "-"]]
+
+[darkelf.units.roboprosthetic_assassin.damage_tables]
+regular = ["1+: unit killed"]
+psychic = ["6+: Unit Shaken"]
+
+
+[darkelf.units.scout]
+race = "darkelf"
+name = "Scout"
+models = ["scout"]
+size = "medium"
+armor = [0, 0, 0, 0]
+cost.mp = 2
+special = [
+    "Forward Position[2], Take-Cover[still,crawl][-3]",
+    "spot: detect enemy hidden units. See general rules",
+]
+shaken = "speed set to slow, move order: [-,-,flee]"
+
+[darkelf.units.scout.orders.movement]
+slow = [
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "B",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
+]
+
+still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+
+[darkelf.units.scout.orders.fire]
+still = [
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+    [
+        "Spot",
+        "Spot",
+    ],
+]
+slow = [["Spot", "Spot"]]
+
+
+[darkelf.units.scout.damage_tables]
+regular = ["0+: unit killed"]
+psychic = ["3+: Unit Shaken"]
+
+#
+# Models
+#
+[models]
+
+[darkelf.models.mechanical_red_dragon]
+name = "Mechanical Red Dragon"
+race = "darkelf"
+equipment_limit = []
+equipments = ["fire_breath"]
+type = ["Flying", "Mechanical", "Walks"]
+special = [
+    "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing",
+    "Fire Resistance 2, Immunity to acid and gear disruption",
+]
+
+
+[darkelf.models.mechanical_red_dragon.assault]
+strength = [12, 8, 8, 4]
+strength_die = "5+"
+deflection = [12, 8, 8, 4]
+deflection_die = "6+"
+damage = "d6"
+ap = 7
+special = []
+
+[darkelf.models.mechanical_iron_dragon]
+name = "Mechanical Iron Dragon"
+race = "darkelf"
+equipment_limit = []
+equipments = ["acid_breath", "shrapnell_breath"]
+type = ["Flying", "Mechanical", "Walks"]
+special = [
+    "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing",
+    "Fire Resistance 2, Immunity to acid and gear disruption",
+]
+
+
+[darkelf.models.mechanical_iron_dragon.assault]
+strength = [12, 8, 8, 4]
+strength_die = "5+"
+deflection = [12, 8, 8, 4]
+deflection_die = "6+"
+damage = "d6"
+ap = 7
+special = []
+
+[darkelf.models.queen_yy]
+name = "Queen YY"
+race = "darkelf"
+equipment_limit = ["Independent:∞"]
+equipments = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
+type = ["Bio crew", "Vehicle", "Mechanical", "Track"]
+special = [
+    "Excellent shot: +2 to hit",
+    "You fire 2 independent heavy rifles in addion to acid cannon each fire order",
+    "Dual ammo: all weapons may load up to 2 shots, and fire them one at a time.",
+    "If you have the order {{\\it release} as an firing option, you may place the poison cload[12] during pre assault step in any movement phase, including contested hexes for assaults",
+]
+
+
+[darkelf.models.queen_yy.assault]
+strength = [5, 4, 3, 2]
+strength_die = "5+"
+deflection = [4, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-1"
+ap = 3
+special = [
+    "Poison[6][1 for 1], Fear[8]",
+    "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not...",
+]
+
+
+[darkelf.models.queen_xy]
+name = "Queen XY"
+race = "darkelf"
+equipment_limit = ["Independent:∞"]
+equipments = []
+type = ["Bio crew", "Vehicle", "Mechanical", "Track"]
+special = [
+    "If you have the order {{\\it release}} as an firing option, you may place a poison cload[12] during any movement phase in any the hex you are in, including contested hexes for assaults",
+]
+
+
+[darkelf.models.queen_xy.assault]
+strength = [5, 4, 3, 2]
+strength_die = "5+"
+deflection = [4, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-1"
+ap = 3
+special = [
+    "Poison[6][1 for 1], Fear[8]",
+    "May also choose to retreat even if winning the assault. The enemy occupies the hex, h it wants to or not...",
+]
+
+
+[darkelf.models.elite_mechanical_cavalry]
+name = "Elite Mechanical Cavalry"
+race = "darkelf"
+equipment_limit = ["Training:1", "Independent:∞"]
+equipments = ["smg_free", "crossbow_free"]
+type = ["Bio", "Elite", "Cavalry", "Walks"]
+special = [
+    "Good Shot: +1 to hit",
+    "Negates to-hit penalty for shooting while moving fast",
+    "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases",
+]
+
+[darkelf.models.elite_mechanical_cavalry.assault]
+strength = [4, 2, 1, 1]
+strength_die = "5+"
+deflection = [4, 3, 0, 0]
+deflection_die = "5+"
+damage = "d6-1"
+ap = 2
+special = []
+
+
+[darkelf.models.nightmare_mechanical_cavalry]
+name = "Nightmare Mechanical Cavalry"
+race = "darkelf"
+equipment_limit = ["Training:1", "Independent:∞"]
+equipments = ["smg_free", "nightmare_breath"]
+type = ["Bio", "Elite", "Cavalry", "Walks"]
+special = ["Good Shot: +1 to hit"]
+
+[darkelf.models.nightmare_mechanical_cavalry.assault]
+strength = [3, 2, 1, 1]
+strength_die = "5+"
+deflection = [3, 2, 0, 0]
+deflection_die = "5+"
+damage = "d6-1"
+ap = 2
+special = []
+
+
+[darkelf.models.mechanical_assault_spider]
+name = "Mechanical Assault Spider"
+race = "darkelf"
+equipment_limit = ["Training:1", "Independent:∞"]
+equipments = ["head_gun"]
+type = ["Mechanical", "Droid", "Walks"]
+special = ["Good Shot: +1 to hit"]
+
+[darkelf.models.mechanical_assault_spider.assault]
+strength = [6, 4, 2, 1]
+strength_die = "5+"
+deflection = [6, 2, 0, 0]
+deflection_die = "6+"
+damage = "d6"
+ap = 7
+special = ["Poison[6][1 for 2]"]
+
+
+[darkelf.models.mechanical_scorpion]
+name = "Mechanical Scorpion"
+race = "darkelf"
+equipment_limit = ["Training:1", "Independent:∞"]
+equipments = ["tail_gatling_gun"]
+type = ["Mechanical", "Droid", "Walks"]
+special = []
+
+[darkelf.models.mechanical_scorpion.assault]
+strength = [8, 4, 2, 1]
+strength_die = "5+"
+deflection = [6, 2, 0, 0]
+deflection_die = "6+"
+damage = "d6"
+ap = 3
+special = ["Poison[12][1 for 2], Fear[8]"]
+
+[darkelf.models.darkelf_infantry]
+name = "Dark Elf Infantry"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle"]
+type = ["Bio", "Infantry", "Walks"]
+special = []
+
+[darkelf.models.darkelf_infantry.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [1, 1, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]", "Reroll all success in assault while crawling"]
+
+
+[darkelf.models.multicultural_infantry]
+name = "Multicultural Infantry"
+race = "darkelf"
+equipment_limit = []
+equipments = ["collar"]
+type = ["Bio", "Infantry", "Walks"]
+special = []
+
+[darkelf.models.multicultural_infantry.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [0, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = []
+
+
+[darkelf.models.darkelf_officer]
+name = "Dark Elf Officer"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["tesla_whip", "remote_control", "officers_mask"]
+type = ["Bio", "Infantry", "Walks", "Elite", "Officer"]
+special = [
+    "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3.",
+    "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase",
+    "Escape artist: in any aftermath phase, you may remove this unit from the board. Treat it as survived for vitory points purposes",
+]
+
+[darkelf.models.darkelf_officer.assault]
+strength = [3, 2, 1, 1]
+strength_die = "5+"
+deflection = [6, 3, 0, 0]
+deflection_die = "6+"
+damage = "d6"
+ap = 0
+special = [
+    "Cunning assault[1 for 3]",
+    "Each deflections counts as both a hit and a deflection",
+]
+
+
+[darkelf.models.darkelf_elite_infantry]
+name = "DarkElf Elite Infantry"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle"]
+type = ["Bio", "Elite", "Infantry", "Walks"]
+replaces = ["darkelf_infantry"]
+special = [
+    "Unit base gains psychic resistance 1 as long as atleast one elite model is alive.",
+]
+cost.xp = 1
+
+[darkelf.models.darkelf_elite_infantry.assault]
+strength = [2, 2, 1, 1]
+strength_die = "5+"
+deflection = [4, 2, 1, 1]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = [
+    "Cunning assault[1 for 2]",
+    "Flexible deflection die: any deflection result may be chosen to add to assault value instead of deflection",
+    "Reroll all success in assault while crawling",
+]
+
+
+[darkelf.models.assassin]
+name = "Assassin"
+race = "darkelf"
+equipment_limit = ["shared: 1", "Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle", "hide_free"]
+type = ["Bio", "Elite", "Infantry", "Walks"]
+special = ["Good Shot: +1 to hit"]
+
+[darkelf.models.assassin.assault]
+strength = [6, 4, 2, 1]
+strength_die = "5+"
+deflection = [8, 3, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = [
+    "Cunning assault[1 for 2], Poison[12]",
+    "Flexible deflection die: any deflection result may be chosen to add to assault value instead of deflection",
+    "Reroll all success in assault while crawling",
+]
+
+
+[darkelf.models.roboprosthetic_assassin]
+name = "Roboprosthetic Assassin"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle", "hide_free"]
+type = ["Bio", "Elite", "Infantry", "Roboprosthetic", "Walks"]
+special = ["Good Shot: +1 to hit"]
+
+[darkelf.models.roboprosthetic_assassin.assault]
+strength = [6, 4, 2, 1]
+strength_die = "5+"
+deflection = [8, 3, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = [
+    "Cunning assault[1 for 2], Poison[12][1 for 1]",
+    "Flexible deflection die: any deflection result from elites may be chosen to add to assault value instead of deflection",
+    "Reroll all success in assault while crawling",
+]
+
+
+[darkelf.models.scout]
+name = "Scout"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle"]
+type = ["Bio", "Infantry", "Walks"]
+special = []
+
+[darkelf.models.scout.assault]
+strength = [2, 1, 1, 1]
+strength_die = "5+"
+deflection = [2, 1, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 1]", "Reroll all success in assault while crawling"]
+
+
+[darkelf.models.roboprosthetic_darkelf]
+name = "Dark Elf Infantry"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle"]
+type = ["Bio", "Infantry", "Walks", "Roboprosthetic"]
+special = []
+
+[darkelf.models.roboprosthetic_darkelf.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [1, 1, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+special = ["Cunning assault[1 for 2]", "Reroll all success in assault while crawling"]
+
+
+[darkelf.models.elite_roboprosthetic_darkelf]
+name = "Elite Roboprosthetic DarkElf"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipments = ["rifle"]
+type = ["Bio", "Elite", "Infantry", "Walks", "Roboprosthetic"]
+replaces = ["roboprosthetic_darkelf"]
+special = [
+    "Unit base gains psychic resistance 1 as long as atleast one elite model is alive.",
+]
+cost.cp = 1
+
+[darkelf.models.elite_roboprosthetic_darkelf.assault]
+strength = [2, 1, 1, 1]
+strength_die = "3+"
+deflection = [4, 2, 1, 1]
+deflection_die = ""
+damage = "d6-2"
+ap = 2
+special = [
+    "Cunning assault[1 for 2]",
+    "Flexible deflection die: any deflection result from elites may be chosen to add to assault value instead of deflection",
+    "Reroll all success in assault while crawling",
+]
+
+
+[equipments]
+
+[darkelf.equipments.rifle]
+name = "Rifle"
+race = "darkelf"
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[darkelf.equipments.rifle.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = []
+
+
+[darkelf.equipments.head_gun]
+name = "Head Gun"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.head_gun.range]
+range = 3
+angle = [true, true, false, false]
+damage = "d6"
+ap = 6
+special = ["Poison[6]"]
+
+
+[darkelf.equipments.tesla_whip]
+name = "Tesla Whip"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.tesla_whip.assault]
+
+special.append = "Poison[4], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken. "
+
+
+[darkelf.equipments.remote_control]
+name = "Remote control"
+race = "darkelf"
+requires = []
+special = [
+    "Activate poison cloud collars by an 'activate' fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with atleast one multicultural_infantry model. This happens in all pre-assault phase this round",
+    "Once activated, the ability is permanent",
+    "Note, neither this unit or the trainee units are imune to poison clouds",
+]
+
+[darkelf.equipments.officers_mask]
+name = "Officer Mask"
+race = "darkelf"
+requires = []
+special = [
+    "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds",
+]
+
+
+[darkelf.equipments.collar]
+name = "Collar"
+race = "darkelf"
+requires = []
+special = [
+    "Keeps multicultural Infantry loyal while there is a Darkelf officer on the battlefield",
+    "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated.",
+]
+
+
+[darkelf.equipments.tail_gatling_gun]
+name = "Tail Gatling Gun"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.tail_gatling_gun.range]
+range = 3
+angle = [true, false, false, false]
+damage = "d6 + d6 Psycic damage"
+ap = 3
+special = [
+    "Focus Fire[aim]: roll 6 dice at same unit.",
+    "May only use aim versus targets within normal range",
+    "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range",
+    "Minor acid",
+    "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used",
+]
+
+
+[darkelf.equipments.heavy_rifle]
+name = "Heavy Rifle"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.heavy_rifle.range]
+range = 4
+angle = [true, true, false, false]
+damage = "d6-1"
+ap = 3
+special = []
+
+
+[darkelf.equipments.acid_cannon]
+name = "Acid Cannon"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.acid_cannon.range]
+range = 4
+angle = [true, true, false, false]
+damage = "d6+d8 Psychic damage + d6 crew damage"
+ap = 3
+special = [
+    "On hit: apply Acid to target. In addition, if you hit target, place an minor acid on all units in hex",
+]
+
+
+[darkelf.equipments.mechanical_imp]
+name = "Mechanical Imp"
+race = "darkelf"
+cost.cp = 4
+cost.xp = 2
+requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
+special = [
+    "Mechanical robotic imps helps all models in unit base to reload it's weapons. Treat any weapons as always loaded.",
+]
+
+
+[darkelf.equipments.smg]
+name = "SMG"
+race = "darkelf"
+cost.cp = 1
+requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+
+[darkelf.equipments.smg.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d6-3"
+ap = 1
+special = [
+    "Always treated as loaded. Fires two times (per model) each time it is fired",
+]
+
+[darkelf.equipments.smg.orders_gained.fire]
+still = [["Fire", "Fire"]]
+slow = [["Fire", "Fire"]]
+
+
+[darkelf.equipments.smg_free]
+name = "SMG"
+race = "darkelf"
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[darkelf.equipments.smg_free.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d6-3"
+ap = 1
+special = [
+    "Always treated as loaded. Fires two times (per model) each time it is fired",
+]
+
+
+[darkelf.equipments.crossbow]
+name = "Crossbow"
+race = "darkelf"
+cost.cp = 2
+requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+
+[darkelf.equipments.crossbow.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = ["Poison[6], minor acid"]
+
+
+[darkelf.equipments.crossbow_free]
+name = "Crossbow"
+race = "darkelf"
+requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+
+[darkelf.equipments.crossbow_free.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = ["Poison[6], minor acid"]
+
+
+[darkelf.equipments.enhanced_crossbow]
+name = "Enhanced Crossbow"
+race = "darkelf"
+model_cost.cp = 2
+requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"], ["type:Elite"]]
+
+[darkelf.equipments.enhanced_crossbow.range]
+range = 6
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = ["Poison[8], minor acid"]
+
+
+[darkelf.equipments.nightmare_breath]
+name = "Nightmare Breath"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.nightmare_breath.range]
+range = 2
+angle = [true, false, false, false]
+damage = "d8 crew damage"
+ap = 0
+special = [
+    "Fires at all models once within range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range",
+    "No regular damage, but Poison[8] and set on fire applies to any unit hit atleast once",
+    "Always treated as loaded",
+]
+
+
+[darkelf.equipments.poison_gas_grenade]
+name = "Poison Gas Grenade"
+race = "darkelf"
+cost.cp = 1
+requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
+
+[darkelf.equipments.poison_gas_grenade.range]
+range = 2
+angle = [true, true, true, true]
+damage = "N.A."
+ap = 0
+special = [
+    "Place a Poison Cloud[6] within normal range",
+    "Limited Ammo[2]",
+    "Always treated as loaded",
+]
+
+
+[darkelf.equipments.poison_gas_grenade.orders_gained.fire]
+all = [["-", "Throw Gas Grenade"]]
+
+
+[darkelf.equipments.mortar1a]
+name = "Mortar 1A"
+race = "darkelf"
+cost.cp = 16
+cost.xp = 8
+requires = [["shared:1"], ["type:Infantry"]]
+
+[darkelf.equipments.mortar1a.range]
+range = 10
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = [
+    "Choose a hex within range and roll a die, at 5+ place a Poison \\& Acid Cloud [8, minor] at target hex. Place a Poison Cloud[6]  at all hexes surrounding that initial hex",
+    "If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from chosen hex.",
+    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
+]
+
+
+[darkelf.equipments.mortar11b]
+name = "Mortar 1.1B"
+race = "darkelf"
+cost.cp = 16
+cost.xp = 8
+requires = [["shared:1"], ["type:Infantry"]]
+
+[darkelf.equipments.mortar11b.range]
+range = 10
+angle = [true, true, true, true]
+damage = "N.A"
+ap = 0
+special = [
+    "Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.",
+    "If you don't roll a 3+, move the target hex the result of the die, a number of hexes in a random direction from chosen hex.",
+    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
+]
+
+
+[darkelf.equipments.poison_claws]
+name = "Poison Claws"
+race = "darkelf"
+cost.cp = 1
+requires = [["Independent:1"], ["type:Roboprosthetic"]]
+
+[darkelf.equipments.poison_claws.assault]
+strength.add = [1, 0, 0, 0]
+special.append = ["Poison[4]"]
+
+
+[darkelf.equipments.poison_spray]
+name = "Poison Spray"
+race = "darkelf"
+cost.cp = 2
+requires = [["Hands:2"], ["type:Roboprosthetic", "type: Infantry"]]
+
+[darkelf.equipments.poison_spray.assault]
+damage.replace = "d6-2 + d6 crew damage"
+special.append = "Poison[6][1 for 2]"
+
+[darkelf.equipments.poison_spray.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6 crew damage"
+ap = 0
+special = ["Poison[6]"]
+
+[darkelf.equipments.integrated_pistol]
+name = "Integrated Pistol"
+race = "darkelf"
+cost.cp = 1
+requires = [["Independent:1"], ["type:Roboprosthetic"]]
+
+[darkelf.equipments.integrated_pistol.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6-2"
+ap = 2
+special = [
+    "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon",
+]
+
+
+[darkelf.equipments.acid_breath]
+name = "Acid breath"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.acid_breath.range]
+range = 3
+angle = [true, false, false, false]
+damage = "-"
+ap = 0
+special = [
+    "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid",
+    "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]",
+]
+
+
+[darkelf.equipments.fire_breath]
+name = "Fire breath"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.fire_breath.range]
+range = 3
+angle = [true, false, false, false]
+damage = "-"
+ap = 0
+special = [
+    "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range. No regular damage, but Poison[6] and any unit hit atleast once is set on fire. Any unit within long range and in front arc is covered in minor acid",
+]
+
+
+[darkelf.equipments.shrapnell_breath]
+name = "Shrapnell breath"
+race = "darkelf"
+requires = []
+
+[darkelf.equipments.shrapnell_breath.range]
+range = 3
+angle = [true, false, false, false]
+damage = "d6-2"
+ap = 2
+special = [
+    "Area[4+] at point blank range, Area[6+] at normal and long range",
+    "Always treated as loaded",
+]
+
+
+[darkelf.equipments.gasmask]
+name = "GasMask assault training"
+race = "darkelf"
+cost.xp = 1
+special = [
+    "Unit becomes immune to poison clouds",
+    "Enemy units in an poison cloud gain -50\\% (rounded down) in assault and assault deflection when facing this unit",
+    "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults",
+]
+requires = [
+    [
+        "Independent:1",
+    ],
+    [
+        "type:Roboprosthetic",
+        "type:Infantri",
+        "type:Cavalery",
+    ],
+]
+
+
+[darkelf.equipments.poisonfog_grenade]
+name = "Poison Fog Grenade"
+race = "darkelf"
+cost.cp = 2
+special = [
+    "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.",
+    "If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or you are outside line of sight of any enemy unit.",
+]
+
+requires = [
+    [
+        "Independent:1",
+    ],
+    [
+        "type:Roboprosthetic",
+        "type:Infantry",
+        "type:Cavalery",
+    ],
+]
+
+[darkelf.equipments.poisonfog_grenade.orders_gained.fire]
+still = [["-", "Throw"], ["Throw", "-"]]
+slow = [["-", "Throw"], ["Throw", "-"]]
+
+
+[darkelf.equipments.hide]
+name = "Hide"
+race = "darkelf"
+cost.xp = 4
+
+requires = [["Training:1"], ["type:Infantry"]]
+
+special = [
+    "Gains the Hidden and Hide[ruins] special effects",
+    "Forward position[1]",
+    "Camuflage[swamp][-1]",
+]
+
+
+[darkelf.equipments.hide.orders_gained.movement]
+still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
+slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
+crawl = [["Hide[ruins]", "-", "-"]]
+
+
+[darkelf.equipments.cloacking_device]
+name = "Cloacking Device"
+race = "darkelf"
+cost.ip = 2
+
+requires = [["Independent:1"], ["type:Mechanical"]]
+
+special = ["Gains the Hidden special effects", "Forward position[1]"]
+
+
+[darkelf.equipments.cloacking_device.orders_gained.movement]
+still = [["Reveal", "-", "-"]]
+slow = [["-", "Reveal", "Chase"]]
+
+
+[darkelf.equipments.hide_free]
+name = "Hide"
+race = "darkelf"
+requires = []
+
+
+special = [
+    "Gains the Hidden and Hide[ruins] special effects",
+    "Forward position[1]",
+    "Camuflage[swamp][-1]",
+]
+
+
+[darkelf.equipments.hide_free.orders_gained.movement]
+still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
+slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
+crawl = [["Hide[ruins]", "-", "-"]]
