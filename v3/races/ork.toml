@@ -79,7 +79,6 @@ movement_order = ["-", "-", "flee"]
 "Regeneration" = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
 "Resistance" = "Acid [5+], Poison [2]"
 "Fire Order" = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
-"To Hit" = "Terrible Shot: -2 to hit with ranged weapons"
 "Hans Sverre's favorite rule" = "Out of ammo: At the end of the game, the troll runs out of ammo"
 
 [units.troll.orders.movement]
@@ -401,6 +400,8 @@ movement_order = ["-", "-", "-"]
 
 [units.battlewagon.special]
 "Transport" = "[2]: may transport up to 2 infantry. Treat any movement order as including an optional Deploy[range=0, quick] order"
+"Fire Order" = "Fire all weapons simultaneously"
+
 
 [units.battlewagon.damage_tables]
 regular = [
@@ -842,6 +843,8 @@ crew = [
     "12+: Unit destroyed",
 ]
 
+[units.ork_char_b1.special]
+    "Fire Order" = "Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them separately"
 
 #
 # Models
@@ -854,7 +857,9 @@ race = "ork"
 equipments = ['troll_gatling_gun']
 type = ["Monster", "Walking"]
 equipment_limit = ["Hands:2", "Independent:∞"]
-special = []
+
+[models.troll.special]
+"To Hit" = "Terrible Shot: -2 to hit with ranged weapons"
 
 
 [models.troll.assault]
@@ -864,10 +869,12 @@ deflection = [6, 0, 0, 0]
 deflection_die = "6+"
 damage = "d12"
 ap = 2
-special = [
-    "Fear[8]",
-    "Troll stench: Any unit entering assault with a troll gains one Poison[6] counter and takes d8 crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and crew damage only to units with a crew damage table",
-]
+
+
+[models.troll.assault.special]
+    "Fear" = "[8]"
+    "Troll Stench" =  "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and crew damage only to units with a crew damage table"
+
 
 
 [models.grunt]
@@ -876,7 +883,7 @@ race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipments = []
 type = ["Bio", "Grunt", "Walking"]
-special = []
+
 
 [models.grunt.assault]
 strength = [2, 2, 2, 2]
@@ -885,7 +892,10 @@ deflection = [0, 0, 0, 0]
 deflection_die = "-"
 damage = "d6-2"
 ap = 2
-special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
+
+[models.grunt.assault.special]
+"Cunning Assault" = "[1 for 3]"
+"Ork Reroll" = "[3]"
 
 
 [models.ork_elite_infantry]
@@ -896,13 +906,14 @@ equipment_limit = ["Hands:2", "Independent:∞"]
 equipments = []
 replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
-special = [
-    "Not Yet dead: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit",
-]
+
+[models.ork_elite_infantry.special]
+    "Not Yet Dead" = "after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
+
 
 
 [models.ork_elite_infantry.unit_special]
-"Psychic" = "Unit gains Psychic resistance 1"
+"Improved Resistance" = "Unit gains Psychic resistance 1"
 
 
 [models.ork_elite_infantry.assault]
@@ -912,7 +923,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
-special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
+
+[models.ork_elite_infantry.assault.special]
+"Ork Reroll" = "[3]"
+"Cunning Assault" = "[1 for 3]"
 
 
 [models.ork_infantry]
@@ -921,7 +935,9 @@ race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipments = ['ork_musket']
 type = ["Infantry", "Walking"]
-special = []
+
+[models.ork_infantry.special]
+"To Hit" = "Bad shot, -1 to hit"
 
 
 [models.ork_infantry.assault]
@@ -931,8 +947,10 @@ deflection = [0, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
 
+[models.ork_infantry.assault.special]
+"Ork Reroll" = "[3]"
+"Cunning Assault" = "[1 for 3]"
 
 [models.ork_werewarg]
 name = "Ork WereWarg"
@@ -940,7 +958,7 @@ race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipments = ['ork_musket']
 type = ["Infantry", "Walking", "Elite", "Monster"]
-special = []
+
 
 
 [models.ork_werewarg.assault]
@@ -950,7 +968,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 3]"]
+
+[models.ork_werewarg.assault.special]
+"Ork Reroll" = "[3]"
+"Cunning Assault" = "[1 for 3]"
 
 
 [models.champion]
@@ -959,7 +980,7 @@ race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipments = []
 type = ["Elite", "Infantry", "Walking"]
-special = []
+
 
 [models.champion.assault]
 strength = [6, 3, 3, 3]
@@ -969,7 +990,10 @@ deflection = [2, 0, 0, 0]
 damage = "d6"
 ap = "N/A"
 
-special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 2]"]
+[models.champion.assault.special]
+"Ork Reroll" = "[3]"
+"Cunning Assault" = "[1 for 2]"
+
 
 
 [models.warg_rider]
@@ -979,7 +1003,6 @@ type = ["Bio", "Cavalry", "Elite", "Walking"]
 equipment_limit = ["Hands:1", "Independent:∞"]
 equipments = []
 
-
 [models.warg_rider.assault]
 strength = [4, 4, 3, 2]
 strength_die = "6+"
@@ -987,7 +1010,10 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 deflection = [2, 2, 1, 1]
-special = ["{template.ability.reroll_assault:3}", "Cunning assault[1 for 4]"]
+
+[models.warg_rider.assault.special]
+"Ork Reroll" = "[3]"
+"Cunning Assault" = "[1 for 4]"
 
 
 [models.hammerhead]
@@ -1011,11 +1037,11 @@ deflection_die = "6+"
 damage = "d8+3 (from front), else d8"
 ap = 10
 deflection = [12, 2, 2, 2]
-special = [
-    "{templates.ability.reroll_assault:6}",
-    "Assault deflection die may not be used to deflect attacks against you, but negate the enemies assault deflection dice instead",
-    "ap 2 (from non-front arcs)",
-]
+
+[models.hammerhead.assault.special]
+"Ork Reroll" = "[6]"
+"Angle" = "ap 2 (from non-front arcs)"
+
 
 
 [models.battlewagon]
@@ -1025,7 +1051,7 @@ type = ["Vehicle", "Mechanical", "Bio Crew", "Tracked"]
 
 equipments = ["spear_shooter", "big_gun", "grenade_launcher"]
 equipment_limit = ["Independent:∞"]
-special = ["Fire all weapons simultaneously"]
+
 
 [models.battlewagon.assault]
 strength = [10, 8, 8, 8]
@@ -1034,7 +1060,10 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 deflection = [0, 0, 0, 0]
-special = ["{templates.ability.reroll_assault:3}"]
+
+[models.battlewagon.assault.special]
+
+"Ork Reroll" =  "[3]"
 
 
 [models.bioengineered_ork]
@@ -1043,7 +1072,7 @@ race = "ork"
 equipment_limit = ["Hands:4", "Independent:∞", "Shared:1"]
 equipments = ["ork_musket", "ork_musket"]
 type = ["Bio", "Infantry", "Walking"]
-special = []
+
 
 [models.bioengineered_ork.assault]
 strength = [3, 2, 2, 2]
@@ -1052,7 +1081,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["{templates.ability.reroll_assault:6}", "Cunning assault[1 for 2]"]
+
+[models.bioengineered_ork.assault.special]
+"Ork Reroll" = "[3]"
+"Cunning Assault" = "[1 for 2]"
 
 [models.elite_bioengineered_ork]
 name = "Elite BioEngineered Ork"
@@ -1061,8 +1093,11 @@ equipment_limit = ["Hands:4", "Independent:∞"]
 equipments = ["ork_musket", "ork_musket"]
 cost.xp = 1
 type = ["Bio", "Infantry", "Walking", "Elite"]
-special = ["Good shot, +1 to hit"]
 replaces = "bioengineered_ork"
+
+[models.elite_bioengineered_ork.special]
+"To Hit" = "Good shot, +1 to hit"
+
 
 [models.elite_bioengineered_ork.assault]
 strength = [4, 3, 3, 3]
@@ -1071,7 +1106,11 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["{template.ability.reroll_assault:6}", "Cunning assault[1 for 2]"]
+
+[models.elite_bioengineered_ork.assault.special]
+"Ork Reroll" = "[6]"
+"Cunning Assault" = "[1 for 2]"
+
 
 
 [models.ork_char_b1]
@@ -1080,9 +1119,9 @@ race = "ork"
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 equipment_limit = ["Independent:∞"]
 equipments = ["rotating_pop_gun", "heavy_forward_gun"]
-special = [
-    "Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them separately",
-]
+
+
+
 
 [models.ork_char_b1.assault]
 strength = [6, 4, 3, 2]
@@ -1092,7 +1131,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 3
 
-special = ["{template.ability.reroll_assault:3}"]
+[models.ork_char_b1.assault.special]
+"Ork Reroll" = "[3]"
 
 
 [models.speedhead]
@@ -1110,11 +1150,11 @@ deflection = [2, 1, 0, 0]
 deflection_die = "6+"
 damage = "d8"
 ap = 3
-special = [
-    "Drive Past[4+]: Works as pre-assault retreat, except you may retreat in the hex directly ahead. Note that it can only be attempted if the hex directly ahead neither becomes overcrowded, is an illegal hex or contain enemies",
-    "{template.ability.reroll_assault:6}",
-    "When moving fast, unit gains Fear[6]",
-]
+
+[models.speedhead.assault.special]
+"Pre-Assault Retreat" = "[4+]"
+"Ork Reroll" = "[6]"
+
 
 
 [equipments]
@@ -1151,7 +1191,6 @@ special = []
 [equipments.clockwork_shield]
 name = "Clockwork Shield"
 race = "ork"
-special = ["Unit base gains damage resistance 1"]
 cost.cp = 2
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
@@ -1159,11 +1198,17 @@ requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
+[equipments.clockwork_shield.unit_special]
+"Improved Resistance (2)" = "Unit base gains damage resistance 1"
+
+
 [equipments.clockwork_shield_free]
 name = "Clockwork Shield"
 race = "ork"
-special = ["Unit base gains damage resistance 1"]
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
+
+[equipments.clockwork_shield_free.unit_special]
+"Improved Resistance (2)" = "Unit base gains damage resistance 1"
 
 [equipments.clockwork_shield_free.assault]
 deflection.add = [1, 0, 0, 0]
@@ -1174,7 +1219,6 @@ name = "Clockwork Wings"
 race = "ork"
 cost.cp = 4
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
-special = ["Flies for a short period of time."]
 
 [equipments.clockwork_wings.assault]
 strength.add = [1, 0, 0, 0]
@@ -1188,7 +1232,6 @@ fast_flying = [["Chase", "B(slow, land)", "-"]]
 name = "Clockwork Wings"
 race = "ork"
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
-special = ["Flies for a short period of time."]
 
 [equipments.clockwork_wings_free.assault]
 strength.add = [1, 0, 0, 0]
@@ -1205,7 +1248,9 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 
 [equipments.flame_covered_axe.assault]
 damage.replace = "d6+1 + d4 crew damage"
-special.append = ["Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"]
+
+[equipments.flame_covered_axe.assault.special]
+"Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 
 [equipments.flame_covered_axe_free]
@@ -1215,7 +1260,9 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 
 [equipments.flame_covered_axe_free.assault]
 damage.replace = "d6+1 + d4 crew damage"
-special.append = ["Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"]
+
+[equipments.flame_covered_axe_free.assault.special]
+Damage = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 
 [equipments.poison_spikes]
@@ -1224,18 +1271,19 @@ race = "ork"
 cost.cp = 1
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
-[equipments.poison_spikes.assault]
-special.append = ["Place a poison[4] on any enemy which you deflected an attack from"]
+[equipments.poison_spikes.assault.special]
+"Damage on Deflect" = "Place a poison[4] on any enemy which you deflected an attack from"
 
 
 [equipments.clockwork_monocular]
 name = "Clockwork Monocular"
 race = "ork"
-special = [
-    "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice.",
-]
+
 cost.cp = 1
 requires = [["type:Infantry"], ["Independent:1"]]
+
+[equipments.clockwork_monocular.model_special]
+"To Hit (2)"= "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
 
 
 [equipments.clockwork_spear]
@@ -1245,7 +1293,9 @@ cost.cp = 2
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 [equipments.clockwork_spear.assault]
 damage.replace = "d8"
-special.append = ["Cunning assault[1 for 2]"]
+
+[equipments.clockwork_spear.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 
 [equipments.clockwork_power_spear]
@@ -1255,10 +1305,12 @@ cost.cp = 3
 requires = [["type:Infantry", "type:Grunt"], ["Hands:2"]]
 [equipments.clockwork_power_spear.assault]
 damage.replace = "d12"
-special.append = ["Cunning assault[1 for 2]"]
 ap.replace = 4
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
+
+[equipments.clockwork_power_spear.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 
 [equipments.ork_pistol]
@@ -1274,8 +1326,6 @@ angle = [true, true, false, false]
 damage = "d6-1"
 ap = 2
 special = [
-    "1-handed weapon. Infantry may combine pistol with another 1-handed weapon.",
-    "If combined with another pistol, you may load and fire both pistol simultaneously",
     "Can be loaded with up to 2 ammo",
 ]
 
@@ -1329,11 +1379,13 @@ ap = 9
 name = "War Drum"
 race = "ork"
 cost.xp = 2
-special = [
-    "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type",
-    "Unit Base gains Terror[6][range 1]",
-]
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
+
+[equipments.war_drum.unit_special]
+    "Movement" = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
+    "Terror" = "[6][range 1]"
+
+
 
 
 [equipments.harpoon_gun]
@@ -1471,10 +1523,10 @@ cost.cp = 2
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
 
-[equipments.tankscalper.assault]
-special.append = [
-    "May replace regular damage with d8 crew damage. Note: crew damage ignore armor",
-]
+[equipments.tankscalper.assault.special]
+
+"Damage" = "May replace regular damage with d8 crew damage. Note: crew damage ignore armor"
+
 
 
 [equipments.healing_syringe]
@@ -1482,10 +1534,12 @@ special.append = [
 race = "ork"
 name = "Healing Syringe"
 cost.cp = 1
-special = [
-    "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token.",
-]
 requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
+
+[equipments.healing_syringe.unit_special]
+"Heal (2)"="In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."
+
+
 
 
 [equipments.hand_catapult]

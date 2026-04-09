@@ -49,7 +49,6 @@ type UnitSpecial = Literal[
     "Regeneration",
     "Take Cover",
     "Fire Order",
-    "To Hit",
     "Evation",
     "Chase",
     "Transport",
@@ -58,16 +57,37 @@ type UnitSpecial = Literal[
     "Immunity",
     "Repair",
     "Heal",
+    "Heal (2)",
     "Repairing",
     "Suicide",
     "LoS",
     "Terror",
     "Poison Cloud",
     "Fog",
-    "Psychic",
     "Movement",
     "Pet",
+    "Improved Resistance",
+    "Improved Resistance (2)"
 ]
+type ModelSpecial = Literal[
+    "To Hit",
+    "To Hit (2)",
+    "Not Yet Dead",
+    
+    
+]
+
+type AssaultSpecial = Literal[
+    "Cunning Assault",
+    "Fear",
+    "Troll Stench",
+    "Ork Reroll",
+    "Angle",
+    "Pre-Assault Retreat",
+    "Damage",
+    "Damage on Deflect"
+]
+    
 type ModelType = Literal[
     "Elite",
     "Bio",
