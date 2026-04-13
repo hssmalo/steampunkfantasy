@@ -624,7 +624,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 [equipments.grenadier.model_special]
 # GA: er dette model eller unit special?
 # HSS: model special :)
-"To Hit 2" = "Get +1 to hit for thrown weapons"
+"To Hit (2)" = "Get +1 to hit for thrown weapons"
 
 [equipments.grenadier.unit_special]
 "Fire Order" = "For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"

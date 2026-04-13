@@ -85,7 +85,8 @@ type ModelSpecial = Literal[
     "Not Yet Dead",
     "Fog",
     "Vulnerability",
-    "Fire"
+    "Fire",
+    "Improved Resistance",
 ]
 
 type AssaultSpecial = Literal[
@@ -146,6 +147,21 @@ class Cost(StrictModel):
     cp: int = 0
     xp: int = 0
     ip: int = 0
+
+    def __str__(self) -> str:
+        """Return a human-readable cost string, graying out zero values."""
+
+        def _part(value: int, unit: str) -> str:
+            s = f"{value:2d}{unit}"
+            return f"[gray30]{s}[/]" if value == 0 else s
+
+        parts = [
+            _part(self.mp, "mp"),
+            _part(self.cp, "cp"),
+            _part(self.xp, "xp"),
+            _part(self.ip, "ip"),
+        ]
+        return " ".join(parts)
 
 
 class EquipmentLimit(StrictModel):

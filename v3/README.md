@@ -32,6 +32,15 @@ uv run spf race show goblin models.goblin_infantry
 uv run spf race show goblin equipments.goblin_bow
 ```
 
+There are also commands for a high-level overview of a race:
+
+```console
+uv run spf race things ork
+uv run spf race units ork
+uv run spf race models ork
+uv run spf race equipment ork
+``
+
 ## List and Show Army Files
 
 Armies are teams created from a race. List all armies:
