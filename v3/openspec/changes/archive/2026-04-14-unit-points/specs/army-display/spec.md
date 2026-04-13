@@ -1,10 +1,4 @@
-# Spec: Army Display
-
-## Purpose
-
-Provides rich console formatting and CLI commands for displaying a loaded `Army` in a human-readable layout.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Pretty-print an army to the console
 The system SHALL provide a function to display an `Army` in a human-readable layout using f-string bullet lists (not rich tables). The army name SHALL be displayed in bold at the top. Each unit SHALL be a top-level bullet point with its point value in parentheses after the unit name. Each model SHALL be a sub-bullet point with its combined equipment (defaults and upgrades) listed in parentheses on the same line, omitted when there is no equipment. The total cost line SHALL use `Cost.__str__()`.
@@ -36,14 +30,3 @@ The system SHALL provide a function to display an `Army` in a human-readable lay
 #### Scenario: Display renders total cost using Cost.__str__()
 - **WHEN** `print_army(army, race_config)` is called
 - **THEN** the total cost is shown using the `Cost.__str__()` format
-
-### Requirement: CLI command to display an army
-The system SHALL provide a CLI command to load an army from a file and display it using the rich formatter.
-
-#### Scenario: show-army command displays a saved army
-- **WHEN** the user runs `spf show-army <filename>`
-- **THEN** the army is loaded from the armies path and printed to the console using `print_army`
-
-#### Scenario: show-army with unknown file reports an error
-- **WHEN** the user runs `spf show-army <filename>` and the file does not exist
-- **THEN** an error message is shown and the process exits with a non-zero status

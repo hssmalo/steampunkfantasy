@@ -4,7 +4,14 @@ import json
 from pathlib import Path
 from typing import Any
 
-from spf.armies.data import Army, ArmyModel, ArmyUnit, total_cost, validate_team
+from spf.armies.data import (
+    Army,
+    ArmyModel,
+    ArmyUnit,
+    total_cost,
+    unit_points,
+    validate_team,
+)
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
@@ -55,9 +62,12 @@ def load_army(army_name: str, tournament: str | None = None) -> Army:
 
 def print_army(army: Army, cfg: RaceConfig) -> None:
     """Pretty-print an army to the console."""
-    stdout.print(f"[bold]{army.nick}[/] ({cfg.races[army.race].name})\n")
+    stdout.rule(f"{army.nick} ({cfg.races[army.race].name})")
     for unit in army.units:
-        stdout.print(f"- {unit.config.name}", highlight=False)
+        pts = unit_points(unit, cfg)
+        stdout.print(
+            f"[bold]{unit.config.name}[/] [yellow]({pts} pts)[/]", highlight=False
+        )
         for model in unit.models:
             all_equipment = [*model.config.equipment, *model.upgrades]
             equip_str = f" ({', '.join(all_equipment)})" if all_equipment else ""

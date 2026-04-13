@@ -1,5 +1,7 @@
 """Army commands for the SteamPunkFantasy CLI."""
 
+import pathlib
+
 import cyclopts
 
 from spf import races
@@ -17,12 +19,15 @@ def add_commands(app: cyclopts.App) -> None:
 def list_armies() -> None:
     """List available armies."""
     for army_path in io.list_armies():
-        army_name = army_path.stem
-        army = io.load_army(army_name)
+        army_id, tournament, army_name = _parse_army_path(army_path)
+        army = io.load_army(army_name, tournament=tournament)
 
         stdout.print(
-            f"- {army_name:<20} {army.race.title():<16}"
-            f" [dim]{army_path.relative_to(config.paths.project)}[/]"
+            (
+                f"- {army_id:<24} {army.race.title():<16}"
+                f" [dim]{army_path.relative_to(config.paths.project)}[/]"
+            ),
+            highlight=False,
         )
 
 
@@ -36,3 +41,12 @@ def show_army(army_name: str) -> None:
 
     cfg = races.get_race(army.race)
     io.print_army(army, cfg)
+
+
+def _parse_army_path(
+    army_path: pathlib.Path,
+) -> tuple[str, str, str]:
+    """Parse an army path into army_id, tournament, and army_name."""
+    army_id = str(army_path.relative_to(config.paths.armies).with_suffix(""))
+    tournament, _, army_name = army_id.rpartition("/")
+    return army_id, tournament, army_name

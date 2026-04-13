@@ -12,6 +12,8 @@ from spf.armies.data import (
     available_equipment,
     available_models,
     total_cost,
+    unit_cost,
+    unit_points,
     upgrade_model,
     upgrade_unit,
     validate_team,
@@ -173,6 +175,57 @@ def test_add_cost_sums_fields() -> None:
     b = t.Cost(mp=10, cp=20, xp=30, ip=40)
     result = _add_cost(a, b)
     assert result == t.Cost(mp=11, cp=22, xp=33, ip=44)
+
+
+def test_unit_cost_base_only(one_unit_army: Army, simple_race: RaceConfig) -> None:
+    unit = one_unit_army.units[0]
+    assert unit_cost(unit, simple_race) == t.Cost(mp=3)
+
+
+def test_unit_cost_with_upgrade_model(
+    one_unit_army: Army, simple_race: RaceConfig
+) -> None:
+    team = upgrade_unit(
+        one_unit_army, ("squad", 0), ("soldier", 0), "elite_soldier", simple_race
+    )
+    assert unit_cost(team.units[0], simple_race) == t.Cost(mp=3, xp=1)  # base + upgrade
+
+
+def test_unit_cost_with_equipment_upgrade(
+    one_unit_army: Army, simple_race: RaceConfig
+) -> None:
+    team = upgrade_model(
+        one_unit_army, ("squad", 0), ("soldier", 0), "sword", simple_race
+    )
+    # base cost + equipment upgrade cost
+    assert unit_cost(team.units[0], simple_race) == t.Cost(mp=3, cp=2)
+
+
+def test_unit_points_formula(one_unit_army: Army, simple_race: RaceConfig) -> None:
+    # squad costs mp=3, so points = 3 + 0 + 0 + 3*0 = 3
+    assert unit_points(one_unit_army.units[0], simple_race) == 3
+
+
+def test_unit_points_ip_weighted(simple_race: RaceConfig) -> None:
+    # Build a unit where cost has ip=2 to verify the 3x weighting
+    # Manually set unit cost with ip component via the existing fixtures
+    team = upgrade_unit(
+        add_unit(Army(race="goblin", nick="T", units=()), "squad", simple_race),
+        ("squad", 0),
+        ("soldier", 0),
+        "elite_soldier",
+        simple_race,
+    )
+    # squad mp=3 + elite_soldier xp=1 → points = 3 + 0 + 1 + 0 = 4
+    assert unit_points(team.units[0], simple_race) == 4
+
+
+def test_unit_points_zero_cost(simple_race: RaceConfig) -> None:
+    # A unit with zero cost yields 0 points
+    zero_cost_unit = simple_race.units["squad"].model_copy(update={"cost": t.Cost()})
+    zero_cost_race = simple_race.model_copy(update={"units": {"squad": zero_cost_unit}})
+    team = add_unit(Army(race="goblin", nick="T", units=()), "squad", zero_cost_race)
+    assert unit_points(team.units[0], zero_cost_race) == 0
 
 
 def test_total_cost_empty_army(simple_race: RaceConfig) -> None:

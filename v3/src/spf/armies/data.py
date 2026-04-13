@@ -250,6 +250,30 @@ def available_equipment(
     ]
 
 
+def unit_cost(unit: ArmyUnit, race_config: RaceConfig) -> t.Cost:
+    """Return the total cost for a single unit.
+
+    Unit base cost + upgrade model costs + upgrade equipment costs.
+    """
+    cost = _add_cost(t.Cost(), unit.config.cost)
+    for i, team_model in enumerate(unit.models):
+        # A model is an upgrade when its name differs from the default.
+        if team_model.name != unit.config.models[i]:
+            cost = _add_cost(cost, team_model.config.cost)
+        for equip_key in team_model.upgrades:
+            cost = _add_cost(cost, race_config.equipment[equip_key].cost)
+    return cost
+
+
+def unit_points(unit: ArmyUnit, race_config: RaceConfig) -> int:
+    """Return the points value for a single unit.
+
+    Points = mp + cp + xp + 3 * ip of the unit's total cost.
+    """
+    cost = unit_cost(unit, race_config)
+    return cost.mp + cost.cp + cost.xp + 3 * cost.ip
+
+
 def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
     """Return the total cost.
 
@@ -257,13 +281,7 @@ def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
     """
     cost = t.Cost()
     for unit in army.units:
-        cost = _add_cost(cost, unit.config.cost)
-        for i, team_model in enumerate(unit.models):
-            # A model is an upgrade when its name differs from the default.
-            if team_model.name != unit.config.models[i]:
-                cost = _add_cost(cost, team_model.config.cost)
-            for equip_key in team_model.upgrades:
-                cost = _add_cost(cost, race_config.equipment[equip_key].cost)
+        cost = _add_cost(cost, unit_cost(unit, race_config))
     return cost
 
 
