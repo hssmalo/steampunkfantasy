@@ -1199,7 +1199,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [equipments.clockwork_shield.unit_special]
-"Improved Resistance (2)" = "Unit base gains damage resistance 1"
+"Protection" = "Unit base gains damage resistance 1"
 
 
 [equipments.clockwork_shield_free]
@@ -1208,7 +1208,7 @@ race = "ork"
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
 [equipments.clockwork_shield_free.unit_special]
-"Improved Resistance (2)" = "Unit base gains damage resistance 1"
+"Protection" = "Unit base gains damage resistance 1"
 
 [equipments.clockwork_shield_free.assault]
 deflection.add = [1, 0, 0, 0]

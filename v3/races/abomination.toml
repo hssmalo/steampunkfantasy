@@ -22,7 +22,7 @@ movement_order = ["-", "-", "flee"]
 [units.abomination_infantry.special]
 "Take Cover" = "[still][-2]"
 "Terror" = "[Range=1][d6]"
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog) hexes. If given additional tentacle weapons, they fire simultainiusly with other weapons on regular Fire order, not Fire(b) order"
+"Tentacle" = "If given additional tentacle weapons, they fire simultainiusly with other weapons on regular Fire(s) order, not Fire(b) order"
 
 [units.abomination_infantry.orders.fire]
 still = [["Fire(b)", "Fire"], ["Fire", "Fire(b)"], ["-", "Load(2)"], ["-", "Aim"]]
@@ -117,7 +117,7 @@ movement_order = ["-", "-", "flee"]
 [units.giant_frog_riders.special]
 "Resistance" = "Poison [4]"
 "Terror" = "[range=1][d8]"
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
+
 
 
 [units.giant_frog_riders.orders.fire]
@@ -156,7 +156,7 @@ fire_order = "Normal"
 [units.hippopotamus_riders.special]
 "Resistance" = "Poison [6]"
 "Fire Order" = "Fire(mm) fires multipuropose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
-"To Hit" = "Double to-hit bonuses and penalties for movement speed, both for you and the target"
+
 
 [units.hippopotamus_riders.orders.fire]
 still = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
@@ -217,8 +217,7 @@ cost.ip = 6
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.squ.special]
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
+
 
 [units.squ.orders.movement]
 slow = [
@@ -337,8 +336,6 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.frost88.special]
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
-"To Hit" = "Double to hit bonuses and penalties for movement, both your own and the enemies"
 "Fire Order" = "Fire(g) fires the main gun, while Fire(fr) fires frost ray. Track ammo only for main gun"
 
 
@@ -472,6 +469,11 @@ equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
 equipments = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
+[models.abomination_infantry.special]
+"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog) hexes. "
+
+
+
 [models.abomination_infantry.assault]
 strength = [1, 1, 1, 1]
 strength_die = "6+"
@@ -479,10 +481,11 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-	"Cunning Assault[1 for 2]",
-	"+100\\% strength and deflections versus shaken units",
-]
+
+[models.abomination_infantry.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Cunning Assault" = "[1 for 2]"
+
 
 [models.hippopotamus_riders]
 name = "Hippopotamus Riders"
@@ -491,6 +494,9 @@ equipment_limit = ["Independent:∞"]
 equipments = ["multipurpose_mortar", "oversized_musket"]
 type = ["Bio", "Walking", "Amphibian"]
 
+[models.hippopotamus_riders.special]
+"To Hit" = "Double to-hit bonuses and penalties for movement speed, both for you and the target"
+
 [models.hippopotamus_riders.assault]
 strength = [12, 6, 3, 3]
 strength_die = "6+"
@@ -498,7 +504,13 @@ deflection = [2, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
-special = ["+100\\% strength and deflections versus shaken units"]
+
+
+[models.hippopotamus_riders.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
+
+
+
 
 [models.horror]
 name = "Horror"
@@ -514,7 +526,9 @@ deflection = [2, 0, 0, 0]
 deflection_die = "4+"
 damage = "d6"
 ap = 2
-special = ["+100\\% strength and deflections versus shaken units"]
+
+[models.horror.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
 
 [models.robot_crab]
 name = "Robot Crab"
@@ -530,10 +544,12 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 0
-special = [
-	"Cunning Assault[1 for 1]",
-	"+100\\% strength and deflections versus shaken units",
-]
+
+
+
+[models.robot_crab.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Cunning Assault" = "[1 for 1]"
 
 
 [models.squ]
@@ -543,6 +559,9 @@ equipments = ["confution_gas_launcher"]
 equipment_limit = ["Independent:∞", "Mechanical Tentacles:2"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
+[models.squ.special]
+"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+
 [models.squ.assault]
 strength = [12, 1, 1, 1]
 strength_die = "6+"
@@ -550,7 +569,10 @@ deflection = [6, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["+100\\% strength and deflections versus shaken units"]
+
+[models.squ.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
+
 
 
 [models.frost88]
@@ -560,6 +582,11 @@ equipments = ["twin_frost_ray", "main_gun"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
+[models.frost88.special]
+"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
+"To Hit" = "Double to hit bonuses and penalties for movement, both your own and the enemies"
+
+
 [models.frost88.assault]
 strength = [10, 1, 1, 1]
 strength_die = "6+"
@@ -567,7 +594,9 @@ deflection = [8, 2, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["+100\\% strength and deflections versus shaken units"]
+
+[models.frost88.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
 
 
 [models.elite_abomination_infantry]
@@ -578,10 +607,10 @@ equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:8"]
 equipments = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = "abomination_infantry"
-special = [
-	"good shot: +1 to hit",
-	"All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack",
-]
+
+[models.elite_abomination_infantry.special]
+"To Hit" = "good shot: +1 to hit"
+"Vulnerability" ="All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack"
 
 [models.elite_abomination_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -590,10 +619,10 @@ deflection = [2, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-	"Cunning Assault[1 for 2]",
-	"+100\\% strength and deflections versus shaken units",
-]
+
+[models.elite_abomination_infantry.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Cunning Assault" = "[1 for 2]"
 
 
 [models.giant_frog_rider]
@@ -603,6 +632,10 @@ equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
 equipments = ["frog_spit", "mechanical_melee_contraption"]
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
 
+
+[models.giant_frog_rider.special]
+"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+
 [models.giant_frog_rider.assault]
 strength = [4, 1, 1, 1]
 strength_die = "6+"
@@ -610,11 +643,11 @@ deflection = [4, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
-special = [
-	"poison[4]",
-	"Cunning Assault[1 for 3]",
-	"+100\\% strength and deflections versus shaken units",
-]
+
+[models.giant_frog_rider.assault.special]
+	"Damage" = "Poison[4]"
+	"Cunning Assault" = "[1 for 3]"
+	"Bonus" = "+100\\% strength and deflections versus shaken units"
 
 
 [equipments]
@@ -660,9 +693,9 @@ strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
-special.append = [
-	"If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears.",
-]
+
+[equipments.tentacle_craclespears.assault.special]
+	"Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
 
 
 [equipments.tentacle_axes]
@@ -681,7 +714,10 @@ name = "Tentacle Shield"
 race = "abomination"
 cost.cp = 2
 requires = [["Tentacles:1"], ["type:Infantry"]]
-special = ["Unit gain [3, 0, 0, 0] in armor. Do not stack"]
+
+[equipments.tentacle_shield.unit_special]
+
+"Protection" = "Unit gain [3, 0, 0, 0] in armor. Do not stack"
 
 [equipments.tentacle_shield.assault]
 
@@ -694,7 +730,9 @@ name = "Frog Cavalry Armor"
 race = "abomination"
 cost.cp = 2
 requires = [["type:Frog"]]
-special = ["Unit gain [4, 3, 3, 0] in armor."]
+
+[equipments.frog_armor.unit_special]
+"Protection" = "Unit gain [4, 3, 3, 0] in armor."
 
 
 [equipments.fog_grenade_mortar]
@@ -806,7 +844,9 @@ special = ["Gear Disruption[5+]"]
 [equipments.mechanical_melee_contraption]
 name = "Mechanical Melee Contraption"
 race = "abomination"
-special = [
-	"Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+",
-]
 requires = []
+
+
+[equipments.mechanical_melee_contraption.assault.special]
+
+	"Improvement" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"

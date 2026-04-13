@@ -67,13 +67,15 @@ type UnitSpecial = Literal[
     "Movement",
     "Pet",
     "Improved Resistance",
-    "Improved Resistance (2)"
+    "Protection",
+    "Tentacle"
 ]
 type ModelSpecial = Literal[
     "To Hit",
     "To Hit (2)",
     "Not Yet Dead",
-    
+    "Fog",
+    "Vulnerability" 
     
 ]
 
@@ -85,7 +87,9 @@ type AssaultSpecial = Literal[
     "Angle",
     "Pre-Assault Retreat",
     "Damage",
-    "Damage on Deflect"
+    "Damage on Deflect",
+    "Bonus",
+    "Improvement"
 ]
     
 type ModelType = Literal[
