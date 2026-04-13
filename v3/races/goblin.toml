@@ -440,7 +440,7 @@ damage = "d6-2"
 ap = 1
 
 [models.mechanical_fire_bird.assault.special]
-"GA vet ikke 1" = "Enemy hit at least once is set on fire"
+"Damage" = "Enemy hit at least once is set on fire"
 
 
 [models.elite_goblin_infantry]
@@ -454,8 +454,7 @@ replaces = "goblin_infantry"
 
 [models.elite_goblin_infantry.special]
 "To Hit" = "+3 to hit with thrown weapons"
-"GA vet ikke 1" = "+1 to pre-assault retreat (per elite in unit)"
-"GA vet ikke 2" = "If unit contains at least one elite, gain Psycic resistance[1]"
+"Improved Resistance" = "If unit contains at least one elite, gain Psycic resistance[1]"
 
 [models.elite_goblin_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -467,6 +466,7 @@ ap = 2
 
 [models.elite_goblin_infantry.assault.special]
 "Cunning Assault" = "[1 for 1]"
+"Pre-Assault Retreat" = "+1 to pre-assault retreat (per elite in unit)"
 
 [equipments]
 
@@ -585,6 +585,7 @@ deflection_die.replace = "6+"
 
 [equipments.poison_dagger.assault.special]
 # GA: Er dette samme effekt som orkenes Poison spikes?
+# Ja. De burde kanskje ha samme navn
 "Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
 
 
@@ -622,8 +623,11 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipments.grenadier.model_special]
 # GA: er dette model eller unit special?
-"GA vet ikke 1" = "For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
-"GA vet ikke 2" = "Get +1 to hit for thrown weapons"
+# HSS: model special :)
+"To Hit 2" = "Get +1 to hit for thrown weapons"
+
+[equipments.grenadier.unit_special]
+"Fire Order" = "For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
 
 [equipments.archer]
 name = "Archer spesialization"
@@ -633,6 +637,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipments.archer.unit_special]
 # GA: er dette model eller unit special?
+# Hss: Best som unit special ja
 "Fire Order" = "For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit"
 
 

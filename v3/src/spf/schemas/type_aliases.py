@@ -85,8 +85,7 @@ type ModelSpecial = Literal[
     "Not Yet Dead",
     "Fog",
     "Vulnerability",
-    "GA vet ikke 1",
-    "GA vet ikke 2",
+    "Fire"
 ]
 
 type AssaultSpecial = Literal[
@@ -103,8 +102,6 @@ type AssaultSpecial = Literal[
     "Bonus",
     "Improvement",
     "Overrun",
-    "GA vet ikke 1",
-    "GA vet ikke 2",
 ]
 
 type ModelType = Literal[
