@@ -103,6 +103,7 @@ type AssaultSpecial = Literal[
     "Bonus",
     "Improvement",
     "Overrun",
+    "GA vet ikke",
 ]
 
 type ModelType = Literal[

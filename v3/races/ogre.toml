@@ -137,8 +137,45 @@ movement_order = ["-", "-", "flee"]
 "Evation" = "[4+]"
 
 [units.pet_panther.orders.movement]
-still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"], ["Follow", "Follow", "Follow"]]
-slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["A+360°", "chase", "chase"], ["Follow", "Follow", "Follow"]]
+still = [
+	[
+		"360°",
+		"360°",
+		"360°",
+	],
+	[
+		"A+360°",
+		"F",
+		"360°",
+	],
+	[
+		"Follow",
+		"Follow",
+		"Follow",
+	],
+]
+slow = [
+	[
+		"360°",
+		"F",
+		"360°",
+	],
+	[
+		"360°",
+		"B",
+		"360°",
+	],
+	[
+		"A+360°",
+		"chase",
+		"chase",
+	],
+	[
+		"Follow",
+		"Follow",
+		"Follow",
+	],
+]
 fast = [["chase", "chase", "chase"], ["360°", "F", "B"], ["Follow", "Follow", "Follow"]]
 
 [units.pet_panther.damage_tables]
@@ -656,7 +693,7 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-special = []
+
 
 [models.ogre_robot]
 name = "Ogre Robot"
@@ -672,7 +709,6 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-2"
 ap = 2
-special = []
 
 
 [models.pet_panther]
@@ -689,7 +725,6 @@ deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6"
 ap = 1
-special = []
 
 
 [models.ogre_assault_scout]
@@ -706,7 +741,6 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-special = []
 
 
 [models.ogre_scout_engineer]
@@ -717,11 +751,11 @@ replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["gear_pistol", "ogre_helbard_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
-special = [
-	"May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones each time",
-	"Repair[2, other, 1st healing]",
-	"Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units",
-]
+
+[models.ogre_scout_engineer.unit_special]
+# GA: Check category
+"Hans Sverre's favorite rule" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones each time"
+"Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_scout_engineer.assault]
 strength = [6, 2, 1, 1]
@@ -730,7 +764,6 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-special = []
 
 
 [models.drone_swarm]
@@ -747,7 +780,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d4-2"
 ap = 0
-special = ["Pre Assault escape: 4+"]
+
+[models.drone_swarm.assault.special]
+# GA: ["Pre Assault escape: 4+"] Is that different?
+"Pre-Assault Retreat" = "4+"
 
 [models.repair_drone]
 name = "Repair Drone"
@@ -763,7 +799,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d4-2"
 ap = 0
-special = ["Pre Assault escape: 4+"]
+
+[models.repair_drone.assault.special]
+# GA: ["Pre Assault escape: 4+"] Is that different?
+"Pre-Assault Retreat" = "4+"
 
 
 [models.medic_drone]
@@ -780,7 +819,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d4-2"
 ap = 0
-special = ["Pre Assault escape: 4+"]
+
+[models.medic_drone.assault.special]
+# GA: ["Pre Assault escape: 4+"] Is that different?
+"Pre-Assault Retreat" = "4+"
 
 
 [models.healing_drone]
@@ -797,7 +839,10 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d4-2"
 ap = 0
-special = ["Pre Assault escape: 4+"]
+
+[models.healing_drone.assault.special]
+# GA: ["Pre Assault escape: 4+"] Is that different?
+"Pre-Assault Retreat" = "4+"
 
 
 [models.main_engine]
@@ -814,10 +859,9 @@ deflection = [9, 6, 3, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-special = [
-	"If after all assault, a wagon the engine is towing cannot enter the hex it should, the wagon is detached from the engine and cannot move",
-]
 
+[models.main_engine.assault.special]
+"GA vet ikke" = "If after all assault, a wagon the engine is towing cannot enter the hex it should, the wagon is detached from the engine and cannot move"
 
 [models.artillery_wagon]
 name = "Artillery Wagon"
@@ -825,7 +869,9 @@ race = "ogre"
 equipment_limit = ["Independent:∞"]
 equipments = ["ogre_artillery"]
 type = ["Mechanical", "Towed", "Drone"]
-special = ["Need command: -2 to hit if unit is not connected to a main engine"]
+
+[models.artillery_wagon.special]
+"To Hit" = "Need command: -2 to hit if unit is not connected to a main engine"
 
 [models.artillery_wagon.assault]
 strength = [9, 9, 9, 6]
@@ -834,9 +880,9 @@ deflection = [9, 9, 9, 6]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-special = [
-	"If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead",
-]
+
+[models.artillery_wagon.assault.special]
+"GA vet ikke" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
 
 [models.broadside_wagon]
@@ -853,9 +899,9 @@ deflection = [9, 9, 9, 6]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-special = [
-	"If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead",
-]
+
+[models.broadside_wagon.assault.special]
+"GA vet ikke" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
 
 [models.elite_ogre_infantry]
@@ -866,7 +912,9 @@ cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
-special = ["Good shot: +1 to hit"]
+
+[models.elite_ogre_infantry.special]
+"To Hit" = "Good shot: +1 to hit"
 
 [models.elite_ogre_infantry.assault]
 strength = [4, 2, 1, 1]
@@ -875,7 +923,7 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-special = []
+
 
 [models.elite_ogre_robot]
 name = "Elite Ogre Robot"
@@ -885,7 +933,9 @@ cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
-special = ["Good shot: +1 to hit"]
+
+[models.elite_ogre_robot.special]
+"To Hit" = "Good shot: +1 to hit"
 
 [models.elite_ogre_robot.assault]
 strength = [2, 1, 1, 1]
@@ -894,7 +944,6 @@ deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-special = []
 
 
 [models.ogre_medic]
@@ -905,7 +954,10 @@ cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Medic"]
-special = ["Healing[1, any, 1st healing]"]
+
+[models.ogre_medic.unit_special]
+# GA: Does this need to be on both model and unit?
+"Heal" = "Healing[1, any, 1st healing]"
 
 [models.ogre_medic.assault]
 strength = [3, 2, 1, 1]
@@ -914,7 +966,9 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-special = ["Cunning Assault[1 for 2]"]
+
+[models.ogre_medic.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 
 [models.ogre_engineer]
@@ -925,11 +979,11 @@ cost.xp = 2
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipments = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
-special = [
-	"May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones per model each time",
-	"Repair[2, other, 1st healing]",
-	"Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units",
-]
+
+[models.ogre_engineer.unit_special]
+# GA: Check category
+"Hans Sverre's favorite rule" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones per model each time"
+"Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_engineer.assault]
 strength = [3, 2, 1, 1]
@@ -938,7 +992,9 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-special = ["Cunning Assault[1 for 2]"]
+
+[models.ogre_engineer.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 
 [equipments]
@@ -970,7 +1026,6 @@ range = 4
 angle = [true, true, true, true]
 damage = "d8-2"
 ap = 2
-special = []
 
 
 [equipments.drone_supply]
@@ -978,7 +1033,10 @@ name = "Drone Supply"
 race = "ogre"
 cost.ip = 1
 requires = [["Independent:1"], ["type:Carrier"]]
-special = ["Gives a supply of 3 {{\\it drone swarm}} units which this model carries"]
+
+[equipments.drone_supply.unit_special]
+# GA: Check category
+"Hans Sverre's favorite rule" = "Gives a supply of 3 {{\\it drone swarm}} units which this model carries"
 
 
 [equipments.ogre_gun]
@@ -991,7 +1049,6 @@ range = 3
 angle = [true, false, false, false]
 damage = "d8+2 if penetrating all armor"
 ap = 5
-special = []
 
 
 [equipments.ogre_artillery]
@@ -1021,7 +1078,6 @@ range = 4
 angle = [true, true, true, true]
 damage = "d8"
 ap = 2
-special = []
 
 
 [equipments.ogre_broadside]
@@ -1034,7 +1090,6 @@ range = 4
 angle = ["-", "x4", "x4", "-"]
 damage = "d8-2"
 ap = 2
-special = []
 
 
 [equipments.fancy_arquebus]
@@ -1048,7 +1103,6 @@ range = 3
 angle = [true, true, true, true]
 damage = "d8+2"
 ap = 4
-special = []
 
 
 [equipments.gear_pistol]
@@ -1061,7 +1115,6 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = []
 
 
 [equipments.fancy_gear_pistol]
@@ -1099,10 +1152,8 @@ name = "Ogre Helbard"
 race = "ogre"
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.ogre_helbard_free.assault]
-special.append = [
-	"+1 assault strength per enemy model in assault (forward direction only)",
-]
+[equipments.ogre_helbard_free.assault.special]
+"GA vet ikke" = "+1 assault strength per enemy model in assault (forward direction only)"
 
 
 [equipments.ogre_helbard]
@@ -1111,11 +1162,8 @@ race = "ogre"
 cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.ogre_helbard.assault]
-special.append = [
-	"+1 assault strength per enemy model in assault (forward direction only)",
-]
-
+[equipments.ogre_helbard.assault.special]
+"GA vet ikke" = "+1 assault strength per enemy model in assault (forward direction only)"
 
 [equipments.fancy_ogre_helbard]
 name = "Fancy Ogre Helbard with integrated fancy pistol"
@@ -1123,10 +1171,8 @@ race = "ogre"
 model_cost.cp = 4
 requires = [["Hands:2"], ["type:Scout", "type:Scout"], ["type:Elite"]]
 
-[equipments.fancy_ogre_helbard.assault]
-special.append = [
-	"+1 assault strength and deflection per enemy model in assault (forward direction only)",
-]
+[equipments.fancy_ogre_helbard.assault.special]
+"GA vet ikke" = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
 
 [equipments.fancy_ogre_helbard.range]
 range = 3
