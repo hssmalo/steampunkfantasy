@@ -584,8 +584,6 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [equipments.poison_dagger.assault.special]
-# GA: Er dette samme effekt som orkenes Poison spikes?
-# Ja. De burde kanskje ha samme navn
 "Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
 
 
@@ -622,8 +620,6 @@ cost.xp = 2
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipments.grenadier.model_special]
-# GA: er dette model eller unit special?
-# HSS: model special :)
 "To Hit (2)" = "Get +1 to hit for thrown weapons"
 
 [equipments.grenadier.unit_special]
@@ -636,8 +632,6 @@ cost.xp = 2
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipments.archer.unit_special]
-# GA: er dette model eller unit special?
-# Hss: Best som unit special ja
 "Fire Order" = "For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit"
 
 
