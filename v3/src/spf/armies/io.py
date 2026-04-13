@@ -4,8 +4,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-from rich.table import Table
-
 from spf.armies.data import Army, ArmyModel, ArmyUnit, total_cost, validate_team
 from spf.config import config
 from spf.console import stdout
@@ -56,21 +54,16 @@ def load_army(army_name: str, tournament: str | None = None) -> Army:
 
 
 def print_army(army: Army, cfg: RaceConfig) -> None:
-    """Pretty-print an army to the console using rich."""
-    stdout.rule(f"{army.nick} \u2014 {cfg.races[army.race].name} Army")
+    """Pretty-print an army to the console."""
+    stdout.print(f"[bold]{army.nick}[/] ({cfg.races[army.race].name})\n")
     for unit in army.units:
-        table = Table(title=f"Unit: {unit.config.name}", show_header=True)
-        table.add_column("Model")
-        table.add_column("Equipment")
+        stdout.print(f"- {unit.config.name}", highlight=False)
         for model in unit.models:
-            upgrades = ", ".join([*model.config.equipment, *model.upgrades])
-            table.add_row(model.name, upgrades)
-        stdout.print(table)
+            all_equipment = [*model.config.equipment, *model.upgrades]
+            equip_str = f" ({', '.join(all_equipment)})" if all_equipment else ""
+            stdout.print(f"  - {model.name}{equip_str}", highlight=False)
     cost = total_cost(army, cfg)
-    stdout.print(
-        f"[dim]Total cost:[/]  MP={cost.mp}  CP={cost.cp}  XP={cost.xp}  IP={cost.ip}",
-        highlight=False,
-    )
+    stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
 
 def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
