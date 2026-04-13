@@ -15,12 +15,12 @@ from spf.schemas.race import RaceConfig
 
 def list_armies() -> list[Path]:
     """List all army files."""
-    return sorted(config.paths.armies.glob("*.json"))
+    return sorted(config.paths.armies.rglob("*.json"))
 
 
-def save_army(army: Army, army_name: str) -> None:
+def save_army(army: Army, army_name: str, tournament: str | None = None) -> None:
     """Serialize army to JSON at config.paths.armies / {army_name}.json."""
-    path = config.paths.armies / f"{army_name}.json"
+    path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     data: dict[str, Any] = {
         "race": army.race,
@@ -38,9 +38,9 @@ def save_army(army: Army, army_name: str) -> None:
     path.write_text(json.dumps(data, indent=2))
 
 
-def load_army(army_name: str) -> Army:
+def load_army(army_name: str, tournament: str | None = None) -> Army:
     """Deserialize army from JSON at config.paths.armies / {army_name}.json."""
-    path = config.paths.armies / f"{army_name}.json"
+    path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     if not path.exists():
         msg = f"No army file found for '{army_name}' at {path}"
         raise FileNotFoundError(msg)

@@ -216,7 +216,7 @@ TOML keys like `default.slow = ["-", "-", "Flee"]` create a nested dict structur
 After migrating, run the full check:
 
 ```bash
-uv run spf show-race <race>
+uv run spf race show <race>
 uv run pytest
 uv run pyright
 uv run ruff check src/

@@ -386,7 +386,10 @@ deflection = [0, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = ["Cunning Assault[1 for 1]", "Pre assault retreat: 6+"]
+
+[models.goblin_infantry.assault.special]
+"Cunning Assault" = "[1 for 1]"
+"Pre-Assault Retreat" = "6+"
 
 
 [models.goblin_infantry_carrier]
@@ -403,7 +406,6 @@ deflection = [12, 0, 0, 0]
 deflection_die = "6+"
 damage = "d4-2"
 ap = 2
-special = []
 
 
 [models.heavy_carrier]
@@ -420,7 +422,6 @@ deflection = [16, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = []
 
 
 [models.mechanical_fire_bird]
@@ -437,7 +438,9 @@ deflection = [16, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 1
-special = ["Enemy hit at least once is set on fire"]
+
+[models.mechanical_fire_bird.assault.special]
+"GA vet ikke 1" = "Enemy hit at least once is set on fire"
 
 
 [models.elite_goblin_infantry]
@@ -448,11 +451,11 @@ equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2"]
 equipments = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = "goblin_infantry"
-special = [
-	"good shot: +3 to hit with thrown weapons",
-	"+1 to pre-assault retreat (per elite in unit)",
-	"If unit contains at least one elite, gain Psycic resistance[1]",
-]
+
+[models.elite_goblin_infantry.special]
+"To Hit" = "+3 to hit with thrown weapons"
+"GA vet ikke 1" = "+1 to pre-assault retreat (per elite in unit)"
+"GA vet ikke 2" = "If unit contains at least one elite, gain Psycic resistance[1]"
 
 [models.elite_goblin_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -461,7 +464,9 @@ deflection = [4, 0, 0, 0]
 deflection_die = "6+"
 damage = "d4-2"
 ap = 2
-special = ["Cunning Assault[1 for 1]"]
+
+[models.elite_goblin_infantry.assault.special]
+"Cunning Assault" = "[1 for 1]"
 
 [equipments]
 
@@ -496,7 +501,6 @@ name = "Clockwork Wings"
 race = "goblin"
 cost.cp = 6
 requires = [["type:Infantry"], ["Independent:1"]]
-special = []
 
 [equipments.clockwork_wings.assault]
 strength.add = [1, 0, 0, 0]
@@ -578,7 +582,10 @@ requires = [["Independent:1"], ["type:Infantry"]]
 [equipments.poison_dagger.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
-special.append = ["Each deflected hit gives enemy poison[4]"]
+
+[equipments.poison_dagger.assault.special]
+# GA: Er dette samme effekt som orkenes Poison spikes?
+"Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
 
 
 [equipments.combat_screw_driver]
@@ -590,9 +597,9 @@ requires = [["Independent:1"], ["type:Infantry"]]
 [equipments.combat_screw_driver.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
-special.append = [
-	"Cunning Deflection: Each deflected hit counts as hits for cunning assault purposes.",
-]
+
+[equipments.combat_screw_driver.assault.special]
+"Cunning Deflection" = "Each deflected hit counts as hits for cunning assault purposes."
 
 
 [equipments.goblin_grenade]
@@ -612,20 +619,21 @@ name = "Grenadier specialization"
 race = "goblin"
 cost.xp = 2
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
-special = [
-	"For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)",
-	"Get +1 to hit for thrown weapons",
-]
 
+[equipments.grenadier.model_special]
+# GA: er dette model eller unit special?
+"GA vet ikke 1" = "For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
+"GA vet ikke 2" = "Get +1 to hit for thrown weapons"
 
 [equipments.archer]
 name = "Archer spesialization"
 race = "goblin"
 cost.xp = 2
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
-special = [
-	"For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit",
-]
+
+[equipments.archer.unit_special]
+# GA: er dette model eller unit special?
+"Fire Order" = "For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit"
 
 
 [equipments.acid_grenade]

@@ -2,14 +2,14 @@
 
 This file provides guidance to AI agents when working with code in this repository.
 
-> **Note:** Currently only abomination, goblin, ogre, and ork are working TOML files. The other races use a legacy format.
+> **Note:** Currently only abomination, goblin, ogre, and ork have working TOML files. The other races use a legacy format.
 
 ## Commands
 
 ```bash
 # Run CLI
 uv run spf --help
-uv run spf race show goblin
+uv run spf race show goblin  # Validates TOML file, here races/goblin.toml
 
 # Run tests
 uv run pytest
