@@ -107,7 +107,9 @@ def empty_army() -> Army:
 
 @pytest.fixture
 def one_unit_army(simple_race: RaceConfig) -> Army:
-    return add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", simple_race)
+    return add_unit(
+        Army(race="goblin", nick="Test Army", units=()), "squad", simple_race
+    )
 
 
 @pytest.fixture
@@ -117,7 +119,9 @@ def goblin_army() -> RaceConfig:
 
 @pytest.fixture
 def goblin_team(goblin_army: RaceConfig) -> Army:
-    return add_unit(Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", goblin_army)
+    return add_unit(
+        Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", goblin_army
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -271,14 +275,20 @@ def test_add_unit_appends_to_team(simple_race: RaceConfig) -> None:
 
 
 def test_add_unit_default_models_match_config(simple_race: RaceConfig) -> None:
-    team = add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", simple_race)
+    team = add_unit(
+        Army(race="goblin", nick="Test Army", units=()), "squad", simple_race
+    )
     unit = team.units[0]
     assert tuple(m.name for m in unit.models) == tuple(unit.config.models)
 
 
 def test_add_unit_unknown_name_raises(simple_race: RaceConfig) -> None:
     with pytest.raises(ValueError, match="Unknown unit"):
-        add_unit(Army(race="goblin", nick="Test Army", units=()), "does_not_exist", simple_race)
+        add_unit(
+            Army(race="goblin", nick="Test Army", units=()),
+            "does_not_exist",
+            simple_race,
+        )
 
 
 # ---------------------------------------------------------------------------

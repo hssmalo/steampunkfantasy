@@ -98,7 +98,9 @@ def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
 
 def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
     race_config = get_race("goblin")
-    army = add_unit(Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", race_config)
+    army = add_unit(
+        Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", race_config
+    )
     save_army(army, "goblin-warband")
     loaded = load_army("goblin-warband")
     assert loaded.race == army.race

@@ -46,9 +46,7 @@ class AssaultConfig(StrictModel):
     deflection_die: t.DieResult
     damage: t.Die
     ap: t.ArmorPenetration
-
     special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
-    # special: list[str] = Field(default_factory=list)
 
 
 class ModelConfig(StrictModel):
@@ -63,7 +61,6 @@ class ModelConfig(StrictModel):
     replaces: t.ModelName | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
-    # special: list[str] = Field(default_factory=list)
 
 
 class Stacker[T](StrictModel):
@@ -79,7 +76,6 @@ class EquipmentAssaultConfig(StrictModel):
     deflection_die: Stacker[t.DieResult] | None = None
     damage: Stacker[t.Die] | None = None
     ap: Stacker[t.ArmorPenetration] | None = None
-    # special: Stacker[list[str]] | None = None
     special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
 
 
@@ -102,7 +98,6 @@ class EquipmentConfig(StrictModel):
     range: EquipmentRangeConfig | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     model_special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
-    # special: list[str] = Field(default_factory=list)
     orders_gained: OrdersConfig | None = None
 
 
