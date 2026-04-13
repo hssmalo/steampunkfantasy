@@ -59,13 +59,13 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Soldier",
                 equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
-                equipments=[],
+                equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
                 cost=None,
             ),
         },
-        equipments={
+        equipment={
             "sword": EquipmentConfig(
                 race="goblin",
                 name="Sword",

@@ -1,6 +1,6 @@
 ## Context
 
-`spf race` currently exposes `list` (all races overview) and `show` (full configaroo dump). The TOML schema already has `units`, `models`, and `equipments` dicts inside `RaceConfig`, and each entry has a `name` field and an optional `cost: Cost | None`. The `Cost` model lives in `src/spf/schemas/type_aliases.py`.
+`spf race` currently exposes `list` (all races overview) and `show` (full configaroo dump). The TOML schema already has `units`, `models`, and `equipment` dicts inside `RaceConfig`, and each entry has a `name` field and an optional `cost: Cost | None`. The `Cost` model lives in `src/spf/schemas/type_aliases.py`.
 
 The CLI entry point is `src/spf/frontends/cli/race.py`; new commands are registered in `add_commands()`.
 

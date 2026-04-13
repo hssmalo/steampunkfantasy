@@ -890,7 +890,7 @@ psychic = ["9+: Unit shaken"]
 name = "Dwarf Infantry"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["musket"]
+equipment = ["musket"]
 type = ["infantry", "walks", "bio"]
 special = []
 
@@ -909,7 +909,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Dwarf Brother in Arms"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["musket"]
+equipment = ["musket"]
 type = ["infantry", "walks", "bio", "brotherinarms", "elite"]
 special = []
 
@@ -928,7 +928,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Dwarf Elite Infantry"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["musket"]
+equipment = ["musket"]
 type = ["elite", "infantry", "walks", "bio"]
 cost.xp = 1
 replaces = ["dwarf_infantry"]
@@ -952,7 +952,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Dwarf Elite SteamPowerArmor"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["heavy_musket_free"]
+equipment = ["heavy_musket_free"]
 type = ["elite", "steampowerarmor", "walks", "bio"]
 cost.xp = 6
 replaces = ["steampowerarmor"]
@@ -977,7 +977,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Dwarf Battle Medic"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["heavy_musket_free"]
+equipment = ["heavy_musket_free"]
 type = ["elite", "steampowerarmor", "walks", "bio"]
 cost.xp = 6
 replaces = ["steampowerarmor"]
@@ -1002,7 +1002,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Dwarf Steampowerarmor Engineer"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["heavy_musket_free"]
+equipment = ["heavy_musket_free"]
 type = ["steampowerarmor", "walks", "bio"]
 cost.xp = 6
 replaces = ["steampowerarmor"]
@@ -1022,7 +1022,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Dwarf Engineer"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["musket"]
+equipment = ["musket"]
 type = ["infantry", "walks", "bio"]
 cost.xp = 4
 replaces = ["dwarf_infantry"]
@@ -1043,7 +1043,7 @@ special = ["cunning assault[1 for 2]"]
 name = "SteamPowerArmor"
 race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
-equipments = ["heavy_musket_free"]
+equipment = ["heavy_musket_free"]
 type = ["steampowerarmor", "mechanical", "walks", "bio"]
 special = []
 
@@ -1062,7 +1062,7 @@ special = ["cunning assault[1 for 2]"]
 name = "Mini Zeppelin"
 race = "dwarf"
 equipment_limit = ["independent:∞"]
-equipments = ["axethrower_machine", "poison_gas_grenade"]
+equipment = ["axethrower_machine", "poison_gas_grenade"]
 type = ["open_vehicle", "floats", "bio"]
 special = []
 
@@ -1080,7 +1080,7 @@ special = []
 name = "Engineer Mini Zeppelin"
 race = "dwarf"
 equipment_limit = ["independent:∞"]
-equipments = ["axethrower_machine", "poison_gas_grenade"]
+equipment = ["axethrower_machine", "poison_gas_grenade"]
 type = ["open_vehicle", "floats", "bio"]
 replaces = ["mini_zeppelin"]
 cost.xp = 2
@@ -1118,7 +1118,7 @@ special = ["May not assault ground units"]
 name = "Tamed Balrog"
 race = "dwarf"
 equipment_limit = []
-equipments = ["flaming_whip"]
+equipment = ["flaming_whip"]
 type = ["monster", "walks", "bio"]
 special = []
 
@@ -1136,7 +1136,7 @@ special = ["Set on fire"]
 name = "GunBlasterWagon"
 race = "dwarf"
 equipment_limit = ["crew:1", "independent:∞"]
-equipments = ["broadside_guns"]
+equipment = ["broadside_guns"]
 type = ["mechanical", "bio_crew", "track", "vehicle"]
 special = []
 
@@ -1155,7 +1155,7 @@ special = []
 name = "dw42"
 race = "dwarf"
 equipment_limit = ["crew:1", "independent:∞"]
-equipments = ["tank_gun"]
+equipment = ["tank_gun"]
 type = ["mechanical", "bio_crew", "track", "vehicle"]
 special = []
 
@@ -1174,7 +1174,7 @@ special = []
 name = "Zap"
 race = "dwarf"
 equipment_limit = ["crew:1", "independent:∞"]
-equipments = ["array_of_heavy_muskets", "zap", "twin_fear_ray_free"]
+equipment = ["array_of_heavy_muskets", "zap", "twin_fear_ray_free"]
 type = ["mechanical", "bio_crew", "track", "vehicle"]
 special = []
 
@@ -1193,7 +1193,7 @@ special = []
 name = "Dwarf AT-gun"
 race = "dwarf"
 equipment_limit = ["training: 1", "independent:∞"]
-equipments = ["big_at_gun"]
+equipment = ["big_at_gun"]
 type = ["bio", "dragged", "open topp", "vehicle", "at_gun"]
 special = []
 
@@ -1212,7 +1212,7 @@ special = ["Is automatically destroyed if forced to retreat in an assault"]
 name = "Zeppelin"
 race = "dwarf"
 equipment_limit = ["independent:∞"]
-equipments = ["array_of_enhanced_heavy_muskets", "fear_ray", "zeppelin_gun"]
+equipment = ["array_of_enhanced_heavy_muskets", "fear_ray", "zeppelin_gun"]
 type = ["flying", "zeppelin"]
 special = []
 
@@ -1227,14 +1227,14 @@ ap = 2
 special = ["Can only assault flying enemies"]
 
 
-[equipments]
+[equipment]
 
-[dwarf.equipments.musket]
+[dwarf.equipment.musket]
 name = "Musket"
 race = "dwarf"
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.musket.range]
+[dwarf.equipment.musket.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1242,7 +1242,7 @@ ap = 2
 special = []
 
 
-[dwarf.equipments.industrial_small_arms]
+[dwarf.equipment.industrial_small_arms]
 name = "Industrial Small Arms production"
 race = "dwarf"
 cost.ip = 1
@@ -1250,64 +1250,64 @@ cost.cp = -3
 requires = [["type:infantry", "type:steampowerarmor"]]
 
 
-[dwarf.equipments.musket_with_springloaded_axe]
+[dwarf.equipment.musket_with_springloaded_axe]
 name = "Musket With Springloaded Axe"
 race = "dwarf"
 cost.cp = 2
 special = ["Gun automatically loaded after an assault"]
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.musket_with_springloaded_axe.range]
+[dwarf.equipment.musket_with_springloaded_axe.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 special = []
 
-[dwarf.equipments.musket_with_springloaded_axe.assault]
+[dwarf.equipment.musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
 damage.replace = "d6-2 + d6 psychic damage"
 
 
-[dwarf.equipments.musket_with_springloaded_axe.orders_gained.fire]
+[dwarf.equipment.musket_with_springloaded_axe.orders_gained.fire]
 slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
 
-[dwarf.equipments.double_barrled_musket_with_springloaded_axe]
+[dwarf.equipment.double_barrled_musket_with_springloaded_axe]
 name = "Doubled Barreled Musket With Springloaded Axe"
 race = "dwarf"
 cost.cp = 4
 special = ["Gun automatically loaded after an assault"]
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.double_barrled_musket_with_springloaded_axe.range]
+[dwarf.equipment.double_barrled_musket_with_springloaded_axe.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 special = ["Fire two shots (per model) for each shot"]
 
-[dwarf.equipments.double_barrled_musket_with_springloaded_axe.assault]
+[dwarf.equipment.double_barrled_musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
 damage.replace = "d6-2 + d6 psychic damage"
 
-[dwarf.equipments.double_barrled_musket_with_springloaded_axe.orders_gained.fire]
+[dwarf.equipment.double_barrled_musket_with_springloaded_axe.orders_gained.fire]
 slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
 
 
-[dwarf.equipments.blast_sticks]
+[dwarf.equipment.blast_sticks]
 name = "Blast Sticks"
 race = "dwarf"
 cost.cp = 2
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.blast_sticks.assault]
+[dwarf.equipment.blast_sticks.assault]
 deflection.add = [1, 1, 1, 1]
 deflection_die.replace = "4+"
 damage.replace = "d6+1"
 ap.replace = 5
 
 
-[dwarf.equipments.infantry_platform]
+[dwarf.equipment.infantry_platform]
 name = "Infantry Platform"
 race = "dwarf"
 cost.cp = 2
@@ -1317,33 +1317,33 @@ special = [
 ]
 
 
-[dwarf.equipments.springloaded_vehicle_assault_weapons]
+[dwarf.equipment.springloaded_vehicle_assault_weapons]
 name = "Springloaded Vehicle Assault Weapons"
 race = "dwarf"
 cost.cp = 4
 requires = [["independent:1"], ["type:vehicle"]]
 
-[dwarf.equipments.springloaded_vehicle_assault_weapons.assault]
+[dwarf.equipment.springloaded_vehicle_assault_weapons.assault]
 strength.add = [4, 2, 2, 0]
 deflection.add = [2, 1, 1, 0]
 deflection_die.replace = "4+"
 damage.replace = "d6-2 + d6 psychic damage"
 
 
-[dwarf.equipments.wheeled_shieldwall]
+[dwarf.equipment.wheeled_shieldwall]
 name = "Wheeled ShieldWall"
 race = "dwarf"
 cost.cp = 2
 requires = [["independent:1"], ["type:infantry"]]
 special = ['Unit gains [5,0,0,0] in armor']
 
-[dwarf.equipments.wheeled_shieldwall.assault]
+[dwarf.equipment.wheeled_shieldwall.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "4+"
 special.append = "-1 in assault strength (per model) if speed is not still. Don't get any armor bonus in assault"
 
 
-[dwarf.equipments.elite_crew]
+[dwarf.equipment.elite_crew]
 name = "Elite Crew"
 race = "dwarf"
 cost.xp = 4
@@ -1351,12 +1351,12 @@ requires = [["crew:1"], ["type:vehicle"]]
 special = ["Gains good shot: +1 to hit"]
 
 
-[dwarf.equipments.axethrower_machine]
+[dwarf.equipment.axethrower_machine]
 name = "AxeThrower Machine"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.axethrower_machine.range]
+[dwarf.equipment.axethrower_machine.range]
 range = 4
 angle = [true, true, false, false]
 damage = "d6-2"
@@ -1367,7 +1367,7 @@ special = [
 ]
 
 
-[dwarf.equipments.jet_pack]
+[dwarf.equipment.jet_pack]
 name = "Jet Pack"
 race = "dwarf"
 cost.cp = 2
@@ -1377,13 +1377,13 @@ special = [
 ]
 requires = [["independent:1"], ["type:steampowerarmor"]]
 
-[dwarf.equipments.superblaster]
+[dwarf.equipment.superblaster]
 name = "Super Blaster"
 race = "dwarf"
 model_cost.cp = 8
 requires = [["type: steampowerarmor"], ["type: elite"], ["hands:2"]]
 
-[dwarf.equipments.superblaster.range]
+[dwarf.equipment.superblaster.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6+2"
@@ -1391,20 +1391,20 @@ ap = 9
 special = []
 
 
-[dwarf.equipments.bigblaster]
+[dwarf.equipment.bigblaster]
 name = "Big Blaster"
 race = "dwarf"
 model_cost.cp = 4
 requires = [["type: infantry"], ["shared:1"]]
 
-[dwarf.equipments.bigblaster.range]
+[dwarf.equipment.bigblaster.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6+1"
 ap = 7
 special = ["Require atleast 2 alive models in unit to be used"]
 
-[dwarf.equipments.vest_of_life_support]
+[dwarf.equipment.vest_of_life_support]
 name = "Vest of Life Support"
 race = "dwarf"
 cost.cp = 2
@@ -1414,18 +1414,18 @@ special = [
 ]
 
 
-[dwarf.equipments.stabilizer]
+[dwarf.equipment.stabilizer]
 name = "Stabilizer"
 race = "dwarf"
 cost.cp = 4
 requires = [["type: infantry", "type:steampowerarmor"], ["independent:1"]]
 special = ["All guns gain Enhanced accurazy. +1 to hit"]
 
-[dwarf.equipments.stabilizer.orders_gained.fire]
+[dwarf.equipment.stabilizer.orders_gained.fire]
 slow = [["-", "aim"], ["aim", "-"]]
 
 
-[dwarf.equipments.trenchcoat_of_resistance]
+[dwarf.equipment.trenchcoat_of_resistance]
 name = "Trench Coat of Resistance"
 race = "dwarf"
 cost.cp = 1
@@ -1435,7 +1435,7 @@ special = [
     "Unit gains imunity to minor acid",
 ]
 
-[dwarf.equipments.brotherinarms_armor]
+[dwarf.equipment.brotherinarms_armor]
 name = "Brother in Arms Armor"
 race = "dwarf"
 cost.ip = 1
@@ -1448,13 +1448,13 @@ special = [
 ]
 
 
-[dwarf.equipments.steamblower]
+[dwarf.equipment.steamblower]
 name = "Steamblower"
 race = "dwarf"
 cost.cp = 4
 requires = [["type: steampowerarmor"], ["hands:2"]]
 
-[dwarf.equipments.steamblower.range]
+[dwarf.equipment.steamblower.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2+d4 crew damage"
@@ -1463,12 +1463,12 @@ special = [
     "Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4",
 ]
 
-[dwarf.equipments.poison_gas_grenade]
+[dwarf.equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
 race = "dwarf"
 requires = [["type: infantry"], ["independent: 1"]]
 
-[dwarf.equipments.poison_gas_grenade.range]
+[dwarf.equipment.poison_gas_grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "N.A"
@@ -1480,12 +1480,12 @@ special = [
 ]
 
 
-[dwarf.equipments.flaming_whip]
+[dwarf.equipment.flaming_whip]
 name = "Flaming Whip"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.flaming_whip.range]
+[dwarf.equipment.flaming_whip.range]
 range = 1
 angle = [true, true, false, false]
 damage = "N.A"
@@ -1493,12 +1493,12 @@ ap = 0
 special = ["Set on fire"]
 
 
-[dwarf.equipments.fear_ray_free]
+[dwarf.equipment.fear_ray_free]
 name = "Fear Ray"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.fear_ray_free.range]
+[dwarf.equipment.fear_ray_free.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6 Psychic damage"
@@ -1506,37 +1506,37 @@ ap = 0
 special = []
 
 
-[dwarf.equipments.twin_fear_ray_free]
+[dwarf.equipment.twin_fear_ray_free]
 name = "Twin Fear Ray"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.twin_fear_ray_free.range]
+[dwarf.equipment.twin_fear_ray_free.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6 Psychic damage"
 ap = 0
 special = ["Fire two times at same target"]
 
-[dwarf.equipments.fear_ray]
+[dwarf.equipment.fear_ray]
 name = "Fear Ray"
 race = "dwarf"
 cost.cp = 2
 requires = [["type: steampowerarmor"], ['hands: 2']]
 
-[dwarf.equipments.fear_ray.range]
+[dwarf.equipment.fear_ray.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6 psychic damage"
 ap = 0
 special = []
 
-[dwarf.equipments.zeppelin_gun]
+[dwarf.equipment.zeppelin_gun]
 name = "Zeppelin Gun"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.zeppelin_gun.range]
+[dwarf.equipment.zeppelin_gun.range]
 range = 5
 angle = [true, true, true, true]
 damage = "d6 +1 +(+3 if penetrating all armor)"
@@ -1544,12 +1544,12 @@ ap = 9
 special = []
 
 
-[dwarf.equipments.big_at_gun]
+[dwarf.equipment.big_at_gun]
 name = "Big AT-Gun"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.big_at_gun.range]
+[dwarf.equipment.big_at_gun.range]
 range = 6
 angle = [true, false, false, false]
 damage = "d6 +1 +(+3 if penetrating all armor)"
@@ -1557,12 +1557,12 @@ ap = 10
 special = []
 
 
-[dwarf.equipments.tank_gun]
+[dwarf.equipment.tank_gun]
 name = "Tank-Gun"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.tank_gun.range]
+[dwarf.equipment.tank_gun.range]
 range = 6
 angle = [true, false, false, false]
 damage = "d6 +1 +(+3 if penetrating all armor)"
@@ -1572,12 +1572,12 @@ special = [
 ]
 
 
-[dwarf.equipments.array_of_enhanced_heavy_muskets]
+[dwarf.equipment.array_of_enhanced_heavy_muskets]
 name = "Array of Enhanced Heavy Muskets"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.array_of_enhanced_heavy_muskets.range]
+[dwarf.equipment.array_of_enhanced_heavy_muskets.range]
 range = 6
 angle = ["x4", "x3", "x2", "0"]
 damage = "d6-1"
@@ -1585,37 +1585,37 @@ ap = 3
 special = []
 
 
-[dwarf.equipments.array_of_heavy_muskets]
+[dwarf.equipment.array_of_heavy_muskets]
 name = "Array of Heavy Muskets"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.array_of_heavy_muskets.range]
+[dwarf.equipment.array_of_heavy_muskets.range]
 range = 3
 angle = ["x4", "x3", "x2", "0"]
 damage = "d6-1"
 ap = 3
 special = []
 
-[dwarf.equipments.zap]
+[dwarf.equipment.zap]
 name = "Zap"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.zap.range]
+[dwarf.equipment.zap.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6+1"
 ap = 4
 special = []
 
-[dwarf.equipments.heavy_musket]
+[dwarf.equipment.heavy_musket]
 name = "Heavy Musket"
 race = "dwarf"
 cost.cp = 2
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.heavy_musket.range]
+[dwarf.equipment.heavy_musket.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1623,26 +1623,26 @@ ap = 3
 special = []
 
 
-[dwarf.equipments.enhanced_heavy_musket]
+[dwarf.equipment.enhanced_heavy_musket]
 name = "Enhanced Heavy Musket"
 race = "dwarf"
 cost.cp = 6
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.enhanced_heavy_musket.range]
+[dwarf.equipment.enhanced_heavy_musket.range]
 range = 6
 angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 special = []
 
-[dwarf.equipments.ultra_heavy_musket]
+[dwarf.equipment.ultra_heavy_musket]
 name = "Ultra Heavy Musket"
 race = "dwarf"
 cost.cp = 2
 requires = [["hands:2"], ["type:steampowerarmor"]]
 
-[dwarf.equipments.ultra_heavy_musket.range]
+[dwarf.equipment.ultra_heavy_musket.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6"
@@ -1650,13 +1650,13 @@ ap = 4
 special = []
 
 
-[dwarf.equipments.double_barrled_long_range_heavy_musket]
+[dwarf.equipment.double_barrled_long_range_heavy_musket]
 name = "Double Barreled Long_Range Heavy Musket"
 race = "dwarf"
 cost.cp = 2
 requires = [["hands:2"], ["type:steampowerarmor"]]
 
-[dwarf.equipments.double_barrled_long_range_heavy_musket.range]
+[dwarf.equipment.double_barrled_long_range_heavy_musket.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1664,13 +1664,13 @@ ap = 3
 special = ["Fire two shots per fire order per model"]
 
 
-[dwarf.equipments.multi_barrled_heavy_musket]
+[dwarf.equipment.multi_barrled_heavy_musket]
 name = "Multibarreled Heavy Musket"
 race = "dwarf"
 cost.cp = 2
 requires = [["hands:2"], ["type:steampowerarmor"]]
 
-[dwarf.equipments.multi_barrled_heavy_musket.range]
+[dwarf.equipment.multi_barrled_heavy_musket.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1678,23 +1678,23 @@ ap = 3
 special = ["Fire three shots per model"]
 
 
-[dwarf.equipments.rocket_jackhammer]
+[dwarf.equipment.rocket_jackhammer]
 name = "Rocket Jackhammer"
 race = "dwarf"
 model_cost.cp = 2
 requires = [["hands:2"], ["type:steampowerarmor"], ["type: elite"]]
 
-[dwarf.equipments.rocket_jackhammer.assault]
+[dwarf.equipment.rocket_jackhammer.assault]
 damage.replace = "d6 (+3 if penetrating all armor)"
 ap.replace = 8
 
 
-[dwarf.equipments.heavy_musket_free]
+[dwarf.equipment.heavy_musket_free]
 name = "Heavy Musket"
 race = "dwarf"
 requires = [["hands:2"], ["type:infantry"]]
 
-[dwarf.equipments.heavy_musket_free.range]
+[dwarf.equipment.heavy_musket_free.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1702,12 +1702,12 @@ ap = 3
 special = []
 
 
-[dwarf.equipments.broadside_guns]
+[dwarf.equipment.broadside_guns]
 name = "Broadside Guns"
 race = "dwarf"
 requires = []
 
-[dwarf.equipments.broadside_guns.range]
+[dwarf.equipment.broadside_guns.range]
 range = 3
 angle = ["0", "x2", "x2", "0"]
 damage = "d6+2"
@@ -1717,7 +1717,7 @@ special = [
 ]
 
 
-[dwarf.equipments.hide]
+[dwarf.equipment.hide]
 name = "Hide"
 race = "dwarf"
 cost.xp = 8
@@ -1735,6 +1735,6 @@ special = [
 ]
 
 
-[dwarf.equipments.hide.orders_gained.orders.movement]
+[dwarf.equipment.hide.orders_gained.orders.movement]
 still = [["Reveal", "-", "-"]]
 slow = [["Hide[hill]", "-", "B[rest]"]]

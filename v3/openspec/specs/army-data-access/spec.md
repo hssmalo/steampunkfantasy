@@ -46,7 +46,7 @@ The system SHALL provide a function to retrieve all models belonging to a given 
 The system SHALL provide a function to retrieve all equipment belonging to a given army.
 
 #### Scenario: Valid army name returns equipment mapping
-- **WHEN** `get_equipments(army_name)` is called with a valid army name
+- **WHEN** `get_equipment(army_name)` is called with a valid army name
 - **THEN** it returns a `dict[str, EquipmentConfig]` keyed by equipment identifier, containing only equipment whose `race` field matches `army_name`
 
 ### Requirement: Get full army configuration

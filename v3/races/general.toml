@@ -5,7 +5,7 @@
     special = []
 
 
-# Templates for units, models and equipments
+# Templates for units, models and equipment
 [races]
 
     [races.template]
@@ -42,7 +42,7 @@
     name = "Template"
     race = "template"
     equipment_limit = ["hands:2", "independent:∞"]
-    equipments = []
+    equipment = []
     type = ["bio", "template", "walks"]
     special = []
 

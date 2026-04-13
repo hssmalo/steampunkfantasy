@@ -24,12 +24,12 @@ Validate and show one race:
 uv run spf race show goblin
 ```
 
-You can also filter down to specific units, models, or equipments:
+You can also filter down to specific units, models, or equipment:
 
 ```console
 uv run spf race show goblin units.goblin_infantry
 uv run spf race show goblin models.goblin_infantry
-uv run spf race show goblin equipments.goblin_bow
+uv run spf race show goblin equipment.goblin_bow
 ```
 
 There are also commands for a high-level overview of a race:

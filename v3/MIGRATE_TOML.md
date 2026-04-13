@@ -4,18 +4,18 @@ This guide covers the changes needed to bring a legacy race TOML file into the c
 
 ## 1. Remove the race namespace prefix
 
-Legacy files nest all sections under `[race.units.*]`, `[race.models.*]`, and `[race.equipments.*]`. The schema expects top-level tables.
+Legacy files nest all sections under `[race.units.*]`, `[race.models.*]`, and `[race.equipment.*]`. The schema expects top-level tables.
 
 ```toml
 # Before
 [ork.units.troll]
 [ork.models.grunt]
-[ork.equipments.ork_musket]
+[ork.equipment.ork_musket]
 
 # After
 [units.troll]
 [models.grunt]
-[equipments.ork_musket]
+[equipment.ork_musket]
 ```
 
 This is a mechanical find-and-replace across the whole file.
@@ -116,7 +116,7 @@ Valid holders: `Hands`, `Independent`, `Shared`, `Grenades`, `Mechanical Tentacl
 
 Note: `type:X` values in `requires` must also match `ModelType` casing (see step 5).
 
-## 7. Fix the `race` field casing in models and equipments
+## 7. Fix the `race` field casing in models and equipment
 
 The `race` field must be the lowercase race name.
 
@@ -137,11 +137,11 @@ race = "ork"
 shaken = ""
 ```
 
-### `equipments` on models
-`ModelConfig.equipments` is required. Models with no equipment need:
+### `equipment` on models
+`ModelConfig.equipment` is required. Models with no equipment need:
 
 ```toml
-equipments = []
+equipment = []
 ```
 
 ### `equipment_limit` on models

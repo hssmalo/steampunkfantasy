@@ -1010,7 +1010,7 @@ crew = ["as regular damage"]
 name = "Gnome Infantry"
 race = "gnome"
 equipment_limit = ["hands:2", "reserve:1", "independent:∞"]
-equipments = ["gnome_gun", "light_smg"]
+equipment = ["gnome_gun", "light_smg"]
 type = ["bio", "infantry", "walks"]
 special = []
 
@@ -1028,7 +1028,7 @@ special = ["Cunning assault[1 for 2]"]
 name = "Quad Bike"
 race = "gnome"
 equipment_limit = ["hands: 2", "reserve:1", "independent:∞"]
-equipments = ["light_smg"]
+equipment = ["light_smg"]
 type = ["bio", "quad_bike", "infantry", "wheeled"]
 special = []
 
@@ -1046,7 +1046,7 @@ special = []
 name = "Assault Bot"
 race = "gnome"
 equipment_limit = ["independent:∞"]
-equipments = []
+equipment = []
 type = ["drone", "walks"]
 special = ["Can only enter play through mortars or drop weapons"]
 
@@ -1064,7 +1064,7 @@ special = ["Cunning assault[1 for 2]"]
 name = "Mechanical Rat"
 race = "gnome"
 equipment_limit = ["independent:∞"]
-equipments = []
+equipment = []
 type = ["drone", "walks"]
 special = ["Can only enter play through tinkerer ability"]
 
@@ -1081,7 +1081,7 @@ special = ["Cunning assault[1 for 2]"]
 name = "Ballista Tractor Mark I"
 race = "gnome"
 equipment_limit = ["ballista:1", "vehicle_mortar:1", "independent:∞"]
-equipments = ["ballista", "assault_bot_mortar_vehicle"]
+equipment = ["ballista", "assault_bot_mortar_vehicle"]
 type = ["mechanical, bio_crew", "vehicles", "wheeled"]
 special = []
 
@@ -1098,7 +1098,7 @@ special = []
 name = "Ballista Tractor Mark II"
 race = "gnome"
 equipment_limit = ["ballista:1", "independent:∞"]
-equipments = ["enhanced_ballista"]
+equipment = ["enhanced_ballista"]
 type = ["mechanical, bio_crew", "vehicles", "wheeled"]
 special = []
 
@@ -1116,7 +1116,7 @@ special = []
 name = "Ballista Tractor Mark III"
 race = "gnome"
 equipment_limit = ["ballista:1", "array:1", "independent:∞"]
-equipments = ["ballista", "array_of_heavy_muskets"]
+equipment = ["ballista", "array_of_heavy_muskets"]
 type = ["mechanical, bio_crew", "vehicles", "wheeled"]
 special = []
 
@@ -1133,7 +1133,7 @@ special = []
 name = "Ballista"
 race = "gnome"
 equipment_limit = ["ballista:1", "independent:∞"]
-equipments = ["ballista"]
+equipment = ["ballista"]
 type = ["construct", "towed"]
 special = []
 
@@ -1151,7 +1151,7 @@ special = ["Cunning assault[1 for 2]"]
 name = "Gnome Motorcycle"
 race = "gnome"
 equipment_limit = ["motorcycle_weapon:1", "independent:∞"]
-equipments = ["splintbombgrenade_launcher"]
+equipment = ["splintbombgrenade_launcher"]
 type = ["bio", "motorcycle", "wheel"]
 special = []
 
@@ -1173,7 +1173,7 @@ equipment_limit = [
     "helicopter_side:1",
     "independent: ∞",
 ]
-equipments = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
+equipment = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
 type = ["bio_crew", "helicopter", "flying"]
 special = ["Quick fix: Repair[1, self, 1st healing phase]"]
 
@@ -1195,7 +1195,7 @@ equipment_limit = [
     "helicopter_side:2",
     "independent: ∞",
 ]
-equipments = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
+equipment = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
 type = ["bio_crew", "helicopter", "flying", "tinkerer"]
 special = [
     "Improved Quick fix: Repair[2, self, 1st healing phase]",
@@ -1220,7 +1220,7 @@ special = []
 name = "Gnome Elite Infantry"
 race = "gnome"
 equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
-equipments = ["gnome_gun", "smg", "poison_dart", "acid_ballon", "grinder"]
+equipment = ["gnome_gun", "smg", "poison_dart", "acid_ballon", "grinder"]
 type = ["bio", "elite", "infantry", "walks"]
 replaces = ["gnome_infantry"]
 special = [
@@ -1242,7 +1242,7 @@ special = ["Cunning assault[1 for 2]"]
 name = "Gnome Tinkerer"
 race = "gnome"
 equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
-equipments = ["tinkerer_gun", "light_smg"]
+equipment = ["tinkerer_gun", "light_smg"]
 type = ["bio", "infantry", "tinkerer", "walks"]
 cost.xp = 4
 cost.cp = -3
@@ -1265,7 +1265,7 @@ special = ["Cunning assault[1 for 2]"]
 name = "QuadBike Tinkerer"
 race = "gnome"
 equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
-equipments = ["light_smg"]
+equipment = ["light_smg"]
 type = ["bio", "infantry", "tinkerer", "walks"]
 cost.xp = 4
 cost.cp = -3
@@ -1284,14 +1284,14 @@ ap = 2
 special = ["Cunning assault[1 for 2]"]
 
 
-[equipments]
+[equipment]
 
-[gnome.equipments.gnome_gun]
+[gnome.equipment.gnome_gun]
 name = "Gnome Gun"
 race = "gnome"
 requires = [["hands:2"]]
 
-[gnome.equipments.gnome_gun.range]
+[gnome.equipment.gnome_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1299,12 +1299,12 @@ ap = 2
 special = []
 
 
-[gnome.equipments.ballista]
+[gnome.equipment.ballista]
 name = "Ballista"
 race = "gnome"
 requires = [["ballista:1"]]
 
-[gnome.equipments.ballista.range]
+[gnome.equipment.ballista.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6 (+2 if penetrating all armor)"
@@ -1312,12 +1312,12 @@ ap = 8
 special = []
 
 
-[gnome.equipments.enhanced_ballista]
+[gnome.equipment.enhanced_ballista]
 name = "Enhanced Ballista"
 race = "gnome"
 requires = [["ballista:1"]]
 
-[gnome.equipments.enhanced_ballista.range]
+[gnome.equipment.enhanced_ballista.range]
 range = 5
 angle = [true, false, false, false]
 damage = "d6 (+3 if penetrating all armor)"
@@ -1325,12 +1325,12 @@ ap = 8
 special = ["Enhanced Accurazy: +1 to hit"]
 
 
-[gnome.equipments.array_of_heavy_muskets]
+[gnome.equipment.array_of_heavy_muskets]
 name = "Array of Heavy Muskets"
 race = "gnome"
 requires = [["array:1"]]
 
-[gnome.equipments.array_of_heavy_muskets.range]
+[gnome.equipment.array_of_heavy_muskets.range]
 range = 3
 angle = ["x4", "x3", "x3", "-"]
 damage = "d6 -1"
@@ -1338,13 +1338,13 @@ ap = 3
 special = []
 
 
-[gnome.equipments.acid_splash]
+[gnome.equipment.acid_splash]
 name = "Acid Splash"
 race = "gnome"
 cost.cp = 2
 requires = [["hands:2"], ["type:infantry"]]
 
-[gnome.equipments.acid_splash.range]
+[gnome.equipment.acid_splash.range]
 range = 4
 angle = [true, true, true, true]
 damage = "-"
@@ -1352,12 +1352,12 @@ ap = 0
 special = ["No regular damage", "Minor Acid"]
 
 
-[gnome.equipments.tinkerer_gun]
+[gnome.equipment.tinkerer_gun]
 name = "Gnome Gun"
 race = "gnome"
 requires = [["hands:2"], ["type:infantry"], ["type:tinkerer"]]
 
-[gnome.equipments.tinkerer_gun.range]
+[gnome.equipment.tinkerer_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6"
@@ -1365,12 +1365,12 @@ ap = 2
 special = []
 
 
-[gnome.equipments.light_smg]
+[gnome.equipment.light_smg]
 name = "Light SMG"
 race = "gnome"
 requires = [["reserve:1"]]
 
-[gnome.equipments.light_smg.range]
+[gnome.equipment.light_smg.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d4-2"
@@ -1381,12 +1381,12 @@ special = [
 ]
 
 
-[gnome.equipments.smg]
+[gnome.equipment.smg]
 name = "SMG"
 race = "gnome"
 requires = [["reserve:1"]]
 
-[gnome.equipments.smg.range]
+[gnome.equipment.smg.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-3"
@@ -1398,12 +1398,12 @@ special = [
 ]
 
 
-[gnome.equipments.poison_dart]
+[gnome.equipment.poison_dart]
 name = "Poison Dart"
 race = "gnome"
 requires = [["reserve:1"]]
 
-[gnome.equipments.poison_dart.range]
+[gnome.equipment.poison_dart.range]
 range = 2
 angle = [true, true, true, true]
 damage = "-"
@@ -1415,12 +1415,12 @@ special = [
 ]
 
 
-[gnome.equipments.acid_ballon]
+[gnome.equipment.acid_ballon]
 name = "Acid Ballon"
 race = "gnome"
 requires = [["reserve:1"]]
 
-[gnome.equipments.acid_ballon.range]
+[gnome.equipment.acid_ballon.range]
 range = 1
 angle = [true, true, true, true]
 damage = "-"
@@ -1432,12 +1432,12 @@ special = [
 ]
 
 
-[gnome.equipments.grinder]
+[gnome.equipment.grinder]
 name = "Grinder"
 race = "gnome"
 requires = [["reserve:1"]]
 
-[gnome.equipments.grinder.range]
+[gnome.equipment.grinder.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d8-2"
@@ -1448,21 +1448,21 @@ special = [
 ]
 
 
-[gnome.equipments.mechanical_owl]
+[gnome.equipment.mechanical_owl]
 name = "Mechanical Owl"
 race = "gnome"
 cost.cp = 2
 special = ["Gives all weapons the enhanced accurazy (+1 to hit) trait"]
 requires = [["type:infantry"], ["independent:1"]]
 
-[gnome.equipments.frost_ray]
+[gnome.equipment.frost_ray]
 race = "gnome"
 name = "Frost Ray"
 cost.cp = 4
 requires = [["type:infantry"], ["hands:2"]]
 
 
-[gnome.equipments.frost_ray.range]
+[gnome.equipment.frost_ray.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d4-2+d6 psychic damage + d4 crew damage"
@@ -1471,18 +1471,18 @@ special = [
     "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step",
 ]
 
-[gnome.equipments.frost_ray.orders_gained.fire]
+[gnome.equipment.frost_ray.orders_gained.fire]
 still = [["-", "amplified fire"]]
 
 
-[gnome.equipments.green_gas_launcher]
+[gnome.equipment.green_gas_launcher]
 race = "gnome"
 name = "Green Gas Launcer"
 model_cost.cp = 2
 requires = [["type:tinkerer", "type:elite"], ["type:infantry"], ["reserve:1"]]
 
 
-[gnome.equipments.green_gas_launcher.range]
+[gnome.equipment.green_gas_launcher.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6 psychic damage + d4 crew damage"
@@ -1495,13 +1495,13 @@ special = [
 ]
 
 
-[gnome.equipments.helicopter_mounted_green_gas_launcher]
+[gnome.equipment.helicopter_mounted_green_gas_launcher]
 race = "gnome"
 name = "Helicopter mounted Green Gas Launcer"
 cost.cp = 2
 requires = [["type: tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
-[gnome.equipments.helicopter_mounted_green_gas_launcher.range]
+[gnome.equipment.helicopter_mounted_green_gas_launcher.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6 psychic damage + d4 crew damage"
@@ -1509,13 +1509,13 @@ ap = 0
 special = ["Choose one hex within range: Area(5+)", "Poison[4]"]
 
 
-[gnome.equipments.experimental_plasma_gun]
+[gnome.equipment.experimental_plasma_gun]
 race = "gnome"
 name = "Experimental Plasma Gun"
 model_cost.cp = 4
 requires = [["type:tinkerer"], ["type:infantry"], ["hands:2"]]
 
-[gnome.equipments.experimental_plasma_gun.range]
+[gnome.equipment.experimental_plasma_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d12-3"
@@ -1526,13 +1526,13 @@ special = [
 ]
 
 
-[gnome.equipments.helicopter_mounted_experimental_plasma_gun]
+[gnome.equipment.helicopter_mounted_experimental_plasma_gun]
 race = "gnome"
 name = "Helicopter Mounted Experimental Plasma Gun"
 cost.cp = 4
 requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
-[gnome.equipments.helicopter_mounted_experimental_plasma_gun.range]
+[gnome.equipment.helicopter_mounted_experimental_plasma_gun.range]
 range = 6
 angle = [true, true, true, false]
 damage = "d12-3"
@@ -1544,12 +1544,12 @@ special = [
 ]
 
 
-[gnome.equipments.helicopter_gatling_gun]
+[gnome.equipment.helicopter_gatling_gun]
 race = "gnome"
 name = "Helicopter Gatling Gun"
 requires = [["type:helicopter"], ["helicopter_front:1"]]
 
-[gnome.equipments.helicopter_gatling_gun.range]
+[gnome.equipment.helicopter_gatling_gun.range]
 range = 3
 angle = [true, false, false, false]
 damage = "d6-1"
@@ -1561,12 +1561,12 @@ special = [
 ]
 
 
-[gnome.equipments.acidic_napalm_bomb]
+[gnome.equipment.acidic_napalm_bomb]
 race = "gnome"
 name = "Acidic Napalm Bomb"
 requires = [["type:helicopter"], ["helicopter_drop:1"]]
 
-[gnome.equipments.acidic_napalm_bomb.range]
+[gnome.equipment.acidic_napalm_bomb.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"
@@ -1577,13 +1577,13 @@ special = [
 ]
 
 
-[gnome.equipments.extra_acidic_napalm_bomb]
+[gnome.equipment.extra_acidic_napalm_bomb]
 race = "gnome"
 name = "(extra) Acidic Napalm Bomb"
 cost.cp = 1
 requires = [["type:helicopter"], ["helicopter_drop:1"]]
 
-[gnome.equipments.extra_acidic_napalm_bomb.range]
+[gnome.equipment.extra_acidic_napalm_bomb.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"
@@ -1594,13 +1594,13 @@ special = [
 ]
 
 
-[gnome.equipments.major_acidic_napalm_bomb]
+[gnome.equipment.major_acidic_napalm_bomb]
 race = "gnome"
 name = "Major Acidic Napalm Bomb"
 cost.cp = 6
 requires = [["type:helicopter"], ["helicopter_drop:1"]]
 
-[gnome.equipments.major_acidic_napalm_bomb.range]
+[gnome.equipment.major_acidic_napalm_bomb.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"
@@ -1611,7 +1611,7 @@ special = [
 ]
 
 
-[gnome.equipments.assault_bot_mortar]
+[gnome.equipment.assault_bot_mortar]
 race = "gnome"
 name = "Assault Bot Mortar"
 cost.cp = 6
@@ -1622,7 +1622,7 @@ special = [
 ]
 
 
-[gnome.equipments.assault_bot_mortar_vehicle]
+[gnome.equipment.assault_bot_mortar_vehicle]
 race = "gnome"
 name = "Assault Bot Mortar"
 requires = [["type:infantry"], ["hands:2"]]
@@ -1632,7 +1632,7 @@ special = [
 ]
 
 
-[gnome.equipments.assault_bot_dropper]
+[gnome.equipment.assault_bot_dropper]
 race = "gnome"
 name = "Assault Bot Dropper"
 cost.cp = 2
@@ -1643,7 +1643,7 @@ special = [
     "Limited Ammo[3]",
 ]
 
-[gnome.equipments.improved_medical_armor]
+[gnome.equipment.improved_medical_armor]
 race = "gnome"
 name = "Improved Medical Armor"
 cost.cp = 2
@@ -1652,7 +1652,7 @@ special = [
     "Unit gain Fire resistance 6, Poison Resistance 6, minor acid resistance[4+] and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
 ]
 
-[gnome.equipments.medical_armor]
+[gnome.equipment.medical_armor]
 race = "gnome"
 name = "Medical Armor"
 cost.cp = 1
@@ -1662,7 +1662,7 @@ special = [
 ]
 
 
-[gnome.equipments.plasma_shield_generator]
+[gnome.equipment.plasma_shield_generator]
 race = "gnome"
 name = "Plasma Shield Generator"
 cost.cp = 2
@@ -1673,14 +1673,14 @@ special = [
 ]
 
 
-[gnome.equipments.plasma_shield_generator.assault]
+[gnome.equipment.plasma_shield_generator.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
 special.append = "Any enemy which is hit atleast once in assault is set on fire"
 
 
-[gnome.equipments.quadbike_lance]
+[gnome.equipment.quadbike_lance]
 race = "gnome"
 name = "Quadbike Lance"
 cost.cp = 2
@@ -1688,11 +1688,11 @@ requires = [["type:quadbike"], ["hands:2"]]
 special = []
 
 
-[gnome.equipments.quadbike_lance.assault]
+[gnome.equipment.quadbike_lance.assault]
 strength.add = [1, 0, 0, 0]
 
 
-[gnome.equipments.improved_plasma_shield_generator]
+[gnome.equipment.improved_plasma_shield_generator]
 race = "gnome"
 name = "Improved Plasma Shield Generator"
 cost.cp = 4
@@ -1703,19 +1703,19 @@ special = [
 ]
 
 
-[gnome.equipments.improved_plasma_shield_generator.assault]
+[gnome.equipment.improved_plasma_shield_generator.assault]
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
 
 special.append = "Any enemy which is hit atleast once in assault is set on fire"
 
 
-[gnome.equipments.splintbombgrenade_launcher]
+[gnome.equipment.splintbombgrenade_launcher]
 race = "gnome"
 name = "Splintbombgrenade_launcher"
 requires = [["type:motorcycle"], ["motorcycle:1"]]
 
-[gnome.equipments.splintbombgrenade_launcher.range]
+[gnome.equipment.splintbombgrenade_launcher.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6"
@@ -1725,13 +1725,13 @@ special = [
 ]
 
 
-[gnome.equipments.experimental_guided_missile]
+[gnome.equipment.experimental_guided_missile]
 race = "gnome"
 name = "Experimental guided missile"
 cost.cp = 2
 requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
-[gnome.equipments.experimental_guided_missile.range]
+[gnome.equipment.experimental_guided_missile.range]
 range = "d4+d12"
 angle = [true, true, true, true]
 damage = "d6 + d6 psychic"
@@ -1745,13 +1745,13 @@ special = [
 ]
 
 
-[gnome.equipments.helicopter_mounted_experimental_nailgun]
+[gnome.equipment.helicopter_mounted_experimental_nailgun]
 race = "gnome"
 name = "Helicopter Mounted Experimental Nail Gun"
 cost.cp = 2
 requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
-[gnome.equipments.helicopter_mounted_experimental_nailgun.range]
+[gnome.equipment.helicopter_mounted_experimental_nailgun.range]
 range = 4
 angle = [true, true, true, false]
 damage = "d6-2"
@@ -1764,13 +1764,13 @@ special = [
 ]
 
 
-[gnome.equipments.experimental_nailgun]
+[gnome.equipment.experimental_nailgun]
 race = "gnome"
 name = "Experimental Nail Gun"
 cost.cp = 2
 requires = [["type:tinkerer"], ["type:infantry"]]
 
-[gnome.equipments.experimental_nailgun.range]
+[gnome.equipment.experimental_nailgun.range]
 range = 4
 angle = [true, true, true, false]
 damage = "d6-2"
@@ -1782,13 +1782,13 @@ special = [
 ]
 
 
-[gnome.equipments.experimental_death_ray]
+[gnome.equipment.experimental_death_ray]
 race = "gnome"
 name = "Experimental Death Ray"
 cost.cp = 4
 requires = [["type:tinkerer"], ["type:infantry"]]
 
-[gnome.equipments.experimental_death_ray.range]
+[gnome.equipment.experimental_death_ray.range]
 range = 8
 angle = [true, true, true, false]
 damage = "d6-6"

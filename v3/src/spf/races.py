@@ -43,6 +43,6 @@ def get_models(race: t.RaceName) -> dict[t.ModelName, r.ModelConfig]:
     return get_race(race).models
 
 
-def get_equipments(race: t.RaceName) -> dict[t.EquipmentName, r.EquipmentConfig]:
+def get_equipment(race: t.RaceName) -> dict[t.EquipmentName, r.EquipmentConfig]:
     """Get all equipment belonging to the given race."""
-    return get_race(race).equipments
+    return get_race(race).equipment

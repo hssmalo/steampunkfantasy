@@ -1107,7 +1107,7 @@ psychic = ["3+: Unit Shaken"]
 name = "Mechanical Red Dragon"
 race = "darkelf"
 equipment_limit = []
-equipments = ["fire_breath"]
+equipment = ["fire_breath"]
 type = ["Flying", "Mechanical", "Walks"]
 special = [
     "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing",
@@ -1128,7 +1128,7 @@ special = []
 name = "Mechanical Iron Dragon"
 race = "darkelf"
 equipment_limit = []
-equipments = ["acid_breath", "shrapnell_breath"]
+equipment = ["acid_breath", "shrapnell_breath"]
 type = ["Flying", "Mechanical", "Walks"]
 special = [
     "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing",
@@ -1149,7 +1149,7 @@ special = []
 name = "Queen YY"
 race = "darkelf"
 equipment_limit = ["Independent:∞"]
-equipments = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
+equipment = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
 type = ["Bio crew", "Vehicle", "Mechanical", "Track"]
 special = [
     "Excellent shot: +2 to hit",
@@ -1176,7 +1176,7 @@ special = [
 name = "Queen XY"
 race = "darkelf"
 equipment_limit = ["Independent:∞"]
-equipments = []
+equipment = []
 type = ["Bio crew", "Vehicle", "Mechanical", "Track"]
 special = [
     "If you have the order {{\\it release}} as an firing option, you may place a poison cload[12] during any movement phase in any the hex you are in, including contested hexes for assaults",
@@ -1200,7 +1200,7 @@ special = [
 name = "Elite Mechanical Cavalry"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
-equipments = ["smg_free", "crossbow_free"]
+equipment = ["smg_free", "crossbow_free"]
 type = ["Bio", "Elite", "Cavalry", "Walks"]
 special = [
     "Good Shot: +1 to hit",
@@ -1222,7 +1222,7 @@ special = []
 name = "Nightmare Mechanical Cavalry"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
-equipments = ["smg_free", "nightmare_breath"]
+equipment = ["smg_free", "nightmare_breath"]
 type = ["Bio", "Elite", "Cavalry", "Walks"]
 special = ["Good Shot: +1 to hit"]
 
@@ -1240,7 +1240,7 @@ special = []
 name = "Mechanical Assault Spider"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
-equipments = ["head_gun"]
+equipment = ["head_gun"]
 type = ["Mechanical", "Droid", "Walks"]
 special = ["Good Shot: +1 to hit"]
 
@@ -1258,7 +1258,7 @@ special = ["Poison[6][1 for 2]"]
 name = "Mechanical Scorpion"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
-equipments = ["tail_gatling_gun"]
+equipment = ["tail_gatling_gun"]
 type = ["Mechanical", "Droid", "Walks"]
 special = []
 
@@ -1275,7 +1275,7 @@ special = ["Poison[12][1 for 2], Fear[8]"]
 name = "Dark Elf Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walks"]
 special = []
 
@@ -1293,7 +1293,7 @@ special = ["Cunning assault[1 for 2]", "Reroll all success in assault while craw
 name = "Multicultural Infantry"
 race = "darkelf"
 equipment_limit = []
-equipments = ["collar"]
+equipment = ["collar"]
 type = ["Bio", "Infantry", "Walks"]
 special = []
 
@@ -1311,7 +1311,7 @@ special = []
 name = "Dark Elf Officer"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["tesla_whip", "remote_control", "officers_mask"]
+equipment = ["tesla_whip", "remote_control", "officers_mask"]
 type = ["Bio", "Infantry", "Walks", "Elite", "Officer"]
 special = [
     "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3.",
@@ -1336,7 +1336,7 @@ special = [
 name = "DarkElf Elite Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Elite", "Infantry", "Walks"]
 replaces = ["darkelf_infantry"]
 special = [
@@ -1362,7 +1362,7 @@ special = [
 name = "Assassin"
 race = "darkelf"
 equipment_limit = ["shared: 1", "Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle", "hide_free"]
+equipment = ["rifle", "hide_free"]
 type = ["Bio", "Elite", "Infantry", "Walks"]
 special = ["Good Shot: +1 to hit"]
 
@@ -1384,7 +1384,7 @@ special = [
 name = "Roboprosthetic Assassin"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle", "hide_free"]
+equipment = ["rifle", "hide_free"]
 type = ["Bio", "Elite", "Infantry", "Roboprosthetic", "Walks"]
 special = ["Good Shot: +1 to hit"]
 
@@ -1406,7 +1406,7 @@ special = [
 name = "Scout"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walks"]
 special = []
 
@@ -1424,7 +1424,7 @@ special = ["Cunning assault[1 for 1]", "Reroll all success in assault while craw
 name = "Dark Elf Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walks", "Roboprosthetic"]
 special = []
 
@@ -1442,7 +1442,7 @@ special = ["Cunning assault[1 for 2]", "Reroll all success in assault while craw
 name = "Elite Roboprosthetic DarkElf"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Elite", "Infantry", "Walks", "Roboprosthetic"]
 replaces = ["roboprosthetic_darkelf"]
 special = [
@@ -1464,14 +1464,14 @@ special = [
 ]
 
 
-[equipments]
+[equipment]
 
-[darkelf.equipments.rifle]
+[darkelf.equipment.rifle]
 name = "Rifle"
 race = "darkelf"
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[darkelf.equipments.rifle.range]
+[darkelf.equipment.rifle.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1479,12 +1479,12 @@ ap = 2
 special = []
 
 
-[darkelf.equipments.head_gun]
+[darkelf.equipment.head_gun]
 name = "Head Gun"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.head_gun.range]
+[darkelf.equipment.head_gun.range]
 range = 3
 angle = [true, true, false, false]
 damage = "d6"
@@ -1492,17 +1492,17 @@ ap = 6
 special = ["Poison[6]"]
 
 
-[darkelf.equipments.tesla_whip]
+[darkelf.equipment.tesla_whip]
 name = "Tesla Whip"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.tesla_whip.assault]
+[darkelf.equipment.tesla_whip.assault]
 
 special.append = "Poison[4], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken. "
 
 
-[darkelf.equipments.remote_control]
+[darkelf.equipment.remote_control]
 name = "Remote control"
 race = "darkelf"
 requires = []
@@ -1512,7 +1512,7 @@ special = [
     "Note, neither this unit or the trainee units are imune to poison clouds",
 ]
 
-[darkelf.equipments.officers_mask]
+[darkelf.equipment.officers_mask]
 name = "Officer Mask"
 race = "darkelf"
 requires = []
@@ -1521,7 +1521,7 @@ special = [
 ]
 
 
-[darkelf.equipments.collar]
+[darkelf.equipment.collar]
 name = "Collar"
 race = "darkelf"
 requires = []
@@ -1531,12 +1531,12 @@ special = [
 ]
 
 
-[darkelf.equipments.tail_gatling_gun]
+[darkelf.equipment.tail_gatling_gun]
 name = "Tail Gatling Gun"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.tail_gatling_gun.range]
+[darkelf.equipment.tail_gatling_gun.range]
 range = 3
 angle = [true, false, false, false]
 damage = "d6 + d6 Psycic damage"
@@ -1550,12 +1550,12 @@ special = [
 ]
 
 
-[darkelf.equipments.heavy_rifle]
+[darkelf.equipment.heavy_rifle]
 name = "Heavy Rifle"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.heavy_rifle.range]
+[darkelf.equipment.heavy_rifle.range]
 range = 4
 angle = [true, true, false, false]
 damage = "d6-1"
@@ -1563,12 +1563,12 @@ ap = 3
 special = []
 
 
-[darkelf.equipments.acid_cannon]
+[darkelf.equipment.acid_cannon]
 name = "Acid Cannon"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.acid_cannon.range]
+[darkelf.equipment.acid_cannon.range]
 range = 4
 angle = [true, true, false, false]
 damage = "d6+d8 Psychic damage + d6 crew damage"
@@ -1578,7 +1578,7 @@ special = [
 ]
 
 
-[darkelf.equipments.mechanical_imp]
+[darkelf.equipment.mechanical_imp]
 name = "Mechanical Imp"
 race = "darkelf"
 cost.cp = 4
@@ -1589,13 +1589,13 @@ special = [
 ]
 
 
-[darkelf.equipments.smg]
+[darkelf.equipment.smg]
 name = "SMG"
 race = "darkelf"
 cost.cp = 1
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
-[darkelf.equipments.smg.range]
+[darkelf.equipment.smg.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-3"
@@ -1604,17 +1604,17 @@ special = [
     "Always treated as loaded. Fires two times (per model) each time it is fired",
 ]
 
-[darkelf.equipments.smg.orders_gained.fire]
+[darkelf.equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
 slow = [["Fire", "Fire"]]
 
 
-[darkelf.equipments.smg_free]
+[darkelf.equipment.smg_free]
 name = "SMG"
 race = "darkelf"
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[darkelf.equipments.smg_free.range]
+[darkelf.equipment.smg_free.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-3"
@@ -1624,13 +1624,13 @@ special = [
 ]
 
 
-[darkelf.equipments.crossbow]
+[darkelf.equipment.crossbow]
 name = "Crossbow"
 race = "darkelf"
 cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
-[darkelf.equipments.crossbow.range]
+[darkelf.equipment.crossbow.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1638,12 +1638,12 @@ ap = 2
 special = ["Poison[6], minor acid"]
 
 
-[darkelf.equipments.crossbow_free]
+[darkelf.equipment.crossbow_free]
 name = "Crossbow"
 race = "darkelf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
-[darkelf.equipments.crossbow_free.range]
+[darkelf.equipment.crossbow_free.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1651,13 +1651,13 @@ ap = 2
 special = ["Poison[6], minor acid"]
 
 
-[darkelf.equipments.enhanced_crossbow]
+[darkelf.equipment.enhanced_crossbow]
 name = "Enhanced Crossbow"
 race = "darkelf"
 model_cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"], ["type:Elite"]]
 
-[darkelf.equipments.enhanced_crossbow.range]
+[darkelf.equipment.enhanced_crossbow.range]
 range = 6
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1665,12 +1665,12 @@ ap = 2
 special = ["Poison[8], minor acid"]
 
 
-[darkelf.equipments.nightmare_breath]
+[darkelf.equipment.nightmare_breath]
 name = "Nightmare Breath"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.nightmare_breath.range]
+[darkelf.equipment.nightmare_breath.range]
 range = 2
 angle = [true, false, false, false]
 damage = "d8 crew damage"
@@ -1682,13 +1682,13 @@ special = [
 ]
 
 
-[darkelf.equipments.poison_gas_grenade]
+[darkelf.equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
 race = "darkelf"
 cost.cp = 1
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
-[darkelf.equipments.poison_gas_grenade.range]
+[darkelf.equipment.poison_gas_grenade.range]
 range = 2
 angle = [true, true, true, true]
 damage = "N.A."
@@ -1700,18 +1700,18 @@ special = [
 ]
 
 
-[darkelf.equipments.poison_gas_grenade.orders_gained.fire]
+[darkelf.equipment.poison_gas_grenade.orders_gained.fire]
 all = [["-", "Throw Gas Grenade"]]
 
 
-[darkelf.equipments.mortar1a]
+[darkelf.equipment.mortar1a]
 name = "Mortar 1A"
 race = "darkelf"
 cost.cp = 16
 cost.xp = 8
 requires = [["shared:1"], ["type:Infantry"]]
 
-[darkelf.equipments.mortar1a.range]
+[darkelf.equipment.mortar1a.range]
 range = 10
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1723,14 +1723,14 @@ special = [
 ]
 
 
-[darkelf.equipments.mortar11b]
+[darkelf.equipment.mortar11b]
 name = "Mortar 1.1B"
 race = "darkelf"
 cost.cp = 16
 cost.xp = 8
 requires = [["shared:1"], ["type:Infantry"]]
 
-[darkelf.equipments.mortar11b.range]
+[darkelf.equipment.mortar11b.range]
 range = 10
 angle = [true, true, true, true]
 damage = "N.A"
@@ -1742,41 +1742,41 @@ special = [
 ]
 
 
-[darkelf.equipments.poison_claws]
+[darkelf.equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
 cost.cp = 1
 requires = [["Independent:1"], ["type:Roboprosthetic"]]
 
-[darkelf.equipments.poison_claws.assault]
+[darkelf.equipment.poison_claws.assault]
 strength.add = [1, 0, 0, 0]
 special.append = ["Poison[4]"]
 
 
-[darkelf.equipments.poison_spray]
+[darkelf.equipment.poison_spray]
 name = "Poison Spray"
 race = "darkelf"
 cost.cp = 2
 requires = [["Hands:2"], ["type:Roboprosthetic", "type: Infantry"]]
 
-[darkelf.equipments.poison_spray.assault]
+[darkelf.equipment.poison_spray.assault]
 damage.replace = "d6-2 + d6 crew damage"
 special.append = "Poison[6][1 for 2]"
 
-[darkelf.equipments.poison_spray.range]
+[darkelf.equipment.poison_spray.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6 crew damage"
 ap = 0
 special = ["Poison[6]"]
 
-[darkelf.equipments.integrated_pistol]
+[darkelf.equipment.integrated_pistol]
 name = "Integrated Pistol"
 race = "darkelf"
 cost.cp = 1
 requires = [["Independent:1"], ["type:Roboprosthetic"]]
 
-[darkelf.equipments.integrated_pistol.range]
+[darkelf.equipment.integrated_pistol.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1786,12 +1786,12 @@ special = [
 ]
 
 
-[darkelf.equipments.acid_breath]
+[darkelf.equipment.acid_breath]
 name = "Acid breath"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.acid_breath.range]
+[darkelf.equipment.acid_breath.range]
 range = 3
 angle = [true, false, false, false]
 damage = "-"
@@ -1802,12 +1802,12 @@ special = [
 ]
 
 
-[darkelf.equipments.fire_breath]
+[darkelf.equipment.fire_breath]
 name = "Fire breath"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.fire_breath.range]
+[darkelf.equipment.fire_breath.range]
 range = 3
 angle = [true, false, false, false]
 damage = "-"
@@ -1817,12 +1817,12 @@ special = [
 ]
 
 
-[darkelf.equipments.shrapnell_breath]
+[darkelf.equipment.shrapnell_breath]
 name = "Shrapnell breath"
 race = "darkelf"
 requires = []
 
-[darkelf.equipments.shrapnell_breath.range]
+[darkelf.equipment.shrapnell_breath.range]
 range = 3
 angle = [true, false, false, false]
 damage = "d6-2"
@@ -1833,7 +1833,7 @@ special = [
 ]
 
 
-[darkelf.equipments.gasmask]
+[darkelf.equipment.gasmask]
 name = "GasMask assault training"
 race = "darkelf"
 cost.xp = 1
@@ -1854,7 +1854,7 @@ requires = [
 ]
 
 
-[darkelf.equipments.poisonfog_grenade]
+[darkelf.equipment.poisonfog_grenade]
 name = "Poison Fog Grenade"
 race = "darkelf"
 cost.cp = 2
@@ -1874,12 +1874,12 @@ requires = [
     ],
 ]
 
-[darkelf.equipments.poisonfog_grenade.orders_gained.fire]
+[darkelf.equipment.poisonfog_grenade.orders_gained.fire]
 still = [["-", "Throw"], ["Throw", "-"]]
 slow = [["-", "Throw"], ["Throw", "-"]]
 
 
-[darkelf.equipments.hide]
+[darkelf.equipment.hide]
 name = "Hide"
 race = "darkelf"
 cost.xp = 4
@@ -1893,13 +1893,13 @@ special = [
 ]
 
 
-[darkelf.equipments.hide.orders_gained.movement]
+[darkelf.equipment.hide.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
 slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
 crawl = [["Hide[ruins]", "-", "-"]]
 
 
-[darkelf.equipments.cloacking_device]
+[darkelf.equipment.cloacking_device]
 name = "Cloacking Device"
 race = "darkelf"
 cost.ip = 2
@@ -1909,12 +1909,12 @@ requires = [["Independent:1"], ["type:Mechanical"]]
 special = ["Gains the Hidden special effects", "Forward position[1]"]
 
 
-[darkelf.equipments.cloacking_device.orders_gained.movement]
+[darkelf.equipment.cloacking_device.orders_gained.movement]
 still = [["Reveal", "-", "-"]]
 slow = [["-", "Reveal", "Chase"]]
 
 
-[darkelf.equipments.hide_free]
+[darkelf.equipment.hide_free]
 name = "Hide"
 race = "darkelf"
 requires = []
@@ -1927,7 +1927,7 @@ special = [
 ]
 
 
-[darkelf.equipments.hide_free.orders_gained.movement]
+[darkelf.equipment.hide_free.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
 slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
 crawl = [["Hide[ruins]", "-", "-"]]

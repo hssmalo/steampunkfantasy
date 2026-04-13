@@ -2,14 +2,14 @@
 
 `_old_data.py` provides `Race`, `Unit`, `Model`, `Equipment`, `Team`, and `Costs` dataclasses that load army data by reading TOML files directly via the `pyconfs` library and wrapping them in `munch.Munch` objects. This is fragile (no validation), uses deprecated dependencies, and is hard to test.
 
-The new `armies.py` introduces `get_army(army_name)` which returns a fully validated `ArmyConfig` Pydantic model. All army data (units, models, equipments, race metadata) is now accessible as typed Python objects.
+The new `armies.py` introduces `get_army(army_name)` which returns a fully validated `ArmyConfig` Pydantic model. All army data (units, models, equipment, race metadata) is now accessible as typed Python objects.
 
 The goal is a clean `data.py` that exposes the same query-level functionality as `_old_data.py` but built on the new schema system.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Provide `get_units`, `get_models`, `get_equipments`, `get_race` (and similar) functions in `data.py` that return typed objects from `ArmyConfig`.
+- Provide `get_units`, `get_models`, `get_equipment`, `get_race` (and similar) functions in `data.py` that return typed objects from `ArmyConfig`.
 - Support listing all available army names.
 - Match the functional surface area that other modules rely on from `_old_data.py` (filtering units/models/equipment by army name).
 

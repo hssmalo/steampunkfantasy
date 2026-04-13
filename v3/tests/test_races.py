@@ -3,7 +3,7 @@
 import pytest
 
 from spf.races import (
-    get_equipments,
+    get_equipment,
     get_metadata,
     get_models,
     get_race,
@@ -76,19 +76,19 @@ def test_get_models_not_empty() -> None:
     assert len(get_models("ogre")) > 0
 
 
-def test_get_equipments_returns_dict_of_equipment_configs() -> None:
-    equipments = get_equipments("ogre")
-    assert isinstance(equipments, dict)
-    assert all(isinstance(v, EquipmentConfig) for v in equipments.values())
+def test_get_equipment_returns_dict_of_equipment_configs() -> None:
+    equipment = get_equipment("ogre")
+    assert isinstance(equipment, dict)
+    assert all(isinstance(v, EquipmentConfig) for v in equipment.values())
 
 
-def test_get_equipments_filters_by_race() -> None:
-    equipments = get_equipments("ogre")
-    assert all(eq.race == "ogre" for eq in equipments.values())
+def test_get_equipment_filters_by_race() -> None:
+    equipment = get_equipment("ogre")
+    assert all(eq.race == "ogre" for eq in equipment.values())
 
 
-def test_get_equipments_not_empty() -> None:
-    assert len(get_equipments("ogre")) > 0
+def test_get_equipment_not_empty() -> None:
+    assert len(get_equipment("ogre")) > 0
 
 
 def test_get_army_reexported() -> None:

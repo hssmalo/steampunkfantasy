@@ -466,7 +466,7 @@ crew = [
 name = "Abomination Infantry"
 race = "abomination"
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
-equipments = ["multipurpose_gun"]
+equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
 [models.abomination_infantry.special]
@@ -491,7 +491,7 @@ ap = 2
 name = "Hippopotamus Riders"
 race = "abomination"
 equipment_limit = ["Independent:∞"]
-equipments = ["multipurpose_mortar", "oversized_musket"]
+equipment = ["multipurpose_mortar", "oversized_musket"]
 type = ["Bio", "Walking", "Amphibian"]
 
 [models.hippopotamus_riders.special]
@@ -516,7 +516,7 @@ ap = 2
 name = "Horror"
 race = "abomination"
 equipment_limit = ["Independent:∞"]
-equipments = []
+equipment = []
 type = ["Bio", "Monster", "Walking", "Amphibian"]
 
 [models.horror.assault]
@@ -534,7 +534,7 @@ ap = 2
 name = "Robot Crab"
 race = "abomination"
 equipment_limit = []
-equipments = []
+equipment = []
 type = ["Drone", "Walking"]
 
 [models.robot_crab.assault]
@@ -555,7 +555,7 @@ ap = 0
 [models.squ]
 name = "Squ"
 race = "abomination"
-equipments = ["confution_gas_launcher"]
+equipment = ["confusion_gas_launcher"]
 equipment_limit = ["Independent:∞", "Mechanical Tentacles:2"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
@@ -578,7 +578,7 @@ ap = 2
 [models.frost88]
 name = "Frost88"
 race = "abomination"
-equipments = ["twin_frost_ray", "main_gun"]
+equipment = ["twin_frost_ray", "main_gun"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
@@ -604,7 +604,7 @@ name = "Elite Abomination Infantry"
 race = "abomination"
 cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:8"]
-equipments = ["multipurpose_gun"]
+equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = "abomination_infantry"
 
@@ -629,7 +629,7 @@ ap = 2
 name = "Giant Frog Rider"
 race = "abomination"
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
-equipments = ["frog_spit", "mechanical_melee_contraption"]
+equipment = ["frog_spit", "mechanical_melee_contraption"]
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
 
 
@@ -650,28 +650,28 @@ ap = 2
 	"Bonus" = "+100\\% strength and deflections versus shaken units"
 
 
-[equipments]
+[equipment]
 
-[equipments.confution_gas_launcher]
+[equipment.confusion_gas_launcher]
 name = "Confution Gas launcher"
 race = "abomination"
 
-[equipments.confution_gas_launcher.range]
+[equipment.confusion_gas_launcher.range]
 range = 4
 angle = [true, true, false, false]
 damage = "d6 psychic + d4 crew damage"
 ap = "N/A"
 special = [
-	"Fires 3 shot per fire order. Each hit gives one confution token to any unit with bio or a bio crew. (se general rules)",
+	"Fires 3 shot per fire order. Each hit gives one confusion token to any unit with bio or a bio crew. (se general rules)",
 ]
 
 
-[equipments.multipurpose_gun]
+[equipment.multipurpose_gun]
 name = "Multipurpose Gun"
 race = "abomination"
 requires = [["Hands:2"]]
 
-[equipments.multipurpose_gun.range]
+[equipment.multipurpose_gun.range]
 range = 5
 angle = [true, true, true, true]
 damage = "d6 psychic"
@@ -680,69 +680,69 @@ special = [
 	"Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psycic damage the unit becomes insane in addition to the normal effects of the psycic damage table",
 ]
 
-[equipments.tentacle_craclespears]
+[equipment.tentacle_craclespears]
 name = "Tentacle CracleSpears"
 race = "abomination"
 cost.cp = 2
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 #requires = [["type:Infantry","type:Cavalry"]]
 
-[equipments.tentacle_craclespears.assault]
+[equipment.tentacle_craclespears.assault]
 
 strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
 
-[equipments.tentacle_craclespears.assault.special]
+[equipment.tentacle_craclespears.assault.special]
 	"Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
 
 
-[equipments.tentacle_axes]
+[equipment.tentacle_axes]
 name = "Tentacle Axes"
 race = "abomination"
 cost.cp = 1
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
-[equipments.tentacle_axes.assault]
+[equipment.tentacle_axes.assault]
 
 strength.add = [2, 0, 0, 0]
 
 
-[equipments.tentacle_shield]
+[equipment.tentacle_shield]
 name = "Tentacle Shield"
 race = "abomination"
 cost.cp = 2
 requires = [["Tentacles:1"], ["type:Infantry"]]
 
-[equipments.tentacle_shield.unit_special]
+[equipment.tentacle_shield.unit_special]
 
 "Protection" = "Unit gain [3, 0, 0, 0] in armor. Do not stack"
 
-[equipments.tentacle_shield.assault]
+[equipment.tentacle_shield.assault]
 
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
 
 
-[equipments.frog_armor]
+[equipment.frog_armor]
 name = "Frog Cavalry Armor"
 race = "abomination"
 cost.cp = 2
 requires = [["type:Frog"]]
 
-[equipments.frog_armor.unit_special]
+[equipment.frog_armor.unit_special]
 "Protection" = "Unit gain [4, 3, 3, 0] in armor."
 
 
-[equipments.fog_grenade_mortar]
+[equipment.fog_grenade_mortar]
 name = "Fog grenade Mortar"
 race = "abomination"
 cost.cp = 4
 requires = [["Tentacles:4"], ["type:Infantry"]]
 
 
-[equipments.fog_grenade_mortar.range]
+[equipment.fog_grenade_mortar.range]
 range = 4
 angle = [true, true, true, true]
 damage = "N/A"
@@ -752,12 +752,12 @@ special = [
 ]
 
 
-[equipments.multipurpose_mortar]
+[equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
 race = "abomination"
 
 
-[equipments.multipurpose_mortar.range]
+[equipment.multipurpose_mortar.range]
 range = 3
 angle = [true, true, true, true]
 damage = "N/A"
@@ -767,12 +767,12 @@ special = [
 ]
 
 
-[equipments.oversized_musket]
+[equipment.oversized_musket]
 name = "Dobble Barrled Oversized Musket"
 race = "abomination"
 
 
-[equipments.oversized_musket.range]
+[equipment.oversized_musket.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d8"
@@ -780,14 +780,14 @@ ap = "3"
 special = ["Fire two shot per fire order", "Gear disruption[6+]"]
 
 
-[equipments.tentacle_dart]
+[equipment.tentacle_dart]
 name = "Tentacle Dart"
 race = "abomination"
 cost.cp = 1
 requires = [["Tentacles:1"], ["type:Infantry", "type:Cavalry"]]
 
 
-[equipments.tentacle_dart.range]
+[equipment.tentacle_dart.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -795,12 +795,12 @@ ap = 1
 special = []
 
 
-[equipments.frog_spit]
+[equipment.frog_spit]
 name = "Frog spit"
 race = "abomination"
 requires = []
 
-[equipments.frog_spit.range]
+[equipment.frog_spit.range]
 range = 1
 angle = [true, true, false, false]
 damage = "N/A"
@@ -811,12 +811,12 @@ special = [
 ]
 
 
-[equipments.twin_frost_ray]
+[equipment.twin_frost_ray]
 name = "Twin Frost Ray"
 race = "abomination"
 requires = []
 
-[equipments.twin_frost_ray.range]
+[equipment.twin_frost_ray.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d4-2+d6 psychic damage + d4 crew damage"
@@ -828,12 +828,12 @@ special = [
 ]
 
 
-[equipments.main_gun]
+[equipment.main_gun]
 name = "Main Gun"
 race = "abomination"
 requires = []
 
-[equipments.main_gun.range]
+[equipment.main_gun.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6 (+d8 crew damage if penetrating all armor)"
@@ -841,12 +841,12 @@ ap = 6
 special = ["Gear Disruption[5+]"]
 
 
-[equipments.mechanical_melee_contraption]
+[equipment.mechanical_melee_contraption]
 name = "Mechanical Melee Contraption"
 race = "abomination"
 requires = []
 
 
-[equipments.mechanical_melee_contraption.assault.special]
+[equipment.mechanical_melee_contraption.assault.special]
 
 	"Improvement" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"

@@ -67,7 +67,7 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Soldier",
                 equipment_limit=["Hands:2", "Grenades:1"],  # pyright: ignore[reportArgumentType]
-                equipments=[],
+                equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
                 cost=None,
@@ -76,14 +76,14 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Elite Soldier",
                 equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
-                equipments=[],
+                equipment=[],
                 type=["Infantry", "Elite"],
                 assault=_ASSAULT,
                 cost=t.Cost(xp=1),
                 replaces="soldier",
             ),
         },
-        equipments={
+        equipment={
             "sword": EquipmentConfig(
                 race="goblin",
                 name="Sword",
@@ -218,7 +218,7 @@ def test_satisfies_requires_type_match(simple_race: RaceConfig) -> None:
     )
     # sword requires [type:Infantry] among others; soldier is Infantry
     assert _satisfies_requires(
-        simple_race.equipments["sword"].requires, soldier, simple_race
+        simple_race.equipment["sword"].requires, soldier, simple_race
     )
 
 
@@ -393,7 +393,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         races=simple_race.races,
         units=simple_race.units,
         models=simple_race.models,
-        equipments={**simple_race.equipments, "elite_sword": elite_only_equip},
+        equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
     )
     team = add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", army)
     with pytest.raises(ValueError, match="requires are not satisfied"):
@@ -564,7 +564,7 @@ def test_validate_team_detects_unsatisfied_equipment_requires(
         races=simple_race.races,
         units=simple_race.units,
         models=simple_race.models,
-        equipments={**simple_race.equipments, "elite_sword": elite_only_equip},
+        equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
     )
     # Manually put elite_sword on a non-Elite soldier
     bad_model = ArmyModel(

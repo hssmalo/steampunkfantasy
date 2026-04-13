@@ -74,8 +74,8 @@ def _remaining_slots(
     slots: dict[t.EquipmentHolder, int] = {
         limit.holder: limit.limit for limit in model.config.equipment_limit
     }
-    for equip_key in (*model.config.equipments, *model.upgrades):
-        for req_group in race_config.equipments[equip_key].requires:
+    for equip_key in (*model.config.equipment, *model.upgrades):
+        for req_group in race_config.equipment[equip_key].requires:
             for req in req_group:
                 if (
                     req.key != "type"
@@ -192,7 +192,7 @@ def upgrade_model(
     unit_idx, unit = _resolve_unit(army, unit_key)
     model_idx, model = _resolve_model(unit, model_key)
 
-    equip = race_config.equipments[equipment_name]
+    equip = race_config.equipment[equipment_name]
     if equip.cost is None:
         msg = (
             f"Equipment '{equipment_name}' has no cost and cannot be used as an upgrade"
@@ -244,7 +244,7 @@ def available_equipment(
     _, model = _resolve_model(unit, model_key)
     return [
         cfg
-        for cfg in race_config.equipments.values()
+        for cfg in race_config.equipment.values()
         if cfg.cost is not None
         and _satisfies_requires(cfg.requires, model, race_config)
     ]
@@ -263,7 +263,7 @@ def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
             if team_model.name != unit.config.models[i]:
                 cost = _add_cost(cost, team_model.config.cost)
             for equip_key in team_model.upgrades:
-                cost = _add_cost(cost, race_config.equipments[equip_key].cost)
+                cost = _add_cost(cost, race_config.equipment[equip_key].cost)
     return cost
 
 
@@ -281,7 +281,7 @@ def validate_team(army: Army, race_config: RaceConfig) -> list[str]:
                 )
             # Validate equipment upgrades
             for equip_key in team_model.upgrades:
-                equip = race_config.equipments[equip_key]
+                equip = race_config.equipment[equip_key]
                 if equip.cost is None:
                     errors.append(
                         f"Unit '{unit.name}', model '{team_model.name}': "

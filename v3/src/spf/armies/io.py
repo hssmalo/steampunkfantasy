@@ -63,7 +63,7 @@ def print_army(army: Army, cfg: RaceConfig) -> None:
         table.add_column("Model")
         table.add_column("Equipment")
         for model in unit.models:
-            upgrades = ", ".join([*model.config.equipments, *model.upgrades])
+            upgrades = ", ".join([*model.config.equipment, *model.upgrades])
             table.add_row(model.name, upgrades)
         stdout.print(table)
     cost = total_cost(army, cfg)

@@ -1,6 +1,6 @@
 ## Context
 
-`races/ork.toml` was written in an older format where each section is prefixed with the race name (e.g. `[ork.units.troll]`). The current `RaceConfig` Pydantic schema expects top-level `[units]`, `[models]`, and `[equipments]` tables without any race prefix. Additionally, the schema changed `UnitConfig.special` from `list[str]` to `dict[UnitSpecial, str]`, requiring all unit specials to be expressed as TOML inline tables or subtables.
+`races/ork.toml` was written in an older format where each section is prefixed with the race name (e.g. `[ork.units.troll]`). The current `RaceConfig` Pydantic schema expects top-level `[units]`, `[models]`, and `[equipment]` tables without any race prefix. Additionally, the schema changed `UnitConfig.special` from `list[str]` to `dict[UnitSpecial, str]`, requiring all unit specials to be expressed as TOML inline tables or subtables.
 
 The schema also enforces strict Literals for `Size`, `ModelType`, `DamageTableName`, and `RaceName` — several values in ork.toml are wrong-cased or misspelled.
 
@@ -19,7 +19,7 @@ The schema also enforces strict Literals for `Size`, `ModelType`, `DamageTableNa
 ## Decisions
 
 ### Section prefix removal
-All `[ork.units.*]`, `[ork.models.*]`, and `[ork.equipments.*]` headers become `[units.*]`, `[models.*]`, and `[equipments.*]`. This is a mechanical rename throughout the file.
+All `[ork.units.*]`, `[ork.models.*]`, and `[ork.equipment.*]` headers become `[units.*]`, `[models.*]`, and `[equipment.*]`. This is a mechanical rename throughout the file.
 
 ### Unit special conversion
 `special = ["item1", "item2"]` list entries become TOML subtables:
@@ -75,8 +75,8 @@ Add to `type_aliases.py`:
 
 ### Missing fields
 - `UnitConfig.shaken` is required (no default). Units missing it: `troll`, `champion`, `warg_rider`, `speedhead`, `hammerhead`, `battlewagon`, `grunt`, `bioengineered_ork`, `ork_char_b1`. Add `shaken = ""` (empty string) for those with no shaken rule specified.
-- `ModelConfig.equipments` is required. `warg_rider` model is missing it — add `equipments = []`.
-- `hammerhead` model has `equipments_limit` (wrong key) — rename to `equipment_limit`.
+- `ModelConfig.equipment` is required. `warg_rider` model is missing it — add `equipment = []`.
+- `hammerhead` model has `equipment_limit` (wrong key) — rename to `equipment_limit`.
 
 ### ap field fixes
 `ap` must be `int | "N/A"`. Model assault `ap` values that are strings like `"2"`, `"3"`, `"-"` must become integers or `"N/A"`. The value `"-"` means N/A → use `"N/A"`. For hammerhead's `"10 (from front), else 2"`: set `ap = 10` and append `"ap 2 (from non-front arcs)"` to the `special` list in `[models.hammerhead.assault]`.

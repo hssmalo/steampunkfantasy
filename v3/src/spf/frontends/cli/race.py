@@ -66,7 +66,7 @@ def _print_models(race: RaceConfig) -> None:
 
 def _print_equipment(race: RaceConfig) -> None:
     """Print one line per equipment item with name and cost."""
-    for equipment in sorted(race.equipments.values(), key=attrgetter("name")):
+    for equipment in sorted(race.equipment.values(), key=attrgetter("name")):
         stdout.print(
             f"- {equipment.name:<40} {_cost_str(equipment.cost)}", highlight=False
         )

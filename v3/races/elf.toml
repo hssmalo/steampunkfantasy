@@ -992,7 +992,7 @@ psychic = ["5+: shaken"]
 name = "E34"
 race = "elf"
 equipment_limit = ["Independent:∞"]
-equipments = ["main_tank_gun", "twin_rifle"]
+equipment = ["main_tank_gun", "twin_rifle"]
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 
 
@@ -1009,7 +1009,7 @@ ap = 3
 name = "Tattoo Ink"
 race = "elf"
 equipment_limit = ["Independent:∞", "Minor Gun:1"]
-equipments = ["gattle_gun", "smg_reserve"]
+equipment = ["gattle_gun", "smg_reserve"]
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 
 [models.tattoo_ink.special]
@@ -1029,7 +1029,7 @@ ap = 3
 name = "Elite Elf scout"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Walking", "Elite"]
 
 [models.elite_elf_scout.special]
@@ -1054,7 +1054,7 @@ ap = 2
 name = "Elite Elf scout"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walking"]
 
 [models.elf_scout.assault]
@@ -1073,7 +1073,7 @@ ap = 2
 name = "Elf Infantry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walking"]
 
 [models.elf_infantry.assault]
@@ -1092,7 +1092,7 @@ ap = 2
 name = "Illusion"
 race = "elf"
 type = ["Illusion", "Walking"]
-equipments = []
+equipment = []
 equipment_limit = []
 
 [models.illusion.assault]
@@ -1107,7 +1107,7 @@ ap = 'N/A'
 name = "SuperElite Elf Infantry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 cost.xp = 2
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
@@ -1137,7 +1137,7 @@ ap = 2
 name = "Elite Elf Infantry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["rifle"]
+equipment = ["rifle"]
 cost.xp = 1
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite"]
@@ -1168,7 +1168,7 @@ ap = 2
 name = "Bear Rider"
 race = "elf"
 equipment_limit = ["Independent:∞"]
-equipments = ["gatling_gun"]
+equipment = ["gatling_gun"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.bear_rider.assault]
@@ -1187,7 +1187,7 @@ ap = 2
 name = "Dire Polar Bear Riders"
 race = "elf"
 equipment_limit = ["Independent:∞"]
-equipments = ["gatling_gun", "elf_flame_arrow_free"]
+equipment = ["gatling_gun", "elf_flame_arrow_free"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.polar_bear_riders.assault]
@@ -1207,7 +1207,7 @@ ap = 2
 name = "Sauropod Riders"
 race = "elf"
 equipment_limit = ["Independent:∞"]
-equipments = [
+equipment = [
 	"sniper_rifle_free",
 	"heavy_mortar",
 	"towed_main_gun",
@@ -1231,7 +1231,7 @@ ap = 2
 name = "Oliphant"
 race = "elf"
 equipment_limit = ["Independent:∞"]
-equipments = ["oliphant_gatling_guns"]
+equipment = ["oliphant_gatling_guns"]
 type = ["Bio", "Cavalry", "Walking"]
 
 
@@ -1248,7 +1248,7 @@ ap = 4
 name = "Crew"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["bow_free", "crew_hand_grenade"]
+equipment = ["bow_free", "crew_hand_grenade"]
 type = ["Bio", "Crew", "Walking"]
 
 [models.crew.assault]
@@ -1263,7 +1263,7 @@ ap = "N/A"
 name = "Eagle Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["at_rifle", "grenade"]
+equipment = ["at_rifle", "grenade"]
 type = ["Bio", "Cavalry", "Flying", "Walking"]
 
 [models.eagle_rider.special]
@@ -1292,7 +1292,7 @@ ap = 3
 name = "Pachyephalosaurus Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["smg_free", "twin_guns"]
+equipment = ["smg_free", "twin_guns"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.pachyephalosaurus_rider.assault]
@@ -1313,7 +1313,7 @@ ap = 2
 name = "Elk Cavalry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["bow_free"]
+equipment = ["bow_free"]
 type = ["Bio", "Cavalry", "Walking", "Elk"]
 
 [models.elk_cavalery.assault]
@@ -1332,7 +1332,7 @@ ap = 2
 name = "Pegasus_rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["bow_free", "shriek_smg_free"]
+equipment = ["bow_free", "shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking", "Flying"]
 
 [models.pegasus_rider.special]
@@ -1356,7 +1356,7 @@ ap = 2
 name = "Elite Pachyephalosaurus Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipments = ["smg_free", "twin_guns"]
+equipment = ["smg_free", "twin_guns"]
 type = ["Bio", "Cavalry", "Walking"]
 replaces = "pachyephalosaurus_rider"
 cost.xp = 1
@@ -1502,7 +1502,7 @@ psychic = ["6+: shaken"]
 name = "Armored Unicorn Rider"
 race = "elf"
 equipment_limit = ["Independent:∞"]
-equipments = ["shriek_smg_free"]
+equipment = ["shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking"]
 
 
@@ -1521,14 +1521,14 @@ ap = 2
 "Cunning Assault" = "[1 for 3]"
 "Pre-Assault Retreat" = "3+"
 
-[equipments]
+[equipment]
 
-[equipments.main_tank_gun]
+[equipment.main_tank_gun]
 name = "Main Tank Gun"
 race = "elf"
 requires = []
 
-[equipments.main_tank_gun.range]
+[equipment.main_tank_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6 (+3 if penetrating all armor)"
@@ -1536,12 +1536,12 @@ ap = 8
 special = ["Double barreled: May load up to 2 shots, and fire them one at a time"]
 
 
-[equipments.towed_main_gun]
+[equipment.towed_main_gun]
 name = "Towed Main Gun"
 race = "elf"
 requires = []
 
-[equipments.towed_main_gun.range]
+[equipment.towed_main_gun.range]
 range = 3
 angle = [false, false, false, true]
 damage = "d6 (+3 if penetrating all armor)"
@@ -1549,24 +1549,24 @@ ap = 8
 special = []
 
 
-[equipments.thunderroar]
+[equipment.thunderroar]
 name = "ThunderRoar"
 race = "elf"
 requires = []
 
-[equipments.thunderroar.range]
+[equipment.thunderroar.range]
 range = 5
 angle = [false, true, false, false]
 damage = "d6 psycic"
 ap = "N/A"
 special = ["May fire once to the right and once to the left each time you fire"]
 
-[equipments.light_mortar]
+[equipment.light_mortar]
 name = "Light Mortar"
 race = "elf"
 requires = []
 
-[equipments.light_mortar.range]
+[equipment.light_mortar.range]
 range = 5
 angle = [false, false, true, false]
 damage = "d6-2"
@@ -1574,12 +1574,12 @@ ap = 2
 special = ["Area[5] on a hex within normal range"]
 
 
-[equipments.gattle_gun]
+[equipment.gattle_gun]
 name = "Gattle_gun"
 race = "elf"
 requires = [["type:Vehicle"], ["Minor Gun:1"]]
 
-[equipments.gattle_gun.range]
+[equipment.gattle_gun.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1587,13 +1587,13 @@ ap = 5
 special = ["May load up to 5 shots"]
 
 
-[equipments.teslaburstlaser]
+[equipment.teslaburstlaser]
 name = "TeslaBurstLaster"
 race = "elf"
 requires = [["type:Vehicle"], ["Minor Gun:1"]]
 cost.cp = 2
 
-[equipments.teslaburstlaser.range]
+[equipment.teslaburstlaser.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1604,12 +1604,12 @@ special = [
 ]
 
 
-[equipments.smg_free]
+[equipment.smg_free]
 name = "SMG"
 race = "elf"
 requires = [["Hands:2"]]
 
-[equipments.smg_free.range]
+[equipment.smg_free.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-3"
@@ -1617,12 +1617,12 @@ ap = 1
 special = ["Fire two shot per fire order (per smg in the unit)"]
 
 
-[equipments.smg_reserve]
+[equipment.smg_reserve]
 name = "SMG"
 race = "elf"
 requires = []
 
-[equipments.smg_reserve.range]
+[equipment.smg_reserve.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-3"
@@ -1630,12 +1630,12 @@ ap = 1
 special = ["Fire two shot per fire order (per smg in the unit)"]
 
 
-[equipments.twin_guns]
+[equipment.twin_guns]
 name = "Twin Guns"
 race = "elf"
 requires = []
 
-[equipments.twin_guns.range]
+[equipment.twin_guns.range]
 range = 3
 angle = [true, false, false, false]
 damage = "d6"
@@ -1646,12 +1646,12 @@ special = [
 ]
 
 
-[equipments.twin_rifle]
+[equipment.twin_rifle]
 name = "Twin Rifle"
 race = "elf"
 requires = []
 
-[equipments.twin_rifle.range]
+[equipment.twin_rifle.range]
 range = 5
 angle = [true, true, true, true]
 damage = "d6 -2"
@@ -1660,13 +1660,13 @@ special = [
 	"Fires two times at same unit per shot.\\\\Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded",
 ]
 
-[equipments.shriek_smg]
+[equipment.shriek_smg]
 name = "Shriek SMG"
 race = "elf"
 requires = [["type:Infantry"], ["Hands:2"]]
 cost.cp = 2
 
-[equipments.shriek_smg.range]
+[equipment.shriek_smg.range]
 range = 3
 angle = [true, true, false, false]
 damage = "d4 -2 + d6 psychic damage"
@@ -1675,17 +1675,17 @@ special = [
 	"Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)",
 ]
 
-[equipments.shriek_smg.orders_gained.fire]
+[equipment.shriek_smg.orders_gained.fire]
 slow = [["-", "Fire"], ["Fire", "-"]]
 fast = [["-", "Fire"], ["Fire", "-"]]
 
 
-[equipments.gatling_gun]
+[equipment.gatling_gun]
 name = "GatlingGun"
 race = "elf"
 requires = []
 
-[equipments.gatling_gun.range]
+[equipment.gatling_gun.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1696,12 +1696,12 @@ special = [
 ]
 
 
-[equipments.shriek_smg_free]
+[equipment.shriek_smg_free]
 name = "Shriek SMG"
 race = "elf"
 requires = []
 
-[equipments.shriek_smg_free.range]
+[equipment.shriek_smg_free.range]
 range = 3
 angle = [true, true, false, false]
 damage = "d4 -2 + d6 psychic damage"
@@ -1711,12 +1711,12 @@ special = [
 ]
 
 
-[equipments.oliphant_gatling_guns]
+[equipment.oliphant_gatling_guns]
 name = "Oliphant GatlingGuns"
 race = "elf"
 requires = []
 
-[equipments.oliphant_gatling_guns.range]
+[equipment.oliphant_gatling_guns.range]
 range = 2
 angle = [false, true, true, false]
 damage = "d6-1"
@@ -1728,25 +1728,25 @@ special = [
 ]
 
 
-[equipments.at_rifle_free]
+[equipment.at_rifle_free]
 name = "AT Rifle"
 race = "elf"
 requires = [["Hands:2"]]
 
-[equipments.at_rifle_free.range]
+[equipment.at_rifle_free.range]
 range = 5
 angle = [true, false, false, false]
 damage = "d6"
 ap = "6"
 special = []
 
-[equipments.at_rifle]
+[equipment.at_rifle]
 name = "AT Rifle"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry"]]
 cost.cp = 8
 
-[equipments.at_rifle.range]
+[equipment.at_rifle.range]
 range = 5
 angle = [true, false, false, false]
 damage = "d6"
@@ -1754,28 +1754,28 @@ ap = "5"
 special = []
 
 
-[equipments.teslacoil_lance]
+[equipment.teslacoil_lance]
 name = "Teslacoil Lance"
 race = "elf"
 requires = [["Independent:1"], ["type:Elk"]]
 cost.cp = 2
 
-[equipments.teslacoil_lance.assault]
+[equipment.teslacoil_lance.assault]
 strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
-[equipments.teslacoil_lance.assault.special]
+[equipment.teslacoil_lance.assault.special]
 "Overrun" = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
 
 
-[equipments.smg]
+[equipment.smg]
 name = "SMG"
 race = "elf"
 cost.cp = 2
 requires = [["type:Infantry", "type:Crew"], ["Hands:2"]]
 
-[equipments.smg.range]
+[equipment.smg.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6"
@@ -1785,19 +1785,19 @@ special = [
 	"always treated as loaded",
 ]
 
-[equipments.smg.orders_gained.fire]
+[equipment.smg.orders_gained.fire]
 still = [['Fire', 'Fire']]
 slow = [['Fire', 'Fire']]
 fast = [['Fire', 'Fire']]
 
 
-[equipments.bow]
+[equipment.bow]
 name = "Elf Bow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 2
 
-[equipments.bow.range]
+[equipment.bow.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1810,18 +1810,18 @@ special = [
 	"Always treated as loaded",
 ]
 
-[equipments.bow.orders_gained.fire]
+[equipment.bow.orders_gained.fire]
 still = [['Fire', 'Fire']]
 slow = [['Fire', 'Fire']]
 fast = [['Fire', 'Fire']]
 
-[equipments.elf_flame_arrow]
+[equipment.elf_flame_arrow]
 name = "Elf Flame Arrow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry", "type:Crew"]]
 cost.cp = 8
 
-[equipments.elf_flame_arrow.range]
+[equipment.elf_flame_arrow.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1835,18 +1835,18 @@ special = [
 	"set enemy on fire",
 ]
 
-[equipments.elf_flame_arrow.orders_gained.fire]
+[equipment.elf_flame_arrow.orders_gained.fire]
 still = [['Fire', 'Fire']]
 slow = [['Fire', 'Fire']]
 fast = [['Fire', 'Fire']]
 
 
-[equipments.elf_flame_arrow_free]
+[equipment.elf_flame_arrow_free]
 name = "Elf Flame Arrow"
 race = "elf"
 requires = []
 
-[equipments.elf_flame_arrow_free.range]
+[equipment.elf_flame_arrow_free.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1861,12 +1861,12 @@ special = [
 ]
 
 
-[equipments.bow_free]
+[equipment.bow_free]
 name = "Elf Bow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
-[equipments.bow_free.range]
+[equipment.bow_free.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1880,12 +1880,12 @@ special = [
 ]
 
 
-[equipments.rifle]
+[equipment.rifle]
 name = "Rifle"
 race = "elf"
 requires = [["Hands:2"]]
 
-[equipments.rifle.range]
+[equipment.rifle.range]
 range = 5
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1893,13 +1893,13 @@ ap = "2"
 special = []
 
 
-[equipments.enhanced_rifle]
+[equipment.enhanced_rifle]
 name = "Enhanced Rifle"
 race = "elf"
 cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.enhanced_rifle.range]
+[equipment.enhanced_rifle.range]
 range = 6
 angle = [true, true, true, true]
 damage = "d6-2"
@@ -1907,13 +1907,13 @@ ap = "2"
 special = ["enhanced accurazy: +1 to hit"]
 
 
-[equipments.sniper_rifle]
+[equipment.sniper_rifle]
 name = "Sniper Rifle"
 race = "elf"
 model_cost.cp = 6
 requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
-[equipments.sniper_rifle.range]
+[equipment.sniper_rifle.range]
 range = 8
 angle = [true, false, false, true]
 damage = "d6-2"
@@ -1924,12 +1924,12 @@ special = [
 ]
 
 
-[equipments.sniper_rifle_free]
+[equipment.sniper_rifle_free]
 name = "Sniper Rifle"
 race = "elf"
 requires = []
 
-[equipments.sniper_rifle_free.range]
+[equipment.sniper_rifle_free.range]
 range = 8
 angle = [true, false, false, false]
 damage = "d6-2"
@@ -1940,12 +1940,12 @@ special = [
 ]
 
 
-[equipments.grenade]
+[equipment.grenade]
 name = "Grenade"
 race = "elf"
 requires = [["Independent:1"]]
 
-[equipments.grenade.range]
+[equipment.grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "d6"
@@ -1953,13 +1953,13 @@ ap = "7"
 special = ["Area(5+)", "Target any hex within normal range", "Always loaded"]
 
 
-[equipments.hand_grenade]
+[equipment.hand_grenade]
 name = "Grenade"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 2
 
-[equipments.hand_grenade.range]
+[equipment.hand_grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "d6"
@@ -1970,18 +1970,18 @@ special = [
 	"Always loaded, used with Throw order",
 ]
 
-[equipments.hand_grenade.orders_gained.fire]
+[equipment.hand_grenade.orders_gained.fire]
 still = [["-", "Throw"]]
 slow = [["-", "Throw"]]
 fast = [["-", "Throw"]]
 
 
-[equipments.crew_hand_grenade]
+[equipment.crew_hand_grenade]
 name = "Grenade"
 race = "elf"
 requires = []
 
-[equipments.crew_hand_grenade.range]
+[equipment.crew_hand_grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "d6"
@@ -1992,17 +1992,17 @@ special = [
 	"Always loaded",
 ]
 
-[equipments.crew_hand_grenade.orders_gained.fire]
+[equipment.crew_hand_grenade.orders_gained.fire]
 still = [["-", "Throw grenade"]]
 slow = [["-", "Throw grenade"]]
 fast = [["-", "Throw grenade"]]
 
-[equipments.heavy_mortar]
+[equipment.heavy_mortar]
 name = "Heavy Mortar"
 race = "elf"
 requires = []
 
-[equipments.heavy_mortar.range]
+[equipment.heavy_mortar.range]
 range = 3
 angle = [true, true, false, false]
 damage = "d6"
@@ -2012,31 +2012,31 @@ special = [
 ]
 
 
-[equipments.deflection_field]
+[equipment.deflection_field]
 name = "Deflection_field"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
 cost.cp = 2
 
-[equipments.deflection_field.assault]
+[equipment.deflection_field.assault]
 deflection.add = [6, 6, 6, 6]
 deflection_die.replace = "5+"
 
-[equipments.elite_tank_crew]
+[equipment.elite_tank_crew]
 name = "Elite Tank Crew"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
 cost.xp = 4
 
-[equipments.elite_tank_crew.model_special]
+[equipment.elite_tank_crew.model_special]
 "To Hit (2)" = "model gain good shoot: +1 to hit"
 
 
-[equipments.camouflage]
+[equipment.camouflage]
 name = "Camouflage"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry"]]
 cost.cp = 2
 
-[equipments.camouflage.unit_special]
+[equipment.camouflage.unit_special]
 Camouflage = "[forrest][-1]"

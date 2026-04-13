@@ -376,7 +376,7 @@ inner = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
 name = "Goblin Infantry"
 race = "goblin"
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1"]
-equipments = ["goblin_bow", "goblin_grenade"]
+equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Walking"]
 
 [models.goblin_infantry.assault]
@@ -395,7 +395,7 @@ ap = 2
 [models.goblin_infantry_carrier]
 name = "Goblin Infantry Carrier"
 race = "goblin"
-equipments = ["light_mortar"]
+equipment = ["light_mortar"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
@@ -411,7 +411,7 @@ ap = 2
 [models.heavy_carrier]
 name = "Heavy Carrier"
 race = "goblin"
-equipments = ["goblin_bow_battery", "heavy_crossbow"]
+equipment = ["goblin_bow_battery", "heavy_crossbow"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
@@ -427,7 +427,7 @@ ap = 2
 [models.mechanical_fire_bird]
 name = "Mechanical Fire Bird"
 race = "goblin"
-equipments = ["ring_of_fire"]
+equipment = ["ring_of_fire"]
 equipment_limit = ["Independent:∞"]
 type = ["Drone", "Flying", "Mechanical"]
 
@@ -448,7 +448,7 @@ name = "Elite Goblin Infantry"
 race = "goblin"
 cost.xp = 1
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2"]
-equipments = ["goblin_bow", "goblin_grenade"]
+equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = "goblin_infantry"
 
@@ -468,14 +468,14 @@ ap = 2
 "Cunning Assault" = "[1 for 1]"
 "Pre-Assault Retreat" = "+1 to pre-assault retreat (per elite in unit)"
 
-[equipments]
+[equipment]
 
-[equipments.goblin_bow]
+[equipment.goblin_bow]
 name = "Goblin bow"
 race = "goblin"
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.goblin_bow.range]
+[equipment.goblin_bow.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d4-2"
@@ -483,29 +483,29 @@ ap = "1"
 special = ["Always treated as loaded"]
 
 
-[equipments.gear_bow]
+[equipment.gear_bow]
 name = "Gear bow"
 race = "goblin"
 cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.gear_bow.range]
+[equipment.gear_bow.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = "1"
 special = ["Always treated as loaded", "Gear Disruption[6+]"]
 
-[equipments.clockwork_wings]
+[equipment.clockwork_wings]
 name = "Clockwork Wings"
 race = "goblin"
 cost.cp = 6
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipments.clockwork_wings.assault]
+[equipment.clockwork_wings.assault]
 strength.add = [1, 0, 0, 0]
 
-[equipments.clockwork_wings.orders_gained.movement]
+[equipment.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "F", "F"]]
 fast_flying = [
 	[
@@ -531,13 +531,13 @@ fast_flying = [
 ]
 
 
-[equipments.poison_bow]
+[equipment.poison_bow]
 name = "Poison bow"
 race = "goblin"
 cost.cp = 4
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.poison_bow.range]
+[equipment.poison_bow.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d4-2 + d4 crew damage"
@@ -549,13 +549,13 @@ special = [
 ]
 
 
-[equipments.ogre_rifle]
+[equipment.ogre_rifle]
 name = "Ogre Rifle"
 race = "goblin"
 cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipments.ogre_rifle.range]
+[equipment.ogre_rifle.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d8-2"
@@ -566,82 +566,82 @@ special = [
 	"Unit is destroyed if trying to land in an impassible or overcrowded hex",
 ]
 
-[equipments.ogre_rifle.orders_gained.movement]
+[equipment.ogre_rifle.orders_gained.movement]
 slow_flying = [["rev", "-", "B[still]"]]
 
-[equipments.ogre_rifle.orders_gained.fire]
+[equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]
 
 
-[equipments.poison_dagger]
+[equipment.poison_dagger]
 name = "Poison Deflection Dagger"
 race = "goblin"
 cost.cp = 2
 requires = [["Independent:1"], ["type:Infantry"]]
 
-[equipments.poison_dagger.assault]
+[equipment.poison_dagger.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
-[equipments.poison_dagger.assault.special]
+[equipment.poison_dagger.assault.special]
 "Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
 
 
-[equipments.combat_screw_driver]
+[equipment.combat_screw_driver]
 name = "Combat Screw Driver"
 race = "goblin"
 cost.cp = 2
 requires = [["Independent:1"], ["type:Infantry"]]
 
-[equipments.combat_screw_driver.assault]
+[equipment.combat_screw_driver.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
-[equipments.combat_screw_driver.assault.special]
+[equipment.combat_screw_driver.assault.special]
 "Cunning Deflection" = "Each deflected hit counts as hits for cunning assault purposes."
 
 
-[equipments.goblin_grenade]
+[equipment.goblin_grenade]
 name = "Goblin Grenade"
 race = "goblin"
 requires = [["Grenades:1"], ["type:Infantry"]]
 
-[equipments.goblin_grenade.range]
+[equipment.goblin_grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "d6"
 ap = 2
 special = ["Thrown weapon", "Always treated as loaded"]
 
-[equipments.grenadier]
+[equipment.grenadier]
 name = "Grenadier specialization"
 race = "goblin"
 cost.xp = 2
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
-[equipments.grenadier.model_special]
+[equipment.grenadier.model_special]
 "To Hit (2)" = "Get +1 to hit for thrown weapons"
 
-[equipments.grenadier.unit_special]
+[equipment.grenadier.unit_special]
 "Fire Order" = "For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
 
-[equipments.archer]
+[equipment.archer]
 name = "Archer spesialization"
 race = "goblin"
 cost.xp = 2
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
-[equipments.archer.unit_special]
+[equipment.archer.unit_special]
 "Fire Order" = "For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit"
 
 
-[equipments.acid_grenade]
+[equipment.acid_grenade]
 name = "Acid Grenade"
 race = "goblin"
 cost.cp = 2
 requires = [["Grenades:1"], ["type:Infantry"]]
 
-[equipments.acid_grenade.range]
+[equipment.acid_grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "n.a."
@@ -653,13 +653,13 @@ special = [
 ]
 
 
-[equipments.poison_grenade]
+[equipment.poison_grenade]
 name = "Poison Grenade"
 race = "goblin"
 cost.cp = 2
 requires = [["Grenades:1"], ["type:Infantry"]]
 
-[equipments.poison_grenade.range]
+[equipment.poison_grenade.range]
 range = 1
 angle = [true, true, true, true]
 damage = "d4 crew damage"
@@ -672,12 +672,12 @@ special = [
 ]
 
 
-[equipments.light_mortar]
+[equipment.light_mortar]
 name = "Light Mortar"
 race = "goblin"
 
 
-[equipments.light_mortar.range]
+[equipment.light_mortar.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6 + d4 crew damage"
@@ -688,12 +688,12 @@ special = [
 ]
 
 
-[equipments.goblin_bow_battery]
+[equipment.goblin_bow_battery]
 name = "Goblin Bow Battery"
 race = "goblin"
 requires = []
 
-[equipments.goblin_bow_battery.range]
+[equipment.goblin_bow_battery.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d4 -2"
@@ -706,12 +706,12 @@ special = [
 ]
 
 
-[equipments.heavy_crossbow]
+[equipment.heavy_crossbow]
 name = "Heavy Crossbow"
 race = "goblin"
 requires = []
 
-[equipments.heavy_crossbow.range]
+[equipment.heavy_crossbow.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6"
@@ -723,12 +723,12 @@ special = [
 ]
 
 
-[equipments.ring_of_fire]
+[equipment.ring_of_fire]
 name = "Ring of Fire"
 race = "goblin"
 requires = []
 
-[equipments.ring_of_fire.range]
+[equipment.ring_of_fire.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"

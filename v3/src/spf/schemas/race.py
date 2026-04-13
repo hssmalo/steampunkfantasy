@@ -54,7 +54,7 @@ class ModelConfig(StrictModel):
     name: t.ModelName
     description: str = ""
     equipment_limit: list[t.ParsedEquipmentLimit]
-    equipments: list[str]
+    equipment: list[str]
     type: list[t.ModelType]
     assault: AssaultConfig
     cost: t.Cost | None = None
@@ -105,7 +105,7 @@ class RaceConfig(StrictModel):
     races: dict[t.RaceName, RaceMetadata]
     units: dict[str, UnitConfig]
     models: dict[str, ModelConfig]
-    equipments: dict[str, EquipmentConfig]
+    equipment: dict[str, EquipmentConfig]
 
     @model_validator(mode="after")
     def check_unit_models(self) -> Self:
@@ -118,13 +118,13 @@ class RaceConfig(StrictModel):
         return self
 
     @model_validator(mode="after")
-    def check_model_equipments(self) -> Self:
+    def check_model_equipment(self) -> Self:
         """Check names of equipment listed under models."""
-        equipment_names = self.equipments.keys()
+        equipment_names = self.equipment.keys()
         for model in self.models.values():
             if any(
                 (failed := equipment) not in equipment_names
-                for equipment in model.equipments
+                for equipment in model.equipment
             ):
                 msg = f"'{failed}' not a valid model name for {model.name}"
                 raise ValueError(msg)

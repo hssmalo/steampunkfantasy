@@ -8,7 +8,7 @@
 - **BREAKING**: Convert `special = [...]` lists on unit entries to TOML table dicts `[units.xxx.special]`
 - Add two new `UnitSpecial` literals to the schema: `"Regeneration"` and `"Hans Sverre's second favorite rule"`
 - Fix field casing: `size`, `DamageTableName`, and `ModelType` values must match schema Literals exactly
-- Fix miscellaneous field errors: `psycic` → `psychic`, `equipments_limit` → `equipment_limit`, `race = "Ork"` → `race = "ork"`, missing `shaken` and `equipments` fields, invalid `ap` string values
+- Fix miscellaneous field errors: `psycic` → `psychic`, `equipment_limit` → `equipment_limit`, `race = "Ork"` → `race = "ork"`, missing `shaken` and `equipment` fields, invalid `ap` string values
 
 ## Capabilities
 
