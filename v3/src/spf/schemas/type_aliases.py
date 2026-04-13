@@ -29,6 +29,7 @@ type EquipmentHolder = Literal[
     "Shared",
     "Specialization",
     "Tentacles",
+    "Minor Gun"
 ]
 type Speed = Literal[
     "all",
@@ -68,7 +69,13 @@ type UnitSpecial = Literal[
     "Pet",
     "Improved Resistance",
     "Protection",
-    "Tentacle"
+    "Tentacle",
+    "Illusion",
+    "Camouflage",
+    "Officer 1",
+    "Officer 2",
+    "Stacking Limit",
+    "Setup"
 ]
 type ModelSpecial = Literal[
     "To Hit",
@@ -80,6 +87,7 @@ type ModelSpecial = Literal[
 ]
 
 type AssaultSpecial = Literal[
+    "FlyBy",
     "Cunning Assault",
     "Fear",
     "Troll Stench",
@@ -89,11 +97,13 @@ type AssaultSpecial = Literal[
     "Damage",
     "Damage on Deflect",
     "Bonus",
-    "Improvement"
+    "Improvement",
+    "Overrun"
 ]
     
 type ModelType = Literal[
     "Elite",
+    "SuperElite",
     "Bio",
     "Bio Crew",
     "Crew",
@@ -125,6 +135,7 @@ type ModelType = Literal[
     "Engineer",
     "Grunt",
     "Medic",
+    "Elk"
 ]
 
 
