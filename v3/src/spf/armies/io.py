@@ -24,6 +24,7 @@ def save_army(army: Army, army_name: str, tournament: str | None = None) -> None
     path.parent.mkdir(parents=True, exist_ok=True)
     data: dict[str, Any] = {
         "race": army.race,
+        "nick": army.nick,
         "units": [
             {
                 "name": unit.name,
@@ -56,7 +57,7 @@ def load_army(army_name: str, tournament: str | None = None) -> Army:
 
 def print_army(army: Army, cfg: RaceConfig) -> None:
     """Pretty-print an army to the console using rich."""
-    stdout.rule(f"{cfg.races[army.race].name} Army")
+    stdout.rule(f"{army.nick} \u2014 {cfg.races[army.race].name} Army")
     for unit in army.units:
         table = Table(title=f"Unit: {unit.config.name}", show_header=True)
         table.add_column("Model")
@@ -89,4 +90,4 @@ def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
         )
         for unit_data in data["units"]
     )
-    return Army(race=data["race"], units=units)
+    return Army(race=data["race"], nick=data["nick"], units=units)

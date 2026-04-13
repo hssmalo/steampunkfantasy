@@ -61,7 +61,7 @@ def simple_race() -> RaceConfig:
 
 
 def test_print_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = add_unit(Army(race="goblin", units=()), "squad", simple_race)
+    army = add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", simple_race)
     # Capture output to avoid noise in test output; assert it runs without error
     console = Console(record=True)
     console.print("")  # prime the recorder
@@ -69,5 +69,5 @@ def test_print_army_does_not_raise(simple_race: RaceConfig) -> None:
 
 
 def test_print_army_empty_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     print_army(army, simple_race)

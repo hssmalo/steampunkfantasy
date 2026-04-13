@@ -89,7 +89,7 @@ def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 
 def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "test-army")
     loaded = load_army("test-army")
     assert loaded.race == army.race
@@ -98,7 +98,7 @@ def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
 
 def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
     race_config = get_race("goblin")
-    army = add_unit(Army(race="goblin", units=()), "goblin_infantry", race_config)
+    army = add_unit(Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", race_config)
     save_army(army, "goblin-warband")
     loaded = load_army("goblin-warband")
     assert loaded.race == army.race
@@ -110,7 +110,7 @@ def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
 
 
 def test_save_creates_file(armies_dir: Path) -> None:
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "my-army")
     assert (armies_dir / "my-army.json").exists()
 
@@ -120,13 +120,13 @@ def test_save_creates_parent_directory(
 ) -> None:
     nested = tmp_path / "nested" / "dir"
     monkeypatch.setattr(config.paths, "armies", nested)
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "my-army")
     assert (nested / "my-army.json").exists()
 
 
 def test_save_json_contains_race(armies_dir: Path) -> None:
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "check-race")
     data = json.loads((armies_dir / "check-race.json").read_text())
     assert data["race"] == "goblin"

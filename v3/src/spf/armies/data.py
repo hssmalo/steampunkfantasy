@@ -29,6 +29,7 @@ class Army:
     """A player's assembled force from a single army."""
 
     race: t.RaceName
+    nick: str
     units: tuple[ArmyUnit, ...]
 
 
@@ -148,7 +149,7 @@ def add_unit(army: Army, unit_name: t.UnitName, race_config: RaceConfig) -> Army
         msg = f"Unknown unit '{unit_name}'"
         raise ValueError(msg)
     new_unit = _make_default_team_unit(unit_name, race_config)
-    return Army(race=army.race, units=(*army.units, new_unit))
+    return Army(race=army.race, nick=army.nick, units=(*army.units, new_unit))
 
 
 def upgrade_unit(
@@ -177,7 +178,7 @@ def upgrade_unit(
     new_models = (*unit.models[:model_idx], new_model, *unit.models[model_idx + 1 :])
     new_unit = ArmyUnit(name=unit.name, config=unit.config, models=new_models)
     new_units = (*army.units[:unit_idx], new_unit, *army.units[unit_idx + 1 :])
-    return Army(race=army.race, units=new_units)
+    return Army(race=army.race, nick=army.nick, units=new_units)
 
 
 def upgrade_model(
@@ -210,7 +211,7 @@ def upgrade_model(
     new_models = (*unit.models[:model_idx], new_model, *unit.models[model_idx + 1 :])
     new_unit = ArmyUnit(name=unit.name, config=unit.config, models=new_models)
     new_units = (*army.units[:unit_idx], new_unit, *army.units[unit_idx + 1 :])
-    return Army(race=army.race, units=new_units)
+    return Army(race=army.race, nick=army.nick, units=new_units)
 
 
 def available_models(

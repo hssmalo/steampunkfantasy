@@ -102,12 +102,12 @@ def simple_race() -> RaceConfig:
 
 @pytest.fixture
 def empty_army() -> Army:
-    return Army(race="goblin", units=())
+    return Army(race="goblin", nick="Test Army", units=())
 
 
 @pytest.fixture
 def one_unit_army(simple_race: RaceConfig) -> Army:
-    return add_unit(Army(race="goblin", units=()), "squad", simple_race)
+    return add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", simple_race)
 
 
 @pytest.fixture
@@ -117,7 +117,7 @@ def goblin_army() -> RaceConfig:
 
 @pytest.fixture
 def goblin_team(goblin_army: RaceConfig) -> Army:
-    return add_unit(Army(race="goblin", units=()), "goblin_infantry", goblin_army)
+    return add_unit(Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", goblin_army)
 
 
 # ---------------------------------------------------------------------------
@@ -147,7 +147,7 @@ def test_team_is_frozen(empty_army: Army) -> None:
 
 
 def test_team_allows_duplicate_unit_in_army(simple_race: RaceConfig) -> None:
-    team = Army(race="goblin", units=())
+    team = Army(race="goblin", nick="Test Army", units=())
     team = add_unit(team, "squad", simple_race)
     team = add_unit(team, "squad", simple_race)
     assert len(team.units) == 2
@@ -172,7 +172,7 @@ def test_add_cost_sums_fields() -> None:
 
 
 def test_total_cost_empty_army(simple_race: RaceConfig) -> None:
-    team = Army(race="goblin", units=())
+    team = Army(race="goblin", nick="Test Army", units=())
     assert total_cost(team, simple_race) == t.Cost()
 
 
@@ -264,21 +264,21 @@ def test_satisfies_requires_cnf_all_groups_needed(simple_race: RaceConfig) -> No
 
 
 def test_add_unit_appends_to_team(simple_race: RaceConfig) -> None:
-    team = Army(race="goblin", units=())
+    team = Army(race="goblin", nick="Test Army", units=())
     team = add_unit(team, "squad", simple_race)
     assert len(team.units) == 1
     assert team.units[0].name == "squad"
 
 
 def test_add_unit_default_models_match_config(simple_race: RaceConfig) -> None:
-    team = add_unit(Army(race="goblin", units=()), "squad", simple_race)
+    team = add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", simple_race)
     unit = team.units[0]
     assert tuple(m.name for m in unit.models) == tuple(unit.config.models)
 
 
 def test_add_unit_unknown_name_raises(simple_race: RaceConfig) -> None:
     with pytest.raises(ValueError, match="Unknown unit"):
-        add_unit(Army(race="goblin", units=()), "does_not_exist", simple_race)
+        add_unit(Army(race="goblin", nick="Test Army", units=()), "does_not_exist", simple_race)
 
 
 # ---------------------------------------------------------------------------
@@ -385,7 +385,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         models=simple_race.models,
         equipments={**simple_race.equipments, "elite_sword": elite_only_equip},
     )
-    team = add_unit(Army(race="goblin", units=()), "squad", army)
+    team = add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", army)
     with pytest.raises(ValueError, match="requires are not satisfied"):
         upgrade_model(team, ("squad", 0), ("soldier", 0), "elite_sword", army)
 
@@ -504,7 +504,7 @@ def test_validate_team_detects_invalid_model_replacement(
             ),
         ),
     )
-    team = Army(race="goblin", units=(illegal_unit,))
+    team = Army(race="goblin", nick="Test Army", units=(illegal_unit,))
     errors = validate_team(team, simple_race)
     assert len(errors) >= 1
     assert any("cannot replace" in e for e in errors)
@@ -536,7 +536,7 @@ def test_validate_team_detects_multiple_violations(simple_race: RaceConfig) -> N
             ),
         ),
     )
-    team = Army(race="goblin", units=(illegal_unit,))
+    team = Army(race="goblin", nick="Test Army", units=(illegal_unit,))
     errors = validate_team(team, simple_race)
     assert len(errors) == 2
 
@@ -563,6 +563,6 @@ def test_validate_team_detects_unsatisfied_equipment_requires(
         upgrades=("elite_sword",),
     )
     bad_unit = ArmyUnit(name="squad", config=army.units["squad"], models=(bad_model,))
-    team = Army(race="goblin", units=(bad_unit,))
+    team = Army(race="goblin", nick="Test Army", units=(bad_unit,))
     errors = validate_team(team, army)
     assert any("requires are not satisfied" in e for e in errors)

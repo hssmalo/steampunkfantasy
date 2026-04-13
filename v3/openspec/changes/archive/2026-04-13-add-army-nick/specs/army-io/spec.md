@@ -1,10 +1,4 @@
-# Spec: Army IO
-
-## Purpose
-
-Provides serialization and deserialization of `Army` objects to and from JSON files on disk, enabling armies to be saved and reloaded across sessions.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Save army to disk
 The system SHALL provide a function to serialize an `Army` to a JSON file identified by an army name. The file path SHALL be derived as `config.paths.armies / f"{army_name}.json"`. Only structural data (race name, nick, unit names, model names, upgrades) SHALL be written; embedded config objects SHALL NOT be serialized. The `nick` field SHALL always be written to the JSON output.
@@ -35,10 +29,3 @@ The system SHALL provide a function to deserialize an `Army` from a JSON file id
 #### Scenario: Loading a file without nick raises an error
 - **WHEN** `load_army(army_name)` is called and the JSON file has no `nick` key
 - **THEN** a `KeyError` is raised
-
-### Requirement: Armies path in config
-The system SHALL expose an `armies` path in the `PathsConfig` configuration, pointing to the project's `armies/` directory by default.
-
-#### Scenario: Config provides armies path
-- **WHEN** the application config is loaded
-- **THEN** `config.paths.armies` is a `Path` pointing to the configured armies directory
