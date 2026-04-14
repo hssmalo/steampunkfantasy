@@ -422,7 +422,7 @@ ap = 2
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 
 [models.frost88]
-name = "Frost88"
+name = "Frost 88"
 race = "abomination"
 equipment = ["twin_frost_ray", "main_gun"]
 equipment_limit = ["Independent:∞"]
@@ -494,7 +494,7 @@ ap = 2
 [equipment]
 
 [equipment.confusion_gas_launcher]
-name = "Confution Gas launcher"
+name = "Confusion Gas launcher"
 race = "abomination"
 
 [equipment.confusion_gas_launcher.range]
@@ -503,7 +503,7 @@ angle = [true, true, false, false]
 damage = "d6 psychic + d4 crew damage"
 ap = "N/A"
 special = [
-	"Fires 3 shot per fire order. Each hit gives one confusion token to any unit with bio or a bio crew. (se general rules)",
+	"Fires 3 shot per fire order. Each hit gives one confusion token to any unit with bio or a bio crew. (see general rules)",
 ]
 
 [equipment.multipurpose_gun]
