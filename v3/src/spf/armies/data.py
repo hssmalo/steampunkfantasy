@@ -55,12 +55,6 @@ def _make_default_team_unit(unit_name: t.UnitName, race_config: RaceConfig) -> A
     return ArmyUnit(name=unit_name, config=unit_config, models=models)
 
 
-def _add_cost(a: t.Cost, b: t.Cost | None) -> t.Cost:
-    if b is None:
-        return a
-    return t.Cost(mp=a.mp + b.mp, cp=a.cp + b.cp, xp=a.xp + b.xp, ip=a.ip + b.ip)
-
-
 def _remaining_slots(
     model: ArmyModel, race_config: RaceConfig
 ) -> dict[t.EquipmentHolder, int]:
@@ -287,26 +281,22 @@ def unit_cost(unit: ArmyUnit, race_config: RaceConfig) -> t.Cost:
     Unit base cost + upgrade model costs + upgrade equipment costs.
     Equipment with upgrade_all=True is charged once; otherwise it's charged per model.
     """
-    cost = _add_cost(t.Cost(), unit.config.cost)
+    cost = t.Cost() + (unit.config.cost or t.Cost())
     num_models = len(unit.models)
     for i, team_model in enumerate(unit.models):
         # A model is an upgrade when its name differs from the default.
-        if team_model.name != unit.config.models[i]:
-            cost = _add_cost(cost, team_model.config.cost)
+        if team_model.name != unit.config.models[i] and team_model.config.cost:
+            cost = cost + team_model.config.cost
         for equip_key in team_model.upgrades:
             equip = race_config.equipment[equip_key]
+            if equip.cost is None:
+                continue
             # upgrade_all=False: per-model pricing — multiply by unit size.
             # upgrade_all=True or None: flat cost (None preserves legacy behavior).
-            if equip.upgrade_all is False and equip.cost is not None:
-                scaled = t.Cost(
-                    mp=equip.cost.mp * num_models,
-                    cp=equip.cost.cp * num_models,
-                    xp=equip.cost.xp * num_models,
-                    ip=equip.cost.ip * num_models,
-                )
-                cost = _add_cost(cost, scaled)
+            if equip.upgrade_all is False:
+                cost = cost + equip.cost * num_models
             else:
-                cost = _add_cost(cost, equip.cost)
+                cost = cost + equip.cost
     return cost
 
 
@@ -315,8 +305,7 @@ def unit_points(unit: ArmyUnit, race_config: RaceConfig) -> int:
 
     Points = mp + cp + xp + 3 * ip of the unit's total cost.
     """
-    cost = unit_cost(unit, race_config)
-    return cost.mp + cost.cp + cost.xp + 3 * cost.ip
+    return unit_cost(unit, race_config).to_points()
 
 
 def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
@@ -324,10 +313,7 @@ def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
 
     Unit base costs + upgrade model costs + upgrade equipment costs.
     """
-    cost = t.Cost()
-    for unit in army.units:
-        cost = _add_cost(cost, unit_cost(unit, race_config))
-    return cost
+    return sum((unit_cost(unit, race_config) for unit in army.units), t.Cost())
 
 
 def validate_army(army: Army, race_config: RaceConfig) -> list[str]:

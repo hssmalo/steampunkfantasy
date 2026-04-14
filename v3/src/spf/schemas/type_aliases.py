@@ -1,6 +1,6 @@
 """Type aliases for SteamPunkFantasy."""
 
-from typing import Annotated, Literal, cast
+from typing import Annotated, Literal, Self, cast
 
 from pydantic import BeforeValidator
 
@@ -148,6 +148,33 @@ class Cost(StrictModel):
     cp: int = 0
     xp: int = 0
     ip: int = 0
+
+    def __add__(self, other: Self) -> Self:
+        """Return element-wise sum of two costs."""
+        return self.__class__(
+            mp=self.mp + other.mp,
+            cp=self.cp + other.cp,
+            xp=self.xp + other.xp,
+            ip=self.ip + other.ip,
+        )
+
+    def __radd__(self, other: Self) -> Self:
+        """Support sum(costs, Cost())."""
+        return other.__add__(self)
+
+    def __mul__(self, n: int) -> Self:
+        """Return cost scaled by n."""
+        return self.__class__(
+            mp=self.mp * n, cp=self.cp * n, xp=self.xp * n, ip=self.ip * n
+        )
+
+    def __rmul__(self, n: int) -> Self:
+        """Return cost scaled by n (reflected)."""
+        return self.__mul__(n)
+
+    def to_points(self) -> int:
+        """Return the points value: mp + cp + xp + 3 * ip."""
+        return self.mp + self.cp + self.xp + 3 * self.ip
 
     def __str__(self) -> str:
         """Return a human-readable cost string, graying out zero values."""

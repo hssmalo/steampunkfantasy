@@ -6,7 +6,6 @@ from spf.armies.data import (
     Army,
     ArmyModel,
     ArmyUnit,
-    _add_cost,
     _format_failed_group,
     _remaining_slots,
     _satisfies_requires,
@@ -165,20 +164,46 @@ def test_team_allows_duplicate_unit_in_army(simple_race: RaceConfig) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Cost helpers
+# Cost arithmetic
 # ---------------------------------------------------------------------------
 
 
-def test_add_cost_with_none_is_identity() -> None:
-    base = t.Cost(mp=1, cp=2, xp=3, ip=4)
-    assert _add_cost(base, None) == base
-
-
-def test_add_cost_sums_fields() -> None:
+def test_cost_add_sums_fields() -> None:
     a = t.Cost(mp=1, cp=2, xp=3, ip=4)
     b = t.Cost(mp=10, cp=20, xp=30, ip=40)
-    result = _add_cost(a, b)
-    assert result == t.Cost(mp=11, cp=22, xp=33, ip=44)
+    assert a + b == t.Cost(mp=11, cp=22, xp=33, ip=44)
+
+
+def test_cost_add_identity() -> None:
+    base = t.Cost(mp=1, cp=2, xp=3, ip=4)
+    assert base + t.Cost() == base
+    assert t.Cost() + base == base
+
+
+def test_cost_sum_over_list() -> None:
+    costs = [t.Cost(mp=1), t.Cost(mp=2), t.Cost(cp=5)]
+    assert sum(costs, t.Cost()) == t.Cost(mp=3, cp=5)
+
+
+def test_cost_mul_scales_all_fields() -> None:
+    assert t.Cost(mp=3, cp=1, xp=0, ip=2) * 4 == t.Cost(mp=12, cp=4, xp=0, ip=8)
+
+
+def test_cost_rmul_is_equivalent() -> None:
+    cost = t.Cost(mp=3, cp=1, xp=0, ip=2)
+    assert 4 * cost == cost * 4
+
+
+def test_cost_mul_by_zero() -> None:
+    assert t.Cost(mp=5, cp=3, xp=1, ip=2) * 0 == t.Cost()
+
+
+def test_cost_to_points_formula() -> None:
+    assert t.Cost(mp=2, cp=3, xp=1, ip=2).to_points() == 12  # 2+3+1+6
+
+
+def test_cost_to_points_zero() -> None:
+    assert t.Cost().to_points() == 0
 
 
 def test_unit_cost_base_only(one_unit_army: Army, simple_race: RaceConfig) -> None:
