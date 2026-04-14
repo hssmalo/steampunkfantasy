@@ -1,27 +1,22 @@
-"""Army data structures and builder functions for SteamPunkFantasy."""
+"""Army data structure and army-level builder, query, and validation functions."""
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
+from spf.armies.model import (
+    ArmyModel,
+    _format_failed_group,
+    _remaining_slots,
+    _satisfies_requires,
+    _unsatisfied_groups,
+)
+from spf.armies.unit import (
+    ArmyUnit,
+    _make_default_team_unit,
+    _resolve_model,
+    unit_cost,
+)
 from spf.schemas import type_aliases as t
-from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig, UnitConfig
-
-
-@dataclass(frozen=True)
-class ArmyModel:
-    """One model slot within a army unit, with any equipment upgrades applied."""
-
-    name: str
-    config: ModelConfig = field(repr=False)
-    upgrades: tuple[str, ...]
-
-
-@dataclass(frozen=True)
-class ArmyUnit:
-    """One unit instance within a army, with its (possibly upgraded) model slots."""
-
-    name: str
-    config: UnitConfig = field(repr=False)
-    models: tuple[ArmyModel, ...]
+from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig
 
 
 @dataclass(frozen=True)
@@ -31,105 +26,6 @@ class Army:
     race: t.RaceName
     nick: str
     units: tuple[ArmyUnit, ...]
-
-
-# ---------------------------------------------------------------------------
-# Internal helpers
-# ---------------------------------------------------------------------------
-
-
-def _make_default_team_model(
-    model_name: t.ModelName, race_config: RaceConfig
-) -> ArmyModel:
-    return ArmyModel(
-        name=model_name, config=race_config.models[model_name], upgrades=()
-    )
-
-
-def _make_default_team_unit(unit_name: t.UnitName, race_config: RaceConfig) -> ArmyUnit:
-    unit_config = race_config.units[unit_name]
-    models = tuple(
-        _make_default_team_model(model_name, race_config)
-        for model_name in unit_config.models
-    )
-    return ArmyUnit(name=unit_name, config=unit_config, models=models)
-
-
-def _remaining_slots(
-    model: ArmyModel, race_config: RaceConfig
-) -> dict[t.EquipmentHolder, int]:
-    """Compute remaining holder slots after all current equipment (defaults + upgrades).
-
-    Slot usage is read from each equipment's requires field. In practice, holder
-    requirements always appear in single-item OR-groups, so iterating all items
-    in all groups gives the correct usage. If an OR-group contained multiple holder
-    requirements in the future, this would over-count; revisit then.
-    """
-    slots: dict[t.EquipmentHolder, int] = {
-        limit.holder: limit.limit for limit in model.config.equipment_limit
-    }
-    for equip_key in (*model.config.equipment, *model.upgrades):
-        for req_group in race_config.equipment[equip_key].requires:
-            for req in req_group:
-                if (
-                    req.key != "type"
-                    and isinstance(req.value, int)
-                    and req.key in slots
-                ):
-                    slots[req.key] -= req.value  # type: ignore[index]
-    return slots
-
-
-def _satisfies_requirement(
-    req: t.Requirement,
-    model: ArmyModel,
-    remaining_slots: dict[t.EquipmentHolder, int],
-) -> bool:
-    if req.key == "type":
-        return req.value in model.config.type
-    available = remaining_slots.get(req.key, 0)
-    return isinstance(req.value, int) and available >= req.value
-
-
-def _unsatisfied_groups(
-    requires: list[list[t.Requirement]],
-    model: ArmyModel,
-    race_config: RaceConfig,
-) -> list[list[t.Requirement]]:
-    """Return OR-groups from requires that are not satisfied by model.
-
-    An empty list means the model satisfies all requirement groups.
-    """
-    remaining = _remaining_slots(model, race_config)
-    return [
-        group
-        for group in requires
-        if not any(_satisfies_requirement(req, model, remaining) for req in group)
-    ]
-
-
-def _format_failed_group(
-    group: list[t.Requirement],
-    remaining_slots: dict[t.EquipmentHolder, int],
-) -> str:
-    """Format a failing OR-group as a human-readable constraint description."""
-    parts: list[str] = []
-    for req in group:
-        if req.key == "type":
-            parts.append(f"type:{req.value}")
-        else:
-            available = remaining_slots.get(req.key, 0)  # type: ignore[arg-type]
-            parts.append(f"{req.key}:{req.value} (have {available})")
-    return "needs " + " or ".join(parts)
-
-
-def _satisfies_requires(
-    requires: list[list[t.Requirement]],
-    model: ArmyModel,
-    race_config: RaceConfig,
-) -> bool:
-    """Evaluate CNF requires: every outer group must have ≥1 satisfied inner req."""
-    return not _unsatisfied_groups(requires, model, race_config)
 
 
 def _resolve_unit(army: Army, unit_key: tuple[t.UnitName, int]) -> tuple[int, ArmyUnit]:
@@ -143,26 +39,6 @@ def _resolve_unit(army: Army, unit_key: tuple[t.UnitName, int]) -> tuple[int, Ar
             count += 1
     msg = f"Unit '{unit_key}' not found in army"
     raise KeyError(msg)
-
-
-def _resolve_model(
-    unit: ArmyUnit, model_key: tuple[t.ModelName, int]
-) -> tuple[int, ArmyModel]:
-    """Return (index_in_tuple, ArmyModel) for the given (name, occurrence_index) key."""
-    name, occurrence = model_key
-    count = 0
-    for i, model in enumerate(unit.models):
-        if model.name == name:
-            if count == occurrence:
-                return i, model
-            count += 1
-    msg = f"Model '{model_key}' not found in unit '{unit.name}'"
-    raise KeyError(msg)
-
-
-# ---------------------------------------------------------------------------
-# Public API
-# ---------------------------------------------------------------------------
 
 
 def add_unit(army: Army, unit_name: t.UnitName, race_config: RaceConfig) -> Army:
@@ -273,39 +149,6 @@ def available_equipment(
         if cfg.cost is not None
         and _satisfies_requires(cfg.requires, model, race_config)
     ]
-
-
-def unit_cost(unit: ArmyUnit, race_config: RaceConfig) -> t.Cost:
-    """Return the total cost for a single unit.
-
-    Unit base cost + upgrade model costs + upgrade equipment costs.
-    Equipment with upgrade_all=True is charged once; otherwise it's charged per model.
-    """
-    cost = t.Cost() + (unit.config.cost or t.Cost())
-    num_models = len(unit.models)
-    for i, team_model in enumerate(unit.models):
-        # A model is an upgrade when its name differs from the default.
-        if team_model.name != unit.config.models[i] and team_model.config.cost:
-            cost = cost + team_model.config.cost
-        for equip_key in team_model.upgrades:
-            equip = race_config.equipment[equip_key]
-            if equip.cost is None:
-                continue
-            # upgrade_all=False: per-model pricing — multiply by unit size.
-            # upgrade_all=True or None: flat cost (None preserves legacy behavior).
-            if equip.upgrade_all is False:
-                cost = cost + equip.cost * num_models
-            else:
-                cost = cost + equip.cost
-    return cost
-
-
-def unit_points(unit: ArmyUnit, race_config: RaceConfig) -> int:
-    """Return the points value for a single unit.
-
-    Points = mp + cp + xp + 3 * ip of the unit's total cost.
-    """
-    return unit_cost(unit, race_config).to_points()
 
 
 def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:

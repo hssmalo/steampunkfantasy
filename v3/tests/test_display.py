@@ -4,7 +4,7 @@ import pytest
 from rich.console import Console
 
 import spf.armies.io
-from spf.armies.data import Army, add_unit
+from spf.armies import Army, add_unit
 from spf.armies.io import print_army
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (

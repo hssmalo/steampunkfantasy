@@ -1,15 +1,11 @@
-"""Tests for spf.armies.data module."""
+"""Tests for army data structures and functions."""
 
 import pytest
 
-from spf.armies.data import (
+from spf.armies import (
     Army,
     ArmyModel,
     ArmyUnit,
-    _format_failed_group,
-    _remaining_slots,
-    _satisfies_requires,
-    _unsatisfied_groups,
     add_unit,
     available_equipment,
     available_models,
@@ -19,6 +15,12 @@ from spf.armies.data import (
     upgrade_model,
     upgrade_unit,
     validate_army,
+)
+from spf.armies.model import (
+    _format_failed_group,
+    _remaining_slots,
+    _satisfies_requires,
+    _unsatisfied_groups,
 )
 from spf.races import get_race
 from spf.schemas import type_aliases as t

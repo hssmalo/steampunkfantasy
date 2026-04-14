@@ -4,12 +4,12 @@ import json
 from pathlib import Path
 from typing import Any
 
-from spf.armies.data import (
+from spf.armies import (
     Army,
     ArmyModel,
     ArmyUnit,
     total_cost,
-    unit_points,
+    unit_cost,
     validate_army,
 )
 from spf.config import config
@@ -67,7 +67,7 @@ def print_army(army: Army, cfg: RaceConfig) -> None:
     """Pretty-print an army to the console."""
     stdout.rule(f"{army.nick} ({cfg.races[army.race].name})")
     for unit in army.units:
-        pts = unit_points(unit, cfg)
+        pts = unit_cost(unit, cfg).to_points()
         stdout.print(
             f"[bold]{unit.config.name}[/] [yellow]({pts} pts)[/]", highlight=False
         )

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.armies.data import Army, add_unit
+from spf.armies import Army, add_unit
 from spf.armies.io import load_army, save_army
 from spf.config import config
 from spf.races import get_race
