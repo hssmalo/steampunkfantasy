@@ -449,10 +449,6 @@ cost.xp = 2
 upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
-[equipments.grenadier.model_special]
-# GA: er dette model eller unit special?
-# HSS: model special :)
-
 [equipment.grenadier.model_special]
 "To Hit (2)" = "Get +1 to hit for thrown weapons"
 
