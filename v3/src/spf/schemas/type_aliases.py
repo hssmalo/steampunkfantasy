@@ -30,6 +30,7 @@ type EquipmentHolder = Literal[
     "Specialization",
     "Tentacles",
     "Minor Gun",
+    "Reserve Melee",
 ]
 type Speed = Literal[
     "all",

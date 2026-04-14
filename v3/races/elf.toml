@@ -221,7 +221,7 @@ cost.ip = 4
 armor = [8, 6, 6, 6]
 
 [units.tattoo_ink.special]
-"Fire Order" = "May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One of the SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do."
+"Fire Order" = "May fire two SMG (and each SMG fire twice) in addition to PentaGun any time a fire order is given. One of the SMG must fire in same angle as PentaGun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only PentaGun do."
 
 [units.tattoo_ink.shaken]
 speed = "still"
@@ -589,7 +589,7 @@ ap = 3
 name = "Tattoo Ink"
 race = "elf"
 equipment_limit = ["Independent:∞", "Minor Gun:1"]
-equipment = ["gattle_gun", "smg_reserve"]
+equipment = ["pentagun", "smg_free"]
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 
 [models.tattoo_ink.special]
@@ -626,7 +626,7 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 
 [models.elf_scout]
-name = "Elite Elf scout"
+name = "Elf scout"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
@@ -1132,12 +1132,12 @@ damage = "d6-2"
 ap = 2
 special = ["Area[5] on a hex within normal range"]
 
-[equipment.gattle_gun]
-name = "Gattle_gun"
+[equipment.pentagun]
+name = "PentaGun"
 race = "elf"
 requires = [["type:Vehicle"], ["Minor Gun:1"]]
 
-[equipment.gattle_gun.range]
+[equipment.pentagun.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
@@ -1167,18 +1167,6 @@ race = "elf"
 requires = [["Hands:2"]]
 
 [equipment.smg_free.range]
-range = 4
-angle = [true, true, true, true]
-damage = "d6-3"
-ap = 1
-special = ["Fire two shot per fire order (per smg in the unit)"]
-
-[equipment.smg_reserve]
-name = "SMG"
-race = "elf"
-requires = []
-
-[equipment.smg_reserve.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-3"
@@ -1501,7 +1489,7 @@ ap = "7"
 special = ["Area(5+)", "Target any hex within normal range", "Always loaded"]
 
 [equipment.hand_grenade]
-name = "Grenade"
+name = "Hand Grenade"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 2
@@ -1524,7 +1512,7 @@ slow = [["-", "Throw"]]
 fast = [["-", "Throw"]]
 
 [equipment.crew_hand_grenade]
-name = "Grenade"
+name = "Crew Hand Grenade"
 race = "elf"
 requires = []
 

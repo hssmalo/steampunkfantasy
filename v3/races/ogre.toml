@@ -449,7 +449,7 @@ crew = [
 [models.ogre_infantry]
 name = "Ogre Infantry"
 race = "ogre"
-equipment_limit = ["Independent:∞", "Hands:2"]
+equipment_limit = ["Independent:∞", "Hands:2", "Reserve Melee:1"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking"]
 
@@ -494,8 +494,8 @@ ap = 1
 [models.ogre_assault_scout]
 name = "Ogre Scout"
 race = "ogre"
-equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["gear_pistol", "ogre_helbard_free"]
+equipment_limit = ["Independent:∞", "Hands:2", "Reserve Melee:1"]
+equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 
 [models.ogre_assault_scout.assault]
@@ -512,7 +512,7 @@ race = "ogre"
 cost.xp = 4
 replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["gear_pistol", "ogre_helbard_free"]
+equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 
 [models.ogre_scout_engineer.unit_special]
@@ -584,7 +584,7 @@ ap = 0
 "Pre-Assault Retreat" = "4+"
 
 [models.healing_drone]
-name = "Repair Drone"
+name = "Healing Drone"
 race = "ogre"
 equipment_limit = ["Independent:∞"]
 equipment = []
@@ -874,7 +874,7 @@ requires = [["Hands:1"], ["type:Scout", "type:Infantry"]]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
-ap = "2"
+ap = 2
 special = [
 	"minor acid",
 	"+1 to hit",
@@ -890,44 +890,35 @@ requires = []
 range = 1
 angle = [true, true, true, true]
 damage = "d4-2"
-ap = "0"
+ap = 0
 special = ["minor acid", "+3 to hit", "Start with two ammo"]
 
-[equipment.ogre_helbard_free]
-name = "Ogre Helbard"
+[equipment.ogre_sword_free]
+name = "Ogre Sword"
 race = "ogre"
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
-[equipment.ogre_helbard_free.assault.special]
+[equipment.ogre_sword_free.assault.special]
 "Bonus" = "+1 assault strength per enemy model in assault (forward direction only)"
 
-[equipment.ogre_helbard]
-name = "Ogre Helbard"
+[equipment.ogre_sword]
+name = "Ogre Sword"
 race = "ogre"
 cost.cp = 2
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
-[equipment.ogre_helbard.assault.special]
+[equipment.ogre_sword.assault.special]
 "Bonus" = "+1 assault strength per enemy model in assault (forward direction only)"
 
-[equipment.fancy_ogre_helbard]
-name = "Fancy Ogre Helbard with integrated fancy pistol"
+[equipment.fancy_ogre_sword]
+name = "Fancy Ogre Sword"
 race = "ogre"
-cost.cp = 4
+cost.cp = 3
 upgrade_all = false
-requires = [["Hands:2"], ["type:Scout", "type:Scout"], ["type:Elite"]]
+requires = [["Reserve Melee:1"], ["type:Scout"], ["type:Elite"]]
 
-[equipment.fancy_ogre_helbard.assault.special]
+[equipment.fancy_ogre_sword.assault.special]
 "Bonus" = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
 
-[equipment.fancy_ogre_helbard.range]
-range = 3
-angle = [true, true, true, true]
-damage = "d6-2"
-ap = "2"
-special = [
-	"minor acid",
-	"+1 to hit",
-	"May be loaded up to 2 times. Start with two ammo",
-]
+
