@@ -111,7 +111,7 @@ slow = [
 	["Follow", "Follow", "Follow"],
 ]
 fast = [
-	["chase", "chase", "chase"],
+	["-", "chase", "chase"],
 	["360°", "F", "B"],
 	["Follow", "Follow", "Follow"]
 ]
@@ -160,7 +160,7 @@ fast = [
 	["360°", "F", "F"],
 	["F", "360°", "F"],
 	["F", "F", "360°"],
-	["chase", "chase", "chase"],
+	["-", "chase", "chase"],
 	["360°", "F", "B"],
 ]
 
@@ -287,7 +287,7 @@ movement_order = ["-", "-", "-"]
 [units.main_engine.special]
 "LoS" = "Blocks Line of Sight"
 "Tow" = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
-"Transport" = "May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order, but you may deploy a maximum of 2 tiny drone units each time"
+"Transport" = "May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order, but you may deploy a maximum of 3 tiny drone units each time"
 
 [units.main_engine.orders.fire]
 still = [
@@ -516,8 +516,7 @@ equipment = ["gear_pistol", "ogre_helbard_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 
 [models.ogre_scout_engineer.unit_special]
-# GA: Check category
-"Hans Sverre's favorite rule" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones each time"
+"Transport" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones each time"
 "Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_scout_engineer.assault]
@@ -545,6 +544,7 @@ ap = 0
 
 [models.drone_swarm.assault.special]
 # GA: ["Pre Assault escape: 4+"] Is that different?
+# Bug fra min side
 "Pre-Assault Retreat" = "4+"
 
 [models.repair_drone]
@@ -563,7 +563,6 @@ damage = "d4-2"
 ap = 0
 
 [models.repair_drone.assault.special]
-# GA: ["Pre Assault escape: 4+"] Is that different?
 "Pre-Assault Retreat" = "4+"
 
 [models.medic_drone]
@@ -582,7 +581,6 @@ damage = "d4-2"
 ap = 0
 
 [models.medic_drone.assault.special]
-# GA: ["Pre Assault escape: 4+"] Is that different?
 "Pre-Assault Retreat" = "4+"
 
 [models.healing_drone]
@@ -601,7 +599,6 @@ damage = "d4-2"
 ap = 0
 
 [models.healing_drone.assault.special]
-# GA: ["Pre Assault escape: 4+"] Is that different?
 "Pre-Assault Retreat" = "4+"
 
 [models.main_engine]
@@ -620,7 +617,7 @@ damage = "d8"
 ap = 3
 
 [models.main_engine.assault.special]
-"GA vet ikke" = "If after all assault, a wagon the engine is towing cannot enter the hex it should, the wagon is detached from the engine and cannot move"
+"Disconnected" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.artillery_wagon]
 name = "Artillery Wagon"
@@ -641,7 +638,7 @@ damage = "d8"
 ap = 3
 
 [models.artillery_wagon.assault.special]
-"GA vet ikke" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
+"Disconnected" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.broadside_wagon]
 name = "Broadside Wagon"
@@ -659,7 +656,7 @@ damage = "d8"
 ap = 3
 
 [models.broadside_wagon.assault.special]
-"GA vet ikke" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
+"Disconnected" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.elite_ogre_infantry]
 name = "Ogre Elite Infantry"
@@ -712,6 +709,7 @@ type = ["Bio", "Infantry", "Walking", "Medic"]
 
 [models.ogre_medic.unit_special]
 # GA: Does this need to be on both model and unit?
+# Hss: In this case no, and heal in general no. Currently there does not exist stacking Heal abilities. :)
 "Heal" = "Healing[1, any, 1st healing]"
 
 [models.ogre_medic.assault]
@@ -735,8 +733,7 @@ equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 
 [models.ogre_engineer.unit_special]
-# GA: Check category
-"Hans Sverre's favorite rule" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones per model each time"
+"Transport" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones per model each time"
 "Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_engineer.assault]
@@ -789,6 +786,7 @@ requires = [["Independent:1"], ["type:Carrier"]]
 
 [equipment.drone_supply.unit_special]
 # GA: Check category
+# Hss: think about this one. I want to replace with spawn abilities.
 "Hans Sverre's favorite rule" = "Gives a supply of 3 {{\\it drone swarm}} units which this model carries"
 
 [equipment.ogre_gun]
@@ -901,7 +899,7 @@ race = "ogre"
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.ogre_helbard_free.assault.special]
-"GA vet ikke" = "+1 assault strength per enemy model in assault (forward direction only)"
+"Bonus" = "+1 assault strength per enemy model in assault (forward direction only)"
 
 [equipment.ogre_helbard]
 name = "Ogre Helbard"
@@ -911,7 +909,7 @@ upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.ogre_helbard.assault.special]
-"GA vet ikke" = "+1 assault strength per enemy model in assault (forward direction only)"
+"Bonus" = "+1 assault strength per enemy model in assault (forward direction only)"
 
 [equipment.fancy_ogre_helbard]
 name = "Fancy Ogre Helbard with integrated fancy pistol"
@@ -921,7 +919,7 @@ upgrade_all = false
 requires = [["Hands:2"], ["type:Scout", "type:Scout"], ["type:Elite"]]
 
 [equipment.fancy_ogre_helbard.assault.special]
-"GA vet ikke" = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
+"Bonus" = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
 
 [equipment.fancy_ogre_helbard.range]
 range = 3
