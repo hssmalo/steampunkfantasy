@@ -35,7 +35,7 @@ def show_army(army_name: str) -> None:
     """Load and display a saved army."""
     try:
         army = io.load_army(army_name)
-    except FileNotFoundError as err:
+    except (FileNotFoundError, ValueError) as err:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 

@@ -97,17 +97,45 @@ def _satisfies_requirement(
     return isinstance(req.value, int) and available >= req.value
 
 
+def _unsatisfied_groups(
+    requires: list[list[t.Requirement]],
+    model: ArmyModel,
+    race_config: RaceConfig,
+) -> list[list[t.Requirement]]:
+    """Return OR-groups from requires that are not satisfied by model.
+
+    An empty list means the model satisfies all requirement groups.
+    """
+    remaining = _remaining_slots(model, race_config)
+    return [
+        group
+        for group in requires
+        if not any(_satisfies_requirement(req, model, remaining) for req in group)
+    ]
+
+
+def _format_failed_group(
+    group: list[t.Requirement],
+    remaining_slots: dict[t.EquipmentHolder, int],
+) -> str:
+    """Format a failing OR-group as a human-readable constraint description."""
+    parts: list[str] = []
+    for req in group:
+        if req.key == "type":
+            parts.append(f"type:{req.value}")
+        else:
+            available = remaining_slots.get(req.key, 0)  # type: ignore[arg-type]
+            parts.append(f"{req.key}:{req.value} (have {available})")
+    return "needs " + " or ".join(parts)
+
+
 def _satisfies_requires(
     requires: list[list[t.Requirement]],
     model: ArmyModel,
     race_config: RaceConfig,
 ) -> bool:
     """Evaluate CNF requires: every outer group must have ≥1 satisfied inner req."""
-    remaining = _remaining_slots(model, race_config)
-    return all(
-        any(_satisfies_requirement(req, model, remaining) for req in group)
-        for group in requires
-    )
+    return not _unsatisfied_groups(requires, model, race_config)
 
 
 def _resolve_unit(army: Army, unit_key: tuple[t.UnitName, int]) -> tuple[int, ArmyUnit]:
@@ -198,10 +226,13 @@ def upgrade_model(
             f"Equipment '{equipment_name}' has no cost and cannot be used as an upgrade"
         )
         raise ValueError(msg)
-    if not _satisfies_requires(equip.requires, model, race_config):
+    failed = _unsatisfied_groups(equip.requires, model, race_config)
+    if failed:
+        remaining = _remaining_slots(model, race_config)
+        detail = "; ".join(_format_failed_group(g, remaining) for g in failed)
         msg = (
-            f"Equipment '{equipment_name}' requires are not satisfied"
-            f" by model '{model.name}'"
+            f"Equipment '{equipment_name}' requires not satisfied"
+            f" by model '{model.name}': {detail}"
         )
         raise ValueError(msg)
 
@@ -285,7 +316,7 @@ def total_cost(army: Army, race_config: RaceConfig) -> t.Cost:
     return cost
 
 
-def validate_team(army: Army, race_config: RaceConfig) -> list[str]:
+def validate_army(army: Army, race_config: RaceConfig) -> list[str]:
     """Return all rule violations in the army. Empty list means the army is valid."""
     errors: list[str] = []
     for unit in army.units:
@@ -306,9 +337,17 @@ def validate_team(army: Army, race_config: RaceConfig) -> list[str]:
                         f"equipment '{equip_key}' has no cost"
                         " and cannot be used as upgrade"
                     )
-                elif not _satisfies_requires(equip.requires, team_model, race_config):
-                    errors.append(
-                        f"Unit '{unit.name}', model '{team_model.name}': "
-                        f"equipment '{equip_key}' requires are not satisfied"
+                else:
+                    failed = _unsatisfied_groups(
+                        equip.requires, team_model, race_config
                     )
+                    if failed:
+                        remaining = _remaining_slots(team_model, race_config)
+                        detail = "; ".join(
+                            _format_failed_group(g, remaining) for g in failed
+                        )
+                        errors.append(
+                            f"Unit '{unit.name}', model '{team_model.name}': "
+                            f"equipment '{equip_key}' requires not satisfied: {detail}"
+                        )
     return errors

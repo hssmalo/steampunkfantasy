@@ -150,3 +150,65 @@ def test_load_unknown_race_raises_value_error(armies_dir: Path) -> None:
     )
     with pytest.raises(ValueError, match="nonexistent_race_xyz"):
         load_army("bad-race")
+
+
+def test_load_blank_unit_name_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [{"name": "", "models": []}],
+    }
+    (armies_dir / "bad-unit.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match=r"Unit #0 \(name ''\): unknown unit name"):
+        load_army("bad-unit")
+
+
+def test_load_blank_model_name_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {
+                "name": "goblin_infantry",
+                "models": [{"name": "", "upgrades": []}],
+            }
+        ],
+    }
+    (armies_dir / "bad-model.json").write_text(json.dumps(data))
+    with pytest.raises(
+        ValueError, match=r"Unit #0 \('goblin_infantry'\) / model #0 \(name ''\)"
+    ):
+        load_army("bad-model")
+
+
+def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {
+                "name": "goblin_infantry",
+                "models": [{"name": "goblin_infantry", "upgrades": ["no_such_upgrade"]}],
+            }
+        ],
+    }
+    (armies_dir / "bad-upgrade.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match="unknown equipment 'no_such_upgrade'"):
+        load_army("bad-upgrade")
+
+
+def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {"name": "", "models": []},
+            {"name": "also_bad", "models": []},
+        ],
+    }
+    (armies_dir / "multi-bad.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError) as exc_info:
+        load_army("multi-bad")
+    msg = str(exc_info.value)
+    assert "Unit #0" in msg
+    assert "Unit #1" in msg

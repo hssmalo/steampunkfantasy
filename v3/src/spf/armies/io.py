@@ -10,7 +10,7 @@ from spf.armies.data import (
     ArmyUnit,
     total_cost,
     unit_points,
-    validate_team,
+    validate_army,
 )
 from spf.config import config
 from spf.console import stdout
@@ -53,7 +53,7 @@ def load_army(army_name: str, tournament: str | None = None) -> Army:
     data: dict[str, Any] = json.loads(path.read_text())
     cfg = get_race(data["race"])
     army = _build_army(data, cfg)
-    errors = validate_team(army, cfg)
+    errors = validate_army(army, cfg)
     if errors:
         msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
         raise ValueError(msg)
@@ -76,8 +76,37 @@ def print_army(army: Army, cfg: RaceConfig) -> None:
     stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
 
+def _validate_army_data(data: dict[str, Any], cfg: RaceConfig) -> list[str]:
+    """Collect name-resolution errors from raw JSON data before construction."""
+    errors: list[str] = []
+    for unit_idx, unit_data in enumerate(data["units"]):
+        unit_name = unit_data["name"]
+        if unit_name not in cfg.units:
+            errors.append(f"Unit #{unit_idx} (name {unit_name!r}): unknown unit name")
+            continue
+        for model_idx, model_data in enumerate(unit_data["models"]):
+            model_name = model_data["name"]
+            if model_name not in cfg.models:
+                errors.append(
+                    f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
+                    f" (name {model_name!r}): unknown model name"
+                )
+                continue
+            errors.extend(
+                f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
+                f" ({model_name!r}): unknown equipment {upgrade!r}"
+                for upgrade in model_data["upgrades"]
+                if upgrade not in cfg.equipment
+            )
+    return errors
+
+
 def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
     """Reconstruct an Army from deserialized JSON data and a live RaceConfig."""
+    errors = _validate_army_data(data, cfg)
+    if errors:
+        msg = "Army JSON contains invalid entries:\n" + "\n".join(errors)
+        raise ValueError(msg)
     units = tuple(
         ArmyUnit(
             name=unit_data["name"],

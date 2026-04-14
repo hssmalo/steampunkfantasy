@@ -101,16 +101,16 @@ Defines the functional API for assembling and querying a player's team. All oper
 - **WHEN** an equipment upgrade is added to a model
 - **THEN** the equipment's cost SHALL be added to `total_cost`
 
-### Requirement: validate_team returns a list of all rule violations
-`validate_team(team, army_config) -> list[str]` SHALL return a list of human-readable error strings describing every rule violation found in the team. An empty list means the team is valid. Violations checked SHALL include: model replacement validity (`replaces`), equipment requires satisfaction, and equipment-with-no-cost being used as upgrade.
+### Requirement: validate_army returns a list of all rule violations
+`validate_army(team, army_config) -> list[str]` SHALL return a list of human-readable error strings describing every rule violation found in the team. An empty list means the team is valid. Violations checked SHALL include: model replacement validity (`replaces`), equipment requires satisfaction, and equipment-with-no-cost being used as upgrade.
 
 #### Scenario: Valid team returns empty list
-- **WHEN** `validate_team` is called on a team with no rule violations
+- **WHEN** `validate_army` is called on a team with no rule violations
 - **THEN** the result SHALL be an empty list
 
 #### Scenario: All violations are reported, not just the first
 - **WHEN** a team has multiple violations
-- **THEN** `validate_team` SHALL return one error string per violation
+- **THEN** `validate_army` SHALL return one error string per violation
 
 #### Scenario: Invalid model replacement is reported
 - **WHEN** a `TeamModel` in a unit has a model that does not have the replaced model in its `replaces` list

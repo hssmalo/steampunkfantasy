@@ -7,7 +7,10 @@ from spf.armies.data import (
     ArmyModel,
     ArmyUnit,
     _add_cost,
+    _format_failed_group,
+    _remaining_slots,
     _satisfies_requires,
+    _unsatisfied_groups,
     add_unit,
     available_equipment,
     available_models,
@@ -16,7 +19,7 @@ from spf.armies.data import (
     unit_points,
     upgrade_model,
     upgrade_unit,
-    validate_team,
+    validate_army,
 )
 from spf.races import get_race
 from spf.schemas import type_aliases as t
@@ -316,6 +319,144 @@ def test_satisfies_requires_cnf_all_groups_needed(simple_race: RaceConfig) -> No
 
 
 # ---------------------------------------------------------------------------
+# _unsatisfied_groups and _format_failed_group
+# ---------------------------------------------------------------------------
+
+
+def test_unsatisfied_groups_all_satisfied(simple_race: RaceConfig) -> None:
+    soldier = ArmyModel(
+        name="soldier", config=simple_race.models["soldier"], upgrades=()
+    )
+    # sword requires [Hands:1] AND [type:Infantry]; soldier satisfies both
+    assert _unsatisfied_groups(simple_race.equipment["sword"].requires, soldier, simple_race) == []
+
+
+def test_unsatisfied_groups_type_failure_returns_group(simple_race: RaceConfig) -> None:
+    soldier = ArmyModel(
+        name="soldier", config=simple_race.models["soldier"], upgrades=()
+    )
+    req = [[t.Requirement(key="type", value="Cavalry")]]
+    failed = _unsatisfied_groups(req, soldier, simple_race)
+    assert len(failed) == 1
+    assert failed[0] == [t.Requirement(key="type", value="Cavalry")]
+
+
+def test_unsatisfied_groups_slot_failure_returns_group(simple_race: RaceConfig) -> None:
+    soldier = ArmyModel(
+        name="soldier", config=simple_race.models["soldier"], upgrades=()
+    )
+    req = [[t.Requirement(key="Hands", value=3)]]
+    failed = _unsatisfied_groups(req, soldier, simple_race)
+    assert len(failed) == 1
+
+
+def test_format_failed_group_type_only(simple_race: RaceConfig) -> None:
+    soldier = ArmyModel(
+        name="soldier", config=simple_race.models["soldier"], upgrades=()
+    )
+    remaining = _remaining_slots(soldier, simple_race)
+    group = [t.Requirement(key="type", value="Infantry"), t.Requirement(key="type", value="Grunt")]
+    result = _format_failed_group(group, remaining)
+    assert result == "needs type:Infantry or type:Grunt"
+
+
+def test_format_failed_group_slot_shows_available(simple_race: RaceConfig) -> None:
+    soldier = ArmyModel(
+        name="soldier", config=simple_race.models["soldier"], upgrades=()
+    )
+    remaining = _remaining_slots(soldier, simple_race)
+    group = [t.Requirement(key="Hands", value=2)]
+    result = _format_failed_group(group, remaining)
+    # soldier has Hands:2 available (no upgrades), so "have 2" — but we're testing format
+    assert "Hands:2" in result
+    assert "have" in result
+
+
+def test_validate_army_requires_error_includes_type_detail(
+    simple_race: RaceConfig,
+) -> None:
+    elite_only_equip = EquipmentConfig(
+        race="goblin",
+        name="Elite Sword",
+        cost=t.Cost(cp=3),
+        requires=[["type:Elite", "type:Cavalry"]],  # pyright: ignore[reportArgumentType]
+    )
+    army = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
+    )
+    bad_model = ArmyModel(
+        name="soldier",
+        config=army.models["soldier"],
+        upgrades=("elite_sword",),
+    )
+    bad_unit = ArmyUnit(name="squad", config=army.units["squad"], models=(bad_model,))
+    team = Army(race="goblin", nick="Test Army", units=(bad_unit,))
+    errors = validate_army(team, army)
+    assert any("type:Elite or type:Cavalry" in e for e in errors)
+
+
+def test_validate_army_requires_error_includes_slot_detail(
+    simple_race: RaceConfig,
+) -> None:
+    # greedy_sword needs Hands:3 but soldier only has Hands:2
+    greedy_equip = EquipmentConfig(
+        race="goblin",
+        name="Greedy Sword",
+        cost=t.Cost(cp=4),
+        requires=[["Hands:3"]],  # pyright: ignore[reportArgumentType]
+    )
+    army = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "greedy_sword": greedy_equip},
+    )
+    bad_model = ArmyModel(
+        name="soldier",
+        config=army.models["soldier"],
+        upgrades=("greedy_sword",),
+    )
+    bad_unit = ArmyUnit(name="squad", config=army.units["squad"], models=(bad_model,))
+    team = Army(race="goblin", nick="Test Army", units=(bad_unit,))
+    errors = validate_army(team, army)
+    assert any("Hands:3" in e and "have" in e for e in errors)
+
+
+def test_validate_army_requires_error_includes_all_failing_groups(
+    simple_race: RaceConfig,
+) -> None:
+    # impossible_sword needs type:Cavalry AND Hands:10 — both fail on soldier
+    impossible_equip = EquipmentConfig(
+        race="goblin",
+        name="Impossible Sword",
+        cost=t.Cost(cp=5),
+        requires=[
+            ["type:Cavalry"],
+            ["Hands:10"],
+        ],  # pyright: ignore[reportArgumentType]
+    )
+    army = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "impossible_sword": impossible_equip},
+    )
+    bad_model = ArmyModel(
+        name="soldier",
+        config=army.models["soldier"],
+        upgrades=("impossible_sword",),
+    )
+    bad_unit = ArmyUnit(name="squad", config=army.units["squad"], models=(bad_model,))
+    team = Army(race="goblin", nick="Test Army", units=(bad_unit,))
+    errors = validate_army(team, army)
+    # Both failing groups should appear, separated by "; "
+    assert any("type:Cavalry" in e and "Hands:10" in e for e in errors)
+
+
+# ---------------------------------------------------------------------------
 # add_unit
 # ---------------------------------------------------------------------------
 
@@ -449,7 +590,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
     )
     team = add_unit(Army(race="goblin", nick="Test Army", units=()), "squad", army)
-    with pytest.raises(ValueError, match="requires are not satisfied"):
+    with pytest.raises(ValueError, match="requires not satisfied"):
         upgrade_model(team, ("squad", 0), ("soldier", 0), "elite_sword", army)
 
 
@@ -530,17 +671,17 @@ def test_available_equipment_excludes_insufficient_slots(
 
 
 # ---------------------------------------------------------------------------
-# validate_team
+# validate_army
 # ---------------------------------------------------------------------------
 
 
-def test_validate_team_valid_returns_empty(
+def test_validate_army_valid_returns_empty(
     one_unit_army: Army, simple_race: RaceConfig
 ) -> None:
-    assert validate_team(one_unit_army, simple_race) == []
+    assert validate_army(one_unit_army, simple_race) == []
 
 
-def test_validate_team_detects_invalid_model_replacement(
+def test_validate_army_detects_invalid_model_replacement(
     simple_race: RaceConfig,
 ) -> None:
     # Manually construct an illegal replacement (soldier replacing itself — no replaces)
@@ -568,12 +709,12 @@ def test_validate_team_detects_invalid_model_replacement(
         ),
     )
     team = Army(race="goblin", nick="Test Army", units=(illegal_unit,))
-    errors = validate_team(team, simple_race)
+    errors = validate_army(team, simple_race)
     assert len(errors) >= 1
     assert any("cannot replace" in e for e in errors)
 
 
-def test_validate_team_detects_multiple_violations(simple_race: RaceConfig) -> None:
+def test_validate_army_detects_multiple_violations(simple_race: RaceConfig) -> None:
     # Two models each with an illegal replacement
     tweaked_unit_config = UnitConfig(
         race="goblin",
@@ -600,11 +741,11 @@ def test_validate_team_detects_multiple_violations(simple_race: RaceConfig) -> N
         ),
     )
     team = Army(race="goblin", nick="Test Army", units=(illegal_unit,))
-    errors = validate_team(team, simple_race)
+    errors = validate_army(team, simple_race)
     assert len(errors) == 2
 
 
-def test_validate_team_detects_unsatisfied_equipment_requires(
+def test_validate_army_detects_unsatisfied_equipment_requires(
     simple_race: RaceConfig,
 ) -> None:
     elite_only_equip = EquipmentConfig(
@@ -627,5 +768,5 @@ def test_validate_team_detects_unsatisfied_equipment_requires(
     )
     bad_unit = ArmyUnit(name="squad", config=army.units["squad"], models=(bad_model,))
     team = Army(race="goblin", nick="Test Army", units=(bad_unit,))
-    errors = validate_team(team, army)
-    assert any("requires are not satisfied" in e for e in errors)
+    errors = validate_army(team, army)
+    assert any("requires not satisfied" in e for e in errors)
