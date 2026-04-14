@@ -20,13 +20,10 @@ def list_armies() -> None:
     """List available armies."""
     for army_path in io.list_armies():
         army_id, tournament, army_name = _parse_army_path(army_path)
-        army = io.load_army(army_name, tournament=tournament)
+        army = io.load_army(army_name, tournament=tournament, validate=False)
 
         stdout.print(
-            (
-                f"- {army_id:<24} {army.race.title():<16}"
-                f" [dim]{army_path.relative_to(config.paths.project)}[/]"
-            ),
+            f"- {army_id:<24} {army.race.title():<16} {army.nick:<32}",
             highlight=False,
         )
 

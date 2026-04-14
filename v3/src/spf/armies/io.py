@@ -44,7 +44,9 @@ def save_army(army: Army, army_name: str, tournament: str | None = None) -> None
     path.write_text(json.dumps(data, indent=2))
 
 
-def load_army(army_name: str, tournament: str | None = None) -> Army:
+def load_army(
+    army_name: str, tournament: str | None = None, *, validate: bool = True
+) -> Army:
     """Deserialize army from JSON at config.paths.armies / {army_name}.json."""
     path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     if not path.exists():
@@ -53,10 +55,11 @@ def load_army(army_name: str, tournament: str | None = None) -> Army:
     data: dict[str, Any] = json.loads(path.read_text())
     cfg = get_race(data["race"])
     army = _build_army(data, cfg)
-    errors = validate_army(army, cfg)
-    if errors:
-        msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
-        raise ValueError(msg)
+    if validate:
+        errors = validate_army(army, cfg)
+        if errors:
+            msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
+            raise ValueError(msg)
     return army
 
 
