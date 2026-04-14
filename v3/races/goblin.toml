@@ -4,12 +4,19 @@
 name = "Goblin"
 
 [units]
+
 [units.goblin_infantry]
 race = "goblin"
 name = "Goblin Infantry"
-models = ["goblin_infantry", "goblin_infantry", "goblin_infantry", "goblin_infantry"]
+models = [
+	"goblin_infantry",
+	"goblin_infantry",
+	"goblin_infantry",
+	"goblin_infantry"
+]
 size = "Small"
 cost.mp = 2
+
 [units.goblin_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -32,7 +39,6 @@ regular = [
 	"8+: Unit destroyed",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-
 psychic = ["4+: shaken"]
 
 [units.goblin_infantry_carrier]
@@ -42,6 +48,7 @@ models = ["goblin_infantry_carrier"]
 size = "Large"
 armor = [10, 6, 5, 4]
 cost.ip = 4
+
 [units.goblin_infantry_carrier.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -52,79 +59,22 @@ movement_order = ["-", "-", "-"]
 
 [units.goblin_infantry_carrier.orders.movement]
 slow = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
-	[
-		"A+F",
-		"F",
-		"F+Deploy+B",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["F", "L/R", "-"],
+	["B", "-", "-"],
+	["A+F", "F", "F+Deploy+B"],
+	["F", "-", "-"],
+	["B", "-", "-"],
 ]
-
 still = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"L/R",
-	],
-	[
-		"-",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"A",
-		"F",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"rev",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
 ]
 
 [units.goblin_infantry_carrier.orders.fire]
@@ -152,7 +102,6 @@ crew = [
 	"12: Unit destroyed",
 ]
 
-
 [units.heavy_carrier]
 race = "goblin"
 name = "Heavy carrier"
@@ -160,6 +109,7 @@ models = ["heavy_carrier"]
 size = "Large"
 armor = [10, 8, 6, 4]
 cost.ip = 8
+
 [units.heavy_carrier.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -171,141 +121,36 @@ movement_order = ["-", "-", "-"]
 
 [units.heavy_carrier.orders.movement]
 slow = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"Deploy",
-	],
-	[
-		"L/R",
-		"F",
-		"-",
-	],
-	[
-		"L/R",
-		"F",
-		"Deploy",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["F", "L/R", "-"],
+	["F", "L/R", "Deploy"],
+	["L/R", "F", "-"],
+	["L/R", "F", "Deploy"],
+	["B", "-", "-"],
+	["A", "F", "-"],
+	["F", "-", "-"],
+	["B", "-", "-"],
 ]
 fast = [
-	[
-		'F',
-		'F',
-		'F+Deploy',
-	],
-	[
-		'F',
-		'F',
-		'F',
-	],
-	[
-		'F',
-		'L/R',
-		'F+Deploy',
-	],
-	[
-		'F',
-		'L/R',
-		'F',
-	],
-	[
-		'L/R',
-		'F',
-		'F',
-	],
-	[
-		'L/R',
-		'F',
-		'F+Deploy',
-	],
-	[
-		'F',
-		'F',
-		'L/R',
-	],
-	[
-		'F',
-		'F+Deploy',
-		'L/R',
-	],
-	[
-		'F',
-		"B",
-		"-",
-	],
+	['F', 'F', 'F+Deploy'],
+	['F', 'F', 'F'],
+	['F', 'L/R', 'F+Deploy'],
+	['F', 'L/R', 'F'],
+	['L/R', 'F', 'F'],
+	['L/R', 'F', 'F+Deploy'],
+	['F', 'F', 'L/R'],
+	['F', 'F+Deploy', 'L/R'],
+	['F', "B", "-"],
 ]
-
 still = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"L/R",
-	],
-	[
-		"-",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"A",
-		"F",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"rev",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
 ]
 
 [units.heavy_carrier.orders.fire]
@@ -335,7 +180,6 @@ crew = [
 	"12: Unit destroyed",
 ]
 
-
 [units.mechanical_fire_bird]
 race = "goblin"
 name = "Mechanical Fire Bird"
@@ -343,6 +187,7 @@ models = ["mechanical_fire_bird"]
 size = "Medium"
 armor = [5, 4, 4, 3]
 cost.ip = 6
+
 [units.mechanical_fire_bird.shaken]
 speed = "fast_flying"
 movement_order = ["-", "F", "F"]
@@ -352,7 +197,11 @@ movement_order = ["-", "F", "F"]
 "Immunity" = "fire"
 
 [units.mechanical_fire_bird.orders.movement]
-fast_flying = [["L/R+F", "F", "F+L/R"], ["F", "F", "F"], ["F", "L/R+F+L/R", "F"]]
+fast_flying = [
+	["L/R+F", "F", "F+L/R"],
+	["F", "F", "F"],
+	["F", "L/R+F+L/R", "F"]
+]
 
 [units.mechanical_fire_bird.orders.fire]
 fast = [["-", "Load"], ["-", "Fire"]]
@@ -366,12 +215,10 @@ regular = [
 	"{{\\it Note: + to future damage does not apply to inner damage}}",
 	"{{\\it Note that it does not get the status temporarily destroyed before the apply damage step}}",
 ]
-
-
 inner = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
 
-
 [models]
+
 [models.goblin_infantry]
 name = "Goblin Infantry"
 race = "goblin"
@@ -391,7 +238,6 @@ ap = 2
 "Cunning Assault" = "[1 for 1]"
 "Pre-Assault Retreat" = "6+"
 
-
 [models.goblin_infantry_carrier]
 name = "Goblin Infantry Carrier"
 race = "goblin"
@@ -407,7 +253,6 @@ deflection_die = "6+"
 damage = "d4-2"
 ap = 2
 
-
 [models.heavy_carrier]
 name = "Heavy Carrier"
 race = "goblin"
@@ -422,7 +267,6 @@ deflection = [16, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-
 
 [models.mechanical_fire_bird]
 name = "Mechanical Fire Bird"
@@ -441,7 +285,6 @@ ap = 1
 
 [models.mechanical_fire_bird.assault.special]
 "Damage" = "Enemy hit at least once is set on fire"
-
 
 [models.elite_goblin_infantry]
 name = "Elite Goblin Infantry"
@@ -482,7 +325,6 @@ damage = "d4-2"
 ap = "1"
 special = ["Always treated as loaded"]
 
-
 [equipment.gear_bow]
 name = "Gear bow"
 race = "goblin"
@@ -508,28 +350,11 @@ strength.add = [1, 0, 0, 0]
 [equipment.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "F", "F"]]
 fast_flying = [
-	[
-		"360°",
-		"F",
-		"B(slow, land)",
-	],
-	[
-		"F",
-		"360°",
-		"F",
-	],
-	[
-		"360°",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"360°",
-	],
+	["360°", "F", "B(slow, land)"],
+	["F", "360°", "F"],
+	["360°", "F", "F"],
+	["F", "F", "360°"],
 ]
-
 
 [equipment.poison_bow]
 name = "Poison bow"
@@ -547,7 +372,6 @@ special = [
 	"Poison[4]",
 	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
 ]
-
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -572,7 +396,6 @@ slow_flying = [["rev", "-", "B[still]"]]
 [equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]
 
-
 [equipment.poison_dagger]
 name = "Poison Deflection Dagger"
 race = "goblin"
@@ -586,7 +409,6 @@ deflection_die.replace = "6+"
 [equipment.poison_dagger.assault.special]
 "Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
 
-
 [equipment.combat_screw_driver]
 name = "Combat Screw Driver"
 race = "goblin"
@@ -599,7 +421,6 @@ deflection_die.replace = "6+"
 
 [equipment.combat_screw_driver.assault.special]
 "Cunning Deflection" = "Each deflected hit counts as hits for cunning assault purposes."
-
 
 [equipment.goblin_grenade]
 name = "Goblin Grenade"
@@ -634,7 +455,6 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 [equipment.archer.unit_special]
 "Fire Order" = "For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit"
 
-
 [equipment.acid_grenade]
 name = "Acid Grenade"
 race = "goblin"
@@ -651,7 +471,6 @@ special = [
 	"Always treated as loaded",
 	"No regular damage, but Minor Acid",
 ]
-
 
 [equipment.poison_grenade]
 name = "Poison Grenade"
@@ -671,11 +490,9 @@ special = [
 	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
 ]
 
-
 [equipment.light_mortar]
 name = "Light Mortar"
 race = "goblin"
-
 
 [equipment.light_mortar.range]
 range = 3
@@ -686,7 +503,6 @@ special = [
 	"Poison[4]",
 	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
 ]
-
 
 [equipment.goblin_bow_battery]
 name = "Goblin Bow Battery"
@@ -705,7 +521,6 @@ special = [
 	"imprecise weapon: -1 to hit",
 ]
 
-
 [equipment.heavy_crossbow]
 name = "Heavy Crossbow"
 race = "goblin"
@@ -721,7 +536,6 @@ special = [
 	"Fire once per ammo spend per fire order",
 	"enhanced accuracy: +1 to hit",
 ]
-
 
 [equipment.ring_of_fire]
 name = "Ring of Fire"

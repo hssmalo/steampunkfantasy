@@ -9,6 +9,7 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
 cost.mp = 4
+
 [units.ork_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -18,32 +19,13 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_infantry.orders.fire]
 still = [
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Aim", "-"],
+    ["-", "Aim"],
 ]
-
 
 [units.ork_infantry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "A+F", "360°"]]
@@ -56,7 +38,6 @@ regular = [
     "8+: Unit destroyed",
     "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-
 psychic = ["4+: shaken"]
 
 [units]
@@ -84,7 +65,6 @@ movement_order = ["-", "-", "flee"]
 [units.troll.orders.movement]
 slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
 
-
 [units.troll.damage_tables]
 regular = [
     "3-9: +1 on future damage",
@@ -92,7 +72,6 @@ regular = [
     "15-19: as 10-14 plus Troll unconscious",
     "20+: permanent dead",
 ]
-
 
 [units.champion]
 race = "ork"
@@ -117,7 +96,6 @@ all = [["As unit it came from"]]
 [units.champion.orders.fire]
 all = [["As unit it came from"]]
 
-
 [units.warg_rider]
 race = "ork"
 name = "Warg Rider"
@@ -135,53 +113,17 @@ movement_order = ["-", "-", "flee"]
 
 [units.warg_rider.orders.movement]
 fast = [
-    [
-        "360°",
-        "F",
-        "F",
-    ],
-    [
-        "F",
-        "360°",
-        "F",
-    ],
-    [
-        "F",
-        "F",
-        "360°",
-    ],
-    [
-        "F",
-        "B",
-        "360°",
-    ],
-    [
-        "-",
-        "chase",
-        "chase",
-    ],
+    ["360°", "F", "F"],
+    ["F", "360°", "F"],
+    ["F", "F", "360°"],
+    ["F", "B", "360°"],
+    ["-", "chase", "chase"],
 ]
 slow = [
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "-",
-        "-",
-        "chase",
-    ],
-    [
-        "360°",
-        "A",
-        "F",
-    ],
+    ["360°", "360°", "360°"],
+    ["360°", "F", "360°"],
+    ["-", "-", "chase"],
+    ["360°", "A", "F"],
 ]
 
 [units.warg_rider.orders.fire]
@@ -198,7 +140,6 @@ regular = [
     "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
     "{{\\it If killed by poison or bleeding, remove that instance}}",
 ]
-
 
 [units.speedhead]
 name = "Speedhead"
@@ -218,31 +159,11 @@ movement_order = ["-", "-", "-"]
 [units.speedhead.orders.movement]
 slow = [["L/R", "F", "L/R"], ["F", "-", "-"], ["A", "F", "F"]]
 fast = [
-    [
-        "F",
-        "F",
-        "F",
-    ],
-    [
-        "L/R",
-        "F",
-        "F",
-    ],
-    [
-        "F",
-        "F",
-        "L/R",
-    ],
-    [
-        "B",
-        "L/R",
-        "F",
-    ],
-    [
-        "B",
-        "F",
-        "-",
-    ],
+    ["F", "F", "F"],
+    ["L/R", "F", "F"],
+    ["F", "F", "L/R"],
+    ["B", "L/R", "F"],
+    ["B", "F", "-"],
 ]
 
 [units.speedhead.orders.fire]
@@ -263,7 +184,6 @@ critical = [
     "5: -1 to hit, +1 to be hit (ranged and assault)",
     "6: Unit set on fire",
 ]
-
 crew = [
     "4-5: Crippled Crew, if already shaken double initial crew damage",
     "6-7: as 4-5, shaken",
@@ -311,80 +231,26 @@ fast = [["Load", "-"], ["Fire", "-"]]
 [units.hammerhead.orders.movement]
 fast = [["F", "F", "-"], ["F", "L/R", "-"], ["F", "B", "-"], ["B", "B", "-"]]
 slow = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "A",
-        "F",
-        "-",
-    ],
-    [
-        "B",
-        "-",
-        "-",
-    ],
-    [
-        "F",
-        "-",
-        "-",
-    ],
-    [
-        "B",
-        "rev",
-        "-",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["A", "F", "-"],
+    ["B", "-", "-"],
+    ["F", "-", "-"],
+    ["B", "rev", "-"],
 ]
-
 still = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "L/R",
-    ],
-    [
-        "-",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "A",
-        "F",
-    ],
-    [
-        "A",
-        "F",
-        "-",
-    ],
-    [
-        "rev",
-        "-",
-        "-",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["L/R", "L/R", "L/R"],
+    ["-", "-", "-"],
+    ["L/R", "A", "F"],
+    ["A", "F", "-"],
+    ["rev", "-", "-"],
 ]
 
 [units.hammerhead.special]
 "Fire Order" = "All 4 harpoon gun must fire at same sector"
 "Movement" = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
-
 
 [units.battlewagon]
 race = "ork"
@@ -401,7 +267,6 @@ movement_order = ["-", "-", "-"]
 [units.battlewagon.special]
 "Transport" = "[2]: may transport up to 2 infantry. Treat any movement order as including an optional Deploy[range=0, quick] order"
 "Fire Order" = "Fire all weapons simultaneously"
-
 
 [units.battlewagon.damage_tables]
 regular = [
@@ -423,13 +288,24 @@ crew = [
 ]
 
 [units.battlewagon.orders.fire]
-still = [["Load", "-"], ["Fire", "-"], ["-", "Fire"], ["-", "Aim"], ["Aim", "-"]]
+still = [
+    ["Load", "-"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["-", "Aim"],
+    ["Aim", "-"]
+]
 slow = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 fast = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [units.battlewagon.orders.movement]
 fast = [["F", "F", "F"], ["F", "F", "-"], ["F", "B", "360°"]]
-slow = [["A+F", "F", "F"], ["360°", "F", "360°"], ["B", "rev", "-"], ["B", "-", "-"]]
+slow = [
+    ["A+F", "F", "F"],
+    ["360°", "F", "360°"],
+    ["B", "rev", "-"],
+    ["B", "-", "-"]
+]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
 
 [units.grunt]
@@ -451,7 +327,6 @@ movement_order = ["-", "-", "flee"]
 [units.grunt.orders.movement]
 slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
 
-
 [units.grunt.damage_tables]
 regular = [
     "1-5: Kill 1 model",
@@ -459,7 +334,6 @@ regular = [
     "9: Destroy unit",
 ]
 psychic = ["4+: Unit Shaken"]
-
 
 [units.ork_werewarg]
 name = "Ork WereWarg"
@@ -469,6 +343,7 @@ size = "Medium"
 cost.mp = 2
 cost.xp = 12
 armor = [0, 0, 0, 0]
+
 [units.ork_werewarg.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -480,66 +355,24 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_werewarg.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "B",
-        "",
-    ],
-    [
-        "360°",
-        "A",
-        "Chase",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "B", ""],
+    ["360°", "A", "Chase"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"]]
 fast = [["-", "Chase", "Chase"], ["F", "B", "-"]]
 
 [units.ork_werewarg.orders.fire]
 still = [
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Aim", "-"],
+    ["-", "Aim"],
 ]
 
 [units.ork_werewarg.damage_tables]
@@ -552,7 +385,6 @@ regular = [
     "{{\\it If one model is temporarily killed by bleed or poison, remove that instance}}",
 ]
 psychic = ["6+: Unit Shaken"]
-
 
 [units.bioengineered_ork]
 name = "BioEngineered Ork"
@@ -578,34 +410,23 @@ movement_order = ["-", "-", "flee"]
 "Resistance" = "Poison 1, Fire 1"
 "Immunity" = "Minor Acid"
 
-
 [units.bioengineered_ork.orders.fire]
-still = [["-", "Fire"], ["Fire", "-"], ["-", "Load"], ["Load", "-"], ["Aim", "-"]]
+still = [
+    ["-", "Fire"],
+    ["Fire", "-"],
+    ["-", "Load"],
+    ["Load", "-"],
+    ["Aim", "-"]
+]
 slow = [["-", "Aim"]]
 
 [units.bioengineered_ork.orders.movement]
 still = [["360°", "-", "-"], ["360°", "A", "F"]]
 slow = [
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "B",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "B", "-"],
+    ["-", "-", "Chase"],
 ]
 
 [units.bioengineered_ork.damage_tables]
@@ -619,7 +440,6 @@ regular = [
 ]
 psychic = ["5+: Unit Shaken"]
 
-
 [units.ork_char_b1]
 race = "ork"
 name = "Ork Char B1"
@@ -627,200 +447,62 @@ models = ["ork_char_b1"]
 size = "Large"
 cost.ip = 12
 armor = [12, 10, 8, 7]
+
 [units.ork_char_b1.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.ork_char_b1.orders.fire]
 slow = [
-    [
-        "Fire (p)",
-        "Load (h)",
-    ],
-    [
-        "Load (h)",
-        "Fire (p)",
-    ],
-    [
-        "Fire (h)",
-        "Load (p)",
-    ],
-    [
-        "Load (p)",
-        "Fire (h)",
-    ],
-    [
-        "Aim(p)",
-        " Load (h)",
-    ],
-    [
-        "Aim(p)",
-        " Fire (h)",
-    ],
-    [
-        "Load (h)",
-        "Aim (p)",
-    ],
-    [
-        "Fire (h)",
-        "Aim (p)",
-    ],
+    ["Fire (p)", "Load (h)"],
+    ["Load (h)", "Fire (p)"],
+    ["Fire (h)", "Load (p)"],
+    ["Load (p)", "Fire (h)"],
+    ["Aim(p)", " Load (h)"],
+    ["Aim(p)", " Fire (h)"],
+    ["Load (h)", "Aim (p)"],
+    ["Fire (h)", "Aim (p)"],
 ]
-
 still = [
-    [
-        "Fire (p)",
-        "Load (h)",
-    ],
-    [
-        "Load (h)",
-        "Fire (p)",
-    ],
-    [
-        "Fire (h)",
-        "Load (p)",
-    ],
-    [
-        "Load (p)",
-        "Fire (h)",
-    ],
-    [
-        "Aim(p)",
-        "Load (h)",
-    ],
-    [
-        "Aim(p)",
-        "Fire (h)",
-    ],
-    [
-        "Load (h)",
-        "Aim (p)",
-    ],
-    [
-        "Fire (h)",
-        "Aim (p)",
-    ],
-    [
-        "Aim (h)",
-        "Fire (p)",
-    ],
-    [
-        "Aim (h)",
-        "Load (p)",
-    ],
-    [
-        "Fire (p)",
-        "Aim (h)",
-    ],
-    [
-        "Load (p)",
-        "Aim (h)",
-    ],
+    ["Fire (p)", "Load (h)"],
+    ["Load (h)", "Fire (p)"],
+    ["Fire (h)", "Load (p)"],
+    ["Load (p)", "Fire (h)"],
+    ["Aim(p)", "Load (h)"],
+    ["Aim(p)", "Fire (h)"],
+    ["Load (h)", "Aim (p)"],
+    ["Fire (h)", "Aim (p)"],
+    ["Aim (h)", "Fire (p)"],
+    ["Aim (h)", "Load (p)"],
+    ["Fire (p)", "Aim (h)"],
+    ["Load (p)", "Aim (h)"],
 ]
 
 [units.ork_char_b1.orders.movement]
-
 fast = [
-    [
-        "F",
-        " F ",
-        " -",
-    ],
-    [
-        "L/R",
-        "F",
-        " -",
-    ],
-    [
-        "F",
-        "L/R",
-        " -",
-    ],
-    [
-        "F",
-        " B ",
-        " -",
-    ],
-    [
-        "B",
-        " B ",
-        " -",
-    ],
+    ["F", " F ", " -"],
+    ["L/R", "F", " -"],
+    ["F", "L/R", " -"],
+    ["F", " B ", " -"],
+    ["B", " B ", " -"],
 ]
-
-
 slow = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "A ",
-        " F ",
-        " -",
-    ],
-    [
-        "B ",
-        " - ",
-        " -",
-    ],
-    [
-        "F ",
-        " - ",
-        " -",
-    ],
-    [
-        "B ",
-        " rev ",
-        " -",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["A ", " F ", " -"],
+    ["B ", " - ", " -"],
+    ["F ", " - ", " -"],
+    ["B ", " rev ", " -"],
 ]
-
-
 still = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "L/R",
-    ],
-    [
-        "-",
-        "-",
-        "-",
-    ],
-    [
-        "L/R ",
-        " A ",
-        " F",
-    ],
-    [
-        "A ",
-        " F ",
-        " -",
-    ],
-    [
-        "rev ",
-        " - ",
-        " -",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L", "-"],
+    ["L/R", "L/R", "L/R"],
+    ["-", "-", "-"],
+    ["L/R ", " A ", " F"],
+    ["A ", " F ", " -"],
+    ["rev ", " - ", " -"],
 ]
-
 
 [units.ork_char_b1.damage_tables]
 regular = [
@@ -844,7 +526,7 @@ crew = [
 ]
 
 [units.ork_char_b1.special]
-    "Fire Order" = "Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them separately"
+"Fire Order" = "Pop gun uses orders with (p) and heavy ordes with (h). Track ammo for them separately"
 
 #
 # Models
@@ -861,7 +543,6 @@ equipment_limit = ["Hands:2", "Independent:∞"]
 [models.troll.special]
 "To Hit" = "Terrible Shot: -2 to hit with ranged weapons"
 
-
 [models.troll.assault]
 strength = [18, 2, 2, 2]
 strength_die = "6+"
@@ -870,12 +551,9 @@ deflection_die = "6+"
 damage = "d12"
 ap = 2
 
-
 [models.troll.assault.special]
-    "Fear" = "[8]"
-    "Troll Stench" =  "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and crew damage only to units with a crew damage table"
-
-
+"Fear" = "[8]"
+"Troll Stench" = "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and crew damage only to units with a crew damage table"
 
 [models.grunt]
 name = "Grunt"
@@ -883,7 +561,6 @@ race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
 type = ["Bio", "Grunt", "Walking"]
-
 
 [models.grunt.assault]
 strength = [2, 2, 2, 2]
@@ -897,7 +574,6 @@ ap = 2
 "Cunning Assault" = "[1 for 3]"
 "Ork Reroll" = "[3]"
 
-
 [models.ork_elite_infantry]
 name = "Ork Elite Infantry"
 race = "ork"
@@ -908,13 +584,10 @@ replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 
 [models.ork_elite_infantry.special]
-    "Not Yet Dead" = "after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
-
-
+"Not Yet Dead" = "after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit base and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
 
 [models.ork_elite_infantry.unit_special]
 "Improved Resistance" = "Unit gains Psychic resistance 1"
-
 
 [models.ork_elite_infantry.assault]
 strength = [3, 2, 2, 2]
@@ -928,7 +601,6 @@ ap = 2
 "Ork Reroll" = "[3]"
 "Cunning Assault" = "[1 for 3]"
 
-
 [models.ork_infantry]
 name = "Ork Infantry"
 race = "ork"
@@ -938,7 +610,6 @@ type = ["Infantry", "Walking"]
 
 [models.ork_infantry.special]
 "To Hit" = "Bad shot, -1 to hit"
-
 
 [models.ork_infantry.assault]
 strength = [2, 2, 2, 2]
@@ -959,8 +630,6 @@ equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipment = ['ork_musket']
 type = ["Infantry", "Walking", "Elite", "Monster"]
 
-
-
 [models.ork_werewarg.assault]
 strength = [3, 3, 2, 2]
 strength_die = "6+"
@@ -973,14 +642,12 @@ ap = 2
 "Ork Reroll" = "[3]"
 "Cunning Assault" = "[1 for 3]"
 
-
 [models.champion]
 name = "Champion"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
 type = ["Elite", "Infantry", "Walking"]
-
 
 [models.champion.assault]
 strength = [6, 3, 3, 3]
@@ -993,8 +660,6 @@ ap = "N/A"
 [models.champion.assault.special]
 "Ork Reroll" = "[3]"
 "Cunning Assault" = "[1 for 2]"
-
-
 
 [models.warg_rider]
 name = "Warg Rider"
@@ -1015,12 +680,10 @@ deflection = [2, 2, 1, 1]
 "Ork Reroll" = "[3]"
 "Cunning Assault" = "[1 for 4]"
 
-
 [models.hammerhead]
 name = "Hammerhead"
 race = "ork"
 type = ["Vehicle", "Mechanical", "Bio Crew", "Tracked"]
-
 equipment = [
     "harpoon_gun_free",
     "harpoon_gun_free",
@@ -1028,7 +691,6 @@ equipment = [
     "harpoon_gun_free",
 ]
 equipment_limit = ["Independent:∞"]
-
 
 [models.hammerhead.assault]
 strength = [12, 8, 8, 8]
@@ -1042,16 +704,12 @@ deflection = [12, 2, 2, 2]
 "Ork Reroll" = "[6]"
 "Angle" = "ap 2 (from non-front arcs)"
 
-
-
 [models.battlewagon]
 name = "Battlewagon"
 race = "ork"
 type = ["Vehicle", "Mechanical", "Bio Crew", "Tracked"]
-
 equipment = ["spear_shooter", "big_gun", "grenade_launcher"]
 equipment_limit = ["Independent:∞"]
-
 
 [models.battlewagon.assault]
 strength = [10, 8, 8, 8]
@@ -1062,9 +720,7 @@ ap = 2
 deflection = [0, 0, 0, 0]
 
 [models.battlewagon.assault.special]
-
-"Ork Reroll" =  "[3]"
-
+"Ork Reroll" = "[3]"
 
 [models.bioengineered_ork]
 name = "BioEngineered Ork"
@@ -1072,7 +728,6 @@ race = "ork"
 equipment_limit = ["Hands:4", "Independent:∞", "Shared:1"]
 equipment = ["ork_musket", "ork_musket"]
 type = ["Bio", "Infantry", "Walking"]
-
 
 [models.bioengineered_ork.assault]
 strength = [3, 2, 2, 2]
@@ -1098,7 +753,6 @@ replaces = "bioengineered_ork"
 [models.elite_bioengineered_ork.special]
 "To Hit" = "Good shot, +1 to hit"
 
-
 [models.elite_bioengineered_ork.assault]
 strength = [4, 3, 3, 3]
 strength_die = "6+"
@@ -1111,17 +765,12 @@ ap = 2
 "Ork Reroll" = "[6]"
 "Cunning Assault" = "[1 for 2]"
 
-
-
 [models.ork_char_b1]
 name = "Ork Char B1"
 race = "ork"
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 equipment_limit = ["Independent:∞"]
 equipment = ["rotating_pop_gun", "heavy_forward_gun"]
-
-
-
 
 [models.ork_char_b1.assault]
 strength = [6, 4, 3, 2]
@@ -1134,14 +783,12 @@ ap = 3
 [models.ork_char_b1.assault.special]
 "Ork Reroll" = "[3]"
 
-
 [models.speedhead]
 name = "Speedhead"
 race = "ork"
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 equipment_limit = ["Independent:∞"]
 equipment = ["flamethrower", "speed_cannon", "shriek"]
-
 
 [models.speedhead.assault]
 strength = [8, 6, 4, 4]
@@ -1154,8 +801,6 @@ ap = 3
 [models.speedhead.assault.special]
 "Pre-Assault Retreat" = "[4+]"
 "Ork Reroll" = "[6]"
-
-
 
 [equipment]
 
@@ -1174,7 +819,6 @@ special = [
     "Bullet storm: A natural 6 on to-hit die is considered a hit regardless of to-hit modifiers",
     "Replace any forest at point blank range with a Rough terrain",
 ]
-
 
 [equipment.ork_musket]
 name = "Ork Musket"
@@ -1201,7 +845,6 @@ deflection_die.replace = "6+"
 [equipment.clockwork_shield.unit_special]
 "Protection" = "Unit base gains damage resistance 1"
 
-
 [equipment.clockwork_shield_free]
 name = "Clockwork Shield"
 race = "ork"
@@ -1227,7 +870,6 @@ strength.add = [1, 0, 0, 0]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
 fast_flying = [["Chase", "B(slow, land)", "-"]]
 
-
 [equipment.clockwork_wings_free]
 name = "Clockwork Wings"
 race = "ork"
@@ -1252,7 +894,6 @@ damage.replace = "d6+1 + d4 crew damage"
 [equipment.flame_covered_axe.assault.special]
 "Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
-
 [equipment.flame_covered_axe_free]
 name = "Flame-covered-axe"
 race = "ork"
@@ -1264,7 +905,6 @@ damage.replace = "d6+1 + d4 crew damage"
 [equipment.flame_covered_axe_free.assault.special]
 Damage = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
-
 [equipment.poison_spikes]
 name = "Poison Spikes"
 race = "ork"
@@ -1274,35 +914,33 @@ requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 [equipment.poison_spikes.assault.special]
 "Damage on Deflect" = "Place a poison[4] on any enemy which you deflected an attack from"
 
-
 [equipment.clockwork_monocular]
 name = "Clockwork Monocular"
 race = "ork"
-
 cost.cp = 1
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [equipment.clockwork_monocular.model_special]
-"To Hit (2)"= "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
-
+"To Hit (2)" = "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
 
 [equipment.clockwork_spear]
 name = "Clockwork Spear"
 race = "ork"
 cost.cp = 2
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
+
 [equipment.clockwork_spear.assault]
 damage.replace = "d8"
 
 [equipment.clockwork_spear.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-
 [equipment.clockwork_power_spear]
 name = "Clockwork Power Spear"
 race = "ork"
 cost.cp = 3
 requires = [["type:Infantry", "type:Grunt"], ["Hands:2"]]
+
 [equipment.clockwork_power_spear.assault]
 damage.replace = "d12"
 ap.replace = 4
@@ -1312,23 +950,18 @@ deflection_die.replace = "6+"
 [equipment.clockwork_power_spear.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-
 [equipment.ork_pistol]
 name = "Ork Pistol"
 race = "ork"
 cost.cp = 1
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 
-
 [equipment.ork_pistol.range]
 range = 3
 angle = [true, true, false, false]
 damage = "d6-1"
 ap = 2
-special = [
-    "Can be loaded with up to 2 ammo",
-]
-
+special = ["Can be loaded with up to 2 ammo"]
 
 [equipment.ork_pistol.orders_gained.fire]
 still = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "-"], ["-", "fire"]]
@@ -1340,7 +973,6 @@ race = "ork"
 cost.cp = 2
 cost.xp = 4
 requires = [["type:Infantry", "type:Cavalry"], ["Independent:1"]]
-
 
 [equipment.pyro.range]
 range = 1
@@ -1354,7 +986,6 @@ special = [
     "Bonus weapon, can be added to any other combination of weapons, but if you don't have any free hands you must choose between normal weapons and using the pyro grenades",
     "In addition, the unit gains Fire Resistance 2",
 ]
-
 
 [equipment.pyro.orders_gained.fire]
 all = [["-", "Throw"]]
@@ -1374,7 +1005,6 @@ special = [
 damage = "d6 +3 if penetrating armor"
 ap = 9
 
-
 [equipment.war_drum]
 name = "War Drum"
 race = "ork"
@@ -1382,11 +1012,8 @@ cost.xp = 2
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
 [equipment.war_drum.unit_special]
-    "Movement" = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
-    "Terror" = "[6][range 1]"
-
-
-
+"Movement" = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
+"Terror" = "[6][range 1]"
 
 [equipment.harpoon_gun]
 name = "Harpoon Gun"
@@ -1404,7 +1031,6 @@ special = [
     "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault.",
 ]
 
-
 [equipment.harpoon_gun_free]
 name = "Harpoon Gun"
 race = "ork"
@@ -1418,7 +1044,6 @@ ap = 2
 special = [
     "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault.",
 ]
-
 
 [equipment.grenade_sling]
 name = "Grenade Sling"
@@ -1437,12 +1062,10 @@ special = [
 damage = "d6"
 ap = 6
 
-
 [equipment.shriek]
 race = "ork"
 name = "Shriek"
 requires = []
-
 
 [equipment.shriek.range]
 range = 3
@@ -1452,7 +1075,6 @@ special = [
 ]
 damage = "d4-2+ d6 psychic damage"
 ap = 2
-
 
 [equipment.speed_cannon]
 race = "ork"
@@ -1468,12 +1090,10 @@ special = [
 damage = "d6+1"
 ap = 6
 
-
 [equipment.flamethrower]
 race = "ork"
 name = "Flamethrower"
 requires = []
-
 
 [equipment.flamethrower.range]
 range = 1
@@ -1487,12 +1107,10 @@ special = [
 damage = "d4 crew damage"
 ap = 3
 
-
 [equipment.rotating_pop_gun]
 race = "ork"
 name = "Rotating Pop Gun"
 requires = []
-
 
 [equipment.rotating_pop_gun.range]
 range = 4
@@ -1501,12 +1119,10 @@ special = ["Poison[8]"]
 damage = "d6 + (d8 crew damage when penetrating all armor)"
 ap = 7
 
-
 [equipment.heavy_forward_gun]
 race = "ork"
 name = "Heavy Forward Gun"
 requires = []
-
 
 [equipment.heavy_forward_gun.range]
 range = 4
@@ -1515,32 +1131,23 @@ damage = "d6 + 3 if penetrating all armor"
 ap = 8
 special = []
 
-
 [equipment.tankscalper]
 race = "ork"
 name = "Tankscalper"
 cost.cp = 2
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
-
 [equipment.tankscalper.assault.special]
-
 "Damage" = "May replace regular damage with d8 crew damage. Note: crew damage ignore armor"
 
-
-
 [equipment.healing_syringe]
-
 race = "ork"
 name = "Healing Syringe"
 cost.cp = 1
 requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
 
 [equipment.healing_syringe.unit_special]
-"Heal (2)"="In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."
-
-
-
+"Heal (2)" = "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."
 
 [equipment.hand_catapult]
 race = "ork"
@@ -1557,7 +1164,6 @@ special = [
 damage = "d6"
 ap = 6
 
-
 [equipment.big_gun]
 race = "ork"
 name = "Big Gun"
@@ -1569,7 +1175,6 @@ special = ["Place two smoke tokens in the hex directly ahead of this unit"]
 damage = "d12"
 ap = 5
 
-
 [equipment.spear_shooter]
 race = "ork"
 name = "Spear Shooter"
@@ -1580,7 +1185,6 @@ angle = ["x2", "x2", "x2", "x2"]
 special = []
 damage = "d6-2"
 ap = 2
-
 
 [equipment.grenade_launcher]
 race = "ork"
@@ -1595,7 +1199,6 @@ special = [
 ]
 damage = "d6"
 ap = 3
-
 
 [equipment.assault_musket]
 race = "ork"

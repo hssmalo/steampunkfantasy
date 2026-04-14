@@ -4,6 +4,7 @@
 name = "Abomination"
 
 [units]
+
 [units.abomination_infantry]
 race = "abomination"
 name = "Abomination Infantry"
@@ -15,6 +16,7 @@ models = [
 ]
 size = "Medium"
 cost.mp = 8
+
 [units.abomination_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -25,7 +27,13 @@ movement_order = ["-", "-", "flee"]
 "Tentacle" = "If given additional tentacle weapons, they fire simultainiusly with other weapons on regular Fire(s) order, not Fire(b) order"
 
 [units.abomination_infantry.orders.fire]
-still = [["Fire(b)", "Fire"], ["Fire", "Fire(b)"], ["-", "Load(2)"], ["-", "Aim"]]
+still = [
+	["Fire(b)", "Fire"],
+	["Fire", "Fire(b)"],
+	["-", "Load(2)"],
+	["-", "Aim"]
+]
+
 [units.abomination_infantry.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
@@ -37,7 +45,6 @@ regular = [
 	"9+: Unit destroyed",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-
 psychic = ["4+: shaken"]
 
 [units.horror]
@@ -47,6 +54,7 @@ models = ["horror"]
 size = "Huge"
 cost.xp = 8
 armor = [6, 4, 2, 1]
+
 [units.horror.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -71,9 +79,7 @@ regular = [
 	"{{\\it Note:  Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]}}",
 	"{{\\it Note: bleeding does not cause more bleeding}}",
 ]
-
 psychic = ["6+: shaken"]
-
 
 [units.robot_crab]
 race = "abomination"
@@ -89,6 +95,7 @@ models = [
 size = "Tiny"
 cost.cp = 1
 armor = [3, 3, 3, 3]
+
 [units.robot_crab.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -102,7 +109,6 @@ fast = [["chase", "chase", "chase"]]
 [units.robot_crab.damage_tables]
 regular = ["1-8: Kill 1 model", "9+: Unit destroyed"]
 
-
 [units.giant_frog_riders]
 race = "abomination"
 name = "Giant Frog Riders"
@@ -110,6 +116,7 @@ models = ["giant_frog_rider", "giant_frog_rider"]
 size = "Medium"
 cost.mp = 2
 cost.xp = 4
+
 [units.giant_frog_riders.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -118,18 +125,20 @@ movement_order = ["-", "-", "flee"]
 "Resistance" = "Poison [4]"
 "Terror" = "[range=1][d8]"
 
-
-
 [units.giant_frog_riders.orders.fire]
 still = [["-", "Load"], ["Load", "-"]]
 slow = [["-", "Load"], ["Load", "-"]]
 fast = [["-", "Load"], ["Load", "-"]]
 
 [units.giant_frog_riders.orders.movement]
-fast = [["360°", "F", "F"], ["F", "F", "360°"], ["F", "360°", "F"], ["F", "B", "-"]]
+fast = [
+	["360°", "F", "F"],
+	["F", "F", "360°"],
+	["F", "360°", "F"],
+	["F", "B", "-"]
+]
 slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"]]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
-
 
 [units.giant_frog_riders.damage_tables]
 regular = [
@@ -139,7 +148,6 @@ regular = [
 ]
 psychic = ["6+: shaken"]
 
-
 [units.hippopotamus_riders]
 race = "abomination"
 name = "Hippopotamus Riders"
@@ -148,6 +156,7 @@ size = "Large"
 cost.mp = 2
 cost.xp = 8
 armor = [6, 5, 4, 2]
+
 [units.hippopotamus_riders.shaken]
 speed = "fast"
 movement_order = ["-", "chase", "chase"]
@@ -157,7 +166,6 @@ fire_order = "Normal"
 "Resistance" = "Poison [6]"
 "Fire Order" = "Fire(mm) fires multipuropose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
 
-
 [units.hippopotamus_riders.orders.fire]
 still = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
 slow = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
@@ -165,35 +173,14 @@ fast = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
 
 [units.hippopotamus_riders.orders.movement]
 fast = [
-	[
-		"360°",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"360°",
-	],
-	[
-		"F",
-		"360°",
-		"F",
-	],
-	[
-		"F",
-		"B",
-		"-",
-	],
-	[
-		"-",
-		"Chase",
-		"Chase",
-	],
+	["360°", "F", "F"],
+	["F", "F", "360°"],
+	["F", "360°", "F"],
+	["F", "B", "-"],
+	["-", "Chase", "Chase"],
 ]
 slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"]]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
-
 
 [units.hippopotamus_riders.damage_tables]
 regular = [
@@ -205,7 +192,6 @@ regular = [
 ]
 psychic = ["6+: shaken"]
 
-
 [units.squ]
 race = "abomination"
 name = "Squ"
@@ -213,87 +199,29 @@ models = ["squ"]
 size = "Large"
 armor = [8, 6, 5, 4]
 cost.ip = 6
+
 [units.squ.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-
-
 [units.squ.orders.movement]
 slow = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
-	[
-		"A",
-		"-",
-		"-",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"B",
-		"rev",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["F", "L/R", "-"],
+	["B", "-", "-"],
+	["A", "-", "-"],
+	["F", "-", "-"],
+	["B", "rev", "-"],
 ]
-
 still = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"L/R",
-	],
-	[
-		"-",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"A",
-		"F",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"rev",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
 ]
 fast = [["F", "F", "-"], ["F", "B", "-"]]
 
@@ -323,7 +251,6 @@ crew = [
 	"12: Unit destroyed",
 ]
 
-
 [units.frost88]
 race = "abomination"
 name = "Frost 88"
@@ -331,6 +258,7 @@ models = ["frost88"]
 size = "Large"
 armor = [10, 8, 7, 6]
 cost.ip = 12
+
 [units.frost88.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -338,82 +266,24 @@ movement_order = ["-", "-", "-"]
 [units.frost88.special]
 "Fire Order" = "Fire(g) fires the main gun, while Fire(fr) fires frost ray. Track ammo only for main gun"
 
-
 [units.frost88.orders.movement]
 slow = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
-	[
-		"A",
-		"-",
-		"-",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"B",
-		"rev",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["F", "L/R", "-"],
+	["B", "-", "-"],
+	["A", "-", "-"],
+	["F", "-", "-"],
+	["B", "rev", "-"],
 ]
-
 still = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"L/R",
-	],
-	[
-		"-",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"A",
-		"F",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"rev",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
 ]
 fast = [["F", "F", "-"], ["F", "B", "-"]]
 
@@ -421,22 +291,10 @@ fast = [["F", "F", "-"], ["F", "B", "-"]]
 slow = [["Load", "Fire(fr)"], ["Fire(g)", "Fire(fr)"]]
 fast = [["Load", "Fire(fr)"], ["Fire(g)", "Fire(fr)"]]
 still = [
-	[
-		"Load",
-		"Fire(fr)",
-	],
-	[
-		"Fire(g)",
-		"Fire(fr)",
-	],
-	[
-		"-",
-		"Aim",
-	],
-	[
-		"Aim",
-		"Fire(fr)",
-	],
+	["Load", "Fire(fr)"],
+	["Fire(g)", "Fire(fr)"],
+	["-", "Aim"],
+	["Aim", "Fire(fr)"],
 ]
 
 [units.frost88.damage_tables]
@@ -460,8 +318,8 @@ crew = [
 	"12: Unit destroyed",
 ]
 
-
 [models]
+
 [models.abomination_infantry]
 name = "Abomination Infantry"
 race = "abomination"
@@ -471,8 +329,6 @@ type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
 [models.abomination_infantry.special]
 "Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog) hexes. "
-
-
 
 [models.abomination_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -485,7 +341,6 @@ ap = 2
 [models.abomination_infantry.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 "Cunning Assault" = "[1 for 2]"
-
 
 [models.hippopotamus_riders]
 name = "Hippopotamus Riders"
@@ -505,12 +360,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-
 [models.hippopotamus_riders.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
-
-
-
 
 [models.horror]
 name = "Horror"
@@ -545,12 +396,9 @@ deflection_die = "6+"
 damage = "d6"
 ap = 0
 
-
-
 [models.robot_crab.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 "Cunning Assault" = "[1 for 1]"
-
 
 [models.squ]
 name = "Squ"
@@ -573,8 +421,6 @@ ap = 2
 [models.squ.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 
-
-
 [models.frost88]
 name = "Frost88"
 race = "abomination"
@@ -585,7 +431,6 @@ type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 [models.frost88.special]
 "Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
 "To Hit" = "Double to hit bonuses and penalties for movement, both your own and the enemies"
-
 
 [models.frost88.assault]
 strength = [10, 1, 1, 1]
@@ -598,7 +443,6 @@ ap = 2
 [models.frost88.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 
-
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
 race = "abomination"
@@ -610,7 +454,7 @@ replaces = "abomination_infantry"
 
 [models.elite_abomination_infantry.special]
 "To Hit" = "good shot: +1 to hit"
-"Vulnerability" ="All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack"
+"Vulnerability" = "All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack"
 
 [models.elite_abomination_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -624,14 +468,12 @@ ap = 2
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 "Cunning Assault" = "[1 for 2]"
 
-
 [models.giant_frog_rider]
 name = "Giant Frog Rider"
 race = "abomination"
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
 equipment = ["frog_spit", "mechanical_melee_contraption"]
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
-
 
 [models.giant_frog_rider.special]
 "Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
@@ -645,10 +487,9 @@ damage = "d6"
 ap = 2
 
 [models.giant_frog_rider.assault.special]
-	"Damage" = "Poison[4]"
-	"Cunning Assault" = "[1 for 3]"
-	"Bonus" = "+100\\% strength and deflections versus shaken units"
-
+"Damage" = "Poison[4]"
+"Cunning Assault" = "[1 for 3]"
+"Bonus" = "+100\\% strength and deflections versus shaken units"
 
 [equipment]
 
@@ -664,7 +505,6 @@ ap = "N/A"
 special = [
 	"Fires 3 shot per fire order. Each hit gives one confusion token to any unit with bio or a bio crew. (se general rules)",
 ]
-
 
 [equipment.multipurpose_gun]
 name = "Multipurpose Gun"
@@ -685,18 +525,15 @@ name = "Tentacle CracleSpears"
 race = "abomination"
 cost.cp = 2
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
+
 #requires = [["type:Infantry","type:Cavalry"]]
-
 [equipment.tentacle_craclespears.assault]
-
 strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
-
 [equipment.tentacle_craclespears.assault.special]
-	"Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
-
+"Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]
 name = "Tentacle Axes"
@@ -705,9 +542,7 @@ cost.cp = 1
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.tentacle_axes.assault]
-
 strength.add = [2, 0, 0, 0]
-
 
 [equipment.tentacle_shield]
 name = "Tentacle Shield"
@@ -716,14 +551,11 @@ cost.cp = 2
 requires = [["Tentacles:1"], ["type:Infantry"]]
 
 [equipment.tentacle_shield.unit_special]
-
 "Protection" = "Unit gain [3, 0, 0, 0] in armor. Do not stack"
 
 [equipment.tentacle_shield.assault]
-
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
-
 
 [equipment.frog_armor]
 name = "Frog Cavalry Armor"
@@ -734,13 +566,11 @@ requires = [["type:Frog"]]
 [equipment.frog_armor.unit_special]
 "Protection" = "Unit gain [4, 3, 3, 0] in armor."
 
-
 [equipment.fog_grenade_mortar]
 name = "Fog grenade Mortar"
 race = "abomination"
 cost.cp = 4
 requires = [["Tentacles:4"], ["type:Infantry"]]
-
 
 [equipment.fog_grenade_mortar.range]
 range = 4
@@ -751,11 +581,9 @@ special = [
 	"Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal. May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)",
 ]
 
-
 [equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
 race = "abomination"
-
 
 [equipment.multipurpose_mortar.range]
 range = 3
@@ -766,11 +594,9 @@ special = [
 	"Either Place two fog tokens in two different hexes, or give two different units one minor acid each, or place two poison cloud[4] in two different hexes. All targets must be within normal range.",
 ]
 
-
 [equipment.oversized_musket]
 name = "Dobble Barrled Oversized Musket"
 race = "abomination"
-
 
 [equipment.oversized_musket.range]
 range = 4
@@ -779,13 +605,11 @@ damage = "d8"
 ap = "3"
 special = ["Fire two shot per fire order", "Gear disruption[6+]"]
 
-
 [equipment.tentacle_dart]
 name = "Tentacle Dart"
 race = "abomination"
 cost.cp = 1
 requires = [["Tentacles:1"], ["type:Infantry", "type:Cavalry"]]
-
 
 [equipment.tentacle_dart.range]
 range = 2
@@ -793,7 +617,6 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 1
 special = []
-
 
 [equipment.frog_spit]
 name = "Frog spit"
@@ -809,7 +632,6 @@ special = [
 	"Poison[4]",
 	"Always treated as loaded, and fire in both first and second gunnery phase independent of other weapons",
 ]
-
 
 [equipment.twin_frost_ray]
 name = "Twin Frost Ray"
@@ -827,7 +649,6 @@ special = [
 	"The target must break if possible (if it has a lower speed available). Reduce the speed one step",
 ]
 
-
 [equipment.main_gun]
 name = "Main Gun"
 race = "abomination"
@@ -840,13 +661,10 @@ damage = "d6 (+d8 crew damage if penetrating all armor)"
 ap = 6
 special = ["Gear Disruption[5+]"]
 
-
 [equipment.mechanical_melee_contraption]
 name = "Mechanical Melee Contraption"
 race = "abomination"
 requires = []
 
-
 [equipment.mechanical_melee_contraption.assault.special]
-
-	"Improvement" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"
+"Improvement" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"

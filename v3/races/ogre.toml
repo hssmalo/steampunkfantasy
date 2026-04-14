@@ -5,6 +5,7 @@ name = "Ogre"
 description = "Yellow, tiny, little men"
 
 [units]
+
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
@@ -12,6 +13,7 @@ description = "Group of four ogres fighting each other"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 4
+
 [units.ogre_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -21,37 +23,17 @@ movement_order = ["-", "-", "flee"]
 
 [units.ogre_infantry.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
-
 
 [units.ogre_infantry.orders.movement]
 still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
-
 
 [units.ogre_infantry.damage_tables]
 regular = [
@@ -61,9 +43,7 @@ regular = [
 	"11+: Unit destroyed",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-
 psychic = ["6+: shaken"]
-
 
 [units.ogre_robot]
 race = "ogre"
@@ -72,6 +52,7 @@ models = ["ogre_robot", "ogre_robot"]
 size = "Medium"
 cost.cp = 4
 armor = [3, 3, 0, 0]
+
 [units.ogre_robot.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -81,32 +62,13 @@ movement_order = ["-", "-", "flee"]
 
 [units.ogre_robot.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
-
 
 [units.ogre_robot.orders.movement]
 still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
@@ -121,13 +83,13 @@ regular = [
 	"{{\\it Note: remove half of the +1 future damage tokens when one robots dies}}",
 ]
 
-
 [units.pet_panther]
 race = "ogre"
 name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 2
+
 [units.pet_panther.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -138,45 +100,21 @@ movement_order = ["-", "-", "flee"]
 
 [units.pet_panther.orders.movement]
 still = [
-	[
-		"360°",
-		"360°",
-		"360°",
-	],
-	[
-		"A+360°",
-		"F",
-		"360°",
-	],
-	[
-		"Follow",
-		"Follow",
-		"Follow",
-	],
+	["360°", "360°", "360°"],
+	["A+360°", "F", "360°"],
+	["Follow", "Follow", "Follow"],
 ]
 slow = [
-	[
-		"360°",
-		"F",
-		"360°",
-	],
-	[
-		"360°",
-		"B",
-		"360°",
-	],
-	[
-		"A+360°",
-		"chase",
-		"chase",
-	],
-	[
-		"Follow",
-		"Follow",
-		"Follow",
-	],
+	["360°", "F", "360°"],
+	["360°", "B", "360°"],
+	["A+360°", "chase", "chase"],
+	["Follow", "Follow", "Follow"],
 ]
-fast = [["chase", "chase", "chase"], ["360°", "F", "B"], ["Follow", "Follow", "Follow"]]
+fast = [
+	["chase", "chase", "chase"],
+	["360°", "F", "B"],
+	["Follow", "Follow", "Follow"]
+]
 
 [units.pet_panther.damage_tables]
 regular = [
@@ -194,6 +132,7 @@ models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 2
 cost.xp = 4
+
 [units.ogre_assault_scout.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -203,34 +142,13 @@ movement_order = ["-", "-", "flee"]
 
 [units.ogre_assault_scout.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
-	[
-		"spot",
-		"spot",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
+	["spot", "spot"],
 ]
 slow = [["Fire", "-"], ["-", "Fire"], ["spot", "spot"]]
 fast = [["Fire", "-"], ["-", "Fire"], ["spot", "spot"]]
@@ -239,31 +157,11 @@ fast = [["Fire", "-"], ["-", "Fire"], ["spot", "spot"]]
 still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["A+360°", "F", "F"]]
 fast = [
-	[
-		"360°",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"360°",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"360°",
-	],
-	[
-		"chase",
-		"chase",
-		"chase",
-	],
-	[
-		"360°",
-		"F",
-		"B",
-	],
+	["360°", "F", "F"],
+	["F", "360°", "F"],
+	["F", "F", "360°"],
+	["chase", "chase", "chase"],
+	["360°", "F", "B"],
 ]
 
 [units.ogre_assault_scout.damage_tables]
@@ -275,13 +173,19 @@ regular = [
 ]
 psychic = ["6+: shaken"]
 
-
 [units.drone_swarm]
 race = "ogre"
 name = "Drone_swarm"
-models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
+models = [
+	"drone_swarm",
+	"drone_swarm",
+	"drone_swarm",
+	"drone_swarm",
+	"drone_swarm"
+]
 size = "Tiny"
 cost.cp = 1
+
 [units.drone_swarm.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -291,11 +195,28 @@ movement_order = ["-", "-", "-"]
 "Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
 
-
 [units.drone_swarm.orders.fire]
-still = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
-slow = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
-fast = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"], ["spot", "spot"]]
+still = [
+	["Fire", "-"],
+	["-", "Fire"],
+	["Aim", "-"],
+	["-", "Aim"],
+	["spot", "spot"]
+]
+slow = [
+	["Fire", "-"],
+	["-", "Fire"],
+	["Aim", "-"],
+	["-", "Aim"],
+	["spot", "spot"]
+]
+fast = [
+	["Fire", "-"],
+	["-", "Fire"],
+	["Aim", "-"],
+	["-", "Aim"],
+	["spot", "spot"]
+]
 
 [units.drone_swarm.orders.movement]
 rest = [["-", "-", "-"]]
@@ -303,10 +224,8 @@ still = [["360°", "360°", "B[rest]"]]
 slow = [["360°", "F", "B"]]
 fast = [["chase", "chase", "chase + B"]]
 
-
 [units.drone_swarm.damage_tables]
 regular = ["1+: Destroy one model"]
-
 
 [units.repair_drone]
 race = "ogre"
@@ -314,6 +233,7 @@ name = "Repair Drone"
 models = ["repair_drone", "repair_drone", "repair_drone", "repair_drone"]
 size = "Tiny"
 cost.cp = 4
+
 [units.repair_drone.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -326,10 +246,8 @@ movement_order = ["-", "-", "-"]
 [units.repair_drone.orders.movement]
 slow = [["360°", "F", "360°"]]
 
-
 [units.repair_drone.damage_tables]
 regular = ["1+: destroy one model"]
-
 
 [units.medic_drone]
 race = "ogre"
@@ -338,6 +256,7 @@ models = ["medic_drone", "medic_drone", "medic_drone", "medic_drone"]
 size = "Tiny"
 cost.cp = 2
 cost.xp = 2
+
 [units.medic_drone.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -350,10 +269,8 @@ movement_order = ["-", "-", "-"]
 [units.medic_drone.orders.movement]
 fast = [["Help", "Help", "Help"]]
 
-
 [units.medic_drone.damage_tables]
 regular = ["1+: destroy one model"]
-
 
 [units.main_engine]
 race = "ogre"
@@ -362,6 +279,7 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 8
 armor = [12, 10, 10, 8]
+
 [units.main_engine.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -371,69 +289,28 @@ movement_order = ["-", "-", "-"]
 "Tow" = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
 "Transport" = "May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order, but you may deploy a maximum of 2 tiny drone units each time"
 
-
 [units.main_engine.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
 slow = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
 fast = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
-
 
 [units.main_engine.orders.movement]
 still = [["L/R", "-", "-"], ["L/R", "-", "A"]]
 slow = [["L/R", "F", "L/R"], ["L/R", "F", "A"], ["F", "L/R", "-"]]
 fast = [
-	[
-		"F",
-		"F",
-		"-",
-	],
-	[
-		"L/R",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"L/R",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"L/R",
-	],
-	[
-		"F",
-		"L/R",
-		"B",
-	],
+	["F", "F", "-"],
+	["L/R", "F", "F"],
+	["F", "L/R", "F"],
+	["F", "F", "L/R"],
+	["F", "L/R", "B"],
 ]
-
 
 [units.main_engine.damage_tables]
 critical = [
@@ -455,7 +332,6 @@ crew = [
 	"13: Unit destroyed",
 ]
 
-
 [units.broadside_wagon]
 race = "ogre"
 name = "Broadside Wagon"
@@ -463,6 +339,7 @@ models = ["broadside_wagon"]
 size = "Large"
 cost.ip = 4
 armor = [2, 10, 10, 8]
+
 [units.broadside_wagon.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -472,84 +349,29 @@ movement_order = ["-", "-", "-"]
 
 [units.broadside_wagon.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
 slow = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
 fast = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
-
 
 [units.broadside_wagon.damage_tables]
 critical = ["1-5: +3 to future damage", "6: set on Fire"]
@@ -566,7 +388,6 @@ crew = [
 	"13: Unit destroyed",
 ]
 
-
 [units.artillery_wagon]
 race = "ogre"
 name = "Artillery Wagon"
@@ -574,6 +395,7 @@ models = ["artillery_wagon"]
 size = "Large"
 cost.ip = 4
 armor = [2, 10, 10, 8]
+
 [units.artillery_wagon.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -583,84 +405,29 @@ movement_order = ["-", "-", "-"]
 
 [units.artillery_wagon.orders.fire]
 still = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
 slow = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
 fast = [
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"-",
-		"Aim",
-	],
+	["Fire", "-"],
+	["-", "Fire"],
+	["Load", "-"],
+	["-", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
 ]
-
 
 [units.artillery_wagon.damage_tables]
 critical = ["1-5: +3 to future damage", "6: set on Fire"]
@@ -677,8 +444,8 @@ crew = [
 	"13: Unit destroyed",
 ]
 
-
 [models]
+
 [models.ogre_infantry]
 name = "Ogre Infantry"
 race = "ogre"
@@ -693,7 +460,6 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-
 
 [models.ogre_robot]
 name = "Ogre Robot"
@@ -710,7 +476,6 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-
 [models.pet_panther]
 name = "Pet Panther"
 race = "ogre"
@@ -726,7 +491,6 @@ deflection_die = "5+"
 damage = "d6"
 ap = 1
 
-
 [models.ogre_assault_scout]
 name = "Ogre Scout"
 race = "ogre"
@@ -741,7 +505,6 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-
 
 [models.ogre_scout_engineer]
 name = "Ogre Scout Engineer"
@@ -764,7 +527,6 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
-
 
 [models.drone_swarm]
 name = "Drone Swarm"
@@ -804,7 +566,6 @@ ap = 0
 # GA: ["Pre Assault escape: 4+"] Is that different?
 "Pre-Assault Retreat" = "4+"
 
-
 [models.medic_drone]
 name = "Medic Drone"
 race = "ogre"
@@ -824,7 +585,6 @@ ap = 0
 # GA: ["Pre Assault escape: 4+"] Is that different?
 "Pre-Assault Retreat" = "4+"
 
-
 [models.healing_drone]
 name = "Repair Drone"
 race = "ogre"
@@ -843,7 +603,6 @@ ap = 0
 [models.healing_drone.assault.special]
 # GA: ["Pre Assault escape: 4+"] Is that different?
 "Pre-Assault Retreat" = "4+"
-
 
 [models.main_engine]
 name = "Main Engine"
@@ -884,7 +643,6 @@ ap = 3
 [models.artillery_wagon.assault.special]
 "GA vet ikke" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
-
 [models.broadside_wagon]
 name = "Broadside Wagon"
 race = "ogre"
@@ -902,7 +660,6 @@ ap = 3
 
 [models.broadside_wagon.assault.special]
 "GA vet ikke" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
-
 
 [models.elite_ogre_infantry]
 name = "Ogre Elite Infantry"
@@ -924,7 +681,6 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
-
 [models.elite_ogre_robot]
 name = "Elite Ogre Robot"
 race = "ogre"
@@ -944,7 +700,6 @@ deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 2
-
 
 [models.ogre_medic]
 name = "Ogre Medic"
@@ -969,7 +724,6 @@ ap = 2
 
 [models.ogre_medic.assault.special]
 "Cunning Assault" = "[1 for 2]"
-
 
 [models.ogre_engineer]
 name = "Ogre Engineer"
@@ -996,7 +750,6 @@ ap = 2
 [models.ogre_engineer.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-
 [equipment]
 
 [equipment.ogre_sniper_rifle]
@@ -1015,7 +768,6 @@ special = [
 	"After eliminating one model with the use of aim, you get to choose which model to destroy",
 ]
 
-
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
 race = "ogre"
@@ -1027,7 +779,6 @@ angle = [true, true, true, true]
 damage = "d8-2"
 ap = 2
 
-
 [equipment.drone_supply]
 name = "Drone Supply"
 race = "ogre"
@@ -1037,7 +788,6 @@ requires = [["Independent:1"], ["type:Carrier"]]
 [equipment.drone_supply.unit_special]
 # GA: Check category
 "Hans Sverre's favorite rule" = "Gives a supply of 3 {{\\it drone swarm}} units which this model carries"
-
 
 [equipment.ogre_gun]
 name = "Ogre gun"
@@ -1049,7 +799,6 @@ range = 3
 angle = [true, false, false, false]
 damage = "d8+2 if penetrating all armor"
 ap = 5
-
 
 [equipment.ogre_artillery]
 name = "Ogre Artillery"
@@ -1066,7 +815,6 @@ special = [
 	"In addition, whether you hit or not, Area[5+], AP=4, damage=d8 in the target hex",
 ]
 
-
 [equipment.fancy_ogre_rifle]
 name = "Fancy Ogre Rifle"
 race = "ogre"
@@ -1079,7 +827,6 @@ angle = [true, true, true, true]
 damage = "d8"
 ap = 2
 
-
 [equipment.ogre_broadside]
 name = "Ogre broadside"
 race = "ogre"
@@ -1090,7 +837,6 @@ range = 4
 angle = ["-", "x4", "x4", "-"]
 damage = "d8-2"
 ap = 2
-
 
 [equipment.fancy_arquebus]
 name = "Fancy Arquebus"
@@ -1104,7 +850,6 @@ angle = [true, true, true, true]
 damage = "d8+2"
 ap = 4
 
-
 [equipment.gear_pistol]
 name = "Gear Pistol"
 race = "ogre"
@@ -1115,7 +860,6 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-
 
 [equipment.fancy_gear_pistol]
 name = "Fancy Gear Pistol"
@@ -1133,7 +877,6 @@ special = [
 	"+1 to hit",
 	"May be loaded up to 2 times. Start with two ammo",
 ]
-
 
 [equipment.tiny_fancy_gear_pistol]
 name = "Tiny Fancy Gear Pistol"
@@ -1154,7 +897,6 @@ requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.ogre_helbard_free.assault.special]
 "GA vet ikke" = "+1 assault strength per enemy model in assault (forward direction only)"
-
 
 [equipment.ogre_helbard]
 name = "Ogre Helbard"

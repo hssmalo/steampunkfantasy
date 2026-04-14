@@ -4,6 +4,7 @@
 name = "Elf"
 
 [units]
+
 [units.elf_infantry]
 race = "elf"
 name = "Elf Infantry"
@@ -15,41 +16,26 @@ cost.mp = 6
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-
 [units.elf_infantry.special]
 "Take Cover" = "[still][-2]"
 
-
 [units.elf_infantry.orders.fire]
 still = [
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"-",
-		"Aim",
-	],
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"Aim",
-		"-",
-	],
+	["-", "Fire"],
+	["-", "Load"],
+	["-", "Aim"],
+	["Fire", "-"],
+	["Load", "-"],
+	["Aim", "-"],
 ]
+
 [units.elf_infantry.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"], ["360°+A+A ", "F ", "F"]]
+still = [
+	["360°", "360°", "360°"],
+	["360°", "A ", "F"],
+	["360°+A+A ", "F ", "F"]
+]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elf_infantry.damage_tables]
@@ -59,9 +45,7 @@ regular = [
 	"9+: Unit destroyed",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-
 psychic = ["4+: shaken"]
-
 
 [units.illusion]
 race = "elf"
@@ -71,14 +55,12 @@ size = "Medium"
 cost.cp = 2
 
 [units.illusion.special]
- "Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
+"Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
 "Movement" = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
-
 
 [units.illusion.shaken]
 speed = 'slow'
 movement_order = ["-", "-", "flee"]
-
 
 [units.illusion.orders.movement]
 slow = [["-", "-", "chase"]]
@@ -86,14 +68,12 @@ slow = [["-", "-", "chase"]]
 [units.illusion.damage_tables]
 regular = ["0-4: kill 1 model", "4+: destroy unit", "Note: immune to poison"]
 
-
 [units.elf_scout]
 race = "elf"
 name = "Elf Scout"
 models = ["elf_scout"]
 size = "Medium"
 cost.mp = 2
-
 
 [units.elf_scout.shaken]
 speed = "slow"
@@ -104,44 +84,27 @@ movement_order = ["-", "-", "flee"]
 
 [units.elf_scout.orders.fire]
 still = [
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"-",
-		"Aim",
-	],
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"spot",
-		"spot",
-	],
+	["-", "Fire"],
+	["-", "Load"],
+	["-", "Aim"],
+	["Fire", "-"],
+	["Load", "-"],
+	["Aim", "-"],
+	["spot", "spot"],
 ]
+
 [units.elf_scout.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"], ["360°+A+A ", "F ", "F"]]
+still = [
+	["360°", "360°", "360°"],
+	["360°", "A ", "F"],
+	["360°+A+A ", "F ", "F"]
+]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elf_scout.damage_tables]
 regular = ["0+: unit killed"]
 psychic = ["3+: shaken"]
-
 
 [units.elite_elf_scout]
 race = "elf"
@@ -151,49 +114,32 @@ size = "Medium"
 cost.mp = 2
 cost.xp = 2
 
-
 [units.elite_elf_scout.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.elite_elf_scout.special]
 "Take Cover" = "[still][-3]"
-"Camouflage" = "[forrest][-1]" 
+"Camouflage" = "[forrest][-1]"
 
 [units.elite_elf_scout.orders.fire]
 still = [
-	[
-		"-",
-		"Fire",
-	],
-	[
-		"-",
-		"Load",
-	],
-	[
-		"-",
-		"Aim",
-	],
-	[
-		"Fire",
-		"-",
-	],
-	[
-		"Load",
-		"-",
-	],
-	[
-		"Aim",
-		"-",
-	],
-	[
-		"spot",
-		"spot",
-	],
+	["-", "Fire"],
+	["-", "Load"],
+	["-", "Aim"],
+	["Fire", "-"],
+	["Load", "-"],
+	["Aim", "-"],
+	["spot", "spot"],
 ]
+
 [units.elite_elf_scout.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"], ["360°+A+A ", "F ", "F"]]
+still = [
+	["360°", "360°", "360°"],
+	["360°", "A ", "F"],
+	["360°+A+A ", "F ", "F"]
+]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elite_elf_scout.damage_tables]
@@ -219,106 +165,29 @@ fast = [["-", "Fire"]]
 
 [units.e34.orders.movement]
 fast = [
-	[
-		"F",
-		"F",
-		"-",
-	],
-	[
-		"F",
-		"R",
-		"-",
-	],
-	[
-		"L/R",
-		"F",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"B",
-		"-",
-	],
-	[
-		"B",
-		"B",
-		"-",
-	],
+	["F", "F", "-"],
+	["F", "R", "-"],
+	["L/R", "F", "-"],
+	["F", "L/R", "-"],
+	["F", "B", "-"],
+	["B", "B", "-"],
 ]
-
 slow = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"B",
-		"rev",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["A", "F", "-"],
+	["B", "-", "-"],
+	["F", "-", "-"],
+	["B", "rev", "-"],
 ]
 still = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"L/R",
-	],
-	[
-		"-",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"A",
-		"F",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"rev",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
 ]
 
 [units.e34.damage_tables]
@@ -343,7 +212,6 @@ crew = [
 	"12+: Unit destroyed",
 ]
 
-
 [units.tattoo_ink]
 race = "elf"
 name = "Tattoo Ink"
@@ -355,142 +223,47 @@ armor = [8, 6, 6, 6]
 [units.tattoo_ink.special]
 "Fire Order" = "May fire two SMG (and each SMG fire twice) in addition to Gattle Gun any time a fire order is given. One of the SMG must fire in same angle as Gattle Gun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only Gattle gun do."
 
-
 [units.tattoo_ink.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-
 [units.tattoo_ink.orders.fire]
 still = [
-	[
-		"Fire",
-		"Aim",
-	],
-	[
-		"Aim",
-		"Fire",
-	],
-	[
-		"Load",
-		"Aim",
-	],
-	[
-		"Load",
-		"Load",
-	],
-	[
-		"Fire",
-		"Fire",
-	],
+	["Fire", "Aim"],
+	["Aim", "Fire"],
+	["Load", "Aim"],
+	["Load", "Load"],
+	["Fire", "Fire"],
 ]
 slow = [["Load", "Load"], ["Fire", "Fire"]]
 fast = [["Fire", "Fire"]]
 
 [units.tattoo_ink.orders.movement]
 fast = [
-	[
-		"F",
-		"F",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"B",
-		"-",
-	],
-	[
-		"B",
-		"B",
-		"-",
-	],
-	[
-		"L/R",
-		"F",
-		"-",
-	],
-	[
-		"road",
-		"road",
-		"road",
-	],
+	["F", "F", "-"],
+	["F", "L/R", "-"],
+	["F", "B", "-"],
+	["B", "B", "-"],
+	["L/R", "F", "-"],
+	["road", "road", "road"],
 ]
 slow = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"B",
-		"-",
-		"-",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"B",
-		"rev",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["A", "F", "-"],
+	["B", "-", "-"],
+	["F", "-", "-"],
+	["B", "rev", "-"],
 ]
 still = [
-	[
-		"L/R",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"-",
-	],
-	[
-		"L/R",
-		"L/R",
-		"L/R",
-	],
-
-	[
-		"-",
-		"-",
-		"-",
-	],
-	[
-		"L/R",
-		"A",
-		"F",
-	],
-	[
-		"A",
-		"F",
-		"-",
-	],
-	[
-		"rev",
-		"-",
-		"-",
-	],
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
 ]
-
 
 [units.tattoo_ink.damage_tables]
 critical = [
@@ -514,7 +287,6 @@ crew = [
 	"10: Crew Killed, Unit Destroyed",
 ]
 
-
 [units.bear_rider]
 race = "elf"
 name = "Bear Rider"
@@ -530,7 +302,6 @@ Resistance = "Poison Resistance 3"
 [units.bear_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
-
 
 [units.bear_rider.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -549,7 +320,6 @@ regular = [
 	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
 ]
 psychic = ["6+: shaken"]
-
 
 [units.polar_bear_riders]
 race = "elf"
@@ -587,7 +357,6 @@ regular = [
 ]
 psychic = ["6+: shaken"]
 
-
 [units.armored_unicorn_rider]
 race = "elf"
 name = "Armored Unicorn Rider"
@@ -598,7 +367,6 @@ cost.xp = 6
 cost.cp = 2
 armor = [6, 6, 6, 5]
 
-
 [units.armored_unicorn_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -607,75 +375,38 @@ movement_order = ["-", "-", "flee"]
 "Resistance" = "Poison Resistance 12, Fire Resistance 3, Minor Acid resistance[4+]"
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
 "Officer 1" = "Grants psychic resistance 1 to the other unit in this hex"
-"Officer 2" =  "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
-"Heal" =  "Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]"
+"Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+"Heal" = "Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]"
 "Stacking Limit" = "May share a hex with a huge unit"
-
-
 
 [units.armored_unicorn_rider.orders.fire]
 still = [["-", "-"], ["-", "Fire Burst(5)"], ["Fire Burst(5)", "-"]]
 slow = [["-", "-"], ["-", "Fire Burst(5)"], ["Fire Burst(5)", "-"]]
 fast = [["-", "-"], ["-", "Fire Burst(5)"], ["Fire Burst(5)", "-"]]
 
-
 [units.armored_unicorn_rider.orders.movement]
 slow = [
-	[
-		"360°",
-		"F",
-		"360°",
-	],
-	[
-		"360°",
-		"B",
-		"360°",
-	],
-	[
-		"360°",
-		"A",
-		"F",
-	],
-	[
-		"-",
-		"-",
-		"Help",
-	],
+	["360°", "F", "360°"],
+	["360°", "B", "360°"],
+	["360°", "A", "F"],
+	["-", "-", "Help"],
 ]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
 fast = [
-	[
-		"360°",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"360°",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"360°",
-	],
-	[
-		"360°",
-		"F",
-		"B",
-	],
-	[
-		"Help",
-		"Help",
-		"Help",
-	],
+	["360°", "F", "F"],
+	["F", "360°", "F"],
+	["F", "F", "360°"],
+	["360°", "F", "B"],
+	["Help", "Help", "Help"],
 ]
 
-
 [units.armored_unicorn_rider.damage_tables]
-regular = ["2-5: Bleed[6]", "6+: killed", "Note: bleeding does not cause more bleeding"]
+regular = [
+	"2-5: Bleed[6]",
+	"6+: killed",
+	"Note: bleeding does not cause more bleeding"
+]
 psychic = ["6+: shaken"]
-
 
 [units.pachyephalosaurus_riders]
 race = "elf"
@@ -691,17 +422,13 @@ cost.xp = 3
 cost.cp = 8
 armor = [3, 3, 0, 0]
 
-
 [units.pachyephalosaurus_riders.special]
 "Resistance" = "Poison Resistance 2"
-"Fire Order" = 	"Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only."
-
-
+"Fire Order" = "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only."
 
 [units.pachyephalosaurus_riders.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
-
 
 [units.pachyephalosaurus_riders.orders.fire]
 still = [["Fire", "-"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
@@ -710,55 +437,25 @@ fast = [["-", "Load"], ["Load", "-"], ["-", "Aim"]]
 
 [units.pachyephalosaurus_riders.orders.movement]
 fast = [
-	[
-		"360°",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"B",
-		"360°",
-	],
-	[
-		"F",
-		"F",
-		"360°",
-	],
-	[
-		"F",
-		"360°",
-		"F",
-	],
-	[
-		"F",
-		"B",
-		"B+360°",
-	],
-	[
-		"F",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"F,360°",
-		"B+B",
-	],
+	["360°", "F", "F"],
+	["F", "B", "360°"],
+	["F", "F", "360°"],
+	["F", "360°", "F"],
+	["F", "B", "B+360°"],
+	["F", "F", "F"],
+	["F", "F,360°", "B+B"],
 ]
 slow = [["360°", "A", "F"], ["B", "360°", "-"]]
 still = [["360°", "A", "F"], ["A+A", "360°+F", "F"], ["A+A", "360°", "F"]]
-
 
 [units.pachyephalosaurus_riders.damage_tables]
 regular = [
 	"2-3: bleed[6]",
 	"6+: kill 1 model, d4 psychic damage",
-		"{{\\it Note: bleeding does not cause more bleeding}}",
+	"{{\\it Note: bleeding does not cause more bleeding}}",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
 psychic = ["4+: shaken"]
-
 
 [units.elk_cavalery]
 race = "elf"
@@ -772,7 +469,6 @@ cost.xp = 2
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-
 [units.elk_cavalery.orders.fire]
 still = [["Fire", "Fire"]]
 slow = [["Fire", "Fire"]]
@@ -781,8 +477,12 @@ fast = [["Fire", "Fire"]]
 [units.elk_cavalery.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
-fast = [["360°", "F", "F"], ["F", "360°", "F"], ["F", "F", "360°"], ["360°", "F", "B"]]
-
+fast = [
+	["360°", "F", "F"],
+	["F", "360°", "F"],
+	["F", "F", "360°"],
+	["360°", "F", "B"]
+]
 
 [units.elk_cavalery.damage_tables]
 regular = [
@@ -793,7 +493,6 @@ regular = [
 ]
 psychic = ["4+: shaken"]
 
-
 [units.pegasus_rider]
 race = "elf"
 name = "Pegasus Rider"
@@ -803,7 +502,7 @@ cost.mp = 4
 cost.xp = 6
 
 [units.pegasus_rider.special]
-"Fire Order" = 	"Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+"Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
 "Resistance" = "poison resistance 2"
 
 [units.pegasus_rider.shaken]
@@ -812,170 +511,53 @@ movement_order = ["-", "-", "flee"]
 
 [units.pegasus_rider.orders.fire]
 still = [
-	[
-		"Fire(bow)",
-		"Fire(bow)",
-	],
-	[
-		"Fire Burst(5)",
-		"Fire (bow)",
-	],
-	[
-		"Fire (bow)",
-		"Fire Burst(5)",
-	],
+	["Fire(bow)", "Fire(bow)"],
+	["Fire Burst(5)", "Fire (bow)"],
+	["Fire (bow)", "Fire Burst(5)"],
 ]
 slow = [
-	[
-		"Fire(bow)",
-		"Fire(bow)",
-	],
-	[
-		"Fire Burst(5)",
-		"Fire (bow)",
-	],
-	[
-		"Fire (bow)",
-		"Fire Burst(5)",
-	],
+	["Fire(bow)", "Fire(bow)"],
+	["Fire Burst(5)", "Fire (bow)"],
+	["Fire (bow)", "Fire Burst(5)"],
 ]
 fast = [
-	[
-		"Fire(bow)",
-		"Fire(bow)",
-	],
-	[
-		"Fire Burst(5)",
-		"Fire (bow)",
-	],
-	[
-		"Fire (bow)",
-		"Fire Burst(5)",
-	],
+	["Fire(bow)", "Fire(bow)"],
+	["Fire Burst(5)", "Fire (bow)"],
+	["Fire (bow)", "Fire Burst(5)"],
 ]
 
 [units.pegasus_rider.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "A[fly]", "F"], ["360°", "A", "F"]]
 slow = [
-	[
-		"360°",
-		"F",
-		"360°",
-	],
-	[
-		"360°",
-		"B",
-		"360°",
-	],
-	[
-		"360°",
-		"A[fly]",
-		"F",
-	],
-	[
-		"360°",
-		"A[f,fly]",
-		"F",
-	],
-	[
-		"360°",
-		"A",
-		"F",
-	],
+	["360°", "F", "360°"],
+	["360°", "B", "360°"],
+	["360°", "A[fly]", "F"],
+	["360°", "A[f,fly]", "F"],
+	["360°", "A", "F"],
 ]
-
 slow_flying = [
-	[
-		"L/R",
-		"F",
-		"-",
-	],
-	[
-		"F",
-		"L/R",
-		"-",
-	],
-	[
-		"F",
-		"-",
-		"-",
-	],
-	[
-		"F",
-		"B[still]",
-		"-",
-	],
-	[
-		"F",
-		"A[f,fly]",
-		"F",
-	],
-	[
-		"L/R",
-		"L/R",
-		"F",
-	],
+	["L/R", "F", "-"],
+	["F", "L/R", "-"],
+	["F", "-", "-"],
+	["F", "B[still]", "-"],
+	["F", "A[f,fly]", "F"],
+	["L/R", "L/R", "F"],
 ]
 fast = [
-	[
-		"360°",
-		"F",
-		"F",
-	],
-	[
-		"360°",
-		"F",
-		"B",
-	],
-	[
-		"360°",
-		"A[f, fly],F",
-		"F",
-	],
-	[
-		"360°",
-		"F",
-		"B",
-	],
+	["360°", "F", "F"],
+	["360°", "F", "B"],
+	["360°", "A[f, fly],F", "F"],
+	["360°", "F", "B"],
 ]
 fast_flying = [
-	[
-		"F",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"L/R",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"B",
-	],
-	[
-		"F",
-		"F",
-		"B[fly]",
-	],
-	[
-		"F",
-		"F",
-		"B[f]",
-	],
-	[
-		"L/R+L/R",
-		"F",
-		"F",
-	],
-	[
-		"F",
-		"F",
-		"B[still]",
-	],
+	["F", "F", "F"],
+	["F", "L/R", "F"],
+	["F", "F", "B"],
+	["F", "F", "B[fly]"],
+	["F", "F", "B[f]"],
+	["L/R+L/R", "F", "F"],
+	["F", "F", "B[still]"],
 ]
-
 
 [units.pegasus_rider.damage_tables]
 regular = [
@@ -986,15 +568,14 @@ regular = [
 ]
 psychic = ["5+: shaken"]
 
-
 [models]
+
 [models.e34]
 name = "E34"
 race = "elf"
 equipment_limit = ["Independent:∞"]
 equipment = ["main_tank_gun", "twin_rifle"]
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
-
 
 [models.e34.assault]
 strength = [4, 3, 3, 2]
@@ -1003,7 +584,6 @@ deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 3
-
 
 [models.tattoo_ink]
 name = "Tattoo Ink"
@@ -1014,8 +594,6 @@ type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 
 [models.tattoo_ink.special]
 "To Hit" = "Ignore to-hit penalties for moving fast"
-	
-
 
 [models.tattoo_ink.assault]
 strength = [3, 2, 2, 2]
@@ -1033,9 +611,7 @@ equipment = ["rifle"]
 type = ["Bio", "Walking", "Elite"]
 
 [models.elite_elf_scout.special]
-	"To Hit" = "Good shot +1"
-	
-
+"To Hit" = "Good shot +1"
 
 [models.elite_elf_scout.assault]
 strength = [2, 2, 2, 2]
@@ -1047,8 +623,7 @@ ap = 2
 
 [models.elite_elf_scout.assault.special]
 "Pre-Assault Retreat" = "[3+]"
-"Cunning Assault" ="[1 for 2]"
-
+"Cunning Assault" = "[1 for 2]"
 
 [models.elf_scout]
 name = "Elite Elf scout"
@@ -1066,8 +641,7 @@ damage = "d6-2"
 ap = 2
 
 [models.elf_scout.assault.special]
-"Cunning Assault" ="[1 for 2"
-
+"Cunning Assault" = "[1 for 2"
 
 [models.elf_infantry]
 name = "Elf Infantry"
@@ -1086,7 +660,6 @@ ap = 2
 
 [models.elf_infantry.assault.special]
 "Cunning Assault" = "[1 for 2]"
-
 
 [models.illusion]
 name = "Illusion"
@@ -1117,8 +690,6 @@ type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 
 [models.superelite_elf_infantry.unit_special]
 "Improved Resistance" = "Unit base gains psychic resistance 2 as long as atleast one superelite model is alive"
-	
-
 
 [models.superelite_elf_infantry.assault]
 strength = [3, 1, 1, 1]
@@ -1131,7 +702,6 @@ ap = 2
 [models.superelite_elf_infantry.assault.special]
 "Pre-Assault Retreat" = "unit gains Pre-assault retreat[4+] as long as atleast 1 superelite is alive"
 "Cunning Assault" = "[1 for 2]"
-
 
 [models.elite_elf_infantry]
 name = "Elite Elf Infantry"
@@ -1156,13 +726,9 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-
 [models.elite_elf_infantry.assault.special]
 "Cunning Assault" = "[1 for 2]"
 "Pre-Assault Retreat" = "unit gains Pre-assault retreat[5+] as long as atleast 1 elite is alive"
-
-
-
 
 [models.bear_rider]
 name = "Bear Rider"
@@ -1182,7 +748,6 @@ ap = 2
 [models.bear_rider.assault.special]
 "Cunning Assault" = "[1 for 3]"
 
-
 [models.polar_bear_riders]
 name = "Dire Polar Bear Riders"
 race = "elf"
@@ -1198,10 +763,8 @@ deflection_die = "5+"
 damage = "d6+2"
 ap = 2
 
-
 [models.polar_bear_riders.assault.special]
 "Cunning Assault" = "[1 for 3]"
-
 
 [models.sauropod]
 name = "Sauropod Riders"
@@ -1216,8 +779,6 @@ equipment = [
 ]
 type = ["Bio", "Cavalry", "Walking"]
 
-
-
 [models.sauropod.assault]
 strength = [2, 0, 0, 0]
 strength_die = "5+"
@@ -1226,14 +787,12 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
-
 [models.oliphant]
 name = "Oliphant"
 race = "elf"
 equipment_limit = ["Independent:∞"]
 equipment = ["oliphant_gatling_guns"]
 type = ["Bio", "Cavalry", "Walking"]
-
 
 [models.oliphant.assault]
 strength = [9, 6, 6, 2]
@@ -1242,7 +801,6 @@ deflection = [6, 2, 2, 2]
 deflection_die = "5+"
 damage = "d6"
 ap = 4
-
 
 [models.crew]
 name = "Crew"
@@ -1267,8 +825,7 @@ equipment = ["at_rifle", "grenade"]
 type = ["Bio", "Cavalry", "Flying", "Walking"]
 
 [models.eagle_rider.special]
-"To Hit"="Good shot: +1 to hit"
-
+"To Hit" = "Good shot: +1 to hit"
 
 [models.eagle_rider.assault]
 strength = [6, 6, 6, 4]
@@ -1278,15 +835,11 @@ deflection_die = "3+"
 damage = "d6-1"
 ap = 3
 
-
 [models.eagle_rider.assault.special]
 "Damage" = "Always attacks weakest point of armor"
 "Cunning Assault" = "[1 for 3]"
-"Pre-Assault Retreat" =  "3+"
+"Pre-Assault Retreat" = "3+"
 "FlyBy" = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault"
-	
-
-
 
 [models.pachyephalosaurus_rider]
 name = "Pachyephalosaurus Rider"
@@ -1304,10 +857,9 @@ damage = "d6-2"
 ap = 2
 
 [models.pachyephalosaurus_rider.assault.special]
-"Pre-Assault Retreat" =  "5+"
+"Pre-Assault Retreat" = "5+"
 "Damage" = "poison[4][1 for 2]"
 "Cunning Assault" = "[1 for 3]"
-
 
 [models.elk_cavalery]
 name = "Elk Cavalry"
@@ -1326,7 +878,6 @@ ap = 2
 
 [models.elk_cavalery.assault.special]
 "Cunning Assault" = "[1 for 4]"
-
 
 [models.pegasus_rider]
 name = "Pegasus_rider"
@@ -1347,10 +898,8 @@ damage = "d6-2"
 ap = 2
 
 [models.pegasus_rider.assault.special]
-	"Pre-Assault Retreat" =  "throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
-	"Cunning Assault" = "[1 for 3]"
-
-
+"Pre-Assault Retreat" = "throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
+"Cunning Assault" = "[1 for 3]"
 
 [models.elite_pachyephalosaurus_rider]
 name = "Elite Pachyephalosaurus Rider"
@@ -1367,7 +916,6 @@ cost.xp = 1
 [models.elite_pachyephalosaurus_rider.unit_special]
 "Improved Resistance" = "Unit gain psychic resistance 1 while atleast one elite is alive"
 
-
 [models.elite_pachyephalosaurus_rider.assault]
 strength = [6, 2, 2, 1]
 strength_die = "5+"
@@ -1381,7 +929,6 @@ ap = 2
 "Cunning Assault" = "[1 for 3]"
 "Pre-Assault Retreat" = "3+ if atleast one elite present"
 
-
 [units.sauropod_riders]
 race = "elf"
 name = "Saouropod Rider"
@@ -1393,15 +940,13 @@ cost.cp = 12
 armor = [4, 3, 3, 3]
 
 [units.sauropod_riders.special]
-"Resistance" = 	"Poison Resistance 4"
+"Resistance" = "Poison Resistance 4"
 "Fire Order" = "Fire and load all weapons simultainiously"
 "Setup" = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
 
-
-
 [units.sauropod_riders.shaken]
 speed = "slow"
-movement_order = ["-","-","flee"]
+movement_order = ["-", "-", "flee"]
 
 [units.sauropod_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -1423,7 +968,6 @@ regular = [
 ]
 psychic = ["8+: shaken"]
 
-
 [units.armored_oliphant_riders]
 race = "elf"
 name = "Oliphant Rider"
@@ -1435,12 +979,12 @@ cost.cp = 6
 armor = [8, 6, 4, 3]
 
 [units.armored_oliphant_riders.special]
-"Resistance" = 	"Poison Resistance 2"
+"Resistance" = "Poison Resistance 2"
 "Fire Order" = "The crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
-movement_order = ["-","-","chase"]
+movement_order = ["-", "-", "chase"]
 comment = "Chases closest unit, friend or foe. Assaults friendly units"
 
 [units.armored_oliphant_riders.orders.movement]
@@ -1449,9 +993,24 @@ still = [["360°", "A", "F"]]
 fast = [["F", "F", "-"], ["F", "L/R", "F"], ["B", "360°", "F"]]
 
 [units.armored_oliphant_riders.orders.fire]
-still = [["fire", "fire"], ["fire", "aim(g)"], ["fire", "load(g)"], ["fire", "fire(g)"]]
-slow = [["fire", "fire"], ["fire", "aim(g)"], ["fire", "load(g)"], ["fire", "fire(g)"]]
-fast = [["fire", "fire"], ["fire", "aim(g)"], ["fire", "load(g)"], ["fire", "fire(g)"]]
+still = [
+	["fire", "fire"],
+	["fire", "aim(g)"],
+	["fire", "load(g)"],
+	["fire", "fire(g)"]
+]
+slow = [
+	["fire", "fire"],
+	["fire", "aim(g)"],
+	["fire", "load(g)"],
+	["fire", "fire(g)"]
+]
+fast = [
+	["fire", "fire"],
+	["fire", "aim(g)"],
+	["fire", "load(g)"],
+	["fire", "fire(g)"]
+]
 
 [units.armored_oliphant_riders.damage_tables]
 regular = [
@@ -1461,7 +1020,6 @@ regular = [
 	"Note: bleeding does not cause more bleeding",
 ]
 psychic = ["6+: shaken"]
-
 
 [units.eagle_rider]
 race = "elf"
@@ -1473,12 +1031,11 @@ cost.xp = 8
 armor = [6, 6, 6, 6]
 
 [units.eagle_rider.special]
-"Resistance"="Poison Resistance 2"
-	
+"Resistance" = "Poison Resistance 2"
 
 [units.eagle_rider.shaken]
 speed = "slow"
-movement_order = ["-","-","flee"]
+movement_order = ["-", "-", "flee"]
 
 [units.eagle_rider.orders.fire]
 fast_flying = [["-", "Fire"], ["-", "Load"], ["-", "Throw Grenade"]]
@@ -1486,7 +1043,11 @@ slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 
 [units.eagle_rider.orders.movement]
 fast_flying = [["360°,F", "360°,F,360°", "F,360°"], ["360°,F ", "F", "B"]]
-slow = [[" 360° ", " F ", " 360°"], ["360°", "360°", "360°"], ["360°", "A", "F"]]
+slow = [
+	[" 360° ", " F ", " 360°"],
+	["360°", "360°", "360°"],
+	["360°", "A", "F"]
+]
 
 [units.eagle_rider.damage_tables]
 regular = [
@@ -1497,14 +1058,12 @@ regular = [
 ]
 psychic = ["6+: shaken"]
 
-
 [models.armored_unicorn_rider]
 name = "Armored Unicorn Rider"
 race = "elf"
 equipment_limit = ["Independent:∞"]
 equipment = ["shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking"]
-
 
 [models.armored_unicorn_rider.special]
 "To Hit" = "Superb shot: +3 to hit"
@@ -1533,8 +1092,9 @@ range = 4
 angle = [true, true, true, true]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
-special = ["Double barreled: May load up to 2 shots, and fire them one at a time"]
-
+special = [
+	"Double barreled: May load up to 2 shots, and fire them one at a time"
+]
 
 [equipment.towed_main_gun]
 name = "Towed Main Gun"
@@ -1547,7 +1107,6 @@ angle = [false, false, false, true]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 special = []
-
 
 [equipment.thunderroar]
 name = "ThunderRoar"
@@ -1573,7 +1132,6 @@ damage = "d6-2"
 ap = 2
 special = ["Area[5] on a hex within normal range"]
 
-
 [equipment.gattle_gun]
 name = "Gattle_gun"
 race = "elf"
@@ -1585,7 +1143,6 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = 5
 special = ["May load up to 5 shots"]
-
 
 [equipment.teslaburstlaser]
 name = "TeslaBurstLaster"
@@ -1603,7 +1160,6 @@ special = [
 	"If a natural 6 is rolle for too hit (and you hit the enemy): the enemy is shaken, in addition to it's normal effect.",
 ]
 
-
 [equipment.smg_free]
 name = "SMG"
 race = "elf"
@@ -1616,7 +1172,6 @@ damage = "d6-3"
 ap = 1
 special = ["Fire two shot per fire order (per smg in the unit)"]
 
-
 [equipment.smg_reserve]
 name = "SMG"
 race = "elf"
@@ -1628,7 +1183,6 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 special = ["Fire two shot per fire order (per smg in the unit)"]
-
 
 [equipment.twin_guns]
 name = "Twin Guns"
@@ -1644,7 +1198,6 @@ special = [
 	"x2 shots per model",
 	"Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range",
 ]
-
 
 [equipment.twin_rifle]
 name = "Twin Rifle"
@@ -1679,7 +1232,6 @@ special = [
 slow = [["-", "Fire"], ["Fire", "-"]]
 fast = [["-", "Fire"], ["Fire", "-"]]
 
-
 [equipment.gatling_gun]
 name = "GatlingGun"
 race = "elf"
@@ -1695,7 +1247,6 @@ special = [
 	"If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one chosen direction. Avoids firing at hexes with friendly units",
 ]
 
-
 [equipment.shriek_smg_free]
 name = "Shriek SMG"
 race = "elf"
@@ -1709,7 +1260,6 @@ ap = 2
 special = [
 	"Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)",
 ]
-
 
 [equipment.oliphant_gatling_guns]
 name = "Oliphant GatlingGuns"
@@ -1726,7 +1276,6 @@ special = [
 	"Focus Fire[aim]: roll 6 dice at same unit.",
 	"If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units.",
 ]
-
 
 [equipment.at_rifle_free]
 name = "AT Rifle"
@@ -1753,7 +1302,6 @@ damage = "d6"
 ap = "5"
 special = []
 
-
 [equipment.teslacoil_lance]
 name = "Teslacoil Lance"
 race = "elf"
@@ -1767,7 +1315,6 @@ deflection_die.replace = "5+"
 
 [equipment.teslacoil_lance.assault.special]
 "Overrun" = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
-
 
 [equipment.smg]
 name = "SMG"
@@ -1789,7 +1336,6 @@ special = [
 still = [['Fire', 'Fire']]
 slow = [['Fire', 'Fire']]
 fast = [['Fire', 'Fire']]
-
 
 [equipment.bow]
 name = "Elf Bow"
@@ -1840,7 +1386,6 @@ still = [['Fire', 'Fire']]
 slow = [['Fire', 'Fire']]
 fast = [['Fire', 'Fire']]
 
-
 [equipment.elf_flame_arrow_free]
 name = "Elf Flame Arrow"
 race = "elf"
@@ -1860,7 +1405,6 @@ special = [
 	"set enemy on fire",
 ]
 
-
 [equipment.bow_free]
 name = "Elf Bow"
 race = "elf"
@@ -1879,7 +1423,6 @@ special = [
 	"Always treated as loaded",
 ]
 
-
 [equipment.rifle]
 name = "Rifle"
 race = "elf"
@@ -1891,7 +1434,6 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = "2"
 special = []
-
 
 [equipment.enhanced_rifle]
 name = "Enhanced Rifle"
@@ -1905,7 +1447,6 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = "2"
 special = ["enhanced accurazy: +1 to hit"]
-
 
 [equipment.sniper_rifle]
 name = "Sniper Rifle"
@@ -1923,7 +1464,6 @@ special = [
 	"After eliminating one model with the use of aim, you get to choose which model to destroy",
 ]
 
-
 [equipment.sniper_rifle_free]
 name = "Sniper Rifle"
 race = "elf"
@@ -1939,7 +1479,6 @@ special = [
 	"After eliminating one model with the use of aim, you get to choose which model to destroy",
 ]
 
-
 [equipment.grenade]
 name = "Grenade"
 race = "elf"
@@ -1951,7 +1490,6 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = "7"
 special = ["Area(5+)", "Target any hex within normal range", "Always loaded"]
-
 
 [equipment.hand_grenade]
 name = "Grenade"
@@ -1974,7 +1512,6 @@ special = [
 still = [["-", "Throw"]]
 slow = [["-", "Throw"]]
 fast = [["-", "Throw"]]
-
 
 [equipment.crew_hand_grenade]
 name = "Grenade"
@@ -2011,7 +1548,6 @@ special = [
 	"Target one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of target hex with Area(4+)",
 ]
 
-
 [equipment.deflection_field]
 name = "Deflection_field"
 race = "elf"
@@ -2030,7 +1566,6 @@ cost.xp = 4
 
 [equipment.elite_tank_crew.model_special]
 "To Hit (2)" = "model gain good shoot: +1 to hit"
-
 
 [equipment.camouflage]
 name = "Camouflage"
