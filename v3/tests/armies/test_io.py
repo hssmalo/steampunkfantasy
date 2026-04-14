@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.armies.data import Army, add_unit
+from spf.armies import Army, add_unit
 from spf.armies.io import load_army, save_army
 from spf.config import config
 from spf.races import get_race
@@ -59,17 +59,18 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Soldier",
                 equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
-                equipments=[],
+                equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
                 cost=None,
             ),
         },
-        equipments={
+        equipment={
             "sword": EquipmentConfig(
                 race="goblin",
                 name="Sword",
                 cost=t.Cost(cp=2),
+                upgrade_all=True,
                 requires=[["Hands:1"], ["type:Infantry"]],  # pyright: ignore[reportArgumentType]
             ),
         },
@@ -89,7 +90,7 @@ def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 
 def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "test-army")
     loaded = load_army("test-army")
     assert loaded.race == army.race
@@ -98,7 +99,9 @@ def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
 
 def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
     race_config = get_race("goblin")
-    army = add_unit(Army(race="goblin", units=()), "goblin_infantry", race_config)
+    army = add_unit(
+        Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", race_config
+    )
     save_army(army, "goblin-warband")
     loaded = load_army("goblin-warband")
     assert loaded.race == army.race
@@ -110,7 +113,7 @@ def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
 
 
 def test_save_creates_file(armies_dir: Path) -> None:
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "my-army")
     assert (armies_dir / "my-army.json").exists()
 
@@ -120,13 +123,13 @@ def test_save_creates_parent_directory(
 ) -> None:
     nested = tmp_path / "nested" / "dir"
     monkeypatch.setattr(config.paths, "armies", nested)
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "my-army")
     assert (nested / "my-army.json").exists()
 
 
 def test_save_json_contains_race(armies_dir: Path) -> None:
-    army = Army(race="goblin", units=())
+    army = Army(race="goblin", nick="Test Army", units=())
     save_army(army, "check-race")
     data = json.loads((armies_dir / "check-race.json").read_text())
     assert data["race"] == "goblin"
@@ -148,3 +151,67 @@ def test_load_unknown_race_raises_value_error(armies_dir: Path) -> None:
     )
     with pytest.raises(ValueError, match="nonexistent_race_xyz"):
         load_army("bad-race")
+
+
+def test_load_blank_unit_name_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [{"name": "", "models": []}],
+    }
+    (armies_dir / "bad-unit.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match=r"Unit #0 \(name ''\): unknown unit name"):
+        load_army("bad-unit")
+
+
+def test_load_blank_model_name_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {
+                "name": "goblin_infantry",
+                "models": [{"name": "", "upgrades": []}],
+            }
+        ],
+    }
+    (armies_dir / "bad-model.json").write_text(json.dumps(data))
+    with pytest.raises(
+        ValueError, match=r"Unit #0 \('goblin_infantry'\) / model #0 \(name ''\)"
+    ):
+        load_army("bad-model")
+
+
+def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {
+                "name": "goblin_infantry",
+                "models": [
+                    {"name": "goblin_infantry", "upgrades": ["no_such_upgrade"]}
+                ],
+            }
+        ],
+    }
+    (armies_dir / "bad-upgrade.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match="unknown equipment 'no_such_upgrade'"):
+        load_army("bad-upgrade")
+
+
+def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {"name": "", "models": []},
+            {"name": "also_bad", "models": []},
+        ],
+    }
+    (armies_dir / "multi-bad.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match="name 'also_bad'") as exc_info:
+        load_army("multi-bad")
+    msg = str(exc_info.value)
+    assert "Unit #0" in msg
+    assert "Unit #1" in msg

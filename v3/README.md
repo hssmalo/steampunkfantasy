@@ -12,24 +12,33 @@ uv run spf --help
 
 ## Show and Validate a Race File
 
-List all races:
+List all races (this only shows races that validate):
 
 ```console
 uv run spf race list
 ```
 
-Validate and show one race:
+Validate and show one race (gives actionable error messages if race doesn't validate):
 
 ```console
 uv run spf race show goblin
 ```
 
-You can also filter down to specific units, models, or equipments:
+You can also filter down to specific units, models, or equipment:
 
 ```console
 uv run spf race show goblin units.goblin_infantry
 uv run spf race show goblin models.goblin_infantry
-uv run spf race show goblin equipments.goblin_bow
+uv run spf race show goblin equipment.goblin_bow
+```
+
+There are also commands for a high-level overview of a race:
+
+```console
+uv run spf race things ork
+uv run spf race units ork
+uv run spf race models ork
+uv run spf race equipment ork
 ```
 
 ## List and Show Army Files
@@ -44,6 +53,7 @@ Show the units, models, and equipment in a given army:
 
 ```console
 uv run spf army show demo
+uv run spf army show 2025/geir_arne
 ```
 
 # Development

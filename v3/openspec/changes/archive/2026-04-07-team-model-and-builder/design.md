@@ -50,7 +50,7 @@ Key domain constraints informing the design:
 
 ### D3: Equipment upgrades tracked as a separate set per TeamModel
 
-**Decision**: `TeamModel.upgrades` is a `tuple[str, ...]` of equipment keys added as upgrades, separate from `TeamModel.config.equipments` (the defaults).
+**Decision**: `TeamModel.upgrades` is a `tuple[str, ...]` of equipment keys added as upgrades, separate from `TeamModel.config.equipment` (the defaults).
 
 **Rationale**: Cleanly separates what came from the army definition vs what the player added. Cost computation only charges for items in `upgrades`. Validation checks both default + upgrade equipment together.
 
@@ -76,7 +76,7 @@ Key domain constraints informing the design:
 ## Risks / Trade-offs
 
 - [`(name, idx)` keys must stay consistent] → If units are reordered, existing keys become stale. Mitigation: treat `Team` as append-only in this iteration; removal is out of scope.
-- [Requires logic is complex] → CNF evaluation over holder slots and model types. Mitigation: implement as a small pure function `_satisfies_requires(model, equipment, current_equipment_keys, army_equipments) -> bool`.
+- [Requires logic is complex] → CNF evaluation over holder slots and model types. Mitigation: implement as a small pure function `_satisfies_requires(model, equipment, current_equipment_keys, army_equipment) -> bool`.
 - [No holder-slot tracking] → When checking available equipment, holder slot usage needs to be computed from current (default + upgrade) equipment. Mitigation: compute on-the-fly from `EquipmentLimit` and the union of default + upgrade equipment keys.
 
 ## Migration Plan

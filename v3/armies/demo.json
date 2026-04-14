@@ -1,5 +1,6 @@
 {
   "race": "goblin",
+  "nick": "The Iron Claws",
   "units": [
     {
       "name": "goblin_infantry",

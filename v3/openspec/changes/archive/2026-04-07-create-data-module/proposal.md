@@ -4,7 +4,7 @@ The codebase has legacy data access code in `_old_data.py` that reads army data 
 
 ## What Changes
 
-- **New file** `src/spf/data.py` providing functions to query army data (units, models, equipments, races) using `ArmyConfig` from the new schema system.
+- **New file** `src/spf/data.py` providing functions to query army data (units, models, equipment, races) using `ArmyConfig` from the new schema system.
 - Legacy `_old_data.py` functionality is reimplemented on top of `get_army()` from `armies.py`, replacing raw TOML manipulation with typed model access.
 - No changes to existing files; `_old_data.py` remains intact for now.
 

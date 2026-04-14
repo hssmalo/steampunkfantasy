@@ -1,0 +1,217 @@
+{
+    "race": "ork",
+    "nick": "Geir Arne's Sabeltann Fighters",
+    "units": [
+        {
+            "name": "ork_char_b1",
+            "models": [
+                {
+                    "name": "ork_char_b1",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
+            "name": "ork_infantry",
+            "models": [
+                {
+                    "name": "ork_elite_infantry",
+                    "upgrades": [
+                        "clockwork_power_spear",
+                        "clockwork_wings"
+                    ]
+                },
+                {
+                    "name": "ork_infantry",
+                    "upgrades": []
+                },
+                {
+                    "name": "ork_infantry",
+                    "upgrades": []
+                },
+                {
+                    "name": "ork_infantry",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
+            "name": "champion",
+            "models": [
+                {
+                    "name": "champion",
+                    "upgrades": [
+                        "clockwork_power_spear",
+                        "clockwork_wings"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ork_infantry",
+            "models": [
+                {
+                    "name": "ork_elite_infantry",
+                    "upgrades": [
+                        "clockwork_power_spear",
+                        "clockwork_wings"
+                    ]
+                },
+                {
+                    "name": "ork_infantry",
+                    "upgrades": []
+                },
+                {
+                    "name": "ork_infantry",
+                    "upgrades": []
+                },
+                {
+                    "name": "ork_infantry",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
+            "name": "bioengineered_ork",
+            "models": [
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                },
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                },
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                },
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "bioengineered_ork",
+            "models": [
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                },
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                },
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                },
+                {
+                    "name": "bioengineered_ork",
+                    "upgrades": [
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol",
+                        "ork_pistol"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "warg_rider",
+            "models": [
+                {
+                    "name": "warg_rider",
+                    "upgrades": []
+                },
+                {
+                    "name": "warg_rider",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
+            "name": "warg_rider",
+            "models": [
+                {
+                    "name": "warg_rider",
+                    "upgrades": []
+                },
+                {
+                    "name": "warg_rider",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
+            "name": "warg_rider",
+            "models": [
+                {
+                    "name": "warg_rider",
+                    "upgrades": []
+                },
+                {
+                    "name": "warg_rider",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
+            "name": "grunt",
+            "models": [
+                {
+                    "name": "grunt",
+                    "upgrades": []
+                },
+                {
+                    "name": "grunt",
+                    "upgrades": []
+                },
+                {
+                    "name": "grunt",
+                    "upgrades": []
+                },
+                {
+                    "name": "grunt",
+                    "upgrades": []
+                }
+            ]
+        }
+    ]
+}

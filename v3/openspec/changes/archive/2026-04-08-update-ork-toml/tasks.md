@@ -1,14 +1,14 @@
 ## Tasks
 
 - [x] Task 1: Extend UnitSpecial with new literals — add `"Regeneration"` and `"Hans Sverre's second favorite rule"` to `UnitSpecial` Literal in `src/spf/schemas/type_aliases.py`
-- [x] Task 2: Remove `ork.` namespace prefix — replace all `[ork.units.`, `[ork.models.`, `[ork.equipments.` headers in `races/ork.toml`
+- [x] Task 2: Remove `ork.` namespace prefix — replace all `[ork.units.`, `[ork.models.`, `[ork.equipment.` headers in `races/ork.toml`
 - [x] Task 3: Convert unit special lists to dict subtables — replace `special = [...]` on each unit with `[units.xxx.special]` TOML subtable using key mappings from design.md
 - [x] Task 4: Fix size field casing — `"huge"` → `"Huge"`, `"medium"` → `"Medium"` on affected units
 - [x] Task 5: Fix damage table name casing — `Regular` → `regular`, `Critical` → `critical`, `psycic` → `psychic`
 - [x] Task 6: Fix ModelType casing and spelling — correct all `type` arrays per model (see design.md mapping table)
 - [x] Task 7: Fix race field casing in models — `race = "Ork"` → `race = "ork"` for hammerhead and battlewagon
 - [x] Task 8: Add missing `shaken` fields to units — add `shaken = ""` to all units that lack it
-- [x] Task 9: Fix missing and incorrect model fields — add `equipments = []` to warg_rider model; rename `equipments_limit` → `equipment_limit` on hammerhead model
+- [x] Task 9: Fix missing and incorrect model fields — add `equipment = []` to warg_rider model; rename `equipment_limit` → `equipment_limit` on hammerhead model
 - [x] Task 10: Fix `ap` field types in model assault configs — string integers → int, `"-"` → `"N/A"`, hammerhead `"10 (from front), else 2"` → `ap = 10` plus special string
 - [x] Task 11: Verify — `uv run spf show-race ork`, `uv run pytest`, `uv run pyright`, `uv run ruff check src/`
 
@@ -23,7 +23,7 @@
 `races/ork.toml` — mechanical find-and-replace:
 - `[ork.units.` → `[units.`
 - `[ork.models.` → `[models.`
-- `[ork.equipments.` → `[equipments.`
+- `[ork.equipment.` → `[equipment.`
 
 #### Task 3
 `races/ork.toml` — convert specials for each unit:
@@ -111,8 +111,8 @@
 
 #### Task 9
 `races/ork.toml`:
-- `warg_rider` model: add `equipments = []`
-- `hammerhead` model: `equipments_limit` → `equipment_limit`
+- `warg_rider` model: add `equipment = []`
+- `hammerhead` model: `equipment_limit` → `equipment_limit`
 
 #### Task 10
 `races/ork.toml` — fix all `ap` values in `[models.*.assault]`:

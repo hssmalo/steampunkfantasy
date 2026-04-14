@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: TeamModel represents a model instance within a team unit
-A `TeamModel` SHALL be an immutable data structure holding the model's key, its `ModelConfig`, and the set of equipment upgrade keys the player added. Default equipment (from `ModelConfig.equipments`) SHALL NOT be stored in `upgrades`.
+A `TeamModel` SHALL be an immutable data structure holding the model's key, its `ModelConfig`, and the set of equipment upgrade keys the player added. Default equipment (from `ModelConfig.equipment`) SHALL NOT be stored in `upgrades`.
 
 #### Scenario: TeamModel created with defaults
 - **WHEN** a `TeamModel` is created for a model key
@@ -9,7 +9,7 @@ A `TeamModel` SHALL be an immutable data structure holding the model's key, its 
 
 #### Scenario: TeamModel stores upgrade keys separately
 - **WHEN** an equipment upgrade is added to a `TeamModel`
-- **THEN** the key SHALL appear in `upgrades` and not in `config.equipments`
+- **THEN** the key SHALL appear in `upgrades` and not in `config.equipment`
 
 ### Requirement: TeamUnit represents a unit instance within a team
 A `TeamUnit` SHALL be an immutable data structure holding the unit's key, its `UnitConfig`, and a tuple of `TeamModel` instances. The models tuple MAY differ from the unit's default `models` list due to upgrades.

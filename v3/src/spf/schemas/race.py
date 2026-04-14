@@ -46,9 +46,7 @@ class AssaultConfig(StrictModel):
     deflection_die: t.DieResult
     damage: t.Die
     ap: t.ArmorPenetration
-
     special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
-    # special: list[str] = Field(default_factory=list)
 
 
 class ModelConfig(StrictModel):
@@ -56,14 +54,13 @@ class ModelConfig(StrictModel):
     name: t.ModelName
     description: str = ""
     equipment_limit: list[t.ParsedEquipmentLimit]
-    equipments: list[str]
+    equipment: list[str]
     type: list[t.ModelType]
     assault: AssaultConfig
     cost: t.Cost | None = None
     replaces: t.ModelName | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
-    # special: list[str] = Field(default_factory=list)
 
 
 class Stacker[T](StrictModel):
@@ -79,7 +76,6 @@ class EquipmentAssaultConfig(StrictModel):
     deflection_die: Stacker[t.DieResult] | None = None
     damage: Stacker[t.Die] | None = None
     ap: Stacker[t.ArmorPenetration] | None = None
-    # special: Stacker[list[str]] | None = None
     special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
 
 
@@ -96,21 +92,31 @@ class EquipmentConfig(StrictModel):
     name: t.EquipmentName
     description: str = ""
     cost: t.Cost | None = None
-    model_cost: t.Cost | None = None
+    upgrade_all: bool | None = None
     requires: list[list[t.ParsedRequirement]] = Field(default_factory=list)
     assault: EquipmentAssaultConfig | None = None
     range: EquipmentRangeConfig | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     model_special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
-    # special: list[str] = Field(default_factory=list)
     orders_gained: OrdersConfig | None = None
+
+    @model_validator(mode="after")
+    def check_upgrade_all_matches_cost(self) -> Self:
+        """Require upgrade_all iff cost is set."""
+        if (self.cost is None) != (self.upgrade_all is None):
+            msg = (
+                f"Equipment '{self.name}': 'upgrade_all' must be set"
+                " if and only if 'cost' is set"
+            )
+            raise ValueError(msg)
+        return self
 
 
 class RaceConfig(StrictModel):
     races: dict[t.RaceName, RaceMetadata]
     units: dict[str, UnitConfig]
     models: dict[str, ModelConfig]
-    equipments: dict[str, EquipmentConfig]
+    equipment: dict[str, EquipmentConfig]
 
     @model_validator(mode="after")
     def check_unit_models(self) -> Self:
@@ -123,13 +129,13 @@ class RaceConfig(StrictModel):
         return self
 
     @model_validator(mode="after")
-    def check_model_equipments(self) -> Self:
+    def check_model_equipment(self) -> Self:
         """Check names of equipment listed under models."""
-        equipment_names = self.equipments.keys()
+        equipment_names = self.equipment.keys()
         for model in self.models.values():
             if any(
                 (failed := equipment) not in equipment_names
-                for equipment in model.equipments
+                for equipment in model.equipment
             ):
                 msg = f"'{failed}' not a valid model name for {model.name}"
                 raise ValueError(msg)

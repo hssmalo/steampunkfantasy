@@ -4,9 +4,14 @@ import json
 from pathlib import Path
 from typing import Any
 
-from rich.table import Table
-
-from spf.armies.data import Army, ArmyModel, ArmyUnit, total_cost, validate_team
+from spf.armies import (
+    Army,
+    ArmyModel,
+    ArmyUnit,
+    total_cost,
+    unit_cost,
+    validate_army,
+)
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
@@ -24,6 +29,7 @@ def save_army(army: Army, army_name: str, tournament: str | None = None) -> None
     path.parent.mkdir(parents=True, exist_ok=True)
     data: dict[str, Any] = {
         "race": army.race,
+        "nick": army.nick,
         "units": [
             {
                 "name": unit.name,
@@ -38,7 +44,9 @@ def save_army(army: Army, army_name: str, tournament: str | None = None) -> None
     path.write_text(json.dumps(data, indent=2))
 
 
-def load_army(army_name: str, tournament: str | None = None) -> Army:
+def load_army(
+    army_name: str, tournament: str | None = None, *, validate: bool = True
+) -> Army:
     """Deserialize army from JSON at config.paths.armies / {army_name}.json."""
     path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     if not path.exists():
@@ -47,33 +55,61 @@ def load_army(army_name: str, tournament: str | None = None) -> Army:
     data: dict[str, Any] = json.loads(path.read_text())
     cfg = get_race(data["race"])
     army = _build_army(data, cfg)
-    errors = validate_team(army, cfg)
-    if errors:
-        msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
-        raise ValueError(msg)
+    if validate:
+        errors = validate_army(army, cfg)
+        if errors:
+            msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
+            raise ValueError(msg)
     return army
 
 
 def print_army(army: Army, cfg: RaceConfig) -> None:
-    """Pretty-print an army to the console using rich."""
-    stdout.rule(f"{cfg.races[army.race].name} Army")
+    """Pretty-print an army to the console."""
+    stdout.rule(f"{army.nick} ({cfg.races[army.race].name})")
     for unit in army.units:
-        table = Table(title=f"Unit: {unit.config.name}", show_header=True)
-        table.add_column("Model")
-        table.add_column("Equipment")
+        pts = unit_cost(unit, cfg).to_points()
+        stdout.print(
+            f"[bold]{unit.config.name}[/] [yellow]({pts} pts)[/]", highlight=False
+        )
         for model in unit.models:
-            upgrades = ", ".join([*model.config.equipments, *model.upgrades])
-            table.add_row(model.name, upgrades)
-        stdout.print(table)
+            all_equipment = [*model.config.equipment, *model.upgrades]
+            equip_str = f" ({', '.join(all_equipment)})" if all_equipment else ""
+            stdout.print(f"  - {model.name}{equip_str}", highlight=False)
     cost = total_cost(army, cfg)
-    stdout.print(
-        f"[dim]Total cost:[/]  MP={cost.mp}  CP={cost.cp}  XP={cost.xp}  IP={cost.ip}",
-        highlight=False,
-    )
+    stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
+
+
+def _validate_army_data(data: dict[str, Any], cfg: RaceConfig) -> list[str]:
+    """Collect name-resolution errors from raw JSON data before construction."""
+    errors: list[str] = []
+    for unit_idx, unit_data in enumerate(data["units"]):
+        unit_name = unit_data["name"]
+        if unit_name not in cfg.units:
+            errors.append(f"Unit #{unit_idx} (name {unit_name!r}): unknown unit name")
+            continue
+        for model_idx, model_data in enumerate(unit_data["models"]):
+            model_name = model_data["name"]
+            if model_name not in cfg.models:
+                errors.append(
+                    f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
+                    f" (name {model_name!r}): unknown model name"
+                )
+                continue
+            errors.extend(
+                f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
+                f" ({model_name!r}): unknown equipment {upgrade!r}"
+                for upgrade in model_data["upgrades"]
+                if upgrade not in cfg.equipment
+            )
+    return errors
 
 
 def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
     """Reconstruct an Army from deserialized JSON data and a live RaceConfig."""
+    errors = _validate_army_data(data, cfg)
+    if errors:
+        msg = "Army JSON contains invalid entries:\n" + "\n".join(errors)
+        raise ValueError(msg)
     units = tuple(
         ArmyUnit(
             name=unit_data["name"],
@@ -89,4 +125,4 @@ def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
         )
         for unit_data in data["units"]
     )
-    return Army(race=data["race"], units=units)
+    return Army(race=data["race"], nick=data["nick"], units=units)
