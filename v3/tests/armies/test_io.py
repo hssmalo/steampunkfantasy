@@ -70,6 +70,7 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Sword",
                 cost=t.Cost(cp=2),
+                upgrade_all=True,
                 requires=[["Hands:1"], ["type:Infantry"]],  # pyright: ignore[reportArgumentType]
             ),
         },
@@ -188,7 +189,9 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
         "units": [
             {
                 "name": "goblin_infantry",
-                "models": [{"name": "goblin_infantry", "upgrades": ["no_such_upgrade"]}],
+                "models": [
+                    {"name": "goblin_infantry", "upgrades": ["no_such_upgrade"]}
+                ],
             }
         ],
     }
@@ -207,7 +210,7 @@ def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> No
         ],
     }
     (armies_dir / "multi-bad.json").write_text(json.dumps(data))
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(ValueError, match="name 'also_bad'") as exc_info:
         load_army("multi-bad")
     msg = str(exc_info.value)
     assert "Unit #0" in msg

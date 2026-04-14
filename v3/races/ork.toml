@@ -836,6 +836,7 @@ special = []
 name = "Clockwork Shield"
 race = "ork"
 cost.cp = 2
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
 [equipment.clockwork_shield.assault]
@@ -861,6 +862,7 @@ deflection_die.replace = "6+"
 name = "Clockwork Wings"
 race = "ork"
 cost.cp = 4
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
 [equipment.clockwork_wings.assault]
@@ -885,7 +887,8 @@ fast_flying = [["Chase", "B(slow, land)", "-"]]
 [equipment.flame_covered_axe]
 name = "Flame-covered-axe"
 race = "ork"
-model_cost.cp = 2
+cost.cp = 2
+upgrade_all = false
 requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 
 [equipment.flame_covered_axe.assault]
@@ -909,6 +912,7 @@ Damage = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 name = "Poison Spikes"
 race = "ork"
 cost.cp = 1
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
 [equipment.poison_spikes.assault.special]
@@ -918,6 +922,7 @@ requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 name = "Clockwork Monocular"
 race = "ork"
 cost.cp = 1
+upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [equipment.clockwork_monocular.model_special]
@@ -927,6 +932,7 @@ requires = [["type:Infantry"], ["Independent:1"]]
 name = "Clockwork Spear"
 race = "ork"
 cost.cp = 2
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 
 [equipment.clockwork_spear.assault]
@@ -939,6 +945,7 @@ damage.replace = "d8"
 name = "Clockwork Power Spear"
 race = "ork"
 cost.cp = 3
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:2"]]
 
 [equipment.clockwork_power_spear.assault]
@@ -954,6 +961,7 @@ deflection_die.replace = "6+"
 name = "Ork Pistol"
 race = "ork"
 cost.cp = 1
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 
 [equipment.ork_pistol.range]
@@ -972,6 +980,7 @@ name = "Pyro"
 race = "ork"
 cost.cp = 2
 cost.xp = 4
+upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry"], ["Independent:1"]]
 
 [equipment.pyro.range]
@@ -994,6 +1003,7 @@ all = [["-", "Throw"]]
 name = "Hand Held Cannon"
 race = "ork"
 cost.cp = 8
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Shared:1"]]
 
 [equipment.hand_held_cannon.range]
@@ -1009,6 +1019,7 @@ ap = 9
 name = "War Drum"
 race = "ork"
 cost.xp = 2
+upgrade_all = true
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
 [equipment.war_drum.unit_special]
@@ -1019,6 +1030,7 @@ requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 name = "Harpoon Gun"
 race = "ork"
 cost.cp = 4
+upgrade_all = true
 requires = [["type:Infantry"], ["Shared:1"]]
 
 [equipment.harpoon_gun.range]
@@ -1049,6 +1061,7 @@ special = [
 name = "Grenade Sling"
 race = "ork"
 cost.cp = 6
+upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry"], ["Hands:1"]]
 
 [equipment.grenade_sling.range]
@@ -1135,6 +1148,7 @@ special = []
 race = "ork"
 name = "Tankscalper"
 cost.cp = 2
+upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
 [equipment.tankscalper.assault.special]
@@ -1144,6 +1158,7 @@ requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 race = "ork"
 name = "Healing Syringe"
 cost.cp = 1
+upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
 
 [equipment.healing_syringe.unit_special]
@@ -1153,6 +1168,7 @@ requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
 race = "ork"
 name = "Hand Catapult"
 cost.cp = 9
+upgrade_all = true
 requires = [["type:Infantry"], ["Hands:3"]]
 
 [equipment.hand_catapult.range]
@@ -1204,6 +1220,7 @@ ap = 3
 race = "ork"
 name = "Assault_Musket"
 cost.cp = 2
+upgrade_all = true
 requires = [["type:Infantry"], ["Hands:2"]]
 
 [equipment.assault_musket.range]

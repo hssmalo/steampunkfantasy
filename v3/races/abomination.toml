@@ -524,6 +524,7 @@ special = [
 name = "Tentacle CracleSpears"
 race = "abomination"
 cost.cp = 2
+upgrade_all = true
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
 #requires = [["type:Infantry","type:Cavalry"]]
@@ -539,6 +540,7 @@ deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 112
 name = "Tentacle Axes"
 race = "abomination"
 cost.cp = 1
+upgrade_all = true
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.tentacle_axes.assault]
@@ -548,6 +550,7 @@ strength.add = [2, 0, 0, 0]
 name = "Tentacle Shield"
 race = "abomination"
 cost.cp = 2
+upgrade_all = true
 requires = [["Tentacles:1"], ["type:Infantry"]]
 
 [equipment.tentacle_shield.unit_special]
@@ -561,6 +564,7 @@ deflection_die.replace = "5+"
 name = "Frog Cavalry Armor"
 race = "abomination"
 cost.cp = 2
+upgrade_all = true
 requires = [["type:Frog"]]
 
 [equipment.frog_armor.unit_special]
@@ -570,6 +574,7 @@ requires = [["type:Frog"]]
 name = "Fog grenade Mortar"
 race = "abomination"
 cost.cp = 4
+upgrade_all = true
 requires = [["Tentacles:4"], ["type:Infantry"]]
 
 [equipment.fog_grenade_mortar.range]
@@ -609,6 +614,7 @@ special = ["Fire two shot per fire order", "Gear disruption[6+]"]
 name = "Tentacle Dart"
 race = "abomination"
 cost.cp = 1
+upgrade_all = true
 requires = [["Tentacles:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.tentacle_dart.range]

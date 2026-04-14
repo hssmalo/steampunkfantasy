@@ -92,13 +92,24 @@ class EquipmentConfig(StrictModel):
     name: t.EquipmentName
     description: str = ""
     cost: t.Cost | None = None
-    model_cost: t.Cost | None = None
+    upgrade_all: bool | None = None
     requires: list[list[t.ParsedRequirement]] = Field(default_factory=list)
     assault: EquipmentAssaultConfig | None = None
     range: EquipmentRangeConfig | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     model_special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
     orders_gained: OrdersConfig | None = None
+
+    @model_validator(mode="after")
+    def check_upgrade_all_matches_cost(self) -> Self:
+        """Require upgrade_all iff cost is set."""
+        if (self.cost is None) != (self.upgrade_all is None):
+            msg = (
+                f"Equipment '{self.name}': 'upgrade_all' must be set"
+                " if and only if 'cost' is set"
+            )
+            raise ValueError(msg)
+        return self
 
 
 class RaceConfig(StrictModel):

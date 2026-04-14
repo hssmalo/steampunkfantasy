@@ -755,7 +755,8 @@ ap = 2
 [equipment.ogre_sniper_rifle]
 name = "Ogre Sniper Rifle"
 race = "ogre"
-model_cost.cp = 6
+cost.cp = 6
+upgrade_all = false
 requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
 [equipment.ogre_sniper_rifle.range]
@@ -783,6 +784,7 @@ ap = 2
 name = "Drone Supply"
 race = "ogre"
 cost.ip = 1
+upgrade_all = true
 requires = [["Independent:1"], ["type:Carrier"]]
 
 [equipment.drone_supply.unit_special]
@@ -819,6 +821,7 @@ special = [
 name = "Fancy Ogre Rifle"
 race = "ogre"
 cost.cp = 2
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.fancy_ogre_rifle.range]
@@ -842,6 +845,7 @@ ap = 2
 name = "Fancy Arquebus"
 race = "ogre"
 cost.cp = 4
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.fancy_arquebus.range]
@@ -865,6 +869,7 @@ ap = 2
 name = "Fancy Gear Pistol"
 race = "ogre"
 cost.cp = 1
+upgrade_all = true
 requires = [["Hands:1"], ["type:Scout", "type:Infantry"]]
 
 [equipment.fancy_gear_pistol.range]
@@ -902,6 +907,7 @@ requires = [["Hands:2"], ["type:Infantry"]]
 name = "Ogre Helbard"
 race = "ogre"
 cost.cp = 2
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.ogre_helbard.assault.special]
@@ -910,7 +916,8 @@ requires = [["Hands:2"], ["type:Infantry"]]
 [equipment.fancy_ogre_helbard]
 name = "Fancy Ogre Helbard with integrated fancy pistol"
 race = "ogre"
-model_cost.cp = 4
+cost.cp = 4
+upgrade_all = false
 requires = [["Hands:2"], ["type:Scout", "type:Scout"], ["type:Elite"]]
 
 [equipment.fancy_ogre_helbard.assault.special]

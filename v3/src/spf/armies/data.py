@@ -285,14 +285,28 @@ def unit_cost(unit: ArmyUnit, race_config: RaceConfig) -> t.Cost:
     """Return the total cost for a single unit.
 
     Unit base cost + upgrade model costs + upgrade equipment costs.
+    Equipment with upgrade_all=True is charged once; otherwise it's charged per model.
     """
     cost = _add_cost(t.Cost(), unit.config.cost)
+    num_models = len(unit.models)
     for i, team_model in enumerate(unit.models):
         # A model is an upgrade when its name differs from the default.
         if team_model.name != unit.config.models[i]:
             cost = _add_cost(cost, team_model.config.cost)
         for equip_key in team_model.upgrades:
-            cost = _add_cost(cost, race_config.equipment[equip_key].cost)
+            equip = race_config.equipment[equip_key]
+            # upgrade_all=False: per-model pricing — multiply by unit size.
+            # upgrade_all=True or None: flat cost (None preserves legacy behavior).
+            if equip.upgrade_all is False and equip.cost is not None:
+                scaled = t.Cost(
+                    mp=equip.cost.mp * num_models,
+                    cp=equip.cost.cp * num_models,
+                    xp=equip.cost.xp * num_models,
+                    ip=equip.cost.ip * num_models,
+                )
+                cost = _add_cost(cost, scaled)
+            else:
+                cost = _add_cost(cost, equip.cost)
     return cost
 
 

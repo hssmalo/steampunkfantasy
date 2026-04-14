@@ -2,7 +2,7 @@
 
 This file provides guidance to AI agents when working with code in this repository.
 
-> **Note:** Currently only abomination, goblin, ogre, and ork have working TOML files. The other races use a legacy format.
+> **Note:** Not all TOML files in races are valid, some still use a legacy format. Run `uv run spf race list` to get a list of the currently valid TOML files.
 
 ## Commands
 

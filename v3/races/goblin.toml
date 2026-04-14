@@ -329,6 +329,7 @@ special = ["Always treated as loaded"]
 name = "Gear bow"
 race = "goblin"
 cost.cp = 2
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.gear_bow.range]
@@ -342,6 +343,7 @@ special = ["Always treated as loaded", "Gear Disruption[6+]"]
 name = "Clockwork Wings"
 race = "goblin"
 cost.cp = 6
+upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [equipment.clockwork_wings.assault]
@@ -360,6 +362,7 @@ fast_flying = [
 name = "Poison bow"
 race = "goblin"
 cost.cp = 4
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.poison_bow.range]
@@ -377,6 +380,7 @@ special = [
 name = "Ogre Rifle"
 race = "goblin"
 cost.cp = 2
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.ogre_rifle.range]
@@ -400,6 +404,7 @@ still = [["Load", "-"], ["-", "Load"]]
 name = "Poison Deflection Dagger"
 race = "goblin"
 cost.cp = 2
+upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipment.poison_dagger.assault]
@@ -413,6 +418,7 @@ deflection_die.replace = "6+"
 name = "Combat Screw Driver"
 race = "goblin"
 cost.cp = 2
+upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipment.combat_screw_driver.assault]
@@ -438,6 +444,7 @@ special = ["Thrown weapon", "Always treated as loaded"]
 name = "Grenadier specialization"
 race = "goblin"
 cost.xp = 2
+upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.grenadier.model_special]
@@ -450,6 +457,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 name = "Archer spesialization"
 race = "goblin"
 cost.xp = 2
+upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.archer.unit_special]
@@ -459,6 +467,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 name = "Acid Grenade"
 race = "goblin"
 cost.cp = 2
+upgrade_all = true
 requires = [["Grenades:1"], ["type:Infantry"]]
 
 [equipment.acid_grenade.range]
@@ -476,6 +485,7 @@ special = [
 name = "Poison Grenade"
 race = "goblin"
 cost.cp = 2
+upgrade_all = true
 requires = [["Grenades:1"], ["type:Infantry"]]
 
 [equipment.poison_grenade.range]

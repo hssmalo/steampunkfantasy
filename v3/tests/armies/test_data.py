@@ -93,6 +93,7 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Sword",
                 cost=t.Cost(cp=2),
+                upgrade_all=True,
                 requires=[["Hands:1"], ["type:Infantry"]],  # pyright: ignore[reportArgumentType]
             ),
             "shield": EquipmentConfig(
@@ -328,7 +329,12 @@ def test_unsatisfied_groups_all_satisfied(simple_race: RaceConfig) -> None:
         name="soldier", config=simple_race.models["soldier"], upgrades=()
     )
     # sword requires [Hands:1] AND [type:Infantry]; soldier satisfies both
-    assert _unsatisfied_groups(simple_race.equipment["sword"].requires, soldier, simple_race) == []
+    assert (
+        _unsatisfied_groups(
+            simple_race.equipment["sword"].requires, soldier, simple_race
+        )
+        == []
+    )
 
 
 def test_unsatisfied_groups_type_failure_returns_group(simple_race: RaceConfig) -> None:
@@ -355,7 +361,10 @@ def test_format_failed_group_type_only(simple_race: RaceConfig) -> None:
         name="soldier", config=simple_race.models["soldier"], upgrades=()
     )
     remaining = _remaining_slots(soldier, simple_race)
-    group = [t.Requirement(key="type", value="Infantry"), t.Requirement(key="type", value="Grunt")]
+    group = [
+        t.Requirement(key="type", value="Infantry"),
+        t.Requirement(key="type", value="Grunt"),
+    ]
     result = _format_failed_group(group, remaining)
     assert result == "needs type:Infantry or type:Grunt"
 
@@ -367,7 +376,7 @@ def test_format_failed_group_slot_shows_available(simple_race: RaceConfig) -> No
     remaining = _remaining_slots(soldier, simple_race)
     group = [t.Requirement(key="Hands", value=2)]
     result = _format_failed_group(group, remaining)
-    # soldier has Hands:2 available (no upgrades), so "have 2" — but we're testing format
+    # soldier has Hands:2 available (no upgrades), so "have 2", but we're testing format
     assert "Hands:2" in result
     assert "have" in result
 
@@ -379,6 +388,7 @@ def test_validate_army_requires_error_includes_type_detail(
         race="goblin",
         name="Elite Sword",
         cost=t.Cost(cp=3),
+        upgrade_all=True,
         requires=[["type:Elite", "type:Cavalry"]],  # pyright: ignore[reportArgumentType]
     )
     army = RaceConfig(
@@ -406,6 +416,7 @@ def test_validate_army_requires_error_includes_slot_detail(
         race="goblin",
         name="Greedy Sword",
         cost=t.Cost(cp=4),
+        upgrade_all=True,
         requires=[["Hands:3"]],  # pyright: ignore[reportArgumentType]
     )
     army = RaceConfig(
@@ -433,6 +444,7 @@ def test_validate_army_requires_error_includes_all_failing_groups(
         race="goblin",
         name="Impossible Sword",
         cost=t.Cost(cp=5),
+        upgrade_all=True,
         requires=[
             ["type:Cavalry"],
             ["Hands:10"],
@@ -581,6 +593,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         race="goblin",
         name="Elite Sword",
         cost=t.Cost(cp=3),
+        upgrade_all=True,
         requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
     )
     army = RaceConfig(
@@ -752,6 +765,7 @@ def test_validate_army_detects_unsatisfied_equipment_requires(
         race="goblin",
         name="Elite Sword",
         cost=t.Cost(cp=3),
+        upgrade_all=True,
         requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
     )
     army = RaceConfig(

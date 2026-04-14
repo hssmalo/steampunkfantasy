@@ -1,10 +1,4 @@
-# Spec: Unit Cost
-
-## Purpose
-
-Provides functions to compute the total cost and points value for a single army unit.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Compute total cost for a single unit
 The system SHALL provide a `unit_cost(unit, race_config)` function in `src/spf/armies/data.py` that returns the total `Cost` for one `ArmyUnit`: the unit's base cost plus any upgrade model costs plus any upgrade equipment costs. Equipment cost is applied once per unit when `upgrade_all` is `True`, or multiplied by the number of models in the unit when `upgrade_all` is `False` or `None`.
@@ -28,14 +22,3 @@ The system SHALL provide a `unit_cost(unit, race_config)` function in `src/spf/a
 #### Scenario: total_cost delegates to unit_cost
 - **WHEN** `total_cost(army, race_config)` is called
 - **THEN** it returns the sum of `unit_cost(unit, race_config)` for every unit in the army
-
-### Requirement: Compute points value for a unit
-The system SHALL provide a `unit_points(unit, race_config)` function in `src/spf/armies/data.py` that returns an `int` equal to `mp + cp + xp + 3 * ip` of the unit's total cost.
-
-#### Scenario: Points formula applied
-- **WHEN** `unit_points(unit, race_config)` is called
-- **THEN** it returns `unit_cost(unit, race_config).mp + unit_cost(unit, race_config).cp + unit_cost(unit, race_config).xp + 3 * unit_cost(unit, race_config).ip`
-
-#### Scenario: Zero-cost unit yields zero points
-- **WHEN** a unit has no cost components (all are zero)
-- **THEN** `unit_points` returns `0`

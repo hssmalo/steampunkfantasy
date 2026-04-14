@@ -1149,6 +1149,7 @@ name = "TeslaBurstLaster"
 race = "elf"
 requires = [["type:Vehicle"], ["Minor Gun:1"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.teslaburstlaser.range]
 range = 3
@@ -1218,6 +1219,7 @@ name = "Shriek SMG"
 race = "elf"
 requires = [["type:Infantry"], ["Hands:2"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.shriek_smg.range]
 range = 3
@@ -1294,6 +1296,7 @@ name = "AT Rifle"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry"]]
 cost.cp = 8
+upgrade_all = true
 
 [equipment.at_rifle.range]
 range = 5
@@ -1307,6 +1310,7 @@ name = "Teslacoil Lance"
 race = "elf"
 requires = [["Independent:1"], ["type:Elk"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.teslacoil_lance.assault]
 strength.add = [1, 0, 0, 0]
@@ -1320,6 +1324,7 @@ deflection_die.replace = "5+"
 name = "SMG"
 race = "elf"
 cost.cp = 2
+upgrade_all = true
 requires = [["type:Infantry", "type:Crew"], ["Hands:2"]]
 
 [equipment.smg.range]
@@ -1342,6 +1347,7 @@ name = "Elf Bow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.bow.range]
 range = 2
@@ -1366,6 +1372,7 @@ name = "Elf Flame Arrow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry", "type:Crew"]]
 cost.cp = 8
+upgrade_all = true
 
 [equipment.elf_flame_arrow.range]
 range = 2
@@ -1439,6 +1446,7 @@ special = []
 name = "Enhanced Rifle"
 race = "elf"
 cost.cp = 2
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.enhanced_rifle.range]
@@ -1451,7 +1459,8 @@ special = ["enhanced accurazy: +1 to hit"]
 [equipment.sniper_rifle]
 name = "Sniper Rifle"
 race = "elf"
-model_cost.cp = 6
+cost.cp = 6
+upgrade_all = false
 requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
 [equipment.sniper_rifle.range]
@@ -1496,6 +1505,7 @@ name = "Grenade"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.hand_grenade.range]
 range = 1
@@ -1553,6 +1563,7 @@ name = "Deflection_field"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.deflection_field.assault]
 deflection.add = [6, 6, 6, 6]
@@ -1563,6 +1574,7 @@ name = "Elite Tank Crew"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
 cost.xp = 4
+upgrade_all = true
 
 [equipment.elite_tank_crew.model_special]
 "To Hit (2)" = "model gain good shoot: +1 to hit"
@@ -1572,6 +1584,7 @@ name = "Camouflage"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry"]]
 cost.cp = 2
+upgrade_all = true
 
 [equipment.camouflage.unit_special]
 Camouflage = "[forrest][-1]"
