@@ -1,73 +1,49 @@
-"""ArmyUnit data structure and unit-level builder and cost functions."""
+"""Resolved Unit data structure with self-contained effective properties."""
 
 from dataclasses import dataclass, field
 
-from spf.armies.model import ArmyModel
+from spf.armies.model import Model
 from spf.schemas import type_aliases as t
-from spf.schemas.race import RaceConfig, UnitConfig
+from spf.schemas.race import UnitConfig
 
 
 @dataclass(frozen=True)
-class ArmyUnit:
-    """One unit instance within a army, with its (possibly upgraded) model slots."""
+class Unit:
+    """A fully resolved unit instance: all equipment configs are stored directly.
+
+    After construction no race_config is needed for any computation.
+    """
 
     name: str
     config: UnitConfig = field(repr=False)
-    models: tuple[ArmyModel, ...]
+    models: tuple[Model, ...]
 
+    @property
+    def unit_specials(self) -> dict[t.UnitSpecial, str]:
+        """Stacked unit-level specials: unit config then each model's unit_specials."""
+        result: dict[t.UnitSpecial, str] = dict(self.config.special)
+        for model in self.models:
+            result |= model.unit_specials
+        return result
 
-def _make_default_team_model(
-    model_name: t.ModelName, race_config: RaceConfig
-) -> ArmyModel:
-    return ArmyModel(
-        name=model_name, config=race_config.models[model_name], upgrades=()
-    )
+    def cost(self) -> t.Cost:
+        """Full unit cost: base + upgrade model costs + equipment costs.
 
-
-def _make_default_team_unit(unit_name: t.UnitName, race_config: RaceConfig) -> ArmyUnit:
-    unit_config = race_config.units[unit_name]
-    models = tuple(
-        _make_default_team_model(model_name, race_config)
-        for model_name in unit_config.models
-    )
-    return ArmyUnit(name=unit_name, config=unit_config, models=models)
-
-
-def _resolve_model(
-    unit: ArmyUnit, model_key: tuple[t.ModelName, int]
-) -> tuple[int, ArmyModel]:
-    """Return (index_in_tuple, ArmyModel) for the given (name, occurrence_index) key."""
-    name, occurrence = model_key
-    count = 0
-    for i, model in enumerate(unit.models):
-        if model.name == name:
-            if count == occurrence:
-                return i, model
-            count += 1
-    msg = f"Model '{model_key}' not found in unit '{unit.name}'"
-    raise KeyError(msg)
-
-
-def unit_cost(unit: ArmyUnit, race_config: RaceConfig) -> t.Cost:
-    """Return the total cost for a single unit.
-
-    Unit base cost + upgrade model costs + upgrade equipment costs.
-    Equipment with upgrade_all=True is charged once; otherwise it's charged per model.
-    """
-    cost = t.Cost() + (unit.config.cost or t.Cost())
-    num_models = len(unit.models)
-    for i, team_model in enumerate(unit.models):
-        # A model is an upgrade when its name differs from the default.
-        if team_model.name != unit.config.models[i] and team_model.config.cost:
-            cost = cost + team_model.config.cost
-        for equip_key in team_model.upgrades:
-            equip = race_config.equipment[equip_key]
-            if equip.cost is None:
-                continue
-            # upgrade_all=False: per-model pricing — multiply by unit size.
-            # upgrade_all=True or None: flat cost (None preserves legacy behavior).
-            if equip.upgrade_all is False:
-                cost = cost + equip.cost * num_models
-            else:
-                cost = cost + equip.cost
-    return cost
+        For upgrade_all=False equipment, cost is multiplied by the total number of
+        models in the unit (per-model pricing charged at unit granularity).
+        """
+        cost = self.config.cost or t.Cost()
+        num_models = len(self.models)
+        for i, model in enumerate(self.models):
+            # Model is an upgrade when its name differs from the default slot
+            if model.name != self.config.models[i] and model.config.cost:
+                cost = cost + model.config.cost
+            for equip in model.upgrade_equipment:
+                if equip.cost is None:
+                    continue
+                if equip.upgrade_all is False:
+                    # Per-model pricing: multiply by full unit size
+                    cost = cost + equip.cost * num_models
+                else:
+                    cost = cost + equip.cost
+        return cost

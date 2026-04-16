@@ -4,14 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from spf.armies import (
-    Army,
-    ArmyModel,
-    ArmyUnit,
-    total_cost,
-    unit_cost,
-    validate_army,
-)
+from spf.armies.army import Army
+from spf.armies.build import ArmyList, ArmyModel, ArmyUnit, validate_army
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
@@ -23,8 +17,8 @@ def list_armies() -> list[Path]:
     return sorted(config.paths.armies.rglob("*.json"))
 
 
-def save_army(army: Army, army_name: str, tournament: str | None = None) -> None:
-    """Serialize army to JSON at config.paths.armies / {army_name}.json."""
+def save_army(army: ArmyList, army_name: str, tournament: str | None = None) -> None:
+    """Serialize ArmyList to JSON at config.paths.armies / {army_name}.json."""
     path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     data: dict[str, Any] = {
@@ -47,35 +41,39 @@ def save_army(army: Army, army_name: str, tournament: str | None = None) -> None
 def load_army(
     army_name: str, tournament: str | None = None, *, validate: bool = True
 ) -> Army:
-    """Deserialize army from JSON at config.paths.armies / {army_name}.json."""
+    """Deserialize and resolve an Army from JSON.
+
+    Builds an ArmyList, optionally validates it, then calls resolve() to return
+    a fully resolved Army. No race_config is needed after this call.
+    """
     path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     if not path.exists():
         msg = f"No army file found for '{army_name}' at {path}"
         raise FileNotFoundError(msg)
     data: dict[str, Any] = json.loads(path.read_text())
     cfg = get_race(data["race"])
-    army = _build_army(data, cfg)
+    army_list = _build_army_list(data, cfg)
     if validate:
-        errors = validate_army(army, cfg)
+        errors = validate_army(army_list, cfg)
         if errors:
             msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
             raise ValueError(msg)
-    return army
+    return army_list.resolve(cfg)
 
 
-def print_army(army: Army, cfg: RaceConfig) -> None:
-    """Pretty-print an army to the console."""
-    stdout.rule(f"{army.nick} ({cfg.races[army.race].name})")
+def print_army(army: Army) -> None:
+    """Pretty-print a resolved Army to the console."""
+    stdout.rule(f"{army.nick} ({army.race.title()})")
     for unit in army.units:
-        pts = unit_cost(unit, cfg).to_points()
+        pts = unit.cost().to_points()
         stdout.print(
             f"[bold]{unit.config.name}[/] [yellow]({pts} pts)[/]", highlight=False
         )
         for model in unit.models:
-            all_equipment = [*model.config.equipment, *model.upgrades]
-            equip_str = f" ({', '.join(all_equipment)})" if all_equipment else ""
+            equip_names = [e.name for e in model.equipment]
+            equip_str = f" ({', '.join(equip_names)})" if equip_names else ""
             stdout.print(f"  - {model.name}{equip_str}", highlight=False)
-    cost = total_cost(army, cfg)
+    cost = army.cost()
     stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
 
@@ -104,8 +102,8 @@ def _validate_army_data(data: dict[str, Any], cfg: RaceConfig) -> list[str]:
     return errors
 
 
-def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
-    """Reconstruct an Army from deserialized JSON data and a live RaceConfig."""
+def _build_army_list(data: dict[str, Any], cfg: RaceConfig) -> ArmyList:
+    """Reconstruct an ArmyList from deserialized JSON data and a live RaceConfig."""
     errors = _validate_army_data(data, cfg)
     if errors:
         msg = "Army JSON contains invalid entries:\n" + "\n".join(errors)
@@ -125,4 +123,4 @@ def _build_army(data: dict[str, Any], cfg: RaceConfig) -> Army:
         )
         for unit_data in data["units"]
     )
-    return Army(race=data["race"], nick=data["nick"], units=units)
+    return ArmyList(race=data["race"], nick=data["nick"], units=units)

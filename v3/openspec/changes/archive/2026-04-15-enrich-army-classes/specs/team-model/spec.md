@@ -1,10 +1,4 @@
-# Spec: Team Model
-
-## Purpose
-
-Defines the immutable data structures representing a player's army at two tiers: a build-time tier (`ArmyModel`, `ArmyUnit`, `ArmyList`) for assembling and mutating armies, and a resolved tier (`Model`, `Unit`, `Army`) for fully resolved, self-contained army state.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: ArmyModel represents a model instance within an army unit during building
 An `ArmyModel` SHALL be an immutable data structure (in `spf.armies.build`) holding the model's name, its `ModelConfig`, and the set of equipment upgrade keys the player added. Default equipment (from `ModelConfig.equipment`) SHALL NOT be stored in `upgrades`. `ArmyModel` carries `config: ModelConfig` to support build-time validation of slot requirements.
