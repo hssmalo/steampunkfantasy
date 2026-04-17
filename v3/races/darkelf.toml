@@ -10,15 +10,24 @@ name = "Dark Elf"
 race = "darkelf"
 name = "Mechanical Red Dragon"
 models = ["mechanical_red_dragon"]
-size = "huge"
+size = "Huge"
 armor = [11, 8, 8, 7]
 cost.ip = 24
 cost.xp = 24
-special = []
-shaken = "speed set to slow (lands if flying), move order: [-,-,-]."
+
+[units.mechanical_red_dragon.special]
+Resistance = "Fire Resistance 2"
+Immunity = "Acid and gear disruption"
+
+
+
+[units.mechanical_red_dragon.shaken]
+speed = "slow"
+movement_order = ["-", "-", "-"]
+comment = "Lands if flying"
 
 [units.mechanical_red_dragon.orders.movement]
-"fast flying" = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
+fast_flying = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
 slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
 
 [units.mechanical_red_dragon.orders.fire]
@@ -36,16 +45,24 @@ regular = [
 race = "darkelf"
 name = "Mechanical Iron Dragon"
 models = ["mechanical_iron_dragon"]
-size = "huge"
+size = "Huge"
 armor = [11, 8, 8, 7]
 cost.ip = 24
 cost.xp = 24
-special = []
-shaken = "speed set to slow (lands if flying), move order: [-,-,-]."
+
+[units.mechanical_iron_dragon.special]
+Resistance = "Fire Resistance 2"
+Immunity = "Acid and gear disruption"
+
+
+[units.mechanical_iron_dragon.shaken]
+speed = "slow"
+movement_order = ["-", "-", "-"]
+comment = "Lands if flying"
 
 [units.mechanical_iron_dragon.orders.movement]
 slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
-"fast flying" = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
+fast_flying = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
 
 [units.mechanical_iron_dragon.orders.fire]
 slow = [
@@ -54,7 +71,7 @@ slow = [
     ["Load", "Breath(shrapnell)"],
     ["Breath(shrapnell)", "Load"],
 ]
-"fast flying" = [
+fast_flying = [
     ["-", "-"],
     ["-", "-"],
     ["Load", "Breath(shrapnell)"],
@@ -72,11 +89,17 @@ regular = [
 race = "darkelf"
 name = "Queen YY"
 models = ["queen_yy"]
-size = "large"
+size = "Large"
 armor = [12, 10, 8, 7]
 cost.ip = 16
-special = []
-shaken = "speed set to still, move order: [-,-,-]"
+
+[units.queen_yy.special]
+"Fire Order" = "You fire 2 independent heavy rifles in addion to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the {{\\it release} as an firing option, you may place the poison cload[12] during pre assault step in any movement phase, including contested hexes for assaults"
+
+[units.queen_yy.shaken]
+speed = 'still'
+movement_order = ["-", "-", "-"]
+
 
 [units.queen_yy.orders.movement]
 fast = [
@@ -135,11 +158,16 @@ crew = [
 race = "darkelf"
 name = "Queen XY"
 models = ["queen_xy"]
-size = "large"
+size = "Large"
 armor = [11, 10, 8, 7]
 cost.ip = 6
-special = []
-shaken = "speed set to still, move order: [-,-,-]"
+
+[units.queen_xy.special]
+"Fire Order" = "If you use the order {{\\it release}} as an firing option, you may place a poison cload[12] during any movement phase in any the hex you are in, including contested hexes for assaults"
+
+[units.queen_xy.shaken]
+speed = 'still'
+movement_order = ["-", "-", "-"]
 
 [units.queen_xy.orders.movement]
 fast = [
@@ -198,15 +226,18 @@ crew = [
 race = "darkelf"
 name = "Nightmare Mechanical Cavalry"
 models = ["nightmare_mechanical_cavalry", "nightmare_mechanical_cavalry"]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 2
 cost.cp = 4
 cost.xp = 12
-special = [
-    "Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"
-]
-shaken = "speed set to slow, move order: [-,-,Flee]"
+
+[units.nightmare_mechanical_cavalry.special]
+"Fire Order" = "Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"
+
+[units.nightmare_mechanical_cavalry.shaken]
+speed = "slow"
+movement_order = ["-","-","Flee"]
 
 [units.nightmare_mechanical_cavalry.orders.movement]
 fast = [
@@ -234,13 +265,18 @@ psychic = ["6+: unit shaken"]
 race = "darkelf"
 name = "Elite Mechanical Cavalry"
 models = ["elite_mechanical_cavalry", "elite_mechanical_cavalry"]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 2
 cost.cp = 4
 cost.xp = 6
-special = []
-shaken = "speed set to slow, move order: [-,-,Flee]"
+
+[units.elite_mechanical_cavalry.special]
+"Fire Order" = "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases"
+
+[units.elite_mechanical_cavalry.shaken]
+speed = "slow"
+movement_order = ["-","-","Flee"]
 
 [units.elite_mechanical_cavalry.orders.movement]
 fast = [
@@ -264,17 +300,19 @@ regular = [
     "5-6: kill 1 model",
     "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by poison, remove that poison token}}",
 ]
-psycic = ["5+: unit shaken"]
+psychic = ["5+: unit shaken"]
 
 [units.mechanical_assault_spider]
 race = "darkelf"
 name = "Mechanical Assault Spider"
 models = ["mechanical_assault_spider"]
-size = "medium"
+size = "Medium"
 armor = [7, 7, 7, 7]
 cost.ip = 4
-special = []
-shaken = "speed set to still, move order: [-,-,-]"
+
+[units.mechanical_assault_spider.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.mechanical_assault_spider.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
@@ -304,11 +342,13 @@ critical = [
 race = "darkelf"
 name = "Mechanical Scorpion"
 models = ["mechanical_scorpion"]
-size = "medium"
+size = "Medium"
 armor = [9, 7, 6, 5]
 cost.ip = 4
-special = []
-shaken = "speed set to still, move order: [-,-,-]"
+
+[units.mechanical_scorpion.shaken]
+speed="still"
+movement_order = ["-","-","-"]
 
 [units.mechanical_scorpion.orders.movement]
 still = [["360°", "360°", "360°"], ["A", "360°", "360°"]]
@@ -343,11 +383,16 @@ models = [
     "darkelf_infantry",
     "darkelf_infantry",
 ]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 6
-special = ["Take-Cover[still,crawl][-2]"]
-shaken = "speed set to slow, move order: [-,-,flee]"
+
+[units.darkelf_infantry.special]
+"Take Cover" = "[still,crawl][-2]"
+
+[units.darkelf_infantry.shaken]
+speed = "slow"
+movement_order = ["-","-","Flee"]
 
 [units.darkelf_infantry.orders.movement]
 slow = [
@@ -400,18 +445,22 @@ models = [
     "multicultural_infantry",
     "multicultural_infantry",
 ]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 2
 cost.xp = 6
-special = [
-    "If number of alive models in this unit is less than 10, you may transfer models from multicultural_trainee in aftermath phase, such that you have a maximum of 10 models in this unit",
-    "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural_trainee units rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving",
-    "Forward Potion[2]",
-    "At start of battle, place two Multicultural Trainee units directly in front of this unit",
-    "Activate order only available while officer is alive",
-]
-shaken = "speed set to slow, move order: [-,-,flee]"
+
+[units.multicultural_infantry.special]
+"Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural_trainee in aftermath phase, such that you have a maximum of 10 models in this unit"
+"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural_trainee units rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving"
+"Spawn" = "At start of battle, place two Multicultural Trainee units directly in front of this unit"
+"Forward Position" = "[2]"
+"Fire Order" = "Activate order only available while officer is alive"
+
+
+[units.multicultural_infantry.shaken]
+speed = "slow"
+movement_order = ["-","-","Flee"]
 
 [units.multicultural_infantry.orders.movement]
 slow = [
@@ -447,16 +496,19 @@ models = [
     "multicultural_infantry",
     "multicultural_infantry",
 ]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 0
 cost.xp = 0
-special = [
-    "May only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules",
-    "If there are no Darkelf officer on the game map, this unit rebel and switch sides",
-    "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes",
-]
-shaken = "speed set to slow, move order: [-,-,flee]"
+description = "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes"
+
+[units.multicultural_trainee.special]
+    "Spawn" = "ay only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules"
+    "Darkelf Officer"= "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
+
+[units.multicultural_trainee.shaken]
+speed = "slow"
+movement_order = ["-","-","Flee"]
 
 [units.multicultural_trainee.orders.movement]
 slow = [["-", "-", "Chase"]]
@@ -474,12 +526,17 @@ models = [
     "roboprosthetic_darkelf",
     "roboprosthetic_darkelf",
 ]
-size = "medium"
+size = "Medium"
 armor = [3, 3, 3, 3]
 cost.mp = 4
 cost.cp = 3
-special = ["Take-Cover[still,crawl][-2]"]
-shaken = "speed set to slow, move order: [-,-,flee]"
+
+[units.roboprosthetic_darkelf.special]
+"Take Cover" = "[still,crawl][-2]"
+
+[units.roboprosthetic_darkelf.shaken]
+speed = "slow"
+movement_order =  ["-","-","Flee"]
 
 [units.roboprosthetic_darkelf.orders.movement]
 slow = [
@@ -521,12 +578,17 @@ psychic = ["5+: Unit Shaken"]
 race = "darkelf"
 name = "Assassin"
 models = ["assassin"]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 2
 cost.xp = 6
-special = ["Take-Cover[still,crawl][-3]"]
-shaken = "speed set to slow, move order: [-,-,flee]"
+
+[units.assassin.special]
+"Take Cover" = "[still,crawl][-3]"
+
+[units.assassin.shaken]
+speed = "slow"
+movement_order =  ["-","-","Flee"]
 
 [units.assassin.orders.movement]
 slow = [
@@ -562,12 +624,17 @@ psychic = ["6+: Unit Shaken"]
 race = "darkelf"
 name = "Roboprosthetic Assassin"
 models = ["roboprosthetic_assassin"]
-size = "medium"
+size = "Medium"
 armor = [3, 3, 3, 3]
 cost.mp = 2
 cost.cp = 7
-special = ["Take-Cover[still,crawl][-3]"]
-shaken = "speed set to slow, move order: [-,-,flee]"
+
+[units.roboprosthetic_assassin.special]
+"Take Cover" = "[still,crawl][-3]"
+
+[units.roboprosthetic_assassin.shaken]
+speed = "slow"
+movement_order = ["-","-","Flee"]
 
 [units.roboprosthetic_assassin.orders.movement]
 slow = [
@@ -604,14 +671,17 @@ psychic = ["6+: Unit Shaken"]
 race = "darkelf"
 name = "Scout"
 models = ["scout"]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 2
-special = [
-    "Forward Position[2], Take-Cover[still,crawl][-3]",
-    "spot: detect enemy hidden units. See general rules",
-]
-shaken = "speed set to slow, move order: [-,-,flee]"
+
+[units.scout.special]
+"Forward Position" = "[2]"
+"Take Cover" = "[still,crawl][-3]"
+
+[units.scout.shaken]
+speed = "slow"
+movement_order= ["-","-","Flee"]
 
 [units.scout.orders.movement]
 slow = [
@@ -655,11 +725,7 @@ name = "Mechanical Red Dragon"
 race = "darkelf"
 equipment_limit = []
 equipment = ["fire_breath"]
-type = ["Flying", "Mechanical", "Walks"]
-special = [
-    "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing",
-    "Fire Resistance 2, Immunity to acid and gear disruption",
-]
+type = ["Flying", "Mechanical", "Walking"]
 
 [models.mechanical_red_dragon.assault]
 strength = [12, 8, 8, 4]
@@ -668,18 +734,17 @@ deflection = [12, 8, 8, 4]
 deflection_die = "6+"
 damage = "d6"
 ap = 7
-special = []
+
+[models.mechanical_red_dragon.assault.special]
+"Lands" = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
 
 [models.mechanical_iron_dragon]
 name = "Mechanical Iron Dragon"
 race = "darkelf"
 equipment_limit = []
 equipment = ["acid_breath", "shrapnell_breath"]
-type = ["Flying", "Mechanical", "Walks"]
-special = [
-    "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing",
-    "Fire Resistance 2, Immunity to acid and gear disruption",
-]
+type = ["Flying", "Mechanical", "Walking"]
+
 
 [models.mechanical_iron_dragon.assault]
 strength = [12, 8, 8, 4]
@@ -688,20 +753,19 @@ deflection = [12, 8, 8, 4]
 deflection_die = "6+"
 damage = "d6"
 ap = 7
-special = []
+[models.mechanical_iron_dragon.assault.special]
+"Lands" = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
 
 [models.queen_yy]
 name = "Queen YY"
 race = "darkelf"
 equipment_limit = ["Independent:∞"]
 equipment = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
-type = ["Bio crew", "Vehicle", "Mechanical", "Track"]
-special = [
-    "Excellent shot: +2 to hit",
-    "You fire 2 independent heavy rifles in addion to acid cannon each fire order",
-    "Dual ammo: all weapons may load up to 2 shots, and fire them one at a time.",
-    "If you have the order {{\\it release} as an firing option, you may place the poison cload[12] during pre assault step in any movement phase, including contested hexes for assaults",
-]
+type = ["Bio Crew", "Vehicle", "Mechanical", "Tracked"]
+
+[models.queen_yy.special]
+"To Hit" = "Excellent shot: +2 to hit"
+
 
 [models.queen_yy.assault]
 strength = [5, 4, 3, 2]
@@ -710,20 +774,19 @@ deflection = [4, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-1"
 ap = 3
-special = [
-    "Poison[6][1 for 1], Fear[8]",
-    "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not...",
-]
+[models.queen_yy.assault.special]
+"Extra Damage" = "Poison[6][1 for 1], Fear[8]"
+"Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+
 
 [models.queen_xy]
 name = "Queen XY"
 race = "darkelf"
 equipment_limit = ["Independent:∞"]
 equipment = []
-type = ["Bio crew", "Vehicle", "Mechanical", "Track"]
-special = [
-    "If you have the order {{\\it release}} as an firing option, you may place a poison cload[12] during any movement phase in any the hex you are in, including contested hexes for assaults",
-]
+
+type = ["Bio Crew", "Vehicle", "Mechanical", "Tracked"]
+
 
 [models.queen_xy.assault]
 strength = [5, 4, 3, 2]
@@ -732,22 +795,24 @@ deflection = [4, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-1"
 ap = 3
-special = [
-    "Poison[6][1 for 1], Fear[8]",
-    "May also choose to retreat even if winning the assault. The enemy occupies the hex, h it wants to or not...",
-]
+
+[models.queen_xy.assault.special]
+"Extra Damage" = "Poison[6][1 for 1], Fear[8]"
+"Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+
+
 
 [models.elite_mechanical_cavalry]
 name = "Elite Mechanical Cavalry"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["smg_free", "crossbow_free"]
-type = ["Bio", "Elite", "Cavalry", "Walks"]
-special = [
-    "Good Shot: +1 to hit",
-    "Negates to-hit penalty for shooting while moving fast",
-    "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases",
-]
+type = ["Bio", "Elite", "Cavalry", "Walking"]
+
+[models.elite_mechanical_cavalry.special]
+"To Hit" = "Good Shot: +1 to hit, Negates to-hit penalty for shooting while moving fast"
+
+
 
 [models.elite_mechanical_cavalry.assault]
 strength = [4, 2, 1, 1]
@@ -756,15 +821,17 @@ deflection = [4, 3, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 2
-special = []
+
 
 [models.nightmare_mechanical_cavalry]
 name = "Nightmare Mechanical Cavalry"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["smg_free", "nightmare_breath"]
-type = ["Bio", "Elite", "Cavalry", "Walks"]
-special = ["Good Shot: +1 to hit"]
+type = ["Bio", "Elite", "Cavalry", "Walking"]
+
+[models.nightmare_mechanical_cavalry.special]
+"To Hit" = "Good Shot: +1 to hit"
 
 [models.nightmare_mechanical_cavalry.assault]
 strength = [3, 2, 1, 1]
@@ -773,15 +840,16 @@ deflection = [3, 2, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 2
-special = []
 
 [models.mechanical_assault_spider]
 name = "Mechanical Assault Spider"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["head_gun"]
-type = ["Mechanical", "Droid", "Walks"]
-special = ["Good Shot: +1 to hit"]
+type = ["Mechanical", "Drone", "Walking"]
+
+[models.mechanical_assault_spider.special]
+"To Hit" = "Good Shot: +1 to hit"
 
 [models.mechanical_assault_spider.assault]
 strength = [6, 4, 2, 1]
@@ -790,15 +858,17 @@ deflection = [6, 2, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 7
-special = ["Poison[6][1 for 2]"]
+
+[models.mechanical_assault_spider.assault.special]
+"Extra Damage" = "Poison[6][1 for 2]"
 
 [models.mechanical_scorpion]
 name = "Mechanical Scorpion"
 race = "darkelf"
 equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["tail_gatling_gun"]
-type = ["Mechanical", "Droid", "Walks"]
-special = []
+type = ["Mechanical", "Drone", "Walking"]
+
 
 [models.mechanical_scorpion.assault]
 strength = [8, 4, 2, 1]
@@ -807,15 +877,18 @@ deflection = [6, 2, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 3
-special = ["Poison[12][1 for 2], Fear[8]"]
+
+[models.mechanical_scorpion.assault.special]
+"Fear" = "[8]"
+"Extra Damage" = "Poison[12][1 for 2]"
 
 [models.darkelf_infantry]
 name = "Dark Elf Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
-type = ["Bio", "Infantry", "Walks"]
-special = []
+type = ["Bio", "Infantry", "Walking"]
+
 
 [models.darkelf_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -824,18 +897,19 @@ deflection = [1, 1, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 2]",
-    "Reroll all success in assault while crawling"
-]
+
+[models.darkelf_infantry.assault.special]
+    "Cunning Assault" = "[1 for 2]"
+    "Penalty"= "Reroll all success in assault while crawling"
+
 
 [models.multicultural_infantry]
 name = "Multicultural Infantry"
 race = "darkelf"
 equipment_limit = []
 equipment = ["collar"]
-type = ["Bio", "Infantry", "Walks"]
-special = []
+type = ["Bio", "Infantry", "Walking"]
+
 
 [models.multicultural_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -844,19 +918,22 @@ deflection = [0, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = []
+
 
 [models.darkelf_officer]
 name = "Dark Elf Officer"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["tesla_whip", "remote_control", "officers_mask"]
-type = ["Bio", "Infantry", "Walks", "Elite", "Officer"]
-special = [
-    "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3.",
-    "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase",
-    "Escape artist: in any aftermath phase, you may remove this unit from the board. Treat it as survived for vitory points purposes",
-]
+type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
+
+[models.darkelf_officer.unit_special]
+"Officer Order" =   "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
+"Officer" = "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+
+[models.darkelf_officer.special]
+"Escape Artist" =    "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for vitory points purposes"
+
 
 [models.darkelf_officer.assault]
 strength = [3, 2, 1, 1]
@@ -865,22 +942,24 @@ deflection = [6, 3, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 0
-special = [
-    "Cunning assault[1 for 3]",
-    "Each deflections counts as both a hit and a deflection",
-]
+
+[models.darkelf_officer.assault.special]
+    "Cunning Assault" = "[1 for 3]"
+    "Counter Attack" = "Each deflections counts as both a hit and a deflection"
 
 [models.darkelf_elite_infantry]
 name = "DarkElf Elite Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
-type = ["Bio", "Elite", "Infantry", "Walks"]
-replaces = ["darkelf_infantry"]
-special = [
-    "Unit base gains psychic resistance 1 as long as atleast one elite model is alive.",
-]
+type = ["Bio", "Elite", "Infantry", "Walking"]
+replaces = "darkelf_infantry"
 cost.xp = 1
+
+[models.darkelf_elite_infantry.unit_special]
+"Improved Resistance" = "Unit base gains psychic resistance 1 as long as atleast one elite model is alive"
+
+
 
 [models.darkelf_elite_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -889,19 +968,21 @@ deflection = [4, 2, 1, 1]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 2]",
-    "Flexible deflection die: any deflection result may be chosen to add to assault value instead of deflection",
-    "Reroll all success in assault while crawling",
-]
+
+[models.darkelf_elite_infantry.assault.special]
+    "Cunning Assault" = "[1 for 2]"
+    "Counter Attack" = "Each deflections counts as both a hit and a deflection"
+    "Penalty" = "Reroll all success in assault while crawling"
 
 [models.assassin]
 name = "Assassin"
 race = "darkelf"
-equipment_limit = ["shared: 1", "Hands:2", "Training:1", "Independent:∞"]
+equipment_limit = ["Shared: 1", "Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle", "hide_free"]
-type = ["Bio", "Elite", "Infantry", "Walks"]
-special = ["Good Shot: +1 to hit"]
+type = ["Bio", "Elite", "Infantry", "Walking"]
+
+[models.assassin.special]
+"To Hit" = "Good Shot: +1 to hit"
 
 [models.assassin.assault]
 strength = [6, 4, 2, 1]
@@ -910,19 +991,22 @@ deflection = [8, 3, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 2], Poison[12]",
-    "Flexible deflection die: any deflection result may be chosen to add to assault value instead of deflection",
-    "Reroll all success in assault while crawling",
-]
+
+[models.assassin.assault.special]
+"Cunning Assault" = "[1 for 2]"
+"Extra Damage" = "Poison[12]"
+"Counter Attack" = "Each deflections counts as both a hit and a deflection"
+"Penalty" ="Reroll all success in assault while crawling"
 
 [models.roboprosthetic_assassin]
 name = "Roboprosthetic Assassin"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle", "hide_free"]
-type = ["Bio", "Elite", "Infantry", "Roboprosthetic", "Walks"]
-special = ["Good Shot: +1 to hit"]
+type = ["Bio", "Elite", "Infantry", "Roboprosthetic", "Walking"]
+
+[models.roboprosthetic_assassin.special]
+"To Hit" = "Good Shot: +1 to hit"
 
 [models.roboprosthetic_assassin.assault]
 strength = [6, 4, 2, 1]
@@ -931,19 +1015,21 @@ deflection = [8, 3, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 2], Poison[12][1 for 1]",
-    "Flexible deflection die: any deflection result from elites may be chosen to add to assault value instead of deflection",
-    "Reroll all success in assault while crawling",
-]
+
+[models.roboprosthetic_assassin.assault.special]
+"Cunning Assault" = "[1 for 2]"
+"Extra Damage" = "Poison[12]"
+"Counter Attack" = "Each deflections counts as both a hit and a deflection"
+"Penalty" ="Reroll all success in assault while crawling"
+
 
 [models.scout]
 name = "Scout"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
-type = ["Bio", "Infantry", "Walks"]
-special = []
+type = ["Bio", "Infantry", "Walking"]
+
 
 [models.scout.assault]
 strength = [2, 1, 1, 1]
@@ -952,18 +1038,19 @@ deflection = [2, 1, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 1]",
-    "Reroll all success in assault while crawling"
-]
+
+[models.scout.assault.special]
+"Cunning Assault" = "[1 for 1]"
+"Penalty" =     "Reroll all success in assault while crawling"
+
 
 [models.roboprosthetic_darkelf]
 name = "Dark Elf Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
-type = ["Bio", "Infantry", "Walks", "Roboprosthetic"]
-special = []
+type = ["Bio", "Infantry", "Walking", "Roboprosthetic"]
+
 
 [models.roboprosthetic_darkelf.assault]
 strength = [1, 1, 1, 1]
@@ -972,22 +1059,25 @@ deflection = [1, 1, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 2]",
-    "Reroll all success in assault while crawling"
-]
+
+[models.roboprosthetic_darkelf.assault.special]
+"Cunning Assault" = "[1 for 2]"
+"Penalty" =     "Reroll all success in assault while crawling"
+
 
 [models.elite_roboprosthetic_darkelf]
 name = "Elite Roboprosthetic DarkElf"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
-type = ["Bio", "Elite", "Infantry", "Walks", "Roboprosthetic"]
-replaces = ["roboprosthetic_darkelf"]
-special = [
-    "Unit base gains psychic resistance 1 as long as atleast one elite model is alive.",
-]
+type = ["Bio", "Elite", "Infantry", "Walking", "Roboprosthetic"]
+replaces = "roboprosthetic_darkelf"
 cost.cp = 1
+
+[models.elite_roboprosthetic_darkelf.unit_special]
+"Improved Resistance" = "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
+
+
 
 [models.elite_roboprosthetic_darkelf.assault]
 strength = [2, 1, 1, 1]
@@ -996,11 +1086,11 @@ deflection = [4, 2, 1, 1]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = [
-    "Cunning assault[1 for 2]",
-    "Flexible deflection die: any deflection result from elites may be chosen to add to assault value instead of deflection",
-    "Reroll all success in assault while crawling",
-]
+
+[models.elite_roboprosthetic_darkelf.assault.special]
+"Cunning Assault" = "[1 for 2]"
+"Penalty" = "Reroll all success in assault while crawling"
+"Counter Attack" = "Each deflections counts as both a hit and a deflection"
 
 [equipment]
 
@@ -1014,7 +1104,7 @@ range = 4
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = []
+
 
 [equipment.head_gun]
 name = "Head Gun"
@@ -1033,35 +1123,38 @@ name = "Tesla Whip"
 race = "darkelf"
 requires = []
 
-[equipment.tesla_whip.assault]
-special.append = "Poison[4], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken. "
+[equipment.tesla_whip.assault.special]
+"Extra Damage" = "Poison[4], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken. "
 
 [equipment.remote_control]
 name = "Remote control"
 race = "darkelf"
 requires = []
-special = [
-    "Activate poison cloud collars by an 'activate' fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with atleast one multicultural_infantry model. This happens in all pre-assault phase this round",
-    "Once activated, the ability is permanent",
-    "Note, neither this unit or the trainee units are imune to poison clouds",
-]
+
+[equipment.remote_control.unit_special]
+
+"Activate" = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with atleast one multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
+"Note" =  "Neither this unit or the trainee units are imune to poison clouds"
+
 
 [equipment.officers_mask]
 name = "Officer Mask"
 race = "darkelf"
 requires = []
-special = [
-    "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds",
-]
+description = "Keeps multicultural Infantry loyal while there is a Darkelf officer on the battlefield"
+
+[equipment.officers_mask.unit_special]
+    "Protection" = "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds"
+
 
 [equipment.collar]
 name = "Collar"
 race = "darkelf"
 requires = []
-special = [
-    "Keeps multicultural Infantry loyal while there is a Darkelf officer on the battlefield",
-    "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated.",
-]
+
+[equipment.collar.unit_special]
+    "Poison Cloud" = "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated."
+
 
 [equipment.tail_gatling_gun]
 name = "Tail Gatling Gun"
@@ -1091,7 +1184,7 @@ range = 4
 angle = [true, true, false, false]
 damage = "d6-1"
 ap = 3
-special = []
+
 
 [equipment.acid_cannon]
 name = "Acid Cannon"
@@ -1112,15 +1205,19 @@ name = "Mechanical Imp"
 race = "darkelf"
 cost.cp = 4
 cost.xp = 2
+upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
-special = [
-    "Mechanical robotic imps helps all models in unit base to reload it's weapons. Treat any weapons as always loaded.",
-]
+
+
+[equipment.mechanical_imp.unit_special]
+"Reload" = "Mechanical robotic imps helps all models in unit to reload it's weapons. Treat any weapons as always loaded."
+
 
 [equipment.smg]
 name = "SMG"
 race = "darkelf"
 cost.cp = 1
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.smg.range]
@@ -1154,6 +1251,7 @@ special = [
 name = "Crossbow"
 race = "darkelf"
 cost.cp = 2
+upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.crossbow.range]
@@ -1178,7 +1276,8 @@ special = ["Poison[6], minor acid"]
 [equipment.enhanced_crossbow]
 name = "Enhanced Crossbow"
 race = "darkelf"
-model_cost.cp = 2
+upgrade_all = false
+cost.cp = 2
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"], ["type:Elite"]]
 
 [equipment.enhanced_crossbow.range]
@@ -1208,6 +1307,7 @@ special = [
 name = "Poison Gas Grenade"
 race = "darkelf"
 cost.cp = 1
+upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.poison_gas_grenade.range]
@@ -1229,7 +1329,8 @@ name = "Mortar 1A"
 race = "darkelf"
 cost.cp = 16
 cost.xp = 8
-requires = [["shared:1"], ["type:Infantry"]]
+upgrade_all = true
+requires = [["Shared:1"], ["type:Infantry"]]
 
 [equipment.mortar1a.range]
 range = 10
@@ -1247,7 +1348,8 @@ name = "Mortar 1.1B"
 race = "darkelf"
 cost.cp = 16
 cost.xp = 8
-requires = [["shared:1"], ["type:Infantry"]]
+upgrade_all = true
+requires = [["Shared:1"], ["type:Infantry"]]
 
 [equipment.mortar11b.range]
 range = 10
@@ -1264,21 +1366,27 @@ special = [
 name = "Poison Claws"
 race = "darkelf"
 cost.cp = 1
+upgrade_all = true
 requires = [["Independent:1"], ["type:Roboprosthetic"]]
 
 [equipment.poison_claws.assault]
 strength.add = [1, 0, 0, 0]
-special.append = ["Poison[4]"]
+
+[equipment.poison_claws.assault.special]
+"Improved Extra Damage" = "Poison[4]"
 
 [equipment.poison_spray]
 name = "Poison Spray"
 race = "darkelf"
 cost.cp = 2
-requires = [["Hands:2"], ["type:Roboprosthetic", "type: Infantry"]]
+upgrade_all = true
+requires = [["Hands:2"], ["type:Roboprosthetic", "type:Infantry"]]
 
 [equipment.poison_spray.assault]
 damage.replace = "d6-2 + d6 crew damage"
-special.append = "Poison[6][1 for 2]"
+
+[equipment.poison_spray.assault.special]
+"Improved Extra Damage" = "Poison[4][1 for 2]"
 
 [equipment.poison_spray.range]
 range = 2
@@ -1291,6 +1399,7 @@ special = ["Poison[6]"]
 name = "Integrated Pistol"
 race = "darkelf"
 cost.cp = 1
+upgrade_all = true
 requires = [["Independent:1"], ["type:Roboprosthetic"]]
 
 [equipment.integrated_pistol.range]
@@ -1350,30 +1459,39 @@ special = [
 name = "GasMask assault training"
 race = "darkelf"
 cost.xp = 1
-special = [
-    "Unit becomes immune to poison clouds",
-    "Enemy units in an poison cloud gain -50\\% (rounded down) in assault and assault deflection when facing this unit",
-    "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults",
-]
+upgrade_all = true
 requires = [
     ["Independent:1"],
-    ["type:Roboprosthetic", "type:Infantri", "type:Cavalery"],
+    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
 ]
 
-[equipment.poisonfog_grenade]
+[equipment.gasmask.unit_special]
+
+    "Immunity" = "Unit becomes immune to poison clouds"
+
+[equipment.gasmask.assault.special]
+    "Bonus" = "When assaulting hexes with poison cloud +50\\% in assault and assault deflection"
+    "Improved Extra Damage"="In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
+    
+
+
+[equipment.poison_fog_grenade]
 name = "Poison Fog Grenade"
 race = "darkelf"
 cost.cp = 2
-special = [
-    "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.",
-    "If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or you are outside line of sight of any enemy unit.",
-]
+upgrade_all = true
+
 requires = [
     ["Independent:1"],
-    ["type:Roboprosthetic", "type:Infantry", "type:Cavalery"],
+    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"],
 ]
 
-[equipment.poisonfog_grenade.orders_gained.fire]
+[equipment.poison_fog_grenade.unit_special]
+    "Fire Order" = "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
+    "Improved Hide" = "If you also have the hide order availble, you may use the it order regardless of terrain if you are either standing in a hex with fog, or you are outside line of sight of any enemy unit."
+
+
+[equipment.poison_fog_grenade.orders_gained.fire]
 still = [["-", "Throw"], ["Throw", "-"]]
 slow = [["-", "Throw"], ["Throw", "-"]]
 
@@ -1381,12 +1499,14 @@ slow = [["-", "Throw"], ["Throw", "-"]]
 name = "Hide"
 race = "darkelf"
 cost.xp = 4
+upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
-special = [
-    "Gains the Hidden and Hide[ruins] special effects",
-    "Forward position[1]",
-    "Camuflage[swamp][-1]",
-]
+
+[equipment.hide.unit_special]
+    "Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
+    "Forward Position" = "[1]"
+    "Camouflage" = "[swamp][-1]"
+
 
 [equipment.hide.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
@@ -1397,8 +1517,12 @@ crawl = [["Hide[ruins]", "-", "-"]]
 name = "Cloacking Device"
 race = "darkelf"
 cost.ip = 2
+upgrade_all = true
 requires = [["Independent:1"], ["type:Mechanical"]]
-special = ["Gains the Hidden special effects", "Forward position[1]"]
+
+[equipment.cloacking_device.unit_special]
+"Hidden" = "Gains the Hidden special effects"
+"Forward Position" ="[1]"
 
 [equipment.cloacking_device.orders_gained.movement]
 still = [["Reveal", "-", "-"]]
@@ -1408,11 +1532,12 @@ slow = [["-", "Reveal", "Chase"]]
 name = "Hide"
 race = "darkelf"
 requires = []
-special = [
-    "Gains the Hidden and Hide[ruins] special effects",
-    "Forward position[1]",
-    "Camuflage[swamp][-1]",
-]
+
+[equipment.hide_free.unit_special]
+    "Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
+    "Forward Position" = "[1]"
+    "Camouflage" = "[swamp][-1]"
+
 
 [equipment.hide_free.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]

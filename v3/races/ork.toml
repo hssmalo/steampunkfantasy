@@ -895,7 +895,7 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 damage.replace = "d6+1 + d4 crew damage"
 
 [equipment.flame_covered_axe.assault.special]
-"Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+"Extra Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 [equipment.flame_covered_axe_free]
 name = "Flame-covered-axe"
@@ -906,7 +906,7 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 damage.replace = "d6+1 + d4 crew damage"
 
 [equipment.flame_covered_axe_free.assault.special]
-Damage = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+"Extra Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 [equipment.poison_spikes]
 name = "Poison Spikes"
@@ -1152,7 +1152,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
 [equipment.tankscalper.assault.special]
-"Damage" = "May replace regular damage with d8 crew damage. Note: crew damage ignore armor"
+"Improved Extra Damage" = "May replace regular damage with d8 crew damage. Note: crew damage ignore armor"
 
 [equipment.healing_syringe]
 race = "ork"

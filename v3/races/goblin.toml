@@ -284,7 +284,7 @@ damage = "d6-2"
 ap = 1
 
 [models.mechanical_fire_bird.assault.special]
-"Damage" = "Enemy hit at least once is set on fire"
+"Extra Damage" = "Enemy hit at least once is set on fire"
 
 [models.elite_goblin_infantry]
 name = "Elite Goblin Infantry"

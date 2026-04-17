@@ -31,6 +31,7 @@ type EquipmentHolder = Literal[
     "Tentacles",
     "Minor Gun",
     "Reserve Melee",
+    "Training"
 ]
 type Speed = Literal[
     "all",
@@ -51,6 +52,7 @@ type UnitSpecial = Literal[
     "Regeneration",
     "Take Cover",
     "Fire Order",
+    "Reload",
     "Evation",
     "Chase",
     "Transport",
@@ -73,11 +75,21 @@ type UnitSpecial = Literal[
     "Tentacle",
     "Illusion",
     "Camouflage",
-    "Officer 1",
+    "Officer",
     "Officer 2",
+    "Officer Order",
     "Stacking Limit",
     "Setup",
     "Improved Resistance (2)",
+    "Spawn",
+    "Transfer",
+    "Darkelf Officer",
+    "Vulnerability",
+    "Activate",
+    "Note",
+    "Hidden",
+    "Improved Hide"
+
 ]
 
 type ModelSpecial = Literal[
@@ -85,9 +97,8 @@ type ModelSpecial = Literal[
     "To Hit (2)",
     "Not Yet Dead",
     "Fog",
-    "Vulnerability",
+    "Escape Artist",
     "Fire",
-    "Improved Resistance",
 ]
 
 type AssaultSpecial = Literal[
@@ -99,12 +110,17 @@ type AssaultSpecial = Literal[
     "Ork Reroll",
     "Angle",
     "Pre-Assault Retreat",
-    "Damage",
+    "Retreat",
+    "Extra Damage",
+    "Improved Extra Damage",
     "Damage on Deflect",
     "Bonus",
     "Improvement",
     "Overrun",
     "Disconnected",
+    "Lands",
+    "Penalty",
+    "Counter Attack"
 ]
 
 type ModelType = Literal[
@@ -141,6 +157,7 @@ type ModelType = Literal[
     "Engineer",
     "Grunt",
     "Medic",
+    "Officer"
 ]
 
 

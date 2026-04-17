@@ -454,6 +454,8 @@ replaces = "abomination_infantry"
 
 [models.elite_abomination_infantry.special]
 "To Hit" = "good shot: +1 to hit"
+
+[models.elite_abomination_infantry.unit_special]
 "Vulnerability" = "All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack"
 
 [models.elite_abomination_infantry.assault]
@@ -487,7 +489,7 @@ damage = "d6"
 ap = 2
 
 [models.giant_frog_rider.assault.special]
-"Damage" = "Poison[4]"
+"Extra Damage" = "Poison[4]"
 "Cunning Assault" = "[1 for 3]"
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 
@@ -534,7 +536,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
 [equipment.tentacle_craclespears.assault.special]
-"Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
+"Improved Extra Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]
 name = "Tentacle Axes"
