@@ -1,10 +1,4 @@
-# Spec: Team Builder
-
-## Purpose
-
-Defines the API for assembling and querying a player's army list. All mutation operations are methods on `ArmyList`, `ArmyUnit`, and `ArmyModel` that return new immutable instances (functional core). The builder provides methods to add units, upgrade models, add equipment, query available options, and validate the army list.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: add_unit adds a unit with default models and equipment to an army list
 `ArmyList.add_unit(unit_name, race_config) -> ArmyList` SHALL return a new `ArmyList` with a new `ArmyUnit` appended. The new unit's models SHALL be the unit's default `UnitConfig.models` list, each as an `ArmyModel` with empty `upgrades`. The unit name SHALL exist in the race config.
@@ -64,11 +58,11 @@ Defines the API for assembling and querying a player's army list. All mutation o
 - **THEN** an empty list SHALL be returned
 
 ### Requirement: available_equipment returns equipment upgrades valid for a model
-`available_equipment(army_list, unit_key, model_key, race_config) -> list[EquipmentConfig]` SHALL return all race equipment that has a non-`None` cost AND has its `requires` constraints satisfied by the model. Slot capacity SHALL be computed using only the model's current upgrade equipment; default equipment SHALL NOT consume slots, because Rule A discards defaults whenever any upgrade is added.
+`available_equipment(army_list, unit_key, model_key, race_config) -> list[EquipmentConfig]` SHALL return all race equipment that has a non-`None` cost AND has its `requires` constraints satisfied by the model.
 
 #### Scenario: Returns only equipment with cost
 - **WHEN** `available_equipment` is called
-- **THEN** equipment with `cost = None` SHALL NOT be included in the result
+- **THEN** equipment with `cost = None` SHALL NOT be included
 
 #### Scenario: Requires CNF is correctly evaluated
 - **WHEN** equipment has `requires = [[A], [B, C]]`
@@ -78,16 +72,12 @@ Defines the API for assembling and querying a player's army list. All mutation o
 - **WHEN** equipment requires `type:Infantry`
 - **THEN** it SHALL only be returned for models whose `type` list includes `"Infantry"`
 
-#### Scenario: Holder requirement checks remaining upgrade-only slot capacity
-- **WHEN** equipment requires `Hands:1` and the model's upgrade equipment already consumes all Hands slots
-- **THEN** that equipment SHALL NOT be included in the result
-
-#### Scenario: Default equipment does not consume slots for availability checks
-- **WHEN** a model has default equipment that consumes Hands slots and no current upgrades
-- **THEN** `available_equipment` SHALL treat all Hands slots as available (defaults are discarded by Rule A when any upgrade is added)
+#### Scenario: Holder requirement checks remaining slot capacity
+- **WHEN** equipment requires `Hands:1` and the model has no remaining Hands slots
+- **THEN** that equipment SHALL NOT be included
 
 ### Requirement: validate_army returns a list of all rule violations
-`validate_army(army_list, race_config) -> list[str]` SHALL return a list of human-readable error strings describing every rule violation. An empty list means the army list is valid. Each upgrade SHALL be validated against the slot capacity remaining after all *previously validated* upgrades on the same model are accounted for; the upgrade being validated SHALL NOT be counted against its own slot check. Slot capacity SHALL be computed using only upgrade equipment (Rule A: defaults are discarded).
+`validate_army(army_list, race_config) -> list[str]` SHALL return a list of human-readable error strings describing every rule violation. An empty list means the army list is valid.
 
 #### Scenario: Valid army list returns empty list
 - **WHEN** `validate_army` is called on an army list with no violations
@@ -102,13 +92,11 @@ Defines the API for assembling and querying a player's army list. All mutation o
 - **THEN** a validation error describing the illegal replacement SHALL be included
 
 #### Scenario: Unsatisfied equipment requires is reported
-- **WHEN** an `ArmyModel` has an upgrade equipment whose `requires` are not satisfied given the remaining slots after prior upgrades
+- **WHEN** an `ArmyModel` has an upgrade equipment whose `requires` are not satisfied
 - **THEN** a validation error describing the unsatisfied requirement SHALL be included
 
-#### Scenario: Default equipment does not consume slots during validation
-- **WHEN** a model has default equipment and upgrade equipment, and the upgrades fit within the model's slot limits without the defaults
-- **THEN** `validate_army` SHALL report no slot errors for those upgrades
+## REMOVED Requirements
 
-#### Scenario: Upgrade is not counted against its own slot check
-- **WHEN** a model has a single upgrade that exactly fits the model's remaining slots
-- **THEN** `validate_army` SHALL report no slot error for that upgrade
+### Requirement: total_cost returns the sum of all costs in a team
+**Reason**: Replaced by `Army.cost()` on the resolved `Army` type. The free function `total_cost(army, race_config)` is removed.
+**Migration**: Call `army_list.resolve(race_config).cost()` or use `Army.cost()` on a loaded army.

@@ -4,7 +4,7 @@ import pytest
 from rich.console import Console
 
 import spf.armies.io
-from spf.armies import Army, add_unit
+from spf.armies import ArmyList
 from spf.armies.io import print_army
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (
@@ -62,18 +62,19 @@ def simple_race() -> RaceConfig:
 
 
 def test_print_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = add_unit(
-        Army(race="goblin", nick="Test Army", units=()), "squad", simple_race
+    army = (
+        ArmyList(race="goblin", nick="Test Army", units=())
+        .add_unit("squad", simple_race)
+        .resolve(simple_race)
     )
-    # Capture output to avoid noise in test output; assert it runs without error
     console = Console(record=True)
-    console.print("")  # prime the recorder
-    print_army(army, simple_race)
+    console.print("")
+    print_army(army)
 
 
 def test_print_army_empty_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = Army(race="goblin", nick="Test Army", units=())
-    print_army(army, simple_race)
+    army = ArmyList(race="goblin", nick="Test Army", units=()).resolve(simple_race)
+    print_army(army)
 
 
 def test_print_army_unit_line_includes_points(
@@ -82,11 +83,13 @@ def test_print_army_unit_line_includes_points(
     capture = Console(record=True)
     monkeypatch.setattr(spf.armies.io, "stdout", capture)
 
-    army = add_unit(
-        Army(race="goblin", nick="Test Army", units=()), "squad", simple_race
+    army = (
+        ArmyList(race="goblin", nick="Test Army", units=())
+        .add_unit("squad", simple_race)
+        .resolve(simple_race)
     )
-    print_army(army, simple_race)
+    print_army(army)
 
     output = capture.export_text()
-    # squad costs mp=3, points = 3+0+0+3*0 = 3
+    # squad costs mp=3, points = 3
     assert "Squad (3 pts)" in output

@@ -12,6 +12,15 @@
             ]
         },
         {
+            "name": "ork_char_b1",
+            "models": [
+                {
+                    "name": "ork_char_b1",
+                    "upgrades": []
+                }
+            ]
+        },
+        {
             "name": "ork_infantry",
             "models": [
                 {
@@ -85,30 +94,15 @@
                 },
                 {
                     "name": "bioengineered_ork",
-                    "upgrades": [
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol"
-                    ]
+                    "upgrades": []
                 },
                 {
                     "name": "bioengineered_ork",
-                    "upgrades": [
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol"
-                    ]
+                    "upgrades": []
                 },
                 {
                     "name": "bioengineered_ork",
-                    "upgrades": [
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol"
-                    ]
+                    "upgrades": []
                 }
             ]
         },
@@ -126,30 +120,15 @@
                 },
                 {
                     "name": "bioengineered_ork",
-                    "upgrades": [
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol"
-                    ]
+                    "upgrades": []
                 },
                 {
                     "name": "bioengineered_ork",
-                    "upgrades": [
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol"
-                    ]
+                    "upgrades": []
                 },
                 {
                     "name": "bioengineered_ork",
-                    "upgrades": [
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol",
-                        "ork_pistol"
-                    ]
+                    "upgrades": []
                 }
             ]
         },

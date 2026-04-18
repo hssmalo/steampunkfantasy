@@ -4,7 +4,6 @@ import pathlib
 
 import cyclopts
 
-from spf import races
 from spf.armies import io
 from spf.config import config
 from spf.console import stderr, stdout
@@ -36,8 +35,7 @@ def show_army(army_name: str) -> None:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    cfg = races.get_race(army.race)
-    io.print_army(army, cfg)
+    io.print_army(army)
 
 
 def _parse_army_path(

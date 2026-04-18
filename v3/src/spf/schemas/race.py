@@ -66,7 +66,7 @@ class ModelConfig(StrictModel):
 class Stacker[T](StrictModel):
     add: T | None = None
     replace: T | None = None
-    append: T | None = None
+    extend: T | None = None
 
 
 class EquipmentAssaultConfig(StrictModel):

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.armies import Army, add_unit
+from spf.armies import Army, ArmyList
 from spf.armies.io import load_army, save_army
 from spf.config import config
 from spf.races import get_race
@@ -90,31 +90,48 @@ def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 
 def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
-    army = Army(race="goblin", nick="Test Army", units=())
-    save_army(army, "test-army")
+    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    save_army(army_list, "test-army")
     loaded = load_army("test-army")
-    assert loaded.race == army.race
+    assert isinstance(loaded, Army)
+    assert loaded.race == army_list.race
     assert loaded.units == ()
 
 
 def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
     race_config = get_race("goblin")
-    army = add_unit(
-        Army(race="goblin", nick="Test Army", units=()), "goblin_infantry", race_config
+    army_list = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+        "goblin_infantry", race_config
     )
-    save_army(army, "goblin-warband")
+    save_army(army_list, "goblin-warband")
     loaded = load_army("goblin-warband")
-    assert loaded.race == army.race
-    assert len(loaded.units) == len(army.units)
-    assert loaded.units[0].name == army.units[0].name
+    assert isinstance(loaded, Army)
+    assert loaded.race == army_list.race
+    assert len(loaded.units) == len(army_list.units)
+    assert loaded.units[0].name == army_list.units[0].name
     assert tuple(m.name for m in loaded.units[0].models) == tuple(
-        m.name for m in army.units[0].models
+        m.name for m in army_list.units[0].models
     )
+
+
+def test_load_army_returns_resolved_army(armies_dir: Path) -> None:  # noqa: ARG001
+    """load_army should return a fully resolved Army, not ArmyList."""
+    race_config = get_race("goblin")
+    army_list = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+        "goblin_infantry", race_config
+    )
+    save_army(army_list, "resolved-test")
+    loaded = load_army("resolved-test")
+    assert isinstance(loaded, Army)
+    # Resolved models have EquipmentConfig objects, not just names
+    model = loaded.units[0].models[0]
+    assert hasattr(model, "default_equipment")
+    assert hasattr(model, "upgrade_equipment")
 
 
 def test_save_creates_file(armies_dir: Path) -> None:
-    army = Army(race="goblin", nick="Test Army", units=())
-    save_army(army, "my-army")
+    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    save_army(army_list, "my-army")
     assert (armies_dir / "my-army.json").exists()
 
 
@@ -123,14 +140,14 @@ def test_save_creates_parent_directory(
 ) -> None:
     nested = tmp_path / "nested" / "dir"
     monkeypatch.setattr(config.paths, "armies", nested)
-    army = Army(race="goblin", nick="Test Army", units=())
-    save_army(army, "my-army")
+    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    save_army(army_list, "my-army")
     assert (nested / "my-army.json").exists()
 
 
 def test_save_json_contains_race(armies_dir: Path) -> None:
-    army = Army(race="goblin", nick="Test Army", units=())
-    save_army(army, "check-race")
+    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    save_army(army_list, "check-race")
     data = json.loads((armies_dir / "check-race.json").read_text())
     assert data["race"] == "goblin"
 
@@ -198,6 +215,12 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
     (armies_dir / "bad-upgrade.json").write_text(json.dumps(data))
     with pytest.raises(ValueError, match="unknown equipment 'no_such_upgrade'"):
         load_army("bad-upgrade")
+
+
+def test_load_geir_arne_army_is_valid() -> None:
+    """Integration test: Test that an army is loaded and validated."""
+    army = load_army("2025/geir_arne")
+    assert isinstance(army, Army)
 
 
 def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:

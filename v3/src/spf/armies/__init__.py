@@ -1,28 +1,28 @@
-"""Army data structures, builders, and IO for SteamPunkFantasy."""
+"""Army data structures, builders, and IO for SteamPunkFantasy.
 
-from spf.armies.army import (
-    Army,
-    add_unit,
+Public API (resolved tier — no race_config needed after construction):
+  Army, Unit, Model — import directly from here
+
+Build-time tier — for constructing armies in code:
+  ArmyList, ArmyUnit, ArmyModel — import from spf.armies.build
+"""
+
+from spf.armies.army import Army
+from spf.armies.build import (
+    ArmyList,
     available_equipment,
     available_models,
-    total_cost,
-    upgrade_model,
-    upgrade_unit,
     validate_army,
 )
-from spf.armies.model import ArmyModel
-from spf.armies.unit import ArmyUnit, unit_cost
+from spf.armies.model import Model
+from spf.armies.unit import Unit
 
 __all__ = [
     "Army",
-    "ArmyModel",
-    "ArmyUnit",
-    "add_unit",
+    "ArmyList",
+    "Model",
+    "Unit",
     "available_equipment",
     "available_models",
-    "total_cost",
-    "unit_cost",
-    "upgrade_model",
-    "upgrade_unit",
     "validate_army",
 ]

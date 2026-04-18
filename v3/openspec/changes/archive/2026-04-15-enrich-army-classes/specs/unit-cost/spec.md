@@ -1,10 +1,4 @@
-# Spec: Unit Cost
-
-## Purpose
-
-Provides methods on the resolved army types to compute costs. `Model.cost()`, `Unit.cost()`, and `Army.cost()` replace the former free functions.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Compute total cost for a single unit via Unit.cost()
 The resolved `Unit` class SHALL provide a `cost() -> Cost` method that returns the total cost for the unit: the unit's base cost plus upgrade model costs plus upgrade equipment costs. For each model's `upgrade_equipment`: if `upgrade_all is False`, the equipment cost is multiplied by `len(unit.models)`; otherwise the equipment cost is added flat. Units or models with `cost = None` SHALL contribute zero cost.
@@ -28,3 +22,13 @@ The resolved `Unit` class SHALL provide a `cost() -> Cost` method that returns t
 #### Scenario: Army cost equals sum of unit costs
 - **WHEN** `army.cost()` is called
 - **THEN** it returns the sum of `unit.cost()` for every unit in the army
+
+## REMOVED Requirements
+
+### Requirement: Compute total cost for a single unit (free function)
+**Reason**: Replaced by `Unit.cost()` method on the resolved `Unit` type. The free functions `unit_cost(unit, race_config)` and `total_cost(army, race_config)` are removed.
+**Migration**: Use `unit.cost()` on a resolved `Unit`; use `army.cost()` on a resolved `Army`.
+
+### Requirement: Compute points value for a unit
+**Reason**: `unit_points()` free function removed alongside `unit_cost()`. Points calculation is still available via `unit.cost().to_points()`.
+**Migration**: Call `unit.cost().to_points()` directly.

@@ -1,10 +1,4 @@
-# Spec: Army Module Structure
-
-## Purpose
-
-Defines the module layout for the army data package. The package exposes two tiers: a build-time tier (`spf.armies.build`) for assembling and mutating armies, and a resolved tier (`spf.armies`) for fully resolved, self-contained army state. The package root re-exports the primary public API.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Army data is organized into focused modules
 The army data package SHALL expose two tiers of types from dedicated modules:
