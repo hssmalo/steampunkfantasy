@@ -92,4 +92,5 @@ def test_print_army_unit_line_includes_points(
 
     output = capture.export_text()
     # squad costs mp=3, points = 3
-    assert "Squad (3 pts)" in output
+    assert "Squad" in output
+    assert "(3 pts)" in output

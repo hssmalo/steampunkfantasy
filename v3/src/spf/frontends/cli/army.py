@@ -13,6 +13,7 @@ def add_commands(app: cyclopts.App) -> None:
     """Add army commands to the CLI."""
     app.command(list_armies, name="list")
     app.command(show_army, name="show")
+    app.command(rules_army, name="rules")
 
 
 def list_armies() -> None:
@@ -36,6 +37,17 @@ def show_army(army_name: str) -> None:
         raise SystemExit(1) from None
 
     io.print_army(army)
+
+
+def rules_army(army_name: str) -> None:
+    """Load and display a saved army as a rules reference."""
+    try:
+        army = io.load_army(army_name)
+    except (FileNotFoundError, ValueError) as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+
+    io.print_army_rules(army)
 
 
 def _parse_army_path(

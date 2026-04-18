@@ -79,6 +79,48 @@ def print_army(army: Army) -> None:
     stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
 
+def print_army_rules(army: Army) -> None:
+    """Pretty-print a resolved Army as a rules-reference view."""
+    stdout.rule(f"{army.nick} — {army.race.title()} Army")
+    for unit in army.units:
+        stdout.print(
+            f"- [yellow]{unit.config.name}[/] - {unit.cost()}", highlight=False
+        )
+        if unit.unit_specials:
+            stdout.print("  - [dim]Specials:[/]", highlight=False)
+            for key, special in unit.unit_specials.items():
+                stdout.print(f"    - [blue]{key}:[/] {special}", highlight=False)
+        for model in unit.models:
+            model_pts = model.cost().to_points()
+            cost_str = f" ({model_pts} pts)" if model_pts else ""
+            stdout.print(f"  - {model.name}{cost_str}", highlight=False)
+            if model.model_specials:
+                stdout.print("    - [dim]Specials:[/]", highlight=False)
+            for key, special in model.model_specials.items():
+                stdout.print(f"      - [blue]{key}:[/] {special}", highlight=False)
+            for equip in model.equipment:
+                equip_cost_str = f" ({equip.cost})" if equip.cost is not None else ""
+                stdout.print(f"    - {equip.name}{equip_cost_str}", highlight=False)
+                if equip.range is not None:
+                    r = equip.range
+                    angle_str = "".join("*" if a else "." for a in r.angle)
+                    stdout.print(
+                        f"      - Range: {r.range} [{angle_str}],"
+                        f" Damage {r.damage}, AP {r.ap}",
+                        highlight=False,
+                    )
+            assault = model.assault()
+            str_angles = "/".join(str(s) for s in assault.strength)
+            def_angles = "/".join(str(d) for d in assault.deflection)
+            stdout.print(
+                f"    - Assault: Strength [{str_angles}]/{assault.strength_die}"
+                f" Deflect [{def_angles}]/{assault.deflection_die}"
+                f" Damage {assault.damage} AP {assault.ap}",
+                highlight=False,
+            )
+    stdout.print(f"\n[dim]Total cost:[/]  {army.cost()}", highlight=False)
+
+
 def _validate_army_data(data: dict[str, Any], cfg: RaceConfig) -> list[str]:
     """Collect name-resolution errors from raw JSON data before construction."""
     errors: list[str] = []

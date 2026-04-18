@@ -946,5 +946,3 @@ requires = [["Reserve Melee:1"], ["type:Scout", "type:Infantry"]]
 [equipment.fancy_warhammer.assault]
 damage.replace = "d8 + d6 psycic damage"
 ap.replace = 5
-
-

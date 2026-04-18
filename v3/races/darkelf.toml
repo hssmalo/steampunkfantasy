@@ -20,7 +20,6 @@ Resistance = "Fire Resistance 2"
 Immunity = "Acid and gear disruption"
 
 
-
 [units.mechanical_red_dragon.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -66,17 +65,24 @@ fast_flying = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
 
 [units.mechanical_iron_dragon.orders.fire]
 slow = [
-    ["-", "Breath(acid)"],
-    ["Breath(acid)", "-"],
-    ["Load", "Breath(shrapnell)"],
-    ["Breath(shrapnell)", "Load"],
+    [
+        "-",
+        "Breath(acid)",
+    ],
+    [
+        "Breath(acid)",
+        "-",
+    ],
+    [
+        "Load",
+        "Breath(shrapnell)",
+    ],
+    [
+        "Breath(shrapnell)",
+        "Load",
+    ],
 ]
-fast_flying = [
-    ["-", "-"],
-    ["-", "-"],
-    ["Load", "Breath(shrapnell)"],
-    ["-", "Load"]
-]
+fast_flying = [["-", "-"], ["-", "-"], ["Load", "Breath(shrapnell)"], ["-", "Load"]]
 
 [units.mechanical_iron_dragon.damage_tables]
 regular = [
@@ -103,28 +109,100 @@ movement_order = ["-", "-", "-"]
 
 [units.queen_yy.orders.movement]
 fast = [
-    ["F", "F", "-"],
-    ["F", "L/R", "-"],
-    ["F", "B", "-"],
-    ["B", "B", "-"],
-    ["L/R", "F", "-"],
+    [
+        "F",
+        "F",
+        "-",
+    ],
+    [
+        "F",
+        "L/R",
+        "-",
+    ],
+    [
+        "F",
+        "B",
+        "-",
+    ],
+    [
+        "B",
+        "B",
+        "-",
+    ],
+    [
+        "L/R",
+        "F",
+        "-",
+    ],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["A", "F", "-"],
-    ["B", "-", "-"],
-    ["F", "-", "-"],
-    ["B", "rev", "-"],
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
-    ["-", "-", "-"],
-    ["L/R", "A", "F"],
-    ["A", "F", "-"],
-    ["rev", "-", "-"],
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "L/R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
 ]
 
 [units.queen_yy.orders.fire]
@@ -171,28 +249,100 @@ movement_order = ["-", "-", "-"]
 
 [units.queen_xy.orders.movement]
 fast = [
-    ["F", "F", "-"],
-    ["F", "L/R", "-"],
-    ["F", "B", "-"],
-    ["B", "B", "-"],
-    ["L/R", "F", "-"],
+    [
+        "F",
+        "F",
+        "-",
+    ],
+    [
+        "F",
+        "L/R",
+        "-",
+    ],
+    [
+        "F",
+        "B",
+        "-",
+    ],
+    [
+        "B",
+        "B",
+        "-",
+    ],
+    [
+        "L/R",
+        "F",
+        "-",
+    ],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["A", "F", "-"],
-    ["B", "-", "-"],
-    ["F", "-", "-"],
-    ["B", "rev", "-"],
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "B",
+        "-",
+        "-",
+    ],
+    [
+        "F",
+        "-",
+        "-",
+    ],
+    [
+        "B",
+        "rev",
+        "-",
+    ],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
-    ["-", "-", "-"],
-    ["L/R", "A", "F"],
-    ["A", "F", "-"],
-    ["rev", "-", "-"],
+    [
+        "L/R",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "-",
+    ],
+    [
+        "L/R",
+        "L/R",
+        "L/R",
+    ],
+    [
+        "-",
+        "-",
+        "-",
+    ],
+    [
+        "L/R",
+        "A",
+        "F",
+    ],
+    [
+        "A",
+        "F",
+        "-",
+    ],
+    [
+        "rev",
+        "-",
+        "-",
+    ],
 ]
 
 [units.queen_xy.orders.fire]
@@ -237,16 +387,40 @@ cost.xp = 12
 
 [units.nightmare_mechanical_cavalry.shaken]
 speed = "slow"
-movement_order = ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.nightmare_mechanical_cavalry.orders.movement]
 fast = [
-    ["F", "F", "F"],
-    ["F", "F", "360°"],
-    ["360°", "F", "F"],
-    ["F", "360°", "F"],
-    ["F", "F", "F+B"],
-    ["F", "B", "360°"],
+    [
+        "F",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "360°",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "F+B",
+    ],
+    [
+        "F",
+        "B",
+        "360°",
+    ],
 ]
 slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
@@ -276,16 +450,40 @@ cost.xp = 6
 
 [units.elite_mechanical_cavalry.shaken]
 speed = "slow"
-movement_order = ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.elite_mechanical_cavalry.orders.movement]
 fast = [
-    ["F", "F", "F"],
-    ["F", "F", "360°"],
-    ["360°", "F", "F"],
-    ["F", "360°", "F"],
-    ["F", "F", "F+B"],
-    ["F", "B", "360°"],
+    [
+        "F",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "F",
+    ],
+    [
+        "F",
+        "360°",
+        "F",
+    ],
+    [
+        "F",
+        "F",
+        "F+B",
+    ],
+    [
+        "F",
+        "B",
+        "360°",
+    ],
 ]
 slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
@@ -347,8 +545,8 @@ armor = [9, 7, 6, 5]
 cost.ip = 4
 
 [units.mechanical_scorpion.shaken]
-speed="still"
-movement_order = ["-","-","-"]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.mechanical_scorpion.orders.movement]
 still = [["360°", "360°", "360°"], ["A", "360°", "360°"]]
@@ -392,32 +590,70 @@ cost.mp = 6
 
 [units.darkelf_infantry.shaken]
 speed = "slow"
-movement_order = ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.darkelf_infantry.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
-    ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
-    ["360°", "B", "-"],
-    ["360°", "B[crawl]", "-"],
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "B",
+        "-",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [
-    ["360°", "F", "-"],
-    ["360°", "B[still]", "-"],
-    ["360°", "A[slow]", "F"]
-]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
 
 [units.darkelf_infantry.orders.fire]
 still = [
-    ["Load", "-"],
-    ["-", "Load"],
-    ["Fire", "-"],
-    ["-", "Fire"],
-    ["Aim", "-"],
-    ["-", "Aim"],
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
 ]
 
 [units.darkelf_infantry.damage_tables]
@@ -460,14 +696,30 @@ cost.xp = 6
 
 [units.multicultural_infantry.shaken]
 speed = "slow"
-movement_order = ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.multicultural_infantry.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
-    ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
 ]
 
 [units.multicultural_infantry.orders.fire]
@@ -503,12 +755,12 @@ cost.xp = 0
 description = "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes"
 
 [units.multicultural_trainee.special]
-    "Spawn" = "ay only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules"
-    "Darkelf Officer"= "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
+"Spawn" = "ay only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules"
+"Darkelf Officer" = "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
 
 [units.multicultural_trainee.shaken]
 speed = "slow"
-movement_order = ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.multicultural_trainee.orders.movement]
 slow = [["-", "-", "Chase"]]
@@ -536,32 +788,70 @@ cost.cp = 3
 
 [units.roboprosthetic_darkelf.shaken]
 speed = "slow"
-movement_order =  ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.roboprosthetic_darkelf.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
-    ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
-    ["360°", "B", "-"],
-    ["360°", "B[crawl]", "-"],
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "B",
+        "-",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [
-    ["360°", "F", "-"],
-    ["360°", "B[still]", "-"],
-    ["360°", "A[slow]", "F"]
-]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
 
 [units.roboprosthetic_darkelf.orders.fire]
 still = [
-    ["Load", "-"],
-    ["-", "Load"],
-    ["Fire", "-"],
-    ["-", "Fire"],
-    ["Aim", "-"],
-    ["-", "Aim"],
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
 ]
 
 [units.roboprosthetic_darkelf.damage_tables]
@@ -588,32 +878,70 @@ cost.xp = 6
 
 [units.assassin.shaken]
 speed = "slow"
-movement_order =  ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.assassin.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
-    ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
-    ["360°", "F", "B"],
-    ["360°", "B[crawl]", "-"],
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "B",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [
-    ["360°", "F", "-"],
-    ["360°", "B[still]", "-"],
-    ["360°", "A[slow]", "F"]
-]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
 
 [units.assassin.orders.fire]
 still = [
-    ["Load", "-"],
-    ["-", "Load"],
-    ["Fire", "-"],
-    ["-", "Fire"],
-    ["Aim", "-"],
-    ["-", "Aim"],
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
 ]
 
 [units.assassin.damage_tables]
@@ -634,32 +962,70 @@ cost.cp = 7
 
 [units.roboprosthetic_assassin.shaken]
 speed = "slow"
-movement_order = ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.roboprosthetic_assassin.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
-    ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
-    ["360°", "F", "B"],
-    ["360°", "B[crawl]", "-"],
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "B",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [
-    ["360°", "F", "-"],
-    ["360°", "B[still]", "-"],
-    ["360°", "A[slow]", "F"]
-]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
 
 [units.roboprosthetic_assassin.orders.fire]
 still = [
-    ["Load", "-"],
-    ["-", "Load"],
-    ["Fire", "-"],
-    ["-", "Fire"],
-    ["Aim", "-"],
-    ["-", "Aim"],
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
 ]
 slow = [["-", "Fire"], ["Fire", "-"]]
 
@@ -681,33 +1047,74 @@ cost.mp = 2
 
 [units.scout.shaken]
 speed = "slow"
-movement_order= ["-","-","Flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.scout.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
-    ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
-    ["360°", "F", "B"],
-    ["360°", "B[crawl]", "-"],
+    [
+        "Chase",
+        "-",
+        "-",
+    ],
+    [
+        "-",
+        "-",
+        "Chase",
+    ],
+    [
+        "360°",
+        "F",
+        "360°",
+    ],
+    [
+        "360°",
+        "360°",
+        "360°",
+    ],
+    [
+        "360°",
+        "F",
+        "B",
+    ],
+    [
+        "360°",
+        "B[crawl]",
+        "-",
+    ],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [
-    ["360°", "F", "-"],
-    ["360°", "B[still]", "-"],
-    ["360°", "A[slow]", "F"]
-]
+crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
 
 [units.scout.orders.fire]
 still = [
-    ["Load", "-"],
-    ["-", "Load"],
-    ["Fire", "-"],
-    ["-", "Fire"],
-    ["Aim", "-"],
-    ["-", "Aim"],
-    ["Spot", "Spot"],
+    [
+        "Load",
+        "-",
+    ],
+    [
+        "-",
+        "Load",
+    ],
+    [
+        "Fire",
+        "-",
+    ],
+    [
+        "-",
+        "Fire",
+    ],
+    [
+        "Aim",
+        "-",
+    ],
+    [
+        "-",
+        "Aim",
+    ],
+    [
+        "Spot",
+        "Spot",
+    ],
 ]
 slow = [["Spot", "Spot"]]
 
@@ -801,7 +1208,6 @@ ap = 3
 "Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
 
 
-
 [models.elite_mechanical_cavalry]
 name = "Elite Mechanical Cavalry"
 race = "darkelf"
@@ -811,7 +1217,6 @@ type = ["Bio", "Elite", "Cavalry", "Walking"]
 
 [models.elite_mechanical_cavalry.special]
 "To Hit" = "Good Shot: +1 to hit, Negates to-hit penalty for shooting while moving fast"
-
 
 
 [models.elite_mechanical_cavalry.assault]
@@ -899,8 +1304,8 @@ damage = "d6-2"
 ap = 2
 
 [models.darkelf_infantry.assault.special]
-    "Cunning Assault" = "[1 for 2]"
-    "Penalty"= "Reroll all success in assault while crawling"
+"Cunning Assault" = "[1 for 2]"
+"Penalty" = "Reroll all success in assault while crawling"
 
 
 [models.multicultural_infantry]
@@ -928,11 +1333,11 @@ equipment = ["tesla_whip", "remote_control", "officers_mask"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 
 [models.darkelf_officer.unit_special]
-"Officer Order" =   "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
+"Officer Order" = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
 "Officer" = "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
 
 [models.darkelf_officer.special]
-"Escape Artist" =    "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for vitory points purposes"
+"Escape Artist" = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for vitory points purposes"
 
 
 [models.darkelf_officer.assault]
@@ -944,8 +1349,8 @@ damage = "d6"
 ap = 0
 
 [models.darkelf_officer.assault.special]
-    "Cunning Assault" = "[1 for 3]"
-    "Counter Attack" = "Each deflections counts as both a hit and a deflection"
+"Cunning Assault" = "[1 for 3]"
+"Counter Attack" = "Each deflections counts as both a hit and a deflection"
 
 [models.darkelf_elite_infantry]
 name = "DarkElf Elite Infantry"
@@ -960,7 +1365,6 @@ cost.xp = 1
 "Improved Resistance" = "Unit base gains psychic resistance 1 as long as atleast one elite model is alive"
 
 
-
 [models.darkelf_elite_infantry.assault]
 strength = [2, 2, 1, 1]
 strength_die = "5+"
@@ -970,9 +1374,9 @@ damage = "d6-2"
 ap = 2
 
 [models.darkelf_elite_infantry.assault.special]
-    "Cunning Assault" = "[1 for 2]"
-    "Counter Attack" = "Each deflections counts as both a hit and a deflection"
-    "Penalty" = "Reroll all success in assault while crawling"
+"Cunning Assault" = "[1 for 2]"
+"Counter Attack" = "Each deflections counts as both a hit and a deflection"
+"Penalty" = "Reroll all success in assault while crawling"
 
 [models.assassin]
 name = "Assassin"
@@ -996,7 +1400,7 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 "Extra Damage" = "Poison[12]"
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
-"Penalty" ="Reroll all success in assault while crawling"
+"Penalty" = "Reroll all success in assault while crawling"
 
 [models.roboprosthetic_assassin]
 name = "Roboprosthetic Assassin"
@@ -1020,7 +1424,7 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 "Extra Damage" = "Poison[12]"
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
-"Penalty" ="Reroll all success in assault while crawling"
+"Penalty" = "Reroll all success in assault while crawling"
 
 
 [models.scout]
@@ -1041,7 +1445,7 @@ ap = 2
 
 [models.scout.assault.special]
 "Cunning Assault" = "[1 for 1]"
-"Penalty" =     "Reroll all success in assault while crawling"
+"Penalty" = "Reroll all success in assault while crawling"
 
 
 [models.roboprosthetic_darkelf]
@@ -1062,7 +1466,7 @@ ap = 2
 
 [models.roboprosthetic_darkelf.assault.special]
 "Cunning Assault" = "[1 for 2]"
-"Penalty" =     "Reroll all success in assault while crawling"
+"Penalty" = "Reroll all success in assault while crawling"
 
 
 [models.elite_roboprosthetic_darkelf]
@@ -1076,7 +1480,6 @@ cost.cp = 1
 
 [models.elite_roboprosthetic_darkelf.unit_special]
 "Improved Resistance" = "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
-
 
 
 [models.elite_roboprosthetic_darkelf.assault]
@@ -1134,7 +1537,7 @@ requires = []
 [equipment.remote_control.unit_special]
 
 "Activate" = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with atleast one multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
-"Note" =  "Neither this unit or the trainee units are imune to poison clouds"
+"Note" = "Neither this unit or the trainee units are imune to poison clouds"
 
 
 [equipment.officers_mask]
@@ -1144,7 +1547,7 @@ requires = []
 description = "Keeps multicultural Infantry loyal while there is a Darkelf officer on the battlefield"
 
 [equipment.officers_mask.unit_special]
-    "Protection" = "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds"
+"Protection" = "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds"
 
 
 [equipment.collar]
@@ -1153,7 +1556,7 @@ race = "darkelf"
 requires = []
 
 [equipment.collar.unit_special]
-    "Poison Cloud" = "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated."
+"Poison Cloud" = "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated."
 
 
 [equipment.tail_gatling_gun]
@@ -1460,19 +1863,15 @@ name = "GasMask assault training"
 race = "darkelf"
 cost.xp = 1
 upgrade_all = true
-requires = [
-    ["Independent:1"],
-    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
-]
+requires = [["Independent:1"], ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]]
 
 [equipment.gasmask.unit_special]
 
-    "Immunity" = "Unit becomes immune to poison clouds"
+"Immunity" = "Unit becomes immune to poison clouds"
 
 [equipment.gasmask.assault.special]
-    "Bonus" = "When assaulting hexes with poison cloud +50\\% in assault and assault deflection"
-    "Improved Extra Damage"="In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
-    
+"Bonus" = "When assaulting hexes with poison cloud +50\\% in assault and assault deflection"
+"Improved Extra Damage" = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
 
 
 [equipment.poison_fog_grenade]
@@ -1481,14 +1880,11 @@ race = "darkelf"
 cost.cp = 2
 upgrade_all = true
 
-requires = [
-    ["Independent:1"],
-    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"],
-]
+requires = [["Independent:1"], ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]]
 
 [equipment.poison_fog_grenade.unit_special]
-    "Fire Order" = "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
-    "Improved Hide" = "If you also have the hide order availble, you may use the it order regardless of terrain if you are either standing in a hex with fog, or you are outside line of sight of any enemy unit."
+"Fire Order" = "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
+"Improved Hide" = "If you also have the hide order available, you may use the it order regardless of terrain if you are either standing in a hex with fog, or you are outside line of sight of any enemy unit."
 
 
 [equipment.poison_fog_grenade.orders_gained.fire]
@@ -1503,9 +1899,9 @@ upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
 
 [equipment.hide.unit_special]
-    "Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
-    "Forward Position" = "[1]"
-    "Camouflage" = "[swamp][-1]"
+"Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
+"Forward Position" = "[1]"
+"Camouflage" = "[swamp][-1]"
 
 
 [equipment.hide.orders_gained.movement]
@@ -1522,7 +1918,7 @@ requires = [["Independent:1"], ["type:Mechanical"]]
 
 [equipment.cloacking_device.unit_special]
 "Hidden" = "Gains the Hidden special effects"
-"Forward Position" ="[1]"
+"Forward Position" = "[1]"
 
 [equipment.cloacking_device.orders_gained.movement]
 still = [["Reveal", "-", "-"]]
@@ -1534,9 +1930,9 @@ race = "darkelf"
 requires = []
 
 [equipment.hide_free.unit_special]
-    "Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
-    "Forward Position" = "[1]"
-    "Camouflage" = "[swamp][-1]"
+"Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
+"Forward Position" = "[1]"
+"Camouflage" = "[swamp][-1]"
 
 
 [equipment.hide_free.orders_gained.movement]
