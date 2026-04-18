@@ -65,9 +65,11 @@ def print_army(army: Army) -> None:
     """Pretty-print a resolved Army to the console."""
     stdout.rule(f"{army.nick} ({army.race.title()})")
     for unit in army.units:
-        pts = unit.cost().to_points()
+        cost = unit.cost()
+        pts = cost.to_points()
         stdout.print(
-            f"[bold]{unit.config.name}[/] [yellow]({pts} pts)[/]", highlight=False
+            f"[bold]{unit.config.name}[/] - {cost} [yellow]({pts} pts)[/]",
+            highlight=False,
         )
         for model in unit.models:
             equip_names = [e.name for e in model.equipment]

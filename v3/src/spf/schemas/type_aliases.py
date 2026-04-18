@@ -31,7 +31,7 @@ type EquipmentHolder = Literal[
     "Tentacles",
     "Minor Gun",
     "Reserve Melee",
-    "Training"
+    "Training",
 ]
 type Speed = Literal[
     "all",
@@ -81,7 +81,7 @@ type UnitSpecial = Literal[
     "Officer",
     "Officer 2",
     "Officer Order",
-    "Stacking Limit",    
+    "Stacking Limit",
     "Spawn",
     "Transfer",
     "Vulnerability",
@@ -89,8 +89,6 @@ type UnitSpecial = Literal[
     "Forward Position",
     "Activate",
     "Note",
-
-
 ]
 
 type ModelSpecial = Literal[
@@ -111,7 +109,7 @@ type AssaultSpecial = Literal[
     "Counter Attack",
     "Bonus",
     "Improvement",
-    "Ork Reroll",    
+    "Ork Reroll",
     "Penalty",
     "Angle",
     "Troll Stench",
@@ -120,8 +118,7 @@ type AssaultSpecial = Literal[
     "Retreat",
     "Disconnected",
     "FlyBy",
-    "Lands",    
-
+    "Lands",
 ]
 
 type ModelType = Literal[
@@ -158,7 +155,7 @@ type ModelType = Literal[
     "Engineer",
     "Grunt",
     "Medic",
-    "Officer"
+    "Officer",
 ]
 
 
