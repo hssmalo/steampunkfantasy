@@ -127,6 +127,26 @@ def goblin_army(goblin_race: RaceConfig) -> ArmyList:
     )
 
 
+@pytest.fixture
+def race_with_defaults(simple_race: RaceConfig) -> RaceConfig:
+    """Variant of simple_race where soldier has a default Hands:2 weapon."""
+    default_sword = EquipmentConfig(
+        race="goblin",
+        name="Default Sword",
+        cost=None,
+        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+    )
+    soldier_with_default = simple_race.models["soldier"].model_copy(
+        update={"equipment": ["default_sword"]}
+    )
+    return RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models={**simple_race.models, "soldier": soldier_with_default},
+        equipment={**simple_race.equipment, "default_sword": default_sword},
+    )
+
+
 # ---------------------------------------------------------------------------
 # Data structure construction
 # ---------------------------------------------------------------------------
@@ -393,6 +413,38 @@ def test_format_failed_group_slot_shows_available(simple_race: RaceConfig) -> No
     result = _format_failed_group(group, remaining)
     assert "Hands:2" in result
     assert "have" in result
+
+
+# ---------------------------------------------------------------------------
+# _remaining_slots — default equipment does not consume slots
+# ---------------------------------------------------------------------------
+
+
+def test_remaining_slots_does_not_count_default_equipment(
+    race_with_defaults: RaceConfig,
+) -> None:
+    # Defaults are always discarded when upgrades are added, so they must never
+    # consume slots. A soldier with a Hands:2 default but no upgrades should
+    # still show Hands:2 free.
+    soldier = ArmyModel(
+        name="soldier", config=race_with_defaults.models["soldier"], upgrades=()
+    )
+    remaining = _remaining_slots(soldier, race_with_defaults)
+    assert remaining.get("Hands", 0) == 2
+
+
+def test_remaining_slots_counts_only_upgrades_when_upgrades_present(
+    race_with_defaults: RaceConfig,
+) -> None:
+    # With a Hands:2 default and a Hands:1 upgrade, only the upgrade is counted.
+    soldier = ArmyModel(
+        name="soldier",
+        config=race_with_defaults.models["soldier"],
+        upgrades=("sword",),
+    )
+    remaining = _remaining_slots(soldier, race_with_defaults)
+    # sword requires Hands:1 → 2 - 1 = 1 remaining (default_sword NOT counted)
+    assert remaining.get("Hands", 0) == 1
 
 
 def test_validate_army_requires_error_includes_type_detail(
@@ -664,14 +716,34 @@ def test_available_equipment_goblin_infantry_clockwork_wings(
     assert "Clockwork Wings" in names
 
 
-def test_available_equipment_excludes_insufficient_slots(
+def test_available_equipment_excludes_truly_insufficient_slots(
     goblin_army: ArmyList, goblin_race: RaceConfig
 ) -> None:
+    # After consuming all Hands slots with one upgrade, a second Hands:2 upgrade
+    # should no longer be available.
+    army_with_upgrade = goblin_army.upgrade_model(
+        ("goblin_infantry", 0), ("goblin_infantry", 0), "gear_bow", goblin_race
+    )
     result = available_equipment(
-        goblin_army, ("goblin_infantry", 0), ("goblin_infantry", 0), goblin_race
+        army_with_upgrade, ("goblin_infantry", 0), ("goblin_infantry", 0), goblin_race
     )
     names = [e.name for e in result]
     assert "Gear bow" not in names
+
+
+def test_available_equipment_defaults_do_not_consume_slots(
+    race_with_defaults: RaceConfig,
+) -> None:
+    # Defaults are replaced by upgrades, so a model with a Hands:2 default weapon
+    # should still be able to receive a Hands:2 upgrade — the default is gone once
+    # any upgrade is added.
+    army = ArmyList(race="goblin", nick="T", units=()).add_unit(
+        "squad", race_with_defaults
+    )
+    # sword requires Hands:1 — the default_sword (Hands:2) must NOT consume slots here
+    result = available_equipment(army, ("squad", 0), ("soldier", 0), race_with_defaults)
+    names = [e.name for e in result]
+    assert "Sword" in names
 
 
 # ---------------------------------------------------------------------------
@@ -774,8 +846,91 @@ def test_validate_army_detects_unsatisfied_equipment_requires(
     assert any("requires not satisfied" in e for e in errors)
 
 
+def test_validate_army_upgrade_exactly_filling_slots_is_valid(
+    simple_race: RaceConfig,
+) -> None:
+    # An upgrade that exactly fits remaining slots must not be flagged as invalid.
+    # soldier has Hands:2; sword requires Hands:1; two swords exactly fill the slots.
+    good_model = ArmyModel(
+        name="soldier",
+        config=simple_race.models["soldier"],
+        upgrades=("sword", "sword"),
+    )
+    good_unit = ArmyUnit(
+        name="squad", config=simple_race.units["squad"], models=(good_model,)
+    )
+    army = ArmyList(race="goblin", nick="Test Army", units=(good_unit,))
+    errors = validate_army(army, simple_race)
+    assert errors == []
+
+
+def test_validate_army_upgrade_not_counted_against_itself(
+    simple_race: RaceConfig,
+) -> None:
+    # A single upgrade using the model's entire slot budget must not be self-defeating.
+    # soldier has Hands:2; a hypothetical "two_hand_sword" requires Hands:2.
+    two_hand_sword = EquipmentConfig(
+        race="goblin",
+        name="Two-Hand Sword",
+        cost=t.Cost(cp=4),
+        upgrade_all=True,
+        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+    )
+    race = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "two_hand_sword": two_hand_sword},
+    )
+    good_model = ArmyModel(
+        name="soldier",
+        config=race.models["soldier"],
+        upgrades=("two_hand_sword",),
+    )
+    good_unit = ArmyUnit(name="squad", config=race.units["squad"], models=(good_model,))
+    army = ArmyList(race="goblin", nick="Test Army", units=(good_unit,))
+    errors = validate_army(army, race)
+    assert errors == []
+
+
+def test_validate_army_defaults_not_counted_for_slot_check(
+    race_with_defaults: RaceConfig,
+) -> None:
+    # A model with a Hands:2 default and a Hands:1 upgrade must be valid —
+    # the default is replaced by the upgrade and does not consume slots.
+    good_model = ArmyModel(
+        name="soldier",
+        config=race_with_defaults.models["soldier"],
+        upgrades=("sword",),
+    )
+    good_unit = ArmyUnit(
+        name="squad", config=race_with_defaults.units["squad"], models=(good_model,)
+    )
+    army = ArmyList(race="goblin", nick="Test Army", units=(good_unit,))
+    errors = validate_army(army, race_with_defaults)
+    assert errors == []
+
+
+def test_validate_army_still_catches_genuine_slot_overflow(
+    simple_race: RaceConfig,
+) -> None:
+    # Three swords (each Hands:1) on a Hands:2 model must still fail.
+    bad_model = ArmyModel(
+        name="soldier",
+        config=simple_race.models["soldier"],
+        upgrades=("sword", "sword", "sword"),
+    )
+    bad_unit = ArmyUnit(
+        name="squad", config=simple_race.units["squad"], models=(bad_model,)
+    )
+    army = ArmyList(race="goblin", nick="Test Army", units=(bad_unit,))
+    errors = validate_army(army, simple_race)
+    assert len(errors) == 1
+    assert "Hands:1" in errors[0]
+
+
 # ---------------------------------------------------------------------------
-# Resolved Model.equipment (Rule A)
+# Resolved Model.equipment — upgrades replace defaults
 # ---------------------------------------------------------------------------
 
 
@@ -833,7 +988,8 @@ def test_model_equipment_upgrades_present_discards_defaults(
     )
     resolved = army.resolve(race)
     model = resolved.units[0].models[0]
-    # defaults have basic_sword; upgrade has sword — Rule A: only sword
+    # defaults have basic_sword; upgrade has sword
+    # — upgrades replace defaults, so only sword
     assert model.equipment == model.upgrade_equipment
     assert all(e.name != "Basic Sword" for e in model.equipment)
 

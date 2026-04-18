@@ -217,6 +217,12 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
         load_army("bad-upgrade")
 
 
+def test_load_geir_arne_army_is_valid() -> None:
+    """Integration test: Test that an army is loaded and validated."""
+    army = load_army("2025/geir_arne")
+    assert isinstance(army, Army)
+
+
 def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:
     data = {
         "race": "goblin",

@@ -244,7 +244,12 @@ def _make_default_army_unit(unit_name: t.UnitName, race_config: RaceConfig) -> A
 def _remaining_slots(
     model: ArmyModel, race_config: RaceConfig
 ) -> dict[t.EquipmentHolder, int]:
-    """Compute remaining holder slots after all current equipment (defaults + upgrades).
+    """Compute remaining holder slots after accounting for all upgrade equipment.
+
+    Default equipment is never counted: when upgrades are present, defaults are
+    discarded entirely. This also applies when checking whether the first upgrade
+    can be added — adding any upgrade replaces the defaults, so they do not
+    occupy slots for that check either.
 
     Slot usage is read from each equipment's requires field. In practice, holder
     requirements always appear in single-item OR-groups, so iterating all items
@@ -253,7 +258,9 @@ def _remaining_slots(
     slots: dict[t.EquipmentHolder, int] = {
         limit.holder: limit.limit for limit in model.config.equipment_limit
     }
-    for equip_key in (*model.config.equipment, *model.upgrades):
+    # Defaults are discarded whenever upgrades are added, so only upgrades consume
+    # slots. This holds even for the first upgrade: adding it replaces all defaults.
+    for equip_key in model.upgrades:
         for req_group in race_config.equipment[equip_key].requires:
             for req in req_group:
                 if (
@@ -365,8 +372,11 @@ def validate_army(army: ArmyList, race_config: RaceConfig) -> list[str]:
                     f"Unit '{unit.name}': model '{team_model.name}' cannot replace "
                     f"'{default_model_name}' (not in its replaces list)"
                 )
-            # Validate equipment upgrades
-            for equip_key in team_model.upgrades:
+            # Validate equipment upgrades sequentially: check each upgrade against
+            # a partial model containing only the *prior* upgrades. This mirrors the
+            # build-time upgrade() semantics and prevents an upgrade from being counted
+            # against its own slot requirement.
+            for j, equip_key in enumerate(team_model.upgrades):
                 equip = race_config.equipment[equip_key]
                 if equip.cost is None:
                     errors.append(
@@ -375,11 +385,16 @@ def validate_army(army: ArmyList, race_config: RaceConfig) -> list[str]:
                         " and cannot be used as upgrade"
                     )
                 else:
+                    partial_model = ArmyModel(
+                        name=team_model.name,
+                        config=team_model.config,
+                        upgrades=team_model.upgrades[:j],
+                    )
                     failed = _unsatisfied_groups(
-                        equip.requires, team_model, race_config
+                        equip.requires, partial_model, race_config
                     )
                     if failed:
-                        remaining = _remaining_slots(team_model, race_config)
+                        remaining = _remaining_slots(partial_model, race_config)
                         detail = "; ".join(
                             _format_failed_group(g, remaining) for g in failed
                         )
