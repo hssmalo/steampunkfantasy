@@ -828,6 +828,21 @@ angle = [true, true, true, true]
 damage = "d8"
 ap = 2
 
+
+[equipment.enhanced_fancy_ogre_rifle]
+name = "Enhanced Fancy Ogre Rifle"
+race = "ogre"
+cost.cp = 6
+upgrade_all = true
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipment.enhanced_fancy_ogre_rifle.range]
+range = 6
+angle = [true, true, true, true]
+damage = "d8"
+ap = 2
+special = ["enhanced accurazy: +1 to hit"]
+
 [equipment.ogre_broadside]
 name = "Ogre broadside"
 race = "ogre"
@@ -920,5 +935,16 @@ requires = [["Reserve Melee:1"], ["type:Scout"], ["type:Elite"]]
 
 [equipment.fancy_ogre_sword.assault.special]
 "Bonus" = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
+
+[equipment.fancy_warhammer]
+name = "Fancy WarHammer"
+race = "ogre"
+cost.cp = 4
+upgrade_all = false
+requires = [["Reserve Melee:1"], ["type:Scout", "type:Infantry"]]
+
+[equipment.fancy_warhammer.assault]
+damage.replace = "d8 + d6 psycic damage"
+ap.replace = 5
 
 

@@ -30,7 +30,7 @@ movement_order = ["-", "-", "flee"]
 still = [["Fire", "Fire"]]
 
 [units.goblin_infantry.orders.movement]
-still = [["360°", "360°", "360°"], ["A+360°", "F", "B+360°"]]
+still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
 
 [units.goblin_infantry.damage_tables]
 regular = [
@@ -443,7 +443,7 @@ ap = 2
 special = ["Thrown weapon", "Always treated as loaded"]
 
 [equipment.grenadier]
-name = "Grenadier specialization"
+name = "Grenadier"
 race = "goblin"
 cost.xp = 2
 upgrade_all = true
@@ -453,7 +453,36 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 "To Hit (2)" = "Get +1 to hit for thrown weapons"
 
 [equipment.grenadier.unit_special]
-"Fire Order" = "For each fire order: fire a bow once and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
+"Fire Order" = "For each fire order: fire a bow once (per model) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
+
+[equipment.commando]
+name = "Commando"
+race = "goblin"
+cost.xp = 8
+upgrade_all = true
+requires = [["Specialization:1"], ["type:Infantry"]]
+
+[equipment.commando.unit_special]
+"Take Cover" = "[still][-4]"
+"Evation" = "[2+]"
+"Hidden" = "Unit has the Hidden and Hide[ruins] special effects."
+"Forward Position" = "[2]"
+"Fire Order" = "For each fire order: Fire a bow once (per model) at one target and throw a grenade (per model) at another target. In addition, in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
+
+
+[equipment.commando.orders_gained.movement]
+still = [["-", "-", "Reveal"],["360°", "F", "Reveal"],["Hide[ruins]", "-", "-"]]
+
+[equipment.commando.assault]
+deflection.add = [4, 0, 0, 0]
+deflection_die.replace = "6+"
+
+
+
+
+
+
+
 
 [equipment.archer]
 name = "Archer spesialization"
@@ -463,7 +492,10 @@ upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.archer.unit_special]
-"Fire Order" = "For each fire order: either fire a bow twice or use one thrown weapon per model. Good shot: +1 to hit"
+"Fire Order" = "For each fire order: either fire a bow twice (per model) or use one thrown weapon (per model)."
+
+[equipment.archer.model_special]
+"To Hit (2)" = "Good shot: +1 to hit"
 
 [equipment.acid_grenade]
 name = "Acid Grenade"

@@ -99,7 +99,6 @@ type ModelSpecial = Literal[
     "Not Yet Dead",
     "Fog",
     "Escape Artist",
-    "Fire",
 ]
 
 type AssaultSpecial = Literal[
@@ -108,20 +107,21 @@ type AssaultSpecial = Literal[
     "Cunning Assault",
     "Cunning Deflection",
     "Damage on Deflect",
+    "Overrun",
     "Counter Attack",
     "Bonus",
     "Improvement",
-    "Penalty",
     "Ork Reroll",    
+    "Penalty",
+    "Angle",
     "Troll Stench",
     "Fear",
     "Pre-Assault Retreat",
     "Retreat",
     "Disconnected",
-    "Angle",
     "FlyBy",
     "Lands",    
-    "Overrun",
+
 ]
 
 type ModelType = Literal[
