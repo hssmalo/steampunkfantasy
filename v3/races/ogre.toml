@@ -787,7 +787,7 @@ requires = [["Independent:1"], ["type:Carrier"]]
 [equipment.drone_supply.unit_special]
 # GA: Check category
 # Hss: think about this one. I want to replace with spawn abilities.
-"Hans Sverre's favorite rule" = "Gives a supply of 3 {{\\it drone swarm}} units which this model carries"
+"Spawn" = "Gives a supply of 3 {{\\it drone swarm}} units which this model carries"
 
 [equipment.ogre_gun]
 name = "Ogre gun"

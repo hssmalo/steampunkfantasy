@@ -374,7 +374,7 @@ movement_order = ["-", "-", "flee"]
 [units.armored_unicorn_rider.special]
 "Resistance" = "Poison Resistance 12, Fire Resistance 3, Minor Acid resistance[4+]"
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
-"Officer 1" = "Grants psychic resistance 1 to the other unit in this hex"
+"Officer" = "Grants psychic resistance 1 to the other unit in this hex"
 "Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
 "Heal" = "Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]"
 "Stacking Limit" = "May share a hex with a huge unit"
@@ -836,7 +836,7 @@ damage = "d6-1"
 ap = 3
 
 [models.eagle_rider.assault.special]
-"Damage" = "Always attacks weakest point of armor"
+"Extra Damage" = "Always attacks weakest point of armor"
 "Cunning Assault" = "[1 for 3]"
 "Pre-Assault Retreat" = "3+"
 "FlyBy" = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault"
@@ -858,7 +858,7 @@ ap = 2
 
 [models.pachyephalosaurus_rider.assault.special]
 "Pre-Assault Retreat" = "5+"
-"Damage" = "poison[4][1 for 2]"
+"Extra Damage" = "poison[4][1 for 2]"
 "Cunning Assault" = "[1 for 3]"
 
 [models.elk_cavalery]
@@ -925,7 +925,7 @@ damage = "d6-2"
 ap = 2
 
 [models.elite_pachyephalosaurus_rider.assault.special]
-"Damage" = "poison[4][1 for 2]"
+"Extra Damage" = "poison[4][1 for 2]"
 "Cunning Assault" = "[1 for 3]"
 "Pre-Assault Retreat" = "3+ if atleast one elite present"
 
