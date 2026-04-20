@@ -41,7 +41,7 @@ Apply damage \
 - Agony 0 (acid, terror)\
 Apply damage 
 
-- Agony 1 (minor acid)\
+- Agony 1 (minor acid, insanity field)\
 Apply damage
 
 - Agony 2 (fire)\
@@ -136,6 +136,10 @@ Elusive[speed, -N]          0      -N         When in given speed
 Optimal at point blank     +1       0         Firing at enemies at point blank range only
 *Weapon* *abilities*
 Enhanced Accurazy          +1       0
+*Status* *effects*
+Confused                   -2       0
+
+
 ------------------------ -------  ---------- ---------------------
 
 
@@ -174,20 +178,27 @@ XXX Resistance N         -N if damage type matches resistance.
 
 Movement/order Initiative: (highest on the list makes choices last with regard to ambiguous orders) \
 
+
+Goblin \
 Elf \
 Dark Elf \
+Abomination \
 Dwarf \
+Ogre \
 Gnome \
 Ork \
 
 
 Assault tie-breaker (wins ties, and choices how to conduct assault if it is ambiguous) \
 
-Dark Elf\
-Ork\
-Dwarf\
+Dark Elf \
+Ogre \
+Ork \
+Dwarf \
 Elf\
-Gnome\
+Gnome \
+Abomination \
+Goblin \
 
 \pagebreak
 
@@ -199,7 +210,7 @@ Gnome\
 
 *Cunning** **Assault[1 for N]*
 
-For each N assault successes assigned to one vehicle (model with type vehicle) in assault, add one +1 to future damage token. If you manage to inflict two or more +1 to future damage tokens this way, the enemy is shaken.
+For each N assault successes assigned to one mechanical unit in assault, add one +1 to future damage token. If you manage to inflict two or more +1 to future damage tokens this way, the enemy is shaken.
 
 
 **Orks Abilities**
@@ -219,7 +230,7 @@ Endurence tokens may be spent in the following way:
 
 *Crippled Crew*
 
-Unit gets -1 on all die roll for its range to-hit, assault strength and assault deflection. In addition, if unit is also shaken, any source of psychic damage now rolls on crew damage even though the unit is normally immune to psychic damage. 
+Unit gets -1 on all die roll for its range to-hit, assault strength and assault deflection. In addition, any source of psychic damage now rolls on crew damage instead.
 
 
 \clearpage
