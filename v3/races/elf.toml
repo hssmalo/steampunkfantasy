@@ -297,7 +297,7 @@ cost.xp = 6
 armor = [7, 6, 6, 6]
 
 [units.bear_rider.special]
-Resistance = "Poison Resistance 3"
+Resistance = "Poison[3]"
 
 [units.bear_rider.shaken]
 speed = "slow"
@@ -332,7 +332,7 @@ cost.cp = 6
 armor = [8, 6, 6, 6]
 
 [units.polar_bear_riders.special]
-"Resistance" = "Poison Resistance 3"
+"Resistance" = "Poison[3]"
 "Fire Order" = "Flame arrow fires every gunnrey phase independent of gatling gun. Always treated as loaded"
 
 [units.polar_bear_riders.shaken]
@@ -372,7 +372,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.armored_unicorn_rider.special]
-"Resistance" = "Poison Resistance 12, Fire Resistance 3, Minor Acid resistance[4+]"
+"Resistance" = "Poison[12], Fire[3], Minor Acid[4+]"
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
 "Officer" = "Grants psychic resistance 1 to the other unit in this hex"
 "Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
@@ -423,7 +423,7 @@ cost.cp = 8
 armor = [3, 3, 0, 0]
 
 [units.pachyephalosaurus_riders.special]
-"Resistance" = "Poison Resistance 2"
+"Resistance" = "Poison[2]"
 "Fire Order" = "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only."
 
 [units.pachyephalosaurus_riders.shaken]
@@ -689,7 +689,7 @@ type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 "To Hit" = "Superb Shot: +3 to hit"
 
 [models.superelite_elf_infantry.unit_special]
-"Improved Resistance" = "Unit base gains psychic resistance 2 as long as atleast one superelite model is alive"
+"Improved Resistance" = "Unit gains resistance Psycic[2] while atleast one superelite model is alive"
 
 [models.superelite_elf_infantry.assault]
 strength = [3, 1, 1, 1]
@@ -716,7 +716,8 @@ type = ["Bio", "Infantry", "Walking", "Elite"]
 "To Hit" = "Good Shot: +1 to hit"
 
 [models.elite_elf_infantry.unit_special]
-"Improved Resistance" = "Unit base gains psychic resistance 1 as long as atleast one superelite model is alive"
+"Improved Resistance" = "Unit gains resistance Psycic[1] while atleast one superelite model is alive"
+
 
 [models.elite_elf_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -887,7 +888,7 @@ equipment = ["bow_free", "shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking", "Flying"]
 
 [models.pegasus_rider.special]
-"To Hit" = "good shot: +1 to hit"
+"To Hit" = "Good shot: +1 to hit"
 
 [models.pegasus_rider.assault]
 strength = [4, 3, 2, 1]
@@ -914,7 +915,7 @@ cost.xp = 1
 "To Hit" = "Good shot: +1"
 
 [models.elite_pachyephalosaurus_rider.unit_special]
-"Improved Resistance" = "Unit gain psychic resistance 1 while atleast one elite is alive"
+"Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
 
 [models.elite_pachyephalosaurus_rider.assault]
 strength = [6, 2, 2, 1]
@@ -940,7 +941,7 @@ cost.cp = 12
 armor = [4, 3, 3, 3]
 
 [units.sauropod_riders.special]
-"Resistance" = "Poison Resistance 4"
+"Resistance" = "Poison[4]"
 "Fire Order" = "Fire and load all weapons simultainiously"
 "Setup" = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
 
@@ -979,7 +980,7 @@ cost.cp = 6
 armor = [8, 6, 4, 3]
 
 [units.armored_oliphant_riders.special]
-"Resistance" = "Poison Resistance 2"
+"Resistance" = "Poison[2]"
 "Fire Order" = "The crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
 
 [units.armored_oliphant_riders.shaken]
@@ -1031,7 +1032,7 @@ cost.xp = 8
 armor = [6, 6, 6, 6]
 
 [units.eagle_rider.special]
-"Resistance" = "Poison Resistance 2"
+"Resistance" = "Poison[2]"
 
 [units.eagle_rider.shaken]
 speed = "slow"

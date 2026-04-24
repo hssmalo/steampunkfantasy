@@ -290,16 +290,17 @@ ap = 1
 name = "Elite Goblin Infantry"
 race = "goblin"
 cost.xp = 1
-equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2"]
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2", "Specialization:1"]
 equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = "goblin_infantry"
 
 [models.elite_goblin_infantry.special]
-"To Hit" = "+3 to hit with thrown weapons"
+"To Hit" = "+2 to hit with thrown weapons"
 
 [models.elite_goblin_infantry.unit_special]
-"Improved Resistance" = "If unit contains at least one elite, gain Psycic resistance[1]"
+"Improved Resistance" =  "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
+
 
 [models.elite_goblin_infantry.assault]
 strength = [2, 1, 1, 1]

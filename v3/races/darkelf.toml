@@ -16,7 +16,7 @@ cost.ip = 24
 cost.xp = 24
 
 [units.mechanical_red_dragon.special]
-Resistance = "Fire Resistance 2"
+Resistance = "Fire[2]"
 Immunity = "Acid and gear disruption"
 
 
@@ -50,7 +50,7 @@ cost.ip = 24
 cost.xp = 24
 
 [units.mechanical_iron_dragon.special]
-Resistance = "Fire Resistance 2"
+Resistance = "Fire[2]"
 Immunity = "Acid and gear disruption"
 
 
@@ -1362,7 +1362,8 @@ replaces = "darkelf_infantry"
 cost.xp = 1
 
 [models.darkelf_elite_infantry.unit_special]
-"Improved Resistance" = "Unit base gains psychic resistance 1 as long as atleast one elite model is alive"
+"Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
+
 
 
 [models.darkelf_elite_infantry.assault]
@@ -1479,8 +1480,7 @@ replaces = "roboprosthetic_darkelf"
 cost.cp = 1
 
 [models.elite_roboprosthetic_darkelf.unit_special]
-"Improved Resistance" = "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
-
+"Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
 
 [models.elite_roboprosthetic_darkelf.assault]
 strength = [2, 1, 1, 1]
