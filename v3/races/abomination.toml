@@ -163,7 +163,7 @@ movement_order = ["-", "chase", "chase"]
 fire_order = "Normal"
 
 [units.hippopotamus_riders.special]
-"Resistance" = "Poison [6]"
+"Resistance" = "Poison [3]"
 "Fire Order" = "Fire(mm) fires multipuropose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
 
 [units.hippopotamus_riders.orders.fire]
@@ -264,7 +264,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.frost88.special]
-"Fire Order" = "Fire(g) fires the main gun, while Fire(fr) fires frost ray. Track ammo only for main gun"
+"Fire Order" = "Fire(g) fires the main gun, while Fire(fr) fires frost ray. Track ammo only for main gun, while frost ray is always loaded"
 
 [units.frost88.orders.movement]
 slow = [
@@ -543,7 +543,7 @@ name = "Tentacle Axes"
 race = "abomination"
 cost.cp = 1
 upgrade_all = true
-requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Tentacles:2"], ["type:Infantry"]]
 
 [equipment.tentacle_axes.assault]
 strength.add = [2, 0, 0, 0]
@@ -570,17 +570,34 @@ upgrade_all = true
 requires = [["type:Frog"]]
 
 [equipment.frog_armor.unit_special]
-"Protection" = "Unit gain [4, 3, 3, 0] in armor."
+"Protection" = "Unit gain [4, 4, 3, 0] in armor."
 
 [equipment.fog_grenade_mortar]
 name = "Fog grenade Mortar"
 race = "abomination"
-cost.cp = 4
+cost.cp = 6
 upgrade_all = true
 requires = [["Tentacles:4"], ["type:Infantry"]]
 
 [equipment.fog_grenade_mortar.range]
 range = 4
+angle = [true, true, true, true]
+damage = "N/A"
+ap = "N/A"
+special = [
+	"Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal. May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)",
+]
+
+
+[equipment.long_range_fog_grenade_mortar]
+name = "Long Range Fog grenade Mortar"
+race = "abomination"
+cost.cp = 10
+upgrade_all = true
+requires = [["Tentacles:4"], ["type:Infantry"]]
+
+[equipment.long_range_fog_grenade_mortar.range]
+range = 8
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
@@ -598,7 +615,7 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 special = [
-	"Either Place two fog tokens in two different hexes, or give two different units one minor acid each, or place two poison cloud[4] in two different hexes. All targets must be within normal range.",
+	"Either Place two poins fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range.",
 ]
 
 [equipment.oversized_musket]
@@ -625,6 +642,22 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 1
 special = []
+
+
+[equipment.fog_poisonizer]
+name = "Fog Poisonizer"
+race = "abomination"
+cost.cp = 2
+upgrade_all = true
+requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
+
+[equipment.fog_poisonizer.range]
+range = 2
+angle = [true, true, true, true]
+damage = "N/A"
+ap = "N/A"
+special = ["Make a fog within normal range into a poison fog[4]",
+"Always treated as loaded. May be used in both gunnery phases"]
 
 [equipment.frog_spit]
 name = "Frog spit"
