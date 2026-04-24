@@ -16,7 +16,7 @@ def add_commands(app: cyclopts.App) -> None:
 
     
 #To Do: put it in another place
-possible_races = ['elf','darkelf','abomination', 'goblin', 'ogre']
+possible_races = ['elf','darkelf','abomination', 'goblin', 'ogre', 'ork']
 
 def show_special(special_key: str) -> None:
     for race_name in possible_races:
@@ -32,9 +32,25 @@ def show_special(special_key: str) -> None:
         for model_name,model in race.models.items():
             for k in model.special.keys(): 
                 if k == special_key:
-                    stdout.print(f"Unit: {model.name:<30}  {special_key: <24} {model.special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Model: {model.name:<30}  {special_key: <24} {model.special[special_key]:<100}", highlight=False)
+            for k in model.unit_special.keys(): 
+                if k == special_key:
+                    stdout.print(f"Model: {model.name:<30}  {special_key: <24} {model.unit_special[special_key]:<100}", highlight=False)
             for k in model.assault.special.keys():
                 if k == special_key:
-                    stdout.print(f"Unit: {model.name:<30}  {special_key: <24} {model.assault.special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Model: {model.name:<30}  {special_key: <24} {model.assault.special[special_key]:<100}", highlight=False)
     
 
+        for equipment_name,thing in race.equipment.items():
+            for k in thing.unit_special.keys(): 
+                if k == special_key:
+                    stdout.print(f"Equipment: {equipment.name:<30}  {special_key: <24} {thing.unit_special[special_key]:<100}", highlight=False)
+
+            for k in thing.model_special.keys(): 
+                if k == special_key:
+                    stdout.print(f"Equipment: {equipment.name:<30}  {special_key: <24} {thing.model_special[special_key]:<100}", highlight=False)
+
+            if thing.assault:
+                for k in thing.assault.special.keys(): 
+                    if k == special_key:
+                        stdout.print(f"Equipment: {equipment.name:<30}  {special_key: <24} {thing.assault.special[special_key]:<100}", highlight=False)
