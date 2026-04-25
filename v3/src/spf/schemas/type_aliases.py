@@ -24,6 +24,7 @@ type DamageTableName = Literal["crew", "critical", "inner", "psychic", "regular"
 type EquipmentHolder = Literal[
     "Independent",
     "Grenades",
+    "Broadside",
     "Hands",
     "Mechanical Tentacles",
     "Shared",
@@ -64,6 +65,7 @@ type UnitSpecial = Literal[
     "Transport",
     "Tow",
     "Fire Order",
+    "Trap",
     "Reload",
     "Regeneration",
     "Heal",
@@ -89,6 +91,7 @@ type UnitSpecial = Literal[
     "Forward Position",
     "Activate",
     "Note",
+
 ]
 
 type ModelSpecial = Literal[

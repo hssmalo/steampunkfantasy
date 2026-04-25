@@ -9,7 +9,7 @@ description = "Yellow, tiny, little men"
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
-description = "Group of four ogres fighting each other"
+description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standar ogre infantry size, thoughness, assault capabilities and firepower of their large weapons. While the ogers themself realize that being big also have disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options, the most normal upgades for the ogre infantry is fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 4
@@ -49,6 +49,7 @@ psychic = ["6+: shaken"]
 race = "ogre"
 name = "Ogre Robot"
 models = ["ogre_robot", "ogre_robot"]
+description = "Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they try to compensate by making medium sized robots. Although being only medium size, they are strong enough to fire large ogre rifles. However, the robots are not as good in close combat compared to the regular ogre infantry. "
 size = "Medium"
 cost.cp = 4
 armor = [3, 3, 0, 0]
@@ -89,6 +90,8 @@ name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 2
+description = "By the Ogres a Panther is viewed as a cute kitten, with useful properties. A view which is not shared by most other nations. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities" 
+
 
 [units.pet_panther.shaken]
 speed = "slow"
@@ -128,6 +131,8 @@ psychic = ["4+: shaken"]
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
+description ="Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furrious, wreking caos in enemy ranks with devestating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaniously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by a ogre sword. While not in an assault it switches to use the gear pistol instead, while always suporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
+
 models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 2
@@ -148,10 +153,10 @@ still = [
 	["-", "Load"],
 	["Aim", "-"],
 	["-", "Aim"],
-	["spot", "spot"],
+	["Spot", "Spot"],
 ]
-slow = [["Fire", "-"], ["-", "Fire"], ["spot", "spot"]]
-fast = [["Fire", "-"], ["-", "Fire"], ["spot", "spot"]]
+slow = [["Fire", "-"], ["-", "Fire"], ["Spot", "Spot"]]
+fast = [["Fire", "-"], ["-", "Fire"], ["Spot", "Spot"]]
 
 [units.ogre_assault_scout.orders.movement]
 still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
@@ -181,19 +186,21 @@ models = [
 	"drone_swarm",
 	"drone_swarm",
 	"drone_swarm",
-	"drone_swarm"
 ]
 size = "Tiny"
 cost.cp = 1
+description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
+
 
 [units.drone_swarm.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
 
 [units.drone_swarm.special]
-"Suicide" = "Once speed is rest, considered this unit destroyed without enemy gaining victory points for it"
+"Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap[5+] at the hex. The trap may only be triggered by enemy units. If Triggered, remove the trap and the unit triggering the trap is given a minor acid token."
 "Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
+ 
 
 [units.drone_swarm.orders.fire]
 still = [
@@ -201,22 +208,24 @@ still = [
 	["-", "Fire"],
 	["Aim", "-"],
 	["-", "Aim"],
-	["spot", "spot"]
+	["Spot", "Spot"]
 ]
 slow = [
 	["Fire", "-"],
 	["-", "Fire"],
 	["Aim", "-"],
 	["-", "Aim"],
-	["spot", "spot"]
+	["Spot", "Spot"]
 ]
 fast = [
 	["Fire", "-"],
 	["-", "Fire"],
 	["Aim", "-"],
 	["-", "Aim"],
-	["spot", "spot"]
+	["Spot", "Spot"]
 ]
+
+
 
 [units.drone_swarm.orders.movement]
 rest = [["-", "-", "-"]]
@@ -233,6 +242,8 @@ name = "Repair Drone"
 models = ["repair_drone", "repair_drone", "repair_drone", "repair_drone"]
 size = "Tiny"
 cost.cp = 4
+description = "A group of 4 tiny drones designed to repair other drones, robots and the huge ogre tanks and vehicles."
+
 
 [units.repair_drone.shaken]
 speed = "slow"
@@ -253,7 +264,8 @@ regular = ["1+: destroy one model"]
 race = "ogre"
 name = "Medic Drone"
 models = ["medic_drone", "medic_drone", "medic_drone", "medic_drone"]
-size = "Tiny"
+size = "Tiny" 
+description = "A group of 4 tiny drones designed to heal infantry. They have become the ogre assault scouts best friends"
 cost.cp = 2
 cost.xp = 2
 
@@ -287,7 +299,7 @@ movement_order = ["-", "-", "-"]
 [units.main_engine.special]
 "LoS" = "Blocks Line of Sight"
 "Tow" = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
-"Transport" = "May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order, but you may deploy a maximum of 3 tiny drone units each time"
+"Transport" = "May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order"
 
 [units.main_engine.orders.fire]
 still = [
@@ -303,13 +315,13 @@ fast = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
 
 [units.main_engine.orders.movement]
 still = [["L/R", "-", "-"], ["L/R", "-", "A"]]
-slow = [["L/R", "F", "L/R"], ["L/R", "F", "A"], ["F", "L/R", "-"]]
-fast = [
-	["F", "F", "-"],
+slow = [["L/R", "F", "L/R"], ["L/R", "F", "A"], ["F", "L/R", "-"], ["F", "-", "-"]]
+fast = [["F", "F", "-"],
 	["L/R", "F", "F"],
 	["F", "L/R", "F"],
 	["F", "F", "L/R"],
 	["F", "L/R", "B"],
+	["F", "F", "B"],
 ]
 
 [units.main_engine.damage_tables]
@@ -352,25 +364,19 @@ still = [
 	["Fire", "-"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 slow = [
 	["Fire", "-"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 fast = [
 	["Fire", "-"],
 	["-", "Fire"],
 	["Load", "-"],
 	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
 ]
 
 [units.broadside_wagon.damage_tables]
@@ -486,7 +492,7 @@ type = ["Bio", "Monster", "Walking", "Scout"]
 [models.pet_panther.assault]
 strength = [4, 2, 1, 1]
 strength_die = "5+"
-deflection = [2, 0, 0, 0]
+deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6"
 ap = 1
@@ -514,6 +520,8 @@ replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
+description = "An Ogre Scout Engineer is an regular Ogre assault scout can repair drones and robots. It can also carry drones, and have the knowledge to hit enemy drone where it hurts the most"
+
 
 [models.ogre_scout_engineer.unit_special]
 "Transport" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones each time"
@@ -526,6 +534,8 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
+[models.ogre_scout_engineer.assault.special]
+"Extra Damage" = "Gear Disrutpin[4+]"
 
 [models.drone_swarm]
 name = "Drone Swarm"
@@ -605,11 +615,11 @@ ap = 0
 name = "Main Engine"
 race = "ogre"
 equipment_limit = ["Independent:∞"]
-equipment = ["ogre_gun"]
+equipment = ["oger_cannon"]
 type = ["Mechanical", "Tracked", "Drone", "Carrier"]
 
 [models.main_engine.assault]
-strength = [9, 6, 3, 0]
+strength = [6, 6, 3, 0]
 strength_die = "5+"
 deflection = [9, 6, 3, 0]
 deflection_die = "5+"
@@ -630,9 +640,9 @@ type = ["Mechanical", "Towed", "Drone"]
 "To Hit" = "Need command: -2 to hit if unit is not connected to a main engine"
 
 [models.artillery_wagon.assault]
-strength = [9, 9, 9, 6]
+strength = [6, 6, 6, 3]
 strength_die = "5+"
-deflection = [9, 9, 9, 6]
+deflection = [6, 6, 6, 3]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
@@ -643,14 +653,14 @@ ap = 3
 [models.broadside_wagon]
 name = "Broadside Wagon"
 race = "ogre"
-equipment_limit = ["Independent:∞"]
+equipment_limit = ["Independent:∞", "Broadside:1"]
 equipment = ["ogre_broadside"]
-type = ["Mechanical", "Towed", "Drone", "Scout"]
+type = ["Mechanical", "Towed"]
 
 [models.broadside_wagon.assault]
-strength = [9, 9, 9, 6]
+strength = [6, 6, 6, 3]
 strength_die = "5+"
-deflection = [9, 9, 9, 6]
+deflection = [6, 6, 6, 3]
 deflection_die = "5+"
 damage = "d8"
 ap = 3
@@ -752,7 +762,7 @@ ap = 2
 [equipment.ogre_sniper_rifle]
 name = "Ogre Sniper Rifle"
 race = "ogre"
-cost.cp = 6
+cost.cp = 8
 upgrade_all = false
 requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
@@ -789,12 +799,12 @@ requires = [["Independent:1"], ["type:Carrier"]]
 # Hss: think about this one. I want to replace with spawn abilities.
 "Spawn" = "Gives a supply of 3 {{\\it drone swarm}} units which this model carries"
 
-[equipment.ogre_gun]
-name = "Ogre gun"
+[equipment.oger_cannon]
+name = "Ogre Cannon"
 race = "ogre"
 requires = []
 
-[equipment.ogre_gun.range]
+[equipment.oger_cannon.range]
 range = 3
 angle = [true, false, false, false]
 damage = "d8+2 if penetrating all armor"
@@ -853,6 +863,19 @@ range = 4
 angle = ["-", "x4", "x4", "-"]
 damage = "d8-2"
 ap = 2
+
+[equipment.fancy_archebus_broadside]
+name = "Ogre broadside"
+race = "ogre"
+requires = [["Broadside:1"],["type:Mechanical"]]
+cost.cp = 6
+upgrade_all = true
+
+[equipment.fancy_archebus_broadside.range]
+range = 3
+angle = ["-", "x4", "x4", "-"]
+damage = "d8+2"
+ap = 4
 
 [equipment.fancy_arquebus]
 name = "Fancy Arquebus"

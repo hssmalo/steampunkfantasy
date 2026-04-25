@@ -466,9 +466,9 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 [equipment.commando.unit_special]
 "Take Cover" = "[still][-4]"
 "Evation" = "[2+]"
-"Hidden" = "Unit has the Hidden and Hide[ruins] special effects."
+"Hidden" = "Unit has the Hidden and Hide[ruins, forrest] special effects."
 "Forward Position" = "[2]"
-"Fire Order" = "For each fire order: Fire a bow once (per model) at one target and throw a grenade (per model) at another target. In addition, in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
+"Fire Order" = "For each fire order: Fire a bow once at one target and throw a grenade at another target. In addition, in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
 
 
 [equipment.commando.orders_gained.movement]
@@ -477,12 +477,6 @@ still = [["-", "-", "Reveal"],["360°", "F", "Reveal"],["Hide[ruins]", "-", "-"]
 [equipment.commando.assault]
 deflection.add = [4, 0, 0, 0]
 deflection_die.replace = "6+"
-
-
-
-
-
-
 
 
 [equipment.archer]
@@ -534,6 +528,28 @@ special = [
 	"Poison[4]",
 	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
 ]
+
+[equipment.acid_trap]
+name = "Acid Trap"
+race = "goblin"
+cost.cp = 2
+upgrade_all = true
+requires = [["Independent:1"], ["type:Infantry"]]
+
+#ToDo: write trap rules
+# [Name] Trap[N+]
+# Name is the name of the trap. 
+# In trigger hex effect, roll a die per unit. At N+ the trap is triggered.
+# Special rules should include rules about what happens when trap is triggered, and wether their own team is immune or not.
+
+[equipment.acid_trap.unit_special]
+"Trap" = "Instead of firing any weapons: place a Goblin Acid Trap[5+] in an unoccopied neighbohring hex. The trap may only be triggered by enemy units. When the trap is triggered, remove the trap and give the unit which triggered the trap an acid token."
+
+
+[equipment.acid_trap.orders_gained.fire]
+still = [["Lay Trap", "Lay Trap"]]
+slow = [["Lay Trap", "Lay Trap"]]
+
 
 [equipment.light_mortar]
 name = "Light Mortar"
