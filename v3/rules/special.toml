@@ -1,21 +1,59 @@
-[assault_special]
+[assault]
 
 [assault.cunning_assault]
 name = "Cunning Assault"
 
-numerics = "[1 per N]"
+short = "[{N}]"
 
-rule = "For each N assault successes assigned to one mechanical unit in assault, add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken."
+explination = "For each {N} assault successes assigned to one mechanical unit in assault, add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack."
 
-example = "Thus, for example if you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken."
+example = "If you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken."
 
 description = "This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage."
+
+[assault.cunning_assault.varriables]
+N = {type = "int", min = 1, max = 4}
+
+
 
 
 [assault.cunning_assault_defence]
 name = "Cunning Assault Defence"
 
-numerics = "[N][M+]"
+short = "[{N}, {M]+]"
 
-rule = "Roll N dice. For each die at M+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken."
+explination = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
+
+
+
+
+
+
+[unit]
+
+[unit.heal]
+
+short = "[{N}, {unit}, {phase}]"
+
+explination = "Healing only works on biological units. You have N points to spend on the following actions:
+
+- Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
+- Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
+- Remove one +1 to future damage token. Cost 1.
+- Neutrilize one minor acid. Cost 1.
+- Extinguish one fire. Cost 3.
+- Neutrilize one poison token: Cost 3.
+- Remove one bleeding token: Cost 3.
+- Degrade one acid to minor acid. Cost 4."
+
+
+
+[unit.heal.varriables]
+
+N = {type = "int", min = 1, max = 10}
+unit = {type = "str", values=["self", "any"]}
+phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
+
+
+
 
