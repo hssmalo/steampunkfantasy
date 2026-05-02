@@ -1,0 +1,21 @@
+[assault_special]
+
+[assault.cunning_assault]
+name = "Cunning Assault"
+
+numerics = "[1 per N]"
+
+rule = "For each N assault successes assigned to one mechanical unit in assault, add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken."
+
+example = "Thus, for example if you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken."
+
+description = "This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage."
+
+
+[assault.cunning_assault_defence]
+name = "Cunning Assault Defence"
+
+numerics = "[N][M+]"
+
+rule = "Roll N dice. For each die at M+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken."
+

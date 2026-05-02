@@ -9,7 +9,7 @@ description = "Yellow, tiny, little men"
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
-description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standar ogre infantry size, thoughness, assault capabilities and firepower of their large weapons. While the ogers themself realize that being big also have disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options, the most normal upgades for the ogre infantry is fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
+description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standar ogre infantry size, thoughness, assault capabilities and firepower of their large weapons. While the ogers themself realize that being big also have some disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 4
@@ -47,9 +47,9 @@ psychic = ["6+: shaken"]
 
 [units.ogre_robot]
 race = "ogre"
-name = "Ogre Robot"
 models = ["ogre_robot", "ogre_robot"]
-description = "Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they try to compensate by making medium sized robots. Although being only medium size, they are strong enough to fire large ogre rifles. However, the robots are not as good in close combat compared to the regular ogre infantry. "
+name = "Ogre Robot"
+description = "Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they try to compensate by making medium sized robots. Although being only medium size, they are strong enough to fire large ogre rifles. However, the robots are not as good in close combat compared to the regular ogre infantry."
 size = "Medium"
 cost.cp = 4
 armor = [3, 3, 0, 0]
@@ -90,7 +90,7 @@ name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 2
-description = "By the Ogres a Panther is viewed as a cute kitten, with useful properties. A view which is not shared by most other nations. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities" 
+description = "A Panther is viewed as a cute kitten, with useful properties by the ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities" 
 
 
 [units.pet_panther.shaken]
