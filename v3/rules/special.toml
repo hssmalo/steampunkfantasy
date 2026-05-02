@@ -33,6 +33,8 @@ explination = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to
 
 [unit.heal]
 
+name = "Heal"
+
 short = "[{N}, {unit}, {phase}]"
 
 explination = "Healing only works on biological units. You have N points to spend on the following actions:
