@@ -1,5 +1,13 @@
 [assault]
 
+[assault.reroll_assault]
+
+name = "Ork Reroll Assault"
+
+short = "[{N}]"
+
+explination = "Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll {N} dice per wave of rerolls. Thus {N} may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls."
+
 [assault.cunning_assault]
 name = "Cunning Assault"
 
@@ -14,22 +22,84 @@ description = "This represent any cunning way to take out heavily armored units 
 [assault.cunning_assault.varriables]
 N = {type = "int", min = 1, max = 4}
 
-
-
-
 [assault.cunning_assault_defence]
 name = "Cunning Assault Defence"
 
-short = "[{N}, {M]+]"
+short = "[{N}, {M}+]"
 
 explination = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
 
 
+[assault.poison]
+
+name = "Assault Poison"
+
+short = "[{N}]][1 for {M}]"
+
+explination = "Targets gets one poison[N] token for each {M} hits."
+
+token = "poison"
+
+[assault.poison]
+
+N = {type = "int", values = [4,6,8,10,12]}
+M = {type = "int", min = 1, max = 4}
 
 
+#ToDo
+#This should be a unit ability, because it does not make sence models of the same unit  have different pre assault retreat
+[assault.pre_assault_retreat]
 
+short = "[{N}+]"
+
+explination = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
+
+[assault.pre_assault_retreat.variables]
+N = {type = "int", min = 1, max = 6}
 
 [unit]
+
+[unit.forward_position]
+
+name = "Forward Position"
+
+short = "[N]"
+
+explination = "At setup this unit may setup upt to {N} hexes away from normal setup area."
+
+[unit.forward_position.variables]
+
+N = {type = "int", min = 1, max = 3}
+
+
+[unit.resistance]
+
+short = [{version}[{N}]]
+
+explination = "Gives improved resilience versus {version} damage"
+
+[unit.resistance.versions]
+
+regular = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
+
+psycic = "Any damage explisitly named psychic damage is reduced damage by {N}"
+
+fire = "Any damage rolled by fire token effect is reduced damage by {N}"
+
+poison = "Any damage rolled by poison token effect reduced damage by {N}"
+
+acid = "Any die rolled by acid or minor acid token are reduced by {N}."
+
+###Note, may see if I need more.
+###Note, modified acid rule to align with the others...
+###Note: to do, change all units which have acid resistance to follow the the rule instead of old
+
+[unit.resistance.variables]
+
+versions = {type = "str", values = ["regular", "psychic", "fire", "poison"]
+
+
+
 
 [unit.heal]
 
@@ -37,7 +107,7 @@ name = "Heal"
 
 short = "[{N}, {unit}, {phase}]"
 
-explination = "Healing only works on biological units. You have N points to spend on the following actions:
+explination = """Healing only works on biological units. You have{N}points to spend on the following actions:
 
 - Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
 - Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
@@ -46,11 +116,11 @@ explination = "Healing only works on biological units. You have N points to spen
 - Extinguish one fire. Cost 3.
 - Neutrilize one poison token: Cost 3.
 - Remove one bleeding token: Cost 3.
-- Degrade one acid to minor acid. Cost 4."
+- Degrade one acid to minor acid. Cost 4.
+"""
 
 
-
-[unit.heal.varriables]
+[unit.heal.variables]
 
 N = {type = "int", min = 1, max = 10}
 unit = {type = "str", values=["self", "any"]}
@@ -58,4 +128,128 @@ phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
 
 
 
+[unit.heal]
+
+name = "Repear"
+
+short = "[{N}, {unit}, {phase}]"
+
+explination = """Repear only works on mechanical and drone units. You have {N} points to spend on the following actions:
+
+- Remove one +1 to future damage token. Cost 1. 
+- Neutrilize one minor acid. Cost 1 
+- Remove 1 shaken token to any unit whish is not bio. Cost 1 
+- Extinguish one fire. Cost 3. 
+- Remove 1 crittical damage effect. Cost 3. 
+- Degrade one acid to minor acid. Cost 4. 
+"""
+
+
+[unit.heal.variables]
+
+N = {type = "int", min = 1, max = 10}
+unit = {type = "str", values=["self", "any"]}
+phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
+
+
+[unit.hide]
+
+short = [{terrain}]
+
+explination = "If you are in {terrain} you may use the hide order: remove your unit from the board, replace it with a hidden token." 
+
+[unit.hide.variables]
+
+#todo, complete list
+terrain = {type = "str", values = ["ruin", "swamp", "forrest", "building"]}
+
+[unit.terror]
+
+name = terror
+
+short = "[range={N}][d{M}]"
+
+explination = "In agony 0, roll a d{M} psycic damage on any enemy unit within range of this unit." 
+
+[unit.terror.variables]
+
+
+N = {type = "int", min = 1, max = 3}
+M = {type = "int", values = [4,6,8,10,12]}
+
+[unit.evation]
+
+short = "[{N}+]"
+
+effect = "Roll a die per area of effect damage. Ignore the damage at {N}+"
+
+[unit.evation.evation]
+
+N = {type = "int", min = 1, max = 6}
+
+
+[weapon]
+
+[weapon.burst]
+
+name = "Burst"
+
+short = "[{N}]"
+
+explination = "This weapon can have, and must be loaded with {N} ammo to be fired. However, when the weapon is fired, it is fired {N} times (per model) at the same enemy unit."
+
+[range.burst.variables]
+
+N = {type = "int", min = 2, max = 10}
+
+
+[weapon.limited_ammo]
+
+name = "Limited Ammo"
+
+Explination = "This weapon may be fired a maxium of {N} times in a match. Starts the game with {N} ammo loaded"
+
+short = "[{N}]"
+
+[weapon.limited_ammo.variables]
+
+N = {type = "int", min = 2, max = 10}
+
+[weapon.gear_disruption]
+
+name = "Gear Disruption"
+
+short = "[{N}+]"
+
+explination = "Only applies when target is a robot. Roll 1 + one die per minor acid token on target. The robot gets one shaken token per roll of {N}+. Major acid counts as 3 minor acid tokens in this regard. (1st shaken token is duplicated as always)"
+
+[weapon.gear_disruption]
+
+N = {type = "int", min = 2, max = 10}
+
+
+[weapon.fire]
+
+name = "Fire"
+
+short = ""
+
+explination = "Any unit hit at least once (in assault or by range weapon) is set on fire"
+
+[weapon.minor_acid]
+
+name = "Minor Acid"
+
+explination = "Target gets a minor acid token"
+
+token = "minor_acid"
+
+
+[weapon.poison]
+
+name = "Poison"
+
+explination = "Target gets a poison[{N}] token"
+
+token = "poison"
 
