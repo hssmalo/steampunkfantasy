@@ -41,8 +41,8 @@ regular = [
 	"4-6: Kill 1 model",
 	"7-10: Kill 1 model, psychic damage[d6]",
 	"11+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
-]
+	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",]
+
 psychic = ["6+: shaken"]
 
 [units.ogre_robot]
@@ -96,9 +96,10 @@ description = "A Panther is viewed as a cute kitten, with useful properties by t
 [units.pet_panther.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
+comment = "If sharing a hex with an Infantry, you may give the pet follow orders even while shaken"
 
 [units.pet_panther.special]
-"Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infangry), you may order it to follow the movement orders and follow the unit it shares its hex with, even if shaken. If so it gets the same speed as the Infantry"
+"Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infangry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
 "Evation" = "[4+]"
 
 [units.pet_panther.orders.movement]
@@ -124,14 +125,13 @@ regular = [
 	"2-3: Bleed[4]",
 	"4-5: As below, +1 to future damage",
 	"6: unit destroyed",
-	"{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}",
-]
+	]
 psychic = ["4+: shaken"]
 
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description ="Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furrious, wreking caos in enemy ranks with devestating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaniously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by a ogre sword. While not in an assault it switches to use the gear pistol instead, while always suporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
+description ="Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furrious, wreking caos in enemy ranks with devestating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaniously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always suporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
 
 models = ["ogre_assault_scout"]
 size = "Large"
@@ -174,7 +174,6 @@ regular = [
 	"2-5: Bleed[8]",
 	"6-7: As below, +1 to future damage",
 	"8: unit destroyed",
-	"{{\\it Note: If one model is killed by bleeding/poison, remove that bleeding/poison \\\\ token and remove half of the +1 future damage tokens}}",
 ]
 psychic = ["6+: shaken"]
 
@@ -197,7 +196,7 @@ speed = "slow"
 movement_order = ["-", "-", "-"]
 
 [units.drone_swarm.special]
-"Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap[5+] at the hex. The trap may only be triggered by enemy units. If Triggered, remove the trap and the unit triggering the trap is given a minor acid token."
+"Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 "Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
  
@@ -357,7 +356,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.broadside_wagon.special]
-"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. Has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
 
 [units.broadside_wagon.orders.fire]
 still = [
@@ -407,7 +406,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.artillery_wagon.special]
-"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. Has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
 
 [units.artillery_wagon.orders.fire]
 still = [
@@ -501,7 +500,7 @@ ap = 1
 name = "Ogre Scout"
 race = "ogre"
 equipment_limit = ["Independent:∞", "Hands:2", "Reserve Melee:1"]
-equipment = ["gear_pistol", "ogre_sword_free"]
+equipment = ["gear_pistol","gear_pistol","ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 
 [models.ogre_assault_scout.assault]
@@ -520,7 +519,7 @@ replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
-description = "An Ogre Scout Engineer is an regular Ogre assault scout can repair drones and robots. It can also carry drones, and have the knowledge to hit enemy drone where it hurts the most"
+description = "An Ogre Scout Engineer is an regular Ogre assault scout which often carry tiny drones and whcih can also repair them. The have the knowledge to hit enemy drone in assaults where it hurts the most"
 
 
 [models.ogre_scout_engineer.unit_special]
@@ -553,8 +552,6 @@ damage = "d4-2"
 ap = 0
 
 [models.drone_swarm.assault.special]
-# GA: ["Pre Assault escape: 4+"] Is that different?
-# Bug fra min side
 "Pre-Assault Retreat" = "4+"
 
 [models.repair_drone]
@@ -718,8 +715,6 @@ equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Medic"]
 
 [models.ogre_medic.unit_special]
-# GA: Does this need to be on both model and unit?
-# Hss: In this case no, and heal in general no. Currently there does not exist stacking Heal abilities. :)
 "Heal" = "Healing[1, any, 1st healing]"
 
 [models.ogre_medic.assault]
@@ -807,7 +802,7 @@ requires = []
 [equipment.oger_cannon.range]
 range = 3
 angle = [true, false, false, false]
-damage = "d8+2 if penetrating all armor"
+damage = "d8 (+2 if penetrating all armor)"
 ap = 5
 
 [equipment.ogre_artillery]
@@ -818,7 +813,7 @@ requires = []
 [equipment.ogre_artillery.range]
 range = 5
 angle = [true, true, true, true]
-damage = "d8+3 if penetrating all armor"
+damage = "d8 (+3 if penetrating all armor)"
 ap = 6
 special = [
 	"Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit",

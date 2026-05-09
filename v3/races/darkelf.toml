@@ -1399,7 +1399,7 @@ ap = 2
 
 [models.assassin.assault.special]
 "Cunning Assault" = "[1 for 2]"
-"Extra Damage" = "Poison[12]"
+"Extra Damage" = "Poison[12][1 for 2]"
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
 "Penalty" = "Reroll all success in assault while crawling"
 
@@ -1423,7 +1423,7 @@ ap = 2
 
 [models.roboprosthetic_assassin.assault.special]
 "Cunning Assault" = "[1 for 2]"
-"Extra Damage" = "Poison[12]"
+"Extra Damage" = "Poison[12][1 for 2]"
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
 "Penalty" = "Reroll all success in assault while crawling"
 

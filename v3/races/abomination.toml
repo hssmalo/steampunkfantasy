@@ -6,6 +6,16 @@ name = "Abomination"
 [units]
 
 #To Do: Add mother ship!
+# Idead for mother ship:
+# Transport up to 4 flying cavalery
+# 18ip-isj...
+# Remove fog ability
+# Add fog ability
+# confusion and insanity stingers
+# Gear disruption weapons.
+# Huge size.
+
+
 
 [units.abomination_infantry]
 race = "abomination"
@@ -407,7 +417,7 @@ name = "Squid"
 race = "abomination"
 equipment = ["confusion_stinger"]
 equipment_limit = ["Independent:∞", "Mechanical Tentacles:2"]
-type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
+type = ["Vehicle", "Mechanical", "Floating", "Bio Crew"]
 
 [models.squid.special]
 "Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
@@ -422,6 +432,8 @@ ap = 2
 
 [models.squid.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
+"Cunning Assault Defence" = "[6][6+]"
+
 
 [models.frost88]
 name = "Frost 88"
@@ -491,10 +503,9 @@ damage = "d6"
 ap = 2
 
 [models.giant_frog_rider.assault.special]
-"Extra Damage" = "Poison[4]"
 "Cunning Assault" = "[1 for 3]"
 "Bonus" = "+100\\% strength and deflections versus shaken units"
-
+"Extra Damage" = "Poison[4][1 for 4]"
 
 [equipment]
 
@@ -522,7 +533,7 @@ range = 1
 angle = [true, true, false, false]
 damage = "d6 psychic"
 ap = "N/A"
-special = ["Only effects units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token.", "Track ammo seperatly from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."]
+special = ["Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage.", "Track ammo seperatly from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."]
 
 [equipment.multipurpose_gun]
 name = "Multipurpose Gun"
@@ -535,7 +546,7 @@ angle = [true, true, true, true]
 damage = "d6 psychic"
 ap = "N/A"
 special = [
-	"Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psycic damage the unit becomes insane in addition to the normal effects of the psycic damage table",
+	"Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psycic damage the unit gets an insanity token, in addition to the normal effects of the psycic damage table",
 ]
 
 [equipment.tentacle_craclespears]

@@ -27,30 +27,30 @@ def show_special(special_key: str) -> None:
         for unit_name,unit in race.units.items():
             for k in unit.special.keys(): 
                 if k == special_key:
-                    stdout.print(f"Unit: {unit.name:<30}  {special_key: <24} {unit.special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Unit: {unit.name:<30}  {special_key: <20} {unit.special[special_key]:<100}", highlight=False)
 
         for model_name,model in race.models.items():
             for k in model.special.keys(): 
                 if k == special_key:
-                    stdout.print(f"Model: {model.name:<30}  {special_key: <24} {model.special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Model: {model.name:<30}  {special_key: <20} {model.special[special_key]:<100}", highlight=False)
             for k in model.unit_special.keys(): 
                 if k == special_key:
-                    stdout.print(f"Model: {model.name:<30}  {special_key: <24} {model.unit_special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Model: {model.name:<30}  {special_key: <20} {model.unit_special[special_key]:<100}", highlight=False)
             for k in model.assault.special.keys():
                 if k == special_key:
-                    stdout.print(f"Model: {model.name:<30}  {special_key: <24} {model.assault.special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Model: {model.name:<30}  {special_key: <20} {model.assault.special[special_key]:<100}", highlight=False)
     
 
         for equipment_name,thing in race.equipment.items():
             for k in thing.unit_special.keys(): 
                 if k == special_key:
-                    stdout.print(f"Equipment: {equipment.name:<30}  {special_key: <24} {thing.unit_special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Equipment:<20 {thing.name:<30}  {special_key: <20} {thing.unit_special[special_key]:<100}", highlight=False)
 
             for k in thing.model_special.keys(): 
                 if k == special_key:
-                    stdout.print(f"Equipment: {equipment.name:<30}  {special_key: <24} {thing.model_special[special_key]:<100}", highlight=False)
+                    stdout.print(f"Equipment: {thing.name:<30}  {special_key: <20} {thing.model_special[special_key]:<100}", highlight=False)
 
             if thing.assault:
                 for k in thing.assault.special.keys(): 
                     if k == special_key:
-                        stdout.print(f"Equipment: {equipment.name:<30}  {special_key: <24} {thing.assault.special[special_key]:<100}", highlight=False)
+                        stdout.print(f"Equipment: {thing.name:<30}  {special_key: <20} {thing.assault.special[special_key]:<100}", highlight=False)

@@ -29,6 +29,8 @@ movement_order = ["-", "-", "flee"]
 [units.goblin_infantry.orders.fire]
 still = [["Fire", "Fire"]]
 
+
+#Description: are so sneaky that they can move around and still be counted as still.
 [units.goblin_infantry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
 
@@ -63,10 +65,13 @@ slow = [
 	["L/R", "L/R", "-"],
 	["F", "L/R", "-"],
 	["B", "-", "-"],
-	["A+F", "F", "F+Deploy+B"],
+	["A+F", "F", "F+Deploy"],
 	["F", "-", "-"],
 	["B", "-", "-"],
 ]
+fast = [
+        ["B", "-", "-"]]
+
 still = [
 	["L/R", "-", "-"],
 	["L/R", "L/R", "-"],
@@ -342,6 +347,8 @@ damage = "d4-2"
 ap = "1"
 special = ["Always treated as loaded", "Gear Disruption[6+]"]
 
+
+#To Do: Consider the applications carefully
 [equipment.clockwork_wings]
 name = "Clockwork Wings"
 race = "goblin"
@@ -468,7 +475,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 "Evation" = "[2+]"
 "Hidden" = "Unit has the Hidden and Hide[ruins, forrest] special effects."
 "Forward Position" = "[2]"
-"Fire Order" = "For each fire order: Fire a bow once at one target and throw a grenade at another target. In addition, in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
+"Fire Order" = "For each fire order: in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
 
 
 [equipment.commando.orders_gained.movement]
@@ -532,18 +539,12 @@ special = [
 [equipment.acid_trap]
 name = "Acid Trap"
 race = "goblin"
-cost.cp = 2
+cost.cp = 4
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
-#ToDo: write trap rules
-# [Name] Trap[N+]
-# Name is the name of the trap. 
-# In trigger hex effect, roll a die per unit. At N+ the trap is triggered.
-# Special rules should include rules about what happens when trap is triggered, and wether their own team is immune or not.
-
 [equipment.acid_trap.unit_special]
-"Trap" = "Instead of firing any weapons: place a Goblin Acid Trap[5+] in an unoccopied neighbohring hex. The trap may only be triggered by enemy units. When the trap is triggered, remove the trap and give the unit which triggered the trap an acid token."
+"Trap" = "With the Lay Trap fire order, Instead of firing any weapons: place a Goblin Acid Trap in an unoccopied neighbohring hex."
 
 
 [equipment.acid_trap.orders_gained.fire]
@@ -576,9 +577,9 @@ angle = [true, true, true, true]
 damage = "d4 -2"
 ap = 2
 special = [
-	"May be loaded with up to 3 ammo",
-	"Fire d12 shots per fire order per ammo spent, all targeted the same unit.",
-	"In addition to normal damage, choose one: add Minor Acid, Poison[6] or Gear Disruption[6+]",
+	"May be loaded (one at a time) with up to 3 ammo",
+	"Fire d12 shots in one fire order per ammo spent, all targeted the same unit.",
+	"In addition to normal damage, choose one (for all shots): add Minor Acid, Poison[6] or Gear Disruption[6+]",
 	"imprecise weapon: -1 to hit",
 ]
 
@@ -593,7 +594,7 @@ angle = [true, false, false, false]
 damage = "d6"
 ap = 4
 special = [
-	"May be loaded with up to 3 ammo",
+	"May be loaded (one at a time) with up to 3 ammo",
 	"Fire once per ammo spend per fire order",
 	"enhanced accuracy: +1 to hit",
 ]

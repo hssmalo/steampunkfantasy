@@ -47,6 +47,46 @@ regular = [
 ]
 psychic = ["4+: shaken"]
 
+
+[units.elf_archer]
+race = "elf"
+name = "Elf Archer"
+models = ["elf_archer", "elf_archer", "elf_archer", "elf_archer"]
+size = "Medium"
+cost.mp = 6
+cost.xp = 2
+
+[units.elf_archer.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+
+[units.elf_archer.special]
+"Take Cover" = "[still][-2]"
+"Forward Position" = "[2]"
+
+[units.elf_archer.orders.fire]
+still = [["Fire", "Fire"]]
+slow = [["Fire", "Fire"]]
+fast = [["Fire", "Fire"]]
+
+[units.elf_archer.orders.movement]
+slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
+still = [
+	["360°", "360°", "360°"],
+	["360°", "A ", "F"],
+	["360°+A+A ", "F ", "F"]
+]
+fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+
+[units.elf_archer.damage_tables]
+regular = [
+	"0-6: Kill 1 model",
+	"7-8: Kill 1 model, psychic damage[d6]",
+	"9+: Unit destroyed",
+	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+]
+psychic = ["5+: shaken"]
+
 [units.illusion]
 race = "elf"
 name = "Illusion"
@@ -57,6 +97,7 @@ cost.cp = 2
 [units.illusion.special]
 "Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
 "Movement" = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
+"Forward Position" = "[2]"
 
 [units.illusion.shaken]
 speed = 'slow'
@@ -295,6 +336,8 @@ size = "Medium"
 cost.mp = 2
 cost.xp = 6
 armor = [7, 6, 6, 6]
+#Cost changed from 2mp and 6xp to indroduce a unit with xp cost only.
+
 
 [units.bear_rider.special]
 Resistance = "Poison[3]"
@@ -366,13 +409,14 @@ cost.mp = 2
 cost.xp = 6
 cost.cp = 2
 armor = [6, 6, 6, 5]
+#cost changed from 2mp, 2cp and 6xp to 2cp and 8xp in line with bear and eagle riders.
 
 [units.armored_unicorn_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.armored_unicorn_rider.special]
-"Resistance" = "Poison[12], Fire[3], Minor Acid[4+]"
+"Resistance" = "Poison[12], Fire[3], Minor Acid[1]"
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
 "Officer" = "Grants psychic resistance 1 to the other unit in this hex"
 "Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
@@ -418,8 +462,8 @@ models = [
 ]
 size = "Medium"
 cost.mp = 4
-cost.xp = 3
-cost.cp = 8
+cost.xp = 5
+cost.cp = 6
 armor = [3, 3, 0, 0]
 
 [units.pachyephalosaurus_riders.special]
@@ -457,41 +501,43 @@ regular = [
 ]
 psychic = ["4+: shaken"]
 
-[units.elk_cavalery]
-race = "elf"
-name = "Elk Cavalery"
-models = ["elk_cavalery", "elk_cavalery", "elk_cavalery", "elk_cavalery"]
-size = "Medium"
-cost.mp = 6
-cost.xp = 2
+# Elk removed. Elf had to many cavalry and elk did not find it's correct place.
 
-[units.elk_cavalery.shaken]
-speed = "slow"
-movement_order = ["-", "-", "flee"]
+#[units.elk_cavalery]
+#race = "elf"
+#name = "Elk Cavalery"
+#models = ["elk_cavalery", "elk_cavalery", "elk_cavalery", "elk_cavalery"]
+#size = "Medium"
+#cost.mp = 6
+#cost.xp = 2
 
-[units.elk_cavalery.orders.fire]
-still = [["Fire", "Fire"]]
-slow = [["Fire", "Fire"]]
-fast = [["Fire", "Fire"]]
+#[units.elk_cavalery.shaken]
+#speed = "slow"
+#movement_order = ["-", "-", "flee"]
 
-[units.elk_cavalery.orders.movement]
-slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
-still = [["360°", "A", "F"], ["360°", "-", "-"]]
-fast = [
-	["360°", "F", "F"],
-	["F", "360°", "F"],
-	["F", "F", "360°"],
-	["360°", "F", "B"]
-]
+#[units.elk_cavalery.orders.fire]
+#still = [["Fire", "Fire"]]
+#slow = [["Fire", "Fire"]]
+#fast = [["Fire", "Fire"]]
 
-[units.elk_cavalery.damage_tables]
-regular = [
-	"2-3: Bleed[4]",
-	"4+: kill 1 model, d4 psychic damage",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
-]
-psychic = ["4+: shaken"]
+#[units.elk_cavalery.orders.movement]
+#slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
+#still = [["360°", "A", "F"], ["360°", "-", "-"]]
+#fast = [
+#	["360°", "F", "F"],
+#	["F", "360°", "F"],
+#	["F", "F", "360°"],
+#	["360°", "F", "B"]
+#]
+
+#[units.elk_cavalery.damage_tables]
+#regular = [
+#	"2-3: Bleed[4]",
+#	"4+: kill 1 model, d4 psychic damage",
+#	"{{\\it Note: bleeding does not cause more bleeding}}",
+#	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+#]
+#psychic = ["4+: shaken"]
 
 [units.pegasus_rider]
 race = "elf"
@@ -503,7 +549,7 @@ cost.xp = 6
 
 [units.pegasus_rider.special]
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
-"Resistance" = "poison resistance 2"
+"Resistance" = "Poison[2]"
 
 [units.pegasus_rider.shaken]
 speed = "slow_flying"
@@ -660,6 +706,25 @@ ap = 2
 
 [models.elf_infantry.assault.special]
 "Cunning Assault" = "[1 for 2]"
+
+[models.elf_archer]
+name = "Elf Archer"
+race = "elf"
+equipment_limit = ["Independent:∞", "Hands:2"]
+equipment = ["bow_free"]
+type = ["Bio", "Infantry", "Walking"]
+
+[models.elf_archer.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [0, 0, 0, 0]
+deflection_die = "5+"
+damage = "d6-2"
+ap = 2
+
+[models.elf_archer.assault.special]
+"Cunning Assault" = "[1 for 2]"
+
 
 [models.illusion]
 name = "Illusion"
@@ -847,7 +912,7 @@ name = "Pachyephalosaurus Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["smg_free", "twin_guns"]
-type = ["Bio", "Cavalry", "Walking"]
+type = ["Bio", "Light Cavalry", "Walking"]
 
 [models.pachyephalosaurus_rider.assault]
 strength = [2, 1, 1, 1]
@@ -862,23 +927,23 @@ ap = 2
 "Extra Damage" = "poison[4][1 for 2]"
 "Cunning Assault" = "[1 for 3]"
 
-[models.elk_cavalery]
-name = "Elk Cavalry"
-race = "elf"
-equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["bow_free"]
-type = ["Bio", "Cavalry", "Walking", "Elk"]
+#[models.elk_cavalery]
+#name = "Elk Cavalry"
+#race = "elf"
+#equipment_limit = ["Independent:∞", "Hands:2"]
+#equipment = ["bow_free"]
+#type = ["Bio", "Cavalry", "Walking", "Elk"]
 
-[models.elk_cavalery.assault]
-strength = [2, 1, 1, 1]
-strength_die = "5+"
-deflection = [1, 0, 0, 0]
-deflection_die = "5+"
-damage = "d6-2"
-ap = 2
+#[models.elk_cavalery.assault]
+#strength = [2, 1, 1, 1]
+#strength_die = "5+"
+#deflection = [1, 0, 0, 0]
+#deflection_die = "5+"
+#damage = "d6-2"
+#ap = 2
 
-[models.elk_cavalery.assault.special]
-"Cunning Assault" = "[1 for 4]"
+#[models.elk_cavalery.assault.special]
+#"Cunning Assault" = "[1 for 4]"
 
 [models.pegasus_rider]
 name = "Pegasus_rider"
@@ -1030,6 +1095,8 @@ size = "Medium"
 cost.mp = 2
 cost.xp = 8
 armor = [6, 6, 6, 6]
+#Cost change from 2mp and 8xp to 10xp.
+
 
 [units.eagle_rider.special]
 "Resistance" = "Poison[2]"
@@ -1203,25 +1270,27 @@ special = [
 	"Fires two times at same unit per shot.\\\\Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded",
 ]
 
-[equipment.shriek_smg]
-name = "Shriek SMG"
-race = "elf"
-requires = [["type:Infantry"], ["Hands:2"]]
-cost.cp = 2
-upgrade_all = true
+#Removed shriek as upgrade uption. Want to focus on bows instead
 
-[equipment.shriek_smg.range]
-range = 3
-angle = [true, true, false, false]
-damage = "d4 -2 + d6 psychic damage"
-ap = 2
-special = [
-	"Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)",
-]
+#[equipment.shriek_smg]
+#name = "Shriek SMG"
+#race = "elf"
+#requires = [["type:Infantry"], ["Hands:2"]]
+#cost.cp = 2
+#upgrade_all = true
 
-[equipment.shriek_smg.orders_gained.fire]
-slow = [["-", "Fire"], ["Fire", "-"]]
-fast = [["-", "Fire"], ["Fire", "-"]]
+#[equipment.shriek_smg.range]
+#range = 3
+#angle = [true, true, false, false]
+#damage = "d4 -2 + d6 psychic damage"
+#ap = 2
+#special = [
+#	"Burst(5): Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)",
+#]
+
+#[equipment.shriek_smg.orders_gained.fire]
+#slow = [["-", "Fire"], ["Fire", "-"]]
+#fast = [["-", "Fire"], ["Fire", "-"]]
 
 [equipment.gatling_gun]
 name = "GatlingGun"
@@ -1297,7 +1366,7 @@ special = []
 [equipment.teslacoil_lance]
 name = "Teslacoil Lance"
 race = "elf"
-requires = [["Independent:1"], ["type:Elk"]]
+requires = [["Independent:1"], ["type:Light Cavalry"]]
 cost.cp = 2
 upgrade_all = true
 
@@ -1309,52 +1378,56 @@ deflection_die.replace = "5+"
 [equipment.teslacoil_lance.assault.special]
 "Overrun" = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
 
-[equipment.smg]
-name = "SMG"
-race = "elf"
-cost.cp = 2
-upgrade_all = true
-requires = [["type:Infantry", "type:Crew"], ["Hands:2"]]
+#SMG removed as upgrade uption
 
-[equipment.smg.range]
-range = 4
-angle = [true, true, true, true]
-damage = "d6"
-ap = 1
-special = [
-	"Fire two shot per fire order (per smg in the unit)",
-	"always treated as loaded",
-]
+#[equipment.smg]
+#name = "SMG"
+#race = "elf"
+#cost.cp = 2
+#upgrade_all = true
+#requires = [["type:Infantry", "type:Crew"], ["Hands:2"]]
 
-[equipment.smg.orders_gained.fire]
-still = [['Fire', 'Fire']]
-slow = [['Fire', 'Fire']]
-fast = [['Fire', 'Fire']]
+#[equipment.smg.range]
+#range = 4
+#angle = [true, true, true, true]
+#damage = "d6"
+#ap = 1
+#special = [
+#	"Fire two shot per fire order (per smg in the unit)",
+#	"always treated as loaded",
+#]
 
-[equipment.bow]
-name = "Elf Bow"
-race = "elf"
-requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
-cost.cp = 2
-upgrade_all = true
+#[equipment.smg.orders_gained.fire]
+#still = [['Fire', 'Fire']]
+#slow = [['Fire', 'Fire']]
+#fast = [['Fire', 'Fire']]
 
-[equipment.bow.range]
-range = 2
-angle = [true, true, true, true]
-damage = "d6-2"
-ap = "0"
-special = [
-	"Ignore to-hit penalty (both self and target) for moving fast and flying",
-	"+1 range if you are flying",
-	"enhanced accurasy: +1 to hit",
-	"Bad at long range: double to-hit penalties at long range.",
-	"Always treated as loaded",
-]
 
-[equipment.bow.orders_gained.fire]
-still = [['Fire', 'Fire']]
-slow = [['Fire', 'Fire']]
-fast = [['Fire', 'Fire']]
+#Introduced Infantry Archer instead. No need for bow as upgrade anymore.
+#[equipment.bow]
+#name = "Elf Bow"
+#race = "elf"
+#requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+#cost.cp = 2
+#upgrade_all = true
+
+#[equipment.bow.range]
+#range = 2
+#angle = [true, true, true, true]
+#damage = "d6-2"
+#ap = "0"
+#special = [
+#	"Ignore to-hit penalty (both self and target) for moving fast and flying",
+#	"+1 range if you are flying",
+#	"enhanced accurasy: +1 to hit",
+#	"Bad at long range: double to-hit penalties at long range.",
+#	"Always treated as loaded",
+#]
+
+#[equipment.bow.orders_gained.fire]
+#still = [['Fire', 'Fire']]
+#slow = [['Fire', 'Fire']]
+#fast = [['Fire', 'Fire']]
 
 [equipment.elf_flame_arrow]
 name = "Elf Flame Arrow"

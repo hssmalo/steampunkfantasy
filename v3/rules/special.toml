@@ -30,6 +30,21 @@ short = "[{N}, {M}+]"
 explination = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
 
 
+[assault.minor_acid]
+
+name = "Assault minor acid"
+
+short = "[1 for {N}]"
+
+explination = "Targets gets one minor token for each {N} hits."
+
+token = "minor acid"
+
+[assault.minor_acid.variables]
+
+N = {type = "int", min = 1, max = 4}
+
+
 [assault.poison]
 
 name = "Assault Poison"
@@ -44,6 +59,8 @@ token = "poison"
 
 N = {type = "int", values = [4,6,8,10,12]}
 M = {type = "int", min = 1, max = 4}
+
+
 
 
 #ToDo
@@ -72,6 +89,7 @@ explination = "At setup this unit may setup upt to {N} hexes away from normal se
 N = {type = "int", min = 1, max = 3}
 
 
+#To Geir Arne. How to do this???
 [unit.resistance]
 
 short = [{version}[{N}]]
@@ -84,7 +102,7 @@ regular = "Any damage rolled on regular damage table of unspecified type is redu
 
 psycic = "Any damage explisitly named psychic damage is reduced damage by {N}"
 
-fire = "Any damage rolled by fire token effect is reduced damage by {N}"
+fire = "Any damage rolled by fire token is effect is reduced damage by {N}"
 
 poison = "Any damage rolled by poison token effect reduced damage by {N}"
 
@@ -127,6 +145,18 @@ unit = {type = "str", values=["self", "any"]}
 phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
 
 
+[unit.immunity]
+
+name = "Immunity"
+
+short = "Immunity [feature]"
+
+description = "Unit is completly immmune to given feature"
+
+[unit.immunity.variables]
+
+#Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???
+feature = {type = "str" }
 
 [unit.heal]
 
@@ -165,7 +195,7 @@ terrain = {type = "str", values = ["ruin", "swamp", "forrest", "building"]}
 
 [unit.terror]
 
-name = terror
+name = "Terror"
 
 short = "[range={N}][d{M}]"
 
@@ -176,6 +206,19 @@ explination = "In agony 0, roll a d{M} psycic damage on any enemy unit within ra
 
 N = {type = "int", min = 1, max = 3}
 M = {type = "int", values = [4,6,8,10,12]}
+
+
+[assault.fear]
+
+name = "Fear"
+
+short = "[d{N}]"
+
+explination = "In pre-assault phase, roll a d{N} psycic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection" 
+
+[unit.fear.variables]
+
+N = {type = "int", values = [4,6,8,10,12]}
 
 [unit.evation]
 
@@ -249,7 +292,12 @@ token = "minor_acid"
 
 name = "Poison"
 
+short = "Poison {N}"
+
 explination = "Target gets a poison[{N}] token"
 
 token = "poison"
 
+[weapon.poison.variables]
+
+N = {type = "int", min = 1, max = 12}
