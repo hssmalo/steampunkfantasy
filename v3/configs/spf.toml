@@ -2,4 +2,5 @@
 project = "{project_path}"
 armies = "{project_path}/armies"
 races = "{project_path}/races"
+rules = "{project_path}/rules"
 templates = "{project_path}/templates"

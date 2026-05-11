@@ -13,8 +13,10 @@ army_app = app.command(cyclopts.App(name="army", help="Work with a specific army
 cli.army.add_commands(army_app)
 race_app = app.command(cyclopts.App(name="race", help="Work with a specific race"))
 cli.race.add_commands(race_app)
+rules_app = app.command(cyclopts.App(name="rules", help="Work with rules"))
+cli.rules.add_commands(rules_app)
 special_app = app.command(
-    cyclopts.App(name="special", help="List all special with a spesific name")
+    cyclopts.App(name="special", help="Work with specials")
 )
 cli.special.add_commands(special_app)
 

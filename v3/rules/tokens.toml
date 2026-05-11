@@ -1,26 +1,19 @@
 [tokens]
 
 [tokens.minor_acid]
-
 name = "Minor Acid"
-
-phase = "Agony 1"
-
-removed = "Only as part of effect"
-
+phases = ["Agony 1"]
+remove = "Only as part of effect"
 effect = "Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid"
 
 
 [tokens.acid]
-
 name = "Acid"
+phases = ["Agony 0"]
+effect = """Roll a d8 on the following damage table:, 
 
-phase = "Agony 0"
-
-effect = """Role a d8 on the following damage table:, 
-
-			-1 : Downgrade from acid to minor acid.
-    	      	      	 2 : +1 to future damge
+			 1 : Downgrade from acid to minor acid.
+			 2 : +1 to future damage
 			 3 : As 2, and if unit has armor, it is reduced by 1 (all directions)
 			 4 : As 3, and place a poison cload [4] at hex.
 			   : and all units in this hex gets a minor acid token. 
@@ -28,24 +21,17 @@ effect = """Role a d8 on the following damage table:,
 			 6 : As 5, and unit gains a terror token.
 			 7 : As 6 and unit is set on fire.
 			 8 : Roll three times on this table., 
-
 """
 
 [tokens.terror]
-
 name = "Terror"
-
-phase = "Agony 0"
-
+phases = ["Agony 0"]
 effect = "Acts as if unit has Terror[range=2][6] but effects only units of the same team"
 
-
 [tokens.poison]
-
 name = "Poison"
-
-phase = "Agony 3"
-
+short = "[N]"
+phases = ["Agony 3"]
 effect = """Roll a d{N}.
 - Ignore armor and regular damage resistances 
 - Reduce damage by poison resistances of target
@@ -55,19 +41,13 @@ effect = """Roll a d{N}.
 
 If poison did not kill a model, downgrade poison one step"""
 
-short = "[N]"
-
-[tokens.poison.variable]
-
-N = N = {type = "int", values = [2,4,6,8,10,12]}
-
+[tokens.poison.variables]
+N = {type = "int", values = [2,4,6,8,10,12]}
 
 [tokens.bleed]
-
 name = "Bleed"
-
-phase = "Agony 4"
-
+short = "[N]"
+phases = ["Agony 4"]
 effect = """Roll a d{N}.
 At 1, remove bleed token. 
 
@@ -76,49 +56,27 @@ Otherwise
 - Apply bonus to damage based on the number +future damage tokens
 - Apply damage to the regular damage table, with the exception that bleed does not cause more bleed.
 - If bleed killed a model, remove bleed.
-
 """
 
-short = "[N]"
-
-[tokens.bleed.variable]
-
-N = N = {type = "int", values = [2,4,6,8,10,12]}
-
-
+[tokens.bleed.variables]
+N =  {type = "int", values = [2,4,6,8,10,12]}
 
 [tokens.confused]
-
 name = "Confused"
-
-phase = "Both gunnery phases and all movement phases"
-
+phases = ["Both gunnery phases and all movement phases"]
 remove = "Remove one token each pre-assault step in each movement phase"
-
 effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -."
 
-
-
 [tokens.insanity]
-
 name = "Insanity"
-
-phase = "Movement phases"
-
+phases = ["Movement phases"]
 remove = "When unit is not longer shaken"
-
 effect = "Can only be given to bio units which are already shaken. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equaly valid hexes to move to with chase, the owner still decides where to go"
 
-
-
 [tokens.hidden]
-
 name = "Hidden"
-
-phases = "All"
-
-remove = "You stay hidden until you reveal your self, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. Cloacking devices stay hidden even if in clear terrain, while all others sources of hidden abilities are revealed if they are in slow or fast in clear terrain within line of sight to an enemy. You only get reveal bonuses if you willingly reveal your self, not if you are forced to."
-
+phases = ["All"]
+remove = "You stay hidden until you reveal yourself, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. Cloacking devices stay hidden even if in clear terrain, while all others sources of hidden abilities are revealed if they are in slow or fast in clear terrain within line of sight to an enemy. You only get reveal bonuses if you willingly reveal your self, not if you are forced to."
 effect = """While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror,
 
 While hidden replace the unit with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden),
@@ -126,61 +84,3 @@ While hidden replace the unit with a hidden token. If you have multiple hidden u
 Reveal order: Place your unit within 2 hexes of the hidden token and gain reveal bonuses. In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses
 
 If you reveal your self you get reveal bonuses: +2 to hit of ranged weapons and pluss 50 percent assault strength and deflection for the first assault you participate in this round."""
-
-
-[hex]
-
-#Til Geir Arne: er dette fornuftig???
-
-eplination = """Hex based effects are triggered in all 'trigger hex based effects part of movement. 
-
-When placing Clouds on a hex for the first time, place two tokens of the given type. Otherwise, place only one.
-Hex based effects are not cumulative. However the effect of acid, fire and poison on units are cumulative with both itself and each other. 
-In case of poison clouds with different strength, apply the strongest if overlapping.
-
-Follow the instructions for each hex based effect
-
-Hexes could also have traps.
-"""
-
-
-[hex.poison_cloud]
-
-name = "Poison Cloud"
-
-short = "[N]"
-
-effect = "Area(5+): roll a die per unit, at 5+, target unit gets a poison[N] or take dN in crew damage if it is a vehicle with a crew damage table."
-
-remove = "Remove one Poison Cloud in each hex in aftermath phase"
-
-[hex.poison_cloud.variables]
-
-N = N = {type = "int", values = [2,4,6,8,10,12]}
-
-
-
-[hex.fog]
-
-name = "Fog"
-
-effect = "Treat hex as if it blocks line of sight and gives to-hit penalties for units standing in fog. To Hit penalties stacks with other terrain features."
-
-remove = "Remove one Poison Cloud in each hex in aftermath phase"
-
-[hex.drone_trap]
-
-name = "Drone Trap"
-
-effect = "All units from the team which placed the trap are immune to the trapp. All other units are effectd. Area(5+): roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets a minor acid token."
-
-remove = "Trap is removed only after triggered"
-
-
-[hex.goblin_acid_trap]
-
-name = "Goblin Acid Trap"
-
-effect = "All flying or floating units are immune to the trapp. All other units, including the goblin, are effectd. Roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets an acid token."
-
-remove = "Trap is removed only after triggered"

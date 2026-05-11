@@ -16,6 +16,7 @@ type UnitName = str
 type ModelName = str
 type EquipmentName = str
 type DamageTable = list[str]
+type PhaseName = str
 
 type RaceName = Literal[
     "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"

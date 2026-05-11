@@ -9,6 +9,7 @@ class PathsConfig(StrictModel):
     project: Path
     armies: Path
     races: Path
+    rules: Path
     templates: Path
 
 

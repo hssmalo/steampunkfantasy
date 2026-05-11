@@ -1,0 +1,37 @@
+#Til Geir Arne: er dette fornuftig???
+explanation = """Hex based effects are triggered in all 'trigger hex based effects part of movement. 
+
+When placing Clouds on a hex for the first time, place two tokens of the given type. Otherwise, place only one.
+Hex based effects are not cumulative. However the effect of acid, fire and poison on units are cumulative with both itself and each other. 
+In case of poison clouds with different strength, apply the strongest if overlapping.
+
+Follow the instructions for each hex based effect
+
+Hexes could also have traps.
+"""
+
+[hexes]
+
+[hexes.poison_cloud]
+name = "Poison Cloud"
+short = "[N]"
+effect = "Area(5+): roll a die per unit, at 5+, target unit gets a poison[N] or take dN in crew damage if it is a vehicle with a crew damage table."
+remove = "Remove one Poison Cloud in each hex in aftermath phase"
+
+[hexes.poison_cloud.variables]
+N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
+
+[hexes.fog]
+name = "Fog"
+effect = "Treat hex as if it blocks line of sight and gives to-hit penalties for units standing in fog. To Hit penalties stacks with other terrain features."
+remove = "Remove one Poison Cloud in each hex in aftermath phase"
+
+[hexes.drone_trap]
+name = "Drone Trap"
+effect = "All units from the team which placed the trap are immune to the trapp. All other units are effectd. Area(5+): roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets a minor acid token."
+remove = "Trap is removed only after triggered"
+
+[hexes.goblin_acid_trap]
+name = "Goblin Acid Trap"
+effect = "All flying or floating units are immune to the trapp. All other units, including the goblin, are effectd. Roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets an acid token."
+remove = "Trap is removed only after triggered"
