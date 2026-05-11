@@ -91,7 +91,6 @@ type UnitSpecial = Literal[
     "Forward Position",
     "Activate",
     "Note",
-
 ]
 
 type ModelSpecial = Literal[

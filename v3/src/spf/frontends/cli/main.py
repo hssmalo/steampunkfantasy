@@ -13,8 +13,11 @@ army_app = app.command(cyclopts.App(name="army", help="Work with a specific army
 cli.army.add_commands(army_app)
 race_app = app.command(cyclopts.App(name="race", help="Work with a specific race"))
 cli.race.add_commands(race_app)
-special_app = app.command(cyclopts.App(name="special", help="List all special with a spesific name"))
+special_app = app.command(
+    cyclopts.App(name="special", help="List all special with a spesific name")
+)
 cli.special.add_commands(special_app)
+
 
 @app.command
 def builder() -> None:
