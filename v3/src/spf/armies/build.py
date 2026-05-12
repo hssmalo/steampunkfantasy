@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Self
 
 from spf.schemas import type_aliases as t
-from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig, UnitConfig
+from spf.schemas.race import ModelConfig, RaceConfig, UnitConfig
 
 if TYPE_CHECKING:
     from spf.armies import Army

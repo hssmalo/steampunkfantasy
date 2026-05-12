@@ -718,9 +718,7 @@ def test_upgrade_all_models_adds_to_all(
         "goblin_infantry", goblin_race
     )
     # Use equipment that doesn't consume limited slots
-    army = army.upgrade_all_models(
-        ("goblin_infantry", 0), "poison_dagger", goblin_race
-    )
+    army = army.upgrade_all_models(("goblin_infantry", 0), "poison_dagger", goblin_race)
     assert all("poison_dagger" in m.upgrades for m in army.units[0].models)
 
 
@@ -829,7 +827,7 @@ def test_available_models_returns_matching(
 ) -> None:
     result = available_models(one_unit_army, ("squad", 0), ("soldier", 0), simple_race)
     assert len(result) == 1
-    assert result[0].name == "Elite Soldier"
+    assert result[0] == "elite_soldier"
 
 
 def test_available_models_empty_when_none_match(
@@ -848,8 +846,7 @@ def test_available_equipment_excludes_no_cost(
     result = available_equipment(
         one_unit_army, ("squad", 0), ("soldier", 0), simple_race
     )
-    names = [e.name for e in result]
-    assert "Shield" not in names
+    assert "shield" not in result
 
 
 def test_available_equipment_includes_valid(
@@ -858,8 +855,7 @@ def test_available_equipment_includes_valid(
     result = available_equipment(
         one_unit_army, ("squad", 0), ("soldier", 0), simple_race
     )
-    names = [e.name for e in result]
-    assert "Sword" in names
+    assert "sword" in result
 
 
 def test_available_equipment_goblin_infantry_clockwork_wings(
@@ -868,8 +864,7 @@ def test_available_equipment_goblin_infantry_clockwork_wings(
     result = available_equipment(
         goblin_army, ("goblin_infantry", 0), ("goblin_infantry", 0), goblin_race
     )
-    names = [e.name for e in result]
-    assert "Clockwork Wings" in names
+    assert "clockwork_wings" in result
 
 
 def test_available_equipment_excludes_truly_insufficient_slots(
@@ -883,8 +878,7 @@ def test_available_equipment_excludes_truly_insufficient_slots(
     result = available_equipment(
         army_with_upgrade, ("goblin_infantry", 0), ("goblin_infantry", 0), goblin_race
     )
-    names = [e.name for e in result]
-    assert "Gear bow" not in names
+    assert "gear_bow" not in result
 
 
 def test_available_equipment_defaults_do_not_consume_slots(
@@ -898,8 +892,7 @@ def test_available_equipment_defaults_do_not_consume_slots(
     )
     # sword requires Hands:1 — the default_sword (Hands:2) must NOT consume slots here
     result = available_equipment(army, ("squad", 0), ("soldier", 0), race_with_defaults)
-    names = [e.name for e in result]
-    assert "Sword" in names
+    assert "sword" in result
 
 
 # ---------------------------------------------------------------------------
