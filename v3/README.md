@@ -10,6 +10,16 @@ Run the `spf` command line interface (CLI):
 uv run spf --help
 ```
 
+## Army Builder App
+
+Run the Army Builder application:
+
+```console
+uv run spf builder
+```
+
+This opens a browser with the Army Builder running on a local host.
+
 ## Show and Validate a Race File
 
 List all races (this only shows races that validate):

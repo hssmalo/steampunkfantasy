@@ -17,6 +17,7 @@ dependencies = [
     "cyclopts>=4.10.1",
     "pydantic>=2.12.5",
     "rich>=13",
+    "streamlit>=1.57.0",
 ]
 
 [project.scripts]
