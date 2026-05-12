@@ -15,15 +15,27 @@
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         }
       ]
     },
@@ -40,15 +52,27 @@
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         }
       ]
     },
@@ -65,15 +89,27 @@
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         }
       ]
     },
@@ -90,15 +126,27 @@
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         },
         {
           "name": "elite_goblin_infantry",
-          "upgrades": []
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
         }
       ]
     },
@@ -113,6 +161,62 @@
         },
         {
           "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
           "upgrades": []
         },
         {
@@ -130,9 +234,7 @@
       "models": [
         {
           "name": "goblin_infantry",
-          "upgrades": [
-            "poison_bow"
-          ]
+          "upgrades": []
         },
         {
           "name": "goblin_infantry",
@@ -153,9 +255,7 @@
       "models": [
         {
           "name": "goblin_infantry",
-          "upgrades": [
-            "poison_bow"
-          ]
+          "upgrades": []
         },
         {
           "name": "goblin_infantry",

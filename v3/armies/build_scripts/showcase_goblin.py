@@ -1,49 +1,54 @@
-from spf.armies import army, build, io
+"""Create a showcase Goblin army."""
+
 from spf import races
+from spf.armies import build, io
 
-goblin = races.get_race('goblin')
+cfg = races.get_race("goblin")
 
- showcase = build.ArmyList('goblin', 'Showcase Goblin', [])
+army = build.ArmyList("goblin", "Showcase Goblin", ())
 
-i1 = build._make_default_army_unit('goblin_infantry', goblin)
+# 4x Elite Goblin Infantry w Grenadier, Gear bow, Acid Grenade
+army = (
+    army.add_unit("goblin_infantry", cfg)
+    .upgrade_full_unit(("goblin_infantry", 0), "elite_goblin_infantry", cfg)
+    .upgrade_all_models(("goblin_infantry", 0), "grenadier", cfg)
+    .upgrade_all_models(("goblin_infantry", 0), "acid_grenade", cfg)
+    .upgrade_all_models(("goblin_infantry", 0), "gear_bow", cfg)
+    .duplicate_unit(("goblin_infantry", 0))
+    .duplicate_unit(("goblin_infantry", 0))
+    .duplicate_unit(("goblin_infantry", 0))
+)
 
-i1 = i1.upgrade_unit(('goblin_infantry', 0), 'elite_goblin_infantry', goblin)
-i1 = i1.upgrade_unit(('goblin_infantry', 0), 'elite_goblin_infantry', goblin)
-i1 = i1.upgrade_unit(('goblin_infantry', 0), 'elite_goblin_infantry', goblin)
-i1 = i1.upgrade_unit(('goblin_infantry', 0), 'elite_goblin_infantry', goblin)
+# 2x Goblin Infantry w Poison bow
+army = (
+    army.add_unit("goblin_infantry", cfg)
+    .upgrade_all_models(("goblin_infantry", 4), "poison_bow", cfg)
+    .duplicate_unit(("goblin_infantry", 4))
+)
 
-i1 = i1.upgrade_model(('goblin_infantry', 0), 'grenadier', goblin)
-i1 = i1.upgrade_model(('elite_goblin_infantry', 0), 'gear_bow', goblin)
+# 6x Goblin Infantry
+army = (
+    army.add_unit("goblin_infantry", cfg)
+    .duplicate_unit(("goblin_infantry", 6))
+    .duplicate_unit(("goblin_infantry", 6))
+    .duplicate_unit(("goblin_infantry", 6))
+    .duplicate_unit(("goblin_infantry", 6))
+    .duplicate_unit(("goblin_infantry", 6))
+)
 
-showcase.units.append(i1)
-showcase.units.append(i1)
-showcase.units.append(i1)
-showcase.units.append(i1)
+# 4x Goblin Infantry Carrier
+army = (
+    army.add_unit("goblin_infantry_carrier", cfg)
+    .duplicate_unit(("goblin_infantry_carrier", 0))
+    .duplicate_unit(("goblin_infantry_carrier", 0))
+    .duplicate_unit(("goblin_infantry_carrier", 0))
+)
 
-i2 = build._make_default_army_unit('goblin_infantry', goblin)
-i2 = i2.upgrade_model(('goblin_infantry', 0), 'poison_bow', goblin)
+# 1x Heavy Carrier
+army = army.add_unit("heavy_carrier", cfg)
 
-showcase.units.append(i2)
-showcase.units.append(i2)
+# Show the army in the console
+io.print_army(army.resolve(cfg))
 
-i3 = build._make_default_army_unit('goblin_infantry', goblin)
-
-showcase.units.append(i3)
-showcase.units.append(i3)
-showcase.units.append(i3)
-showcase.units.append(i3)
-showcase.units.append(i3)
-showcase.units.append(i3)
-
-t1 = build._make_default_army_unit('goblin_infantry_carrier', goblin)
-
-showcase.units.append(t1)
-showcase.units.append(t1)
-showcase.units.append(t1)
-showcase.units.append(t1)
-
-t2 = build._make_default_army_unit('heavy_carrier', goblin)
-
-showcase.units.append(t2)
-
-io.save_army(showcase, 'showcase_goblin')
+# Save the army to disk
+io.save_army(army, "showcase/goblin")
