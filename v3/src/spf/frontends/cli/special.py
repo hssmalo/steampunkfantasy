@@ -41,17 +41,17 @@ type SpecialKey = t.UnitSpecial | t.ModelSpecial | t.AssaultSpecial
 def _unit_matches(race: RaceConfig, key: t.UnitSpecial) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     matches.extend(
-        (f"Unit:      {u.name}", u.special[key])
+        (f"U    Unit:      {u.name}", u.special[key])
         for u in race.units.values()
         if key in u.special
     )
     matches.extend(
-        (f"Model:     {m.name}", m.unit_special[key])
+        (f"U    Model:     {m.name}", m.unit_special[key])
         for m in race.models.values()
         if key in m.unit_special
     )
     matches.extend(
-        (f"Equipment: {e.name}", e.unit_special[key])
+        (f"U    Equipment: {e.name}", e.unit_special[key])
         for e in race.equipment.values()
         if key in e.unit_special
     )
@@ -61,12 +61,12 @@ def _unit_matches(race: RaceConfig, key: t.UnitSpecial) -> list[tuple[str, str]]
 def _model_matches(race: RaceConfig, key: t.ModelSpecial) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     matches.extend(
-        (f"Model:     {m.name}", m.special[key])
+        (f" M   Model:     {m.name}", m.special[key])
         for m in race.models.values()
         if key in m.special
     )
     matches.extend(
-        (f"Equipment: {e.name}", e.model_special[key])
+        (f" M   Equipment: {e.name}", e.model_special[key])
         for e in race.equipment.values()
         if key in e.model_special
     )
@@ -76,12 +76,12 @@ def _model_matches(race: RaceConfig, key: t.ModelSpecial) -> list[tuple[str, str
 def _assault_matches(race: RaceConfig, key: t.AssaultSpecial) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     matches.extend(
-        (f"Model:     {m.name}", m.assault.special[key])
+        (f"  A  Model:     {m.name}", m.assault.special[key])
         for m in race.models.values()
         if key in m.assault.special
     )
     matches.extend(
-        (f"Equipment: {e.name}", e.assault.special[key])
+        (f"  A  Equipment: {e.name}", e.assault.special[key])
         for e in race.equipment.values()
         if e.assault and key in e.assault.special
     )
@@ -102,7 +102,10 @@ def _collect_matches(
 
 
 def show_special(special_key: SpecialKey) -> None:
-    """Show all units, models, and equipment with a given special rule."""
+    """Show all units, models, and equipment with a given special rule.
+
+    Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials.
+    """
     for race_name in races.list_races():
         try:
             race = races.get_race(race_name)

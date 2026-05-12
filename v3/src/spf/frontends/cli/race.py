@@ -1,11 +1,9 @@
 """Race commands for the SteamPunkFantasy CLI."""
 
 from operator import attrgetter
-from typing import cast
 
 import configaroo
 import cyclopts
-import pydantic
 
 from spf import races
 from spf.config import config
@@ -28,12 +26,9 @@ def add_commands(app: cyclopts.App) -> None:
 
 def list_races() -> None:
     """List available races."""
-    for race_path in sorted(config.paths.races.glob("*.toml")):
-        race_name = cast("t.RaceName", race_path.stem)
-        try:
-            race = races.get_race(race_name)
-        except pydantic.ValidationError:
-            continue  # Don't list non-validated races
+    for race_name in races.list_races(validate=True):
+        race_path = config.paths.races / f"{race_name}.toml"
+        race = races.get_race(race_name)
 
         stdout.print(
             f"- {race_name:<20} {race.races[race_name].name:<16}"

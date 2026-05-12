@@ -152,6 +152,68 @@ class ArmyList:
         new_units = (*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :])
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
+    def upgrade_full_unit(
+        self,
+        unit_key: tuple[t.UnitName, int],
+        upgrade_model_name: t.ModelName,
+        race_config: RaceConfig,
+    ) -> Self:
+        """Replace all models in a unit with an upgrade model."""
+        _, unit = _resolve_unit(self, unit_key)
+        result = self
+        for i in range(len(unit.models)):
+            _, updated_unit = _resolve_unit(result, unit_key)
+            model_name = updated_unit.models[i].name
+            # Find which occurrence of this model is at position i
+            occurrence = sum(
+                1 for j in range(i) if updated_unit.models[j].name == model_name
+            )
+            result = result.upgrade_unit(
+                unit_key, (model_name, occurrence), upgrade_model_name, race_config
+            )
+        return result
+
+    def upgrade_all_models(
+        self,
+        unit_key: tuple[t.UnitName, int],
+        equipment_name: t.EquipmentName,
+        race_config: RaceConfig,
+    ) -> Self:
+        """Add the same equipment upgrade to all models in a unit."""
+        _, unit = _resolve_unit(self, unit_key)
+        result = self
+        for i in range(len(unit.models)):
+            _, updated_unit = _resolve_unit(result, unit_key)
+            model_name = updated_unit.models[i].name
+            # Find which occurrence of this model is at position i
+            occurrence = sum(
+                1 for j in range(i) if updated_unit.models[j].name == model_name
+            )
+            result = result.upgrade_model(
+                unit_key, (model_name, occurrence), equipment_name, race_config
+            )
+        return result
+
+    def duplicate_unit(
+        self,
+        unit_key: tuple[t.UnitName, int],
+    ) -> Self:
+        """Add a copy of an existing unit to the army list."""
+        _, unit = _resolve_unit(self, unit_key)
+        new_unit = ArmyUnit(name=unit.name, config=unit.config, models=unit.models)
+        return self.__class__(
+            race=self.race, nick=self.nick, units=(*self.units, new_unit)
+        )
+
+    def delete_unit(
+        self,
+        unit_key: tuple[t.UnitName, int],
+    ) -> Self:
+        """Remove a unit from the army list."""
+        unit_idx, _ = _resolve_unit(self, unit_key)
+        new_units = (*self.units[:unit_idx], *self.units[unit_idx + 1 :])
+        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+
     def resolve(self, race_config: RaceConfig) -> "Army":
         """Return a fully resolved Army with all equipment configs populated.
 
