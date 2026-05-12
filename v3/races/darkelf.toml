@@ -19,7 +19,6 @@ cost.xp = 24
 Resistance = "Fire[2]"
 Immunity = "Acid and gear disruption"
 
-
 [units.mechanical_red_dragon.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -53,7 +52,6 @@ cost.xp = 24
 Resistance = "Fire[2]"
 Immunity = "Acid and gear disruption"
 
-
 [units.mechanical_iron_dragon.shaken]
 speed = "slow"
 movement_order = ["-", "-", "-"]
@@ -65,24 +63,17 @@ fast_flying = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
 
 [units.mechanical_iron_dragon.orders.fire]
 slow = [
-    [
-        "-",
-        "Breath(acid)",
-    ],
-    [
-        "Breath(acid)",
-        "-",
-    ],
-    [
-        "Load",
-        "Breath(shrapnell)",
-    ],
-    [
-        "Breath(shrapnell)",
-        "Load",
-    ],
+    ["-", "Breath(acid)"],
+    ["Breath(acid)", "-"],
+    ["Load", "Breath(shrapnell)"],
+    ["Breath(shrapnell)", "Load"],
 ]
-fast_flying = [["-", "-"], ["-", "-"], ["Load", "Breath(shrapnell)"], ["-", "Load"]]
+fast_flying = [
+    ["-", "-"],
+    ["-", "-"],
+    ["Load", "Breath(shrapnell)"],
+    ["-", "Load"]
+]
 
 [units.mechanical_iron_dragon.damage_tables]
 regular = [
@@ -106,103 +97,30 @@ cost.ip = 16
 speed = 'still'
 movement_order = ["-", "-", "-"]
 
-
 [units.queen_yy.orders.movement]
 fast = [
-    [
-        "F",
-        "F",
-        "-",
-    ],
-    [
-        "F",
-        "L/R",
-        "-",
-    ],
-    [
-        "F",
-        "B",
-        "-",
-    ],
-    [
-        "B",
-        "B",
-        "-",
-    ],
-    [
-        "L/R",
-        "F",
-        "-",
-    ],
+    ["F", "F", "-"],
+    ["F", "L/R", "-"],
+    ["F", "B", "-"],
+    ["B", "B", "-"],
+    ["L/R", "F", "-"],
 ]
 slow = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "A",
-        "F",
-        "-",
-    ],
-    [
-        "B",
-        "-",
-        "-",
-    ],
-    [
-        "F",
-        "-",
-        "-",
-    ],
-    [
-        "B",
-        "rev",
-        "-",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["A", "F", "-"],
+    ["B", "-", "-"],
+    ["F", "-", "-"],
+    ["B", "rev", "-"],
 ]
 still = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "L/R",
-    ],
-    [
-        "-",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "A",
-        "F",
-    ],
-    [
-        "A",
-        "F",
-        "-",
-    ],
-    [
-        "rev",
-        "-",
-        "-",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["L/R", "L/R", "L/R"],
+    ["-", "-", "-"],
+    ["L/R", "A", "F"],
+    ["A", "F", "-"],
+    ["rev", "-", "-"],
 ]
 
 [units.queen_yy.orders.fire]
@@ -249,100 +167,28 @@ movement_order = ["-", "-", "-"]
 
 [units.queen_xy.orders.movement]
 fast = [
-    [
-        "F",
-        "F",
-        "-",
-    ],
-    [
-        "F",
-        "L/R",
-        "-",
-    ],
-    [
-        "F",
-        "B",
-        "-",
-    ],
-    [
-        "B",
-        "B",
-        "-",
-    ],
-    [
-        "L/R",
-        "F",
-        "-",
-    ],
+    ["F", "F", "-"],
+    ["F", "L/R", "-"],
+    ["F", "B", "-"],
+    ["B", "B", "-"],
+    ["L/R", "F", "-"],
 ]
 slow = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "A",
-        "F",
-        "-",
-    ],
-    [
-        "B",
-        "-",
-        "-",
-    ],
-    [
-        "F",
-        "-",
-        "-",
-    ],
-    [
-        "B",
-        "rev",
-        "-",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["A", "F", "-"],
+    ["B", "-", "-"],
+    ["F", "-", "-"],
+    ["B", "rev", "-"],
 ]
 still = [
-    [
-        "L/R",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "-",
-    ],
-    [
-        "L/R",
-        "L/R",
-        "L/R",
-    ],
-    [
-        "-",
-        "-",
-        "-",
-    ],
-    [
-        "L/R",
-        "A",
-        "F",
-    ],
-    [
-        "A",
-        "F",
-        "-",
-    ],
-    [
-        "rev",
-        "-",
-        "-",
-    ],
+    ["L/R", "-", "-"],
+    ["L/R", "L/R", "-"],
+    ["L/R", "L/R", "L/R"],
+    ["-", "-", "-"],
+    ["L/R", "A", "F"],
+    ["A", "F", "-"],
+    ["rev", "-", "-"],
 ]
 
 [units.queen_xy.orders.fire]
@@ -391,36 +237,12 @@ movement_order = ["-", "-", "Flee"]
 
 [units.nightmare_mechanical_cavalry.orders.movement]
 fast = [
-    [
-        "F",
-        "F",
-        "F",
-    ],
-    [
-        "F",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "F",
-        "F",
-    ],
-    [
-        "F",
-        "360°",
-        "F",
-    ],
-    [
-        "F",
-        "F",
-        "F+B",
-    ],
-    [
-        "F",
-        "B",
-        "360°",
-    ],
+    ["F", "F", "F"],
+    ["F", "F", "360°"],
+    ["360°", "F", "F"],
+    ["F", "360°", "F"],
+    ["F", "F", "F+B"],
+    ["F", "B", "360°"],
 ]
 slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
@@ -454,36 +276,12 @@ movement_order = ["-", "-", "Flee"]
 
 [units.elite_mechanical_cavalry.orders.movement]
 fast = [
-    [
-        "F",
-        "F",
-        "F",
-    ],
-    [
-        "F",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "F",
-        "F",
-    ],
-    [
-        "F",
-        "360°",
-        "F",
-    ],
-    [
-        "F",
-        "F",
-        "F+B",
-    ],
-    [
-        "F",
-        "B",
-        "360°",
-    ],
+    ["F", "F", "F"],
+    ["F", "F", "360°"],
+    ["360°", "F", "F"],
+    ["F", "360°", "F"],
+    ["F", "F", "F+B"],
+    ["F", "B", "360°"],
 ]
 slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
@@ -594,66 +392,28 @@ movement_order = ["-", "-", "Flee"]
 
 [units.darkelf_infantry.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "B",
-        "-",
-    ],
-    [
-        "360°",
-        "B[crawl]",
-        "-",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "B", "-"],
+    ["360°", "B[crawl]", "-"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+crawl = [
+    ["360°", "F", "-"],
+    ["360°", "B[still]", "-"],
+    ["360°", "A[slow]", "F"]
+]
 
 [units.darkelf_infantry.orders.fire]
 still = [
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Aim", "-"],
+    ["-", "Aim"],
 ]
 
 [units.darkelf_infantry.damage_tables]
@@ -693,33 +453,16 @@ cost.xp = 6
 "Forward Position" = "[2]"
 "Fire Order" = "Activate order only available while officer is alive"
 
-
 [units.multicultural_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [units.multicultural_infantry.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
 ]
 
 [units.multicultural_infantry.orders.fire]
@@ -792,66 +535,28 @@ movement_order = ["-", "-", "Flee"]
 
 [units.roboprosthetic_darkelf.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "B",
-        "-",
-    ],
-    [
-        "360°",
-        "B[crawl]",
-        "-",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "B", "-"],
+    ["360°", "B[crawl]", "-"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+crawl = [
+    ["360°", "F", "-"],
+    ["360°", "B[still]", "-"],
+    ["360°", "A[slow]", "F"]
+]
 
 [units.roboprosthetic_darkelf.orders.fire]
 still = [
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Aim", "-"],
+    ["-", "Aim"],
 ]
 
 [units.roboprosthetic_darkelf.damage_tables]
@@ -882,66 +587,28 @@ movement_order = ["-", "-", "Flee"]
 
 [units.assassin.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "F",
-        "B",
-    ],
-    [
-        "360°",
-        "B[crawl]",
-        "-",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "F", "B"],
+    ["360°", "B[crawl]", "-"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+crawl = [
+    ["360°", "F", "-"],
+    ["360°", "B[still]", "-"],
+    ["360°", "A[slow]", "F"]
+]
 
 [units.assassin.orders.fire]
 still = [
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Aim", "-"],
+    ["-", "Aim"],
 ]
 
 [units.assassin.damage_tables]
@@ -966,66 +633,28 @@ movement_order = ["-", "-", "Flee"]
 
 [units.roboprosthetic_assassin.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "F",
-        "B",
-    ],
-    [
-        "360°",
-        "B[crawl]",
-        "-",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "F", "B"],
+    ["360°", "B[crawl]", "-"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+crawl = [
+    ["360°", "F", "-"],
+    ["360°", "B[still]", "-"],
+    ["360°", "A[slow]", "F"]
+]
 
 [units.roboprosthetic_assassin.orders.fire]
 still = [
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Aim", "-"],
+    ["-", "Aim"],
 ]
 slow = [["-", "Fire"], ["Fire", "-"]]
 
@@ -1051,70 +680,29 @@ movement_order = ["-", "-", "Flee"]
 
 [units.scout.orders.movement]
 slow = [
-    [
-        "Chase",
-        "-",
-        "-",
-    ],
-    [
-        "-",
-        "-",
-        "Chase",
-    ],
-    [
-        "360°",
-        "F",
-        "360°",
-    ],
-    [
-        "360°",
-        "360°",
-        "360°",
-    ],
-    [
-        "360°",
-        "F",
-        "B",
-    ],
-    [
-        "360°",
-        "B[crawl]",
-        "-",
-    ],
+    ["Chase", "-", "-"],
+    ["-", "-", "Chase"],
+    ["360°", "F", "360°"],
+    ["360°", "360°", "360°"],
+    ["360°", "F", "B"],
+    ["360°", "B[crawl]", "-"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"], ["360°", "A[crawl]", "F"]]
-crawl = [["360°", "F", "-"], ["360°", "B[still]", "-"], ["360°", "A[slow]", "F"]]
+crawl = [
+    ["360°", "F", "-"],
+    ["360°", "B[still]", "-"],
+    ["360°", "A[slow]", "F"]
+]
 
 [units.scout.orders.fire]
 still = [
-    [
-        "Load",
-        "-",
-    ],
-    [
-        "-",
-        "Load",
-    ],
-    [
-        "Fire",
-        "-",
-    ],
-    [
-        "-",
-        "Fire",
-    ],
-    [
-        "Aim",
-        "-",
-    ],
-    [
-        "-",
-        "Aim",
-    ],
-    [
-        "Spot",
-        "Spot",
-    ],
+    ["Load", "-"],
+    ["-", "Load"],
+    ["Fire", "-"],
+    ["-", "Fire"],
+    ["Aim", "-"],
+    ["-", "Aim"],
+    ["Spot", "Spot"],
 ]
 slow = [["Spot", "Spot"]]
 
@@ -1152,7 +740,6 @@ equipment_limit = []
 equipment = ["acid_breath", "shrapnell_breath"]
 type = ["Flying", "Mechanical", "Walking"]
 
-
 [models.mechanical_iron_dragon.assault]
 strength = [12, 8, 8, 4]
 strength_die = "5+"
@@ -1160,6 +747,7 @@ deflection = [12, 8, 8, 4]
 deflection_die = "6+"
 damage = "d6"
 ap = 7
+
 [models.mechanical_iron_dragon.assault.special]
 "Lands" = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
 
@@ -1173,7 +761,6 @@ type = ["Bio Crew", "Vehicle", "Mechanical", "Tracked"]
 [models.queen_yy.special]
 "To Hit" = "Excellent shot: +2 to hit"
 
-
 [models.queen_yy.assault]
 strength = [5, 4, 3, 2]
 strength_die = "5+"
@@ -1181,19 +768,17 @@ deflection = [4, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-1"
 ap = 3
+
 [models.queen_yy.assault.special]
 "Extra Damage" = "Poison[6][1 for 1], Fear[8]"
 "Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
-
 
 [models.queen_xy]
 name = "Queen XY"
 race = "darkelf"
 equipment_limit = ["Independent:∞"]
 equipment = []
-
 type = ["Bio Crew", "Vehicle", "Mechanical", "Tracked"]
-
 
 [models.queen_xy.assault]
 strength = [5, 4, 3, 2]
@@ -1207,7 +792,6 @@ ap = 3
 "Extra Damage" = "Poison[6][1 for 1], Fear[8]"
 "Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
 
-
 [models.elite_mechanical_cavalry]
 name = "Elite Mechanical Cavalry"
 race = "darkelf"
@@ -1218,7 +802,6 @@ type = ["Bio", "Elite", "Cavalry", "Walking"]
 [models.elite_mechanical_cavalry.special]
 "To Hit" = "Good Shot: +1 to hit, Negates to-hit penalty for shooting while moving fast"
 
-
 [models.elite_mechanical_cavalry.assault]
 strength = [4, 2, 1, 1]
 strength_die = "5+"
@@ -1226,7 +809,6 @@ deflection = [4, 3, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 2
-
 
 [models.nightmare_mechanical_cavalry]
 name = "Nightmare Mechanical Cavalry"
@@ -1274,7 +856,6 @@ equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["tail_gatling_gun"]
 type = ["Mechanical", "Drone", "Walking"]
 
-
 [models.mechanical_scorpion.assault]
 strength = [8, 4, 2, 1]
 strength_die = "5+"
@@ -1294,7 +875,6 @@ equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walking"]
 
-
 [models.darkelf_infantry.assault]
 strength = [1, 1, 1, 1]
 strength_die = "5+"
@@ -1307,14 +887,12 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 "Penalty" = "Reroll all success in assault while crawling"
 
-
 [models.multicultural_infantry]
 name = "Multicultural Infantry"
 race = "darkelf"
 equipment_limit = []
 equipment = ["collar"]
 type = ["Bio", "Infantry", "Walking"]
-
 
 [models.multicultural_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -1323,7 +901,6 @@ deflection = [0, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-
 
 [models.darkelf_officer]
 name = "Dark Elf Officer"
@@ -1338,7 +915,6 @@ type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 
 [models.darkelf_officer.special]
 "Escape Artist" = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for vitory points purposes"
-
 
 [models.darkelf_officer.assault]
 strength = [3, 2, 1, 1]
@@ -1363,8 +939,6 @@ cost.xp = 1
 
 [models.darkelf_elite_infantry.unit_special]
 "Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
-
-
 
 [models.darkelf_elite_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -1427,14 +1001,12 @@ ap = 2
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
 "Penalty" = "Reroll all success in assault while crawling"
 
-
 [models.scout]
 name = "Scout"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walking"]
-
 
 [models.scout.assault]
 strength = [2, 1, 1, 1]
@@ -1448,14 +1020,12 @@ ap = 2
 "Cunning Assault" = "[1 for 1]"
 "Penalty" = "Reroll all success in assault while crawling"
 
-
 [models.roboprosthetic_darkelf]
 name = "Dark Elf Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
 type = ["Bio", "Infantry", "Walking", "Roboprosthetic"]
-
 
 [models.roboprosthetic_darkelf.assault]
 strength = [1, 1, 1, 1]
@@ -1468,7 +1038,6 @@ ap = 2
 [models.roboprosthetic_darkelf.assault.special]
 "Cunning Assault" = "[1 for 2]"
 "Penalty" = "Reroll all success in assault while crawling"
-
 
 [models.elite_roboprosthetic_darkelf]
 name = "Elite Roboprosthetic DarkElf"
@@ -1508,7 +1077,6 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-
 [equipment.head_gun]
 name = "Head Gun"
 race = "darkelf"
@@ -1535,10 +1103,8 @@ race = "darkelf"
 requires = []
 
 [equipment.remote_control.unit_special]
-
 "Activate" = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with atleast one multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
 "Note" = "Neither this unit or the trainee units are imune to poison clouds"
-
 
 [equipment.officers_mask]
 name = "Officer Mask"
@@ -1549,7 +1115,6 @@ description = "Keeps multicultural Infantry loyal while there is a Darkelf offic
 [equipment.officers_mask.unit_special]
 "Protection" = "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds"
 
-
 [equipment.collar]
 name = "Collar"
 race = "darkelf"
@@ -1557,7 +1122,6 @@ requires = []
 
 [equipment.collar.unit_special]
 "Poison Cloud" = "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated."
-
 
 [equipment.tail_gatling_gun]
 name = "Tail Gatling Gun"
@@ -1588,7 +1152,6 @@ angle = [true, true, false, false]
 damage = "d6-1"
 ap = 3
 
-
 [equipment.acid_cannon]
 name = "Acid Cannon"
 race = "darkelf"
@@ -1611,10 +1174,8 @@ cost.xp = 2
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
-
 [equipment.mechanical_imp.unit_special]
 "Reload" = "Mechanical robotic imps helps all models in unit to reload it's weapons. Treat any weapons as always loaded."
-
 
 [equipment.smg]
 name = "SMG"
@@ -1863,29 +1424,31 @@ name = "GasMask assault training"
 race = "darkelf"
 cost.xp = 1
 upgrade_all = true
-requires = [["Independent:1"], ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]]
+requires = [
+    ["Independent:1"],
+    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
+]
 
 [equipment.gasmask.unit_special]
-
 "Immunity" = "Unit becomes immune to poison clouds"
 
 [equipment.gasmask.assault.special]
 "Bonus" = "When assaulting hexes with poison cloud +50\\% in assault and assault deflection"
 "Improved Extra Damage" = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
 
-
 [equipment.poison_fog_grenade]
 name = "Poison Fog Grenade"
 race = "darkelf"
 cost.cp = 2
 upgrade_all = true
-
-requires = [["Independent:1"], ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]]
+requires = [
+    ["Independent:1"],
+    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
+]
 
 [equipment.poison_fog_grenade.unit_special]
 "Fire Order" = "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
 "Improved Hide" = "If you also have the hide order available, you may use the it order regardless of terrain if you are either standing in a hex with fog, or you are outside line of sight of any enemy unit."
-
 
 [equipment.poison_fog_grenade.orders_gained.fire]
 still = [["-", "Throw"], ["Throw", "-"]]
@@ -1902,7 +1465,6 @@ requires = [["Training:1"], ["type:Infantry"]]
 "Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
 "Forward Position" = "[1]"
 "Camouflage" = "[swamp][-1]"
-
 
 [equipment.hide.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
@@ -1933,7 +1495,6 @@ requires = []
 "Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
 "Forward Position" = "[1]"
 "Camouflage" = "[swamp][-1]"
-
 
 [equipment.hide_free.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]

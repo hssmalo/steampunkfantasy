@@ -551,8 +551,8 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 special = ["cunning assault[1 for 2]"]
-#Note to self: give them cunning assault defence
 
+#Note to self: give them cunning assault defence
 [models.elite_steampowerarmor]
 name = "Dwarf Elite SteamPowerArmor"
 race = "dwarf"
@@ -653,8 +653,8 @@ deflection_die = 'n.a.'
 damage = "d6-2"
 ap = 2
 special = ["cunning assault[1 for 2]"]
-#Note to self: give them cunning assault defence
 
+#Note to self: give them cunning assault defence
 [models.mini_zeppelin]
 name = "Mini Zeppelin"
 race = "dwarf"

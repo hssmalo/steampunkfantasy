@@ -53,8 +53,6 @@ armor = [0, 0, 0, 0]
 
 # Move to description
 #"Hans Sverre's favorite rule" = "Out of ammo: At the end of the game, the troll runs out of ammo"
-
-
 [units.troll.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -64,7 +62,6 @@ movement_order = ["-", "-", "flee"]
 "Regeneration" = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
 "Resistance" = "Poison[2], Acid [1]"
 "Fire Order" = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
-
 
 [units.troll.orders.movement]
 slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
@@ -93,7 +90,6 @@ movement_order = ["-", "-", "flee"]
 
 [units.champion.damage_tables]
 regular = ["2-3: Bleeding[4]", "4+ : Killed"]
-
 
 #to do... order of spawned champion= order of the infantry...
 [units.champion.orders.movement]

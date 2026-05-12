@@ -42,7 +42,7 @@ effect = """Roll a d{N}.
 If poison did not kill a model, downgrade poison one step"""
 
 [tokens.poison.variables]
-N = {type = "int", values = [2,4,6,8,10,12]}
+N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
 
 [tokens.bleed]
 name = "Bleed"
@@ -59,23 +59,23 @@ Otherwise
 """
 
 [tokens.bleed.variables]
-N =  {type = "int", values = [2,4,6,8,10,12]}
+N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
 
 [tokens.confused]
 name = "Confused"
-phases = ["Both gunnery phases and all movement phases"]
+phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 remove = "Remove one token each pre-assault step in each movement phase"
 effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -."
 
 [tokens.insanity]
 name = "Insanity"
-phases = ["Movement phases"]
+phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
 effect = "Can only be given to bio units which are already shaken. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equaly valid hexes to move to with chase, the owner still decides where to go"
 
 [tokens.hidden]
 name = "Hidden"
-phases = ["All"]
+phases = []
 remove = "You stay hidden until you reveal yourself, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. Cloacking devices stay hidden even if in clear terrain, while all others sources of hidden abilities are revealed if they are in slow or fast in clear terrain within line of sight to an enemy. You only get reveal bonuses if you willingly reveal your self, not if you are forced to."
 effect = """While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror,
 

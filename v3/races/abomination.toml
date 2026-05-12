@@ -3,10 +3,8 @@
 [races.abomination]
 name = "Abomination"
 
-[units]
-
-#To Do: Add mother ship!
-# Idead for mother ship:
+# TODO: Add mother ship!
+# Ideas for mother ship:
 # Transport up to 4 flying cavalery
 # 18ip-isj...
 # Remove fog ability
@@ -14,8 +12,7 @@ name = "Abomination"
 # confusion and insanity stingers
 # Gear disruption weapons.
 # Huge size.
-
-
+[units]
 
 [units.abomination_infantry]
 race = "abomination"
@@ -434,7 +431,6 @@ ap = 2
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 "Cunning Assault Defence" = "[6][6+]"
 
-
 [models.frost88]
 name = "Frost 88"
 race = "abomination"
@@ -488,7 +484,11 @@ ap = 2
 name = "Giant Frog Rider"
 race = "abomination"
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
-equipment = ["frog_spit", "mechanical_melee_contraption", "insanity_contraption"]
+equipment = [
+	"frog_spit",
+	"mechanical_melee_contraption",
+	"insanity_contraption"
+]
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
 
 [models.giant_frog_rider.special]
@@ -522,7 +522,6 @@ special = [
 	"Fires 3 shot per fire order. Each hit gives one confusion token to any unit with bio or a bio crew. (see general rules)",
 ]
 
-
 [equipment.insanity_contraption]
 name = "Insanity Contraption"
 race = "abomination"
@@ -533,7 +532,10 @@ range = 1
 angle = [true, true, false, false]
 damage = "d6 psychic"
 ap = "N/A"
-special = ["Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage.", "Track ammo seperatly from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."]
+special = [
+	"Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage.",
+	"Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
+]
 
 [equipment.multipurpose_gun]
 name = "Multipurpose Gun"
@@ -615,7 +617,6 @@ special = [
 	"Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal. May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)",
 ]
 
-
 [equipment.long_range_fog_grenade_mortar]
 name = "Long Range Fog Grenade Mortar"
 race = "abomination"
@@ -642,7 +643,7 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 special = [
-	"Either Place two poins fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range.",
+	"Either place two fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range.",
 ]
 
 [equipment.oversized_musket]
@@ -670,7 +671,6 @@ damage = "d6-2"
 ap = 1
 special = []
 
-
 [equipment.fog_poisonizer]
 name = "Fog Poisonizer"
 race = "abomination"
@@ -683,8 +683,10 @@ range = 2
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
-special = ["Make a fog within normal range into a poison fog[4]",
-"Always treated as loaded. May be used in both gunnery phases"]
+special = [
+	"Make a fog within normal range into a poison fog[4]",
+	"Always treated as loaded. May be used in both gunnery phases"
+]
 
 [equipment.frog_spit]
 name = "Frog Spit"
