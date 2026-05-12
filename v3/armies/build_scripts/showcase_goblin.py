@@ -1,11 +1,11 @@
 """Create a showcase Goblin army."""
 
 from spf import races
-from spf.armies import build, io
+from spf.armies import ArmyList, io
 
 cfg = races.get_race("goblin")
 
-army = build.ArmyList("goblin", "Showcase Goblin", ())
+army = ArmyList("goblin", "Showcase Goblin", ())
 
 # 4x Elite Goblin Infantry w Grenadier, Gear bow, Acid Grenade
 army = (
@@ -47,8 +47,8 @@ army = (
 # 1x Heavy Carrier
 army = army.add_unit("heavy_carrier", cfg)
 
-# Show the army in the console
-io.print_army(army.resolve(cfg))
-
 # Save the army to disk
 io.save_army(army, "showcase/goblin")
+
+# Show the army in the console
+io.print_army(army.resolve(cfg))

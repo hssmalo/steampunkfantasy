@@ -391,13 +391,13 @@ def available_models(
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
-) -> list[ModelConfig]:
+) -> list[t.ModelName]:
     """Return army models whose replaces field equals the given model's name."""
     _, unit = _resolve_unit(army, unit_key)
     _, model = _resolve_model(unit, model_key)
     return [
-        cfg
-        for cfg in race_config.models.values()
+        model_name
+        for model_name, cfg in race_config.models.items()
         if cfg.replaces is not None and model.name == cfg.replaces
     ]
 
@@ -407,7 +407,7 @@ def available_equipment(
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
-) -> list[EquipmentConfig]:
+) -> list[t.EquipmentName]:
     """Return equipment upgrades valid for the given model.
 
     Valid means: has a cost and satisfies the model's requires constraints.
@@ -415,8 +415,8 @@ def available_equipment(
     _, unit = _resolve_unit(army, unit_key)
     _, model = _resolve_model(unit, model_key)
     return [
-        cfg
-        for cfg in race_config.equipment.values()
+        equipment_name
+        for equipment_name, cfg in race_config.equipment.items()
         if cfg.cost is not None
         and _satisfies_requires(cfg.requires, model, race_config)
     ]
