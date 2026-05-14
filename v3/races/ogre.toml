@@ -188,7 +188,7 @@ models = [
 ]
 size = "Tiny"
 cost.cp = 1
-description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
+description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre themself are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
 
 
 [units.drone_swarm.shaken]
@@ -543,6 +543,9 @@ equipment_limit = ["Independent:∞"]
 equipment = ["tiny_fancy_gear_pistol"]
 type = ["Mechanical", "Floating", "Drone"]
 
+[models.drone_swarm.special]
+"To Hit" = "Superb shot: +3 to hit"
+
 [models.drone_swarm.assault]
 strength = [1, 0, 0, 0]
 strength_die = "5+"
@@ -860,7 +863,7 @@ damage = "d8-2"
 ap = 2
 
 [equipment.fancy_archebus_broadside]
-name = "Ogre broadside"
+name = "Fancy Archebus broadside"
 race = "ogre"
 requires = [["Broadside:1"],["type:Mechanical"]]
 cost.cp = 6
@@ -924,7 +927,7 @@ range = 1
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = 0
-special = ["minor acid", "+3 to hit", "Start with two ammo"]
+special = ["minor acid", "Start with two ammo"]
 
 [equipment.ogre_sword_free]
 name = "Ogre Sword"

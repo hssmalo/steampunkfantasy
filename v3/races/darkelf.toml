@@ -101,6 +101,7 @@ cost.ip = 16
 
 [units.queen_yy.special]
 "Fire Order" = "You fire 2 independent heavy rifles in addion to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the {{\\it release} as an firing option, you may place the poison cload[12] during pre assault step in any movement phase, including contested hexes for assaults"
+"Resistance" = "Acid(2)"
 
 [units.queen_yy.shaken]
 speed = 'still'
@@ -1527,7 +1528,7 @@ race = "darkelf"
 requires = []
 
 [equipment.tesla_whip.assault.special]
-"Extra Damage" = "Poison[4], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken. "
+"Extra Damage" = "Poison[4][1 for 2], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.remote_control]
 name = "Remote control"
@@ -1741,7 +1742,7 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 special = [
-    "Choose a hex within range and roll a die, at 5+ place a Poison \\& Acid Cloud [8, minor] at target hex. Place a Poison Cloud[6]  at all hexes surrounding that initial hex",
+    "Choose a hex within range and roll a die, at 5+ place a Poison Cloud [8] at target hex. Place a Poison Cloud[6]  at all hexes surrounding that initial hex",
     "If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from chosen hex.",
     "Indirect fire: may use line of sight of any friendly unit on the battle field.",
 ]
@@ -1749,8 +1750,8 @@ special = [
 [equipment.mortar11b]
 name = "Mortar 1.1B"
 race = "darkelf"
-cost.cp = 16
-cost.xp = 8
+cost.cp = 8
+cost.xp = 4
 upgrade_all = true
 requires = [["Shared:1"], ["type:Infantry"]]
 
@@ -1765,6 +1766,23 @@ special = [
     "Indirect fire: may use line of sight of any friendly unit on the battle field.",
 ]
 
+
+[equipment.glitterbomb_mortar]
+name = "Glitterbomb Mortar"
+race = "darkelf"
+cost.cp = 12
+upgrade_all = true
+requires = [["Shared:1"], ["type:Infantry"]]
+
+[equipment.glitterbomb_mortar.range]
+range = 8
+angle = [true, true, true, true]
+damage = "N.A"
+ap = 0
+special = ["Choose a hex within range. Area(5+): A unit hit atleast once gains a terror token",
+    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
+]
+
 [equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
@@ -1776,7 +1794,7 @@ requires = [["Independent:1"], ["type:Roboprosthetic"]]
 strength.add = [1, 0, 0, 0]
 
 [equipment.poison_claws.assault.special]
-"Improved Extra Damage" = "Poison[4]"
+"Improved Extra Damage" = "Poison[4][1 for 1]"
 
 [equipment.poison_spray]
 name = "Poison Spray"
@@ -1883,8 +1901,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]]
 
 [equipment.poison_fog_grenade.unit_special]
-"Fire Order" = "Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
-"Improved Hide" = "If you also have the hide order available, you may use the it order regardless of terrain if you are either standing in a hex with fog, or you are outside line of sight of any enemy unit."
+"Fire Order" = "Use twice per game, use an throw fire order to place 2 fog tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
 
 
 [equipment.poison_fog_grenade.orders_gained.fire]
