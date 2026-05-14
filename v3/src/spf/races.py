@@ -2,6 +2,7 @@
 
 from typing import cast
 
+import pydantic
 from configaroo import Configuration
 
 from spf.config import config
@@ -9,12 +10,26 @@ from spf.schemas import race as r
 from spf.schemas import type_aliases as t
 
 
-def list_races() -> list[t.RaceName]:
+def list_races(*, validate: bool = False) -> list[t.RaceName]:
     """List race names available in the data directory."""
     return [
-        cast("t.RaceName", path.stem)
+        race
         for path in sorted(config.paths.races.glob("*.toml"))
+        if (
+            (race := cast("t.RaceName", path.stem))
+            and (not validate or _race_validates(race))
+        )
     ]
+
+
+def _race_validates(race_name: t.RaceName) -> bool:
+    """Check if the TOML definition of a race validates."""
+    try:
+        get_race(race_name)
+    except pydantic.ValidationError:
+        return False
+    else:
+        return True
 
 
 def get_race(race: t.RaceName) -> r.RaceConfig:

@@ -29,7 +29,6 @@ movement_order = ["-", "-", "flee"]
 [units.goblin_infantry.orders.fire]
 still = [["Fire", "Fire"]]
 
-
 #Description: are so sneaky that they can move around and still be counted as still.
 [units.goblin_infantry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
@@ -69,9 +68,7 @@ slow = [
 	["F", "-", "-"],
 	["B", "-", "-"],
 ]
-fast = [
-        ["B", "-", "-"]]
-
+fast = [["B", "-", "-"]]
 still = [
 	["L/R", "-", "-"],
 	["L/R", "L/R", "-"],
@@ -304,8 +301,7 @@ replaces = "goblin_infantry"
 "To Hit" = "+2 to hit with thrown weapons"
 
 [models.elite_goblin_infantry.unit_special]
-"Improved Resistance" =  "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
-
+"Improved Resistance" = "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
 
 [models.elite_goblin_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -346,7 +342,6 @@ angle = [true, true, true, true]
 damage = "d4-2"
 ap = "1"
 special = ["Always treated as loaded", "Gear Disruption[6+]"]
-
 
 #To Do: Consider the applications carefully
 [equipment.clockwork_wings]
@@ -477,14 +472,16 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 "Forward Position" = "[2]"
 "Fire Order" = "For each fire order: in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
 
-
 [equipment.commando.orders_gained.movement]
-still = [["-", "-", "Reveal"],["360°", "F", "Reveal"],["Hide[ruins]", "-", "-"]]
+still = [
+	["-", "-", "Reveal"],
+	["360°", "F", "Reveal"],
+	["Hide[ruins]", "-", "-"]
+]
 
 [equipment.commando.assault]
 deflection.add = [4, 0, 0, 0]
 deflection_die.replace = "6+"
-
 
 [equipment.archer]
 name = "Archer spesialization"
@@ -546,11 +543,9 @@ requires = [["Independent:1"], ["type:Infantry"]]
 [equipment.acid_trap.unit_special]
 "Trap" = "With the Lay Trap fire order, Instead of firing any weapons: place a Goblin Acid Trap in an unoccopied neighbohring hex."
 
-
 [equipment.acid_trap.orders_gained.fire]
 still = [["Lay Trap", "Lay Trap"]]
 slow = [["Lay Trap", "Lay Trap"]]
-
 
 [equipment.light_mortar]
 name = "Light Mortar"

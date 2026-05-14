@@ -664,6 +664,160 @@ def test_upgrade_model_unknown_key_raises(
 
 
 # ---------------------------------------------------------------------------
+# upgrade_full_unit
+# ---------------------------------------------------------------------------
+
+
+def test_upgrade_full_unit_replaces_all_models(
+    goblin_race: RaceConfig,
+) -> None:
+    army = ArmyList(race="goblin", nick="Test", units=()).add_unit(
+        "goblin_infantry", goblin_race
+    )
+    assert len(army.units[0].models) == 4
+    army = army.upgrade_full_unit(
+        ("goblin_infantry", 0), "elite_goblin_infantry", goblin_race
+    )
+    assert all(m.name == "elite_goblin_infantry" for m in army.units[0].models)
+
+
+def test_upgrade_full_unit_does_not_mutate_original(
+    simple_race: RaceConfig,
+) -> None:
+    army = ArmyList(race="goblin", nick="Test", units=()).add_unit("squad", simple_race)
+    original = army
+    army.upgrade_full_unit(("squad", 0), "elite_soldier", simple_race)
+    assert original.units[0].models[0].name == "soldier"
+
+
+def test_upgrade_full_unit_invalid_replacement_raises(
+    one_unit_army: ArmyList, simple_race: RaceConfig
+) -> None:
+    with pytest.raises(ValueError, match="cannot replace"):
+        one_unit_army.upgrade_full_unit(("squad", 0), "soldier", simple_race)
+
+
+def test_upgrade_full_unit_unknown_unit_key_raises(
+    one_unit_army: ArmyList, simple_race: RaceConfig
+) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.upgrade_full_unit(
+            ("nonexistent", 0), "elite_soldier", simple_race
+        )
+
+
+# ---------------------------------------------------------------------------
+# upgrade_all_models
+# ---------------------------------------------------------------------------
+
+
+def test_upgrade_all_models_adds_to_all(
+    goblin_race: RaceConfig,
+) -> None:
+    army = ArmyList(race="goblin", nick="Test", units=()).add_unit(
+        "goblin_infantry", goblin_race
+    )
+    # Use equipment that doesn't consume limited slots
+    army = army.upgrade_all_models(("goblin_infantry", 0), "poison_dagger", goblin_race)
+    assert all("poison_dagger" in m.upgrades for m in army.units[0].models)
+
+
+def test_upgrade_all_models_does_not_mutate_original(
+    one_unit_army: ArmyList, simple_race: RaceConfig
+) -> None:
+    original = one_unit_army
+    one_unit_army.upgrade_all_models(("squad", 0), "sword", simple_race)
+    assert original.units[0].models[0].upgrades == ()
+
+
+def test_upgrade_all_models_no_cost_raises(
+    one_unit_army: ArmyList, simple_race: RaceConfig
+) -> None:
+    with pytest.raises(ValueError, match="no cost"):
+        one_unit_army.upgrade_all_models(("squad", 0), "shield", simple_race)
+
+
+def test_upgrade_all_models_unsatisfied_requires_raises(
+    simple_race: RaceConfig,
+) -> None:
+    elite_only_equip = EquipmentConfig(
+        race="goblin",
+        name="Elite Sword",
+        cost=t.Cost(cp=3),
+        upgrade_all=True,
+        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
+    )
+    race = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
+    )
+    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit("squad", race)
+    with pytest.raises(ValueError, match="requires not satisfied"):
+        army.upgrade_all_models(("squad", 0), "elite_sword", race)
+
+
+def test_upgrade_all_models_unknown_unit_key_raises(
+    one_unit_army: ArmyList, simple_race: RaceConfig
+) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.upgrade_all_models(("nonexistent", 0), "sword", simple_race)
+
+
+# ---------------------------------------------------------------------------
+# duplicate_unit
+# ---------------------------------------------------------------------------
+
+
+def test_duplicate_unit_appends_copy(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.duplicate_unit(("squad", 0))
+    assert len(army.units) == 2
+    assert army.units[0].name == army.units[1].name
+    assert army.units[0].models[0].name == army.units[1].models[0].name
+
+
+def test_duplicate_unit_is_independent(
+    one_unit_army: ArmyList, simple_race: RaceConfig
+) -> None:
+    army = one_unit_army.duplicate_unit(("squad", 0))
+    upgraded = army.upgrade_unit(
+        ("squad", 1), ("soldier", 0), "elite_soldier", simple_race
+    )
+    assert upgraded.units[0].models[0].name == "soldier"
+    assert upgraded.units[1].models[0].name == "elite_soldier"
+
+
+def test_duplicate_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.duplicate_unit(("nonexistent", 0))
+
+
+# ---------------------------------------------------------------------------
+# delete_unit
+# ---------------------------------------------------------------------------
+
+
+def test_delete_unit_removes_unit(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.duplicate_unit(("squad", 0))
+    assert len(army.units) == 2
+    army = army.delete_unit(("squad", 1))
+    assert len(army.units) == 1
+    assert army.units[0].name == "squad"
+
+
+def test_delete_unit_does_not_mutate_original(one_unit_army: ArmyList) -> None:
+    original = one_unit_army
+    one_unit_army.delete_unit(("squad", 0))
+    assert len(original.units) == 1
+
+
+def test_delete_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.delete_unit(("nonexistent", 0))
+
+
+# ---------------------------------------------------------------------------
 # available_models and available_equipment
 # ---------------------------------------------------------------------------
 
@@ -673,7 +827,7 @@ def test_available_models_returns_matching(
 ) -> None:
     result = available_models(one_unit_army, ("squad", 0), ("soldier", 0), simple_race)
     assert len(result) == 1
-    assert result[0].name == "Elite Soldier"
+    assert result[0] == "elite_soldier"
 
 
 def test_available_models_empty_when_none_match(
@@ -692,8 +846,7 @@ def test_available_equipment_excludes_no_cost(
     result = available_equipment(
         one_unit_army, ("squad", 0), ("soldier", 0), simple_race
     )
-    names = [e.name for e in result]
-    assert "Shield" not in names
+    assert "shield" not in result
 
 
 def test_available_equipment_includes_valid(
@@ -702,8 +855,7 @@ def test_available_equipment_includes_valid(
     result = available_equipment(
         one_unit_army, ("squad", 0), ("soldier", 0), simple_race
     )
-    names = [e.name for e in result]
-    assert "Sword" in names
+    assert "sword" in result
 
 
 def test_available_equipment_goblin_infantry_clockwork_wings(
@@ -712,8 +864,7 @@ def test_available_equipment_goblin_infantry_clockwork_wings(
     result = available_equipment(
         goblin_army, ("goblin_infantry", 0), ("goblin_infantry", 0), goblin_race
     )
-    names = [e.name for e in result]
-    assert "Clockwork Wings" in names
+    assert "clockwork_wings" in result
 
 
 def test_available_equipment_excludes_truly_insufficient_slots(
@@ -727,8 +878,7 @@ def test_available_equipment_excludes_truly_insufficient_slots(
     result = available_equipment(
         army_with_upgrade, ("goblin_infantry", 0), ("goblin_infantry", 0), goblin_race
     )
-    names = [e.name for e in result]
-    assert "Gear bow" not in names
+    assert "gear_bow" not in result
 
 
 def test_available_equipment_defaults_do_not_consume_slots(
@@ -742,8 +892,7 @@ def test_available_equipment_defaults_do_not_consume_slots(
     )
     # sword requires Hands:1 — the default_sword (Hands:2) must NOT consume slots here
     result = available_equipment(army, ("squad", 0), ("soldier", 0), race_with_defaults)
-    names = [e.name for e in result]
-    assert "Sword" in names
+    assert "sword" in result
 
 
 # ---------------------------------------------------------------------------

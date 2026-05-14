@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Self
 
 from spf.schemas import type_aliases as t
-from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig, UnitConfig
+from spf.schemas.race import ModelConfig, RaceConfig, UnitConfig
 
 if TYPE_CHECKING:
     from spf.armies import Army
@@ -150,6 +150,68 @@ class ArmyList:
         unit_idx, unit = _resolve_unit(self, unit_key)
         new_unit = unit.upgrade_model(model_key, equipment_name, race_config)
         new_units = (*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :])
+        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+
+    def upgrade_full_unit(
+        self,
+        unit_key: tuple[t.UnitName, int],
+        upgrade_model_name: t.ModelName,
+        race_config: RaceConfig,
+    ) -> Self:
+        """Replace all models in a unit with an upgrade model."""
+        _, unit = _resolve_unit(self, unit_key)
+        result = self
+        for i in range(len(unit.models)):
+            _, updated_unit = _resolve_unit(result, unit_key)
+            model_name = updated_unit.models[i].name
+            # Find which occurrence of this model is at position i
+            occurrence = sum(
+                1 for j in range(i) if updated_unit.models[j].name == model_name
+            )
+            result = result.upgrade_unit(
+                unit_key, (model_name, occurrence), upgrade_model_name, race_config
+            )
+        return result
+
+    def upgrade_all_models(
+        self,
+        unit_key: tuple[t.UnitName, int],
+        equipment_name: t.EquipmentName,
+        race_config: RaceConfig,
+    ) -> Self:
+        """Add the same equipment upgrade to all models in a unit."""
+        _, unit = _resolve_unit(self, unit_key)
+        result = self
+        for i in range(len(unit.models)):
+            _, updated_unit = _resolve_unit(result, unit_key)
+            model_name = updated_unit.models[i].name
+            # Find which occurrence of this model is at position i
+            occurrence = sum(
+                1 for j in range(i) if updated_unit.models[j].name == model_name
+            )
+            result = result.upgrade_model(
+                unit_key, (model_name, occurrence), equipment_name, race_config
+            )
+        return result
+
+    def duplicate_unit(
+        self,
+        unit_key: tuple[t.UnitName, int],
+    ) -> Self:
+        """Add a copy of an existing unit to the army list."""
+        _, unit = _resolve_unit(self, unit_key)
+        new_unit = ArmyUnit(name=unit.name, config=unit.config, models=unit.models)
+        return self.__class__(
+            race=self.race, nick=self.nick, units=(*self.units, new_unit)
+        )
+
+    def delete_unit(
+        self,
+        unit_key: tuple[t.UnitName, int],
+    ) -> Self:
+        """Remove a unit from the army list."""
+        unit_idx, _ = _resolve_unit(self, unit_key)
+        new_units = (*self.units[:unit_idx], *self.units[unit_idx + 1 :])
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def resolve(self, race_config: RaceConfig) -> "Army":
@@ -329,13 +391,13 @@ def available_models(
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
-) -> list[ModelConfig]:
+) -> list[t.ModelName]:
     """Return army models whose replaces field equals the given model's name."""
     _, unit = _resolve_unit(army, unit_key)
     _, model = _resolve_model(unit, model_key)
     return [
-        cfg
-        for cfg in race_config.models.values()
+        model_name
+        for model_name, cfg in race_config.models.items()
         if cfg.replaces is not None and model.name == cfg.replaces
     ]
 
@@ -345,7 +407,7 @@ def available_equipment(
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
-) -> list[EquipmentConfig]:
+) -> list[t.EquipmentName]:
     """Return equipment upgrades valid for the given model.
 
     Valid means: has a cost and satisfies the model's requires constraints.
@@ -353,8 +415,8 @@ def available_equipment(
     _, unit = _resolve_unit(army, unit_key)
     _, model = _resolve_model(unit, model_key)
     return [
-        cfg
-        for cfg in race_config.equipment.values()
+        equipment_name
+        for equipment_name, cfg in race_config.equipment.items()
         if cfg.cost is not None
         and _satisfies_requires(cfg.requires, model, race_config)
     ]

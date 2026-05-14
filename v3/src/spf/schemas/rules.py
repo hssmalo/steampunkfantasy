@@ -14,7 +14,7 @@ class IntVariableConfig(StrictModel):
     max: int | None = None
     values: list[int] | None = None
 
-    def validate(self, value: int) -> int:
+    def validate_value(self, value: int) -> int:
         """Validate the given value."""
         if self.min is not None and value < self.min:
             msg = f"Value {value} less than minimum {self.min}"
@@ -34,7 +34,7 @@ class StringVariableConfig(StrictModel):
     max: int | None = None
     values: list[str] | None = None
 
-    def validate(self, value: str) -> str:
+    def validate_value(self, value: str) -> str:
         """Validate the given value."""
         if self.values is not None and value not in self.values:
             msg = f"Value {value} not any of {self.values}"

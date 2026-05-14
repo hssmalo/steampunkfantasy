@@ -16,7 +16,22 @@ type UnitName = str
 type ModelName = str
 type EquipmentName = str
 type DamageTable = list[str]
-type PhaseName = str
+type PhaseName = Literal[
+    "Gunnery 1",
+    "Movement 1",
+    "Movement 2",
+    "Movement 3",
+    "Gunnery 2",
+    "Healing 1",
+    "Agony 0",
+    "Agony 1",
+    "Agony 2",
+    "Agony 3",
+    "Agony 4",
+    "Agony 5",
+    "Healing 2",
+    "Aftermath",
+]
 
 type RaceName = Literal[
     "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"
