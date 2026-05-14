@@ -154,6 +154,7 @@ type RangeSpecial = Literal[
     "Focus Fire",
     "Ammo",
     "Order",
+    "Drag",
     "Range",
     "Burst",
     "Recoil",
