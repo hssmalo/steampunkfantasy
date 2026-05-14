@@ -1088,7 +1088,9 @@ range = 3
 angle = [true, true, false, false]
 damage = "d6"
 ap = 6
-special = ["Poison[6]"]
+
+[equipment.head_gun.range.special]
+"Extra Damage" = "Poison[6]"
 
 [equipment.tesla_whip]
 name = "Tesla Whip"
@@ -1134,13 +1136,12 @@ range = 3
 angle = [true, false, false, false]
 damage = "d6 + d6 Psycic damage"
 ap = 3
-special = [
-    "Focus Fire[aim]: roll 6 dice at same unit.",
-    "May only use aim versus targets within normal range",
-    "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range",
-    "Minor acid",
-    "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used",
-]
+
+[equipment.tail_gatling_gun.range.special]
+ "Focus Fire" = "When using aim: roll 6 dice at same unit."
+"Area" = "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range"
+"Extra Damage" = "Minor acid"
+"Ammo" =     "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
 
 [equipment.heavy_rifle]
 name = "Heavy Rifle"
@@ -1163,9 +1164,10 @@ range = 4
 angle = [true, true, false, false]
 damage = "d6+d8 Psychic damage + d6 crew damage"
 ap = 3
-special = [
-    "On hit: apply Acid to target. In addition, if you hit target, place an minor acid on all units in hex",
-]
+
+[equipment.acid_cannon.range.special]
+"Extra Damage" = "Acid. In addition, if you hit target, place an minor acid on all units in hex"
+
 
 [equipment.mechanical_imp]
 name = "Mechanical Imp"
@@ -1190,9 +1192,10 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
-special = [
-    "Always treated as loaded. Fires two times (per model) each time it is fired",
-]
+
+[equipment.smg.range.special]
+"Ammo" = "Always treated as loaded"
+"Multiple Shots" = "Fires two times (per model) each time it is fired"
 
 [equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
@@ -1208,9 +1211,11 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
-special = [
-    "Always treated as loaded. Fires two times (per model) each time it is fired",
-]
+
+[equipment.smg_free.range.special]
+"Ammo" = "Always treated as loaded"
+"Multiple Shots" = "Fires two times (per model) each time it is fired"
+
 
 [equipment.crossbow]
 name = "Crossbow"
@@ -1224,7 +1229,9 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = ["Poison[6], minor acid"]
+
+[equipment.crossbow.range.special]
+"Extra Damage" = "Poison[6], Minor Acid"
 
 [equipment.crossbow_free]
 name = "Crossbow"
@@ -1236,7 +1243,9 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = ["Poison[6], minor acid"]
+
+[equipment.crossbow_free.range.special]
+"Extra Damage" = "Poison[6], Minor Acid"
 
 [equipment.enhanced_crossbow]
 name = "Enhanced Crossbow"
@@ -1250,7 +1259,9 @@ range = 6
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = ["Poison[8], minor acid"]
+
+[equipment.enhanced_crossbow.range.special]
+"Extra Damage" = "Poison[8], Minor Acid"
 
 [equipment.nightmare_breath]
 name = "Nightmare Breath"
@@ -1262,11 +1273,12 @@ range = 2
 angle = [true, false, false, false]
 damage = "d8 crew damage"
 ap = 0
-special = [
-    "Fires at all models once within range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range",
-    "No regular damage, but Poison[8] and set on fire applies to any unit hit atleast once",
-    "Always treated as loaded",
-]
+
+[equipment.nightmare_breath.range.special]
+"Area" = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
+"Extra Damage" = "No regular damage, but Poison[8] and set on fire"
+"Ammo" = "Always treated as loaded"
+
 
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
@@ -1280,14 +1292,17 @@ range = 2
 angle = [true, true, true, true]
 damage = "N.A."
 ap = 0
-special = [
-    "Place a Poison Cloud[6] within normal range",
-    "Limited Ammo[2]",
-    "Always treated as loaded",
-]
+
+[equipment.poison_gas_grenade.range.special]
+"Cloud" = "Place a Poison Cloud[6] within normal range"
+"Ammo" = "Limited Ammo[2]"
+"Order" = "Used by Throw order"
 
 [equipment.poison_gas_grenade.orders_gained.fire]
-all = [["-", "Throw Gas Grenade"]]
+still = [["-", "Throw"]]
+slow = [["-", "Throw"]]
+crawl = [["-", "Throw"]]
+
 
 [equipment.mortar1a]
 name = "Mortar 1A"
@@ -1302,11 +1317,11 @@ range = 10
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = [
-    "Choose a hex within range and roll a die, at 5+ place a Poison Cloud [8] at target hex. Place a Poison Cloud[6]  at all hexes surrounding that initial hex",
-    "If you don't roll a 5+, move the target hex the result of the die, a number of hexes in a random direction from chosen hex.",
-    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
-]
+[equipment.mortar1a.range.special]
+"Range" =  "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
+"Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+"Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
+
 
 [equipment.mortar11b]
 name = "Mortar 1.1B"
@@ -1321,28 +1336,28 @@ range = 10
 angle = [true, true, true, true]
 damage = "N.A"
 ap = 0
-special = [
-    "Choose a hex within range and roll a die, at 3+ place a Poison Cloud [12] at target hex.",
-    "If you don't roll a 3+, move the target hex the result of the die, a number of hexes in a random direction from chosen hex.",
-    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
-]
+[equipment.mortar11b.range.special]
+"Range" =  "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
+"Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+"Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
 
 
-[equipment.glitterbomb_mortar]
-name = "Glitterbomb Mortar"
-race = "darkelf"
-cost.cp = 12
-upgrade_all = true
-requires = [["Shared:1"], ["type:Infantry"]]
+# ToDo Move to Ogre? Make DarkElf immune
+#[equipment.glitterbomb_mortar]
+#name = "Glitterbomb Mortar"
+#race = "darkelf"
+#cost.cp = 12
+#upgrade_all = true
+#requires = [["Shared:1"], ["type:Infantry"]]
 
-[equipment.glitterbomb_mortar.range]
-range = 8
-angle = [true, true, true, true]
-damage = "N.A"
-ap = 0
-special = ["Choose a hex within range. Area(5+): A unit hit atleast once gains a terror token",
-    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
-]
+#[equipment.glitterbomb_mortar.range]
+#range = 8
+#angle = [true, true, true, true]
+#damage = "N.A"
+#ap = 0
+#special = ["Choose a hex within range. Area(5+): A unit hit atleast once gains a terror token",
+#    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
+#]
 
 [equipment.poison_claws]
 name = "Poison Claws"
@@ -1375,7 +1390,9 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6 crew damage"
 ap = 0
-special = ["Poison[6]"]
+
+[equipment.poison_spray.range.special]
+"Extra Damage" = "Poison[6]"
 
 [equipment.integrated_pistol]
 name = "Integrated Pistol"
@@ -1389,9 +1406,9 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = [
-    "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon",
-]
+
+[equipment.integrated_pistol.range.special]
+"Ammo" = "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon"
 
 [equipment.acid_breath]
 name = "Acid breath"
@@ -1403,10 +1420,11 @@ range = 3
 angle = [true, false, false, false]
 damage = "-"
 ap = 0
-special = [
-    "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid",
-    "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]",
-]
+
+[equipment.acid_breath.range.special]
+"Extra Damage" =     "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid"
+"Bonus" =  "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
+
 
 [equipment.fire_breath]
 name = "Fire breath"
@@ -1418,9 +1436,11 @@ range = 3
 angle = [true, false, false, false]
 damage = "-"
 ap = 0
-special = [
-    "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range. No regular damage, but Poison[6] and any unit hit atleast once is set on fire. Any unit within long range and in front arc is covered in minor acid",
-]
+
+[equipment.fire_breath.range.special]
+"Area" = "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range."
+"Extra Damage" = "No regular damage, but Poison[6] and set on fire."
+"Bonus" = "Any unit within long range and in front arc gets a minor acid token"
 
 [equipment.shrapnell_breath]
 name = "Shrapnell breath"
@@ -1432,10 +1452,11 @@ range = 3
 angle = [true, false, false, false]
 damage = "d6-2"
 ap = 2
-special = [
-    "Area[4+] at point blank range, Area[6+] at normal and long range",
-    "Always treated as loaded",
-]
+
+[equipment.shrapnell_breath.range.special]
+"Range" = "Target all hexes within front ark and within long range"
+"Area" = "[4+] at point blank range, Area[6+] at normal and long range"
+"Ammo" =  "Always treated as loaded"
 
 [equipment.gasmask]
 name = "GasMask assault training"

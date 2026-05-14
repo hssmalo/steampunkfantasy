@@ -228,6 +228,9 @@ equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1
 equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Walking"]
 
+[models.goblin_infantry.unit_special]
+"Pre-Assault Retreat" = "6+"
+
 [models.goblin_infantry.assault]
 strength = [2, 1, 1, 1]
 strength_die = "6+"
@@ -238,7 +241,8 @@ ap = 2
 
 [models.goblin_infantry.assault.special]
 "Cunning Assault" = "[1 for 1]"
-"Pre-Assault Retreat" = "6+"
+
+
 
 [models.goblin_infantry_carrier]
 name = "Goblin Infantry Carrier"
@@ -302,6 +306,7 @@ replaces = "goblin_infantry"
 
 [models.elite_goblin_infantry.unit_special]
 "Improved Resistance" = "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
+"Pre-Assault Retreat" = "[6+], +1 to pre-assault retreat (per elite in unit)"
 
 [models.elite_goblin_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -313,7 +318,6 @@ ap = 2
 
 [models.elite_goblin_infantry.assault.special]
 "Cunning Assault" = "[1 for 1]"
-"Pre-Assault Retreat" = "+1 to pre-assault retreat (per elite in unit)"
 
 [equipment]
 
@@ -327,7 +331,9 @@ range = 2
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = "1"
-special = ["Always treated as loaded"]
+
+[equipment.goblin_bow.range.special]
+"Ammo" = "Always treated as loaded"
 
 [equipment.gear_bow]
 name = "Gear bow"
@@ -341,7 +347,10 @@ range = 3
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = "1"
-special = ["Always treated as loaded", "Gear Disruption[6+]"]
+
+[equipment.gear_bow.range.special]
+"Ammo"= "Always treated as loaded"
+"Extra Damage" = "Gear Disruption[6+]"
 
 #To Do: Consider the applications carefully
 [equipment.clockwork_wings]
@@ -375,11 +384,12 @@ range = 2
 angle = [true, true, true, true]
 damage = "d4-2 + d4 crew damage"
 ap = "1"
-special = [
-	"Always treated as loaded",
-	"Poison[4]",
-	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
-]
+
+[equipment.poison_bow.range.special]
+"Ammo" = "Always treated as loaded"
+"Extra Damage" = "Poison[4]"
+"Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -393,11 +403,15 @@ range = 2
 angle = [true, true, true, true]
 damage = "d8-2"
 ap = "2"
-special = [
-	"After firing this weapon, set speed to slow flying",
-	"remember to track ammo",
-	"Unit is destroyed if trying to land in an impassible or overcrowded hex",
-]
+
+[equipment.ogre_rifle.unit_special]
+"Movement" = "Unit is destroyed if trying to land in an impassible or overcrowded hex"
+
+[equipment.ogre_rifle.range.special]
+"Recoil"  = "After firing this weapon, set speed to slow flying"
+"Note" = "Remember to track ammo"
+
+
 
 [equipment.ogre_rifle.orders_gained.movement]
 slow_flying = [["rev", "-", "B[still]"]]
@@ -443,7 +457,10 @@ range = 1
 angle = [true, true, true, true]
 damage = "d6"
 ap = 2
-special = ["Thrown weapon", "Always treated as loaded"]
+
+[equipment.goblin_grenade.range.special]
+"Type" = "Thrown weapon"
+"Ammo" = "Always treated as loaded"
 
 [equipment.grenadier]
 name = "Grenadier"
@@ -508,11 +525,12 @@ range = 1
 angle = [true, true, true, true]
 damage = "n.a."
 ap = 0
-special = [
-	"Thrown wapon",
-	"Always treated as loaded",
-	"No regular damage, but Minor Acid",
-]
+
+[equipment.acid_grenade.range.special]
+"Type" = "Thrown wapon"
+"Ammo" = "Always treated as loaded"
+"Extra Damage" = "No regular damage, but Minor Acid"
+
 
 [equipment.poison_grenade]
 name = "Poison Grenade"
@@ -526,12 +544,13 @@ range = 1
 angle = [true, true, true, true]
 damage = "d4 crew damage"
 ap = 0
-special = [
-	"Thrown wapon",
-	"Always treated as loaded",
-	"Poison[4]",
-	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
-]
+
+
+[equipment.poison_grenade.range.special]
+"Type" = "Thrown wapon"
+"Ammo" = "Always treated as loaded"
+"Extra Damage" = "Poison[4]"
+"Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
 
 [equipment.acid_trap]
 name = "Acid Trap"
@@ -556,10 +575,10 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6 + d4 crew damage"
 ap = 2
-special = [
-	"Poison[4]",
-	"Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token",
-]
+
+[equipment.light_mortar.range.special]
+"Extra Damage" = "Poison[4]"
+"Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
 
 [equipment.goblin_bow_battery]
 name = "Goblin Bow Battery"
@@ -571,12 +590,15 @@ range = 2
 angle = [true, true, true, true]
 damage = "d4 -2"
 ap = 2
-special = [
-	"May be loaded (one at a time) with up to 3 ammo",
-	"Fire d12 shots in one fire order per ammo spent, all targeted the same unit.",
-	"In addition to normal damage, choose one (for all shots): add Minor Acid, Poison[6] or Gear Disruption[6+]",
-	"imprecise weapon: -1 to hit",
-]
+
+[equipment.goblin_bow_battery.range.special]
+"Ammo" = "May be loaded (one at a time) with up to 3 ammo"
+"Multiple Shots" = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
+"Extra Damage" = "In addition to normal damage, choose one (for all shots): add Minor Acid, Poison[6] or Gear Disruption[6+]"
+
+[equipment.goblin_bow_battery.model_special]
+"To Hit (2)" = 	"Imprecise weapon[Bow Battery]: -1 to hit"
+
 
 [equipment.heavy_crossbow]
 name = "Heavy Crossbow"
@@ -588,11 +610,14 @@ range = 4
 angle = [true, false, false, false]
 damage = "d6"
 ap = 4
-special = [
-	"May be loaded (one at a time) with up to 3 ammo",
-	"Fire once per ammo spend per fire order",
-	"enhanced accuracy: +1 to hit",
-]
+
+[equipment.heavy_crossbow.range.special]
+"Ammo" = "May be loaded (one at a time) with up to 3 ammo"
+"Multiple Shots" = "Fire once per ammo spend per fire order"
+
+[equipment.heavy_crossbow.model_special]
+"To Hit (3)" = "Enhanced accuracy[Heavy Crossbow]: +1 to hit"
+
 
 [equipment.ring_of_fire]
 name = "Ring of Fire"
@@ -604,6 +629,9 @@ range = 2
 angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
-special = [
-	"Area[6+] at all enemies within exacatly range 2. All units hit at least once is set on fire",
-]
+
+
+[equipment.ring_of_fire.range.special]
+"Area" = "[6+]"
+"Range" = "Targe at all enemies within exacatly range 2"
+"Extra Damage" = "All units hit at least once is set on fire"

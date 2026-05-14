@@ -533,7 +533,7 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.drone_swarm.assault.special]
+[models.drone_swarm.unit_special]
 "Pre-Assault Retreat" = "4+"
 
 [models.repair_drone]
@@ -551,7 +551,7 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.repair_drone.assault.special]
+[models.repair_drone.unit_special]
 "Pre-Assault Retreat" = "4+"
 
 [models.medic_drone]
@@ -569,7 +569,7 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.medic_drone.assault.special]
+[models.medic_drone.unit_special]
 "Pre-Assault Retreat" = "4+"
 
 [models.healing_drone]
@@ -587,7 +587,7 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.healing_drone.assault.special]
+[models.healing_drone.unit_special]
 "Pre-Assault Retreat" = "4+"
 
 [models.main_engine]
@@ -748,10 +748,11 @@ range = 8
 angle = [true, true, true, true]
 damage = "d8-2"
 ap = 3
-special = [
-	"improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 psychic damage and +d6 crew damage when aiming",
-	"After eliminating one model with the use of aim, you get to choose which model to destroy",
-]
+
+[equipment.ogre_sniper_rifle.range.special]
+"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 psychic damage and +d6 crew damage when aiming"
+"Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -797,10 +798,16 @@ range = 5
 angle = [true, true, true, true]
 damage = "d8 (+3 if penetrating all armor)"
 ap = 6
-special = [
-	"Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit",
-	"In addition, whether you hit or not, Area[5+], AP=4, damage=d8 in the target hex",
-]
+
+[equipment.ogre_artillery.range.special]
+"Extra Damage" = "Whether you hit or not, Area[5+], AP=4, damage=d8 in the target hex"
+"Indirect Fire" = "May use line of sight of any scout instead of its own."
+
+
+[equipment.ogre_artillery.model_special]
+"To Hit" = "If a scout has line of sight to target, the unit gains good shot: +1 to hit"
+	
+
 
 [equipment.fancy_ogre_rifle]
 name = "Fancy Ogre Rifle"
@@ -827,7 +834,9 @@ range = 6
 angle = [true, true, true, true]
 damage = "d8"
 ap = 2
-special = ["enhanced accurazy: +1 to hit"]
+
+[equipment.enhanced_fancy_ogre_rifle.model_special]
+"To Hit (2)" = "enhanced accurazy: +1 to hit"
 
 [equipment.ogre_broadside]
 name = "Ogre Broadside"
@@ -889,11 +898,16 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = [
-	"minor acid",
-	"+1 to hit",
-	"May be loaded up to 2 times. Start with two ammo",
-]
+
+[equipment.fancy_gear_pistol.range.special]
+"Extra Damage" = "Minor Acid"
+	
+[equipment.fancy_gear_pistol.model_special]
+"To Hit (2)" = "Enhanced accurazy: +1 to hit"
+
+[equipment.fancy_gear_pistol.unit_special]
+"Fire Order" = "May load up to 2 shots, and fire them one at a time"
+
 
 [equipment.tiny_fancy_gear_pistol]
 name = "Tiny Fancy Gear Pistol"
@@ -905,7 +919,12 @@ range = 1
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = 0
-special = ["minor acid", "Start with two ammo"]
+
+[equipment.tiny_fancy_gear_pistol.range.special]
+"Extra Damage" = "Minor Acid"
+
+[equipment.tiny_fancy_gear_pistol.unit_special]
+"Fire Order" = "Start with two ammo, use them one at a time"
 
 [equipment.ogre_sword_free]
 name = "Ogre Sword"

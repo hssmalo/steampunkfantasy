@@ -173,7 +173,7 @@ fire_order = "Normal"
 
 [units.hippopotamus_riders.special]
 "Resistance" = "Poison [3]"
-"Fire Order" = "Fire(mm) fires multipuropose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
+"Fire Order" = "Fire(mm) fires multipurpose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
 
 [units.hippopotamus_riders.orders.fire]
 still = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
@@ -518,9 +518,10 @@ range = 4
 angle = [true, true, false, false]
 damage = "d6 psychic + d4 crew damage"
 ap = "N/A"
-special = [
-	"Fires 3 shot per fire order. Each hit gives one confusion token to any unit with bio or a bio crew. (see general rules)",
-]
+
+[equipment.confusion_stinger.range.special]
+"Multiple Shots" = "Fires 3 shot per fire order."
+"Extra Damage" = "Confusion"
 
 [equipment.insanity_contraption]
 name = "Insanity Contraption"
@@ -532,10 +533,12 @@ range = 1
 angle = [true, true, false, false]
 damage = "d6 psychic"
 ap = "N/A"
-special = [
-	"Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage.",
-	"Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
-]
+
+[equipment.insanity_contraption.range.special]
+
+"Insanity" = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage."
+"Ammo" =	"Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
+
 
 [equipment.multipurpose_gun]
 name = "Multipurpose Gun"
@@ -547,9 +550,9 @@ range = 5
 angle = [true, true, true, true]
 damage = "d6 psychic"
 ap = "N/A"
-special = [
-	"Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psycic damage the unit gets an insanity token, in addition to the normal effects of the psycic damage table",
-]
+
+[equipment.multipurpose_gun.range.special]
+"Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psycic damage the unit gets an insanity token, in addition to the normal effects of the psycic damage table"
 
 [equipment.tentacle_craclespears]
 name = "Tentacle CracleSpears"
@@ -613,9 +616,13 @@ range = 4
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
-special = [
-	"Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal. May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)",
-]
+
+[equipment.fog_grenade_mortar.range.special]
+
+"Cloud" = "Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+
+"Ammo" = "May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+
 
 [equipment.long_range_fog_grenade_mortar]
 name = "Long Range Fog Grenade Mortar"
@@ -629,9 +636,12 @@ range = 8
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
-special = [
-	"Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal. May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)",
-]
+
+[equipment.long_range_fog_grenade_mortar.range.special]
+
+"Cloud" = "Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+
+"Ammo" = "May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 [equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
@@ -642,9 +652,9 @@ range = 3
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
-special = [
-	"Either place two fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range.",
-]
+
+[equipment.multipurpose_mortar.range.special]
+"Multipurpose" = "Either place two fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
 
 [equipment.oversized_musket]
 name = "Dobble Barrled Oversized Musket"
@@ -655,7 +665,10 @@ range = 4
 angle = [true, false, false, false]
 damage = "d8"
 ap = "3"
-special = ["Fire two shot per fire order", "Gear disruption[6+]"]
+
+[equipment.oversized_musket.range.special]
+"Multiple Shots" = "Fire two shot per fire order"
+"Extra Damage" = "Gear disruption[6+]"
 
 [equipment.tentacle_dart]
 name = "Tentacle Dart"
@@ -669,7 +682,6 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 1
-special = []
 
 [equipment.fog_poisonizer]
 name = "Fog Poisonizer"
@@ -683,10 +695,12 @@ range = 2
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
-special = [
-	"Make a fog within normal range into a poison fog[4]",
-	"Always treated as loaded. May be used in both gunnery phases"
-]
+
+[equipment.fog_poisonizer.range.special]
+"Cloud" = "Make a fog within normal range into a poison fog[4]"
+"Ammo" = "Always treated as loaded"
+"Order" = "May be used in both gunnery phases"
+
 
 [equipment.frog_spit]
 name = "Frog Spit"
@@ -698,10 +712,12 @@ range = 1
 angle = [true, true, false, false]
 damage = "N/A"
 ap = "N/A"
-special = [
-	"Poison[4]",
-	"Always treated as loaded, and fire in both first and second gunnery phase independent of other weapons",
-]
+
+[equipment.frog_spit.range.special]
+"Extra Damage" = "Poison[4]"
+"Ammo" = "Always treated as loaded"
+"Order" =  "Fire in both first and second gunnery phase independent of other weapons and orders"
+
 
 [equipment.twin_frost_ray]
 name = "Twin Frost Ray"
@@ -713,11 +729,11 @@ range = 4
 angle = [true, false, false, false]
 damage = "d4-2+d6 psychic damage + d4 crew damage"
 ap = 0
-special = [
-	"Fire twice per fire order",
-	"Always treated as loaded",
-	"The target must break if possible (if it has a lower speed available). Reduce the speed one step",
-]
+
+[equipment.twin_frost_ray.range.special]
+"Multiple Shots" = "Fire twice per fire order"
+"Ammo" = "Always treated as loaded"
+"Extra Damage" = "The target must break if possible (if it has a lower speed available). Reduce the speed one step"
 
 [equipment.main_gun]
 name = "Main Gun"
@@ -729,7 +745,8 @@ range = 4
 angle = [true, false, false, false]
 damage = "d6 (+d8 crew damage if penetrating all armor)"
 ap = 6
-special = ["Gear Disruption[5+]"]
+[equipment.main_gun.range.special]
+"Extra Damage" = "Gear Disruption[5+]"
 
 [equipment.mechanical_melee_contraption]
 name = "Mechanical Melee Contraption"

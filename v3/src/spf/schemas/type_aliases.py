@@ -99,6 +99,7 @@ type UnitSpecial = Literal[
     "Officer",
     "Officer 2",
     "Officer Order",
+    "Pre-Assault Retreat",
     "Stacking Limit",
     "Spawn",
     "Transfer",
@@ -107,11 +108,13 @@ type UnitSpecial = Literal[
     "Forward Position",
     "Activate",
     "Note",
+    "Side Weapon",
 ]
 
 type ModelSpecial = Literal[
     "To Hit",
     "To Hit (2)",
+    "To Hit (3)",
     "Not Yet Dead",
     "Fog",
     "Escape Artist",
@@ -133,11 +136,36 @@ type AssaultSpecial = Literal[
     "Angle",
     "Troll Stench",
     "Fear",
-    "Pre-Assault Retreat",
     "Retreat",
     "Disconnected",
     "FlyBy",
     "Lands",
+]
+
+
+type RangeSpecial = Literal[
+    "Extra Damage",
+    "Sniper",
+    "Improved Aim",
+    "Indirect Fire",
+    "Multiple Shots",
+    "Area",
+    "Bonus",
+    "Focus Fire",
+    "Ammo",
+    "Order",
+    "Range",
+    "Burst",
+    "Recoil",
+    "Note",
+    "Type",
+    "Cloud",
+    "Insanity",
+    "Multipurpose"
+    
+
+    
+    
 ]
 
 type ModelType = Literal[
