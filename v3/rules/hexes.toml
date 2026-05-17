@@ -24,7 +24,7 @@ N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
 [hexes.fog]
 name = "Fog"
 effect = "Treat hex as if it blocks line of sight and gives to-hit penalties for units standing in fog. To Hit penalties stacks with other terrain features."
-remove = "Remove one Poison Cloud in each hex in aftermath phase"
+remove = "Remove one Fog in each hex in aftermath phase"
 
 [hexes.drone_trap]
 name = "Drone Trap"

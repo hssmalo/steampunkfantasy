@@ -92,7 +92,7 @@ cost.ip = 16
 
 [units.queen_yy.special]
 "Fire Order" = "You fire 2 independent heavy rifles in addion to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the {{\\it release} as an firing option, you may place the poison cload[12] during pre assault step in any movement phase, including contested hexes for assaults"
-"Resistance" = "Acid(2)"
+"Resistance" = "Acid[2]"
 
 [units.queen_yy.shaken]
 speed = 'still'
@@ -771,7 +771,8 @@ damage = "d6-1"
 ap = 3
 
 [models.queen_yy.assault.special]
-"Extra Damage" = "Poison[6][1 for 1], Fear[8]"
+"Extra Damage" = "Poison[6][1 for 1]"
+"Fear" = "[8]"
 "Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
 
 [models.queen_xy]
@@ -790,7 +791,8 @@ damage = "d6-1"
 ap = 3
 
 [models.queen_xy.assault.special]
-"Extra Damage" = "Poison[6][1 for 1], Fear[8]"
+"Extra Damage" = "Poison[6][1 for 1]"
+"Fear" = "[8]"
 "Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
 
 [models.elite_mechanical_cavalry]

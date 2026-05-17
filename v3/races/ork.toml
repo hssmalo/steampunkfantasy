@@ -86,7 +86,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.champion.special]
-"Spawn" = "Has same orders available as the unit base it awakened from, and the same weapons as the last surviving model of the unit base"
+"Spawn" = "Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
 
 [units.champion.damage_tables]
 regular = ["2-3: Bleeding[4]", "4+ : Killed"]
@@ -267,7 +267,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.battlewagon.special]
-"Transport" = "[2]: may transport up to 2 infantry. Treat any movement order as including an optional +Deploy[range=0, quick] order"
+"Transport" = "May transport up to 2 infantry. Treat any movement in movementphase 3 order as including an optional +Deploy(range=1) order. May deploy directly in assult. If Battlewagon enters an assault, you may optionaly deploy 1 infantry to join the assault."
 "Fire Order" = "Fire all weapons simultaneously"
 
 [units.battlewagon.damage_tables]
@@ -1039,7 +1039,7 @@ requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
 [equipment.war_drum.unit_special]
 "Movement" = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
-"Terror" = "[6][range 1]"
+"Terror" = "[6](range=1)"
 
 [equipment.harpoon_gun]
 name = "Harpoon Gun"

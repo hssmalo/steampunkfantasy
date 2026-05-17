@@ -1,5 +1,21 @@
 [tokens]
 
+[tokens.crippled_crew]
+name = "Crippled Crew"
+phases = []
+effect = "Get -1 to hit and -1 on all assault dice. In addition, psycic damage now causes crew damage instead"
+remove = "Only by healing ability"
+
+
+[tokens.plus_minus_one]
+name = "-1 to hit, +1 to be hit "
+phases = []
+effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults."
+remove = "Only by repair ability"
+
+
+
+
 [tokens.minor_acid]
 name = "Minor Acid"
 phases = ["Agony 1"]
@@ -26,7 +42,7 @@ effect = """Roll a d8 on the following damage table:,
 [tokens.terror]
 name = "Terror"
 phases = ["Agony 0"]
-effect = "Acts as if unit has Terror[range=2][6] but effects only units of the same team"
+effect = "Acts as if unit has Terror[6](range=2) but effects only units of the same team"
 
 [tokens.poison]
 name = "Poison"

@@ -3,15 +3,6 @@
 [races.abomination]
 name = "Abomination"
 
-# TODO: Add mother ship!
-# Ideas for mother ship:
-# Transport up to 4 flying cavalery
-# 18ip-isj...
-# Remove fog ability
-# Add fog ability
-# confusion and insanity stingers
-# Gear disruption weapons.
-# Huge size.
 [units]
 
 [units.abomination_infantry]
@@ -32,7 +23,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.abomination_infantry.special]
 "Take Cover" = "[still][-2]"
-"Terror" = "[Range=1][d6]"
+"Terror" = "[6](range=1)"
 "Tentacle" = "If given additional tentacle weapons, they fire simultainiusly with other weapons on regular Fire(s) order, not Fire(b) order"
 
 [units.abomination_infantry.orders.fire]
@@ -69,7 +60,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.horror.special]
-"Terror" = "While in fog (in agony phases): Terror[Range=1][d12], Insanity Filed[range=1][d6]"
+"Terror" = "While in fog (in agony phases): Terror[12](Range=1), Insanity Filed[range=1][d6]"
 "Fog" = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
 "Poison Cloud" = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
 "Immunity" = "acid and fire, poison resistance 12"
@@ -89,6 +80,41 @@ regular = [
 	"{{\\it Note: bleeding does not cause more bleeding}}",
 ]
 psychic = ["6+: shaken"]
+
+[units.shriek_monstrosity]
+race = "abomination"
+name = "Shriek Monstrosity"
+models = ["shriek_monstrosity"]
+size = "Large"
+cost.xp = 6
+
+[units.shriek_monstrosity.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+
+[units.shriek_monstrosity.special]
+"Resistance" = "Poison[3]"
+
+
+[units.shriek_monstrosity.orders.movement]
+slow_flying = [["360°", "F", "360°"], ["360°", "F", "A"]]
+fast_flying = [["F", "F", "-"], ["L/R", "F", "F"], ["F", "L/R", "F"],  ["F", "F", "L/R"],  ["F", "B", "360°"]]
+
+[units.shriek_monstrosity.orders.fire]
+slow_flying = [["-", "Load"], ["-", "Fire"]] 
+fast_flying = [["-", "Load"], ["-", "Fire"]]
+
+[units.shriek_monstrosity.damage_tables]
+regular = [
+	"1-3: Bleed[4]",
+	"4-5: Bleed[6], +1 to future damage",
+	"6-7: Bleed[8], +2 to future damage",
+	"8+: Unit destroyed",
+	"{{\\it Note: bleeding does not cause more bleeding}}",
+]
+psychic = ["6+: shaken"]
+
+
 
 [units.robot_crab]
 race = "abomination"
@@ -131,8 +157,8 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.giant_frog_riders.special]
-"Resistance" = "Poison [4]"
-"Terror" = "[range=1][d8]"
+"Resistance" = "Poison[4]"
+"Terror" = "[8](range=1)"
 
 [units.giant_frog_riders.orders.fire]
 still = [["-", "Load"], ["Load", "-"]]
@@ -172,7 +198,7 @@ movement_order = ["-", "chase", "chase"]
 fire_order = "Normal"
 
 [units.hippopotamus_riders.special]
-"Resistance" = "Poison [3]"
+"Resistance" = "Poison[3]"
 "Fire Order" = "Fire(mm) fires multipurpose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
 
 [units.hippopotamus_riders.orders.fire]
@@ -258,6 +284,69 @@ crew = [
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
+]
+
+
+[units.mothership_squid]
+race = "abomination"
+name = "MotherShip Squid"
+models = ["mothership_squid"]
+size = "Huge"
+armor = [10, 9, 6, 4]
+cost.ip = 18
+
+[units.mothership_squid.special]
+"Fog" = "Has a fog manipulator: for all hexes within range=2 of the mothership, you may choose to either forgo removing a fog, or remove an extra fog"
+"Transport" = "May Transport up to 2 large units, or up to 4 medium units or up to 8 tiny units. Deploy order is Deploy(range=2)"
+
+[units.mothership_squid.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
+
+[units.mothership_squid.orders.movement]
+slow = [
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["F", "L/R", "Deploy"],
+	["F", "-", "Deploy"],
+	["F", "L/R", "-"],
+	["F", "-", "-"],
+	["B", "-", "-"],
+	["B", "rev", "-"],
+]
+still = [
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
+]
+
+[units.mothership_squid.orders.fire]
+slow = [["Load", "-"], ["Fire", "-"], ["Aim", "-"]]
+still = [["Load", "-"], ["Fire", "-"], ["Aim", "-"]]
+
+[units.mothership_squid.damage_tables]
+regular = [
+	"1-3: +1 to future damage",
+	"4: +2 to future damage",
+	"5-11: as below, d6 critical damage",
+	"12: Unit destroyed",
+]
+critical = ["1: Shaken",
+	 "2: +2 extra to future damage",
+	"3-4: Unit cannot Move. Speed set to still",
+	"5-6: set on fire",
+]
+
+crew = [
+	"4-5: If already shaken double initial crew damage",
+	"6-7: As 4-5, and Crippled Crew",
+	"8-9: as 6-7, shaken",
+	"10-17: as 8-9, +3 to future crew damage",
+	"18: Unit destroyed",
 ]
 
 [units.frost88]
@@ -372,6 +461,8 @@ ap = 2
 [models.hippopotamus_riders.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 
+
+
 [models.horror]
 name = "Horror"
 race = "abomination"
@@ -390,12 +481,33 @@ ap = 2
 [models.horror.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 
+
+[models.shriek_monstrosity]
+name = "Shriek Monstosity"
+race = "abomination"
+equipment_limit = ["Independent:∞"]
+equipment = ["shriek"]
+type = ["Bio", "Monster", "Walking", "Amphibian"]
+
+[models.shriek_monstrosity.assault]
+strength = [18, 12, 12, 6]
+strength_die = "6+"
+deflection = [12, 12, 12, 12]
+deflection_die = "6+"
+damage = "d6"
+ap = 2
+
+[models.shriek_monstrosity.assault.special]
+"Note" = "Since unit has no speed on land, it can only assault flying units"
+
+
 [models.robot_crab]
 name = "Robot Crab"
 race = "abomination"
 equipment_limit = []
 equipment = []
 type = ["Drone", "Walking"]
+
 
 [models.robot_crab.assault]
 strength = [1, 1, 1, 1]
@@ -430,6 +542,25 @@ ap = 2
 [models.squid.assault.special]
 "Bonus" = "+100\\% strength and deflections versus shaken units"
 "Cunning Assault Defence" = "[6][6+]"
+
+[models.mothership_squid]
+name = "MotherShip Squid"
+race = "abomination"
+equipment = ["greater_confusion_stinger", "insanity_stinger", "disruptor_stinger"]
+equipment_limit = ["Independent:∞", "Mechanical Tentacles:12"]
+type = ["Vehicle", "Mechanical", "Floating", "Bio Crew"]
+
+[models.mothership_squid.assault]
+strength = [36, 24, 24, 12]
+strength_die = "6+"
+deflection = [12, 6, 6, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+
+[models.mothership_squid.assault.special]
+"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Cunning Assault Defence" = "[12][6+]"
 
 [models.frost88]
 name = "Frost 88"
@@ -519,9 +650,64 @@ angle = [true, true, false, false]
 damage = "d6 psychic + d4 crew damage"
 ap = "N/A"
 
+
 [equipment.confusion_stinger.range.special]
 "Multiple Shots" = "Fires 3 shot per fire order."
 "Extra Damage" = "Confusion"
+
+
+[equipment.greater_confusion_stinger]
+name = "Confusion Stinger"
+race = "abomination"
+requires = []
+
+[equipment.greater_confusion_stinger.range]
+range = 4
+angle = [true, true, false, false]
+damage = "d8 psychic + d6 crew damage"
+ap = "N/A"
+
+
+[equipment.greater_confusion_stinger.range.special]
+"Multiple Shots" = "Fires 2 shot per fire order."
+"Extra Damage" = "Confusion"
+
+[equipment.disruptor_stinger]
+name = "Disruptor Stinger"
+race = "abomination"
+requires = []
+
+[equipment.disruptor_stinger.range]
+range = 4
+angle = [true, true, false, false]
+damage = "d4-2"
+ap = 0
+
+[equipment.disruptor_stinger.range.special]
+"Multiple Shots" = "Fires 4 shot per fire order."
+"Extra Damage" = "Gear Disruption[5+]"
+
+
+[equipment.insanity_stinger]
+name = "Insanity Stinger"
+race = "abomination"
+requires = []
+
+[equipment.insanity_stinger.range]
+range = 4
+angle = [true, true, false, false]
+damage = "d8 psychic"
+ap = "N/A"
+
+
+[equipment.insanity_stinger.range.special]
+"Multiple Shots" = "Fires 6 shot per fire order."
+"Insanity" = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage."
+
+
+
+
+
 
 [equipment.insanity_contraption]
 name = "Insanity Contraption"
@@ -682,6 +868,23 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 1
+
+
+[equipment.shriek]
+name = "Shriek"
+race = "abomination"
+requires = []
+description = "Loading represent preparing for a horrible roar next turn"
+
+[equipment.shriek.range]
+range = 2
+angle = [true, false, false, false]
+damage = "d6 -1 psychic damage"
+ap = "N/A"
+
+[equipment.shriek.range.special]
+"Area" = "Target enemies in all hexes within front arch (not including the hexes on the edge of firing arngle) and long range. At point blank Area[4+], within normal range Area[5+] and all other hexes Area[6+]"
+"Ammo" = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo"
 
 [equipment.fog_poisonizer]
 name = "Fog Poisonizer"

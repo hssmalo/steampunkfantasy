@@ -140,6 +140,7 @@ type AssaultSpecial = Literal[
     "Disconnected",
     "FlyBy",
     "Lands",
+    "Note",
 ]
 
 

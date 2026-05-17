@@ -55,7 +55,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.goblin_infantry_carrier.special]
-"Transport" = "May transport up to 3 Goblin infantry. Has Deploy[range=1] which may be used with Deploy orders"
+"Transport" = "May transport up to 3 Goblin infantry. Deploy order is Deploy(range=1). May not be deployed into assault."
 "Forward Position" = "[1]"
 
 [units.goblin_infantry_carrier.orders.movement]
@@ -117,7 +117,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.heavy_carrier.special]
-"Transport" = "May transport up to 1 Goblin infantry. Has Deploy[range=1, quick] which may be used with Deploy orders"
+"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier is enters an assault, you may optionaly deploy infantery to join the assault"
 "Forward Position" = "[1]"
 "Fire Order" = "Fire and load all weapons simultaniusly, with identical ammo usage for all weapons"
 
@@ -405,11 +405,11 @@ damage = "d8-2"
 ap = "2"
 
 [equipment.ogre_rifle.unit_special]
-"Movement" = "Unit is destroyed if trying to land in an impassible or overcrowded hex"
+"Movement" = "Unit is destroyed if trying to land in an impassible or overcrowded hex."
 
 [equipment.ogre_rifle.range.special]
 "Recoil"  = "After firing this weapon, set speed to slow flying"
-"Note" = "Remember to track ammo"
+"Note" = "Remember to track ammo. "
 
 
 

@@ -81,7 +81,7 @@ versions = { type = "str", values = ["regular", "psychic", "fire", "poison"] }
 [unit.heal]
 name = "Heal"
 short = "[{N}, {unit}, {phase}]"
-explanation = """Healing only works on biological units. You have{N}points to spend on the following actions:
+explanation = """Healing only works on biological units and removing crippled crew for units with bio crew. You have{N}points to spend on the following actions:
 
 - Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
 - Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
@@ -91,6 +91,7 @@ explanation = """Healing only works on biological units. You have{N}points to sp
 - Neutrilize one poison token: Cost 3.
 - Remove one bleeding token: Cost 3.
 - Degrade one acid to minor acid. Cost 4.
+- Remove crippled crew token. Cost 4. 
 """
 
 [unit.heal.variables]

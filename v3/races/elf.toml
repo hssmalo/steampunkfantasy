@@ -963,7 +963,7 @@ cost.xp = 1
 "To Hit" = "Good shot: +1"
 
 [models.elite_pachyephalosaurus_rider.unit_special]
-"Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
+"Improved Resistance" = "Unit gains resistance Psychic[1] while atleast one elite is alive"
 "Pre-Assault Retreat" = "3+ if atleast one elite present"
 
 [models.elite_pachyephalosaurus_rider.assault]
@@ -1147,7 +1147,7 @@ damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
 [equipment.main_tank_gun.unit_special]
-"Fire Order"= "Double barreled: May load up to 2 shots, and fire them one at a time"
+"Fire Order"= "Double barreled: May load up to 2 ammo, and fire them one at a time"
 
 
 [equipment.towed_main_gun]

@@ -191,6 +191,7 @@ movement_order = ["-", "-", "-"]
 "Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 "Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
+"Chase" = "Chase orders avoid entering assault if abble. Treat target hex to be one hex at point blank range to an enemy."
 
 [units.drone_swarm.orders.fire]
 still = [
@@ -286,7 +287,8 @@ movement_order = ["-", "-", "-"]
 [units.main_engine.special]
 "LoS" = "Blocks Line of Sight"
 "Tow" = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
-"Transport" = "May carry up to 6 tiny drone units. Has Deploy[range=2], may not be deployed into assault. Treat all 3rd movement steps as including an optional + deploy order"
+"Transport" = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault"
+
 
 [units.main_engine.orders.fire]
 still = [
@@ -501,7 +503,7 @@ type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 description = "An Ogre Scout Engineer is an regular Ogre assault scout which often carry tiny drones and which can also repair them. The have the knowledge to hit enemy drone in assaults where it hurts the most"
 
 [models.ogre_scout_engineer.unit_special]
-"Transport" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones each time"
+"Transport" = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
 "Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_scout_engineer.assault]
@@ -720,7 +722,7 @@ equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 
 [models.ogre_engineer.unit_special]
-"Transport" = "May carry 4 tiny drone units. If so treat all movement 3 orders as including an optional Deploy[range=2] in addition to its normal effect, which may deploy a maximum of 2 tiny drones per model each time"
+"Transport" = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
 "Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_engineer.assault]
