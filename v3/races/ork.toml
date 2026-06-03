@@ -352,7 +352,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_werewarg.special]
 "Take Cover" = "[still][-2]"
-"Regeneration" = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
+"Regeneration" = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
 "Resistance" = "Poison [2]."
 
 [units.ork_werewarg.orders.movement]

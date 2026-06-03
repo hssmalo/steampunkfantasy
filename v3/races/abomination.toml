@@ -63,7 +63,8 @@ movement_order = ["-", "-", "-"]
 "Terror" = "While in fog (in agony phases): Terror[12](Range=1), Insanity Filed[range=1][d6]"
 "Fog" = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
 "Poison Cloud" = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
-"Immunity" = "acid and fire, poison resistance 12"
+"Resistance" = "[12]"
+"Immunity" = "acid and fire"
 "Forward Position" = "[3]"
 
 [units.horror.orders.movement]
@@ -546,7 +547,7 @@ ap = 2
 [models.mothership_squid]
 name = "MotherShip Squid"
 race = "abomination"
-equipment = ["greater_confusion_stinger", "insanity_stinger", "disruptor_stinger"]
+equipment = ["greater_confusion_stinger", "great_insanity_stinger", "greater_disruptor_stinger"]
 equipment_limit = ["Independent:∞", "Mechanical Tentacles:12"]
 type = ["Vehicle", "Mechanical", "Floating", "Bio Crew"]
 
@@ -672,37 +673,37 @@ ap = "N/A"
 "Multiple Shots" = "Fires 2 shot per fire order."
 "Extra Damage" = "Confusion"
 
-[equipment.disruptor_stinger]
+[equipment.greater_disruptor_stinger]
 name = "Disruptor Stinger"
 race = "abomination"
 requires = []
 
-[equipment.disruptor_stinger.range]
+[equipment.greater_disruptor_stinger.range]
 range = 4
 angle = [true, true, false, false]
 damage = "d4-2"
 ap = 0
 
-[equipment.disruptor_stinger.range.special]
+[equipment.greater_disruptor_stinger.range.special]
 "Multiple Shots" = "Fires 4 shot per fire order."
 "Extra Damage" = "Gear Disruption[5+]"
 
 
-[equipment.insanity_stinger]
+[equipment.greater_insanity_stinger]
 name = "Insanity Stinger"
 race = "abomination"
 requires = []
 
-[equipment.insanity_stinger.range]
+[equipment.greater_insanity_stinger.range]
 range = 4
 angle = [true, true, false, false]
-damage = "d8 psychic"
+damage = "d6 psychic"
 ap = "N/A"
 
 
-[equipment.insanity_stinger.range.special]
+[equipment.greater_insanity_stinger.range.special]
 "Multiple Shots" = "Fires 6 shot per fire order."
-"Insanity" = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage."
+"Insanity" = "Only effects bio units.  If you either inflict damage two times with this weapon on the same unit in the same gunnery phase, or inflict damage to a unit which is already shaken, the enemy unit gains an Insanity token in addition to the regular effect of psychic damage."
 
 
 

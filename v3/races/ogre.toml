@@ -6,6 +6,47 @@ description = "Yellow, tiny, little men"
 
 [units]
 
+[units.ogre_hydra]
+race = "ogre"
+name = "Ogre Hydra"
+models = ["ogre_hydra", "ogre_crew", "ogre_crew"]
+size = "Huge"
+cost.mp = 4
+cost.xp = 24
+
+[units.ogre_hydra.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+
+[units.ogre_hydra.special]
+"Regeneration" = "Heal[N, self, 2nd Healin], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
+"Heads" = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+"Fire Order" = "Breath weapon and poison spit always treated as loaded. Load orders only for the weapon of the crew. If crew's weapon is laoded, fire them simultaniously with breath wapon and poison spit"
+"Forward Position" = "[1]"
+
+[units.ogre_hydra.orders.fire]
+still = [["Fire", "Load"],
+       ["Load", "Fire"]]
+
+slow = [["Fire", "Load"],
+       ["Load", "Fire"]]
+
+[units.ogre_hydra.orders.movement]
+slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
+still = [
+	["360°", "360°", "360°"],
+	["360°", "A ", "F"]]
+
+[units.ogre_hydra.damage_tables]
+regular = ["1-2: Bleed[4]",
+	   "3-5: +1 to future damage, Bleed[4]",
+	   "6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroied, add aditional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
+	   "10-17: As below, d6 psychic damage",
+	   "18: Unit destroied",
+	"{{\\it Note: Bleed does not cause more bleeding}}",]
+psychic = ["6+: shaken"]
+
+
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
@@ -447,6 +488,22 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
+
+[models.ogre_crew]
+name = "Ogre Infantry"
+race = "ogre"
+equipment_limit = ["Independent:∞", "Hands:2"]
+equipment = ["ogre_rifle"]
+type = ["Bio", "Crew"]
+
+[models.ogre_crew.assault]
+strength = [0, 0, 0, 0]
+strength_die = "5+"
+deflection = [0, 0, 0, 0]
+deflection_die = "5+"
+damage = "-"
+ap = "N/A"
+
 [models.ogre_robot]
 name = "Ogre Robot"
 race = "ogre"
@@ -516,6 +573,27 @@ ap = 3
 
 [models.ogre_scout_engineer.assault.special]
 "Extra Damage" = "Gear Disrutpin[4+]"
+
+[models.ogre_hydra]
+name = "Ogre Hydra"
+race = "ogre"
+equipment_limit = ["Independent:∞"]
+equipment = ["acid_breath", "poison_spit"]
+type = ["Bio", "Cavalry", "Walking"]
+
+[models.ogre_hydra.assault]
+strength = [6, 6, 6, 6]
+strength_die = "5+"
+deflection = [6, 2, 2, 2]
+deflection_die = "5+"
+damage = "d6"
+ap = 2
+
+[models.ogre_hydra.assault.special]
+"Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
+"Extra Damage" = "Poison[6][1 for 2]"
+"Fear" = "[6]"
+
 
 [models.drone_swarm]
 name = "Drone Swarm"
@@ -816,7 +894,7 @@ name = "Fancy Ogre Rifle"
 race = "ogre"
 cost.cp = 2
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry", "type:Crew"]]
 
 [equipment.fancy_ogre_rifle.range]
 range = 4
@@ -829,7 +907,7 @@ name = "Enhanced Fancy Ogre Rifle"
 race = "ogre"
 cost.cp = 6
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry", "type:Crew"]]
 
 [equipment.enhanced_fancy_ogre_rifle.range]
 range = 6
@@ -869,7 +947,7 @@ name = "Fancy Arquebus"
 race = "ogre"
 cost.cp = 4
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry", "type:Crew"]]
 
 [equipment.fancy_arquebus.range]
 range = 3
@@ -966,3 +1044,33 @@ requires = [["Reserve Melee:1"], ["type:Scout", "type:Infantry"]]
 [equipment.fancy_warhammer.assault]
 damage.replace = "d8 + d6 psycic damage"
 ap.replace = 5
+
+[equipment.acid_breath]
+name = "Acid Breath"
+race = "elf"
+requires = []
+
+[equipment.acid_breath.range]
+range = 2
+angle = [true, true, false, false]
+damage = "-"
+ap = "N/A"
+
+[equipment.acid_breath.range.special]
+"Extra Damage" = "Choose one hex within normal range. Automaticly consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise. "
+
+
+[equipment.poison_spit]
+name = "Poison Spit"
+race = "elf"
+requires = []
+
+[equipment.poison_spit.range]
+range = 2
+angle = [true, true, false, false]
+damage = "-"
+ap = "N/A"
+
+[equipment.poison_spit.range.special]
+"Extra Damage" = "Poison[6]."
+"Multiple Shots" = "Fire one time per alive minor head"

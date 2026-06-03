@@ -86,6 +86,7 @@ type UnitSpecial = Literal[
     "Regeneration",
     "Heal",
     "Heal (2)",
+    "Heads",
     "Repair",
     "Repairing",
     "Suicide",
@@ -146,6 +147,7 @@ type AssaultSpecial = Literal[
 
 type RangeSpecial = Literal[
     "Extra Damage",
+    "Critical",
     "Sniper",
     "Improved Aim",
     "Indirect Fire",
