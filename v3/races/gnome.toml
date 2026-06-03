@@ -16,7 +16,7 @@ models = [
 ]
 size = "medium"
 armor = [0, 0, 0, 0]
-cost.mp = 4
+cost.mp = 16
 special = ["Take-Cover[still][-2]"]
 shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
 
@@ -56,8 +56,8 @@ name = "Quad Bike"
 models = ["quad_bike", "quad_bike", "quad_bike", "quad_bike"]
 size = "medium"
 armor = [0, 0, 0, 0]
-cost.mp = 4
-cost.cp = 4
+cost.mp = 16
+cost.cp = 16
 special = ["May not enter buildings"]
 shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
 
@@ -130,9 +130,9 @@ name = "Gnome Motorcyle"
 models = ["gnome_motorcycle", "gnome_motorcycle", "gnome_motorcycle"]
 size = "medium"
 armor = [4, 3, 0, 0]
-cost.mp = 2
-cost.xp = 4
-cost.cp = 4
+cost.mp = 8
+cost.xp = 16
+cost.cp = 16
 special = ["Elusive[fast]: additional -1 to be hit while fast"]
 shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
 
@@ -166,7 +166,7 @@ name = "Ballista Drone"
 models = ["ballista"]
 size = "lagre"
 armor = [0, 0, 0, 0]
-cost.cp = 6
+cost.cp = 24
 special = []
 shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
 
@@ -198,7 +198,7 @@ name = "Ballista Tractor, Mark I"
 models = ["ballista_tractor_markI"]
 size = "lagre"
 armor = [12, 8, 8, 7]
-cost.ip = 8
+cost.ip = 32
 special = ["Fires and loads both weapons at fire and load actions"]
 shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
 
@@ -262,7 +262,7 @@ name = "Ballista Tractor, Mark II"
 models = ["ballista_tractor_markII"]
 size = "lagre"
 armor = [12, 8, 8, 7]
-cost.ip = 8
+cost.ip = 32
 special = []
 shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
 
@@ -323,7 +323,7 @@ name = "Ballista Tractor, Mark III"
 models = ["ballista_tractor_markIII"]
 size = "lagre"
 armor = [12, 8, 8, 7]
-cost.ip = 8
+cost.ip = 32
 special = ["Fires and loads both weapons at fire and load actions"]
 shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
 
@@ -385,8 +385,8 @@ name = "Gnome Helicopter"
 models = ["gnome_helicopter"]
 size = "large"
 armor = [0, 0, 0, 0]
-cost.ip = 6
-cost.xp = 2
+cost.ip = 24
+cost.xp = 8
 special = [
     "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously",
     "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying).",
@@ -650,8 +650,8 @@ special = [
     "May move normally even if shaken",
 ]
 replaces = ["gnome_helicopter"]
-cost.xp = 6
-cost.cp = -2
+cost.xp = 24
+cost.cp = -8
 
 [models.tinkerer_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -673,7 +673,7 @@ special = [
     "Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)",
     "Unit gains psycic resistance 1 as long as atleast one elite model is alive.",
 ]
-cost.xp = 1
+cost.xp = 4
 
 [models.gnome_elite_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -690,8 +690,8 @@ race = "gnome"
 equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
 equipment = ["tinkerer_gun", "light_smg"]
 type = ["bio", "infantry", "tinkerer", "walks"]
-cost.xp = 4
-cost.cp = -3
+cost.xp = 16
+cost.cp = -12
 replaces = ["gnome_infantry"]
 special = [
     "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat. ",
@@ -712,8 +712,8 @@ race = "gnome"
 equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
 equipment = ["light_smg"]
 type = ["bio", "infantry", "tinkerer", "walks"]
-cost.xp = 4
-cost.cp = -3
+cost.xp = 16
+cost.cp = -12
 replaces = ["quad_bike"]
 special = [
     "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat. ",
@@ -781,7 +781,7 @@ special = []
 [equipment.acid_splash]
 name = "Acid Splash"
 race = "gnome"
-cost.cp = 2
+cost.cp = 8
 requires = [["hands:2"], ["type:infantry"]]
 
 [equipment.acid_splash.range]
@@ -884,14 +884,14 @@ special = [
 [equipment.mechanical_owl]
 name = "Mechanical Owl"
 race = "gnome"
-cost.cp = 2
+cost.cp = 8
 special = ["Gives all weapons the enhanced accurazy (+1 to hit) trait"]
 requires = [["type:infantry"], ["independent:1"]]
 
 [equipment.frost_ray]
 race = "gnome"
 name = "Frost Ray"
-cost.cp = 4
+cost.cp = 16
 requires = [["type:infantry"], ["hands:2"]]
 
 [equipment.frost_ray.range]
@@ -909,7 +909,8 @@ still = [["-", "amplified fire"]]
 [equipment.green_gas_launcher]
 race = "gnome"
 name = "Green Gas Launcer"
-model_cost.cp = 2
+cost.cp = 8
+upgrade_all = False 
 requires = [["type:tinkerer", "type:elite"], ["type:infantry"], ["reserve:1"]]
 
 [equipment.green_gas_launcher.range]
@@ -927,7 +928,7 @@ special = [
 [equipment.helicopter_mounted_green_gas_launcher]
 race = "gnome"
 name = "Helicopter mounted Green Gas Launcer"
-cost.cp = 2
+cost.cp = 8
 requires = [["type: tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
 [equipment.helicopter_mounted_green_gas_launcher.range]
@@ -940,7 +941,8 @@ special = ["Choose one hex within range: Area(5+)", "Poison[4]"]
 [equipment.experimental_plasma_gun]
 race = "gnome"
 name = "Experimental Plasma Gun"
-model_cost.cp = 4
+cost.cp = 16
+upgrade_all = False
 requires = [["type:tinkerer"], ["type:infantry"], ["hands:2"]]
 
 [equipment.experimental_plasma_gun.range]
@@ -956,7 +958,7 @@ special = [
 [equipment.helicopter_mounted_experimental_plasma_gun]
 race = "gnome"
 name = "Helicopter Mounted Experimental Plasma Gun"
-cost.cp = 4
+cost.cp = 16
 requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
 [equipment.helicopter_mounted_experimental_plasma_gun.range]
@@ -1004,7 +1006,7 @@ special = [
 [equipment.extra_acidic_napalm_bomb]
 race = "gnome"
 name = "(extra) Acidic Napalm Bomb"
-cost.cp = 1
+cost.cp = 4
 requires = [["type:helicopter"], ["helicopter_drop:1"]]
 
 [equipment.extra_acidic_napalm_bomb.range]
@@ -1020,7 +1022,7 @@ special = [
 [equipment.major_acidic_napalm_bomb]
 race = "gnome"
 name = "Major Acidic Napalm Bomb"
-cost.cp = 6
+cost.cp = 24
 requires = [["type:helicopter"], ["helicopter_drop:1"]]
 
 [equipment.major_acidic_napalm_bomb.range]
@@ -1036,7 +1038,7 @@ special = [
 [equipment.assault_bot_mortar]
 race = "gnome"
 name = "Assault Bot Mortar"
-cost.cp = 6
+cost.cp = 24
 requires = [["type:infantry"], ["hands:2"]]
 special = [
     "No regular damage",
@@ -1055,7 +1057,7 @@ special = [
 [equipment.assault_bot_dropper]
 race = "gnome"
 name = "Assault Bot Dropper"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:helicopter"], ["helicopter_drop:1"]]
 special = [
     "No regular damage",
@@ -1066,7 +1068,7 @@ special = [
 [equipment.improved_medical_armor]
 race = "gnome"
 name = "Improved Medical Armor"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:infantry"], ["independent:1"]]
 special = [
     "Unit gain Fire resistance 6, Poison Resistance 6, minor acid resistance[4+] and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
@@ -1075,7 +1077,7 @@ special = [
 [equipment.medical_armor]
 race = "gnome"
 name = "Medical Armor"
-cost.cp = 1
+cost.cp = 4
 requires = [["type:infantry"], ["independent:1"]]
 special = [
     "Unit gain Fire resistance 2, Poison Resistance 2, and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
@@ -1084,7 +1086,7 @@ special = [
 [equipment.plasma_shield_generator]
 race = "gnome"
 name = "Plasma Shield Generator"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:infantry"], ["independent:1"]]
 special = [
     "Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)",
@@ -1099,7 +1101,7 @@ special.append = "Any enemy which is hit atleast once in assault is set on fire"
 [equipment.quadbike_lance]
 race = "gnome"
 name = "Quadbike Lance"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:quadbike"], ["hands:2"]]
 special = []
 
@@ -1109,7 +1111,7 @@ strength.add = [1, 0, 0, 0]
 [equipment.improved_plasma_shield_generator]
 race = "gnome"
 name = "Improved Plasma Shield Generator"
-cost.cp = 4
+cost.cp = 16
 requires = [["type:infantry"], ["independent:1"]]
 special = [
     "Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)",
@@ -1138,7 +1140,7 @@ special = [
 [equipment.experimental_guided_missile]
 race = "gnome"
 name = "Experimental guided missile"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
 [equipment.experimental_guided_missile.range]
@@ -1157,7 +1159,7 @@ special = [
 [equipment.helicopter_mounted_experimental_nailgun]
 race = "gnome"
 name = "Helicopter Mounted Experimental Nail Gun"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
 
 [equipment.helicopter_mounted_experimental_nailgun.range]
@@ -1175,7 +1177,7 @@ special = [
 [equipment.experimental_nailgun]
 race = "gnome"
 name = "Experimental Nail Gun"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:tinkerer"], ["type:infantry"]]
 
 [equipment.experimental_nailgun.range]
@@ -1192,7 +1194,7 @@ special = [
 [equipment.experimental_death_ray]
 race = "gnome"
 name = "Experimental Death Ray"
-cost.cp = 4
+cost.cp = 16
 requires = [["type:tinkerer"], ["type:infantry"]]
 
 [equipment.experimental_death_ray.range]

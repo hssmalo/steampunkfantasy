@@ -11,7 +11,7 @@ race = "darkelf"
 name = "MecaHydra"
 models = ["mechahydra"]
 size = "Huge"
-cost.ip = 12
+cost.ip = 48
 armor = [9,8,8,7]
 
 [units.mechahydra.shaken]
@@ -49,8 +49,8 @@ name = "Mechanical Red Dragon"
 models = ["mechanical_red_dragon"]
 size = "Huge"
 armor = [11, 8, 8, 7]
-cost.ip = 24
-cost.xp = 24
+cost.ip = 96
+cost.xp = 96
 
 [units.mechanical_red_dragon.special]
 Resistance = "Fire[2]"
@@ -82,8 +82,8 @@ name = "Mechanical Iron Dragon"
 models = ["mechanical_iron_dragon"]
 size = "Huge"
 armor = [11, 8, 8, 7]
-cost.ip = 24
-cost.xp = 24
+cost.ip = 96
+cost.xp = 96
 
 [units.mechanical_iron_dragon.special]
 Resistance = "Fire[2]"
@@ -125,7 +125,7 @@ name = "Queen YY"
 models = ["queen_yy"]
 size = "Large"
 armor = [12, 10, 8, 7]
-cost.ip = 16
+cost.ip = 64
 
 [units.queen_yy.special]
 "Fire Order" = "You fire 2 independent heavy rifles in addion to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the {{\\it release} as an firing option, you may place the poison cload[12] during pre assault step in any movement phase, including contested hexes for assaults"
@@ -194,7 +194,7 @@ name = "Queen XY"
 models = ["queen_xy"]
 size = "Large"
 armor = [11, 10, 8, 7]
-cost.ip = 6
+cost.ip = 24
 
 [units.queen_xy.special]
 "Fire Order" = "If you use the order {{\\it release}} as an firing option, you may place a poison cload[12] during any movement phase in any the hex you are in, including contested hexes for assaults"
@@ -262,9 +262,9 @@ name = "Nightmare Mechanical Cavalry"
 models = ["nightmare_mechanical_cavalry", "nightmare_mechanical_cavalry"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 2
-cost.cp = 4
-cost.xp = 12
+cost.mp = 8
+cost.cp = 16
+cost.xp = 48
 
 [units.nightmare_mechanical_cavalry.special]
 "Fire Order" = "Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"
@@ -301,9 +301,9 @@ name = "Elite Mechanical Cavalry"
 models = ["elite_mechanical_cavalry", "elite_mechanical_cavalry"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 2
-cost.cp = 4
-cost.xp = 6
+cost.mp = 8
+cost.cp = 16
+cost.xp = 24
 
 [units.elite_mechanical_cavalry.special]
 "Fire Order" = "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases"
@@ -342,7 +342,7 @@ name = "Mechanical Assault Spider"
 models = ["mechanical_assault_spider"]
 size = "Medium"
 armor = [7, 7, 7, 7]
-cost.ip = 4
+cost.ip = 16
 
 [units.mechanical_assault_spider.shaken]
 speed = "still"
@@ -378,7 +378,7 @@ name = "Mechanical Scorpion"
 models = ["mechanical_scorpion"]
 size = "Medium"
 armor = [9, 7, 6, 5]
-cost.ip = 4
+cost.ip = 16
 
 [units.mechanical_scorpion.shaken]
 speed = "still"
@@ -419,7 +419,7 @@ models = [
 ]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 6
+cost.mp = 24
 
 [units.darkelf_infantry.special]
 "Take Cover" = "[still,crawl][-2]"
@@ -481,8 +481,8 @@ models = [
 ]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 2
-cost.xp = 6
+cost.mp = 8
+cost.xp = 24
 
 [units.multicultural_infantry.special]
 "Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural_trainee in aftermath phase, such that you have a maximum of 10 models in this unit"
@@ -531,8 +531,6 @@ models = [
 ]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 0
-cost.xp = 0
 description = "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes"
 
 [units.multicultural_trainee.special]
@@ -561,8 +559,8 @@ models = [
 ]
 size = "Medium"
 armor = [3, 3, 3, 3]
-cost.mp = 4
-cost.cp = 3
+cost.mp = 16
+cost.cp = 12
 
 [units.roboprosthetic_darkelf.special]
 "Take Cover" = "[still,crawl][-2]"
@@ -613,8 +611,8 @@ name = "Assassin"
 models = ["assassin"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 2
-cost.xp = 6
+cost.mp = 8
+cost.xp = 24
 
 [units.assassin.special]
 "Take Cover" = "[still,crawl][-3]"
@@ -659,8 +657,8 @@ name = "Roboprosthetic Assassin"
 models = ["roboprosthetic_assassin"]
 size = "Medium"
 armor = [3, 3, 3, 3]
-cost.mp = 2
-cost.cp = 7
+cost.mp = 8
+cost.cp = 24
 
 [units.roboprosthetic_assassin.special]
 "Take Cover" = "[still,crawl][-3]"
@@ -706,7 +704,7 @@ name = "Scout"
 models = ["scout"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-cost.mp = 2
+cost.mp = 8
 
 [units.scout.special]
 "Forward Position" = "[2]"
@@ -995,7 +993,7 @@ equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
 type = ["Bio", "Elite", "Infantry", "Walking"]
 replaces = "darkelf_infantry"
-cost.xp = 1
+cost.xp = 4
 
 [models.darkelf_elite_infantry.unit_special]
 "Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
@@ -1106,7 +1104,7 @@ equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
 type = ["Bio", "Elite", "Infantry", "Walking", "Roboprosthetic"]
 replaces = "roboprosthetic_darkelf"
-cost.cp = 1
+cost.cp = 4
 
 [models.elite_roboprosthetic_darkelf.unit_special]
 "Improved Resistance" = "Unit gain resistance Psychic[1] while atleast one elite is alive"
@@ -1231,8 +1229,8 @@ ap = 3
 [equipment.mechanical_imp]
 name = "Mechanical Imp"
 race = "darkelf"
-cost.cp = 4
-cost.xp = 2
+cost.cp = 16
+cost.xp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
@@ -1242,7 +1240,7 @@ requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 [equipment.smg]
 name = "SMG"
 race = "darkelf"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
@@ -1279,7 +1277,7 @@ ap = 1
 [equipment.crossbow]
 name = "Crossbow"
 race = "darkelf"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
@@ -1310,7 +1308,7 @@ ap = 2
 name = "Enhanced Crossbow"
 race = "darkelf"
 upgrade_all = false
-cost.cp = 2
+cost.cp = 8
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"], ["type:Elite"]]
 
 [equipment.enhanced_crossbow.range]
@@ -1342,7 +1340,7 @@ ap = 0
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
 race = "darkelf"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
@@ -1366,8 +1364,8 @@ crawl = [["-", "Throw"]]
 [equipment.mortar1a]
 name = "Mortar 1A"
 race = "darkelf"
-cost.cp = 16
-cost.xp = 8
+cost.cp = 64
+cost.xp = 32
 upgrade_all = true
 requires = [["Shared:1"], ["type:Infantry"]]
 
@@ -1385,8 +1383,8 @@ ap = 2
 [equipment.mortar11b]
 name = "Mortar 1.1B"
 race = "darkelf"
-cost.cp = 8
-cost.xp = 4
+cost.cp = 32
+cost.xp = 16
 upgrade_all = true
 requires = [["Shared:1"], ["type:Infantry"]]
 
@@ -1405,7 +1403,7 @@ ap = 0
 #[equipment.glitterbomb_mortar]
 #name = "Glitterbomb Mortar"
 #race = "darkelf"
-#cost.cp = 12
+#cost.cp = 48
 #upgrade_all = true
 #requires = [["Shared:1"], ["type:Infantry"]]
 
@@ -1421,7 +1419,7 @@ ap = 0
 [equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Independent:1"], ["type:Roboprosthetic"]]
 
@@ -1434,7 +1432,7 @@ strength.add = [1, 0, 0, 0]
 [equipment.poison_spray]
 name = "Poison Spray"
 race = "darkelf"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Roboprosthetic", "type:Infantry"]]
 
@@ -1456,7 +1454,7 @@ ap = 0
 [equipment.integrated_pistol]
 name = "Integrated Pistol"
 race = "darkelf"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Independent:1"], ["type:Roboprosthetic"]]
 
@@ -1565,7 +1563,7 @@ ap = 2
 [equipment.gasmask]
 name = "GasMask assault training"
 race = "darkelf"
-cost.xp = 1
+cost.xp = 4
 upgrade_all = true
 requires = [
     ["Independent:1"],
@@ -1582,7 +1580,7 @@ requires = [
 [equipment.poison_fog_grenade]
 name = "Poison Fog Grenade"
 race = "darkelf"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [
     ["Independent:1"],
@@ -1599,7 +1597,7 @@ slow = [["-", "Throw"], ["Throw", "-"]]
 [equipment.hide]
 name = "Hide"
 race = "darkelf"
-cost.xp = 4
+cost.xp = 16
 upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
 
@@ -1616,7 +1614,7 @@ crawl = [["Hide[ruins]", "-", "-"]]
 [equipment.cloacking_device]
 name = "Cloacking Device"
 race = "darkelf"
-cost.ip = 2
+cost.ip = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Mechanical"]]
 

@@ -11,8 +11,8 @@ race = "elf"
 name = "Elf Hydra"
 models = ["elf_hydra", "hydra_crew", "hydra_crew", "hydra_crew", "hydra_crew"]
 size = "Huge"
-cost.mp = 6
-cost.xp = 24
+cost.mp = 24
+cost.xp = 96
 
 [units.elf_hydra.shaken]
 speed = "slow"
@@ -53,7 +53,7 @@ race = "elf"
 name = "Elf Infantry"
 models = ["elf_infantry", "elf_infantry", "elf_infantry", "elf_infantry"]
 size = "Medium"
-cost.mp = 6
+cost.mp = 24
 
 [units.elf_infantry.shaken]
 speed = "slow"
@@ -95,8 +95,8 @@ race = "elf"
 name = "Elf Archer"
 models = ["elf_archer", "elf_archer", "elf_archer", "elf_archer"]
 size = "Medium"
-cost.mp = 6
-cost.xp = 2
+cost.mp = 24
+cost.xp = 8
 
 [units.elf_archer.shaken]
 speed = "slow"
@@ -134,7 +134,7 @@ race = "elf"
 name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "Medium"
-cost.cp = 2
+cost.cp = 8
 
 [units.illusion.special]
 "Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
@@ -156,7 +156,7 @@ race = "elf"
 name = "Elf Scout"
 models = ["elf_scout"]
 size = "Medium"
-cost.mp = 2
+cost.mp = 8
 
 [units.elf_scout.shaken]
 speed = "slow"
@@ -194,8 +194,8 @@ race = "elf"
 name = "Elite Elf Scout"
 models = ["elite_elf_scout"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 2
+cost.mp = 8
+cost.xp = 8
 
 [units.elite_elf_scout.shaken]
 speed = "slow"
@@ -234,7 +234,7 @@ race = "elf"
 name = "E34"
 models = ["e34"]
 size = "Large"
-cost.ip = 12
+cost.ip = 48
 armor = [10, 9, 9, 8]
 
 [units.e34.shaken]
@@ -300,7 +300,7 @@ race = "elf"
 name = "Tattoo Ink"
 models = ["tattoo_ink"]
 size = "Medium"
-cost.ip = 4
+cost.ip = 16
 armor = [8, 6, 6, 6]
 
 [units.tattoo_ink.special]
@@ -374,8 +374,8 @@ race = "elf"
 name = "Bear Rider"
 models = ["bear_rider"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 6
+cost.mp = 8
+cost.xp = 24
 armor = [7, 6, 6, 6]
 
 # Cost changed from 2mp and 6xp to introduce a unit with xp cost only.
@@ -409,9 +409,9 @@ race = "elf"
 name = "Dire Polar Bear Riders"
 models = ["polar_bear_riders"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 8
-cost.cp = 6
+cost.mp = 8
+cost.xp = 32
+cost.cp = 24
 armor = [8, 6, 6, 6]
 
 [units.polar_bear_riders.special]
@@ -445,9 +445,9 @@ race = "elf"
 name = "Armored Unicorn Rider"
 models = ["armored_unicorn_rider"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 6
-cost.cp = 2
+cost.mp = 8
+cost.xp = 24
+cost.cp = 8
 armor = [6, 6, 6, 5]
 
 #cost changed from 2mp, 2cp and 6xp to 2cp and 8xp in line with bear and eagle riders.
@@ -501,9 +501,9 @@ models = [
 	"pachyephalosaurus_rider",
 ]
 size = "Medium"
-cost.mp = 4
-cost.xp = 5
-cost.cp = 6
+cost.mp = 16
+cost.xp = 24
+cost.cp = 24
 armor = [3, 3, 0, 0]
 
 [units.pachyephalosaurus_riders.special]
@@ -547,8 +547,8 @@ psychic = ["4+: shaken"]
 #name = "Elk Cavalery"
 #models = ["elk_cavalery", "elk_cavalery", "elk_cavalery", "elk_cavalery"]
 #size = "Medium"
-#cost.mp = 6
-#cost.xp = 2
+#cost.mp = 24
+#cost.xp = 8
 #[units.elk_cavalery.shaken]
 #speed = "slow"
 #movement_order = ["-", "-", "flee"]
@@ -578,8 +578,8 @@ race = "elf"
 name = "Pegasus Rider"
 models = ["pegasus_rider", "pegasus_rider"]
 size = "Medium"
-cost.mp = 4
-cost.xp = 6
+cost.mp = 16
+cost.xp = 24
 
 [units.pegasus_rider.special]
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
@@ -804,7 +804,7 @@ name = "SuperElite Elf Infantry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
-cost.xp = 2
+cost.xp = 8
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 
@@ -831,7 +831,7 @@ name = "Elite Elf Infantry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
-cost.xp = 1
+cost.xp = 4
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite"]
 
@@ -1037,7 +1037,7 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["smg_free", "twin_guns"]
 type = ["Bio", "Cavalry", "Walking"]
 replaces = "pachyephalosaurus_rider"
-cost.xp = 1
+cost.xp = 4
 
 [models.elite_pachyephalosaurus_rider.special]
 "To Hit" = "Good shot: +1"
@@ -1063,9 +1063,9 @@ race = "elf"
 name = "Saouropod Rider"
 models = ["sauropod"]
 size = "Huge"
-cost.mp = 2
-cost.xp = 12
-cost.cp = 12
+cost.mp = 8
+cost.xp = 48
+cost.cp = 48
 armor = [4, 3, 3, 3]
 
 [units.sauropod_riders.special]
@@ -1102,9 +1102,9 @@ race = "elf"
 name = "Oliphant Rider"
 models = ["oliphant", "crew", "crew", "crew", "crew"]
 size = "Large"
-cost.mp = 2
-cost.xp = 6
-cost.cp = 6
+cost.mp = 8
+cost.xp = 24
+cost.cp = 24
 armor = [8, 6, 4, 3]
 
 [units.armored_oliphant_riders.special]
@@ -1155,8 +1155,8 @@ race = "elf"
 name = "Eagle Rider"
 models = ["eagle_rider"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 8
+cost.mp = 8
+cost.xp = 32
 armor = [6, 6, 6, 6]
 
 #Cost change from 2mp and 8xp to 10xp.
@@ -1288,7 +1288,7 @@ ap = 5
 name = "TeslaBurstLaster"
 race = "elf"
 requires = [["type:Vehicle"], ["Minor Gun:1"]]
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 
 [equipment.teslaburstlaser.range]
@@ -1444,7 +1444,7 @@ ap = "6"
 name = "AT Rifle"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry"]]
-cost.cp = 8
+cost.cp = 32
 upgrade_all = true
 
 [equipment.at_rifle.range]
@@ -1457,7 +1457,7 @@ ap = "5"
 name = "Teslacoil Lance"
 race = "elf"
 requires = [["Independent:1"], ["type:Light Cavalry"]]
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 
 [equipment.teslacoil_lance.assault]
@@ -1472,7 +1472,7 @@ deflection_die.replace = "5+"
 name = "Elf Flame Arrow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry", "type:Crew"]]
-cost.cp = 8
+cost.cp = 32
 upgrade_all = true
 
 [equipment.elf_flame_arrow.range]
@@ -1549,7 +1549,7 @@ ap = "2"
 [equipment.enhanced_rifle]
 name = "Enhanced Rifle"
 race = "elf"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
@@ -1565,7 +1565,7 @@ ap = "2"
 [equipment.sniper_rifle]
 name = "Sniper Rifle"
 race = "elf"
-cost.cp = 6
+cost.cp = 24
 upgrade_all = false
 requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
@@ -1614,7 +1614,7 @@ ap = "7"
 name = "Hand Grenade"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 
 [equipment.hand_grenade.range]
@@ -1678,7 +1678,7 @@ ap = "5"
 name = "Deflection_field"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 
 [equipment.deflection_field.assault]
@@ -1689,7 +1689,7 @@ deflection_die.replace = "5+"
 name = "Elite Tank Crew"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
-cost.xp = 4
+cost.xp = 16
 upgrade_all = true
 
 [equipment.elite_tank_crew.model_special]
@@ -1699,7 +1699,7 @@ upgrade_all = true
 name = "Camouflage"
 race = "elf"
 requires = [["Independent:1"], ["type:Infantry"]]
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 
 [equipment.camouflage.unit_special]

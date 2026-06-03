@@ -15,7 +15,7 @@ models = [
 	"goblin_infantry"
 ]
 size = "Small"
-cost.mp = 2
+cost.mp = 8
 
 [units.goblin_infantry.shaken]
 speed = "slow"
@@ -48,7 +48,7 @@ name = "Goblin Infantry carrier"
 models = ["goblin_infantry_carrier"]
 size = "Large"
 armor = [10, 6, 5, 4]
-cost.ip = 4
+cost.ip = 16
 
 [units.goblin_infantry_carrier.shaken]
 speed = "still"
@@ -110,7 +110,7 @@ name = "Heavy carrier"
 models = ["heavy_carrier"]
 size = "Large"
 armor = [10, 8, 6, 4]
-cost.ip = 8
+cost.ip = 32
 
 [units.heavy_carrier.shaken]
 speed = "still"
@@ -188,7 +188,7 @@ name = "Mechanical Fire Bird"
 models = ["mechanical_fire_bird"]
 size = "Medium"
 armor = [5, 4, 4, 3]
-cost.ip = 6
+cost.ip = 24
 
 [units.mechanical_fire_bird.shaken]
 speed = "fast_flying"
@@ -295,7 +295,7 @@ ap = 1
 [models.elite_goblin_infantry]
 name = "Elite Goblin Infantry"
 race = "goblin"
-cost.xp = 1
+cost.xp = 4
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2", "Specialization:1"]
 equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
@@ -338,7 +338,7 @@ ap = "1"
 [equipment.gear_bow]
 name = "Gear bow"
 race = "goblin"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
@@ -346,7 +346,7 @@ requires = [["Hands:2"], ["type:Infantry"]]
 range = 3
 angle = [true, true, true, true]
 damage = "d4-2"
-ap = "1"
+ap = 1
 
 [equipment.gear_bow.range.special]
 "Ammo"= "Always treated as loaded"
@@ -356,7 +356,7 @@ ap = "1"
 [equipment.clockwork_wings]
 name = "Clockwork Wings"
 race = "goblin"
-cost.cp = 6
+cost.cp = 24
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
@@ -375,7 +375,7 @@ fast_flying = [
 [equipment.poison_bow]
 name = "Poison bow"
 race = "goblin"
-cost.cp = 4
+cost.cp = 16
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
@@ -383,7 +383,7 @@ requires = [["Hands:2"], ["type:Infantry"]]
 range = 2
 angle = [true, true, true, true]
 damage = "d4-2 + d4 crew damage"
-ap = "1"
+ap = 1
 
 [equipment.poison_bow.range.special]
 "Ammo" = "Always treated as loaded"
@@ -394,7 +394,7 @@ ap = "1"
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
 race = "goblin"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
@@ -422,7 +422,7 @@ still = [["Load", "-"], ["-", "Load"]]
 [equipment.poison_dagger]
 name = "Poison Deflection Dagger"
 race = "goblin"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
@@ -436,7 +436,7 @@ deflection_die.replace = "6+"
 [equipment.combat_screw_driver]
 name = "Combat Screw Driver"
 race = "goblin"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
@@ -465,7 +465,7 @@ ap = 2
 [equipment.grenadier]
 name = "Grenadier"
 race = "goblin"
-cost.xp = 2
+cost.xp = 8
 upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
@@ -478,7 +478,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 [equipment.commando]
 name = "Commando"
 race = "goblin"
-cost.xp = 8
+cost.xp = 32
 upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry"]]
 
@@ -503,7 +503,7 @@ deflection_die.replace = "6+"
 [equipment.archer]
 name = "Archer spesialization"
 race = "goblin"
-cost.xp = 2
+cost.xp = 8
 upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
@@ -516,7 +516,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 [equipment.acid_grenade]
 name = "Acid Grenade"
 race = "goblin"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Grenades:1"], ["type:Infantry"]]
 
@@ -535,7 +535,7 @@ ap = 0
 [equipment.poison_grenade]
 name = "Poison Grenade"
 race = "goblin"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Grenades:1"], ["type:Infantry"]]
 
@@ -555,7 +555,7 @@ ap = 0
 [equipment.acid_trap]
 name = "Acid Trap"
 race = "goblin"
-cost.cp = 4
+cost.cp = 16
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 

@@ -8,7 +8,7 @@ race = "ork"
 name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
-cost.mp = 4
+cost.mp = 16
 
 [units.ork_infantry.shaken]
 speed = "slow"
@@ -47,8 +47,8 @@ name = "Troll"
 race = "ork"
 models = ["troll"]
 size = "Huge"
-cost.xp = 12
-cost.cp = 2
+cost.xp = 48
+cost.cp = 8
 armor = [0, 0, 0, 0]
 
 # Move to description
@@ -103,8 +103,8 @@ race = "ork"
 name = "Warg Rider"
 models = ["warg_rider", "warg_rider"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 4
+cost.mp = 8
+cost.xp = 16
 
 [units.warg_rider.shaken]
 speed = "slow"
@@ -148,7 +148,7 @@ name = "Speedhead"
 race = "ork"
 models = ["speedhead"]
 size = "Medium"
-cost.ip = 6
+cost.ip = 24
 armor = [8, 7, 7, 7]
 
 [units.speedhead.shaken]
@@ -198,7 +198,7 @@ race = "ork"
 name = "HammerHead"
 models = ["hammerhead"]
 size = "Large"
-cost.ip = 8
+cost.ip = 32
 armor = [13, 8, 7, 7]
 
 [units.hammerhead.shaken]
@@ -259,7 +259,7 @@ race = "ork"
 name = "Battlewagon"
 models = ["battlewagon"]
 size = "Large"
-cost.ip = 8
+cost.ip = 32
 armor = [8, 7, 7, 6]
 
 [units.battlewagon.shaken]
@@ -315,7 +315,7 @@ name = "Grunt"
 race = "ork"
 models = ["grunt", "grunt", "grunt", "grunt"]
 size = "Medium"
-cost.mp = 2
+cost.mp = 8
 armor = [0, 0, 0, 0]
 
 [units.grunt.shaken]
@@ -342,8 +342,8 @@ name = "Ork WereWarg"
 race = "ork"
 models = ["ork_werewarg", "ork_werewarg", "ork_werewarg", "ork_werewarg"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 12
+cost.mp = 8
+cost.xp = 48
 armor = [0, 0, 0, 0]
 
 [units.ork_werewarg.shaken]
@@ -398,9 +398,9 @@ models = [
     "bioengineered_ork",
 ]
 size = "Medium"
-cost.mp = 4
-cost.xp = 2
-cost.cp = 1
+cost.mp = 16
+cost.xp = 8
+cost.cp = 4
 armor = [0, 0, 0, 0]
 
 [units.bioengineered_ork.shaken]
@@ -447,7 +447,7 @@ race = "ork"
 name = "Ork Char B1"
 models = ["ork_char_b1"]
 size = "Large"
-cost.ip = 12
+cost.ip = 48
 armor = [12, 10, 8, 7]
 
 [units.ork_char_b1.shaken]
@@ -579,7 +579,7 @@ ap = 2
 [models.ork_elite_infantry]
 name = "Ork Elite Infantry"
 race = "ork"
-cost.xp = 4
+cost.xp = 16
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
 replaces = "ork_infantry"
@@ -748,7 +748,7 @@ name = "Elite BioEngineered Ork"
 race = "ork"
 equipment_limit = ["Hands:4", "Independent:∞"]
 equipment = ["ork_musket", "ork_musket"]
-cost.xp = 1
+cost.xp = 4
 type = ["Bio", "Infantry", "Walking", "Elite"]
 replaces = "bioengineered_ork"
 
@@ -841,7 +841,7 @@ ap = 2
 [equipment.clockwork_shield]
 name = "Clockwork Shield"
 race = "ork"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
@@ -867,7 +867,7 @@ deflection_die.replace = "6+"
 [equipment.clockwork_wings]
 name = "Clockwork Wings"
 race = "ork"
-cost.cp = 4
+cost.cp = 16
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
@@ -893,7 +893,7 @@ fast_flying = [["Chase", "B(slow, land)", "-"]]
 [equipment.flame_covered_axe]
 name = "Flame-covered-axe"
 race = "ork"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = false
 requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 
@@ -917,7 +917,7 @@ damage.replace = "d6+1 + d4 crew damage"
 [equipment.poison_spikes]
 name = "Poison Spikes"
 race = "ork"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
@@ -927,7 +927,7 @@ requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 [equipment.clockwork_monocular]
 name = "Clockwork Monocular"
 race = "ork"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
@@ -937,7 +937,7 @@ requires = [["type:Infantry"], ["Independent:1"]]
 [equipment.clockwork_spear]
 name = "Clockwork Spear"
 race = "ork"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 
@@ -950,7 +950,7 @@ damage.replace = "d8"
 [equipment.clockwork_power_spear]
 name = "Clockwork Power Spear"
 race = "ork"
-cost.cp = 3
+cost.cp = 12
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:2"]]
 
@@ -966,7 +966,7 @@ deflection_die.replace = "6+"
 [equipment.ork_pistol]
 name = "Ork Pistol"
 race = "ork"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 
@@ -986,8 +986,8 @@ slow = [["fire", "-"], ["-", "fire"]]
 [equipment.pyro]
 name = "Pyro"
 race = "ork"
-cost.cp = 2
-cost.xp = 4
+cost.cp = 8
+cost.xp = 16
 upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry"], ["Independent:1"]]
 
@@ -1015,7 +1015,7 @@ all = [["-", "Throw"]]
 [equipment.hand_held_cannon]
 name = "Hand Held Cannon"
 race = "ork"
-cost.cp = 8
+cost.cp = 32
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Shared:1"]]
 
@@ -1033,7 +1033,7 @@ ap = 9
 [equipment.war_drum]
 name = "War Drum"
 race = "ork"
-cost.xp = 2
+cost.xp = 8
 upgrade_all = true
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
@@ -1044,7 +1044,7 @@ requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 [equipment.harpoon_gun]
 name = "Harpoon Gun"
 race = "ork"
-cost.cp = 4
+cost.cp = 16
 upgrade_all = true
 requires = [["type:Infantry"], ["Shared:1"]]
 
@@ -1076,7 +1076,7 @@ ap = 2
 [equipment.grenade_sling]
 name = "Grenade Sling"
 race = "ork"
-cost.cp = 6
+cost.cp = 24
 upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry"], ["Hands:1"]]
 
@@ -1171,7 +1171,7 @@ ap = 8
 [equipment.tankscalper]
 race = "ork"
 name = "Tankscalper"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
@@ -1181,7 +1181,7 @@ requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 [equipment.healing_syringe]
 race = "ork"
 name = "Healing Syringe"
-cost.cp = 1
+cost.cp = 2
 upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
 
@@ -1191,7 +1191,7 @@ requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
 [equipment.hand_catapult]
 race = "ork"
 name = "Hand Catapult"
-cost.cp = 9
+cost.cp = 32
 upgrade_all = true
 requires = [["type:Infantry"], ["Hands:3"]]
 
@@ -1249,7 +1249,7 @@ ap = 3
 [equipment.assault_musket]
 race = "ork"
 name = "Assault_Musket"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry"], ["Hands:2"]]
 

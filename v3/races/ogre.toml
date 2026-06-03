@@ -11,8 +11,8 @@ race = "ogre"
 name = "Ogre Hydra"
 models = ["ogre_hydra", "ogre_crew", "ogre_crew"]
 size = "Huge"
-cost.mp = 4
-cost.xp = 24
+cost.mp = 16
+cost.xp = 96
 
 [units.ogre_hydra.shaken]
 speed = "slow"
@@ -53,7 +53,7 @@ name = "Ogre Infantry"
 description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, thoughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
-cost.mp = 4
+cost.mp = 16
 
 [units.ogre_infantry.shaken]
 speed = "slow"
@@ -92,7 +92,7 @@ models = ["ogre_robot", "ogre_robot"]
 name = "Ogre Robot"
 description = "Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they try to compensate by making medium sized robots. Although being only medium size, they are strong enough to fire large ogre rifles. However, the robots are not as good in close combat compared to the regular ogre infantry."
 size = "Medium"
-cost.cp = 4
+cost.cp = 16
 armor = [3, 3, 0, 0]
 
 [units.ogre_robot.shaken]
@@ -130,7 +130,7 @@ race = "ogre"
 name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
-cost.xp = 2
+cost.xp = 8
 description = "A Panther is viewed as a cute kitten, with useful properties by the ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities"
 
 [units.pet_panther.shaken]
@@ -174,8 +174,8 @@ name = "Ogre Assault Scout"
 description = "Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furrious, wreking caos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
 models = ["ogre_assault_scout"]
 size = "Large"
-cost.mp = 2
-cost.xp = 4
+cost.mp = 8
+cost.xp = 16
 
 [units.ogre_assault_scout.shaken]
 speed = "slow"
@@ -221,7 +221,7 @@ race = "ogre"
 name = "Drone_swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
-cost.cp = 1
+cost.cp = 4
 description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre themself are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
 
 [units.drone_swarm.shaken]
@@ -271,7 +271,7 @@ race = "ogre"
 name = "Repair Drone"
 models = ["repair_drone", "repair_drone", "repair_drone", "repair_drone"]
 size = "Tiny"
-cost.cp = 4
+cost.cp = 16
 description = "A group of 4 tiny drones designed to repair other drones, robots and the huge ogre tanks and vehicles."
 
 [units.repair_drone.shaken]
@@ -295,8 +295,8 @@ name = "Medic Drone"
 models = ["medic_drone", "medic_drone", "medic_drone", "medic_drone"]
 size = "Tiny"
 description = "A group of 4 tiny drones designed to heal infantry. They have become the ogre assault scouts best friends"
-cost.cp = 2
-cost.xp = 2
+cost.cp = 8
+cost.xp = 8
 
 [units.medic_drone.shaken]
 speed = "slow"
@@ -318,7 +318,7 @@ race = "ogre"
 name = "Main engine"
 models = ["main_engine"]
 size = "Huge"
-cost.ip = 8
+cost.ip = 32
 armor = [12, 10, 10, 8]
 
 [units.main_engine.shaken]
@@ -385,7 +385,7 @@ race = "ogre"
 name = "Broadside Wagon"
 models = ["broadside_wagon"]
 size = "Large"
-cost.ip = 4
+cost.ip = 16
 armor = [2, 10, 10, 8]
 
 [units.broadside_wagon.shaken]
@@ -420,7 +420,7 @@ race = "ogre"
 name = "Artillery Wagon"
 models = ["artillery_wagon"]
 size = "Large"
-cost.ip = 4
+cost.ip = 16
 armor = [2, 10, 10, 8]
 
 [units.artillery_wagon.shaken]
@@ -552,7 +552,7 @@ ap = 3
 [models.ogre_scout_engineer]
 name = "Ogre Scout Engineer"
 race = "ogre"
-cost.xp = 4
+cost.xp = 16
 replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["gear_pistol", "ogre_sword_free"]
@@ -731,7 +731,7 @@ ap = 3
 name = "Ogre Elite Infantry"
 race = "ogre"
 replaces = "ogre_infantry"
-cost.xp = 1
+cost.xp = 4
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
@@ -751,7 +751,7 @@ ap = 2
 name = "Elite Ogre Robot"
 race = "ogre"
 replaces = "ogre_robot"
-cost.xp = 1
+cost.xp = 4
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
@@ -771,7 +771,7 @@ ap = 2
 name = "Ogre Medic"
 race = "ogre"
 replaces = "ogre_infantry"
-cost.xp = 1
+cost.xp = 4
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Medic"]
@@ -794,7 +794,7 @@ ap = 2
 name = "Ogre Engineer"
 race = "ogre"
 replaces = "ogre_infantry"
-cost.xp = 2
+cost.xp = 8
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
@@ -819,7 +819,7 @@ ap = 2
 [equipment.ogre_sniper_rifle]
 name = "Ogre Sniper Rifle"
 race = "ogre"
-cost.cp = 8
+cost.cp = 32
 upgrade_all = false
 requires = [["Hands:2"], ["type:Infantry"], ["type:Elite"]]
 
@@ -848,7 +848,7 @@ ap = 2
 [equipment.drone_supply]
 name = "Drone Supply"
 race = "ogre"
-cost.ip = 1
+cost.ip = 4
 upgrade_all = true
 requires = [["Independent:1"], ["type:Carrier"]]
 
@@ -892,7 +892,7 @@ ap = 6
 [equipment.fancy_ogre_rifle]
 name = "Fancy Ogre Rifle"
 race = "ogre"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Crew"]]
 
@@ -905,7 +905,7 @@ ap = 2
 [equipment.enhanced_fancy_ogre_rifle]
 name = "Enhanced Fancy Ogre Rifle"
 race = "ogre"
-cost.cp = 6
+cost.cp = 24
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Crew"]]
 
@@ -933,7 +933,7 @@ ap = 2
 name = "Fancy Arquebus broadside"
 race = "ogre"
 requires = [["Broadside:1"], ["type:Mechanical"]]
-cost.cp = 6
+cost.cp = 24
 upgrade_all = true
 
 [equipment.fancy_arquebus_broadside.range]
@@ -945,7 +945,7 @@ ap = 4
 [equipment.fancy_arquebus]
 name = "Fancy Arquebus"
 race = "ogre"
-cost.cp = 4
+cost.cp = 16
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry", "type:Crew"]]
 
@@ -969,7 +969,7 @@ ap = 2
 [equipment.fancy_gear_pistol]
 name = "Fancy Gear Pistol"
 race = "ogre"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Hands:1"], ["type:Scout", "type:Infantry"]]
 
@@ -1017,7 +1017,7 @@ requires = [["Reserve Melee:1"], ["type:Infantry"]]
 [equipment.ogre_sword]
 name = "Ogre Sword"
 race = "ogre"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
@@ -1027,7 +1027,7 @@ requires = [["Reserve Melee:1"], ["type:Infantry"]]
 [equipment.fancy_ogre_sword]
 name = "Fancy Ogre Sword"
 race = "ogre"
-cost.cp = 3
+cost.cp = 12
 upgrade_all = false
 requires = [["Reserve Melee:1"], ["type:Scout"], ["type:Elite"]]
 
@@ -1037,7 +1037,7 @@ requires = [["Reserve Melee:1"], ["type:Scout"], ["type:Elite"]]
 [equipment.fancy_warhammer]
 name = "Fancy WarHammer"
 race = "ogre"
-cost.cp = 4
+cost.cp = 16
 upgrade_all = false
 requires = [["Reserve Melee:1"], ["type:Scout", "type:Infantry"]]
 

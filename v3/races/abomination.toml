@@ -15,7 +15,7 @@ models = [
 	"abomination_infantry",
 ]
 size = "Medium"
-cost.mp = 8
+cost.mp = 32
 
 [units.abomination_infantry.shaken]
 speed = "slow"
@@ -52,7 +52,7 @@ race = "abomination"
 name = "Horror"
 models = ["horror"]
 size = "Huge"
-cost.xp = 8
+cost.xp = 32
 armor = [6, 4, 2, 1]
 
 [units.horror.shaken]
@@ -87,7 +87,7 @@ race = "abomination"
 name = "Shriek Monstrosity"
 models = ["shriek_monstrosity"]
 size = "Large"
-cost.xp = 6
+cost.xp = 24
 
 [units.shriek_monstrosity.shaken]
 speed = "slow"
@@ -129,7 +129,7 @@ models = [
 	"robot_crab",
 ]
 size = "Tiny"
-cost.cp = 1
+cost.cp = 4
 armor = [3, 3, 3, 3]
 
 [units.robot_crab.shaken]
@@ -150,8 +150,8 @@ race = "abomination"
 name = "Giant Frog Riders"
 models = ["giant_frog_rider", "giant_frog_rider"]
 size = "Medium"
-cost.mp = 2
-cost.xp = 4
+cost.mp = 8
+cost.xp = 16
 
 [units.giant_frog_riders.shaken]
 speed = "slow"
@@ -189,8 +189,8 @@ race = "abomination"
 name = "Hippopotamus Riders"
 models = ["hippopotamus_riders"]
 size = "Large"
-cost.mp = 2
-cost.xp = 8
+cost.mp = 8
+cost.xp = 32
 armor = [6, 5, 4, 2]
 
 [units.hippopotamus_riders.shaken]
@@ -234,7 +234,7 @@ name = "Squid"
 models = ["squid"]
 size = "Large"
 armor = [8, 6, 5, 4]
-cost.ip = 6
+cost.ip = 24
 
 [units.squid.shaken]
 speed = "still"
@@ -294,7 +294,7 @@ name = "MotherShip Squid"
 models = ["mothership_squid"]
 size = "Huge"
 armor = [10, 9, 6, 4]
-cost.ip = 18
+cost.ip = 72
 
 [units.mothership_squid.special]
 "Fog" = "Has a fog manipulator: for all hexes within range=2 of the mothership, you may choose to either forgo removing a fog, or remove an extra fog"
@@ -356,7 +356,7 @@ name = "Frost 88"
 models = ["frost88"]
 size = "Large"
 armor = [10, 8, 7, 6]
-cost.ip = 12
+cost.ip = 48
 
 [units.frost88.shaken]
 speed = "still"
@@ -547,7 +547,7 @@ ap = 2
 [models.mothership_squid]
 name = "MotherShip Squid"
 race = "abomination"
-equipment = ["greater_confusion_stinger", "great_insanity_stinger", "greater_disruptor_stinger"]
+equipment = ["greater_confusion_stinger", "greater_insanity_stinger", "greater_disruptor_stinger"]
 equipment_limit = ["Independent:∞", "Mechanical Tentacles:12"]
 type = ["Vehicle", "Mechanical", "Floating", "Bio Crew"]
 
@@ -588,7 +588,7 @@ ap = 2
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
 race = "abomination"
-cost.xp = 1
+cost.xp = 4
 equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:8"]
 equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
@@ -744,7 +744,7 @@ ap = "N/A"
 [equipment.tentacle_craclespears]
 name = "Tentacle CracleSpears"
 race = "abomination"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
@@ -760,7 +760,7 @@ deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 112
 [equipment.tentacle_axes]
 name = "Tentacle Axes"
 race = "abomination"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Tentacles:2"], ["type:Infantry"]]
 
@@ -770,7 +770,7 @@ strength.add = [2, 0, 0, 0]
 [equipment.tentacle_shield]
 name = "Tentacle Shield"
 race = "abomination"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Tentacles:1"], ["type:Infantry"]]
 
@@ -784,7 +784,7 @@ deflection_die.replace = "5+"
 [equipment.frog_armor]
 name = "Frog Cavalry Armor"
 race = "abomination"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["type:Frog"]]
 
@@ -794,7 +794,7 @@ requires = [["type:Frog"]]
 [equipment.fog_grenade_mortar]
 name = "Fog Grenade Mortar"
 race = "abomination"
-cost.cp = 6
+cost.cp = 24
 upgrade_all = true
 requires = [["Tentacles:4"], ["type:Infantry"]]
 
@@ -814,7 +814,7 @@ ap = "N/A"
 [equipment.long_range_fog_grenade_mortar]
 name = "Long Range Fog Grenade Mortar"
 race = "abomination"
-cost.cp = 10
+cost.cp = 40
 upgrade_all = true
 requires = [["Tentacles:4"], ["type:Infantry"]]
 
@@ -860,7 +860,7 @@ ap = "3"
 [equipment.tentacle_dart]
 name = "Tentacle Dart"
 race = "abomination"
-cost.cp = 1
+cost.cp = 4
 upgrade_all = true
 requires = [["Tentacles:1"], ["type:Infantry", "type:Cavalry"]]
 
@@ -890,7 +890,7 @@ ap = "N/A"
 [equipment.fog_poisonizer]
 name = "Fog Poisonizer"
 race = "abomination"
-cost.cp = 2
+cost.cp = 8
 upgrade_all = true
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 

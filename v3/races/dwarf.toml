@@ -16,7 +16,7 @@ models = [
 ]
 size = "medium"
 armor = [0, 0, 0, 0]
-cost.mp = 4
+cost.mp = 16
 special = ["Poison Resistance 2, Fire Resistance 1", "Take Cover[still][-2]"]
 shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
 
@@ -48,7 +48,7 @@ name = "Dwarf Brother in arms"
 models = ["dwarf_brotherinarms", "dwarf_brotherinarms"]
 size = "medium"
 armor = [0, 0, 0, 0]
-cost.mp = 2
+cost.mp = 8
 special = ["Poison Resistance 3, Fire Resistance 2", "Take Cover[still][-1]"]
 shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
 
@@ -85,9 +85,9 @@ models = [
 ]
 size = "Medium"
 armor = [7, 6, 6, 5]
-cost.mp = 4
-cost.cp = 2
-cost.ip = 2
+cost.mp = 16
+cost.cp = 8
+cost.ip = 8
 special = [
     "Poison Resistance 4, Fire Resistance 2",
     "Steady[slow]: +1 to hit, +1 to-be hit while slow",
@@ -129,9 +129,9 @@ name = "Mini Zeppelin"
 models = ["mini_zeppelin", "mini_zeppelin", "mini_zeppelin"]
 size = "medium"
 armor = [0, 0, 0, 0]
-cost.cp = 4
-cost.xp = 4
-cost.mp = 2
+cost.cp = 16
+cost.xp = 16
+cost.mp = 8
 special = [
     "Poison Resistance 3",
     "Floats",
@@ -156,7 +156,7 @@ name = "Transport Zeppelin"
 models = ["transport_zeppelin"]
 size = "medium"
 armor = [6, 5, 0, 0]
-cost.cp = 4
+cost.cp = 8
 special = [
     "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders",
     "May not transport any infantri with wheeled shieldwall",
@@ -193,9 +193,9 @@ name = "Dwarf AT-gun"
 models = ["dwarf_at_gun"]
 size = "Large"
 armor = [7, 0, 0, 0]
-cost.cp = 6
-cost.xp = 4
-cost.mp = 2
+cost.cp = 24
+cost.xp = 16
+cost.mp = 8
 special = ["Poison Resistance 2, Fire resistance 1"]
 shaken = "Movement set to still. Movement order: [-,-,-]. May not fire weapons"
 
@@ -223,7 +223,7 @@ name = "GunBlasterWagon"
 models = ["gunblasterwagon"]
 size = "Large"
 armor = [8, 10, 10, 7]
-cost.ip = 6
+cost.ip = 24
 special = [
     "Fire Resistance 2",
     "optimal Point blank: +1 to hit at point blank range",
@@ -293,7 +293,7 @@ name = "Dw42"
 models = ["dw42"]
 size = "Large"
 armor = [13, 10, 10, 9]
-cost.ip = 18
+cost.ip = 73
 special = ["Fire Resistance 2"]
 shaken = "Movement set to still. Movement order: [-,-,-]. May not fire weapons"
 
@@ -353,7 +353,7 @@ name = "Zap"
 models = ["zap"]
 size = "Large"
 armor = [10, 8, 8, 7]
-cost.ip = 8
+cost.ip = 32
 special = [
     "Fire and load all weapons at the same time",
     "Loses aim when moving away from the hex where it aimed",
@@ -420,8 +420,8 @@ name = "Zeppelin"
 models = ["zeppelin"]
 size = "huge"
 armor = [8, 8, 8, 8]
-cost.ip = 24
-cost.xp = 12
+cost.ip = 96
+cost.xp = 48
 special = [
     "Steady: +1 to hit, +1 to be hit.",
     "Repair[2, self, healing 2]",
@@ -461,7 +461,7 @@ name = "Tamed Balrog"
 models = ["tamed_balrog"]
 size = "Huge"
 armor = [8, 7, 7, 6]
-cost.xp = 24
+cost.xp = 96
 special = [
     "Fire Resistance 12, Poison Resistance 6",
     "Terror[8][range=2]",
@@ -536,7 +536,7 @@ race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
 equipment = ["musket"]
 type = ["elite", "infantry", "walks", "bio"]
-cost.xp = 1
+cost.xp = 4
 replaces = ["dwarf_infantry"]
 special = [
     "good shot: +1 to hit",
@@ -559,7 +559,7 @@ race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
 equipment = ["heavy_musket_free"]
 type = ["elite", "steampowerarmor", "walks", "bio"]
-cost.xp = 6
+cost.xp = 24
 replaces = ["steampowerarmor"]
 special = [
     "good shot: +1 to hit",
@@ -582,7 +582,7 @@ race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
 equipment = ["heavy_musket_free"]
 type = ["elite", "steampowerarmor", "walks", "bio"]
-cost.xp = 6
+cost.xp = 24
 replaces = ["steampowerarmor"]
 special = [
     "unit gains psychic resistance 2 as long as 1 battle medic is alive",
@@ -605,7 +605,7 @@ race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
 equipment = ["heavy_musket_free"]
 type = ["steampowerarmor", "walks", "bio"]
-cost.xp = 6
+cost.xp = 24
 replaces = ["steampowerarmor"]
 special = ["Unit gains: Repair[3, any, Healing 1]"]
 
@@ -624,7 +624,7 @@ race = "dwarf"
 equipment_limit = ["hands:2", "shared:1", "independent:∞"]
 equipment = ["musket"]
 type = ["infantry", "walks", "bio"]
-cost.xp = 4
+cost.xp = 16
 replaces = ["dwarf_infantry"]
 special = ["Unit gains: Repair[3, any, Healing 1]"]
 
@@ -679,7 +679,7 @@ equipment_limit = ["independent:∞"]
 equipment = ["axethrower_machine", "poison_gas_grenade"]
 type = ["open_vehicle", "floats", "bio"]
 replaces = ["mini_zeppelin"]
-cost.xp = 2
+cost.xp = 8
 special = ["Unit gains: Repair[2, self, Healing 1]"]
 
 [models.engineer_mini_zeppelin.assault]
@@ -826,14 +826,14 @@ special = []
 [equipment.industrial_small_arms]
 name = "Industrial Small Arms production"
 race = "dwarf"
-cost.ip = 1
-cost.cp = -3
+cost.ip = 4
+cost.cp = -12
 requires = [["type:infantry", "type:steampowerarmor"]]
 
 [equipment.musket_with_springloaded_axe]
 name = "Musket With Springloaded Axe"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 special = ["Gun automatically loaded after an assault"]
 requires = [["hands:2"], ["type:infantry"]]
 
@@ -854,7 +854,7 @@ slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
 [equipment.double_barrled_musket_with_springloaded_axe]
 name = "Doubled Barreled Musket With Springloaded Axe"
 race = "dwarf"
-cost.cp = 4
+cost.cp = 16
 special = ["Gun automatically loaded after an assault"]
 requires = [["hands:2"], ["type:infantry"]]
 
@@ -875,7 +875,7 @@ slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
 [equipment.blast_sticks]
 name = "Blast Sticks"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["hands:2"], ["type:infantry"]]
 
 [equipment.blast_sticks.assault]
@@ -887,7 +887,7 @@ ap.replace = 5
 [equipment.infantry_platform]
 name = "Infantry Platform"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["independent:1"], ["type:vehicle"]]
 special = [
     "Tank Riders: While an infantry is in slow, and sharing a hex with this vehicle, you may use the movement order of the vehicle instead of your infantry movement when placing orders. Speed of infantry is set to slow after movement",
@@ -896,7 +896,7 @@ special = [
 [equipment.springloaded_vehicle_assault_weapons]
 name = "Springloaded Vehicle Assault Weapons"
 race = "dwarf"
-cost.cp = 4
+cost.cp = 16
 requires = [["independent:1"], ["type:vehicle"]]
 
 [equipment.springloaded_vehicle_assault_weapons.assault]
@@ -908,7 +908,7 @@ damage.replace = "d6-2 + d6 psychic damage"
 [equipment.wheeled_shieldwall]
 name = "Wheeled ShieldWall"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["independent:1"], ["type:infantry"]]
 special = ['Unit gains [5,0,0,0] in armor']
 
@@ -920,7 +920,7 @@ special.append = "-1 in assault strength (per model) if speed is not still. Don'
 [equipment.elite_crew]
 name = "Elite Crew"
 race = "dwarf"
-cost.xp = 4
+cost.xp = 16
 requires = [["crew:1"], ["type:vehicle"]]
 special = ["Gains good shot: +1 to hit"]
 
@@ -942,8 +942,8 @@ special = [
 [equipment.jet_pack]
 name = "Jet Pack"
 race = "dwarf"
-cost.cp = 2
-cost.xp = 2
+cost.cp = 8
+cost.xp = 8
 special = [
     "Once per game in any single movement phase, instead of your normal movement, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex, but keep your orientation. This may initialize an assault if the hex is occupied by enemy forces.",
 ]
@@ -952,7 +952,8 @@ requires = [["independent:1"], ["type:steampowerarmor"]]
 [equipment.superblaster]
 name = "Super Blaster"
 race = "dwarf"
-model_cost.cp = 8
+cost.cp = 32
+upgrade_all = False
 requires = [["type: steampowerarmor"], ["type: elite"], ["hands:2"]]
 
 [equipment.superblaster.range]
@@ -965,7 +966,8 @@ special = []
 [equipment.bigblaster]
 name = "Big Blaster"
 race = "dwarf"
-model_cost.cp = 4
+cost.cp = 4
+upgrade_all = False
 requires = [["type: infantry"], ["shared:1"]]
 
 [equipment.bigblaster.range]
@@ -978,7 +980,7 @@ special = ["Require atleast 2 alive models in unit to be used"]
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["type:infantry", "type:steampowerarmor"], ["independent:1"]]
 special = [
     "Unit gains 1 endurence token per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect",
@@ -987,7 +989,7 @@ special = [
 [equipment.stabilizer]
 name = "Stabilizer"
 race = "dwarf"
-cost.cp = 4
+cost.cp = 16
 requires = [["type: infantry", "type:steampowerarmor"], ["independent:1"]]
 special = ["All guns gain Enhanced accurazy. +1 to hit"]
 
@@ -997,7 +999,7 @@ slow = [["-", "aim"], ["aim", "-"]]
 [equipment.trenchcoat_of_resistance]
 name = "Trench Coat of Resistance"
 race = "dwarf"
-cost.cp = 1
+cost.cp = 4
 requires = [["type:infantry", "type:steampowerarmor"], ["independent:1"]]
 special = [
     "Unit improves poison resistance and fire reistance with 1",
@@ -1007,7 +1009,7 @@ special = [
 [equipment.brotherinarms_armor]
 name = "Brother in Arms Armor"
 race = "dwarf"
-cost.ip = 1
+cost.ip = 4
 requires = [["type: brotherinarms"], ["independent:1"]]
 special = [
     "Unit gains 2 endurence tokens per elite model in the unit. See general rules for effect",
@@ -1019,7 +1021,7 @@ special = [
 [equipment.steamblower]
 name = "Steamblower"
 race = "dwarf"
-cost.cp = 4
+cost.cp = 16
 requires = [["type: steampowerarmor"], ["hands:2"]]
 
 [equipment.steamblower.range]
@@ -1086,11 +1088,11 @@ special = ["Fire two times at same target"]
 [equipment.fear_ray]
 name = "Fear Ray"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["type: steampowerarmor"], ['hands: 2']]
 
 [equipment.fear_ray.range]
-range = 4
+range = 16
 angle = [true, false, false, false]
 damage = "d6 psychic damage"
 ap = 0
@@ -1173,7 +1175,7 @@ special = []
 [equipment.heavy_musket]
 name = "Heavy Musket"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["hands:2"], ["type:infantry"]]
 
 [equipment.heavy_musket.range]
@@ -1186,7 +1188,7 @@ special = []
 [equipment.enhanced_heavy_musket]
 name = "Enhanced Heavy Musket"
 race = "dwarf"
-cost.cp = 6
+cost.cp = 24
 requires = [["hands:2"], ["type:infantry"]]
 
 [equipment.enhanced_heavy_musket.range]
@@ -1199,7 +1201,7 @@ special = []
 [equipment.ultra_heavy_musket]
 name = "Ultra Heavy Musket"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["hands:2"], ["type:steampowerarmor"]]
 
 [equipment.ultra_heavy_musket.range]
@@ -1212,7 +1214,7 @@ special = []
 [equipment.double_barrled_long_range_heavy_musket]
 name = "Double Barreled Long_Range Heavy Musket"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["hands:2"], ["type:steampowerarmor"]]
 
 [equipment.double_barrled_long_range_heavy_musket.range]
@@ -1225,7 +1227,7 @@ special = ["Fire two shots per fire order per model"]
 [equipment.multi_barrled_heavy_musket]
 name = "Multibarreled Heavy Musket"
 race = "dwarf"
-cost.cp = 2
+cost.cp = 8
 requires = [["hands:2"], ["type:steampowerarmor"]]
 
 [equipment.multi_barrled_heavy_musket.range]
@@ -1238,7 +1240,8 @@ special = ["Fire three shots per model"]
 [equipment.rocket_jackhammer]
 name = "Rocket Jackhammer"
 race = "dwarf"
-model_cost.cp = 2
+cost.cp = 2
+upgrade_all = False
 requires = [["hands:2"], ["type:steampowerarmor"], ["type: elite"]]
 
 [equipment.rocket_jackhammer.assault]
@@ -1274,7 +1277,7 @@ special = [
 [equipment.hide]
 name = "Hide"
 race = "dwarf"
-cost.xp = 8
+cost.xp = 32
 requires = [["training:1"], ["type:at_gun"]]
 special = [
     "While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror",
