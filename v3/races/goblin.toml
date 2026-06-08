@@ -224,7 +224,7 @@ inner = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
 [models.goblin_infantry]
 name = "Goblin Infantry"
 race = "goblin"
-equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1"]
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1", "Special Arrows:3"]
 equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Walking"]
 
@@ -330,10 +330,52 @@ requires = [["Hands:2"], ["type:Infantry"]]
 range = 2
 angle = [true, true, true, true]
 damage = "d4-2"
-ap = "1"
+ap = 1
 
 [equipment.goblin_bow.range.special]
 "Ammo" = "Always treated as loaded"
+
+
+[equipment.seeker_arrow]
+name = "Goblin bow with limited seeker arrows"
+race = "goblin"
+requires = [["Special Arrows:3"], ["type:Infantry"]]
+cost.cp = 8
+upgrade_all = true
+
+[equipment.seeker_arrow.model_special]
+"To Hit (2)" = "+2 to hit if using seeker arrow"
+
+[equipment.seeker_arrow.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d4-2"
+ap = 1
+
+[equipment.seeker_arrow.range.special]
+"Ammo" = "Limited Ammo[3]"
+
+
+
+[equipment.assasin_seeker_arrow]
+name = "Seeker Assasin Arrow"
+race = "goblin"
+requires = [["Hands:2"], ["type:Infantry"]]
+cost.cp = 16
+upgrade_all = true
+
+[equipment.assasin_seeker_arrow.model_special]
+"To Hit (2)" = "+2 to hit if using seeker arrow"
+
+[equipment.assasin_seeker_arrow.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d4-2"
+ap = 1
+
+[equipment.assasin_seeker_arrow.range.special]
+"Ammo" = "Limited Ammo[4]. Each model have one assasin seeker arrow each, which may be used once per game. Spend one limited ammo per model firing this weapon."
+"Extra Damage" = "Poison[12]"
 
 [equipment.gear_bow]
 name = "Gear bow"
@@ -487,7 +529,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 "Evation" = "[2+]"
 "Hidden" = "Unit has the Hidden and Hide[ruins, forrest] special effects."
 "Forward Position" = "[2]"
-"Fire Order" = "For each fire order: in any round you have reveal bonus, you may fire a bow twice at one target and throw two grenades at another target"
+"Fire Order" = "In any round you have reveal bonus, you may fire a bow three times at one target or throw three grenades at one target"
 
 [equipment.commando.orders_gained.movement]
 still = [
@@ -635,3 +677,16 @@ ap = 0
 "Area" = "[6+]"
 "Range" = "Targe at all enemies within exacatly range 2"
 "Extra Damage" = "All units hit at least once is set on fire"
+
+[equipment.assault_archer]
+name = "Assault Archer"
+race = "goblin"
+requires = [["Hands:2"], ["type:Archer"]]
+cost.xp = 8
+upgrade_all = true
+
+[equipment.assault_archer.assault]
+
+
+[equipment.assault_archer.assault.special]
+"Retreat" = "Unit gains aim if you manage to pre-esscape an assault"

@@ -42,6 +42,7 @@ type EquipmentHolder = Literal[
     "Grenades",
     "Broadside",
     "Hands",
+    "Special Arrows",
     "Mechanical Tentacles",
     "Shared",
     "Specialization",
@@ -148,6 +149,7 @@ type AssaultSpecial = Literal[
 type RangeSpecial = Literal[
     "Extra Damage",
     "Critical",
+    "Fumble",
     "Sniper",
     "Improved Aim",
     "Indirect Fire",
@@ -199,6 +201,7 @@ type ModelType = Literal[
     "Carrier",
     "Towed",
     "Monster",
+    "Archer",
     "Tinkerer",
     "Brother in Arms",
     "Roboprosthetic",
@@ -207,6 +210,10 @@ type ModelType = Literal[
     "Grunt",
     "Medic",
     "Officer",
+    "Dwalf",
+    "Ogrin",
+    "Gnolf",
+    "Orlf"
 ]
 
 

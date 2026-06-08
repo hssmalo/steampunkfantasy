@@ -486,7 +486,7 @@ cost.xp = 24
 
 [units.multicultural_infantry.special]
 "Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural_trainee in aftermath phase, such that you have a maximum of 10 models in this unit"
-"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural_trainee units rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving"
+"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural tranee units which has more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving. "
 "Spawn" = "At start of battle, place two Multicultural Trainee units directly in front of this unit"
 "Forward Position" = "[2]"
 "Fire Order" = "Activate order only available while officer is alive"
@@ -946,7 +946,7 @@ ap = 2
 "Penalty" = "Reroll all success in assault while crawling"
 
 [models.multicultural_infantry]
-name = "Multicultural Infantry"
+name = "Generic Multicultural Infantry"
 race = "darkelf"
 equipment_limit = []
 equipment = ["collar"]
@@ -959,6 +959,88 @@ deflection = [0, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
+
+[models.dwalf_infantry]
+name = "Dwalf Infantry"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipment = []
+type = ["Bio", "Dwalf", "Infantry", "Walking"]
+replaces = "multicultural_infantry"
+cost.mp = 1
+description = "HalfDwarf and HalfElf. More loyal to the Darkelf than not."
+
+[models.dwalf_infantry.assault]
+strength = [1, 1, 1, 1]
+strength_die = "4+"
+deflection = [1, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+
+
+[models.gnolf_tinkerer]
+name = "Gnolf Tinkerer"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipment = []
+type = ["Bio", "Gnolf", "Infantry", "Walking"]
+replaces = "multicultural_infantry"
+cost.mp = 1
+cost.xp = 1
+cost.cp = -1
+description = "HalfGnome and HalfElf. More loyal to the Darkelf than not."
+
+[models.gnolf_tinkerer.assault]
+strength = [1, 1, 1, 1]
+strength_die = "5+"
+deflection = [1, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+
+
+[models.orlf_infantry]
+name = "Orlf"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
+equipment = []
+type = ["Bio", "Orlf", "Infantry", "Walking"]
+replaces = "multicultural_infantry"
+cost.mp = 4
+description = "HalfOrk and HalfElf. More loyal to the Darkelf than not."
+
+[models.orlf_infantry.assault]
+strength = [2, 0, 0, 0]
+strength_die = "6+"
+deflection = [1, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+
+[models.orlf_infantry.assault.special]
+"Ork Reroll" = "[3]"
+
+
+
+[models.ogrin_infantry]
+name = "Ogrin Infantry"
+race = "darkelf"
+equipment_limit = ["Hands:2", "Independent:∞"]
+equipment = []
+type = ["Bio", "Ogrin", "Infantry", "Walking"]
+replaces = "multicultural_infantry"
+cost.mp = 3
+description = "HalfOgre and HalfGoblin."
+
+[models.ogrin_infantry.assault]
+strength = [3, 1, 1, 1]
+strength_die = "5+"
+deflection = [0, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6"
+ap = 2
+
 
 [models.darkelf_officer]
 name = "Dark Elf Officer"
@@ -1540,7 +1622,7 @@ damage = "d4-3"
 ap = 1
 
 [equipment.laser_eyes.range.special]
-"Critical" = "If a natural 6 is rolled for to hit (and you hit the enemy): unit is set on fire."
+"Critical" = "If Critical: unit is set on fire."
 "Multiple Shots" = "Fire two time per functional head (minor and major)"
 
 
@@ -1640,3 +1722,45 @@ requires = []
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
 slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
 crawl = [["Hide[ruins]", "-", "-"]]
+
+[equipment.vest_of_life_support]
+name = "Vest of Life Support"
+race = "darkelf"
+cost.cp = 8
+requires = [["Independent:1"], ["type:Dwalf"],]
+upgrade_all = true
+
+[equipment.vest_of_life_support.unit_special]
+"Protection" =  "Unit gains 1 endurence token per Dwalf model"
+
+
+[equipment.ogrin_bow]
+name = "Ogrin bow"
+race = "darkelf"
+requires = [["Hands:2"], ["type:Ogrin", "type:Orlf"]]
+cost.cp = 8
+upgrade_all = true
+
+[equipment.ogrin_bow.unit_special]
+"Fire Order" = "All models with bows always fire in all gunnery phases"
+
+[equipment.ogrin_bow.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d8-2"
+ap = 1
+
+[equipment.ogrin_bow.range.special]
+"Ammo" = "Always treated as loaded"
+
+
+
+[equipment.war_axe]
+name = "War Axe"
+race = "darkelf"
+cost.cp = 8
+upgrade_all = true
+requires = [["type:Orlf", "type:Dwalf"], ["Hands:1"]]
+
+[equipment.war_axe.assault]
+strength.add = [1, 0, 0, 0]
