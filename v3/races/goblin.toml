@@ -23,7 +23,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.goblin_infantry.special]
 "Take Cover" = "[still][-3]"
-"Fire Order" = "You may either fire an arrow or use one thrown weapon with each fire order."
+"Fire Order" = "You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order."
 "Evation" = "[4+]"
 
 [units.goblin_infantry.orders.fire]
@@ -41,6 +41,73 @@ regular = [
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
 psychic = ["4+: shaken"]
+
+
+
+
+[units.gigant_snake_cavalry]
+race = "goblin"
+name = "Gigant Snake Cavalry"
+models = ["gigant_snake_cavalry"]
+size = "Large"
+cost.mp = 4
+cost.xp = 24
+description = '''Two Goblin veilding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snake, hidding in the grass below. For the light hearted, even the tiny snake can be scary.
+
+Decent endurence, decent in assault with an devestating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefullness of the gigant snake cavalry.
+'''
+
+
+[units.gigant_snake_cavalry.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+
+[units.gigant_snake_cavalry.special]
+"Fire Order" = "You may either fire two regular arrows or one special arrows (arrow with limited ammo)."
+"Forward Position" = "[1]"
+"Terror" = "[6](range=1)"
+
+[units.gigant_snake_cavalry.orders.fire]
+still = [["Fire", "Fire"]]
+
+[units.gigant_snake_cavalry.orders.movement]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chase", "-"]]
+
+[units.gigant_snake_cavalry.damage_tables]
+regular = ["1-7: Bleed[8]", 
+	"8+: Unit destroyed",
+	"{{\\it Note: Bleeding does not cause more bleeding}}",
+]
+psychic = ["6+: shaken"]
+
+
+
+[units.tiny_snake]
+race = "goblin"
+name = "Tiny Snake"
+models = ["tiny_snake","tiny_snake"]
+size = "Tiny"
+
+[units.tiny_snake.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+
+[units.tiny_snake.special]
+"Hidden" = "When put on the battlefield, unit is hidden. Does not have terror while hidden."
+"Terror" = "[4](range=1)"
+
+[units.tiny_snake.orders.movement]
+slow = [["-", "-",  "Chase"], ["Reveal", "-", "-"]]
+
+[units.tiny_snake.damage_tables]
+regular = ["0-3: kill one model", 
+	   "4+ unit destroied"]
+	   
+psychic = ["2+: shaken"]
+
+
+
 
 [units.goblin_infantry_carrier]
 race = "goblin"
@@ -104,6 +171,55 @@ crew = [
 	"12: Unit destroyed",
 ]
 
+[units.bipedal_mech]
+race = "goblin"
+name = "Bipedal Mech"
+models = ["bipedal_mech"]
+size = "Large"
+armor = [8,8,8,6]
+cost.ip = 24
+
+[units.bipedal_mech.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
+
+[units.bipedal_mech.special]
+"Fire Order" = "Fire and load all weapons simultaniusly. Fire stinkbomb in addition to two light mortars"
+"Forward Position" = "[2]"
+
+[units.bipedal_mech.orders.movement]
+still = [["360°", "360°", "360°"],["360°", "A", "360°"]]
+slow  = [["360°", "F", "360°"], ["360°", "F", "B"]] 
+
+
+
+[units.bipedal_mech.orders.fire]
+
+still = [["Load", "-"], ["Fire", "-"]]
+slow =  [["Load", "-"], ["Fire", "-"]]
+
+[units.bipedal_mech.damage_tables]
+regular = [
+	"1-3: +1 to future damage",
+	"4: as below, shaken",
+	"5-8: as below, d6 critical damage",
+	"9: Unit destroyed",
+]
+critical = [
+	"1: Take d12 crew damage (note, it is not shaken before the apply damage step)",
+	"2: Unit gets a minor acid token",
+	"3: +1 to be hit, -1 to hit",
+	"4: Cannot rotate",
+	"5: Unit cannot Move ",
+	"6: +1 to future damage and unit gets another shaken token",
+]
+crew = [
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
+	"6-7: as 4-5, shaken",
+	"8-11: as 6-7, +3 to future crew damage",
+	"12: Unit destroyed",
+]
+
 [units.heavy_carrier]
 race = "goblin"
 name = "Heavy carrier"
@@ -117,7 +233,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.heavy_carrier.special]
-"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier is enters an assault, you may optionaly deploy infantery to join the assault"
+"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionaly deploy the infantery to join the assault"
 "Forward Position" = "[1]"
 "Fire Order" = "Fire and load all weapons simultaniusly, with identical ammo usage for all weapons"
 
@@ -160,6 +276,9 @@ fast = [["Load", "Fire"]]
 slow = [["Load", "Load"]]
 still = [["Load", "Load"]]
 
+
+
+
 [units.heavy_carrier.damage_tables]
 regular = [
 	"1-3: +1 to future damage",
@@ -180,6 +299,88 @@ crew = [
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
+]
+
+
+
+[units.modified_car]
+race = "goblin"
+name = "Modified Car"
+models = ["modified_car"]
+size = "Medium"
+armor = [4, 3, 2, 1]
+cost.ip = 8
+
+[units.modified_car.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
+
+[units.modified_car.special]
+"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Car enters an assault, you may optionaly deploy the infantery to join the assault"
+"Forward Position" = "[1]"
+"Fire Order" = "Use both auto bow and goblin grenade on each fire order"
+
+[units.modified_car.orders.movement]
+slow = [
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["F", "L/R", "-"],
+	["F", "L/R", "Deploy"],
+	["L/R", "F", "-"],
+	["L/R", "F", "Deploy"],
+	["B", "-", "-"],
+	["A", "F", "-"],
+	["F", "-", "-"],
+	["B", "-", "-"],
+]
+fast = [
+	['F', 'F', 'Deploy'],
+	['F', 'F', 'F'],
+	['F', 'L/R', 'F+Deploy'],
+	['F', 'L/R', 'F'],
+	['L/R', 'F', 'F'],
+	['L/R', 'F', 'F+Deploy'],
+	['F', 'F', 'L/R'],
+	['F', 'F+Deploy', 'L/R'],
+	['F', "B", "-"],
+]
+still = [
+	["L/R", "-", "-"],
+	["L/R", "L/R", "-"],
+	["L/R", "L/R", "L/R"],
+	["-", "-", "-"],
+	["L/R", "A", "F"],
+	["A", "F", "-"],
+	["rev", "-", "-"],
+]
+
+[units.modified_car.orders.fire]
+fast = [["Fire", "Fire"]]
+slow = [["Fire", "Fire"]]
+still = [["Fire", "Fire"]]
+
+
+
+
+[units.modified_car.damage_tables]
+regular = [
+	"1-2: +1 to future damage",
+	"3: as below, shaken",
+	"4-7: as below, d6 critical damage",
+	"8: Unit destroyed",
+]
+critical = [
+	"1: 1d4 damage to all transported units",
+	"2: Forced Deploy (empty hexes only)",
+	"3: +1 to be hit, -1 to hit",
+	"4: Cannot rotate",
+	"5-6: Unit cannot Move ",
+]
+crew = [
+	"3-4: Crippled Crew, if already shaken double initial crew damage",
+	"5-6: as 4-5, shaken",
+	"7-9: as 6-7, +3 to future crew damage",
+	"10: Unit destroyed",
 ]
 
 [units.mechanical_fire_bird]
@@ -244,6 +445,61 @@ ap = 2
 
 
 
+[models.gigant_snake_cavalry]
+name = "Gigant Snake Cavalry"
+race = "goblin"
+equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:3"]
+equipment = ["goblin_bow", "snake_arrow"]
+type = ["Bio", "Cavalry", "Walking"]
+
+[models.gigant_snake_cavalry.assault]
+strength = [18, 12, 12, 6]
+strength_die = "6+"
+deflection = [0, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+
+[models.gigant_snake_cavalry.assault.special]
+"Extra Damage" = "Poison[8](1 for 2)"
+
+
+
+[models.tiny_snake]
+name = "Tiny Snake"
+race = "goblin"
+equipment_limit = []
+equipment = []
+type = ["Bio", "Monster", "Walking"]
+
+[models.tiny_snake.assault]
+strength = [4, 1, 1, 1]
+strength_die = "6+"
+deflection = [0, 0, 0, 0]
+deflection_die = "6+"
+damage = "d4-2"
+ap = 0
+
+[models.tiny_snake.assault.special]
+"Extra Damage" = "Poison[6](1 for 1)"
+"Bonus" = "If you have reveal bonuses in assault, enemy may not use assault deflection to remove hits from this unit and you get 2 assault deflection per hit on the enemy"
+
+
+[models.bipedal_mech]
+name = "Bipedal Mech"
+race = "goblin"
+equipment_limit = ["Independent:∞"]
+equipment = ["stinkbomb", "light_mortar"]
+type = ["Bio Crew", "Mechanical", "Walking"]
+
+[models.bipedal_mech.assault]
+strength = [12, 12, 12, 1]
+strength_die = "6+"
+deflection = [12, 12, 12, 1]
+deflection_die = "6+"
+damage = "d6"
+ap = 3
+
 [models.goblin_infantry_carrier]
 name = "Goblin Infantry Carrier"
 race = "goblin"
@@ -270,6 +526,21 @@ type = ["Vehicle", "Tracked", "Mechanical"]
 strength = [16, 8, 1, 1]
 strength_die = "6+"
 deflection = [16, 0, 0, 0]
+deflection_die = "6+"
+damage = "d6-2"
+ap = 2
+
+[models.modified_car]
+name = "Modified Car"
+race = "goblin"
+equipment = ["auto_bow", "goblin_grenade_free"]
+equipment_limit = ["Independent:∞"]
+type = ["Vehicle", "Tracked", "Mechanical"]
+
+[models.modified_car.assault]
+strength = [8, 4, 1, 1]
+strength_die = "6+"
+deflection = [8, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
@@ -337,14 +608,14 @@ ap = 1
 
 
 [equipment.seeker_arrow]
-name = "Goblin bow with limited seeker arrows"
+name = "Seeker arrows"
 race = "goblin"
 requires = [["Special Arrows:3"], ["type:Infantry"]]
 cost.cp = 8
 upgrade_all = true
 
 [equipment.seeker_arrow.model_special]
-"To Hit (2)" = "+2 to hit if using seeker arrow"
+"To Hit (2)" = "Enhanced Arrow: +2 to hit"
 
 [equipment.seeker_arrow.range]
 range = 4
@@ -354,6 +625,25 @@ ap = 1
 
 [equipment.seeker_arrow.range.special]
 "Ammo" = "Limited Ammo[3]"
+
+
+
+[equipment.snake_arrow]
+name = "Snake arrows"
+race = "goblin"
+requires = [["Special Arrows:3"],["type:Cavalry"]]
+#decription = "Attached to the arrow is a small container with a tiny snake inside which is released when the arrow lands"
+
+
+[equipment.snake_arrow.range]
+range = 2
+angle = [true, true, true, true]
+damage = "N/A"
+ap = "N/A"
+
+[equipment.snake_arrow.range.special]
+"Ammo" = "Limited Ammo[3]"
+"Spawn" = "Place one hidden tiny snake in an empty hex within normal range"
 
 
 
@@ -453,13 +743,13 @@ ap = "2"
 "Recoil"  = "After firing this weapon, set speed to slow flying"
 "Note" = "Remember to track ammo. "
 
-
-
 [equipment.ogre_rifle.orders_gained.movement]
 slow_flying = [["rev", "-", "B[still]"]]
 
 [equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]
+
+
 
 [equipment.poison_dagger]
 name = "Poison Deflection Dagger"
@@ -500,9 +790,35 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 2
 
-[equipment.goblin_grenade.range.special]
-"Type" = "Thrown weapon"
+[equipment.goblin_grenade_free]
+name = "Goblin Grenade"
+race = "goblin"
+requires = []
+
+[equipment.goblin_grenade_free.range]
+range = 1
+angle = [true, true, true, true]
+damage = "d6"
+ap = 2
+
+[equipment.goblin_grenade_free.range.special]
 "Ammo" = "Always treated as loaded"
+
+
+[equipment.auto_bow]
+name = "Goblin Auto Bow"
+race = "goblin"
+requires = []
+
+[equipment.auto_bow.range]
+range = 2
+angle = [true, true, true, false]
+damage = "d4-2"
+ap = 1
+
+[equipment.auto_bow.range.special]
+"Ammo" = "Always treated as loaded"
+"Multiple Shots" = "Shoot two times per fire order"
 
 [equipment.grenadier]
 name = "Grenadier"
@@ -515,7 +831,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 "To Hit (2)" = "Get +1 to hit for thrown weapons"
 
 [equipment.grenadier.unit_special]
-"Fire Order" = "For each fire order: fire a bow once (per model) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
+"Fire Order" = "For each fire order: fire a bow once (either a regular or special arrow) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
 
 [equipment.commando]
 name = "Commando"
@@ -529,7 +845,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 "Evation" = "[2+]"
 "Hidden" = "Unit has the Hidden and Hide[ruins, forrest] special effects."
 "Forward Position" = "[2]"
-"Fire Order" = "In any round you have reveal bonus, you may fire a bow three times at one target or throw three grenades at one target"
+"Fire Order" = "In any round you have reveal bonus, you may fire a bow three times (either a regular arrow or an special arrow each time) at one target or throw three grenades at one target"
 
 [equipment.commando.orders_gained.movement]
 still = [
@@ -550,7 +866,7 @@ upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.archer.unit_special]
-"Fire Order" = "For each fire order: either fire a bow twice (per model) or use one thrown weapon (per model)."
+"Fire Order" = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon (per model)."
 
 [equipment.archer.model_special]
 "To Hit (2)" = "Good shot: +1 to hit"
@@ -661,6 +977,22 @@ ap = 4
 "To Hit (3)" = "Enhanced accuracy[Heavy Crossbow]: +1 to hit"
 
 
+[equipment.stinkbomb]
+name = "StinkBomb"
+race = "goblin"
+requires = []
+
+[equipment.stinkbomb.range]
+range = 4
+angle = [true, true, true, false]
+damage = "d6 psychic damage + d6 crew damage"
+ap = "N/A"
+
+[equipment.stinkbomb.range.special]
+"Extra Damage" = "Minor Acid, Poison[6]"
+"Area" = "If you hit the enemy, Area[5+] with same damage as main hit (with extra damage)"
+"Cloud" = "Place a Poison Cloud[6] in the hex of the targeted unit"
+
 [equipment.ring_of_fire]
 name = "Ring of Fire"
 race = "goblin"
@@ -674,8 +1006,7 @@ ap = 0
 
 
 [equipment.ring_of_fire.range.special]
-"Area" = "[6+]"
-"Range" = "Targe at all enemies within exacatly range 2"
+"Area" = "[6+] Targe at all enemies within exacatly range 2"
 "Extra Damage" = "All units hit at least once is set on fire"
 
 [equipment.assault_archer]

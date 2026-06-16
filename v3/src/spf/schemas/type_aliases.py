@@ -167,11 +167,8 @@ type RangeSpecial = Literal[
     "Type",
     "Cloud",
     "Insanity",
-    "Multipurpose"
-    
-
-    
-    
+    "Multipurpose",
+    "Spawn"    
 ]
 
 type ModelType = Literal[

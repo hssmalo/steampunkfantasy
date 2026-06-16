@@ -206,3 +206,20 @@ token = "poison"
 
 [weapon.poison.variables]
 N = { type = "int", min = 1, max = 12 }
+
+
+[weapon.fumble]
+
+name = "Fumble"
+short = "Fumble"
+
+explantion = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
+
+
+[weapon.critical]
+
+name = "Critical"
+
+short = "Critical"
+
+explantion = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"

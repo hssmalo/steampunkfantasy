@@ -1008,7 +1008,7 @@ equipment = []
 type = ["Bio", "Orlf", "Infantry", "Walking"]
 replaces = "multicultural_infantry"
 cost.mp = 4
-description = "HalfOrk and HalfElf. More loyal to the Darkelf than not."
+description = "HalfOrk and HalfElf. More loyal to the Darkelf compared to regular multicultural infantry"
 
 [models.orlf_infantry.assault]
 strength = [2, 0, 0, 0]
@@ -1036,7 +1036,7 @@ description = "HalfOgre and HalfGoblin."
 [models.ogrin_infantry.assault]
 strength = [3, 1, 1, 1]
 strength_die = "5+"
-deflection = [0, 0, 0, 0]
+deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
@@ -1608,7 +1608,7 @@ damage = "d4-2"
 ap    = 1
 
 [equipment.shrapnell_spit.range.special]
-"Area" = "Choose a hex within normal range. Area[1+] at point blank range, Area[4+] otherwise. Large units are hit d4 times per model effected, while huge units are hit d8 per model effected, while all other sizes are only hit once per model effected."
+"Area" = "Choose a hex within normal range. Area[1+] at point blank range, Area[4+] otherwise. Single model large units are hit d4 times, while single model huge units are hit d8 times."
 
 [equipment.laser_eyes]
 name = "Laser Eyes"
@@ -1639,8 +1639,9 @@ ap = 2
 
 [equipment.shrapnell_breath.range.special]
 "Range" = "Target one hexe within front ark and within long range"
-"Area" = "[4+] at point blank range, Area[6+] at normal and long range"
+"Area" = "[4+] at point blank range, Area[6+] at normal and long range. Single model large units are hit d4 times and single model huge units are hit d8 times."
 "Ammo" =  "Always treated as loaded"
+
 
 [equipment.gasmask]
 name = "GasMask assault training"

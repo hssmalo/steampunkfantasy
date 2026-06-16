@@ -20,7 +20,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.elf_hydra.special]
 "Regeneration" = "Heal[N, self, 2nd Healin], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
-"Heads" = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+"Heads" = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
 "Fire Order" = "Crew fire elf bows each gunnery phase indepent of fire orders. Breath weapon and poison spit always treated as loaded"
 "Forward Position" = "[1]"
 
@@ -106,6 +106,7 @@ movement_order = ["-", "-", "flee"]
 "Take Cover" = "[still][-2]"
 "Forward Position" = "[2]"
 "Pre-Assault Retreat" = "5+"
+"Fire Order" = "You may either fire one regular arrow, or one special arrow each fire order (arrows with limited ammo)"
 
 [units.elf_archer.orders.fire]
 still = [["Fire", "Fire"]]
@@ -797,7 +798,7 @@ cost.xp = 6
 
 
 [models.superb_elf_archer.special]
-"To Hit" = "Superb Shot: +2 to hit"
+"To Hit" = "Great Shot: +2 to hit"
 
 [models.superb_elf_archer.unit_special]
 "Improved Resistance" = "Unit gains resistance Psycic[2] while atleast one superelite model is alive"
@@ -839,12 +840,12 @@ name = "SuperElite Elf Infantry"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
-cost.xp = 8
+cost.xp = 6
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 
 [models.superelite_elf_infantry.special]
-"To Hit" = "Superb Shot: +3 to hit"
+"To Hit" = "Great Shot: +2 to hit"
 
 [models.superelite_elf_infantry.unit_special]
 "Improved Resistance" = "Unit gains resistance Psycic[2] while atleast one superelite model is alive"
@@ -961,14 +962,14 @@ damage = "d6"
 ap = 4
 
 [models.crew]
-name = "Crew"
+name = "Oliphant Crew"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["bow_free", "crew_hand_grenade"]
 type = ["Bio", "Crew", "Walking"]
 
 [models.crew.assault]
-strength = [1, 0, 0, 0]
+strength = [0, 0, 0, 0]
 strength_die = "5+"
 deflection = [0, 0, 0, 0]
 deflection_die = "5+"
@@ -981,7 +982,7 @@ name = "Hydra Crew"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["bow_free"]
-type = ["Bio", "Crew"]
+type = ["Bio", "Crew", "Walking"]
 
 [models.hydra_crew.assault]
 strength = [0, 0, 0, 0]
@@ -990,6 +991,7 @@ deflection = [0, 0, 0, 0]
 deflection_die = "5+"
 damage = "-"
 ap = "N/A"
+
 
 [models.eagle_rider]
 name = "Eagle Rider"
@@ -1365,7 +1367,7 @@ damage = "d6"
 ap = 4
 
 [equipment.twin_guns.range.special]
-"Multiple Shots" = "x2 shots per model"
+"Multiple Shots" = "x2 shots per fire order"
 "Bonus" = "Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range"
 
 [equipment.twin_rifle]
@@ -1627,11 +1629,9 @@ ap = 0
 name = "Elven Seeker Arrows"
 race = "elf"
 upgrade_all = false
-cost.cp = 4
+cost.cp = 6
 requires = [["Special Arrows:2"],["type:Archer"],["type:SuperElite"]]
-description = '''The pride of elven craftmanship. A programable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.
-
-To be able to use this item effectively you need to upgrade atleast one model toa suberb archer.'''
+description = '''The pride of elven craftmanship. A programable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
 
 [equipment.elven_seeker_arrow.model_special]
 "To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +5 to hit"
@@ -1676,7 +1676,7 @@ ap = 3
 
 [equipment.rocket_arrow.range.special]
 "Ammo" = "Always treated as loaded"
-"Fumble" = "If fumble, place a poison cloud[4] in the hex you are standing."
+"Fumble" = "If fumble, take d6-4 in damage."
 
 
 
