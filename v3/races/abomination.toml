@@ -316,7 +316,7 @@ size = "Medium"
 cost.cp = 24
 cost.xp = 16
 
-description = "For those that do not know better, these unit looks like living water elementals. However, no such things exists, and there is nothing natural by this unit. Abomination uses their skill in water manupulation to create a drone that is surronded by water. The trueth is revealed while the unit is shaken, when the waterflow surronding the models stops"
+description = "For those that do not know better, these unit looks like living water elementals. However, no such things exists, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The trueth is revealed while the unit is shaken, when the waterflow surrounding the models stops"
 
 [units.water_elemental.shaken]
 speed = "still"
@@ -342,7 +342,7 @@ regular = [
 	"1-2: +1 to future damage",
 	"3-4: +2 to future damage",
 	"5+:  shaken, Destroy one model", 
-	"{{\\it Note: If one model is destroied remove half of the +1 future damage tokens }}"
+	"{{\\it Note: If one model is destroyed remove half of the +1 future damage tokens }}"
 	]
 
 
@@ -849,9 +849,9 @@ race = "abomination"
 cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
-description = """Abomination exceel in water manupulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surronding the unit helps protect from regular bullets.
+description = """Abomination exceel in water manipulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surrounding the unit helps protect from regular bullets.
 
-Most usefull in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
+Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
 [equipment.water_shield.unit_special]
 "Resistance" = "Acid[1], Poison[1], Fire[1], Regular[1]. Armor assist: if this unit gain armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
