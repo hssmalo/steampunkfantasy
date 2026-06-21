@@ -854,7 +854,7 @@ description = """Abomination exceel in water manupulation. A thin layer of water
 Most usefull in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
 [equipment.water_shield.unit_special]
-"Resistance" = "Acid Resistance[1], Poison Resistance[1], Fire Resistance[1], Regular Resistance[1]. Armor assist: if this unit gain armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
+"Resistance" = "Acid[1], Poison[1], Fire[1], Regular[1]. Armor assist: if this unit gain armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
 
 [equipment.frog_armor]
 name = "Frog Cavalry Armor"

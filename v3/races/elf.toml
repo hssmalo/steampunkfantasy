@@ -458,7 +458,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.armored_unicorn_rider.special]
-"Resistance" = "Poison[12], Fire[3], Minor Acid[1]"
+"Resistance" = "Poison[12], Fire[3], Acid[1]"
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
 "Officer" = "Grants psychic resistance 1 to the other unit in this hex"
 "Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"

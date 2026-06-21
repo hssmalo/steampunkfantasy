@@ -22,7 +22,7 @@ movement_order = ["-", "-", "-"]
 "Repair" = "[1, self, 2nd Healing]"
 "Heads" = "1 major head, 6 minor head. Keep track of number of functional minor heads at any time, Poison spits, laser eys and assault is dependent on the number of functional heads."
 "Forward Position" = "[1]"
-"Resistance" = "Fire Resistance[1]"
+"Resistance" = "Fire[1]"
 
 [units.mechahydra.orders.fire]
 still = [["Load", "-"], ["-", "Load"],["Fire", "-"],["-", "Fire"]]

@@ -214,7 +214,7 @@ psychic = ["6+: shaken"]
 
 [units.drone_swarm]
 race = "ogre"
-name = "Drone_swarm"
+name = "Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.cp = 4
@@ -264,7 +264,7 @@ regular = ["1+: Destroy one model"]
 
 [units.industrial_drone_swarm]
 race = "ogre"
-name = "Industrial Drone_swarm"
+name = "Industrial Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.ip = 1

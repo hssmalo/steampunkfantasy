@@ -60,7 +60,7 @@ movement_order = ["-", "-", "flee"]
 [units.troll.special]
 "Forward Position" = "[1]"
 "Regeneration" = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
-"Resistance" = "Poison[2], Acid [1]"
+"Resistance" = "Poison[2], Acid[1]"
 "Fire Order" = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
 
 [units.troll.orders.movement]
@@ -353,7 +353,7 @@ movement_order = ["-", "-", "flee"]
 [units.ork_werewarg.special]
 "Take Cover" = "[still][-2]"
 "Regeneration" = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
-"Resistance" = "Poison [2]."
+"Resistance" = "Poison[2]."
 
 [units.ork_werewarg.orders.movement]
 slow = [
