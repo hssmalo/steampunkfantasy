@@ -68,9 +68,9 @@ explanation = "Gives improved resilience versus {version} damage"
 [unit.resistance.versions]
 regular = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
 psycic = "Any damage explicitly named psychic damage is reduced damage by {N}"
-fire = "Any damage rolled by fire token is effect is reduced damage by {N}"
+fire = "Any damage rolled by fire token is effect is reduced damage by {N}. It is also reduced with respect to stop burning by {N}"
 poison = "Any damage rolled by poison token effect reduced damage by {N}"
-acid = "Any die rolled by acid or minor acid token are reduced by {N}."
+acid = "Any die rolled by acid or minor acid token is reduced by {N}."
 
 ###Note, may see if I need more.
 ###Note, modified acid rule to align with the others...
