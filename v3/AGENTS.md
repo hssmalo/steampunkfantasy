@@ -21,19 +21,23 @@ uv run spf race show goblin models.goblin_infantry
 uv run spf race show goblin equipment.goblin_bow
 ```
 
-The project uses uv and Python 3.13+. Additionally, it uses Pytest, Ruff, Pyright, and Typos for testing and linting:
+The project uses uv and Python 3.13+. Quality gates (Pytest, Ruff, Pyright, and Typos) are
+run through [`just`](https://github.com/casey/just). Prefer the `just` recipes over the
+underlying commands:
 
+```console
+just            # Run all quality gates (same as `just check`)
+just check      # fmt-check, lint, typecheck, spell, test — stops on first failure
+
+just fmt        # Auto-format with ruff
+just fmt-check  # Check formatting without writing changes
+just lint       # Lint with ruff
+just typecheck  # Type-check with pyright
+just spell      # Spell-check with typos
+just test       # Run the test suite (accepts extra pytest args, e.g. `just test -k foo`)
+just fix        # Auto-fix lint issues, then reformat
+just validate   # Validate all the TOML files via the spf CLI
 ```
-# Run tests
-uv run pytest
 
-# Lint and format
-uv run ruff check src/
-uv run ruff format src/
-
-# Type checking
-uv run pyright
-
-# Spell checking
-uv run typos
-```
+Run `just check` before committing. The underlying tools (`uv run pytest`, `uv run ruff`,
+`uv run pyright`, `uv run typos`) can still be invoked directly when needed.

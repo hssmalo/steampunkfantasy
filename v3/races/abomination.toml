@@ -790,7 +790,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipment.water_shield.unit_special]
-"Resistance" = "Regular Damage Resitance: d4, Fire Resistance: d4. Roll d4 for each damage you take"
+"Resistance" = "Regular Damage Resistance: d4, Fire Resistance: d4. Roll d4 for each damage you take"
 
 [equipment.frog_armor]
 name = "Frog Cavalry Armor"

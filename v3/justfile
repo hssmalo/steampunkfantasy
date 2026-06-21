@@ -1,7 +1,7 @@
 default: check
 
 # Run all quality gates in order, stopping on the first failure.
-check: fmt-check lint typecheck test
+check: fmt-check lint validate spell test typecheck 
 
 # Auto-format the codebase with ruff.
 fmt:
@@ -18,6 +18,14 @@ lint:
 # Type-check src/ and tests/ with pyright.
 typecheck:
     uv run pyright
+
+# Spell-check the codebase with typos.
+spell:
+    uv run typos
+
+# Fix spelling errors with typos.
+spell:
+    uv run typos --write-changes
 
 # Run the test suite quietly.
 test *args:

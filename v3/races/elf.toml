@@ -21,7 +21,7 @@ movement_order = ["-", "-", "flee"]
 [units.elf_hydra.special]
 "Regeneration" = "Heal[N, self, 2nd Healin], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
 "Heads" = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
-"Fire Order" = "Crew fire elf bows each gunnery phase indepent of fire orders. Breath weapon and poison spit always treated as loaded"
+"Fire Order" = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
 "Forward Position" = "[1]"
 
 [units.elf_hydra.orders.fire]
@@ -40,9 +40,9 @@ still = [
 [units.elf_hydra.damage_tables]
 regular = ["1-2: Bleed[4]",
 	   "3-5: +1 to future damage, Bleed[4]",
-	   "6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroied, add aditional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
+	   "6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	   "10-17: As below, d6 psychic damage",
-	   "18: Unit destroied",
+	   "18: Unit destroyed",
 	"{{\\it Note: Bleed does not cause more bleeding}}",]
 psychic = ["6+: shaken"]
 
@@ -1399,7 +1399,7 @@ damage = "-"
 ap = "N/A"
 
 [equipment.acid_breath.range.special]
-"Extra Damage" = "Choose one hex within normal range. Automaticly consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise. "
+"Extra Damage" = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise. "
 
 
 [equipment.poison_spit]
@@ -1631,7 +1631,7 @@ race = "elf"
 upgrade_all = false
 cost.cp = 6
 requires = [["Special Arrows:2"],["type:Archer"],["type:SuperElite"]]
-description = '''The pride of elven craftmanship. A programable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
+description = '''The pride of elven craftmanship. A programmable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
 
 [equipment.elven_seeker_arrow.model_special]
 "To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +5 to hit"
@@ -1646,7 +1646,7 @@ ap = 0
 
 [equipment.elven_seeker_arrow.range.special]
 "Range" = "Elven Seeker Arrow do not need line of sight (but cannot target hidden units)"
-"Ammo" = "Limited Ammo[1]. Add 1 limited ammo token per model carring this weapon, and remove 1 per model firing the special arrow"
+"Ammo" = "Limited Ammo[1]. Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
 "Sniper" = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
 
 
@@ -1660,7 +1660,7 @@ race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 8
 upgrade_all = true
-description = "Many Elf hate this weapon as it is not elecant or accurate as elf bows should be. But most appricate that it causes more havoc"
+description = "Many Elf hate this weapon as it is not elecant or accurate as elf bows should be. But most appreciate that it causes more havoc"
 
 
 
@@ -1671,7 +1671,7 @@ damage = "d6-1"
 ap = 3
 
 [equipment.rocket_arrow.model_special]
-"To Hit (2)" =	"Innacurate: -1 to Hit"
+"To Hit (2)" =	"Inaccurate: -1 to Hit"
 
 
 [equipment.rocket_arrow.range.special]

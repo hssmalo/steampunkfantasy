@@ -1,1 +1,8 @@
+[files]
+extend-exclude = ["rules/todo.md"]
+
+[default]
+# Ignore any line ending with `# typos: ignore`
+extend-ignore-re = ["(?Rm)^.*(#|//)\\s*typos:\\s*ignore$"]
+
 [default.extend-words]

@@ -52,9 +52,9 @@ models = ["gigant_snake_cavalry"]
 size = "Large"
 cost.mp = 4
 cost.xp = 24
-description = '''Two Goblin veilding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snake, hidding in the grass below. For the light hearted, even the tiny snake can be scary.
+description = '''Two Goblin veilding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snake, hiding in the grass below. For the light hearted, even the tiny snake can be scary.
 
-Decent endurence, decent in assault with an devestating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefullness of the gigant snake cavalry.
+Decent endurence, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness of the gigant snake cavalry.
 '''
 
 
@@ -102,7 +102,7 @@ slow = [["-", "-",  "Chase"], ["Reveal", "-", "-"]]
 
 [units.tiny_snake.damage_tables]
 regular = ["0-3: kill one model", 
-	   "4+ unit destroied"]
+	   "4+ unit destroyed"]
 	   
 psychic = ["2+: shaken"]
 
@@ -233,7 +233,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.heavy_carrier.special]
-"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionaly deploy the infantery to join the assault"
+"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantery to join the assault"
 "Forward Position" = "[1]"
 "Fire Order" = "Fire and load all weapons simultaniusly, with identical ammo usage for all weapons"
 
@@ -316,7 +316,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.modified_car.special]
-"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Car enters an assault, you may optionaly deploy the infantery to join the assault"
+"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Car enters an assault, you may optionally deploy the infantery to join the assault"
 "Forward Position" = "[1]"
 "Fire Order" = "Use both auto bow and goblin grenade on each fire order"
 
@@ -632,7 +632,7 @@ ap = 1
 name = "Snake arrows"
 race = "goblin"
 requires = [["Special Arrows:3"],["type:Cavalry"]]
-#decription = "Attached to the arrow is a small container with a tiny snake inside which is released when the arrow lands"
+#description = "Attached to the arrow is a small container with a tiny snake inside which is released when the arrow lands"
 
 
 [equipment.snake_arrow.range]
@@ -647,24 +647,24 @@ ap = "N/A"
 
 
 
-[equipment.assasin_seeker_arrow]
-name = "Seeker Assasin Arrow"
+[equipment.assassin_seeker_arrow]
+name = "Seeker Assassin Arrow"
 race = "goblin"
 requires = [["Hands:2"], ["type:Infantry"]]
 cost.cp = 16
 upgrade_all = true
 
-[equipment.assasin_seeker_arrow.model_special]
+[equipment.assassin_seeker_arrow.model_special]
 "To Hit (2)" = "+2 to hit if using seeker arrow"
 
-[equipment.assasin_seeker_arrow.range]
+[equipment.assassin_seeker_arrow.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = 1
 
-[equipment.assasin_seeker_arrow.range.special]
-"Ammo" = "Limited Ammo[4]. Each model have one assasin seeker arrow each, which may be used once per game. Spend one limited ammo per model firing this weapon."
+[equipment.assassin_seeker_arrow.range.special]
+"Ammo" = "Limited Ammo[4]. Each model have one assassin seeker arrow each, which may be used once per game. Spend one limited ammo per model firing this weapon."
 "Extra Damage" = "Poison[12]"
 
 [equipment.gear_bow]

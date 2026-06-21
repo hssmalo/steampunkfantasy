@@ -8,7 +8,7 @@ explanation = "Each natural 6 rolled in assault count as 2 hits. Further, any na
 [assault.cunning_assault]
 name = "Cunning Assault"
 short = "[{N}]"
-explanation = "For each {N} assault successes assigned to one mechanical unit in assault, add +1 to all future damage token to that whith the vehicle type. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack."
+explanation = "For each {N} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack."
 example = "If you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken."
 description = "This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage."
 
@@ -106,7 +106,7 @@ explanation = ""
 description = "Unit is completely immmune to given feature"
 
 [unit.immunity.variables]
-#Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???
+#Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???  # typos: ignore
 feature = {type = "str" }
 
 [unit.repair]
@@ -116,7 +116,7 @@ explanation = """Repear only works on mechanical and drone units. You have {N} p
 
 - Remove one +1 to future damage token. Cost 1. 
 - Neutrilize one minor acid. Cost 1 
-- Remove 1 shaken token to any unit whish is not bio. Cost 1 
+- Remove 1 shaken token to any unit which is not bio. Cost 1 
 - Extinguish one fire. Cost 3. 
 - Remove 1 crittical damage effect. Cost 3. 
 - Degrade one acid to minor acid. Cost 4. 
