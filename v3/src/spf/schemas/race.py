@@ -85,7 +85,6 @@ class EquipmentRangeConfig(StrictModel):
     damage: t.Die
     ap: t.ArmorPenetration
     special: dict[t.RangeSpecial, str] = Field(default_factory=dict)
-    #special: list[str] = Field(default_factory=list)
 
 
 class EquipmentConfig(StrictModel):

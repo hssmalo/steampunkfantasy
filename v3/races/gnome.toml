@@ -910,7 +910,7 @@ still = [["-", "amplified fire"]]
 race = "gnome"
 name = "Green Gas Launcer"
 cost.cp = 8
-upgrade_all = False 
+upgrade_all = false
 requires = [["type:tinkerer", "type:elite"], ["type:infantry"], ["reserve:1"]]
 
 [equipment.green_gas_launcher.range]
@@ -942,7 +942,7 @@ special = ["Choose one hex within range: Area(5+)", "Poison[4]"]
 race = "gnome"
 name = "Experimental Plasma Gun"
 cost.cp = 16
-upgrade_all = False
+upgrade_all = false
 requires = [["type:tinkerer"], ["type:infantry"], ["hands:2"]]
 
 [equipment.experimental_plasma_gun.range]

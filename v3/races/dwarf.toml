@@ -953,7 +953,7 @@ requires = [["independent:1"], ["type:steampowerarmor"]]
 name = "Super Blaster"
 race = "dwarf"
 cost.cp = 32
-upgrade_all = False
+upgrade_all = false
 requires = [["type: steampowerarmor"], ["type: elite"], ["hands:2"]]
 
 [equipment.superblaster.range]
@@ -967,7 +967,7 @@ special = []
 name = "Big Blaster"
 race = "dwarf"
 cost.cp = 4
-upgrade_all = False
+upgrade_all = false
 requires = [["type: infantry"], ["shared:1"]]
 
 [equipment.bigblaster.range]
@@ -1241,7 +1241,7 @@ special = ["Fire three shots per model"]
 name = "Rocket Jackhammer"
 race = "dwarf"
 cost.cp = 2
-upgrade_all = False
+upgrade_all = false
 requires = [["hands:2"], ["type:steampowerarmor"], ["type: elite"]]
 
 [equipment.rocket_jackhammer.assault]
