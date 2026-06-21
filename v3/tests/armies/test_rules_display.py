@@ -112,7 +112,7 @@ def test_unit_line_includes_name_and_pts(
 ) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
-    assert "Squad -  3mp  0cp  0xp  0ip" in capture.export_text()
+    assert "Squad -  0ip  3mp  0xp  0cp" in capture.export_text()
 
 
 def test_unit_specials_shown_when_present(

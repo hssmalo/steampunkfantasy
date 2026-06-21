@@ -24,7 +24,7 @@ spell:
     uv run typos
 
 # Fix spelling errors with typos.
-spell:
+spell-fix:
     uv run typos --write-changes
 
 # Run the test suite quietly.

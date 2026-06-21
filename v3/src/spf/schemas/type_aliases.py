@@ -260,10 +260,10 @@ class Cost(StrictModel):
             return f"[gray30]{s}[/]" if value == 0 else s
 
         parts = [
-            _part(self.mp, "mp"),
-            _part(self.cp, "cp"),
-            _part(self.xp, "xp"),
             _part(self.ip, "ip"),
+            _part(self.mp, "mp"),
+            _part(self.xp, "xp"),
+            _part(self.cp, "cp"),
         ]
         return " ".join(parts)
 

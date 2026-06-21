@@ -9,7 +9,7 @@ from spf.console import stdout
 from spf.schemas import type_aliases as t
 from spf.schemas.race import RaceConfig
 
-_NO_COST = "[gray30] -mp  -cp  -xp  -ip[/]"
+_NO_COST = "[gray30] -ip  -mp  -xp  -cp[/]"
 
 
 def add_commands(app: cyclopts.App) -> None:
