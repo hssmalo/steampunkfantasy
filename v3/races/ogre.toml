@@ -25,27 +25,23 @@ movement_order = ["-", "-", "flee"]
 "Forward Position" = "[1]"
 
 [units.ogre_hydra.orders.fire]
-still = [["Fire", "Load"],
-       ["Load", "Fire"]]
-
-slow = [["Fire", "Load"],
-       ["Load", "Fire"]]
+still = [["Fire", "Load"], ["Load", "Fire"]]
+slow = [["Fire", "Load"], ["Load", "Fire"]]
 
 [units.ogre_hydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [
-	["360°", "360°", "360°"],
-	["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
 [units.ogre_hydra.damage_tables]
-regular = ["1-2: Bleed[4]",
-	   "3-5: +1 to future damage, Bleed[4]",
-	   "6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroied, add aditional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
-	   "10-17: As below, d6 psychic damage",
-	   "18: Unit destroied",
-	"{{\\it Note: Bleed does not cause more bleeding}}",]
+regular = [
+	"1-2: Bleed[4]",
+	"3-5: +1 to future damage, Bleed[4]",
+	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroied, add aditional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
+	"10-17: As below, d6 psychic damage",
+	"18: Unit destroied",
+	"{{\\it Note: Bleed does not cause more bleeding}}",
+]
 psychic = ["6+: shaken"]
-
 
 [units.ogre_infantry]
 race = "ogre"
@@ -266,7 +262,6 @@ fast = [["chase", "chase", "chase + B"]]
 [units.drone_swarm.damage_tables]
 regular = ["1+: Destroy one model"]
 
-
 [units.industrial_drone_swarm]
 race = "ogre"
 name = "Industrial Drone_swarm"
@@ -316,7 +311,6 @@ fast = [["chase", "chase", "chase + B"]]
 
 [units.industrial_drone_swarm.damage_tables]
 regular = ["0+: Destroy one model"]
-
 
 [units.repair_drone]
 race = "ogre"
@@ -381,7 +375,6 @@ movement_order = ["-", "-", "-"]
 "LoS" = "Blocks Line of Sight"
 "Tow" = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
 "Transport" = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault"
-
 
 [units.main_engine.orders.fire]
 still = [
@@ -540,7 +533,6 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
-
 [models.ogre_crew]
 name = "Ogre Infantry"
 race = "ogre"
@@ -645,7 +637,6 @@ ap = 2
 "Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
 "Extra Damage" = "Poison[6][1 for 2]"
 "Fear" = "[6]"
-
 
 [models.drone_swarm]
 name = "Drone Swarm"
@@ -885,7 +876,6 @@ ap = 3
 "Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 psychic damage and +d6 crew damage when aiming"
 "Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
-
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
 race = "ogre"
@@ -923,11 +913,8 @@ ap = 6
 "Extra Damage" = "Whether you hit or not, Area[5+], AP=4, damage=d8 in the target hex"
 "Indirect Fire" = "May use line of sight of any scout instead of its own."
 
-
 [equipment.ogre_artillery.model_special]
 "To Hit" = "If a scout has line of sight to target, the unit gains good shot: +1 to hit"
-	
-
 
 [equipment.fancy_ogre_rifle]
 name = "Fancy Ogre Rifle"
@@ -1021,13 +1008,12 @@ ap = 2
 
 [equipment.fancy_gear_pistol.range.special]
 "Extra Damage" = "Minor Acid"
-	
+
 [equipment.fancy_gear_pistol.model_special]
 "To Hit (2)" = "Enhanced accurazy: +1 to hit"
 
 [equipment.fancy_gear_pistol.unit_special]
 "Fire Order" = "May load up to 2 shots, and fire them one at a time"
-
 
 [equipment.tiny_fancy_gear_pistol]
 name = "Tiny Fancy Gear Pistol"
@@ -1087,7 +1073,7 @@ ap.replace = 5
 
 [equipment.acid_breath]
 name = "Acid Breath"
-race = "elf"
+race = "ogre"
 requires = []
 
 [equipment.acid_breath.range]
@@ -1099,10 +1085,9 @@ ap = "N/A"
 [equipment.acid_breath.range.special]
 "Extra Damage" = "Choose one hex within normal range. Automaticly consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise. "
 
-
 [equipment.poison_spit]
 name = "Poison Spit"
-race = "elf"
+race = "ogre"
 requires = []
 
 [equipment.poison_spit.range]

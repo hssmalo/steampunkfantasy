@@ -1,6 +1,5 @@
 """Race commands for the SteamPunkFantasy CLI."""
 
-
 import configaroo
 import cyclopts
 

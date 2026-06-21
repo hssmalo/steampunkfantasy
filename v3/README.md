@@ -68,6 +68,21 @@ uv run spf army show 2025/geir_arne
 
 # Development
 
+You can install `just` to run developer commands:
+
+```console
+uv tool install rust-just
+```
+
+List the developer commands with `-l`:
+
+```console
+just -l  # List available commands
+
+# Run all checks
+just check
+```
+
 There is a prompt available to update TOML files. You can ask your coding assistant:
 
 > Follow the instructions in @MIGRATE_TOML.md to update @races/elf.toml
