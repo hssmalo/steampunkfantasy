@@ -168,7 +168,7 @@ type RangeSpecial = Literal[
     "Cloud",
     "Insanity",
     "Multipurpose",
-    "Spawn"    
+    "Spawn",
 ]
 
 type ModelType = Literal[
@@ -210,7 +210,7 @@ type ModelType = Literal[
     "Dwalf",
     "Ogrin",
     "Gnolf",
-    "Orlf"
+    "Orlf",
 ]
 
 
@@ -246,6 +246,11 @@ class Cost(StrictModel):
     def to_points(self) -> int:
         """Return the points value: mp + cp + xp + 3 * ip."""
         return self.mp + self.cp + self.xp + 3 * self.ip
+
+    @property
+    def sort_idx(self) -> int:
+        """Create a number that can be used for sorting."""
+        return -(self.cp + 1000 * (self.xp + 1000 * (self.mp + 1000 * self.ip)))
 
     def __str__(self) -> str:
         """Return a human-readable cost string, graying out zero values."""

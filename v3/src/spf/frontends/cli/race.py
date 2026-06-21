@@ -1,6 +1,5 @@
 """Race commands for the SteamPunkFantasy CLI."""
 
-from operator import attrgetter
 
 import configaroo
 import cyclopts
@@ -49,19 +48,26 @@ def _cost_str(cost: t.Cost | None) -> str:
 
 def _print_units(race: RaceConfig) -> None:
     """Print one line per unit with name and cost."""
-    for unit in sorted(race.units.values(), key=attrgetter("name")):
+    for unit in sorted(
+        race.units.values(), key=lambda unit: unit.cost.sort_idx if unit.cost else 0
+    ):
         stdout.print(f"- {unit.name:<40} {_cost_str(unit.cost)}", highlight=False)
 
 
 def _print_models(race: RaceConfig) -> None:
     """Print one line per model with name and cost."""
-    for model in sorted(race.models.values(), key=attrgetter("name")):
+    for model in sorted(
+        race.models.values(), key=lambda model: model.cost.sort_idx if model.cost else 0
+    ):
         stdout.print(f"- {model.name:<40} {_cost_str(model.cost)}", highlight=False)
 
 
 def _print_equipment(race: RaceConfig) -> None:
     """Print one line per equipment item with name and cost."""
-    for equipment in sorted(race.equipment.values(), key=attrgetter("name")):
+    for equipment in sorted(
+        race.equipment.values(),
+        key=lambda equipment: equipment.cost.sort_idx if equipment.cost else 0,
+    ):
         stdout.print(
             f"- {equipment.name:<40} {_cost_str(equipment.cost)}", highlight=False
         )
