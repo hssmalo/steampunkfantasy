@@ -87,7 +87,7 @@ effect = "Only effects biological units or units with biological crew. While con
 name = "Insanity"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equaly valid hexes to move to with chase, the owner still decides where to go"
+effect = "Can only be given to bio units which are already shaken. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go"
 
 [tokens.hidden]
 name = "Hidden"

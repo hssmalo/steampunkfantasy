@@ -267,7 +267,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.battlewagon.special]
-"Transport" = "May transport up to 2 infantry. Treat any movement in movementphase 3 order as including an optional +Deploy(range=1) order. May deploy directly in assult. If Battlewagon enters an assault, you may optionaly deploy 1 infantry to join the assault."
+"Transport" = "May transport up to 2 infantry. Treat any movement in movementphase 3 order as including an optional +Deploy(range=1) order. May deploy directly in assault. If Battlewagon enters an assault, you may optionally deploy 1 infantry to join the assault."
 "Fire Order" = "Fire all weapons simultaneously"
 
 [units.battlewagon.damage_tables]
@@ -823,7 +823,7 @@ ap = 3
 
 
 [equipment.troll_gatling_gun.range.special]
-"Area" =  "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a reguler range shot"
+"Area" =  "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
 "Bonus" = "Replace any forest at point blank range with a Rough terrain"
 
 
