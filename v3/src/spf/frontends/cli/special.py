@@ -107,6 +107,14 @@ def show_special(special_key: SpecialKey) -> None:
     Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials.
     """
     for race_name in races.list_races():
+        print(race_name)
+        #Dwarf and Gnome not updated to v3 yet.
+        if race_name == "dwarf":
+            continue
+        if race_name == "gnome":
+            continue
+        
+        
         try:
             race = races.get_race(race_name)
         except pydantic.ValidationError:

@@ -303,24 +303,24 @@ crew = [
 
 
 
-[units.modified_car]
+[units.modified_truck]
 race = "goblin"
-name = "Modified Car"
-models = ["modified_car"]
+name = "Modified Truck"
+models = ["modified_truck"]
 size = "Medium"
 armor = [4, 3, 2, 1]
 cost.ip = 8
 
-[units.modified_car.shaken]
+[units.modified_truck.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.modified_car.special]
-"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Car enters an assault, you may optionaly deploy the infantery to join the assault"
+[units.modified_truck.special]
+"Transport" = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionaly deploy the infantery to join the assault"
 "Forward Position" = "[1]"
 "Fire Order" = "Use both auto bow and goblin grenade on each fire order"
 
-[units.modified_car.orders.movement]
+[units.modified_truck.orders.movement]
 slow = [
 	["L/R", "-", "-"],
 	["L/R", "L/R", "-"],
@@ -354,7 +354,7 @@ still = [
 	["rev", "-", "-"],
 ]
 
-[units.modified_car.orders.fire]
+[units.modified_truck.orders.fire]
 fast = [["Fire", "Fire"]]
 slow = [["Fire", "Fire"]]
 still = [["Fire", "Fire"]]
@@ -362,7 +362,7 @@ still = [["Fire", "Fire"]]
 
 
 
-[units.modified_car.damage_tables]
+[units.modified_truck.damage_tables]
 regular = [
 	"1-2: +1 to future damage",
 	"3: as below, shaken",
@@ -433,7 +433,7 @@ type = ["Bio", "Infantry", "Walking"]
 "Pre-Assault Retreat" = "6+"
 
 [models.goblin_infantry.assault]
-strength = [2, 1, 1, 1]
+strength = [1, 1, 1, 1]
 strength_die = "6+"
 deflection = [0, 0, 0, 0]
 deflection_die = "6+"
@@ -530,14 +530,14 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.modified_car]
-name = "Modified Car"
+[models.modified_truck]
+name = "Modified Truck"
 race = "goblin"
 equipment = ["auto_bow", "goblin_grenade_free"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
-[models.modified_car.assault]
+[models.modified_truck.assault]
 strength = [8, 4, 1, 1]
 strength_die = "6+"
 deflection = [8, 0, 0, 0]
@@ -818,7 +818,7 @@ ap = 1
 
 [equipment.auto_bow.range.special]
 "Ammo" = "Always treated as loaded"
-"Multiple Shots" = "Shoot two times per fire order"
+"Multiple Shots" = "Shoot three times per fire order"
 
 [equipment.grenadier]
 name = "Grenadier"
