@@ -19,19 +19,21 @@ cost.mp = 8
 
 [units.goblin_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
+#sneak: +1 to hit, 0 to be hit
 [units.goblin_infantry.special]
-"Take Cover" = "[still][-3]"
+"Take Cover" = "[sneak][-2]"
 "Fire Order" = "You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order."
 "Evation" = "[4+]"
 
 [units.goblin_infantry.orders.fire]
-still = [["Fire", "Fire"]]
+sneak = [["Fire", "Fire"]]
 
 #Description: are so sneaky that they can move around and still be counted as still.
 [units.goblin_infantry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
+slow  = [["360°", "F", "B"]]
 
 [units.goblin_infantry.damage_tables]
 regular = [
@@ -52,18 +54,18 @@ models = ["gigant_snake_cavalry"]
 size = "Large"
 cost.mp = 4
 cost.xp = 24
-description = '''Two Goblin veilding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snake, hiding in the grass below. For the light hearted, even the tiny snake can be scary.
+description = '''Two Goblin veilding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. For the light hearted, even the tiny snake can be scary.
 
-Decent endurence, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness of the gigant snake cavalry.
+Decent endurence, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
 '''
 
 
 [units.gigant_snake_cavalry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.gigant_snake_cavalry.special]
-"Fire Order" = "You may either fire two regular arrows or one special arrows (arrow with limited ammo)."
+"Fire Order" = "You may either fire two regular arrows or one special arrow (arrow with limited ammo)."
 "Forward Position" = "[1]"
 "Terror" = "[6](range=1)"
 
@@ -75,8 +77,9 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chase", "-"]]
 
 [units.gigant_snake_cavalry.damage_tables]
-regular = ["1-7: Bleed[8]", 
-	"8+: Unit destroyed",
+regular = ["1-6: Bleed[8]",
+	  "7-8: +1 to future damage, Bleed[8]",
+	  "9+: Unit destroyed",
 	"{{\\it Note: Bleeding does not cause more bleeding}}",
 ]
 psychic = ["6+: shaken"]
@@ -86,12 +89,12 @@ psychic = ["6+: shaken"]
 [units.tiny_snake]
 race = "goblin"
 name = "Tiny Snake"
-models = ["tiny_snake","tiny_snake"]
+models = ["tiny_snake", "tiny_snake"]
 size = "Tiny"
 
 [units.tiny_snake.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.tiny_snake.special]
 "Hidden" = "When put on the battlefield, unit is hidden. Does not have terror while hidden."
@@ -455,7 +458,7 @@ equipment = ["goblin_bow", "snake_arrow"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.gigant_snake_cavalry.assault]
-strength = [18, 12, 12, 6]
+strength = [24, 18, 12, 6]
 strength_die = "6+"
 deflection = [0, 0, 0, 0]
 deflection_die = "6+"
@@ -484,7 +487,7 @@ ap = 0
 
 [models.tiny_snake.assault.special]
 "Extra Damage" = "Poison[6](1 for 1)"
-"Bonus" = "If you have reveal bonuses in assault, enemy may not use assault deflection to remove hits from this unit and you get 2 assault deflection per hit on the enemy"
+"Bonus" = "If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection"
 
 
 [models.bipedal_mech]
@@ -535,7 +538,7 @@ ap = 2
 [models.modified_truck]
 name = "Modified Truck"
 race = "goblin"
-equipment = ["auto_bow", "goblin_grenade_free"]
+equipment = ["auto_bow", "goblin_grenade_free", "goblin_grenade_free"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
@@ -861,14 +864,14 @@ deflection.add = [4, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [equipment.archer]
-name = "Archer spesialization"
+name = "Archer Spesialization"
 race = "goblin"
 cost.xp = 8
 upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.archer.unit_special]
-"Fire Order" = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon (per model)."
+"Fire Order" = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon"
 
 [equipment.archer.model_special]
 "To Hit (2)" = "Good shot: +1 to hit"

@@ -9,7 +9,7 @@ description = "Yellow, tiny, little men"
 [units.ogre_hydra]
 race = "ogre"
 name = "Ogre Hydra"
-models = ["ogre_hydra", "ogre_crew", "ogre_crew"]
+models = ["ogre_hydra", "ogre_hydra_crew", "ogre_hydra_crew"]
 size = "Huge"
 cost.mp = 16
 cost.xp = 96
@@ -19,14 +19,14 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.ogre_hydra.special]
-"Regeneration" = "Heal[N, self, 2nd Healin], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
+"Regeneration" = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
 "Heads" = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
-"Fire Order" = "Breath weapon and poison spit always treated as loaded. Load orders only for the weapon of the crew. If crew's weapon is loaded, fire them simultaneously with breath wapon and poison spit"
+"Fire Order" = "Breath weapon and poison spit always treated as loaded and used with Fire(H) orders. Crew weapons are used with Load(crew) and Fire(crew) orders"
 "Forward Position" = "[1]"
 
 [units.ogre_hydra.orders.fire]
-still = [["Fire", "Load"], ["Load", "Fire"]]
-slow = [["Fire", "Load"], ["Load", "Fire"]]
+still = [["Fire(H)", "Load(crew)"], ["Load(crew)", "Fire(H)"], ["Fire(H)", "Fire(crew)"], ["Fire(crew)", "Fire(H)"]]
+slow =  [["Fire(H)", "Load(crew)"], ["Load(crew)", "Fire(H)"], ["Fire(H)", "Fire(crew)"], ["Fire(crew)", "Fire(H)"]]
 
 [units.ogre_hydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
@@ -53,7 +53,7 @@ cost.mp = 16
 
 [units.ogre_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.ogre_infantry.special]
 "Take Cover" = "[still][-1]"
@@ -93,7 +93,7 @@ armor = [3, 3, 0, 0]
 
 [units.ogre_robot.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.ogre_robot.special]
 "Take Cover" = "[still][-2]"
@@ -131,7 +131,7 @@ description = "A Panther is viewed as a cute kitten, with useful properties by t
 
 [units.pet_panther.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 comment = "If sharing a hex with an Infantry, you may give the pet follow orders even while shaken"
 
 [units.pet_panther.special]
@@ -147,11 +147,11 @@ still = [
 slow = [
 	["360°", "F", "360°"],
 	["360°", "B", "360°"],
-	["A+360°", "chase", "chase"],
+	["A+360°", "Chase", "Chase"],
 	["Follow", "Follow", "Follow"],
 ]
 fast = [
-	["-", "chase", "chase"],
+	["-", "Chase", "Chase"],
 	["360°", "F", "B"],
 	["Follow", "Follow", "Follow"]
 ]
@@ -175,7 +175,7 @@ cost.xp = 16
 
 [units.ogre_assault_scout.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.ogre_assault_scout.special]
 "Take Cover" = "[still][-2]"
@@ -200,15 +200,15 @@ fast = [
 	["360°", "F", "F"],
 	["F", "360°", "F"],
 	["F", "F", "360°"],
-	["-", "chase", "chase"],
+	["-", "Chase", "Chase"],
 	["360°", "F", "B"],
 ]
 
 [units.ogre_assault_scout.damage_tables]
 regular = [
 	"2-5: Bleed[8]",
-	"6-7: As below, +1 to future damage",
-	"8: unit destroyed"
+	"7-8: As below, +1 to future damage",
+	"9+: unit destroyed"
 ]
 psychic = ["6+: shaken"]
 
@@ -257,7 +257,7 @@ fast = [
 rest = [["-", "-", "-"]]
 still = [["360°", "360°", "B[rest]"]]
 slow = [["360°", "F", "B"]]
-fast = [["chase", "chase", "chase + B"]]
+fast = [["Chase", "Chase", "Chase + B"]]
 
 [units.drone_swarm.damage_tables]
 regular = ["1+: Destroy one model"]
@@ -307,7 +307,7 @@ fast = [
 rest = [["-", "-", "-"]]
 still = [["360°", "360°", "B[rest]"]]
 slow = [["360°", "F", "B"]]
-fast = [["chase", "chase", "chase + B"]]
+fast = [["Chase", "Chase", "Chase + B"]]
 
 [units.industrial_drone_swarm.damage_tables]
 regular = ["0+: Destroy one model"]
@@ -442,8 +442,8 @@ movement_order = ["-", "-", "-"]
 
 [units.broadside_wagon.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
-slow = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
-fast = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
+slow =  [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
+fast =  [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
 
 [units.broadside_wagon.damage_tables]
 critical = ["1-5: +3 to future damage", "6: set on Fire"]
@@ -533,14 +533,17 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
-[models.ogre_crew]
-name = "Ogre Infantry"
+[models.ogre_hydra_crew]
+name = "Ogre Hydra Crew"
 race = "ogre"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Crew"]
 
-[models.ogre_crew.assault]
+[models.ogre_hydra_crew.special]
+"To Hit" = "Good shoot: +1 to hit"
+
+[models.ogre_hydra_crew.assault]
 strength = [0, 0, 0, 0]
 strength_die = "5+"
 deflection = [0, 0, 0, 0]
@@ -910,7 +913,7 @@ damage = "d8 (+3 if penetrating all armor)"
 ap = 6
 
 [equipment.ogre_artillery.range.special]
-"Extra Damage" = "Whether you hit or not, Area[5+], AP=4, damage=d8 in the target hex"
+"Extra Damage" = "If you hit enemy, in addition to regular damage, Area[5+], AP=4, damage=d8 in the target hex"
 "Indirect Fire" = "May use line of sight of any scout instead of its own."
 
 [equipment.ogre_artillery.model_special]
@@ -948,11 +951,11 @@ ap = 2
 [equipment.ogre_broadside]
 name = "Ogre Broadside"
 race = "ogre"
-requires = []
+requires = [["Broadside:1"], ["type:Mechanical"]]
 
 [equipment.ogre_broadside.range]
 range = 4
-angle = ["-", "x4", "x4", "-"]
+angle = ["-", "x6", "x6", "-"]
 damage = "d8-2"
 ap = 2
 
@@ -965,7 +968,7 @@ upgrade_all = true
 
 [equipment.fancy_arquebus_broadside.range]
 range = 3
-angle = ["-", "x4", "x4", "-"]
+angle = ["-", "x6", "x6", "-"]
 damage = "d8+2"
 ap = 4
 

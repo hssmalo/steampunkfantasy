@@ -58,6 +58,7 @@ type Speed = Literal[
     "crawl",
     "slow",
     "fast",
+    "sneak",
     "still_flying",
     "slow_flying",
     "fast_flying",

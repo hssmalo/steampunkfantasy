@@ -376,7 +376,7 @@ critical = [
 race = "darkelf"
 name = "Mechanical Scorpion"
 models = ["mechanical_scorpion"]
-size = "Medium"
+size = "Large"
 armor = [9, 7, 6, 5]
 cost.ip = 16
 
@@ -968,7 +968,7 @@ equipment = []
 type = ["Bio", "Dwalf", "Infantry", "Walking"]
 replaces = "multicultural_infantry"
 cost.mp = 1
-description = "HalfDwarf and HalfElf. More loyal to the Darkelf than not."
+description = "HalfDwarf and HalfElf (Elf or Darkelf). More loyal to the Darkelf than not."
 
 [models.dwalf_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -1252,7 +1252,7 @@ requires = []
 name = "Officer Mask"
 race = "darkelf"
 requires = []
-description = "Keeps multicultural Infantry loyal while there is a Darkelf officer on the battlefield"
+description = ""
 
 [equipment.officers_mask.unit_special]
 "Protection" = "If the officer is the only alive model, this unit becomes immun to poisons and poison clouds"
@@ -1334,7 +1334,7 @@ ap = 1
 
 [equipment.smg.range.special]
 "Ammo" = "Always treated as loaded"
-"Multiple Shots" = "Fires two times (per model) each time it is fired"
+"Multiple Shots" = "Fires two times each time it is fired"
 
 [equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
@@ -1765,3 +1765,26 @@ requires = [["type:Orlf", "type:Dwalf"], ["Hands:1"]]
 
 [equipment.war_axe.assault]
 strength.add = [1, 0, 0, 0]
+
+
+[equipment.experimental_acid_smg]
+name = "Experimental Acid SMG"
+race = "darkelf"
+requires = [["Hands:2"], ["type:Gnolf"]]
+cost.cp = 4
+upgrade_all = false
+
+[equipment.experimental_acid_smg.unit_special]
+"Fire Order" = "All models with smg always fire in all gunnery phases"
+
+[equipment.experimental_acid_smg.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d6-3"
+ap = 1
+
+[equipment.experimental_acid_smg.range.special]
+"Ammo" = "Always treated as loaded."
+"Multiple Shots" = "Fires two times each time it is fired"
+"Extra Damage" = "Minor Acid"
+"Fumble" = "Unit Gains one minor acid token (per fumble) "
