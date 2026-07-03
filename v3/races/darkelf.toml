@@ -26,7 +26,6 @@ movement_order = ["-", "-", "-"]
 
 [units.mechahydra.orders.fire]
 still = [["Load", "-"], ["-", "Load"],["Fire", "-"],["-", "Fire"]]
-
 slow = [["Load", "-"], ["-", "Load"],["Fire", "-"],["-", "Fire"]]
 
 [units.mechahydra.orders.movement]
@@ -51,10 +50,10 @@ size = "Huge"
 armor = [11, 8, 8, 7]
 cost.ip = 96
 cost.xp = 96
-
+0
 [units.mechanical_red_dragon.special]
 Resistance = "Fire[2]"
-Immunity = "Acid and gear disruption"
+Immunity = "Acid and Gear Disruption"
 
 [units.mechanical_red_dragon.shaken]
 speed = "slow"
@@ -485,8 +484,8 @@ cost.mp = 8
 cost.xp = 24
 
 [units.multicultural_infantry.special]
-"Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural_trainee in aftermath phase, such that you have a maximum of 10 models in this unit"
-"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural tranee units which has more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving. "
+"Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
+"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural tranee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving. "
 "Spawn" = "At start of battle, place two Multicultural Trainee units directly in front of this unit"
 "Forward Position" = "[2]"
 "Fire Order" = "Activate order only available while officer is alive"
@@ -511,7 +510,7 @@ regular = [
     "0-1: If number of alive models is more than 2, Kill 1 model",
     "2-5: Kill 1 model",
     "6-8: Kill 1 Model, d6 Psychic damage",
-    "9: Destroy unit",
+    "9: Kill 4 Models, d6 Psychic damage",
     "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
     "{{\\it If killed by poison, remove that instance}}",
     "{{\\it Count the number of alive models before the apply damage step}}",
@@ -599,7 +598,7 @@ still = [
 regular = [
     "0-5: Kill 1 model",
     "6-8: Kill 1 Model, d6 Psychic damage",
-    "9: Destroy unit base",
+    "9: Destroy unit",
     "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
     "{{\\it If killed by poison, remove that instance}}",
 ]
