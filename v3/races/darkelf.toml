@@ -50,7 +50,7 @@ size = "Huge"
 armor = [11, 8, 8, 7]
 cost.ip = 96
 cost.xp = 96
-0
+
 [units.mechanical_red_dragon.special]
 Resistance = "Fire[2]"
 Immunity = "Acid and Gear Disruption"
