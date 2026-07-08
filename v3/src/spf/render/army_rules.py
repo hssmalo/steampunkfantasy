@@ -18,6 +18,17 @@ from spf.schemas.race import EquipmentConfig
 type _Specials = tuple[tuple[str, str], ...]
 
 
+def _roll_text(roll: t.DamageRoll) -> str:
+    """Render a damage roll as its table-column string (``9`` / ``1-2`` / ``6+``)."""
+    match roll:
+        case t.ExactRoll(value=value):
+            return str(value)
+        case t.RangeRoll(low=low, high=high):
+            return f"{low}-{high}"
+        case t.AtLeastRoll(value=value):
+            return f"{value}+"
+
+
 def _count_summary[T](
     items: Sequence[T], name_of: Callable[[T], str]
 ) -> tuple[str, ...]:
