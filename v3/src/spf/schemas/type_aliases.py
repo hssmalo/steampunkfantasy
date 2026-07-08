@@ -63,9 +63,9 @@ type Speed = Literal[
     "slow",
     "fast",
     "sneak",
-    "still_flying",
-    "slow_flying",
-    "fast_flying",
+    "still_fly",
+    "slow_fly",
+    "fast_fly",
 ]
 type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
 type UnitSpecial = Literal[
