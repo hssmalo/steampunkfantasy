@@ -326,9 +326,9 @@ def test_army_rules_markdown_renders_two_column_damage_table(tmp_path: Path) -> 
     )
 
     text = out.read_text(encoding="utf-8")
-    assert "| Roll | Effect |" in text
-    assert "| 1 | Fine |" in text
-    assert "| 2 | Dead |" in text
+    # Rows must be contiguous with the header separator: a blank line here would
+    # end the Markdown table and leave the rows as loose text.
+    assert "| Roll | Effect |\n| ---- | ------ |\n| 1 | Fine |\n| 2 | Dead |\n" in text
     assert "- Stay calm" in text
 
 

@@ -17,12 +17,12 @@
 
 | Roll | Effect |
 | ---- | ------ |
-{% for roll, effect in rows %}
+{% for roll, effect in rows -%}
 | {{ roll }} | {{ effect }} |
-{%- endfor %}
-{% for note in notes %}
+{% endfor -%}
+{% for note in notes -%}
 - {{ note }}
-{%- endfor %}
+{% endfor -%}
 {% endfor %}
 {% for model in unit.models %}
 ### {{ model.name }}
