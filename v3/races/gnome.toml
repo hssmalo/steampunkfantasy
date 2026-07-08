@@ -138,8 +138,8 @@ size = "Tiny"
 armor = [0, 0, 0, 0]
 
 [units.mechanical_rat.shaken]
-speed = "slow"
-movement_order = ["-", "-", "flee"]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.mechanical_rat.orders.movement]
 slow = [["-", "-", "Chase"]]
@@ -730,7 +730,7 @@ cost.cp = -12
 replaces = "gnome_infantry"
 
 [models.gnome_tinkerer.unit_special]
-"Spawn" = "mechanical_rat: Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+"Spawn" = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
 
 
@@ -757,7 +757,7 @@ cost.cp = -12
 replaces = "quad_bike"
 
 [models.quadbike_tinkerer.unit_special]
-"Spawn" = "mechanical_rat: Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+"Spawn" = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
 [models.quadbike_tinkerer.assault]
 strength = [1, 1, 1, 1]
