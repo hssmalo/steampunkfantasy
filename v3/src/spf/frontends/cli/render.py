@@ -14,6 +14,7 @@ import cyclopts
 from spf.armies import io
 from spf.console import stderr, stdout
 from spf.render import Product, render
+from spf.render.army_rules import build_reference
 from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
 from spf.render.products import register_product
@@ -22,6 +23,10 @@ DEFAULT_FORMAT = "pdf"
 
 # The Order Card Product: templates live at ``<family>/cards/main.<ext>.jinja``.
 CARDS = register_product(Product(name="cards"))
+
+# The Army Reference Product: templates live at
+# ``<family>/army-rules/main.<ext>.jinja``.
+ARMY_RULES = register_product(Product(name="army-rules"))
 
 
 def _validate_format(_type: type, value: str) -> None:
@@ -74,6 +79,27 @@ def render_cards(
     stdout.print(f"Wrote {out}")
 
 
+def render_army_rules(
+    army_name: str,
+    *,
+    opts: Annotated[RenderOpts | None, cyclopts.Parameter(name="*")] = None,
+) -> None:
+    """Render an army's rules reference to a document."""
+    opts = opts or RenderOpts()
+    try:
+        army = io.load_army(army_name)
+    except (FileNotFoundError, ValueError) as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+
+    stem = _safe_stem(army_name)
+    reference = build_reference(army, stem=stem)
+    fmt = get_format(opts.format)
+    out = render(ARMY_RULES, reference, fmt, name=stem, out=opts.out)
+    stdout.print(f"Wrote {out}")
+
+
 def add_commands(app: cyclopts.App) -> None:
     """Add render commands to the CLI."""
     app.command(render_cards, name="cards")
+    app.command(render_army_rules, name="army-rules")

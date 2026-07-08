@@ -1,0 +1,42 @@
+# {{ source.nick }} — {{ source.race }} — {{ source.points }} points
+{% for unit in source.units %}
+## {{ unit.name }}{% if unit.count > 1 %} ({{ unit.count }}×){% endif %}
+
+- Size: {{ unit.size }}
+- Models: {{ unit.model_summary | join(', ') }}
+{%- if unit.armor %}
+- Armor: {{ unit.armor | join('/') }}
+{%- endif %}
+- Points: {{ unit.points }}
+- Shaken: {{ unit.shaken_speed }} / {{ unit.shaken_fire }}
+{% for name, text in unit.specials %}
+- **{{ name }}**: {{ text }}
+{%- endfor %}
+{% for name, rows in unit.damage_tables %}
+**{{ name }}**
+{% for row in rows %}
+- {{ row }}
+{%- endfor %}
+{% endfor %}
+{% for model in unit.models %}
+### {{ model.name }}
+
+- Equipment: {{ model.equipment_summary | join(', ') }}
+- Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
+{% for name, text in model.specials %}
+- **{{ name }}**: {{ text }}
+{%- endfor %}
+{% for name, text in model.assault_specials %}
+- **{{ name }}**: {{ text }}
+{%- endfor %}
+{% for equip in model.equipment %}
+#### {{ equip.name }}
+
+- Range: {{ equip.range }}, angle {{ equip.angle | join('/') }}, damage {{ equip.damage }}, AP {{ equip.ap }}
+{%- for name, text in equip.specials %}
+- **{{ name }}**: {{ text }}
+{%- endfor %}
+{% endfor %}
+{% endfor %}
+---
+{% endfor %}

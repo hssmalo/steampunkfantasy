@@ -1,0 +1,75 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{textcomp}
+
+\begin{document}
+\begin{center}
+{\Large \VAR{source.nick | latex_escape}} \\
+\VAR{source.race | latex_escape} --- \VAR{source.points} points
+\end{center}
+
+\BLOCK{for unit in source.units}
+\section{\VAR{unit.name | latex_escape}\BLOCK{if unit.count > 1} (\VAR{unit.count}$\times$)\BLOCK{endif}}
+
+Size: \VAR{unit.size | latex_escape} \\
+Models: \VAR{unit.model_summary | join(', ') | latex_escape} \\
+\BLOCK{if unit.armor}
+Armor: \VAR{unit.armor | join('/')} \\
+\BLOCK{endif}
+Points: \VAR{unit.points} \\
+Shaken: \VAR{unit.shaken_speed | latex_escape} / \VAR{unit.shaken_fire | latex_escape}
+
+\BLOCK{if unit.specials}
+\begin{itemize}
+\BLOCK{for name, text in unit.specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+
+\BLOCK{for name, rows in unit.damage_tables}
+\textbf{\VAR{name | latex_escape}}
+\begin{itemize}
+\BLOCK{for row in rows}
+\item \VAR{row | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endfor}
+
+\BLOCK{for model in unit.models}
+\subsection{\VAR{model.name | latex_escape}}
+
+Equipment: \VAR{model.equipment_summary | join(', ') | latex_escape} \\
+Assault: strength \VAR{model.assault_strength | join('/')} (\VAR{model.assault_strength_die | latex_escape}),
+deflection \VAR{model.assault_deflection | join('/')} (\VAR{model.assault_deflection_die | latex_escape}),
+damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
+
+\BLOCK{if model.specials or model.assault_specials}
+\begin{itemize}
+\BLOCK{for name, text in model.specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\BLOCK{for name, text in model.assault_specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+
+\BLOCK{for equip in model.equipment}
+\subsubsection{\VAR{equip.name | latex_escape}}
+
+Range: \VAR{equip.range}, angle \VAR{equip.angle | join('/') | latex_escape}, damage \VAR{equip.damage | latex_escape}, AP \VAR{equip.ap}
+
+\BLOCK{if equip.specials}
+\begin{itemize}
+\BLOCK{for name, text in equip.specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endfor}
+\BLOCK{endfor}
+
+\newpage
+\BLOCK{endfor}
+\end{document}
