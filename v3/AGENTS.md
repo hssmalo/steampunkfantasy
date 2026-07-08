@@ -6,6 +6,9 @@ validates/displays them.
 
 ## Detailed guides
 
+- **[`docs/agents/workflow.md`](docs/agents/workflow.md)** — implementation
+  workflow: scratch-folder plans, TDD in a separate worktree, commit-per-cycle,
+  and PR handling.
 - **[`docs/agents/cli.md`](docs/agents/cli.md)** — using the `spf` CLI to inspect
   units, models, and equipment (and the legacy-TOML caveat).
 - **[`docs/agents/quality-gates.md`](docs/agents/quality-gates.md)** — the `just`

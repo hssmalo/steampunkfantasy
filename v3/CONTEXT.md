@@ -81,7 +81,16 @@ _Avoid_: shooting, ranged
 
 **Damage table**:
 A lookup mapping a rolled damage result to its effects (kills, tokens, unit
-destruction). Kinds include `regular` and `psychic`.
+destruction), made up of Damage rows plus table-wide notes. Kinds include
+`Regular`, `Critical`, `Crew`, `Inner`, and `Psychic`.
+
+**Damage row**:
+One entry in a Damage table: a Damage roll paired with its effect text.
+_Avoid_: damage line, damage table entry
+
+**Damage roll**:
+The roll portion of a Damage row that a rolled result is checked against —
+an exact value, a range, or an "at least" threshold.
 
 **Special** (special rule):
 A named rule that modifies a Unit, Model, Equipment, Assault, or Range beyond
