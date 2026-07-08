@@ -66,7 +66,7 @@ def _unit(
         size=size,
         shaken=shaken or ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=orders,
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
     return Unit(name=name, config=config, models=models or (_model(),))
 
