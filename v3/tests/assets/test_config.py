@@ -12,6 +12,11 @@ def test_candidates_and_assets_paths_resolve() -> None:
     assert config.paths.assets.name == "assets"
 
 
+def test_prompts_path_resolves() -> None:
+    assert isinstance(config.paths.prompts, Path)
+    assert config.paths.prompts.name == "prompts"
+
+
 def test_per_kind_counts_resolve() -> None:
     assert config.assets.lore.count == 1
     assert config.assets.image.count == 3

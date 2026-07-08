@@ -17,8 +17,14 @@ from typing import Protocol
 class Service(Protocol):
     """Generates the raw content for a Kind's Candidates."""
 
-    def generate(self, source: str, count: int) -> Sequence[bytes | str]:
-        """Return ``count`` generated values (text or binary) for ``source``."""
+    def generate(
+        self, source: str, count: int, *, seed: int | None = None
+    ) -> Sequence[bytes | str]:
+        """Return ``count`` generated values (text or binary) for ``source``.
+
+        ``seed`` is an optional base seed; a Service derives its own ``count``
+        sub-seeds from it, and ``None`` means generate non-deterministically.
+        """
         ...
 
 

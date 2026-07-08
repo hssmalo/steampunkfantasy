@@ -11,6 +11,7 @@ class PathsConfig(StrictModel):
     races: Path
     rules: Path
     templates: Path
+    prompts: Path
     output: Path
     candidates: Path
     assets: Path

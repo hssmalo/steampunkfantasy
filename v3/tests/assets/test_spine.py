@@ -27,6 +27,21 @@ def test_generate_writes_n_candidates_at_kind_layout(
     assert [p.read_bytes() for p in paths] == [b"one", b"two", b"three"]
 
 
+def test_generate_threads_seed_to_service(tmp_path: Path) -> None:
+    service = FakeService()
+    kind = Kind(name="_seedy", service=service, subdir="_test", extension="txt")
+    generate(
+        kind,
+        source="a grunt description",
+        race="orks",
+        name="grunt",
+        count=2,
+        seed=7,
+        candidates_root=tmp_path,
+    )
+    assert service.seen_seed == 7
+
+
 def test_generate_honors_count(tmp_path: Path, test_kind: Kind) -> None:
     paths = generate(
         test_kind,

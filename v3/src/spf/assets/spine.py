@@ -28,6 +28,7 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     race: str,
     name: str,
     count: int,
+    seed: int | None = None,
     candidates_root: Path = config.paths.candidates,
 ) -> list[Path]:
     """Generate ``count`` Candidates for ``source`` and write them to disk.
@@ -36,12 +37,14 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     ``candidates_root/<race>/[<subdir>/]<name>.<index>.<extension>`` with a
     1-based index, inferring text-vs-binary mode from the value's type. Existing
     candidate files are overwritten silently. Returns the written paths in order.
+    ``seed`` is threaded straight to the Service (see :class:`Service`).
     """
     directory = _asset_dir(candidates_root, kind, race)
     directory.mkdir(parents=True, exist_ok=True)
 
     paths: list[Path] = []
-    for index, value in enumerate(kind.service.generate(source, count), start=1):
+    generated = kind.service.generate(source, count, seed=seed)
+    for index, value in enumerate(generated, start=1):
         path = directory / f"{name}.{index}.{kind.extension}"
         if isinstance(value, bytes):
             path.write_bytes(value)

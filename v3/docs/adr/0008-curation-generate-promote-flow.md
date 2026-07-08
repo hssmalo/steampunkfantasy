@@ -30,3 +30,13 @@ cleanly separated from the deterministic file copy (`promote`).
 - Rejected: an interactive single-command generate-and-pick flow — better UX for
   pure text, but it couples generation to review, fights image/mesh inspection,
   and resists testing.
+
+## Amendment (2026-07-08, #25 — first concrete kind: Image)
+
+The `Service` protocol now carries an optional base **`seed`**:
+`generate(source, count, *, seed=None)`. `generate` in the spine threads it
+straight through. Each Service owns deriving its own `count` sub-seeds from the
+base (so a batch is reproducible from one value); `seed=None` means generate
+non-deterministically. The CLI resolves a concrete seed per run — the caller's
+`--seed` or a fresh random one — prints it, and always passes it down, so any
+run (including a random one) is reproducible via the printed value.
