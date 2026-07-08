@@ -17,7 +17,7 @@ from typing import Protocol
 class Service(Protocol):
     """Generates the raw content for a Kind's Candidates."""
 
-    def generate(self, source: object, count: int) -> Sequence[bytes | str]:
+    def generate(self, source: str, count: int) -> Sequence[bytes | str]:
         """Return ``count`` generated values (text or binary) for ``source``."""
         ...
 

@@ -13,7 +13,7 @@ def test_generate_writes_n_candidates_at_kind_layout(
 ) -> None:
     paths = generate(
         test_kind,
-        source=object(),
+        source="a grunt description",
         race="orks",
         name="grunt",
         count=3,
@@ -30,7 +30,7 @@ def test_generate_writes_n_candidates_at_kind_layout(
 def test_generate_honors_count(tmp_path: Path, test_kind: Kind) -> None:
     paths = generate(
         test_kind,
-        source=object(),
+        source="a grunt description",
         race="orks",
         name="grunt",
         count=2,
@@ -48,7 +48,7 @@ def test_generate_without_subdir_writes_flat_text(tmp_path: Path) -> None:
     )
     paths = generate(
         lore_kind,
-        source=object(),
+        source="a grunt description",
         race="orks",
         name="lore",
         count=2,
@@ -68,7 +68,7 @@ def test_promote_copies_picked_candidate_into_store(
     store = tmp_path / "assets"
     generate(
         test_kind,
-        source=object(),
+        source="a grunt description",
         race="orks",
         name="grunt",
         count=3,
@@ -89,7 +89,7 @@ def test_promote_copies_picked_candidate_into_store(
 def test_promote_missing_candidate_raises(tmp_path: Path, test_kind: Kind) -> None:
     generate(
         test_kind,
-        source=object(),
+        source="a grunt description",
         race="orks",
         name="grunt",
         count=3,
@@ -113,7 +113,7 @@ def test_promote_overwrites_existing_asset_silently(
     store = tmp_path / "assets"
     generate(
         test_kind,
-        source=object(),
+        source="a grunt description",
         race="orks",
         name="grunt",
         count=3,

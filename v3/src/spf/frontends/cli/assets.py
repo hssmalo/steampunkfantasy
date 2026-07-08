@@ -11,6 +11,7 @@ from typing import Annotated
 import cyclopts
 
 from spf.assets import get_kind, promote
+from spf.config import config
 
 
 def _validate_kind(_type: type, value: str) -> None:
@@ -37,6 +38,13 @@ def add_commands(app: cyclopts.App) -> None:
         RACE is the race the Asset belongs to, KIND its Asset kind, NAME its base
         file name. ``--pick`` selects the 1-based Candidate to commit.
         """
-        promote(get_kind(kind), race=race, name=name, pick=pick)
+        promote(
+            get_kind(kind),
+            race=race,
+            name=name,
+            pick=pick,
+            candidates_root=config.paths.candidates,
+            assets_root=config.paths.assets,
+        )
 
     app.command(promote_asset, name="promote")

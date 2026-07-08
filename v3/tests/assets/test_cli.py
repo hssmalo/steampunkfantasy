@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-import cyclopts
 import pytest
+from cyclopts.exceptions import CycloptsError
 
 from spf.assets import Kind, generate
 from spf.assets.kinds import KINDS
@@ -23,7 +23,14 @@ def registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
 
 
 def test_promote_command_lands_picked_candidate(registered_kind: Kind) -> None:
-    generate(registered_kind, source=object(), race="orks", name="grunt", count=3)
+    generate(
+        registered_kind,
+        source="a grunt description",
+        race="orks",
+        name="grunt",
+        count=3,
+        candidates_root=config.paths.candidates,
+    )
     app(
         ["assets", "promote", "orks", "_test", "grunt", "--pick", "2"],
         exit_on_error=False,
@@ -38,7 +45,7 @@ def test_promote_command_unknown_kind_errors(
 ) -> None:
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
-    with pytest.raises(cyclopts.exceptions.CycloptsError, match="Unknown kind"):
+    with pytest.raises(CycloptsError, match="Unknown kind"):
         app(
             ["assets", "promote", "orks", "nope", "grunt", "--pick", "1"],
             exit_on_error=False,

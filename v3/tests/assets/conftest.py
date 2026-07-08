@@ -19,7 +19,7 @@ class FakeService:
 
     values: Sequence[bytes | str] = (b"one", b"two", b"three")
 
-    def generate(self, source: object, count: int) -> Sequence[bytes | str]:
+    def generate(self, source: str, count: int) -> Sequence[bytes | str]:
         """Return the first ``count`` canned values."""
         return list(self.values)[:count]
 

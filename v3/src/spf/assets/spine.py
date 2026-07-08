@@ -23,12 +23,12 @@ def _asset_dir(root: Path, kind: Kind, race: str) -> Path:
 
 def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-foundation spec
     kind: Kind,
-    source: object,
+    source: str,
     *,
     race: str,
     name: str,
     count: int,
-    candidates_root: Path | None = None,
+    candidates_root: Path = config.paths.candidates,
 ) -> list[Path]:
     """Generate ``count`` Candidates for ``source`` and write them to disk.
 
@@ -37,8 +37,7 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     1-based index, inferring text-vs-binary mode from the value's type. Existing
     candidate files are overwritten silently. Returns the written paths in order.
     """
-    root = candidates_root if candidates_root is not None else config.paths.candidates
-    directory = _asset_dir(root, kind, race)
+    directory = _asset_dir(candidates_root, kind, race)
     directory.mkdir(parents=True, exist_ok=True)
 
     paths: list[Path] = []
@@ -58,8 +57,8 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
     race: str,
     name: str,
     pick: int,
-    candidates_root: Path | None = None,
-    assets_root: Path | None = None,
+    candidates_root: Path = config.paths.candidates,
+    assets_root: Path = config.paths.assets,
 ) -> Path:
     """Promote the picked Candidate into the committed Asset store.
 
@@ -68,15 +67,14 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
     bytes-for-bytes. ``pick`` is 1-based. An existing Asset is overwritten
     silently. Raises :class:`ValueError` when the picked Candidate is missing.
     """
-    c_root = candidates_root if candidates_root is not None else config.paths.candidates
-    a_root = assets_root if assets_root is not None else config.paths.assets
-
-    candidate = _asset_dir(c_root, kind, race) / f"{name}.{pick}.{kind.extension}"
+    candidate = (
+        _asset_dir(candidates_root, kind, race) / f"{name}.{pick}.{kind.extension}"
+    )
     if not candidate.is_file():
         msg = f"No candidate to promote at {candidate} (pick {pick})"
         raise ValueError(msg)
 
-    asset = _asset_dir(a_root, kind, race) / f"{name}.{kind.extension}"
+    asset = _asset_dir(assets_root, kind, race) / f"{name}.{kind.extension}"
     asset.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(candidate, asset)
     return asset
