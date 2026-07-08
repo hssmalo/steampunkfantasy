@@ -13,6 +13,8 @@ offline backend in #36.
 
 import os
 import random
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from collections.abc import Sequence
@@ -25,6 +27,12 @@ _HEIGHT = 1024
 _MODEL = "zimage"
 _SEED_BOUND = 2**31
 
+# Transient origin failures (5xx, incl. Cloudflare 52x) are worth retrying with
+# exponential backoff; client errors (4xx auth/not-found) are not.
+_MAX_ATTEMPTS = 4  # one initial try plus three retries
+_BACKOFF_BASE = 1.0  # seconds, doubled each retry: 1s, 2s, 4s
+_SERVER_ERROR = 500
+
 
 def _build_url(prompt: str, seed: int) -> str:
     """Build the Pollinations image URL for ``prompt`` at ``seed``."""
@@ -36,13 +44,32 @@ def _build_url(prompt: str, seed: int) -> str:
 
 
 def _fetch(url: str) -> bytes:
-    """Fetch the raw image bytes at ``url``, adding the API key when set."""
+    """Fetch the raw image bytes at ``url``, retrying transient server errors.
+
+    Authenticates with the optional ``SPF_POLLINATIONS_API_KEY`` via an
+    ``Authorization: Bearer`` header (keeping the key out of the URL). Retries up
+    to :data:`_MAX_ATTEMPTS` times with exponential backoff on 5xx responses and
+    connection errors; 4xx client errors fail fast.
+    """
+    request = urllib.request.Request(url)  # noqa: S310  https endpoint
     key = os.environ.get("SPF_POLLINATIONS_API_KEY")
     if key:
-        separator = "&" if "?" in url else "?"
-        url = f"{url}{separator}key={urllib.parse.quote(key, safe='')}"
-    with urllib.request.urlopen(url) as response:  # noqa: S310  https endpoint
-        return response.read()
+        request.add_header("Authorization", f"Bearer {key}")
+
+    for attempt in range(_MAX_ATTEMPTS):
+        try:
+            with urllib.request.urlopen(request) as response:  # noqa: S310  https
+                return response.read()
+        except urllib.error.HTTPError as err:
+            if err.code < _SERVER_ERROR or attempt == _MAX_ATTEMPTS - 1:
+                raise  # client error, or out of retries
+        except urllib.error.URLError:
+            if attempt == _MAX_ATTEMPTS - 1:
+                raise  # out of retries
+        time.sleep(_BACKOFF_BASE * 2**attempt)
+
+    msg = "unreachable: the retry loop always returns or raises"
+    raise RuntimeError(msg)  # pragma: no cover
 
 
 class PollinationsService:

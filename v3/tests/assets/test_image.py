@@ -1,6 +1,10 @@
 """The Image kind: Pollinations-backed Service, URL building, registration."""
 
+import urllib.error
+import urllib.request
+from email.message import Message
 from pathlib import Path
+from typing import Self
 from urllib.parse import parse_qs, unquote, urlsplit
 
 import pytest
@@ -112,6 +116,139 @@ def test_build_url_encodes_prompt_and_params() -> None:
     assert params["height"] == ["1024"]
     assert params["model"] == ["zimage"]
     assert params["seed"] == ["99"]
+
+
+class _FakeResponse:
+    """A minimal ``urlopen`` context manager returning canned bytes."""
+
+    def __init__(self, data: bytes) -> None:
+        self._data = data
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *_: object) -> bool:
+        return False
+
+    def read(self) -> bytes:
+        return self._data
+
+
+def _http_error(code: int) -> urllib.error.HTTPError:
+    return urllib.error.HTTPError("https://x", code, "boom", Message(), None)
+
+
+def test_fetch_sends_bearer_auth_header(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("SPF_POLLINATIONS_API_KEY", "pk_secret")
+    captured: dict[str, urllib.request.Request] = {}
+
+    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
+        captured["req"] = request
+        return _FakeResponse(b"IMG")
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+
+    assert img._fetch("https://gen.pollinations.ai/image/x") == b"IMG"
+    assert captured["req"].get_header("Authorization") == "Bearer pk_secret"
+    assert "pk_secret" not in captured["req"].full_url  # key stays out of the URL
+
+
+def test_fetch_omits_auth_header_without_key(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
+    captured: dict[str, urllib.request.Request] = {}
+
+    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
+        captured["req"] = request
+        return _FakeResponse(b"IMG")
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+
+    img._fetch("https://x")
+    assert captured["req"].get_header("Authorization") is None
+
+
+def test_fetch_retries_on_server_error_then_succeeds(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
+    outcomes: list[object] = [_http_error(522), _http_error(530), _FakeResponse(b"OK")]
+    calls: list[urllib.request.Request] = []
+
+    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
+        result = outcomes[len(calls)]
+        calls.append(request)
+        if isinstance(result, Exception):
+            raise result
+        assert isinstance(result, _FakeResponse)
+        return result
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(img.time, "sleep", sleeps.append)
+
+    assert img._fetch("https://x") == b"OK"
+    assert len(calls) == 3  # two failures, then success
+    assert len(sleeps) == 2  # backed off before each retry
+
+
+def test_fetch_does_not_retry_on_client_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
+    calls: list[urllib.request.Request] = []
+
+    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
+        calls.append(request)
+        raise _http_error(403)
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(img.time, "sleep", sleeps.append)
+
+    with pytest.raises(urllib.error.HTTPError) as excinfo:
+        img._fetch("https://x")
+    assert excinfo.value.code == 403
+    assert len(calls) == 1  # failed fast, no retry
+    assert sleeps == []
+
+
+def test_fetch_gives_up_after_max_attempts(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
+    calls: list[urllib.request.Request] = []
+
+    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
+        calls.append(request)
+        raise _http_error(522)
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(img.time, "sleep", lambda _: None)
+
+    with pytest.raises(urllib.error.HTTPError) as excinfo:
+        img._fetch("https://x")
+    assert excinfo.value.code == 522
+    assert len(calls) == img._MAX_ATTEMPTS
+
+
+def test_fetch_backoff_grows_exponentially(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
+    monkeypatch.setattr(img, "_BACKOFF_BASE", 0.5)
+
+    def fake_urlopen(_: urllib.request.Request) -> _FakeResponse:
+        raise _http_error(522)
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(img.time, "sleep", sleeps.append)
+
+    with pytest.raises(urllib.error.HTTPError):
+        img._fetch("https://x")
+    assert sleeps == [0.5 * 2**i for i in range(img._MAX_ATTEMPTS - 1)]
 
 
 def test_image_kind_is_registered() -> None:
