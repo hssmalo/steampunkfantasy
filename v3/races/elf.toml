@@ -38,7 +38,7 @@ Regular = [
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"10-17: As below, d6 Psychic damage",
 	"18: Unit destroyed",
-	"{{\\it Note: Bleed does not cause more bleeding}}",
+	"Note: Bleed does not cause more bleeding",
 ]
 Psychic = ["6+: shaken"]
 
@@ -80,7 +80,7 @@ Regular = [
 	"0-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["4+: shaken"]
 
@@ -121,7 +121,7 @@ Regular = [
 	"0-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["5+: shaken"]
 
@@ -396,7 +396,7 @@ Regular = [
 	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
 	"Note: bleeding does not cause more bleeding",
-	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
+	"Note: if one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
 ]
 Psychic = ["6+: shaken"]
 
@@ -432,7 +432,7 @@ Regular = [
 	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
 	"Note: bleeding does not cause more bleeding",
-	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
+	"Note: if one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
 ]
 Psychic = ["6+: shaken"]
 
@@ -532,8 +532,8 @@ still = [["360°", "A", "F"], ["A+A", "360°+F", "F"], ["A+A", "360°", "F"]]
 Regular = [
 	"2-3: Bleed[6]",
 	"6+: kill 1 model, d4 Psychic damage",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: bleeding does not cause more bleeding",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["4+: shaken"]
 
@@ -565,8 +565,8 @@ Psychic = ["4+: shaken"]
 #regular = [
 #	"2-3: Bleed[4]",
 #	"4+: kill 1 model, d4 Psychic damage",
-#	"{{\\it Note: bleeding does not cause more bleeding}}",
-#	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+#	"Note: bleeding does not cause more bleeding",
+#	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 #]
 #Psychic = ["4+: shaken"]
 [units.pegasus_rider]
@@ -639,8 +639,8 @@ fast_fly = [
 Regular = [
 	"2-3: Bleed[4]",
 	"4+: kill 1 model",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: bleeding does not cause more bleeding",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["5+: shaken"]
 
@@ -1109,8 +1109,8 @@ Regular = [
 	"9-11: as below, +1 to future damage",
 	"12-19: as below, d8 Psychic damage",
 	"20: Unit killed",
-	"{{\\it Note: Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]}}",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
+	"Note: Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"Note: bleeding does not cause more bleeding",
 ]
 Psychic = ["8+: shaken"]
 

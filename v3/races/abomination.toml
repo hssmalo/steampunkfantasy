@@ -233,7 +233,7 @@ Regular = [
 	"1-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["4+: shaken"]
 
@@ -269,8 +269,8 @@ Regular = [
 	"4-5: As below, +1 to future damage",
 	"6-8: As below, if caused by bleeding, amplify bleeding",
 	"9+: Unit destroyed",
-	"{{\\it Note:  Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]}}",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
+	"Note:  Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"Note: bleeding does not cause more bleeding",
 ]
 Psychic = ["6+: shaken"]
 
@@ -303,7 +303,7 @@ Regular = [
 	"4-5: Bleed[6], +1 to future damage",
 	"6-7: Bleed[8], +2 to future damage",
 	"8+: Unit destroyed",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
+	"Note: bleeding does not cause more bleeding",
 ]
 Psychic = ["6+: shaken"]
 
@@ -342,7 +342,7 @@ Regular = [
 	"1-2: +1 to future damage",
 	"3-4: +2 to future damage",
 	"5+:  shaken, Destroy one model",
-	"{{\\it Note: If one model is destroyed remove half of the +1 future damage tokens }}"
+	"Note: If one model is destroyed remove half of the +1 future damage tokens"
 	]
 
 
@@ -412,7 +412,7 @@ still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 Regular = [
 	"2-3: Bleed[4]",
 	"4+: kill 1 model",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["6+: shaken"]
 
@@ -456,7 +456,7 @@ Regular = [
 	"4-6: as below, +1 to future damage",
 	"7-8: as below, shaken",
 	"9+: unit destroyed",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
+	"Note: bleeding does not cause more bleeding",
 ]
 Psychic = ["6+: shaken"]
 
@@ -483,7 +483,7 @@ damage = "d6-2"
 ap = 2
 
 [models.abomination_infantry.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 "Cunning Assault" = "[1 for 2]"
 
 [models.hippopotamus_riders]
@@ -505,7 +505,7 @@ damage = "d6"
 ap = 2
 
 [models.hippopotamus_riders.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 
 
 
@@ -525,7 +525,7 @@ damage = "d6"
 ap = 2
 
 [models.horror.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 
 
 [models.shriek_monstrosity]
@@ -579,7 +579,7 @@ damage = "d6"
 ap = 0
 
 [models.robot_crab.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 "Cunning Assault" = "[1 for 1]"
 
 [models.squid]
@@ -601,7 +601,7 @@ damage = "d6-2"
 ap = 2
 
 [models.squid.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 "Cunning Assault Defense" = "[6][6+]"
 
 [models.mothership]
@@ -620,7 +620,7 @@ damage = "d6-2"
 ap = 2
 
 [models.mothership.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 "Cunning Assault Defense" = "[12](6+)"
 
 [models.frost88]
@@ -644,7 +644,7 @@ damage = "d6-2"
 ap = 2
 
 [models.frost88.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
@@ -670,7 +670,7 @@ damage = "d6-2"
 ap = 2
 
 [models.elite_abomination_infantry.assault.special]
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 "Cunning Assault" = "[1 for 2]"
 
 [models.giant_frog_rider]
@@ -697,7 +697,7 @@ ap = 2
 
 [models.giant_frog_rider.assault.special]
 "Cunning Assault" = "[1 for 3]"
-"Bonus" = "+100\\% strength and deflections versus shaken units"
+"Bonus" = "+100% strength and deflections versus shaken units"
 "Extra Damage" = "Poison[4][1 for 4]"
 
 [equipment]

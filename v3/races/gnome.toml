@@ -265,7 +265,7 @@ Regular = [
 Critical = [
     "1-2: +3 to future damage",
     "3: +1 to be hit, -1 to hit",
-    "4: Rotate unit 180$^0$",
+    "4: Rotate unit 180°",
     "5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
     "6: set on fire",
 ]
@@ -324,7 +324,7 @@ Regular = [
 Critical = [
     "1-2: +3 to future damage",
     "3: +1 to be hit, -1 to hit",
-    "4: Rotate unit 180$^0$",
+    "4: Rotate unit 180°",
     "5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
     "6: set on fire",
 ]
@@ -386,7 +386,7 @@ Regular = [
 Critical = [
     "1-2: +3 to future damage",
     "3: +1 to be hit, -1 to hit",
-    "4: Rotate unit 180$^0$",
+    "4: Rotate unit 180°",
     "5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
     "6: set on fire",
 ]

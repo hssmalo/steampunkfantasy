@@ -44,7 +44,7 @@ Regular = [
 	"0-5: Kill 1 model",
 	"6-7: Kill 1 model, Psychic damage[d6]",
 	"8+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["4+: shaken"]
 
@@ -84,7 +84,7 @@ slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chase", "-"]]
 Regular = ["1-6: Bleed[8]",
 	  "7-8: +1 to future damage, Bleed[8]",
 	  "9+: Unit destroyed",
-	"{{\\it Note: Bleeding does not cause more bleeding}}",
+	"Note: Bleeding does not cause more bleeding",
 ]
 Psychic = ["6+: shaken"]
 
@@ -424,8 +424,8 @@ Regular = [
 	"4-5: +2 to future damage",
 	"6+: As below, temporarily destroyed",
 	"While temporarily destroyed, all regular damage do inner damage instead",
-	"{{\\it Note: + to future damage does not apply to inner damage}}",
-	"{{\\it Note that it does not get the status temporarily destroyed before the apply damage step}}",
+	"Note: + to future damage does not apply to inner damage",
+	"Note that it does not get the status temporarily destroyed before the apply damage step",
 ]
 Inner = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
 
