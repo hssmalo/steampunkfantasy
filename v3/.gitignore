@@ -1,3 +1,6 @@
 
 # Session scratch (uncommitted working notes)
 .scratch/
+
+# Rendered output
+output/

@@ -19,6 +19,8 @@ race_app = app.command(cyclopts.App(name="race", help="Work with a specific race
 cli.race.add_commands(race_app)
 rules_app = app.command(cyclopts.App(name="rules", help="Work with rules."))
 cli.rules.add_commands(rules_app)
+render_app = app.command(cyclopts.App(name="render", help="Render products to files."))
+cli.render.add_commands(render_app)
 special_app = app.command(cyclopts.App(name="special", help="Work with special rules."))
 cli.special.add_commands(special_app)
 

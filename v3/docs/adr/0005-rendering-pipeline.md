@@ -36,3 +36,10 @@ the prose layout, so one source cannot serve both well.
   seam to inline them; deferred.
 - Multi-Unit and multi-Army aggregation into one Rendering is a future concern;
   the placeholder is concatenating PDFs at the end.
+- The Markdown Jinja environment runs with `autoescape=False`, **not** HTML
+  autoescape as one might assume. Markdown templates emit Markdown text, not
+  HTML — Jinja HTML-escaping would corrupt the raw `.md` (a `&` becomes `&amp;`)
+  and does nothing for Markdown-special characters anyway. HTML-escaping is
+  deferred to the Markdown→HTML derivation, where `markdown-it-py` escapes text
+  correctly. (Source data is designer-authored TOML, so injection risk is low
+  regardless.)
