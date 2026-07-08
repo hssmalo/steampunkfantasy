@@ -6,7 +6,6 @@ name = "Dark Elf"
 [spawns.multicultural_trainee]
 unit = "multicultural_trainee"
 
-
 #cloud => cloud
 [units]
 
@@ -16,7 +15,7 @@ name = "MecaHydra"
 models = ["mechahydra"]
 size = "Huge"
 cost.ip = 48
-armor = [9,8,8,7]
+armor = [9, 8, 8, 7]
 
 [units.mechahydra.shaken]
 speed = "still"
@@ -29,22 +28,20 @@ movement_order = ["-", "-", "-"]
 "Resistance" = "Fire[1]"
 
 [units.mechahydra.orders.fire]
-still = [["Load", "-"], ["-", "Load"],["Fire", "-"],["-", "Fire"]]
-slow = [["Load", "-"], ["-", "Load"],["Fire", "-"],["-", "Fire"]]
+still = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"]]
+slow = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"]]
 
 [units.mechahydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [
-	["360°", "360°", "360°"],
-	["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
 [units.mechahydra.damage_tables]
-regular = ["1-3: +1 to future damage",
-	   "4-5: +2 to future damage",
-	   "6-17: +2 to future damage, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Set unit on fire",
-	   "18: Unit destroyed"]
-
-
+Regular = [
+    "1-3: +1 to future damage",
+    "4-5: +2 to future damage",
+    "6-17: +2 to future damage, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Set unit on fire",
+    "18: Unit destroyed"
+]
 
 [units.mechanical_red_dragon]
 race = "darkelf"
@@ -73,7 +70,7 @@ slow = [["-", "Breath(fire)"], ["Breath(fire)", "-"], ["-", "Load"]]
 fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
 
 [units.mechanical_red_dragon.damage_tables]
-regular = [
+Regular = [
     "1-4: +1 on future damage",
     "5-10: +1 on future damage, shaken",
     "13+: Unit destroyed",
@@ -116,7 +113,7 @@ fast_flying = [
 ]
 
 [units.mechanical_iron_dragon.damage_tables]
-regular = [
+Regular = [
     "1-4: +1 on future damage",
     "5-10: +1 on future damage, shaken",
     "13+: Unit destroyed",
@@ -170,13 +167,13 @@ slow = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release"]]
 fast = [["-", "fire"], ["-", "fire"], ["-", "fire"], ["-", "Release"]]
 
 [units.queen_yy.damage_tables]
-regular = [
+Regular = [
     "1-3: +1 to future damage",
     "4-5: as 1-3, shaken",
     "6-8: as 4-5, Critical damage[d6]",
     "9+: Unit destroyed",
 ]
-critical = [
+Critical = [
     "1: -1 to-hit, +1 to-be-hit",
     "2: Rotates right in agony 0 step",
     "3: Rotates left in agony 1 and in agony 3",
@@ -184,10 +181,10 @@ critical = [
     "5: unit is covered in acid",
     "6: unit is set on fire",
 ]
-crew = [
-    "4-7: Double initial crew damage if already shaken",
+Crew = [
+    "4-7: Double initial Crew damage if already shaken",
     "8-10: As below, Crippled Crew",
-    "11-12: as 10, +3 to future crew damage",
+    "11-12: as 10, +3 to future Crew damage",
     "13: Crew Killed, unit destroyed",
 ]
 
@@ -238,13 +235,13 @@ slow = [["-", "Release"]]
 fast = [["-", "Release"]]
 
 [units.queen_xy.damage_tables]
-regular = [
+Regular = [
     "1-3: +1 to future damage",
     "4-5:as 1-4, shaken",
     "6-8: 4-5, Critical damage[d6]",
     "9+: Unit destroyed",
 ]
-critical = [
+Critical = [
     "1: -1 to-hit, +1 to-be-hit",
     "2: Rotates right in agony 0 step",
     "3: rotates left in agony 1 and in agony 3",
@@ -252,10 +249,10 @@ critical = [
     "5: unit is covered in acid",
     "6: unit is set on fire",
 ]
-crew = [
-    "4-7: double initial crew damage if already shaken",
+Crew = [
+    "4-7: double initial Crew damage if already shaken",
     "9-10: As below, Crippled Crew",
-    "11-12: As below, +3 to future crew damage",
+    "11-12: As below, +3 to future Crew damage",
     "13: Crew Killed, unit destroyed",
 ]
 
@@ -289,14 +286,14 @@ slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.nightmare_mechanical_cavalry.damage_tables]
-regular = [
+Regular = [
     "2-3: +1 on future damage",
     "4: +2 on future damage",
     "5-6: Kill 1 model",
-    "7+: Kill 1 model, d6 psychic damage",
+    "7+: Kill 1 model, d6 Psychic damage",
     "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by poison, remove that poison token}}",
 ]
-psychic = ["6+: unit shaken"]
+Psychic = ["6+: unit shaken"]
 
 [units.elite_mechanical_cavalry]
 race = "darkelf"
@@ -331,13 +328,13 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 all = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
 [units.elite_mechanical_cavalry.damage_tables]
-regular = [
+Regular = [
     "2-3: +1 on future damage",
     "4: +2 on future damage",
     "5-6: kill 1 model",
     "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by poison, remove that poison token}}",
 ]
-psychic = ["5+: unit shaken"]
+Psychic = ["5+: unit shaken"]
 
 [units.mechanical_assault_spider]
 race = "darkelf"
@@ -360,13 +357,13 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
 [units.mechanical_assault_spider.damage_tables]
-regular = [
+Regular = [
     "1-2: +1 to future damage",
     "3: as below, shaken",
     "4-6: as below, critical damage[d6]",
     "7+: Destroy unit",
 ]
-critical = [
+Critical = [
     "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
     "2: Cannot move",
     "3: Cannot rotate",
@@ -397,15 +394,15 @@ still = [["-", "Load"], ["-", "Fire"], ["Load", "Aim"]]
 slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
 [units.mechanical_scorpion.damage_tables]
-regular = [
+Regular = [
     "1-2: +1 to future damage",
     "3: as below, shaken",
     "4-6: as below, critical damage[d6]",
     "7+: Destroy unit",
 ]
-critical = [
+Critical = [
     "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
-    "2: Cannot move, looses fear",
+    "2: Cannot move, loses fear",
     "3: Cannot rotate",
     "4-5: x3 Light damage[d6]",
     "6: Unit set on Fire",
@@ -458,14 +455,14 @@ still = [
 ]
 
 [units.darkelf_infantry.damage_tables]
-regular = [
+Regular = [
     "0-5: Kill 1 model",
-    "6-8: Kill 1 Model, d6 Psychic damage",
+    "6-8: Kill 1 model, d6 Psychic damage",
     "9: Destroy unit",
     "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
     "{{\\it If killed by poison, remove that instance}}",
 ]
-psychic = ["4+: Unit Shaken"]
+Psychic = ["4+: Unit shaken"]
 
 [units.multicultural_infantry]
 race = "darkelf"
@@ -489,7 +486,7 @@ cost.xp = 24
 
 [units.multicultural_infantry.special]
 "Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
-"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving. "
+"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving."
 "Spawn" = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit"
 "Forward Position" = "[2]"
 "Fire Order" = "Activate order only available while officer is alive"
@@ -510,16 +507,16 @@ slow = [
 slow = [["Activate", "-"]]
 
 [units.multicultural_infantry.damage_tables]
-regular = [
+Regular = [
     "0-1: If number of alive models is more than 2, Kill 1 model",
     "2-5: Kill 1 model",
-    "6-8: Kill 1 Model, d6 Psychic damage",
-    "9: Kill 4 Models, d6 Psychic damage",
+    "6-8: Kill 1 model, d6 Psychic damage",
+    "9: Kill 4 models, d6 Psychic damage",
     "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
     "{{\\it If killed by poison, remove that instance}}",
     "{{\\it Count the number of alive models before the apply damage step}}",
 ]
-psychic = ["5+: Unit Shaken"]
+Psychic = ["5+: Unit shaken"]
 
 [units.multicultural_trainee]
 race = "darkelf"
@@ -547,8 +544,8 @@ movement_order = ["-", "-", "Flee"]
 slow = [["-", "-", "Chase"]]
 
 [units.multicultural_trainee.damage_tables]
-regular = ["1-8: Kill 1 model", "9: Destroy Unit"]
-psychic = ["3+: Unit Shaken"]
+Regular = ["1-8: Kill 1 model", "9: Destroy unit"]
+Psychic = ["3+: Unit shaken"]
 
 [units.roboprosthetic_darkelf]
 race = "darkelf"
@@ -598,14 +595,14 @@ still = [
 ]
 
 [units.roboprosthetic_darkelf.damage_tables]
-regular = [
+Regular = [
     "0-5: Kill 1 model",
-    "6-8: Kill 1 Model, d6 Psychic damage",
+    "6-8: Kill 1 model, d6 Psychic damage",
     "9: Destroy unit",
     "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
     "{{\\it If killed by poison, remove that instance}}",
 ]
-psychic = ["5+: Unit Shaken"]
+Psychic = ["5+: Unit shaken"]
 
 [units.assassin]
 race = "darkelf"
@@ -650,8 +647,8 @@ still = [
 ]
 
 [units.assassin.damage_tables]
-regular = ["1+: unit killed"]
-psychic = ["6+: Unit Shaken"]
+Regular = ["1+: unit killed"]
+Psychic = ["6+: Unit shaken"]
 
 [units.roboprosthetic_assassin]
 race = "darkelf"
@@ -697,8 +694,8 @@ still = [
 slow = [["-", "Fire"], ["Fire", "-"]]
 
 [units.roboprosthetic_assassin.damage_tables]
-regular = ["1+: unit killed"]
-psychic = ["6+: Unit Shaken"]
+Regular = ["1+: unit killed"]
+Psychic = ["6+: Unit shaken"]
 
 [units.scout]
 race = "darkelf"
@@ -745,8 +742,8 @@ still = [
 slow = [["Spot", "Spot"]]
 
 [units.scout.damage_tables]
-regular = ["0+: unit killed"]
-psychic = ["3+: Unit Shaken"]
+Regular = ["0+: unit killed"]
+Psychic = ["3+: Unit shaken"]
 
 #
 # Models
@@ -771,7 +768,7 @@ ap = 2
 [models.mechahydra.assault.special]
 "Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
 "Extra Damage" = "Poison[6][1 for 2]"
-"Cunning Assault Defence" = "[3][5+]"
+"Cunning Assault Defense" = "[3][5+]"
 
 [models.mechanical_red_dragon]
 name = "Mechanical Red Dragon"
@@ -980,7 +977,6 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-
 [models.gnolf_tinkerer]
 name = "Gnolf Tinkerer"
 race = "darkelf"
@@ -1000,7 +996,6 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-
 
 [models.orlf_infantry]
 name = "Orlf"
@@ -1023,8 +1018,6 @@ ap = 2
 [models.orlf_infantry.assault.special]
 "Ork Reroll" = "[3]"
 
-
-
 [models.ogrin_infantry]
 name = "Ogrin Infantry"
 race = "darkelf"
@@ -1042,7 +1035,6 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
-
 
 [models.darkelf_officer]
 name = "Dark Elf Officer"
@@ -1279,10 +1271,10 @@ damage = "d6 + d6 Psychic damage"
 ap = 3
 
 [equipment.tail_gatling_gun.range.special]
- "Focus Fire" = "When using aim: roll 6 dice at same unit."
+"Focus Fire" = "When using aim: roll 6 dice at same unit."
 "Area" = "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range"
 "Extra Damage" = "Minor acid"
-"Ammo" =     "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
+"Ammo" = "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
 
 [equipment.heavy_rifle]
 name = "Heavy Rifle"
@@ -1303,12 +1295,11 @@ requires = []
 [equipment.acid_cannon.range]
 range = 4
 angle = [true, true, false, false]
-damage = "d6+d8 Psychic damage + d6 crew damage"
+damage = "d6+d8 Psychic damage + d6 Crew damage"
 ap = 3
 
 [equipment.acid_cannon.range.special]
 "Extra Damage" = "Acid. In addition, if you hit target, place an minor acid on all units in hex"
-
 
 [equipment.mechanical_imp]
 name = "Mechanical Imp"
@@ -1356,7 +1347,6 @@ ap = 1
 [equipment.smg_free.range.special]
 "Ammo" = "Always treated as loaded"
 "Multiple Shots" = "Fires two times (per model) each time it is fired"
-
 
 [equipment.crossbow]
 name = "Crossbow"
@@ -1412,14 +1402,13 @@ requires = []
 [equipment.nightmare_breath.range]
 range = 2
 angle = [true, false, false, false]
-damage = "d8 crew damage"
+damage = "d8 Crew damage"
 ap = 0
 
 [equipment.nightmare_breath.range.special]
 "Area" = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
 "Extra Damage" = "No regular damage, but Poison[8] and set on fire"
 "Ammo" = "Always treated as loaded"
-
 
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
@@ -1444,7 +1433,6 @@ still = [["-", "Throw"]]
 slow = [["-", "Throw"]]
 crawl = [["-", "Throw"]]
 
-
 [equipment.mortar1a]
 name = "Mortar 1A"
 race = "darkelf"
@@ -1458,11 +1446,11 @@ range = 10
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
+
 [equipment.mortar1a.range.special]
-"Range" =  "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
+"Range" = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 "Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
 "Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
-
 
 [equipment.mortar11b]
 name = "Mortar 1.1B"
@@ -1477,11 +1465,11 @@ range = 10
 angle = [true, true, true, true]
 damage = "N.A"
 ap = 0
+
 [equipment.mortar11b.range.special]
-"Range" =  "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
+"Range" = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 "Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
 "Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
-
 
 # ToDo Move to Ogre? Make DarkElf immune
 #[equipment.glitterbomb_mortar]
@@ -1490,7 +1478,6 @@ ap = 0
 #cost.cp = 48
 #upgrade_all = true
 #requires = [["Shared:1"], ["type:Infantry"]]
-
 #[equipment.glitterbomb_mortar.range]
 #range = 8
 #angle = [true, true, true, true]
@@ -1499,7 +1486,6 @@ ap = 0
 #special = ["Choose a hex within range. Area(5+): A unit hit at least once gains a terror token",
 #    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
 #]
-
 [equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
@@ -1521,7 +1507,7 @@ upgrade_all = true
 requires = [["Hands:2"], ["type:Roboprosthetic", "type:Infantry"]]
 
 [equipment.poison_spray.assault]
-damage.replace = "d6-2 + d6 crew damage"
+damage.replace = "d6-2 + d6 Crew damage"
 
 [equipment.poison_spray.assault.special]
 "Improved Extra Damage" = "Poison[4][1 for 2]"
@@ -1529,7 +1515,7 @@ damage.replace = "d6-2 + d6 crew damage"
 [equipment.poison_spray.range]
 range = 2
 angle = [true, true, true, true]
-damage = "d6 crew damage"
+damage = "d6 Crew damage"
 ap = 0
 
 [equipment.poison_spray.range.special]
@@ -1563,9 +1549,8 @@ damage = "-"
 ap = 0
 
 [equipment.acid_breath.range.special]
-"Extra Damage" =     "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid"
-"Bonus" =  "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
-
+"Extra Damage" = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid"
+"Bonus" = "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
 
 [equipment.fire_breath]
 name = "Fire breath"
@@ -1599,7 +1584,7 @@ ap = "N/A"
 "Multiple Shots" = "Fire one time per functional minor head"
 
 [equipment.shrapnel_spit]
-name="Shrapnel Spit"
+name = "Shrapnel Spit"
 race = "darkelf"
 requires = []
 
@@ -1607,7 +1592,7 @@ requires = []
 range = 3
 angle = [true, true, false, false]
 damage = "d4-2"
-ap    = 1
+ap = 1
 
 [equipment.shrapnel_spit.range.special]
 "Area" = "Choose a hex within normal range. Area[1+] at point blank range, Area[4+] otherwise. Single model large units are hit d4 times, while single model huge units are hit d8 times."
@@ -1627,7 +1612,6 @@ ap = 1
 "Critical" = "If Critical: unit is set on fire."
 "Multiple Shots" = "Fire two time per functional head (minor and major)"
 
-
 [equipment.shrapnel_breath]
 name = "Shrapnel breath"
 race = "darkelf"
@@ -1640,13 +1624,12 @@ damage = "d6-2"
 ap = 2
 
 [equipment.shrapnel_breath.range.special]
-"Range" = "Target one hex within front ark and within long range"
+"Range" = "Target one hex within front arc and within long range"
 "Area" = "[4+] at point blank range, Area[6+] at normal and long range. Single model large units are hit d4 times and single model huge units are hit d8 times."
-"Ammo" =  "Always treated as loaded"
-
+"Ammo" = "Always treated as loaded"
 
 [equipment.gasmask]
-name = "GasMask assault training"
+name = "Gas mask assault training"
 race = "darkelf"
 cost.xp = 4
 upgrade_all = true
@@ -1730,12 +1713,11 @@ crawl = [["Hide[ruins]", "-", "-"]]
 name = "Vest of Life Support"
 race = "darkelf"
 cost.cp = 8
-requires = [["Independent:1"], ["type:Dwalf"],]
+requires = [["Independent:1"], ["type:Dwalf"]]
 upgrade_all = true
 
 [equipment.vest_of_life_support.unit_special]
-"Protection" =  "Unit gains 1 endurance token per Dwalf model"
-
+"Protection" = "Unit gains 1 endurance token per Dwalf model"
 
 [equipment.ogrin_bow]
 name = "Ogrin bow"
@@ -1756,8 +1738,6 @@ ap = 1
 [equipment.ogrin_bow.range.special]
 "Ammo" = "Always treated as loaded"
 
-
-
 [equipment.war_axe]
 name = "War Axe"
 race = "darkelf"
@@ -1767,7 +1747,6 @@ requires = [["type:Orlf", "type:Dwalf"], ["Hands:1"]]
 
 [equipment.war_axe.assault]
 strength.add = [1, 0, 0, 0]
-
 
 [equipment.experimental_acid_smg]
 name = "Experimental Acid SMG"
@@ -1789,4 +1768,4 @@ ap = 1
 "Ammo" = "Always treated as loaded."
 "Multiple Shots" = "Fires two times each time it is fired"
 "Extra Damage" = "Minor Acid"
-"Fumble" = "Unit Gains one minor acid token (per fumble) "
+"Fumble" = "Unit Gains one minor acid token (per fumble)"

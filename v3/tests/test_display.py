@@ -43,7 +43,7 @@ def simple_race() -> RaceConfig:
                 special={},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"regular": ["Fine", "Dead"]},
+                damage_tables={"Regular": ["Fine", "Dead"]},
             )
         },
         models={

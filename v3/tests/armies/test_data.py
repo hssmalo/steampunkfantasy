@@ -61,7 +61,7 @@ def simple_race() -> RaceConfig:
                 special={},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"regular": ["Fine", "Dead"]},
+                damage_tables={"Regular": ["Fine", "Dead"]},
             )
         },
         models={
@@ -1042,7 +1042,7 @@ def test_validate_army_detects_invalid_model_replacement(
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": ["Fine", "Dead"]},
     )
     illegal_unit = ArmyUnit(
         name="squad",
@@ -1072,7 +1072,7 @@ def test_validate_army_detects_multiple_violations(simple_race: RaceConfig) -> N
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": ["Fine", "Dead"]},
     )
     illegal_unit = ArmyUnit(
         name="double_squad",
@@ -1572,7 +1572,7 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": ["Fine", "Dead"]},
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1606,7 +1606,7 @@ def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": ["Fine", "Dead"]},
     )
     race = RaceConfig(
         races=simple_race.races,

@@ -47,7 +47,7 @@ def simple_race() -> RaceConfig:
                 special={"Terror": "causes fear"},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"regular": ["Fine", "Dead"]},
+                damage_tables={"Regular": ["Fine", "Dead"]},
             )
         },
         models={
@@ -146,7 +146,7 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
                 special={},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"regular": ["Fine", "Dead"]},
+                damage_tables={"Regular": ["Fine", "Dead"]},
             )
         },
         models={
