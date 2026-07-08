@@ -4,3 +4,6 @@
 
 # Rendered output
 output/
+
+# Uncurated Asset candidates (Assets themselves are committed)
+candidates/

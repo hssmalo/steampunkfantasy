@@ -5,6 +5,17 @@ races = "{project_path}/races"
 rules = "{project_path}/rules"
 templates = "{project_path}/templates"
 output = "{project_path}/output"
+candidates = "{project_path}/candidates"
+assets = "{project_path}/assets"
 
 [render.latex]
 engine = "pdflatex"
+
+[assets.lore]
+count = 1
+
+[assets.image]
+count = 3
+
+[assets.model]
+count = 2

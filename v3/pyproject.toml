@@ -57,3 +57,5 @@ ignore = [
 "src/spf/schemas/*.py" = ["D101"]
 "tests/**/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]
 "tests/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]
+# Test doubles legitimately carry unused protocol args (ARG002).
+"tests/**/conftest.py" = ["ARG002"]
