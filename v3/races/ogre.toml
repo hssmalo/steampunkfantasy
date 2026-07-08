@@ -19,7 +19,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.ogre_hydra.special]
-"Regeneration" = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
+"Regeneration" = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
 "Heads" = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
 "Fire Order" = "Breath weapon and poison spit always treated as loaded and used with Fire(H) orders. Crew weapons are used with Load(crew) and Fire(crew) orders"
 "Forward Position" = "[1]"
@@ -46,7 +46,7 @@ psychic = ["6+: shaken"]
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
-description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, thoughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
+description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 16
@@ -135,7 +135,7 @@ movement_order = ["-", "-", "Flee"]
 comment = "If sharing a hex with an Infantry, you may give the pet follow orders even while shaken"
 
 [units.pet_panther.special]
-"Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infangry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
+"Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
 "Evation" = "[4+]"
 
 [units.pet_panther.orders.movement]
@@ -167,7 +167,7 @@ psychic = ["4+: shaken"]
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description = "Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furrious, wreking caos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
+description = "Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
 models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 8
@@ -946,7 +946,7 @@ damage = "d8"
 ap = 2
 
 [equipment.enhanced_fancy_ogre_rifle.model_special]
-"To Hit (2)" = "enhanced accurazy: +1 to hit"
+"To Hit (2)" = "enhanced accuracy: +1 to hit"
 
 [equipment.ogre_broadside]
 name = "Ogre Broadside"
@@ -1013,7 +1013,7 @@ ap = 2
 "Extra Damage" = "Minor Acid"
 
 [equipment.fancy_gear_pistol.model_special]
-"To Hit (2)" = "Enhanced accurazy: +1 to hit"
+"To Hit (2)" = "Enhanced accuracy: +1 to hit"
 
 [equipment.fancy_gear_pistol.unit_special]
 "Fire Order" = "May load up to 2 shots, and fire them one at a time"
@@ -1071,7 +1071,7 @@ upgrade_all = false
 requires = [["Reserve Melee:1"], ["type:Scout", "type:Infantry"]]
 
 [equipment.fancy_warhammer.assault]
-damage.replace = "d8 + d6 psycic damage"
+damage.replace = "d8 + d6 psychic damage"
 ap.replace = 5
 
 [equipment.acid_breath]

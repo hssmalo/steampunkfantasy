@@ -214,7 +214,7 @@ movement_order = ["-", "-", "flee"]
 [units.abomination_infantry.special]
 "Take Cover" = "[still][-2]"
 "Terror" = "[6](range=1)"
-"Tentacle" = "If given additional tentacle weapons, they fire simultainiusly with other weapons on regular Fire(s) order, not Fire(b) order"
+"Tentacle" = "If given additional tentacle weapons, they fire simultaneously with other weapons on regular Fire(s) order, not Fire(b) order"
 
 [units.abomination_infantry.orders.fire]
 still = [
@@ -294,7 +294,7 @@ slow_flying = [["360°", "F", "360°"], ["360°", "F", "A"]]
 fast_flying = [["F", "F", "-"], ["L/R", "F", "F"], ["F", "L/R", "F"],  ["F", "F", "L/R"],  ["F", "B", "360°"]]
 
 [units.shriek_monstrosity.orders.fire]
-slow_flying = [["-", "Load"], ["-", "Fire"]] 
+slow_flying = [["-", "Load"], ["-", "Fire"]]
 fast_flying = [["-", "Load"], ["-", "Fire"]]
 
 [units.shriek_monstrosity.damage_tables]
@@ -316,7 +316,7 @@ size = "Medium"
 cost.cp = 24
 cost.xp = 16
 
-description = "For those that do not know better, these unit looks like living water elementals. However, no such things exists, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The trueth is revealed while the unit is shaken, when the waterflow surrounding the models stops"
+description = "For those that do not know better, these unit looks like living water elementals. However, no such things exists, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The truth is revealed while the unit is shaken, when the waterflow surrounding the models stops"
 
 [units.water_elemental.shaken]
 speed = "still"
@@ -327,7 +327,7 @@ comment = "Remove all resistances and immunities while shaken"
 "Repair" = "[1, self, 2nd healing]"
 "Resistance" = "Acid[2], Regular[2]"
 "Immunity" = "Fire"
-"Fire Order" = "Fire and load all weapons simultaniuously"
+"Fire Order" = "Fire and load all weapons simultaneously"
 
 [units.water_elemental.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
@@ -335,13 +335,13 @@ still = [["360°", "-", "360°"], ["360°", "A", "F"]]
 
 [units.water_elemental.orders.fire]
 
-slow = [["-", "Load"], ["-", "Fire"]] 
+slow = [["-", "Load"], ["-", "Fire"]]
 
 [units.water_elemental.damage_tables]
 regular = [
 	"1-2: +1 to future damage",
 	"3-4: +2 to future damage",
-	"5+:  shaken, Destroy one model", 
+	"5+:  shaken, Destroy one model",
 	"{{\\it Note: If one model is destroyed remove half of the +1 future damage tokens }}"
 	]
 
@@ -529,7 +529,7 @@ ap = 2
 
 
 [models.shriek_monstrosity]
-name = "Shriek Monstosity"
+name = "Shriek Monstrosity"
 race = "abomination"
 equipment_limit = ["Independent:∞"]
 equipment = ["shriek"]
@@ -659,7 +659,7 @@ replaces = "abomination_infantry"
 "To Hit" = "Good shot: +1 to hit"
 
 [models.elite_abomination_infantry.unit_special]
-"Vulnerability" = "All enemies within range 2 gets psycic vulnerability of 1: Increase psycic damage they take by 1. This ability does not stack"
+"Vulnerability" = "All enemies within range 2 gets psychic vulnerability of 1: Increase psychic damage they take by 1. This ability does not stack"
 
 [models.elite_abomination_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -800,10 +800,10 @@ damage = "d6 psychic"
 ap = "N/A"
 
 [equipment.multipurpose_gun.range.special]
-"Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psycic damage the unit gets an insanity token, in addition to the normal effects of the psycic damage table"
+"Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause psychic damage the unit gets an insanity token, in addition to the normal effects of the psychic damage table"
 
 [equipment.tentacle_craclespears]
-name = "Tentacle CracleSpears"
+name = "Tentacle CrackleSpears"
 race = "abomination"
 cost.cp = 8
 upgrade_all = true
@@ -816,7 +816,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
 [equipment.tentacle_craclespears.assault.special]
-"Improved Extra Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psycic damage in addition to the regular damage. This ability does not stack with more spears."
+"Improved Extra Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 psychic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]
 name = "Tentacle Axes"
@@ -849,7 +849,7 @@ race = "abomination"
 cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
-description = """Abomination exceel in water manipulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surrounding the unit helps protect from regular bullets.
+description = """Abomination excel in water manipulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surrounding the unit helps protect from regular bullets.
 
 Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
@@ -919,7 +919,7 @@ ap = "N/A"
 "Multipurpose" = "Either place two fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
 
 [equipment.oversized_musket]
-name = "Double Barrled Oversized Musket"
+name = "Double Barreled Oversized Musket"
 race = "abomination"
 
 [equipment.oversized_musket.range]
@@ -961,7 +961,7 @@ damage = "d6 -1 psychic damage"
 ap = "N/A"
 
 [equipment.shriek.range.special]
-"Area" = "Target enemies in all hexes within front arch (not including the hexes on the edge of firing arngle) and long range. At point blank Area[4+], within normal range Area[5+] and all other hexes Area[6+]"
+"Area" = "Target enemies in all hexes within front arch (not including the hexes on the edge of firing angle) and long range. At point blank Area[4+], within normal range Area[5+] and all other hexes Area[6+]"
 "Ammo" = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo"
 
 [equipment.fog_poisonizer]
@@ -1069,5 +1069,3 @@ requires = []
 
 [equipment.mechanical_melee_contraption.assault.special]
 "Improvement" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"
-
-

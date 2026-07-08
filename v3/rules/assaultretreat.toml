@@ -1,5 +1,5 @@
 [retreat]
-description = """After loosing an assault, you are forced to retreat. What happens after you retreat depends on what type the models in the unit are. All models should have atleast one type which describes how the units moves, and thus also how the unit retreats.
+description = """After loosing an assault, you are forced to retreat. What happens after you retreat depends on what type the models in the unit are. All models should have at least one type which describes how the units moves, and thus also how the unit retreats.
 
 If a model has both flying and another type of movement on land, using the flying retreat options while flying and the land options while on land.
 """

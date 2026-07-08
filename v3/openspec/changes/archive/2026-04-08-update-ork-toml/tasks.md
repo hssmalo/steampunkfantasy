@@ -4,7 +4,7 @@
 - [x] Task 2: Remove `ork.` namespace prefix — replace all `[ork.units.`, `[ork.models.`, `[ork.equipment.` headers in `races/ork.toml`
 - [x] Task 3: Convert unit special lists to dict subtables — replace `special = [...]` on each unit with `[units.xxx.special]` TOML subtable using key mappings from design.md
 - [x] Task 4: Fix size field casing — `"huge"` → `"Huge"`, `"medium"` → `"Medium"` on affected units
-- [x] Task 5: Fix damage table name casing — `Regular` → `regular`, `Critical` → `critical`, `psycic` → `psychic`
+- [x] Task 5: Fix damage table name casing — `Regular` → `regular`, `Critical` → `critical`, `psycic` → `psychic`  # typos: ignore
 - [x] Task 6: Fix ModelType casing and spelling — correct all `type` arrays per model (see design.md mapping table)
 - [x] Task 7: Fix race field casing in models — `race = "Ork"` → `race = "ork"` for hammerhead and battlewagon
 - [x] Task 8: Add missing `shaken` fields to units — add `shaken = ""` to all units that lack it
@@ -83,7 +83,7 @@
 #### Task 5
 `races/ork.toml` — fix damage table keys:
 - `ork_char_b1`: `Regular` → `regular`, `Critical` → `critical`
-- `warg_rider`: `psycic` → `psychic`
+- `warg_rider`: `psycic` → `psychic`  # typos: ignore
 
 #### Task 6
 `races/ork.toml` — fix model `type` arrays:

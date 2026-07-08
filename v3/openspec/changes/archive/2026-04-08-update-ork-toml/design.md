@@ -69,7 +69,7 @@ Add to `type_aliases.py`:
 | Field | Wrong | Correct |
 |---|---|---|
 | `size` | `"huge"`, `"medium"` | `"Huge"`, `"Medium"` |
-| `DamageTableName` | `"Regular"`, `"Critical"`, `"psycic"` | `"regular"`, `"critical"`, `"psychic"` |
+| `DamageTableName` | `"Regular"`, `"Critical"`, `"psycic"` | `"regular"`, `"critical"`, `"psychic"` |   # typos: ignore
 | `ModelType` | `"grunt"`, `"bio crew"`, `"Walks"`, `"Mechancical"`, `"Track"`, `"Ork"` (race) | `"Grunt"`, `"Bio Crew"`, `"Walking"`, `"Mechanical"`, `"Tracked"`, `"ork"` |
 | `race` | `"Ork"` (capital O in models) | `"ork"` |
 
