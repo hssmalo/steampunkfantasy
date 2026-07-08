@@ -3,7 +3,6 @@
 [races.elf]
 name = "Elf"
 
-
 [units]
 
 [units.elf_hydra]
@@ -25,28 +24,23 @@ movement_order = ["-", "-", "flee"]
 "Forward Position" = "[1]"
 
 [units.elf_hydra.orders.fire]
-still = [["Fire", "-"],
-       ["-", "Fire"]]
-
-slow = [["Fire", "-"],
-       ["-", "Fire"]]
+still = [["Fire", "-"], ["-", "Fire"]]
+slow = [["Fire", "-"], ["-", "Fire"]]
 
 [units.elf_hydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [
-	["360°", "360°", "360°"],
-	["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
 [units.elf_hydra.damage_tables]
-regular = ["1-2: Bleed[4]",
-	   "3-5: +1 to future damage, Bleed[4]",
-	   "6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
-	   "10-17: As below, d6 psychic damage",
-	   "18: Unit destroyed",
-	"{{\\it Note: Bleed does not cause more bleeding}}",]
+regular = [
+	"1-2: Bleed[4]",
+	"3-5: +1 to future damage, Bleed[4]",
+	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
+	"10-17: As below, d6 psychic damage",
+	"18: Unit destroyed",
+	"{{\\it Note: Bleed does not cause more bleeding}}",
+]
 psychic = ["6+: shaken"]
-
-
 
 [units.elf_infantry]
 race = "elf"
@@ -365,7 +359,8 @@ regular = [
 	"5-7: as below, d6 Critical Damage",
 	"8+ Destroyed",
 ]
-crew = ["4-5: Crippled Crew, if already shaken double initial crew damage",
+crew = [
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future crew damage",
 	"12+: Unit destroyed",
@@ -517,9 +512,9 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.pachyephalosaurus_riders.orders.fire]
-still = [["Fire", "-"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
-slow = [["-", "Load"],  ["Load", "-"], ["-", "Aim"]]
-fast = [["-", "Load"],  ["Load", "-"], ["-", "Aim"]]
+still = [["Fire", "Load"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
+slow = [["-", "Load"], ["Load", "-"], ["-", "Aim"]]
+fast = [["-", "Load"], ["Load", "-"], ["-", "Aim"]]
 
 [units.pachyephalosaurus_riders.orders.movement]
 fast = [
@@ -628,7 +623,7 @@ slow_flying = [
 fast = [
 	["360°", "F", "F"],
 	["360°", "F", "B"],
-	["360°", "A[f, fly],F", "F"],
+	["360°", "A[f,fly],F", "F"],
 	["360°", "F", "B"],
 ]
 fast_flying = [
@@ -667,7 +662,6 @@ deflection_die = "5+"
 damage = "d6-1"
 ap = 3
 
-
 [models.elf_hydra]
 name = "Elf Hydra"
 race = "elf"
@@ -687,7 +681,6 @@ ap = 2
 "Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
 "Extra Damage" = "Poison[6][1 for 2]"
 "Fear" = "[6]"
-
 
 [models.tattoo_ink]
 name = "Tattoo Ink"
@@ -730,7 +723,6 @@ ap = 2
 
 [models.elite_elf_scout.unit_special]
 "Pre-Assault Retreat" = "[3+]"
-
 
 [models.elf_scout]
 name = "Elf scout"
@@ -786,7 +778,6 @@ ap = 2
 [models.elf_archer.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-
 [models.superb_elf_archer]
 name = "Superb Elf Archer"
 race = "elf"
@@ -795,7 +786,6 @@ equipment = ["bow_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 replaces = "elf_archer"
 cost.xp = 6
-
 
 [models.superb_elf_archer.special]
 "To Hit" = "Great Shot: +2 to hit"
@@ -814,11 +804,6 @@ ap = 2
 
 [models.superb_elf_archer.assault.special]
 "Cunning Assault" = "[1 for 2]"
-
-
-
-
-
 
 [models.illusion]
 name = "Illusion"
@@ -976,7 +961,6 @@ deflection_die = "5+"
 damage = "-"
 ap = "N/A"
 
-
 [models.hydra_crew]
 name = "Hydra Crew"
 race = "elf"
@@ -991,7 +975,6 @@ deflection = [0, 0, 0, 0]
 deflection_die = "5+"
 damage = "-"
 ap = "N/A"
-
 
 [models.eagle_rider]
 name = "Eagle Rider"
@@ -1018,7 +1001,6 @@ ap = 3
 
 [models.eagle_rider.unit_special]
 "Pre-Assault Retreat" = "3+"
-
 
 [models.pachyephalosaurus_rider]
 name = "Pachyephalosaurus Rider"
@@ -1065,7 +1047,6 @@ ap = 2
 
 [models.pegasus_rider.unit_special]
 "Pre-Assault Retreat" = "throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
-
 
 [models.elite_pachyephalosaurus_rider]
 name = "Elite Pachyephalosaurus Rider"
@@ -1246,7 +1227,6 @@ ap = 2
 [models.armored_unicorn_rider.assault.special]
 "Cunning Assault" = "[1 for 3]"
 
-
 [models.armored_unicorn_rider.unit_special]
 "Pre-Assault Retreat" = "3+"
 
@@ -1264,8 +1244,7 @@ damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
 [equipment.main_tank_gun.unit_special]
-"Fire Order"= "Double barreled: May load up to 2 ammo, and fire them one at a time"
-
+"Fire Order" = "Double barreled: May load up to 2 ammo, and fire them one at a time"
 
 [equipment.towed_main_gun]
 name = "Towed Main Gun"
@@ -1277,7 +1256,6 @@ range = 3
 angle = [false, false, false, true]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
-
 
 [equipment.thunderroar]
 name = "ThunderRoar"
@@ -1303,6 +1281,7 @@ range = 5
 angle = [false, false, true, false]
 damage = "d6-2"
 ap = 2
+
 [equipment.light_mortar.range.special]
 "Area" = "[5+]"
 "Range" = "A Hex within normal range"
@@ -1401,7 +1380,6 @@ ap = "N/A"
 [equipment.acid_breath.range.special]
 "Extra Damage" = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise. "
 
-
 [equipment.poison_spit]
 name = "Poison Spit"
 race = "elf"
@@ -1442,11 +1420,9 @@ range = 3
 angle = [true, true, false, false]
 damage = "d4 -2 + d6 psychic damage"
 ap = 2
+
 [equipment.shriek_smg_free.range.special]
 "Burst" = "[5]: Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)"
-
-
-
 
 [equipment.oliphant_gatling_guns]
 name = "Oliphant GatlingGuns"
@@ -1460,12 +1436,10 @@ angle = [false, true, true, false]
 damage = "d6-1"
 ap = "3"
 
-
 [equipment.oliphant_gatling_guns.range.special]
 "Multiple Shots" = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
 "Focus Fire" = "When using aim, roll 6 dice at same unit."
 "Area" = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."
-
 
 [equipment.at_rifle_free]
 name = "AT Rifle"
@@ -1520,13 +1494,12 @@ damage = "d6-2"
 ap = "0"
 
 [equipment.elf_flame_arrow.model_special]
-"To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +1 to hit"
+"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
 
 [equipment.elf_flame_arrow.range.special]
 "Range" = "+1 range if you are flying"
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "set enemy on fire"
-
 
 [equipment.elf_flame_arrow.orders_gained.fire]
 still = [['Fire', 'Fire']]
@@ -1545,7 +1518,7 @@ damage = "d6-2"
 ap = "0"
 
 [equipment.elf_flame_arrow_free.model_special]
-"To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +1 to hit"
+"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
 
 [equipment.elf_flame_arrow_free.range.special]
 "Range" = "+1 range if you are flying"
@@ -1568,8 +1541,7 @@ ap = "0"
 "Ammo" = "Always treated as loaded"
 
 [equipment.bow_free.model_special]
-"To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +1 to hit"
-
+"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
 
 [equipment.assault_archer]
 name = "Assault Archer"
@@ -1579,7 +1551,6 @@ cost.xp = 8
 upgrade_all = true
 
 [equipment.assault_archer.assault]
-
 
 [equipment.assault_archer.assault.special]
 "Retreat" = "Unit gains aim if you manage to pre-esscape an assault"
@@ -1600,10 +1571,6 @@ ap = "N/A"
 [equipment.illusion_weapon.range.special]
 "Ammo" = "Always treated as loaded. Fire in both gunnery phases."
 
-
-
-
-
 [equipment.seeker_arrow]
 name = "Seeker Arrows"
 race = "elf"
@@ -1612,7 +1579,7 @@ upgrade_all = true
 cost.cp = 8
 
 [equipment.seeker_arrow.model_special]
-"To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +3 to hit"
+"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +3 to hit"
 
 [equipment.seeker_arrow.range]
 range = 4
@@ -1624,18 +1591,16 @@ ap = 0
 "Range" = "+1 range if you are flying"
 "Ammo" = "Limited Ammor(3)"
 
-
 [equipment.elven_seeker_arrow]
 name = "Elven Seeker Arrows"
 race = "elf"
 upgrade_all = false
 cost.cp = 6
-requires = [["Special Arrows:2"],["type:Archer"],["type:SuperElite"]]
+requires = [["Special Arrows:2"], ["type:Archer"], ["type:SuperElite"]]
 description = '''The pride of elven craftmanship. A programmable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
 
 [equipment.elven_seeker_arrow.model_special]
-"To Hit (2)" =	"Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accurasy: +5 to hit"
-
+"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +5 to hit"
 
 [equipment.elven_seeker_arrow.range]
 range = 10
@@ -1643,16 +1608,10 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 0
 
-
 [equipment.elven_seeker_arrow.range.special]
 "Range" = "Elven Seeker Arrow do not need line of sight (but cannot target hidden units)"
 "Ammo" = "Limited Ammo[1]. Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
 "Sniper" = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
-
-
-
-
-
 
 [equipment.rocket_arrow]
 name = "Bow with Rocket Arrows"
@@ -1662,8 +1621,6 @@ cost.cp = 8
 upgrade_all = true
 description = "Many Elf hate this weapon as it is not elecant or accurate as elf bows should be. But most appreciate that it causes more havoc"
 
-
-
 [equipment.rocket_arrow.range]
 range = 4
 angle = [true, true, true, true]
@@ -1671,15 +1628,11 @@ damage = "d6-1"
 ap = 3
 
 [equipment.rocket_arrow.model_special]
-"To Hit (2)" =	"Inaccurate: -1 to Hit"
-
+"To Hit (2)" = "Inaccurate: -1 to Hit"
 
 [equipment.rocket_arrow.range.special]
 "Ammo" = "Always treated as loaded"
 "Fumble" = "If fumble, take d6-4 in damage."
-
-
-
 
 [equipment.rifle]
 name = "Rifle"
@@ -1691,7 +1644,6 @@ range = 5
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = "2"
-
 
 [equipment.enhanced_rifle]
 name = "Enhanced Rifle"
@@ -1707,7 +1659,7 @@ damage = "d6-2"
 ap = "2"
 
 [equipment.enhanced_rifle.model_special]
-"To Hit" = "enhanced accurazy: +1 to hit"
+"To Hit" = "Enhanced accuracy: +1 to hit"
 
 [equipment.sniper_rifle]
 name = "Sniper Rifle"
@@ -1772,10 +1724,9 @@ ap = "5"
 
 [equipment.hand_grenade.range.special]
 "Area" = "[5+] if used by a unit with 1-2 alive models, [4+] if used by a unit with 3-4 models"
-"Range"="Target any hex within normal range"
+"Range" = "Target any hex within normal range"
 "Ammo" = "Always loaded"
 "Order" = "Used with Throw order"
-
 
 [equipment.hand_grenade.orders_gained.fire]
 still = [["-", "Throw"]]
@@ -1794,10 +1745,9 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = "5"
 
-
 [equipment.crew_hand_grenade.range.special]
 "Area" = "[4+]"
-"Range" ="Target any hex within normal range"
+"Range" = "Target any hex within normal range"
 "Ammo" = "Always loaded"
 "Order" = "Used with Throw order"
 
@@ -1851,6 +1801,3 @@ upgrade_all = true
 
 [equipment.camouflage.unit_special]
 Camouflage = "[forrest][-1]"
-
-
-
