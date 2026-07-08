@@ -39,7 +39,7 @@ Regular = [
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"10-17: As below, d6 Psychic damage",
 	"18: Unit destroyed",
-	"{{\\it Note: Bleed does not cause more bleeding}}",
+	"Note: Bleed does not cause more bleeding",
 ]
 Psychic = ["6+: shaken"]
 
@@ -78,7 +78,7 @@ Regular = [
 	"4-6: Kill 1 model",
 	"7-10: Kill 1 model, Psychic damage[d6]",
 	"11+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["6+: shaken"]
 
@@ -118,7 +118,7 @@ Regular = [
 	"4-6: +2 to future damage",
 	"7-10: Kill 1 model",
 	"11+: Unit destroyed",
-	"{{\\it Note: remove half of the +1 future damage tokens when one robots dies}}",
+	"Note: remove half of the +1 future damage tokens when one robots dies",
 ]
 
 [units.pet_panther]
@@ -226,7 +226,7 @@ movement_order = ["-", "-", "-"]
 
 [units.drone_swarm.special]
 "Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
-"Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
 "Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
 
@@ -276,7 +276,7 @@ movement_order = ["-", "-", "-"]
 
 [units.industrial_drone_swarm.special]
 "Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
-"Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
 "Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
 
@@ -326,7 +326,7 @@ movement_order = ["-", "-", "-"]
 
 [units.repair_drone.special]
 "Repair" = "Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models"
-"Repairing" = "If this unit shares a hex with another unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
 "Evation" = "[3+]"
 
 [units.repair_drone.orders.movement]
@@ -350,7 +350,7 @@ movement_order = ["-", "-", "-"]
 
 [units.medic_drone.special]
 "Heal" = "Heal[N, other, 2nd healing] where N is the number of alive medic drones models"
-"Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
 "Evation" = "[3+]"
 
 [units.medic_drone.orders.movement]

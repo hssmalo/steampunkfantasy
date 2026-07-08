@@ -131,9 +131,9 @@ Regular = [
     "3-5: Kill 1 model",
     "6-9: Kill 1 model, roll d6 Psychic damage",
     "10+: Unit killed",
-    "{{\\it Note: bleeding does not cause more bleeding}}",
-    "{{\\it If one model is killed by bleeding/poison, remove that bleeding/poison token}}",
-    "{{\\it and remove half of the +1 future damage tokens}}",
+    "Note: bleeding does not cause more bleeding",
+    "If one model is killed by bleeding/poison, remove that bleeding/poison token",
+    "and remove half of the +1 future damage tokens",
 ]
 Psychic = ["5+: Unit shaken"]
 

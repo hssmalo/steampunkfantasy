@@ -40,7 +40,7 @@ Regular = [
     "1-5: Kill 1 model",
     "6-7: Kill 1 model, Psychic damage[d6]",
     "8+: Unit destroyed",
-    "{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+    "Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 Psychic = ["4+: shaken"]
 
@@ -146,8 +146,8 @@ Regular = [
     "2-3: Bleeding[6]",
     "4-6: Bleeding[6], +1 to future damage, Psychic damage[d6]",
     "7+: kill 1 model, Psychic damage[d6]",
-    "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
-    "{{\\it If killed by poison or bleeding, remove that instance}}",
+    "When one model is killed, half all +1 to future damage rounded down",
+    "If killed by poison or bleeding, remove that instance",
 ]
 
 [units.speedhead]
@@ -391,7 +391,7 @@ Regular = [
     "10: Unit Permanently Destroyed, stops regenerating",
     "When all models are temporarily killed:",
     "replace kill 1 model with +1 on future damage and keep all remaining bleeding",
-    "{{\\it If one model is temporarily killed by bleed or poison, remove that instance}}",
+    "If one model is temporarily killed by bleed or poison, remove that instance",
 ]
 Psychic = ["6+: Unit shaken"]
 
@@ -444,8 +444,8 @@ Regular = [
     "2-5: Kill 1 model",
     "6-8: Kill 1 model, d6 Psychic damage",
     "9: Destroy unit",
-    "{{\\it When one model is killed, half all +1 to future damage rounded down}}",
-    "{{\\it If killed by poison or bleeding, remove that instance}}",
+    "When one model is killed, half all +1 to future damage rounded down",
+    "If killed by poison or bleeding, remove that instance",
 ]
 Psychic = ["5+: Unit shaken"]
 
