@@ -1,7 +1,7 @@
 {% macro order_table(title, rows, shaken_cells) -%}
 ### {{ title }}
 
-{% set lengths = (rows | map('last') | map('length') | list) + ([shaken_cells | length] if shaken_cells else []) -%}
+{% set lengths = (rows | map('last') | map('length') | list) -%}
 {% set ncols = (lengths | max) if lengths else 1 -%}
 | Speed |{{ ' |' * ncols }}
 |{{ ' --- |' * (ncols + 1) }}
@@ -9,12 +9,12 @@
 | {{ speed }} |{% for cell in cells %} {{ cell }} |{% endfor %}{{ ' |' * (ncols - cells | length) }}
 {% endfor -%}
 {% if shaken_cells -%}
-| shaken |{% for cell in shaken_cells %} {{ cell }} |{% endfor %}{{ ' |' * (ncols - shaken_cells | length) }}
+| shaken:{% for cell in shaken_cells %} {{ cell }} |{% endfor %}{{ ' |' * (ncols - shaken_cells | length) }}
 {% endif -%}
 {% endmacro -%}
 {% for unit in source.units -%}
 ## {{ unit.name }}
 
 {{ order_table("Movement", unit.movement_rows, unit.shaken_movement) }}
-{{ order_table("Fire", unit.fire_rows, (unit.shaken_fire,) if unit.shaken_fire else None) }}
+{{ order_table("Fire", unit.fire_rows, ("", unit.shaken_fire, "") if unit.shaken_fire else None) }}
 {% endfor -%}

@@ -27,7 +27,7 @@ movement_order = ["-", "-", "flee"]
 "Take Cover" = "[still][-2]"
 
 [units.dwarf_infantry.orders.movement]
-slow =  [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "360°", "F"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "360°", "F"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.dwarf_infantry.orders.fire]
@@ -262,7 +262,6 @@ movement_order = ["-", "-", "-"]
 [units.gunblasterwagon.orders.movement]
 fast = [
     ["F", "F", "-"],
-    ["F", "R", "-"],
     ["F", "L/R", "-"],
     ["F", "B", "-"],
     ["F", "F", "L/R"],
@@ -291,8 +290,8 @@ still = [
 
 [units.gunblasterwagon.orders.fire]
 still = [["Fire", "-"], ["Load", "-"]]
-slow =  [["Load", "-"], ["Load", "-"]]
-fast =  [["Load", "-"], ["Load", "-"]]
+slow = [["Load", "-"], ["Load", "-"]]
+fast = [["Load", "-"], ["Load", "-"]]
 
 [units.gunblasterwagon.damage_tables]
 Regular = [
@@ -333,12 +332,10 @@ movement_order = ["-", "-", "-"]
 [units.dw42.orders.movement]
 fast = [
     ["F", "F", "-"],
-    ["F", "R", "-"],
     ["F", "L/R", "-"],
     ["F", "B", "-"],
     ["B", "B", "-"],
     ["F", "B", "-"],
-    ["F", "R", "-"],
     ["F", "F", "F"],
 ]
 slow = [
@@ -511,7 +508,6 @@ fire_order = "May not use whip"
 [units.tamed_balrog.special]
 "Resistance" = "Fire[12], Poison[6]"
 "Terror" = "[8][range=2]"
-
 
 [units.tamed_balrog.orders.movement]
 slow = [
@@ -761,7 +757,6 @@ ap = 2
 [models.engineer_mini_zeppelin.assault.special]
 "Cunning Assault Defense" = "[2][4+]"
 
-
 [models.transport_zeppelin]
 name = "Transport Zeppelin"
 race = "dwarf"
@@ -805,10 +800,8 @@ equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["broadside_guns"]
 type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
 
-
 [models.gunblasterwagon.special]
 "To Hit" = "optimal Point blank: +1 to hit at point blank range"
-
 
 [models.gunblasterwagon.assault]
 strength = [2, 2, 2, 2]
@@ -842,7 +835,6 @@ type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
 
 [models.zap.special]
 "To Hit" = "Loses aim when moving away from the hex where it aimed"
-
 
 [models.zap.assault]
 strength = [4, 3, 3, 2]
