@@ -9,7 +9,6 @@ unit = "mechanical_rat"
 [spawns.assault_bots]
 unit = "assault_bots"
 
-
 [units]
 
 [units.gnome_infantry]
@@ -81,12 +80,9 @@ movement_order = ["-", "-", "flee"]
 [units.quad_bike.orders.movement]
 fast = [
     ["F", "F", "-"],
-    ["F", "F", "R"],
-    ["F", "F", "L"],
-    ["F", "R", "F"],
-    ["F", "L", "F"],
-    ["L", "F", "F"],
-    ["R", "F", "F"],
+    ["F", "F", "L/R"],
+    ["F", "L/R", "F"],
+    ["L/R", "F", "F"],
     ["F", "F", "B"],
     ["F", "B", "-"],
 ]
@@ -172,15 +168,11 @@ fast = [
     ["F", "360°", "F"],
     ["F", "B", "360°"],
 ]
-slow = [
-    ["360°", "F", "360°"],
-    ["360°", "A", "F"],
-    ["360°", "F+B", "360°"],
-]
+slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
 
 [units.gnome_motorcycle.orders.fire]
-still = [["-", "Fire"],["-", "Load"]]
+still = [["-", "Fire"], ["-", "Load"]]
 slow = [["-", "Fire"], ["-", "Load"]]
 fast = [["-", "Fire"]]
 
@@ -259,11 +251,9 @@ still = [
 ]
 
 [units.ballista_tractor_markI.orders.fire]
-
 fast = [["-", "Load"], ["-", "Fire"]]
 slow = [["-", "Load"], ["-", "Fire"]]
 still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
-
 
 [units.ballista_tractor_markI.damage_tables]
 Regular = [
@@ -320,7 +310,6 @@ still = [
 ]
 
 [units.ballista_tractor_markII.orders.fire]
-
 fast = [["-", "Load"], ["-", "Fire"]]
 slow = [["-", "Load"], ["-", "Fire"]]
 still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
@@ -430,13 +419,13 @@ still = [
     ["A[slow]", "360°", "F"],
     ["A[still]", "360°", "-"],
 ]
-still_flying = [
+still_fly = [
     ["360°", "-", "-"],
     ["-", "-", "D"],
     ["A[slow]", "360°", "F"],
     ["A[fast]", "360°", "F"],
 ]
-slow_flying = [
+slow_fly = [
     ["L/R", "F", "-"],
     ["L/R", "F", "L/R"],
     ["-", "-", "D"],
@@ -444,9 +433,8 @@ slow_flying = [
     ["A[fast]", "F", "F"],
     ["F", "B[still]", "360°"],
 ]
-
 #ToDo: review movement orders with + options.
-fast_flying = [
+fast_fly = [
     ["F", "F", "-"],
     ["F", "F", "L/R"],
     ["F", "L/R", "F"],
@@ -462,9 +450,9 @@ fast_flying = [
 
 [units.gnome_helicopter.orders.fire]
 still = [["-", "Load"]]
-fast_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
-slow_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
-still_flying = [
+fast_fly = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
+slow_fly = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
+still_fly = [
     ["Throw(d)", "Fire"],
     ["Load", "Throw(d)"],
     ["Throw(d)", "Load"],
@@ -732,9 +720,6 @@ replaces = "gnome_infantry"
 [models.gnome_tinkerer.unit_special]
 "Spawn" = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
-
-
-
 [models.gnome_tinkerer.assault]
 strength = [1, 1, 1, 1]
 strength_die = "5+"
@@ -959,7 +944,11 @@ race = "gnome"
 name = "Green Gas Launcher"
 cost.cp = 8
 upgrade_all = false
-requires = [["type:Tinkerer", "type:Elite"], ["type:Infantry"], ["Reserve Ranged:1"]]
+requires = [
+    ["type:Tinkerer", "type:Elite"],
+    ["type:Infantry"],
+    ["Reserve Ranged:1"]
+]
 
 [equipment.green_gas_launcher.range]
 range = 3
@@ -1223,7 +1212,6 @@ ap = 5
 
 [equipment.experimental_guided_missile.model_special]
 "To Hit" = "Guided[Guided Missile]: +4 to hit"
-
 
 [equipment.helicopter_mounted_experimental_nailgun]
 race = "gnome"

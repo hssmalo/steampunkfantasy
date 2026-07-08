@@ -62,7 +62,7 @@ movement_order = ["-", "-", "-"]
 comment = "Lands if flying"
 
 [units.mechanical_red_dragon.orders.movement]
-fast_flying = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
+fast_fly = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
 slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
 
 [units.mechanical_red_dragon.orders.fire]
@@ -96,7 +96,7 @@ comment = "Lands if flying"
 
 [units.mechanical_iron_dragon.orders.movement]
 slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
-fast_flying = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
+fast_fly = [["L/R", "F", "F"], ["F", "F", "-"], ["B[slow]", "360°", "F"]]
 
 [units.mechanical_iron_dragon.orders.fire]
 slow = [
@@ -105,7 +105,7 @@ slow = [
     ["Load", "Breath(shrapnel)"],
     ["Breath(shrapnel)", "Load"],
 ]
-fast_flying = [
+fast_fly = [
     ["-", "-"],
     ["-", "-"],
     ["Load", "Breath(shrapnel)"],

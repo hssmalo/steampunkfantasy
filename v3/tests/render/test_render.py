@@ -214,8 +214,9 @@ def test_unknown_format_raises() -> None:
         get_format("nope")
 
 
-def test_product_registry_starts_empty() -> None:
-    assert PRODUCTS == {}
+def test_product_registry_contains_cards_product() -> None:
+    # The Order Card product registers itself at import (spf.frontends.cli.render).
+    assert PRODUCTS["cards"] == Product(name="cards")
 
 
 def test_product_registry_registers_and_looks_up() -> None:

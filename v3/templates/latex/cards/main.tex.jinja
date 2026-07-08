@@ -1,0 +1,25 @@
+\documentclass[frontgrid,a4,12pt]{flacards}
+\usepackage{textcomp}
+\pagesetup{3}{3}
+\setlength{\cardwidth}{63mm}
+\setlength{\cardheight}{88mm}
+\renewcommand{\cardtextstylef}{\small}
+\renewcommand{\cardtextstyleb}{\small}
+\renewcommand{\brfoot}{}
+
+\begin{document}
+\BLOCK{for card in source.cards}
+\renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
+\renewcommand{\flhead}{\VAR{card.kind}}
+\card{%
+\begin{tabular}{ll}
+\BLOCK{for speed, cells in card.rows}
+\VAR{speed | replace("_", " ") | latex_escape} & [\VAR{cells | join(', ') | latex_escape}] \\
+\BLOCK{endfor}
+\end{tabular}%
+}{%
+\VAR{card.unit_name | latex_escape} \\ \VAR{card.kind}%
+}
+
+\BLOCK{endfor}
+\end{document}

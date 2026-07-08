@@ -290,12 +290,12 @@ movement_order = ["-", "-", "flee"]
 
 
 [units.shriek_monstrosity.orders.movement]
-slow_flying = [["360°", "F", "360°"], ["360°", "F", "A"]]
-fast_flying = [["F", "F", "-"], ["L/R", "F", "F"], ["F", "L/R", "F"],  ["F", "F", "L/R"],  ["F", "B", "360°"]]
+slow_fly = [["360°", "F", "360°"], ["360°", "F", "A"]]
+fast_fly = [["F", "F", "-"], ["L/R", "F", "F"], ["F", "L/R", "F"],  ["F", "F", "L/R"],  ["F", "B", "360°"]]
 
 [units.shriek_monstrosity.orders.fire]
-slow_flying = [["-", "Load"], ["-", "Fire"]]
-fast_flying = [["-", "Load"], ["-", "Fire"]]
+slow_fly = [["-", "Load"], ["-", "Fire"]]
+fast_fly = [["-", "Load"], ["-", "Fire"]]
 
 [units.shriek_monstrosity.damage_tables]
 Regular = [

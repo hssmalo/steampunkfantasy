@@ -23,7 +23,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_infantry.orders.fire]
 still = [
-    ["Fire", "-"],
+    ["Fire\\begin{tull}", "-"],
     ["-", "Fire"],
     ["Load", "-"],
     ["-", "Load"],
@@ -463,54 +463,54 @@ movement_order = ["-", "-", "-"]
 
 [units.ork_char_b1.orders.fire]
 slow = [
-    ["Fire (p)", "Load (h)"],
-    ["Load (h)", "Fire (p)"],
-    ["Fire (h)", "Load (p)"],
-    ["Load (p)", "Fire (h)"],
-    ["Aim(p)", "Load (h)"],
-    ["Aim(p)", "Fire (h)"],
-    ["Load (h)", "Aim (p)"],
-    ["Fire (h)", "Aim (p)"],
+    ["Fire(p)", "Load(h)"],
+    ["Load(h)", "Fire(p)"],
+    ["Fire(h)", "Load(p)"],
+    ["Load(p)", "Fire(h)"],
+    ["Aim(p)", "Load(h)"],
+    ["Aim(p)", "Fire(h)"],
+    ["Load(h)", "Aim(p)"],
+    ["Fire(h)", "Aim(p)"],
 ]
 still = [
-    ["Fire (p)", "Load (h)"],
-    ["Load (h)", "Fire (p)"],
-    ["Fire (h)", "Load (p)"],
-    ["Load (p)", "Fire (h)"],
-    ["Aim(p)", "Load (h)"],
-    ["Aim(p)", "Fire (h)"],
-    ["Load (h)", "Aim (p)"],
-    ["Fire (h)", "Aim (p)"],
-    ["Aim (h)", "Fire (p)"],
-    ["Aim (h)", "Load (p)"],
-    ["Fire (p)", "Aim (h)"],
-    ["Load (p)", "Aim (h)"],
+    ["Fire(p)", "Load(h)"],
+    ["Load(h)", "Fire(p)"],
+    ["Fire(h)", "Load(p)"],
+    ["Load(p)", "Fire(h)"],
+    ["Aim(p)", "Load(h)"],
+    ["Aim(p)", "Fire(h)"],
+    ["Load(h)", "Aim(p)"],
+    ["Fire(h)", "Aim(p)"],
+    ["Aim(h)", "Fire(p)"],
+    ["Aim(h)", "Load(p)"],
+    ["Fire(p)", "Aim(h)"],
+    ["Load(p)", "Aim(h)"],
 ]
 
 [units.ork_char_b1.orders.movement]
 fast = [
-    ["F", " F ", " -"],
-    ["L/R", "F", " -"],
-    ["F", "L/R", " -"],
-    ["F", " B ", " -"],
-    ["B", " B ", " -"],
+    ["F", "F", "-"],
+    ["L/R", "F", "-"],
+    ["F", "L/R", "-"],
+    ["F", "B", "-"],
+    ["B", "B", "-"],
 ]
 slow = [
     ["L/R", "-", "-"],
     ["L/R", "L/R", "-"],
-    ["A ", " F ", " -"],
-    ["B ", " - ", " -"],
-    ["F ", " - ", " -"],
-    ["B ", " rev ", " -"],
+    ["A", "F", "-"],
+    ["B", "-", "-"],
+    ["F", "-", "-"],
+    ["B", "rev", "-"],
 ]
 still = [
     ["L/R", "-", "-"],
-    ["L/R", "L", "-"],
+    ["L/R", "L/R", "-"],
     ["L/R", "L/R", "L/R"],
     ["-", "-", "-"],
-    ["L/R ", " A ", " F"],
-    ["A ", " F ", " -"],
-    ["rev ", " - ", " -"],
+    ["L/R", "A", "F"],
+    ["A", "F", "-"],
+    ["rev", "-", "-"],
 ]
 
 [units.ork_char_b1.damage_tables]
@@ -880,7 +880,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_flying = [["Chase", "B(slow, land)", "-"]]
+fast_fly = [["Chase", "B(slow, land)", "-"]]
 
 [equipment.clockwork_wings_free]
 name = "Clockwork Wings"
@@ -892,7 +892,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings_free.orders_gained.movement]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_flying = [["Chase", "B(slow, land)", "-"]]
+fast_fly = [["Chase", "B(slow, land)", "-"]]
 
 [equipment.flame_covered_axe]
 name = "Flame-covered-axe"
