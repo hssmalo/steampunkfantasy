@@ -49,6 +49,10 @@ type EquipmentHolder = Literal[
     "Tentacles",
     "Minor Gun",
     "Reserve Melee",
+    "Reserve Ranged",
+    "Helicopter Front",
+    "Helicopter Drop",
+    "Helicopter Side",
     "Training",
 ]
 type Speed = Literal[
@@ -176,6 +180,7 @@ type RangeSpecial = Literal[
 type ModelType = Literal[
     "Elite",
     "SuperElite",
+    "Quadbike",
     "Bio",
     "Bio Crew",
     "Crew",

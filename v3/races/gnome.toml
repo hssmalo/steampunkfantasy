@@ -14,11 +14,16 @@ models = [
     "gnome_infantry",
     "gnome_infantry"
 ]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
-special = ["Take-Cover[still][-2]"]
-shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+
+[units.gnome_infantry.special]
+"Take Cover" = "[still][-2]"
+
+[units.gnome_infantry.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.gnome_infantry.orders.movement]
 slow = [
@@ -54,12 +59,17 @@ psychic = ["4+: Unit Shaken"]
 race = "gnome"
 name = "Quad Bike"
 models = ["quad_bike", "quad_bike", "quad_bike", "quad_bike"]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
 cost.cp = 16
-special = ["May not enter buildings"]
-shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+
+[units.quad_bike.special]
+"Note" = "May not enter buildings"
+
+[units.quad_bike.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.quad_bike.orders.movement]
 fast = [
@@ -100,9 +110,12 @@ psychic = ["6+: Unit Shaken"]
 race = "gnome"
 name = "Assault Bots"
 models = ["assault_bot", "assault_bot", "assault_bot", "assault_bot"]
-size = "medium"
+size = "Medium"
 armor = [0, 0, 0, 0]
-special = [""]
+
+[units.assault_bots.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.assault_bots.orders.movement]
 slow = [["-", "-", "Chase"]]
@@ -114,9 +127,12 @@ regular = ["0-7: Kill 1 model", "8: Destroy Unit"]
 race = "gnome"
 name = "Mechanical Rat"
 models = ["mechanical_rat"]
-size = "tiny"
+size = "Tiny"
 armor = [0, 0, 0, 0]
-special = [""]
+
+[units.mechanical_rat.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.mechanical_rat.orders.movement]
 slow = [["-", "-", "Chase"]]
@@ -126,15 +142,20 @@ regular = ["0+: Destroy Unit"]
 
 [units.gnome_motorcycle]
 race = "gnome"
-name = "Gnome Motorcyle"
+name = "Gnome Motorcycle"
 models = ["gnome_motorcycle", "gnome_motorcycle", "gnome_motorcycle"]
-size = "medium"
+size = "Medium"
 armor = [4, 3, 0, 0]
 cost.mp = 8
 cost.xp = 16
 cost.cp = 16
-special = ["Elusive[fast]: additional -1 to be hit while fast"]
-shaken = "Speed set to slow, move order: [-,-,flee]. May not fire weapons"
+
+[units.gnome_motorcycle.special]
+"Evation" = "Elusive[fast]: additional -1 to be hit while fast"
+
+[units.gnome_motorcycle.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
 
 [units.gnome_motorcycle.orders.movement]
 fast = [
@@ -164,11 +185,13 @@ psychic = ["6+: Unit Shaken"]
 race = "gnome"
 name = "Ballista Drone"
 models = ["ballista"]
-size = "lagre"
+size = "Large"
 armor = [0, 0, 0, 0]
 cost.cp = 24
-special = []
-shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[units.ballista_drone.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.ballista_drone.orders.movement]
 slow = [["360$^0$", "F", "-"], ["-", "-", "B"]]
@@ -196,11 +219,16 @@ regular = [
 race = "gnome"
 name = "Ballista Tractor, Mark I"
 models = ["ballista_tractor_markI"]
-size = "lagre"
+size = "Large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
-special = ["Fires and loads both weapons at fire and load actions"]
-shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[units.ballista_tractor_markI.special]
+"Fire Order" = "Fires and loads both weapons at fire and load actions"
+
+[units.ballista_tractor_markI.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.ballista_tractor_markI.orders.movement]
 slow = [
@@ -260,11 +288,13 @@ crew = [
 race = "gnome"
 name = "Ballista Tractor, Mark II"
 models = ["ballista_tractor_markII"]
-size = "lagre"
+size = "Large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
-special = []
-shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[units.ballista_tractor_markII.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.ballista_tractor_markII.orders.movement]
 slow = [
@@ -321,11 +351,16 @@ crew = [
 race = "gnome"
 name = "Ballista Tractor, Mark III"
 models = ["ballista_tractor_markIII"]
-size = "lagre"
+size = "Large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
-special = ["Fires and loads both weapons at fire and load actions"]
-shaken = "Speed set to still, move order: [- - -]. May not fire weapons"
+
+[units.ballista_tractor_MarkIII.special]
+"Fire Order" = "Fires and loads both weapons at fire and load actions"
+
+[units.ballista_tractor_MarkIII.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.ballista_tractor_MarkIII.orders.movement]
 slow = [
@@ -383,18 +418,20 @@ crew = [
 race = "gnome"
 name = "Gnome Helicopter"
 models = ["gnome_helicopter"]
-size = "large"
+size = "Large"
 armor = [0, 0, 0, 0]
 cost.ip = 24
 cost.xp = 8
-special = [
-    "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously",
-    "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying).",
-]
-shaken = "Speed set to still_ground, move order: [- - -]. May not fire weapons"
+
+[units.gnome_helicopter.special]
+"Fire Order" = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously"
+
+[units.gnome_helicopter.shaken]
+speed = "still"
+movement_order = ["-", "-", "-"]
 
 [units.gnome_helicopter.orders.movement]
-still_ground = [
+still = [
     ["A[still]", "360$^0$", "-"],
     ["A[slow]", "360$^0$", "F"],
     ["A[still]", "360$^0$", "-"],
@@ -434,7 +471,7 @@ fast_flying = [
 ]
 
 [units.gnome_helicopter.orders.fire]
-still_ground = [["-", "Load"]]
+still = [["-", "Load"]]
 fast_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
 slow_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
 still_flying = [
@@ -462,10 +499,9 @@ crew = ["as regular damage"]
 [models.gnome_infantry]
 name = "Gnome Infantry"
 race = "gnome"
-equipment_limit = ["hands:2", "reserve:1", "independent:∞"]
+equipment_limit = ["Hands:2", "Reserve Ranged:1", "Independent:∞"]
 equipment = ["gnome_gun", "light_smg"]
-type = ["bio", "infantry", "walks"]
-special = []
+type = ["Bio", "Infantry", "Walking"]
 
 [models.gnome_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -474,15 +510,16 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.gnome_infantry.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [models.quad_bike]
 name = "Quad Bike"
 race = "gnome"
-equipment_limit = ["hands: 2", "reserve:1", "independent:∞"]
+equipment_limit = ["Hands:2", "Reserve Ranged:1", "Independent:∞"]
 equipment = ["light_smg"]
-type = ["bio", "quad_bike", "infantry", "wheeled"]
-special = []
+type = ["Bio", "Quadbike", "Infantry", "Wheeled"]
 
 [models.quad_bike.assault]
 strength = [1, 1, 1, 1]
@@ -491,15 +528,16 @@ deflection = [1, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 3
-special = []
 
 [models.assault_bot]
 name = "Assault Bot"
 race = "gnome"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = []
-type = ["drone", "walks"]
-special = ["Can only enter play through mortars or drop weapons"]
+type = ["Drone", "Walking"]
+
+[models.assault_bot.unit_special]
+"Setup" = "Can only enter play through mortars or drop weapons"
 
 [models.assault_bot.assault]
 strength = [1, 0, 0, 0]
@@ -508,15 +546,19 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.assault_bot.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [models.mechanical_rat]
 name = "Mechanical Rat"
 race = "gnome"
-equipment_limit = ["independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = []
-type = ["drone", "walks"]
-special = ["Can only enter play through tinkerer ability"]
+type = ["Drone", "Walking"]
+
+[models.mechanical_rat.unit_special]
+"Setup" = "Can only enter play through tinkerer ability"
 
 [models.mechanical_rat.assault]
 strength = [3, 0, 0, 0]
@@ -525,15 +567,16 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.mechanical_rat.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [models.ballista_tractor_markI]
 name = "Ballista Tractor Mark I"
 race = "gnome"
-equipment_limit = ["ballista:1", "vehicle_mortar:1", "independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = ["ballista", "assault_bot_mortar_vehicle"]
-type = ["mechanical, bio_crew", "vehicles", "wheeled"]
-special = []
+type = ["Mechanical", "Bio Crew", "Vehicle", "Wheeled"]
 
 [models.ballista_tractor_markI.assault]
 strength = [3, 2, 2, 1]
@@ -542,15 +585,13 @@ deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 2
-special = []
 
 [models.ballista_tractor_markII]
 name = "Ballista Tractor Mark II"
 race = "gnome"
-equipment_limit = ["ballista:1", "independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = ["enhanced_ballista"]
-type = ["mechanical, bio_crew", "vehicles", "wheeled"]
-special = []
+type = ["Mechanical", "Bio Crew", "Vehicle", "Wheeled"]
 
 [models.ballista_tractor_markII.assault]
 strength = [3, 2, 2, 1]
@@ -559,15 +600,13 @@ deflection = [4, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 2
-special = []
 
 [models.ballista_tractor_markIII]
 name = "Ballista Tractor Mark III"
 race = "gnome"
-equipment_limit = ["ballista:1", "array:1", "independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = ["ballista", "array_of_heavy_muskets"]
-type = ["mechanical, bio_crew", "vehicles", "wheeled"]
-special = []
+type = ["Mechanical", "Bio Crew", "Vehicle", "Wheeled"]
 
 [models.ballista_tractor_markIII.assault]
 strength = [3, 2, 2, 1]
@@ -576,15 +615,13 @@ deflection = [2, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-1"
 ap = 2
-special = []
 
 [models.ballista]
 name = "Ballista"
 race = "gnome"
-equipment_limit = ["ballista:1", "independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = ["ballista"]
-type = ["construct", "towed"]
-special = []
+type = ["AT Gun", "Towed"]
 
 [models.ballista.assault]
 strength = [1, 1, 1, 1]
@@ -593,15 +630,16 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.ballista.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [models.gnome_motorcycle]
 name = "Gnome Motorcycle"
 race = "gnome"
-equipment_limit = ["motorcycle_weapon:1", "independent:∞"]
+equipment_limit = ["Independent:∞"]
 equipment = ["splintbombgrenade_launcher"]
-type = ["bio", "motorcycle", "wheel"]
-special = []
+type = ["Bio", "Motorcycle", "Wheeled"]
 
 [models.gnome_motorcycle.assault]
 strength = [2, 1, 1, 0]
@@ -610,20 +648,27 @@ deflection = [2, 1, 0, 0]
 deflection_die = "5+"
 damage = "d6-2"
 ap = 2
-special = ["Pre-Assault Retreat[4+]"]
+
+[models.gnome_motorcycle.assault.special]
+"Retreat" = "Pre-Assault Retreat[4+]"
 
 [models.gnome_helicopter]
 name = "Gnome Helicopter"
 race = "gnome"
 equipment_limit = [
-    "helicopter_front:1",
-    "helicopter_drop:1",
-    "helicopter_side:1",
-    "independent: ∞",
+    "Helicopter Front:1",
+    "Helicopter Drop:1",
+    "Helicopter Side:1",
+    "Independent:∞",
 ]
 equipment = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
-type = ["bio_crew", "helicopter", "flying"]
-special = ["Quick fix: Repair[1, self, 1st healing phase]"]
+type = ["Bio Crew", "Helicopter", "Flying"]
+
+[models.gnome_helicopter.unit_special]
+"Repair" = "Quick fix: Repair[1, self, 1st healing phase]"
+
+[models.gnome_helicopter.special]
+"To Hit" = "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
 
 [models.gnome_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -632,26 +677,28 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = []
 
 [models.tinkerer_helicopter]
 name = "Tinkerer Helicopter"
 race = "gnome"
 equipment_limit = [
-    "helicopter_front:1",
-    "helicopter_drop:1",
-    "helicopter_side:2",
-    "independent: ∞",
+    "Helicopter Front:1",
+    "Helicopter Drop:1",
+    "Helicopter Side:2",
+    "Independent:∞",
 ]
 equipment = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
-type = ["bio_crew", "helicopter", "flying", "tinkerer"]
-special = [
-    "Improved Quick fix: Repair[2, self, 1st healing phase]",
-    "May move normally even if shaken",
-]
-replaces = ["gnome_helicopter"]
+type = ["Bio Crew", "Helicopter", "Flying", "Tinkerer"]
+replaces = "gnome_helicopter"
 cost.xp = 24
 cost.cp = -8
+
+[models.tinkerer_helicopter.unit_special]
+"Repair" = "Improved Quick fix: Repair[2, self, 1st healing phase]"
+"Movement" = "May move normally even if shaken"
+
+[models.tinkerer_helicopter.special]
+"To Hit" = "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
 
 [models.tinkerer_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -660,20 +707,19 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = []
 
 [models.gnome_elite_infantry]
 name = "Gnome Elite Infantry"
 race = "gnome"
-equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+equipment_limit = ["Hands:2", "Reserve Ranged:∞", "Independent:∞"]
 equipment = ["gnome_gun", "smg", "poison_dart", "acid_ballon", "grinder"]
-type = ["bio", "elite", "infantry", "walks"]
-replaces = ["gnome_infantry"]
-special = [
-    "Threat any gunnery phase without any other ordre as fire(reserve) order instead (for this model only.)",
-    "Unit gains psycic resistance 1 as long as atleast one elite model is alive.",
-]
+type = ["Bio", "Elite", "Infantry", "Walking"]
+replaces = "gnome_infantry"
 cost.xp = 4
+
+[models.gnome_elite_infantry.unit_special]
+"Fire Order" = "Treat any gunnery phase without any other order as fire(reserve) order instead (for this model only.)"
+"Resistance" = "Unit gains psychic resistance 1 as long as at least one elite model is alive."
 
 [models.gnome_elite_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -682,20 +728,22 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.gnome_elite_infantry.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [models.gnome_tinkerer]
 name = "Gnome Tinkerer"
 race = "gnome"
-equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+equipment_limit = ["Hands:2", "Reserve Ranged:∞", "Independent:∞"]
 equipment = ["tinkerer_gun", "light_smg"]
-type = ["bio", "infantry", "tinkerer", "walks"]
+type = ["Bio", "Infantry", "Tinkerer", "Walking"]
 cost.xp = 16
 cost.cp = -12
-replaces = ["gnome_infantry"]
-special = [
-    "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat. ",
-]
+replaces = "gnome_infantry"
+
+[models.gnome_tinkerer.unit_special]
+"Spawn" = "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
 [models.gnome_tinkerer.assault]
 strength = [1, 1, 1, 1]
@@ -704,20 +752,22 @@ deflection = [0, 0, 0, 0]
 deflection_die = ""
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.gnome_tinkerer.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [models.quadbike_tinkerer]
 name = "QuadBike Tinkerer"
 race = "gnome"
-equipment_limit = ["hands:2", "reserve:∞", "independent:∞"]
+equipment_limit = ["Hands:2", "Reserve Ranged:∞", "Independent:∞"]
 equipment = ["light_smg"]
-type = ["bio", "infantry", "tinkerer", "walks"]
+type = ["Bio", "Infantry", "Tinkerer", "Walking"]
 cost.xp = 16
 cost.cp = -12
-replaces = ["quad_bike"]
-special = [
-    "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat. ",
-]
+replaces = "quad_bike"
+
+[models.quadbike_tinkerer.unit_special]
+"Spawn" = "Once per game in any shooting phase: May Launch Mechanical rat: Place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
 [models.quadbike_tinkerer.assault]
 strength = [1, 1, 1, 1]
@@ -726,384 +776,406 @@ deflection = [3, 0, 0, 0]
 deflection_die = "5+"
 damage = "d6-2"
 ap = 2
-special = ["Cunning assault[1 for 2]"]
+
+[models.quadbike_tinkerer.assault.special]
+"Cunning Assault" = "[1 for 2]"
 
 [equipment]
 
 [equipment.gnome_gun]
 name = "Gnome Gun"
 race = "gnome"
-requires = [["hands:2"]]
+requires = [["Hands:2"]]
 
 [equipment.gnome_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-special = []
 
 [equipment.ballista]
 name = "Ballista"
 race = "gnome"
-requires = [["ballista:1"]]
+requires = [["Independent:1"]]
 
 [equipment.ballista.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6 (+2 if penetrating all armor)"
 ap = 8
-special = []
 
 [equipment.enhanced_ballista]
 name = "Enhanced Ballista"
 race = "gnome"
-requires = [["ballista:1"]]
+requires = [["Independent:1"]]
 
 [equipment.enhanced_ballista.range]
 range = 5
 angle = [true, false, false, false]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
-special = ["Enhanced Accurazy: +1 to hit"]
+
+[equipment.enhanced_ballista.range.special]
+"Bonus" = "Enhanced Accuracy: +1 to hit"
 
 [equipment.array_of_heavy_muskets]
 name = "Array of Heavy Muskets"
 race = "gnome"
-requires = [["array:1"]]
+requires = [["Independent:1"]]
 
 [equipment.array_of_heavy_muskets.range]
 range = 3
 angle = ["x4", "x3", "x3", "-"]
 damage = "d6 -1"
 ap = 3
-special = []
 
 [equipment.acid_splash]
 name = "Acid Splash"
 race = "gnome"
 cost.cp = 8
-requires = [["hands:2"], ["type:infantry"]]
+upgrade_all = true
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.acid_splash.range]
 range = 4
 angle = [true, true, true, true]
 damage = "-"
 ap = 0
-special = ["No regular damage", "Minor Acid"]
+
+[equipment.acid_splash.range.special]
+"Note" = "No regular damage"
+"Type" = "Minor Acid"
 
 [equipment.tinkerer_gun]
 name = "Gnome Gun"
 race = "gnome"
-requires = [["hands:2"], ["type:infantry"], ["type:tinkerer"]]
+requires = [["Hands:2"], ["type:Infantry"], ["type:Tinkerer"]]
 
 [equipment.tinkerer_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6"
 ap = 2
-special = []
 
 [equipment.light_smg]
 name = "Light SMG"
 race = "gnome"
-requires = [["reserve:1"]]
+requires = [["Reserve Ranged:1"]]
 
 [equipment.light_smg.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = 1
-special = [
-    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
-    "Always treated as loaded",
-]
+
+[equipment.light_smg.range.special]
+"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+"Ammo" = "Always treated as loaded"
 
 [equipment.smg]
 name = "SMG"
 race = "gnome"
-requires = [["reserve:1"]]
+requires = [["Reserve Ranged:1"]]
 
 [equipment.smg.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
-special = [
-    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
-    "Fire two shots per fire reserve order",
-    "Always treated as loaded",
-]
+
+[equipment.smg.range.special]
+"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+"Multiple Shots" = "Fire two shots per fire reserve order"
+"Ammo" = "Always treated as loaded"
 
 [equipment.poison_dart]
 name = "Poison Dart"
 race = "gnome"
-requires = [["reserve:1"]]
+requires = [["Reserve Ranged:1"]]
 
 [equipment.poison_dart.range]
 range = 2
 angle = [true, true, true, true]
 damage = "-"
 ap = 0
-special = [
-    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
-    "Always treated as loaded",
-    "Poison[4]",
-]
+
+[equipment.poison_dart.range.special]
+"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+"Ammo" = "Always treated as loaded"
+"Type" = "Poison[4]"
 
 [equipment.acid_ballon]
-name = "Acid Ballon"
+name = "Acid Balloon"
 race = "gnome"
-requires = [["reserve:1"]]
+requires = [["Reserve Ranged:1"]]
 
 [equipment.acid_ballon.range]
 range = 1
 angle = [true, true, true, true]
 damage = "-"
 ap = 0
-special = [
-    "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time.",
-    "Always treated as loaded",
-    "Minor Acid",
-]
+
+[equipment.acid_ballon.range.special]
+"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+"Ammo" = "Always treated as loaded"
+"Type" = "Minor Acid"
 
 [equipment.grinder]
 name = "Grinder"
 race = "gnome"
-requires = [["reserve:1"]]
+requires = [["Reserve Ranged:1"]]
 
 [equipment.grinder.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d8-2"
 ap = 2
-special = [
-    "Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time.",
-    "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used",
-]
+
+[equipment.grinder.range.special]
+"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time."
+"Ammo" = "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used"
 
 [equipment.mechanical_owl]
 name = "Mechanical Owl"
 race = "gnome"
 cost.cp = 8
-special = ["Gives all weapons the enhanced accurazy (+1 to hit) trait"]
-requires = [["type:infantry"], ["independent:1"]]
+upgrade_all = true
+requires = [["type:Infantry"], ["Independent:1"]]
+
+[equipment.mechanical_owl.model_special]
+"To Hit" = "Gives all weapons the enhanced accuracy (+1 to hit) trait"
 
 [equipment.frost_ray]
 race = "gnome"
 name = "Frost Ray"
 cost.cp = 16
-requires = [["type:infantry"], ["hands:2"]]
+upgrade_all = true
+requires = [["type:Infantry"], ["Hands:2"]]
 
 [equipment.frost_ray.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d4-2+d6 psychic damage + d4 crew damage"
 ap = 0
-special = [
-    "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step",
-]
+
+[equipment.frost_ray.range.special]
+"Order" = "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step"
 
 [equipment.frost_ray.orders_gained.fire]
 still = [["-", "amplified fire"]]
 
 [equipment.green_gas_launcher]
 race = "gnome"
-name = "Green Gas Launcer"
+name = "Green Gas Launcher"
 cost.cp = 8
 upgrade_all = false
-requires = [["type:tinkerer", "type:elite"], ["type:infantry"], ["reserve:1"]]
+requires = [["type:Tinkerer", "type:Elite"], ["type:Infantry"], ["Reserve Ranged:1"]]
 
 [equipment.green_gas_launcher.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6 psychic damage + d4 crew damage"
 ap = 0
-special = [
-    "Choose one hex (per model firing this weapon) within normal range: Area(5+)",
-    "Poison[6]",
-    "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time.",
-    "Always treated as loaded",
-]
+
+[equipment.green_gas_launcher.range.special]
+"Area" = "Choose one hex (per model firing this weapon) within normal range: Area(5+)"
+"Type" = "Poison[6]"
+"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
+"Ammo" = "Always treated as loaded"
 
 [equipment.helicopter_mounted_green_gas_launcher]
 race = "gnome"
-name = "Helicopter mounted Green Gas Launcer"
+name = "Helicopter mounted Green Gas Launcher"
 cost.cp = 8
-requires = [["type: tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+upgrade_all = true
+requires = [["type:Tinkerer"], ["type:Helicopter"], ["Helicopter Side:1"]]
 
 [equipment.helicopter_mounted_green_gas_launcher.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6 psychic damage + d4 crew damage"
 ap = 0
-special = ["Choose one hex within range: Area(5+)", "Poison[4]"]
+
+[equipment.helicopter_mounted_green_gas_launcher.range.special]
+"Area" = "Choose one hex within range: Area(5+)"
+"Type" = "Poison[4]"
 
 [equipment.experimental_plasma_gun]
 race = "gnome"
 name = "Experimental Plasma Gun"
 cost.cp = 16
 upgrade_all = false
-requires = [["type:tinkerer"], ["type:infantry"], ["hands:2"]]
+requires = [["type:Tinkerer"], ["type:Infantry"], ["Hands:2"]]
 
 [equipment.experimental_plasma_gun.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d12-3"
 ap = 6
-special = [
-    "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes atleast one model to die, remove the model carrying the plasma gun first.",
-    "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire",
-]
+
+[equipment.experimental_plasma_gun.range.special]
+"Fumble" = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes at least one model to die, remove the model carrying the plasma gun first."
+"Critical" = "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire"
 
 [equipment.helicopter_mounted_experimental_plasma_gun]
 race = "gnome"
 name = "Helicopter Mounted Experimental Plasma Gun"
 cost.cp = 16
-requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+upgrade_all = true
+requires = [["type:Tinkerer"], ["type:Helicopter"], ["Helicopter Side:1"]]
 
 [equipment.helicopter_mounted_experimental_plasma_gun.range]
 range = 6
 angle = [true, true, true, false]
 damage = "d12-3"
 ap = 6
-special = [
-    "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter",
-    "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire",
-    "Difficulty firing forward: Get -1 to hit in forward direction",
-]
+
+[equipment.helicopter_mounted_experimental_plasma_gun.range.special]
+"Fumble" = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter"
+"Critical" = "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire"
+"Note" = "Difficulty firing forward: Get -1 to hit in forward direction"
 
 [equipment.helicopter_gatling_gun]
 race = "gnome"
 name = "Helicopter Gatling Gun"
-requires = [["type:helicopter"], ["helicopter_front:1"]]
+requires = [["type:Helicopter"], ["Helicopter Front:1"]]
 
 [equipment.helicopter_gatling_gun.range]
 range = 3
 angle = [true, false, false, false]
 damage = "d6-1"
 ap = 6
-special = [
-    "Fire once at all enemy units within range and within angle of fire",
-    "If aim, instead use focus fire, roll 6 dice at same unit",
-    "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers",
-]
+
+[equipment.helicopter_gatling_gun.range.special]
+"Multiple Shots" = "Fire once at all enemy units within range and within angle of fire"
+"Focus Fire" = "If aim, instead use focus fire, roll 6 dice at same unit"
+"Bonus" = "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"
 
 [equipment.acidic_napalm_bomb]
 race = "gnome"
 name = "Acidic Napalm Bomb"
-requires = [["type:helicopter"], ["helicopter_drop:1"]]
+requires = [["type:Helicopter"], ["Helicopter Drop:1"]]
 
 [equipment.acidic_napalm_bomb.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
-special = [
-    "Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)",
-    "Limited Ammo[2]",
-]
+
+[equipment.acidic_napalm_bomb.range.special]
+"Area" = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+"Ammo" = "Limited Ammo[2]"
 
 [equipment.extra_acidic_napalm_bomb]
 race = "gnome"
 name = "(extra) Acidic Napalm Bomb"
 cost.cp = 4
-requires = [["type:helicopter"], ["helicopter_drop:1"]]
+upgrade_all = true
+requires = [["type:Helicopter"], ["Helicopter Drop:1"]]
 
 [equipment.extra_acidic_napalm_bomb.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
-special = [
-    "Choose a hex within normal range: Area(4+): minor acid and any unit hit atleast one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)",
-    "Limited Ammo[3]",
-]
+
+[equipment.extra_acidic_napalm_bomb.range.special]
+"Area" = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+"Ammo" = "Limited Ammo[3]"
 
 [equipment.major_acidic_napalm_bomb]
 race = "gnome"
 name = "Major Acidic Napalm Bomb"
 cost.cp = 24
-requires = [["type:helicopter"], ["helicopter_drop:1"]]
+upgrade_all = true
+requires = [["type:Helicopter"], ["Helicopter Drop:1"]]
 
 [equipment.major_acidic_napalm_bomb.range]
 range = 2
 angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
-special = [
-    "Choose a hex within normal range: Area(4+): acid and any unit hit atleast one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)",
-    "Limited Ammo[2]",
-]
+
+[equipment.major_acidic_napalm_bomb.range.special]
+"Area" = "Choose a hex within normal range: Area(4+): acid and any unit hit at least one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)"
+"Ammo" = "Limited Ammo[2]"
 
 [equipment.assault_bot_mortar]
 race = "gnome"
 name = "Assault Bot Mortar"
 cost.cp = 24
-requires = [["type:infantry"], ["hands:2"]]
-special = [
-    "No regular damage",
-    "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon.",
-]
+upgrade_all = true
+requires = [["type:Infantry"], ["Hands:2"]]
+
+[equipment.assault_bot_mortar.unit_special]
+"Note" = "No regular damage"
+"Spawn" = "When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."
 
 [equipment.assault_bot_mortar_vehicle]
 race = "gnome"
 name = "Assault Bot Mortar"
-requires = [["type:infantry"], ["hands:2"]]
-special = [
-    "No regular damage",
-    "When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon.",
-]
+requires = [["type:Infantry"], ["Hands:2"]]
+
+[equipment.assault_bot_mortar_vehicle.unit_special]
+"Note" = "No regular damage"
+"Spawn" = "When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."
 
 [equipment.assault_bot_dropper]
 race = "gnome"
 name = "Assault Bot Dropper"
 cost.cp = 8
-requires = [["type:helicopter"], ["helicopter_drop:1"]]
-special = [
-    "No regular damage",
-    "When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon.",
-    "Limited Ammo[3]",
-]
+upgrade_all = true
+requires = [["type:Helicopter"], ["Helicopter Drop:1"]]
+
+[equipment.assault_bot_dropper.unit_special]
+"Note" = "No regular damage"
+"Spawn" = "When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon."
+"Reload" = "Limited Ammo[3]"
 
 [equipment.improved_medical_armor]
 race = "gnome"
 name = "Improved Medical Armor"
 cost.cp = 8
-requires = [["type:infantry"], ["independent:1"]]
-special = [
-    "Unit gain Fire resistance 6, Poison Resistance 6, minor acid resistance[4+] and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
-]
+upgrade_all = true
+requires = [["type:Infantry"], ["Independent:1"]]
+
+[equipment.improved_medical_armor.unit_special]
+"Resistance" = "Unit gain Fire resistance 6, Poison Resistance 6, minor acid resistance[4+] and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)"
 
 [equipment.medical_armor]
 race = "gnome"
 name = "Medical Armor"
 cost.cp = 4
-requires = [["type:infantry"], ["independent:1"]]
-special = [
-    "Unit gain Fire resistance 2, Poison Resistance 2, and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)",
-]
+upgrade_all = true
+requires = [["type:Infantry"], ["Independent:1"]]
+
+[equipment.medical_armor.unit_special]
+"Resistance" = "Unit gain Fire resistance 2, Poison Resistance 2, and Psychic resistance 1 (improve by 1 if unit has psychic resistance from another source)"
 
 [equipment.plasma_shield_generator]
 race = "gnome"
 name = "Plasma Shield Generator"
 cost.cp = 8
-requires = [["type:infantry"], ["independent:1"]]
-special = [
-    "Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)",
-    "However, every time this unit takes atleast 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)",
-]
+upgrade_all = true
+requires = [["type:Infantry"], ["Independent:1"]]
+
+[equipment.plasma_shield_generator.unit_special]
+"Resistance" = "Unit gain d4 regular resistance (roll d4 every time it is hit with some regular damage)"
+"Vulnerability" = "However, every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
 
 [equipment.plasma_shield_generator.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
-special.append = "Any enemy which is hit atleast once in assault is set on fire"
+
+[equipment.plasma_shield_generator.assault.special]
+"Bonus" = "Any enemy which is hit at least once in assault is set on fire"
 
 [equipment.quadbike_lance]
 race = "gnome"
 name = "Quadbike Lance"
 cost.cp = 8
-requires = [["type:quadbike"], ["hands:2"]]
-special = []
+upgrade_all = true
+requires = [["type:Quadbike"], ["Hands:2"]]
 
 [equipment.quadbike_lance.assault]
 strength.add = [1, 0, 0, 0]
@@ -1112,99 +1184,106 @@ strength.add = [1, 0, 0, 0]
 race = "gnome"
 name = "Improved Plasma Shield Generator"
 cost.cp = 16
-requires = [["type:infantry"], ["independent:1"]]
-special = [
-    "Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)",
-    "However, every time this unit takes atleast 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)",
-]
+upgrade_all = true
+requires = [["type:Infantry"], ["Independent:1"]]
+
+[equipment.improved_plasma_shield_generator.unit_special]
+"Resistance" = "Unit gain d8 regular resistance (roll d8 every time it is hit with some regular damage)"
+"Vulnerability" = "However, every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
 
 [equipment.improved_plasma_shield_generator.assault]
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
-special.append = "Any enemy which is hit atleast once in assault is set on fire"
+
+[equipment.improved_plasma_shield_generator.assault.special]
+"Bonus" = "Any enemy which is hit at least once in assault is set on fire"
 
 [equipment.splintbombgrenade_launcher]
 race = "gnome"
 name = "Splintbombgrenade_launcher"
-requires = [["type:motorcycle"], ["motorcycle:1"]]
+requires = [["type:Motorcycle"]]
 
 [equipment.splintbombgrenade_launcher.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6"
 ap = 2
-special = [
-    "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)",
-]
+
+[equipment.splintbombgrenade_launcher.range.special]
+"Area" = "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)"
 
 [equipment.experimental_guided_missile]
 race = "gnome"
 name = "Experimental guided missile"
 cost.cp = 8
-requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+upgrade_all = true
+requires = [["type:Tinkerer"], ["type:Helicopter"], ["Helicopter Side:1"]]
 
 [equipment.experimental_guided_missile.range]
-range = "d4+d12"
+range = 16
 angle = [true, true, true, true]
 damage = "d6 + d6 psychic"
 ap = 5
-special = [
-    "Minor Acid",
-    "Guided: +4 to hit",
-    "Do not need line of sight to target",
-    "If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)",
-    "If you roll a 1 on to hit, (regardless of whether you hit or not), you are covered in minor acid",
-]
+
+[equipment.experimental_guided_missile.range.special]
+"Type" = "Minor Acid"
+"Bonus" = "Guided: +4 to hit"
+"Indirect Fire" = "Do not need line of sight to target"
+"Range" = "Actual range is rolled each time as d4+d12 (max 16). If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)"
+"Fumble" = "If you roll a 1 on to hit, (regardless of whether you hit or not), you are covered in minor acid"
 
 [equipment.helicopter_mounted_experimental_nailgun]
 race = "gnome"
 name = "Helicopter Mounted Experimental Nail Gun"
 cost.cp = 8
-requires = [["type:tinkerer"], ["type:helicopter"], ["helicopter_side:1"]]
+upgrade_all = true
+requires = [["type:Tinkerer"], ["type:Helicopter"], ["Helicopter Side:1"]]
 
 [equipment.helicopter_mounted_experimental_nailgun.range]
 range = 4
 angle = [true, true, true, false]
 damage = "d6-2"
 ap = 3
-special = [
-    "Fire d12 shots each time it is fired at the same unit",
-    "If you rolled atleast one 1 for to-hit, add +1 to future damage to self",
-    "If you roll only a 1 for the number of shots you fire, the gun is destroyed",
-    "Difficult to fire forward: -1 to hit firing forward",
-]
+
+[equipment.helicopter_mounted_experimental_nailgun.range.special]
+"Multiple Shots" = "Fire d12 shots each time it is fired at the same unit"
+"Recoil" = "If you rolled at least one 1 for to-hit, add +1 to future damage to self"
+"Fumble" = "If you roll only a 1 for the number of shots you fire, the gun is destroyed"
+"Note" = "Difficult to fire forward: -1 to hit firing forward"
 
 [equipment.experimental_nailgun]
 race = "gnome"
 name = "Experimental Nail Gun"
 cost.cp = 8
-requires = [["type:tinkerer"], ["type:infantry"]]
+upgrade_all = true
+requires = [["type:Tinkerer"], ["type:Infantry"]]
 
 [equipment.experimental_nailgun.range]
 range = 4
 angle = [true, true, true, false]
 damage = "d6-2"
 ap = 3
-special = [
-    "Fire d12 shots each time and all at the same unit",
-    "If you rolled atleast one 1 for to-hit, add +1 to future damage",
-    "If you roll only a one for the number of shots you fire, the gun is destroyed. Replace it with a regular gnome gun",
-]
+
+[equipment.experimental_nailgun.range.special]
+"Multiple Shots" = "Fire d12 shots each time and all at the same unit"
+"Recoil" = "If you rolled at least one 1 for to-hit, add +1 to future damage"
+"Fumble" = "If you roll only a one for the number of shots you fire, the gun is destroyed. Replace it with a regular gnome gun"
 
 [equipment.experimental_death_ray]
 race = "gnome"
 name = "Experimental Death Ray"
 cost.cp = 16
-requires = [["type:tinkerer"], ["type:infantry"]]
+upgrade_all = true
+requires = [["type:Tinkerer"], ["type:Infantry"]]
 
 [equipment.experimental_death_ray.range]
 range = 8
 angle = [true, true, true, false]
 damage = "d6-6"
 ap = 2
-special = [
-    "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token",
-    "May keep aiming instead of firing or loading.",
-    "If you hit your enemy, roll for damage 4 times",
-    "In agony phase 0, roll a die per aim-token for death ray. If you roll at least one 1, add minor acid to self, if you rolled at least two 1s, death ray explodes and unit is killed.",
-]
+
+[equipment.experimental_death_ray.range.special]
+"Improved Aim" = "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token"
+"Order" = "May keep aiming instead of firing or loading."
+"Multiple Shots" = "If you hit your enemy, roll for damage 4 times"
+"Fumble" = "In agony phase 0, roll a die per aim-token for death ray. If you roll at least one 1, add minor acid to self, if you rolled at least two 1s, death ray explodes and unit is killed."

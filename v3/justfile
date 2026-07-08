@@ -42,6 +42,7 @@ validate:
     uv run spf race show darkelf > /dev/null
     uv run spf race show dwarf > /dev/null
     uv run spf race show elf > /dev/null
+    uv run spf race show gnome > /dev/null
     uv run spf race show goblin > /dev/null
     uv run spf race show ork > /dev/null
     uv run spf race show ogre > /dev/null
