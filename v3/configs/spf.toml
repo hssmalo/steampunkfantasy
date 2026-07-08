@@ -4,3 +4,7 @@ armies = "{project_path}/armies"
 races = "{project_path}/races"
 rules = "{project_path}/rules"
 templates = "{project_path}/templates"
+output = "{project_path}/output"
+
+[render.latex]
+engine = "pdflatex"

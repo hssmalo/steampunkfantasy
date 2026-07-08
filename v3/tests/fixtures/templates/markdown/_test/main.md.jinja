@@ -1,0 +1,9 @@
+# {{ source.title }}
+
+{{ source.note }}
+
+| Name | Value |
+| ---- | ----- |
+{% for key, value in source.rows -%}
+| {{ key }} | {{ value }} |
+{% endfor -%}

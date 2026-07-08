@@ -11,7 +11,17 @@ class PathsConfig(StrictModel):
     races: Path
     rules: Path
     templates: Path
+    output: Path
+
+
+class LatexConfig(StrictModel):
+    engine: str = "pdflatex"
+
+
+class RenderConfig(StrictModel):
+    latex: LatexConfig = LatexConfig()
 
 
 class SteamPunkFantasyConfig(StrictModel):
     paths: PathsConfig
+    render: RenderConfig = RenderConfig()
