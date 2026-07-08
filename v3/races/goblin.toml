@@ -3,6 +3,10 @@
 [races.goblin]
 name = "Goblin"
 
+[spawns.tiny_snake]
+unit = "tiny_snake"
+
+
 [units]
 
 [units.goblin_infantry]
@@ -648,7 +652,7 @@ ap = "N/A"
 
 [equipment.snake_arrow.range.special]
 "Ammo" = "Limited Ammo[3]"
-"Spawn" = "Place one hidden tiny snake in an empty hex within normal range"
+"Spawn" = "tiny_snake: Place one hidden tiny snake in an empty hex within normal range"
 
 
 

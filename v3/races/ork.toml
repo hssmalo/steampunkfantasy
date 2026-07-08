@@ -3,6 +3,10 @@
 [races.ork]
 name = "Ork"
 
+[spawns.ork_champion]
+unit = "champion"
+copy_equipment = true
+
 [units.ork_infantry]
 race = "ork"
 name = "Ork Infantry"
@@ -86,17 +90,20 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.champion.special]
-"Spawn" = "Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
+"Spawn" = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
 
 [units.champion.damage_tables]
 Regular = ["2-3: Bleeding[4]", "4+: Killed"]
 
-#to do... order of spawned champion= order of the infantry...
 [units.champion.orders.movement]
-all = [["As unit it came from"]]
+still = [["As unit it came from"]]
+slow = [["As unit it came from"]]
+fast = [["As unit it came from"]]
 
 [units.champion.orders.fire]
-all = [["As unit it came from"]]
+still = [["As unit it came from"]]
+slow = [["As unit it came from"]]
+fast = [["As unit it came from"]]
 
 [units.warg_rider]
 race = "ork"
@@ -586,7 +593,7 @@ replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 
 [models.ork_elite_infantry.special]
-"Not Yet Dead" = "after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to. Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
+"Not Yet Dead" = "ork_champion: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit this model is attached to. Champion does not retain any of the abilities from the unit, and has a separate unit and model entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
 
 [models.ork_elite_infantry.unit_special]
 "Improved Resistance" = "Unit gains Psychic resistance 1 while at least one elite is alive"
@@ -804,7 +811,6 @@ ap = 3
 "Pre-Assault Retreat" = "[4+]"
 
 [models.speedhead.assault.special]
-
 "Ork Reroll" = "[6]"
 
 [equipment]
@@ -813,7 +819,7 @@ ap = 3
 name = "Troll Gatling Gun"
 race = "ork"
 requires = [["Hands:2"]]
-description =  "A huge gatling gun designed to be carried by trolls. The orks have put the troll gatling gun on auto fire mode. Fires once at all models, friends or foe, within long-range and within forward arc."
+description = "A huge gatling gun designed to be carried by trolls. The orks have put the troll gatling gun on auto fire mode. Fires once at all models, friends or foe, within long-range and within forward arc."
 
 [equipment.troll_gatling_gun.range]
 range = 4
@@ -821,11 +827,9 @@ angle = [true, false, false, false]
 damage = "d10"
 ap = 3
 
-
 [equipment.troll_gatling_gun.range.special]
-"Area" =  "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
+"Area" = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
 "Bonus" = "Replace any forest at point blank range with a Rough terrain"
-
 
 [equipment.ork_musket]
 name = "Ork Musket"
@@ -1003,9 +1007,8 @@ ap = 0
 [equipment.pyro.unit_special]
 "Improved Resistance" = "Fire[2]"
 
-
 [equipment.pyro.range.special]
-"Order" =    "Used with Throw order"
+"Order" = "Used with Throw order"
 "Extra Damage" = "Set on fire"
 "Ammo" = "Always treated as loaded"
 
@@ -1025,10 +1028,8 @@ angle = [true, false, false, false]
 damage = "d6 +3 if penetrating armor"
 ap = 9
 
-
 [equipment.hand_held_cannon.range.special]
 "Order" = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
-
 
 [equipment.war_drum]
 name = "War Drum"
@@ -1056,7 +1057,7 @@ ap = 2
 
 [equipment.harpoon_gun.range.special]
 "Order" = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
-"Drag" =     "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+"Drag" = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
 
 [equipment.harpoon_gun_free]
 name = "Harpoon Gun"
@@ -1071,7 +1072,7 @@ ap = 2
 
 [equipment.harpoon_gun_free.range.special]
 "Order" = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
-"Drag" =     "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+"Drag" = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
 
 [equipment.grenade_sling]
 name = "Grenade Sling"
@@ -1092,8 +1093,6 @@ ap = 6
 "Bonus" = "If combined with the pyro, the pyro gains standard range of 3 instead of 1."
 "Note" = "It is a 1 handed weapon but may not be combined with another sling"
 
-
-
 [equipment.shriek]
 race = "ork"
 name = "Shriek"
@@ -1106,8 +1105,7 @@ damage = "d4-2+ d6 Psychic damage"
 ap = 2
 
 [equipment.shriek.range.special]
-    "Burst" = "[5] Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
-
+"Burst" = "[5] Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
 
 [equipment.speed_cannon]
 race = "ork"
@@ -1123,8 +1121,6 @@ ap = 6
 [equipment.speed_cannon.range.special]
 "Burst" = "[5] Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
 
-
-
 [equipment.flamethrower]
 race = "ork"
 name = "Flamethrower"
@@ -1138,9 +1134,8 @@ ap = 0
 
 [equipment.flamethrower.range.special]
 "Area" = "Fire at all possible hexes possible simultaneously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc."
-"Extra Damage" =     "set on Fire"
-"Ammo" =     "Limited Ammo[3]"
-
+"Extra Damage" = "set on Fire"
+"Ammo" = "Limited Ammo[3]"
 
 [equipment.rotating_pop_gun]
 race = "ork"
@@ -1155,7 +1150,6 @@ ap = 7
 
 [equipment.rotating_pop_gun.range.special]
 "Extra Damage" = "Poison[8]"
-
 
 [equipment.heavy_forward_gun]
 race = "ork"
@@ -1205,8 +1199,6 @@ ap = 6
 "Area" = "If fired from a unit with 3-4 models within normal range: Area[4+], if fired from a unit with 1-2 models at normal range: Area[5+], if fired from a unit with 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area[6+]"
 "Range" = "Choose one hex within normal range or one hex within long range."
 
-
-
 [equipment.big_gun]
 race = "ork"
 name = "Big Gun"
@@ -1219,7 +1211,6 @@ ap = 5
 
 [equipment.big_gun.range.special]
 "Cloud" = "Place two fog tokens in the hex directly ahead of this unit"
-
 
 [equipment.spear_shooter]
 race = "ork"
@@ -1245,7 +1236,6 @@ ap = 3
 "Range" = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex"
 "Area" = "[2+]"
 
-
 [equipment.assault_musket]
 race = "ork"
 name = "Assault_Musket"
@@ -1259,15 +1249,12 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-
 [equipment.assault_musket.model_special]
 "To Hit (2)" = "Enhanced Accuracy[Assault Musket]: +1 to hit"
 
 [equipment.assault_musket.range.special]
 "Ammo" = "May load up to 4 ammo. If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' setting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1"
 "Note" = "ps! It is not recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon separately"
-
-
 
 [equipment.assault_musket.orders_gained.fire]
 still = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "fire"]]
