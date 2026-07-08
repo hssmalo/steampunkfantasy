@@ -36,7 +36,7 @@ type PhaseName = Literal[
 type RaceName = Literal[
     "abomination", "darkelf", "dwarf", "elf", "gnome", "goblin", "ogre", "ork"
 ]
-type DamageTableName = Literal["crew", "critical", "inner", "psychic", "regular"]
+type DamageTableName = Literal["Crew", "Critical", "Inner", "Psychic", "Regular"]
 type EquipmentHolder = Literal[
     "Independent",
     "Grenades",
@@ -133,7 +133,7 @@ type AssaultSpecial = Literal[
     "Improved Extra Damage",
     "Cunning Assault",
     "Cunning Deflection",
-    "Cunning Assault Defence",
+    "Cunning Assault Defense",
     "Damage on Deflect",
     "Overrun",
     "Counter Attack",

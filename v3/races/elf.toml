@@ -32,15 +32,15 @@ slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
 [units.elf_hydra.damage_tables]
-regular = [
+Regular = [
 	"1-2: Bleed[4]",
 	"3-5: +1 to future damage, Bleed[4]",
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
-	"10-17: As below, d6 psychic damage",
+	"10-17: As below, d6 Psychic damage",
 	"18: Unit destroyed",
 	"{{\\it Note: Bleed does not cause more bleeding}}",
 ]
-psychic = ["6+: shaken"]
+Psychic = ["6+: shaken"]
 
 [units.elf_infantry]
 race = "elf"
@@ -76,13 +76,13 @@ still = [
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elf_infantry.damage_tables]
-regular = [
+Regular = [
 	"0-6: Kill 1 model",
-	"7-8: Kill 1 model, psychic damage[d6]",
+	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-psychic = ["4+: shaken"]
+Psychic = ["4+: shaken"]
 
 [units.elf_archer]
 race = "elf"
@@ -117,13 +117,13 @@ still = [
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elf_archer.damage_tables]
-regular = [
+Regular = [
 	"0-6: Kill 1 model",
-	"7-8: Kill 1 model, psychic damage[d6]",
+	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-psychic = ["5+: shaken"]
+Psychic = ["5+: shaken"]
 
 [units.illusion]
 race = "elf"
@@ -133,7 +133,7 @@ size = "Medium"
 cost.cp = 8
 
 [units.illusion.special]
-"Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
+"Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does Psychic damage, it would require you to tell the enemy that this unit does not have a Psychic damage table, which would give the illusion away."
 "Movement" = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
 "Forward Position" = "[2]"
 
@@ -145,7 +145,7 @@ movement_order = ["-", "-", "flee"]
 slow = [["-", "-", "chase"]]
 
 [units.illusion.damage_tables]
-regular = ["0-4: kill 1 model", "4+: destroy unit", "Note: immune to poison"]
+Regular = ["0-4: kill 1 model", "4+: destroy unit", "Note: immune to poison"]
 
 [units.elf_scout]
 race = "elf"
@@ -182,8 +182,8 @@ still = [
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elf_scout.damage_tables]
-regular = ["0+: unit killed"]
-psychic = ["3+: shaken"]
+Regular = ["0+: unit killed"]
+Psychic = ["3+: shaken"]
 
 [units.elite_elf_scout]
 race = "elf"
@@ -222,8 +222,8 @@ still = [
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
 [units.elite_elf_scout.damage_tables]
-regular = ["0+: unit killed"]
-psychic = ["3+: shaken"]
+Regular = ["0+: unit killed"]
+Psychic = ["3+: shaken"]
 
 [units.e34]
 race = "elf"
@@ -270,13 +270,13 @@ still = [
 ]
 
 [units.e34.damage_tables]
-regular = [
+Regular = [
 	"1-3: +1 on future damage",
 	"4: as below, shaken",
 	"5-8: as below, Critical Damage",
 	"9+: Destroyed",
 ]
-critical = [
+Critical = [
 	"1: Cannot move",
 	"2: -1 to hit, +1 to be hit(ranged and assault)",
 	"3: Cannot Rotate",
@@ -284,10 +284,10 @@ critical = [
 	"5: Stuck turret: firing angle is now only forward",
 	"6: Unit is set on Fire",
 ]
-crew = [
-	"4-5: Crippled Crew, if already shaken double initial crew damage",
+Crew = [
+	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future crew damage",
+	"8-11: as 6-7, +3 to future Crew damage",
 	"12+: Unit destroyed",
 ]
 
@@ -345,24 +345,24 @@ still = [
 ]
 
 [units.tattoo_ink.damage_tables]
-critical = [
-	"1: Shaken",
+Critical = [
+	"1: shaken",
 	"2: -1 to hit, +1 to be hit",
 	"3: Cannot rotate",
 	"4: +3 on future damage",
 	"5: unit cannot change speed.",
 	"6: Set unit on Fire!",
 ]
-regular = [
+Regular = [
 	"1-2: +1 on future damage",
 	"3-4 as below, shaken",
 	"5-7: as below, d6 Critical Damage",
 	"8+ Destroyed",
 ]
-crew = [
-	"4-5: Crippled Crew, if already shaken double initial crew damage",
+Crew = [
+	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future crew damage",
+	"8-11: as 6-7, +3 to future Crew damage",
 	"12+: Unit destroyed",
 ]
 
@@ -392,14 +392,14 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
 [units.bear_rider.damage_tables]
-regular = [
-	"2-7: +1 to future damage, bleed[4]",
-	"8:10: +2 to future damage, bleed[6], psychic damage[d6]",
+Regular = [
+	"2-7: +1 to future damage, Bleed[4]",
+	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
 	"Note: bleeding does not cause more bleeding",
 	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
 ]
-psychic = ["6+: shaken"]
+Psychic = ["6+: shaken"]
 
 [units.polar_bear_riders]
 race = "elf"
@@ -428,14 +428,14 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
 [units.polar_bear_riders.damage_tables]
-regular = [
-	"2-7: +1 to future damage, bleed[4]",
-	"8:10: +2 to future damage, bleed[6], psychic damage[d6]",
+Regular = [
+	"2-7: +1 to future damage, Bleed[4]",
+	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
 	"Note: bleeding does not cause more bleeding",
 	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
 ]
-psychic = ["6+: shaken"]
+Psychic = ["6+: shaken"]
 
 [units.armored_unicorn_rider]
 race = "elf"
@@ -455,7 +455,7 @@ movement_order = ["-", "-", "flee"]
 [units.armored_unicorn_rider.special]
 "Resistance" = "Poison[12], Fire[3], Acid[1]"
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
-"Officer" = "Grants psychic resistance 1 to the other unit in this hex"
+"Officer" = "Grants Psychic resistance 1 to the other unit in this hex"
 "Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
 "Heal" = "Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]"
 "Stacking Limit" = "May share a hex with a huge unit"
@@ -482,12 +482,12 @@ fast = [
 ]
 
 [units.armored_unicorn_rider.damage_tables]
-regular = [
+Regular = [
 	"2-5: Bleed[6]",
 	"6+: killed",
 	"Note: bleeding does not cause more bleeding"
 ]
-psychic = ["6+: shaken"]
+Psychic = ["6+: shaken"]
 
 [units.pachyephalosaurus_riders]
 race = "elf"
@@ -530,13 +530,13 @@ slow = [["360°", "A", "F"], ["B", "360°", "-"]]
 still = [["360°", "A", "F"], ["A+A", "360°+F", "F"], ["A+A", "360°", "F"]]
 
 [units.pachyephalosaurus_riders.damage_tables]
-regular = [
-	"2-3: bleed[6]",
-	"6+: kill 1 model, d4 psychic damage",
+Regular = [
+	"2-3: Bleed[6]",
+	"6+: kill 1 model, d4 Psychic damage",
 	"{{\\it Note: bleeding does not cause more bleeding}}",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-psychic = ["4+: shaken"]
+Psychic = ["4+: shaken"]
 
 # Elk removed. Elf had to many cavalry and elk did not find it's correct place.
 #[units.elk_cavalery]
@@ -565,11 +565,11 @@ psychic = ["4+: shaken"]
 #[units.elk_cavalery.damage_tables]
 #regular = [
 #	"2-3: Bleed[4]",
-#	"4+: kill 1 model, d4 psychic damage",
+#	"4+: kill 1 model, d4 Psychic damage",
 #	"{{\\it Note: bleeding does not cause more bleeding}}",
 #	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 #]
-#psychic = ["4+: shaken"]
+#Psychic = ["4+: shaken"]
 [units.pegasus_rider]
 race = "elf"
 name = "Pegasus Rider"
@@ -637,13 +637,13 @@ fast_flying = [
 ]
 
 [units.pegasus_rider.damage_tables]
-regular = [
+Regular = [
 	"2-3: Bleed[4]",
 	"4+: kill 1 model",
 	"{{\\it Note: bleeding does not cause more bleeding}}",
 	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-psychic = ["5+: shaken"]
+Psychic = ["5+: shaken"]
 
 [models]
 
@@ -817,7 +817,7 @@ strength = [1, 0, 0, 0]
 strength_die = "5+"
 deflection = [0, 0, 0, 0]
 deflection_die = "5+"
-damage = "d6 psychic damage"
+damage = "d6 Psychic damage"
 ap = 'N/A'
 
 [models.superelite_elf_infantry]
@@ -1104,7 +1104,7 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
 [units.sauropod_riders.damage_tables]
-regular = [
+Regular = [
 	"2-3: Bleed[4]",
 	"4-8: As below, If caused by bleeding, amplify bleeding",
 	"9-11: as below, +1 to future damage",
@@ -1113,7 +1113,7 @@ regular = [
 	"{{\\it Note: Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]}}",
 	"{{\\it Note: bleeding does not cause more bleeding}}",
 ]
-psychic = ["8+: shaken"]
+Psychic = ["8+: shaken"]
 
 [units.armored_oliphant_riders]
 race = "elf"
@@ -1127,7 +1127,7 @@ armor = [8, 6, 4, 3]
 
 [units.armored_oliphant_riders.special]
 "Resistance" = "Poison[2]"
-"Fire Order" = "The crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
+"Fire Order" = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
@@ -1160,13 +1160,13 @@ fast = [
 ]
 
 [units.armored_oliphant_riders.damage_tables]
-regular = [
-	"2-6: Bleed[8] ",
-	"7: As below, d6 psychic damage",
+Regular = [
+	"2-6: Bleed[8]",
+	"7: As below, d6 Psychic damage",
 	"8+: Unit killed",
 	"Note: bleeding does not cause more bleeding",
 ]
-psychic = ["6+: shaken"]
+Psychic = ["6+: shaken"]
 
 [units.eagle_rider]
 race = "elf"
@@ -1198,13 +1198,13 @@ slow = [
 ]
 
 [units.eagle_rider.damage_tables]
-regular = [
+Regular = [
 	"2-3: +1 to future damage, Bleed[4]",
-	"4-6: +2 to future damage, bleed[6], psychic damage[d6]",
+	"4-6: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"7+: killed",
 	"Note: bleeding does not cause more bleeding",
 ]
-psychic = ["6+: shaken"]
+Psychic = ["6+: shaken"]
 
 [models.armored_unicorn_rider]
 name = "Armored Unicorn Rider"
@@ -1265,7 +1265,7 @@ requires = []
 [equipment.thunderroar.range]
 range = 5
 angle = [false, true, false, false]
-damage = "d6 psychic"
+damage = "d6 Psychic"
 ap = "N/A"
 
 [equipment.thunderroar.range.special]
@@ -1301,7 +1301,7 @@ ap = 5
 "Fire Order" = "May be load up to 5 shots, fire them one at a time"
 
 [equipment.teslaburstlaser]
-name = "TeslaBurstLaster"
+name = "TeslaBurstLaser"
 race = "elf"
 requires = [["type:Vehicle"], ["Minor Gun:1"]]
 cost.cp = 8
@@ -1378,7 +1378,7 @@ damage = "-"
 ap = "N/A"
 
 [equipment.acid_breath.range.special]
-"Extra Damage" = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise. "
+"Extra Damage" = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1396,7 +1396,7 @@ ap = "N/A"
 "Multiple Shots" = "Fire one time per alive minor head"
 
 [equipment.gatling_gun]
-name = "GatlingGun"
+name = "Gatling Gun"
 race = "elf"
 requires = []
 
@@ -1418,14 +1418,14 @@ requires = []
 [equipment.shriek_smg_free.range]
 range = 3
 angle = [true, true, false, false]
-damage = "d4 -2 + d6 psychic damage"
+damage = "d4 -2 + d6 Psychic damage"
 ap = 2
 
 [equipment.shriek_smg_free.range.special]
 "Burst" = "[5]: Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)"
 
 [equipment.oliphant_gatling_guns]
-name = "Oliphant GatlingGuns"
+name = "Oliphant Gatling Guns"
 race = "elf"
 requires = []
 description = "Represent one gatling gun firing to the left and one firing to the right."
@@ -1565,7 +1565,7 @@ upgrade_all = true
 [equipment.illusion_weapon.range]
 range = 2
 angle = [true, true, true, true]
-damage = "d6 psychic damage"
+damage = "d6 Psychic damage"
 ap = "N/A"
 
 [equipment.illusion_weapon.range.special]
@@ -1675,7 +1675,7 @@ damage = "d6-2"
 ap = "3"
 
 [equipment.sniper_rifle.range.special]
-"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psychic damage and +d4 crew damage when aiming"
+"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
 "Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
 [equipment.sniper_rifle_free]
@@ -1690,7 +1690,7 @@ damage = "d6-2"
 ap = "3"
 
 [equipment.sniper_rifle_free.range.special]
-"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 psychic damage and +d4 crew damage when aiming"
+"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
 "Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
 [equipment.grenade]
@@ -1737,7 +1737,7 @@ fast = [["-", "Throw"]]
 name = "Crew Hand Grenade"
 race = "elf"
 requires = []
-description = "All crew target one hex with hand grenades"
+description = "All Crew target one hex with hand grenades"
 
 [equipment.crew_hand_grenade.range]
 range = 1
