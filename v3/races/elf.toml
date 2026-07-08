@@ -18,7 +18,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.elf_hydra.special]
-"Regeneration" = "Heal[N, self, 2nd Healin], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroid head"
+"Regeneration" = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
 "Heads" = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
 "Fire Order" = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
 "Forward Position" = "[1]"
@@ -133,7 +133,7 @@ size = "Medium"
 cost.cp = 8
 
 [units.illusion.special]
-"Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camufloulage[forrest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
+"Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does psychic damage, it would require you to tell the enemy that this unit does not have a psychic damage table, which would give the illusion away."
 "Movement" = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
 "Forward Position" = "[2]"
 
@@ -199,7 +199,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.elite_elf_scout.special]
 "Take Cover" = "[still][-3]"
-"Camouflage" = "[forrest][-1]"
+"Camouflage" = "[forest][-1]"
 
 [units.elite_elf_scout.orders.fire]
 still = [
@@ -413,7 +413,7 @@ armor = [8, 6, 6, 6]
 
 [units.polar_bear_riders.special]
 "Resistance" = "Poison[3]"
-"Fire Order" = "Flame arrow fires every gunnrey phase independent of gatling gun. Always treated as loaded"
+"Fire Order" = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded"
 
 [units.polar_bear_riders.shaken]
 speed = "slow"
@@ -791,8 +791,8 @@ cost.xp = 6
 "To Hit" = "Great Shot: +2 to hit"
 
 [models.superb_elf_archer.unit_special]
-"Improved Resistance" = "Unit gains resistance Psycic[2] while atleast one superelite model is alive"
-"Pre-Assault Retreat" = "unit gains Pre-assault retreat[3+] as long as atleast 1 superelite is alive"
+"Improved Resistance" = "Unit gains resistance Psychic[2] while at least one superelite model is alive"
+"Pre-Assault Retreat" = "unit gains Pre-assault retreat[3+] as long as at least 1 superelite is alive"
 
 [models.superb_elf_archer.assault]
 strength = [1, 1, 1, 1]
@@ -833,8 +833,8 @@ type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 "To Hit" = "Great Shot: +2 to hit"
 
 [models.superelite_elf_infantry.unit_special]
-"Improved Resistance" = "Unit gains resistance Psycic[2] while atleast one superelite model is alive"
-"Pre-Assault Retreat" = "unit gains Pre-assault retreat[4+] as long as atleast 1 superelite is alive"
+"Improved Resistance" = "Unit gains resistance Psychic[2] while at least one superelite model is alive"
+"Pre-Assault Retreat" = "unit gains Pre-assault retreat[4+] as long as at least 1 superelite is alive"
 
 [models.superelite_elf_infantry.assault]
 strength = [3, 1, 1, 1]
@@ -860,8 +860,8 @@ type = ["Bio", "Infantry", "Walking", "Elite"]
 "To Hit" = "Good Shot: +1 to hit"
 
 [models.elite_elf_infantry.unit_special]
-"Improved Resistance" = "Unit gains resistance Psycic[1] while atleast one superelite model is alive"
-"Pre-Assault Retreat" = "unit gains Pre-assault retreat[5+] as long as atleast 1 elite is alive"
+"Improved Resistance" = "Unit gains resistance Psychic[1] while at least one superelite model is alive"
+"Pre-Assault Retreat" = "unit gains Pre-assault retreat[5+] as long as at least 1 elite is alive"
 
 [models.elite_elf_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -1061,8 +1061,8 @@ cost.xp = 4
 "To Hit" = "Good shot: +1"
 
 [models.elite_pachyephalosaurus_rider.unit_special]
-"Improved Resistance" = "Unit gains resistance Psychic[1] while atleast one elite is alive"
-"Pre-Assault Retreat" = "3+ if atleast one elite present"
+"Improved Resistance" = "Unit gains resistance Psychic[1] while at least one elite is alive"
+"Pre-Assault Retreat" = "3+ if at least one elite present"
 
 [models.elite_pachyephalosaurus_rider.assault]
 strength = [6, 2, 2, 1]
@@ -1078,7 +1078,7 @@ ap = 2
 
 [units.sauropod_riders]
 race = "elf"
-name = "Saouropod Rider"
+name = "Sauropod Rider"
 models = ["sauropod"]
 size = "Huge"
 cost.mp = 8
@@ -1088,7 +1088,7 @@ armor = [4, 3, 3, 3]
 
 [units.sauropod_riders.special]
 "Resistance" = "Poison[4]"
-"Fire Order" = "Fire and load all weapons simultainiously"
+"Fire Order" = "Fire and load all weapons simultaneously"
 "Setup" = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
 
 [units.sauropod_riders.shaken]
@@ -1265,7 +1265,7 @@ requires = []
 [equipment.thunderroar.range]
 range = 5
 angle = [false, true, false, false]
-damage = "d6 psycic"
+damage = "d6 psychic"
 ap = "N/A"
 
 [equipment.thunderroar.range.special]
@@ -1553,7 +1553,7 @@ upgrade_all = true
 [equipment.assault_archer.assault]
 
 [equipment.assault_archer.assault.special]
-"Retreat" = "Unit gains aim if you manage to pre-esscape an assault"
+"Retreat" = "Unit gains aim if you manage to pre-escape an assault"
 
 [equipment.illusion_weapon]
 name = "Illusion Weapon"
@@ -1589,7 +1589,7 @@ ap = 0
 
 [equipment.seeker_arrow.range.special]
 "Range" = "+1 range if you are flying"
-"Ammo" = "Limited Ammor(3)"
+"Ammo" = "Limited Ammo(3)"
 
 [equipment.elven_seeker_arrow]
 name = "Elven Seeker Arrows"
@@ -1597,7 +1597,7 @@ race = "elf"
 upgrade_all = false
 cost.cp = 6
 requires = [["Special Arrows:2"], ["type:Archer"], ["type:SuperElite"]]
-description = '''The pride of elven craftmanship. A programmable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
+description = '''The pride of elven craftsmanship. A programmable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
 
 [equipment.elven_seeker_arrow.model_special]
 "To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +5 to hit"
@@ -1800,4 +1800,4 @@ cost.cp = 8
 upgrade_all = true
 
 [equipment.camouflage.unit_special]
-Camouflage = "[forrest][-1]"
+Camouflage = "[forest][-1]"

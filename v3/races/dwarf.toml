@@ -155,7 +155,7 @@ fire_order = "Normal"
 [units.mini_zeppelin.special]
 "Resistance" = "Poison[3]"
 "Note" = "Floats"
-"Movement" = "random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutrilize the effect of the weather"
+"Movement" = "random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutralize the effect of the weather"
 
 [units.mini_zeppelin.orders.movement]
 fast = [["random", "L/R+F", "F"], ["random", "F", "F"], ["random", "F", "B"]]
@@ -182,7 +182,7 @@ movement_order = ["-", "F", "F"]
 comment = "May not deploy units while shaken"
 
 [units.transport_zeppelin.special]
-"Transport" = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantri with wheeled shieldwall"
+"Transport" = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall"
 
 [units.transport_zeppelin.orders.movement]
 fast_flying = [
@@ -468,7 +468,7 @@ comment = "Each Shaken token counts as +1 to future damage token."
 "Steady" = "+1 to hit, +1 to be hit."
 "Repair" = "[2, self, healing 2]"
 "Vulnerability" = "When damaged, add 1 to the result for each shaken token on the Zeppelin."
-"Note" = "Withering Ray: May replace forrest with rough terrain in the hex it is standing"
+"Note" = "Withering Ray: May replace forest with rough terrain in the hex it is standing"
 
 [units.zeppelin.orders.movement]
 slow_flying = [
@@ -617,7 +617,7 @@ replaces = "steampowerarmor"
 
 [models.elite_steampowerarmor.unit_special]
 "Improved Resistance" = "unit gains psychic resistance 1 as long as 1 elite model is alive"
-"Protection" = "Unit gains 1 endurence token per elite in unit. See general rules for effect"
+"Protection" = "Unit gains 1 endurance token per elite in unit. See general rules for effect"
 
 [models.elite_steampowerarmor.assault]
 strength = [4, 3, 3, 3]
@@ -643,7 +643,7 @@ replaces = "steampowerarmor"
 [models.battle_medic.unit_special]
 "Improved Resistance" = "unit gains psychic resistance 2 as long as 1 battle medic is alive"
 "Heal" = "Unit gains: Heal[1, any, Healing 1]"
-"Protection" = "Unit gains 1 endurence token and this model counts as elites for life of vest support. See general rules for effect"
+"Protection" = "Unit gains 1 endurance token and this model counts as elites for life of vest support. See general rules for effect"
 
 [models.battle_medic.assault]
 strength = [4, 3, 3, 3]
@@ -929,28 +929,28 @@ damage.replace = "d6-2 + d6 psychic damage"
 [equipment.musket_with_springloaded_axe.orders_gained.fire]
 slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
 
-[equipment.double_barrled_musket_with_springloaded_axe]
+[equipment.double_barreled_musket_with_springloaded_axe]
 name = "Doubled Barreled Musket With Springloaded Axe"
 race = "dwarf"
 cost.cp = 16
 upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
-[equipment.double_barrled_musket_with_springloaded_axe.range]
+[equipment.double_barreled_musket_with_springloaded_axe.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.double_barrled_musket_with_springloaded_axe.range.special]
+[equipment.double_barreled_musket_with_springloaded_axe.range.special]
 "Multiple Shots" = "Fire two shots (per model) for each shot"
 "Ammo" = "Gun automatically loaded after an assault"
 
-[equipment.double_barrled_musket_with_springloaded_axe.assault]
+[equipment.double_barreled_musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
 damage.replace = "d6-2 + d6 psychic damage"
 
-[equipment.double_barrled_musket_with_springloaded_axe.orders_gained.fire]
+[equipment.double_barreled_musket_with_springloaded_axe.orders_gained.fire]
 slow = [["-", "Load"], ["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [equipment.blast_sticks]
@@ -1071,7 +1071,7 @@ damage = "d6+1"
 ap = 7
 
 [equipment.bigblaster.range.special]
-"Ammo" = "Require atleast 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
+"Ammo" = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
@@ -1081,7 +1081,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.vest_of_life_support.unit_special]
-"Protection" = "Unit gains 1 endurence token per regular model  and 2 endurence tokens per elite model in the unit. See general rules for effect"
+"Protection" = "Unit gains 1 endurance token per regular model  and 2 endurance tokens per elite model in the unit. See general rules for effect"
 
 [equipment.stabilizer]
 name = "Stabilizer"
@@ -1091,7 +1091,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.stabilizer.model_special]
-"To Hit" = "Enhanced accurazy. +1 to hit"
+"To Hit" = "Enhanced accuracy. +1 to hit"
 
 [equipment.stabilizer.orders_gained.fire]
 slow = [["-", "aim"], ["aim", "-"]]
@@ -1104,7 +1104,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.trenchcoat_of_resistance.unit_special]
-"Improved Resistance" = "Unit improves poison resistance and fire reistance with 1"
+"Improved Resistance" = "Unit improves poison resistance and fire resistance with 1"
 "Immunity" = "Unit gains immunity to minor acid"
 
 [equipment.brotherinarms_armor]
@@ -1115,7 +1115,7 @@ upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
 [equipment.brotherinarms_armor.unit_special]
-"Protection" = "Unit gains 2 endurence tokens per elite model in the unit. See general rules for effect. Stacks with vest of life support. In addition to the normal rules for endurence tokens, the unit may use one endurence token in healing phase 1, to replace any bleeding with poison[6]. Unit gains [4,3,3,3] in armor"
+"Protection" = "Unit gains 2 endurance tokens per elite model in the unit. See general rules for effect. Stacks with vest of life support. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Unit gains [4,3,3,3] in armor"
 
 [equipment.steamblower]
 name = "Steamblower"
@@ -1309,36 +1309,36 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 4
 
-[equipment.double_barrled_long_range_heavy_musket]
+[equipment.double_barreled_long_range_heavy_musket]
 name = "Double Barreled Long_Range Heavy Musket"
 race = "dwarf"
 cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Steampowerarmor"]]
 
-[equipment.double_barrled_long_range_heavy_musket.range]
+[equipment.double_barreled_long_range_heavy_musket.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.double_barrled_long_range_heavy_musket.range.special]
+[equipment.double_barreled_long_range_heavy_musket.range.special]
 "Multiple Shots" = "Fire two shots per fire order per model"
 
-[equipment.multi_barrled_heavy_musket]
+[equipment.multi_barreled_heavy_musket]
 name = "Multibarreled Heavy Musket"
 race = "dwarf"
 cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Steampowerarmor"]]
 
-[equipment.multi_barrled_heavy_musket.range]
+[equipment.multi_barreled_heavy_musket.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.multi_barrled_heavy_musket.range.special]
+[equipment.multi_barreled_heavy_musket.range.special]
 "Multiple Shots" = "Fire three shots per model"
 
 [equipment.rocket_jackhammer]
@@ -1375,7 +1375,7 @@ damage = "d6+2"
 ap = 7
 
 [equipment.broadside_guns.range.special]
-"Cloud" = "After firng these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired."
+"Cloud" = "After firing these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired."
 
 [equipment.hide]
 name = "Hide"

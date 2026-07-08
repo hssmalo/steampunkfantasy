@@ -54,9 +54,9 @@ models = ["gigant_snake_cavalry"]
 size = "Large"
 cost.mp = 4
 cost.xp = 24
-description = '''Two Goblin veilding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. For the light hearted, even the tiny snake can be scary.
+description = '''Two Goblin wielding a bow each riding one gigant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. For the light hearted, even the tiny snake can be scary.
 
-Decent endurence, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
+Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
 '''
 
 
@@ -104,9 +104,9 @@ movement_order = ["-", "-", "Flee"]
 slow = [["-", "-",  "Chase"], ["Reveal", "-", "-"]]
 
 [units.tiny_snake.damage_tables]
-regular = ["0-3: kill one model", 
+regular = ["0-3: kill one model",
 	   "4+ unit destroyed"]
-	   
+
 psychic = ["2+: shaken"]
 
 
@@ -187,12 +187,12 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.bipedal_mech.special]
-"Fire Order" = "Fire and load all weapons simultaniusly. Fire stinkbomb in addition to two light mortars"
+"Fire Order" = "Fire and load all weapons simultaneously. Fire stinkbomb in addition to two light mortars"
 "Forward Position" = "[2]"
 
 [units.bipedal_mech.orders.movement]
 still = [["360°", "360°", "360°"],["360°", "A", "360°"]]
-slow  = [["360°", "F", "360°"], ["360°", "F", "B"]] 
+slow  = [["360°", "F", "360°"], ["360°", "F", "B"]]
 
 
 
@@ -236,9 +236,9 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.heavy_carrier.special]
-"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantery to join the assault"
+"Transport" = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantry to join the assault"
 "Forward Position" = "[1]"
-"Fire Order" = "Fire and load all weapons simultaniusly, with identical ammo usage for all weapons"
+"Fire Order" = "Fire and load all weapons simultaneously, with identical ammo usage for all weapons"
 
 [units.heavy_carrier.orders.movement]
 slow = [
@@ -321,7 +321,7 @@ movement_order = ["-", "-", "-"]
 
 
 [units.modified_truck.special]
-"Transport" = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantery to join the assault"
+"Transport" = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantry to join the assault"
 "Forward Position" = "[1]"
 "Fire Order" = "Use both auto bow and goblin grenade on each fire order"
 
@@ -581,7 +581,7 @@ replaces = "goblin_infantry"
 "To Hit" = "+2 to hit with thrown weapons"
 
 [models.elite_goblin_infantry.unit_special]
-"Improved Resistance" = "Unit gains psychic resistance 1 as long as atleast one elite model is alive."
+"Improved Resistance" = "Unit gains psychic resistance 1 as long as at least one elite model is alive."
 "Pre-Assault Retreat" = "[6+], +1 to pre-assault retreat (per elite in unit)"
 
 [models.elite_goblin_infantry.assault]
@@ -848,7 +848,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 [equipment.commando.unit_special]
 "Take Cover" = "[still][-4]"
 "Evation" = "[2+]"
-"Hidden" = "Unit has the Hidden and Hide[ruins, forrest] special effects."
+"Hidden" = "Unit has the Hidden and Hide[ruins, forest] special effects."
 "Forward Position" = "[2]"
 "Fire Order" = "In any round you have reveal bonus, you may fire a bow three times (either a regular arrow or an special arrow each time) at one target or throw three grenades at one target"
 
@@ -864,7 +864,7 @@ deflection.add = [4, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [equipment.archer]
-name = "Archer Spesialization"
+name = "Archer Specialization"
 race = "goblin"
 cost.xp = 8
 upgrade_all = true
@@ -890,7 +890,7 @@ damage = "n.a."
 ap = 0
 
 [equipment.acid_grenade.range.special]
-"Type" = "Thrown wapon"
+"Type" = "Thrown weapon"
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "No regular damage, but Minor Acid"
 
@@ -910,7 +910,7 @@ ap = 0
 
 
 [equipment.poison_grenade.range.special]
-"Type" = "Thrown wapon"
+"Type" = "Thrown weapon"
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "Poison[4]"
 "Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
@@ -923,7 +923,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipment.acid_trap.unit_special]
-"Trap" = "With the Lay Trap fire order, Instead of firing any weapons: place a Goblin Acid Trap in an unoccopied neighbohring hex."
+"Trap" = "With the Lay Trap fire order, Instead of firing any weapons: place a Goblin Acid Trap in an unoccupied neighboring hex."
 
 [equipment.acid_trap.orders_gained.fire]
 still = [["Lay Trap", "Lay Trap"]]
@@ -1011,7 +1011,7 @@ ap = 0
 
 
 [equipment.ring_of_fire.range.special]
-"Area" = "[6+] Targe at all enemies within exacatly range 2"
+"Area" = "[6+] Targe at all enemies within exactly range 2"
 "Extra Damage" = "All units hit at least once is set on fire"
 
 [equipment.assault_archer]
@@ -1025,4 +1025,4 @@ upgrade_all = true
 
 
 [equipment.assault_archer.assault.special]
-"Retreat" = "Unit gains aim if you manage to pre-esscape an assault"
+"Retreat" = "Unit gains aim if you manage to pre-escape an assault"
