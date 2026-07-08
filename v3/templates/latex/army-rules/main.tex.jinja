@@ -11,13 +11,13 @@
 \BLOCK{for unit in source.units}
 \section{\VAR{unit.name | latex_escape}\BLOCK{if unit.count > 1} (\VAR{unit.count}$\times$)\BLOCK{endif}}
 
-Size: \VAR{unit.size | latex_escape} \\
-Models: \VAR{unit.model_summary | join(', ') | latex_escape} \\
+\textbf{Size:} \VAR{unit.size | latex_escape} \\
+\textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
 \BLOCK{if unit.armor}
-Armor: \VAR{unit.armor | join('/')} \\
+\textbf{Armor:} [\VAR{unit.armor | join(', ')}] \\
 \BLOCK{endif}
-Points: \VAR{unit.points} \\
-Shaken: \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
+\textbf{Points:} \VAR{unit.points} \\
+\textbf{Shaken:} \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
 
 \BLOCK{if unit.specials}
 \begin{itemize}
@@ -41,8 +41,8 @@ Shaken: \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join
 \BLOCK{for model in unit.models}
 \subsection{\VAR{model.name | latex_escape}}
 
-Equipment: \VAR{model.equipment_summary | join(', ') | latex_escape} \\
-Assault: strength \VAR{model.assault_strength | join('/')} (\VAR{model.assault_strength_die | latex_escape}),
+\textbf{Equipment:} \VAR{model.equipment_summary | join(', ') | latex_escape} \\
+\textbf{Assault:} strength \VAR{model.assault_strength | join('/')} (\VAR{model.assault_strength_die | latex_escape}),
 deflection \VAR{model.assault_deflection | join('/')} (\VAR{model.assault_deflection_die | latex_escape}),
 damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 
@@ -60,7 +60,7 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 \BLOCK{for equip in model.equipment}
 \subsubsection{\VAR{equip.name | latex_escape}}
 
-Range: \VAR{equip.range}, angle \VAR{equip.angle | join('/') | latex_escape}, damage \VAR{equip.damage | latex_escape}, AP \VAR{equip.ap}
+\textbf{Range:} \VAR{equip.range}, angle \VAR{equip.angle | join('/') | latex_escape}, damage \VAR{equip.damage | latex_escape}, AP \VAR{equip.ap}
 
 \BLOCK{if equip.specials}
 \begin{itemize}
