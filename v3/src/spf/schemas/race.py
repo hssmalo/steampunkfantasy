@@ -1,6 +1,6 @@
 """Schema for SteamPunkFantasy armies."""
 
-from typing import Self
+from typing import Any, Self
 
 from pydantic import Field, model_validator
 
@@ -112,11 +112,102 @@ class EquipmentConfig(StrictModel):
         return self
 
 
+class SpawnConfig(StrictModel):
+    unit: t.UnitName
+    equipment: list[t.EquipmentName] = Field(default_factory=list)
+    copy_equipment: bool = False
+
+
+def _validate_specials(
+    spawns: set[str], special_dict: dict[Any, str], context: str
+) -> None:
+    for rule_name, rule_value in special_dict.items():
+        if rule_name not in ("Spawn", "Not Yet Dead"):
+            continue
+        if ":" not in rule_value:
+            msg = (
+                f"Special rule '{rule_name}' in {context} must follow the format "
+                f"'[spawn_id]: [placement_text]'. Got: '{rule_value}'"
+            )
+            raise ValueError(msg)
+        spawn_id, _ = rule_value.split(":", 1)
+        spawn_id = spawn_id.strip()
+        if spawn_id not in spawns:
+            msg = (
+                f"Special rule '{rule_name}' in {context} references undefined "
+                f"spawn ID '{spawn_id}'"
+            )
+            raise ValueError(msg)
+
+
 class RaceConfig(StrictModel):
     races: dict[t.RaceName, RaceMetadata]
     units: dict[str, UnitConfig]
     models: dict[str, ModelConfig]
     equipment: dict[str, EquipmentConfig]
+    spawns: dict[str, SpawnConfig] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def check_spawns(self) -> Self:
+        """Validate spawns catalog and references in special rules."""
+        # 1. Validate that for every key in spawns, spawns[key].unit is in self.units
+        for spawn_id, spawn in self.spawns.items():
+            if spawn.unit not in self.units:
+                msg = f"Spawn '{spawn_id}' references invalid unit '{spawn.unit}'"
+                raise ValueError(msg)
+            for eq in spawn.equipment:
+                if eq not in self.equipment:
+                    msg = f"Spawn '{spawn_id}' references invalid equipment '{eq}'"
+                    raise ValueError(msg)
+
+        spawns_keys = set(self.spawns.keys())
+
+        # Check all units
+        for unit in self.units.values():
+            _validate_specials(spawns_keys, unit.special, f"unit '{unit.name}'")
+
+        # Check all models
+        for model in self.models.values():
+            _validate_specials(
+                spawns_keys,
+                model.unit_special,
+                f"model '{model.name}' unit_special",
+            )
+            _validate_specials(
+                spawns_keys, model.special, f"model '{model.name}' special"
+            )
+            _validate_specials(
+                spawns_keys,
+                model.assault.special,
+                f"model '{model.name}' assault special",
+            )
+
+        # Check all equipment
+        for eq in self.equipment.values():
+            _validate_specials(
+                spawns_keys,
+                eq.unit_special,
+                f"equipment '{eq.name}' unit_special",
+            )
+            _validate_specials(
+                spawns_keys,
+                eq.model_special,
+                f"equipment '{eq.name}' model_special",
+            )
+            if eq.assault is not None:
+                _validate_specials(
+                    spawns_keys,
+                    eq.assault.special,
+                    f"equipment '{eq.name}' assault special",
+                )
+            if eq.range is not None:
+                _validate_specials(
+                    spawns_keys,
+                    eq.range.special,
+                    f"equipment '{eq.name}' range special",
+                )
+
+        return self
 
     @model_validator(mode="after")
     def check_unit_models(self) -> Self:
