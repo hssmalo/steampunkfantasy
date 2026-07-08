@@ -401,15 +401,15 @@ armor = [5, 4, 4, 3]
 cost.ip = 24
 
 [units.mechanical_fire_bird.shaken]
-speed = "fast_flying"
+speed = "fast_fly"
 movement_order = ["-", "F", "F"]
 
 [units.mechanical_fire_bird.special]
-"Hans Sverre's favorite rule" = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_flying. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
+"Hans Sverre's favorite rule" = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
 "Immunity" = "fire"
 
 [units.mechanical_fire_bird.orders.movement]
-fast_flying = [
+fast_fly = [
 	["L/R+F", "F", "F+L/R"],
 	["F", "F", "F"],
 	["F", "L/R+F+L/R", "F"]
@@ -706,7 +706,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "F", "F"]]
-fast_flying = [
+fast_fly = [
 	["360°", "F", "B(slow, land)"],
 	["F", "360°", "F"],
 	["360°", "F", "F"],
@@ -753,7 +753,7 @@ ap = "2"
 "Note" = "Remember to track ammo."
 
 [equipment.ogre_rifle.orders_gained.movement]
-slow_flying = [["rev", "-", "B[still]"]]
+slow_fly = [["rev", "-", "B[still]"]]
 
 [equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]

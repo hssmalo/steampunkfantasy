@@ -430,13 +430,13 @@ still = [
     ["A[slow]", "360°", "F"],
     ["A[still]", "360°", "-"],
 ]
-still_flying = [
+still_fly = [
     ["360°", "-", "-"],
     ["-", "-", "D"],
     ["A[slow]", "360°", "F"],
     ["A[fast]", "360°", "F"],
 ]
-slow_flying = [
+slow_fly = [
     ["L/R", "F", "-"],
     ["L/R", "F", "L/R"],
     ["-", "-", "D"],
@@ -446,7 +446,7 @@ slow_flying = [
 ]
 
 #ToDo: review movement orders with + options.
-fast_flying = [
+fast_fly = [
     ["F", "F", "-"],
     ["F", "F", "L/R"],
     ["F", "L/R", "F"],
@@ -462,9 +462,9 @@ fast_flying = [
 
 [units.gnome_helicopter.orders.fire]
 still = [["-", "Load"]]
-fast_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
-slow_flying = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
-still_flying = [
+fast_fly = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
+slow_fly = [["Throw(d)", "Fire"], ["Load", "Throw(d)"], ["Throw(d)", "Load"]]
+still_fly = [
     ["Throw(d)", "Fire"],
     ["Load", "Throw(d)"],
     ["Throw(d)", "Load"],

@@ -177,7 +177,7 @@ armor = [6, 5, 0, 0]
 cost.cp = 8
 
 [units.transport_zeppelin.shaken]
-speed = "fast_flying"
+speed = "fast_fly"
 movement_order = ["-", "F", "F"]
 comment = "May not deploy units while shaken"
 
@@ -185,7 +185,7 @@ comment = "May not deploy units while shaken"
 "Transport" = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall"
 
 [units.transport_zeppelin.orders.movement]
-fast_flying = [
+fast_fly = [
     ["360°", "F", "F+Depoloy"],
     ["F", "F+Depoloy", "360°"],
     ["F", "360°", "F+Deploy"],
@@ -459,7 +459,7 @@ cost.ip = 96
 cost.xp = 48
 
 [units.zeppelin.shaken]
-speed = "slow_flying"
+speed = "slow_fly"
 movement_order = ["-", "-", "F"]
 fire_order = "Fire one less weapon system per shaken token."
 comment = "Each shaken token counts as +1 to future damage token."
@@ -471,7 +471,7 @@ comment = "Each shaken token counts as +1 to future damage token."
 "Note" = "Withering Ray: May replace forest with rough terrain in the hex it is standing"
 
 [units.zeppelin.orders.movement]
-slow_flying = [
+slow_fly = [
     ["L/R", "-", "-"],
     ["L/R", "L/R", "-"],
     ["F", "-", "-"],

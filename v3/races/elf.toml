@@ -583,7 +583,7 @@ cost.xp = 24
 "Resistance" = "Poison[2]"
 
 [units.pegasus_rider.shaken]
-speed = "slow_flying"
+speed = "slow_fly"
 movement_order = ["-", "-", "flee"]
 
 [units.pegasus_rider.orders.fire]
@@ -612,7 +612,7 @@ slow = [
 	["360°", "A[f,fly]", "F"],
 	["360°", "A", "F"],
 ]
-slow_flying = [
+slow_fly = [
 	["L/R", "F", "-"],
 	["F", "L/R", "-"],
 	["F", "-", "-"],
@@ -626,7 +626,7 @@ fast = [
 	["360°", "A[f,fly],F", "F"],
 	["360°", "F", "B"],
 ]
-fast_flying = [
+fast_fly = [
 	["F", "F", "F"],
 	["F", "L/R", "F"],
 	["F", "F", "B"],
@@ -1186,11 +1186,11 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.eagle_rider.orders.fire]
-fast_flying = [["-", "Fire"], ["-", "Load"], ["-", "Throw"]]
+fast_fly = [["-", "Fire"], ["-", "Load"], ["-", "Throw"]]
 slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 
 [units.eagle_rider.orders.movement]
-fast_flying = [["360°,F", "360°,F,360°", "F,360°"], ["360°,F ", "F", "B"]]
+fast_fly = [["360°,F", "360°,F,360°", "F,360°"], ["360°,F ", "F", "B"]]
 slow = [
 	[" 360° ", " F ", " 360°"],
 	["360°", "360°", "360°"],

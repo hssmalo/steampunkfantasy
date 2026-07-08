@@ -23,7 +23,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_infantry.orders.fire]
 still = [
-    ["Fire", "-"],
+    ["Fire\\begin{tull}", "-"],
     ["-", "Fire"],
     ["Load", "-"],
     ["-", "Load"],
@@ -880,7 +880,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings.orders_gained.movement]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_flying = [["Chase", "B(slow, land)", "-"]]
+fast_fly = [["Chase", "B(slow, land)", "-"]]
 
 [equipment.clockwork_wings_free]
 name = "Clockwork Wings"
@@ -892,7 +892,7 @@ strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings_free.orders_gained.movement]
 slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_flying = [["Chase", "B(slow, land)", "-"]]
+fast_fly = [["Chase", "B(slow, land)", "-"]]
 
 [equipment.flame_covered_axe]
 name = "Flame-covered-axe"
