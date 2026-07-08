@@ -23,7 +23,7 @@ class ArmyModel:
     config: ModelConfig = field(repr=False)
     upgrades: tuple[str, ...]
 
-    def upgrade(self, equipment_name: str, race_config: RaceConfig) -> Self:
+    def upgrade(self, equipment_name: str, *, race_config: RaceConfig) -> Self:
         """Return a new ArmyModel with the given equipment upgrade added.
 
         Raises ValueError if the equipment has no cost or its requires are not
@@ -37,10 +37,14 @@ class ArmyModel:
                 " and cannot be used as an upgrade"
             )
             raise ValueError(msg)
-        failed = _unsatisfied_groups(equip.requires, self, race_config)
+        failed = _unsatisfied_groups(
+            equip.requires, model=self, race_config=race_config
+        )
         if failed:
-            remaining = _remaining_slots(self, race_config)
-            detail = "; ".join(_format_failed_group(g, remaining) for g in failed)
+            remaining = _remaining_slots(self, race_config=race_config)
+            detail = "; ".join(
+                _format_failed_group(g, remaining_slots=remaining) for g in failed
+            )
             msg = (
                 f"Equipment '{equipment_name}' requires not satisfied"
                 f" by model '{self.name}': {detail}"
@@ -64,12 +68,13 @@ class ArmyUnit:
     def upgrade_model(
         self,
         model_key: tuple[t.ModelName, int],
+        *,
         equipment_name: str,
         race_config: RaceConfig,
     ) -> Self:
         """Return a new ArmyUnit with an equipment upgrade applied to one model."""
-        model_idx, model = _resolve_model(self, model_key)
-        new_model = model.upgrade(equipment_name, race_config)
+        model_idx, model = _resolve_model(self, model_key=model_key)
+        new_model = model.upgrade(equipment_name, race_config=race_config)
         new_models = (
             *self.models[:model_idx],
             new_model,
@@ -80,6 +85,7 @@ class ArmyUnit:
     def upgrade_unit(
         self,
         model_key: tuple[t.ModelName, int],
+        *,
         upgrade_model_name: str,
         race_config: RaceConfig,
     ) -> Self:
@@ -89,7 +95,7 @@ class ArmyUnit:
         replaced.
 
         """
-        model_idx, existing = _resolve_model(self, model_key)
+        model_idx, existing = _resolve_model(self, model_key=model_key)
         upgrade_config = race_config.models[upgrade_model_name]
         if upgrade_config.replaces is None or existing.name != upgrade_config.replaces:
             msg = (
@@ -116,12 +122,12 @@ class ArmyList:
     nick: str
     units: tuple[ArmyUnit, ...]
 
-    def add_unit(self, unit_name: t.UnitName, race_config: RaceConfig) -> Self:
+    def add_unit(self, unit_name: t.UnitName, *, race_config: RaceConfig) -> Self:
         """Return a new ArmyList with the given unit appended at its default state."""
         if unit_name not in race_config.units:
             msg = f"Unknown unit '{unit_name}'"
             raise ValueError(msg)
-        new_unit = _make_default_army_unit(unit_name, race_config)
+        new_unit = _make_default_army_unit(unit_name, race_config=race_config)
         return self.__class__(
             race=self.race, nick=self.nick, units=(*self.units, new_unit)
         )
@@ -129,68 +135,84 @@ class ArmyList:
     def upgrade_unit(
         self,
         unit_key: tuple[t.UnitName, int],
+        *,
         model_key: tuple[t.ModelName, int],
         upgrade_model_name: t.ModelName,
         race_config: RaceConfig,
     ) -> Self:
         """Return a new ArmyList with one model slot replaced by an upgrade model."""
-        unit_idx, unit = _resolve_unit(self, unit_key)
-        new_unit = unit.upgrade_unit(model_key, upgrade_model_name, race_config)
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_unit = unit.upgrade_unit(
+            model_key=model_key,
+            upgrade_model_name=upgrade_model_name,
+            race_config=race_config,
+        )
         new_units = (*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :])
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def upgrade_model(
         self,
         unit_key: tuple[t.UnitName, int],
+        *,
         model_key: tuple[t.ModelName, int],
         equipment_name: t.EquipmentName,
         race_config: RaceConfig,
     ) -> Self:
         """Return a new ArmyList with one equipment upgrade added to a model slot."""
-        unit_idx, unit = _resolve_unit(self, unit_key)
-        new_unit = unit.upgrade_model(model_key, equipment_name, race_config)
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_unit = unit.upgrade_model(
+            model_key=model_key, equipment_name=equipment_name, race_config=race_config
+        )
         new_units = (*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :])
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def upgrade_full_unit(
         self,
         unit_key: tuple[t.UnitName, int],
+        *,
         upgrade_model_name: t.ModelName,
         race_config: RaceConfig,
     ) -> Self:
         """Replace all models in a unit with an upgrade model."""
-        _, unit = _resolve_unit(self, unit_key)
+        _, unit = _resolve_unit(self, unit_key=unit_key)
         result = self
         for i in range(len(unit.models)):
-            _, updated_unit = _resolve_unit(result, unit_key)
+            _, updated_unit = _resolve_unit(result, unit_key=unit_key)
             model_name = updated_unit.models[i].name
             # Find which occurrence of this model is at position i
             occurrence = sum(
                 1 for j in range(i) if updated_unit.models[j].name == model_name
             )
             result = result.upgrade_unit(
-                unit_key, (model_name, occurrence), upgrade_model_name, race_config
+                unit_key,
+                model_key=(model_name, occurrence),
+                upgrade_model_name=upgrade_model_name,
+                race_config=race_config,
             )
         return result
 
     def upgrade_all_models(
         self,
         unit_key: tuple[t.UnitName, int],
+        *,
         equipment_name: t.EquipmentName,
         race_config: RaceConfig,
     ) -> Self:
         """Add the same equipment upgrade to all models in a unit."""
-        _, unit = _resolve_unit(self, unit_key)
+        _, unit = _resolve_unit(self, unit_key=unit_key)
         result = self
         for i in range(len(unit.models)):
-            _, updated_unit = _resolve_unit(result, unit_key)
+            _, updated_unit = _resolve_unit(result, unit_key=unit_key)
             model_name = updated_unit.models[i].name
             # Find which occurrence of this model is at position i
             occurrence = sum(
                 1 for j in range(i) if updated_unit.models[j].name == model_name
             )
             result = result.upgrade_model(
-                unit_key, (model_name, occurrence), equipment_name, race_config
+                unit_key,
+                model_key=(model_name, occurrence),
+                equipment_name=equipment_name,
+                race_config=race_config,
             )
         return result
 
@@ -199,7 +221,7 @@ class ArmyList:
         unit_key: tuple[t.UnitName, int],
     ) -> Self:
         """Add a copy of an existing unit to the army list."""
-        _, unit = _resolve_unit(self, unit_key)
+        _, unit = _resolve_unit(self, unit_key=unit_key)
         new_unit = ArmyUnit(name=unit.name, config=unit.config, models=unit.models)
         return self.__class__(
             race=self.race, nick=self.nick, units=(*self.units, new_unit)
@@ -210,7 +232,7 @@ class ArmyList:
         unit_key: tuple[t.UnitName, int],
     ) -> Self:
         """Remove a unit from the army list."""
-        unit_idx, _ = _resolve_unit(self, unit_key)
+        unit_idx, _ = _resolve_unit(self, unit_key=unit_key)
         new_units = (*self.units[:unit_idx], *self.units[unit_idx + 1 :])
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
@@ -255,7 +277,7 @@ class ArmyList:
 
 
 def _resolve_unit(
-    army: ArmyList, unit_key: tuple[t.UnitName, int]
+    army: ArmyList, *, unit_key: tuple[t.UnitName, int]
 ) -> tuple[int, ArmyUnit]:
     """Return (index, ArmyUnit) for the given (name, occurrence_index) key."""
     name, occurrence = unit_key
@@ -270,7 +292,7 @@ def _resolve_unit(
 
 
 def _resolve_model(
-    unit: ArmyUnit, model_key: tuple[t.ModelName, int]
+    unit: ArmyUnit, *, model_key: tuple[t.ModelName, int]
 ) -> tuple[int, ArmyModel]:
     """Return (index, ArmyModel) for the given (name, occurrence_index) key."""
     name, occurrence = model_key
@@ -285,7 +307,7 @@ def _resolve_model(
 
 
 def _make_default_army_model(
-    model_name: t.ModelName, race_config: RaceConfig
+    model_name: t.ModelName, *, race_config: RaceConfig
 ) -> ArmyModel:
     return ArmyModel(
         name=model_name,
@@ -294,17 +316,19 @@ def _make_default_army_model(
     )
 
 
-def _make_default_army_unit(unit_name: t.UnitName, race_config: RaceConfig) -> ArmyUnit:
+def _make_default_army_unit(
+    unit_name: t.UnitName, *, race_config: RaceConfig
+) -> ArmyUnit:
     unit_config = race_config.units[unit_name]
     models = tuple(
-        _make_default_army_model(model_name, race_config)
+        _make_default_army_model(model_name, race_config=race_config)
         for model_name in unit_config.models
     )
     return ArmyUnit(name=unit_name, config=unit_config, models=models)
 
 
 def _remaining_slots(
-    model: ArmyModel, race_config: RaceConfig
+    model: ArmyModel, *, race_config: RaceConfig
 ) -> dict[t.EquipmentHolder, int]:
     """Compute remaining holder slots after accounting for all upgrade equipment.
 
@@ -336,6 +360,7 @@ def _remaining_slots(
 
 def _satisfies_requirement(
     req: t.Requirement,
+    *,
     model: ArmyModel,
     remaining_slots: dict[t.EquipmentHolder, int],
 ) -> bool:
@@ -347,6 +372,7 @@ def _satisfies_requirement(
 
 def _unsatisfied_groups(
     requires: list[list[t.Requirement]],
+    *,
     model: ArmyModel,
     race_config: RaceConfig,
 ) -> list[list[t.Requirement]]:
@@ -354,25 +380,30 @@ def _unsatisfied_groups(
 
     An empty list means the model satisfies all requirement groups.
     """
-    remaining = _remaining_slots(model, race_config)
+    remaining = _remaining_slots(model, race_config=race_config)
     return [
         group
         for group in requires
-        if not any(_satisfies_requirement(req, model, remaining) for req in group)
+        if not any(
+            _satisfies_requirement(req, model=model, remaining_slots=remaining)
+            for req in group
+        )
     ]
 
 
 def _satisfies_requires(
     requires: list[list[t.Requirement]],
+    *,
     model: ArmyModel,
     race_config: RaceConfig,
 ) -> bool:
     """Evaluate CNF requires: every outer group must have ≥1 satisfied inner req."""
-    return not _unsatisfied_groups(requires, model, race_config)
+    return not _unsatisfied_groups(requires, model=model, race_config=race_config)
 
 
 def _format_failed_group(
     group: list[t.Requirement],
+    *,
     remaining_slots: dict[t.EquipmentHolder, int],
 ) -> str:
     """Format a failing OR-group as a human-readable constraint description."""
@@ -388,13 +419,14 @@ def _format_failed_group(
 
 def available_models(
     army: ArmyList,
+    *,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
 ) -> list[t.ModelName]:
     """Return army models whose replaces field equals the given model's name."""
-    _, unit = _resolve_unit(army, unit_key)
-    _, model = _resolve_model(unit, model_key)
+    _, unit = _resolve_unit(army, unit_key=unit_key)
+    _, model = _resolve_model(unit, model_key=model_key)
     return [
         model_name
         for model_name, cfg in race_config.models.items()
@@ -404,6 +436,7 @@ def available_models(
 
 def available_equipment(
     army: ArmyList,
+    *,
     unit_key: tuple[t.UnitName, int],
     model_key: tuple[t.ModelName, int],
     race_config: RaceConfig,
@@ -412,17 +445,17 @@ def available_equipment(
 
     Valid means: has a cost and satisfies the model's requires constraints.
     """
-    _, unit = _resolve_unit(army, unit_key)
-    _, model = _resolve_model(unit, model_key)
+    _, unit = _resolve_unit(army, unit_key=unit_key)
+    _, model = _resolve_model(unit, model_key=model_key)
     return [
         equipment_name
         for equipment_name, cfg in race_config.equipment.items()
         if cfg.cost is not None
-        and _satisfies_requires(cfg.requires, model, race_config)
+        and _satisfies_requires(cfg.requires, model=model, race_config=race_config)
     ]
 
 
-def validate_army(army: ArmyList, race_config: RaceConfig) -> list[str]:
+def validate_army(army: ArmyList, *, race_config: RaceConfig) -> list[str]:
     """Return all rule violations in the army. Empty list means the army is valid."""
     errors: list[str] = []
     for unit in army.units:
@@ -453,12 +486,15 @@ def validate_army(army: ArmyList, race_config: RaceConfig) -> list[str]:
                         upgrades=team_model.upgrades[:j],
                     )
                     failed = _unsatisfied_groups(
-                        equip.requires, partial_model, race_config
+                        equip.requires, model=partial_model, race_config=race_config
                     )
                     if failed:
-                        remaining = _remaining_slots(partial_model, race_config)
+                        remaining = _remaining_slots(
+                            partial_model, race_config=race_config
+                        )
                         detail = "; ".join(
-                            _format_failed_group(g, remaining) for g in failed
+                            _format_failed_group(g, remaining_slots=remaining)
+                            for g in failed
                         )
                         errors.append(
                             f"Unit '{unit.name}', model '{team_model.name}': "

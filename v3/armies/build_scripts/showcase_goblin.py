@@ -9,11 +9,21 @@ army = ArmyList("goblin", "Showcase Goblin", ())
 
 # 4x Elite Goblin Infantry w Grenadier, Gear bow, Acid Grenade
 army = (
-    army.add_unit("goblin_infantry", cfg)
-    .upgrade_full_unit(("goblin_infantry", 0), "elite_goblin_infantry", cfg)
-    .upgrade_all_models(("goblin_infantry", 0), "grenadier", cfg)
-    .upgrade_all_models(("goblin_infantry", 0), "acid_grenade", cfg)
-    .upgrade_all_models(("goblin_infantry", 0), "gear_bow", cfg)
+    army.add_unit("goblin_infantry", race_config=cfg)
+    .upgrade_full_unit(
+        ("goblin_infantry", 0),
+        upgrade_model_name="elite_goblin_infantry",
+        race_config=cfg,
+    )
+    .upgrade_all_models(
+        ("goblin_infantry", 0), equipment_name="grenadier", race_config=cfg
+    )
+    .upgrade_all_models(
+        ("goblin_infantry", 0), equipment_name="acid_grenade", race_config=cfg
+    )
+    .upgrade_all_models(
+        ("goblin_infantry", 0), equipment_name="gear_bow", race_config=cfg
+    )
     .duplicate_unit(("goblin_infantry", 0))
     .duplicate_unit(("goblin_infantry", 0))
     .duplicate_unit(("goblin_infantry", 0))
@@ -21,14 +31,16 @@ army = (
 
 # 2x Goblin Infantry w Poison bow
 army = (
-    army.add_unit("goblin_infantry", cfg)
-    .upgrade_all_models(("goblin_infantry", 4), "poison_bow", cfg)
+    army.add_unit("goblin_infantry", race_config=cfg)
+    .upgrade_all_models(
+        ("goblin_infantry", 4), equipment_name="poison_bow", race_config=cfg
+    )
     .duplicate_unit(("goblin_infantry", 4))
 )
 
 # 6x Goblin Infantry
 army = (
-    army.add_unit("goblin_infantry", cfg)
+    army.add_unit("goblin_infantry", race_config=cfg)
     .duplicate_unit(("goblin_infantry", 6))
     .duplicate_unit(("goblin_infantry", 6))
     .duplicate_unit(("goblin_infantry", 6))
@@ -38,17 +50,17 @@ army = (
 
 # 4x Goblin Infantry Carrier
 army = (
-    army.add_unit("goblin_infantry_carrier", cfg)
+    army.add_unit("goblin_infantry_carrier", race_config=cfg)
     .duplicate_unit(("goblin_infantry_carrier", 0))
     .duplicate_unit(("goblin_infantry_carrier", 0))
     .duplicate_unit(("goblin_infantry_carrier", 0))
 )
 
 # 1x Heavy Carrier
-army = army.add_unit("heavy_carrier", cfg)
+army = army.add_unit("heavy_carrier", race_config=cfg)
 
 # Save the army to disk
-io.save_army(army, "showcase/goblin")
+io.save_army(army, army_name="showcase/goblin")
 
 # Show the army in the console
 io.print_army(army.resolve(cfg))

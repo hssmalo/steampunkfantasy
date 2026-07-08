@@ -256,15 +256,15 @@ class Cost(StrictModel):
     def __str__(self) -> str:
         """Return a human-readable cost string, graying out zero values."""
 
-        def _part(value: int, unit: str) -> str:
+        def _part(value: int, *, unit: str) -> str:
             s = f"{value:2d}{unit}"
             return f"[gray30]{s}[/]" if value == 0 else s
 
         parts = [
-            _part(self.ip, "ip"),
-            _part(self.mp, "mp"),
-            _part(self.xp, "xp"),
-            _part(self.cp, "cp"),
+            _part(self.ip, unit="ip"),
+            _part(self.mp, unit="mp"),
+            _part(self.xp, unit="xp"),
+            _part(self.cp, unit="cp"),
         ]
         return " ".join(parts)
 

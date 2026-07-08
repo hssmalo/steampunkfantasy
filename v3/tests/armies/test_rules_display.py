@@ -95,10 +95,17 @@ def capture(monkeypatch: pytest.MonkeyPatch) -> Console:
     return console
 
 
-def _army(race: RaceConfig, upgrades: tuple[str, ...] = ()) -> ArmyList:
-    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit("squad", race)
+def _army(race: RaceConfig, *, upgrades: tuple[str, ...] = ()) -> ArmyList:
+    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+        "squad", race_config=race
+    )
     for upgrade in upgrades:
-        army = army.upgrade_model(("squad", 0), ("soldier", 0), upgrade, race)
+        army = army.upgrade_model(
+            ("squad", 0),
+            model_key=("soldier", 0),
+            equipment_name=upgrade,
+            race_config=race,
+        )
     return army
 
 
@@ -108,7 +115,7 @@ def _army(race: RaceConfig, upgrades: tuple[str, ...] = ()) -> ArmyList:
 
 
 def test_unit_line_includes_name_and_pts(
-    simple_race: RaceConfig, capture: Console
+    simple_race: RaceConfig, *, capture: Console
 ) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
@@ -116,7 +123,7 @@ def test_unit_line_includes_name_and_pts(
 
 
 def test_unit_specials_shown_when_present(
-    simple_race: RaceConfig, capture: Console
+    simple_race: RaceConfig, *, capture: Console
 ) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
@@ -157,7 +164,7 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
     )
     army = (
         ArmyList(race="goblin", nick="T", units=())
-        .add_unit("squad", race_no_special)
+        .add_unit("squad", race_config=race_no_special)
         .resolve(race_no_special)
     )
     print_army_rules(army)
@@ -169,14 +176,14 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_model_line_shows_name(simple_race: RaceConfig, capture: Console) -> None:
+def test_model_line_shows_name(simple_race: RaceConfig, *, capture: Console) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
     assert "soldier" in capture.export_text()
 
 
 def test_model_line_omits_cost_when_zero(
-    simple_race: RaceConfig, capture: Console
+    simple_race: RaceConfig, *, capture: Console
 ) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
@@ -190,7 +197,7 @@ def test_model_line_omits_cost_when_zero(
     assert lines == []
 
 
-def test_model_specials_shown(simple_race: RaceConfig, capture: Console) -> None:
+def test_model_specials_shown(simple_race: RaceConfig, *, capture: Console) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
     output = capture.export_text()
@@ -203,14 +210,16 @@ def test_model_specials_shown(simple_race: RaceConfig, capture: Console) -> None
 # ---------------------------------------------------------------------------
 
 
-def test_equipment_shown_with_cost(simple_race: RaceConfig, capture: Console) -> None:
+def test_equipment_shown_with_cost(
+    simple_race: RaceConfig, *, capture: Console
+) -> None:
     army = _army(simple_race, upgrades=("sword",)).resolve(simple_race)
     print_army_rules(army)
     output = capture.export_text()
     assert "Sword" in output
 
 
-def test_range_weapon_stats_shown(simple_race: RaceConfig, capture: Console) -> None:
+def test_range_weapon_stats_shown(simple_race: RaceConfig, *, capture: Console) -> None:
     army = _army(simple_race, upgrades=("bow",)).resolve(simple_race)
     print_army_rules(army)
     output = capture.export_text()
@@ -220,7 +229,7 @@ def test_range_weapon_stats_shown(simple_race: RaceConfig, capture: Console) -> 
 
 
 def test_equipment_without_range_omits_range_stats(
-    simple_race: RaceConfig, capture: Console
+    simple_race: RaceConfig, *, capture: Console
 ) -> None:
     army = _army(simple_race, upgrades=("sword",)).resolve(simple_race)
     print_army_rules(army)
@@ -232,7 +241,7 @@ def test_equipment_without_range_omits_range_stats(
 # ---------------------------------------------------------------------------
 
 
-def test_assault_profile_shown(simple_race: RaceConfig, capture: Console) -> None:
+def test_assault_profile_shown(simple_race: RaceConfig, *, capture: Console) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
     output = capture.export_text()
@@ -248,7 +257,7 @@ def test_assault_profile_shown(simple_race: RaceConfig, capture: Console) -> Non
 # ---------------------------------------------------------------------------
 
 
-def test_total_cost_shown(simple_race: RaceConfig, capture: Console) -> None:
+def test_total_cost_shown(simple_race: RaceConfig, *, capture: Console) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
     assert "Total cost" in capture.export_text()
@@ -260,7 +269,7 @@ def test_total_cost_shown(simple_race: RaceConfig, capture: Console) -> None:
 
 
 def test_rules_army_missing_file_exits_nonzero(
-    tmp_path: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
+    tmp_path: pytest.TempPathFactory, *, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(config.paths, "armies", tmp_path)  # type: ignore[arg-type]
     with pytest.raises(SystemExit) as exc_info:

@@ -17,7 +17,7 @@ def list_armies() -> list[Path]:
     return sorted(config.paths.armies.rglob("*.json"))
 
 
-def save_army(army: ArmyList, army_name: str, tournament: str | None = None) -> None:
+def save_army(army: ArmyList, *, army_name: str, tournament: str | None = None) -> None:
     """Serialize ArmyList to JSON at config.paths.armies / {army_name}.json."""
     path = config.paths.armies / (tournament or "") / f"{army_name}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -39,7 +39,7 @@ def save_army(army: ArmyList, army_name: str, tournament: str | None = None) -> 
 
 
 def load_army(
-    army_name: str, tournament: str | None = None, *, validate: bool = True
+    army_name: str, *, tournament: str | None = None, validate: bool = True
 ) -> Army:
     """Deserialize and resolve an Army from JSON.
 
@@ -52,9 +52,9 @@ def load_army(
         raise FileNotFoundError(msg)
     data: dict[str, Any] = json.loads(path.read_text())
     cfg = get_race(data["race"])
-    army_list = _build_army_list(data, cfg)
+    army_list = _build_army_list(data, cfg=cfg)
     if validate:
-        errors = validate_army(army_list, cfg)
+        errors = validate_army(army_list, race_config=cfg)
         if errors:
             msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
             raise ValueError(msg)
@@ -121,7 +121,7 @@ def print_army_rules(army: Army) -> None:
     stdout.print(f"\n[dim]Total cost:[/]  {army.cost()}", highlight=False)
 
 
-def _validate_army_data(data: dict[str, Any], cfg: RaceConfig) -> list[str]:
+def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
     """Collect name-resolution errors from raw JSON data before construction."""
     errors: list[str] = []
     for unit_idx, unit_data in enumerate(data["units"]):
@@ -146,9 +146,9 @@ def _validate_army_data(data: dict[str, Any], cfg: RaceConfig) -> list[str]:
     return errors
 
 
-def _build_army_list(data: dict[str, Any], cfg: RaceConfig) -> ArmyList:
+def _build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
     """Reconstruct an ArmyList from deserialized JSON data and a live RaceConfig."""
-    errors = _validate_army_data(data, cfg)
+    errors = _validate_army_data(data, cfg=cfg)
     if errors:
         msg = "Army JSON contains invalid entries:\n" + "\n".join(errors)
         raise ValueError(msg)

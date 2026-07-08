@@ -78,7 +78,7 @@ def simple_race() -> RaceConfig:
 
 
 @pytest.fixture
-def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Redirect config.paths.armies to a temporary directory."""
     monkeypatch.setattr(config.paths, "armies", tmp_path)
     return tmp_path
@@ -91,7 +91,7 @@ def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
     army_list = ArmyList(race="goblin", nick="Test Army", units=())
-    save_army(army_list, "test-army")
+    save_army(army_list, army_name="test-army")
     loaded = load_army("test-army")
     assert isinstance(loaded, Army)
     assert loaded.race == army_list.race
@@ -101,9 +101,9 @@ def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
 def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
     race_config = get_race("goblin")
     army_list = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
-        "goblin_infantry", race_config
+        "goblin_infantry", race_config=race_config
     )
-    save_army(army_list, "goblin-warband")
+    save_army(army_list, army_name="goblin-warband")
     loaded = load_army("goblin-warband")
     assert isinstance(loaded, Army)
     assert loaded.race == army_list.race
@@ -118,9 +118,9 @@ def test_load_army_returns_resolved_army(armies_dir: Path) -> None:  # noqa: ARG
     """load_army should return a fully resolved Army, not ArmyList."""
     race_config = get_race("goblin")
     army_list = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
-        "goblin_infantry", race_config
+        "goblin_infantry", race_config=race_config
     )
-    save_army(army_list, "resolved-test")
+    save_army(army_list, army_name="resolved-test")
     loaded = load_army("resolved-test")
     assert isinstance(loaded, Army)
     # Resolved models have EquipmentConfig objects, not just names
@@ -131,23 +131,23 @@ def test_load_army_returns_resolved_army(armies_dir: Path) -> None:  # noqa: ARG
 
 def test_save_creates_file(armies_dir: Path) -> None:
     army_list = ArmyList(race="goblin", nick="Test Army", units=())
-    save_army(army_list, "my-army")
-    assert (armies_dir / "my-army.json").exists()
+    save_army(army_list, army_name="goblin-army")
+    assert (armies_dir / "goblin-army.json").exists()
 
 
 def test_save_creates_parent_directory(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     nested = tmp_path / "nested" / "dir"
     monkeypatch.setattr(config.paths, "armies", nested)
     army_list = ArmyList(race="goblin", nick="Test Army", units=())
-    save_army(army_list, "my-army")
-    assert (nested / "my-army.json").exists()
+    save_army(army_list, army_name="goblin-army")
+    assert (nested / "goblin-army.json").exists()
 
 
 def test_save_json_contains_race(armies_dir: Path) -> None:
     army_list = ArmyList(race="goblin", nick="Test Army", units=())
-    save_army(army_list, "check-race")
+    save_army(army_list, army_name="check-race")
     data = json.loads((armies_dir / "check-race.json").read_text())
     assert data["race"] == "goblin"
 
