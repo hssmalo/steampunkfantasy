@@ -3,6 +3,10 @@
 [races.darkelf]
 name = "Dark Elf"
 
+[spawns.multicultural_trainee]
+unit = "multicultural_trainee"
+
+
 #cloud => cloud
 [units]
 
@@ -486,7 +490,7 @@ cost.xp = 24
 [units.multicultural_infantry.special]
 "Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
 "Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving. "
-"Spawn" = "At start of battle, place two Multicultural Trainee units directly in front of this unit"
+"Spawn" = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit"
 "Forward Position" = "[2]"
 "Fire Order" = "Activate order only available while officer is alive"
 
@@ -533,7 +537,6 @@ armor = [0, 0, 0, 0]
 description = "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes"
 
 [units.multicultural_trainee.special]
-"Spawn" = "ay only enter the game through the darkelf_officer assault ability. See DarkElf officer for rules"
 "Darkelf Officer" = "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
 
 [units.multicultural_trainee.shaken]

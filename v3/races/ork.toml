@@ -3,6 +3,11 @@
 [races.ork]
 name = "Ork"
 
+[spawns.ork_champion]
+unit = "champion"
+copy_equipment = true
+
+
 [units.ork_infantry]
 race = "ork"
 name = "Ork Infantry"
@@ -86,17 +91,20 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.champion.special]
-"Spawn" = "Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
+"Spawn" = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
 
 [units.champion.damage_tables]
 regular = ["2-3: Bleeding[4]", "4+ : Killed"]
 
-#to do... order of spawned champion= order of the infantry...
 [units.champion.orders.movement]
-all = [["As unit it came from"]]
+still = [["As unit it came from"]]
+slow = [["As unit it came from"]]
+fast = [["As unit it came from"]]
 
 [units.champion.orders.fire]
-all = [["As unit it came from"]]
+still = [["As unit it came from"]]
+slow = [["As unit it came from"]]
+fast = [["As unit it came from"]]
 
 [units.warg_rider]
 race = "ork"
@@ -586,7 +594,7 @@ replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 
 [models.ork_elite_infantry.special]
-"Not Yet Dead" = "after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit base or the model, and has a separate model and unit base entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
+"Not Yet Dead" = "ork_champion: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit base this model is attached to . Champion does not retain any of the abilities from the unit, and has a separate unit and model entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
 
 [models.ork_elite_infantry.unit_special]
 "Improved Resistance" = "Unit gains Psychic resistance 1 while at least one elite is alive"
