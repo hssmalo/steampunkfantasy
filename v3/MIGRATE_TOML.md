@@ -1,6 +1,6 @@
 # Migrating Legacy Race TOML Files
 
-This guide covers the changes needed to bring a legacy race TOML file into the current validated format. Run `uv run spf show-race <race>` after each step to see remaining errors.
+This guide covers the changes needed to bring a legacy race TOML file into the current validated format. Run `uv run spf race show <race>` after each step to see remaining errors.
 
 ## 1. Remove the race namespace prefix
 
@@ -20,9 +20,20 @@ Legacy files nest all sections under `[race.units.*]`, `[race.models.*]`, and `[
 
 This is a mechanical find-and-replace across the whole file.
 
-## 2. Convert unit `special` from list to dict
+## 2. Convert every `special` from list to dict
 
-`UnitConfig.special` changed from `list[str]` to `dict[UnitSpecial, str]`. Each list item must become a key-value pair in a TOML subtable. The key must be a valid `UnitSpecial` literal (see `src/spf/schemas/type_aliases.py`).
+All `special` fields changed from `list[str]` to a `dict[<Literal>, str]`. Each list
+item must become a key-value pair in a TOML subtable, keyed by a valid literal from
+`src/spf/schemas/type_aliases.py`. There are **five** distinct special fields, each
+with its own literal type:
+
+| Location | TOML subtable | Literal type |
+|---|---|---|
+| Unit | `[units.X.special]` | `UnitSpecial` |
+| Model (model-level trait) | `[models.X.special]` | `ModelSpecial` |
+| Model (grants unit ability) | `[models.X.unit_special]` | `UnitSpecial` |
+| Assault (unit/model/equipment) | `[...assault.special]` | `AssaultSpecial` |
+| Range (equipment) | `[equipment.X.range.special]` | `RangeSpecial` |
 
 ```toml
 # Before
@@ -39,12 +50,16 @@ special = ["Forward Position[2]", "Cannot use ranged weapons"]
 **Key mapping guidelines:**
 - Strip the parameter from the key: `"Forward Position[2]"` → key `"Forward Position"`, value `"[2]"`
 - Use the ability name before the colon as the key: `"Regeneration[3]: Heal[...]"` → key `"Regeneration"`, value `"[3]: Heal[...]"`
-- Combine related items under one key where they describe the same ability
-- If no existing `UnitSpecial` literal fits, add a new one to `type_aliases.py`
+- Combine related items under one key where they describe the same ability (dict keys must be unique — two list items that map to the same key must be merged into one value)
+- If no existing literal fits, add a new one to the appropriate type in `type_aliases.py`
 
-Units with no specials need no subtable (the field defaults to an empty dict).
+**Model `special` vs `unit_special`:** a trait the model has itself (e.g. `"good shot: +1 to hit"` → `ModelSpecial` `"To Hit"`) goes under `[models.X.special]`. A trait the model *grants to its whole unit* (e.g. `"unit gains psychic resistance 2 while an elite is alive"`, `"Unit gains: Repair[...]"`, endurance tokens → `"Protection"`) goes under `[models.X.unit_special]` keyed by `UnitSpecial`.
 
-Always ask if the key is ambiguous or is missing from `UnitSpecial`. It's possible to add new literals, but only do so if the user confirms.
+**Legacy equipment-level `special`:** `EquipmentConfig` has no top-level `special` field. Distribute each item into `unit_special`, `model_special`, `assault.special`, or `range.special` by what it affects (e.g. armor/endurance the unit gains → `unit_special`; a reload-after-assault note on a gun → `range.special` `"Ammo"`).
+
+Any entry with no specials needs no subtable (the field defaults to an empty dict). An empty `special = []` inside a `range` block should simply be deleted.
+
+Always ask if a key is ambiguous or is missing from the literal type. It's possible to add new literals, but only do so if the user confirms.
 
 ## 3. Fix `size` casing
 
@@ -131,11 +146,32 @@ race = "ork"
 ## 8. Add missing required fields
 
 ### `shaken` on units
-`UnitConfig.shaken` is required with no default. Units without a shaken rule need an explicit empty string:
+`UnitConfig.shaken` is required and is now a structured `ShakenConfig` subtable, **not** a
+string. Parse the legacy sentence into fields:
 
 ```toml
-shaken = ""
+# Before
+shaken = "Movement set to slow. Movement order: [-,-,flee]. May not fire weapons"
+
+# After
+[units.X.shaken]
+speed = "slow"                     # Speed literal (see below); required
+movement_order = ["-", "-", "flee"]  # MovementOrder list; required
+# fire_order = "Normal"            # optional; defaults to "Can't use weapons".
+                                   # Set it only when the unit CAN fire while shaken.
+# comment = "..."                  # optional free text for any leftover clause
 ```
+
+Fields:
+- `speed` — the Speed the unit drops to (from "Movement/Speed set to X"). Must be a valid
+  `Speed` literal. If the legacy text gives no speed, use the unit's own movement speed and
+  confirm with the user. Note the `Speed` spellings: it's `fast_flying` / `slow_flying` /
+  `still_flying` (not `flying_fast`). The same literals key `orders.movement` /
+  `orders.fire` and must be corrected there too.
+- `movement_order` — the `[-,-,flee]`-style order as a list of strings.
+- `fire_order` — defaults to `"Can't use weapons"`. Only set it when the unit may still fire
+  (e.g. `"Normal"`, or a rule like `"Fire one less weapon system per shaken token."`).
+- `comment` — any remaining clause (e.g. `"May not deploy units while shaken"`).
 
 ### `equipment` on models
 `ModelConfig.equipment` is required. Models with no equipment need:
@@ -165,7 +201,7 @@ ap = 2
 ap = "N/A"
 ```
 
-If `ap` varies by arc (e.g. `"10 (from front), else 2"`), use the primary value as an integer and document the variation in the `special` list.
+If `ap` varies by arc (e.g. `"10 (from front), else 2"`), use the primary value as an integer and document the variation in the `special` dict (see step 2).
 
 ## 10. Fix `replaces` field
 
@@ -179,16 +215,25 @@ replaces = ["ork_infantry"]
 replaces = "ork_infantry"
 ```
 
-## 11. Fix `special.append` in equipment assault configs
+## 11. Convert `special.append` in equipment assault/range configs to a dict
 
-`Stacker[list[str]].append` expects a list, not a string:
+Equipment `assault.special` and `range.special` are now `dict[<Literal>, str]`, not a
+`Stacker`. The numeric stat fields (`strength`, `deflection`, `damage`, `ap`, …) are still
+`Stacker`s and keep their `.add` / `.replace` / `.extend` keys — but any `special.append`
+(or `special = [...]`) must become a keyed subtable:
 
 ```toml
 # Before
-special.append = "Cunning assault[1 for 2]"
+[equipment.wheeled_shieldwall.assault]
+deflection.add = [1, 0, 0, 0]
+special.append = "-1 in assault strength if speed is not still"
 
 # After
-special.append = ["Cunning assault[1 for 2]"]
+[equipment.wheeled_shieldwall.assault]
+deflection.add = [1, 0, 0, 0]
+
+[equipment.wheeled_shieldwall.assault.special]
+"Penalty" = "-1 in assault strength if speed is not still"
 ```
 
 ## 12. Fix movement order `all` entries
@@ -211,6 +256,27 @@ TOML keys like `default.slow = ["-", "-", "Flee"]` create a nested dict structur
 # default.slow = ["-", "-", "Flee"]
 ```
 
+## 14. Set `upgrade_all` on every equipment with a `cost`
+
+`EquipmentConfig` requires that `upgrade_all` is set **if and only if** `cost` is set. Any
+priced equipment that lacks `upgrade_all` fails validation with:
+
+> `'upgrade_all' must be set if and only if 'cost' is set`
+
+`upgrade_all` is a pricing rule: `true` charges the `cost` once per unit; `false` charges it
+per model (cost × number of models in the unit). Free equipment (no `cost`) must **not** set
+it.
+
+```toml
+[equipment.heavy_musket]
+cost.cp = 8
+upgrade_all = true   # or false for per-model pricing
+requires = [["Hands:2"], ["type:Infantry"]]
+```
+
+This is a game-balance decision — confirm the intended value (or a per-category default) with
+the user rather than guessing.
+
 ## Verification
 
 After migrating, run the full check:
@@ -222,4 +288,6 @@ uv run pyright
 uv run ruff check src/
 ```
 
-Finally, add the race to the list of working TOML files in AGENTS.md
+Finally, add the race to the `validate` recipe in the `justfile` (a
+`uv run spf race show <race> > /dev/null` line) so `just validate` / `just check` guard it
+against regressions. The race then also shows up in `uv run spf race list`.

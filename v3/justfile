@@ -1,7 +1,7 @@
 default: check
 
 # Run all quality gates in order, stopping on the first failure.
-check: fmt-check lint validate spell test typecheck 
+check: fmt-check lint validate spell test typecheck
 
 # Auto-format the codebase with ruff.
 fmt:
@@ -40,6 +40,7 @@ fix:
 validate:
     uv run spf race show abomination > /dev/null
     uv run spf race show darkelf > /dev/null
+    uv run spf race show dwarf > /dev/null
     uv run spf race show elf > /dev/null
     uv run spf race show goblin > /dev/null
     uv run spf race show ork > /dev/null
@@ -47,4 +48,3 @@ validate:
     uv run spf rules hexes > /dev/null
     uv run spf rules specials > /dev/null
     uv run spf rules tokens > /dev/null
-    

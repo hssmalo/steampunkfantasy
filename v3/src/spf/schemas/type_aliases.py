@@ -112,6 +112,7 @@ type UnitSpecial = Literal[
     "Activate",
     "Note",
     "Side Weapon",
+    "Steady",
 ]
 
 type ModelSpecial = Literal[
@@ -212,6 +213,8 @@ type ModelType = Literal[
     "Ogrin",
     "Gnolf",
     "Orlf",
+    "AT Gun",
+    "Open Vehicle",
 ]
 
 
