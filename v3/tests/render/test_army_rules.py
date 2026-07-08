@@ -9,8 +9,10 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.config import config
-from spf.frontends.cli.render import RenderOpts, render_army_rules
+from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
+from spf.render import render
 from spf.render.army_rules import _roll_text, build_reference
+from spf.render.formats import get_format
 from spf.schemas.race import (
     AssaultConfig,
     EquipmentAssaultConfig,
@@ -311,6 +313,36 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
     assert model_entry.assault_specials == (("Bonus", "[+1 strength]"),)
+
+
+# --- Templates: two-column damage table (drives the real templates) --------
+
+
+def test_army_rules_markdown_renders_two_column_damage_table(tmp_path: Path) -> None:
+    reference = build_reference(_army(_unit()), stem="test")
+
+    out = render(
+        ARMY_RULES, reference, get_format("markdown"), name="test", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "| Roll | Effect |" in text
+    assert "| 1 | Fine |" in text
+    assert "| 2 | Dead |" in text
+    assert "- Stay calm" in text
+
+
+def test_army_rules_latex_renders_two_column_damage_table(tmp_path: Path) -> None:
+    reference = build_reference(_army(_unit()), stem="test")
+
+    out = render(
+        ARMY_RULES, reference, get_format("latex"), name="test", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\begin{tabular}{l l}" in text
+    assert r"1 & Fine \\" in text
+    assert r"\item Stay calm" in text
 
 
 # --- CLI: render army-rules end-to-end (drives the real templates) ---------

@@ -12,10 +12,16 @@
 {% for name, text in unit.specials %}
 - **{{ name }}**: {{ text }}
 {%- endfor %}
-{% for name, rows in unit.damage_tables %}
+{% for name, rows, notes in unit.damage_tables %}
 **{{ name }}**
-{% for row in rows %}
-- {{ row }}
+
+| Roll | Effect |
+| ---- | ------ |
+{% for roll, effect in rows %}
+| {{ roll }} | {{ effect }} |
+{%- endfor %}
+{% for note in notes %}
+- {{ note }}
 {%- endfor %}
 {% endfor %}
 {% for model in unit.models %}
