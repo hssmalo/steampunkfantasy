@@ -85,7 +85,12 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
         orders=OrdersConfig(),
         armor=armor,
         special=unit_special or {},  # pyright: ignore[reportArgumentType]
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={  # pyright: ignore[reportArgumentType]
+            "Regular": {
+                "rows": ["1: Fine", "2: Dead"],
+                "notes": ["Stay calm"],
+            }
+        },
     )
     return Unit(name=name, config=config, models=resolved_models)
 
@@ -128,7 +133,9 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_movement == ("-", "-", "flee")
     assert unit_entry.shaken_fire == "No weapons"
     assert unit_entry.specials == (("Take Cover", "[sneak][-2]"),)
-    assert unit_entry.damage_tables == (("Regular", ("Fine", "Dead")),)
+    assert unit_entry.damage_tables == (
+        ("Regular", (("1", "Fine"), ("2", "Dead")), ("Stay calm",)),
+    )
     (model_entry,) = unit_entry.models
     assert model_entry.name == "Soldier"
     assert model_entry.equipment_summary == ()
