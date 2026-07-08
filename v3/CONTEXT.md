@@ -151,8 +151,12 @@ rows. Units that produce identical cards collapse to one set (no duplicates).
 _Avoid_: order sheet, unit card (a card is one option, not one Unit)
 
 **Army Reference**:
-A Rendering of the exact rules pertaining to one Army. Built from a resolved
-Army.
+A Rendering of the exact rules pertaining to one Army, built from a resolved
+Army. A nested Unit → Model → Equipment view of the fielded force: stats,
+specials (the short override text — full rule text belongs to the Rulebook),
+and damage tables. Orders are *not* part of it; those live on the Order Cards.
+Identically-configured Units (and identical Models within a Unit) appear once.
+_Avoid_: army sheet, roster printout
 
 **Race Overview**:
 A Rendering covering all Units, Models, and Equipment of one Race. Built from a
