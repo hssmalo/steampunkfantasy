@@ -115,6 +115,7 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.armor == (10, 8, 6, 4)
     assert unit_entry.points == unit.cost().to_points()
     assert unit_entry.shaken_speed == "slow"
+    assert unit_entry.shaken_movement == ("-", "-", "flee")
     assert unit_entry.shaken_fire == "No weapons"
     assert unit_entry.specials == (("Take Cover", "[sneak][-2]"),)
     assert unit_entry.damage_tables == (("Regular", ("Fine", "Dead")),)

@@ -73,6 +73,7 @@ class UnitEntry:
     armor: tuple[int, ...] | None
     points: int
     shaken_speed: t.Speed
+    shaken_movement: tuple[str, ...]
     shaken_fire: str
     specials: _Specials
     damage_tables: tuple[tuple[str, tuple[str, ...]], ...]
@@ -138,6 +139,7 @@ def _unit_entry(unit: Unit) -> UnitEntry:
         armor=tuple(unit.config.armor) if unit.config.armor is not None else None,
         points=unit.cost().to_points(),
         shaken_speed=unit.config.shaken.speed,
+        shaken_movement=tuple(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
         specials=tuple(unit.unit_specials.items()),
         damage_tables=tuple(

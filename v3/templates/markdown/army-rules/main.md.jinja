@@ -8,7 +8,7 @@
 - Armor: {{ unit.armor | join('/') }}
 {%- endif %}
 - Points: {{ unit.points }}
-- Shaken: {{ unit.shaken_speed }} / {{ unit.shaken_fire }}
+- Shaken: {{ unit.shaken_speed }} [{{ unit.shaken_movement | join(', ') }}] / {{ unit.shaken_fire }}
 {% for name, text in unit.specials %}
 - **{{ name }}**: {{ text }}
 {%- endfor %}

@@ -2,11 +2,11 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{textcomp}
 
+\title{\VAR{source.nick | latex_escape}}
+\author{\VAR{source.race | latex_escape} --- \VAR{source.points} points}
+
 \begin{document}
-\begin{center}
-{\Large \VAR{source.nick | latex_escape}} \\
-\VAR{source.race | latex_escape} --- \VAR{source.points} points
-\end{center}
+\maketitle
 
 \BLOCK{for unit in source.units}
 \section{\VAR{unit.name | latex_escape}\BLOCK{if unit.count > 1} (\VAR{unit.count}$\times$)\BLOCK{endif}}
@@ -17,7 +17,7 @@ Models: \VAR{unit.model_summary | join(', ') | latex_escape} \\
 Armor: \VAR{unit.armor | join('/')} \\
 \BLOCK{endif}
 Points: \VAR{unit.points} \\
-Shaken: \VAR{unit.shaken_speed | latex_escape} / \VAR{unit.shaken_fire | latex_escape}
+Shaken: \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
 
 \BLOCK{if unit.specials}
 \begin{itemize}
@@ -26,14 +26,16 @@ Shaken: \VAR{unit.shaken_speed | latex_escape} / \VAR{unit.shaken_fire | latex_e
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
-
 \BLOCK{for name, rows in unit.damage_tables}
-\textbf{\VAR{name | latex_escape}}
-\begin{itemize}
+
+\noindent\textbf{Damage Table: \VAR{name | latex_escape}}
+
+\begin{tabular}{l}
 \BLOCK{for row in rows}
-\item \VAR{row | latex_escape}
+\VAR{row | latex_escape} \\
 \BLOCK{endfor}
-\end{itemize}
+\end{tabular}
+\vspace{1ex}
 \BLOCK{endfor}
 
 \BLOCK{for model in unit.models}
