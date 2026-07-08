@@ -88,6 +88,13 @@ A named rule that modifies a Unit, Model, Equipment, Assault, or Range beyond
 the base stats. Defined in `rules/special.toml` and referenced by name.
 _Avoid_: ability, trait, perk
 
+**Spawn**:
+The creation and placement of a new Unit on the battlefield during play, triggered by an event (e.g. game setup, shooting, or model death). Defined by a Spawn Rule.
+
+**Spawn Rule**:
+A structured configuration in a Race's TOML file under the `spawns` section that specifies the target Unit, optional initial Equipment, and whether to inherit equipment from the spawning model.
+_Avoid_: summon, deploy
+
 **Speed**:
 A movement setting (still, slow, fast, and flying/sneak variants) that selects
 which Order rows apply.
