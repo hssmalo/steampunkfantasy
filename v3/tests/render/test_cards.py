@@ -289,7 +289,7 @@ def test_render_cards_markdown_has_tables_and_shaken(tmp_path: Path) -> None:
     assert "## Goblin Infantry" in text
     assert "### Movement" in text
     assert "### Fire" in text
-    assert "| shaken |" in text
+    assert "| shaken: " in text
 
 
 def test_render_cards_html_is_a_table(tmp_path: Path) -> None:
