@@ -112,3 +112,37 @@ future damage, …), placed and removed in specific Phases.
 **Nick**:
 The player-chosen name of an Army instance.
 _Avoid_: nickname, label, title
+
+### Rendering (generated reference artifacts)
+
+**Rendering**:
+A generated file artifact produced by rendering one Product to one Format. The
+output of the `spf/render/` subsystem; distinct from terminal/Rich output, which
+serves authoring and inspection, not gameplay reference.
+_Avoid_: export, document, output
+
+**Product**:
+One of the four kinds of gameplay reference we generate: **Order Card**, **Army
+Reference**, **Race Overview**, **Rulebook**. Each Product binds to one
+source-of-truth object and is rendered through a template family.
+
+**Format**:
+An output syntax a Product renders to: `markdown`, `html`, `latex`, `pdf`.
+Markdown and LaTeX are *authored* as template families; HTML derives from the
+Markdown family, PDF derives (via pdflatex) from the LaTeX family.
+
+**Order Card**:
+A per-Unit Rendering holding that Unit's Movement and Fire Orders. Built from a
+resolved Army.
+
+**Army Reference**:
+A Rendering of the exact rules pertaining to one Army. Built from a resolved
+Army.
+
+**Race Overview**:
+A Rendering covering all Units, Models, and Equipment of one Race. Built from a
+Race's `RaceConfig` (unresolved, for now).
+
+**Rulebook**:
+A Rendering of the general, army-agnostic rules. Built from the `rules/*.toml`
+configs.
