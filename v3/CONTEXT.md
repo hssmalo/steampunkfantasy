@@ -146,3 +146,32 @@ Race's `RaceConfig` (unresolved, for now).
 **Rulebook**:
 A Rendering of the general, army-agnostic rules. Built from the `rules/*.toml`
 configs.
+
+### Generated assets (AI-authored color & atmosphere)
+
+**Asset**:
+A curated, committed artifact generated from source TOML by an AI service and
+reviewed by a human before it lands. Canonical, versioned in git under
+`assets/<race>/…`. Distinct from a Rendering (a throwaway build artifact) and
+from a Cost dimension (`ip` is Industry Points, unrelated). Three kinds: Lore,
+Image, Model.
+_Avoid_: artifact (that's a Rendering build output), resource, media
+
+**Lore** (asset):
+A Markdown Asset holding the full story, history, and atmosphere of a Race,
+generated from its TOML. Grows beyond what a TOML `description` field can hold;
+stored as `assets/<race>/lore.md`.
+_Avoid_: story, background, fluff, description (the TOML `description` is a
+short prose field, the seed — not the Lore)
+
+**Image** (asset):
+A 2D image Asset depicting a Race or Unit, generated from its `description`.
+Stored under `assets/<race>/images/`. May later be embedded by a Rendering —
+that embedding is out of scope for the generation step.
+
+**Model** (asset):
+A 3D-mesh Asset (for on-demand printing) depicting a Unit or Model, stored
+under `assets/<race>/models/`. The print-on-demand ordering leg is out of scope
+for the generation step.
+_Note_: overloads the domain **Model** (a single figure in a Unit); a Model
+asset is the printable mesh *of* such a figure.
