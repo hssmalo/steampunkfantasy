@@ -35,12 +35,12 @@ slow = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"]]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
-[units.mechahydra.damage_tables]
-Regular = [
-    "1-3: +1 to future damage",
-    "4-5: +2 to future damage",
-    "6-17: +2 to future damage, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Set unit on fire",
-    "18: Unit destroyed"
+[units.mechahydra.damage_tables.Regular]
+rows = [
+	"1-3: +1 to future damage",
+	"4-5: +2 to future damage",
+	"6-17: +2 to future damage, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Set unit on fire",
+	"18: Unit destroyed",
 ]
 
 [units.mechanical_red_dragon]
@@ -69,11 +69,11 @@ slow = [["360°", "-", "-"], ["360°", "F", "-"], ["360°", "A", "F"]]
 slow = [["-", "Breath(fire)"], ["Breath(fire)", "-"], ["-", "Load"]]
 fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
 
-[units.mechanical_red_dragon.damage_tables]
-Regular = [
-    "1-4: +1 on future damage",
-    "5-10: +1 on future damage, shaken",
-    "13+: Unit destroyed",
+[units.mechanical_red_dragon.damage_tables.Regular]
+rows = [
+	"1-4: +1 on future damage",
+	"5-10: +1 on future damage, shaken",
+	"13+: Unit destroyed",
 ]
 
 [units.mechanical_iron_dragon]
@@ -112,11 +112,11 @@ fast_fly = [
     ["-", "Load"]
 ]
 
-[units.mechanical_iron_dragon.damage_tables]
-Regular = [
-    "1-4: +1 on future damage",
-    "5-10: +1 on future damage, shaken",
-    "13+: Unit destroyed",
+[units.mechanical_iron_dragon.damage_tables.Regular]
+rows = [
+	"1-4: +1 on future damage",
+	"5-10: +1 on future damage, shaken",
+	"13+: Unit destroyed",
 ]
 
 [units.queen_yy]
@@ -166,26 +166,30 @@ still = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release"]]
 slow = [["-", "aim"], ["-", "load"], ["-", "fire"], ["-", "Release"]]
 fast = [["-", "fire"], ["-", "fire"], ["-", "fire"], ["-", "Release"]]
 
-[units.queen_yy.damage_tables]
-Regular = [
-    "1-3: +1 to future damage",
-    "4-5: as 1-3, shaken",
-    "6-8: as 4-5, Critical damage[d6]",
-    "9+: Unit destroyed",
+[units.queen_yy.damage_tables.Regular]
+rows = [
+	"1-3: +1 to future damage",
+	"4-5: as 1-3, shaken",
+	"6-8: as 4-5, Critical damage[d6]",
+	"9+: Unit destroyed",
 ]
-Critical = [
-    "1: -1 to-hit, +1 to-be-hit",
-    "2: Rotates right in agony 0 step",
-    "3: Rotates left in agony 1 and in agony 3",
-    "4: cannot move",
-    "5: unit is covered in acid",
-    "6: unit is set on fire",
+
+[units.queen_yy.damage_tables.Critical]
+rows = [
+	"1: -1 to-hit, +1 to-be-hit",
+	"2: Rotates right in agony 0 step",
+	"3: Rotates left in agony 1 and in agony 3",
+	"4: cannot move",
+	"5: unit is covered in acid",
+	"6: unit is set on fire",
 ]
-Crew = [
-    "4-7: Double initial Crew damage if already shaken",
-    "8-10: As below, Crippled Crew",
-    "11-12: as 10, +3 to future Crew damage",
-    "13: Crew Killed, unit destroyed",
+
+[units.queen_yy.damage_tables.Crew]
+rows = [
+	"4-7: Double initial Crew damage if already shaken",
+	"8-10: As below, Crippled Crew",
+	"11-12: as 10, +3 to future Crew damage",
+	"13: Crew Killed, unit destroyed",
 ]
 
 [units.queen_xy]
@@ -234,26 +238,30 @@ still = [["-", "Release"]]
 slow = [["-", "Release"]]
 fast = [["-", "Release"]]
 
-[units.queen_xy.damage_tables]
-Regular = [
-    "1-3: +1 to future damage",
-    "4-5:as 1-4, shaken",
-    "6-8: 4-5, Critical damage[d6]",
-    "9+: Unit destroyed",
+[units.queen_xy.damage_tables.Regular]
+rows = [
+	"1-3: +1 to future damage",
+	"4-5:as 1-4, shaken",
+	"6-8: 4-5, Critical damage[d6]",
+	"9+: Unit destroyed",
 ]
-Critical = [
-    "1: -1 to-hit, +1 to-be-hit",
-    "2: Rotates right in agony 0 step",
-    "3: rotates left in agony 1 and in agony 3",
-    "4: only still available",
-    "5: unit is covered in acid",
-    "6: unit is set on fire",
+
+[units.queen_xy.damage_tables.Critical]
+rows = [
+	"1: -1 to-hit, +1 to-be-hit",
+	"2: Rotates right in agony 0 step",
+	"3: rotates left in agony 1 and in agony 3",
+	"4: only still available",
+	"5: unit is covered in acid",
+	"6: unit is set on fire",
 ]
-Crew = [
-    "4-7: double initial Crew damage if already shaken",
-    "9-10: As below, Crippled Crew",
-    "11-12: As below, +3 to future Crew damage",
-    "13: Crew Killed, unit destroyed",
+
+[units.queen_xy.damage_tables.Crew]
+rows = [
+	"4-7: double initial Crew damage if already shaken",
+	"9-10: As below, Crippled Crew",
+	"11-12: As below, +3 to future Crew damage",
+	"13: Crew Killed, unit destroyed",
 ]
 
 [units.nightmare_mechanical_cavalry]
@@ -285,15 +293,21 @@ fast = [
 slow = [["360°", "F", "360°"], ["360°", "A", "F"], ["360°", "F+B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
-[units.nightmare_mechanical_cavalry.damage_tables]
-Regular = [
-    "2-3: +1 on future damage",
-    "4: +2 on future damage",
-    "5-6: Kill 1 model",
-    "7+: Kill 1 model, d6 Psychic damage",
-    "Note: If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
+[units.nightmare_mechanical_cavalry.damage_tables.Regular]
+rows = [
+	"2-3: +1 on future damage",
+	"4: +2 on future damage",
+	"5-6: Kill 1 model",
+	"7+: Kill 1 model, d6 Psychic damage",
 ]
-Psychic = ["6+: unit shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
+]
+
+[units.nightmare_mechanical_cavalry.damage_tables.Psychic]
+rows = [
+	"6+: unit shaken",
+]
 
 [units.elite_mechanical_cavalry]
 race = "darkelf"
@@ -327,14 +341,20 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 [units.elite_mechanical_cavalry.orders.fire]
 all = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
-[units.elite_mechanical_cavalry.damage_tables]
-Regular = [
-    "2-3: +1 on future damage",
-    "4: +2 on future damage",
-    "5-6: kill 1 model",
-    "Note: If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
+[units.elite_mechanical_cavalry.damage_tables.Regular]
+rows = [
+	"2-3: +1 on future damage",
+	"4: +2 on future damage",
+	"5-6: kill 1 model",
 ]
-Psychic = ["5+: unit shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
+]
+
+[units.elite_mechanical_cavalry.damage_tables.Psychic]
+rows = [
+	"5+: unit shaken",
+]
 
 [units.mechanical_assault_spider]
 race = "darkelf"
@@ -356,20 +376,22 @@ still = [["360°", "360°", "360°"], ["360°", "A", "360°"]]
 still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
-[units.mechanical_assault_spider.damage_tables]
-Regular = [
-    "1-2: +1 to future damage",
-    "3: as below, shaken",
-    "4-6: as below, critical damage[d6]",
-    "7+: Destroy unit",
+[units.mechanical_assault_spider.damage_tables.Regular]
+rows = [
+	"1-2: +1 to future damage",
+	"3: as below, shaken",
+	"4-6: as below, critical damage[d6]",
+	"7+: Destroy unit",
 ]
-Critical = [
-    "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
-    "2: Cannot move",
-    "3: Cannot rotate",
-    "4: x3 +3 to future damage",
-    "5: half, rounded down, all assault strength and deflection values",
-    "6: Unit set on Fire",
+
+[units.mechanical_assault_spider.damage_tables.Critical]
+rows = [
+	"1: -1 to-hit, +1 to-be-hit (ranged and assault)",
+	"2: Cannot move",
+	"3: Cannot rotate",
+	"4: x3 +3 to future damage",
+	"5: half, rounded down, all assault strength and deflection values",
+	"6: Unit set on Fire",
 ]
 
 [units.mechanical_scorpion]
@@ -393,19 +415,21 @@ fast = [["360°", "F", "B"]]
 still = [["-", "Load"], ["-", "Fire"], ["Load", "Aim"]]
 slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
-[units.mechanical_scorpion.damage_tables]
-Regular = [
-    "1-2: +1 to future damage",
-    "3: as below, shaken",
-    "4-6: as below, critical damage[d6]",
-    "7+: Destroy unit",
+[units.mechanical_scorpion.damage_tables.Regular]
+rows = [
+	"1-2: +1 to future damage",
+	"3: as below, shaken",
+	"4-6: as below, critical damage[d6]",
+	"7+: Destroy unit",
 ]
-Critical = [
-    "1: -1 to-hit, +1 to-be-hit (ranged and assault)",
-    "2: Cannot move, loses fear",
-    "3: Cannot rotate",
-    "4-5: x3 Light damage[d6]",
-    "6: Unit set on Fire",
+
+[units.mechanical_scorpion.damage_tables.Critical]
+rows = [
+	"1: -1 to-hit, +1 to-be-hit (ranged and assault)",
+	"2: Cannot move, loses fear",
+	"3: Cannot rotate",
+	"4-5: x3 Light damage[d6]",
+	"6: Unit set on Fire",
 ]
 
 [units.darkelf_infantry]
@@ -454,15 +478,21 @@ still = [
     ["-", "Aim"],
 ]
 
-[units.darkelf_infantry.damage_tables]
-Regular = [
-    "0-5: Kill 1 model",
-    "6-8: Kill 1 model, d6 Psychic damage",
-    "9: Destroy unit",
-    "When one model is killed, half all +1 to future damage rounded down",
-    "If killed by poison, remove that instance",
+[units.darkelf_infantry.damage_tables.Regular]
+rows = [
+	"0-5: Kill 1 model",
+	"6-8: Kill 1 model, d6 Psychic damage",
+	"9: Destroy unit",
 ]
-Psychic = ["4+: Unit shaken"]
+notes = [
+	"When one model is killed, half all +1 to future damage rounded down",
+	"If killed by poison, remove that instance",
+]
+
+[units.darkelf_infantry.damage_tables.Psychic]
+rows = [
+	"4+: Unit shaken",
+]
 
 [units.multicultural_infantry]
 race = "darkelf"
@@ -506,17 +536,23 @@ slow = [
 [units.multicultural_infantry.orders.fire]
 slow = [["Activate", "-"]]
 
-[units.multicultural_infantry.damage_tables]
-Regular = [
-    "0-1: If number of alive models is more than 2, Kill 1 model",
-    "2-5: Kill 1 model",
-    "6-8: Kill 1 model, d6 Psychic damage",
-    "9: Kill 4 models, d6 Psychic damage",
-    "When one model is killed, half all +1 to future damage rounded down",
-    "If killed by poison, remove that instance",
-    "Count the number of alive models before the apply damage step",
+[units.multicultural_infantry.damage_tables.Regular]
+rows = [
+	"0-1: If number of alive models is more than 2, Kill 1 model",
+	"2-5: Kill 1 model",
+	"6-8: Kill 1 model, d6 Psychic damage",
+	"9: Kill 4 models, d6 Psychic damage",
 ]
-Psychic = ["5+: Unit shaken"]
+notes = [
+	"When one model is killed, half all +1 to future damage rounded down",
+	"If killed by poison, remove that instance",
+	"Count the number of alive models before the apply damage step",
+]
+
+[units.multicultural_infantry.damage_tables.Psychic]
+rows = [
+	"5+: Unit shaken",
+]
 
 [units.multicultural_trainee]
 race = "darkelf"
@@ -543,9 +579,16 @@ movement_order = ["-", "-", "Flee"]
 [units.multicultural_trainee.orders.movement]
 slow = [["-", "-", "Chase"]]
 
-[units.multicultural_trainee.damage_tables]
-Regular = ["1-8: Kill 1 model", "9: Destroy unit"]
-Psychic = ["3+: Unit shaken"]
+[units.multicultural_trainee.damage_tables.Regular]
+rows = [
+	"1-8: Kill 1 model",
+	"9: Destroy unit",
+]
+
+[units.multicultural_trainee.damage_tables.Psychic]
+rows = [
+	"3+: Unit shaken",
+]
 
 [units.roboprosthetic_darkelf]
 race = "darkelf"
@@ -594,15 +637,21 @@ still = [
     ["-", "Aim"],
 ]
 
-[units.roboprosthetic_darkelf.damage_tables]
-Regular = [
-    "0-5: Kill 1 model",
-    "6-8: Kill 1 model, d6 Psychic damage",
-    "9: Destroy unit",
-    "When one model is killed, half all +1 to future damage rounded down",
-    "If killed by poison, remove that instance",
+[units.roboprosthetic_darkelf.damage_tables.Regular]
+rows = [
+	"0-5: Kill 1 model",
+	"6-8: Kill 1 model, d6 Psychic damage",
+	"9: Destroy unit",
 ]
-Psychic = ["5+: Unit shaken"]
+notes = [
+	"When one model is killed, half all +1 to future damage rounded down",
+	"If killed by poison, remove that instance",
+]
+
+[units.roboprosthetic_darkelf.damage_tables.Psychic]
+rows = [
+	"5+: Unit shaken",
+]
 
 [units.assassin]
 race = "darkelf"
@@ -646,9 +695,15 @@ still = [
     ["-", "Aim"],
 ]
 
-[units.assassin.damage_tables]
-Regular = ["1+: unit killed"]
-Psychic = ["6+: Unit shaken"]
+[units.assassin.damage_tables.Regular]
+rows = [
+	"1+: unit killed",
+]
+
+[units.assassin.damage_tables.Psychic]
+rows = [
+	"6+: Unit shaken",
+]
 
 [units.roboprosthetic_assassin]
 race = "darkelf"
@@ -693,9 +748,15 @@ still = [
 ]
 slow = [["-", "Fire"], ["Fire", "-"]]
 
-[units.roboprosthetic_assassin.damage_tables]
-Regular = ["1+: unit killed"]
-Psychic = ["6+: Unit shaken"]
+[units.roboprosthetic_assassin.damage_tables.Regular]
+rows = [
+	"1+: unit killed",
+]
+
+[units.roboprosthetic_assassin.damage_tables.Psychic]
+rows = [
+	"6+: Unit shaken",
+]
 
 [units.scout]
 race = "darkelf"
@@ -741,9 +802,15 @@ still = [
 ]
 slow = [["Spot", "Spot"]]
 
-[units.scout.damage_tables]
-Regular = ["0+: unit killed"]
-Psychic = ["3+: Unit shaken"]
+[units.scout.damage_tables.Regular]
+rows = [
+	"0+: unit killed",
+]
+
+[units.scout.damage_tables.Psychic]
+rows = [
+	"3+: Unit shaken",
+]
 
 #
 # Models

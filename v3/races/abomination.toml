@@ -43,21 +43,25 @@ slow = [["-", "Load"], ["-", "Fire"]]
 fast = [["-", "Load"], ["-", "Fire"]]
 still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
-[units.squid.damage_tables]
-Regular = [
+[units.squid.damage_tables.Regular]
+rows = [
 	"1-3: +1 to future damage",
 	"4: as below, shaken",
 	"5-8: as below, d6 critical damage",
 	"9: Unit destroyed",
 ]
-Critical = [
+
+[units.squid.damage_tables.Critical]
+rows = [
 	"1-2: +3 to future damage",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
 	"5: Unit cannot move",
 	"6: set on fire",
 ]
-Crew = [
+
+[units.squid.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future Crew damage",
@@ -106,20 +110,24 @@ still = [
 slow = [["Load", "-"], ["Fire", "-"], ["Aim", "-"]]
 still = [["Load", "-"], ["Fire", "-"], ["Aim", "-"]]
 
-[units.mothership.damage_tables]
-Regular = [
+[units.mothership.damage_tables.Regular]
+rows = [
 	"1-3: +1 to future damage",
 	"4: +2 to future damage",
 	"5-11: as below, d6 critical damage",
 	"12: Unit destroyed",
 ]
-Critical = ["1: shaken",
-	 "2: +2 extra to future damage",
+
+[units.mothership.damage_tables.Critical]
+rows = [
+	"1: shaken",
+	"2: +2 extra to future damage",
 	"3-4: Unit cannot move. Speed set to still",
 	"5-6: set on fire",
 ]
 
-Crew = [
+[units.mothership.damage_tables.Crew]
+rows = [
 	"4-5: If already shaken double initial Crew damage",
 	"6-7: As 4-5, and Crippled Crew",
 	"8-9: as 6-7, shaken",
@@ -173,21 +181,25 @@ still = [
 	["Aim", "Fire(fr)"],
 ]
 
-[units.frost88.damage_tables]
-Regular = [
+[units.frost88.damage_tables.Regular]
+rows = [
 	"1-3: +1 to future damage",
 	"4: as below, shaken",
 	"5-8: as below, d6 critical damage",
 	"9: Unit destroyed",
 ]
-Critical = [
+
+[units.frost88.damage_tables.Critical]
+rows = [
 	"1: +3 to future damage",
 	"2: +1 to be hit, -1 to hit",
 	"3: Cannot rotate",
 	"4-5: Unit cannot move",
 	"6: set on fire",
 ]
-Crew = [
+
+[units.frost88.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future Crew damage",
@@ -228,14 +240,20 @@ still = [
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
-[units.abomination_infantry.damage_tables]
-Regular = [
+[units.abomination_infantry.damage_tables.Regular]
+rows = [
 	"1-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
-	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
-Psychic = ["4+: shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.abomination_infantry.damage_tables.Psychic]
+rows = [
+	"4+: shaken",
+]
 
 [units.horror]
 race = "abomination"
@@ -263,16 +281,22 @@ movement_order = ["-", "-", "-"]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
-[units.horror.damage_tables]
-Regular = [
+[units.horror.damage_tables.Regular]
+rows = [
 	"1-3: Bleed[6]",
 	"4-5: As below, +1 to future damage",
 	"6-8: As below, if caused by bleeding, amplify bleeding",
 	"9+: Unit destroyed",
-	"Note:  Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
-	"Note: bleeding does not cause more bleeding",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"bleeding does not cause more bleeding",
+]
+
+[units.horror.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.shriek_monstrosity]
 race = "abomination"
@@ -297,15 +321,21 @@ fast_fly = [["F", "F", "-"], ["L/R", "F", "F"], ["F", "L/R", "F"],  ["F", "F", "
 slow_fly = [["-", "Load"], ["-", "Fire"]]
 fast_fly = [["-", "Load"], ["-", "Fire"]]
 
-[units.shriek_monstrosity.damage_tables]
-Regular = [
+[units.shriek_monstrosity.damage_tables.Regular]
+rows = [
 	"1-3: Bleed[4]",
 	"4-5: Bleed[6], +1 to future damage",
 	"6-7: Bleed[8], +2 to future damage",
 	"8+: Unit destroyed",
-	"Note: bleeding does not cause more bleeding",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+]
+
+[units.shriek_monstrosity.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.water_elemental]
 race = "abomination"
@@ -337,13 +367,15 @@ still = [["360°", "-", "360°"], ["360°", "A", "F"]]
 
 slow = [["-", "Load"], ["-", "Fire"]]
 
-[units.water_elemental.damage_tables]
-Regular = [
+[units.water_elemental.damage_tables.Regular]
+rows = [
 	"1-2: +1 to future damage",
 	"3-4: +2 to future damage",
 	"5+:  shaken, Destroy one model",
-	"Note: If one model is destroyed remove half of the +1 future damage tokens"
-	]
+]
+notes = [
+	"If one model is destroyed remove half of the +1 future damage tokens",
+]
 
 
 
@@ -374,8 +406,11 @@ movement_order = ["-", "-", "-"]
 [units.robot_crab.orders.movement]
 fast = [["chase", "chase", "chase"]]
 
-[units.robot_crab.damage_tables]
-Regular = ["1-8: Kill 1 model", "9+: Unit destroyed"]
+[units.robot_crab.damage_tables.Regular]
+rows = [
+	"1-8: Kill 1 model",
+	"9+: Unit destroyed",
+]
 
 [units.giant_frog_riders]
 race = "abomination"
@@ -408,13 +443,19 @@ fast = [
 slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"]]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
-[units.giant_frog_riders.damage_tables]
-Regular = [
+[units.giant_frog_riders.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[4]",
 	"4+: kill 1 model",
-	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.giant_frog_riders.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.hippopotamus_riders]
 race = "abomination"
@@ -450,15 +491,21 @@ fast = [
 slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"]]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
-[units.hippopotamus_riders.damage_tables]
-Regular = [
+[units.hippopotamus_riders.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[4]",
 	"4-6: as below, +1 to future damage",
 	"7-8: as below, shaken",
 	"9+: unit destroyed",
-	"Note: bleeding does not cause more bleeding",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+]
+
+[units.hippopotamus_riders.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 
 
