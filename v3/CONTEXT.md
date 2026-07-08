@@ -139,8 +139,16 @@ Markdown and LaTeX are *authored* as template families; HTML derives from the
 Markdown family, PDF derives (via pdflatex) from the LaTeX family.
 
 **Order Card**:
-A per-Unit Rendering holding that Unit's Movement and Fire Orders. Built from a
-resolved Army.
+A single printed card carrying one *order option* — one Order type (Movement
+**or** Fire, never both) for one Unit — showing that option's cells across every
+Speed the Unit has it at (e.g. one Movement card lists `still`, `slow`, `fast`
+rows for option 1; option 2 is the next card). The Order Card Product renders a
+whole resolved Army as one **deck** file (in PDF, nine cards to an A4 page).
+
+Each Unit's orders are the *merged* orders: its base `orders` unioned per Speed
+with any orders gained from equipment (`orders_gained`), appending the gained
+rows. Units that produce identical cards collapse to one set (no duplicates).
+_Avoid_: order sheet, unit card (a card is one option, not one Unit)
 
 **Army Reference**:
 A Rendering of the exact rules pertaining to one Army. Built from a resolved
@@ -163,6 +171,13 @@ reviewed by a human before it lands. Canonical, versioned in git under
 from a Cost dimension (`ip` is Industry Points, unrelated). Three kinds: Lore,
 Image, Model.
 _Avoid_: artifact (that's a Rendering build output), resource, media
+
+**Candidate**:
+A raw, uncurated Asset produced by a generate step, awaiting human review.
+Candidates are non-canonical and gitignored, written under `candidates/<race>/…`
+mirroring the Asset layout. Promoting exactly one Candidate commits it as the
+Asset; the rest are discarded.
+_Avoid_: draft, option, variant, sample
 
 **Lore** (asset):
 A Markdown Asset holding the full story, history, and atmosphere of a Race,
