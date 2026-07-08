@@ -1,5 +1,7 @@
 [files]
-extend-exclude = ["rules/todo.md"]
+# card_standar.tex is a legacy flacards sample kept for reference; its filename
+# misspelling is not ours to rename (superseded by templates/latex/cards/).
+extend-exclude = ["rules/todo.md", "templates/card_standar.tex"]
 
 [default]
 # Ignore any line ending with `# typos: ignore`
