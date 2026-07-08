@@ -27,7 +27,7 @@ movement_order = ["-", "-", "flee"]
 "Take Cover" = "[still][-2]"
 
 [units.dwarf_infantry.orders.movement]
-slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "360°", "F"]]
+slow =  [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "360°", "F"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.dwarf_infantry.orders.fire]
@@ -106,7 +106,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.steampowerarmor.special]
-"Resistance" = "Poison[4], Fire[2], Acid[5+]"
+"Resistance" = "Poison[4], Fire[2], Acid[1]"
 "Steady" = "[slow]: +1 to hit, +1 to-be hit while slow"
 "Repair" = "Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of models alive"
 
@@ -257,7 +257,6 @@ movement_order = ["-", "-", "-"]
 
 [units.gunblasterwagon.special]
 "Resistance" = "Fire[2]"
-"Note" = "optimal Point blank: +1 to hit at point blank range"
 "Movement" = "Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."
 
 [units.gunblasterwagon.orders.movement]
@@ -292,8 +291,8 @@ still = [
 
 [units.gunblasterwagon.orders.fire]
 still = [["Fire", "-"], ["Load", "-"]]
-slow = [["Load", "-"], ["Load", "-"]]
-fast = [["Load", "-"], ["Load", "-"]]
+slow =  [["Load", "-"], ["Load", "-"]]
+fast =  [["Load", "-"], ["Load", "-"]]
 
 [units.gunblasterwagon.damage_tables]
 regular = [
@@ -322,7 +321,7 @@ name = "Dw42"
 models = ["dw42"]
 size = "Large"
 armor = [13, 10, 10, 9]
-cost.ip = 73
+cost.ip = 72
 
 [units.dw42.shaken]
 speed = "still"
@@ -395,7 +394,6 @@ movement_order = ["-", "-", "-"]
 
 [units.zap.special]
 "Fire Order" = "Fire and load all weapons at the same time"
-"Note" = "Loses aim when moving away from the hex where it aimed"
 "Resistance" = "Fire[2]"
 
 [units.zap.orders.movement]
@@ -513,7 +511,7 @@ fire_order = "May not use whip"
 [units.tamed_balrog.special]
 "Resistance" = "Fire[12], Poison[6]"
 "Terror" = "[8][range=2]"
-"Note" = "Excellent Whip Handling (counts as Excellent shot, +2 to hit)"
+
 
 [units.tamed_balrog.orders.movement]
 slow = [
@@ -571,7 +569,7 @@ type = ["Infantry", "Walking", "Bio", "Brother in Arms", "Elite"]
 strength = [3, 1, 1, 1]
 strength_die = "4+"
 deflection = [1, 0, 0, 0]
-deflection_die = 'n.a.'
+deflection_die = '4+'
 damage = "d6"
 ap = 2
 
@@ -631,6 +629,7 @@ ap = 2
 
 [models.elite_steampowerarmor.assault.special]
 "Cunning Assault" = "[1 for 2]"
+"Cunning Assault Defence" = "[1][4+]"
 
 [models.battle_medic]
 name = "Dwarf Battle Medic"
@@ -721,13 +720,12 @@ ap = 2
 [models.steampowerarmor.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-#Note to self: give them cunning assault defence
 [models.mini_zeppelin]
 name = "Mini Zeppelin"
 race = "dwarf"
 equipment_limit = ["Independent:∞"]
 equipment = ["axethrower_machine", "poison_gas_grenade"]
-type = ["Open Vehicle", "Floating", "Bio"]
+type = ["Mechanical", "Open Vehicle", "Floating", "Bio"]
 
 [models.mini_zeppelin.assault]
 strength = [2, 1, 1, 1]
@@ -736,6 +734,9 @@ deflection = [3, 2, 1, 1]
 deflection_die = "4+"
 damage = "d6-2"
 ap = 2
+
+[models.mini_zeppelin.assault.special]
+"Cunning Assault Defence" = "[1][4+]"
 
 [models.engineer_mini_zeppelin]
 name = "Engineer Mini Zeppelin"
@@ -757,6 +758,10 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
+[models.engineer_mini_zeppelin.assault.special]
+"Cunning Assault Defence" = "[2][4+]"
+
+
 [models.transport_zeppelin]
 name = "Transport Zeppelin"
 race = "dwarf"
@@ -772,15 +777,15 @@ deflection_die = "n.a"
 damage = "d6-2"
 ap = 2
 
-[models.transport_zeppelin.assault.special]
-"Note" = "May not assault ground units"
-
 [models.tamed_balrog]
 name = "Tamed Balrog"
 race = "dwarf"
 equipment_limit = []
 equipment = ["flaming_whip"]
 type = ["Monster", "Walking", "Bio"]
+
+[models.tamed_balrog.special]
+"To Hit" = "Excellent Whip Handling (counts as Excellent shot, +2 to hit)"
 
 [models.tamed_balrog.assault]
 strength = [6, 4, 3, 2]
@@ -791,7 +796,7 @@ damage = "d6"
 ap = 6
 
 [models.tamed_balrog.assault.special]
-"Extra Damage" = "Set on fire"
+"Extra Damage" = "Fire"
 
 [models.gunblasterwagon]
 name = "GunBlasterWagon"
@@ -799,6 +804,11 @@ race = "dwarf"
 equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["broadside_guns"]
 type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
+
+
+[models.gunblasterwagon.special]
+"To Hit" = "optimal Point blank: +1 to hit at point blank range"
+
 
 [models.gunblasterwagon.assault]
 strength = [2, 2, 2, 2]
@@ -830,6 +840,10 @@ equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["array_of_heavy_muskets", "zap", "twin_fear_ray_free"]
 type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
 
+[models.zap.special]
+"To Hit" = "Loses aim when moving away from the hex where it aimed"
+
+
 [models.zap.assault]
 strength = [4, 3, 3, 2]
 strength_die = "4+"
@@ -843,7 +857,7 @@ name = "Dwarf AT-gun"
 race = "dwarf"
 equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["big_at_gun"]
-type = ["Bio", "Towed", "Open Vehicle", "Vehicle", "AT Gun"]
+type = ["Bio", "Towed", "Open Vehicle", "AT Gun"]
 
 [models.dwarf_at_gun.assault]
 strength = [1, 0, 0, 0]
@@ -870,9 +884,6 @@ deflection = [3, 3, 3, 3]
 deflection_die = "4+"
 damage = "d6-2"
 ap = 2
-
-[models.zeppelin.assault.special]
-"Note" = "Can only assault flying enemies"
 
 [equipment]
 
@@ -940,7 +951,7 @@ strength.add = [1, 1, 1, 1]
 damage.replace = "d6-2 + d6 psychic damage"
 
 [equipment.double_barrled_musket_with_springloaded_axe.orders_gained.fire]
-slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
+slow = [["-", "Load"], ["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [equipment.blast_sticks]
 name = "Blast Sticks"
@@ -1018,7 +1029,9 @@ ap = 2
 
 [equipment.axethrower_machine.range.special]
 "Multiple Shots" = "Fire x2 per fire order per model"
-"Bonus" = "+1 to hit if range to enemy is an even number, -1 to hit if it is an odd number"
+
+[equipment.axethrower_machine.model_special]
+"To Hit" = "+1 to hit if range to enemy is an even number, -1 to hit if it is an odd number"
 
 [equipment.jet_pack]
 name = "Jet Pack"
@@ -1058,7 +1071,7 @@ damage = "d6+1"
 ap = 7
 
 [equipment.bigblaster.range.special]
-"Ammo" = "Require atleast 2 alive models in unit to be used"
+"Ammo" = "Require atleast 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
@@ -1078,7 +1091,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.stabilizer.model_special]
-"To Hit" = "All guns gain Enhanced accurazy. +1 to hit"
+"To Hit" = "Enhanced accurazy. +1 to hit"
 
 [equipment.stabilizer.orders_gained.fire]
 slow = [["-", "aim"], ["aim", "-"]]
@@ -1092,7 +1105,7 @@ requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.trenchcoat_of_resistance.unit_special]
 "Improved Resistance" = "Unit improves poison resistance and fire reistance with 1"
-"Immunity" = "Unit gains imunity to minor acid"
+"Immunity" = "Unit gains immunity to minor acid"
 
 [equipment.brotherinarms_armor]
 name = "Brother in Arms Armor"
@@ -1148,7 +1161,7 @@ damage = "N.A"
 ap = 0
 
 [equipment.flaming_whip.range.special]
-"Extra Damage" = "Set on fire"
+"Extra Damage" = "Fire"
 
 [equipment.fear_ray_free]
 name = "Fear Ray"
@@ -1372,7 +1385,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:AT Gun"]]
 
 [equipment.hide.unit_special]
-"Hidden" = "While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror. While hidden replace the unit with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden). You stay hidden until you reveal your self, have a speed slow in a clear hex with line of sight to an enemy, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. If you reveal your self you get reveal bonuses: +2 to hit, +1 to damage of ranged weapons and pluss 50 percent assault strength and deflection. In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses"
+"Hidden" = "Start the game with a hidden token."
 "Forward Position" = "[1]"
 "Camouflage" = "[hill][-1]"
 
