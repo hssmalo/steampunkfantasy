@@ -1,59 +1,34 @@
 [retreat]
+description = """After loosing an assault, you are forced to retreat. What happens after you retreat depends on what type the models in the unit are. All models should have atleast one type which describes how the units moves, and thus also how the unit retreats.
 
-description = "After loosing an assault, you are forced to retreat. What happens after you retreat depends on what type the models in the unit are. All models should have atleast one type which decribes how the units moves, and thus also how the unit retreats. 
-
-If a model has both flying and another type of movement on land, using the flying retreat options while flying and the land options while on land. 
-"
+If a model has both flying and another type of movement on land, using the flying retreat options while flying and the land options while on land.
+"""
 
 #To: Geir Arne
 #All below should correspond to a available type. All models should have a type corresponding to one of the below. If not, its a bug which should be fixed.
 [retreat.Walking]
-
-description = "Retreat one hex backword, either facing or facing away from the contested hex."
-
-blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no awailable hexes to move to, unit is destroied"
-
+description = "Retreat one hex backward, either facing or facing away from the contested hex."
+blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 speed = "Set speed to slow, rest of movement orders treated as 360⁰"
 
-
 [retreat.Tracked]
-
 description = "Retreat one hex forward, keeping same orientation as before the assault"
-
 speed = "Set to still. Rest of movement orders treated as -"
-
-blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no awailable hexes to move to, unit is destroied"
-
+blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 
 [retreat.Wheeled]
-
 description = "Retreat one hex forward, keeping same orientation as before the assault"
-
 speed = "Set to still. Rest of movement orders treated as -"
-
-blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no awailable hexes to move to, unit is destroied"
-
-
-
+blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 
 [retreat.Floating]
-
 description = "Retreat one hex forward, keeping same orientation as before the assault"
-
 speed = "Set to still. Rest of movement orders treated as -"
-
-blocked = "If the hex you are trying to move into is blocked by either overcroweded, impassble hex or an enemy, move to one of the nearest possible hexes. If there are no awailable hexes to move to, unit is destroied"
-
+blocked = "If the hex you are trying to move into is blocked by either overcroweded, impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 
 [retreat.Flying]
-
 description = "Retreat one hex forward, keeping same orientation as before the assault"
-
-speed = "If the unit has an availble none-flying speed, it lands and speed and rest of movement is treated as the type of movement used on land. If unit does not have any none-flying speed available, speed is set to slowest availble fly speed. Treat the rest of the movement as -"
-
-
+speed = "If the unit has an available none-flying speed, it lands and speed and rest of movement is treated as the type of movement used on land. If unit does not have any none-flying speed available, speed is set to slowest available fly speed. Treat the rest of the movement as -"
 
 [retreat.towed]
-
-description = "Destroied if forced to retreat"
-
+description = "Destroyed if forced to retreat"

@@ -77,23 +77,39 @@ class Model:
             if ea is None:
                 continue
             if ea.strength is not None:
-                strength = _apply_angles("strength", strength, ea.strength, equip.name)
+                strength = _apply_angles(
+                    "strength",
+                    current=strength,
+                    stacker=ea.strength,
+                    equip_name=equip.name,
+                )
             if ea.strength_die is not None:
                 strength_die = _apply_die(
-                    "strength_die", strength_die, ea.strength_die, equip.name
+                    "strength_die",
+                    _current=strength_die,
+                    stacker=ea.strength_die,
+                    equip_name=equip.name,
                 )
             if ea.deflection is not None:
                 deflection = _apply_angles(
-                    "deflection", deflection, ea.deflection, equip.name
+                    "deflection",
+                    current=deflection,
+                    stacker=ea.deflection,
+                    equip_name=equip.name,
                 )
             if ea.deflection_die is not None:
                 deflection_die = _apply_die(
-                    "deflection_die", deflection_die, ea.deflection_die, equip.name
+                    "deflection_die",
+                    _current=deflection_die,
+                    stacker=ea.deflection_die,
+                    equip_name=equip.name,
                 )
             if ea.damage is not None:
-                damage = _apply_die("damage", damage, ea.damage, equip.name)
+                damage = _apply_die(
+                    "damage", _current=damage, stacker=ea.damage, equip_name=equip.name
+                )
             if ea.ap is not None:
-                ap = _apply_ap(ap, ea.ap, equip.name)
+                ap = _apply_ap(ap, stacker=ea.ap, equip_name=equip.name)
             special |= ea.special
 
         return AssaultConfig(
@@ -114,6 +130,7 @@ class Model:
 
 def _apply_angles(
     field_name: str,
+    *,
     current: list[int],
     stacker: Stacker[list[int]],
     equip_name: str,
@@ -131,6 +148,7 @@ def _apply_angles(
 
 def _apply_die(
     field_name: str,
+    *,
     _current: str,
     stacker: Stacker[str],
     equip_name: str,
@@ -156,6 +174,7 @@ def _apply_die(
 
 def _apply_ap(
     current: t.ArmorPenetration,
+    *,
     stacker: Stacker[t.ArmorPenetration],
     equip_name: str,
 ) -> t.ArmorPenetration:

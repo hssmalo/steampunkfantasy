@@ -38,7 +38,7 @@ def add_commands(app: cyclopts.App) -> None:
 type SpecialKey = t.UnitSpecial | t.ModelSpecial | t.AssaultSpecial
 
 
-def _unit_matches(race: RaceConfig, key: t.UnitSpecial) -> list[tuple[str, str]]:
+def _unit_matches(race: RaceConfig, *, key: t.UnitSpecial) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     matches.extend(
         (f"U    Unit:      {u.name}", u.special[key])
@@ -58,7 +58,7 @@ def _unit_matches(race: RaceConfig, key: t.UnitSpecial) -> list[tuple[str, str]]
     return matches
 
 
-def _model_matches(race: RaceConfig, key: t.ModelSpecial) -> list[tuple[str, str]]:
+def _model_matches(race: RaceConfig, *, key: t.ModelSpecial) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     matches.extend(
         (f" M   Model:     {m.name}", m.special[key])
@@ -73,7 +73,9 @@ def _model_matches(race: RaceConfig, key: t.ModelSpecial) -> list[tuple[str, str
     return matches
 
 
-def _assault_matches(race: RaceConfig, key: t.AssaultSpecial) -> list[tuple[str, str]]:
+def _assault_matches(
+    race: RaceConfig, *, key: t.AssaultSpecial
+) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     matches.extend(
         (f"  A  Model:     {m.name}", m.assault.special[key])
@@ -89,15 +91,15 @@ def _assault_matches(race: RaceConfig, key: t.AssaultSpecial) -> list[tuple[str,
 
 
 def _collect_matches(
-    race: RaceConfig, special_key: SpecialKey
+    race: RaceConfig, *, special_key: SpecialKey
 ) -> list[tuple[str, str]]:
     matches: list[tuple[str, str]] = []
     if is_unit_special(special_key):
-        matches.extend(_unit_matches(race, special_key))
+        matches.extend(_unit_matches(race, key=special_key))
     if is_model_special(special_key):
-        matches.extend(_model_matches(race, special_key))
+        matches.extend(_model_matches(race, key=special_key))
     if is_assault_special(special_key):
-        matches.extend(_assault_matches(race, special_key))
+        matches.extend(_assault_matches(race, key=special_key))
     return matches
 
 
@@ -119,7 +121,7 @@ def show_special(special_key: SpecialKey) -> None:
         except pydantic.ValidationError:
             continue
 
-        matches = _collect_matches(race, special_key)
+        matches = _collect_matches(race, special_key=special_key)
         if not matches:
             continue
 
