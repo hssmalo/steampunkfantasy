@@ -21,6 +21,10 @@ rules_app = app.command(cyclopts.App(name="rules", help="Work with rules."))
 cli.rules.add_commands(rules_app)
 render_app = app.command(cyclopts.App(name="render", help="Render products to files."))
 cli.render.add_commands(render_app)
+assets_app = app.command(
+    cyclopts.App(name="assets", help="Generate and curate assets.")
+)
+cli.assets.add_commands(assets_app)
 special_app = app.command(cyclopts.App(name="special", help="Work with special rules."))
 cli.special.add_commands(special_app)
 
