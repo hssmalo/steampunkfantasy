@@ -182,7 +182,7 @@ N = { type = "int", min = 2, max = 10 }
 [weapon.gear_disruption]
 name = "Gear Disruption"
 short = "[{N}+]"
-explanation = "Only applies when target is a robot. Roll 1 + one die per minor acid token on target. The robot gets one shaken token per roll of {N}+. Major acid counts as 3 minor acid tokens in this regard. (1st shaken token is duplicated as always)"
+explanation = "Only applies when target is a drone. Roll 1 + one die per minor acid token on target. The drone gets one shaken token per roll of {N}+. Major acid counts as 3 minor acid tokens in this regard. (1st shaken token is duplicated as always)"
 
 [weapon.gear_disruption.variables]
 N = { type = "int", min = 2, max = 10 }
