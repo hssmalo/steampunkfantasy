@@ -340,7 +340,7 @@ def test_army_rules_latex_renders_two_column_damage_table(tmp_path: Path) -> Non
     )
 
     text = out.read_text(encoding="utf-8")
-    assert r"\begin{tabular}{l l}" in text
+    assert r"\begin{tabular}{ll}" in text
     assert r"1 & Fine \\" in text
     assert r"\item Stay calm" in text
 
