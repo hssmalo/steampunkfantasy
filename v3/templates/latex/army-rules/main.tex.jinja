@@ -26,15 +26,22 @@
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
-\BLOCK{for name, rows in unit.damage_tables}
+\BLOCK{for name, rows, notes in unit.damage_tables}
 
 \noindent\textbf{Damage Table: \VAR{name | latex_escape}}
 
-\begin{tabular}{l}
-\BLOCK{for row in rows}
-\VAR{row | latex_escape} \\
+\begin{tabular}{ll}
+\BLOCK{for roll, effect in rows}
+\VAR{roll | latex_escape} & \VAR{effect | latex_escape} \\
 \BLOCK{endfor}
 \end{tabular}
+\BLOCK{if notes}
+\begin{itemize}
+\BLOCK{for note in notes}
+\item \VAR{note | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
 \vspace{1ex}
 \BLOCK{endfor}
 

@@ -2,7 +2,7 @@
 
 from typing import Annotated, Literal, Self, cast
 
-from pydantic import BeforeValidator
+from pydantic import BeforeValidator, Field
 
 from spf.schemas import StrictModel
 
@@ -15,7 +15,56 @@ type ArmorPenetration = int | Literal["N/A"]
 type UnitName = str
 type ModelName = str
 type EquipmentName = str
-type DamageTable = list[str]
+
+
+class ExactRoll(StrictModel):
+    value: int
+
+
+class RangeRoll(StrictModel):
+    low: int
+    high: int
+
+
+class AtLeastRoll(StrictModel):
+    value: int
+
+
+type DamageRoll = ExactRoll | RangeRoll | AtLeastRoll
+
+
+class DamageRow(StrictModel):
+    roll: DamageRoll
+    effect: str
+
+
+def _parse_damage_row(row: str) -> DamageRow:
+    """Parse a 'roll: effect' string into a DamageRow."""
+    roll_text, sep, effect = row.partition(":")
+    if not sep:
+        msg = f"Damage row missing ':' separator: {row!r}"
+        raise ValueError(msg)
+    roll_text = roll_text.strip()
+    effect = effect.strip()
+    roll: DamageRoll
+    if roll_text.endswith("+"):
+        roll = AtLeastRoll(value=int(roll_text[:-1]))
+    elif "-" in roll_text:
+        low, _, high = roll_text.partition("-")
+        roll = RangeRoll(low=int(low), high=int(high))
+    else:
+        roll = ExactRoll(value=int(roll_text))
+    return DamageRow(roll=roll, effect=effect)
+
+
+type ParsedDamageRow = Annotated[DamageRow, BeforeValidator(_parse_damage_row)]
+
+
+class DamageTable(StrictModel):
+    rows: list[ParsedDamageRow]
+    notes: list[str] = Field(default_factory=list)
+
+
 type PhaseName = Literal[
     "Gunnery 1",
     "Movement 1",

@@ -9,8 +9,10 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.config import config
-from spf.frontends.cli.render import RenderOpts, render_army_rules
-from spf.render.army_rules import build_reference
+from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
+from spf.render import render
+from spf.render.army_rules import _roll_text, build_reference
+from spf.render.formats import get_format
 from spf.schemas.race import (
     AssaultConfig,
     EquipmentAssaultConfig,
@@ -24,6 +26,7 @@ from spf.schemas.race import (
 from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
+from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, RangeRoll
 
 ENGINE = config.render.latex.engine
 
@@ -84,13 +87,27 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
         orders=OrdersConfig(),
         armor=armor,
         special=unit_special or {},  # pyright: ignore[reportArgumentType]
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={  # pyright: ignore[reportArgumentType]
+            "Regular": {
+                "rows": ["1: Fine", "2: Dead"],
+                "notes": ["Stay calm"],
+            }
+        },
     )
     return Unit(name=name, config=config, models=resolved_models)
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
     return Army(race=race, nick=nick, units=units)  # pyright: ignore[reportArgumentType]
+
+
+# --- _roll_text: DamageRoll -> display string -------------------------------
+
+
+def test_roll_text_renders_each_roll_variant() -> None:
+    assert _roll_text(ExactRoll(value=9)) == "9"
+    assert _roll_text(RangeRoll(low=1, high=2)) == "1-2"
+    assert _roll_text(AtLeastRoll(value=6)) == "6+"
 
 
 # --- build_reference: basic Unit/Model shape --------------------------------
@@ -118,7 +135,9 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_movement == ("-", "-", "flee")
     assert unit_entry.shaken_fire == "No weapons"
     assert unit_entry.specials == (("Take Cover", "[sneak][-2]"),)
-    assert unit_entry.damage_tables == (("Regular", ("Fine", "Dead")),)
+    assert unit_entry.damage_tables == (
+        ("Regular", (("1", "Fine"), ("2", "Dead")), ("Stay calm",)),
+    )
     (model_entry,) = unit_entry.models
     assert model_entry.name == "Soldier"
     assert model_entry.equipment_summary == ()
@@ -296,6 +315,36 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_specials == (("Bonus", "[+1 strength]"),)
 
 
+# --- Templates: two-column damage table (drives the real templates) --------
+
+
+def test_army_rules_markdown_renders_two_column_damage_table(tmp_path: Path) -> None:
+    reference = build_reference(_army(_unit()), stem="test")
+
+    out = render(
+        ARMY_RULES, reference, get_format("markdown"), name="test", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    # Rows must be contiguous with the header separator: a blank line here would
+    # end the Markdown table and leave the rows as loose text.
+    assert "| Roll | Effect |\n| ---- | ------ |\n| 1 | Fine |\n| 2 | Dead |\n" in text
+    assert "- Stay calm" in text
+
+
+def test_army_rules_latex_renders_two_column_damage_table(tmp_path: Path) -> None:
+    reference = build_reference(_army(_unit()), stem="test")
+
+    out = render(
+        ARMY_RULES, reference, get_format("latex"), name="test", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\begin{tabular}{l l}" in text
+    assert r"1 & Fine \\" in text
+    assert r"\item Stay calm" in text
+
+
 # --- CLI: render army-rules end-to-end (drives the real templates) ---------
 
 DEMO_ARMY = "demo"
@@ -315,7 +364,7 @@ def test_render_army_rules_markdown_has_title_and_unit_sections(
     assert "### " in text  # a Model subsection
     assert "Movement" not in text
     assert "Fire Order" in text or "Take Cover" in text  # a unit special
-    assert "0-5: Kill 1 model" in text  # a damage-table row
+    assert "| 0-5 | Kill 1 model |" in text  # a two-column damage-table row
 
 
 def test_render_army_rules_html_is_a_document(tmp_path: Path) -> None:

@@ -18,6 +18,17 @@ from spf.schemas.race import EquipmentConfig
 type _Specials = tuple[tuple[str, str], ...]
 
 
+def _roll_text(roll: t.DamageRoll) -> str:
+    """Render a damage roll as its table-column string (``9`` / ``1-2`` / ``6+``)."""
+    match roll:
+        case t.ExactRoll(value=value):
+            return str(value)
+        case t.RangeRoll(low=low, high=high):
+            return f"{low}-{high}"
+        case t.AtLeastRoll(value=value):
+            return f"{value}+"
+
+
 def _count_summary[T](
     items: Sequence[T], name_of: Callable[[T], str]
 ) -> tuple[str, ...]:
@@ -76,7 +87,7 @@ class UnitEntry:
     shaken_movement: tuple[str, ...]
     shaken_fire: str
     specials: _Specials
-    damage_tables: tuple[tuple[str, tuple[str, ...]], ...]
+    damage_tables: tuple[tuple[str, tuple[tuple[str, str], ...], tuple[str, ...]], ...]
     models: tuple[ModelEntry, ...]
 
 
@@ -143,7 +154,12 @@ def _unit_entry(unit: Unit) -> UnitEntry:
         shaken_fire=unit.config.shaken.fire_order,
         specials=tuple(unit.unit_specials.items()),
         damage_tables=tuple(
-            (name, tuple(rows)) for name, rows in unit.config.damage_tables.items()
+            (
+                name,
+                tuple((_roll_text(row.roll), row.effect) for row in table.rows),
+                tuple(table.notes),
+            )
+            for name, table in unit.config.damage_tables.items()
         ),
         models=_dedup([_model_entry(model) for model in unit.models]),
     )
