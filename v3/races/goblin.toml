@@ -21,6 +21,13 @@ models = [
 size = "Small"
 cost.mp = 8
 
+description = '''Four Goblin armred with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger. Thus they are hard to hit and can evade incoming danger.
+
+They are viewed as somewhat primitive by the standards of other races, however do not underestimate the Goblin infantry, which very well may swarm you. And especially with some upgrades and support, goblin infantry can be deadly.
+
+In game terms you do want to come close and personal to the enemy, but avoid assaults.'''
+
+
 [units.goblin_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
@@ -34,7 +41,6 @@ movement_order = ["-", "-", "Flee"]
 [units.goblin_infantry.orders.fire]
 sneak = [["Fire", "Fire"]]
 
-#Description: are so sneaky that they can move around and still be counted as still.
 [units.goblin_infantry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
 slow  = [["360°", "F", "B"]]
@@ -64,7 +70,7 @@ models = ["gigant_snake_cavalry"]
 size = "Large"
 cost.mp = 4
 cost.xp = 24
-description = '''Two Goblin wielding a bow each riding one giant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are fired by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. For the light hearted, even the tiny snake can be scary.
+description = '''Two Goblin wielding a bow each riding one giant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are launched by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. 
 
 Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
 '''
@@ -109,6 +115,8 @@ name = "Tiny Snake"
 models = ["tiny_snake", "tiny_snake"]
 size = "Tiny"
 
+description = "Two tiny snakes hiding in the grass, ready to bite anyone that comes to close"
+
 [units.tiny_snake.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
@@ -141,6 +149,12 @@ models = ["goblin_infantry_carrier"]
 size = "Large"
 armor = [10, 6, 5, 4]
 cost.ip = 16
+
+description = '''A Goblin Armored Carrier, armed with a light mortar. It is very fast while driving straight forward, but needs to slow down to turn. Well armored from the front, less so from the sides and rear. Since Goblin infantry are smaller than the other races, you can pack more of them in the same vehicle. Once the goblin exit, they swarm the enemy with lots and lots of goblin infantry.
+
+Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if lucky.
+'''
+
 
 [units.goblin_infantry_carrier.shaken]
 speed = "still"
@@ -178,8 +192,8 @@ still = [["-", "Load"], ["-", "Fire"]]
 [units.goblin_infantry_carrier.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: as below, shaken",
-	"5-8: as below, d6 critical damage",
+	"4: As 1-3, shaken",
+	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
 
@@ -189,7 +203,7 @@ rows = [
 	"3: Forced Deploy (all units, empty hexes only)",
 	"4: Cannot rotate",
 	"5: Unit cannot move",
-	"6: set on fire",
+	"6: Fire",
 ]
 
 [units.goblin_infantry_carrier.damage_tables.Crew]
@@ -230,8 +244,8 @@ slow =  [["Load", "-"], ["Fire", "-"]]
 [units.bipedal_mech.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: as below, shaken",
-	"5-8: as below, d6 critical damage",
+	"4: As 1-3, shaken",
+	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
 
@@ -260,6 +274,15 @@ models = ["heavy_carrier"]
 size = "Large"
 armor = [10, 8, 6, 4]
 cost.ip = 32
+
+description = '''A Heavy Armored Carrier, armed with a battery of bows and a heavy crossbow. Slightly more armored compared to the Goblin Armored Carrier, much better armed and more flexible exit, but carries only one goblin infantry.
+
+The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapons system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
+
+These have dual use, one is to deliver Goblin infantry closer to the enemy, anothes is to lay devastating firepower onto the enemy.
+'''
+
+
 
 [units.heavy_carrier.shaken]
 speed = "still"
@@ -315,8 +338,8 @@ still = [["Load", "Load"]]
 [units.heavy_carrier.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: as below, shaken",
-	"5-8: as below, d6 critical damage",
+	"4: As 1-3 , shaken",
+	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
 
@@ -327,7 +350,7 @@ rows = [
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
 	"5: Unit cannot move",
-	"6: set on fire",
+	"6: Fire",
 ]
 
 [units.heavy_carrier.damage_tables.Crew]
@@ -404,8 +427,8 @@ still = [["Fire", "Fire"]]
 [units.modified_truck.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: as below, shaken",
-	"4-7: as below, d6 critical damage",
+	"3: As 1-2, shaken",
+	"4-7: As 3, d6 critical damage",
 	"8: Unit destroyed",
 ]
 
@@ -456,7 +479,7 @@ fast = [["-", "Load"], ["-", "Fire"]]
 rows = [
 	"1-3: +1 to future damage",
 	"4-5: +2 to future damage",
-	"6+: As below, temporarily destroyed",
+	"6+: As 4-5, temporarily destroyed",
 ]
 notes = [
 	"While temporarily destroyed, all regular damage do inner damage instead",
@@ -981,8 +1004,8 @@ race = "goblin"
 [equipment.light_mortar.range]
 range = 3
 angle = [true, true, true, true]
-damage = "d6 + d4 Crew damage"
-ap = 2
+damage = "d4 Crew damage"
+ap = "N/A"
 
 [equipment.light_mortar.range.special]
 "Extra Damage" = "Poison[4]"
