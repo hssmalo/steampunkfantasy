@@ -38,6 +38,9 @@ class Unit:
         """
         cost = self.config.cost or t.Cost()
         num_models = len(self.models)
+
+        unique = []
+        
         for i, model in enumerate(self.models):
             # Model is an upgrade when its name differs from the default slot
             if model.name != self.config.models[i] and model.config.cost:
@@ -47,9 +50,14 @@ class Unit:
                     continue
                 if equip.upgrade_all is False:
                     # Per-model pricing: multiply by full unit size
-                    cost = cost + equip.cost * num_models
-                else:
+                    #cost = cost + equip.cost * num_models
                     cost = cost + equip.cost
+                else:
+                    if equip.name in unique:
+                        continue
+                    else:
+                        unique.append(equip.name)
+                        cost = cost + equip.cost
         return cost
 
     def orders(self) -> OrdersConfig:
