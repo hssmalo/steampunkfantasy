@@ -1589,6 +1589,12 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
             equipment_name="per_model_gear",
             race_config=race,
         )
+        .upgrade_model(
+            ("two_squad", 0),
+            model_key=("soldier", 1),
+            equipment_name="per_model_gear",
+            race_config=race,
+        )
     )
     resolved = army.resolve(race)
     # cost = 1cp * 2 models = 2cp
