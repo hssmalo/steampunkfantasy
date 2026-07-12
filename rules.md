@@ -144,7 +144,7 @@ Swamp                 medium and smaller enter and exit freely.
 Building              Infantry enter freely
                       any other type cannot enter without a special rule. Level 0 blocking terrain.
 Road                  If moving from a road to another hex with road, movement is always freely.
-Smoke                 Blocks line of sight 
+FoG                   Blocks line of sight 
                       Removed in aftermath. (place two smoke markers, remove 1 in each aftermath)
 River                 ???		      
 Water                 1 movement point to enter for ships, floating or flying
@@ -160,7 +160,7 @@ Line of sight from one hex to another: place a line from the center of the heigh
 Terrain also provide cover, which is given in the to-hit table later.
 
 *Stacking* *Limit*:\
-One hex may maximum hold either up two 2 units if at most one of them is large, or 1 huge unit.
+One hex may maximum hold either up two 2 units if at most one of them is large or larger. A huge unit may only share a hex with a small or smaller unit.
 Flying units have the same stacking limits, but while flying is independent of stacking limit on ground. A flying unit may even share a hex with an enemy.
 
 If trying to enter the same hex with MORE than that simultaneously, all from within same team/faction, then stay in the hex instead of moving with a number of units such that a maximum of the stacking limit enter the hex. The controlling player may deside which units stay put. Note that this also applies in assaults. (see later) In the case of movement outside your own controll such as flee or chase, treat the hex as an impassable hex, and continue movement procedures. 
@@ -273,6 +273,8 @@ Each unit has a set of available orders. Code:
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
 If still no such hex is available, let your enemy move your unit to any hex he/she likes
+- Help: move toward friendly unit which may be healed. If no such unit exist, move towards the nearest friendly cavarlery. If no such unit exist, move towards nearest friendly unit. If only unit alive, treat it as flee. During Help orders you may swap the position with any friendly nearby biological unit. If you don't need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving",
+
 
 Any order divided in 3 happens in movement step, where the first is executed in movement 1, the second in movement 2 and the third in movement 3.
 If Two different letters are separated by + instead of a comma, they happen in same step. For example: \
@@ -283,7 +285,7 @@ Some special orders:
 - D=Drift: Move 1 hex in any direction, regardless of facing. But do not rotate the unit.
 - Road: Move along the road. Facing is always along the road.
 - Help: Move in any hex as long as you move 1 step closer to an injured ally which you can heal/repair. As with chase, take current orders into account.
-- Deploy: Place a transported unit within the speified range of the unit. Place the transported units facing away from this unit. Enter an assault if hex is occupied. If the deploy part is after a + and the unit is assaulted, the deployment is halted and assault is carried out. If the unit has the quick threat, the transported units may deploy automaticly as part of an assault.
+- Deploy: Place a transported unit within the speified range of the unit. Place the transported units facing away from this unit if range>0, else put it in same facing as this unit.. Enter an assault if hex is occupied. If the deploy part is after a + and the unit is assaulted, the deployment is halted and assault is carried out. Deploy units after assault if you win. If you loose the assault, don't carry out any deployment. If the unit has the quick, the transported units may deploy automaticly as part of an assault.
 
 
 
@@ -366,7 +368,8 @@ Modify it with the following modifiers:
                           to hit, to be hit  special
 ------------------------ ------- ---------- ---------------------
 *Speeds*
-Stand still                +1      +1
+Still                      +1      +1
+Sneak                      +1       0
 Crawling                   +1      +1
 Rest                       +1      +1
 Setup speed                +1      +1
@@ -826,8 +829,8 @@ Insane is removed when unit is no longer shaken.
 
 **Confused**
 
-Only effects biological units or units with biological crew.
-While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. 
+Only effects biological units or units with biological crew. While confused, enemy gets -2 to hit, and
+any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. 
 
 Remove one confusion token every pre-assault step.
 

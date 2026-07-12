@@ -1,26 +1,25 @@
 \clearpage
 
-\section{ Grunt 1 }
+\section{ SMG Infantry }
 
 \begin{tabular}{ll}
-  Name & Grunt \\
+  Name & Dark Elf Infantry \\
   Size & medium\\
-  Models & 4 x Grunt\\
+  Models & 4 x Dark Elf Infantry\\
   Armor & [0, 0, 0, 0]\\
-  Victory points & 2\\
-  Shaken & \\
+  Victory points & 9\\
+  Shaken & speed set to slow, move order: [-,-,flee]\\
 \end{tabular}
 
-Forward Position[2]\\ 
-Cannot use ranged weapons\\ 
+Take-Cover[still,crawl][-2]\\ 
 
 
 
 {\bf Damage Tables} \\
 \ \\ {\bf regular } \\
-1-5: Kill 1 model \\
+0-5: Kill 1 model \\
 6-8: Kill 1 Model, d6 Psychic damage \\
-9: Destroy unit \\
+9: Destroy unit base \\
 \ \\ {\bf psychic } \\
 4+: Unit Shaken \\
 
@@ -30,20 +29,39 @@ Cannot use ranged weapons\\
 \subsection{ Models }
 
 \begin{tabular}{ll}
-Model name: & {\bf Grunt } \\
-Type: & [bio, grunt, walks] \\
+Model name: & {\bf Dark Elf Infantry } \\
+Type: & [bio, infantry, walks] \\
 \end{tabular}
 \ \\
-Equipment:  \\
+Equipment: 1 x SMG, 1 x Poison Fog Grenade \\
 \ \\
-Assault: [2, 2, 2, 2] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
-Assault Deflection: [0, 0, 0, 0] Die: -\\
-\indent {template.ability.reroll_assault:3}\\ 
-Cunning assault[1 for 3]\\ 
+Assault: [1, 1, 1, 1] Die: 5+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [1, 1, 0, 0] Die: 6+\\
+\indent Cunning assault[1 for 2]\\ 
+Reroll all success in assault while crawling\\ 
  
 \ \\
 
 \ \\
+{\bf SMG } \\
+
+
+
+Range: 3  Angle: [True, True, True, True] AP: 1 Damage: d6-3 \\
+Always treated as loded. Fires two times (per model) each time it is fired\\ 
+
+
+
+
+{\bf Poison Fog Grenade } \\
+
+Use once per game, use an throw fire order to place 2 smoke tokens and 2 poison cloud[6] tokens in either an adjecent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade.\\ 
+If you also have the hidden ability, you may use the hide order regardless of terrain if you are either standing in a hex with smoke, or you are outside line of sight of any enemy unit. \\ 
+
+
+
+
+
  
 \ \\
 

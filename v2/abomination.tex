@@ -52,8 +52,8 @@ Equipment: 1 x Multipurpose Gun \\
 \ \\
 Assault: [1, 1, 1, 1] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [1, 0, 0, 0] Die: 6+\\
-\indent +100\% strength and deflections versus shaken units\\ 
-Cunning Assault[1 for 2]\\ 
+\indent Cunning Assault[1 for 2]\\ 
++100\% strength and deflections versus shaken units\\ 
  
 \ \\
 
@@ -171,7 +171,7 @@ Assault Deflection: [2, 0, 0, 0] Die: 4+\\
   Special: \\
 \end{tabular}
 
-\noindent Primary target for all chase orders are enemies robots (unit which are not biological and are not biological crew). Move towarders neares robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead\\ 
+\noindent Primary target for all chase orders are enemies drone. Move towarders neares enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead\\ 
 
 
 \ \\ {\bf movement } \\
@@ -197,8 +197,8 @@ Equipment:  \\
 \ \\
 Assault: [1, 1, 1, 1] Die: 6+ Armor Penetration: 0 Damage: d6 \\
 Assault Deflection: [1, 0, 0, 0] Die: 6+\\
-\indent Cunning Assault[1 for 1]\\ 
-+100\% strength and deflections versus shaken units\\ 
+\indent +100\% strength and deflections versus shaken units\\ 
+Cunning Assault[1 for 1]\\ 
  
 \ \\
 
@@ -279,8 +279,8 @@ Equipment: 1 x Frog spit, 1 x Mechanical Melee Contraption \\
 Assault: [4, 1, 1, 1] Die: 6+ Armor Penetration: 2 Damage: d6 \\
 Assault Deflection: [4, 0, 0, 0] Die: 6+\\
 \indent Cunning Assault[1 for 3]\\ 
-poison[4]\\ 
 +100\% strength and deflections versus shaken units\\ 
+poison[4]\\ 
  
 \ \\
 
@@ -334,20 +334,20 @@ Improves assault if ammo is spend. You may spend one ammo in an assault, to incr
 \end{tabular}
 
 \noindent Poison Resistance 6\\ 
-Fire(m) fires multipuropose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo.\\ 
+Fire(mm) fires multipuropose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo.\\ 
 Double to-hit bonuses and penalties for movement speed, both for you and the target\\ 
 
 
 \ \\ {\bf fire } \\
 still [Load, Load] \\
-still [Fire(m), Fire(om)] \\
-still [Fire(om), Fire(m)] \\
+still [Fire(mm), Fire(om)] \\
+still [Fire(om), Fire(mm)] \\
 slow [Load, Load] \\
-slow [Fire(m), Fire(om)] \\
-slow [Fire(om), Fire(m)] \\
+slow [Fire(mm), Fire(om)] \\
+slow [Fire(om), Fire(mm)] \\
 fast [Load, Load] \\
-fast [Fire(m), Fire(om)] \\
-fast [Fire(om), Fire(m)] \\
+fast [Fire(mm), Fire(om)] \\
+fast [Fire(om), Fire(mm)] \\
 \ \\ {\bf movement } \\
 fast [360°, F, F] \\
 fast [F, F, 360°] \\
@@ -461,8 +461,12 @@ still [rev, -, -] \\
 fast [F, F, -] \\
 fast [F, B, -] \\
 \ \\ {\bf fire } \\
-all [-, Load] \\
-all [-, Fire] \\
+slow [-, Load] \\
+slow [-, Fire] \\
+fast [-, Load] \\
+fast [-, Fire] \\
+still [-, Load] \\
+still [-, Fire] \\
 still [-, Aim] \\
 
 
@@ -528,6 +532,127 @@ Fires 3 shot per fire order. Each hit gives one confution token to any unit with
 
 
 
+\clearpage
+
+\section{ Frost 88 }
+
+\begin{tabular}{ll}
+  Name & Frost 88 \\
+  Size & lagre\\
+  Cost & 12ip\\
+  Models & 1 x Frost88\\
+  Armor & [10, 8, 7, 6]\\
+  Shaken & Speed set to still, move order: [- - -]. May not fire weapons\\
+  Special: \\
+\end{tabular}
+
+\noindent Fog: dobble to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)\\ 
+Double to hit bonuses and penalties for movement, both your own and the enemies\\ 
+Fire(g) fires the main gun, while Fire(fr) fires frost ray. Track ammo only for main gun\\ 
+
+
+\ \\ {\bf movement } \\
+slow [L/R, -, -] \\
+slow [L/R, L/R, -] \\
+slow [F, L/R, -] \\
+slow [B, -, -] \\
+slow [A, -, -] \\
+slow [F, -, -] \\
+slow [B, rev, -] \\
+still [L/R, -, -] \\
+still [L/R, L/R, -] \\
+still [L/R, L/R, L/R] \\
+still [-, -, -] \\
+still [L/R, A, F] \\
+still [A, F, -] \\
+still [rev, -, -] \\
+fast [F, F, -] \\
+fast [F, B, -] \\
+\ \\ {\bf fire } \\
+slow [Load, Fire(fr)] \\
+slow [Fire(g), Fire(fr)] \\
+fast [Load, Fire(fr)] \\
+fast [Fire(g), Fire(fr)] \\
+still [Load, Fire(fr)] \\
+still [Fire(g), Fire(fr)] \\
+still [-, Aim] \\
+still [Aim, Fire(fr)] \\
+
+
+{\bf Damage Tables} \\
+\ \\ {\bf regular } \\
+1-3: +1 to future damage \\
+4: as below, shaken \\
+5-8: as below, d6 critical damage \\
+9: Unit destroyed \\
+\ \\ {\bf critical } \\
+1: +3 to future damage \\
+2: +1 to be hit, -1 to hit \\
+3: Cannot rotate \\
+4-5: Unit cannot Move  \\
+6: set on fire \\
+\ \\ {\bf crew } \\
+4-5: Crippled Crew, if aleady shaken double initial crew damage \\
+6-7: as 4-5, shaken \\
+8-11: as 6-7, +3 to future crew damage \\
+12: Unit destroyed \\
+
+
+\noindent
+\begin{tabular}{ll}
+Model name: &{\bf Frost88 } \\
+Equipment Limits: &[independent:∞] \\
+Type: &[vehicle, mechanical, track, bio crew] \\
+Replaces: &Nothing \\
+Cost: & 0\\
+\end{tabular}
+\ \\
+Equipment: 1 x Twin Frost Ray, 1 x Main Gun \\
+\ \\
+Assault: [10, 1, 1, 1] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
+Assault Deflection: [8, 2, 0, 0] Die: 6+\\
+\indent +100\% strength and deflections versus shaken units\\ 
+ 
+\ \\
+
+\ \\
+{\bf Twin Frost Ray } \\
+
+
+
+Range: 4  Angle: [True, False, False, False] AP: 0 Damage: d4-2+d6 psychic damage + d4 crew damage \\
+Fire twice per fire order\\ 
+Always treated as loaded\\ 
+The target must break if possible (if it has a lower speed available). Reduce the speed one step\\ 
+
+
+
+
+{\bf Main Gun } \\
+
+
+
+Range: 4  Angle: [True, False, False, False] AP: 6 Damage: d6 (+d8 crew damage if penetrating all armor) \\
+Gear Disruption[5+]\\ 
+
+
+
+
+ 
+\ \\
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Upgradeable Units}\noindent
 \begin{tabular}{ll}
 Model name: &{\bf Elite Abomination Infantry } \\
@@ -541,8 +666,8 @@ Equipment: 1 x Multipurpose Gun \\
 \ \\
 Assault: [2, 1, 1, 1] Die: 6+ Armor Penetration: 2 Damage: d6-2 \\
 Assault Deflection: [2, 0, 0, 0] Die: 6+\\
-\indent +100\% strength and deflections versus shaken units\\ 
-Cunning Assault[1 for 2]\\ 
+\indent Cunning Assault[1 for 2]\\ 
++100\% strength and deflections versus shaken units\\ 
  
 \ \\
 good shot: +1 to hit\\ 

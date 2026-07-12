@@ -113,8 +113,8 @@ class Race:
         for name, unit in self.units.items():
             txt = txt + unit.write_info(long_=long_, format_=format_)
 
-            if format_ == "tex":
-                txt = txt + "\\pagebreak"
+            #if format_ == "tex":
+            #    txt = txt + "\\clearpage"
 
         if format_ == "tex":
             txt = txt + "\\section{Upgradeable Units}"
@@ -215,8 +215,8 @@ class Team:
 
             txt = txt + unit.write_info(long_=long_, format_=format_, nickname=name)
 
-            if format_ == "tex":
-                txt = txt + "\\pagebreak"
+            #if format_ == "tex":
+            #    txt = txt + "\\clearpage"
 
             if format_ == "tex":
                 filename = self.name.replace(" ", "") + ".tex"
@@ -733,10 +733,12 @@ class Model:
         if format_ == "tex":
             from pprint import pprint
 
+            pprint('fuck you')
             pprint(self.info.assault.special)
 
             try:
-                for u in self.info.assault.special:
+                a = list(set(self.info.assault.special))
+                for u in a:
                     print(u)
                     txt = txt + u + "\\\\ \n"
             except AttributeError:

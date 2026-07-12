@@ -21,7 +21,7 @@ models = [
 size = "Small"
 cost.mp = 8
 
-description = '''Four Goblin armred with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger. Thus they are hard to hit and can evade incoming danger.
+description = '''Four Goblin armred with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger. Thus they are hard to hit and can evade incoming bombs.
 
 They are viewed as somewhat primitive by the standards of other races, however do not underestimate the Goblin infantry, which very well may swarm you. And especially with some upgrades and support, goblin infantry can be deadly.
 
@@ -209,8 +209,8 @@ rows = [
 [units.goblin_infantry_carrier.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -277,7 +277,7 @@ cost.ip = 32
 
 description = '''A Heavy Armored Carrier, armed with a battery of bows and a heavy crossbow. Slightly more armored compared to the Goblin Armored Carrier, much better armed and more flexible exit, but carries only one goblin infantry.
 
-The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapons system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
+The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapon system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
 
 These have dual use, one is to deliver Goblin infantry closer to the enemy, anothes is to lay devastating firepower onto the enemy.
 '''
@@ -356,8 +356,8 @@ rows = [
 [units.heavy_carrier.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -444,8 +444,8 @@ rows = [
 [units.modified_truck.damage_tables.Crew]
 rows = [
 	"3-4: Crippled Crew, if already shaken double initial Crew damage",
-	"5-6: as 4-5, shaken",
-	"7-9: as 6-7, +3 to future Crew damage",
+	"5-6: As 4-5, shaken",
+	"7-9: As 6-7, +3 to future Crew damage",
 	"10: Unit destroyed",
 ]
 
