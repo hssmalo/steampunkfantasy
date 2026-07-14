@@ -3,6 +3,8 @@
 [races.goblin]
 name = "Goblin"
 
+description = "Small sneaky infantry, viewed as somewhat primitive but has proven to have done some surprisingly well engineering jobs"
+
 [spawns.tiny_snake]
 unit = "tiny_snake"
 

@@ -14,6 +14,14 @@ size = "Huge"
 cost.mp = 16
 cost.xp = 96
 
+description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two large ogres riding it. The only animal large enough to carry two ogres.
+Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each.
+
+Both the Elfs and the Ogres uses these beasts in war, while DarkElf has made a mechanical copy.
+
+Low range and slow is a bad combination, but if you manage to come within short range of enemy, the hydra has powerful firepower, and especially if you get an enemy within point blank range, where you can use the acid breath full potential. You may consider upgrading the Ogre Hydra Crew weapons to give it some better firepower at longer ranges.
+'''
+
 [units.ogre_hydra.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -159,7 +167,7 @@ comment = "If sharing a hex with an Infantry, you may give the pet follow orders
 [units.pet_panther.special]
 "Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
 "Evation" = "[4+]"
-
+"Terror" = "[4]"
 
 
 
@@ -304,60 +312,6 @@ rows = [
 	"1+: Destroy one model",
 ]
 
-[units.industrial_drone_swarm]
-race = "ogre"
-name = "Industrial Drone Swarm"
-models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
-size = "Tiny"
-cost.ip = 1
-description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre infantry themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
-
-Fire at whatever is in range whenever you can, and cover the enemy in minor acid. These units are extremely accurate and extremely cheap, but will self destruct once they reach rest speed. Keep some support firepower to kill enemies which are covered in acid.
-'''
-
-[units.industrial_drone_swarm.shaken]
-speed = "slow"
-movement_order = ["-", "-", "-"]
-
-[units.industrial_drone_swarm.special]
-"Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
-"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
-"Evation" = "[3+]"
-"Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
-
-[units.industrial_drone_swarm.orders.fire]
-still = [
-	["Fire", "-"],
-	["-", "Fire"],
-	["Aim", "-"],
-	["-", "Aim"],
-	["Spot", "Spot"]
-]
-slow = [
-	["Fire", "-"],
-	["-", "Fire"],
-	["Aim", "-"],
-	["-", "Aim"],
-	["Spot", "Spot"]
-]
-fast = [
-	["Fire", "-"],
-	["-", "Fire"],
-	["Aim", "-"],
-	["-", "Aim"],
-	["Spot", "Spot"]
-]
-
-[units.industrial_drone_swarm.orders.movement]
-rest = [["-", "-", "-"]]
-still = [["360°", "360°", "B[rest]"]]
-slow = [["360°", "F", "B"]]
-fast = [["Chase", "Chase", "Chase + B"]]
-
-[units.industrial_drone_swarm.damage_tables.Regular]
-rows = [
-	"0+: Destroy one model",
-]
 
 [units.repair_drone]
 race = "ogre"
@@ -417,6 +371,13 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 32
 armor = [12, 10, 10, 8]
+description = '''A huge locomotive of this land train, useually pulling one or two wagons. It can carry lots of tiny drones and has a huge ogre cannon firing forward. Very well armored from front and side, less so in back. It also provided command and intelligence to the wagons it is towing
+
+This unit blocks line of sight, and is well protected. Exploit the blocked line of sight to your advantage, to protect the other wagons behind or units you want to come closer without exposing them to enemy fire. The ogre cannon is a large weapons which does plenty of damage, but you have only one shot, which may hit or miss. It has also somewhat low range and can only fire straight forward.
+
+It can deploy drones up to range 2, which might be a big bost, and you can put them really close to the enemy.
+'''
+
 
 [units.main_engine.shaken]
 speed = "slow"
@@ -485,8 +446,13 @@ race = "ogre"
 name = "Broadside Wagon"
 models = ["broadside_wagon"]
 size = "Large"
-cost.ip = 16
+cost.ip = 8
 armor = [2, 10, 10, 8]
+description = '''Broadside wagon fires is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time. It need to be connected with a main engine to move (either directly or indirectly). It is well protected from the sides and back, but is extremely porly armored from the front.
+
+Try to place the broadside wagon with enemies on all sides such that you can use all the firepower it offers. If you loose an assault you will most probably be disconnected from the main engine. So avoid assault at all costs.
+'''
+
 
 [units.broadside_wagon.shaken]
 speed = "still"
@@ -527,8 +493,13 @@ race = "ogre"
 name = "Artillery Wagon"
 models = ["artillery_wagon"]
 size = "Large"
-cost.ip = 16
+cost.ip = 32
 armor = [2, 10, 10, 8]
+description = '''Artillery wagons is armored with a huge ogre artillery which can fire indirectly. It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front. 
+
+Indirect fire, long range, to hit bonus from scouts and huge damage is a good combination and target should be enemy tanks or other expensive units. If you loose an assault, you are probably disconnected from main engine, and makes you stranded, so avoid assaults at all cost.
+'''
+
 
 [units.artillery_wagon.shaken]
 speed = "still"
@@ -536,31 +507,28 @@ movement_order = ["-", "-", "-"]
 
 [units.artillery_wagon.special]
 "Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+"Fire Order" = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading" 
+
+
 
 [units.artillery_wagon.orders.fire]
 still = [
-	["Fire", "-"],
+	["Fire", "Aim"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 slow = [
-	["Fire", "-"],
+	["Fire", "Aim"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 fast = [
-	["Fire", "-"],
+	["Fire", "Aim"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 
 [units.artillery_wagon.damage_tables.Critical]
