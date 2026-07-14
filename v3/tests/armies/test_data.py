@@ -61,7 +61,7 @@ def simple_race() -> RaceConfig:
                 special={},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"Regular": ["Fine", "Dead"]},
+                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
             )
         },
         models={
@@ -1042,7 +1042,7 @@ def test_validate_army_detects_invalid_model_replacement(
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
     illegal_unit = ArmyUnit(
         name="squad",
@@ -1072,7 +1072,7 @@ def test_validate_army_detects_multiple_violations(simple_race: RaceConfig) -> N
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
     illegal_unit = ArmyUnit(
         name="double_squad",
@@ -1572,7 +1572,7 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1586,6 +1586,12 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
         .upgrade_model(
             ("two_squad", 0),
             model_key=("soldier", 0),
+            equipment_name="per_model_gear",
+            race_config=race,
+        )
+        .upgrade_model(
+            ("two_squad", 0),
+            model_key=("soldier", 1),
             equipment_name="per_model_gear",
             race_config=race,
         )
@@ -1606,7 +1612,7 @@ def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
         special={},
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
     race = RaceConfig(
         races=simple_race.races,

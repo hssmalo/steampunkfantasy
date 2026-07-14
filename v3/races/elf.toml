@@ -31,16 +31,22 @@ slow = [["Fire", "-"], ["-", "Fire"]]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
-[units.elf_hydra.damage_tables]
-Regular = [
+[units.elf_hydra.damage_tables.Regular]
+rows = [
 	"1-2: Bleed[4]",
 	"3-5: +1 to future damage, Bleed[4]",
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"10-17: As below, d6 Psychic damage",
 	"18: Unit destroyed",
-	"{{\\it Note: Bleed does not cause more bleeding}}",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"Bleed does not cause more bleeding",
+]
+
+[units.elf_hydra.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.elf_infantry]
 race = "elf"
@@ -75,14 +81,20 @@ still = [
 ]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
-[units.elf_infantry.damage_tables]
-Regular = [
+[units.elf_infantry.damage_tables.Regular]
+rows = [
 	"0-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-Psychic = ["4+: shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.elf_infantry.damage_tables.Psychic]
+rows = [
+	"4+: shaken",
+]
 
 [units.elf_archer]
 race = "elf"
@@ -116,14 +128,20 @@ still = [
 ]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
-[units.elf_archer.damage_tables]
-Regular = [
+[units.elf_archer.damage_tables.Regular]
+rows = [
 	"0-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
 	"9+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-Psychic = ["5+: shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.elf_archer.damage_tables.Psychic]
+rows = [
+	"5+: shaken",
+]
 
 [units.illusion]
 race = "elf"
@@ -144,8 +162,14 @@ movement_order = ["-", "-", "flee"]
 [units.illusion.orders.movement]
 slow = [["-", "-", "chase"]]
 
-[units.illusion.damage_tables]
-Regular = ["0-4: kill 1 model", "4+: destroy unit", "Note: immune to poison"]
+[units.illusion.damage_tables.Regular]
+rows = [
+	"0-4: kill 1 model",
+	"4+: destroy unit",
+]
+notes = [
+	"immune to poison",
+]
 
 [units.elf_scout]
 race = "elf"
@@ -181,9 +205,15 @@ still = [
 ]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
-[units.elf_scout.damage_tables]
-Regular = ["0+: unit killed"]
-Psychic = ["3+: shaken"]
+[units.elf_scout.damage_tables.Regular]
+rows = [
+	"0+: unit killed",
+]
+
+[units.elf_scout.damage_tables.Psychic]
+rows = [
+	"3+: shaken",
+]
 
 [units.elite_elf_scout]
 race = "elf"
@@ -221,9 +251,15 @@ still = [
 ]
 fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
 
-[units.elite_elf_scout.damage_tables]
-Regular = ["0+: unit killed"]
-Psychic = ["3+: shaken"]
+[units.elite_elf_scout.damage_tables.Regular]
+rows = [
+	"0+: unit killed",
+]
+
+[units.elite_elf_scout.damage_tables.Psychic]
+rows = [
+	"3+: shaken",
+]
 
 [units.e34]
 race = "elf"
@@ -268,14 +304,16 @@ still = [
 	["rev", "-", "-"],
 ]
 
-[units.e34.damage_tables]
-Regular = [
+[units.e34.damage_tables.Regular]
+rows = [
 	"1-3: +1 on future damage",
 	"4: as below, shaken",
 	"5-8: as below, Critical Damage",
 	"9+: Destroyed",
 ]
-Critical = [
+
+[units.e34.damage_tables.Critical]
+rows = [
 	"1: Cannot move",
 	"2: -1 to hit, +1 to be hit(ranged and assault)",
 	"3: Cannot Rotate",
@@ -283,7 +321,9 @@ Critical = [
 	"5: Stuck turret: firing angle is now only forward",
 	"6: Unit is set on Fire",
 ]
-Crew = [
+
+[units.e34.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future Crew damage",
@@ -343,8 +383,8 @@ still = [
 	["rev", "-", "-"],
 ]
 
-[units.tattoo_ink.damage_tables]
-Critical = [
+[units.tattoo_ink.damage_tables.Critical]
+rows = [
 	"1: shaken",
 	"2: -1 to hit, +1 to be hit",
 	"3: Cannot rotate",
@@ -352,13 +392,17 @@ Critical = [
 	"5: unit cannot change speed.",
 	"6: Set unit on Fire!",
 ]
-Regular = [
+
+[units.tattoo_ink.damage_tables.Regular]
+rows = [
 	"1-2: +1 on future damage",
-	"3-4 as below, shaken",
+	"3-4: as below, shaken",
 	"5-7: as below, d6 Critical Damage",
-	"8+ Destroyed",
+	"8+: Destroyed",
 ]
-Crew = [
+
+[units.tattoo_ink.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-11: as 6-7, +3 to future Crew damage",
@@ -390,15 +434,21 @@ slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
-[units.bear_rider.damage_tables]
-Regular = [
+[units.bear_rider.damage_tables.Regular]
+rows = [
 	"2-7: +1 to future damage, Bleed[4]",
 	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
-	"Note: bleeding does not cause more bleeding",
-	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+	"if one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
+]
+
+[units.bear_rider.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.polar_bear_riders]
 race = "elf"
@@ -426,15 +476,21 @@ slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
-[units.polar_bear_riders.damage_tables]
-Regular = [
+[units.polar_bear_riders.damage_tables.Regular]
+rows = [
 	"2-7: +1 to future damage, Bleed[4]",
 	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
-	"Note: bleeding does not cause more bleeding",
-	"Note: if one model is killed by bleeding/poison, remove that instance \\\\ bleeding/poison and remove up to half + to future token",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+	"if one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
+]
+
+[units.polar_bear_riders.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.armored_unicorn_rider]
 race = "elf"
@@ -480,13 +536,19 @@ fast = [
 	["Help", "Help", "Help"],
 ]
 
-[units.armored_unicorn_rider.damage_tables]
-Regular = [
+[units.armored_unicorn_rider.damage_tables.Regular]
+rows = [
 	"2-5: Bleed[6]",
 	"6+: killed",
-	"Note: bleeding does not cause more bleeding"
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+]
+
+[units.armored_unicorn_rider.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.pachyephalosaurus_riders]
 race = "elf"
@@ -528,14 +590,20 @@ fast = [
 slow = [["360°", "A", "F"], ["B", "360°", "-"]]
 still = [["360°", "A", "F"], ["A+A", "360°+F", "F"], ["A+A", "360°", "F"]]
 
-[units.pachyephalosaurus_riders.damage_tables]
-Regular = [
+[units.pachyephalosaurus_riders.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[6]",
 	"6+: kill 1 model, d4 Psychic damage",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-Psychic = ["4+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.pachyephalosaurus_riders.damage_tables.Psychic]
+rows = [
+	"4+: shaken",
+]
 
 # Elk removed. Elf had to many cavalry and elk did not find it's correct place.
 #[units.elk_cavalery]
@@ -565,8 +633,8 @@ Psychic = ["4+: shaken"]
 #regular = [
 #	"2-3: Bleed[4]",
 #	"4+: kill 1 model, d4 Psychic damage",
-#	"{{\\it Note: bleeding does not cause more bleeding}}",
-#	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
+#	"Note: bleeding does not cause more bleeding",
+#	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 #]
 #Psychic = ["4+: shaken"]
 [units.pegasus_rider]
@@ -635,14 +703,20 @@ fast_fly = [
 	["F", "F", "B[still]"],
 ]
 
-[units.pegasus_rider.damage_tables]
-Regular = [
+[units.pegasus_rider.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[4]",
 	"4+: kill 1 model",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-Psychic = ["5+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.pegasus_rider.damage_tables.Psychic]
+rows = [
+	"5+: shaken",
+]
 
 [models]
 
@@ -1102,17 +1176,23 @@ slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
-[units.sauropod_riders.damage_tables]
-Regular = [
+[units.sauropod_riders.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[4]",
 	"4-8: As below, If caused by bleeding, amplify bleeding",
 	"9-11: as below, +1 to future damage",
 	"12-19: as below, d8 Psychic damage",
 	"20: Unit killed",
-	"{{\\it Note: Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]}}",
-	"{{\\it Note: bleeding does not cause more bleeding}}",
 ]
-Psychic = ["8+: shaken"]
+notes = [
+	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"bleeding does not cause more bleeding",
+]
+
+[units.sauropod_riders.damage_tables.Psychic]
+rows = [
+	"8+: shaken",
+]
 
 [units.armored_oliphant_riders]
 race = "elf"
@@ -1158,14 +1238,20 @@ fast = [
 	["fire", "fire(g)"]
 ]
 
-[units.armored_oliphant_riders.damage_tables]
-Regular = [
+[units.armored_oliphant_riders.damage_tables.Regular]
+rows = [
 	"2-6: Bleed[8]",
 	"7: As below, d6 Psychic damage",
 	"8+: Unit killed",
-	"Note: bleeding does not cause more bleeding",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+]
+
+[units.armored_oliphant_riders.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.eagle_rider]
 race = "elf"
@@ -1196,14 +1282,20 @@ slow = [
 	["360°", "A", "F"]
 ]
 
-[units.eagle_rider.damage_tables]
-Regular = [
+[units.eagle_rider.damage_tables.Regular]
+rows = [
 	"2-3: +1 to future damage, Bleed[4]",
 	"4-6: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"7+: killed",
-	"Note: bleeding does not cause more bleeding",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"bleeding does not cause more bleeding",
+]
+
+[units.eagle_rider.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [models.armored_unicorn_rider]
 name = "Armored Unicorn Rider"

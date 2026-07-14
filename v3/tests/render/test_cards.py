@@ -66,7 +66,7 @@ def _unit(
         size=size,
         shaken=shaken or ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=orders,
-        damage_tables={"Regular": ["Fine", "Dead"]},
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
     return Unit(name=name, config=config, models=models or (_model(),))
 
@@ -289,7 +289,7 @@ def test_render_cards_markdown_has_tables_and_shaken(tmp_path: Path) -> None:
     assert "## Goblin Infantry" in text
     assert "### Movement" in text
     assert "### Fire" in text
-    assert "| shaken |" in text
+    assert "| shaken: " in text
 
 
 def test_render_cards_html_is_a_table(tmp_path: Path) -> None:

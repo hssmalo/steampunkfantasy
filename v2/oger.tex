@@ -281,6 +281,7 @@ Range: 3  Angle: [True, True, True, True] AP: 2 Damage: d6-2 \\
 
 \noindent Once speed is rest, considered this unit destroied without enemy gaining victory points for it\\ 
 If this unit shares a hex with a unit with {{\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points\\ 
+Evation[3+]\\ 
 
 
 \ \\ {\bf fire } \\
@@ -373,6 +374,7 @@ Start with two ammo\\
 \noindent Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models\\ 
 May share hex with a huge unit\\ 
 If this unit shares a hex with another unit with {{\it repair}} ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points\\ 
+Evation[3+]\\ 
 
 
 \ \\ {\bf movement } \\
@@ -431,9 +433,10 @@ Assault Deflection: [1, 0, 0, 0] Die: 5+\\
   Special: \\
 \end{tabular}
 
-\noindent Heal[N, other, 1st healing] where N is the number of alive medic drones models\\ 
+\noindent Heal[N, other, 2nd healing] where N is the number of alive medic drones models\\ 
 May share hex with a huge unit\\ 
 If this unit shares a hex with a unit with {{\it repair}} ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points\\ 
+Evation[3+]\\ 
 
 
 \ \\ {\bf movement } \\
@@ -762,7 +765,7 @@ Need command: -2 to hit if unit is not connected to a main engine\\
 
 Range: 5  Angle: [True, True, True, True] AP: 6 Damage: d8+3 if penetrating all armor \\
 Indirect fire: may use line of sight of any scout instead of its own. In addition, if a scout has line of sight to target, the unit gains good shot: +1 to hit\\ 
-Place poison cloud[6] in the target hex\\ 
+In addition, wether you hit or not, Area[5+], AP=4, damage=d8 in the target hex\\ 
 
 
 
@@ -898,6 +901,7 @@ Assault Deflection: [1, 0, 0, 0] Die: 5+\\
 \indent Cunning Assault[1 for 2]\\ 
  
 \ \\
+Healing[1, any, 1st healing]\\ 
 
 \ \\
 {\bf Oger Rifle } \\
@@ -968,12 +972,12 @@ After eliminating one model with the use of aim, you get to choose which model t
 \ \\
 \ \\
 \begin{tabular}{ll}
-name: & {\bf Drone Suply } \\
+name: & {\bf Drone Supply } \\
 Requiers: & [[independent:1], [type:carrier]] \\
 Cost: & Upgrade all models for: 1ip \\
 \end{tabular}
 
-Gives Main engine suply of 4 {{\it drone swarm}} units which this model carries\\ 
+Gives a supply of 3 {{\it drone swarm}} units which this model carries\\ 
 
 
 

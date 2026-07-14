@@ -33,23 +33,32 @@ class Unit:
     def cost(self) -> t.Cost:
         """Full unit cost: base + upgrade model costs + equipment costs.
 
-        For upgrade_all=False equipment, cost is multiplied by the total number of
-        models in the unit (per-model pricing charged at unit granularity).
+        For upgrade_all=False equipment, cost is added once for each model
+        in the unit (per-model pricing charged at unit granularity).
+
+        For upgrade_all=True equipment, cost is added to the unit once
+        independently of how many units are upgraded.
         """
         cost = self.config.cost or t.Cost()
-        num_models = len(self.models)
+
+        unique = []
         for i, model in enumerate(self.models):
             # Model is an upgrade when its name differs from the default slot
             if model.name != self.config.models[i] and model.config.cost:
                 cost = cost + model.config.cost
+
+            tmp = []
             for equip in model.upgrade_equipment:
                 if equip.cost is None:
                     continue
-                if equip.upgrade_all is False:
-                    # Per-model pricing: multiply by full unit size
-                    cost = cost + equip.cost * num_models
-                else:
+                if not equip.upgrade_all:
                     cost = cost + equip.cost
+                elif equip.name in unique:
+                    continue
+                else:
+                    tmp.append(equip.name)
+                    cost = cost + equip.cost
+            unique = unique + tmp
         return cost
 
     def orders(self) -> OrdersConfig:

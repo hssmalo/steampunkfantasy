@@ -1,70 +1,105 @@
 \contentsline {chapter}{\numberline {1}Dark Elf}{7}{chapter.1}%
-\contentsline {section}{\numberline {1.1} Mechanical red Dragon }{8}{section.1.1}%
+\contentsline {section}{\numberline {1.1} Mechanical Red Dragon }{8}{section.1.1}%
 \contentsline {section}{\numberline {1.2} Mechanical Iron Dragon }{10}{section.1.2}%
 \contentsline {section}{\numberline {1.3} Queen YY }{12}{section.1.3}%
 \contentsline {section}{\numberline {1.4} Queen XY }{15}{section.1.4}%
-\contentsline {section}{\numberline {1.5} Nightmare Mechanical Cavalry }{17}{section.1.5}%
-\contentsline {section}{\numberline {1.6} Elite Mechanical Cavalry }{19}{section.1.6}%
-\contentsline {section}{\numberline {1.7} Mechanical Assault Spider }{21}{section.1.7}%
-\contentsline {section}{\numberline {1.8} Dark Elf Infantry }{23}{section.1.8}%
-\contentsline {section}{\numberline {1.9} Roboprosthetic DarkElf }{25}{section.1.9}%
-\contentsline {section}{\numberline {1.10} Assasin }{27}{section.1.10}%
-\contentsline {section}{\numberline {1.11} Roboprosthetic Assasin }{30}{section.1.11}%
-\contentsline {section}{\numberline {1.12} Scout }{33}{section.1.12}%
-\contentsline {section}{\numberline {1.13}Upgradeable Units}{35}{section.1.13}%
-\contentsline {section}{\numberline {1.14}Equipment and training Upgrades}{36}{section.1.14}%
-\contentsline {chapter}{\numberline {2}Dwarf}{41}{chapter.2}%
-\contentsline {section}{\numberline {2.1} Dwarf Infantry }{42}{section.2.1}%
-\contentsline {section}{\numberline {2.2} Dwarf Brother in arms }{44}{section.2.2}%
-\contentsline {section}{\numberline {2.3} SteamPowerArmor }{46}{section.2.3}%
-\contentsline {section}{\numberline {2.4} Mini Zeppelin }{48}{section.2.4}%
-\contentsline {section}{\numberline {2.5} Transport Zeppelin }{50}{section.2.5}%
-\contentsline {section}{\numberline {2.6} Dwarf AT-gun }{52}{section.2.6}%
-\contentsline {section}{\numberline {2.7} GunBlasterWagon }{54}{section.2.7}%
-\contentsline {section}{\numberline {2.8} Dw42 }{57}{section.2.8}%
-\contentsline {section}{\numberline {2.9} Zap }{60}{section.2.9}%
-\contentsline {section}{\numberline {2.10} Zeppelin }{63}{section.2.10}%
-\contentsline {section}{\numberline {2.11} Tamed Balrog }{66}{section.2.11}%
-\contentsline {section}{\numberline {2.12}Upgradeable Units}{68}{section.2.12}%
-\contentsline {section}{\numberline {2.13}Equipment and training Upgrades}{71}{section.2.13}%
-\contentsline {chapter}{\numberline {3}Elf}{79}{chapter.3}%
-\contentsline {section}{\numberline {3.1} Elf Infantry }{80}{section.3.1}%
-\contentsline {section}{\numberline {3.2} Illusion }{82}{section.3.2}%
-\contentsline {section}{\numberline {3.3} Elf Scout }{84}{section.3.3}%
-\contentsline {section}{\numberline {3.4} Elite Elf Scout }{86}{section.3.4}%
-\contentsline {section}{\numberline {3.5} E34 }{88}{section.3.5}%
-\contentsline {section}{\numberline {3.6} Tattoo Ink }{91}{section.3.6}%
-\contentsline {section}{\numberline {3.7} Bear Rider }{94}{section.3.7}%
-\contentsline {section}{\numberline {3.8} Eagle Rider }{96}{section.3.8}%
-\contentsline {section}{\numberline {3.9} Armored Unicorn Rider }{98}{section.3.9}%
-\contentsline {section}{\numberline {3.10} Pachyephalosaurus Riders }{101}{section.3.10}%
-\contentsline {section}{\numberline {3.11} Elk Cavalery }{104}{section.3.11}%
-\contentsline {section}{\numberline {3.12} Pegasus Rider }{106}{section.3.12}%
-\contentsline {section}{\numberline {3.13}Upgradeable Units}{109}{section.3.13}%
-\contentsline {section}{\numberline {3.14}Equipment and training Upgrades}{111}{section.3.14}%
-\contentsline {chapter}{\numberline {4}Ork}{115}{chapter.4}%
-\contentsline {section}{\numberline {4.1} Troll }{116}{section.4.1}%
-\contentsline {section}{\numberline {4.2} Champion }{118}{section.4.2}%
-\contentsline {section}{\numberline {4.3} Warg Rider }{120}{section.4.3}%
-\contentsline {section}{\numberline {4.4} Speedhead }{122}{section.4.4}%
-\contentsline {section}{\numberline {4.5} HammerHead }{125}{section.4.5}%
-\contentsline {section}{\numberline {4.6} Battlewagon }{128}{section.4.6}%
-\contentsline {section}{\numberline {4.7} Grunt }{131}{section.4.7}%
-\contentsline {section}{\numberline {4.8} Ork Infantry }{133}{section.4.8}%
-\contentsline {section}{\numberline {4.9} BioEngineered Ork }{135}{section.4.9}%
-\contentsline {section}{\numberline {4.10} Ork Char B1 }{137}{section.4.10}%
-\contentsline {section}{\numberline {4.11}Upgradeable Units}{141}{section.4.11}%
-\contentsline {section}{\numberline {4.12}Equipment and training Upgrades}{142}{section.4.12}%
-\contentsline {chapter}{\numberline {5}Gnome}{149}{chapter.5}%
-\contentsline {section}{\numberline {5.1} Gnome Infantry }{150}{section.5.1}%
-\contentsline {section}{\numberline {5.2} Quad Bike }{152}{section.5.2}%
-\contentsline {section}{\numberline {5.3} Assault Bots }{154}{section.5.3}%
-\contentsline {section}{\numberline {5.4} Mechanical Rat }{156}{section.5.4}%
-\contentsline {section}{\numberline {5.5} Gnome Motorcyle }{157}{section.5.5}%
-\contentsline {section}{\numberline {5.6} Ballista Drone }{159}{section.5.6}%
-\contentsline {section}{\numberline {5.7} Ballista Tractor, Mark I }{161}{section.5.7}%
-\contentsline {section}{\numberline {5.8} Ballista Tractor, Mark II }{164}{section.5.8}%
-\contentsline {section}{\numberline {5.9} Ballista Tractor, Mark III }{167}{section.5.9}%
-\contentsline {section}{\numberline {5.10} Gnome Helicopter }{170}{section.5.10}%
-\contentsline {section}{\numberline {5.11}Upgradeable Units}{173}{section.5.11}%
-\contentsline {section}{\numberline {5.12}Equipment and training Upgrades}{177}{section.5.12}%
+\contentsline {section}{\numberline {1.5} Nightmare Mechanical Cavalry }{18}{section.1.5}%
+\contentsline {section}{\numberline {1.6} Elite Mechanical Cavalry }{20}{section.1.6}%
+\contentsline {section}{\numberline {1.7} Mechanical Assault Spider }{22}{section.1.7}%
+\contentsline {section}{\numberline {1.8} Mechanical Scorpion }{24}{section.1.8}%
+\contentsline {section}{\numberline {1.9} Dark Elf Infantry }{26}{section.1.9}%
+\contentsline {section}{\numberline {1.10} Multicultural Infantry }{28}{section.1.10}%
+\contentsline {section}{\numberline {1.11} Multicultural Trainee }{31}{section.1.11}%
+\contentsline {section}{\numberline {1.12} Roboprosthetic DarkElf }{33}{section.1.12}%
+\contentsline {section}{\numberline {1.13} Assasin }{35}{section.1.13}%
+\contentsline {section}{\numberline {1.14} Roboprosthetic Assasin }{37}{section.1.14}%
+\contentsline {section}{\numberline {1.15} Scout }{39}{section.1.15}%
+\contentsline {section}{\numberline {1.16}Upgradeable Units}{40}{section.1.16}%
+\contentsline {section}{\numberline {1.17}Equipment and training Upgrades}{42}{section.1.17}%
+\contentsline {chapter}{\numberline {2}Dwarf}{47}{chapter.2}%
+\contentsline {section}{\numberline {2.1} Dwarf Infantry }{48}{section.2.1}%
+\contentsline {section}{\numberline {2.2} Dwarf Brother in arms }{50}{section.2.2}%
+\contentsline {section}{\numberline {2.3} SteamPowerArmor }{52}{section.2.3}%
+\contentsline {section}{\numberline {2.4} Mini Zeppelin }{54}{section.2.4}%
+\contentsline {section}{\numberline {2.5} Transport Zeppelin }{56}{section.2.5}%
+\contentsline {section}{\numberline {2.6} Dwarf AT-gun }{58}{section.2.6}%
+\contentsline {section}{\numberline {2.7} GunBlasterWagon }{60}{section.2.7}%
+\contentsline {section}{\numberline {2.8} Dw42 }{63}{section.2.8}%
+\contentsline {section}{\numberline {2.9} Zap }{66}{section.2.9}%
+\contentsline {section}{\numberline {2.10} Zeppelin }{69}{section.2.10}%
+\contentsline {section}{\numberline {2.11} Tamed Balrog }{71}{section.2.11}%
+\contentsline {section}{\numberline {2.12}Upgradeable Units}{72}{section.2.12}%
+\contentsline {section}{\numberline {2.13}Equipment and training Upgrades}{76}{section.2.13}%
+\contentsline {chapter}{\numberline {3}Elf}{83}{chapter.3}%
+\contentsline {section}{\numberline {3.1} Elf Infantry }{84}{section.3.1}%
+\contentsline {section}{\numberline {3.2} Illusion }{86}{section.3.2}%
+\contentsline {section}{\numberline {3.3} Elf Scout }{88}{section.3.3}%
+\contentsline {section}{\numberline {3.4} Elite Elf Scout }{90}{section.3.4}%
+\contentsline {section}{\numberline {3.5} E34 }{92}{section.3.5}%
+\contentsline {section}{\numberline {3.6} Tattoo Ink }{95}{section.3.6}%
+\contentsline {section}{\numberline {3.7} Bear Rider }{98}{section.3.7}%
+\contentsline {section}{\numberline {3.8} Dire Polar Bear Riders }{100}{section.3.8}%
+\contentsline {section}{\numberline {3.9} Armored Unicorn Rider }{102}{section.3.9}%
+\contentsline {section}{\numberline {3.10} Pachyephalosaurus Riders }{105}{section.3.10}%
+\contentsline {section}{\numberline {3.11} Elk Cavalery }{108}{section.3.11}%
+\contentsline {section}{\numberline {3.12} Pegasus Rider }{110}{section.3.12}%
+\contentsline {section}{\numberline {3.13} Saouropod Rider }{113}{section.3.13}%
+\contentsline {section}{\numberline {3.14} Oliphant Rider }{116}{section.3.14}%
+\contentsline {section}{\numberline {3.15} Eagle Rider }{119}{section.3.15}%
+\contentsline {section}{\numberline {3.16}Upgradeable Units}{121}{section.3.16}%
+\contentsline {section}{\numberline {3.17}Equipment and training Upgrades}{123}{section.3.17}%
+\contentsline {chapter}{\numberline {4}Ork}{129}{chapter.4}%
+\contentsline {section}{\numberline {4.1} Troll }{130}{section.4.1}%
+\contentsline {section}{\numberline {4.2} Champion }{132}{section.4.2}%
+\contentsline {section}{\numberline {4.3} Warg Rider }{134}{section.4.3}%
+\contentsline {section}{\numberline {4.4} Speedhead }{136}{section.4.4}%
+\contentsline {section}{\numberline {4.5} HammerHead }{139}{section.4.5}%
+\contentsline {section}{\numberline {4.6} Battlewagon }{142}{section.4.6}%
+\contentsline {section}{\numberline {4.7} Grunt }{145}{section.4.7}%
+\contentsline {section}{\numberline {4.8} Ork WereWarg }{147}{section.4.8}%
+\contentsline {section}{\numberline {4.9} BioEngineered Ork }{149}{section.4.9}%
+\contentsline {section}{\numberline {4.10} Ork Char B1 }{151}{section.4.10}%
+\contentsline {section}{\numberline {4.11}Upgradeable Units}{154}{section.4.11}%
+\contentsline {section}{\numberline {4.12}Equipment and training Upgrades}{155}{section.4.12}%
+\contentsline {chapter}{\numberline {5}Gnome}{163}{chapter.5}%
+\contentsline {section}{\numberline {5.1} Gnome Infantry }{164}{section.5.1}%
+\contentsline {section}{\numberline {5.2} Quad Bike }{166}{section.5.2}%
+\contentsline {section}{\numberline {5.3} Assault Bots }{168}{section.5.3}%
+\contentsline {section}{\numberline {5.4} Mechanical Rat }{169}{section.5.4}%
+\contentsline {section}{\numberline {5.5} Gnome Motorcyle }{170}{section.5.5}%
+\contentsline {section}{\numberline {5.6} Ballista Drone }{172}{section.5.6}%
+\contentsline {section}{\numberline {5.7} Ballista Tractor, Mark I }{174}{section.5.7}%
+\contentsline {section}{\numberline {5.8} Ballista Tractor, Mark II }{177}{section.5.8}%
+\contentsline {section}{\numberline {5.9} Ballista Tractor, Mark III }{180}{section.5.9}%
+\contentsline {section}{\numberline {5.10} Gnome Helicopter }{183}{section.5.10}%
+\contentsline {section}{\numberline {5.11}Upgradeable Units}{186}{section.5.11}%
+\contentsline {section}{\numberline {5.12}Equipment and training Upgrades}{190}{section.5.12}%
+\contentsline {chapter}{\numberline {6}Abomination}{197}{chapter.6}%
+\contentsline {section}{\numberline {6.1} Abomination Infantry }{198}{section.6.1}%
+\contentsline {section}{\numberline {6.2} Horror }{200}{section.6.2}%
+\contentsline {section}{\numberline {6.3} Robot Crab }{202}{section.6.3}%
+\contentsline {section}{\numberline {6.4} Gigant Frog Riders }{204}{section.6.4}%
+\contentsline {section}{\numberline {6.5} Hippopotamus Riders }{207}{section.6.5}%
+\contentsline {section}{\numberline {6.6} Squ }{210}{section.6.6}%
+\contentsline {section}{\numberline {6.7} Frost 88 }{213}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Upgradeable Units}{215}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Equipment and training Upgrades}{216}{section.6.9}%
+\contentsline {chapter}{\numberline {7}Goblin}{219}{chapter.7}%
+\contentsline {section}{\numberline {7.1} Goblin Infantry }{220}{section.7.1}%
+\contentsline {section}{\numberline {7.2} Goblin Infantry carrier }{222}{section.7.2}%
+\contentsline {section}{\numberline {7.3} Heavy carrier }{225}{section.7.3}%
+\contentsline {section}{\numberline {7.4} Mechanical Fire Bird }{228}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Upgradeable Units}{230}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Equipment and training Upgrades}{230}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Oger}{235}{chapter.8}%
+\contentsline {section}{\numberline {8.1} Oger Infantry }{236}{section.8.1}%
+\contentsline {section}{\numberline {8.2} Oger Robot }{238}{section.8.2}%
+\contentsline {section}{\numberline {8.3} Oger Assault Scout }{240}{section.8.3}%
+\contentsline {section}{\numberline {8.4} Drone swarm }{242}{section.8.4}%
+\contentsline {section}{\numberline {8.5} Repair Drone }{244}{section.8.5}%
+\contentsline {section}{\numberline {8.6} Medic Drone }{246}{section.8.6}%
+\contentsline {section}{\numberline {8.7} Main engine }{248}{section.8.7}%
+\contentsline {section}{\numberline {8.8} Broadside Wagon }{251}{section.8.8}%
+\contentsline {section}{\numberline {8.9} Artillery Wagon }{254}{section.8.9}%
+\contentsline {section}{\numberline {8.10}Upgradeable Units}{256}{section.8.10}%
+\contentsline {section}{\numberline {8.11}Equipment and training Upgrades}{259}{section.8.11}%

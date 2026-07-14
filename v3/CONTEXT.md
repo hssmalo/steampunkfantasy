@@ -81,7 +81,16 @@ _Avoid_: shooting, ranged
 
 **Damage table**:
 A lookup mapping a rolled damage result to its effects (kills, tokens, unit
-destruction). Kinds include `regular` and `psychic`.
+destruction), made up of Damage rows plus table-wide notes. Kinds include
+`Regular`, `Critical`, `Crew`, `Inner`, and `Psychic`.
+
+**Damage row**:
+One entry in a Damage table: a Damage roll paired with its effect text.
+_Avoid_: damage line, damage table entry
+
+**Damage roll**:
+The roll portion of a Damage row that a rolled result is checked against —
+an exact value, a range, or an "at least" threshold.
 
 **Special** (special rule):
 A named rule that modifies a Unit, Model, Equipment, Assault, or Range beyond
@@ -151,8 +160,12 @@ rows. Units that produce identical cards collapse to one set (no duplicates).
 _Avoid_: order sheet, unit card (a card is one option, not one Unit)
 
 **Army Reference**:
-A Rendering of the exact rules pertaining to one Army. Built from a resolved
-Army.
+A Rendering of the exact rules pertaining to one Army, built from a resolved
+Army. A nested Unit → Model → Equipment view of the fielded force: stats,
+specials (the short override text — full rule text belongs to the Rulebook),
+and damage tables. Orders are *not* part of it; those live on the Order Cards.
+Identically-configured Units (and identical Models within a Unit) appear once.
+_Avoid_: army sheet, roster printout
 
 **Race Overview**:
 A Rendering covering all Units, Models, and Equipment of one Race. Built from a

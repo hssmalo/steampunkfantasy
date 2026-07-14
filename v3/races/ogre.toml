@@ -2,7 +2,7 @@
 
 [races.ogre]
 name = "Ogre"
-description = "Yellow, tiny, little men"
+description = "Large intelligent humanoid with huge tanks and small and tiny robots."
 
 [units]
 
@@ -13,6 +13,14 @@ models = ["ogre_hydra", "ogre_hydra_crew", "ogre_hydra_crew"]
 size = "Huge"
 cost.mp = 16
 cost.xp = 96
+
+description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two large ogres riding it. The only animal large enough to carry two ogres.
+Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each.
+
+Both the Elfs and the Ogres uses these beasts in war, while DarkElf has made a mechanical copy.
+
+Low range and slow is a bad combination, but if you manage to come within short range of enemy, the hydra has powerful firepower, and especially if you get an enemy within point blank range, where you can use the acid breath full potential. You may consider upgrading the Ogre Hydra Crew weapons to give it some better firepower at longer ranges.
+'''
 
 [units.ogre_hydra.shaken]
 speed = "slow"
@@ -32,21 +40,33 @@ slow =  [["Fire(H)", "Load(crew)"], ["Load(crew)", "Fire(H)"], ["Fire(H)", "Fire
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
 
-[units.ogre_hydra.damage_tables]
-Regular = [
+[units.ogre_hydra.damage_tables.Regular]
+rows = [
 	"1-2: Bleed[4]",
 	"3-5: +1 to future damage, Bleed[4]",
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"10-17: As below, d6 Psychic damage",
 	"18: Unit destroyed",
-	"{{\\it Note: Bleed does not cause more bleeding}}",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"Bleed does not cause more bleeding",
+]
+
+[units.ogre_hydra.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
-description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
+description = '''Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. 
+
+The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle. 
+
+Versus regular infantry ogres are at a clear disadvantage since they only  fire two shots per unit. However versus thougher opponents, their far superior damage per shot compensate for lack of models in the unit.'''
+
+
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 16
@@ -72,21 +92,29 @@ still = [
 still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 
-[units.ogre_infantry.damage_tables]
-Regular = [
+[units.ogre_infantry.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[4]",
 	"4-6: Kill 1 model",
 	"7-10: Kill 1 model, Psychic damage[d6]",
 	"11+: Unit destroyed",
-	"{{\\it Note: If one model is killed remove half of the +1 future damage tokens \\\\ and if killed by bleeding/poison, remove that bleeding/poison token}}",
 ]
-Psychic = ["6+: shaken"]
+notes = [
+	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+]
+
+[units.ogre_infantry.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.ogre_robot]
 race = "ogre"
 models = ["ogre_robot", "ogre_robot"]
 name = "Ogre Robot"
-description = "Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they try to compensate by making medium sized robots. Although being only medium size, they are strong enough to fire large ogre rifles. However, the robots are not as good in close combat compared to the regular ogre infantry."
+description = '''Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action. 
+
+Due to being smaller and having some armor they are far better protected compared to Ogre infantry. However, the robots are not as good in close combat compared to the regular ogre infantry. They also cost cp (craftpoints) instead of mp (manpower) and thus may be viewed as more expensive'''
 size = "Medium"
 cost.cp = 16
 armor = [3, 3, 0, 0]
@@ -112,13 +140,15 @@ still = [
 still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 
-[units.ogre_robot.damage_tables]
-Regular = [
+[units.ogre_robot.damage_tables.Regular]
+rows = [
 	"2-3: +1 to future damage",
 	"4-6: +2 to future damage",
 	"7-10: Kill 1 model",
 	"11+: Unit destroyed",
-	"{{\\it Note: remove half of the +1 future damage tokens when one robots dies}}",
+]
+notes = [
+	"remove half of the +1 future damage tokens when one robots dies",
 ]
 
 [units.pet_panther]
@@ -127,7 +157,7 @@ name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 8
-description = "A Panther is viewed as a cute kitten, with useful properties by the ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities"
+description = "A Panther is viewed as a cute kitten, with useful properties by the Ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities"
 
 [units.pet_panther.shaken]
 speed = "slow"
@@ -137,6 +167,9 @@ comment = "If sharing a hex with an Infantry, you may give the pet follow orders
 [units.pet_panther.special]
 "Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
 "Evation" = "[4+]"
+"Terror" = "[4]"
+
+
 
 [units.pet_panther.orders.movement]
 still = [
@@ -156,18 +189,26 @@ fast = [
 	["Follow", "Follow", "Follow"]
 ]
 
-[units.pet_panther.damage_tables]
-Regular = [
+[units.pet_panther.damage_tables.Regular]
+rows = [
 	"2-3: Bleed[4]",
 	"4-5: As below, +1 to future damage",
-	"6: unit destroyed"
+	"6: unit destroyed",
 ]
-Psychic = ["4+: shaken"]
+
+[units.pet_panther.damage_tables.Psychic]
+rows = [
+	"4+: shaken",
+]
 
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description = "Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
+description = '''Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating before taken out of action. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously with their long swards. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. 
+
+An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s).
+
+If you get your hands on some healing, they may help tremendously in keeping these unit alive.'''
 models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 8
@@ -204,13 +245,17 @@ fast = [
 	["360°", "F", "B"],
 ]
 
-[units.ogre_assault_scout.damage_tables]
-Regular = [
+[units.ogre_assault_scout.damage_tables.Regular]
+rows = [
 	"2-5: Bleed[8]",
 	"7-8: As below, +1 to future damage",
-	"9+: unit destroyed"
+	"9+: unit destroyed",
 ]
-Psychic = ["6+: shaken"]
+
+[units.ogre_assault_scout.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
 
 [units.drone_swarm]
 race = "ogre"
@@ -218,7 +263,10 @@ name = "Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.cp = 4
-description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
+description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre infantry themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
+
+Fire at whatever is in range whenever you can, and cover the enemy in minor acid. These units are extremely accurate and extremely cheap, but will self destruct once they reach rest speed. Keep some support firepower to kill enemies which are covered in acid.
+'''
 
 [units.drone_swarm.shaken]
 speed = "slow"
@@ -226,7 +274,7 @@ movement_order = ["-", "-", "-"]
 
 [units.drone_swarm.special]
 "Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
-"Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
 "Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
 
@@ -259,58 +307,11 @@ still = [["360°", "360°", "B[rest]"]]
 slow = [["360°", "F", "B"]]
 fast = [["Chase", "Chase", "Chase + B"]]
 
-[units.drone_swarm.damage_tables]
-Regular = ["1+: Destroy one model"]
-
-[units.industrial_drone_swarm]
-race = "ogre"
-name = "Industrial Drone Swarm"
-models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
-size = "Tiny"
-cost.ip = 1
-description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
-
-[units.industrial_drone_swarm.shaken]
-speed = "slow"
-movement_order = ["-", "-", "-"]
-
-[units.industrial_drone_swarm.special]
-"Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
-"Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
-"Evation" = "[3+]"
-"Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
-
-[units.industrial_drone_swarm.orders.fire]
-still = [
-	["Fire", "-"],
-	["-", "Fire"],
-	["Aim", "-"],
-	["-", "Aim"],
-	["Spot", "Spot"]
-]
-slow = [
-	["Fire", "-"],
-	["-", "Fire"],
-	["Aim", "-"],
-	["-", "Aim"],
-	["Spot", "Spot"]
-]
-fast = [
-	["Fire", "-"],
-	["-", "Fire"],
-	["Aim", "-"],
-	["-", "Aim"],
-	["Spot", "Spot"]
+[units.drone_swarm.damage_tables.Regular]
+rows = [
+	"1+: Destroy one model",
 ]
 
-[units.industrial_drone_swarm.orders.movement]
-rest = [["-", "-", "-"]]
-still = [["360°", "360°", "B[rest]"]]
-slow = [["360°", "F", "B"]]
-fast = [["Chase", "Chase", "Chase + B"]]
-
-[units.industrial_drone_swarm.damage_tables]
-Regular = ["0+: Destroy one model"]
 
 [units.repair_drone]
 race = "ogre"
@@ -326,14 +327,16 @@ movement_order = ["-", "-", "-"]
 
 [units.repair_drone.special]
 "Repair" = "Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models"
-"Repairing" = "If this unit shares a hex with another unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
 "Evation" = "[3+]"
 
 [units.repair_drone.orders.movement]
 slow = [["360°", "F", "360°"]]
 
-[units.repair_drone.damage_tables]
-Regular = ["1+: destroy one model"]
+[units.repair_drone.damage_tables.Regular]
+rows = [
+	"1+: destroy one model",
+]
 
 [units.medic_drone]
 race = "ogre"
@@ -350,14 +353,16 @@ movement_order = ["-", "-", "-"]
 
 [units.medic_drone.special]
 "Heal" = "Heal[N, other, 2nd healing] where N is the number of alive medic drones models"
-"Repairing" = "If this unit shares a hex with a unit with {{\\it repair}} ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
+"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
 "Evation" = "[3+]"
 
 [units.medic_drone.orders.movement]
 fast = [["Help", "Help", "Help"]]
 
-[units.medic_drone.damage_tables]
-Regular = ["1+: destroy one model"]
+[units.medic_drone.damage_tables.Regular]
+rows = [
+	"1+: destroy one model",
+]
 
 [units.main_engine]
 race = "ogre"
@@ -366,6 +371,13 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 32
 armor = [12, 10, 10, 8]
+description = '''A huge locomotive of this land train, useually pulling one or two wagons. It can carry lots of tiny drones and has a huge ogre cannon firing forward. Very well armored from front and side, less so in back. It also provided command and intelligence to the wagons it is towing
+
+This unit blocks line of sight, and is well protected. Exploit the blocked line of sight to your advantage, to protect the other wagons behind or units you want to come closer without exposing them to enemy fire. The ogre cannon is a large weapons which does plenty of damage, but you have only one shot, which may hit or miss. It has also somewhat low range and can only fire straight forward.
+
+It can deploy drones up to range 2, which might be a big bost, and you can put them really close to the enemy.
+'''
+
 
 [units.main_engine.shaken]
 speed = "slow"
@@ -405,20 +417,24 @@ fast = [
 	["F", "F", "B"],
 ]
 
-[units.main_engine.damage_tables]
-Critical = [
+[units.main_engine.damage_tables.Critical]
+rows = [
 	"1-3: +3 to future damage",
 	"4: Cannot rotate",
 	"5: Cannot move",
 	"6: set on Fire",
 ]
-Regular = [
+
+[units.main_engine.damage_tables.Regular]
+rows = [
 	"1-3: +1 on future damage",
 	"4: as below, shaken",
 	"5-8: Critical damage[d6], +1 on future damage",
 	"9+: Destroyed",
 ]
-Crew = [
+
+[units.main_engine.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-12: as 6-7, +3 to future Crew damage",
@@ -430,8 +446,13 @@ race = "ogre"
 name = "Broadside Wagon"
 models = ["broadside_wagon"]
 size = "Large"
-cost.ip = 16
+cost.ip = 8
 armor = [2, 10, 10, 8]
+description = '''Broadside wagon fires is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time. It need to be connected with a main engine to move (either directly or indirectly). It is well protected from the sides and back, but is extremely porly armored from the front.
+
+Try to place the broadside wagon with enemies on all sides such that you can use all the firepower it offers. If you loose an assault you will most probably be disconnected from the main engine. So avoid assault at all costs.
+'''
+
 
 [units.broadside_wagon.shaken]
 speed = "still"
@@ -445,15 +466,22 @@ still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
 slow =  [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
 fast =  [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
 
-[units.broadside_wagon.damage_tables]
-Critical = ["1-5: +3 to future damage", "6: set on Fire"]
-Regular = [
+[units.broadside_wagon.damage_tables.Critical]
+rows = [
+	"1-5: +3 to future damage",
+	"6: set on Fire",
+]
+
+[units.broadside_wagon.damage_tables.Regular]
+rows = [
 	"1-3: +1 on future damage",
 	"4: as below, shaken",
 	"5-8: Critical damage[d6], +1 on future damage",
 	"9+: Destroyed",
 ]
-Crew = [
+
+[units.broadside_wagon.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-12: as 6-7, +3 to future Crew damage",
@@ -465,8 +493,13 @@ race = "ogre"
 name = "Artillery Wagon"
 models = ["artillery_wagon"]
 size = "Large"
-cost.ip = 16
+cost.ip = 32
 armor = [2, 10, 10, 8]
+description = '''Artillery wagons is armored with a huge ogre artillery which can fire indirectly. It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front. 
+
+Indirect fire, long range, to hit bonus from scouts and huge damage is a good combination and target should be enemy tanks or other expensive units. If you loose an assault, you are probably disconnected from main engine, and makes you stranded, so avoid assaults at all cost.
+'''
+
 
 [units.artillery_wagon.shaken]
 speed = "still"
@@ -474,42 +507,46 @@ movement_order = ["-", "-", "-"]
 
 [units.artillery_wagon.special]
 "Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+"Fire Order" = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading" 
+
+
 
 [units.artillery_wagon.orders.fire]
 still = [
-	["Fire", "-"],
+	["Fire", "Aim"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 slow = [
-	["Fire", "-"],
+	["Fire", "Aim"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 fast = [
-	["Fire", "-"],
+	["Fire", "Aim"],
 	["-", "Fire"],
 	["Load", "-"],
-	["-", "Load"],
-	["Aim", "-"],
-	["-", "Aim"],
+	["-", "Load"]
 ]
 
-[units.artillery_wagon.damage_tables]
-Critical = ["1-5: +3 to future damage", "6: set on Fire"]
-Regular = [
+[units.artillery_wagon.damage_tables.Critical]
+rows = [
+	"1-5: +3 to future damage",
+	"6: set on Fire",
+]
+
+[units.artillery_wagon.damage_tables.Regular]
+rows = [
 	"1-3: +1 on future damage",
 	"4: as below, shaken",
 	"5-8: Critical damage[d6], +1 on future damage",
 	"9+: Destroyed",
 ]
-Crew = [
+
+[units.artillery_wagon.damage_tables.Crew]
+rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
 	"6-7: as 4-5, shaken",
 	"8-12: as 6-7, +3 to future Crew damage",

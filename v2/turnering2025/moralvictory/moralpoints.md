@@ -8,6 +8,7 @@ You gain moral points in the following way:
 - you have flying Zeppelins in you army, +1 per turnament
 - you have a mechanical owl, +1 per turnament
 - most tokens on one unit at end of game during turnament, +2 (friendly), +4 (enemy)
+- Once per turnemanet, you may complain that one of your enemy units were overpowered. That player gains -1, you get +1 if atleast one other player agrees.
 - discover the beauty of crew damage, +3 per turnament
 - kill a tank with crew damage, +3 per turnament
 - Having the most fun, +5 per turnament

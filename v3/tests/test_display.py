@@ -43,7 +43,7 @@ def simple_race() -> RaceConfig:
                 special={},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"Regular": ["Fine", "Dead"]},
+                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
             )
         },
         models={

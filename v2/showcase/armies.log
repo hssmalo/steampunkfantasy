@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  12 MAY 2025 19:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  20 APR 2026 20:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -286,7 +286,7 @@ LaTeX Info: Redefining \addtolength on input line 81.
 Package: tokcycle 2021/08/25 V1.42 Cycle through and transform a stream of toke
 ns
 ))
-Package hyperref Info: Option `colorlinks' set `true' on input line 15.
+Package hyperref Info: Option `colorlinks' set `true' on input line 17.
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
@@ -298,27 +298,27 @@ LaTeX Warning: Unused global option(s):
     [a4,color].
 
 (./armies.aux (./DwarfSteamPowerArmorwithBalrogAssault.aux)
-(./Oliphantattack.aux))
+(./Oliphantattack.aux) (./Insanity.aux))
 \openout1 = `armies.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
@@ -348,7 +348,7 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 \makeMPintoPDFobject=\count308
 \everyMPtoPDFconversion=\toks30
 )))
-Package hyperref Info: Link coloring ON on input line 25.
+Package hyperref Info: Link coloring ON on input line 27.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -360,9 +360,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count309
 )
-LaTeX Info: Redefining \ref on input line 25.
-LaTeX Info: Redefining \pageref on input line 25.
-LaTeX Info: Redefining \nameref on input line 25.
+LaTeX Info: Redefining \ref on input line 27.
+LaTeX Info: Redefining \pageref on input line 27.
+LaTeX Info: Redefining \nameref on input line 27.
 
 (./armies.out) (./armies.out)
 \@outlinefile=\write3
@@ -373,9 +373,9 @@ LaTeX Info: Redefining \nameref on input line 25.
 File: fc-english.def 2016/01/12
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 27.
+(Font)              <14.4> on input line 29.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 27.
+(Font)              <7> on input line 29.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
@@ -403,7 +403,7 @@ Chapter 1.
 \openout2 = `DwarfSteamPowerArmorwithBalrogAssault.aux'.
 
  (./DwarfSteamPowerArmorwithBalrogAssault.tex
-Overfull \hbox (72.5802pt too wide) in paragraph at lines 5--13
+Overfull \hbox (77.47598pt too wide) in paragraph at lines 5--13
 [] 
  []
 
@@ -413,137 +413,108 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--18
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 21--29
+Underfull \hbox (badness 10000) in paragraph at lines 21--32
 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (60.43697pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 6 \OT1/cmr/m/sl/12 CHAPTER 1.  DWARFS: STEAMPOWERARMOR WITH BAL
-ROG ASSAULT.TEX
  []
 
 [6
 
+
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
+Underfull \hbox (badness 10000) in paragraph at lines 43--44
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--45
+Underfull \hbox (badness 10000) in paragraph at lines 45--48
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+Underfull \hbox (badness 10000) in paragraph at lines 52--53
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--58
+Underfull \hbox (badness 10000) in paragraph at lines 60--61
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--63
+Underfull \hbox (badness 10000) in paragraph at lines 64--66
 
  []
 
+[7
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7]
-Overfull \hbox (39.61943pt too wide) in paragraph at lines 87--95
+]
+Overfull \hbox (39.61943pt too wide) in paragraph at lines 90--98
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 96--99
+Underfull \hbox (badness 10000) in paragraph at lines 99--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 102--108
+Underfull \hbox (badness 10000) in paragraph at lines 105--113
+
+ []
+
+[8
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (60.43697pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 8 \OT1/cmr/m/sl/12 CHAPTER 1.  DWARFS: STEAMPOWERARMOR WITH BAL
-ROG ASSAULT.TEX
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+Underfull \hbox (badness 10000) in paragraph at lines 126--129
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--124
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 128--129
+Underfull \hbox (badness 10000) in paragraph at lines 137--139
 
  []
 
+[9
 
-Underfull \hbox (badness 10000) in paragraph at lines 132--134
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [9]
-Overfull \hbox (56.58731pt too wide) in paragraph at lines 158--166
+]
+Overfull \hbox (61.4831pt too wide) in paragraph at lines 163--171
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--170
+Underfull \hbox (badness 10000) in paragraph at lines 172--175
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 173--190
+Underfull \hbox (badness 10000) in paragraph at lines 178--195
+
+ []
+
+[10
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (66.3119pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 10 \OT1/cmr/m/sl/12 CHAPTER 1.  DWARFS: STEAMPOWERARMOR WITH BA
-LROG ASSAULT.TEX
- []
-
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 213--214
+Underfull \hbox (badness 10000) in paragraph at lines 214--215
 
  []
 
@@ -553,7 +524,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 218--219
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 222--223
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
 
  []
 
@@ -563,67 +534,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 227--228
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 231--233
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 236--238
 
- [11]
-Overfull \hbox (72.5802pt too wide) in paragraph at lines 257--265
+ []
+
+[11
+
+]
+Overfull \hbox (77.47598pt too wide) in paragraph at lines 262--270
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 266--268
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 271--278
+Underfull \hbox (badness 10000) in paragraph at lines 276--283
+
+ []
+
+[12
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (66.3119pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 12 \OT1/cmr/m/sl/12 CHAPTER 1.  DWARFS: STEAMPOWERARMOR WITH BA
-LROG ASSAULT.TEX
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 289--290
+Underfull \hbox (badness 10000) in paragraph at lines 296--299
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--294
+Underfull \hbox (badness 10000) in paragraph at lines 303--304
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
+Underfull \hbox (badness 10000) in paragraph at lines 307--308
 
  []
 
+) [13
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--303
-
- []
-
-)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [13]
-Overfull \hbox (66.3119pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 14 \OT1/cmr/m/sl/12 CHAPTER 1.  DWARFS: STEAMPOWERARMOR WITH BA
-LROG ASSAULT.TEX
- []
-
-[14
+] [14
 
 
 
@@ -633,7 +594,7 @@ Chapter 2.
 \openout2 = `Oliphantattack.aux'.
 
  (./Oliphantattack.tex
-Overfull \hbox (59.59422pt too wide) in paragraph at lines 5--13
+Overfull \hbox (64.81639pt too wide) in paragraph at lines 5--13
 [] 
  []
 
@@ -647,10 +608,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 19--27
 
  []
 
+[16
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [16
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 38--39
@@ -663,148 +622,328 @@ Underfull \hbox (badness 10000) in paragraph at lines 46--47
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--55
+Underfull \hbox (badness 10000) in paragraph at lines 50--54
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--69
+Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--77
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--86
+Underfull \hbox (badness 10000) in paragraph at lines 79--85
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 94--98
+Underfull \hbox (badness 10000) in paragraph at lines 93--97
 
  []
 
-[17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[17
 
- [18]
-Overfull \hbox (44.32355pt too wide) in paragraph at lines 122--130
+] [18]
+Overfull \hbox (44.32355pt too wide) in paragraph at lines 121--129
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--152
+Underfull \hbox (badness 10000) in paragraph at lines 133--151
+
+ []
+
+[19
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19]
-Underfull \hbox (badness 10000) in paragraph at lines 163--164
+Underfull \hbox (badness 10000) in paragraph at lines 170--171
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 171--172
+Underfull \hbox (badness 10000) in paragraph at lines 174--176
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 175--177
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
 
  []
 
+[20
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--187
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [20]
-Overfull \hbox (72.5802pt too wide) in paragraph at lines 211--219
+]
+Overfull \hbox (77.47598pt too wide) in paragraph at lines 210--218
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 220--221
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 224--232
+Underfull \hbox (badness 10000) in paragraph at lines 223--231
+
+ []
+
+[21
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 242--243
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [21]
-Underfull \hbox (badness 10000) in paragraph at lines 243--244
+Underfull \hbox (badness 10000) in paragraph at lines 244--247
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 245--248
+Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 252--253
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
+
+ []
+
+) [22
+
+]
+Chapter 3.
+[23
+
+
+
+]
+\openout2 = `Insanity.aux'.
+
+ (./Insanity.tex
+Overfull \hbox (77.47598pt too wide) in paragraph at lines 5--13
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--18
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--257
+Underfull \hbox (badness 10000) in paragraph at lines 21--29
 
  []
 
-)
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[24
 
- [22]
-(./armies.aux (./DwarfSteamPowerArmorwithBalrogAssault.aux)
-(./Oliphantattack.aux))
 
-Package rerunfilecheck Warning: File `armies.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+]
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
-Package rerunfilecheck Info: Checksums for `armies.out':
-(rerunfilecheck)             Before: 5E84B0AB44AF7F6A62019AD67351A873;1506
-(rerunfilecheck)             After:  0E2BC1E5B012288BC73ECFC4C025FDD0;1481.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 42--46
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--56
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--61
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--66
+
+ []
+
+[25
+
+]
+Overfull \hbox (41.92609pt too wide) in paragraph at lines 99--104
+[]\OT1/cmr/m/n/12 While in fog (in agony phases): Ter-ror[Range=1][d12], In-san
+-ity Filed[range=1][d6] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--104
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--117
+
+ []
+
+[26
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 128--129
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 130--133
+
+ []
+
+[27
+
+]
+Overfull \hbox (62.20947pt too wide) in paragraph at lines 157--165
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--169
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 172--179
+
+ []
+
+[28
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--198
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--222
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--230
+
+ []
+
+[29
+
+]
+Overfull \hbox (11.88083pt too wide) in paragraph at lines 256--264
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--266
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 269--286
+
+ []
+
+[30
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 297--298
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 299--302
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 306--307
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 310--312
+
+ []
+
+) [31
+
+] (./armies.aux (./DwarfSteamPowerArmorwithBalrogAssault.aux)
+(./Oliphantattack.aux) (./Insanity.aux))
+Package rerunfilecheck Info: File `armies.out' has not changed.
+(rerunfilecheck)             Checksum: FC375BC2CAE54B2515F1914B95AEAEF4;2092.
  ) 
 Here is how much of TeX's memory you used:
- 10497 strings out of 478287
- 165376 string characters out of 5849289
- 468309 words of memory out of 5000000
- 28499 multiletter control sequences out of 15000+600000
- 475385 words of font info for 48 fonts, out of 8000000 for 9000
+ 10548 strings out of 478287
+ 166352 string characters out of 5849289
+ 468625 words of memory out of 5000000
+ 28525 multiletter control sequences out of 15000+600000
+ 475380 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  97i,6n,99p,1020b,686s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb>
-Output written on armies.pdf (22 pages, 82026 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on armies.pdf (31 pages, 91169 bytes).
 PDF statistics:
- 194 PDF objects out of 1000 (max. 8388607)
- 160 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 270 PDF objects out of 1000 (max. 8388607)
+ 226 compressed objects within 3 object streams
+ 58 named destinations out of 1000 (max. 500000)
+ 113 words of extra memory for PDF output out of 10000 (max. 10000000)
 
