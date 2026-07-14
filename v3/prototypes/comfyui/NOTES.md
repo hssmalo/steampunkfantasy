@@ -19,8 +19,8 @@ Background research: [`docs/research/comfyui.md`](../../docs/research/comfyui.md
 
 | # | Hypothesis | Source | Status |
 |---|---|---|---|
-| 1 | Local ComfyUI needs **no auth at all** — `POST /api/prompt` just works | ComfyUI has no built-in authentication | ⬜ untested |
-| 2 | Local is **free**: credits only apply to *API Nodes* (hosted models called from inside a workflow), not to the HTTP API itself | `docs/research/comfyui.md` §5 | ⬜ untested |
+| 1 | Local ComfyUI needs **no auth at all** | ComfyUI has no built-in authentication | 🟡 partly confirmed — run A |
+| 2 | Local is **free**: credits only apply to *API Nodes* (hosted models called from inside a workflow), not to the HTTP API itself | `docs/research/comfyui.md` §5 | ✅ confirmed — run A |
 | 3 | The **same workflow JSON** runs on both, so local vs cloud is just `base_url` + `X-API-Key` | Comfy Cloud docs: "compatible with local ComfyUI's API" | ⬜ untested |
 | 4 | **Cloud exposes a checkpoint we can also install locally** — the "two model inventories" risk. *This is the one that can sink the design.* | unverified in research | ⬜ untested |
 | 5 | `SaveImage` embeds the workflow in PNG `tEXt` by default, so an asset carries its own recipe | ComfyUI `nodes.py` | ⬜ untested |
@@ -28,6 +28,54 @@ Background research: [`docs/research/comfyui.md`](../../docs/research/comfyui.md
 
 The probe is built as **one script, not two**, precisely because hypothesis 3 is
 the thing we're testing — two scripts would assume it away.
+
+## Results log
+
+### Run A — local, 2026-07-15, contributor's GPU box
+
+```json
+{"works_without_api_key": true, "checkpoints": [], "verdict": "FAILED",
+ "error": "server has NO checkpoints installed"}
+```
+
+**The headline finding, and it's the one we most wanted: `works_without_api_key:
+true`.** A stock local ComfyUI answered an unauthenticated request from a
+separate process. No account, no API key, no credits. **Hypothesis 2 is
+confirmed** — the paid surface (API Nodes) is opt-in *by node choice inside a
+workflow*, not a toll gate on the HTTP API. Driving a local ComfyUI "from
+outside" is free.
+
+**Hypothesis 1 is only *partly* confirmed, and the distinction matters.** What we
+actually proved is that `GET /api/system_stats` needs no key. The run died before
+it ever reached `POST /api/prompt`, so *submission* over an unauthenticated
+connection is still strictly unproven. Nothing suggests it will differ (ComfyUI
+has no auth layer at all, for any route), but it is not measured. Promote this to
+✅ only once a run gets past phase 3.
+
+The failure itself is not a finding about ComfyUI, it's a finding about *setup*:
+**ComfyUI ships with zero models.** It is an execution engine, not a bundle. An
+empty `models/checkpoints/` means `CheckpointLoaderSimple` has no name to offer
+and the probe correctly refuses to submit a workflow that could only 400.
+
+Fix, before re-running:
+
+```bash
+cd ComfyUI/models/checkpoints
+curl -L -O https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
+# ~6.9 GB, then RESTART ComfyUI — it caches the model list
+```
+
+SDXL is chosen here for its *boringly canonical filename*, not its merits: the
+design needs local and cloud to share a checkpoint **filename**, so a standard
+name maximises the chance Cloud already has it. It is not necessarily the model
+we would ship with (see licensing in the research doc — FLUX.1 schnell and
+Qwen-Image are Apache-2.0 and cleaner for a game we might sell). The probe tests
+plumbing, not art direction; pick the model later.
+
+**Sequencing note for the next run:** ideally get Cloud's checkpoint inventory
+*first* (`probe.py cloud` prints it even if generation fails), then have
+contributors download exactly the file Cloud already has, under exactly that
+name. That turns hypothesis 4 from a coin-flip into a deliberate choice.
 
 ## Run it
 
