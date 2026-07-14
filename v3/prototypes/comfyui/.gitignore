@@ -1,0 +1,3 @@
+# Probe run outputs — throwaway, never commit. Send findings-*.json back by hand.
+out-*.png
+findings-*.json
