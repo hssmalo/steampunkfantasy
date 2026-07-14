@@ -2,7 +2,7 @@
 
 [races.ogre]
 name = "Ogre"
-description = "Yellow, tiny, little men"
+description = "Large intelligent humanoid with huge tanks and small and tiny robots."
 
 [units]
 
@@ -52,7 +52,13 @@ rows = [
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
-description = "Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle"
+description = '''Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. 
+
+The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle. 
+
+Versus regular infantry ogres are at a clear disadvantage since they only  fire two shots per unit. However versus thougher opponents, their far superior damage per shot compensate for lack of models in the unit.'''
+
+
 models = ["ogre_infantry", "ogre_infantry"]
 size = "Large"
 cost.mp = 16
@@ -98,7 +104,9 @@ rows = [
 race = "ogre"
 models = ["ogre_robot", "ogre_robot"]
 name = "Ogre Robot"
-description = "Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they try to compensate by making medium sized robots. Although being only medium size, they are strong enough to fire large ogre rifles. However, the robots are not as good in close combat compared to the regular ogre infantry."
+description = '''Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action. 
+
+Due to being smaller and having some armor they are far better protected compared to Ogre infantry. However, the robots are not as good in close combat compared to the regular ogre infantry. They also cost cp (craftpoints) instead of mp (manpower) and thus may be viewed as more expensive'''
 size = "Medium"
 cost.cp = 16
 armor = [3, 3, 0, 0]
@@ -141,7 +149,7 @@ name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 8
-description = "A Panther is viewed as a cute kitten, with useful properties by the ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities"
+description = "A Panther is viewed as a cute kitten, with useful properties by the Ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities"
 
 [units.pet_panther.shaken]
 speed = "slow"
@@ -151,6 +159,9 @@ comment = "If sharing a hex with an Infantry, you may give the pet follow orders
 [units.pet_panther.special]
 "Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
 "Evation" = "[4+]"
+
+
+
 
 [units.pet_panther.orders.movement]
 still = [
@@ -185,7 +196,11 @@ rows = [
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description = "Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery when they can. An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s)."
+description = '''Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating before taken out of action. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously with their long swards. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. 
+
+An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s).
+
+If you get your hands on some healing, they may help tremendously in keeping these unit alive.'''
 models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 8
@@ -240,7 +255,10 @@ name = "Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.cp = 4
-description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
+description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre infantry themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
+
+Fire at whatever is in range whenever you can, and cover the enemy in minor acid. These units are extremely accurate and extremely cheap, but will self destruct once they reach rest speed. Keep some support firepower to kill enemies which are covered in acid.
+'''
 
 [units.drone_swarm.shaken]
 speed = "slow"
@@ -292,7 +310,10 @@ name = "Industrial Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.ip = 1
-description = "A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit"
+description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre infantry themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
+
+Fire at whatever is in range whenever you can, and cover the enemy in minor acid. These units are extremely accurate and extremely cheap, but will self destruct once they reach rest speed. Keep some support firepower to kill enemies which are covered in acid.
+'''
 
 [units.industrial_drone_swarm.shaken]
 speed = "slow"

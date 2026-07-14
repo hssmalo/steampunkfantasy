@@ -120,6 +120,7 @@ type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
 type UnitSpecial = Literal[
     "Hans Sverre's favorite rule",
     "Hans Sverre's second favorite rule",
+    "Phoenix",
     "Immunity",
     "Resistance",
     "Improved Resistance",

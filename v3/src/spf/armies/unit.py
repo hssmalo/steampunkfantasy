@@ -46,8 +46,8 @@ class Unit:
             # Model is an upgrade when its name differs from the default slot
             if model.name != self.config.models[i] and model.config.cost:
                 cost = cost + model.config.cost
-                
-            tmp = []     
+
+            tmp = []
             for equip in model.upgrade_equipment:
                 if equip.cost is None:
                     continue

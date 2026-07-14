@@ -21,11 +21,12 @@ models = [
 size = "Small"
 cost.mp = 8
 
-description = '''Four Goblin armred with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger. Thus they are hard to hit and can evade incoming bombs.
+description = '''Four Goblin armred with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger. 
 
 They are viewed as somewhat primitive by the standards of other races, however do not underestimate the Goblin infantry, which very well may swarm you. And especially with some upgrades and support, goblin infantry can be deadly.
 
-In game terms you do want to come close and personal to the enemy, but avoid assaults.'''
+In game terms you do want to come close and personal to the enemy, but avoid assaults. Luckily they are hard to hit and can evade incoming bombs.
+'''
 
 
 [units.goblin_infantry.shaken]
@@ -70,7 +71,7 @@ models = ["gigant_snake_cavalry"]
 size = "Large"
 cost.mp = 4
 cost.xp = 24
-description = '''Two Goblin wielding a bow each riding one giant snake. A terrifying view for all enemies, which is an unsuaualt treat for the goblin army. They also carry tiny snakes which are launched by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. 
+description = '''Two Goblin wielding a bow each riding one giant snake. A terrifying view for all enemies, which the goblin enjoys alot since it is an unsuaual that any goblin in clear sight are scary. They also carry tiny snakes which are launched by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below. 
 
 Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
 '''
@@ -152,7 +153,7 @@ cost.ip = 16
 
 description = '''A Goblin Armored Carrier, armed with a light mortar. It is very fast while driving straight forward, but needs to slow down to turn. Well armored from the front, less so from the sides and rear. Since Goblin infantry are smaller than the other races, you can pack more of them in the same vehicle. Once the goblin exit, they swarm the enemy with lots and lots of goblin infantry.
 
-Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if lucky.
+Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if you are lucky.
 '''
 
 
@@ -221,6 +222,10 @@ models = ["bipedal_mech"]
 size = "Large"
 armor = [8,8,8,6]
 cost.ip = 24
+description = '''Fairly well armored bipedal mechanised walker piloted by two goblin. These are the pride of goblin innovation, the first tank which walks on two legs. Or at least, that is what the goblin claim. On one side it has a big weapon which fires the dreaded stinkbomb at enemis, while on the left it is is armed with two light mortars.
+
+Do not underestimate the stinkbombs, which are great versus infantry, tanks and vehicles. Versus biological units the stinkbombs poison the enemy, scare them, cover them in acid, and if you hit you get an area effect hopefully doing the same thing over again. Versus tanks with biological crew, the crew damage can be devastating to, especially versus tanks which are already shaken. It is less effective versus drones. Goblin do not know what aiming is, so fire load and repeat as often as possible.
+'''
 
 [units.bipedal_mech.shaken]
 speed = "still"
@@ -275,7 +280,7 @@ size = "Large"
 armor = [10, 8, 6, 4]
 cost.ip = 32
 
-description = '''A Heavy Armored Carrier, armed with a battery of bows and a heavy crossbow. Slightly more armored compared to the Goblin Armored Carrier, much better armed and more flexible exit, but carries only one goblin infantry.
+description = '''A Heavy Armored Carrier, armed with a battery of bows and three heavy crossbows. Slightly more armored compared to the Goblin Armored Carrier, much better armed and more flexible exit, but carries only four goblin infantry (one unit).
 
 The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapon system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
 
@@ -371,6 +376,11 @@ size = "Medium"
 armor = [4, 3, 2, 1]
 cost.ip = 8
 
+description = '''This is an modified civilian car made primarily to deploy Goblin infantry to the front. They added an auto bow (a bow which automatically fires arrows) and some add-hoc armor for some protection, but far from adequate. They are also packed with goblin grenades which the crew throws at enemy whenever they can. Goblin being smaller than the other races can pack surprisingly large number of infantry in a small volume.
+
+These are cheap vehicles, with primarily role to help you place infantry closer to the enemy, which you should do as fast as possible. Having infantry inside one of these inside the truck on round 2 and you have done something wrong.
+'''
+
 [units.modified_truck.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -456,20 +466,25 @@ models = ["mechanical_fire_bird"]
 size = "Medium"
 armor = [5, 4, 4, 3]
 cost.ip = 24
+description = '''A robot modeled after the classical phoenix. Flys fast, trying to set all enemies around it on fire. Inside the robot is an remarkable reassemble mechanism which can rebuild the robot almost from scratch. How the goblin manage to make this marvel of a rebuild mechanism is a mysteri.
+
+Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set ana enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it har to hit, some armor protects from regular muskets and rifles, while simulatiously requires a few shots to disensamble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy. 
+'''
+
 
 [units.mechanical_fire_bird.shaken]
 speed = "fast_fly"
 movement_order = ["-", "F", "F"]
 
 [units.mechanical_fire_bird.special]
-"Hans Sverre's favorite rule" = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
+"Phoenix" = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
 "Immunity" = "fire"
 
 [units.mechanical_fire_bird.orders.movement]
 fast_fly = [
 	["L/R+F", "F", "F+L/R"],
 	["F", "F", "F"],
-	["F", "L/R+F+L/R", "F"]
+	["F+L/R", "F+L/R", "F"]
 ]
 
 [units.mechanical_fire_bird.orders.fire]
@@ -1080,7 +1095,7 @@ ap = 0
 
 [equipment.ring_of_fire.range.special]
 "Area" = "[6+] target at all enemies within exactly range 2"
-"Extra Damage" = "All units hit at least once is set on fire"
+"Extra Damage" = "Fire"
 
 [equipment.assault_archer]
 name = "Assault Archer"
