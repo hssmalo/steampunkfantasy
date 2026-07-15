@@ -1,6 +1,6 @@
 Changelog.
 
-Date		Description
+Date		Description							Why
 14.07.2026	Panther gained Terror[4]					It fit the description, and it seemed to need a slight boost.
 14.07.2026	Artillery Wagon now needs a scout and to fire a shot to aim 	Both a buff and a debuff. More fitting to how artillery works.
 14.07.2026	Artillery Wagon cost from 16ip to 32ip				Was overpowered.
