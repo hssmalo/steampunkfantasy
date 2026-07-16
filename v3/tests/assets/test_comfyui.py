@@ -37,8 +37,9 @@ class _ScriptedComfy:
 
     Serves a ``prompt_id`` on ``/api/prompt`` (recording the submitted graph),
     a ``completed`` record on any poll route, and PNG bytes on ``/api/view``.
-    ``poll_ok`` decides which poll routes answer; a route it rejects raises a
-    404 :class:`~urllib.error.HTTPError`, exactly as a real server would.
+    ``poll_ok`` decides which poll routes answer; a route it rejects raises
+    :class:`~spf.assets.comfyui.ComfyUIError`, exactly as ``_request`` does on a
+    4xx from a server that does not serve that route.
     """
 
     def __init__(
@@ -83,7 +84,9 @@ class _ScriptedComfy:
     def _poll(self, path: str) -> dict[str, Any]:
         route = "/history/{id}" if path.startswith("/history/") else "/api/jobs/{id}"
         if not self._poll_ok(route):
-            raise _http_error(404)
+            # _request already turns a 4xx into ComfyUIError; mirror that here.
+            msg = f"HTTP 404 on {path}"
+            raise comfyui.ComfyUIError(msg)
         pid = path.rsplit("/", 1)[-1]
         outputs = (
             self._outputs
@@ -253,3 +256,21 @@ def test_generate_returns_one_blob_per_job_in_order(
     assert len(set(_patched_seeds(scripted))) == 3  # a distinct seed per job
     # batch_size stays as authored (one image per job); it is never patched.
     assert all(g["4"]["inputs"]["batch_size"] == 1 for _, g in scripted.submissions)
+
+
+# --- Cycle 4: poll try-both-and-cache ---------------------------------------
+
+
+def test_poll_tries_both_routes_then_caches_the_winner(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # This server answers only /history/{id} (like a local ComfyUI).
+    scripted = _ScriptedComfy(poll_ok=lambda route: route == "/history/{id}")
+    service = _service(scripted, monkeypatch)
+
+    service.generate("a prompt", 2, seed=1)
+
+    polls = [p for p, _ in scripted.calls if "/jobs/" in p or "/history/" in p]
+    # Job 1 tries /api/jobs (rejected) then /history (wins); job 2 reuses the
+    # cached /history route without re-trying /api/jobs.
+    assert polls == ["/api/jobs/pid-1", "/history/pid-1", "/history/pid-2"]
