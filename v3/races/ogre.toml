@@ -14,7 +14,7 @@ size = "Huge"
 cost.mp = 16
 cost.xp = 96
 
-description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two large ogres riding on the hydra. The hydra is the only animal large enough to carry two ogres as cavalry. Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each. '''
+description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two ogres riding on the hydra. The hydra is the only animal large enough to carry two ogres as cavalry. Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each. '''
 
 lore = '''
 Both the Elfs and the Ogres uses these beasts in war, while DarkElf has made a mechanical copy.
@@ -62,7 +62,7 @@ rows = [
 race = "ogre"
 name = "Ogre Infantry"
 description = '''
-Two ogres fighting side by side firing a large ogre rifle. 
+Ogre Infantry armed with a large ogre rifle. Ogre enjoy fancy outfits, even during war. The rifle is a ww1 style rifle.
 '''
 
 lore = '''
@@ -216,7 +216,11 @@ rows = [
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description = '''Ogre assault scouts are the biggest and most well trained of all ogres, and can take a fair amount of beating before taken out of action. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. Emphasis is put on fighting multiple enemies simultaneously with their long swards. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. 
+description = '''Ogre assault scouts are armed with a sword and a gear pistol. A gear pistole is a clockwork steampunk pistol. Ogre enjoy fanzy outfits even during war. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. 
+'''
+
+tip ='''
+Emphasis is put on fighting multiple enemies simultaneously with their long swards. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. 
 
 An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s).
 
