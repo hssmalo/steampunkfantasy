@@ -5,15 +5,17 @@ low-level HTTP seam — so no real sockets are opened. A committed fixture graph
 (``fixtures/mini_workflow.json``) stands in for a real API-format workflow.
 """
 
+import itertools
 import json
 import random
 import urllib.error
 import urllib.parse
+import urllib.request
 from collections.abc import Callable
 from email.message import Message
 from io import BytesIO
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import pytest
 
@@ -274,3 +276,112 @@ def test_poll_tries_both_routes_then_caches_the_winner(
     # Job 1 tries /api/jobs (rejected) then /history (wins); job 2 reuses the
     # cached /history route without re-trying /api/jobs.
     assert polls == ["/api/jobs/pid-1", "/history/pid-1", "/history/pid-2"]
+
+
+# --- Cycle 5: retry vs fail-fast --------------------------------------------
+
+
+class _FakeResponse:
+    """A minimal ``urlopen`` context manager returning canned bytes."""
+
+    def __init__(self, data: bytes) -> None:
+        self._data = data
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *_: object) -> bool:
+        return False
+
+    def read(self) -> bytes:
+        return self._data
+
+
+def test_request_retries_server_error_then_succeeds(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    outcomes: list[object] = [_http_error(500), _FakeResponse(b'{"prompt_id": "p"}')]
+    calls: list[object] = []
+
+    def fake_urlopen(request: object, timeout: float = 120) -> _FakeResponse:  # noqa: ARG001
+        result = outcomes[len(calls)]
+        calls.append(request)
+        if isinstance(result, Exception):
+            raise result
+        assert isinstance(result, _FakeResponse)
+        return result
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(comfyui.time, "sleep", sleeps.append)
+
+    result = comfyui._request("http://x", "/api/prompt", body={})
+
+    assert result == {"prompt_id": "p"}
+    assert len(calls) == 2  # one failure, then success
+    assert len(sleeps) == 1  # backed off once before the retry
+
+
+def test_request_fails_fast_on_client_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls: list[object] = []
+
+    def fake_urlopen(request: object, timeout: float = 120) -> _FakeResponse:  # noqa: ARG001
+        calls.append(request)
+        raise _http_error(400, b"bad request body")
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(comfyui.time, "sleep", sleeps.append)
+
+    with pytest.raises(comfyui.ComfyUIError, match="bad request body"):
+        comfyui._request("http://x", "/api/prompt", body={})
+    assert len(calls) == 1  # failed fast, no retry
+    assert sleeps == []
+
+
+def test_generate_raises_on_failed_status_carrying_node_errors(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def fake(base: str, path: str, **_: object) -> Any:  # noqa: ANN401, ARG001
+        if path == "/api/prompt":
+            return {"prompt_id": "pid"}
+        return {"status": "failed", "node_errors": {"5": "OOM loading KSampler"}}
+
+    monkeypatch.setattr(comfyui, "_request", fake)
+    service = comfyui.ComfyUIService(
+        base_url="http://x", workflow_path=_MINI, api_key_env="", timeout_s=5
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="OOM loading KSampler"):
+        service.generate("a prompt", 1, seed=1)
+
+
+def test_generate_raises_when_completed_with_no_images(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy(outputs={})  # completed, but no images
+    service = _service(scripted, monkeypatch)
+
+    with pytest.raises(comfyui.ComfyUIError, match="no images"):
+        service.generate("a prompt", 1, seed=1)
+
+
+def test_generate_raises_on_poll_timeout(monkeypatch: pytest.MonkeyPatch) -> None:
+    def fake(base: str, path: str, **_: object) -> Any:  # noqa: ANN401, ARG001
+        if path == "/api/prompt":
+            return {"prompt_id": "pid"}
+        return {"status": "running"}  # never completes
+
+    # Cross the deadline after one poll pass; make the backoff sleep a no-op.
+    clock = itertools.chain([0.0, 0.0], itertools.repeat(100.0))
+    monkeypatch.setattr(comfyui, "_request", fake)
+    monkeypatch.setattr(comfyui.time, "monotonic", lambda: next(clock))
+    monkeypatch.setattr(comfyui.time, "sleep", lambda _: None)
+    service = comfyui.ComfyUIService(
+        base_url="http://x", workflow_path=_MINI, api_key_env="", timeout_s=1
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="timed out"):
+        service.generate("a prompt", 1, seed=1)
