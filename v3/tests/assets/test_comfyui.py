@@ -8,6 +8,7 @@ low-level HTTP seam — so no real sockets are opened. A committed fixture graph
 import json
 import random
 import urllib.error
+import urllib.parse
 from collections.abc import Callable
 from email.message import Message
 from io import BytesIO
@@ -48,7 +49,7 @@ class _ScriptedComfy:
     ) -> None:
         self.submissions: list[tuple[str, dict[str, Any]]] = []
         self.calls: list[tuple[str, str | None]] = []
-        self._outputs = _one_image_outputs() if outputs is None else outputs
+        self._outputs = outputs  # None ⇒ one per-job image named after the prompt_id
         self._poll_ok = poll_ok
         self._counter = 0
 
@@ -74,8 +75,9 @@ class _ScriptedComfy:
             assert body is not None
             self.submissions.append((pid, body["prompt"]))
             return {"prompt_id": pid}
-        if raw:  # /api/view
-            return _PNG + b"fake-image-bytes"
+        if raw:  # /api/view — echo the requested filename so blobs are per-job
+            query = urllib.parse.parse_qs(path.split("?", 1)[1])
+            return _PNG + query["filename"][0].encode()
         return self._poll(path)
 
     def _poll(self, path: str) -> dict[str, Any]:
@@ -83,7 +85,12 @@ class _ScriptedComfy:
         if not self._poll_ok(route):
             raise _http_error(404)
         pid = path.rsplit("/", 1)[-1]
-        record = {"status": "completed", "outputs": self._outputs}
+        outputs = (
+            self._outputs
+            if self._outputs is not None
+            else _one_image_outputs(f"{pid}.png")
+        )
+        record = {"status": "completed", "outputs": outputs}
         return {pid: record} if path.startswith("/history/") else record
 
 
@@ -226,3 +233,23 @@ def test_rejects_a_non_text_positive_input(
 
     with pytest.raises(comfyui.ComfyUIError, match="no 'text' input"):
         service.generate("prompt", 1, seed=7)
+
+
+# --- Cycle 3: happy-path flow (N blobs, in order) ---------------------------
+
+
+def test_generate_returns_one_blob_per_job_in_order(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _service(scripted, monkeypatch)
+
+    blobs = service.generate("a prompt", 3, seed=1)
+
+    pids = [pid for pid, _ in scripted.submissions]
+    assert len(pids) == 3  # three sequential submissions
+    # Each job's blob is fetched and returned in submission order.
+    assert list(blobs) == [_PNG + f"{pid}.png".encode() for pid in pids]
+    assert len(set(_patched_seeds(scripted))) == 3  # a distinct seed per job
+    # batch_size stays as authored (one image per job); it is never patched.
+    assert all(g["4"]["inputs"]["batch_size"] == 1 for _, g in scripted.submissions)
