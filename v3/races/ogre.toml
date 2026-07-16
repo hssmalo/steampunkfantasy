@@ -2,7 +2,7 @@
 
 [races.ogre]
 name = "Ogre"
-description = "Large intelligent humanoid with huge tanks and small and tiny robots."
+description = "Ogres are large intelligent humanoid typically about 4m in height. They enjoy fancy outfints and fancy equipment. Ogres are often joined by swarms of tiny drones."
 
 [units]
 
@@ -14,12 +14,13 @@ size = "Huge"
 cost.mp = 16
 cost.xp = 96
 
-description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two large ogres riding it. The only animal large enough to carry two ogres.
-Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each.
+description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two large ogres riding it. The hydra is the only animal large enough to carry two ogres as cavalry. Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each. '''
 
+lore = '''
 Both the Elfs and the Ogres uses these beasts in war, while DarkElf has made a mechanical copy.
+'''
 
-Low range and slow is a bad combination, but if you manage to come within short range of enemy, the hydra has powerful firepower, and especially if you get an enemy within point blank range, where you can use the acid breath full potential. You may consider upgrading the Ogre Hydra Crew weapons to give it some better firepower at longer ranges.
+tip = '''Low range and slow is a bad combination, but if you manage to come within short range of enemy, the hydra has powerful firepower, and especially if you get an enemy within point blank range, where you can use the acid breath full potential. You may consider upgrading the Ogre Hydra Crew weapons to give it some better firepower at longer ranges.
 '''
 
 [units.ogre_hydra.shaken]
@@ -60,8 +61,15 @@ rows = [
 [units.ogre_infantry]
 race = "ogre"
 name = "Ogre Infantry"
-description = '''Two ogres fighting side by side firing a large ogre rifle. Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. 
+description = '''
+Two ogres fighting side by side firing a large ogre rifle. 
+'''
 
+lore = '''
+Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. 
+'''
+
+tip = '''
 The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle. 
 
 Versus regular infantry ogres are at a clear disadvantage since they only  fire two shots per unit. However versus thougher opponents, their far superior damage per shot compensate for lack of models in the unit.'''
@@ -112,9 +120,13 @@ rows = [
 race = "ogre"
 models = ["ogre_robot", "ogre_robot"]
 name = "Ogre Robot"
-description = '''Ogre Robot unit consists of two medium size robots made by the skilled ogre craftsmen. The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action. 
+description = '''Robot unit consists of two medium size robots (2m in height) made by the skilled Ogre craftsmen. '''
 
-Due to being smaller and having some armor they are far better protected compared to Ogre infantry. However, the robots are not as good in close combat compared to the regular ogre infantry. They also cost cp (craftpoints) instead of mp (manpower) and thus may be viewed as more expensive'''
+lore = '''The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action. 
+'''
+
+tip = '''Due to being smaller and having some armor they are far better protected compared to Ogre infantry. However, the robots are not as good in close combat compared to the regular ogre infantry. They also cost cp (craftpoints) instead of mp (manpower) and thus may be viewed as more expensive'''
+
 size = "Medium"
 cost.cp = 16
 armor = [3, 3, 0, 0]
@@ -371,9 +383,9 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 32
 armor = [12, 10, 10, 8]
-description = '''A huge locomotive of this land train, useually pulling one or two wagons. It can carry lots of tiny drones and has a huge ogre cannon firing forward. Very well armored from front and side, less so in back. It also provided command and intelligence to the wagons it is towing
+description = '''The main engine is a huge vehicle which towes one or mored armed and armored wagons behind. It can carry lots of tiny drones and has a huge ogre cannon firing straight forward. It is very well armored from front and side'''
 
-This unit blocks line of sight, and is well protected. Exploit the blocked line of sight to your advantage, to protect the other wagons behind or units you want to come closer without exposing them to enemy fire. The ogre cannon is a large weapons which does plenty of damage, but you have only one shot, which may hit or miss. It has also somewhat low range and can only fire straight forward.
+tip = '''This unit blocks line of sight, and is well protected. Exploit the blocked line of sight to your advantage, to protect the other wagons behind or units you want to come closer without exposing them to enemy fire. The ogre cannon is a large weapons which does plenty of damage, but you have only one shot, which may hit or miss. It has also somewhat low range and can only fire straight forward.
 
 It can deploy drones up to range 2, which might be a big bost, and you can put them really close to the enemy.
 '''
@@ -448,7 +460,11 @@ models = ["broadside_wagon"]
 size = "Large"
 cost.ip = 8
 armor = [2, 10, 10, 8]
-description = '''Broadside wagon fires is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time. It need to be connected with a main engine to move (either directly or indirectly). It is well protected from the sides and back, but is extremely porly armored from the front.
+description = '''Broadside wagon is pulled by the main engine, and is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time. 
+'''
+
+tip = '''
+It need to be connected with a main engine to move (either directly or indirectly). It is well protected from the sides and back, but is extremely porly armored from the front.
 
 Try to place the broadside wagon with enemies on all sides such that you can use all the firepower it offers. If you loose an assault you will most probably be disconnected from the main engine. So avoid assault at all costs.
 '''
@@ -495,7 +511,10 @@ models = ["artillery_wagon"]
 size = "Large"
 cost.ip = 32
 armor = [2, 10, 10, 8]
-description = '''Artillery wagons is armored with a huge ogre artillery which can fire indirectly. It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front. 
+description = '''Artillery wagons needs to be towed and is armored with a huge ogre artillery which can fire indirectly.'''
+
+tip = '''
+It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front. 
 
 Indirect fire, long range, to hit bonus from scouts and huge damage is a good combination and target should be enemy tanks or other expensive units. If you loose an assault, you are probably disconnected from main engine, and makes you stranded, so avoid assaults at all cost.
 '''

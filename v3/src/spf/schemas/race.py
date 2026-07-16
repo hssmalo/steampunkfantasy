@@ -29,6 +29,9 @@ class UnitConfig(StrictModel):
     race: t.RaceName
     name: t.UnitName
     description: str = ""
+    tip: str = ""
+    lore: str = ""
+    ai_guid: str = ""
     models: list[str]
     size: t.Size
     cost: t.Cost | None = None
