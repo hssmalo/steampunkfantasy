@@ -37,6 +37,15 @@ def test_tooling_toml_is_never_flagged() -> None:
     assert result == []
 
 
+def test_added_game_toml_is_not_flagged() -> None:
+    # A newly added race is staged but not in the modified-only set; adds pass.
+    result = missing_changelogs(
+        modified=set(),
+        staged={"races/troll.toml"},
+    )
+    assert result == []
+
+
 def test_rules_flagged_independently_of_satisfied_races() -> None:
     # races changelog is staged (satisfied); rules changelog is not.
     result = missing_changelogs(
