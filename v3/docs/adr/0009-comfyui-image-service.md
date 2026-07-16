@@ -63,6 +63,30 @@ The goal is only to *generate images in both*.
   anything past a committed Asset. This ADR only swaps the provider behind
   `generate`.
 
+## Amendment (2026-07-16) — the shipped configuration
+
+Implementing the Service (see
+[`docs/plans/comfyui-image-service.md`](../plans/comfyui-image-service.md))
+locks in these concrete choices:
+
+- **Environment selector is TOML-only.** `assets.image.comfyui.env` is the sole
+  selector, defaulting to `local`; switching to Comfy Cloud is a one-line TOML
+  edit. No CLI flag, no env-var override.
+- **Named Environment blocks.** `[assets.image.comfyui.local]` and
+  `[…​.cloud]`, each with `base_url`, `workflow`, and `api_key_env` (the *name*
+  of the env var holding the key, read lazily at generate time; empty ⇒ no auth
+  header).
+- **`workflows/` layout.** `cloud.json` is committed; `local.example.json` is a
+  committed reference; `local.json` is per-machine and gitignored. Resolved
+  under a new `paths.workflows`.
+- **Qwen-Image (Apache-2.0) for both Environments.** `cloud.json` and
+  `local.example.json` are the same Qwen-Image export, reconciled against
+  Cloud's inventory by filename if needed. This **supersedes the "prefer FLUX.1
+  schnell / SDXL" framing above** for the *shipped* choice, while staying
+  consistent with this ADR's licensing guidance — Qwen-Image is Apache-2.0.
+- **Patch only prompt + seed.** The runtime Service never patches model names,
+  steps, cfg, LoRAs, or the negative prompt; those stay exactly as authored.
+
 ## Amendment (2026-07-16) — the prototype is retired
 
 The throwaway probe under `prototypes/comfyui/` (a stdlib client plus a research
