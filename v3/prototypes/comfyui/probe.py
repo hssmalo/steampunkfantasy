@@ -71,6 +71,18 @@ MODEL_EXTS = (".safetensors", ".ckpt", ".pt", ".pth", ".bin", ".gguf", ".sft")
 # the common exported ones; anything else fails loudly rather than silently.
 SAMPLER_CLASSES = ("KSampler", "KSamplerAdvanced")
 
+# The built-in graph is SDXL, so prefer a real SDXL base checkpoint. Cloud's
+# object_info lists ~80 names including ControlNet encoders and refiners that are
+# advertised but NOT loadable via CheckpointLoaderSimple (they 400 at execution
+# with value_not_in_list) -- so never just take names[0]. These are ordinary base
+# checkpoints, tried in order; falls back to the first advertised name.
+PREFERRED_BUILTIN_CKPTS = (
+    "sd_xl_base_1.0.safetensors",
+    "sd_xl_turbo_1.0_fp16.safetensors",
+    "dreamshaper_8.safetensors",
+    "v1-5-pruned-emaonly-fp16.safetensors",
+)
+
 
 class ProbeError(Exception):
     """Something we want reported as a finding, not a traceback."""
@@ -185,8 +197,14 @@ def resolve_builtin_checkpoint(base, api_key, graph, wanted):
     from whatever the server actually has installed.
     """
     node = sole_node_of_class(graph, ("CheckpointLoaderSimple",), "checkpoint loader")
-    info = request(base, "/api/object_info/CheckpointLoaderSimple", api_key)
-    names = info["CheckpointLoaderSimple"]["input"]["required"]["ckpt_name"][0]
+    # Bulk /api/object_info, not the per-class /api/object_info/{class}: Comfy
+    # Cloud 404s the per-class route ("Use /api/object_info instead") while local
+    # supports both, so the bulk call keeps this a single-client probe.
+    info = request(base, "/api/object_info", api_key)
+    spec = info.get("CheckpointLoaderSimple")
+    if spec is None:
+        raise ProbeError("server has no CheckpointLoaderSimple node")
+    names = spec["input"]["required"]["ckpt_name"][0]
     if not names:
         raise ProbeError(
             "server has NO checkpoints installed. Either drop a .safetensors into "
@@ -195,7 +213,9 @@ def resolve_builtin_checkpoint(base, api_key, graph, wanted):
         )
     if wanted and wanted not in names:
         raise ProbeError(f"--checkpoint {wanted!r} not on this server; have: {names}")
-    chosen = wanted or names[0]
+    chosen = wanted or next(
+        (n for n in PREFERRED_BUILTIN_CKPTS if n in names), names[0]
+    )
     graph[node]["inputs"]["ckpt_name"] = chosen
     print(f"    -> built-in graph checkpoint: {chosen}")
     return chosen

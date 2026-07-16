@@ -36,11 +36,11 @@ Background research: [`docs/research/comfyui.md`](../../docs/research/comfyui.md
 
 | # | Hypothesis | Source | Status |
 |---|---|---|---|
-| 1 | Local ComfyUI needs **no auth at all** | ComfyUI has no built-in authentication | 🟡 partly confirmed — run A |
+| 1 | Local ComfyUI needs **no auth at all** | ComfyUI has no built-in authentication | ✅ confirmed — run B (end-to-end submit + poll + fetch, no key) |
 | 2 | Local is **free**: credits only apply to *API Nodes* (hosted models called from inside a workflow), not to the HTTP API itself | `docs/research/comfyui.md` §5 | ✅ confirmed — run A |
-| 3 | The **same** HTTP client drives both (each with its **own** workflow); cloud speaks the same `/api/*` surface, differing only by `base_url` + `X-API-Key` | Comfy Cloud docs: "compatible with local ComfyUI's API" | ⬜ untested |
+| 3 | The **same** HTTP client drives both (each with its **own** workflow); cloud speaks the same `/api/*` surface, differing only by `base_url` + `X-API-Key` | Comfy Cloud docs: "compatible with local ComfyUI's API" | ✅ confirmed — run E (same client + graph generated on Cloud, `base_url`+key the only change) |
 | 4 | ~~Cloud exposes a checkpoint we can also install locally~~ **Retired by the scope decision** — different checkpoints per environment is now the design, not a risk. Each workflow need only run on *its own* server. | — | ⬛ n/a |
-| 5 | `SaveImage` embeds the workflow in PNG `tEXt` by default, so an asset carries its own recipe | ComfyUI `nodes.py` | ⬜ untested |
+| 5 | `SaveImage` embeds the recipe in PNG `tEXt` by default, so an asset carries its own recipe | ComfyUI `nodes.py` | ✅ confirmed — run B (`prompt` chunk present) |
 | 6 | Same seed → same bytes on the same machine (`--twice`) — *local convenience only, not a cross-environment goal* | inferred, not confirmed | ⬜ untested |
 
 Hypothesis 3 is now about the **client and API surface** being shared, not the
@@ -121,6 +121,127 @@ workflow to test. The Qwen export is the more revealing cloud test precisely
 because of `ComfySwitchNode` — if Cloud rejects it, we've learned the real
 portability boundary; if it accepts it, even better.
 
+### Run B — local, 2026-07-16, contributor's GPU box, Qwen export end-to-end
+
+```json
+{"works_without_api_key": true, "unknown_node_classes": [],
+ "poll_route_that_worked": "/history/{id}", "seconds_to_first_image": 626.6,
+ "png_text_keys": ["prompt"], "png_embeds_workflow": true, "verdict": "OK"}
+```
+
+The full loop ran against `samples/qwen_image_api.json`: preflight (every node
+class + all four model files present, no unknown classes, no combo mismatches) →
+`POST /api/prompt` → poll → fetch → a real PNG. **This closes hypothesis 1**: the
+run reached and passed `POST /api/prompt` with no API key, so unauthenticated
+*submission* — not just `system_stats` — is now measured, not just inferred.
+
+Three findings the design should carry forward:
+
+- **Poll route is bare `/history/{id}`** — not `/api/jobs/{id}` or
+  `/api/history/{id}`. Research was unsure; this is the one that answered. The
+  real client should try `/history/{id}` first.
+- **PNG carries a `prompt` tEXt chunk, no separate `workflow` chunk.** For an
+  API-submitted job that is exactly right — the *executable* graph is embedded
+  (its recipe), not the UI-layout `workflow` blob a manual Save would add.
+  Hypothesis 5 confirmed in the form that matters.
+- **`seconds_to_first_image: 626.6` (~10.5 min).** Almost certainly cold-start
+  VRAM load of the fp8 Qwen UNET + CLIP + VAE, not steady state — but **unverified**.
+  Open question for the next local run: is a *second* generation in the same
+  server session dramatically faster? If ~10 min is steady state, local batch
+  generation needs rethinking. This is the one number that could still bite us.
+
+Note this export uses `LoraLoaderModelOnly` (a **core** node), not the
+`ComfySwitchNode` from the earlier sample — so `unknown_node_classes` is empty and
+this graph is more portable than feared. But **local cannot test portability**
+(the contributor's server has every node); that remains a cloud-only question for
+hypothesis 3.
+
+### Run C — cloud, 2026-07-16, built-in SDXL graph — probe bug, informative
+
+```json
+{"backend": "cloud", "works_without_api_key": true, "verdict": "FAILED",
+ "error": "HTTP 404 on /api/object_info/CheckpointLoaderSimple -- \"This
+           endpoint is not available on Comfy Cloud. Use /api/object_info instead.\""}
+```
+
+**Not a Cloud incompatibility — a leftover per-class call in the probe.** Cloud
+reached, answered `/api/system_stats`, and returned a *helpful* 404 naming the
+supported route. Everything else (including preflight) already used the bulk
+`/api/object_info`; only `resolve_builtin_checkpoint` still hit the per-class
+`/api/object_info/CheckpointLoaderSimple`. **Fixed** — it now uses bulk
+`/api/object_info` (which local supports too, so the probe stays single-client).
+Re-run needed.
+
+Two real signals already, though:
+
+- **Cloud speaks the same `/api/*` surface** — same base routes, differing only
+  in that it drops the per-node-class `object_info` sub-route and *tells you the
+  replacement*. This is exactly the compatibility hypothesis 3 needs; strong
+  early sign one client can drive both.
+- **`works_without_api_key: true` on Cloud** — `GET /api/system_stats` answered
+  with **no** `X-API-Key`. So Cloud's *stats* endpoint is public. Don't overread
+  it: submission almost certainly still needs the key (the subsequent authed
+  `object_info` call returned 404, not 401, so the key is valid and accepted).
+  But flag it — worth confirming on the re-run whether `/api/prompt` rejects an
+  unauthenticated submit.
+
+### Run D — cloud, 2026-07-16, built-in SDXL — full client loop works, bad ckpt pick
+
+```json
+{"backend": "cloud", "works_without_api_key": true, "unknown_node_classes": [],
+ "patched_steps": true, "patched_seed_into": "5", "verdict": "FAILED",
+ "error": "job FAILED ... value_not_in_list: ckpt_name
+           'dynamicrafter/controlnet/dc_sketch_encoder_fp16.safetensors'"}
+```
+
+**This all but closes hypothesis 3.** With the bulk-`object_info` fix, the *same
+stdlib client* drove Cloud through every phase: reachable → preflight (81
+checkpoints enumerated) → `/api/prompt` **accepted** (job queued) → poll surfaced
+the job record → patching applied (`patched_steps`, `patched_seed_into`). The only
+failure was on Cloud's *execution* side, and it was our fault, not Cloud's:
+
+- The probe picked `names[0]`, which on Cloud is
+  `dynamicrafter/controlnet/dc_sketch_encoder_fp16.safetensors` — a **ControlNet
+  encoder, not a base checkpoint**. Cloud *advertises* it in `object_info` but
+  rejects it for `CheckpointLoaderSimple` at run time (`value_not_in_list`).
+- **Finding worth carrying forward:** on Cloud, **membership in `object_info` ≠
+  loadable**. Our preflight marked it `available: true` (it *is* in the list), so
+  preflight can't fully vet Cloud checkpoints — only execution can. Local didn't
+  show this because a contributor's box only lists what it can actually load.
+- **Fixed:** `resolve_builtin_checkpoint` now prefers a real SDXL base
+  (`sd_xl_base_1.0.safetensors`, which **is** in Cloud's list), falling back
+  through a small known-good list. Re-run needed.
+
+Also confirmed in the inventory: Cloud carries `sd_xl_base_1.0.safetensors`,
+`flux1-schnell-fp8.safetensors`, and `flux1-dev-fp8.safetensors` — so our clean
+Apache-2.0 candidate (FLUX.1 schnell) is available cloud-side.
+
+### Run E — cloud, 2026-07-16, built-in SDXL — SUCCESS, real image end-to-end
+
+```json
+{"backend": "cloud", "works_without_api_key": true, "verdict": "OK",
+ "ckpt": "sd_xl_base_1.0.safetensors", "seconds_to_first_image": 10.3,
+ "poll_route_that_worked": "/api/jobs/{id}", "png_text_keys": ["prompt"]}
+```
+
+**Hypothesis 3 confirmed.** The *same* stdlib client and the *same* built-in graph
+that we run locally generated a real SDXL image on Comfy Cloud, with nothing
+changed but `base_url` and the `X-API-Key` header. Submit → poll → fetch → PNG,
+all green.
+
+Two facts the real client must carry:
+
+- **Poll route differs by backend.** Cloud answered on `/api/jobs/{id}`; local
+  answered on `/history/{id}`. Neither backend serves the other's route, so the
+  client genuinely needs to try both (the probe's try-all-three poll is not
+  over-engineering — it's required).
+- **Cloud is the fast path: 10.3 s** for an SDXL image, versus local's ~626 s
+  cold-start on the Qwen box. This matches the hardware analysis — the contributor
+  with the real GPU is the local case; this machine is the cloud case.
+
+`png_text_keys: ["prompt"]` on Cloud too — the recipe-embedding behaviour (H5) is
+identical across both backends.
+
 ## Run it
 
 **Local** (contributors with a real GPU). Start ComfyUI first; default bind is
@@ -178,9 +299,35 @@ the probe — please report it rather than working around it.
 
 ## Verdict
 
-> _Fill this in when the runs come back, then delete the prototype._
+_All load-bearing hypotheses settled by runs A–E (2026-07-15/16). Ready to fold
+into an ADR/issue and delete this prototype._
 
-- **Is local free and open?** …
-- **Does one client serve both?** …
-- **Do local and cloud share a checkpoint?** …
-- **Decision:** …
+- **Is local free and open?** **Yes, proven end-to-end.** A stock local ComfyUI
+  answered an unauthenticated request and ran a full generation with no account,
+  no API key, no credits (runs A + B). The paid surface (API Nodes) is opt-in *by
+  node choice inside a workflow*, not a toll gate on the HTTP API.
+- **Does one client serve both?** **Yes (H3 confirmed, run E).** One stdlib-only
+  client drove local *and* Cloud through submit → poll → fetch → PNG, changing
+  only `base_url` + the `X-API-Key` header. Two backend differences the real
+  client must handle:
+  1. **Poll route differs** — Cloud `/api/jobs/{id}`, local `/history/{id}`; try
+     both.
+  2. **Cloud drops the per-class `/api/object_info/{class}` route** (use bulk
+     `/api/object_info`, which both support), and on Cloud *object_info
+     membership ≠ loadable* — some advertised names 400 at execution. Vet Cloud
+     checkpoints by execution, not by the advertised list.
+- **Do local and cloud share a checkpoint?** **Don't care — retired by the scope
+  decision.** Each environment names its own model. For the record they *could*
+  overlap (Cloud carries `sd_xl_base_1.0`, `flux1-schnell-fp8`, `flux1-dev-fp8`),
+  but the design does not require it.
+- **Performance shape:** Cloud ~10 s/image (SDXL); local ~626 s first image on the
+  contributor's Qwen box — almost certainly cold-start VRAM load, **steady-state
+  still unmeasured** (the one open number; take a `--twice` local run if it
+  matters before shipping).
+- **Decision:** **ComfyUI is viable for both environments.** Build one HTTP client
+  (stdlib is sufficient — the probe needed no dependency) with per-environment
+  config: `base_url`, optional `api_key`, and each environment's own
+  `workflow_path` + model. Backend-specific: poll-route fallback, bulk
+  object_info only. Model licensing for anything we might ship → **FLUX.1 schnell
+  or Qwen-Image (both Apache-2.0)**; avoid FLUX.1 dev (non-commercial) and SD 3.5
+  ($1M tripwire) — see `docs/research/comfyui.md`.
