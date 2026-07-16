@@ -83,6 +83,14 @@ just -l  # List available commands
 just check
 ```
 
-There is a prompt available to update TOML files. You can ask your coding assistant:
+Prek can be used to run checks when you `git commit`. Install the Prek hooks once:
 
-> Follow the instructions in @MIGRATE_TOML.md to update @races/elf.toml
+```console
+uv run prek install
+```
+
+If you need to bypass the hooks on a given commit, use `--no-verify`:
+
+```console
+git commit -m "..." --no-verify
+```
