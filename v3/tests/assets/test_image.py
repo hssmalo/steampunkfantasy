@@ -264,6 +264,22 @@ def test_cli_blank_race_description_exits_without_writing(
     assert not image_env.candidates.exists()
 
 
+def test_cli_failed_job_surfaces_red_error(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _make_env(monkeypatch, tmp_path, fail=True)
+
+    with pytest.raises(SystemExit) as excinfo:
+        _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
+
+    assert excinfo.value.code == 1
+    err = capsys.readouterr().err
+    assert "image generation failed" in err
+    assert "CUDA out of memory" in err  # ComfyUI's node_errors surfaced
+
+
 @pytest.mark.usefixtures("image_env")
 def test_cli_unknown_race_errors(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as excinfo:

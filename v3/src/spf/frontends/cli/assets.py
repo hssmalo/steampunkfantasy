@@ -14,6 +14,7 @@ import cyclopts
 from spf import races
 from spf.assets import generate, get_kind, promote
 from spf.assets import image as _image  # noqa: F401  registers the "image" Kind
+from spf.assets.comfyui import ComfyUIError
 from spf.config import config
 from spf.console import stderr, stdout
 
@@ -124,7 +125,7 @@ def add_commands(app: cyclopts.App) -> None:
                 seed=seed,
                 candidates_root=config.paths.candidates,
             )
-        except OSError as err:
+        except (OSError, ComfyUIError) as err:
             stderr.print(f"[red]Error:[/] image generation failed: {err}")
             raise SystemExit(1) from None
 
