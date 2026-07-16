@@ -52,41 +52,75 @@ connection is still strictly unproven. Nothing suggests it will differ (ComfyUI
 has no auth layer at all, for any route), but it is not measured. Promote this to
 ✅ only once a run gets past phase 3.
 
-The failure itself is not a finding about ComfyUI, it's a finding about *setup*:
-**ComfyUI ships with zero models.** It is an execution engine, not a bundle. An
-empty `models/checkpoints/` means `CheckpointLoaderSimple` has no name to offer
-and the probe correctly refuses to submit a workflow that could only 400.
+The `"checkpoints": []` was **almost certainly a false negative from the probe,
+not an empty box** — see the correction below. The v1 probe only ever asked
+`CheckpointLoaderSimple` what it had.
 
-Fix, before re-running:
+### Correction — the contributor's real model is Qwen-Image, which has no checkpoint
+
+They exported their working setup (kept as
+`prototypes/comfyui/samples/qwen_image_api.json`). It reveals the v1 probe was
+**looking in the wrong drawer**:
+
+- Their model is **Qwen-Image**, a *UNET-split* model. It loads via
+  `UNETLoader` + `CLIPLoader` + `VAELoader` naming three separate files
+  (`qwen_image_2512_fp8_e4m3fn.safetensors`, `qwen_2.5_vl_7b_fp8_scaled.safetensors`,
+  `qwen_image_vae.safetensors`). There is **no `CheckpointLoaderSimple` and no
+  checkpoint file at all** — so `models/checkpoints/` is legitimately empty while
+  the box is fully model-equipped. They likely never needed the SDXL download.
+- Their graph uses **`ComfySwitchNode`** (a 4-step-LoRA toggle). That is *not* a
+  core node. It runs locally but is the textbook custom-node portability risk:
+  the same JSON will fail on Comfy Cloud unless Cloud has that node pack. This is
+  exactly what hypothesis 3/4 need to find out.
+
+**What this changed in the probe (v2):** the checkpoint-only inventory check is
+replaced by a general **preflight** that asks the server, for *every* node: do
+you have this node class, and every model file it names? It detects split-loader
+models and unknown/custom nodes alike, and reports the full available list for
+each loader input so a local run and a cloud run can be diffed directly. Prompt
+and seed are now patched by *following links from the sampler*, so the one script
+drives both the built-in graph and any exported one. Verified offline against
+both the built-in SDXL graph and the real Qwen export.
+
+**Still worth doing (SDXL as a portable baseline).** The built-in graph uses core
+nodes + one checkpoint on purpose: it's the clean test of "same workflow, both
+backends." SDXL's *boringly canonical filename* maximises the chance Cloud has
+the identical name. It isn't necessarily the model we'd ship (FLUX.1 schnell and
+Qwen-Image are Apache-2.0 and cleaner for a game we might sell — see the research
+doc); the probe tests plumbing, not art direction.
 
 ```bash
+# only if you want the portable SDXL baseline; a Qwen box doesn't need it
 cd ComfyUI/models/checkpoints
 curl -L -O https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
 # ~6.9 GB, then RESTART ComfyUI — it caches the model list
 ```
 
-SDXL is chosen here for its *boringly canonical filename*, not its merits: the
-design needs local and cloud to share a checkpoint **filename**, so a standard
-name maximises the chance Cloud already has it. It is not necessarily the model
-we would ship with (see licensing in the research doc — FLUX.1 schnell and
-Qwen-Image are Apache-2.0 and cleaner for a game we might sell). The probe tests
-plumbing, not art direction; pick the model later.
-
-**Sequencing note for the next run:** ideally get Cloud's checkpoint inventory
-*first* (`probe.py cloud` prints it even if generation fails), then have
-contributors download exactly the file Cloud already has, under exactly that
-name. That turns hypothesis 4 from a coin-flip into a deliberate choice.
+**Sequencing note for the next run:** get Cloud's inventory *first*
+(`probe.py cloud` prints it even when generation fails), then decide which
+workflow to test. The Qwen export is the more revealing cloud test precisely
+because of `ComfySwitchNode` — if Cloud rejects it, we've learned the real
+portability boundary; if it accepts it, even better.
 
 ## Run it
 
 **Local** (contributors with a real GPU). Start ComfyUI first; default bind is
-`127.0.0.1:8188`, and at least one checkpoint must be installed.
+`127.0.0.1:8188`.
 
 ```bash
+# Built-in portable SDXL graph (needs a checkpoint installed):
 python3 prototypes/comfyui/probe.py local
 python3 prototypes/comfyui/probe.py local --twice     # also checks reproducibility
 python3 prototypes/comfyui/probe.py local --checkpoint sd_xl_base_1.0.safetensors
+
+# Your OWN exported workflow — no download, drives what already works for you.
+# In ComfyUI: "Save (API Format)" (NOT plain Save), then:
+python3 prototypes/comfyui/probe.py local --workflow my_export.json
 ```
+
+The probe patches only the positive prompt and seed, following links from the
+`KSampler`; everything else (model, steps, cfg, LoRA switches) stays exactly as
+you saved it. Pass `--prompt "..."` to change the test prompt.
 
 **Cloud** (needs a paid tier — API access is excluded from the free tier).
 

@@ -1,7 +1,13 @@
 [files]
 # card_standar.tex is a legacy flacards sample kept for reference; its filename
 # misspelling is not ours to rename (superseded by templates/latex/cards/).
-extend-exclude = ["rules/todo.md", "templates/card_standar.tex"]
+extend-exclude = [
+    "rules/todo.md",
+    "templates/card_standar.tex",
+    # Verbatim ComfyUI export from a contributor; their prompt's spelling is
+    # captured data, not ours to rewrite (throwaway prototype sample anyway).
+    "prototypes/comfyui/samples/*.json",
+]
 
 [default]
 # Ignore any line ending with `# typos: ignore`
