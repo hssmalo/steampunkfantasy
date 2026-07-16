@@ -134,7 +134,7 @@ def add_commands(app: cyclopts.App) -> None:
             raise SystemExit(1) from None
 
         stdout.print(
-            f"Promote one with: spf assets promote {race} image {name} --pick N"
+            f"Promote one with: spf assets promote {race} image {target} --pick N"
         )
 
     app.command(promote_asset, name="promote")
