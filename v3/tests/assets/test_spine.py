@@ -27,6 +27,29 @@ def test_generate_writes_n_candidates_at_kind_layout(
     assert [p.read_bytes() for p in paths] == [b"one", b"two", b"three"]
 
 
+def test_generate_persists_each_candidate_before_reporting_it(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    # on_candidate fires per file, in order, with the bytes already on disk —
+    # proving Candidates are saved incrementally, not as a final batch.
+    seen: list[tuple[Path, bytes]] = []
+    generate(
+        test_kind,
+        source="a grunt description",
+        race="orks",
+        name="grunt",
+        count=3,
+        candidates_root=tmp_path,
+        on_candidate=lambda path: seen.append((path, path.read_bytes())),
+    )
+    base = tmp_path / "orks" / "_test"
+    assert seen == [
+        (base / "grunt.1.txt", b"one"),
+        (base / "grunt.2.txt", b"two"),
+        (base / "grunt.3.txt", b"three"),
+    ]
+
+
 def test_generate_threads_seed_to_service(tmp_path: Path) -> None:
     service = FakeService()
     kind = Kind(name="_seedy", service=service, subdir="_test", extension="txt")

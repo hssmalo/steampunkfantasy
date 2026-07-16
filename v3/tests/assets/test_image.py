@@ -203,6 +203,11 @@ def test_cli_unit_image_writes_candidates(
     assert (images / "ogre_grunt.1.png").read_bytes().startswith(_PNG)
     out = capsys.readouterr().out
     assert "5" in out  # the seed is printed
+    # The composed prompt is echoed before the request goes out.
+    assert "A stout ogre grunt hefting a huge wrench" in out
+    # Each Candidate's path is reported as it lands (one "Wrote" per image).
+    assert out.count("Wrote ") == 3
+    assert "ogre_grunt.1.png" in out
     assert "spf assets promote ogre image ogre_grunt --pick" in out
 
 

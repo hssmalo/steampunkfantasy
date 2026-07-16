@@ -115,8 +115,11 @@ def add_commands(app: cyclopts.App) -> None:
         stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
         count = opts.count or config.assets.image.count
 
+        # Show the composed prompt (dimmed) before sending it to the Service.
+        stdout.print(prompt, style="dim", markup=False)
+
         try:
-            paths = generate(
+            generate(
                 get_kind("image"),
                 prompt,
                 race=race,
@@ -124,13 +127,12 @@ def add_commands(app: cyclopts.App) -> None:
                 count=count,
                 seed=seed,
                 candidates_root=config.paths.candidates,
+                on_candidate=lambda path: stdout.print(f"Wrote {path}"),
             )
         except (OSError, ComfyUIError) as err:
             stderr.print(f"[red]Error:[/] image generation failed: {err}")
             raise SystemExit(1) from None
 
-        for path in paths:
-            stdout.print(f"Wrote {path}")
         stdout.print(
             f"Promote one with: spf assets promote {race} image {name} --pick N"
         )

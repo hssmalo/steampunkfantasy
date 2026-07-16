@@ -19,7 +19,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
@@ -291,9 +291,19 @@ class ComfyUIService:
         self._timeout_s = timeout_s
 
     def generate(
-        self, source: str, count: int, *, seed: int | None = None
+        self,
+        source: str,
+        count: int,
+        *,
+        seed: int | None = None,
+        on_result: Callable[[bytes | str], None] | None = None,
     ) -> Sequence[bytes]:
-        """Render ``count`` images for the ``source`` prompt, one per sub-seed."""
+        """Render ``count`` images for the ``source`` prompt, one per sub-seed.
+
+        Each job's image is fetched as it completes; ``on_result`` (when given)
+        is called with that blob right away, so the caller can save it before the
+        next job is submitted, rather than at the end of the batch.
+        """
         graph = _load_workflow(self._workflow_path)
         api_key = os.environ.get(self._api_key_env) if self._api_key_env else None
         api_key = api_key or None
@@ -313,5 +323,8 @@ class ComfyUIService:
                 timeout_s=self._timeout_s,
                 cached_route=cached_route,
             )
-            blobs.extend(_fetch_images(self._base_url, api_key, record))
+            for blob in _fetch_images(self._base_url, api_key, record):
+                if on_result is not None:
+                    on_result(blob)
+                blobs.append(blob)
         return blobs
