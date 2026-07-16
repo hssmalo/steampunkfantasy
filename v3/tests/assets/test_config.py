@@ -16,7 +16,7 @@ def test_paths_resolve() -> None:
 
 
 def _env(**kw: str) -> ComfyUIEnvConfig:
-    base = {"base_url": "http://x", "workflow": "w.json"}
+    base = {"base_url": "http://x", "workflow": Path("w.json")}
     return ComfyUIEnvConfig(**{**base, **kw})
 
 
