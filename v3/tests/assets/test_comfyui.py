@@ -5,6 +5,7 @@ low-level HTTP seam — so no real sockets are opened. A committed fixture graph
 (``fixtures/mini_workflow.json``) stands in for a real API-format workflow.
 """
 
+import json
 import random
 import urllib.error
 from collections.abc import Callable
@@ -107,6 +108,18 @@ def _patched_seeds(scripted: _ScriptedComfy) -> list[int]:
     return [graph[_SAMPLER]["inputs"]["seed"] for _, graph in scripted.submissions]
 
 
+def _service_for(
+    graph: dict[str, Any],
+    tmp_path: Path,
+    scripted: _ScriptedComfy,
+    monkeypatch: pytest.MonkeyPatch,
+) -> comfyui.ComfyUIService:
+    """Build a service whose Workflow is ``graph`` written to a temp file."""
+    workflow = tmp_path / "wf.json"
+    workflow.write_text(json.dumps(graph), encoding="utf-8")
+    return _service(scripted, monkeypatch, workflow_path=workflow)
+
+
 # --- Cycle 1: sub-seed derivation (ported from PollinationsService) ---------
 
 
@@ -128,3 +141,88 @@ def test_generate_derives_deterministic_distinct_seeds(
     assert len(first) == len(again) == 3
     assert seeds_a == seeds_b == expected  # deterministic given the base seed
     assert len(set(seeds_a)) == 3  # three distinct sub-seeds from one base
+
+
+# --- Cycle 2: graph-follow patching -----------------------------------------
+
+
+def test_patches_prompt_onto_positive_leaving_the_rest_authored(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _service(scripted, monkeypatch)
+
+    service.generate("a brass rat soldier", 1, seed=7)
+
+    _, graph = scripted.submissions[0]
+    expected = random.Random(7).randrange(2**31)  # noqa: S311  independent truth
+    assert graph[_SAMPLER]["inputs"]["seed"] == expected  # seed on the sampler
+    assert graph[_POSITIVE]["inputs"]["text"] == "a brass rat soldier"
+    # Everything else stays exactly as authored (Decision 4).
+    assert graph["3"]["inputs"]["text"] == "a placeholder negative prompt"
+    assert graph[_SAMPLER]["inputs"]["steps"] == 20
+    assert graph[_SAMPLER]["inputs"]["cfg"] == 7.0
+    assert graph["1"]["inputs"]["ckpt_name"] == "model.safetensors"
+
+
+def test_follows_a_linked_seed_primitive(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    graph = {
+        "s": {
+            "class_type": "KSampler",
+            "inputs": {"seed": ["p", 0], "positive": ["t", 0]},
+        },
+        "t": {"class_type": "CLIPTextEncode", "inputs": {"text": "placeholder"}},
+        "p": {"class_type": "PrimitiveInt", "inputs": {"value": 0}},
+    }
+    scripted = _ScriptedComfy()
+    service = _service_for(graph, tmp_path, scripted, monkeypatch)
+
+    service.generate("prompt", 1, seed=7)
+
+    _, submitted = scripted.submissions[0]
+    expected = random.Random(7).randrange(2**31)  # noqa: S311  independent truth
+    assert submitted["p"]["inputs"]["value"] == expected  # upstream primitive set
+    assert submitted["s"]["inputs"]["seed"] == ["p", 0]  # the link itself untouched
+
+
+def test_rejects_a_workflow_with_no_sampler(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    graph = {"t": {"class_type": "CLIPTextEncode", "inputs": {"text": "x"}}}
+    service = _service_for(graph, tmp_path, _ScriptedComfy(), monkeypatch)
+
+    with pytest.raises(comfyui.ComfyUIError, match="found 0"):
+        service.generate("prompt", 1, seed=7)
+
+
+def test_rejects_a_workflow_with_two_samplers(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    sampler = {"class_type": "KSampler", "inputs": {"seed": 0, "positive": ["t", 0]}}
+    graph = {
+        "s1": dict(sampler),
+        "s2": dict(sampler),
+        "t": {"class_type": "CLIPTextEncode", "inputs": {"text": "x"}},
+    }
+    service = _service_for(graph, tmp_path, _ScriptedComfy(), monkeypatch)
+
+    with pytest.raises(comfyui.ComfyUIError, match="found 2"):
+        service.generate("prompt", 1, seed=7)
+
+
+def test_rejects_a_non_text_positive_input(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    graph = {
+        "s": {
+            "class_type": "KSampler",
+            "inputs": {"seed": 0, "positive": ["c", 0]},
+        },
+        "c": {"class_type": "ConditioningCombine", "inputs": {"strength": 1.0}},
+    }
+    service = _service_for(graph, tmp_path, _ScriptedComfy(), monkeypatch)
+
+    with pytest.raises(comfyui.ComfyUIError, match="no 'text' input"):
+        service.generate("prompt", 1, seed=7)
