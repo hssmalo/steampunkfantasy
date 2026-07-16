@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from cyclopts.exceptions import CycloptsError
 
 from spf.assets import comfyui, get_kind
 from spf.assets import image as img
@@ -288,12 +289,10 @@ def test_cli_failed_job_surfaces_red_error(
 
 
 @pytest.mark.usefixtures("image_env")
-def test_cli_unknown_race_errors(capsys: pytest.CaptureFixture[str]) -> None:
-    with pytest.raises(SystemExit) as excinfo:
+def test_cli_unknown_race_errors() -> None:
+    # RACE is typed as a Literal, so cyclopts rejects unknown values itself.
+    with pytest.raises(CycloptsError, match="nope"):
         _run("assets", "image", "nope")
-
-    assert excinfo.value.code == 1
-    assert "nope" in capsys.readouterr().err
 
 
 @pytest.mark.usefixtures("image_env")
