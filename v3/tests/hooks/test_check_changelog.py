@@ -19,6 +19,15 @@ def test_modified_race_toml_with_changelog_staged_is_not_flagged() -> None:
     assert result == []
 
 
+def test_first_time_added_changelog_satisfies() -> None:
+    # The changelog is brand new: it is staged (ACM) but was never "modified".
+    result = missing_changelogs(
+        modified={"races/elf.toml"},
+        staged={"races/elf.toml", "races/changelog.md"},
+    )
+    assert result == []
+
+
 def test_rules_flagged_independently_of_satisfied_races() -> None:
     # races changelog is staged (satisfied); rules changelog is not.
     result = missing_changelogs(
