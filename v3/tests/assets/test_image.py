@@ -1,18 +1,29 @@
-"""The Image kind: Pollinations-backed Service, URL building, registration."""
+"""The Image kind: ComfyUI-backed Service wiring, env selection, CLI flow.
 
-import urllib.error
-import urllib.request
-from email.message import Message
+The provider internals (patching, submit/poll/fetch, retries) are covered in
+``test_comfyui.py``. Here we test the *wiring*: that the Kind is registered,
+that ``_build_service`` honours the configured Environment, and that the
+``spf assets image`` command composes prompts and writes Candidates end-to-end
+over a monkeypatched :func:`comfyui._request`.
+"""
+
+import urllib.parse
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Self
-from urllib.parse import parse_qs, unquote, urlsplit
+from typing import Any
 
 import pytest
 
-from spf.assets import get_kind
+from spf.assets import comfyui, get_kind
 from spf.assets import image as img
 from spf.config import config
 from spf.frontends.cli import app
+
+_FIXTURES = Path(__file__).parent / "fixtures"
+_MINI = _FIXTURES / "mini_workflow.json"
+_PNG = b"\x89PNG\r\n\x1a\n"
+_POSITIVE = "2"  # the positive text node in mini_workflow.json
+_SAMPLER = "5"  # the KSampler in mini_workflow.json
 
 _OGRE_TOML = """\
 [races.ogre]
@@ -56,9 +67,67 @@ name = "Gnome"
 """
 
 
-@pytest.fixture
-def image_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
-    """Point config at tmp race/prompt/store dirs and fake the network fetch."""
+class _FakeRequest:
+    """A stand-in for :func:`comfyui._request` for the CLI flow.
+
+    Records the submitted graphs, then serves a completed job and PNG bytes.
+    Set ``fail`` to make every job report a ``failed`` status, so the CLI's
+    error path can be exercised.
+    """
+
+    def __init__(self, *, fail: bool = False) -> None:
+        self.submissions: list[dict[str, Any]] = []
+        self._fail = fail
+        self._counter = 0
+
+    def __call__(  # noqa: PLR0913  mirrors the _request seam's fixed shape
+        self,
+        base: str,  # noqa: ARG002  positional to match _request; unused here
+        path: str,
+        *,
+        api_key: str | None = None,  # noqa: ARG002  unused in this fake
+        body: dict[str, Any] | None = None,
+        raw: bool = False,
+        timeout: float = 120,  # noqa: ARG002  part of the seam signature; unused
+    ) -> Any:  # noqa: ANN401  mirrors _request's dynamic return
+        if path == "/api/prompt":
+            self._counter += 1
+            assert body is not None
+            self.submissions.append(body["prompt"])
+            return {"prompt_id": f"pid-{self._counter}"}
+        if raw:  # /api/view — echo the requested filename so blobs are per-job
+            query = urllib.parse.parse_qs(path.split("?", 1)[1])
+            return _PNG + query["filename"][0].encode()
+        if self._fail:
+            return {"status": "failed", "node_errors": {"5": "CUDA out of memory"}}
+        pid = path.rsplit("/", 1)[-1]
+        outputs = {"7": {"images": [{"filename": f"{pid}.png", "type": "output"}]}}
+        return {"status": "completed", "outputs": outputs}
+
+
+@dataclass
+class _ImageEnv:
+    """A configured tmp project plus the scripted ComfyUI seam."""
+
+    root: Path
+    comfy: _FakeRequest
+
+    @property
+    def candidates(self) -> Path:
+        return self.root / "candidates"
+
+    def prompts(self) -> list[str]:
+        """Return the positive prompt patched into each submitted job, in order."""
+        return [g[_POSITIVE]["inputs"]["text"] for g in self.comfy.submissions]
+
+    def seeds(self) -> list[int]:
+        """Return the seed patched into each submitted job, in order."""
+        return [g[_SAMPLER]["inputs"]["seed"] for g in self.comfy.submissions]
+
+
+def _make_env(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *, fail: bool = False
+) -> _ImageEnv:
     races = tmp_path / "races"
     races.mkdir()
     (races / "ogre.toml").write_text(_OGRE_TOML, encoding="utf-8")
@@ -70,225 +139,87 @@ def image_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
     monkeypatch.setattr(config.paths, "prompts", prompts)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
-    monkeypatch.setattr(img, "_fetch", lambda url: b"PNG:" + url.encode("utf-8"))
-    return tmp_path
+
+    comfy = _FakeRequest(fail=fail)
+    monkeypatch.setattr(comfyui, "_request", comfy)
+    # The wired service points at the (gitignored) real workflow; aim it at the
+    # committed fixture so the flow runs without a per-machine local.json.
+    monkeypatch.setattr(img.IMAGE.service, "_workflow_path", _MINI)
+    return _ImageEnv(tmp_path, comfy)
+
+
+@pytest.fixture
+def image_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> _ImageEnv:
+    """Configure a tmp project with a happy scripted ComfyUI."""
+    return _make_env(monkeypatch, tmp_path)
 
 
 def _run(*argv: str) -> None:
     app([*argv], exit_on_error=False, result_action="return_value")
 
 
-def test_service_derives_deterministic_distinct_seeds(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.setattr(img, "_fetch", lambda url: url.encode("utf-8"))
-    service = img.PollinationsService()
-
-    first = service.generate("a prompt", 3, seed=42)
-    again = service.generate("a prompt", 3, seed=42)
-
-    assert len(first) == 3
-    assert first == again  # deterministic given the base seed
-    assert len(set(first)) == 3  # count distinct sub-seeds derived from one base
-
-
-def test_service_returns_blobs_in_order(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(img, "_fetch", lambda url: url.encode("utf-8"))
-    service = img.PollinationsService()
-
-    blobs = service.generate("a prompt", 2, seed=1)
-
-    seeds = [int(parse_qs(urlsplit(b.decode()).query)["seed"][0]) for b in blobs]
-    rng = __import__("random").Random(1)
-    expected = [rng.randrange(2**31) for _ in range(2)]
-    assert seeds == expected
-
-
-def test_build_url_encodes_prompt_and_params() -> None:
-    url = img._build_url("Ogre Infantry, side by side", seed=99)
-
-    split = urlsplit(url)
-    assert split.netloc == "gen.pollinations.ai"
-    assert " " not in url  # prompt is URL-encoded
-    assert "Ogre%20Infantry" in url
-    params = parse_qs(split.query)
-    assert params["width"] == ["1024"]
-    assert params["height"] == ["1024"]
-    assert params["model"] == ["zimage"]
-    assert params["seed"] == ["99"]
-
-
-class _FakeResponse:
-    """A minimal ``urlopen`` context manager returning canned bytes."""
-
-    def __init__(self, data: bytes) -> None:
-        self._data = data
-
-    def __enter__(self) -> Self:
-        return self
-
-    def __exit__(self, *_: object) -> bool:
-        return False
-
-    def read(self) -> bytes:
-        return self._data
-
-
-def _http_error(code: int) -> urllib.error.HTTPError:
-    return urllib.error.HTTPError("https://x", code, "boom", Message(), None)
-
-
-def test_fetch_sends_bearer_auth_header(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("SPF_POLLINATIONS_API_KEY", "pk_secret")
-    captured: dict[str, urllib.request.Request] = {}
-
-    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
-        captured["req"] = request
-        return _FakeResponse(b"IMG")
-
-    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
-
-    assert img._fetch("https://gen.pollinations.ai/image/x") == b"IMG"
-    assert captured["req"].get_header("Authorization") == "Bearer pk_secret"
-    assert "pk_secret" not in captured["req"].full_url  # key stays out of the URL
-
-
-def test_fetch_omits_auth_header_without_key(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
-    captured: dict[str, urllib.request.Request] = {}
-
-    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
-        captured["req"] = request
-        return _FakeResponse(b"IMG")
-
-    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
-
-    img._fetch("https://x")
-    assert captured["req"].get_header("Authorization") is None
-
-
-def test_fetch_retries_on_server_error_then_succeeds(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
-    outcomes: list[object] = [_http_error(522), _http_error(530), _FakeResponse(b"OK")]
-    calls: list[urllib.request.Request] = []
-
-    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
-        result = outcomes[len(calls)]
-        calls.append(request)
-        if isinstance(result, Exception):
-            raise result
-        assert isinstance(result, _FakeResponse)
-        return result
-
-    sleeps: list[float] = []
-    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
-    monkeypatch.setattr(img.time, "sleep", sleeps.append)
-
-    assert img._fetch("https://x") == b"OK"
-    assert len(calls) == 3  # two failures, then success
-    assert len(sleeps) == 2  # backed off before each retry
-
-
-def test_fetch_does_not_retry_on_client_error(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
-    calls: list[urllib.request.Request] = []
-
-    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
-        calls.append(request)
-        raise _http_error(403)
-
-    sleeps: list[float] = []
-    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
-    monkeypatch.setattr(img.time, "sleep", sleeps.append)
-
-    with pytest.raises(urllib.error.HTTPError) as excinfo:
-        img._fetch("https://x")
-    assert excinfo.value.code == 403
-    assert len(calls) == 1  # failed fast, no retry
-    assert sleeps == []
-
-
-def test_fetch_gives_up_after_max_attempts(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
-    calls: list[urllib.request.Request] = []
-
-    def fake_urlopen(request: urllib.request.Request) -> _FakeResponse:
-        calls.append(request)
-        raise _http_error(522)
-
-    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
-    monkeypatch.setattr(img.time, "sleep", lambda _: None)
-
-    with pytest.raises(urllib.error.HTTPError) as excinfo:
-        img._fetch("https://x")
-    assert excinfo.value.code == 522
-    assert len(calls) == img._MAX_ATTEMPTS
-
-
-def test_fetch_backoff_grows_exponentially(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.delenv("SPF_POLLINATIONS_API_KEY", raising=False)
-    monkeypatch.setattr(img, "_BACKOFF_BASE", 0.5)
-
-    def fake_urlopen(_: urllib.request.Request) -> _FakeResponse:
-        raise _http_error(522)
-
-    sleeps: list[float] = []
-    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
-    monkeypatch.setattr(img.time, "sleep", sleeps.append)
-
-    with pytest.raises(urllib.error.HTTPError):
-        img._fetch("https://x")
-    assert sleeps == [0.5 * 2**i for i in range(img._MAX_ATTEMPTS - 1)]
+# --- Kind registration + service wiring -------------------------------------
 
 
 def test_image_kind_is_registered() -> None:
     kind = get_kind("image")
     assert kind.subdir == "images"
     assert kind.extension == "png"
-    assert isinstance(kind.service, img.PollinationsService)
+    assert isinstance(kind.service, comfyui.ComfyUIService)
+
+
+def test_build_service_points_at_the_selected_env(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cu = config.assets.image.comfyui
+    monkeypatch.setattr(cu, "env", "cloud")
+
+    service = img._build_service()
+
+    assert service._base_url == cu.cloud.base_url
+    assert service._workflow_path == config.paths.workflows / cu.cloud.workflow
+    assert service._api_key_env == cu.cloud.api_key_env
+
+
+def test_build_service_rejects_an_unknown_env(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(config.assets.image.comfyui, "env", "staging")
+    with pytest.raises(ValueError, match="Unknown ComfyUI env"):
+        img._build_service()
+
+
+# --- CLI flow (provider-agnostic, over the scripted seam) -------------------
 
 
 def test_cli_unit_image_writes_candidates(
-    image_env: Path, capsys: pytest.CaptureFixture[str]
+    image_env: _ImageEnv, capsys: pytest.CaptureFixture[str]
 ) -> None:
     _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
 
-    images = image_env / "candidates" / "ogre" / "images"
+    images = image_env.candidates / "ogre" / "images"
     written = sorted(p.name for p in images.glob("*.png"))
     assert written == ["ogre_grunt.1.png", "ogre_grunt.2.png", "ogre_grunt.3.png"]
-    assert (images / "ogre_grunt.1.png").read_bytes().startswith(b"PNG:")
+    assert (images / "ogre_grunt.1.png").read_bytes().startswith(_PNG)
     out = capsys.readouterr().out
     assert "5" in out  # the seed is printed
     assert "spf assets promote ogre image ogre_grunt --pick" in out
 
 
 def test_cli_unit_image_prompt_composes_preamble_name_description(
-    image_env: Path,
+    image_env: _ImageEnv,
 ) -> None:
     _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
 
-    blob = image_env / "candidates" / "ogre" / "images" / "ogre_grunt.1.png"
-    url = blob.read_bytes().removeprefix(b"PNG:").decode("utf-8")
-    prompt = unquote(urlsplit(url).path.split("/image/", 1)[1])
-    assert prompt == (
+    assert image_env.prompts()[0] == (
         "Preamble one. two. Ogre Grunt. A stout ogre grunt hefting a huge wrench"
     )
 
 
-def test_cli_race_image_uses_race_name_layout(image_env: Path) -> None:
+def test_cli_race_image_uses_race_name_layout(image_env: _ImageEnv) -> None:
     _run("assets", "image", "ogre", "--seed", "5")
 
-    images = image_env / "candidates" / "ogre" / "images"
+    images = image_env.candidates / "ogre" / "images"
     assert sorted(p.name for p in images.glob("*.png")) == [
         "ogre.1.png",
         "ogre.2.png",
@@ -296,23 +227,41 @@ def test_cli_race_image_uses_race_name_layout(image_env: Path) -> None:
     ]
 
 
+def test_cli_same_seed_reproduces_batch(image_env: _ImageEnv) -> None:
+    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "123")
+    first = image_env.seeds()
+    image_env.comfy.submissions.clear()
+    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "123")
+
+    assert image_env.seeds() == first  # same base seed → same sub-seeds
+
+
+def test_cli_count_override_beats_config(image_env: _ImageEnv) -> None:
+    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "1", "--count", "1")
+
+    images = image_env.candidates / "ogre" / "images"
+    assert [p.name for p in images.glob("*.png")] == ["ogre_grunt.1.png"]
+
+
 def test_cli_blank_unit_description_exits_without_writing(
-    image_env: Path, capsys: pytest.CaptureFixture[str]
+    image_env: _ImageEnv, capsys: pytest.CaptureFixture[str]
 ) -> None:
     with pytest.raises(SystemExit) as excinfo:
         _run("assets", "image", "ogre", "ogre_blank")
 
     assert excinfo.value.code == 1
-    assert not (image_env / "candidates").exists()
+    assert not image_env.candidates.exists()
     assert "no description" in capsys.readouterr().err
 
 
-def test_cli_blank_race_description_exits_without_writing(image_env: Path) -> None:
+def test_cli_blank_race_description_exits_without_writing(
+    image_env: _ImageEnv,
+) -> None:
     with pytest.raises(SystemExit) as excinfo:
         _run("assets", "image", "gnome")
 
     assert excinfo.value.code == 1
-    assert not (image_env / "candidates").exists()
+    assert not image_env.candidates.exists()
 
 
 @pytest.mark.usefixtures("image_env")
@@ -335,46 +284,3 @@ def test_cli_unknown_unit_lists_available(
     err = capsys.readouterr().err
     assert "not_a_unit" in err
     assert "ogre_grunt" in err  # available units listed
-
-
-def _urls(images: Path, name: str) -> list[str]:
-    return [
-        p.read_bytes().removeprefix(b"PNG:").decode("utf-8")
-        for p in sorted(images.glob(f"{name}.*.png"))
-    ]
-
-
-def test_cli_same_seed_reproduces_batch(image_env: Path) -> None:
-    images = image_env / "candidates" / "ogre" / "images"
-    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "123")
-    first = _urls(images, "ogre_grunt")
-    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "123")
-    assert _urls(images, "ogre_grunt") == first
-
-
-def test_cli_count_override_beats_config(image_env: Path) -> None:
-    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "1", "--count", "1")
-
-    images = image_env / "candidates" / "ogre" / "images"
-    assert [p.name for p in images.glob("*.png")] == ["ogre_grunt.1.png"]
-
-
-@pytest.mark.integration
-def test_live_pollinations_returns_png_bytes() -> None:
-    """Opt-in: really call Pollinations for one small image (skipped by default).
-
-    Run with ``pytest -m integration``. Skips when the anonymous path is
-    unavailable (rate-limited/401) and no ``SPF_POLLINATIONS_API_KEY`` is set.
-    """
-    service = img.PollinationsService()
-    try:
-        blobs = service.generate(
-            "A single steampunk gear on a plain background", 1, seed=1
-        )
-    except OSError as err:  # anonymous tier rate-limited / unauthorized
-        pytest.skip(f"Pollinations unavailable: {err}")
-
-    assert len(blobs) == 1
-    assert isinstance(blobs[0], bytes)
-    assert len(blobs[0]) > 0
-    assert blobs[0][:8] == b"\x89PNG\r\n\x1a\n"
