@@ -385,3 +385,44 @@ def test_generate_raises_on_poll_timeout(monkeypatch: pytest.MonkeyPatch) -> Non
 
     with pytest.raises(comfyui.ComfyUIError, match="timed out"):
         service.generate("a prompt", 1, seed=1)
+
+
+# --- Cycle 6: lazy API key --------------------------------------------------
+
+
+def test_sends_api_key_header_when_env_var_is_set(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("SPF_TEST_KEY", "secret-123")
+    scripted = _ScriptedComfy()
+    service = _service(scripted, monkeypatch, api_key_env="SPF_TEST_KEY")
+
+    service.generate("a prompt", 1, seed=1)
+
+    assert {key for _, key in scripted.calls} == {"secret-123"}
+
+
+def test_omits_api_key_when_env_name_is_empty(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _service(scripted, monkeypatch, api_key_env="")
+
+    service.generate("a prompt", 1, seed=1)
+
+    assert all(key is None for _, key in scripted.calls)
+
+
+def test_api_key_is_read_lazily_at_generate_time(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("SPF_TEST_KEY", raising=False)
+    scripted = _ScriptedComfy()
+    # The env var is unset when the service is constructed...
+    service = _service(scripted, monkeypatch, api_key_env="SPF_TEST_KEY")
+    # ...and exported only afterwards, as a user would after importing the CLI.
+    monkeypatch.setenv("SPF_TEST_KEY", "exported-later")
+
+    service.generate("a prompt", 1, seed=1)
+
+    assert {key for _, key in scripted.calls} == {"exported-later"}
