@@ -93,10 +93,11 @@ def image(
     opts = opts or AssetOpts()
 
     if unit == "all":
-        unit_names = races.get_units(race).keys()
-        for u in unit_names:
-            stdout.print(f"[bold]{u}")
-            image(race, u, opts=opts)
+        for unit_name in [None, *races.get_units(race)]:
+            if unit_name:
+                stdout.print(f"[green]{unit_name}[/]")
+            image(race, unit=unit_name, opts=opts)
+        return
 
     try:
         name, human_name, description = _resolve_target(race, unit)
@@ -137,3 +138,5 @@ def image(
     except (OSError, ComfyUIError) as err:
         stderr.print(f"[red]Error:[/] image generation failed: {err}")
         raise SystemExit(1) from None
+
+    stdout.print(f"Promote one with: spf assets promote {race} image {target} --pick N")
