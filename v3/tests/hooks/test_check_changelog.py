@@ -17,3 +17,21 @@ def test_modified_race_toml_with_changelog_staged_is_not_flagged() -> None:
         staged={"races/elf.toml", "races/changelog.md"},
     )
     assert result == []
+
+
+def test_rules_flagged_independently_of_satisfied_races() -> None:
+    # races changelog is staged (satisfied); rules changelog is not.
+    result = missing_changelogs(
+        modified={"races/elf.toml", "rules/special.toml"},
+        staged={"races/elf.toml", "races/changelog.md", "rules/special.toml"},
+    )
+    assert result == [("rules/special.toml", "rules/changelog.md")]
+
+
+def test_races_flagged_independently_of_satisfied_rules() -> None:
+    # rules changelog is staged (satisfied); races changelog is not.
+    result = missing_changelogs(
+        modified={"races/elf.toml", "rules/special.toml"},
+        staged={"races/elf.toml", "rules/special.toml", "rules/changelog.md"},
+    )
+    assert result == [("races/elf.toml", "races/changelog.md")]
