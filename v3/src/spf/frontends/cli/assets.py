@@ -112,10 +112,8 @@ def add_commands(app: cyclopts.App) -> None:
             )
             raise SystemExit(1)
 
-        preamble = " ".join(
-            (config.paths.prompts / "image.txt").read_text(encoding="utf-8").split()
-        )
-        prompt = f"{preamble} {human_name}. {description}"
+        system = (config.paths.prompts / "image.txt").read_text(encoding="utf-8")
+        prompt = f"Subject: {human_name}.\nDetails: {description}\n{system}"
 
         seed = (
             opts.seed if opts.seed is not None else random.randrange(_SEED_BOUND)  # noqa: S311  seed, not cryptographic

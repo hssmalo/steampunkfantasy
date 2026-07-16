@@ -39,9 +39,7 @@ dev = [
 # `integration` tests hit live external services; skip them in the default run
 # (and in `just check`/CI). Opt in with `pytest -m integration`.
 addopts = "-m 'not integration'"
-markers = [
-    "integration: hits a live external provider; skipped by default",
-]
+markers = ["integration: hits a live external provider; skipped by default"]
 
 [tool.ruff]
 target-version = "py312"
@@ -69,3 +67,9 @@ ignore = [
 "tests/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]
 "tests/**/conftest.py" = ["ARG002"]
 "armies/build_scripts/*.py" = ["N999"]
+
+[tool.garuff.per-file-ignores]
+"tests/**/*.py" = ["GAC010"]
+
+[tool.garuff.rules.GAC008]
+max_positional_args = 2

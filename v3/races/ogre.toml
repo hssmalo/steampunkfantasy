@@ -2,7 +2,7 @@
 
 [races.ogre]
 name = "Ogre"
-description = "Ogres are large intelligent humanoid typically about 4m in height. They enjoy fancy outfints and fancy equipment. Ogres are often joined by swarms of tiny drones."
+description = "Ogres are large intelligent humanoids typically about 4m in height. They enjoy fancy outfits and fancy equipment. Ogres are often joined by swarms of tiny drones."
 
 [units]
 
@@ -16,8 +16,9 @@ cost.xp = 96
 
 description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two ogres riding on the hydra. The hydra is the only animal large enough to carry two ogres as cavalry. Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each. '''
 
+
 lore = '''
-Both the Elfs and the Ogres uses these beasts in war, while DarkElf has made a mechanical copy.
+Both the Elves and the Ogres uses these beasts in war, while DarkElf has made a mechanical copy.
 '''
 
 tip = '''Low range and slow is a bad combination, but if you manage to come within short range of enemy, the hydra has powerful firepower, and especially if you get an enemy within point blank range, where you can use the acid breath full potential. You may consider upgrading the Ogre Hydra Crew weapons to give it some better firepower at longer ranges.
@@ -66,11 +67,11 @@ Ogre Infantry armed with a large ogre rifle. Ogre enjoy fancy outfits, even duri
 '''
 
 lore = '''
-Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages. 
+Most other nations envy the standard ogre infantry size, toughness, assault capabilities and firepower of their large weapons. While the ogres themselves realize that being big also have some disadvantages.
 '''
 
 tip = '''
-The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle. 
+The infantry comes in a smaller groups and has trouble taking cover. Even though you may give your infantry melee options to boost close combat capabilities, the most normal upgrades for the ogre infantry are fire support options: Fancy Rifle, Fancy Arquebus or Enhanced Fancy Ogre Rifle.
 
 Versus regular infantry ogres are at a clear disadvantage since they only  fire two shots per unit. However versus thougher opponents, their far superior damage per shot compensate for lack of models in the unit.'''
 
@@ -122,7 +123,7 @@ models = ["ogre_robot", "ogre_robot"]
 name = "Ogre Robot"
 description = '''Robot unit consists of two medium size robots (2m in height) made by the skilled Ogre craftsmen. '''
 
-lore = '''The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action. 
+lore = '''The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action.
 '''
 
 tip = '''Due to being smaller and having some armor they are far better protected compared to Ogre infantry. However, the robots are not as good in close combat compared to the regular ogre infantry. They also cost cp (craftpoints) instead of mp (manpower) and thus may be viewed as more expensive'''
@@ -169,7 +170,10 @@ name = "Pet Panther"
 models = ["pet_panther"]
 size = "Medium"
 cost.xp = 8
-description = "A Panther is viewed as a cute kitten, with useful properties by the Ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with  Ogre Assault Scouts which uses them to improved their assault capabilities"
+description = "A Panther is a big scare cat with huge theeth"
+
+
+lore = '''For the ogre it is viewed as a cute kitten, with useful properties by the Ogres. A view which is not shared by most other nations, which finds them terrifying. Often fighting side by side with Ogre Assault Scouts who use them to improve their assault capabilities'''
 
 [units.pet_panther.shaken]
 speed = "slow"
@@ -220,11 +224,8 @@ description = '''Ogre assault scouts are armed with a sword and a gear pistol. A
 '''
 
 tip ='''
-Emphasis is put on fighting multiple enemies simultaneously with their long swards. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. 
+Emphasis is put on fighting multiple enemies simultaneously with their long swords. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. '''
 
-An army typically comes with a fair number of these units. Normal upgrades for the ogre assault scouts include fancy sword or fancy warhammer and may be combined with fancy gear pistol(s).
-
-If you get your hands on some healing, they may help tremendously in keeping these unit alive.'''
 models = ["ogre_assault_scout"]
 size = "Large"
 cost.mp = 8
@@ -279,7 +280,7 @@ name = "Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.cp = 4
-description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes to close with minor acid. Although ogre infantry themselves are big and though, they are few in numbers and far from immune to enemy fire. This lead to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
+description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes too close with minor acid. Although ogre infantry themselves are big and tough, they are few in numbers and far from immune to enemy fire. This led to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
 
 Fire at whatever is in range whenever you can, and cover the enemy in minor acid. These units are extremely accurate and extremely cheap, but will self destruct once they reach rest speed. Keep some support firepower to kill enemies which are covered in acid.
 '''
@@ -387,7 +388,7 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 32
 armor = [12, 10, 10, 8]
-description = '''The main engine is a huge vehicle which towes one or mored armed and armored wagons behind. It can carry lots of tiny drones and has a huge ogre cannon firing straight forward. It is very well armored from front and side'''
+description = '''The main engine is a huge vehicle which tows one or more armed and armored wagons behind. It can carry lots of tiny drones and has a huge ogre cannon firing straight forward. It is very well armored from front and side'''
 
 tip = '''This unit blocks line of sight, and is well protected. Exploit the blocked line of sight to your advantage, to protect the other wagons behind or units you want to come closer without exposing them to enemy fire. The ogre cannon is a large weapons which does plenty of damage, but you have only one shot, which may hit or miss. It has also somewhat low range and can only fire straight forward.
 
@@ -464,7 +465,7 @@ models = ["broadside_wagon"]
 size = "Large"
 cost.ip = 8
 armor = [2, 10, 10, 8]
-description = '''Broadside wagon is pulled by the main engine, and is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time. 
+description = '''Broadside wagon is pulled by the main engine, and is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time.
 '''
 
 tip = '''
@@ -479,7 +480,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.broadside_wagon.special]
-"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
 
 [units.broadside_wagon.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
@@ -515,50 +516,29 @@ models = ["artillery_wagon"]
 size = "Large"
 cost.ip = 32
 armor = [2, 10, 10, 8]
-description = '''Artillery wagons needs to be towed and is armored with a huge ogre artillery which can fire indirectly.'''
+description = '''Artillery wagons need to be towed and are armored with a huge ogre artillery which can fire indirectly.'''
 
 tip = '''
-It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front. 
+It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front.
 
 Indirect fire, long range, to hit bonus from scouts and huge damage is a good combination and target should be enemy tanks or other expensive units. If you loose an assault, you are probably disconnected from main engine, and makes you stranded, so avoid assaults at all cost.
 '''
-
 
 [units.artillery_wagon.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.artillery_wagon.special]
-"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which towes it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
-"Fire Order" = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading" 
-
-
+"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+"Fire Order" = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading"
 
 [units.artillery_wagon.orders.fire]
-still = [
-	["Fire", "Aim"],
-	["-", "Fire"],
-	["Load", "-"],
-	["-", "Load"]
-]
-slow = [
-	["Fire", "Aim"],
-	["-", "Fire"],
-	["Load", "-"],
-	["-", "Load"]
-]
-fast = [
-	["Fire", "Aim"],
-	["-", "Fire"],
-	["Load", "-"],
-	["-", "Load"]
-]
+still = [["Fire", "Aim"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
+slow = [["Fire", "Aim"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
+fast = [["Fire", "Aim"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
 
 [units.artillery_wagon.damage_tables.Critical]
-rows = [
-	"1-5: +3 to future damage",
-	"6: set on Fire",
-]
+rows = ["1-5: +3 to future damage", "6: set on Fire"]
 
 [units.artillery_wagon.damage_tables.Regular]
 rows = [
@@ -664,7 +644,7 @@ replaces = "ogre_assault_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
-description = "An Ogre Scout Engineer is an regular Ogre assault scout which often carry tiny drones and which can also repair them. The have the knowledge to hit enemy drone in assaults where it hurts the most"
+description = "A regular Ogre assault scout which often carries tiny drones and which can also repair them. They have the knowledge to hit enemy drones in assaults where it hurts the most"
 
 [models.ogre_scout_engineer.unit_special]
 "Transport" = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"

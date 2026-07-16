@@ -1710,7 +1710,7 @@ race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 cost.cp = 8
 upgrade_all = true
-description = "Many Elf hate this weapon as it is not elecant or accurate as elf bows should be. But most appreciate that it causes more havoc"
+description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc"
 
 [equipment.rocket_arrow.range]
 range = 4

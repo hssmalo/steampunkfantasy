@@ -217,7 +217,9 @@ def test_cli_unit_image_prompt_composes_preamble_name_description(
     _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
 
     assert image_env.prompts()[0] == (
-        "Preamble one. two. Ogre Grunt. A stout ogre grunt hefting a huge wrench"
+        "Subject: Ogre Grunt."
+        "\nDetails: A stout ogre grunt hefting a huge wrench"
+        "\nPreamble one.\ntwo.\n"
     )
 
 

@@ -567,7 +567,7 @@ models = [
 ]
 size = "Medium"
 armor = [0, 0, 0, 0]
-description = "Consists of Dwarfs, Elfs, Orks, Goblin, Ogres, Abominations and Gnomes"
+description = "Consists of Dwarfs, Elves, Orks, Goblin, Ogres, Abominations and Gnomes"
 
 [units.multicultural_trainee.special]
 "Darkelf Officer" = "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
