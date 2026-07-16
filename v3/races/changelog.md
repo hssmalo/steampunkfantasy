@@ -5,8 +5,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race | Description                                                 | Why                                                                                  |
 | ---------- | ---- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 14.07.2026 |      | Panther gained Terror[4]                                    | It fit the description, and it seemed to need a slight boost.                        |
-| 14.07.2026 |      | Artillery Wagon now needs a scout and to fire a shot to aim | Both a buff and a debuff. More fitting to how artillery works.                       |
-| 14.07.2026 |      | Artillery Wagon cost from 16ip to 32ip                      | Was overpowered.                                                                     |
-| 14.07.2026 |      | Broadside Wagon cost from 16ip to 8ip                       | Was underpowered. Still needs a main engine to move, but easier to get longer train. |
-| 14.07.2026 |      | Removed Industrial Drone (but kept the regular version)     | No need to allow that many ogre drones on the battlefield.                           |
+| 14.07.2026 | Ogre | Panther gained Terror[4]                                    | It fit the description, and it seemed to need a slight boost.                        |
+| 14.07.2026 | Ogre | Artillery Wagon now needs a scout and to fire a shot to aim | Both a buff and a debuff. More fitting to how artillery works.                       |
+| 14.07.2026 | Ogre | Artillery Wagon cost from 16ip to 32ip                      | Was overpowered.                                                                     |
+| 14.07.2026 | Ogre | Broadside Wagon cost from 16ip to 8ip                       | Was underpowered. Still needs a main engine to move, but easier to get longer train. |
+| 14.07.2026 | Ogre | Removed Industrial Drone (but kept the regular version)     | No need to allow that many ogre drones on the battlefield.                           |
