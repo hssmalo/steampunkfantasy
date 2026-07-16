@@ -90,17 +90,17 @@ def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 
 def test_round_trip_empty_army(armies_dir: Path) -> None:  # noqa: ARG001
-    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[])
     save_army(army_list, army_name="test-army")
     loaded = load_army("test-army")
     assert isinstance(loaded, Army)
     assert loaded.race == army_list.race
-    assert loaded.units == ()
+    assert loaded.units == []
 
 
 def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
     race_config = get_race("goblin")
-    army_list = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "goblin_infantry", race_config=race_config
     )
     save_army(army_list, army_name="goblin-warband")
@@ -117,7 +117,7 @@ def test_round_trip_with_units(armies_dir: Path) -> None:  # noqa: ARG001
 def test_load_army_returns_resolved_army(armies_dir: Path) -> None:  # noqa: ARG001
     """load_army should return a fully resolved Army, not ArmyList."""
     race_config = get_race("goblin")
-    army_list = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "goblin_infantry", race_config=race_config
     )
     save_army(army_list, army_name="resolved-test")
@@ -130,7 +130,7 @@ def test_load_army_returns_resolved_army(armies_dir: Path) -> None:  # noqa: ARG
 
 
 def test_save_creates_file(armies_dir: Path) -> None:
-    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[])
     save_army(army_list, army_name="goblin-army")
     assert (armies_dir / "goblin-army.json").exists()
 
@@ -140,13 +140,13 @@ def test_save_creates_parent_directory(
 ) -> None:
     nested = tmp_path / "nested" / "dir"
     monkeypatch.setattr(config.paths, "armies", nested)
-    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[])
     save_army(army_list, army_name="goblin-army")
     assert (nested / "goblin-army.json").exists()
 
 
 def test_save_json_contains_race(armies_dir: Path) -> None:
-    army_list = ArmyList(race="goblin", nick="Test Army", units=())
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[])
     save_army(army_list, army_name="check-race")
     data = json.loads((armies_dir / "check-race.json").read_text())
     assert data["race"] == "goblin"

@@ -14,7 +14,7 @@ from spf.armies.army import Army
 from spf.armies.unit import Unit
 from spf.schemas import type_aliases as t
 
-type _Rows = tuple[tuple[str, tuple[str, ...]], ...]  # (speed, cells) per row
+type _Rows = list[tuple[str, list[str]]]  # (speed, cells) per row
 type _Orders = dict[t.Speed, list[list[str]]] | None  # one order-type, per Speed
 
 
@@ -35,7 +35,7 @@ class UnitOrders:
     size: str
     movement_rows: _Rows  # every (speed, cells) option, flat
     fire_rows: _Rows
-    shaken_movement: tuple[str, ...] | None  # speed + movement_order cells
+    shaken_movement: list[str] | None  # speed + movement_order cells
     shaken_fire: str | None
 
 
@@ -44,41 +44,41 @@ class OrderCardDeck:
     """The whole Army's order cards, carrying both render shapes."""
 
     stem: str
-    units: tuple[UnitOrders, ...]  # Markdown family (flat tables)
-    cards: tuple[OrderCard, ...]  # LaTeX family (9-per-page grid)
+    units: list[UnitOrders]  # Markdown family (flat tables)
+    cards: list[OrderCard]  # LaTeX family (9-per-page grid)
 
 
 def _flat_rows(orders: _Orders) -> _Rows:
     """Flatten one order-type into (speed, cells) per option row, in Speed order."""
     if not orders:
-        return ()
-    return tuple(
-        (speed, tuple(cells)) for speed, options in orders.items() for cells in options
-    )
+        return []
+    return [
+        (speed, list(cells)) for speed, options in orders.items() for cells in options
+    ]
 
 
 def _cards(
     unit_name: str,
     kind: Literal["Movement", "Fire"],
     orders: _Orders,
-) -> tuple[OrderCard, ...]:
+) -> list[OrderCard]:
     """Transpose one order-type by option-index: card i = option i across Speeds."""
     if not orders:
-        return ()
+        return []
     width = max(len(options) for options in orders.values())
     cards: list[OrderCard] = []
     for i in range(width):
-        rows = tuple(
-            (speed, tuple(options[i]))
+        rows = [
+            (speed, list(options[i]))
             for speed, options in orders.items()
             if i < len(options)
-        )
+        ]
         if rows:
             cards.append(OrderCard(unit_name=unit_name, kind=kind, rows=rows))
-    return tuple(cards)
+    return cards
 
 
-def _unit_orders(unit: Unit) -> tuple[UnitOrders, tuple[OrderCard, ...]]:
+def _unit_orders(unit: Unit) -> tuple[UnitOrders, list[OrderCard]]:
     """Build the flat table and card list for a single Unit."""
     merged = unit.orders()
     shaken = unit.config.shaken
@@ -87,13 +87,13 @@ def _unit_orders(unit: Unit) -> tuple[UnitOrders, tuple[OrderCard, ...]]:
         size=unit.config.size,
         movement_rows=_flat_rows(merged.movement),
         fire_rows=_flat_rows(merged.fire),
-        shaken_movement=(shaken.speed, *shaken.movement_order),
+        shaken_movement=[shaken.speed, *shaken.movement_order],
         shaken_fire=shaken.fire_order,
     )
-    cards = (
+    cards = [
         *_cards(unit.config.name, "Movement", merged.movement),
         *_cards(unit.config.name, "Fire", merged.fire),
-    )
+    ]
     return unit_orders, cards
 
 
@@ -106,13 +106,13 @@ def build_deck(army: Army, *, stem: str) -> OrderCardDeck:
     """
     units: list[UnitOrders] = []
     cards: list[OrderCard] = []
-    seen: set[tuple[str, _Rows, _Rows]] = set()
+    seen: list[tuple[str, _Rows, _Rows]] = []
     for unit in army.units:
         unit_orders, unit_cards = _unit_orders(unit)
         key = (unit_orders.name, unit_orders.movement_rows, unit_orders.fire_rows)
         if key in seen:
             continue
-        seen.add(key)
+        seen.append(key)
         units.append(unit_orders)
         cards.extend(unit_cards)
-    return OrderCardDeck(stem=stem, units=tuple(units), cards=tuple(cards))
+    return OrderCardDeck(stem=stem, units=units, cards=cards)

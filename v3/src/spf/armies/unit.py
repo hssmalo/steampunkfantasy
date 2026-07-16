@@ -8,7 +8,7 @@ from spf.schemas import type_aliases as t
 from spf.schemas.race import OrdersConfig, UnitConfig
 
 # Canonical Speed ordering for stable merged-order output.
-_SPEED_ORDER: tuple[t.Speed, ...] = get_args(t.Speed.__value__)
+_SPEED_ORDER: list[t.Speed] = list(get_args(t.Speed.__value__))
 
 
 @dataclass(frozen=True)
@@ -20,7 +20,7 @@ class Unit:
 
     name: str
     config: UnitConfig = field(repr=False)
-    models: tuple[Model, ...]
+    models: list[Model]
 
     @property
     def unit_specials(self) -> dict[t.UnitSpecial, str]:

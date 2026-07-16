@@ -15,7 +15,7 @@ from spf.armies.unit import Unit
 from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
-type _Specials = tuple[tuple[str, str], ...]
+type _Specials = list[tuple[str, str]]
 
 
 def _roll_text(roll: t.DamageRoll) -> str:
@@ -29,9 +29,7 @@ def _roll_text(roll: t.DamageRoll) -> str:
             return f"{value}+"
 
 
-def _count_summary[T](
-    items: Sequence[T], name_of: Callable[[T], str]
-) -> tuple[str, ...]:
+def _count_summary[T](items: Sequence[T], name_of: Callable[[T], str]) -> list[str]:
     """Group `items` by equality, first-seen order, into `NxName` labels."""
     counts: list[tuple[T, int]] = []
     for item in items:
@@ -41,7 +39,7 @@ def _count_summary[T](
                 break
         else:
             counts.append((item, 1))
-    return tuple(f"{n}x {name_of(item)}" for item, n in counts)
+    return [f"{n}x {name_of(item)}" for item, n in counts]
 
 
 @dataclass(frozen=True)
@@ -49,16 +47,16 @@ class ModelEntry:
     """One distinct Model configuration within a Unit."""
 
     name: str
-    equipment_summary: tuple[str, ...]
+    equipment_summary: list[str]
     specials: _Specials
-    assault_strength: tuple[int, ...]
+    assault_strength: list[int]
     assault_strength_die: t.DieResult
-    assault_deflection: tuple[int, ...]
+    assault_deflection: list[int]
     assault_deflection_die: t.DieResult
     assault_damage: t.Die
     assault_ap: t.ArmorPenetration
     assault_specials: _Specials
-    equipment: tuple["EquipmentEntry", ...]
+    equipment: list["EquipmentEntry"]
 
 
 @dataclass(frozen=True)
@@ -67,7 +65,7 @@ class EquipmentEntry:
 
     name: str
     range: int
-    angle: tuple[bool | str, ...]
+    angle: list[bool | str]
     damage: t.Die
     ap: t.ArmorPenetration
     specials: _Specials
@@ -80,15 +78,15 @@ class UnitEntry:
     name: str
     count: int
     size: t.Size
-    model_summary: tuple[str, ...]
-    armor: tuple[int, ...] | None
+    model_summary: list[str]
+    armor: list[int] | None
     points: int
     shaken_speed: t.Speed
-    shaken_movement: tuple[str, ...]
+    shaken_movement: list[str]
     shaken_fire: str
     specials: _Specials
-    damage_tables: tuple[tuple[str, tuple[tuple[str, str], ...], tuple[str, ...]], ...]
-    models: tuple[ModelEntry, ...]
+    damage_tables: list[tuple[str, list[tuple[str, str]], list[str]]]
+    models: list[ModelEntry]
 
 
 @dataclass(frozen=True)
@@ -99,7 +97,7 @@ class ArmyReference:
     nick: str
     race: t.RaceName
     points: int
-    units: tuple[UnitEntry, ...]
+    units: list[UnitEntry]
 
 
 def _equipment_entry(equip: EquipmentConfig) -> EquipmentEntry:
@@ -107,20 +105,20 @@ def _equipment_entry(equip: EquipmentConfig) -> EquipmentEntry:
     return EquipmentEntry(
         name=equip.name,
         range=equip.range.range,
-        angle=tuple(equip.range.angle),
+        angle=list(equip.range.angle),
         damage=equip.range.damage,
         ap=equip.range.ap,
-        specials=tuple(equip.range.special.items()),
+        specials=list(equip.range.special.items()),
     )
 
 
-def _dedup[T](entries: Sequence[T]) -> tuple[T, ...]:
+def _dedup[T](entries: Sequence[T]) -> list[T]:
     """Drop duplicate entries, preserving first-seen order."""
     result: list[T] = []
     for entry in entries:
         if entry not in result:
             result.append(entry)
-    return tuple(result)
+    return result
 
 
 def _model_entry(model: Model) -> ModelEntry:
@@ -129,14 +127,14 @@ def _model_entry(model: Model) -> ModelEntry:
     return ModelEntry(
         name=model.config.name,
         equipment_summary=_count_summary(model.equipment, lambda e: e.name),
-        specials=tuple(model.model_specials.items()),
-        assault_strength=tuple(assault.strength),
+        specials=list(model.model_specials.items()),
+        assault_strength=list(assault.strength),
         assault_strength_die=assault.strength_die,
-        assault_deflection=tuple(assault.deflection),
+        assault_deflection=list(assault.deflection),
         assault_deflection_die=assault.deflection_die,
         assault_damage=assault.damage,
         assault_ap=assault.ap,
-        assault_specials=tuple(assault.special.items()),
+        assault_specials=list(assault.special.items()),
         equipment=_dedup([_equipment_entry(e) for e in ranged_equipment]),
     )
 
@@ -147,25 +145,25 @@ def _unit_entry(unit: Unit) -> UnitEntry:
         count=1,
         size=unit.config.size,
         model_summary=_count_summary(unit.models, lambda m: m.config.name),
-        armor=tuple(unit.config.armor) if unit.config.armor is not None else None,
+        armor=list(unit.config.armor) if unit.config.armor is not None else None,
         points=unit.cost().to_points(),
         shaken_speed=unit.config.shaken.speed,
-        shaken_movement=tuple(unit.config.shaken.movement_order),
+        shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
-        specials=tuple(unit.unit_specials.items()),
-        damage_tables=tuple(
+        specials=list(unit.unit_specials.items()),
+        damage_tables=[
             (
                 name,
-                tuple((_roll_text(row.roll), row.effect) for row in table.rows),
-                tuple(table.notes),
+                [(_roll_text(row.roll), row.effect) for row in table.rows],
+                list(table.notes),
             )
             for name, table in unit.config.damage_tables.items()
-        ),
+        ],
         models=_dedup([_model_entry(model) for model in unit.models]),
     )
 
 
-def _collapse_units(entries: Sequence[UnitEntry]) -> tuple[UnitEntry, ...]:
+def _collapse_units(entries: Sequence[UnitEntry]) -> list[UnitEntry]:
     """Collapse units equal in every field but `count`, summing their counts."""
     collapsed: list[UnitEntry] = []
     for entry in entries:
@@ -176,7 +174,7 @@ def _collapse_units(entries: Sequence[UnitEntry]) -> tuple[UnitEntry, ...]:
                 break
         else:
             collapsed.append(entry)
-    return tuple(collapsed)
+    return collapsed
 
 
 def build_reference(army: Army, *, stem: str) -> ArmyReference:

@@ -21,7 +21,7 @@ class ArmyModel:
 
     name: str
     config: ModelConfig = field(repr=False)
-    upgrades: tuple[str, ...]
+    upgrades: list[str]
 
     def upgrade(self, equipment_name: str, *, race_config: RaceConfig) -> Self:
         """Return a new ArmyModel with the given equipment upgrade added.
@@ -53,7 +53,7 @@ class ArmyModel:
         return self.__class__(
             name=self.name,
             config=self.config,
-            upgrades=(*self.upgrades, equipment_name),
+            upgrades=[*self.upgrades, equipment_name],
         )
 
 
@@ -63,7 +63,7 @@ class ArmyUnit:
 
     name: str
     config: UnitConfig = field(repr=False)
-    models: tuple[ArmyModel, ...]
+    models: list[ArmyModel]
 
     def upgrade_model(
         self,
@@ -75,11 +75,11 @@ class ArmyUnit:
         """Return a new ArmyUnit with an equipment upgrade applied to one model."""
         model_idx, model = _resolve_model(self, model_key=model_key)
         new_model = model.upgrade(equipment_name, race_config=race_config)
-        new_models = (
+        new_models = [
             *self.models[:model_idx],
             new_model,
             *self.models[model_idx + 1 :],
-        )
+        ]
         return self.__class__(name=self.name, config=self.config, models=new_models)
 
     def upgrade_unit(
@@ -104,13 +104,13 @@ class ArmyUnit:
             )
             raise ValueError(msg)
         new_model = ArmyModel(
-            name=upgrade_model_name, config=upgrade_config, upgrades=()
+            name=upgrade_model_name, config=upgrade_config, upgrades=[]
         )
-        new_models = (
+        new_models = [
             *self.models[:model_idx],
             new_model,
             *self.models[model_idx + 1 :],
-        )
+        ]
         return self.__class__(name=self.name, config=self.config, models=new_models)
 
 
@@ -120,7 +120,7 @@ class ArmyList:
 
     race: t.RaceName
     nick: str
-    units: tuple[ArmyUnit, ...]
+    units: list[ArmyUnit]
 
     def add_unit(self, unit_name: t.UnitName, *, race_config: RaceConfig) -> Self:
         """Return a new ArmyList with the given unit appended at its default state."""
@@ -129,7 +129,7 @@ class ArmyList:
             raise ValueError(msg)
         new_unit = _make_default_army_unit(unit_name, race_config=race_config)
         return self.__class__(
-            race=self.race, nick=self.nick, units=(*self.units, new_unit)
+            race=self.race, nick=self.nick, units=[*self.units, new_unit]
         )
 
     def upgrade_unit(
@@ -147,7 +147,7 @@ class ArmyList:
             upgrade_model_name=upgrade_model_name,
             race_config=race_config,
         )
-        new_units = (*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :])
+        new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def upgrade_model(
@@ -163,7 +163,7 @@ class ArmyList:
         new_unit = unit.upgrade_model(
             model_key=model_key, equipment_name=equipment_name, race_config=race_config
         )
-        new_units = (*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :])
+        new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def upgrade_full_unit(
@@ -224,7 +224,7 @@ class ArmyList:
         _, unit = _resolve_unit(self, unit_key=unit_key)
         new_unit = ArmyUnit(name=unit.name, config=unit.config, models=unit.models)
         return self.__class__(
-            race=self.race, nick=self.nick, units=(*self.units, new_unit)
+            race=self.race, nick=self.nick, units=[*self.units, new_unit]
         )
 
     def delete_unit(
@@ -233,7 +233,7 @@ class ArmyList:
     ) -> Self:
         """Remove a unit from the army list."""
         unit_idx, _ = _resolve_unit(self, unit_key=unit_key)
-        new_units = (*self.units[:unit_idx], *self.units[unit_idx + 1 :])
+        new_units = [*self.units[:unit_idx], *self.units[unit_idx + 1 :]]
         return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def resolve(self, race_config: RaceConfig) -> "Army":
@@ -247,27 +247,27 @@ class ArmyList:
         from spf.armies.model import Model  # noqa: PLC0415
         from spf.armies.unit import Unit  # noqa: PLC0415
 
-        units = tuple(
+        units = [
             Unit(
                 name=army_unit.name,
                 config=army_unit.config,
-                models=tuple(
+                models=[
                     Model(
                         name=army_model.name,
                         config=army_model.config,
-                        default_equipment=tuple(
+                        default_equipment=[
                             race_config.equipment[eq]
                             for eq in army_model.config.equipment
-                        ),
-                        upgrade_equipment=tuple(
+                        ],
+                        upgrade_equipment=[
                             race_config.equipment[eq] for eq in army_model.upgrades
-                        ),
+                        ],
                     )
                     for army_model in army_unit.models
-                ),
+                ],
             )
             for army_unit in self.units
-        )
+        ]
         return Army(race=self.race, nick=self.nick, units=units)
 
 
@@ -312,7 +312,7 @@ def _make_default_army_model(
     return ArmyModel(
         name=model_name,
         config=race_config.models[model_name],
-        upgrades=(),
+        upgrades=[],
     )
 
 
@@ -320,10 +320,10 @@ def _make_default_army_unit(
     unit_name: t.UnitName, *, race_config: RaceConfig
 ) -> ArmyUnit:
     unit_config = race_config.units[unit_name]
-    models = tuple(
+    models = [
         _make_default_army_model(model_name, race_config=race_config)
         for model_name in unit_config.models
-    )
+    ]
     return ArmyUnit(name=unit_name, config=unit_config, models=models)
 
 

@@ -95,11 +95,11 @@ def capture(monkeypatch: pytest.MonkeyPatch) -> Console:
     return console
 
 
-def _army(race: RaceConfig, *, upgrades: tuple[str, ...] = ()) -> ArmyList:
-    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+def _army(race: RaceConfig, *, upgrades: list[str] | None = None) -> ArmyList:
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "squad", race_config=race
     )
-    for upgrade in upgrades:
+    for upgrade in upgrades or []:
         army = army.upgrade_model(
             ("squad", 0),
             model_key=("soldier", 0),
@@ -163,7 +163,7 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
         equipment={},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race_no_special)
         .resolve(race_no_special)
     )
@@ -213,14 +213,24 @@ def test_model_specials_shown(simple_race: RaceConfig, *, capture: Console) -> N
 def test_equipment_shown_with_cost(
     simple_race: RaceConfig, *, capture: Console
 ) -> None:
-    army = _army(simple_race, upgrades=("sword",)).resolve(simple_race)
+    army = _army(
+        simple_race,
+        upgrades=[
+            "sword",
+        ],
+    ).resolve(simple_race)
     print_army_rules(army)
     output = capture.export_text()
     assert "Sword" in output
 
 
 def test_range_weapon_stats_shown(simple_race: RaceConfig, *, capture: Console) -> None:
-    army = _army(simple_race, upgrades=("bow",)).resolve(simple_race)
+    army = _army(
+        simple_race,
+        upgrades=[
+            "bow",
+        ],
+    ).resolve(simple_race)
     print_army_rules(army)
     output = capture.export_text()
     assert "Range" in output
@@ -231,7 +241,12 @@ def test_range_weapon_stats_shown(simple_race: RaceConfig, *, capture: Console) 
 def test_equipment_without_range_omits_range_stats(
     simple_race: RaceConfig, *, capture: Console
 ) -> None:
-    army = _army(simple_race, upgrades=("sword",)).resolve(simple_race)
+    army = _army(
+        simple_race,
+        upgrades=[
+            "sword",
+        ],
+    ).resolve(simple_race)
     print_army_rules(army)
     assert "Range" not in capture.export_text()
 

@@ -152,19 +152,19 @@ def _build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
     if errors:
         msg = "Army JSON contains invalid entries:\n" + "\n".join(errors)
         raise ValueError(msg)
-    units = tuple(
+    units = [
         ArmyUnit(
             name=unit_data["name"],
             config=cfg.units[unit_data["name"]],
-            models=tuple(
+            models=[
                 ArmyModel(
                     name=model_data["name"],
                     config=cfg.models[model_data["name"]],
-                    upgrades=tuple(model_data["upgrades"]),
+                    upgrades=list(model_data["upgrades"]),
                 )
                 for model_data in unit_data["models"]
-            ),
+            ],
         )
         for unit_data in data["units"]
-    )
+    ]
     return ArmyList(race=data["race"], nick=data["nick"], units=units)

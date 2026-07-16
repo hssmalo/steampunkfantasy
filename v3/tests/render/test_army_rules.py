@@ -43,7 +43,7 @@ _ASSAULT = AssaultConfig(
 def _model(
     *,
     name: str = "Soldier",
-    equipment: tuple[EquipmentConfig, ...] = (),
+    equipment: list[EquipmentConfig] | None = None,
     assault: AssaultConfig = _ASSAULT,
     model_special: dict[str, str] | None = None,
 ) -> Model:
@@ -60,21 +60,21 @@ def _model(
     return Model(
         name=name,
         config=config,
-        default_equipment=(),
-        upgrade_equipment=equipment,
+        default_equipment=[],
+        upgrade_equipment=equipment or [],
     )
 
 
 def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under test
     *,
-    models: tuple[Model, ...] | None = None,
+    models: list[Model] | None = None,
     name: str = "Squad",
     size: str = "Small",
     shaken: ShakenConfig | None = None,
     armor: list[int] | None = None,
     unit_special: dict[str, str] | None = None,
 ) -> Unit:
-    resolved_models = models or (_model(),)
+    resolved_models = models or [_model()]
     config = UnitConfig(
         race="elf",
         name=name,  # pyright: ignore[reportArgumentType]
@@ -98,7 +98,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
-    return Army(race=race, nick=nick, units=units)  # pyright: ignore[reportArgumentType]
+    return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
 
 
 # --- _roll_text: DamageRoll -> display string -------------------------------
@@ -128,19 +128,19 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.name == "Squad"
     assert unit_entry.count == 1
     assert unit_entry.size == "Small"
-    assert unit_entry.model_summary == ("1x Soldier",)
-    assert unit_entry.armor == (10, 8, 6, 4)
+    assert unit_entry.model_summary == ["1x Soldier"]
+    assert unit_entry.armor == [10, 8, 6, 4]
     assert unit_entry.points == unit.cost().to_points()
     assert unit_entry.shaken_speed == "slow"
-    assert unit_entry.shaken_movement == ("-", "-", "flee")
+    assert unit_entry.shaken_movement == ["-", "-", "flee"]
     assert unit_entry.shaken_fire == "No weapons"
-    assert unit_entry.specials == (("Take Cover", "[sneak][-2]"),)
-    assert unit_entry.damage_tables == (
-        ("Regular", (("1", "Fine"), ("2", "Dead")), ("Stay calm",)),
-    )
+    assert unit_entry.specials == [("Take Cover", "[sneak][-2]")]
+    assert unit_entry.damage_tables == [
+        ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
+    ]
     (model_entry,) = unit_entry.models
     assert model_entry.name == "Soldier"
-    assert model_entry.equipment_summary == ()
+    assert model_entry.equipment_summary == []
 
 
 def _equip(
@@ -159,14 +159,14 @@ def _equip(
 def test_build_reference_equipment_summary_counts_rangeless_equipment() -> None:
     rifle = _equip(name="Rifle")
     grenade = _equip(name="Grenade")
-    unit = _unit(models=(_model(equipment=(rifle, rifle, grenade)),))
+    unit = _unit(models=[_model(equipment=[rifle, rifle, grenade])])
 
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
     (model_entry,) = unit_entry.models
-    assert model_entry.equipment_summary == ("2x Rifle", "1x Grenade")
-    assert model_entry.equipment == ()
+    assert model_entry.equipment_summary == ["2x Rifle", "1x Grenade"]
+    assert model_entry.equipment == []
 
 
 def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
@@ -180,31 +180,31 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
             special={"Sniper": "[+1]"},  # pyright: ignore[reportArgumentType]
         ),
     )
-    unit = _unit(models=(_model(equipment=(musket,)),))
+    unit = _unit(models=[_model(equipment=[musket])])
 
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
     (model_entry,) = unit_entry.models
-    assert model_entry.equipment_summary == ("1x Clockwork Musket",)
+    assert model_entry.equipment_summary == ["1x Clockwork Musket"]
     (equip_entry,) = model_entry.equipment
     assert equip_entry.name == "Clockwork Musket"
     assert equip_entry.range == 24
-    assert equip_entry.angle == (True, False, False, False)
+    assert equip_entry.angle == [True, False, False, False]
     assert equip_entry.damage == "d6"
     assert equip_entry.ap == 2
-    assert equip_entry.specials == (("Sniper", "[+1]"),)
+    assert equip_entry.specials == [("Sniper", "[+1]")]
 
 
 def test_build_reference_rangeless_equipment_gets_no_sub_entry() -> None:
     rifle = _equip(name="Rifle")
-    unit = _unit(models=(_model(equipment=(rifle,)),))
+    unit = _unit(models=[_model(equipment=[rifle])])
 
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
     (model_entry,) = unit_entry.models
-    assert model_entry.equipment == ()
+    assert model_entry.equipment == []
 
 
 def test_build_reference_dedups_identical_ranged_equipment_within_a_model() -> None:
@@ -213,13 +213,13 @@ def test_build_reference_dedups_identical_ranged_equipment_within_a_model() -> N
     )
     musket_a = _equip(name="Musket", range_config=range_config)
     musket_b = _equip(name="Musket", range_config=range_config)
-    unit = _unit(models=(_model(equipment=(musket_a, musket_b)),))
+    unit = _unit(models=[_model(equipment=[musket_a, musket_b])])
 
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
     (model_entry,) = unit_entry.models
-    assert model_entry.equipment_summary == ("2x Musket",)
+    assert model_entry.equipment_summary == ["2x Musket"]
     (equip_entry,) = model_entry.equipment
     assert equip_entry.name == "Musket"
 
@@ -230,19 +230,19 @@ def test_build_reference_dedups_identical_ranged_equipment_within_a_model() -> N
 def test_build_reference_collapses_identical_models_within_a_unit() -> None:
     elite = _model(name="Elite Infantry")
     grunt = _model(name="Infantry")
-    unit = _unit(models=(elite, grunt, grunt, elite))
+    unit = _unit(models=[elite, grunt, grunt, elite])
 
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
-    assert unit_entry.model_summary == ("2x Elite Infantry", "2x Infantry")
+    assert unit_entry.model_summary == ["2x Elite Infantry", "2x Infantry"]
     assert [m.name for m in unit_entry.models] == ["Elite Infantry", "Infantry"]
 
 
 def test_build_reference_keeps_distinct_model_upgrades_separate() -> None:
     plain = _model(name="Soldier")
-    upgraded = _model(name="Soldier", equipment=(_equip(name="Rifle"),))
-    unit = _unit(models=(plain, upgraded))
+    upgraded = _model(name="Soldier", equipment=[_equip(name="Rifle")])
+    unit = _unit(models=[plain, upgraded])
 
     reference = build_reference(_army(unit), stem="test")
 
@@ -299,20 +299,20 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
             )
         }
     )
-    model = _model(equipment=(stacking_rifle,))
-    unit = _unit(models=(model,))
+    model = _model(equipment=[stacking_rifle])
+    unit = _unit(models=[model])
 
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
     (model_entry,) = unit_entry.models
     resolved = model.assault()
-    assert model_entry.assault_strength == tuple(resolved.strength)
-    assert model_entry.assault_strength == (2, 0, 0, 0)
+    assert model_entry.assault_strength == list(resolved.strength)
+    assert model_entry.assault_strength == [2, 0, 0, 0]
     assert model_entry.assault_strength_die == resolved.strength_die
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
-    assert model_entry.assault_specials == (("Bonus", "[+1 strength]"),)
+    assert model_entry.assault_specials == [("Bonus", "[+1 strength]")]
 
 
 # --- Templates: two-column damage table (drives the real templates) --------

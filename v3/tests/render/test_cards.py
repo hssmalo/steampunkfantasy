@@ -33,7 +33,7 @@ _ASSAULT = AssaultConfig(
 )
 
 
-def _model(*, equipment: tuple[EquipmentConfig, ...] = ()) -> Model:
+def _model(*, equipment: list[EquipmentConfig] | None = None) -> Model:
     config = ModelConfig(
         race="elf",
         name="Soldier",
@@ -46,15 +46,15 @@ def _model(*, equipment: tuple[EquipmentConfig, ...] = ()) -> Model:
     return Model(
         name="Soldier",
         config=config,
-        default_equipment=(),
-        upgrade_equipment=equipment,
+        default_equipment=[],
+        upgrade_equipment=equipment or [],
     )
 
 
 def _unit(
     *,
     orders: OrdersConfig,
-    models: tuple[Model, ...] | None = None,
+    models: list[Model] | None = None,
     name: str = "Squad",
     size: t.Size = "Small",
     shaken: ShakenConfig | None = None,
@@ -68,7 +68,7 @@ def _unit(
         orders=orders,
         damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
-    return Unit(name=name, config=config, models=models or (_model(),))
+    return Unit(name=name, config=config, models=models or [_model()])
 
 
 def _equip(orders_gained: OrdersConfig, *, name: str = "SMG") -> EquipmentConfig:
@@ -101,7 +101,7 @@ def test_orders_equipment_appends_rows_after_base_rows() -> None:
     smg = _equip(OrdersConfig(fire={"still": [["Fire", "Fire"]]}))
     unit = _unit(
         orders=OrdersConfig(fire={"still": [["-"]]}),
-        models=(_model(equipment=(smg,)),),
+        models=[_model(equipment=[smg])],
     )
 
     merged = unit.orders()
@@ -113,7 +113,7 @@ def test_orders_equipment_introduces_new_speed() -> None:
     hide = _equip(OrdersConfig(movement={"crawl": [["360°", "F", "F"]]}), name="Hide")
     unit = _unit(
         orders=OrdersConfig(movement={"still": [["A"]]}),
-        models=(_model(equipment=(hide,)),),
+        models=[_model(equipment=[hide])],
     )
 
     merged = unit.orders()
@@ -126,7 +126,7 @@ def test_orders_duplicate_rows_across_models_collapse() -> None:
     smg_b = _equip(OrdersConfig(fire={"still": [["Fire", "Fire"]]}), name="SMG-B")
     unit = _unit(
         orders=OrdersConfig(fire={"still": [["-"]]}),
-        models=(_model(equipment=(smg_a,)), _model(equipment=(smg_b,))),
+        models=[_model(equipment=[smg_a]), _model(equipment=[smg_b])],
     )
 
     merged = unit.orders()
@@ -151,7 +151,7 @@ def test_orders_speeds_follow_canonical_order() -> None:
 
 
 def _army(*units: Unit, nick: str = "Test") -> Army:
-    return Army(race="elf", nick=nick, units=units)
+    return Army(race="elf", nick=nick, units=list(units))
 
 
 def test_build_deck_flat_rows_one_entry_per_option() -> None:
@@ -167,12 +167,12 @@ def test_build_deck_flat_rows_one_entry_per_option() -> None:
     assert deck.stem == "test"
     (unit_orders,) = deck.units
     assert unit_orders.name == "Squad"
-    assert unit_orders.movement_rows == (
-        ("still", ("A", "B")),
-        ("still", ("C", "D")),
-        ("slow", ("E", "F")),
-    )
-    assert unit_orders.fire_rows == (("still", ("Fire",)),)
+    assert unit_orders.movement_rows == [
+        ("still", ["A", "B"]),
+        ("still", ["C", "D"]),
+        ("slow", ["E", "F"]),
+    ]
+    assert unit_orders.fire_rows == [("still", ["Fire"])]
 
 
 # --- build_deck: card transposition -----------------------------------------
@@ -194,10 +194,10 @@ def test_build_deck_transposes_cards_by_option_index() -> None:
     movement = [c for c in deck.cards if c.kind == "Movement"]
     fire = [c for c in deck.cards if c.kind == "Fire"]
     assert [c.rows for c in movement] == [
-        (("still", ("S0",)), ("slow", ("L0",))),
-        (("still", ("S1",)), ("slow", ("L1",))),
+        [("still", ["S0"]), ("slow", ["L0"])],
+        [("still", ["S1"]), ("slow", ["L1"])],
     ]
-    assert [c.rows for c in fire] == [(("still", ("F0",)),)]
+    assert [c.rows for c in fire] == [[("still", ["F0"])]]
     assert all(c.unit_name == "Squad" for c in deck.cards)
 
 
@@ -214,8 +214,8 @@ def test_build_deck_uneven_option_counts_drop_speed_from_later_cards() -> None:
     deck = build_deck(_army(unit), stem="test")
 
     assert [c.rows for c in deck.cards] == [
-        (("still", ("S0",)), ("slow", ("L0",))),
-        (("still", ("S1",)),),
+        [("still", ["S0"]), ("slow", ["L0"])],
+        [("still", ["S1"])],
     ]
 
 
@@ -230,7 +230,7 @@ def test_build_deck_collapses_identical_units() -> None:
     deck = build_deck(_army(unit_a, unit_b), stem="test")
 
     assert len(deck.units) == 1
-    assert [c.rows for c in deck.cards] == [(("still", ("A",)),)]
+    assert [c.rows for c in deck.cards] == [[("still", ["A"])]]
 
 
 def test_build_deck_keeps_distinct_units() -> None:
@@ -254,7 +254,7 @@ def test_build_deck_carries_shaken_to_units_not_cards() -> None:
     deck = build_deck(_army(unit), stem="test")
 
     (unit_orders,) = deck.units
-    assert unit_orders.shaken_movement == ("slow", "-", "-", "flee")
+    assert unit_orders.shaken_movement == ["slow", "-", "-", "flee"]
     assert unit_orders.shaken_fire == "No weapons"
     # Shaken is not an order option, so it never becomes a card.
     assert all("flee" not in str(card.rows) for card in deck.cards)

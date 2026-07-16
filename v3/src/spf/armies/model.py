@@ -15,11 +15,11 @@ class Model:
 
     name: str
     config: ModelConfig = field(repr=False)
-    default_equipment: tuple[EquipmentConfig, ...] = field(repr=False)
-    upgrade_equipment: tuple[EquipmentConfig, ...] = field(repr=False)
+    default_equipment: list[EquipmentConfig] = field(repr=False)
+    upgrade_equipment: list[EquipmentConfig] = field(repr=False)
 
     @property
-    def equipment(self) -> tuple[EquipmentConfig, ...]:
+    def equipment(self) -> list[EquipmentConfig]:
         """Effective equipment.
 
         When any upgrade equipment is present, all default equipment is discarded.

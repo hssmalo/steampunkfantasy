@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("ork")
 
-army = ArmyList("ork", "Geir Arne's Sabeltann Fighters", ())
+army = ArmyList("ork", "Geir Arne's Sabeltann Fighters", [])
 
 # 2x Ork Char B1
 army = army.add_unit("ork_char_b1", race_config=cfg).duplicate_unit(("ork_char_b1", 0))

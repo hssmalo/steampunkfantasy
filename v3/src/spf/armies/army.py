@@ -16,7 +16,7 @@ class Army:
 
     race: t.RaceName
     nick: str
-    units: tuple[Unit, ...]
+    units: list[Unit]
 
     def cost(self) -> t.Cost:
         """Return the total cost of all units in this army."""

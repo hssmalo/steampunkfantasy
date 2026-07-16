@@ -63,7 +63,7 @@ def simple_race() -> RaceConfig:
 
 def test_print_army_does_not_raise(simple_race: RaceConfig) -> None:
     army = (
-        ArmyList(race="goblin", nick="Test Army", units=())
+        ArmyList(race="goblin", nick="Test Army", units=[])
         .add_unit("squad", race_config=simple_race)
         .resolve(simple_race)
     )
@@ -73,7 +73,7 @@ def test_print_army_does_not_raise(simple_race: RaceConfig) -> None:
 
 
 def test_print_army_empty_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = ArmyList(race="goblin", nick="Test Army", units=()).resolve(simple_race)
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).resolve(simple_race)
     print_army(army)
 
 
@@ -84,7 +84,7 @@ def test_print_army_unit_line_includes_points(
     monkeypatch.setattr(spf.armies.io, "stdout", capture)
 
     army = (
-        ArmyList(race="goblin", nick="Test Army", units=())
+        ArmyList(race="goblin", nick="Test Army", units=[])
         .add_unit("squad", race_config=simple_race)
         .resolve(simple_race)
     )

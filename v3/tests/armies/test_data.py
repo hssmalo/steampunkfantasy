@@ -105,12 +105,12 @@ def simple_race() -> RaceConfig:
 
 @pytest.fixture
 def empty_army() -> ArmyList:
-    return ArmyList(race="goblin", nick="Test Army", units=())
+    return ArmyList(race="goblin", nick="Test Army", units=[])
 
 
 @pytest.fixture
 def one_unit_army(simple_race: RaceConfig) -> ArmyList:
-    return ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    return ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "squad", race_config=simple_race
     )
 
@@ -122,7 +122,7 @@ def goblin_race() -> RaceConfig:
 
 @pytest.fixture
 def goblin_army(goblin_race: RaceConfig) -> ArmyList:
-    return ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    return ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "goblin_infantry", race_config=goblin_race
     )
 
@@ -153,12 +153,12 @@ def race_with_defaults(simple_race: RaceConfig) -> RaceConfig:
 
 
 def test_army_model_default_upgrades(simple_race: RaceConfig) -> None:
-    model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=())
-    assert model.upgrades == ()
+    model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=[])
+    assert model.upgrades == []
 
 
 def test_army_model_is_frozen(simple_race: RaceConfig) -> None:
-    model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=())
+    model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=[])
     with pytest.raises((AttributeError, TypeError)):
         model.upgrades = ("sword",)  # pyright: ignore[reportAttributeAccessIssue]
 
@@ -174,7 +174,7 @@ def test_army_list_is_frozen(empty_army: ArmyList) -> None:
 
 
 def test_army_list_allows_duplicate_units(simple_race: RaceConfig) -> None:
-    army = ArmyList(race="goblin", nick="Test Army", units=())
+    army = ArmyList(race="goblin", nick="Test Army", units=[])
     army = army.add_unit("squad", race_config=simple_race)
     army = army.add_unit("squad", race_config=simple_race)
     assert len(army.units) == 2
@@ -268,7 +268,7 @@ def test_unit_points_formula(
 def test_unit_points_ip_weighted(simple_race: RaceConfig) -> None:
     # elite_soldier adds xp=1 → points = 3 + 1 = 4
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=simple_race)
         .upgrade_unit(
             ("squad", 0),
@@ -284,7 +284,7 @@ def test_unit_points_ip_weighted(simple_race: RaceConfig) -> None:
 def test_unit_points_zero_cost(simple_race: RaceConfig) -> None:
     zero_cost_unit = simple_race.units["squad"].model_copy(update={"cost": t.Cost()})
     zero_cost_race = simple_race.model_copy(update={"units": {"squad": zero_cost_unit}})
-    army = ArmyList(race="goblin", nick="T", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
         "squad", race_config=zero_cost_race
     )
     resolved = army.resolve(zero_cost_race)
@@ -292,7 +292,7 @@ def test_unit_points_zero_cost(simple_race: RaceConfig) -> None:
 
 
 def test_army_cost_empty(simple_race: RaceConfig) -> None:
-    resolved = ArmyList(race="goblin", nick="Test Army", units=()).resolve(simple_race)
+    resolved = ArmyList(race="goblin", nick="Test Army", units=[]).resolve(simple_race)
     assert resolved.cost() == t.Cost()
 
 
@@ -336,7 +336,7 @@ def test_army_cost_includes_upgrade_equipment(
 
 def test_satisfies_requires_type_match(simple_race: RaceConfig) -> None:
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     assert _satisfies_requires(
         simple_race.equipment["sword"].requires, model=soldier, race_config=simple_race
@@ -346,7 +346,7 @@ def test_satisfies_requires_type_match(simple_race: RaceConfig) -> None:
 def test_satisfies_requires_type_mismatch(simple_race: RaceConfig) -> None:
     req = [[t.Requirement(key="type", value="Cavalry")]]
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     assert not _satisfies_requires(req, model=soldier, race_config=simple_race)
 
@@ -354,7 +354,7 @@ def test_satisfies_requires_type_mismatch(simple_race: RaceConfig) -> None:
 def test_satisfies_requires_holder_sufficient(simple_race: RaceConfig) -> None:
     req = [[t.Requirement(key="Hands", value=1)]]
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     assert _satisfies_requires(req, model=soldier, race_config=simple_race)
 
@@ -362,7 +362,7 @@ def test_satisfies_requires_holder_sufficient(simple_race: RaceConfig) -> None:
 def test_satisfies_requires_holder_insufficient(simple_race: RaceConfig) -> None:
     req = [[t.Requirement(key="Hands", value=3)]]
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     assert not _satisfies_requires(req, model=soldier, race_config=simple_race)
 
@@ -373,7 +373,7 @@ def test_satisfies_requires_cnf_all_groups_needed(simple_race: RaceConfig) -> No
         [t.Requirement(key="type", value="Cavalry")],
     ]
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     assert not _satisfies_requires(req, model=soldier, race_config=simple_race)
 
@@ -385,7 +385,7 @@ def test_satisfies_requires_cnf_all_groups_needed(simple_race: RaceConfig) -> No
 
 def test_unsatisfied_groups_all_satisfied(simple_race: RaceConfig) -> None:
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     assert (
         _unsatisfied_groups(
@@ -399,7 +399,7 @@ def test_unsatisfied_groups_all_satisfied(simple_race: RaceConfig) -> None:
 
 def test_unsatisfied_groups_type_failure_returns_group(simple_race: RaceConfig) -> None:
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     req = [[t.Requirement(key="type", value="Cavalry")]]
     failed = _unsatisfied_groups(req, model=soldier, race_config=simple_race)
@@ -409,7 +409,7 @@ def test_unsatisfied_groups_type_failure_returns_group(simple_race: RaceConfig) 
 
 def test_unsatisfied_groups_slot_failure_returns_group(simple_race: RaceConfig) -> None:
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     req = [[t.Requirement(key="Hands", value=3)]]
     failed = _unsatisfied_groups(req, model=soldier, race_config=simple_race)
@@ -418,7 +418,7 @@ def test_unsatisfied_groups_slot_failure_returns_group(simple_race: RaceConfig) 
 
 def test_format_failed_group_type_only(simple_race: RaceConfig) -> None:
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     remaining = _remaining_slots(soldier, race_config=simple_race)
     group = [
@@ -431,7 +431,7 @@ def test_format_failed_group_type_only(simple_race: RaceConfig) -> None:
 
 def test_format_failed_group_slot_shows_available(simple_race: RaceConfig) -> None:
     soldier = ArmyModel(
-        name="soldier", config=simple_race.models["soldier"], upgrades=()
+        name="soldier", config=simple_race.models["soldier"], upgrades=[]
     )
     remaining = _remaining_slots(soldier, race_config=simple_race)
     group = [t.Requirement(key="Hands", value=2)]
@@ -452,7 +452,7 @@ def test_remaining_slots_does_not_count_default_equipment(
     # consume slots. A soldier with a Hands:2 default but no upgrades should
     # still show Hands:2 free.
     soldier = ArmyModel(
-        name="soldier", config=race_with_defaults.models["soldier"], upgrades=()
+        name="soldier", config=race_with_defaults.models["soldier"], upgrades=[]
     )
     remaining = _remaining_slots(soldier, race_config=race_with_defaults)
     assert remaining.get("Hands", 0) == 2
@@ -465,7 +465,9 @@ def test_remaining_slots_counts_only_upgrades_when_upgrades_present(
     soldier = ArmyModel(
         name="soldier",
         config=race_with_defaults.models["soldier"],
-        upgrades=("sword",),
+        upgrades=[
+            "sword",
+        ],
     )
     remaining = _remaining_slots(soldier, race_config=race_with_defaults)
     # sword requires Hands:1 → 2 - 1 = 1 remaining (default_sword NOT counted)
@@ -491,10 +493,12 @@ def test_validate_army_requires_error_includes_type_detail(
     bad_model = ArmyModel(
         name="soldier",
         config=race.models["soldier"],
-        upgrades=("elite_sword",),
+        upgrades=[
+            "elite_sword",
+        ],
     )
-    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=(bad_model,))
-    army = ArmyList(race="goblin", nick="Test Army", units=(bad_unit,))
+    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=[bad_model])
+    army = ArmyList(race="goblin", nick="Test Army", units=[bad_unit])
     errors = validate_army(army, race_config=race)
     assert any("type:Elite or type:Cavalry" in e for e in errors)
 
@@ -518,10 +522,12 @@ def test_validate_army_requires_error_includes_slot_detail(
     bad_model = ArmyModel(
         name="soldier",
         config=race.models["soldier"],
-        upgrades=("greedy_sword",),
+        upgrades=[
+            "greedy_sword",
+        ],
     )
-    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=(bad_model,))
-    army = ArmyList(race="goblin", nick="Test Army", units=(bad_unit,))
+    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=[bad_model])
+    army = ArmyList(race="goblin", nick="Test Army", units=[bad_unit])
     errors = validate_army(army, race_config=race)
     assert any("Hands:3" in e and "have" in e for e in errors)
 
@@ -548,10 +554,12 @@ def test_validate_army_requires_error_includes_all_failing_groups(
     bad_model = ArmyModel(
         name="soldier",
         config=race.models["soldier"],
-        upgrades=("impossible_sword",),
+        upgrades=[
+            "impossible_sword",
+        ],
     )
-    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=(bad_model,))
-    army = ArmyList(race="goblin", nick="Test Army", units=(bad_unit,))
+    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=[bad_model])
+    army = ArmyList(race="goblin", nick="Test Army", units=[bad_unit])
     errors = validate_army(army, race_config=race)
     assert any("type:Cavalry" in e and "Hands:10" in e for e in errors)
 
@@ -562,7 +570,7 @@ def test_validate_army_requires_error_includes_all_failing_groups(
 
 
 def test_add_unit_appends_to_army(simple_race: RaceConfig) -> None:
-    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "squad", race_config=simple_race
     )
     assert len(army.units) == 1
@@ -570,7 +578,7 @@ def test_add_unit_appends_to_army(simple_race: RaceConfig) -> None:
 
 
 def test_add_unit_default_models_match_config(simple_race: RaceConfig) -> None:
-    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "squad", race_config=simple_race
     )
     unit = army.units[0]
@@ -579,7 +587,7 @@ def test_add_unit_default_models_match_config(simple_race: RaceConfig) -> None:
 
 def test_add_unit_unknown_name_raises(simple_race: RaceConfig) -> None:
     with pytest.raises(ValueError, match="Unknown unit"):
-        ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+        ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
             "does_not_exist", race_config=simple_race
         )
 
@@ -675,7 +683,7 @@ def test_upgrade_model_does_not_mutate_original(
         equipment_name="sword",
         race_config=simple_race,
     )
-    assert one_unit_army.units[0].models[0].upgrades == ()
+    assert one_unit_army.units[0].models[0].upgrades == []
 
 
 def test_upgrade_model_no_cost_raises(
@@ -704,7 +712,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         models=simple_race.models,
         equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "squad", race_config=race
     )
     with pytest.raises(ValueError, match="requires not satisfied"):
@@ -736,7 +744,7 @@ def test_upgrade_model_unknown_key_raises(
 def test_upgrade_full_unit_replaces_all_models(
     goblin_race: RaceConfig,
 ) -> None:
-    army = ArmyList(race="goblin", nick="Test", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test", units=[]).add_unit(
         "goblin_infantry", race_config=goblin_race
     )
     assert len(army.units[0].models) == 4
@@ -751,7 +759,7 @@ def test_upgrade_full_unit_replaces_all_models(
 def test_upgrade_full_unit_does_not_mutate_original(
     simple_race: RaceConfig,
 ) -> None:
-    army = ArmyList(race="goblin", nick="Test", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test", units=[]).add_unit(
         "squad", race_config=simple_race
     )
     original = army
@@ -789,7 +797,7 @@ def test_upgrade_full_unit_unknown_unit_key_raises(
 def test_upgrade_all_models_adds_to_all(
     goblin_race: RaceConfig,
 ) -> None:
-    army = ArmyList(race="goblin", nick="Test", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test", units=[]).add_unit(
         "goblin_infantry", race_config=goblin_race
     )
     # Use equipment that doesn't consume limited slots
@@ -806,7 +814,7 @@ def test_upgrade_all_models_does_not_mutate_original(
     one_unit_army.upgrade_all_models(
         ("squad", 0), equipment_name="sword", race_config=simple_race
     )
-    assert original.units[0].models[0].upgrades == ()
+    assert original.units[0].models[0].upgrades == []
 
 
 def test_upgrade_all_models_no_cost_raises(
@@ -834,7 +842,7 @@ def test_upgrade_all_models_unsatisfied_requires_raises(
         models=simple_race.models,
         equipment={**simple_race.equipment, "elite_sword": elite_only_equip},
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
         "squad", race_config=race
     )
     with pytest.raises(ValueError, match="requires not satisfied"):
@@ -1005,7 +1013,7 @@ def test_available_equipment_defaults_do_not_consume_slots(
     # Defaults are replaced by upgrades, so a model with a Hands:2 default weapon
     # should still be able to receive a Hands:2 upgrade — the default is gone once
     # any upgrade is added.
-    army = ArmyList(race="goblin", nick="T", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
         "squad", race_config=race_with_defaults
     )
     # sword requires Hands:1 — the default_sword (Hands:2) must NOT consume slots here
@@ -1047,15 +1055,15 @@ def test_validate_army_detects_invalid_model_replacement(
     illegal_unit = ArmyUnit(
         name="squad",
         config=tweaked_unit_config,
-        models=(
+        models=[
             ArmyModel(
                 name="soldier",
                 config=simple_race.models["soldier"],
-                upgrades=(),
+                upgrades=[],
             ),
-        ),
+        ],
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=(illegal_unit,))
+    army = ArmyList(race="goblin", nick="Test Army", units=[illegal_unit])
     errors = validate_army(army, race_config=simple_race)
     assert len(errors) >= 1
     assert any("cannot replace" in e for e in errors)
@@ -1077,16 +1085,16 @@ def test_validate_army_detects_multiple_violations(simple_race: RaceConfig) -> N
     illegal_unit = ArmyUnit(
         name="double_squad",
         config=tweaked_unit_config,
-        models=(
+        models=[
             ArmyModel(
-                name="soldier", config=simple_race.models["soldier"], upgrades=()
+                name="soldier", config=simple_race.models["soldier"], upgrades=[]
             ),
             ArmyModel(
-                name="soldier", config=simple_race.models["soldier"], upgrades=()
+                name="soldier", config=simple_race.models["soldier"], upgrades=[]
             ),
-        ),
+        ],
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=(illegal_unit,))
+    army = ArmyList(race="goblin", nick="Test Army", units=[illegal_unit])
     errors = validate_army(army, race_config=simple_race)
     assert len(errors) == 2
 
@@ -1110,10 +1118,12 @@ def test_validate_army_detects_unsatisfied_equipment_requires(
     bad_model = ArmyModel(
         name="soldier",
         config=race.models["soldier"],
-        upgrades=("elite_sword",),
+        upgrades=[
+            "elite_sword",
+        ],
     )
-    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=(bad_model,))
-    army = ArmyList(race="goblin", nick="Test Army", units=(bad_unit,))
+    bad_unit = ArmyUnit(name="squad", config=race.units["squad"], models=[bad_model])
+    army = ArmyList(race="goblin", nick="Test Army", units=[bad_unit])
     errors = validate_army(army, race_config=race)
     assert any("requires not satisfied" in e for e in errors)
 
@@ -1126,12 +1136,12 @@ def test_validate_army_upgrade_exactly_filling_slots_is_valid(
     good_model = ArmyModel(
         name="soldier",
         config=simple_race.models["soldier"],
-        upgrades=("sword", "sword"),
+        upgrades=["sword", "sword"],
     )
     good_unit = ArmyUnit(
-        name="squad", config=simple_race.units["squad"], models=(good_model,)
+        name="squad", config=simple_race.units["squad"], models=[good_model]
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=(good_unit,))
+    army = ArmyList(race="goblin", nick="Test Army", units=[good_unit])
     errors = validate_army(army, race_config=simple_race)
     assert errors == []
 
@@ -1157,10 +1167,12 @@ def test_validate_army_upgrade_not_counted_against_itself(
     good_model = ArmyModel(
         name="soldier",
         config=race.models["soldier"],
-        upgrades=("two_hand_sword",),
+        upgrades=[
+            "two_hand_sword",
+        ],
     )
-    good_unit = ArmyUnit(name="squad", config=race.units["squad"], models=(good_model,))
-    army = ArmyList(race="goblin", nick="Test Army", units=(good_unit,))
+    good_unit = ArmyUnit(name="squad", config=race.units["squad"], models=[good_model])
+    army = ArmyList(race="goblin", nick="Test Army", units=[good_unit])
     errors = validate_army(army, race_config=race)
     assert errors == []
 
@@ -1173,12 +1185,14 @@ def test_validate_army_defaults_not_counted_for_slot_check(
     good_model = ArmyModel(
         name="soldier",
         config=race_with_defaults.models["soldier"],
-        upgrades=("sword",),
+        upgrades=[
+            "sword",
+        ],
     )
     good_unit = ArmyUnit(
-        name="squad", config=race_with_defaults.units["squad"], models=(good_model,)
+        name="squad", config=race_with_defaults.units["squad"], models=[good_model]
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=(good_unit,))
+    army = ArmyList(race="goblin", nick="Test Army", units=[good_unit])
     errors = validate_army(army, race_config=race_with_defaults)
     assert errors == []
 
@@ -1190,12 +1204,12 @@ def test_validate_army_still_catches_genuine_slot_overflow(
     bad_model = ArmyModel(
         name="soldier",
         config=simple_race.models["soldier"],
-        upgrades=("sword", "sword", "sword"),
+        upgrades=["sword", "sword", "sword"],
     )
     bad_unit = ArmyUnit(
-        name="squad", config=simple_race.units["squad"], models=(bad_model,)
+        name="squad", config=simple_race.units["squad"], models=[bad_model]
     )
-    army = ArmyList(race="goblin", nick="Test Army", units=(bad_unit,))
+    army = ArmyList(race="goblin", nick="Test Army", units=[bad_unit])
     errors = validate_army(army, race_config=simple_race)
     assert len(errors) == 1
     assert "Hands:1" in errors[0]
@@ -1225,13 +1239,13 @@ def test_model_equipment_no_upgrades_returns_defaults(simple_race: RaceConfig) -
         },
         equipment={**simple_race.equipment, "basic_sword": sword_free},
     )
-    army = ArmyList(race="goblin", nick="T", units=()).add_unit(
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
         "squad", race_config=race
     )
     resolved = army.resolve(race)
     model = resolved.units[0].models[0]
     assert len(model.default_equipment) == 1
-    assert model.upgrade_equipment == ()
+    assert model.upgrade_equipment == []
     assert model.equipment == model.default_equipment
 
 
@@ -1256,7 +1270,7 @@ def test_model_equipment_upgrades_present_discards_defaults(
         equipment={**simple_race.equipment, "basic_sword": sword_free},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1286,7 +1300,7 @@ def test_model_unit_specials_base_from_config(simple_race: RaceConfig) -> None:
         update={"models": {**simple_race.models, "soldier": model_cfg}}
     )
     resolved = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .resolve(race)
     )
@@ -1312,7 +1326,7 @@ def test_model_unit_specials_equipment_overrides(simple_race: RaceConfig) -> Non
         equipment={**simple_race.equipment, "magic_sword": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1341,7 +1355,7 @@ def test_model_model_specials_stacked(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "scope": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1368,7 +1382,7 @@ def test_unit_unit_specials_merges_model_contributions(simple_race: RaceConfig) 
         equipment=simple_race.equipment,
     )
     resolved = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .resolve(race)
     )
@@ -1384,7 +1398,7 @@ def test_unit_unit_specials_merges_model_contributions(simple_race: RaceConfig) 
 
 def test_model_assault_no_equipment_returns_base(simple_race: RaceConfig) -> None:
     resolved = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=simple_race)
         .resolve(simple_race)
     )
@@ -1411,7 +1425,7 @@ def test_model_assault_add_scalar_ap(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "ap_ammo": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1441,7 +1455,7 @@ def test_model_assault_add_angles_element_wise(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "power_weapon": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1471,7 +1485,7 @@ def test_model_assault_replace_damage(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "big_weapon": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1500,7 +1514,7 @@ def test_model_assault_add_on_die_raises(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "bad_weapon": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1532,7 +1546,7 @@ def test_model_assault_add_on_na_ap_raises(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "ap_boost": equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .upgrade_model(
             ("squad", 0),
@@ -1581,7 +1595,7 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
         equipment={**simple_race.equipment, "per_model_gear": per_model_equip},
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("two_squad", race_config=race)
         .upgrade_model(
             ("two_squad", 0),
@@ -1621,7 +1635,7 @@ def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
         equipment=simple_race.equipment,
     )
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("two_squad", race_config=race)
         .upgrade_model(
             ("two_squad", 0),
@@ -1642,7 +1656,7 @@ def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
 
 def test_resolve_preserves_unit_count(simple_race: RaceConfig) -> None:
     army = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=simple_race)
         .add_unit("squad", race_config=simple_race)
     )
@@ -1669,7 +1683,7 @@ def test_resolve_populates_default_equipment(simple_race: RaceConfig) -> None:
         equipment={**simple_race.equipment, "basic_sword": sword_free},
     )
     resolved = (
-        ArmyList(race="goblin", nick="T", units=())
+        ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
         .resolve(race)
     )

@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("goblin")
 
-army = ArmyList("goblin", "Showcase Goblin", ())
+army = ArmyList("goblin", "Showcase Goblin", [])
 
 # 4x Elite Goblin Infantry w Grenadier, Gear bow, Acid Grenade
 army = (
