@@ -122,7 +122,7 @@ class SpawnConfig(StrictModel):
 
 
 def _validate_specials(
-    spawns: set[str], special_dict: dict[Any, str], context: str
+    spawns: set[str], special_dict: dict[Any, str], *, context: str
 ) -> None:
     for rule_name, rule_value in special_dict.items():
         if rule_name not in ("Spawn", "Not Yet Dead"):
@@ -167,22 +167,22 @@ class RaceConfig(StrictModel):
 
         # Check all units
         for unit in self.units.values():
-            _validate_specials(spawns_keys, unit.special, f"unit '{unit.name}'")
+            _validate_specials(spawns_keys, unit.special, context=f"unit '{unit.name}'")
 
         # Check all models
         for model in self.models.values():
             _validate_specials(
                 spawns_keys,
                 model.unit_special,
-                f"model '{model.name}' unit_special",
+                context=f"model '{model.name}' unit_special",
             )
             _validate_specials(
-                spawns_keys, model.special, f"model '{model.name}' special"
+                spawns_keys, model.special, context=f"model '{model.name}' special"
             )
             _validate_specials(
                 spawns_keys,
                 model.assault.special,
-                f"model '{model.name}' assault special",
+                context=f"model '{model.name}' assault special",
             )
 
         # Check all equipment
@@ -190,24 +190,24 @@ class RaceConfig(StrictModel):
             _validate_specials(
                 spawns_keys,
                 eq.unit_special,
-                f"equipment '{eq.name}' unit_special",
+                context=f"equipment '{eq.name}' unit_special",
             )
             _validate_specials(
                 spawns_keys,
                 eq.model_special,
-                f"equipment '{eq.name}' model_special",
+                context=f"equipment '{eq.name}' model_special",
             )
             if eq.assault is not None:
                 _validate_specials(
                     spawns_keys,
                     eq.assault.special,
-                    f"equipment '{eq.name}' assault special",
+                    context=f"equipment '{eq.name}' assault special",
                 )
             if eq.range is not None:
                 _validate_specials(
                     spawns_keys,
                     eq.range.special,
-                    f"equipment '{eq.name}' range special",
+                    context=f"equipment '{eq.name}' range special",
                 )
 
         return self

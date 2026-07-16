@@ -21,8 +21,8 @@ SOURCE_VAR = "source"
 def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foundation spec
     product: Product,
     source: object,
-    fmt: Format,
     *,
+    fmt: Format,
     name: str,
     out: Path | None = None,
     templates_root: Path | None = None,

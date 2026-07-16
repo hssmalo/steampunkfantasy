@@ -106,7 +106,7 @@ def test_render_markdown_to_expected_path(tmp_path: Path, product: Product) -> N
     out = render(
         product,
         FakeSource(),
-        get_format("markdown"),
+        fmt=get_format("markdown"),
         name="sample",
         templates_root=FIXTURES,
         output_root=tmp_path,
@@ -120,7 +120,7 @@ def test_render_latex_to_expected_path(tmp_path: Path, product: Product) -> None
     out = render(
         product,
         FakeSource(),
-        get_format("latex"),
+        fmt=get_format("latex"),
         name="sample",
         templates_root=FIXTURES,
         output_root=tmp_path,
@@ -134,7 +134,7 @@ def test_render_explicit_out_overrides_layout(tmp_path: Path, product: Product) 
     out = render(
         product,
         FakeSource(),
-        get_format("markdown"),
+        fmt=get_format("markdown"),
         name="ignored",
         out=target,
         templates_root=FIXTURES,
@@ -149,7 +149,7 @@ def test_render_silently_overwrites(tmp_path: Path, product: Product) -> None:
     render(
         product,
         FakeSource(),
-        get_format("markdown"),
+        fmt=get_format("markdown"),
         name="ignored",
         out=target,
         templates_root=FIXTURES,
@@ -162,7 +162,7 @@ def test_render_missing_template_fails_lazily(tmp_path: Path) -> None:
         render(
             Product(name="_absent"),
             FakeSource(),
-            get_format("markdown"),
+            fmt=get_format("markdown"),
             name="sample",
             templates_root=FIXTURES,
             output_root=tmp_path,
@@ -174,7 +174,7 @@ def test_render_missing_template_fails_lazily(tmp_path: Path) -> None:
 
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
 def test_render_pdf_end_to_end(
-    tmp_path: Path, product: Product, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, product: Product, *, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     captured: list[Path] = []
     real_tempdir = tempfile.TemporaryDirectory
@@ -189,7 +189,7 @@ def test_render_pdf_end_to_end(
     out = render(
         product,
         FakeSource(),
-        get_format("pdf"),
+        fmt=get_format("pdf"),
         name="sample",
         templates_root=FIXTURES,
         output_root=tmp_path,

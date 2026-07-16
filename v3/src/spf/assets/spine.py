@@ -14,7 +14,7 @@ from spf.assets.kinds import Kind
 from spf.config import config
 
 
-def _asset_dir(root: Path, kind: Kind, race: str) -> Path:
+def _asset_dir(root: Path, kind: Kind, *, race: str) -> Path:
     """Return the directory a Kind's files live in under `root` for `race`."""
     directory = root / race
     if kind.subdir is not None:
@@ -44,7 +44,7 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     it is written. Returns the written paths in order. `seed` is threaded
     straight to the Service (see `Service`).
     """
-    directory = _asset_dir(candidates_root, kind, race)
+    directory = _asset_dir(candidates_root, kind, race=race)
     directory.mkdir(parents=True, exist_ok=True)
 
     paths: list[Path] = []
@@ -80,13 +80,13 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
     silently. Raises `ValueError` when the picked Candidate is missing.
     """
     candidate = (
-        _asset_dir(candidates_root, kind, race) / f"{name}.{pick}.{kind.extension}"
+        _asset_dir(candidates_root, kind, race=race) / f"{name}.{pick}.{kind.extension}"
     )
     if not candidate.is_file():
         msg = f"No candidate to promote at {candidate} (pick {pick})"
         raise ValueError(msg)
 
-    asset = _asset_dir(assets_root, kind, race) / f"{name}.{kind.extension}"
+    asset = _asset_dir(assets_root, kind, race=race) / f"{name}.{kind.extension}"
     asset.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(candidate, asset)
     return asset

@@ -322,7 +322,11 @@ def test_army_rules_markdown_renders_two_column_damage_table(tmp_path: Path) -> 
     reference = build_reference(_army(_unit()), stem="test")
 
     out = render(
-        ARMY_RULES, reference, get_format("markdown"), name="test", output_root=tmp_path
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
     )
 
     text = out.read_text(encoding="utf-8")
@@ -336,7 +340,11 @@ def test_army_rules_latex_renders_two_column_damage_table(tmp_path: Path) -> Non
     reference = build_reference(_army(_unit()), stem="test")
 
     out = render(
-        ARMY_RULES, reference, get_format("latex"), name="test", output_root=tmp_path
+        ARMY_RULES,
+        reference,
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
     )
 
     text = out.read_text(encoding="utf-8")

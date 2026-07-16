@@ -34,7 +34,7 @@ def list_races() -> None:
         )
 
 
-def show_race(race_name: t.RaceName, *, section: str | None = None) -> None:
+def show_race(race_name: t.RaceName, section: str | None = None) -> None:
     """Load and display a saved race."""
     race = races.get_race(race_name)
     configaroo.print_configuration(race, section=section)

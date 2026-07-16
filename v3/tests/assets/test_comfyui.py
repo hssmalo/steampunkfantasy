@@ -123,6 +123,7 @@ def _patched_seeds(scripted: _ScriptedComfy) -> list[int]:
 def _service_for(
     graph: dict[str, Any],
     tmp_path: Path,
+    *,
     scripted: _ScriptedComfy,
     monkeypatch: pytest.MonkeyPatch,
 ) -> comfyui.ComfyUIService:
@@ -189,7 +190,7 @@ def test_follows_a_linked_seed_primitive(
         "p": {"class_type": "PrimitiveInt", "inputs": {"value": 0}},
     }
     scripted = _ScriptedComfy()
-    service = _service_for(graph, tmp_path, scripted, monkeypatch)
+    service = _service_for(graph, tmp_path, scripted=scripted, monkeypatch=monkeypatch)
 
     service.generate("prompt", 1, seed=7)
 
@@ -203,7 +204,9 @@ def test_rejects_a_workflow_with_no_sampler(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     graph = {"t": {"class_type": "CLIPTextEncode", "inputs": {"text": "x"}}}
-    service = _service_for(graph, tmp_path, _ScriptedComfy(), monkeypatch)
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
 
     with pytest.raises(comfyui.ComfyUIError, match="found 0"):
         service.generate("prompt", 1, seed=7)
@@ -218,7 +221,9 @@ def test_rejects_a_workflow_with_two_samplers(
         "s2": dict(sampler),
         "t": {"class_type": "CLIPTextEncode", "inputs": {"text": "x"}},
     }
-    service = _service_for(graph, tmp_path, _ScriptedComfy(), monkeypatch)
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
 
     with pytest.raises(comfyui.ComfyUIError, match="found 2"):
         service.generate("prompt", 1, seed=7)
@@ -234,7 +239,9 @@ def test_rejects_a_non_text_positive_input(
         },
         "c": {"class_type": "ConditioningCombine", "inputs": {"strength": 1.0}},
     }
-    service = _service_for(graph, tmp_path, _ScriptedComfy(), monkeypatch)
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
 
     with pytest.raises(comfyui.ComfyUIError, match="no 'text' input"):
         service.generate("prompt", 1, seed=7)

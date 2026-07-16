@@ -85,11 +85,13 @@ def latex_to_pdf(text: str) -> bytes:
                 check=False,
             )
             if result.returncode != 0:
-                raise RenderError(_compile_error(engine, tmp_path, result.stdout))
+                raise RenderError(
+                    _compile_error(engine, tmp_path, stdout=result.stdout)
+                )
         return (tmp_path / "main.pdf").read_bytes()
 
 
-def _compile_error(engine: str, tmp_path: Path, stdout: str) -> str:
+def _compile_error(engine: str, tmp_path: Path, *, stdout: str) -> str:
     """Build a compile-failure message ending with the tail of the engine log."""
     log_path = tmp_path / "main.log"
     log = (

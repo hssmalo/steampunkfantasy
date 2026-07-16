@@ -75,7 +75,7 @@ def render_cards(
     stem = _safe_stem(army_name)
     deck = build_deck(army, stem=stem)
     fmt = get_format(opts.format)
-    out = render(CARDS, deck, fmt, name=stem, out=opts.out)
+    out = render(CARDS, deck, fmt=fmt, name=stem, out=opts.out)
     stdout.print(f"Wrote {out}")
 
 
@@ -95,7 +95,7 @@ def render_army_rules(
     stem = _safe_stem(army_name)
     reference = build_reference(army, stem=stem)
     fmt = get_format(opts.format)
-    out = render(ARMY_RULES, reference, fmt, name=stem, out=opts.out)
+    out = render(ARMY_RULES, reference, fmt=fmt, name=stem, out=opts.out)
     stdout.print(f"Wrote {out}")
 
 

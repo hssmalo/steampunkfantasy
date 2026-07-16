@@ -117,7 +117,7 @@ def _nodes_of_class(graph: dict[str, Any], *classes: str) -> list[str]:
 
 
 def _sole_node_of_class(
-    graph: dict[str, Any], classes: Sequence[str], what: str
+    graph: dict[str, Any], classes: Sequence[str], *, what: str
 ) -> str:
     """Return the id of the one node of `classes`; raise unless exactly one."""
     hits = _nodes_of_class(graph, *classes)
@@ -128,7 +128,7 @@ def _sole_node_of_class(
 
 
 def _set_scalar_or_upstream(
-    graph: dict[str, Any], node_id: str, key: str, value: object
+    graph: dict[str, Any], node_id: str, *, key: str, value: object
 ) -> bool:
     """Set `inputs[key]` to `value`, following a link to its primitive.
 
@@ -159,11 +159,11 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
     Everything else — model, steps, cfg, LoRAs, negative — is left untouched.
     Raises `ComfyUIError` on an unpatchable graph.
     """
-    sid = _sole_node_of_class(graph, SAMPLER_CLASSES, "sampler")
+    sid = _sole_node_of_class(graph, SAMPLER_CLASSES, what="sampler")
     inputs = graph[sid]["inputs"]
 
     seed_key = "seed" if "seed" in inputs else "noise_seed"
-    if not _set_scalar_or_upstream(graph, sid, seed_key, seed):
+    if not _set_scalar_or_upstream(graph, sid, key=seed_key, value=seed):
         msg = f"could not find a seed input on sampler {sid}"
         raise ComfyUIError(msg)
 
@@ -182,7 +182,7 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
 # --- Submit / poll / fetch ---------------------------------------------------
 
 
-def _submit(base: str, api_key: str | None, graph: dict[str, Any]) -> str:
+def _submit(base: str, api_key: str | None, *, graph: dict[str, Any]) -> str:
     """Queue `graph` via `/api/prompt` and return its `prompt_id`."""
     response = _request(
         base,
@@ -205,8 +205,8 @@ def _record_state(record: dict[str, Any]) -> str | None:
 def _poll(
     base: str,
     api_key: str | None,
-    prompt_id: str,
     *,
+    prompt_id: str,
     timeout_s: float,
     cached_route: str | None,
 ) -> tuple[dict[str, Any], str]:
@@ -242,7 +242,7 @@ def _poll(
 
 
 def _fetch_images(
-    base: str, api_key: str | None, record: dict[str, Any]
+    base: str, api_key: str | None, *, record: dict[str, Any]
 ) -> list[bytes]:
     """Fetch every non-`temp` output image of `record` via `/api/view`."""
     images = [
@@ -315,15 +315,15 @@ class ComfyUIService:
         for sub_seed in sub_seeds:
             job_graph = json.loads(json.dumps(graph))  # per-job copy
             _patch_prompt_and_seed(job_graph, prompt=source, seed=sub_seed)
-            prompt_id = _submit(self._base_url, api_key, job_graph)
+            prompt_id = _submit(self._base_url, api_key, graph=job_graph)
             record, cached_route = _poll(
                 self._base_url,
                 api_key,
-                prompt_id,
+                prompt_id=prompt_id,
                 timeout_s=self._timeout_s,
                 cached_route=cached_route,
             )
-            for blob in _fetch_images(self._base_url, api_key, record):
+            for blob in _fetch_images(self._base_url, api_key, record=record):
                 if on_result is not None:
                     on_result(blob)
                 blobs.append(blob)

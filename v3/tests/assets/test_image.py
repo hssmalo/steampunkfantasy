@@ -275,6 +275,7 @@ def test_cli_blank_race_description_exits_without_writing(
 def test_cli_failed_job_surfaces_red_error(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
+    *,
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     _make_env(monkeypatch, tmp_path, fail=True)

@@ -76,9 +76,9 @@ class Unit:
             if equip.orders_gained is not None
         ]
         return OrdersConfig(
-            fire=self._merge_order_type(self.config.orders.fire, gained, "fire"),
+            fire=self._merge_order_type(self.config.orders.fire, gained, kind="fire"),
             movement=self._merge_order_type(
-                self.config.orders.movement, gained, "movement"
+                self.config.orders.movement, gained, kind="movement"
             ),
         )
 
@@ -86,6 +86,7 @@ class Unit:
     def _merge_order_type(
         base: dict[t.Speed, list[list[str]]] | None,
         gained: list[OrdersConfig],
+        *,
         kind: str,
     ) -> dict[t.Speed, list[list[str]]] | None:
         """Merge one order-type across base and each equipment's gained orders."""

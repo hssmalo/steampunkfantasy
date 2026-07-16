@@ -60,6 +60,7 @@ def _flat_rows(orders: _Orders) -> _Rows:
 def _cards(
     unit_name: str,
     kind: Literal["Movement", "Fire"],
+    *,
     orders: _Orders,
 ) -> list[OrderCard]:
     """Transpose one order-type by option-index: card i = option i across Speeds."""
@@ -91,8 +92,8 @@ def _unit_orders(unit: Unit) -> tuple[UnitOrders, list[OrderCard]]:
         shaken_fire=shaken.fire_order,
     )
     cards = [
-        *_cards(unit.config.name, "Movement", merged.movement),
-        *_cards(unit.config.name, "Fire", merged.fire),
+        *_cards(unit.config.name, "Movement", orders=merged.movement),
+        *_cards(unit.config.name, "Fire", orders=merged.fire),
     ]
     return unit_orders, cards
 
