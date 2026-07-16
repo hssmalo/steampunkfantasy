@@ -26,17 +26,17 @@ def test_promote_command_lands_picked_candidate(registered_kind: Kind) -> None:
     generate(
         registered_kind,
         source="a grunt description",
-        race="orks",
+        race="ork",
         name="grunt",
         count=3,
         candidates_root=config.paths.candidates,
     )
     app(
-        ["assets", "promote", "orks", "_test", "grunt", "--pick", "2"],
+        ["assets", "promote", "ork", "_test", "grunt", "--pick", "2"],
         exit_on_error=False,
         result_action="return_value",
     )
-    asset = config.paths.assets / "orks" / "_test" / "grunt.txt"
+    asset = config.paths.assets / "ork" / "_test" / "grunt.txt"
     assert asset.read_bytes() == b"two"
 
 
@@ -47,6 +47,6 @@ def test_promote_command_unknown_kind_errors(
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
     with pytest.raises(CycloptsError, match="Unknown kind"):
         app(
-            ["assets", "promote", "orks", "nope", "grunt", "--pick", "1"],
+            ["assets", "promote", "ork", "nope", "grunt", "--pick", "1"],
             exit_on_error=False,
         )
