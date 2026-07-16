@@ -14,6 +14,14 @@ than smoothed over.
 
 ## Bottom line
 
+> **Scope update (2026-07-15):** the project goal was later narrowed to *generate
+> images in both environments*, with **no cross-environment reproducibility and no
+> requirement that a single workflow run in both places** — local and cloud may use
+> different checkpoints and different workflows. That **retires the "two model
+> inventories" risk called out below**: each workflow only has to run on its own
+> server. The rest of this document's facts stand; just read "the same workflow JSON
+> runs on both" as a *bonus if convenient*, not a requirement.
+
 **Yes — "one seam, two backends" is viable, and it's better than we hoped.**
 Comfy Org's own cloud (`https://cloud.comfy.org`) exposes an API that its docs
 explicitly describe as *"compatible with local ComfyUI's API, making it easy to

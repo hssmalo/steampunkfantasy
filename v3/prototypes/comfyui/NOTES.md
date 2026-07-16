@@ -4,10 +4,27 @@
 an ADR or issue.** It is not production code, has no tests, and imports nothing
 from `spf` on purpose.
 
+## Scope decision (2026-07-15) — read this first
+
+The goal is to **generate images in both environments**, local and cloud. It is
+**not** to reproduce anything across them:
+
+- **No cross-environment reproducibility is wanted** — not even approximately. The
+  same request may (will) yield different images locally and in the cloud, and
+  that is fine.
+- **Local and cloud may use different checkpoints** — indeed different *workflows*
+  entirely. Each environment names whatever model it has.
+
+So the thing we're building is **one HTTP client** plus **per-environment config**
+(`base_url`, optional `api_key`, and *its own* `workflow_path` + model). It is
+*not* "one workflow JSON that must run in both places." That reframes two of the
+hypotheses below (3 and 4) from load-bearing risks down to don't-cares — see the
+status column.
+
 ## The question
 
 Can **one** stdlib-only client drive **both** a local ComfyUI and Comfy Cloud,
-with nothing changing but a base URL and an auth header?
+each pointed at its own workflow + model via config?
 
 And the sub-question that decides whether local is even viable for contributors:
 **is calling a local ComfyUI "from outside" genuinely free** — no account, no API
@@ -21,13 +38,15 @@ Background research: [`docs/research/comfyui.md`](../../docs/research/comfyui.md
 |---|---|---|---|
 | 1 | Local ComfyUI needs **no auth at all** | ComfyUI has no built-in authentication | 🟡 partly confirmed — run A |
 | 2 | Local is **free**: credits only apply to *API Nodes* (hosted models called from inside a workflow), not to the HTTP API itself | `docs/research/comfyui.md` §5 | ✅ confirmed — run A |
-| 3 | The **same workflow JSON** runs on both, so local vs cloud is just `base_url` + `X-API-Key` | Comfy Cloud docs: "compatible with local ComfyUI's API" | ⬜ untested |
-| 4 | **Cloud exposes a checkpoint we can also install locally** — the "two model inventories" risk. *This is the one that can sink the design.* | unverified in research | ⬜ untested |
+| 3 | The **same** HTTP client drives both (each with its **own** workflow); cloud speaks the same `/api/*` surface, differing only by `base_url` + `X-API-Key` | Comfy Cloud docs: "compatible with local ComfyUI's API" | ⬜ untested |
+| 4 | ~~Cloud exposes a checkpoint we can also install locally~~ **Retired by the scope decision** — different checkpoints per environment is now the design, not a risk. Each workflow need only run on *its own* server. | — | ⬛ n/a |
 | 5 | `SaveImage` embeds the workflow in PNG `tEXt` by default, so an asset carries its own recipe | ComfyUI `nodes.py` | ⬜ untested |
-| 6 | Same seed → same bytes on the same machine (`--twice`) | inferred, not confirmed | ⬜ untested |
+| 6 | Same seed → same bytes on the same machine (`--twice`) — *local convenience only, not a cross-environment goal* | inferred, not confirmed | ⬜ untested |
 
-The probe is built as **one script, not two**, precisely because hypothesis 3 is
-the thing we're testing — two scripts would assume it away.
+Hypothesis 3 is now about the **client and API surface** being shared, not the
+workflow. The probe stays **one script, not two**, because a single client
+driving both backends is exactly that shared surface — two scripts would assume
+it away. Per-environment *workflows* are expected and supported via `--workflow`.
 
 ## Results log
 
