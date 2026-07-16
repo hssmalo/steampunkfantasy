@@ -6,6 +6,8 @@ TOML in one of those directories requires its changelog to be staged in the
 same commit.
 """
 
+import subprocess
+import sys
 from pathlib import Path
 
 GAME_DATA_DIRS = ("races", "rules")
@@ -50,3 +52,29 @@ def _is_game_toml(path: str, directory: str) -> bool:
     """Return whether ``path`` is a TOML directly inside ``directory``."""
     candidate = Path(path)
     return candidate.parent == Path(directory) and candidate.suffix == ".toml"
+
+
+def _staged_paths(diff_filter: str) -> set[str]:
+    """Return staged paths matching a ``git diff --cached`` diff filter."""
+    result = subprocess.run(  # noqa: S603
+        ["git", "diff", "--cached", "--name-only", f"--diff-filter={diff_filter}"],  # noqa: S607
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return {line for line in result.stdout.splitlines() if line}
+
+
+def main() -> int:
+    """Block the commit when game data changed without its changelog."""
+    modified = _staged_paths("M")  # modify-only trigger
+    staged = _staged_paths("ACM")  # add-or-modify satisfies the changelog
+    offending = missing_changelogs(modified, staged)
+    if offending:
+        print(format_message(offending), file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

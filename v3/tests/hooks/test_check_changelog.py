@@ -1,6 +1,29 @@
 """Tests for the changelog pre-commit hook's pure logic."""
 
-from hooks.check_changelog import format_message, missing_changelogs
+import subprocess
+from pathlib import Path
+
+import pytest
+
+from hooks.check_changelog import format_message, main, missing_changelogs
+
+
+def _git(repo: Path, *args: str) -> None:
+    subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True)  # noqa: S607
+
+
+@pytest.fixture
+def committed_race_repo(tmp_path: Path) -> Path:
+    """A git repo with a committed race TOML and its changelog."""
+    _git(tmp_path, "init", "-q")
+    _git(tmp_path, "config", "user.email", "t@example.com")
+    _git(tmp_path, "config", "user.name", "Test")
+    (tmp_path / "races").mkdir()
+    (tmp_path / "races" / "elf.toml").write_text("name = 'Elf'\n")
+    (tmp_path / "races" / "changelog.md").write_text("# Changelog\n")
+    _git(tmp_path, "add", "-A")
+    _git(tmp_path, "commit", "-qm", "init")
+    return tmp_path
 
 
 def test_modified_race_toml_without_changelog_is_flagged() -> None:
@@ -52,6 +75,31 @@ def test_message_lists_offenders_changelog_and_escape_hatch() -> None:
     assert "rules/changelog.md" in message
     # The escape hatch is mentioned.
     assert "--no-verify" in message
+
+
+def test_main_blocks_when_changelog_missing(
+    committed_race_repo: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repo = committed_race_repo
+    (repo / "races" / "elf.toml").write_text("name = 'Elf'  # buffed\n")
+    _git(repo, "add", "races/elf.toml")
+    monkeypatch.chdir(repo)
+
+    assert main() == 1
+
+
+def test_main_passes_when_changelog_staged(
+    committed_race_repo: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repo = committed_race_repo
+    (repo / "races" / "elf.toml").write_text("name = 'Elf'  # buffed\n")
+    (repo / "races" / "changelog.md").write_text("# Changelog\n\nwhy\n")
+    _git(repo, "add", "races/elf.toml", "races/changelog.md")
+    monkeypatch.chdir(repo)
+
+    assert main() == 0
 
 
 def test_added_game_toml_is_not_flagged() -> None:
