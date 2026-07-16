@@ -121,7 +121,7 @@ rows = [
 race = "ogre"
 models = ["ogre_robot", "ogre_robot"]
 name = "Ogre Robot"
-description = '''Robot unit consists of two medium size robots (2m in height) made by the skilled Ogre craftsmen. '''
+description = '''A Robot (2m in height) armed with WW1 style rifle'''
 
 lore = '''The ogres realize that being big comes with some big disadvantages, thus they compensate by making medium sized robots. Although being only medium size, they are still strong enough to fire large ogre rifles. Ogre Robots can also take some serious beating before they are taken out of action.
 '''
@@ -220,7 +220,7 @@ rows = [
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description = '''Ogre assault scouts are armed with a sword and a gear pistol. A gear pistole is a clockwork steampunk pistol. Ogre enjoy fanzy outfits even during war. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool.
+description = '''Ogre assault scouts are armed with a sword and a gear pistol. A gear pistol is a clockwork steampunk pistol. Ogre enjoy fanzy outfits even during war. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. 
 '''
 
 tip ='''
@@ -280,8 +280,13 @@ name = "Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
 size = "Tiny"
 cost.cp = 4
-description = '''A drone swarm consists of 4 tiny floating drones, each carrying a tiny gear pistol. With deadly precision they cover any enemy that comes too close with minor acid. Although ogre infantry themselves are big and tough, they are few in numbers and far from immune to enemy fire. This led to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
+description = '''A drone swarm consists of 4 tiny floating drones, each carrying a gear pistol. A gear pistol is a clockwork steampunk pistol. '''
 
+lore = '''
+With deadly precision they cover any enemy that comes too close with minor acid. Although ogre infantry themselves are big and tough, they are few in numbers and far from immune to enemy fire. This led to the development of this cheap expendable unit to compensate for the ogre infantry disadvantages.
+'''
+
+tip = '''
 Fire at whatever is in range whenever you can, and cover the enemy in minor acid. These units are extremely accurate and extremely cheap, but will self destruct once they reach rest speed. Keep some support firepower to kill enemies which are covered in acid.
 '''
 
@@ -336,7 +341,7 @@ name = "Repair Drone"
 models = ["repair_drone", "repair_drone", "repair_drone", "repair_drone"]
 size = "Tiny"
 cost.cp = 16
-description = "A group of 4 tiny drones designed to repair other drones, robots and the huge ogre tanks and vehicles."
+description = "A tiny drones designed to repair other robots and vehicles."
 
 [units.repair_drone.shaken]
 speed = "slow"
@@ -360,7 +365,9 @@ race = "ogre"
 name = "Medic Drone"
 models = ["medic_drone", "medic_drone", "medic_drone", "medic_drone"]
 size = "Tiny"
-description = "A group of 4 tiny drones designed to heal infantry. They have become the ogre assault scouts best friends"
+description = "A tiny drone designed to heal infantry."
+
+lore = "They have become the ogre assault scouts best friends"
 cost.cp = 8
 cost.xp = 8
 
@@ -388,7 +395,7 @@ models = ["main_engine"]
 size = "Huge"
 cost.ip = 32
 armor = [12, 10, 10, 8]
-description = '''The main engine is a huge vehicle which tows one or more armed and armored wagons behind. It can carry lots of tiny drones and has a huge ogre cannon firing straight forward. It is very well armored from front and side'''
+description = '''The main engine is a huge vehicle which tows one or more armed and armored wagons behind. It can carry lots of tiny drones and has a huge cannon firing straight forward. It is very well armored from front and side'''
 
 tip = '''This unit blocks line of sight, and is well protected. Exploit the blocked line of sight to your advantage, to protect the other wagons behind or units you want to come closer without exposing them to enemy fire. The ogre cannon is a large weapons which does plenty of damage, but you have only one shot, which may hit or miss. It has also somewhat low range and can only fire straight forward.
 
@@ -465,7 +472,7 @@ models = ["broadside_wagon"]
 size = "Large"
 cost.ip = 8
 armor = [2, 10, 10, 8]
-description = '''Broadside wagon is pulled by the main engine, and is specialized in broadside fire where lots of heavy ogre hand-weapons are fired to both sides at the same time.
+description = '''Broadside wagon is pulled by the main engine, and is specialized in broadside fire where lots of heavy hand-weapons are fired to both sides at the same time.
 '''
 
 tip = '''
@@ -516,7 +523,7 @@ models = ["artillery_wagon"]
 size = "Large"
 cost.ip = 32
 armor = [2, 10, 10, 8]
-description = '''Artillery wagons need to be towed and are armored with a huge ogre artillery which can fire indirectly.'''
+description = '''Artillery wagons need to be towed and are armed with a huge artillery which can fire indirectly.'''
 
 tip = '''
 It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely porly armored from the front.
