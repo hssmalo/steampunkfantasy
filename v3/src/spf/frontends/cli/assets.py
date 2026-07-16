@@ -96,7 +96,7 @@ def image(
         unit_names = races.get_units(race).keys()
         for u in unit_names:
             stdout.print(f"[bold]{u}")
-            image(race, u)
+            image(race, u, opts=opts)
 
     try:
         name, human_name, description = _resolve_target(race, unit)
@@ -137,71 +137,3 @@ def image(
     except (OSError, ComfyUIError) as err:
         stderr.print(f"[red]Error:[/] image generation failed: {err}")
         raise SystemExit(1) from None
-
-    def image(
-        race: str,
-        unit: str | None = None,
-        *,
-        opts: Annotated[AssetOpts | None, cyclopts.Parameter(name="*")] = None,
-    ) -> None:
-        """Generate image Candidates for a RACE, or a UNIT of it.
-
-        The prompt is composed from ``prompts/image.txt`` plus the target's name
-        and description; a target without a description is a hard error.
-        """
-        opts = opts or AssetOpts()
-
-        if unit == "all":
-            unit_names = races.get_units(race).keys()
-            for u in unit_names:
-                stdout.print(f"[bold]{u}")
-                image(race, u)
-
-        try:
-            name, human_name, description = _resolve_target(race, unit)
-        except ValueError as err:
-            stderr.print(f"[red]Error:[/] {err}")
-            raise SystemExit(1) from None
-
-        target = unit or race
-        if not description.strip():
-            stderr.print(
-                f"[red]Error:[/] no description for {target!r}, "
-                "cannot generate an image"
-            )
-            raise SystemExit(1)
-
-        system = (config.paths.prompts / "image.txt").read_text(encoding="utf-8")
-        prompt = f"Subject: {human_name}.\nDetails: {description}\n{system}"
-
-        seed = (
-            opts.seed if opts.seed is not None else random.randrange(_SEED_BOUND)  # noqa: S311  seed, not cryptographic
-        )
-        stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
-        count = opts.count or config.assets.image.count
-
-        # Show the composed prompt (dimmed) before sending it to the Service.
-        stdout.print(prompt, style="dim", markup=False)
-
-        try:
-            generate(
-                get_kind("image"),
-                prompt,
-                race=race,
-                name=name,
-                count=count,
-                seed=seed,
-                candidates_root=config.paths.candidates,
-                on_candidate=lambda path: stdout.print(f"Wrote {path}"),
-            )
-        except (OSError, ComfyUIError) as err:
-            stderr.print(f"[red]Error:[/] image generation failed: {err}")
-            raise SystemExit(1) from None
-
-        stdout.print(
-            f"Promote one with: spf assets promote {race} image {target} --pick N"
-        )
-
-    app.command(promote_asset, name="promote")
-    app.command(image, name="image")
-
