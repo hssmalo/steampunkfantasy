@@ -9,12 +9,12 @@ from hooks.check_changelog import format_message, main, missing_changelogs
 
 
 def _git(repo: Path, *args: str) -> None:
-    subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True)  # noqa: S607
+    subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True)  # noqa: S603, S607
 
 
 @pytest.fixture
 def committed_race_repo(tmp_path: Path) -> Path:
-    """A git repo with a committed race TOML and its changelog."""
+    """Build a git repo with a committed race TOML and its changelog."""
     _git(tmp_path, "init", "-q")
     _git(tmp_path, "config", "user.email", "t@example.com")
     _git(tmp_path, "config", "user.name", "Test")

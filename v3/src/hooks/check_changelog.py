@@ -26,9 +26,7 @@ def missing_changelogs(
     offending: list[tuple[str, str]] = []
     for directory in GAME_DATA_DIRS:
         changelog = f"{directory}/changelog.md"
-        flagged = sorted(
-            path for path in modified if _is_game_toml(path, directory)
-        )
+        flagged = sorted(path for path in modified if _is_game_toml(path, directory))
         if flagged and changelog not in staged:
             offending.extend((path, changelog) for path in flagged)
     return offending
@@ -37,9 +35,7 @@ def missing_changelogs(
 def format_message(offending: list[tuple[str, str]]) -> str:
     """Render the block message for ``(toml, changelog)`` offender pairs."""
     lines = ["Game data changed without a changelog update:", ""]
-    lines.extend(
-        f"  {toml} -> update {changelog}" for toml, changelog in offending
-    )
+    lines.extend(f"  {toml} -> update {changelog}" for toml, changelog in offending)
     lines += [
         "",
         "Record *why* the balance changed in the changelog, then stage it.",
@@ -71,7 +67,7 @@ def main() -> int:
     staged = _staged_paths("ACM")  # add-or-modify satisfies the changelog
     offending = missing_changelogs(modified, staged)
     if offending:
-        print(format_message(offending), file=sys.stderr)
+        sys.stderr.write(format_message(offending) + "\n")
         return 1
     return 0
 
