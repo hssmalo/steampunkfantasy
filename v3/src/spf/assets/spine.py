@@ -7,6 +7,7 @@ both stores.
 """
 
 import shutil
+from collections.abc import Callable
 from pathlib import Path
 
 from spf.assets.kinds import Kind
@@ -28,26 +29,37 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     race: str,
     name: str,
     count: int,
+    seed: int | None = None,
     candidates_root: Path = config.paths.candidates,
+    on_candidate: Callable[[Path], None] | None = None,
 ) -> list[Path]:
     """Generate ``count`` Candidates for ``source`` and write them to disk.
 
     Each generated value is written to
     ``candidates_root/<race>/[<subdir>/]<name>.<index>.<extension>`` with a
-    1-based index, inferring text-vs-binary mode from the value's type. Existing
-    candidate files are overwritten silently. Returns the written paths in order.
+    1-based index, inferring text-vs-binary mode from the value's type, *as soon
+    as the Service produces it* — so a slow batch persists each Candidate rather
+    than waiting for the whole run. Existing candidate files are overwritten
+    silently. ``on_candidate`` (when given) is called with each path right after
+    it is written. Returns the written paths in order. ``seed`` is threaded
+    straight to the Service (see :class:`Service`).
     """
     directory = _asset_dir(candidates_root, kind, race)
     directory.mkdir(parents=True, exist_ok=True)
 
     paths: list[Path] = []
-    for index, value in enumerate(kind.service.generate(source, count), start=1):
-        path = directory / f"{name}.{index}.{kind.extension}"
+
+    def _persist(value: bytes | str) -> None:
+        path = directory / f"{name}.{len(paths) + 1}.{kind.extension}"
         if isinstance(value, bytes):
             path.write_bytes(value)
         else:
             path.write_text(value, encoding="utf-8")
         paths.append(path)
+        if on_candidate is not None:
+            on_candidate(path)
+
+    kind.service.generate(source, count, seed=seed, on_result=_persist)
     return paths
 
 

@@ -210,3 +210,16 @@ under `assets/<race>/models/`. The print-on-demand ordering leg is out of scope
 for the generation step.
 _Note_: overloads the domain **Model** (a single figure in a Unit); a Model
 asset is the printable mesh *of* such a figure.
+
+**Environment** (image generation):
+A configured ComfyUI target — `local` (a contributor's own ComfyUI) or `cloud`
+(Comfy Cloud) — the Image Service submits to, selected by
+`assets.image.comfyui.env`. Each Environment runs its own Workflow against its
+own models; the same request may yield different images in each.
+_Avoid_: shell environment (unrelated), backend, target.
+
+**Workflow** (image generation):
+A ComfyUI API-format graph (JSON) naming the nodes and models one generation
+runs. Per-Environment: `cloud.json` is committed, `local.json` is per-machine.
+The Image Service patches only the positive prompt and a per-job seed into it.
+_Avoid_: pipeline, graph (in user-facing text).

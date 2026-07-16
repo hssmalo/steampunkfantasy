@@ -2,12 +2,15 @@
 
 import pytest
 
+import spf.assets.image  # noqa: F401  self-registers the "image" kind on import
 from spf.assets import Kind, get_kind, register_kind
 from spf.assets.kinds import KINDS
 
 
-def test_registry_starts_empty() -> None:
-    assert KINDS == {}
+def test_concrete_kind_self_registers_on_import() -> None:
+    # Importing a concrete kind module registers it globally; the "image" kind
+    # (#25) is the first, so the registry is no longer empty once it is loaded.
+    assert "image" in KINDS
 
 
 def test_register_and_look_up(test_kind: Kind) -> None:
