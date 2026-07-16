@@ -220,7 +220,7 @@ rows = [
 [units.ogre_assault_scout]
 race = "ogre"
 name = "Ogre Assault Scout"
-description = '''Ogre assault scouts are armed with a sword and a gear pistol. A gear pistole is a clockwork steampunk pistol. Ogre enjoy fanzy outfits even during war. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool. 
+description = '''Ogre assault scouts are armed with a sword and a gear pistol. A gear pistole is a clockwork steampunk pistol. Ogre enjoy fanzy outfits even during war. Fast, furious, wrecking chaos in enemy ranks with devastating assault using the ogre sword as its primary tool.
 '''
 
 tip ='''

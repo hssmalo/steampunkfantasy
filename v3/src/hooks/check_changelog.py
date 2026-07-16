@@ -1,7 +1,7 @@
 """Block a commit when game-data TOML changes without its changelog.
 
-Each game-data directory owns a changelog: ``races/`` is paired with
-``races/changelog.md`` and ``rules/`` with ``rules/changelog.md``. Modifying a
+Each game-data directory owns a changelog: `races/` is paired with
+`races/changelog.md` and `rules/` with `rules/changelog.md`. Modifying a
 TOML in one of those directories requires its changelog to be staged in the
 same commit.
 """
@@ -19,9 +19,9 @@ def missing_changelogs(
 ) -> list[tuple[str, str]]:
     """Find game-data TOMLs modified without their changelog staged.
 
-    ``modified`` is the set of paths modified in the commit; ``staged`` is the
+    `modified` is the set of paths modified in the commit; `staged` is the
     set of paths added or modified (so a first-time changelog counts). Returns
-    ``(offending_toml, required_changelog)`` pairs, empty when nothing is amiss.
+    `(offending_toml, required_changelog)` pairs, empty when nothing is amiss.
     """
     offending: list[tuple[str, str]] = []
     for directory in GAME_DATA_DIRS:
@@ -33,7 +33,7 @@ def missing_changelogs(
 
 
 def format_message(offending: list[tuple[str, str]]) -> str:
-    """Render the block message for ``(toml, changelog)`` offender pairs."""
+    """Render the block message for `(toml, changelog)` offender pairs."""
     lines = ["Game data changed without a changelog update:", ""]
     lines.extend(f"  {toml} -> update {changelog}" for toml, changelog in offending)
     lines += [
@@ -45,16 +45,16 @@ def format_message(offending: list[tuple[str, str]]) -> str:
 
 
 def _is_game_toml(path: str, directory: str) -> bool:
-    """Return whether ``path`` is a TOML directly inside ``directory``."""
+    """Return whether `path` is a TOML directly inside `directory`."""
     candidate = Path(path)
     return candidate.parent == Path(directory) and candidate.suffix == ".toml"
 
 
 def _staged_paths(diff_filter: str) -> set[str]:
-    """Return staged paths matching a ``git diff --cached`` diff filter.
+    """Return staged paths matching a `git diff --cached` diff filter.
 
-    ``--relative`` yields paths relative to the current directory (the project
-    root when the hook runs), so they match the ``races/`` and ``rules/``
+    `--relative` yields paths relative to the current directory (the project
+    root when the hook runs), so they match the `races/` and `rules/`
     prefixes even when the project lives in a subdirectory of the git repo.
     """
     result = subprocess.run(  # noqa: S603

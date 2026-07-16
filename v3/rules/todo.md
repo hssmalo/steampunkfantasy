@@ -4,7 +4,7 @@ Flytte det som egner seg til toml filer.
 
 Lage en 'genere terreng regel'
 
-Legge til amphibian rules 
+Legge til amphibian rules
 
 Ble enig med meg selv om ordlegging.
 1 runde består av flere faser.

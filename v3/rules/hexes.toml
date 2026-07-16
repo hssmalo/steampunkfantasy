@@ -1,8 +1,8 @@
 #Til Geir Arne: er dette fornuftig???
-explanation = """Hex based effects are triggered in all 'trigger hex based effects part of movement. 
+explanation = """Hex based effects are triggered in all 'trigger hex based effects part of movement.
 
 When placing Clouds on a hex for the first time, place two tokens of the given type. Otherwise, place only one.
-Hex based effects are not cumulative. However the effect of acid, fire and poison on units are cumulative with both itself and each other. 
+Hex based effects are not cumulative. However the effect of acid, fire and poison on units are cumulative with both itself and each other.
 In case of poison clouds with different strength, apply the strongest if overlapping.
 
 Follow the instructions for each hex based effect
