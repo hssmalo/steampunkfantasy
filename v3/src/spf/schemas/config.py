@@ -36,7 +36,7 @@ class ComfyUIEnvConfig(StrictModel):
     """A single ComfyUI Environment: where to reach it and what to run."""
 
     base_url: str
-    workflow: str
+    workflow: Path
     api_key_env: str = ""
 
 

@@ -20,17 +20,17 @@ count = 1
 count = 3
 
 [assets.image.comfyui]
-env = "local"          # the ONLY selector; edit to "cloud" to switch
-timeout_s = 900        # generous: local cold-start measured ~626s
+env = "local"
+timeout_s = 1200
 
 [assets.image.comfyui.local]
 base_url = "http://127.0.0.1:8188"
-workflow = "local.json"        # resolved under paths.workflows; gitignored per-machine
-api_key_env = ""               # empty => no auth header
+workflow = "{paths.workflows}/local.json" # gitignored per-machine
+api_key_env = "" # empty => no auth header
 
 [assets.image.comfyui.cloud]
 base_url = "https://cloud.comfy.org"
-workflow = "cloud.json"        # resolved under paths.workflows; committed
+workflow = "{paths.workflows}/cloud.json"
 api_key_env = "SPF_COMFYUI_API_KEY"
 
 [assets.model]

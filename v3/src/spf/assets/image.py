@@ -23,7 +23,7 @@ def _build_service() -> ComfyUIService:
     env = comfyui.selected()  # ComfyUIEnvConfig for comfyui.env; raises on bad env
     return ComfyUIService(
         base_url=env.base_url,
-        workflow_path=config.paths.workflows / env.workflow,
+        workflow_path=env.workflow,
         api_key_env=env.api_key_env,
         timeout_s=comfyui.timeout_s,
     )
