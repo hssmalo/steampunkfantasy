@@ -102,6 +102,28 @@ def test_main_passes_when_changelog_staged(
     assert main() == 0
 
 
+def test_main_blocks_when_project_is_in_a_repo_subdirectory(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # The project lives in proj/ inside the git repo; git reports repo-relative
+    # paths (proj/races/elf.toml). The hook must still match races/elf.toml.
+    _git(tmp_path, "init", "-q")
+    _git(tmp_path, "config", "user.email", "t@example.com")
+    _git(tmp_path, "config", "user.name", "Test")
+    project = tmp_path / "proj"
+    (project / "races").mkdir(parents=True)
+    (project / "races" / "elf.toml").write_text("name = 'Elf'\n")
+    _git(tmp_path, "add", "-A")
+    _git(tmp_path, "commit", "-qm", "init")
+
+    (project / "races" / "elf.toml").write_text("name = 'Elf'  # buffed\n")
+    _git(tmp_path, "add", "proj/races/elf.toml")
+    monkeypatch.chdir(project)
+
+    assert main() == 1
+
+
 def test_added_game_toml_is_not_flagged() -> None:
     # A newly added race is staged but not in the modified-only set; adds pass.
     result = missing_changelogs(

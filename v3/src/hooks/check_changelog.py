@@ -51,9 +51,21 @@ def _is_game_toml(path: str, directory: str) -> bool:
 
 
 def _staged_paths(diff_filter: str) -> set[str]:
-    """Return staged paths matching a ``git diff --cached`` diff filter."""
+    """Return staged paths matching a ``git diff --cached`` diff filter.
+
+    ``--relative`` yields paths relative to the current directory (the project
+    root when the hook runs), so they match the ``races/`` and ``rules/``
+    prefixes even when the project lives in a subdirectory of the git repo.
+    """
     result = subprocess.run(  # noqa: S603
-        ["git", "diff", "--cached", "--name-only", f"--diff-filter={diff_filter}"],  # noqa: S607
+        [  # noqa: S607
+            "git",
+            "diff",
+            "--cached",
+            "--name-only",
+            "--relative",
+            f"--diff-filter={diff_filter}",
+        ],
         capture_output=True,
         text=True,
         check=True,
