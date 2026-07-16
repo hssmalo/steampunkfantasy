@@ -1,6 +1,6 @@
 """Tests for the changelog pre-commit hook's pure logic."""
 
-from hooks.check_changelog import missing_changelogs
+from hooks.check_changelog import format_message, missing_changelogs
 
 
 def test_modified_race_toml_without_changelog_is_flagged() -> None:
@@ -35,6 +35,23 @@ def test_tooling_toml_is_never_flagged() -> None:
         staged={"pyproject.toml", "typos.toml", "configs/spf.toml"},
     )
     assert result == []
+
+
+def test_message_lists_offenders_changelog_and_escape_hatch() -> None:
+    message = format_message(
+        [
+            ("races/elf.toml", "races/changelog.md"),
+            ("rules/special.toml", "rules/changelog.md"),
+        ]
+    )
+    # Every offending TOML is named.
+    assert "races/elf.toml" in message
+    assert "rules/special.toml" in message
+    # Each required changelog is named.
+    assert "races/changelog.md" in message
+    assert "rules/changelog.md" in message
+    # The escape hatch is mentioned.
+    assert "--no-verify" in message
 
 
 def test_added_game_toml_is_not_flagged() -> None:

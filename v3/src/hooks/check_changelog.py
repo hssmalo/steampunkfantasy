@@ -32,6 +32,20 @@ def missing_changelogs(
     return offending
 
 
+def format_message(offending: list[tuple[str, str]]) -> str:
+    """Render the block message for ``(toml, changelog)`` offender pairs."""
+    lines = ["Game data changed without a changelog update:", ""]
+    lines.extend(
+        f"  {toml} -> update {changelog}" for toml, changelog in offending
+    )
+    lines += [
+        "",
+        "Record *why* the balance changed in the changelog, then stage it.",
+        "To bypass this check, commit with `git commit --no-verify`.",
+    ]
+    return "\n".join(lines)
+
+
 def _is_game_toml(path: str, directory: str) -> bool:
     """Return whether ``path`` is a TOML directly inside ``directory``."""
     candidate = Path(path)
