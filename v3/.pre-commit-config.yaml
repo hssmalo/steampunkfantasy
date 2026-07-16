@@ -17,3 +17,12 @@ repos:
         args: [--fix, src/, tests/]
       - id: ruff-format
         args: [src/, tests/]
+
+  - repo: local
+    hooks:
+      - id: changelog-reminder
+        name: Remind to update changelog for TOML changes
+        entry: uv run python -m hooks.check_changelog
+        language: system
+        pass_filenames: false
+        always_run: true
