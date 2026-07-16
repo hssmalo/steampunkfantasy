@@ -9,7 +9,7 @@ registry mechanism only. **Zero** concrete kinds are registered here; each kind
 issue registers its own.
 """
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -17,8 +17,23 @@ from typing import Protocol
 class Service(Protocol):
     """Generates the raw content for a Kind's Candidates."""
 
-    def generate(self, source: str, count: int) -> Sequence[bytes | str]:
-        """Return ``count`` generated values (text or binary) for ``source``."""
+    def generate(
+        self,
+        source: str,
+        count: int,
+        *,
+        seed: int | None = None,
+        on_result: Callable[[bytes | str], None] | None = None,
+    ) -> Sequence[bytes | str]:
+        """Return ``count`` generated values (text or binary) for ``source``.
+
+        ``seed`` is an optional base seed; a Service derives its own ``count``
+        sub-seeds from it, and ``None`` means generate non-deterministically.
+
+        ``on_result``, when given, is called with each value in order as it
+        becomes available, so a caller can persist results incrementally instead
+        of waiting for the whole batch; the full sequence is still returned.
+        """
         ...
 
 

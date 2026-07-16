@@ -4,9 +4,11 @@ armies = "{project_path}/armies"
 races = "{project_path}/races"
 rules = "{project_path}/rules"
 templates = "{project_path}/templates"
+prompts = "{project_path}/prompts"
 output = "{project_path}/output"
 candidates = "{project_path}/candidates"
 assets = "{project_path}/assets"
+workflows = "{project_path}/workflows"
 
 [render.latex]
 engine = "pdflatex"
@@ -16,6 +18,20 @@ count = 1
 
 [assets.image]
 count = 3
+
+[assets.image.comfyui]
+env = "local"
+timeout_s = 1200
+
+[assets.image.comfyui.local]
+base_url = "http://127.0.0.1:8188"
+workflow = "{paths.workflows}/local.json" # gitignored per-machine
+api_key_env = "" # empty => no auth header
+
+[assets.image.comfyui.cloud]
+base_url = "https://cloud.comfy.org"
+workflow = "{paths.workflows}/cloud.json"
+api_key_env = "SPF_COMFYUI_API_KEY"
 
 [assets.model]
 count = 2

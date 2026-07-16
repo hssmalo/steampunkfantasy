@@ -7,3 +7,6 @@ output/
 
 # Uncurated Asset candidates (Assets themselves are committed)
 candidates/
+
+# Per-machine local ComfyUI workflow (committed: cloud.json + local.example.json)
+workflows/local.json
