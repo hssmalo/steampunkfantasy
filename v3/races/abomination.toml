@@ -346,7 +346,7 @@ size = "Medium"
 cost.cp = 24
 cost.xp = 16
 
-description = "For those that do not know better, these unit looks like living water elementals. However, no such things exists, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The truth is revealed while the unit is shaken, when the waterflow surrounding the models stops"
+description = "For those that do not know better, this unit looks like living water elementals. However, no such things exist, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The truth is revealed while the unit is shaken, when the waterflow surrounding the models stops"
 
 [units.water_elemental.shaken]
 speed = "still"
@@ -896,7 +896,7 @@ race = "abomination"
 cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
-description = """Abomination excel in water manipulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surrounding the unit helps protect from regular bullets.
+description = """Abominations excel in water manipulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surrounding the unit helps protect from regular bullets.
 
 Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
@@ -999,7 +999,7 @@ race = "abomination"
 requires = []
 description = """A horrible sound scares enemies in a forward cone
 
-Loading represent preparing for a horrible roar next turn"""
+Loading represents preparing for a horrible roar next turn"""
 
 [equipment.shriek.range]
 range = 2

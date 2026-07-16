@@ -865,7 +865,7 @@ ap = 3
 name = "Troll Gatling Gun"
 race = "ork"
 requires = [["Hands:2"]]
-description = "A huge gatling gun designed to be carried by trolls. The orks have put the troll gatling gun on auto fire mode. Fires once at all models, friends or foe, within long-range and within forward arc."
+description = "A huge gatling gun designed to be carried by trolls. The orks have put the troll gatling gun on auto fire mode. Fires once at all models, friend or foe, within long-range and within forward arc."
 
 [equipment.troll_gatling_gun.range]
 range = 4
