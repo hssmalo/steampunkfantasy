@@ -15,6 +15,7 @@ class PathsConfig(StrictModel):
     output: Path
     candidates: Path
     assets: Path
+    workflows: Path
 
 
 class LatexConfig(StrictModel):
@@ -31,15 +32,52 @@ class AssetKindConfig(StrictModel):
     count: int
 
 
+class ComfyUIEnvConfig(StrictModel):
+    """A single ComfyUI Environment: where to reach it and what to run."""
+
+    base_url: str
+    workflow: str
+    api_key_env: str = ""
+
+
+class ComfyUIConfig(StrictModel):
+    """The ComfyUI provider config: the two Environments and the selector."""
+
+    env: str = "local"
+    timeout_s: int = 900
+    local: ComfyUIEnvConfig
+    cloud: ComfyUIEnvConfig
+
+    def selected(self) -> ComfyUIEnvConfig:
+        """Return the Environment block named by ``env``.
+
+        Raises :class:`ValueError` naming the two valid Environments when
+        ``env`` is neither (mirrors :func:`spf.assets.get_kind`).
+        """
+        if self.env == "local":
+            return self.local
+        if self.env == "cloud":
+            return self.cloud
+        msg = f"Unknown ComfyUI env {self.env!r}; known envs: local, cloud"
+        raise ValueError(msg)
+
+
+class ImageAssetConfig(StrictModel):
+    """Image asset settings: count plus the ComfyUI provider config."""
+
+    count: int
+    comfyui: ComfyUIConfig
+
+
 class AssetsConfig(StrictModel):
     """Asset generation config, one entry per Asset kind."""
 
     lore: AssetKindConfig = AssetKindConfig(count=1)
-    image: AssetKindConfig = AssetKindConfig(count=3)
+    image: ImageAssetConfig
     model: AssetKindConfig = AssetKindConfig(count=2)
 
 
 class SteamPunkFantasyConfig(StrictModel):
     paths: PathsConfig
     render: RenderConfig = RenderConfig()
-    assets: AssetsConfig = AssetsConfig()
+    assets: AssetsConfig

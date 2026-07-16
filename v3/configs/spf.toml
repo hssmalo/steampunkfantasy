@@ -8,6 +8,7 @@ prompts = "{project_path}/prompts"
 output = "{project_path}/output"
 candidates = "{project_path}/candidates"
 assets = "{project_path}/assets"
+workflows = "{project_path}/workflows"
 
 [render.latex]
 engine = "pdflatex"
@@ -17,6 +18,20 @@ count = 1
 
 [assets.image]
 count = 3
+
+[assets.image.comfyui]
+env = "local"          # the ONLY selector; edit to "cloud" to switch
+timeout_s = 900        # generous: local cold-start measured ~626s
+
+[assets.image.comfyui.local]
+base_url = "http://127.0.0.1:8188"
+workflow = "local.json"        # resolved under paths.workflows; gitignored per-machine
+api_key_env = ""               # empty => no auth header
+
+[assets.image.comfyui.cloud]
+base_url = "https://cloud.comfy.org"
+workflow = "cloud.json"        # resolved under paths.workflows; committed
+api_key_env = "SPF_COMFYUI_API_KEY"
 
 [assets.model]
 count = 2
