@@ -1,12 +1,12 @@
 """The ComfyUI-backed Image Service: one stdlib client for local and cloud.
 
-Turns a composed prompt into ``count`` PNG blobs by submitting an authored
+Turns a composed prompt into `count` PNG blobs by submitting an authored
 ComfyUI **Workflow** (an API-format graph) to a configured **Environment**
 (local ComfyUI or Comfy Cloud). Only the positive prompt and a per-job seed are
 patched into the graph; the model, steps, cfg, LoRAs, and negative prompt stay
 exactly as authored (see ADR 0009 and its amendment).
 
-All network I/O funnels through the single :func:`_request` seam, so tests
+All network I/O funnels through the single `_request` seam, so tests
 monkeypatch exactly that one function. Stdlib only — the prototype proved a
 dependency is unnecessary.
 """
@@ -38,10 +38,10 @@ _PRIMITIVE_KEYS = ("value", "seed", "int", "number")
 class ComfyUIError(Exception):
     """A ComfyUI failure to surface as a clean CLI message, not a traceback.
 
-    Raised for an execution ``failed`` status (carrying ComfyUI's
-    ``node_errors``), a timeout, a completed job with no images, and an
-    unpatchable Workflow. Transient network failures are :mod:`urllib` errors
-    and are handled by retry inside :func:`_request`, not raised as this.
+    Raised for an execution `failed` status (carrying ComfyUI's
+    `node_errors`), a timeout, a completed job with no images, and an
+    unpatchable Workflow. Transient network failures are `urllib` errors
+    and are handled by retry inside `_request`, not raised as this.
     """
 
 
@@ -56,11 +56,11 @@ def _request(  # noqa: PLR0913  the single HTTP seam's shape is fixed (see the p
 ) -> Any:  # noqa: ANN401  parsed JSON (dict/list) or raw bytes, by design
     """Perform one ComfyUI HTTP call — the sole network seam.
 
-    JSON-encodes ``body`` (setting ``Content-Type``) when present and adds an
-    ``X-API-Key`` header when ``api_key`` is given. Retries transient failures
+    JSON-encodes `body` (setting `Content-Type`) when present and adds an
+    `X-API-Key` header when `api_key` is given. Retries transient failures
     (5xx and connection errors) with exponential backoff up to
-    :data:`_MAX_ATTEMPTS`; 4xx client errors fail fast. Returns parsed JSON, or
-    raw ``bytes`` when ``raw`` is set (for ``/api/view``).
+    `_MAX_ATTEMPTS`; 4xx client errors fail fast. Returns parsed JSON, or
+    raw `bytes` when `raw` is set (for `/api/view`).
     """
     url = f"{base}{path}"
     data = json.dumps(body).encode() if body is not None else None
@@ -94,10 +94,10 @@ def _request(  # noqa: PLR0913  the single HTTP seam's shape is fixed (see the p
 
 
 def _load_workflow(path: Path) -> dict[str, Any]:
-    """Read and parse ``path`` as an API-format Workflow graph.
+    """Read and parse `path` as an API-format Workflow graph.
 
-    An API-format graph is a dict of nodes, each carrying ``class_type``. A
-    plain (UI-format) export is not runnable; raise :class:`ComfyUIError`
+    An API-format graph is a dict of nodes, each carrying `class_type`. A
+    plain (UI-format) export is not runnable; raise `ComfyUIError`
     telling the user to "Save (API Format)".
     """
     graph = json.loads(path.read_text(encoding="utf-8"))
@@ -119,7 +119,7 @@ def _nodes_of_class(graph: dict[str, Any], *classes: str) -> list[str]:
 def _sole_node_of_class(
     graph: dict[str, Any], classes: Sequence[str], what: str
 ) -> str:
-    """Return the id of the one node of ``classes``; raise unless exactly one."""
+    """Return the id of the one node of `classes`; raise unless exactly one."""
     hits = _nodes_of_class(graph, *classes)
     if len(hits) != 1:
         msg = f"expected exactly 1 {what} node, found {len(hits)}: {hits}"
@@ -130,11 +130,11 @@ def _sole_node_of_class(
 def _set_scalar_or_upstream(
     graph: dict[str, Any], node_id: str, key: str, value: object
 ) -> bool:
-    """Set ``inputs[key]`` to ``value``, following a link to its primitive.
+    """Set `inputs[key]` to `value`, following a link to its primitive.
 
-    A link is ``["<node_id>", slot]``; a literal is anything else. When the
+    A link is `["<node_id>", slot]`; a literal is anything else. When the
     input is a link, patch the upstream primitive's value instead. Returns
-    whether a value was set (``False`` if the input is absent).
+    whether a value was set (`False` if the input is absent).
     """
     inputs = graph[node_id]["inputs"]
     if key not in inputs:
@@ -155,9 +155,9 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
     """Patch only the positive prompt and the seed, by graph-follow.
 
     Locates the sole sampler, patches its seed (following a linked primitive),
-    then follows its ``positive`` link to the text node and sets ``text``.
+    then follows its `positive` link to the text node and sets `text`.
     Everything else — model, steps, cfg, LoRAs, negative — is left untouched.
-    Raises :class:`ComfyUIError` on an unpatchable graph.
+    Raises `ComfyUIError` on an unpatchable graph.
     """
     sid = _sole_node_of_class(graph, SAMPLER_CLASSES, "sampler")
     inputs = graph[sid]["inputs"]
@@ -183,7 +183,7 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
 
 
 def _submit(base: str, api_key: str | None, graph: dict[str, Any]) -> str:
-    """Queue ``graph`` via ``/api/prompt`` and return its ``prompt_id``."""
+    """Queue `graph` via `/api/prompt` and return its `prompt_id`."""
     response = _request(
         base,
         "/api/prompt",
@@ -210,12 +210,12 @@ def _poll(
     timeout_s: float,
     cached_route: str | None,
 ) -> tuple[dict[str, Any], str]:
-    """Poll until the job completes, returning ``(record, route)``.
+    """Poll until the job completes, returning `(record, route)`.
 
-    Tries ``cached_route`` if known, else each of :data:`_POLL_ROUTES` in order
+    Tries `cached_route` if known, else each of `_POLL_ROUTES` in order
     until one answers 200 — that becomes the cached route for the batch. The two
-    shapes are normalized: ``/history/{id}`` nests under the prompt_id,
-    ``/api/jobs/{id}`` does not. Raises :class:`ComfyUIError` on a ``failed``
+    shapes are normalized: `/history/{id}` nests under the prompt_id,
+    `/api/jobs/{id}` does not. Raises `ComfyUIError` on a `failed`
     status or on timeout.
     """
     deadline = time.monotonic() + timeout_s
@@ -244,7 +244,7 @@ def _poll(
 def _fetch_images(
     base: str, api_key: str | None, record: dict[str, Any]
 ) -> list[bytes]:
-    """Fetch every non-``temp`` output image of ``record`` via ``/api/view``."""
+    """Fetch every non-`temp` output image of `record` via `/api/view`."""
     images = [
         image
         for node in record.get("outputs", {}).values()
@@ -268,11 +268,11 @@ def _fetch_images(
 
 
 class ComfyUIService:
-    """A :class:`~spf.assets.Service` that renders images via ComfyUI.
+    """A `Service` that renders images via ComfyUI.
 
     Constructed from one Environment's config; touches neither the network nor
-    the Workflow file until :meth:`generate`. The API key is read lazily, per
-    call, from the environment variable named by ``api_key_env`` (empty ⇒ no
+    the Workflow file until `generate`. The API key is read lazily, per
+    call, from the environment variable named by `api_key_env` (empty ⇒ no
     auth header), so it can be exported after import.
     """
 
@@ -284,7 +284,7 @@ class ComfyUIService:
         api_key_env: str,
         timeout_s: int,
     ) -> None:
-        """Store one Environment's config; read nothing until ``generate``."""
+        """Store one Environment's config; read nothing until `generate`."""
         self._base_url = base_url
         self._workflow_path = workflow_path
         self._api_key_env = api_key_env
@@ -298,9 +298,9 @@ class ComfyUIService:
         seed: int | None = None,
         on_result: Callable[[bytes | str], None] | None = None,
     ) -> Sequence[bytes]:
-        """Render ``count`` images for the ``source`` prompt, one per sub-seed.
+        """Render `count` images for the `source` prompt, one per sub-seed.
 
-        Each job's image is fetched as it completes; ``on_result`` (when given)
+        Each job's image is fetched as it completes; `on_result` (when given)
         is called with that blob right away, so the caller can save it before the
         next job is submitted, rather than at the end of the batch.
         """

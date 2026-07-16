@@ -1,8 +1,8 @@
 """The ComfyUI-backed Image Service: patching, submit/poll/fetch, errors.
 
-Everything is driven through a monkeypatched :func:`comfyui._request` — the one
+Everything is driven through a monkeypatched `comfyui._request` — the one
 low-level HTTP seam — so no real sockets are opened. A committed fixture graph
-(``fixtures/mini_workflow.json``) stands in for a real API-format workflow.
+(`fixtures/mini_workflow.json`) stands in for a real API-format workflow.
 """
 
 import itertools
@@ -35,12 +35,12 @@ def _one_image_outputs(name: str = "spf_00001_.png") -> dict[str, Any]:
 
 
 class _ScriptedComfy:
-    """A stand-in for :func:`comfyui._request` recording submissions.
+    """A stand-in for `comfyui._request` recording submissions.
 
-    Serves a ``prompt_id`` on ``/api/prompt`` (recording the submitted graph),
-    a ``completed`` record on any poll route, and PNG bytes on ``/api/view``.
-    ``poll_ok`` decides which poll routes answer; a route it rejects raises
-    :class:`~spf.assets.comfyui.ComfyUIError`, exactly as ``_request`` does on a
+    Serves a `prompt_id` on `/api/prompt` (recording the submitted graph),
+    a `completed` record on any poll route, and PNG bytes on `/api/view`.
+    `poll_ok` decides which poll routes answer; a route it rejects raises
+    `ComfyUIError`, exactly as `_request` does on a
     4xx from a server that does not serve that route.
     """
 
@@ -126,7 +126,7 @@ def _service_for(
     scripted: _ScriptedComfy,
     monkeypatch: pytest.MonkeyPatch,
 ) -> comfyui.ComfyUIService:
-    """Build a service whose Workflow is ``graph`` written to a temp file."""
+    """Build a service whose Workflow is `graph` written to a temp file."""
     workflow = tmp_path / "wf.json"
     workflow.write_text(json.dumps(graph), encoding="utf-8")
     return _service(scripted, monkeypatch, workflow_path=workflow)
@@ -282,7 +282,7 @@ def test_poll_tries_both_routes_then_caches_the_winner(
 
 
 class _FakeResponse:
-    """A minimal ``urlopen`` context manager returning canned bytes."""
+    """A minimal `urlopen` context manager returning canned bytes."""
 
     def __init__(self, data: bytes) -> None:
         self._data = data

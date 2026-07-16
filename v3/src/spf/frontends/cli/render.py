@@ -1,7 +1,7 @@
 """Render commands for the SteamPunkFantasy CLI.
 
-Registers the ``spf render`` group and its product subcommands, plus the reusable
-``RenderOpts`` parameter set they accept.
+Registers the `spf render` group and its product subcommands, plus the reusable
+`RenderOpts` parameter set they accept.
 """
 
 import re
@@ -21,16 +21,16 @@ from spf.render.products import register_product
 
 DEFAULT_FORMAT = "pdf"
 
-# The Order Card Product: templates live at ``<family>/cards/main.<ext>.jinja``.
+# The Order Card Product: templates live at `<family>/cards/main.<ext>.jinja`.
 CARDS = register_product(Product(name="cards"))
 
 # The Army Reference Product: templates live at
-# ``<family>/army-rules/main.<ext>.jinja``.
+# `<family>/army-rules/main.<ext>.jinja`.
 ARMY_RULES = register_product(Product(name="army-rules"))
 
 
 def _validate_format(_type: type, value: str) -> None:
-    """Reject a ``--format`` value not registered in the Format registry."""
+    """Reject a `--format` value not registered in the Format registry."""
     if value not in FORMATS:
         known = ", ".join(FORMATS)
         msg = f"Unknown format {value!r}; choose from: {known}"
@@ -55,7 +55,7 @@ class RenderOpts:
 
 
 def _safe_stem(name: str) -> str:
-    """Slugify ``name`` to a filename stem of letters, digits, and single dashes."""
+    """Slugify `name` to a filename stem of letters, digits, and single dashes."""
     return re.sub(r"[^A-Za-z0-9]+", "-", name).strip("-")
 
 
