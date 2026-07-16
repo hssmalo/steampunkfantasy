@@ -4,6 +4,10 @@
 extend-exclude = [
     "rules/todo.md",
     "templates/card_standar.tex",
+    # Third-party ComfyUI exports: the embedded positive-prompt text is data the
+    # Service overwrites at generate time, not prose we maintain.
+    "workflows/cloud.json",
+    "workflows/local.example.json",
 ]
 
 [default]

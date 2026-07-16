@@ -391,7 +391,8 @@ Work in a dedicated worktree per the repo workflow
 ## 12. Acceptance criteria
 
 - `spf assets image <race>` with `env = "local"` and a local ComfyUI running
-  writes `count` candidate PNGs, patching only prompt + seed into `local.json`.
+  writes `count` candidate PNG files, patching only prompt + seed into
+  `local.json`.
 - Flipping `env = "cloud"` (TOML edit) + exporting `SPF_COMFYUI_API_KEY` generates
   the same way against Comfy Cloud via `cloud.json`, no other change.
 - A ComfyUI execution failure prints a clear `[red]Error:[/] …` with ComfyUI's
