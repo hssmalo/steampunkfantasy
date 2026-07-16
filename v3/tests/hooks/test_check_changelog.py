@@ -28,6 +28,15 @@ def test_first_time_added_changelog_satisfies() -> None:
     assert result == []
 
 
+def test_tooling_toml_is_never_flagged() -> None:
+    # Tooling TOML lives outside races/ and rules/, so it is ignored.
+    result = missing_changelogs(
+        modified={"pyproject.toml", "typos.toml", "configs/spf.toml"},
+        staged={"pyproject.toml", "typos.toml", "configs/spf.toml"},
+    )
+    assert result == []
+
+
 def test_rules_flagged_independently_of_satisfied_races() -> None:
     # races changelog is staged (satisfied); rules changelog is not.
     result = missing_changelogs(
