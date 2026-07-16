@@ -4,9 +4,6 @@
 extend-exclude = [
     "rules/todo.md",
     "templates/card_standar.tex",
-    # Verbatim ComfyUI export from a contributor; their prompt's spelling is
-    # captured data, not ours to rewrite (throwaway prototype sample anyway).
-    "prototypes/comfyui/samples/*.json",
 ]
 
 [default]

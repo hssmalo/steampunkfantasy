@@ -69,7 +69,3 @@ ignore = [
 "tests/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]
 "tests/**/conftest.py" = ["ARG002"]
 "armies/build_scripts/*.py" = ["N999"]
-# Throwaway prototypes (prototypes/**) answer a question and are then deleted.
-# They are stdlib-only scripts that report to stdout; holding them to the
-# production ruleset (prints, annotations, docstrings) buys nothing.
-"prototypes/**" = ["ALL"]
