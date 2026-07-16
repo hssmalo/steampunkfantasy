@@ -164,11 +164,15 @@ size = "Large"
 armor = [10, 6, 5, 4]
 cost.ip = 16
 
-description = '''A Goblin Armored Carrier, armed with a light mortar. It is very fast while driving straight forward, but needs to slow down to turn. Well armored from the front, less so from the sides and rear. Since Goblin infantry are smaller than the other races, you can pack more of them in the same vehicle. Once the goblin exit, they swarm the place with lots and lots of goblin infantry.
+description = '''An Armored Carrier, armed with a light mortar, and deploying small goblin to the battlefield. The goblin swarm out of the vehicle in large numbers. It is very fast while driving straight forward. 
+'''
+
+
+lore = '''Since Goblin infantry are smaller than the other races, you can pack more of them in the same vehicle. Once the goblin exit, they swarm the place with lots and lots of goblin infantry.
 '''
 
 tip = '''
-Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if you are lucky.
+Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if you are lucky. Well armored from the front, less so from the sides and rear. 
 '''
 
 
@@ -238,7 +242,7 @@ size = "Large"
 armor = [8,8,8,6]
 cost.ip = 24
 
-description = '''Fairly well armored bipedal mechanised walker piloted by two goblin. On one side it has a big weapon which fires the dreaded stinkbomb at enemies, while on the left it is is armed with two light mortars.
+description = '''Fairly well armored bipedal mechanised walker piloted by two goblin. On one side the bipedal mech has a big weapon which fires the dreaded stinkbomb at enemies, while on the left it is is armed with two light mortars.
 '''
 
 lore = '''These are the pride of goblin innovation, the first tank which walks on two legs. Or at least, that is what the goblin claim. 
@@ -301,8 +305,9 @@ size = "Large"
 armor = [10, 8, 6, 4]
 cost.ip = 32
 
-description = '''A Heavy Armored Carrier, armed with a battery of bows and three heavy crossbows. Can transport 4 goublin infantry which are rapidly deployed to the battlefield
+description = '''A Heavy Armored Carrier, armed with a battery of bows and three heavy crossbows. Can transport 4 goublin infantry which are rapidly deployed to the battlefield'''
 
+lore = '''
 The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapon system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
 '''
 
@@ -401,7 +406,7 @@ size = "Medium"
 armor = [4, 3, 2, 1]
 cost.ip = 8
 
-description = '''This is an modified civilian car made primarily to deploy Goblin infantry to the front. They added an auto bow (a bow which automatically fires arrows) and some add-hoc armor for some protection, but far from adequate. They are also packed with goblin grenades which the crew throws at enemy whenever they can. Goblin being smaller than the other races can pack surprisingly large number of infantry in a small volume.
+description = '''This is an modified civilian truck and added an auto bow (a bow which automatically fires arrows) and some add-hoc armor for some protection. They are also packed with grenades which the crew throws out of the window whenever they can. The modified truck also carries lots of goblin infantry.
 '''
 
 

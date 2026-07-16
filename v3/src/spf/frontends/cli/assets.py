@@ -91,13 +91,12 @@ def add_commands(app: cyclopts.App) -> None:
         """
         opts = opts or AssetOpts()
 
-        if unit == 'all':
+        if unit == "all":
             unit_names = races.get_units(race).keys()
             for u in unit_names:
                 stdout.print(f"[bold]{u}")
                 image(race, u)
 
-        
         try:
             name, human_name, description = _resolve_target(race, unit)
         except ValueError as err:
