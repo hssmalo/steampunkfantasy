@@ -1,6 +1,6 @@
 """The Format registry.
 
-A :class:`Format` is a target output shape: a file extension, the template
+A `Format` is a target output shape: a file extension, the template
 *family* it renders from, and an optional post-step (a derivation) that turns the
 rendered text into the final content. Formats are plain records registered in a
 module-level dict at import time and looked up by name.

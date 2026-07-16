@@ -1,10 +1,10 @@
 """The Kind record and its registry.
 
-A :class:`Kind` is a kind of Asset (Lore, Image, Model). It owns the
-:class:`Service` that generates its Candidates and declares, declaratively, how
-its files are laid out under a race: ``<race>/[<subdir>/]<name>.<extension>``.
+A `Kind` is a kind of Asset (Lore, Image, Model). It owns the
+`Service` that generates its Candidates and declares, declaratively, how
+its files are laid out under a race: `<race>/[<subdir>/]<name>.<extension>`.
 
-This foundation ships the record type, the :class:`Service` protocol, and the
+This foundation ships the record type, the `Service` protocol, and the
 registry mechanism only. **Zero** concrete kinds are registered here; each kind
 issue registers its own.
 """
@@ -25,12 +25,12 @@ class Service(Protocol):
         seed: int | None = None,
         on_result: Callable[[bytes | str], None] | None = None,
     ) -> Sequence[bytes | str]:
-        """Return ``count`` generated values (text or binary) for ``source``.
+        """Return `count` generated values (text or binary) for `source`.
 
-        ``seed`` is an optional base seed; a Service derives its own ``count``
-        sub-seeds from it, and ``None`` means generate non-deterministically.
+        `seed` is an optional base seed; a Service derives its own `count`
+        sub-seeds from it, and `None` means generate non-deterministically.
 
-        ``on_result``, when given, is called with each value in order as it
+        `on_result`, when given, is called with each value in order as it
         becomes available, so a caller can persist results incrementally instead
         of waiting for the whole batch; the full sequence is still returned.
         """

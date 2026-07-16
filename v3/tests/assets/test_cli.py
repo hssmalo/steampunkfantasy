@@ -1,4 +1,4 @@
-"""S5: the shared ``spf assets promote`` CLI command over a throwaway kind."""
+"""S5: the shared `spf assets promote` CLI command over a throwaway kind."""
 
 from pathlib import Path
 

@@ -1,7 +1,7 @@
 """Order Card view-model: shape a resolved Army into a printable deck.
 
 This is a *presentation* transposition (ADR 0007). The core model exposes merged
-orders via :meth:`spf.armies.unit.Unit.orders`; this module turns those into the
+orders via `spf.armies.unit.Unit.orders`; this module turns those into the
 two shapes the render families need: a flat per-Unit table (Markdown family) and
 an option-index-transposed card list (LaTeX 9-per-page grid). No I/O, no
 templates.
@@ -98,10 +98,10 @@ def _unit_orders(unit: Unit) -> tuple[UnitOrders, tuple[OrderCard, ...]]:
 
 
 def build_deck(army: Army, *, stem: str) -> OrderCardDeck:
-    """Build an :class:`OrderCardDeck` from a resolved Army.
+    """Build an `OrderCardDeck` from a resolved Army.
 
-    Each Unit contributes a flat :class:`UnitOrders` and its transposed
-    :class:`OrderCard` set. Units producing an identical flat view (same name and
+    Each Unit contributes a flat `UnitOrders` and its transposed
+    `OrderCard` set. Units producing an identical flat view (same name and
     merged movement/fire rows) collapse to one entry.
     """
     units: list[UnitOrders] = []

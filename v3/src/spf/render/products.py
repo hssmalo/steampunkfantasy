@@ -1,9 +1,9 @@
 """The Product registry.
 
-A :class:`Product` is a kind of Rendering (Order Card, Army Reference, ...). Its
-``name`` locates templates as ``<family>/<name>/main.<ext>.jinja`` and names the
+A `Product` is a kind of Rendering (Order Card, Army Reference, ...). Its
+`name` locates templates as `<family>/<name>/main.<ext>.jinja` and names the
 output subdirectory. A Product is *not* bound to a single family — the
-``(product, family)`` pair locates a template, so the same Product can reach both
+`(product, family)` pair locates a template, so the same Product can reach both
 HTML (via the markdown family) and PDF (via the latex family).
 
 This foundation ships the record type and the registry mechanism only. **Zero**

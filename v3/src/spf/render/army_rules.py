@@ -1,7 +1,7 @@
 """Army Reference view-model: shape a resolved Army into a nested rules view.
 
-This is a *presentation* transposition (ADR 0007), like :mod:`spf.render.cards`.
-It reads only the resolved :class:`~spf.armies.army.Army` — no ``race_config``,
+This is a *presentation* transposition (ADR 0007), like `spf.render.cards`.
+It reads only the resolved `Army` — no `race_config`,
 no rules loading, no full special-rule text (that belongs to the Rulebook
 product). No I/O, no templates.
 """
@@ -19,7 +19,7 @@ type _Specials = tuple[tuple[str, str], ...]
 
 
 def _roll_text(roll: t.DamageRoll) -> str:
-    """Render a damage roll as its table-column string (``9`` / ``1-2`` / ``6+``)."""
+    """Render a damage roll as its table-column string (`9` / `1-2` / `6+`)."""
     match roll:
         case t.ExactRoll(value=value):
             return str(value)
@@ -32,7 +32,7 @@ def _roll_text(roll: t.DamageRoll) -> str:
 def _count_summary[T](
     items: Sequence[T], name_of: Callable[[T], str]
 ) -> tuple[str, ...]:
-    """Group ``items`` by equality, first-seen order, into ``NxName`` labels."""
+    """Group `items` by equality, first-seen order, into `NxName` labels."""
     counts: list[tuple[T, int]] = []
     for item in items:
         for i, (existing, n) in enumerate(counts):
@@ -166,7 +166,7 @@ def _unit_entry(unit: Unit) -> UnitEntry:
 
 
 def _collapse_units(entries: Sequence[UnitEntry]) -> tuple[UnitEntry, ...]:
-    """Collapse units equal in every field but ``count``, summing their counts."""
+    """Collapse units equal in every field but `count`, summing their counts."""
     collapsed: list[UnitEntry] = []
     for entry in entries:
         bare = replace(entry, count=1)
@@ -180,7 +180,7 @@ def _collapse_units(entries: Sequence[UnitEntry]) -> tuple[UnitEntry, ...]:
 
 
 def build_reference(army: Army, *, stem: str) -> ArmyReference:
-    """Build an :class:`ArmyReference` from a resolved Army."""
+    """Build an `ArmyReference` from a resolved Army."""
     return ArmyReference(
         stem=stem,
         nick=army.nick,

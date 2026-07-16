@@ -1,8 +1,8 @@
 """Asset commands for the SteamPunkFantasy CLI.
 
-Ships the shared, kind-agnostic ``spf assets promote`` command, the reusable
-``AssetOpts`` parameter set that per-kind ``generate`` subcommands accept, and
-the first concrete generate subcommand, ``spf assets image``.
+Ships the shared, kind-agnostic `spf assets promote` command, the reusable
+`AssetOpts` parameter set that per-kind `generate` subcommands accept, and
+the first concrete generate subcommand, `spf assets image`.
 """
 
 import random
@@ -45,10 +45,10 @@ class AssetOpts:
 
 
 def _resolve_target(race: t.RaceName, unit: str | None) -> tuple[str, str, str]:
-    """Return ``(name, human_name, description)`` for a race or unit target.
+    """Return `(name, human_name, description)` for a race or unit target.
 
-    ``race`` must be a known race; ``unit`` (when given) a known unit key of it.
-    Raises :class:`ValueError` mirroring ``get_race`` for unknown names.
+    `race` must be a known race; `unit` (when given) a known unit key of it.
+    Raises `ValueError` mirroring `get_race` for unknown names.
     """
     if unit is None:
         metadata = races.get_metadata(race)  # raises ValueError for unknown race
@@ -67,7 +67,7 @@ def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: int) -> None
     """Promote the picked Candidate into the committed Asset store.
 
     RACE is the race the Asset belongs to, KIND its Asset kind, NAME its base
-    file name. ``--pick`` selects the 1-based Candidate to commit.
+    file name. `--pick` selects the 1-based Candidate to commit.
     """
     promote(
         get_kind(kind),
@@ -87,7 +87,7 @@ def image(
 ) -> None:
     """Generate image Candidates for a RACE, or a UNIT of it.
 
-    The prompt is composed from ``prompts/image.txt`` plus the target's name
+    The prompt is composed from `prompts/image.txt` plus the target's name
     and description; a target without a description is a hard error.
     """
     opts = opts or AssetOpts()

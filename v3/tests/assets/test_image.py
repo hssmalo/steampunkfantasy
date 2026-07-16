@@ -1,10 +1,10 @@
 """The Image kind: ComfyUI-backed Service wiring, env selection, CLI flow.
 
 The provider internals (patching, submit/poll/fetch, retries) are covered in
-``test_comfyui.py``. Here we test the *wiring*: that the Kind is registered,
-that ``_build_service`` honours the configured Environment, and that the
-``spf assets image`` command composes prompts and writes Candidates end-to-end
-over a monkeypatched :func:`comfyui._request`.
+`test_comfyui.py`. Here we test the *wiring*: that the Kind is registered,
+that `_build_service` honours the configured Environment, and that the
+`spf assets image` command composes prompts and writes Candidates end-to-end
+over a monkeypatched `comfyui._request`.
 """
 
 import urllib.parse
@@ -69,10 +69,10 @@ name = "Gnome"
 
 
 class _FakeRequest:
-    """A stand-in for :func:`comfyui._request` for the CLI flow.
+    """A stand-in for `comfyui._request` for the CLI flow.
 
     Records the submitted graphs, then serves a completed job and PNG bytes.
-    Set ``fail`` to make every job report a ``failed`` status, so the CLI's
+    Set `fail` to make every job report a `failed` status, so the CLI's
     error path can be exercised.
     """
 

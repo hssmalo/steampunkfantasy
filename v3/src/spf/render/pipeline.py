@@ -1,7 +1,7 @@
 """The render seam: one generic pipeline for every Product and Format.
 
-``render`` looks up the family environment for the Format, loads the Product's
-``main.<ext>.jinja`` template, renders the whole source object into it, applies
+`render` looks up the family environment for the Format, loads the Product's
+`main.<ext>.jinja` template, renders the whole source object into it, applies
 the Format's post-step if any, and writes exactly one file. It contains no
 per-product or per-format branching — behavior comes entirely from the Format and
 Product records.
@@ -28,15 +28,15 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     templates_root: Path | None = None,
     output_root: Path | None = None,
 ) -> Path:
-    """Render one ``source`` to one file and return the written path.
+    """Render one `source` to one file and return the written path.
 
-    The template ``<product>/main.<ext>.jinja`` from the Format's family is
-    rendered with ``source`` bound to :data:`SOURCE_VAR`. A missing template for
-    the requested ``(product, family)`` pair surfaces as Jinja's
-    ``TemplateNotFound`` here, at render time only. The Format's post-step, when
+    The template `<product>/main.<ext>.jinja` from the Format's family is
+    rendered with `source` bound to `SOURCE_VAR`. A missing template for
+    the requested `(product, family)` pair surfaces as Jinja's
+    `TemplateNotFound` here, at render time only. The Format's post-step, when
     present, produces the final content; otherwise the rendered text is written
-    directly. The output path is ``out`` when given, else
-    ``output_root/<product>/<name>.<ext>``. Parent directories are created and any
+    directly. The output path is `out` when given, else
+    `output_root/<product>/<name>.<ext>`. Parent directories are created and any
     existing file is overwritten silently.
     """
     environments = make_environments(templates_root)

@@ -1,8 +1,8 @@
 """The assets seams: generate Candidates, then promote one into the store.
 
-Both functions are kind-agnostic — behavior comes entirely from the :class:`Kind`
-record. A Kind's layout is ``<race>/[<subdir>/]<name>.<extension>``; Candidates
-insert a 1-based ``.<index>`` before the extension so the same layout addresses
+Both functions are kind-agnostic — behavior comes entirely from the `Kind`
+record. A Kind's layout is `<race>/[<subdir>/]<name>.<extension>`; Candidates
+insert a 1-based `.<index>` before the extension so the same layout addresses
 both stores.
 """
 
@@ -15,7 +15,7 @@ from spf.config import config
 
 
 def _asset_dir(root: Path, kind: Kind, race: str) -> Path:
-    """Return the directory a Kind's files live in under ``root`` for ``race``."""
+    """Return the directory a Kind's files live in under `root` for `race`."""
     directory = root / race
     if kind.subdir is not None:
         directory = directory / kind.subdir
@@ -33,16 +33,16 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     candidates_root: Path = config.paths.candidates,
     on_candidate: Callable[[Path], None] | None = None,
 ) -> list[Path]:
-    """Generate ``count`` Candidates for ``source`` and write them to disk.
+    """Generate `count` Candidates for `source` and write them to disk.
 
     Each generated value is written to
-    ``candidates_root/<race>/[<subdir>/]<name>.<index>.<extension>`` with a
+    `candidates_root/<race>/[<subdir>/]<name>.<index>.<extension>` with a
     1-based index, inferring text-vs-binary mode from the value's type, *as soon
     as the Service produces it* — so a slow batch persists each Candidate rather
     than waiting for the whole run. Existing candidate files are overwritten
-    silently. ``on_candidate`` (when given) is called with each path right after
-    it is written. Returns the written paths in order. ``seed`` is threaded
-    straight to the Service (see :class:`Service`).
+    silently. `on_candidate` (when given) is called with each path right after
+    it is written. Returns the written paths in order. `seed` is threaded
+    straight to the Service (see `Service`).
     """
     directory = _asset_dir(candidates_root, kind, race)
     directory.mkdir(parents=True, exist_ok=True)
@@ -74,10 +74,10 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
 ) -> Path:
     """Promote the picked Candidate into the committed Asset store.
 
-    Copies ``<race>/[<subdir>/]<name>.<pick>.<extension>`` from the candidates
-    store to ``<race>/[<subdir>/]<name>.<extension>`` in the assets store,
-    bytes-for-bytes. ``pick`` is 1-based. An existing Asset is overwritten
-    silently. Raises :class:`ValueError` when the picked Candidate is missing.
+    Copies `<race>/[<subdir>/]<name>.<pick>.<extension>` from the candidates
+    store to `<race>/[<subdir>/]<name>.<extension>` in the assets store,
+    bytes-for-bytes. `pick` is 1-based. An existing Asset is overwritten
+    silently. Raises `ValueError` when the picked Candidate is missing.
     """
     candidate = (
         _asset_dir(candidates_root, kind, race) / f"{name}.{pick}.{kind.extension}"

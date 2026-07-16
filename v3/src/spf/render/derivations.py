@@ -43,7 +43,7 @@ def md_to_html(text: str) -> str:
     """Convert Markdown text into a standalone HTML5 document.
 
     Tables are enabled and the rendered fragment is wrapped in a minimal
-    document (doctype, charset, title, embedded stylesheet) so the ``.html`` is
+    document (doctype, charset, title, embedded stylesheet) so the `.html` is
     double-clickable.
     """
     markdown = MarkdownIt("commonmark").enable("table")
@@ -55,8 +55,8 @@ def latex_to_pdf(text: str) -> bytes:
     """Compile LaTeX text to PDF and return the PDF bytes.
 
     Compilation runs the configured engine twice in a temporary directory with
-    ``-interaction=nonstopmode -halt-on-error`` so cross-references and page
-    numbers stabilize. Only the resulting ``.pdf`` is read back out; every
+    `-interaction=nonstopmode -halt-on-error` so cross-references and page
+    numbers stabilize. Only the resulting `.pdf` is read back out; every
     transient file stays inside the temporary directory.
     """
     engine = config.render.latex.engine
