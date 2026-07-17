@@ -21,7 +21,7 @@ repos:
   - repo: local
     hooks:
       - id: changelog-reminder
-        name: Remind to update changelog for TOML changes
+        name: update changelog for TOML changes
         entry: uv run python -m hooks.check_changelog
         language: system
         pass_filenames: false
