@@ -2,6 +2,7 @@
 
 [races.ork]
 name = "Ork"
+description = "A band of bloodthirsty orks that clearly love chaos"
 
 [spawns.ork_champion]
 unit = "champion"
@@ -23,7 +24,7 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_infantry.orders.fire]
 still = [
-    ["Fire\\begin{tull}", "-"],
+    ["Fire", "-"],
     ["-", "Fire"],
     ["Load", "-"],
     ["-", "Load"],
