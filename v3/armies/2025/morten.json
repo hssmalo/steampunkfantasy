@@ -1,0 +1,306 @@
+{
+  "race": "dwarf",
+  "nick": "Showcase Dwarf",
+  "units": [
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        },
+        {
+          "name": "elite_dwarf_infantry",
+          "upgrades": [
+            "blast_sticks",
+            "vest_of_life_support",
+            "trenchcoat_of_resistance",
+            "industrial_small_arms"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "transport_zeppelin",
+      "models": [
+        {
+          "name": "transport_zeppelin",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "transport_zeppelin",
+      "models": [
+        {
+          "name": "transport_zeppelin",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "transport_zeppelin",
+      "models": [
+        {
+          "name": "transport_zeppelin",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gunblasterwagon",
+      "models": [
+        {
+          "name": "gunblasterwagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gunblasterwagon",
+      "models": [
+        {
+          "name": "gunblasterwagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gunblasterwagon",
+      "models": [
+        {
+          "name": "gunblasterwagon",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

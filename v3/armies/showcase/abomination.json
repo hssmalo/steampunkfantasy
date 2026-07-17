@@ -1,0 +1,185 @@
+{
+  "race": "abomination",
+  "nick": "Showcase Abomination",
+  "units": [
+    {
+      "name": "abomination_infantry",
+      "models": [
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        },
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        },
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        },
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "abomination_infantry",
+      "models": [
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        },
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        },
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        },
+        {
+          "name": "abomination_infantry",
+          "upgrades": [
+            "fog_grenade_mortar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "giant_frog_riders",
+      "models": [
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        },
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "giant_frog_riders",
+      "models": [
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        },
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "giant_frog_riders",
+      "models": [
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        },
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "giant_frog_riders",
+      "models": [
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        },
+        {
+          "name": "giant_frog_rider",
+          "upgrades": [
+            "frog_armor",
+            "tentacle_craclespears"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "squid",
+      "models": [
+        {
+          "name": "squid",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "squid",
+      "models": [
+        {
+          "name": "squid",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "squid",
+      "models": [
+        {
+          "name": "squid",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "squid",
+      "models": [
+        {
+          "name": "squid",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "horror",
+      "models": [
+        {
+          "name": "horror",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

@@ -194,7 +194,7 @@ name = "Transport Zeppelin"
 models = ["transport_zeppelin"]
 size = "Medium"
 armor = [6, 5, 0, 0]
-cost.cp = 8
+cost.cp = 16
 
 [units.transport_zeppelin.shaken]
 speed = "fast_fly"

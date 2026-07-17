@@ -1,0 +1,166 @@
+{
+  "race": "elf",
+  "nick": "Showcase Elf",
+  "units": [
+    {
+      "name": "elf_infantry",
+      "models": [
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "elf_infantry",
+      "models": [
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "armored_oliphant_riders",
+      "models": [
+        {
+          "name": "oliphant",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "armored_oliphant_riders",
+      "models": [
+        {
+          "name": "oliphant",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "armored_oliphant_riders",
+      "models": [
+        {
+          "name": "oliphant",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "armored_oliphant_riders",
+      "models": [
+        {
+          "name": "oliphant",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        },
+        {
+          "name": "crew",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "e34",
+      "models": [
+        {
+          "name": "e34",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "e34",
+      "models": [
+        {
+          "name": "e34",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

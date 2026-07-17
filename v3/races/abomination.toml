@@ -906,7 +906,7 @@ Most useful in combination with tentacle shield, which makes them very robust ve
 [equipment.frog_armor]
 name = "Frog Cavalry Armor"
 race = "abomination"
-cost.cp = 8
+cost.cp = 4
 upgrade_all = true
 requires = [["type:Frog"]]
 

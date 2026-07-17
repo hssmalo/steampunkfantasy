@@ -69,16 +69,15 @@ rows = [
 
 
 
-[units.gigant_snake_cavalry]
+[units.giant_snake_cavalry]
 race = "goblin"
 name = "Giant Snake Cavalry"
-models = ["gigant_snake_cavalry"]
+models = ["giant_snake_cavalry"]
 size = "Large"
 cost.mp = 4
 cost.xp = 24
 
-description = '''Two Goblin wielding a bow each riding one giant scary snake.
-They also carry tiny snakes which are launched by special arrows carried by the goblin. Where applied in large numbers, the battlefield is littered with these tiny snakes, hiding in the grass below.
+description = '''One giant scary snake with two goblin riding the. The goblin are wielding a bow each. In addition the battlefield is littered with tiny snakes, hiding in the grass below.
 '''
 
 lore = '''
@@ -90,23 +89,23 @@ Decent endurance, decent in assault with an devastating poison if they hit, and 
 '''
 
 
-[units.gigant_snake_cavalry.shaken]
+[units.giant_snake_cavalry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
-[units.gigant_snake_cavalry.special]
+[units.giant_snake_cavalry.special]
 "Fire Order" = "You may either fire two regular arrows or one special arrow (arrow with limited ammo)."
 "Forward Position" = "[1]"
 "Terror" = "[6](range=1)"
 
-[units.gigant_snake_cavalry.orders.fire]
+[units.giant_snake_cavalry.orders.fire]
 still = [["Fire", "Fire"]]
 
-[units.gigant_snake_cavalry.orders.movement]
+[units.giant_snake_cavalry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chase", "-"]]
 
-[units.gigant_snake_cavalry.damage_tables.Regular]
+[units.giant_snake_cavalry.damage_tables.Regular]
 rows = [
 	"1-6: Bleed[8]",
 	"7-8: +1 to future damage, Bleed[8]",
@@ -116,7 +115,7 @@ notes = [
 	"Bleeding does not cause more bleeding",
 ]
 
-[units.gigant_snake_cavalry.damage_tables.Psychic]
+[units.giant_snake_cavalry.damage_tables.Psychic]
 rows = [
 	"6+: shaken",
 ]
@@ -242,7 +241,7 @@ size = "Large"
 armor = [8,8,8,6]
 cost.ip = 24
 
-description = '''Fairly well armored bipedal mechanised walker piloted by two goblin. On one side the bipedal mech has a big weapon which fires the dreaded stinkbomb at enemies, while on the left it is is armed with two light mortars.
+description = '''Fairly well armored bipedal mechanised walker. On one side the bipedal mech has a big weapon (big mortar) which fires the dreaded stinkbomb at enemies, while on the left it is is armed with two light mortars.
 '''
 
 lore = '''These are the pride of goblin innovation, the first tank which walks on two legs. Or at least, that is what the goblin claim.
@@ -305,7 +304,7 @@ size = "Large"
 armor = [10, 8, 6, 4]
 cost.ip = 32
 
-description = '''A Heavy Armored Carrier, armed with a battery of bows and three heavy crossbows. Can transport 4 goublin infantry which are rapidly deployed to the battlefield'''
+description = '''A Heavy Armored Carrier, armed with a battery of bows in the back and three giant heavy crossbows aiming forward. '''
 
 lore = '''
 The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapon system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
@@ -406,7 +405,7 @@ size = "Medium"
 armor = [4, 3, 2, 1]
 cost.ip = 8
 
-description = '''This is an modified civilian truck and added an auto bow (a bow which automatically fires arrows) and some add-hoc armor for some protection. They are also packed with grenades which the crew throws out of the window whenever they can. The modified truck also carries lots of goblin infantry.
+description = '''This is an modified civilian truck and added an auto bow (a auto bow is an robotic bow) They are also packed with grenades which the crew throws out of the window whenever they can. The modified truck also carries lots of goblin infantry.
 '''
 
 
@@ -571,14 +570,14 @@ ap = 2
 
 
 
-[models.gigant_snake_cavalry]
+[models.giant_snake_cavalry]
 name = "Giant Snake Cavalry"
 race = "goblin"
 equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:3"]
 equipment = ["goblin_bow", "snake_arrow"]
 type = ["Bio", "Cavalry", "Walking"]
 
-[models.gigant_snake_cavalry.assault]
+[models.giant_snake_cavalry.assault]
 strength = [24, 18, 12, 6]
 strength_die = "6+"
 deflection = [0, 0, 0, 0]
@@ -586,7 +585,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.gigant_snake_cavalry.assault.special]
+[models.giant_snake_cavalry.assault.special]
 "Extra Damage" = "Poison[8](1 for 2)"
 
 

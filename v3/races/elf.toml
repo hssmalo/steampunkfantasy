@@ -13,6 +13,9 @@ size = "Huge"
 cost.mp = 24
 cost.xp = 96
 
+description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with 4 elves riding on the hydra. The elf are really small compared to the hydra. Major head has an acid breath, minor heads spits poison, while the four elf wields a bow each. Elf are elegant and smooth.'''
+
+
 [units.elf_hydra.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -54,6 +57,8 @@ name = "Elf Infantry"
 models = ["elf_infantry", "elf_infantry", "elf_infantry", "elf_infantry"]
 size = "Medium"
 cost.mp = 24
+description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
+'''
 
 [units.elf_infantry.shaken]
 speed = "slow"
@@ -103,6 +108,9 @@ models = ["elf_archer", "elf_archer", "elf_archer", "elf_archer"]
 size = "Medium"
 cost.mp = 24
 cost.xp = 8
+description = '''An elegant elf wielding an steampunk bow. The bow has some clockwork gears.
+'''
+
 
 [units.elf_archer.shaken]
 speed = "slow"
@@ -149,6 +157,9 @@ name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "Medium"
 cost.cp = 8
+description = '''This is an illusion which like an elegant elf wielding a illusionary ww1 rifle
+'''
+
 
 [units.illusion.special]
 "Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does Psychic damage, it would require you to tell the enemy that this unit does not have a Psychic damage table, which would give the illusion away."
@@ -177,6 +188,9 @@ name = "Elf Scout"
 models = ["elf_scout"]
 size = "Medium"
 cost.mp = 8
+description = '''An elegant elf scout hiding in the forest and observing the battlefield. On the scouts back is an ww1 style rifle.
+'''
+
 
 [units.elf_scout.shaken]
 speed = "slow"
@@ -222,6 +236,9 @@ models = ["elite_elf_scout"]
 size = "Medium"
 cost.mp = 8
 cost.xp = 8
+description = '''An elite elegant elf scout hiding in the forest and observing the battlefield. On the scouts back is an ww1 style rifle. 
+'''
+
 
 [units.elite_elf_scout.shaken]
 speed = "slow"
@@ -268,6 +285,9 @@ models = ["e34"]
 size = "Large"
 cost.ip = 48
 armor = [10, 9, 9, 8]
+description = '''An elegant steampunk tank with a gun on a rotating turret. On both sides of the the gun on the turret there are two rifles  
+'''
+
 
 [units.e34.shaken]
 speed = "still"
@@ -337,6 +357,9 @@ models = ["tattoo_ink"]
 size = "Medium"
 cost.ip = 16
 armor = [8, 6, 6, 6]
+description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret. There are also two smg pointing out of the vehicle, one on the turret and one facing straight forward. 
+'''
+
 
 [units.tattoo_ink.special]
 "Fire Order" = "May fire two SMG (and each SMG fire twice) in addition to PentaGun any time a fire order is given. One of the SMG must fire in same angle as PentaGun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only PentaGun do."
@@ -417,8 +440,11 @@ size = "Medium"
 cost.mp = 8
 cost.xp = 24
 armor = [7, 6, 6, 6]
+description = '''An medium sized bear with one elf riding the bear. The elf is wielding a gatling gun.
+'''
 
-# Cost changed from 2mp and 6xp to introduce a unit with xp cost only.
+
+
 [units.bear_rider.special]
 Resistance = "Poison[3]"
 
@@ -459,6 +485,9 @@ cost.mp = 8
 cost.xp = 32
 cost.cp = 24
 armor = [8, 6, 6, 6]
+description = '''A huge  dire polar bear with one two elf riding the bear. The first elf is wielding a gatling gun, the other a bow which fires fire burning arrows.
+'''
+
 
 [units.polar_bear_riders.special]
 "Resistance" = "Poison[3]"
@@ -501,8 +530,10 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 8
 armor = [6, 6, 6, 5]
+description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the sadle, 
+'''
 
-#cost changed from 2mp, 2cp and 6xp to 2cp and 8xp in line with bear and eagle riders.
+
 [units.armored_unicorn_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -563,6 +594,8 @@ cost.mp = 16
 cost.xp = 24
 cost.cp = 24
 armor = [3, 3, 0, 0]
+description = ''' Pachyephalosourus is a two legged dinaosour. On the pachephalosourus there is an elegant elf wielding an smg. On the sides of the pachephalosourus there are two guns'''
+
 
 [units.pachyephalosaurus_riders.special]
 "Resistance" = "Poison[2]"
@@ -644,6 +677,8 @@ models = ["pegasus_rider", "pegasus_rider"]
 size = "Medium"
 cost.mp = 16
 cost.xp = 24
+description = ''' An elegant elf wielding a bow riding a pegasus. An smg is placed on the sadle of the pegasus.'''
+
 
 [units.pegasus_rider.special]
 "Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
