@@ -14,6 +14,8 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
 cost.mp = 16
+description = "Bloodthirsty ork in rags wielding a musket with a bajonet"
+
 
 [units.ork_infantry.shaken]
 speed = "slow"
@@ -61,9 +63,11 @@ size = "Huge"
 cost.xp = 48
 cost.cp = 8
 armor = [0, 0, 0, 0]
+description =  '''Giant brown bloodthirsty troll wielding a gatling gun
+'''
 
-# Move to description
-#"Hans Sverre's favorite rule" = "Out of ammo: At the end of the game, the troll runs out of ammo"
+lore = "At the end of the game, the troll runs out of ammo"
+
 [units.troll.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -91,6 +95,9 @@ name = "Champion"
 models = ["champion"]
 size = "Medium"
 armor = [0, 0, 0, 0]
+description = '''An ork with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield.
+'''
+
 
 [units.champion.shaken]
 speed = "slow"
@@ -122,6 +129,10 @@ models = ["warg_rider", "warg_rider"]
 size = "Medium"
 cost.mp = 8
 cost.xp = 16
+description = '''An ork riding a warg (warg is a huge angry wolf with big teeth). The ork is wielding a spear
+
+'''
+
 
 [units.warg_rider.shaken]
 speed = "slow"
@@ -173,6 +184,9 @@ models = ["speedhead"]
 size = "Medium"
 cost.ip = 24
 armor = [8, 7, 7, 7]
+description = '''An fast steampunk armored car with a flamethrower in front and a rapid fire gun pointing backward
+'''
+
 
 [units.speedhead.shaken]
 speed = "still"
@@ -227,6 +241,9 @@ models = ["hammerhead"]
 size = "Large"
 cost.ip = 32
 armor = [13, 8, 7, 7]
+description = '''A steampunk vehicle with a big battling ram infront, crashing into and destroying a house. 
+'''
+
 
 [units.hammerhead.shaken]
 speed = "still"
@@ -292,6 +309,10 @@ models = ["battlewagon"]
 size = "Large"
 cost.ip = 32
 armor = [8, 7, 7, 6]
+description = '''A steampunk armored carrier with a gun pointing directly ahead, , a gun that fires spears on top, and a mortar at the back of the vehicle. 
+
+'''
+
 
 [units.battlewagon.shaken]
 speed = "still"
@@ -352,6 +373,10 @@ models = ["grunt", "grunt", "grunt", "grunt"]
 size = "Medium"
 cost.mp = 8
 armor = [0, 0, 0, 0]
+description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brazz amulet and almost no clothes.
+'''
+
+
 
 [units.grunt.shaken]
 speed = "slow"
@@ -384,6 +409,9 @@ size = "Medium"
 cost.mp = 8
 cost.xp = 48
 armor = [0, 0, 0, 0]
+description = '''An ork werewarg is amix between a warg and and ork, wielding a musket with bajonett.
+'''
+
 
 [units.ork_werewarg.shaken]
 speed = "slow"
@@ -446,6 +474,9 @@ cost.mp = 16
 cost.xp = 8
 cost.cp = 4
 armor = [0, 0, 0, 0]
+description = '''An bloodthirsty ork in finer clothes with 4 arms and wielding 4 pistols.
+'''
+
 
 [units.bioengineered_ork.shaken]
 speed = "slow"
@@ -499,6 +530,9 @@ models = ["ork_char_b1"]
 size = "Large"
 cost.ip = 48
 armor = [12, 10, 8, 7]
+description = '''An orkish steampunk version of the french world war II tank Char  B1
+'''
+
 
 [units.ork_char_b1.shaken]
 speed = "still"

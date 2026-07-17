@@ -3,6 +3,8 @@
 [races.elf]
 name = "Elf"
 
+description = '''Elf are elegant and approximately 2m in height'''
+
 [units]
 
 [units.elf_hydra]
@@ -1193,6 +1195,9 @@ cost.mp = 8
 cost.xp = 48
 cost.cp = 48
 armor = [4, 3, 3, 3]
+description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour is towing a big AT gun behind. O
+'''
+
 
 [units.sauropod_riders.special]
 "Resistance" = "Poison[4]"
@@ -1238,6 +1243,9 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 24
 armor = [8, 6, 4, 3]
+description = '''Oliphant is a big elephant with a plotform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant shoots arrows and throws grenades
+'''
+
 
 [units.armored_oliphant_riders.special]
 "Resistance" = "Poison[2]"
@@ -1296,8 +1304,11 @@ size = "Medium"
 cost.mp = 8
 cost.xp = 32
 armor = [6, 6, 6, 6]
+description = '''An elegant elf riding a giant eagle. The elf is wielding an anti-tank gun.
+'''
 
-#Cost change from 2mp and 8xp to 10xp.
+
+
 [units.eagle_rider.special]
 "Resistance" = "Poison[2]"
 
