@@ -129,6 +129,18 @@ future damage, …), placed and removed in specific Phases.
 The player-chosen name of an Army instance.
 _Avoid_: nickname, label, title
 
+### Game-data maintenance
+
+**Changelog**:
+A human-maintained record of deliberate balance changes to game data, one per
+data directory: `races/changelog.md` for Race edits and `rules/changelog.md` for
+rules edits. A Markdown table of **Date, Description, Why**. It records the
+*reasoning* behind a change — why a Unit, Model, Equipment, or Special was
+buffed, nerfed, or removed — not the mechanical edit itself (git already records
+that).
+_Avoid_: history, release notes, git log (git records the edit; the Changelog
+records the intent)
+
 ### Rendering (generated reference artifacts)
 
 **Rendering**:
