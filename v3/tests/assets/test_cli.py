@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from cyclopts.exceptions import CycloptsError
 
-from spf.assets import Kind, generate
+from spf.assets import Kind, generate, promote
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
@@ -15,7 +15,13 @@ from tests.assets.conftest import FakeRefiner, FakeService
 @pytest.fixture
 def registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway kind and point the config roots under tmp."""
-    kind = Kind(name="_test", service=FakeService(), subdir="_test", extension="txt")
+    kind = Kind(
+        name="_test",
+        service=FakeService(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+    )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
@@ -82,7 +88,11 @@ def test_promote_command_unknown_kind_errors(
 def refinable_registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway refinable kind with a Candidate already on disk."""
     kind = Kind(
-        name="_refinable", service=FakeRefiner(), subdir="_test", extension="txt"
+        name="_refinable",
+        service=FakeRefiner(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
     )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
@@ -180,3 +190,161 @@ def test_refine_command_errors_cleanly_on_a_kind_that_cannot_refine(
         app(argv, exit_on_error=False, result_action="return_value")
 
     assert "does not support refinement" in capsys.readouterr().err
+
+
+def test_image_command_errors_cleanly_on_an_unknown_unit(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    argv = ["assets", "image", "ork", "nosuchunit"]
+
+    with pytest.raises(SystemExit):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+    # Lists what the caller could have meant, rather than just rejecting it.
+    err = capsys.readouterr().err
+    assert "nosuchunit" in err
+    assert "grunt" in err
+
+
+def test_list_command_reports_coverage_for_one_race(
+    registered_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    generate(
+        registered_kind,
+        source="a grunt description",
+        race="ork",
+        name="grunt",
+        count=2,
+        candidates_root=config.paths.candidates,
+    )
+    promote(
+        registered_kind,
+        race="ork",
+        name="grunt",
+        pick="2",
+        candidates_root=config.paths.candidates,
+        assets_root=config.paths.assets,
+    )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    assert "Ork" in out  # the race heading always prints
+    grunt_line = next(line for line in out.splitlines() if "grunt" in line)
+    assert "2 candidates" in grunt_line
+    # Covered and uncovered read as a symmetric pair of glyphs, not a glyph
+    # opposed to a word.
+    assert "\N{CHECK MARK}" in grunt_line
+    # A Target with neither Asset nor Candidates still gets a row.
+    troll_line = next(line for line in out.splitlines() if "troll" in line)
+    assert "\N{BALLOT X}" in troll_line
+
+
+def test_list_command_expands_lineages_under_candidates(
+    registered_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    candidates = config.paths.candidates / "ork" / "_test"
+    candidates.mkdir(parents=True)
+    for lineage, content in [("10", b"a"), ("2", b"b"), ("4.1", b"chosen")]:
+        (candidates / f"grunt.{lineage}.txt").write_bytes(content)
+    promote(
+        registered_kind,
+        race="ork",
+        name="grunt",
+        pick="4.1",
+        candidates_root=config.paths.candidates,
+        assets_root=config.paths.assets,
+    )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--candidates"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    lineage_line = next(
+        line for line in out.splitlines() if line.strip().startswith("2")
+    )
+    # Numerically sorted: 10 sorts last, not straight after 1.
+    assert [part.split("\u2190")[0] for part in lineage_line.split()] == [
+        "2",
+        "4.1",
+        "10",
+    ]
+    # The Asset is byte-identical to 4.1, so that is the one already promoted.
+    assert "4.1\u2190promoted" in lineage_line
+
+
+@pytest.mark.usefixtures("registered_kind")
+def test_list_command_without_a_race_covers_every_validating_race(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    app(
+        ["assets", "list", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    # Full detail for every race, not a summary (D12).
+    assert "Ork" in out
+    assert "Goblin" in out
+    assert "grunt" in out
+
+
+def test_list_command_surfaces_orphans_under_unknown(
+    registered_kind: Kind,  # noqa: ARG001  registers the _test kind and tmp roots
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    assets = config.paths.assets / "ork" / "_test"
+    assets.mkdir(parents=True)
+    (assets / "gigant_snake_cavalry.txt").write_bytes(b"typo")
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    assert "Unknown" in out
+    assert "gigant_snake_cavalry.txt" in out
+
+
+@pytest.mark.usefixtures("registered_kind")
+def test_list_command_errors_on_an_explicitly_named_invalid_race(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # The bare-race sweep omits a non-validating race silently (ADR 0004), but
+    # naming one explicitly must say so rather than raise ValidationError.
+    races_dir = tmp_path / "broken-races"
+    races_dir.mkdir()
+    (races_dir / "gnome.toml").write_text("[races.gnome]\nname = 123\n")
+    monkeypatch.setattr(config.paths, "races", races_dir)
+
+    with pytest.raises(SystemExit) as excinfo:
+        app(
+            ["assets", "list", "gnome", "--kind", "_test"],
+            exit_on_error=False,
+            result_action="return_value",
+        )
+
+    assert excinfo.value.code == 1
+    assert "gnome" in capsys.readouterr().err
+
+
+@pytest.mark.usefixtures("registered_kind")
+def test_list_command_defaults_to_every_registered_kind(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # An omitted --kind must not be run through the kind validator.
+    app(["assets", "list", "ork"], exit_on_error=False, result_action="return_value")
+
+    assert "Ork" in capsys.readouterr().out

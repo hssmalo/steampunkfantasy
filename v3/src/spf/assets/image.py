@@ -38,5 +38,6 @@ IMAGE = register_kind(
         service=_build_service(),
         subdir="images",
         extension="png",
+        targets=frozenset({"race", "unit"}),
     )
 )

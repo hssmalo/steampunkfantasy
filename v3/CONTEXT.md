@@ -266,3 +266,27 @@ The dotted 1-based Candidate index (`2`, `2.1`, `2.1.3`) recording derivation:
 straight off the filename, so no provenance is recorded anywhere else. The
 coordinate both `refine --from` and `promote --pick` take.
 _Avoid_: version, revision, generation, history
+
+**Target**:
+The thing an Asset depicts — a Race, a Unit, or a Model. Which of those a given
+Kind applies to is declared by the Kind itself (Lore targets a Race only; an
+Image targets a Race or a Unit). The name that addresses a Target on the command
+line is the same key `promote` and `refine` take.
+_Avoid_: subject, referent
+
+**Survey**:
+The result of checking one Kind's Targets for one Race against the two stores:
+which have an Asset, which have Candidates waiting, and which files match no
+Target. Derived on demand, never stored.
+_Avoid_: inventory (a Survey is driven by what *should* exist, not by what is on
+disk), report, census
+
+**Coverage**:
+One Target's line in a Survey: whether its Asset exists, and its Candidates.
+_Avoid_: status, entry
+
+**Orphan**:
+A file in the Asset or Candidate store matching no Target of its Kind — usually
+a Target renamed in TOML after generation, or a typo. Surfaced under the
+`Unknown` heading rather than silently ignored.
+_Avoid_: stray, dangling

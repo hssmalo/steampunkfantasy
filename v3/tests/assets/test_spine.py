@@ -52,7 +52,13 @@ def test_generate_persists_each_candidate_before_reporting_it(
 
 def test_generate_threads_seed_to_service(tmp_path: Path) -> None:
     service = FakeService()
-    kind = Kind(name="_seedy", service=service, subdir="_test", extension="txt")
+    kind = Kind(
+        name="_seedy",
+        service=service,
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+    )
     generate(
         kind,
         source="a grunt description",
@@ -83,6 +89,7 @@ def test_generate_without_subdir_writes_flat_text(tmp_path: Path) -> None:
         service=FakeService(values=("chapter one", "chapter two")),
         subdir=None,
         extension="md",
+        targets=frozenset({"race"}),
     )
     paths = generate(
         lore_kind,
