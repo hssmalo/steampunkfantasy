@@ -104,8 +104,9 @@ are now narrower than the code:
 - **The patch set is prompt + seed + the sole `LoadImage`.** "Patch only prompt
   + seed" still describes *generate* exactly. A Refinement patches one further
   input: the filename of the uploaded init image, on the graph's one
-  `LoadImage`. Model names, steps, cfg, LoRAs, and the negative prompt remain
-  untouched in both operations.
+  `LoadImage`. Model names, steps, cfg, and LoRAs remain untouched in both
+  operations. (The negative prompt did too when this was written; the amendment
+  below overturns that.)
 - **The positive node's prompt input is `text` *or* `prompt`.** Following the
   sampler's `positive` link and setting `text` was correct for every generate
   graph, where the encoder is `CLIPTextEncode`. Qwen's edit encoder,
@@ -115,3 +116,73 @@ are now narrower than the code:
 Nothing else about this ADR changes. In particular the single-`_request` seam
 still holds: the init-image upload is `multipart/form-data` built on the
 stdlib, inside `_request`, rather than a new HTTP dependency.
+
+## Amendment (2026-07-18) — the Negative Prompt is authored, not embedded
+
+Issue 50 overturns this ADR's "Patch only prompt + seed" and the amendment
+above's "the negative prompt remain[s] untouched in both operations". The patch
+set is now **prompt + negative prompt + seed + the sole `LoadImage`**.
+
+- **The Negative Prompt lives in `prompts/image-negative.txt`** and is
+  **required** — a missing file is a hard error, not a fallback to the
+  Workflow's authored value. (The amendment below makes that path configured
+  rather than hardcoded; the default is unchanged.)
+- **It replaces, it does not append.** Whatever the Workflow authors on its
+  negative encoder is overwritten wholesale, exactly as the positive already
+  is. The point is that the effective Negative Prompt is readable in one
+  version-controlled file rather than being a function of a committed Workflow
+  and a gitignored per-machine one.
+- **One file serves both operations and both Environments.** ADR 0010's reason
+  for a Refinement dropping the positive preamble does not extend to a
+  constraint on output quality.
+- **An unpatchable negative is a hard error**, symmetric with the positive.
+  This rejects guidance-distilled Workflows that wire `negative` to a
+  `ConditioningZeroOut` — notably FLUX.1 schnell, named above as the
+  licensing-clean Cloud option. Neither shipped Environment does this today;
+  the first Workflow that needs it decides then, loudly, rather than us
+  shipping a silent skip that would hide real misconfigurations meanwhile.
+
+Model names, steps, cfg, and LoRAs remain untouched. The single `_request` seam
+and the stdlib-only constraint are unaffected.
+
+**The seeded text is English, and it holds.** The Workflows' embedded negatives
+were Chinese; the file was seeded with an English translation rather than the
+verbatim original, which carried a real risk — the Chinese string was the only
+negative ever validated against Qwen-Image, and this ADR renounces
+cross-environment reproducibility, so there was no cheap A/B to settle it.
+Discharged on 2026-07-18: the owner ran several generations and Refinements
+under the English file and judged it to work well. That is a spot-check, not a
+measurement — nobody compared the two strings head to head — so it is grounds
+for keeping English, not for asserting the translation is equivalent.
+
+## Amendment (2026-07-18) — both prompt files are configured, not hardcoded
+
+Issue 50 first shipped the Negative Prompt as a hardcoded basename under
+`paths.prompts`, following the precedent of the positive preamble. Review
+rejected that precedent rather than extending it: **both** prompt files are now
+named by config, under `[assets.image]`.
+
+```toml
+[assets.image]
+prompt = "{paths.prompts}/image.txt"
+negative_prompt = "{paths.prompts}/image-negative.txt"
+```
+
+- **They follow the Workflow keys' pattern**, interpolating under a `paths.*`
+  root exactly as `ComfyUIEnvConfig.workflow` does under `paths.workflows`.
+  A prompt file and a Workflow file are the same kind of thing — an authored
+  input the Service reads by path — so they are configured the same way.
+- **They sit in `[assets.image]`, not in an Environment block**, because one
+  pair serves both Environments and both operations. Putting them per-Environment
+  would invite exactly the drift this issue set out to remove.
+- **Neither key has a default.** A missing one fails at config load, not at
+  generate time — the same bargain `refine_workflow` already makes.
+- **The positive was retrofitted for symmetry.** Making the negative
+  configurable while the positive stayed a string literal would have left the
+  more-edited of the two files the less-reachable one. This is scope beyond
+  issue 50, taken deliberately: the hardcoding had never been examined as a
+  decision, only inherited.
+
+The shipped default paths are unchanged, so no existing checkout moves a file.
+
+Nothing else about this ADR changes.

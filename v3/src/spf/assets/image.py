@@ -3,9 +3,10 @@
 Registers the `image` `Kind`, laid out at
 `<race>/images/<name>.png`, backed by
 `ComfyUIService`. This module is pure wiring: it
-builds the service from the configured ComfyUI **Environment** and registers
-the Kind. The provider — one stdlib client across local ComfyUI and Comfy Cloud
-— lives in `spf.assets.comfyui` (see ADR 0009).
+builds the service from the configured ComfyUI **Environment** — plus the
+configured Negative Prompt file, which is shared rather than per-Environment —
+and registers the Kind. The provider — one stdlib client across local ComfyUI
+and Comfy Cloud — lives in `spf.assets.comfyui` (see ADR 0009).
 """
 
 from spf.assets.comfyui import ComfyUIService
@@ -25,6 +26,7 @@ def _build_service() -> ComfyUIService:
         base_url=env.base_url,
         workflow_path=env.workflow,
         refine_workflow_path=env.refine_workflow,
+        negative_path=config.assets.image.negative_prompt,
         api_key_env=env.api_key_env,
         timeout_s=comfyui.timeout_s,
     )
@@ -36,5 +38,6 @@ IMAGE = register_kind(
         service=_build_service(),
         subdir="images",
         extension="png",
+        targets=frozenset({"race", "unit"}),
     )
 )
