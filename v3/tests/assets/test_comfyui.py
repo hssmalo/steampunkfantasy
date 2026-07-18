@@ -13,6 +13,7 @@ import urllib.parse
 import urllib.request
 from collections.abc import Callable
 from email.message import Message
+from email.parser import BytesParser
 from io import BytesIO
 from pathlib import Path
 from typing import Any, Self
@@ -346,6 +347,82 @@ def test_request_fails_fast_on_client_error(
         comfyui._request("http://x", "/api/prompt", body={})
     assert len(calls) == 1  # failed fast, no retry
     assert sleeps == []
+
+
+# --- Cycle 3: multipart upload of a Refinement's init image ------------------
+
+
+def _captured_multipart(
+    monkeypatch: pytest.MonkeyPatch, response: bytes
+) -> list[urllib.request.Request]:
+    """Capture the `Request` objects `_request` hands to `urlopen`."""
+    calls: list[urllib.request.Request] = []
+
+    def fake_urlopen(
+        request: urllib.request.Request,
+        timeout: float = 120,  # noqa: ARG001  part of the urlopen signature
+    ) -> _FakeResponse:
+        calls.append(request)
+        return _FakeResponse(response)
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    return calls
+
+
+def _parse_multipart(request: urllib.request.Request) -> dict[str, Message]:
+    """Re-parse a captured request as MIME, the way a server would.
+
+    Returns the form parts by field name, so the encoder is checked against
+    the stdlib's parser rather than against itself.
+    """
+    assert isinstance(request.data, bytes)
+    headers = f"Content-Type: {request.get_header('Content-type')}\r\n\r\n".encode()
+    payload = BytesParser().parsebytes(headers + request.data).get_payload()
+    assert isinstance(payload, list)
+    parts: dict[str, Message] = {}
+    for part in payload:
+        assert isinstance(part, Message)
+        name = part.get_param("name", header="content-disposition")
+        assert isinstance(name, str)
+        parts[name] = part
+    return parts
+
+
+def test_request_posts_an_upload_as_multipart(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # The init image is uploaded as a real multipart/form-data body built on
+    # the stdlib — no HTTP dependency.
+    calls = _captured_multipart(monkeypatch, b'{"name": "init.png"}')
+
+    result = comfyui._request(
+        "http://x",
+        "/api/upload/image",
+        upload=("init.png", _PNG),
+        body={"overwrite": "true"},
+    )
+
+    assert result == {"name": "init.png"}
+    (request,) = calls
+    assert request.get_header("Content-type", "").startswith("multipart/form-data;")
+
+    parts = _parse_multipart(request)
+    assert set(parts) == {"image", "overwrite"}
+    assert parts["image"].get_filename() == "init.png"
+    assert parts["image"].get_payload(decode=True) == _PNG
+    assert parts["overwrite"].get_payload(decode=True) == b"true"
+
+
+def test_upload_adds_no_http_dependency() -> None:
+    # ADR 0009: the ComfyUI client is stdlib-only. Multipart encoding is not a
+    # reason to take on an HTTP library.
+    pyproject = (Path(__file__).parents[2] / "pyproject.toml").read_text(
+        encoding="utf-8"
+    )
+    declared = pyproject.split("dependencies = [", 1)[1].split("]", 1)[0]
+    assert not {"requests", "httpx", "aiohttp", "urllib3"} & set(
+        declared.replace('"', " ").replace(",", " ").split()
+    )
 
 
 def test_generate_raises_on_failed_status_carrying_node_errors(

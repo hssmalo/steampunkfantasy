@@ -12,6 +12,7 @@ dependency is unnecessary.
 """
 
 import json
+import mimetypes
 import os
 import random
 import time
@@ -45,29 +46,72 @@ class ComfyUIError(Exception):
     """
 
 
+def _encode_multipart(
+    fields: dict[str, Any], upload: tuple[str, bytes]
+) -> tuple[bytes, str]:
+    """Encode `fields` plus one file `upload` as `multipart/form-data`.
+
+    Returns `(body, content_type)`. Stdlib only — ComfyUI's
+    `/api/upload/image` is the one route that is not JSON, and a whole HTTP
+    dependency to format ~40 lines of MIME would not pay for itself
+    (see ADR 0009).
+    """
+    filename, blob = upload
+    boundary = uuid.uuid4().hex
+    disposition = 'Content-Disposition: form-data; name="{name}"'
+    parts: list[bytes] = []
+    for key, value in fields.items():
+        header = disposition.format(name=key)
+        parts.append(f"--{boundary}\r\n{header}\r\n\r\n{value}\r\n".encode())
+
+    mime = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+    header = f'{disposition.format(name="image")}; filename="{filename}"'
+    parts.append(
+        f"--{boundary}\r\n{header}\r\nContent-Type: {mime}\r\n\r\n".encode()
+        + blob
+        + b"\r\n"
+    )
+    parts.append(f"--{boundary}--\r\n".encode())
+    return b"".join(parts), f"multipart/form-data; boundary={boundary}"
+
+
+def _encode_body(
+    body: dict[str, Any] | None, upload: tuple[str, bytes] | None
+) -> tuple[bytes | None, str | None]:
+    """Return the `(data, content_type)` pair for a request's payload."""
+    if upload is not None:
+        return _encode_multipart(body or {}, upload)
+    if body is not None:
+        return json.dumps(body).encode(), "application/json"
+    return None, None
+
+
 def _request(  # noqa: PLR0913  the single HTTP seam's shape is fixed (see the plan)
     base: str,
     path: str,
     *,
     api_key: str | None = None,
     body: dict[str, Any] | None = None,
+    upload: tuple[str, bytes] | None = None,
     raw: bool = False,
     timeout: float = 120,
 ) -> Any:  # noqa: ANN401  parsed JSON (dict/list) or raw bytes, by design
     """Perform one ComfyUI HTTP call — the sole network seam.
 
     JSON-encodes `body` (setting `Content-Type`) when present and adds an
-    `X-API-Key` header when `api_key` is given. Retries transient failures
-    (5xx and connection errors) with exponential backoff up to
-    `_MAX_ATTEMPTS`; 4xx client errors fail fast. Returns parsed JSON, or
-    raw `bytes` when `raw` is set (for `/api/view`).
+    `X-API-Key` header when `api_key` is given. When `upload` is given as
+    `(filename, blob)`, the call is `multipart/form-data` instead and `body`
+    carries the accompanying form fields. Retries transient failures (5xx and
+    connection errors) with exponential backoff up to `_MAX_ATTEMPTS`; 4xx
+    client errors fail fast. Returns parsed JSON, or raw `bytes` when `raw` is
+    set (for `/api/view`).
     """
     url = f"{base}{path}"
-    data = json.dumps(body).encode() if body is not None else None
+    data, content_type = _encode_body(body, upload)
     for attempt in range(_MAX_ATTEMPTS):
         request = urllib.request.Request(url, data=data)  # noqa: S310  configured host
-        if body is not None:
-            request.add_header("Content-Type", "application/json")
+        if content_type is not None:
+            request.add_header("Content-Type", content_type)
         if api_key:
             request.add_header("X-API-Key", api_key)
         try:
