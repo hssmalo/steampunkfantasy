@@ -159,7 +159,7 @@ name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "Medium"
 cost.cp = 8
-description = '''This is an illusion which like an elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
+description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
 '''
 
 
@@ -595,7 +595,7 @@ cost.mp = 16
 cost.xp = 24
 cost.cp = 24
 armor = [3, 3, 0, 0]
-description = ''' Pachyephalosourus is a two legged dinaosour. On the pachephalosourus there is an elegant elf wielding an smg. On the sides of the pachephalosourus there are two cannons, on on each side ot the Pachyephalosourus'''
+description = ''' Pachyephalosourus is a two legged dinaosour. On the pachephalosourus there is an elegant elf wielding an smg. On the sides of the pachephalosourus there are two cannons, on on each side on the Pachyephalosourus'''
 
 
 [units.pachyephalosaurus_riders.special]

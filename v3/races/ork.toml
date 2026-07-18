@@ -14,7 +14,7 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
 cost.mp = 16
-description = "Bloodthirsty ork in rags wielding a napleonic style musket with a bajonet"
+description = "Bloodthirsty ork in leather rags wielding a napleonic style musket with a bajonet"
 
 
 [units.ork_infantry.shaken]
