@@ -320,7 +320,7 @@ name = "Shriek Monstrosity"
 models = ["shriek_monstrosity"]
 size = "Large"
 cost.xp = 24
-description = '''A flying monstros bird scaring the enemy with a deadly scream.
+description = '''A flying monstrous bird scaring the enemy with a deadly scream.
 '''
 
 
