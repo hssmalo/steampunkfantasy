@@ -116,12 +116,50 @@ def test_promote_copies_picked_candidate_into_store(
         test_kind,
         race="orks",
         name="grunt",
-        pick=2,
+        pick="2",
         candidates_root=candidates,
         assets_root=store,
     )
     assert asset == store / "orks" / "_test" / "grunt.txt"
     assert asset.read_bytes() == b"two"
+
+
+def test_promote_picks_a_dotted_lineage_candidate(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    # A Refinement's Candidates carry a dotted Lineage index; promoting one
+    # still writes the plain `<name>.<extension>` Asset.
+    candidates = tmp_path / "candidates" / "orks" / "_test"
+    candidates.mkdir(parents=True)
+    (candidates / "grunt.2.1.txt").write_bytes(b"refined")
+    asset = promote(
+        test_kind,
+        race="orks",
+        name="grunt",
+        pick="2.1",
+        candidates_root=tmp_path / "candidates",
+        assets_root=tmp_path / "assets",
+    )
+    assert asset == tmp_path / "assets" / "orks" / "_test" / "grunt.txt"
+    assert asset.read_bytes() == b"refined"
+
+
+@pytest.mark.parametrize(
+    "pick", ["", "0", "2.", ".1", "2..1", "2.0", "a", "2.1a", "-1"]
+)
+def test_promote_rejects_a_malformed_lineage(
+    tmp_path: Path, test_kind: Kind, pick: str
+) -> None:
+    # A typo fails naming the Lineage, not as a confusing missing-file error.
+    with pytest.raises(ValueError, match=r"[Ll]ineage"):
+        promote(
+            test_kind,
+            race="orks",
+            name="grunt",
+            pick=pick,
+            candidates_root=tmp_path / "candidates",
+            assets_root=tmp_path / "assets",
+        )
 
 
 def test_promote_missing_candidate_raises(tmp_path: Path, test_kind: Kind) -> None:
@@ -138,7 +176,7 @@ def test_promote_missing_candidate_raises(tmp_path: Path, test_kind: Kind) -> No
             test_kind,
             race="orks",
             name="grunt",
-            pick=99,
+            pick="99",
             candidates_root=tmp_path / "candidates",
             assets_root=tmp_path / "assets",
         )
@@ -161,7 +199,7 @@ def test_promote_overwrites_existing_asset_silently(
         test_kind,
         race="orks",
         name="grunt",
-        pick=1,
+        pick="1",
         candidates_root=candidates,
         assets_root=store,
     )
@@ -169,7 +207,7 @@ def test_promote_overwrites_existing_asset_silently(
         test_kind,
         race="orks",
         name="grunt",
-        pick=3,
+        pick="3",
         candidates_root=candidates,
         assets_root=store,
     )

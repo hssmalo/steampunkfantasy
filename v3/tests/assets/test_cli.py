@@ -40,6 +40,29 @@ def test_promote_command_lands_picked_candidate(registered_kind: Kind) -> None:
     assert asset.read_bytes() == b"two"
 
 
+@pytest.mark.usefixtures("registered_kind")
+def test_promote_command_accepts_a_dotted_lineage_pick() -> None:
+    candidates = config.paths.candidates / "ork" / "_test"
+    candidates.mkdir(parents=True)
+    (candidates / "grunt.2.1.txt").write_bytes(b"refined")
+    app(
+        ["assets", "promote", "ork", "_test", "grunt", "--pick", "2.1"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+    asset = config.paths.assets / "ork" / "_test" / "grunt.txt"
+    assert asset.read_bytes() == b"refined"
+
+
+@pytest.mark.usefixtures("registered_kind")
+def test_promote_command_rejects_a_malformed_pick() -> None:
+    with pytest.raises(CycloptsError, match=r"[Ll]ineage"):
+        app(
+            ["assets", "promote", "ork", "_test", "grunt", "--pick", "2..1"],
+            exit_on_error=False,
+        )
+
+
 def test_promote_command_unknown_kind_errors(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:

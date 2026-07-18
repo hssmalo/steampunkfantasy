@@ -6,12 +6,32 @@ insert a 1-based `.<index>` before the extension so the same layout addresses
 both stores.
 """
 
+import re
 import shutil
 from collections.abc import Callable
 from pathlib import Path
 
 from spf.assets.kinds import Kind
 from spf.config import config
+
+LINEAGE_PATTERN = re.compile(r"^[1-9][0-9]*(\.[1-9][0-9]*)*$")
+
+
+def validate_lineage(lineage: str) -> str:
+    """Return `lineage` unchanged, or raise `ValueError` if it is malformed.
+
+    A **Lineage** is a dotted, 1-based Candidate index (`2`, `2.1`, `2.1.3`)
+    recording derivation: `2.1` is the first Candidate of the Refinement of
+    Candidate `2`. Leading zeros and empty components are rejected, so a typo
+    fails here rather than as a confusing missing-file error.
+    """
+    if not LINEAGE_PATTERN.match(lineage):
+        msg = (
+            f"Malformed lineage {lineage!r}: expected a dotted 1-based index, "
+            "such as '2' or '2.1'"
+        )
+        raise ValueError(msg)
+    return lineage
 
 
 def _asset_dir(root: Path, kind: Kind, *, race: str) -> Path:
@@ -68,7 +88,7 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
     *,
     race: str,
     name: str,
-    pick: int,
+    pick: str,
     candidates_root: Path = config.paths.candidates,
     assets_root: Path = config.paths.assets,
 ) -> Path:
@@ -76,9 +96,12 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
 
     Copies `<race>/[<subdir>/]<name>.<pick>.<extension>` from the candidates
     store to `<race>/[<subdir>/]<name>.<extension>` in the assets store,
-    bytes-for-bytes. `pick` is 1-based. An existing Asset is overwritten
-    silently. Raises `ValueError` when the picked Candidate is missing.
+    bytes-for-bytes. `pick` is a Lineage — a dotted 1-based index (`2`, `2.1`),
+    so a Refinement's Candidate promotes exactly like an original's. An
+    existing Asset is overwritten silently. Raises `ValueError` when `pick` is
+    malformed or the picked Candidate is missing.
     """
+    validate_lineage(pick)
     candidate = (
         _asset_dir(candidates_root, kind, race=race) / f"{name}.{pick}.{kind.extension}"
     )

@@ -12,7 +12,7 @@ from typing import Annotated
 import cyclopts
 
 from spf import races
-from spf.assets import generate, get_kind, promote
+from spf.assets import generate, get_kind, promote, validate_lineage
 from spf.assets import image as _image  # noqa: F401  registers the "image" Kind
 from spf.assets.comfyui import ComfyUIError
 from spf.config import config
@@ -34,6 +34,14 @@ def _validate_kind(_type: type, value: str) -> None:
 
 
 Kind = Annotated[str, cyclopts.Parameter(validator=_validate_kind)]
+
+
+def _validate_lineage(_type: type, value: str) -> None:
+    """Reject a Lineage that is not a dotted 1-based index."""
+    validate_lineage(value)  # raises ValueError describing the expected shape
+
+
+Lineage = Annotated[str, cyclopts.Parameter(validator=_validate_lineage)]
 
 
 @dataclass
@@ -63,11 +71,12 @@ def _resolve_target(race: t.RaceName, unit: str | None) -> tuple[str, str, str]:
     return unit, config_unit.name, config_unit.description
 
 
-def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: int) -> None:
+def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: Lineage) -> None:
     """Promote the picked Candidate into the committed Asset store.
 
     RACE is the race the Asset belongs to, KIND its Asset kind, NAME its base
-    file name. `--pick` selects the 1-based Candidate to commit.
+    file name. `--pick` selects the Candidate to commit by Lineage — a dotted
+    1-based index, so `2` picks an original and `2.1` a Refinement of it.
     """
     promote(
         get_kind(kind),
