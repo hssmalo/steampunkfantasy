@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from cyclopts.exceptions import CycloptsError
 
-from spf.assets import Kind, generate
+from spf.assets import Kind, generate, promote
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
@@ -193,3 +193,38 @@ def test_image_command_errors_cleanly_on_an_unknown_unit(
     err = capsys.readouterr().err
     assert "nosuchunit" in err
     assert "grunt" in err
+
+
+def test_list_command_reports_coverage_for_one_race(
+    registered_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    generate(
+        registered_kind,
+        source="a grunt description",
+        race="ork",
+        name="grunt",
+        count=2,
+        candidates_root=config.paths.candidates,
+    )
+    promote(
+        registered_kind,
+        race="ork",
+        name="grunt",
+        pick="2",
+        candidates_root=config.paths.candidates,
+        assets_root=config.paths.assets,
+    )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    assert "Ork" in out  # the race heading always prints
+    grunt_line = next(line for line in out.splitlines() if "grunt" in line)
+    assert "2 candidates" in grunt_line
+    # A Target with neither Asset nor Candidates still gets a row.
+    troll_line = next(line for line in out.splitlines() if "troll" in line)
+    assert "missing" in troll_line

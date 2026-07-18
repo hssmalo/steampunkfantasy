@@ -14,16 +14,19 @@ import cyclopts
 
 from spf import races
 from spf.assets import (
+    Coverage,
     Target,
     generate,
     get_kind,
     promote,
     refine,
+    survey,
     targets,
     validate_lineage,
 )
 from spf.assets import image as _image  # noqa: F401  registers the "image" Kind
 from spf.assets.comfyui import ComfyUIError
+from spf.assets.kinds import KINDS
 from spf.assets.kinds import Kind as AssetKind
 from spf.config import config
 from spf.console import stderr, stdout
@@ -34,6 +37,7 @@ _SEED_BOUND = 2**31
 
 def add_commands(app: cyclopts.App) -> None:
     """Add asset commands to the CLI."""
+    app.command(list_assets, name="list")
     app.command(promote_asset, name="promote")
     app.command(refine_asset, name="refine")
     app.command(image, name="image")
@@ -87,6 +91,59 @@ def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Targ
     available = ", ".join(t_.name for t_ in found if t_.level == "unit")
     msg = f"Unknown unit '{unit}' for race '{race}'. Available units: {available}"
     raise ValueError(msg)
+
+
+def _print_coverage(row: Coverage) -> None:
+    """Print one Coverage row: key first, human name dimmed, then status."""
+    # Pad the *plain* text, then wrap it in markup: padding a marked-up string
+    # counts the tag characters and misaligns every column.
+    status = "[green]✓[/]      " if row.asset else "[red]missing[/]"
+    count = f"{len(row.candidates)} candidates" if row.candidates else ""
+    stdout.print(
+        f"  - {row.target.name:<24} [dim]{row.target.human_name:<24}[/]"
+        f" {status} {count}",
+        highlight=False,
+        soft_wrap=True,  # a coverage row is scanned or piped, never reflowed
+    )
+
+
+def list_assets(
+    race: t.RaceName | None = None,
+    *,
+    kind: Kind | None = None,
+    candidates: bool = False,
+) -> None:
+    """Report which Targets have Assets, and how many Candidates are waiting.
+
+    RACE restricts the report to one race; omitted, every validating race is
+    covered. `--kind` restricts it to one registered Asset kind, and
+    `--candidates` expands each row into its Candidate Lineages, marking the
+    one the Asset was promoted from.
+
+    Missing Assets are a normal state, so this always exits 0.
+    """
+    race_names: list[t.RaceName] = (
+        [race] if race is not None else races.list_races(validate=True)
+    )
+    kinds = [get_kind(kind)] if kind is not None else list(KINDS.values())
+
+    for race_name in race_names:
+        stdout.print(f"[bold]{races.get_metadata(race_name).name}[/]", highlight=False)
+        for asset_kind in kinds:
+            found = survey(
+                asset_kind,
+                race_name,
+                candidates_root=config.paths.candidates,
+                assets_root=config.paths.assets,
+                with_candidates=candidates,
+            )
+            stdout.print(f"  {asset_kind.name.title()}", highlight=False)
+            for row in found.rows:
+                _print_coverage(row)
+            if found.orphans:
+                stdout.print("  Unknown", highlight=False)
+                for orphan in found.orphans:
+                    stdout.print(f"  - {orphan.name}", highlight=False)
 
 
 def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: Lineage) -> None:
