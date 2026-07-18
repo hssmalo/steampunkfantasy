@@ -26,7 +26,7 @@ army = (
     )
     .upgrade_all_models(
         ("giant_frog_riders", 0),
-        equipment_name="tentacle_craclespears",
+        equipment_name="tentacle_cracklespears",
         race_config=cfg,
     )
     .duplicate_unit(("giant_frog_riders", 0))

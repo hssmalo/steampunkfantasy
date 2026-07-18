@@ -582,36 +582,36 @@ rows = [
 	"6+: shaken",
 ]
 
-[units.pachyephalosaurus_riders]
+[units.pachycephalosaurus_riders]
 race = "elf"
-name = "Pachyephalosaurus Riders"
+name = "Pachycephalosaurus Riders"
 models = [
-	"pachyephalosaurus_rider",
-	"pachyephalosaurus_rider",
-	"pachyephalosaurus_rider",
+	"pachycephalosaurus_rider",
+	"pachycephalosaurus_rider",
+	"pachycephalosaurus_rider",
 ]
 size = "Medium"
 cost.mp = 16
 cost.xp = 24
 cost.cp = 24
 armor = [3, 3, 0, 0]
-description = ''' Pachyephalosourus is a two legged dinaosour. On the pachephalosourus there is an elegant elf wielding an smg. On the sides of the pachephalosourus there are two cannons, one on each side of the Pachyephalosourus'''
+description = ''' Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus'''
 
 
-[units.pachyephalosaurus_riders.special]
+[units.pachycephalosaurus_riders.special]
 "Resistance" = "Poison[2]"
 "Fire Order" = "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only."
 
-[units.pachyephalosaurus_riders.shaken]
+[units.pachycephalosaurus_riders.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.pachyephalosaurus_riders.orders.fire]
+[units.pachycephalosaurus_riders.orders.fire]
 still = [["Fire", "Load"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
 slow = [["-", "Load"], ["Load", "-"], ["-", "Aim"]]
 fast = [["-", "Load"], ["Load", "-"], ["-", "Aim"]]
 
-[units.pachyephalosaurus_riders.orders.movement]
+[units.pachycephalosaurus_riders.orders.movement]
 fast = [
 	["360°", "F", "F"],
 	["F", "B", "360°"],
@@ -624,7 +624,7 @@ fast = [
 slow = [["360°", "A", "F"], ["B", "360°", "-"]]
 still = [["360°", "A", "F"], ["A+A", "360°+F", "F"], ["A+A", "360°", "F"]]
 
-[units.pachyephalosaurus_riders.damage_tables.Regular]
+[units.pachycephalosaurus_riders.damage_tables.Regular]
 rows = [
 	"2-3: Bleed[6]",
 	"6+: kill 1 model, d4 Psychic damage",
@@ -634,7 +634,7 @@ notes = [
 	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 
-[units.pachyephalosaurus_riders.damage_tables.Psychic]
+[units.pachycephalosaurus_riders.damage_tables.Psychic]
 rows = [
 	"4+: shaken",
 ]
@@ -1111,14 +1111,14 @@ ap = 3
 [models.eagle_rider.unit_special]
 "Pre-Assault Retreat" = "3+"
 
-[models.pachyephalosaurus_rider]
-name = "Pachyephalosaurus Rider"
+[models.pachycephalosaurus_rider]
+name = "Pachycephalosaurus Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["smg_free", "twin_guns"]
 type = ["Bio", "Light Cavalry", "Walking"]
 
-[models.pachyephalosaurus_rider.assault]
+[models.pachycephalosaurus_rider.assault]
 strength = [2, 1, 1, 1]
 strength_die = "5+"
 deflection = [1, 0, 0, 0]
@@ -1126,11 +1126,11 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.pachyephalosaurus_rider.assault.special]
+[models.pachycephalosaurus_rider.assault.special]
 "Extra Damage" = "poison[4][1 for 2]"
 "Cunning Assault" = "[1 for 3]"
 
-[models.pachyephalosaurus_rider.unit_special]
+[models.pachycephalosaurus_rider.unit_special]
 "Pre-Assault Retreat" = "5+"
 
 [models.pegasus_rider]
@@ -1157,23 +1157,23 @@ ap = 2
 [models.pegasus_rider.unit_special]
 "Pre-Assault Retreat" = "throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
 
-[models.elite_pachyephalosaurus_rider]
-name = "Elite Pachyephalosaurus Rider"
+[models.elite_pachycephalosaurus_rider]
+name = "Elite Pachycephalosaurus Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["smg_free", "twin_guns"]
 type = ["Bio", "Cavalry", "Walking"]
-replaces = "pachyephalosaurus_rider"
+replaces = "pachycephalosaurus_rider"
 cost.xp = 4
 
-[models.elite_pachyephalosaurus_rider.special]
+[models.elite_pachycephalosaurus_rider.special]
 "To Hit" = "Good shot: +1"
 
-[models.elite_pachyephalosaurus_rider.unit_special]
+[models.elite_pachycephalosaurus_rider.unit_special]
 "Improved Resistance" = "Unit gains resistance Psychic[1] while at least one elite is alive"
 "Pre-Assault Retreat" = "3+ if at least one elite present"
 
-[models.elite_pachyephalosaurus_rider.assault]
+[models.elite_pachycephalosaurus_rider.assault]
 strength = [6, 2, 2, 1]
 strength_die = "5+"
 deflection = [3, 0, 0, 0]
@@ -1181,7 +1181,7 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_pachyephalosaurus_rider.assault.special]
+[models.elite_pachycephalosaurus_rider.assault.special]
 "Extra Damage" = "poison[4][1 for 2]"
 "Cunning Assault" = "[1 for 3]"
 

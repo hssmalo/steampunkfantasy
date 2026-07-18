@@ -879,7 +879,7 @@ ap = "N/A"
 [equipment.multipurpose_gun.range.special]
 "Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insanity token, in addition to the normal effects of the Psychic damage table"
 
-[equipment.tentacle_craclespears]
+[equipment.tentacle_cracklespears]
 name = "Tentacle CrackleSpears"
 race = "abomination"
 cost.cp = 8
@@ -887,12 +887,12 @@ upgrade_all = true
 requires = [["Tentacles:2"], ["type:Infantry", "type:Cavalry"]]
 
 #requires = [["type:Infantry","type:Cavalry"]]
-[equipment.tentacle_craclespears.assault]
+[equipment.tentacle_cracklespears.assault]
 strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
-[equipment.tentacle_craclespears.assault.special]
+[equipment.tentacle_cracklespears.assault.special]
 "Improved Extra Damage" = "If assault in a hex with fog (smoke token), each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]

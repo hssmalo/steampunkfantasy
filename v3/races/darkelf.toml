@@ -11,7 +11,7 @@ unit = "multicultural_trainee"
 
 [units.mechahydra]
 race = "darkelf"
-name = "MecaHydra"
+name = "MechaHydra"
 models = ["mechahydra"]
 size = "Huge"
 cost.ip = 48
