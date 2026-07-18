@@ -297,6 +297,20 @@ def test_rejects_a_non_text_negative_input(
         service.generate("prompt", 1, seed=7)
 
 
+def test_requires_the_negative_prompt_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A missing file is an error, not a fall-through to the Workflow's
+    # authored negative (issue 50, D3).
+    scripted = _ScriptedComfy()
+    service = _service(scripted, monkeypatch, negative_path=tmp_path / "absent.txt")
+
+    with pytest.raises(FileNotFoundError):
+        service.generate("prompt", 1, seed=7)
+
+    assert scripted.submissions == []  # nothing was queued
+
+
 def test_patches_an_encoder_that_names_its_input_prompt(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

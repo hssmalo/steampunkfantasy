@@ -22,9 +22,12 @@ from spf.frontends.cli import app
 
 _FIXTURES = Path(__file__).parent / "fixtures"
 _MINI = _FIXTURES / "mini_workflow.json"
+_MINI_REFINE = _FIXTURES / "mini_refine_workflow.json"
 _PNG = b"\x89PNG\r\n\x1a\n"
 _POSITIVE = "2"  # the positive text node in mini_workflow.json
+_NEGATIVE = "3"  # the negative text node in mini_workflow.json
 _SAMPLER = "5"  # the KSampler in mini_workflow.json
+_NEGATIVE_TEXT = "blurry, watermarked"
 
 _OGRE_TOML = """\
 [races.ogre]
@@ -88,9 +91,13 @@ class _FakeRequest:
         *,
         api_key: str | None = None,  # noqa: ARG002  unused in this fake
         body: dict[str, Any] | None = None,
+        upload: tuple[str, bytes] | None = None,
         raw: bool = False,
         timeout: float = 120,  # noqa: ARG002  part of the seam signature; unused
     ) -> Any:  # noqa: ANN401  mirrors _request's dynamic return
+        if path == "/api/upload/image":  # a Refinement uploads its init image
+            assert upload is not None
+            return {"name": upload[0], "subfolder": "", "type": "input"}
         if path == "/api/prompt":
             self._counter += 1
             assert body is not None
@@ -136,6 +143,7 @@ def _make_env(
     prompts = tmp_path / "prompts"
     prompts.mkdir()
     (prompts / "image.txt").write_text("Preamble one.\ntwo.\n", encoding="utf-8")
+    (prompts / "image-negative.txt").write_text(_NEGATIVE_TEXT, encoding="utf-8")
     monkeypatch.setattr(config.paths, "races", races)
     monkeypatch.setattr(config.paths, "prompts", prompts)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
@@ -146,6 +154,12 @@ def _make_env(
     # The wired service points at the (gitignored) real workflow; aim it at the
     # committed fixture so the flow runs without a per-machine local.json.
     monkeypatch.setattr(img.IMAGE.service, "_workflow_path", _MINI)
+    monkeypatch.setattr(img.IMAGE.service, "_refine_workflow_path", _MINI_REFINE)
+    # Likewise the Negative Prompt: the service bound the real repo path at
+    # import, so aim it at this project's own file.
+    monkeypatch.setattr(
+        img.IMAGE.service, "_negative_path", prompts / "image-negative.txt"
+    )
     return _ImageEnv(tmp_path, comfy)
 
 
@@ -212,10 +226,44 @@ def test_cli_unit_image_writes_candidates(
     assert "5" in out  # the seed is printed
     # The composed prompt is echoed before the request goes out.
     assert "A stout ogre grunt hefting a huge wrench" in out
+    # The Negative Prompt is static, so only its path is named (issue 50, D7).
+    assert "image-negative.txt" in out
     # Each Candidate's path is reported as it lands (one "Wrote" per image).
     assert out.count("Wrote ") == 3
     assert "ogre_grunt.1.png" in out
     assert "spf assets promote ogre image ogre_grunt --pick" in out
+
+
+def test_cli_unit_image_patches_the_authored_negative_prompt(
+    image_env: _ImageEnv,
+) -> None:
+    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
+
+    negatives = [g[_NEGATIVE]["inputs"]["text"] for g in image_env.comfy.submissions]
+    assert negatives == [_NEGATIVE_TEXT] * 3  # every job in the batch
+
+
+def test_cli_refine_image_names_the_negative_prompt_file(
+    image_env: _ImageEnv, capsys: pytest.CaptureFixture[str]
+) -> None:
+    candidates = image_env.candidates / "ogre" / "images"
+    candidates.mkdir(parents=True)
+    (candidates / "ogre_grunt.2.png").write_bytes(_PNG)
+
+    _run(
+        "assets",
+        "refine",
+        "ogre",
+        "image",
+        "ogre_grunt",
+        "--from",
+        "2",
+        "make the hat brass",
+        "--count",
+        "1",
+    )
+
+    assert "image-negative.txt" in capsys.readouterr().out
 
 
 def test_cli_unit_image_prompt_composes_preamble_name_description(

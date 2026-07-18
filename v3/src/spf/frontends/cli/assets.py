@@ -8,6 +8,7 @@ subcommands accept, and the first concrete generate subcommand,
 
 import random
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Annotated
 
 import cyclopts
@@ -36,6 +37,16 @@ def _validate_kind(_type: type, value: str) -> None:
 
 
 Kind = Annotated[str, cyclopts.Parameter(validator=_validate_kind)]
+
+
+def _negative_prompt_path() -> Path:
+    """Where the Image Service reads its Negative Prompt from (issue 50, D7).
+
+    Echoed by path, not by content: unlike the composed positive prompt it is
+    static and version-controlled, so naming the file keeps it discoverable
+    without scrolling the varying prompt off screen.
+    """
+    return config.paths.prompts / "image-negative.txt"
 
 
 def _validate_lineage(_type: type, value: str) -> None:
@@ -124,8 +135,13 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
 
     # Show what is actually sent (dimmed), matching `image`; here it is just
-    # the Correction.
+    # the Correction. The Negative Prompt is an image concern, so name its file
+    # only when an image is what is being refined.
     stdout.print(correction, style="dim", markup=False)
+    if kind == "image":
+        stdout.print(
+            f"Negative: {_negative_prompt_path()}", style="dim", soft_wrap=True
+        )
 
     try:
         refine(
@@ -189,6 +205,7 @@ def image(
 
     # Show the composed prompt (dimmed) before sending it to the Service.
     stdout.print(prompt, style="dim", markup=False)
+    stdout.print(f"Negative: {_negative_prompt_path()}", style="dim", soft_wrap=True)
 
     try:
         generate(
