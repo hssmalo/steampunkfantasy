@@ -25,7 +25,7 @@ import urllib.request
 import uuid
 from collections.abc import Callable, Sequence
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 SAMPLER_CLASSES = ("KSampler", "KSamplerAdvanced")
 _MAX_ATTEMPTS = 4  # one initial try plus three retries (from PollinationsService)
@@ -218,14 +218,13 @@ def _patch_init_image(graph: dict[str, Any], filename: str) -> None:
 def _patch_text(
     graph: dict[str, Any],
     sampler_inputs: dict[str, Any],
-    slot: str,
+    slot: Literal["positive", "negative"],
     text: str,
 ) -> None:
     """Follow the sampler's `slot` link and set the text node's prompt input.
 
-    `slot` is `positive` or `negative`; both are patched the same way, and an
-    encoder declaring neither of `PROMPT_KEYS` is an error either way (see
-    ADR 0009's fourth amendment).
+    Both slots are patched the same way, and an encoder declaring neither of
+    `PROMPT_KEYS` is an error either way (see ADR 0009's fourth amendment).
     """
     link = sampler_inputs.get(slot)
     if not isinstance(link, list):
@@ -236,8 +235,8 @@ def _patch_text(
         if key in node["inputs"]:
             node["inputs"][key] = text
             return
-    klass = node["class_type"]
-    msg = f"{slot} node {klass} has no 'text' or 'prompt' input to patch"
+    class_type = node["class_type"]
+    msg = f"{slot} node {class_type} has no 'text' or 'prompt' input to patch"
     raise ComfyUIError(msg)
 
 
