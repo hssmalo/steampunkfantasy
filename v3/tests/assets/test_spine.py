@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.assets import Kind, generate, promote, refine
+from spf.assets import Kind, generate, promote, refine, stage_promoted
 from tests.assets.conftest import FakeRefiner, FakeService
 
 
@@ -517,3 +517,106 @@ def test_refining_the_same_candidate_twice_continues_the_numbering(
 
     base = tmp_path / "orks" / "_test"
     assert second == [base / "grunt.2.3.txt", base / "grunt.2.4.txt"]
+
+
+# --- Cycle 9: staging a promoted Asset back as a Candidate -------------------
+
+
+def test_stage_promoted_copies_the_asset_into_the_candidate_store(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    candidates = tmp_path / "candidates"
+    store = tmp_path / "assets"
+    asset = store / "orks" / "_test" / "grunt.txt"
+    asset.parent.mkdir(parents=True)
+    asset.write_bytes(b"the committed asset")
+
+    lineage = stage_promoted(
+        test_kind,
+        race="orks",
+        name="grunt",
+        candidates_root=candidates,
+        assets_root=store,
+    )
+
+    assert lineage == "1"
+    staged = candidates / "orks" / "_test" / "grunt.1.txt"
+    assert staged.read_bytes() == b"the committed asset"
+
+
+def test_stage_promoted_takes_the_next_free_index(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    candidates = tmp_path / "candidates"
+    store = tmp_path / "assets"
+    asset = store / "orks" / "_test" / "grunt.txt"
+    asset.parent.mkdir(parents=True)
+    asset.write_bytes(b"the committed asset")
+    generate(
+        test_kind,
+        source="a grunt description",
+        race="orks",
+        name="grunt",
+        count=3,
+        candidates_root=candidates,
+    )
+
+    lineage = stage_promoted(
+        test_kind,
+        race="orks",
+        name="grunt",
+        candidates_root=candidates,
+        assets_root=store,
+    )
+
+    assert lineage == "4"
+
+
+def test_stage_promoted_without_an_asset_raises(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    with pytest.raises(ValueError, match="asset"):
+        stage_promoted(
+            test_kind,
+            race="orks",
+            name="grunt",
+            candidates_root=tmp_path / "candidates",
+            assets_root=tmp_path / "assets",
+        )
+
+
+def test_promote_then_stage_promoted_round_trips_the_bytes(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    candidates = tmp_path / "candidates"
+    store = tmp_path / "assets"
+    generate(
+        test_kind,
+        source="a grunt description",
+        race="orks",
+        name="grunt",
+        count=3,
+        candidates_root=candidates,
+    )
+    promote(
+        test_kind,
+        race="orks",
+        name="grunt",
+        pick="2",
+        candidates_root=candidates,
+        assets_root=store,
+    )
+
+    lineage = stage_promoted(
+        test_kind,
+        race="orks",
+        name="grunt",
+        candidates_root=candidates,
+        assets_root=store,
+    )
+
+    base = candidates / "orks" / "_test"
+    assert lineage == "4"
+    assert (base / f"grunt.{lineage}.txt").read_bytes() == (
+        base / "grunt.2.txt"
+    ).read_bytes()

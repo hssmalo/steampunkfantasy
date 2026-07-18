@@ -226,3 +226,30 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
     asset.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(candidate, asset)
     return asset
+
+
+def stage_promoted(
+    kind: Kind,
+    *,
+    race: str,
+    name: str,
+    candidates_root: Path = config.paths.candidates,
+    assets_root: Path = config.paths.assets,
+) -> str:
+    """Copy the promoted Asset back into the Candidate store, returning its Lineage.
+
+    The exact inverse of `promote`: a plain `copyfile` the other way, taking
+    the next free index (see `_next_index`) so the Asset becomes an ordinary
+    Candidate addressable by Lineage. Raises `ValueError` when the Target has
+    no promoted Asset.
+    """
+    asset = _asset_dir(assets_root, kind, race=race) / f"{name}.{kind.extension}"
+    if not asset.is_file():
+        msg = f"No promoted asset to stage at {asset}"
+        raise ValueError(msg)
+
+    directory = _asset_dir(candidates_root, kind, race=race)
+    directory.mkdir(parents=True, exist_ok=True)
+    lineage = str(_next_index(directory, kind, name=name))
+    shutil.copyfile(asset, directory / f"{name}.{lineage}.{kind.extension}")
+    return lineage
