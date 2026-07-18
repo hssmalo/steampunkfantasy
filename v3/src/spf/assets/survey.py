@@ -9,6 +9,7 @@ Derived on demand, never stored. `targets` supplies the spine; this module is
 the only part that touches disk.
 """
 
+import hashlib
 import re
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -49,22 +50,34 @@ def survey(
     *,
     candidates_root: Path = config.paths.candidates,
     assets_root: Path = config.paths.assets,
+    with_candidates: bool = False,
 ) -> Survey:
     """Return `kind`'s coverage of `race`, one row per Target.
 
-    Rows follow `targets()` order. Raises `ValueError` for an unknown race.
+    Rows follow `targets()` order. `with_candidates` additionally recovers, by
+    digest, which Candidate each Asset was promoted from — the expensive part,
+    so it is off by default (ADR 0012). Raises `ValueError` for an unknown race.
     """
     asset_dir = _asset_dir(assets_root, kind, race=race)
-    waiting = _candidates_by_name(_asset_dir(candidates_root, kind, race=race), kind)
+    candidate_dir = _asset_dir(candidates_root, kind, race=race)
+    waiting = _candidates_by_name(candidate_dir, kind)
     found = targets(kind, race)
-    rows = [
-        Coverage(
-            target=target,
-            asset=_asset_for(asset_dir, kind, target),
-            candidates=sorted(waiting.get(target.name, []), key=_lineage_key),
+    rows = []
+    for target in found:
+        asset = _asset_for(asset_dir, kind, target)
+        lineages = sorted(waiting.get(target.name, []), key=_lineage_key)
+        rows.append(
+            Coverage(
+                target=target,
+                asset=asset,
+                candidates=lineages,
+                promoted_from=(
+                    _promoted_from(asset, candidate_dir, kind, target, lineages)
+                    if with_candidates and asset is not None
+                    else []
+                ),
+            )
         )
-        for target in found
-    ]
     known = {target.name for target in found}
     orphans = [
         path
@@ -78,6 +91,34 @@ def _asset_for(asset_dir: Path, kind: Kind, target: Target) -> Path | None:
     """Return the committed Asset for `target`, or `None` when there is none."""
     path = asset_dir / f"{target.name}.{kind.extension}"
     return path if path.is_file() else None
+
+
+def _promoted_from(
+    asset: Path,
+    candidate_dir: Path,
+    kind: Kind,
+    target: Target,
+    lineages: list[str],
+) -> list[str]:
+    """Return every Lineage byte-identical to `asset`.
+
+    `promote` is a plain copy, so the Asset matches the Candidate it came from.
+    Seeds are deterministic, so two Candidates can collide — all matches are
+    reported rather than one guessed (ADR 0012).
+    """
+    digest = _digest(asset)
+    matches = []
+    for lineage in lineages:
+        path = candidate_dir / f"{target.name}.{lineage}.{kind.extension}"
+        if path.is_file() and _digest(path) == digest:
+            matches.append(lineage)
+    return matches
+
+
+def _digest(path: Path) -> bytes:
+    """Return the SHA-256 digest of `path`."""
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").digest()
 
 
 def _lineage_key(lineage: str) -> tuple[int, ...]:

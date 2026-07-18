@@ -84,3 +84,41 @@ def test_survey_reports_asset_files_matching_no_target_as_orphans(
     )
 
     assert found.orphans == [typo]
+
+
+def test_survey_recovers_which_candidate_was_promoted(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    assets_root, candidates_root = stores
+    _write(candidates_root, "grunt.2.txt", b"the other one")
+    _write(candidates_root, "grunt.4.1.txt", b"the chosen one")
+    _write(assets_root, "grunt.txt", b"the chosen one")
+
+    found = survey(
+        test_kind,
+        "ork",
+        assets_root=assets_root,
+        candidates_root=candidates_root,
+        with_candidates=True,
+    )
+
+    by_name = {row.target.name: row for row in found.rows}
+    assert by_name["grunt"].promoted_from == ["4.1"]
+
+
+def test_survey_skips_provenance_unless_candidates_are_asked_for(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    # Hashing the Candidate store is the expensive part; the default listing
+    # must not pay for it (ADR 0012).
+    assets_root, candidates_root = stores
+    _write(candidates_root, "grunt.2.txt", b"the chosen one")
+    _write(assets_root, "grunt.txt", b"the chosen one")
+
+    found = survey(
+        test_kind, "ork", assets_root=assets_root, candidates_root=candidates_root
+    )
+
+    by_name = {row.target.name: row for row in found.rows}
+    assert by_name["grunt"].promoted_from == []
+    assert by_name["grunt"].candidates == ["2"]
