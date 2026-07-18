@@ -68,3 +68,19 @@ def test_survey_keeps_digits_that_belong_to_the_target_name(
 
     by_name = {row.target.name: row for row in found.rows}
     assert by_name["ork_char_b1"].candidates == ["2", "4.1"]
+
+
+def test_survey_reports_asset_files_matching_no_target_as_orphans(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    # The real case this view exists to surface: a typo'd file name that no
+    # longer matches any unit key, so it silently covers nothing.
+    assets_root, candidates_root = stores
+    _write(assets_root, "grunt.txt")
+    typo = _write(assets_root, "gigant_snake_cavalry.txt")
+
+    found = survey(
+        test_kind, "ork", assets_root=assets_root, candidates_root=candidates_root
+    )
+
+    assert found.orphans == [typo]

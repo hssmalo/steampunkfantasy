@@ -56,15 +56,22 @@ def survey(
     """
     asset_dir = _asset_dir(assets_root, kind, race=race)
     waiting = _candidates_by_name(_asset_dir(candidates_root, kind, race=race), kind)
+    found = targets(kind, race)
     rows = [
         Coverage(
             target=target,
             asset=_asset_for(asset_dir, kind, target),
             candidates=sorted(waiting.get(target.name, []), key=_lineage_key),
         )
-        for target in targets(kind, race)
+        for target in found
     ]
-    return Survey(rows=rows, orphans=[])
+    known = {target.name for target in found}
+    orphans = [
+        path
+        for path in sorted(asset_dir.glob(f"*.{kind.extension}"))
+        if path.name[: -len(kind.extension) - 1] not in known
+    ]
+    return Survey(rows=rows, orphans=orphans)
 
 
 def _asset_for(asset_dir: Path, kind: Kind, target: Target) -> Path | None:
