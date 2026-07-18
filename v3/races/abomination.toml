@@ -2,7 +2,7 @@
 
 [races.abomination]
 name = "Abomination"
-description = '''Humanoid creatures with 4 to 8 tentacles. 
+description = '''Humanoid creatures with 4 to 8 tentacles.
 '''
 
 
@@ -15,7 +15,7 @@ models = ["confusiator"]
 size = "Large"
 armor = [8, 6, 5, 4]
 cost.ip = 24
-description = '''Horrifying steampunk tank with a rotating turret with a beamweapon causing confusion 
+description = '''Horrifying steampunk tank with a rotating turret with a beamweapon causing confusion
 '''
 
 
@@ -148,7 +148,7 @@ models = ["frost88"]
 size = "Large"
 armor = [10, 8, 7, 6]
 cost.ip = 48
-description = '''Steampunk heavy armored vehicle, without a turret, but with two weapons firing forwards, a frost ray and water jet 
+description = '''Steampunk heavy armored vehicle, without a turret, but with two weapons firing forwards, a frost ray and water jet
 '''
 
 

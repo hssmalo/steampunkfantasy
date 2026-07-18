@@ -95,7 +95,7 @@ name = "Champion"
 models = ["champion"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor. 
+description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor.
 '''
 
 
