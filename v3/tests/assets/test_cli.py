@@ -344,3 +344,81 @@ def test_list_command_defaults_to_every_registered_kind(
     app(["assets", "list", "ork"], exit_on_error=False, result_action="return_value")
 
     assert "Ork" in capsys.readouterr().out
+
+
+# --- Cycle 9: refining an already-promoted Asset -----------------------------
+
+
+def _promote_asset(content: bytes = b"the committed asset") -> Path:
+    """Write a committed Asset for `grunt` under the test kind's layout."""
+    asset = config.paths.assets / "ork" / "_test" / "grunt.txt"
+    asset.parent.mkdir(parents=True, exist_ok=True)
+    asset.write_bytes(content)
+    return asset
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_command_rejects_both_from_and_promoted() -> None:
+    _promote_asset()
+    argv = [
+        "assets",
+        "refine",
+        "ork",
+        "_refinable",
+        "grunt",
+        "--from",
+        "2",
+        "--promoted",
+        "fix it",
+    ]
+    with pytest.raises(CycloptsError):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_command_requires_from_or_promoted() -> None:
+    argv = ["assets", "refine", "ork", "_refinable", "grunt", "fix it"]
+    with pytest.raises(CycloptsError):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_promoted_stages_the_asset_and_refines_it(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _promote_asset()
+    argv = [
+        "assets",
+        "refine",
+        "ork",
+        "_refinable",
+        "grunt",
+        "--promoted",
+        "make the hat brass",
+        "--count",
+        "1",
+    ]
+    app(argv, exit_on_error=False, result_action="return_value")
+
+    # `grunt.2` is already on disk, so the staged Asset takes 3 and its
+    # refinements hang off that.
+    candidates = config.paths.candidates / "ork" / "_test"
+    assert (candidates / "grunt.3.txt").read_bytes() == b"the committed asset"
+    assert (candidates / "grunt.3.1.txt").read_bytes() == b"one"
+
+    out = capsys.readouterr().out
+    assert "Copied promoted asset to grunt.3.txt" in out
+    # The hint interpolates the resolved Lineage; there is no --from to use.
+    assert "--pick 3.N" in out
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_promoted_errors_cleanly_without_an_asset(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    argv = ["assets", "refine", "ork", "_refinable", "grunt", "--promoted", "fix it"]
+
+    with pytest.raises(SystemExit):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+    assert "grunt.txt" in capsys.readouterr().err
