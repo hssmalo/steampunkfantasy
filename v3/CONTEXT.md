@@ -132,12 +132,16 @@ _Avoid_: nickname, label, title
 ### Game-data maintenance
 
 **Changelog**:
-A human-maintained record of deliberate balance changes to game data, one per
-data directory: `races/changelog.md` for Race edits and `rules/changelog.md` for
-rules edits. A Markdown table of **Date, Description, Why**. It records the
-*reasoning* behind a change — why a Unit, Model, Equipment, or Special was
-buffed, nerfed, or removed — not the mechanical edit itself (git already records
-that).
+A human-maintained record of deliberate changes to game data, one per data
+directory: `races/changelog.md` for Race edits (**Date, Race, Description,
+Why**) and `rules/changelog.md` for rules edits (**Date, Description, Why**).
+
+A change belongs in it when it is *intentional* **and** alters rules or gameplay
+identity — a Unit buffed, nerfed, or removed, but also one renamed (a player who
+fielded the Mothership needs to know where it went). Corrections that change no
+intent — spelling fixes, casing — are not Changelog material.
+
+It records the *reasoning*, not the mechanical edit (git already records that).
 _Avoid_: history, release notes, git log (git records the edit; the Changelog
 records the intent)
 
