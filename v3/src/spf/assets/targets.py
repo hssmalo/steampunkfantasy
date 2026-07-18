@@ -9,7 +9,9 @@ Pure: this module reads the Race TOML and nothing else. Checking what is
 actually on disk is `survey`'s job.
 """
 
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
+from typing import Protocol
 
 from spf import races
 from spf.assets.kinds import Kind, TargetLevel
@@ -26,41 +28,37 @@ class Target:
     level: TargetLevel
 
 
+class _Described(Protocol):
+    """The shape every level's entries share: a display name and a blurb."""
+
+    name: str
+    description: str
+
+
+# Every level resolves to a mapping of key to described entry, so the race
+# level -- a single object -- is wrapped in one to match. Insertion order is
+# the order Targets come back in: race, then units, then models.
+_LEVELS: dict[TargetLevel, Callable[[t.RaceName], Mapping[str, _Described]]] = {
+    "race": lambda race: {race: races.get_metadata(race)},
+    "unit": races.get_units,
+    "model": races.get_models,
+}
+
+
 def targets(kind: Kind, race: t.RaceName) -> list[Target]:
     """Return the Targets `kind` covers for `race`, race level first.
 
     `name` is the key that addresses the Target on the command line — the same
     one `promote` and `refine` take. Raises `ValueError` for an unknown race.
     """
-    found: list[Target] = []
-    if "race" in kind.targets:
-        metadata = races.get_metadata(race)  # raises ValueError for unknown race
-        found.append(
-            Target(
-                name=race,
-                human_name=metadata.name,
-                description=metadata.description,
-                level="race",
-            )
+    return [
+        Target(
+            name=name,
+            human_name=entry.name,
+            description=entry.description,
+            level=level,
         )
-    if "unit" in kind.targets:
-        found.extend(
-            Target(
-                name=name,
-                human_name=unit.name,
-                description=unit.description,
-                level="unit",
-            )
-            for name, unit in races.get_units(race).items()
-        )
-    if "model" in kind.targets:
-        found.extend(
-            Target(
-                name=name,
-                human_name=model.name,
-                description=model.description,
-                level="model",
-            )
-            for name, model in races.get_models(race).items()
-        )
-    return found
+        for level, getter in _LEVELS.items()
+        if level in kind.targets
+        for name, entry in getter(race).items()  # raises ValueError for unknown race
+    ]
