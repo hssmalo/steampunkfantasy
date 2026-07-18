@@ -127,6 +127,17 @@ def test_refine_command_writes_candidates_under_the_lineage() -> None:
     assert (candidates / "grunt.2.txt").read_bytes() == b"the original"
 
 
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_omits_the_negative_prompt_line_for_a_non_image_kind(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # `refine` serves every Kind; the Negative Prompt is an image concern, so
+    # naming its file during a lore or model refinement would be a lie.
+    app(_refine_argv("--count", "1"), exit_on_error=False, result_action="return_value")
+
+    assert "image-negative.txt" not in capsys.readouterr().out
+
+
 def test_refine_command_passes_the_correction_verbatim(
     refinable_registered_kind: Kind,
 ) -> None:

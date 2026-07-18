@@ -62,6 +62,22 @@ def _validate_kind(_type: type, value: str | None) -> None:
 Kind = Annotated[str, cyclopts.Parameter(validator=_validate_kind)]
 
 
+def _negative_prompt_echo() -> str:
+    """Return the `Negative:` line naming where the Service reads it (D7).
+
+    Echoed by path, not by content: unlike the composed positive prompt it is
+    static and version-controlled, so naming the file keeps it discoverable
+    without scrolling the varying prompt off screen. Shown project-relative
+    (as `race.py` does) — short enough to read and to retype.
+    """
+    path = config.assets.image.negative_prompt
+    try:
+        shown = str(path.relative_to(config.paths.project))
+    except ValueError:  # configured outside the project; absolute is all we have
+        shown = str(path)
+    return f"Negative: {shown}"
+
+
 def _validate_lineage(_type: type, value: str) -> None:
     """Reject a Lineage that is not a dotted 1-based index."""
     validate_lineage(value)  # raises ValueError describing the expected shape
@@ -226,8 +242,11 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
 
     # Show what is actually sent (dimmed), matching `image`; here it is just
-    # the Correction.
+    # the Correction. The Negative Prompt is an image concern, so name its file
+    # only when an image is what is being refined.
     stdout.print(correction, style="dim", markup=False)
+    if kind == "image":
+        stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
         refine(
@@ -286,8 +305,9 @@ def image(
     with no promoted Asset yet, the race-level image included. The two, and a
     named UNIT, are mutually exclusive.
 
-    The prompt is composed from `prompts/image.txt` plus the target's name
-    and description; a target without a description is a hard error.
+    The prompt is composed from the configured preamble file
+    (`assets.image.prompt`, by default `prompts/image.txt`) plus the target's
+    name and description; a target without a description is a hard error.
     """
     opts = opts or AssetOpts()
     kind = get_kind("image")
@@ -315,7 +335,7 @@ def _generate_image(
         )
         raise SystemExit(1)
 
-    system = (config.paths.prompts / "image.txt").read_text(encoding="utf-8")
+    system = config.assets.image.prompt.read_text(encoding="utf-8")
     prompt = f"Subject: {target.human_name}.\nDetails: {target.description}\n{system}"
 
     count, seed = opts.resolve()
@@ -323,6 +343,7 @@ def _generate_image(
 
     # Show the composed prompt (dimmed) before sending it to the Service.
     stdout.print(prompt, style="dim", markup=False)
+    stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
         generate(

@@ -159,7 +159,7 @@ name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "Medium"
 cost.cp = 8
-description = '''This is an illusion which like an elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
+description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
 '''
 
 

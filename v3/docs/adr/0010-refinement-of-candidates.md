@@ -135,3 +135,13 @@ Candidate twice reuses one server-side file rather than accumulating
   an already-promoted Asset (Refinement is closed over the candidates store);
   Refinement for the Lore and Model kinds (the protocol makes it possible,
   nothing implements it).
+
+## Amendment (2026-07-18) — the standing guardrail moved out of the Workflow
+
+Issue 50 makes the Negative Prompt a patched input, so "The negative prompt
+stays unpatched" above is no longer true. It remains a **standing guardrail**
+applied identically to every generation and Refinement — and a Correction is
+still always a positive statement, for exactly the reason given there. Only its
+home changed: it is authored in `prompts/image-negative.txt` rather than in
+each Workflow JSON, so tuning it is a one-file edit instead of a per-Workflow
+one. See [ADR 0009](0009-comfyui-image-service.md)'s fourth amendment.

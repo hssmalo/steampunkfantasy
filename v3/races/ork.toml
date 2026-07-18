@@ -14,7 +14,7 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
 cost.mp = 16
-description = "Bloodthirsty ork in rags wielding a napleonic style musket with a bajonet"
+description = "Bloodthirsty ork in leather rags wielding a napleonic style musket with a bajonet"
 
 
 [units.ork_infantry.shaken]
@@ -95,7 +95,7 @@ name = "Champion"
 models = ["champion"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor. 
+description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor.
 '''
 
 

@@ -25,11 +25,14 @@ from spf.assets import comfyui
 _FIXTURES = Path(__file__).parent / "fixtures"
 _MINI = _FIXTURES / "mini_workflow.json"
 _MINI_REFINE = _FIXTURES / "mini_refine_workflow.json"
+_NEGATIVE = _FIXTURES / "negative_prompt.txt"
+_NEGATIVE_TEXT = "a negative prompt from the file"
 _PNG = b"\x89PNG\r\n\x1a\n"
 
-# The fixture's KSampler and positive text node (see mini_workflow.json).
+# The fixture's KSampler and positive/negative text nodes (mini_workflow.json).
 _SAMPLER = "5"
 _POSITIVE = "2"
+_NEGATIVE_NODE = "3"
 
 
 def _one_image_outputs(name: str = "spf_00001_.png") -> dict[str, Any]:
@@ -124,6 +127,7 @@ def _service(
         "base_url": "http://server",
         "workflow_path": _MINI,
         "refine_workflow_path": _MINI_REFINE,
+        "negative_path": _NEGATIVE,
         "api_key_env": "",
         "timeout_s": 5,
     }
@@ -185,8 +189,9 @@ def test_patches_prompt_onto_positive_leaving_the_rest_authored(
     expected = random.Random(7).randrange(2**31)  # noqa: S311  independent truth
     assert graph[_SAMPLER]["inputs"]["seed"] == expected  # seed on the sampler
     assert graph[_POSITIVE]["inputs"]["text"] == "a brass rat soldier"
+    # The authored negative is replaced wholesale by the file's (issue 50, D1).
+    assert graph[_NEGATIVE_NODE]["inputs"]["text"] == _NEGATIVE_TEXT
     # Everything else stays exactly as authored (Decision 4).
-    assert graph["3"]["inputs"]["text"] == "a placeholder negative prompt"
     assert graph[_SAMPLER]["inputs"]["steps"] == 20
     assert graph[_SAMPLER]["inputs"]["cfg"] == 7.0
     assert graph["1"]["inputs"]["ckpt_name"] == "model.safetensors"
@@ -198,9 +203,10 @@ def test_follows_a_linked_seed_primitive(
     graph = {
         "s": {
             "class_type": "KSampler",
-            "inputs": {"seed": ["p", 0], "positive": ["t", 0]},
+            "inputs": {"seed": ["p", 0], "positive": ["t", 0], "negative": ["n", 0]},
         },
         "t": {"class_type": "CLIPTextEncode", "inputs": {"text": "placeholder"}},
+        "n": {"class_type": "CLIPTextEncode", "inputs": {"text": "placeholder"}},
         "p": {"class_type": "PrimitiveInt", "inputs": {"value": 0}},
     }
     scripted = _ScriptedComfy()
@@ -261,6 +267,50 @@ def test_rejects_a_non_text_positive_input(
         service.generate("prompt", 1, seed=7)
 
 
+def test_rejects_a_sampler_with_no_negative_link(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Having made the Negative Prompt required, silently discarding it is the
+    # worst outcome (issue 50, D4).
+    graph = json.loads(_MINI.read_text(encoding="utf-8"))
+    del graph[_SAMPLER]["inputs"]["negative"]
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="'negative' input is not a link"):
+        service.generate("prompt", 1, seed=7)
+
+
+def test_rejects_a_non_text_negative_input(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A guidance-distilled Workflow wires `negative` to a `ConditioningZeroOut`;
+    # that is rejected loudly rather than silently skipped (issue 50, D4).
+    graph = json.loads(_MINI.read_text(encoding="utf-8"))
+    graph[_NEGATIVE_NODE] = {"class_type": "ConditioningZeroOut", "inputs": {}}
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="negative node ConditioningZeroOut"):
+        service.generate("prompt", 1, seed=7)
+
+
+def test_requires_the_negative_prompt_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A missing file is an error, not a fall-through to the Workflow's
+    # authored negative (issue 50, D3).
+    scripted = _ScriptedComfy()
+    service = _service(scripted, monkeypatch, negative_path=tmp_path / "absent.txt")
+
+    with pytest.raises(FileNotFoundError):
+        service.generate("prompt", 1, seed=7)
+
+    assert scripted.submissions == []  # nothing was queued
+
+
 def test_patches_an_encoder_that_names_its_input_prompt(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -269,9 +319,13 @@ def test_patches_an_encoder_that_names_its_input_prompt(
     graph = {
         "s": {
             "class_type": "KSampler",
-            "inputs": {"seed": 0, "positive": ["t", 0]},
+            "inputs": {"seed": 0, "positive": ["t", 0], "negative": ["n", 0]},
         },
         "t": {
+            "class_type": "TextEncodeQwenImageEditPlus",
+            "inputs": {"prompt": "placeholder", "clip": ["c", 0]},
+        },
+        "n": {
             "class_type": "TextEncodeQwenImageEditPlus",
             "inputs": {"prompt": "placeholder", "clip": ["c", 0]},
         },
@@ -283,6 +337,7 @@ def test_patches_an_encoder_that_names_its_input_prompt(
 
     _, submitted = scripted.submissions[0]
     assert submitted["t"]["inputs"]["prompt"] == "make the hat brass instead of leather"
+    assert submitted["n"]["inputs"]["prompt"] == _NEGATIVE_TEXT
 
 
 # --- Cycle 3: happy-path flow (N blobs, in order) ---------------------------
@@ -475,6 +530,7 @@ def test_generate_raises_on_failed_status_carrying_node_errors(
         base_url="http://x",
         workflow_path=_MINI,
         refine_workflow_path=_MINI_REFINE,
+        negative_path=_NEGATIVE,
         api_key_env="",
         timeout_s=5,
     )
@@ -508,6 +564,7 @@ def test_generate_raises_on_poll_timeout(monkeypatch: pytest.MonkeyPatch) -> Non
         base_url="http://x",
         workflow_path=_MINI,
         refine_workflow_path=_MINI_REFINE,
+        negative_path=_NEGATIVE,
         api_key_env="",
         timeout_s=1,
     )
@@ -611,8 +668,9 @@ def test_refine_patches_the_correction_verbatim_as_the_positive_prompt(
     assert graph[_REFINE_POSITIVE]["inputs"]["prompt"] == correction
     expected = random.Random(7).randrange(2**31)  # noqa: S311  independent truth
     assert graph["9"]["inputs"]["seed"] == expected
-    # The standing guardrail and the authored stack are left alone.
-    assert graph["7"]["inputs"]["prompt"] == "a placeholder negative prompt"
+    # One Negative Prompt file serves both operations (issue 50, D2).
+    assert graph["7"]["inputs"]["prompt"] == _NEGATIVE_TEXT
+    # The authored stack is left alone.
     assert graph["1"]["inputs"]["unet_name"] == "edit-model.safetensors"
     assert graph["9"]["inputs"]["steps"] == 4
 

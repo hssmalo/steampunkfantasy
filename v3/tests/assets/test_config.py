@@ -6,7 +6,7 @@ import pytest
 from pydantic import ValidationError
 
 from spf.config import config
-from spf.schemas.config import ComfyUIConfig, ComfyUIEnvConfig
+from spf.schemas.config import ComfyUIConfig, ComfyUIEnvConfig, ImageAssetConfig
 
 
 def test_paths_resolve() -> None:
@@ -14,6 +14,23 @@ def test_paths_resolve() -> None:
     assert isinstance(config.paths.assets, Path)
     assert isinstance(config.paths.prompts, Path)
     assert isinstance(config.paths.workflows, Path)
+
+
+def test_image_prompt_paths_resolve() -> None:
+    # Both prompt files are configured paths, not hardcoded basenames, and
+    # interpolate under `paths.prompts` the way the Workflows do under
+    # `paths.workflows` (ADR 0009's fifth amendment).
+    image = config.assets.image
+    assert image.prompt.parent == config.paths.prompts
+    assert image.negative_prompt.parent == config.paths.prompts
+
+
+def test_image_asset_requires_both_prompt_paths() -> None:
+    # Neither key has a default: a missing one fails at load, not at generate.
+    with pytest.raises(ValidationError, match="negative_prompt"):
+        ImageAssetConfig(  # pyright: ignore[reportCallIssue]  the omission is the point
+            count=3, prompt=Path("image.txt"), comfyui=config.assets.image.comfyui
+        )
 
 
 def _env(**kw: str) -> ComfyUIEnvConfig:
