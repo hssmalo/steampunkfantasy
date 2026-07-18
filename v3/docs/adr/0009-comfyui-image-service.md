@@ -94,3 +94,24 @@ doc and decision log) existed only to answer the questions above. With every
 load-bearing hypothesis settled and recorded here, it has been **deleted**. Its
 findings live on in this ADR; the primary-source research it referenced remains at
 [`docs/research/comfyui.md`](../research/comfyui.md).
+
+## Amendment (2026-07-18) — the patch set grew for Refinement
+
+[ADR 0010](0010-refinement-of-candidates.md) adds **Refinement**, which submits
+a second Workflow per Environment through this same client. Two sentences above
+are now narrower than the code:
+
+- **The patch set is prompt + seed + the sole `LoadImage`.** "Patch only prompt
+  + seed" still describes *generate* exactly. A Refinement patches one further
+  input: the filename of the uploaded init image, on the graph's one
+  `LoadImage`. Model names, steps, cfg, LoRAs, and the negative prompt remain
+  untouched in both operations.
+- **The positive node's prompt input is `text` *or* `prompt`.** Following the
+  sampler's `positive` link and setting `text` was correct for every generate
+  graph, where the encoder is `CLIPTextEncode`. Qwen's edit encoder,
+  `TextEncodeQwenImageEditPlus`, declares the same input as `prompt`. That is
+  the node's schema, not an authoring choice, so the client tries both keys.
+
+Nothing else about this ADR changes. In particular the single-`_request` seam
+still holds: the init-image upload is `multipart/form-data` built on the
+stdlib, inside `_request`, rather than a new HTTP dependency.

@@ -1,0 +1,63 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "edit-model.safetensors" }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": { "clip_name": "text-encoder.safetensors" }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "vae.safetensors" }
+  },
+  "4": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "placeholder.png", "upload": "image" }
+  },
+  "5": {
+    "class_type": "ImageScale",
+    "inputs": {
+      "width": 1328,
+      "height": 1328,
+      "upscale_method": "lanczos",
+      "crop": "center",
+      "image": ["4", 0]
+    }
+  },
+  "6": {
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "inputs": { "prompt": "a placeholder correction", "clip": ["2", 0] }
+  },
+  "7": {
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "inputs": { "prompt": "a placeholder negative prompt", "clip": ["2", 0] }
+  },
+  "8": {
+    "class_type": "VAEEncode",
+    "inputs": { "pixels": ["5", 0], "vae": ["3", 0] }
+  },
+  "9": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 0,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": ["1", 0],
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "latent_image": ["8", 0]
+    }
+  },
+  "10": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["9", 0], "vae": ["3", 0] }
+  },
+  "11": {
+    "class_type": "SaveImage",
+    "inputs": { "filename_prefix": "spf", "images": ["10", 0] }
+  }
+}
