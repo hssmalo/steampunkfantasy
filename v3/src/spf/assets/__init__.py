@@ -8,15 +8,17 @@ records (`Kind`, `Service`) rather than per-kind code. The seams are
 `register_kind`.
 """
 
-from spf.assets.kinds import Kind, Service, get_kind, register_kind
-from spf.assets.spine import generate, promote, validate_lineage
+from spf.assets.kinds import Kind, Refiner, Service, get_kind, register_kind
+from spf.assets.spine import generate, promote, refine, validate_lineage
 
 __all__ = [
     "Kind",
+    "Refiner",
     "Service",
     "generate",
     "get_kind",
     "promote",
+    "refine",
     "register_kind",
     "validate_lineage",
 ]
