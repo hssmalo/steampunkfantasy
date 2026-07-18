@@ -13,9 +13,18 @@ from typing import Annotated
 import cyclopts
 
 from spf import races
-from spf.assets import generate, get_kind, promote, refine, validate_lineage
+from spf.assets import (
+    Target,
+    generate,
+    get_kind,
+    promote,
+    refine,
+    targets,
+    validate_lineage,
+)
 from spf.assets import image as _image  # noqa: F401  registers the "image" Kind
 from spf.assets.comfyui import ComfyUIError
+from spf.assets.kinds import Kind as AssetKind
 from spf.config import config
 from spf.console import stderr, stdout
 from spf.schemas import type_aliases as t
@@ -63,23 +72,21 @@ class AssetOpts:
         return self.count or config.assets.image.count, seed
 
 
-def _resolve_target(race: t.RaceName, unit: str | None) -> tuple[str, str, str]:
-    """Return `(name, human_name, description)` for a race or unit target.
+def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Target:
+    """Return the Target a command addresses: the race itself, or a unit of it.
 
     `race` must be a known race; `unit` (when given) a known unit key of it.
     Raises `ValueError` mirroring `get_race` for unknown names.
     """
-    if unit is None:
-        metadata = races.get_metadata(race)  # raises ValueError for unknown race
-        return race, metadata.name, metadata.description
-    units = races.get_units(race)  # raises ValueError for unknown race
-    try:
-        config_unit = units[unit]
-    except KeyError:
-        available = ", ".join(units)
-        msg = f"Unknown unit '{unit}' for race '{race}'. Available units: {available}"
-        raise ValueError(msg) from None
-    return unit, config_unit.name, config_unit.description
+    found = targets(kind, race)  # raises ValueError for unknown race
+    wanted = race if unit is None else unit
+    level = "race" if unit is None else "unit"
+    for target in found:
+        if target.level == level and target.name == wanted:
+            return target
+    available = ", ".join(t_.name for t_ in found if t_.level == "unit")
+    msg = f"Unknown unit '{unit}' for race '{race}'. Available units: {available}"
+    raise ValueError(msg)
 
 
 def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: Lineage) -> None:
@@ -168,21 +175,22 @@ def image(
             image(race, unit=unit_name, opts=opts)
         return
 
+    kind = get_kind("image")
     try:
-        name, human_name, description = _resolve_target(race, unit)
+        target = _resolve_target(kind, race, unit)
     except ValueError as err:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    target = unit or race
-    if not description.strip():
+    if not target.description.strip():
         stderr.print(
-            f"[red]Error:[/] no description for {target!r}, cannot generate an image"
+            f"[red]Error:[/] no description for {target.name!r}, "
+            "cannot generate an image"
         )
         raise SystemExit(1)
 
     system = (config.paths.prompts / "image.txt").read_text(encoding="utf-8")
-    prompt = f"Subject: {human_name}.\nDetails: {description}\n{system}"
+    prompt = f"Subject: {target.human_name}.\nDetails: {target.description}\n{system}"
 
     count, seed = opts.resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
@@ -192,10 +200,10 @@ def image(
 
     try:
         generate(
-            get_kind("image"),
+            kind,
             prompt,
             race=race,
-            name=name,
+            name=target.name,
             count=count,
             seed=seed,
             candidates_root=config.paths.candidates,
@@ -205,4 +213,6 @@ def image(
         stderr.print(f"[red]Error:[/] image generation failed: {err}")
         raise SystemExit(1) from None
 
-    stdout.print(f"Promote one with: spf assets promote {race} image {target} --pick N")
+    stdout.print(
+        f"Promote one with: spf assets promote {race} image {target.name} --pick N"
+    )
