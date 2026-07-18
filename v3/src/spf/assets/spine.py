@@ -65,6 +65,16 @@ def _asset_dir(root: Path, kind: Kind, *, race: str) -> Path:
     return directory
 
 
+def _asset_path(root: Path, kind: Kind, *, race: str, name: str) -> Path:
+    """Return the path of `name`'s committed Asset under `root` for `race`.
+
+    The Asset side of the layout, carrying no Lineage — that is what
+    distinguishes it from a Candidate. Shared by `promote`, `stage_promoted`,
+    and the Survey, so the three cannot drift apart.
+    """
+    return _asset_dir(root, kind, race=race) / f"{name}.{kind.extension}"
+
+
 def _next_index(directory: Path, kind: Kind, *, name: str) -> int:
     """Return the index a new Candidate of `name` should take.
 
@@ -222,7 +232,7 @@ def promote(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fou
         msg = f"No candidate to promote at {candidate} (pick {pick})"
         raise ValueError(msg)
 
-    asset = _asset_dir(assets_root, kind, race=race) / f"{name}.{kind.extension}"
+    asset = _asset_path(assets_root, kind, race=race, name=name)
     asset.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(candidate, asset)
     return asset
@@ -243,7 +253,7 @@ def stage_promoted(
     Candidate addressable by Lineage. Raises `ValueError` when the Target has
     no promoted Asset.
     """
-    asset = _asset_dir(assets_root, kind, race=race) / f"{name}.{kind.extension}"
+    asset = _asset_path(assets_root, kind, race=race, name=name)
     if not asset.is_file():
         msg = f"No promoted asset to stage at {asset}"
         raise ValueError(msg)
