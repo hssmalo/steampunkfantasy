@@ -249,7 +249,9 @@ _Avoid_: negative, neg prompt, exclusions, banned terms
 
 **Refinement**:
 Generating Candidates from an existing Candidate plus a Correction, rather than
-from a Race description. Chains, because the result is itself a Candidate.
+from a Race description. Chains, because the result is itself a Candidate. May
+also start from a promoted Asset: the Asset is staged into the Candidate store
+first, so the operation itself is unchanged.
 _Avoid_: edit, variation, touch-up, img2img (an implementation mechanism, not
 the domain operation)
 
@@ -264,7 +266,9 @@ _Avoid_: instruction, tweak, fix, note
 The dotted 1-based Candidate index (`2`, `2.1`, `2.1.3`) recording derivation:
 `2.1` is the first Candidate of the Refinement of Candidate `2`. Readable
 straight off the filename, so no provenance is recorded anywhere else. The
-coordinate both `refine --from` and `promote --pick` take.
+coordinate both `refine --from` and `promote --pick` take. Permanent: a Lineage
+is allocated past whatever already exists, never reclaimed and never
+renumbered, so it is a coordinate rather than a count of anything.
 _Avoid_: version, revision, generation, history
 
 **Target**:
