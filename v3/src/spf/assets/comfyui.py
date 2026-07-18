@@ -377,15 +377,16 @@ class ComfyUIService:
         *,
         base_url: str,
         workflow_path: Path,
+        refine_workflow_path: Path,
         api_key_env: str,
         timeout_s: int,
-        refine_workflow_path: Path | None = None,
     ) -> None:
         """Store one Environment's config; read nothing until a call.
 
-        `refine_workflow_path` may point at a file that does not exist — an
-        Environment without an authored refine Workflow generates fine, and
-        only fails, cleanly, if a Refinement is actually run.
+        Every Environment names both Workflows, but `refine_workflow_path` may
+        point at a file that does not exist — an Environment without an
+        authored refine Workflow generates fine, and only fails, cleanly, if a
+        Refinement is actually run.
         """
         self._base_url = base_url
         self._workflow_path = workflow_path
@@ -477,9 +478,6 @@ class ComfyUIService:
         a scene description alongside pulls it toward re-rendering rather than
         editing (ADR 0010). The init image is uploaded once for the batch.
         """
-        if self._refine_workflow_path is None:
-            msg = "no refine Workflow is configured for this Environment"
-            raise ComfyUIError(msg)
         graph = _load_workflow(self._refine_workflow_path)
         filename = _upload_image(self._base_url, self._api_key, blob=init)
         return self._run_jobs(

@@ -53,6 +53,15 @@ class AssetOpts:
     count: int | None = None
     seed: int | None = None
 
+    def resolve(self) -> tuple[int, int]:
+        """Return the `(count, seed)` to run with, filling in the defaults.
+
+        An unset `--seed` draws a fresh one so the run is still reproducible
+        after the fact: the caller prints it back for `--seed N`.
+        """
+        seed = self.seed if self.seed is not None else random.randrange(_SEED_BOUND)  # noqa: S311  seed, not cryptographic
+        return self.count or config.assets.image.count, seed
+
 
 def _resolve_target(race: t.RaceName, unit: str | None) -> tuple[str, str, str]:
     """Return `(name, human_name, description)` for a race or unit target.
@@ -111,12 +120,8 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     instructions. Results land under the derived name `NAME.LINEAGE`, so
     refining `2` writes `2.1`, `2.2`, … and the original is left alone.
     """
-    opts = opts or AssetOpts()
-    seed = (
-        opts.seed if opts.seed is not None else random.randrange(_SEED_BOUND)  # noqa: S311  seed, not cryptographic
-    )
+    count, seed = (opts or AssetOpts()).resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
-    count = opts.count or config.assets.image.count
 
     # Show what is actually sent (dimmed), matching `image`; here it is just
     # the Correction.
@@ -179,11 +184,8 @@ def image(
     system = (config.paths.prompts / "image.txt").read_text(encoding="utf-8")
     prompt = f"Subject: {human_name}.\nDetails: {description}\n{system}"
 
-    seed = (
-        opts.seed if opts.seed is not None else random.randrange(_SEED_BOUND)  # noqa: S311  seed, not cryptographic
-    )
+    count, seed = opts.resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
-    count = opts.count or config.assets.image.count
 
     # Show the composed prompt (dimmed) before sending it to the Service.
     stdout.print(prompt, style="dim", markup=False)

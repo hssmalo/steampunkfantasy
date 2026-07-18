@@ -123,6 +123,7 @@ def _service(
     opts: dict[str, Any] = {
         "base_url": "http://server",
         "workflow_path": _MINI,
+        "refine_workflow_path": _MINI_REFINE,
         "api_key_env": "",
         "timeout_s": 5,
     }
@@ -471,7 +472,11 @@ def test_generate_raises_on_failed_status_carrying_node_errors(
 
     monkeypatch.setattr(comfyui, "_request", fake)
     service = comfyui.ComfyUIService(
-        base_url="http://x", workflow_path=_MINI, api_key_env="", timeout_s=5
+        base_url="http://x",
+        workflow_path=_MINI,
+        refine_workflow_path=_MINI_REFINE,
+        api_key_env="",
+        timeout_s=5,
     )
 
     with pytest.raises(comfyui.ComfyUIError, match="OOM loading KSampler"):
@@ -500,7 +505,11 @@ def test_generate_raises_on_poll_timeout(monkeypatch: pytest.MonkeyPatch) -> Non
     monkeypatch.setattr(comfyui.time, "monotonic", lambda: next(clock))
     monkeypatch.setattr(comfyui.time, "sleep", lambda _: None)
     service = comfyui.ComfyUIService(
-        base_url="http://x", workflow_path=_MINI, api_key_env="", timeout_s=1
+        base_url="http://x",
+        workflow_path=_MINI,
+        refine_workflow_path=_MINI_REFINE,
+        api_key_env="",
+        timeout_s=1,
     )
 
     with pytest.raises(comfyui.ComfyUIError, match="timed out"):
@@ -557,21 +566,11 @@ _LOAD_IMAGE = "4"
 _REFINE_POSITIVE = "6"
 
 
-def _refine_service(
-    scripted: _ScriptedComfy,
-    monkeypatch: pytest.MonkeyPatch,
-    **kw: object,
-) -> comfyui.ComfyUIService:
-    return _service(
-        scripted, monkeypatch, **{"refine_workflow_path": _MINI_REFINE, **kw}
-    )
-
-
 def test_refine_uploads_the_init_image_and_points_load_image_at_it(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     scripted = _ScriptedComfy()
-    service = _refine_service(scripted, monkeypatch)
+    service = _service(scripted, monkeypatch)
 
     service.refine("make the hat brass", _INIT, 1, seed=7)
 
@@ -589,7 +588,7 @@ def test_refine_qualifies_the_init_filename_with_a_subfolder(
     # ComfyUI may store the upload under a subfolder; LoadImage then needs the
     # qualified "sub/name.png" form, not the bare name.
     scripted = _ScriptedComfy(subfolder="spf")
-    service = _refine_service(scripted, monkeypatch)
+    service = _service(scripted, monkeypatch)
 
     service.refine("make the hat brass", _INIT, 1, seed=7)
 
@@ -602,7 +601,7 @@ def test_refine_patches_the_correction_verbatim_as_the_positive_prompt(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     scripted = _ScriptedComfy()
-    service = _refine_service(scripted, monkeypatch)
+    service = _service(scripted, monkeypatch)
 
     service.refine("make the hat brass instead of leather", _INIT, 1, seed=7)
 
@@ -622,7 +621,7 @@ def test_refine_returns_one_blob_per_sub_seed_uploading_once(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     scripted = _ScriptedComfy()
-    service = _refine_service(scripted, monkeypatch)
+    service = _service(scripted, monkeypatch)
 
     blobs = service.refine("make the hat brass", _INIT, 3, seed=1)
 
@@ -638,7 +637,7 @@ def test_refine_streams_each_blob_to_on_result(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     scripted = _ScriptedComfy()
-    service = _refine_service(scripted, monkeypatch)
+    service = _service(scripted, monkeypatch)
     seen: list[bytes | str] = []
 
     blobs = service.refine(
@@ -655,9 +654,7 @@ def test_refine_rejects_a_workflow_with_no_load_image(
     del graph[_LOAD_IMAGE]
     workflow = tmp_path / "no-load-image.json"
     workflow.write_text(json.dumps(graph), encoding="utf-8")
-    service = _refine_service(
-        _ScriptedComfy(), monkeypatch, refine_workflow_path=workflow
-    )
+    service = _service(_ScriptedComfy(), monkeypatch, refine_workflow_path=workflow)
 
     with pytest.raises(comfyui.ComfyUIError, match="found 0"):
         service.refine("make the hat brass", _INIT, 1, seed=7)
@@ -672,9 +669,7 @@ def test_refine_rejects_a_workflow_with_two_load_images(
     graph["4b"] = dict(graph[_LOAD_IMAGE])
     workflow = tmp_path / "two-load-images.json"
     workflow.write_text(json.dumps(graph), encoding="utf-8")
-    service = _refine_service(
-        _ScriptedComfy(), monkeypatch, refine_workflow_path=workflow
-    )
+    service = _service(_ScriptedComfy(), monkeypatch, refine_workflow_path=workflow)
 
     with pytest.raises(comfyui.ComfyUIError, match="found 2"):
         service.refine("make the hat brass", _INIT, 1, seed=7)
