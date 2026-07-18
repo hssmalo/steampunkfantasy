@@ -234,9 +234,18 @@ _Avoid_: shell environment (unrelated), backend, target.
 A ComfyUI API-format graph (JSON) naming the nodes and models one generation
 runs. Per-Environment, and one each for generating and refining: `cloud.json`
 and `cloud-refine.json` are committed, the `local*` ones are per-machine. The
-Image Service patches only the positive prompt and a per-job seed into it —
-plus, for a refine Workflow, the sole `LoadImage`'s filename.
+Image Service patches only the positive prompt, the Negative Prompt, and the
+seed — plus, for a refine Workflow, the sole `LoadImage`'s filename.
 _Avoid_: pipeline, graph (in user-facing text).
+
+**Negative Prompt** (image generation):
+What an image should _not_ contain, authored in the file named by
+`assets.image.negative_prompt` (by default `prompts/image-negative.txt`) and
+patched into a Workflow's negative encoder at generation time. One file
+serves both Environments and both operations (generate and refine), and it
+**replaces** whatever the Workflow authored rather than adding to it. Required
+— a missing file is an error, not a fall-through.
+_Avoid_: negative, neg prompt, exclusions, banned terms
 
 **Refinement**:
 Generating Candidates from an existing Candidate plus a Correction, rather than
@@ -247,7 +256,8 @@ the domain operation)
 **Correction**:
 The verbatim edit prompt a Refinement applies ("make the hat brass instead of
 leather"). Used as the whole positive prompt — no description, no wrapper — and
-always phrased positively, since the negative prompt is never patched.
+always phrased positively: the Negative Prompt is a fixed, shared file, so a
+Correction has no per-call negative to carry an exclusion in.
 _Avoid_: instruction, tweak, fix, note
 
 **Lineage**:

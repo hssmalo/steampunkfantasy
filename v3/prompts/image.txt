@@ -1,4 +1,3 @@
 Environment: Detailed fantasy-steampunk for a tabletop wargame.
 Style: Painted concept-art, subject in action centered on a dimmed, war-torn background.
 Lighting: Dramatic.
-Do not include any text or logos.
