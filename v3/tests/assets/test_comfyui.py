@@ -267,6 +267,36 @@ def test_rejects_a_non_text_positive_input(
         service.generate("prompt", 1, seed=7)
 
 
+def test_rejects_a_sampler_with_no_negative_link(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Having made the Negative Prompt required, silently discarding it is the
+    # worst outcome (issue 50, D4).
+    graph = json.loads(_MINI.read_text(encoding="utf-8"))
+    del graph[_SAMPLER]["inputs"]["negative"]
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="'negative' input is not a link"):
+        service.generate("prompt", 1, seed=7)
+
+
+def test_rejects_a_non_text_negative_input(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A guidance-distilled Workflow wires `negative` to a `ConditioningZeroOut`;
+    # that is rejected loudly rather than silently skipped (issue 50, D4).
+    graph = json.loads(_MINI.read_text(encoding="utf-8"))
+    graph[_NEGATIVE_NODE] = {"class_type": "ConditioningZeroOut", "inputs": {}}
+    service = _service_for(
+        graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="negative node ConditioningZeroOut"):
+        service.generate("prompt", 1, seed=7)
+
+
 def test_patches_an_encoder_that_names_its_input_prompt(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
