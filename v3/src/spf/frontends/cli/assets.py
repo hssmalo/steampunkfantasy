@@ -34,6 +34,10 @@ from spf.schemas import type_aliases as t
 
 _SEED_BOUND = 2**31
 
+# UNIT, --all and --missing pick *which* Targets to generate for, so at most one
+# may be given. LimitedChoice() defaults to min=0, max=1: exactly that rule.
+_SELECTION = cyclopts.Group("Selection", validator=cyclopts.validators.LimitedChoice())
+
 
 def add_commands(app: cyclopts.App) -> None:
     """Add asset commands to the CLI."""
@@ -229,33 +233,64 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     )
 
 
+def _image_targets(
+    kind: AssetKind, race: t.RaceName, unit: str | None, *, all_: bool, missing: bool
+) -> list[Target]:
+    """Return the Targets one `image` invocation should generate for.
+
+    Exactly one selector applies, enforced by `_SELECTION` before we get here:
+    `--all` takes every Target, `--missing` every Target with no promoted Asset
+    (the race-level one included), and otherwise it is the single named Target.
+    """
+    if all_:
+        return targets(kind, race)
+    if missing:
+        found = survey(
+            kind,
+            race,
+            candidates_root=config.paths.candidates,
+            assets_root=config.paths.assets,
+        )
+        return [row.target for row in found.rows if row.asset is None]
+    return [_resolve_target(kind, race, unit)]
+
+
 def image(
     race: t.RaceName,
-    unit: str | None = None,
+    unit: Annotated[str | None, cyclopts.Parameter(group=_SELECTION)] = None,
     *,
+    all_: Annotated[bool, cyclopts.Parameter(name="--all", group=_SELECTION)] = False,
+    missing: Annotated[bool, cyclopts.Parameter(group=_SELECTION)] = False,
     opts: Annotated[AssetOpts | None, cyclopts.Parameter(name="*")] = None,
 ) -> None:
     """Generate image Candidates for a RACE, or a UNIT of it.
+
+    `--all` covers the race and every unit; `--missing` covers every Target
+    with no promoted Asset yet, the race-level image included. The two, and a
+    named UNIT, are mutually exclusive.
 
     The prompt is composed from `prompts/image.txt` plus the target's name
     and description; a target without a description is a hard error.
     """
     opts = opts or AssetOpts()
-
-    if unit == "all":
-        for unit_name in [None, *races.get_units(race)]:
-            if unit_name:
-                stdout.print(f"[green]{unit_name}[/]")
-            image(race, unit=unit_name, opts=opts)
-        return
-
     kind = get_kind("image")
+
     try:
-        target = _resolve_target(kind, race, unit)
+        selected = _image_targets(kind, race, unit, all_=all_, missing=missing)
     except ValueError as err:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
+    for target in selected:
+        if len(selected) > 1:
+            stdout.print(f"[green]{target.name}[/]")
+        _generate_image(kind, race, target, opts)
+
+
+def _generate_image(
+    kind: AssetKind, race: t.RaceName, target: Target, opts: AssetOpts
+) -> None:
+    """Generate Candidates for one Target, reporting each as it lands."""
     if not target.description.strip():
         stderr.print(
             f"[red]Error:[/] no description for {target.name!r}, "

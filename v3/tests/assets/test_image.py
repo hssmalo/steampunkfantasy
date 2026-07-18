@@ -58,6 +58,39 @@ movement_order = ["-", "-", "flee"]
 [equipment]
 """
 
+_DWARF_TOML = """\
+[races.dwarf]
+name = "Dwarf"
+description = "Stubborn engineers with brass-plated beards"
+
+[units.dwarf_grunt]
+race = "dwarf"
+name = "Dwarf Grunt"
+description = "A dwarf grunt swinging a riveted club"
+models = []
+size = "Small"
+[units.dwarf_grunt.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+[units.dwarf_grunt.orders]
+[units.dwarf_grunt.damage_tables]
+
+[units.dwarf_scout]
+race = "dwarf"
+name = "Dwarf Scout"
+description = "A wiry dwarf scout with a spyglass"
+models = []
+size = "Small"
+[units.dwarf_scout.shaken]
+speed = "slow"
+movement_order = ["-", "-", "flee"]
+[units.dwarf_scout.orders]
+[units.dwarf_scout.damage_tables]
+
+[models]
+[equipment]
+"""
+
 _GNOME_TOML = """\
 [races.gnome]
 name = "Gnome"
@@ -133,6 +166,7 @@ def _make_env(
     races.mkdir()
     (races / "ogre.toml").write_text(_OGRE_TOML, encoding="utf-8")
     (races / "gnome.toml").write_text(_GNOME_TOML, encoding="utf-8")
+    (races / "dwarf.toml").write_text(_DWARF_TOML, encoding="utf-8")
     prompts = tmp_path / "prompts"
     prompts.mkdir()
     (prompts / "image.txt").write_text("Preamble one.\ntwo.\n", encoding="utf-8")
@@ -311,3 +345,51 @@ def test_cli_unknown_unit_lists_available(
     err = capsys.readouterr().err
     assert "not_a_unit" in err
     assert "ogre_grunt" in err  # available units listed
+
+
+def test_cli_all_flag_covers_the_race_and_every_unit(image_env: _ImageEnv) -> None:
+    _run("assets", "image", "dwarf", "--all", "--seed", "5", "--count", "1")
+
+    images = image_env.candidates / "dwarf" / "images"
+    assert sorted(p.name for p in images.glob("*.png")) == [
+        "dwarf.1.png",
+        "dwarf_grunt.1.png",
+        "dwarf_scout.1.png",
+    ]
+
+
+def test_cli_missing_flag_skips_targets_that_already_have_assets(
+    image_env: _ImageEnv,
+) -> None:
+    assets = image_env.root / "assets" / "dwarf" / "images"
+    assets.mkdir(parents=True)
+    (assets / "dwarf_grunt.png").write_bytes(_PNG)
+
+    _run("assets", "image", "dwarf", "--missing", "--seed", "5", "--count", "1")
+
+    images = image_env.candidates / "dwarf" / "images"
+    # dwarf_grunt is already promoted; the race-level Target is included.
+    assert sorted(p.name for p in images.glob("*.png")) == [
+        "dwarf.1.png",
+        "dwarf_scout.1.png",
+    ]
+
+
+@pytest.mark.usefixtures("image_env")
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["assets", "image", "dwarf", "--all", "--missing"],
+        ["assets", "image", "dwarf", "dwarf_grunt", "--all"],
+    ],
+)
+def test_cli_selectors_are_mutually_exclusive(argv: list[str]) -> None:
+    with pytest.raises(CycloptsError, match=r"[Mm]utually exclusive"):
+        _run(*argv)
+
+
+@pytest.mark.usefixtures("image_env")
+def test_cli_magic_all_unit_is_gone() -> None:
+    # `image <race> all` used to mean --all; it is now just an unknown unit.
+    with pytest.raises(SystemExit):
+        _run("assets", "image", "dwarf", "all")
