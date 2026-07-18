@@ -271,13 +271,9 @@ def test_list_command_expands_lineages_under_candidates(
         line for line in out.splitlines() if line.strip().startswith("2")
     )
     # Numerically sorted: 10 sorts last, not straight after 1.
-    assert [part.split("\u2190")[0] for part in lineage_line.split()] == [
-        "2",
-        "4.1",
-        "10",
-    ]
+    assert [part.split()[0] for part in lineage_line.split(", ")] == ["2", "4.1", "10"]
     # The Asset is byte-identical to 4.1, so that is the one already promoted.
-    assert "4.1\u2190promoted" in lineage_line
+    assert "4.1 (promoted)" in lineage_line
 
 
 @pytest.mark.usefixtures("registered_kind")

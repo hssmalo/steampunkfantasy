@@ -127,24 +127,21 @@ def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Targ
 def _print_lineages(row: Coverage) -> None:
     """Print a row's Candidate Lineages, flat and numerically sorted."""
     parts = [
-        f"[green]{lineage}←promoted[/]" if lineage in row.promoted_from else lineage
+        f"[green]{lineage} (promoted)[/]" if lineage in row.promoted_from else lineage
         for lineage in row.candidates
     ]
-    stdout.print(f"      {'  '.join(parts)}", highlight=False, soft_wrap=True)
+    stdout.print(f"      {', '.join(parts)}", highlight=False, soft_wrap=True)
 
 
 def _print_coverage(row: Coverage) -> None:
     """Print one Coverage row: key first, human name dimmed, then status."""
-    # Covered and uncovered are a symmetric pair of one-column glyphs, so the
-    # status needs no padding of its own. Named escapes rather than literals:
-    # a bare check mark and ballot X are hard to tell apart in a diff.
     status = "[green]\N{CHECK MARK}[/]" if row.asset else "[red]\N{BALLOT X}[/]"
     count = f"{len(row.candidates)} candidates" if row.candidates else ""
     # The name columns pad the *plain* value before the markup wraps it:
     # padding an already-marked-up string counts the tag characters and
     # misaligns every column after it.
     stdout.print(
-        f"  - {row.target.name:<24} [dim]{row.target.human_name:<24}[/]"
+        f"  - {row.target.name:<32} [dim]{row.target.human_name:<32}[/]"
         f" {status} {count}",
         highlight=False,
         soft_wrap=True,  # a coverage row is scanned or piped, never reflowed

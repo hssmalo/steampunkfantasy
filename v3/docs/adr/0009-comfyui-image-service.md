@@ -145,6 +145,16 @@ set is now **prompt + negative prompt + seed + the sole `LoadImage`**.
 Model names, steps, cfg, and LoRAs remain untouched. The single `_request` seam
 and the stdlib-only constraint are unaffected.
 
+**The seeded text is English, and it holds.** The Workflows' embedded negatives
+were Chinese; the file was seeded with an English translation rather than the
+verbatim original, which carried a real risk — the Chinese string was the only
+negative ever validated against Qwen-Image, and this ADR renounces
+cross-environment reproducibility, so there was no cheap A/B to settle it.
+Discharged on 2026-07-18: the owner ran several generations and Refinements
+under the English file and judged it to work well. That is a spot-check, not a
+measurement — nobody compared the two strings head to head — so it is grounds
+for keeping English, not for asserting the translation is equivalent.
+
 ## Amendment (2026-07-18) — both prompt files are configured, not hardcoded
 
 Issue 50 first shipped the Negative Prompt as a hardcoded basename under
