@@ -90,16 +90,20 @@ class AssetOpts:
 def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Target:
     """Return the Target a command addresses: the race itself, or a unit of it.
 
-    `race` must be a known race; `unit` (when given) a known unit key of it.
+    `race` must be a known race; `unit` (when given) a known key of it.
     Raises `ValueError` mirroring `get_race` for unknown names.
+
+    Matching is by name across every level the Kind declares, rather than a
+    hardcoded race/unit fork, so a Kind that declares `model` resolves without
+    touching this helper. `targets()` yields the race level first, so a unit
+    keyed like its own race cannot shadow it.
     """
     found = targets(kind, race)  # raises ValueError for unknown race
     wanted = race if unit is None else unit
-    level = "race" if unit is None else "unit"
     for target in found:
-        if target.level == level and target.name == wanted:
+        if target.name == wanted:
             return target
-    available = ", ".join(t_.name for t_ in found if t_.level == "unit")
+    available = ", ".join(t_.name for t_ in found if t_.level != "race")
     msg = f"Unknown unit '{unit}' for race '{race}'. Available units: {available}"
     raise ValueError(msg)
 
