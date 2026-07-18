@@ -10,18 +10,15 @@ the only part that touches disk.
 """
 
 import hashlib
-import re
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from spf.assets.kinds import Kind
-from spf.assets.spine import _asset_dir
+from spf.assets.spine import _asset_dir, _asset_path, _split_lineage
 from spf.assets.targets import Target, targets
 from spf.config import config
 from spf.schemas import type_aliases as t
-
-_INDEX_PATTERN = re.compile(r"^[1-9][0-9]*$")
 
 
 @dataclass(frozen=True)
@@ -64,7 +61,7 @@ def survey(
     found = targets(kind, race)
     rows = []
     for target in found:
-        asset = _asset_for(asset_dir, kind, target)
+        asset = _asset_for(assets_root, kind, target, race=race)
         lineages = sorted(waiting.get(target.name, []), key=_lineage_key)
         rows.append(
             Coverage(
@@ -93,9 +90,9 @@ def survey(
     return Survey(rows=rows, orphans=orphans)
 
 
-def _asset_for(asset_dir: Path, kind: Kind, target: Target) -> Path | None:
+def _asset_for(root: Path, kind: Kind, target: Target, *, race: str) -> Path | None:
     """Return the committed Asset for `target`, or `None` when there is none."""
-    path = asset_dir / f"{target.name}.{kind.extension}"
+    path = _asset_path(root, kind, race=race, name=target.name)
     return path if path.is_file() else None
 
 
@@ -130,22 +127,6 @@ def _digest(path: Path) -> bytes:
 def _lineage_key(lineage: str) -> tuple[int, ...]:
     """Return the sort key for a Lineage: `2.1` sorts before `10`, not after."""
     return tuple(int(part) for part in lineage.split("."))
-
-
-def _split_lineage(stem: str) -> tuple[str, str] | None:
-    """Return `(target_name, lineage)` for a Candidate stem, or `None`.
-
-    Splits from the *right* on components that are whole 1-based indices, so a
-    Target name that itself ends in digits (`ork_char_b1`, `e34`) keeps them.
-    `None` means the stem carries no Lineage at all.
-    """
-    parts = stem.split(".")
-    cut = len(parts)
-    while cut > 1 and _INDEX_PATTERN.match(parts[cut - 1]):
-        cut -= 1
-    if cut == len(parts):
-        return None
-    return ".".join(parts[:cut]), ".".join(parts[cut:])
 
 
 def _candidates_by_name(candidate_dir: Path, kind: Kind) -> dict[str, list[str]]:

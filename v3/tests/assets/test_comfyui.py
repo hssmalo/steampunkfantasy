@@ -151,7 +151,7 @@ def _service_for(
     return _service(scripted, monkeypatch, workflow_path=workflow)
 
 
-# --- Cycle 1: sub-seed derivation (ported from PollinationsService) ---------
+# --- sub-seed derivation (ported from PollinationsService) ------------------
 
 
 def test_generate_derives_deterministic_distinct_seeds(
@@ -174,7 +174,7 @@ def test_generate_derives_deterministic_distinct_seeds(
     assert len(set(seeds_a)) == 3  # three distinct sub-seeds from one base
 
 
-# --- Cycle 2: graph-follow patching -----------------------------------------
+# --- graph-follow patching --------------------------------------------------
 
 
 def test_patches_prompt_onto_positive_leaving_the_rest_authored(
@@ -340,7 +340,7 @@ def test_patches_an_encoder_that_names_its_input_prompt(
     assert submitted["n"]["inputs"]["prompt"] == _NEGATIVE_TEXT
 
 
-# --- Cycle 3: happy-path flow (N blobs, in order) ---------------------------
+# --- happy-path flow (N blobs, in order) ------------------------------------
 
 
 def test_generate_returns_one_blob_per_job_in_order(
@@ -360,7 +360,7 @@ def test_generate_returns_one_blob_per_job_in_order(
     assert all(g["4"]["inputs"]["batch_size"] == 1 for _, g in scripted.submissions)
 
 
-# --- Cycle 4: poll try-both-and-cache ---------------------------------------
+# --- poll try-both-and-cache ------------------------------------------------
 
 
 def test_poll_tries_both_routes_then_caches_the_winner(
@@ -378,7 +378,7 @@ def test_poll_tries_both_routes_then_caches_the_winner(
     assert polls == ["/api/jobs/pid-1", "/history/pid-1", "/history/pid-2"]
 
 
-# --- Cycle 5: retry vs fail-fast --------------------------------------------
+# --- retry vs fail-fast -----------------------------------------------------
 
 
 class _FakeResponse:
@@ -441,7 +441,7 @@ def test_request_fails_fast_on_client_error(
     assert sleeps == []
 
 
-# --- Cycle 3: multipart upload of a Refinement's init image ------------------
+# --- multipart upload of a Refinement's init image --------------------------
 
 
 def _captured_multipart(
@@ -573,7 +573,7 @@ def test_generate_raises_on_poll_timeout(monkeypatch: pytest.MonkeyPatch) -> Non
         service.generate("a prompt", 1, seed=1)
 
 
-# --- Cycle 6: lazy API key --------------------------------------------------
+# --- lazy API key -----------------------------------------------------------
 
 
 def test_sends_api_key_header_when_env_var_is_set(
@@ -614,7 +614,7 @@ def test_api_key_is_read_lazily_at_generate_time(
     assert {key for _, key in scripted.calls} == {"exported-later"}
 
 
-# --- Cycle 5: refine (upload -> patch init image -> submit/poll/fetch) ------
+# --- refine (upload -> patch init image -> submit/poll/fetch) ---------------
 
 _INIT = _PNG + b"the candidate being refined"
 

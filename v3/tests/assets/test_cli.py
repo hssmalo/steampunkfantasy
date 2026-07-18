@@ -1,11 +1,14 @@
 """S5: the shared `spf assets promote` CLI command over a throwaway kind."""
 
+import re
+from collections.abc import Callable, Sequence
 from pathlib import Path
 
 import pytest
 from cyclopts.exceptions import CycloptsError
 
 from spf.assets import Kind, generate, promote
+from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
@@ -81,7 +84,7 @@ def test_promote_command_unknown_kind_errors(
         )
 
 
-# --- Cycle 8: the refine command --------------------------------------------
+# --- the refine command -----------------------------------------------------
 
 
 @pytest.fixture
@@ -344,3 +347,150 @@ def test_list_command_defaults_to_every_registered_kind(
     app(["assets", "list", "ork"], exit_on_error=False, result_action="return_value")
 
     assert "Ork" in capsys.readouterr().out
+
+
+# --- refining an already-promoted Asset -------------------------------------
+
+
+def _promote_asset(content: bytes = b"the committed asset") -> Path:
+    """Write a committed Asset for `grunt` under the test kind's layout."""
+    asset = config.paths.assets / "ork" / "_test" / "grunt.txt"
+    asset.parent.mkdir(parents=True, exist_ok=True)
+    asset.write_bytes(content)
+    return asset
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_command_rejects_both_from_and_promoted() -> None:
+    _promote_asset()
+    argv = [
+        "assets",
+        "refine",
+        "ork",
+        "_refinable",
+        "grunt",
+        "--from",
+        "2",
+        "--promoted",
+        "fix it",
+    ]
+    with pytest.raises(CycloptsError):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_command_requires_from_or_promoted() -> None:
+    argv = ["assets", "refine", "ork", "_refinable", "grunt", "fix it"]
+    with pytest.raises(CycloptsError):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_promoted_stages_the_asset_and_refines_it(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _promote_asset()
+    argv = [
+        "assets",
+        "refine",
+        "ork",
+        "_refinable",
+        "grunt",
+        "--promoted",
+        "make the hat brass",
+        "--count",
+        "1",
+    ]
+    app(argv, exit_on_error=False, result_action="return_value")
+
+    # `grunt.2` is already on disk, so the staged Asset takes 3 and its
+    # refinements hang off that.
+    candidates = config.paths.candidates / "ork" / "_test"
+    assert (candidates / "grunt.3.txt").read_bytes() == b"the committed asset"
+    assert (candidates / "grunt.3.1.txt").read_bytes() == b"one"
+
+    out = capsys.readouterr().out
+    assert "Copied promoted asset to grunt.3.txt" in out
+    # The hint interpolates the resolved Lineage; there is no --from to use.
+    assert "--pick 3.N" in out
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_promoted_errors_cleanly_without_an_asset(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    argv = ["assets", "refine", "ork", "_refinable", "grunt", "--promoted", "fix it"]
+
+    with pytest.raises(SystemExit):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+    assert "grunt.txt" in capsys.readouterr().err
+
+
+# --- elapsed time per Candidate ---------------------------------------------
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_command_reports_elapsed_time_per_candidate(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # The shape, never a duration: a real timing assertion would need a sleep
+    # to be meaningful, which buys nothing.
+    app(_refine_argv("--count", "2"), exit_on_error=False, result_action="return_value")
+
+    wrote = [
+        line
+        for line in capsys.readouterr().out.splitlines()
+        if line.startswith("Wrote")
+    ]
+    assert len(wrote) == 2
+    assert all(re.fullmatch(r"Wrote .* \(\d+\.\ds\)", line) for line in wrote)
+
+
+def test_refine_command_survives_a_service_raising_mid_batch(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # The stopwatch wraps the whole batch, so a Service dying part-way through
+    # it must still leave the Candidates that did land reported, and the
+    # failure surfacing as the ordinary error line.
+    class HalfwayFailingRefiner(FakeRefiner):
+        """Yield every Candidate but the last, then lose the ComfyUI queue."""
+
+        def refine(
+            self,
+            source: str,
+            init: bytes,
+            count: int,
+            *,
+            seed: int | None = None,
+            on_result: Callable[[bytes | str], None] | None = None,
+        ) -> Sequence[bytes | str]:
+            super().refine(source, init, count - 1, seed=seed, on_result=on_result)
+            msg = "the queue went away"
+            raise ComfyUIError(msg)
+
+    kind = Kind(
+        name="_refinable",
+        service=HalfwayFailingRefiner(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+    )
+    monkeypatch.setitem(KINDS, kind.name, kind)
+    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
+    candidates = config.paths.candidates / "ork" / "_test"
+    candidates.mkdir(parents=True)
+    (candidates / "grunt.2.txt").write_bytes(b"the original")
+
+    with pytest.raises(SystemExit):
+        app(
+            _refine_argv("--count", "2"),
+            exit_on_error=False,
+            result_action="return_value",
+        )
+
+    captured = capsys.readouterr()
+    # The Candidate that did land is still reported, and the failure surfaces
+    # as the ordinary error line rather than a timer traceback.
+    assert "Wrote" in captured.out
+    assert "the queue went away" in captured.err

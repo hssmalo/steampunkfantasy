@@ -7,11 +7,15 @@ subcommands accept, and the first concrete generate subcommand,
 """
 
 import random
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Annotated
 
 import cyclopts
 import pydantic
+from codetiming import Timer
 
 from spf import races
 from spf.assets import (
@@ -21,6 +25,7 @@ from spf.assets import (
     get_kind,
     promote,
     refine,
+    stage_promoted,
     survey,
     targets,
     validate_lineage,
@@ -38,6 +43,13 @@ _SEED_BOUND = 2**31
 # UNIT, --all and --missing pick *which* Targets to generate for, so at most one
 # may be given. LimitedChoice() defaults to min=0, max=1: exactly that rule.
 _SELECTION = cyclopts.Group("Selection", validator=cyclopts.validators.LimitedChoice())
+
+# `refine` always needs a Candidate to start from, and --from and --promoted are
+# the two ways to name one — so unlike _SELECTION this group takes min=1,
+# requiring exactly one rather than at most one.
+_SOURCE = cyclopts.Group(
+    "Source", validator=cyclopts.validators.LimitedChoice(min=1, max=1)
+)
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -78,8 +90,14 @@ def _negative_prompt_echo() -> str:
     return f"Negative: {shown}"
 
 
-def _validate_lineage(_type: type, value: str) -> None:
-    """Reject a Lineage that is not a dotted 1-based index."""
+def _validate_lineage(_type: type, value: str | None) -> None:
+    """Reject a Lineage that is not a dotted 1-based index.
+
+    `None` is an omitted optional `--from`, which `refine --promoted` resolves
+    for itself — the validator must let it through rather than parse it.
+    """
+    if value is None:
+        return
     validate_lineage(value)  # raises ValueError describing the expected shape
 
 
@@ -218,13 +236,73 @@ def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: Lineage) -> 
     )
 
 
+@contextmanager
+def _timed_candidates() -> Iterator[Callable[[Path], None]]:
+    """Yield an `on_candidate` reporting each Candidate with its elapsed time.
+
+    The interval is the gap between two Service callbacks, so it is stopped and
+    restarted per candidate rather than wrapped in a scope of its own. A job
+    yielding several images reports the elapsed time against the first.
+    """
+    timer = Timer(logger=None)
+
+    def report(path: Path) -> None:
+        stdout.print(
+            f"Wrote {path} ({timer.stop():.1f}s)",
+            highlight=False,
+            soft_wrap=True,  # a path is copied or piped, never reflowed
+        )
+        timer.start()
+
+    timer.start()
+    try:
+        yield report
+    finally:
+        # `report` restarts the timer after the last Candidate and the Service
+        # can raise mid-batch, so the timer is always still running here. The
+        # Timer is per-context, so stopping it is hygiene rather than a fix for
+        # anything observable.
+        timer.stop()
+
+
+def _refine_source(
+    kind: AssetKind, *, race: t.RaceName, name: str, from_: str | None, promoted: bool
+) -> str:
+    """Return the Lineage a refinement starts from, staging the Asset if asked.
+
+    With `--promoted` the committed Asset is copied back into the Candidate
+    store first and reported by name, so the refinement itself stays the
+    ordinary Candidate-to-Candidate operation. Raises `ValueError` when there
+    is no promoted Asset to stage.
+    """
+    if not promoted:
+        if from_ is None:
+            # Narrows `from_` to `str`; _SOURCE already rules this out.
+            msg = "either --from or --promoted is required"
+            raise ValueError(msg)
+        return from_
+
+    lineage = stage_promoted(
+        kind,
+        race=race,
+        name=name,
+        candidates_root=config.paths.candidates,
+        assets_root=config.paths.assets,
+    )
+    stdout.print(f"Copied promoted asset to {name}.{lineage}.{kind.extension}")
+    return lineage
+
+
 def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opts
     race: t.RaceName,
     kind: Kind,
     name: str,
     correction: str,
     *,
-    from_: Annotated[Lineage, cyclopts.Parameter(name="--from")],
+    from_: Annotated[
+        Lineage | None, cyclopts.Parameter(name="--from", group=_SOURCE)
+    ] = None,
+    promoted: Annotated[bool, cyclopts.Parameter(group=_SOURCE)] = False,
     opts: Annotated[AssetOpts | None, cyclopts.Parameter(name="*")] = None,
 ) -> None:
     """Refine an existing Candidate by applying a CORRECTION to it.
@@ -232,13 +310,16 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     RACE is the race the Asset belongs to, KIND its Asset kind, NAME its base
     file name, and CORRECTION the edit to apply ("make the hat brass instead
     of leather"). `--from` picks the Candidate to refine by Lineage, the same
-    dotted index `promote --pick` takes.
+    dotted index `promote --pick` takes; `--promoted` instead refines the
+    committed Asset, staging a copy of it into the Candidate store first.
+    Exactly one of the two is required.
 
     The Correction is the whole prompt — no `prompts/image.txt` preamble and no
     race description, because an instruction-edit model is trained on
     instructions. Results land under the derived name `NAME.LINEAGE`, so
     refining `2` writes `2.1`, `2.2`, … and the original is left alone.
     """
+    asset_kind = get_kind(kind)
     count, seed = (opts or AssetOpts()).resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
 
@@ -246,27 +327,33 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     # the Correction. The Negative Prompt is an image concern, so name its file
     # only when an image is what is being refined.
     stdout.print(correction, style="dim", markup=False)
-    if kind == "image":
+    if asset_kind.name == "image":
         stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
-        refine(
-            get_kind(kind),
-            correction,
-            race=race,
-            name=name,
-            lineage=from_,
-            count=count,
-            seed=seed,
-            candidates_root=config.paths.candidates,
-            on_candidate=lambda path: stdout.print(f"Wrote {path}"),
+        lineage = _refine_source(
+            asset_kind, race=race, name=name, from_=from_, promoted=promoted
         )
+        with _timed_candidates() as on_candidate:
+            refine(
+                asset_kind,
+                correction,
+                race=race,
+                name=name,
+                lineage=lineage,
+                count=count,
+                seed=seed,
+                candidates_root=config.paths.candidates,
+                on_candidate=on_candidate,
+            )
     except (OSError, ComfyUIError, TypeError, ValueError) as err:
         stderr.print(f"[red]Error:[/] refinement failed: {err}")
         raise SystemExit(1) from None
 
+    # The *resolved* Lineage: with --promoted there is no `from_` to name, and
+    # interpolating it would render `--pick None.N`.
     stdout.print(
-        f"Promote one with: spf assets promote {race} {kind} {name} --pick {from_}.N"
+        f"Promote one with: spf assets promote {race} {kind} {name} --pick {lineage}.N"
     )
 
 
@@ -347,16 +434,17 @@ def _generate_image(
     stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
-        generate(
-            kind,
-            prompt,
-            race=race,
-            name=target.name,
-            count=count,
-            seed=seed,
-            candidates_root=config.paths.candidates,
-            on_candidate=lambda path: stdout.print(f"Wrote {path}"),
-        )
+        with _timed_candidates() as on_candidate:
+            generate(
+                kind,
+                prompt,
+                race=race,
+                name=target.name,
+                count=count,
+                seed=seed,
+                candidates_root=config.paths.candidates,
+                on_candidate=on_candidate,
+            )
     except (OSError, ComfyUIError) as err:
         stderr.print(f"[red]Error:[/] image generation failed: {err}")
         raise SystemExit(1) from None
