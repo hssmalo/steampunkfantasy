@@ -266,7 +266,7 @@ def _timed_candidates() -> Iterator[Callable[[Path], None]]:
 
 
 def _refine_source(
-    kind: str, *, race: t.RaceName, name: str, from_: str | None, promoted: bool
+    kind: AssetKind, *, race: t.RaceName, name: str, from_: str | None, promoted: bool
 ) -> str:
     """Return the Lineage a refinement starts from, staging the Asset if asked.
 
@@ -277,21 +277,19 @@ def _refine_source(
     """
     if not promoted:
         if from_ is None:
-            # _SOURCE already requires exactly one of the two, so this guards
-            # that group being loosened, not a path a user can reach.
+            # Narrows `from_` to `str`; _SOURCE already rules this out.
             msg = "either --from or --promoted is required"
             raise ValueError(msg)
         return from_
 
-    asset_kind = get_kind(kind)
     lineage = stage_promoted(
-        asset_kind,
+        kind,
         race=race,
         name=name,
         candidates_root=config.paths.candidates,
         assets_root=config.paths.assets,
     )
-    stdout.print(f"Copied promoted asset to {name}.{lineage}.{asset_kind.extension}")
+    stdout.print(f"Copied promoted asset to {name}.{lineage}.{kind.extension}")
     return lineage
 
 
@@ -321,6 +319,7 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     instructions. Results land under the derived name `NAME.LINEAGE`, so
     refining `2` writes `2.1`, `2.2`, … and the original is left alone.
     """
+    asset_kind = get_kind(kind)
     count, seed = (opts or AssetOpts()).resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
 
@@ -328,16 +327,16 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     # the Correction. The Negative Prompt is an image concern, so name its file
     # only when an image is what is being refined.
     stdout.print(correction, style="dim", markup=False)
-    if kind == "image":
+    if asset_kind.name == "image":
         stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
         lineage = _refine_source(
-            kind, race=race, name=name, from_=from_, promoted=promoted
+            asset_kind, race=race, name=name, from_=from_, promoted=promoted
         )
         with _timed_candidates() as on_candidate:
             refine(
-                get_kind(kind),
+                asset_kind,
                 correction,
                 race=race,
                 name=name,
