@@ -104,8 +104,9 @@ are now narrower than the code:
 - **The patch set is prompt + seed + the sole `LoadImage`.** "Patch only prompt
   + seed" still describes *generate* exactly. A Refinement patches one further
   input: the filename of the uploaded init image, on the graph's one
-  `LoadImage`. Model names, steps, cfg, LoRAs, and the negative prompt remain
-  untouched in both operations.
+  `LoadImage`. Model names, steps, cfg, and LoRAs remain untouched in both
+  operations. (The negative prompt did too when this was written; the amendment
+  below overturns that.)
 - **The positive node's prompt input is `text` *or* `prompt`.** Following the
   sampler's `positive` link and setting `text` was correct for every generate
   graph, where the encoder is `CLIPTextEncode`. Qwen's edit encoder,
@@ -115,3 +116,30 @@ are now narrower than the code:
 Nothing else about this ADR changes. In particular the single-`_request` seam
 still holds: the init-image upload is `multipart/form-data` built on the
 stdlib, inside `_request`, rather than a new HTTP dependency.
+
+## Amendment (2026-07-18) — the Negative Prompt is authored, not embedded
+
+Issue 50 overturns this ADR's "Patch only prompt + seed" and the amendment
+above's "the negative prompt remain[s] untouched in both operations". The patch
+set is now **prompt + negative prompt + seed + the sole `LoadImage`**.
+
+- **The Negative Prompt lives in `prompts/image-negative.txt`**, resolved under
+  `paths.prompts`, and is **required** — a missing file is a hard error, not a
+  fallback to the Workflow's authored value.
+- **It replaces, it does not append.** Whatever the Workflow authors on its
+  negative encoder is overwritten wholesale, exactly as the positive already
+  is. The point is that the effective Negative Prompt is readable in one
+  version-controlled file rather than being a function of a committed Workflow
+  and a gitignored per-machine one.
+- **One file serves both operations and both Environments.** ADR 0010's reason
+  for a Refinement dropping the positive preamble does not extend to a
+  constraint on output quality.
+- **An unpatchable negative is a hard error**, symmetric with the positive.
+  This rejects guidance-distilled Workflows that wire `negative` to a
+  `ConditioningZeroOut` — notably FLUX.1 schnell, named above as the
+  licensing-clean Cloud option. Neither shipped Environment does this today;
+  the first Workflow that needs it decides then, loudly, rather than us
+  shipping a silent skip that would hide real misconfigurations meanwhile.
+
+Model names, steps, cfg, and LoRAs remain untouched. The single `_request` seam
+and the stdlib-only constraint are unaffected.
