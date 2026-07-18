@@ -26,11 +26,13 @@ timeout_s = 1200
 [assets.image.comfyui.local]
 base_url = "http://127.0.0.1:8188"
 workflow = "{paths.workflows}/local.json" # gitignored per-machine
+refine_workflow = "{paths.workflows}/local-refine.json" # gitignored per-machine
 api_key_env = "" # empty => no auth header
 
 [assets.image.comfyui.cloud]
 base_url = "https://cloud.comfy.org"
 workflow = "{paths.workflows}/cloud.json"
+refine_workflow = "{paths.workflows}/cloud-refine.json"
 api_key_env = "SPF_COMFYUI_API_KEY"
 
 [assets.model]

@@ -37,6 +37,7 @@ class ComfyUIEnvConfig(StrictModel):
 
     base_url: str
     workflow: Path
+    refine_workflow: Path
     api_key_env: str = ""
 
 
