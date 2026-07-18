@@ -179,3 +179,17 @@ def test_refine_command_errors_cleanly_on_a_kind_that_cannot_refine(
         app(argv, exit_on_error=False, result_action="return_value")
 
     assert "does not support refinement" in capsys.readouterr().err
+
+
+def test_image_command_errors_cleanly_on_an_unknown_unit(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    argv = ["assets", "image", "ork", "nosuchunit"]
+
+    with pytest.raises(SystemExit):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+    # Lists what the caller could have meant, rather than just rejecting it.
+    err = capsys.readouterr().err
+    assert "nosuchunit" in err
+    assert "grunt" in err
