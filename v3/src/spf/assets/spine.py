@@ -19,6 +19,7 @@ from spf.assets.kinds import Kind, Refiner
 from spf.config import config
 
 LINEAGE_PATTERN = re.compile(r"^[1-9][0-9]*(\.[1-9][0-9]*)*$")
+_INDEX_PATTERN = re.compile(r"^[1-9][0-9]*$")
 
 
 def validate_lineage(lineage: str) -> str:
@@ -36,6 +37,22 @@ def validate_lineage(lineage: str) -> str:
         )
         raise ValueError(msg)
     return lineage
+
+
+def _split_lineage(stem: str) -> tuple[str, str] | None:
+    """Return `(target_name, lineage)` for a Candidate stem, or `None`.
+
+    Splits from the *right* on components that are whole 1-based indices, so a
+    Target name that itself ends in digits (`ork_char_b1`, `e34`) keeps them.
+    `None` means the stem carries no Lineage at all.
+    """
+    parts = stem.split(".")
+    cut = len(parts)
+    while cut > 1 and _INDEX_PATTERN.match(parts[cut - 1]):
+        cut -= 1
+    if cut == len(parts):
+        return None
+    return ".".join(parts[:cut]), ".".join(parts[cut:])
 
 
 def _asset_dir(root: Path, kind: Kind, *, race: str) -> Path:
