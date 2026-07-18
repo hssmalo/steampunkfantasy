@@ -9,9 +9,9 @@ looking at the filesystem — the missing things are, by definition, not there.
 $ spf assets list goblin
 Goblin
   Image
-  - goblin                   Goblin                   missing
+  - goblin                   Goblin                   ✗
   - goblin_infantry          Goblin Infantry          ✓
-  - giant_snake_cavalry      Giant Snake Cavalry      missing
+  - giant_snake_cavalry      Giant Snake Cavalry      ✗
   …
   Unknown
   - gigant_snake_cavalry.png
@@ -35,7 +35,7 @@ next `spf assets image` or `promote` command.
 Rejected: a filesystem inventory (cannot answer "what's missing", and a Target
 renamed in TOML looks like a covered Target rather than a problem); a summary
 count per race (the owner explicitly chose full detail — ~120 lines, ~82%
-`missing` — because the detail *is* the worklist).
+uncovered — because the detail *is* the worklist).
 
 ## The Target set is declared per Kind
 

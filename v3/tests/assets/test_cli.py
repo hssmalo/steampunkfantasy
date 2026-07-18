@@ -236,9 +236,12 @@ def test_list_command_reports_coverage_for_one_race(
     assert "Ork" in out  # the race heading always prints
     grunt_line = next(line for line in out.splitlines() if "grunt" in line)
     assert "2 candidates" in grunt_line
+    # Covered and uncovered read as a symmetric pair of glyphs, not a glyph
+    # opposed to a word.
+    assert "\N{CHECK MARK}" in grunt_line
     # A Target with neither Asset nor Candidates still gets a row.
     troll_line = next(line for line in out.splitlines() if "troll" in line)
-    assert "missing" in troll_line
+    assert "\N{BALLOT X}" in troll_line
 
 
 def test_list_command_expands_lineages_under_candidates(

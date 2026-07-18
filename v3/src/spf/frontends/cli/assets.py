@@ -135,10 +135,14 @@ def _print_lineages(row: Coverage) -> None:
 
 def _print_coverage(row: Coverage) -> None:
     """Print one Coverage row: key first, human name dimmed, then status."""
-    # Pad the *plain* text, then wrap it in markup: padding a marked-up string
-    # counts the tag characters and misaligns every column.
-    status = "[green]✓[/]      " if row.asset else "[red]missing[/]"
+    # Covered and uncovered are a symmetric pair of one-column glyphs, so the
+    # status needs no padding of its own. Named escapes rather than literals:
+    # a bare check mark and ballot X are hard to tell apart in a diff.
+    status = "[green]\N{CHECK MARK}[/]" if row.asset else "[red]\N{BALLOT X}[/]"
     count = f"{len(row.candidates)} candidates" if row.candidates else ""
+    # The name columns pad the *plain* value before the markup wraps it:
+    # padding an already-marked-up string counts the tag characters and
+    # misaligns every column after it.
     stdout.print(
         f"  - {row.target.name:<24} [dim]{row.target.human_name:<24}[/]"
         f" {status} {count}",
