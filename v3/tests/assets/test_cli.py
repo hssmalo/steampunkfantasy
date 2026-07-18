@@ -264,3 +264,39 @@ def test_list_command_expands_lineages_under_candidates(
     ]
     # The Asset is byte-identical to 4.1, so that is the one already promoted.
     assert "4.1\u2190promoted" in lineage_line
+
+
+@pytest.mark.usefixtures("registered_kind")
+def test_list_command_without_a_race_covers_every_validating_race(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    app(
+        ["assets", "list", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    # Full detail for every race, not a summary (D12).
+    assert "Ork" in out
+    assert "Goblin" in out
+    assert "grunt" in out
+
+
+def test_list_command_surfaces_orphans_under_unknown(
+    registered_kind: Kind,  # noqa: ARG001  registers the _test kind and tmp roots
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    assets = config.paths.assets / "ork" / "_test"
+    assets.mkdir(parents=True)
+    (assets / "gigant_snake_cavalry.txt").write_bytes(b"typo")
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    assert "Unknown" in out
+    assert "gigant_snake_cavalry.txt" in out
