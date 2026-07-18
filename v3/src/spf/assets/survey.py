@@ -84,6 +84,12 @@ def survey(
         for path in sorted(asset_dir.glob(f"*.{kind.extension}"))
         if path.name[: -len(kind.extension) - 1] not in known
     ]
+    if with_candidates:
+        orphans += [
+            candidate_dir / f"{name}.{lineage}.{kind.extension}"
+            for name in sorted(waiting.keys() - known)
+            for lineage in sorted(waiting[name], key=_lineage_key)
+        ]
     return Survey(rows=rows, orphans=orphans)
 
 

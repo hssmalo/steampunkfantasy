@@ -122,3 +122,49 @@ def test_survey_skips_provenance_unless_candidates_are_asked_for(
     by_name = {row.target.name: row for row in found.rows}
     assert by_name["grunt"].promoted_from == []
     assert by_name["grunt"].candidates == ["2"]
+
+
+def test_survey_reports_every_candidate_matching_the_asset(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    # Seeds are deterministic, so two Candidates can be byte-identical. Both are
+    # reported rather than one guessed (ADR 0012).
+    assets_root, candidates_root = stores
+    _write(candidates_root, "grunt.2.txt", b"identical")
+    _write(candidates_root, "grunt.5.txt", b"identical")
+    _write(candidates_root, "grunt.3.txt", b"different")
+    _write(assets_root, "grunt.txt", b"identical")
+
+    found = survey(
+        test_kind,
+        "ork",
+        assets_root=assets_root,
+        candidates_root=candidates_root,
+        with_candidates=True,
+    )
+
+    by_name = {row.target.name: row for row in found.rows}
+    assert by_name["grunt"].promoted_from == ["2", "5"]
+
+
+def test_survey_extends_orphans_to_candidates_when_asked(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    assets_root, candidates_root = stores
+    stray = _write(candidates_root, "gigant_snake_cavalry.2.txt")
+    _write(candidates_root, "grunt.2.txt")
+
+    default = survey(
+        test_kind, "ork", assets_root=assets_root, candidates_root=candidates_root
+    )
+    detailed = survey(
+        test_kind,
+        "ork",
+        assets_root=assets_root,
+        candidates_root=candidates_root,
+        with_candidates=True,
+    )
+
+    # By default the Unknown section covers Assets only.
+    assert default.orphans == []
+    assert detailed.orphans == [stray]
