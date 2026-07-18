@@ -3,14 +3,16 @@
 Turns a composed prompt into `count` PNG blobs by submitting an authored
 ComfyUI **Workflow** (an API-format graph) to a configured **Environment**
 (local ComfyUI or Comfy Cloud). Only the positive prompt and a per-job seed are
-patched into the graph; the model, steps, cfg, LoRAs, and negative prompt stay
-exactly as authored (see ADR 0009 and its amendment).
+patched into the graph — plus, for a Refinement, the sole `LoadImage`'s
+filename; the model, steps, cfg, LoRAs, and negative prompt stay exactly as
+authored (see ADR 0009 and its amendment, and ADR 0010).
 
 All network I/O funnels through the single `_request` seam, so tests
 monkeypatch exactly that one function. Stdlib only — the prototype proved a
 dependency is unnecessary.
 """
 
+import hashlib
 import json
 import mimetypes
 import os
@@ -200,6 +202,18 @@ def _set_scalar_or_upstream(
     return True
 
 
+def _patch_init_image(graph: dict[str, Any], filename: str) -> None:
+    """Point the sole `LoadImage` at the uploaded `filename`.
+
+    The one patch point Refinement adds (see ADR 0010). Located by class, not
+    by title; a refine Workflow carrying zero or several `LoadImage` nodes —
+    as Qwen-Image-Edit's stock multi-reference template does — is rejected
+    rather than guessed at.
+    """
+    nid = _sole_node_of_class(graph, ["LoadImage"], what="LoadImage")
+    graph[nid]["inputs"]["image"] = filename
+
+
 def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> None:
     """Patch only the positive prompt and the seed, by graph-follow.
 
@@ -232,6 +246,36 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
 
 
 # --- Submit / poll / fetch ---------------------------------------------------
+
+
+def _upload_image(base: str, api_key: str | None, *, blob: bytes) -> str:
+    """Upload `blob` to ComfyUI's `input/` and return the name it stored it as.
+
+    The Candidate's own bytes are the sole source of truth, so a Refinement
+    always uploads (ADR 0010): `LoadImage` reads from `input/` while
+    generations land in `output/`, and a Candidate may have been generated in
+    a different Environment, or a week ago.
+
+    The name is derived from the blob's digest, so refining the same Candidate
+    twice reuses one server-side file instead of accumulating `foo (1).png`;
+    `overwrite` makes that reuse explicit. The returned name is qualified with
+    the response's `subfolder` when the server sets one.
+    """
+    name = f"spf-init-{hashlib.sha256(blob).hexdigest()[:16]}.png"
+    response = _request(
+        base,
+        "/api/upload/image",
+        api_key=api_key,
+        body={"overwrite": "true"},
+        upload=(name, blob),
+        timeout=300,  # a Candidate PNG is ~1-2 MB, and Cloud is not always brisk
+    )
+    stored = response.get("name")
+    if not stored:
+        msg = f"no name in upload response: {response}"
+        raise ComfyUIError(msg)
+    subfolder = response.get("subfolder") or ""
+    return f"{subfolder}/{stored}" if subfolder else stored
 
 
 def _submit(base: str, api_key: str | None, *, graph: dict[str, Any]) -> str:
@@ -335,12 +379,65 @@ class ComfyUIService:
         workflow_path: Path,
         api_key_env: str,
         timeout_s: int,
+        refine_workflow_path: Path | None = None,
     ) -> None:
-        """Store one Environment's config; read nothing until `generate`."""
+        """Store one Environment's config; read nothing until a call.
+
+        `refine_workflow_path` may point at a file that does not exist — an
+        Environment without an authored refine Workflow generates fine, and
+        only fails, cleanly, if a Refinement is actually run.
+        """
         self._base_url = base_url
         self._workflow_path = workflow_path
         self._api_key_env = api_key_env
         self._timeout_s = timeout_s
+        self._refine_workflow_path = refine_workflow_path
+
+    @property
+    def _api_key(self) -> str | None:
+        """Read the key from the environment, per call, so it can be set late."""
+        key = os.environ.get(self._api_key_env) if self._api_key_env else None
+        return key or None
+
+    def _run_jobs(  # noqa: PLR0913  one job loop, driven by both public calls
+        self,
+        graph: dict[str, Any],
+        *,
+        prompt: str,
+        count: int,
+        seed: int | None,
+        on_result: Callable[[bytes | str], None] | None,
+        init_filename: str | None = None,
+    ) -> Sequence[bytes]:
+        """Submit `count` jobs off `graph`, one per sub-seed, fetching as they land.
+
+        The one place jobs are run: `generate` and `refine` differ only in the
+        Workflow they load and whether an init image was uploaded first.
+        """
+        api_key = self._api_key
+        rng = random.Random(seed)  # noqa: S311  image seeds, not cryptographic
+        sub_seeds = [rng.randrange(_SEED_BOUND) for _ in range(count)]
+
+        cached_route: str | None = None
+        blobs: list[bytes] = []
+        for sub_seed in sub_seeds:
+            job_graph = json.loads(json.dumps(graph))  # per-job copy
+            if init_filename is not None:
+                _patch_init_image(job_graph, init_filename)
+            _patch_prompt_and_seed(job_graph, prompt=prompt, seed=sub_seed)
+            prompt_id = _submit(self._base_url, api_key, graph=job_graph)
+            record, cached_route = _poll(
+                self._base_url,
+                api_key,
+                prompt_id=prompt_id,
+                timeout_s=self._timeout_s,
+                cached_route=cached_route,
+            )
+            for blob in _fetch_images(self._base_url, api_key, record=record):
+                if on_result is not None:
+                    on_result(blob)
+                blobs.append(blob)
+        return blobs
 
     def generate(
         self,
@@ -356,27 +453,40 @@ class ComfyUIService:
         is called with that blob right away, so the caller can save it before the
         next job is submitted, rather than at the end of the batch.
         """
-        graph = _load_workflow(self._workflow_path)
-        api_key = os.environ.get(self._api_key_env) if self._api_key_env else None
-        api_key = api_key or None
-        rng = random.Random(seed)  # noqa: S311  image seeds, not cryptographic
-        sub_seeds = [rng.randrange(_SEED_BOUND) for _ in range(count)]
+        return self._run_jobs(
+            _load_workflow(self._workflow_path),
+            prompt=source,
+            count=count,
+            seed=seed,
+            on_result=on_result,
+        )
 
-        cached_route: str | None = None
-        blobs: list[bytes] = []
-        for sub_seed in sub_seeds:
-            job_graph = json.loads(json.dumps(graph))  # per-job copy
-            _patch_prompt_and_seed(job_graph, prompt=source, seed=sub_seed)
-            prompt_id = _submit(self._base_url, api_key, graph=job_graph)
-            record, cached_route = _poll(
-                self._base_url,
-                api_key,
-                prompt_id=prompt_id,
-                timeout_s=self._timeout_s,
-                cached_route=cached_route,
-            )
-            for blob in _fetch_images(self._base_url, api_key, record=record):
-                if on_result is not None:
-                    on_result(blob)
-                blobs.append(blob)
-        return blobs
+    def refine(
+        self,
+        source: str,
+        init: bytes,
+        count: int,
+        *,
+        seed: int | None = None,
+        on_result: Callable[[bytes | str], None] | None = None,
+    ) -> Sequence[bytes]:
+        """Render `count` edits of the `init` Candidate applying Correction `source`.
+
+        `source` is the Correction, used verbatim as the whole positive prompt
+        — an instruction-edit model is trained on instructions, and feeding it
+        a scene description alongside pulls it toward re-rendering rather than
+        editing (ADR 0010). The init image is uploaded once for the batch.
+        """
+        if self._refine_workflow_path is None:
+            msg = "no refine Workflow is configured for this Environment"
+            raise ComfyUIError(msg)
+        graph = _load_workflow(self._refine_workflow_path)
+        filename = _upload_image(self._base_url, self._api_key, blob=init)
+        return self._run_jobs(
+            graph,
+            prompt=source,
+            count=count,
+            seed=seed,
+            on_result=on_result,
+            init_filename=filename,
+        )

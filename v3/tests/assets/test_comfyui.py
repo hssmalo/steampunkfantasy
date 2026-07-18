@@ -24,6 +24,7 @@ from spf.assets import comfyui
 
 _FIXTURES = Path(__file__).parent / "fixtures"
 _MINI = _FIXTURES / "mini_workflow.json"
+_MINI_REFINE = _FIXTURES / "mini_refine_workflow.json"
 _PNG = b"\x89PNG\r\n\x1a\n"
 
 # The fixture's KSampler and positive text node (see mini_workflow.json).
@@ -50,16 +51,20 @@ class _ScriptedComfy:
         *,
         outputs: dict[str, Any] | None = None,
         poll_ok: Callable[[str], bool] = lambda _route: True,
+        subfolder: str = "",
     ) -> None:
         self.submissions: list[tuple[str, dict[str, Any]]] = []
         self.calls: list[tuple[str, str | None]] = []
+        self.uploads: list[tuple[tuple[str, bytes], dict[str, Any]]] = []
         self._outputs = outputs  # None ⇒ one per-job image named after the prompt_id
         self._poll_ok = poll_ok
+        self._subfolder = subfolder  # what /api/upload/image echoes back
         self._counter = 0
 
     def reset(self) -> None:
         self.submissions.clear()
         self.calls.clear()
+        self.uploads.clear()
         self._counter = 0
 
     def __call__(  # noqa: PLR0913  mirrors the _request seam's fixed shape
@@ -69,10 +74,17 @@ class _ScriptedComfy:
         *,
         api_key: str | None = None,
         body: dict[str, Any] | None = None,
+        upload: tuple[str, bytes] | None = None,
         raw: bool = False,
         timeout: float = 120,  # noqa: ARG002  part of the seam signature; unused
     ) -> Any:  # noqa: ANN401  mirrors _request's dynamic return
         self.calls.append((path, api_key))
+        if path == "/api/upload/image":
+            assert upload is not None
+            self.uploads.append((upload, body or {}))
+            # ComfyUI renames on collision and answers with what it stored.
+            name, _blob = upload
+            return {"name": name, "subfolder": self._subfolder, "type": "input"}
         if path == "/api/prompt":
             self._counter += 1
             pid = f"pid-{self._counter}"
@@ -534,3 +546,135 @@ def test_api_key_is_read_lazily_at_generate_time(
     service.generate("a prompt", 1, seed=1)
 
     assert {key for _, key in scripted.calls} == {"exported-later"}
+
+
+# --- Cycle 5: refine (upload -> patch init image -> submit/poll/fetch) ------
+
+_INIT = _PNG + b"the candidate being refined"
+
+# The refine fixture's LoadImage and positive encoder (mini_refine_workflow).
+_LOAD_IMAGE = "4"
+_REFINE_POSITIVE = "6"
+
+
+def _refine_service(
+    scripted: _ScriptedComfy,
+    monkeypatch: pytest.MonkeyPatch,
+    **kw: object,
+) -> comfyui.ComfyUIService:
+    return _service(
+        scripted, monkeypatch, **{"refine_workflow_path": _MINI_REFINE, **kw}
+    )
+
+
+def test_refine_uploads_the_init_image_and_points_load_image_at_it(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _refine_service(scripted, monkeypatch)
+
+    service.refine("make the hat brass", _INIT, 1, seed=7)
+
+    (filename, blob), fields = scripted.uploads[0]
+    assert blob == _INIT  # the candidate's own bytes are what get uploaded
+    assert fields["overwrite"] == "true"  # refining twice must not pile up "foo (1)"
+    _, graph = scripted.submissions[0]
+    # The sole LoadImage now names the file the server said it stored.
+    assert graph[_LOAD_IMAGE]["inputs"]["image"] == filename
+
+
+def test_refine_qualifies_the_init_filename_with_a_subfolder(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # ComfyUI may store the upload under a subfolder; LoadImage then needs the
+    # qualified "sub/name.png" form, not the bare name.
+    scripted = _ScriptedComfy(subfolder="spf")
+    service = _refine_service(scripted, monkeypatch)
+
+    service.refine("make the hat brass", _INIT, 1, seed=7)
+
+    (name, _blob), _fields = scripted.uploads[0]
+    _, graph = scripted.submissions[0]
+    assert graph[_LOAD_IMAGE]["inputs"]["image"] == f"spf/{name}"
+
+
+def test_refine_patches_the_correction_verbatim_as_the_positive_prompt(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _refine_service(scripted, monkeypatch)
+
+    service.refine("make the hat brass instead of leather", _INIT, 1, seed=7)
+
+    _, graph = scripted.submissions[0]
+    # Verbatim: no scene description, no wrapper (the plan, §5).
+    correction = "make the hat brass instead of leather"
+    assert graph[_REFINE_POSITIVE]["inputs"]["prompt"] == correction
+    expected = random.Random(7).randrange(2**31)  # noqa: S311  independent truth
+    assert graph["9"]["inputs"]["seed"] == expected
+    # The standing guardrail and the authored stack are left alone.
+    assert graph["7"]["inputs"]["prompt"] == "a placeholder negative prompt"
+    assert graph["1"]["inputs"]["unet_name"] == "edit-model.safetensors"
+    assert graph["9"]["inputs"]["steps"] == 4
+
+
+def test_refine_returns_one_blob_per_sub_seed_uploading_once(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _refine_service(scripted, monkeypatch)
+
+    blobs = service.refine("make the hat brass", _INIT, 3, seed=1)
+
+    pids = [pid for pid, _ in scripted.submissions]
+    assert len(pids) == 3  # three variants of the one Correction
+    assert list(blobs) == [_PNG + f"{pid}.png".encode() for pid in pids]
+    assert len(scripted.uploads) == 1  # the init image is uploaded once per batch
+    seeds = [g["9"]["inputs"]["seed"] for _, g in scripted.submissions]
+    assert len(set(seeds)) == 3
+
+
+def test_refine_streams_each_blob_to_on_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = _ScriptedComfy()
+    service = _refine_service(scripted, monkeypatch)
+    seen: list[bytes | str] = []
+
+    blobs = service.refine(
+        "make the hat brass", _INIT, 2, seed=1, on_result=seen.append
+    )
+
+    assert seen == list(blobs)  # saved as they arrive, not at the end of the batch
+
+
+def test_refine_rejects_a_workflow_with_no_load_image(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    graph = json.loads(_MINI_REFINE.read_text(encoding="utf-8"))
+    del graph[_LOAD_IMAGE]
+    workflow = tmp_path / "no-load-image.json"
+    workflow.write_text(json.dumps(graph), encoding="utf-8")
+    service = _refine_service(
+        _ScriptedComfy(), monkeypatch, refine_workflow_path=workflow
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="found 0"):
+        service.refine("make the hat brass", _INIT, 1, seed=7)
+
+
+def test_refine_rejects_a_workflow_with_two_load_images(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Qwen-Image-Edit's stock template ships two or three LoadImage nodes; a
+    # refine Workflow must be reduced to exactly one (the plan, §6).
+    graph = json.loads(_MINI_REFINE.read_text(encoding="utf-8"))
+    graph["4b"] = dict(graph[_LOAD_IMAGE])
+    workflow = tmp_path / "two-load-images.json"
+    workflow.write_text(json.dumps(graph), encoding="utf-8")
+    service = _refine_service(
+        _ScriptedComfy(), monkeypatch, refine_workflow_path=workflow
+    )
+
+    with pytest.raises(comfyui.ComfyUIError, match="found 2"):
+        service.refine("make the hat brass", _INIT, 1, seed=7)
