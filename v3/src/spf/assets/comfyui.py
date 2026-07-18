@@ -2,10 +2,11 @@
 
 Turns a composed prompt into `count` PNG blobs by submitting an authored
 ComfyUI **Workflow** (an API-format graph) to a configured **Environment**
-(local ComfyUI or Comfy Cloud). Only the positive prompt and a per-job seed are
-patched into the graph — plus, for a Refinement, the sole `LoadImage`'s
-filename; the model, steps, cfg, LoRAs, and negative prompt stay exactly as
-authored (see ADR 0009 and its amendment, and ADR 0010).
+(local ComfyUI or Comfy Cloud). Only the positive prompt, the Negative Prompt
+(read from `negative_path`), and a per-job seed are patched into the graph —
+plus, for a Refinement, the sole `LoadImage`'s filename; the model, steps, cfg,
+and LoRAs stay exactly as authored (see ADR 0009 and its amendments, and
+ADR 0010).
 
 All network I/O funnels through the single `_request` seam, so tests
 monkeypatch exactly that one function. Stdlib only — the prototype proved a
@@ -214,13 +215,41 @@ def _patch_init_image(graph: dict[str, Any], filename: str) -> None:
     graph[nid]["inputs"]["image"] = filename
 
 
-def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> None:
-    """Patch only the positive prompt and the seed, by graph-follow.
+def _patch_text(
+    graph: dict[str, Any],
+    sampler_inputs: dict[str, Any],
+    slot: str,
+    text: str,
+) -> None:
+    """Follow the sampler's `slot` link and set the text node's prompt input.
+
+    `slot` is `positive` or `negative`; both are patched the same way, and an
+    encoder declaring neither of `PROMPT_KEYS` is an error either way (see
+    ADR 0009's fourth amendment).
+    """
+    link = sampler_inputs.get(slot)
+    if not isinstance(link, list):
+        msg = f"sampler's {slot!r} input is not a link to a text node"
+        raise ComfyUIError(msg)
+    node = graph[link[0]]
+    for key in PROMPT_KEYS:
+        if key in node["inputs"]:
+            node["inputs"][key] = text
+            return
+    klass = node["class_type"]
+    msg = f"{slot} node {klass} has no 'text' or 'prompt' input to patch"
+    raise ComfyUIError(msg)
+
+
+def _patch_prompts_and_seed(
+    graph: dict[str, Any], *, prompt: str, negative: str, seed: int
+) -> None:
+    """Patch only the two prompts and the seed, by graph-follow.
 
     Locates the sole sampler, patches its seed (following a linked primitive),
-    then follows its `positive` link to the text node and sets its prompt
-    input, whichever of `PROMPT_KEYS` that node declares.
-    Everything else — model, steps, cfg, LoRAs, negative — is left untouched.
+    then follows its `positive` and `negative` links to their text nodes and
+    sets each one's prompt input, whichever of `PROMPT_KEYS` that node
+    declares. Everything else — model, steps, cfg, LoRAs — is left untouched.
     Raises `ComfyUIError` on an unpatchable graph.
     """
     sid = _sole_node_of_class(graph, SAMPLER_CLASSES, what="sampler")
@@ -231,18 +260,8 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
         msg = f"could not find a seed input on sampler {sid}"
         raise ComfyUIError(msg)
 
-    positive = inputs.get("positive")
-    if not isinstance(positive, list):
-        msg = "sampler's 'positive' input is not a link to a text node"
-        raise ComfyUIError(msg)
-    text_node = graph[positive[0]]["inputs"]
-    for key in PROMPT_KEYS:
-        if key in text_node:
-            text_node[key] = prompt
-            return
-    klass = graph[positive[0]]["class_type"]
-    msg = f"positive node {klass} has no 'text' or 'prompt' input to patch"
-    raise ComfyUIError(msg)
+    _patch_text(graph, inputs, "positive", prompt)
+    _patch_text(graph, inputs, "negative", negative)
 
 
 # --- Submit / poll / fetch ---------------------------------------------------
@@ -372,12 +391,13 @@ class ComfyUIService:
     auth header), so it can be exported after import.
     """
 
-    def __init__(
+    def __init__(  # noqa: PLR0913  one Environment's config, all keyword-only
         self,
         *,
         base_url: str,
         workflow_path: Path,
         refine_workflow_path: Path,
+        negative_path: Path,
         api_key_env: str,
         timeout_s: int,
     ) -> None:
@@ -386,10 +406,13 @@ class ComfyUIService:
         Every Environment names both Workflows, but `refine_workflow_path` may
         point at a file that does not exist — an Environment without an
         authored refine Workflow generates fine, and only fails, cleanly, if a
-        Refinement is actually run.
+        Refinement is actually run. `negative_path` is required, however: a
+        missing Negative Prompt file is an error, not a fall-through to the
+        Workflow's authored value (ADR 0009's fourth amendment).
         """
         self._base_url = base_url
         self._workflow_path = workflow_path
+        self._negative_path = negative_path
         self._api_key_env = api_key_env
         self._timeout_s = timeout_s
         self._refine_workflow_path = refine_workflow_path
@@ -413,9 +436,12 @@ class ComfyUIService:
         """Submit `count` jobs off `graph`, one per sub-seed, fetching as they land.
 
         The one place jobs are run: `generate` and `refine` differ only in the
-        Workflow they load and whether an init image was uploaded first.
+        Workflow they load and whether an init image was uploaded first. The
+        Negative Prompt is read once per batch, so a batch stays internally
+        consistent even if the file is edited mid-run.
         """
         api_key = self._api_key
+        negative = self._negative_path.read_text(encoding="utf-8").strip()
         rng = random.Random(seed)  # noqa: S311  image seeds, not cryptographic
         sub_seeds = [rng.randrange(_SEED_BOUND) for _ in range(count)]
 
@@ -425,7 +451,9 @@ class ComfyUIService:
             job_graph = json.loads(json.dumps(graph))  # per-job copy
             if init_filename is not None:
                 _patch_init_image(job_graph, init_filename)
-            _patch_prompt_and_seed(job_graph, prompt=prompt, seed=sub_seed)
+            _patch_prompts_and_seed(
+                job_graph, prompt=prompt, negative=negative, seed=sub_seed
+            )
             prompt_id = _submit(self._base_url, api_key, graph=job_graph)
             record, cached_route = _poll(
                 self._base_url,

@@ -184,6 +184,8 @@ def test_build_service_points_at_the_selected_env(
     # uses the same Environment's authored edit graph.
     refine = config.paths.workflows / cu.cloud.refine_workflow
     assert service._refine_workflow_path == refine
+    # The Negative Prompt file is shared, not per-Environment (issue 50, D2).
+    assert service._negative_path == config.paths.prompts / "image-negative.txt"
 
 
 def test_build_service_rejects_an_unknown_env(
