@@ -300,3 +300,13 @@ def test_list_command_surfaces_orphans_under_unknown(
     out = capsys.readouterr().out
     assert "Unknown" in out
     assert "gigant_snake_cavalry.txt" in out
+
+
+@pytest.mark.usefixtures("registered_kind")
+def test_list_command_defaults_to_every_registered_kind(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # An omitted --kind must not be run through the kind validator.
+    app(["assets", "list", "ork"], exit_on_error=False, result_action="return_value")
+
+    assert "Ork" in capsys.readouterr().out

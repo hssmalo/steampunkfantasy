@@ -43,8 +43,14 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(image, name="image")
 
 
-def _validate_kind(_type: type, value: str) -> None:
-    """Reject a KIND that is not registered, surfacing the known kinds."""
+def _validate_kind(_type: type, value: str | None) -> None:
+    """Reject a KIND that is not registered, surfacing the known kinds.
+
+    `None` is an omitted optional `--kind`, which means "every registered
+    kind" — the validator must let it through rather than look it up.
+    """
+    if value is None:
+        return
     get_kind(value)  # raises ValueError naming the known kinds
 
 
