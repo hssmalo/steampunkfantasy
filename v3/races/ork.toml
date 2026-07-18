@@ -14,7 +14,7 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "Medium"
 cost.mp = 16
-description = "Bloodthirsty ork in rags wielding a musket with a bajonet"
+description = "Bloodthirsty ork in rags wielding a napleonic style musket with a bajonet"
 
 
 [units.ork_infantry.shaken]
@@ -95,7 +95,7 @@ name = "Champion"
 models = ["champion"]
 size = "Medium"
 armor = [0, 0, 0, 0]
-description = '''An ork with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield.
+description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor. 
 '''
 
 
@@ -241,7 +241,7 @@ models = ["hammerhead"]
 size = "Large"
 cost.ip = 32
 armor = [13, 8, 7, 7]
-description = '''A steampunk vehicle with a big battling ram infront, crashing into and destroying a house. 
+description = '''A steampunk vehicle with a big battling ram infront, crashing into and destroying a house.
 '''
 
 
@@ -309,7 +309,7 @@ models = ["battlewagon"]
 size = "Large"
 cost.ip = 32
 armor = [8, 7, 7, 6]
-description = '''A steampunk armored carrier with a gun pointing directly ahead, , a gun that fires spears on top, and a mortar at the back of the vehicle. 
+description = '''A steampunk armored carrier with a gun pointing directly ahead, , a gun that fires spears on top, and a mortar at the back of the vehicle.
 
 '''
 

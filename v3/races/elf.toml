@@ -159,7 +159,7 @@ name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "Medium"
 cost.cp = 8
-description = '''This is an illusion which like an elegant elf wielding a illusionary ww1 rifle
+description = '''This is an illusion which like an elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
 '''
 
 
@@ -238,7 +238,7 @@ models = ["elite_elf_scout"]
 size = "Medium"
 cost.mp = 8
 cost.xp = 8
-description = '''An elite elegant elf scout hiding in the forest and observing the battlefield. On the scouts back is an ww1 style rifle. 
+description = '''An elite elegant elf scout hiding in the forest and observing the battlefield. The scout uses camoufage paint. On the scouts back is an ww1 style rifle.
 '''
 
 
@@ -287,7 +287,7 @@ models = ["e34"]
 size = "Large"
 cost.ip = 48
 armor = [10, 9, 9, 8]
-description = '''An elegant steampunk tank with a gun on a rotating turret. On both sides of the the gun on the turret there are two rifles  
+description = '''An elegant steampunk tank with a main gun on a rotating turret. On the turret two small arms guns are pointing out of the turret and in the same direction as the main gun.
 '''
 
 
@@ -359,8 +359,7 @@ models = ["tattoo_ink"]
 size = "Medium"
 cost.ip = 16
 armor = [8, 6, 6, 6]
-description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret. There are also two smg pointing out of the vehicle, one on the turret and one facing straight forward. 
-'''
+description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret. '''
 
 
 [units.tattoo_ink.special]
@@ -532,7 +531,7 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 8
 armor = [6, 6, 6, 5]
-description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the sadle, 
+description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the sadle,
 '''
 
 
@@ -596,7 +595,7 @@ cost.mp = 16
 cost.xp = 24
 cost.cp = 24
 armor = [3, 3, 0, 0]
-description = ''' Pachyephalosourus is a two legged dinaosour. On the pachephalosourus there is an elegant elf wielding an smg. On the sides of the pachephalosourus there are two guns'''
+description = ''' Pachyephalosourus is a two legged dinaosour. On the pachephalosourus there is an elegant elf wielding an smg. On the sides of the pachephalosourus there are two cannons, on on each side ot the Pachyephalosourus'''
 
 
 [units.pachyephalosaurus_riders.special]
@@ -679,7 +678,7 @@ models = ["pegasus_rider", "pegasus_rider"]
 size = "Medium"
 cost.mp = 16
 cost.xp = 24
-description = ''' An elegant elf wielding a bow riding a pegasus. An smg is placed on the sadle of the pegasus.'''
+description = ''' An elegant elf wielding a bow riding a pegasus. A pegasus is a horse with wings. An smg is placed on the sadle of the pegasus.'''
 
 
 [units.pegasus_rider.special]
@@ -1195,8 +1194,7 @@ cost.mp = 8
 cost.xp = 48
 cost.cp = 48
 armor = [4, 3, 3, 3]
-description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour is towing a big AT gun behind. O
-'''
+description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. Souropod is a plant eating dinosour with long necks and walking on 4 legs. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour it is towing a big napoleonic steampunk cannon. The cannon points backwards'''
 
 
 [units.sauropod_riders.special]
@@ -1243,7 +1241,7 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 24
 armor = [8, 6, 4, 3]
-description = '''Oliphant is a big elephant with a plotform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant shoots arrows and throws grenades
+description = '''Oliphant is a big elephant with a plotform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant are armed with bows and grenades
 '''
 
 
