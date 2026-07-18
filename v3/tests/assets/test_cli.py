@@ -15,7 +15,13 @@ from tests.assets.conftest import FakeRefiner, FakeService
 @pytest.fixture
 def registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway kind and point the config roots under tmp."""
-    kind = Kind(name="_test", service=FakeService(), subdir="_test", extension="txt")
+    kind = Kind(
+        name="_test",
+        service=FakeService(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+    )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
@@ -82,7 +88,11 @@ def test_promote_command_unknown_kind_errors(
 def refinable_registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway refinable kind with a Candidate already on disk."""
     kind = Kind(
-        name="_refinable", service=FakeRefiner(), subdir="_test", extension="txt"
+        name="_refinable",
+        service=FakeRefiner(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
     )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")

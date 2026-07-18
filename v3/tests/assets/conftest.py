@@ -70,6 +70,7 @@ def test_kind() -> Kind:
         service=FakeService(),
         subdir="_test",
         extension="txt",
+        targets=frozenset({"race", "unit"}),
     )
 
 
@@ -81,4 +82,5 @@ def refinable_kind() -> Kind:
         service=FakeRefiner(),
         subdir="_test",
         extension="txt",
+        targets=frozenset({"race", "unit"}),
     )

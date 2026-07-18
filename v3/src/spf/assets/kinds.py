@@ -11,7 +11,9 @@ issue registers its own.
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Protocol, runtime_checkable
+from typing import Literal, Protocol, runtime_checkable
+
+TargetLevel = Literal["race", "unit", "model"]
 
 
 class Service(Protocol):
@@ -73,6 +75,8 @@ class Kind:
     service: Service
     subdir: str | None
     extension: str
+    targets: frozenset[TargetLevel]
+    """The levels this Kind can depict: an Image targets a Race or a Unit."""
 
 
 KINDS: dict[str, Kind] = {}
