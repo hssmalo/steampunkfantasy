@@ -228,3 +228,39 @@ def test_list_command_reports_coverage_for_one_race(
     # A Target with neither Asset nor Candidates still gets a row.
     troll_line = next(line for line in out.splitlines() if "troll" in line)
     assert "missing" in troll_line
+
+
+def test_list_command_expands_lineages_under_candidates(
+    registered_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    candidates = config.paths.candidates / "ork" / "_test"
+    candidates.mkdir(parents=True)
+    for lineage, content in [("10", b"a"), ("2", b"b"), ("4.1", b"chosen")]:
+        (candidates / f"grunt.{lineage}.txt").write_bytes(content)
+    promote(
+        registered_kind,
+        race="ork",
+        name="grunt",
+        pick="4.1",
+        candidates_root=config.paths.candidates,
+        assets_root=config.paths.assets,
+    )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--candidates"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    lineage_line = next(
+        line for line in out.splitlines() if line.strip().startswith("2")
+    )
+    # Numerically sorted: 10 sorts last, not straight after 1.
+    assert [part.split("\u2190")[0] for part in lineage_line.split()] == [
+        "2",
+        "4.1",
+        "10",
+    ]
+    # The Asset is byte-identical to 4.1, so that is the one already promoted.
+    assert "4.1\u2190promoted" in lineage_line

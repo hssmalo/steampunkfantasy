@@ -93,6 +93,15 @@ def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Targ
     raise ValueError(msg)
 
 
+def _print_lineages(row: Coverage) -> None:
+    """Print a row's Candidate Lineages, flat and numerically sorted."""
+    parts = [
+        f"[green]{lineage}←promoted[/]" if lineage in row.promoted_from else lineage
+        for lineage in row.candidates
+    ]
+    stdout.print(f"      {'  '.join(parts)}", highlight=False, soft_wrap=True)
+
+
 def _print_coverage(row: Coverage) -> None:
     """Print one Coverage row: key first, human name dimmed, then status."""
     # Pad the *plain* text, then wrap it in markup: padding a marked-up string
@@ -140,6 +149,8 @@ def list_assets(
             stdout.print(f"  {asset_kind.name.title()}", highlight=False)
             for row in found.rows:
                 _print_coverage(row)
+                if candidates and row.candidates:
+                    _print_lineages(row)
             if found.orphans:
                 stdout.print("  Unknown", highlight=False)
                 for orphan in found.orphans:
