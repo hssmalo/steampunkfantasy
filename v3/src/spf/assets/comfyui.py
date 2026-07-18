@@ -35,6 +35,11 @@ _POLL_ROUTES = ("/api/jobs/{id}", "/history/{id}")  # try-both order
 # Upstream primitive keys a scalar link might carry its value under.
 _PRIMITIVE_KEYS = ("value", "seed", "int", "number")
 
+# What a positive encoder names its prompt input: `CLIPTextEncode` (every
+# generate graph) says `text`; `TextEncodeQwenImageEditPlus` (every Qwen edit
+# graph) says `prompt`. The key is the node's schema, not an authoring choice.
+PROMPT_KEYS = ("text", "prompt")
+
 
 class ComfyUIError(Exception):
     """A ComfyUI failure to surface as a clean CLI message, not a traceback.
@@ -199,7 +204,8 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
     """Patch only the positive prompt and the seed, by graph-follow.
 
     Locates the sole sampler, patches its seed (following a linked primitive),
-    then follows its `positive` link to the text node and sets `text`.
+    then follows its `positive` link to the text node and sets its prompt
+    input, whichever of `PROMPT_KEYS` that node declares.
     Everything else — model, steps, cfg, LoRAs, negative — is left untouched.
     Raises `ComfyUIError` on an unpatchable graph.
     """
@@ -216,11 +222,13 @@ def _patch_prompt_and_seed(graph: dict[str, Any], *, prompt: str, seed: int) -> 
         msg = "sampler's 'positive' input is not a link to a text node"
         raise ComfyUIError(msg)
     text_node = graph[positive[0]]["inputs"]
-    if "text" not in text_node:
-        klass = graph[positive[0]]["class_type"]
-        msg = f"positive node {klass} has no 'text' input to patch"
-        raise ComfyUIError(msg)
-    text_node["text"] = prompt
+    for key in PROMPT_KEYS:
+        if key in text_node:
+            text_node[key] = prompt
+            return
+    klass = graph[positive[0]]["class_type"]
+    msg = f"positive node {klass} has no 'text' or 'prompt' input to patch"
+    raise ComfyUIError(msg)
 
 
 # --- Submit / poll / fetch ---------------------------------------------------

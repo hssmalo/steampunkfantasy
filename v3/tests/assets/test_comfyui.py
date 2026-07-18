@@ -244,8 +244,32 @@ def test_rejects_a_non_text_positive_input(
         graph, tmp_path, scripted=_ScriptedComfy(), monkeypatch=monkeypatch
     )
 
-    with pytest.raises(comfyui.ComfyUIError, match="no 'text' input"):
+    with pytest.raises(comfyui.ComfyUIError, match="no 'text' or 'prompt' input"):
         service.generate("prompt", 1, seed=7)
+
+
+def test_patches_an_encoder_that_names_its_input_prompt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Qwen's edit encoder declares `prompt` where CLIPTextEncode declares
+    # `text` (see the plan, §6). Both keys must patch.
+    graph = {
+        "s": {
+            "class_type": "KSampler",
+            "inputs": {"seed": 0, "positive": ["t", 0]},
+        },
+        "t": {
+            "class_type": "TextEncodeQwenImageEditPlus",
+            "inputs": {"prompt": "placeholder", "clip": ["c", 0]},
+        },
+    }
+    scripted = _ScriptedComfy()
+    service = _service_for(graph, tmp_path, scripted=scripted, monkeypatch=monkeypatch)
+
+    service.generate("make the hat brass instead of leather", 1, seed=7)
+
+    _, submitted = scripted.submissions[0]
+    assert submitted["t"]["inputs"]["prompt"] == "make the hat brass instead of leather"
 
 
 # --- Cycle 3: happy-path flow (N blobs, in order) ---------------------------
