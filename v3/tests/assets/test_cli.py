@@ -299,7 +299,7 @@ def test_list_command_surfaces_orphans_under_unknown(
 ) -> None:
     assets = config.paths.assets / "ork" / "_test"
     assets.mkdir(parents=True)
-    (assets / "gigant_snake_cavalry.txt").write_bytes(b"typo")
+    (assets / "gigant_snake_cavalry.txt").write_bytes(b"typo")  # typos: ignore
 
     app(
         ["assets", "list", "ork", "--kind", "_test"],
@@ -309,7 +309,7 @@ def test_list_command_surfaces_orphans_under_unknown(
 
     out = capsys.readouterr().out
     assert "Unknown" in out
-    assert "gigant_snake_cavalry.txt" in out
+    assert "gigant_snake_cavalry.txt" in out  # typos: ignore
 
 
 @pytest.mark.usefixtures("registered_kind")

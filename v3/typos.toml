@@ -8,6 +8,11 @@ extend-exclude = [
     # Service overwrites at generate time, not prose we maintain.
     "workflows/cloud.json",
     "workflows/local.example.json",
+    # ADR 0011 documents the Orphan feature using gigant_snake_cavalry.png as
+    # its worked example, in prose and in sample CLI output. An ADR *about* a
+    # typo will always contain that typo; sweeping it would falsify a decision
+    # record.
+    "docs/adr/0011-coverage-survey-of-assets.md",
 ]
 
 [default]
@@ -17,10 +22,22 @@ extend-ignore-re = ["(?Rm)^.*(#|//)\\s*typos:\\s*ignore$"]
 [default.extend-words]
 # Domain misspellings that the default `typos` dictionary does not catch.
 # `just spell` flags these; `just spell-fix` rewrites every occurrence across
-# races/, rules/, and src/ (incl. the `type_aliases.py` enums). A few keys are
-# embedded in identifier keys (shrapnell_spit, cloacking_device,
+# races/, rules/, armies/, src/ (incl. the `type_aliases.py` enums), and tests/.
+# Some are embedded in identifier keys (shrapnell_spit, cloacking_device,
 # tentacle_craclespears) whose references are rewritten in the same sweep — run
 # `just check` afterward to confirm nothing desynced.
+#
+# Matching is word-level, applied *after* typos splits identifiers on `_` and
+# camelCase boundaries. So `cracle` does not reach `tentacle_craclespears`:
+# `craclespears` is a single token there, and `cracle` is not a standalone word
+# inside it. That is why exact-token entries like `craclespears` sit alongside
+# `cracle` — they are not redundant, and removing one as a duplicate silently
+# reopens the hole. When a misspelling is glued into a compound, add the whole
+# compound as its own entry.
+#
+# There is no flag-but-do-not-fix option here: `extend-words` rejects the
+# multi-correction array form, so an uncertain candidate must be left out
+# entirely rather than added speculatively.
 accurazy = "accuracy"
 addion = "addition"
 alot = "a lot"
@@ -35,9 +52,11 @@ caos = "chaos"
 cloacking = "cloaking"
 cload = "cloud"
 cracle = "crackle"
+craclespears = "cracklespears"
 craftmanship = "craftsmanship"
 depoloy = "deploy"
 destroid = "destroyed"
+dinaosour = "dinosaur"
 endurence = "endurance"
 enemis = "enemies"
 esscape = "escape"
@@ -50,6 +69,7 @@ firng = "firing"
 flys = "flies"
 forrest = "forest"
 furrious = "furious"
+gigant = "giant"
 gunnrey = "gunnery"
 healin = "healing"
 hexe = "hex"
@@ -59,12 +79,16 @@ imunity = "immunity"
 infangry = "infantry"
 infantery = "infantry"
 infantri = "infantry"
+meca = "mecha"
 monstosity = "monstrosity"
 mysteri = "mystery"
 neighbohring = "neighboring"
 neutrilize = "neutralize"
 ordes = "orders"
 outfints = "outfits"
+pachephalosourus = "pachycephalosaurus"
+pachyephalosaurus = "pachycephalosaurus"
+pachyephalosourus = "pachycephalosaurus"
 pluss = "plus"
 psycic = "psychic"
 reistance = "resistance"
