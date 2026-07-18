@@ -13,6 +13,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "codetiming>=1.4.0",
     "configaroo>=0.6.1",
     "cyclopts>=4.10.1",
     "jinja2>=3.1.6",

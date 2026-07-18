@@ -7,11 +7,15 @@ subcommands accept, and the first concrete generate subcommand,
 """
 
 import random
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Annotated
 
 import cyclopts
 import pydantic
+from codetiming import Timer
 
 from spf import races
 from spf.assets import (
@@ -232,6 +236,35 @@ def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: Lineage) -> 
     )
 
 
+@contextmanager
+def _timed_candidates() -> Iterator[Callable[[Path], None]]:
+    """Yield an `on_candidate` reporting each Candidate with its elapsed time.
+
+    The interval is the gap between two Service callbacks, so it is stopped and
+    restarted per candidate rather than wrapped in a scope of its own. A job
+    yielding several images reports the elapsed time against the first.
+    """
+    timer = Timer(logger=None)
+
+    def report(path: Path) -> None:
+        stdout.print(
+            f"Wrote {path} ({timer.stop():.1f}s)",
+            highlight=False,
+            soft_wrap=True,  # a path is copied or piped, never reflowed
+        )
+        timer.start()
+
+    timer.start()
+    try:
+        yield report
+    finally:
+        # `report` restarts the timer after the last Candidate and the Service
+        # can raise mid-batch, so the timer is always still running here. The
+        # Timer is per-context, so stopping it is hygiene rather than a fix for
+        # anything observable.
+        timer.stop()
+
+
 def _refine_source(
     kind: str, *, race: t.RaceName, name: str, from_: str | None, promoted: bool
 ) -> str:
@@ -302,17 +335,18 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
         lineage = _refine_source(
             kind, race=race, name=name, from_=from_, promoted=promoted
         )
-        refine(
-            get_kind(kind),
-            correction,
-            race=race,
-            name=name,
-            lineage=lineage,
-            count=count,
-            seed=seed,
-            candidates_root=config.paths.candidates,
-            on_candidate=lambda path: stdout.print(f"Wrote {path}"),
-        )
+        with _timed_candidates() as on_candidate:
+            refine(
+                get_kind(kind),
+                correction,
+                race=race,
+                name=name,
+                lineage=lineage,
+                count=count,
+                seed=seed,
+                candidates_root=config.paths.candidates,
+                on_candidate=on_candidate,
+            )
     except (OSError, ComfyUIError, TypeError, ValueError) as err:
         stderr.print(f"[red]Error:[/] refinement failed: {err}")
         raise SystemExit(1) from None
@@ -401,16 +435,17 @@ def _generate_image(
     stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
-        generate(
-            kind,
-            prompt,
-            race=race,
-            name=target.name,
-            count=count,
-            seed=seed,
-            candidates_root=config.paths.candidates,
-            on_candidate=lambda path: stdout.print(f"Wrote {path}"),
-        )
+        with _timed_candidates() as on_candidate:
+            generate(
+                kind,
+                prompt,
+                race=race,
+                name=target.name,
+                count=count,
+                seed=seed,
+                candidates_root=config.paths.candidates,
+                on_candidate=on_candidate,
+            )
     except (OSError, ComfyUIError) as err:
         stderr.print(f"[red]Error:[/] image generation failed: {err}")
         raise SystemExit(1) from None

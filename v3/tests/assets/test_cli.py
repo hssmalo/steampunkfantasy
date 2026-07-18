@@ -1,11 +1,14 @@
 """S5: the shared `spf assets promote` CLI command over a throwaway kind."""
 
+import re
+from collections.abc import Callable, Sequence
 from pathlib import Path
 
 import pytest
 from cyclopts.exceptions import CycloptsError
 
 from spf.assets import Kind, generate, promote
+from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
@@ -422,3 +425,72 @@ def test_refine_promoted_errors_cleanly_without_an_asset(
         app(argv, exit_on_error=False, result_action="return_value")
 
     assert "grunt.txt" in capsys.readouterr().err
+
+
+# --- Cycle 10: elapsed time per Candidate ------------------------------------
+
+
+@pytest.mark.usefixtures("refinable_registered_kind")
+def test_refine_command_reports_elapsed_time_per_candidate(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # The shape, never a duration: a real timing assertion would need a sleep
+    # to be meaningful, which buys nothing.
+    app(_refine_argv("--count", "2"), exit_on_error=False, result_action="return_value")
+
+    wrote = [
+        line
+        for line in capsys.readouterr().out.splitlines()
+        if line.startswith("Wrote")
+    ]
+    assert len(wrote) == 2
+    assert all(re.fullmatch(r"Wrote .* \(\d+\.\ds\)", line) for line in wrote)
+
+
+def test_refine_command_survives_a_service_raising_mid_batch(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # The stopwatch wraps the whole batch, so a Service dying part-way through
+    # it must still leave the Candidates that did land reported, and the
+    # failure surfacing as the ordinary error line.
+    class HalfwayFailingRefiner(FakeRefiner):
+        """Yield every Candidate but the last, then lose the ComfyUI queue."""
+
+        def refine(
+            self,
+            source: str,
+            init: bytes,
+            count: int,
+            *,
+            seed: int | None = None,
+            on_result: Callable[[bytes | str], None] | None = None,
+        ) -> Sequence[bytes | str]:
+            super().refine(source, init, count - 1, seed=seed, on_result=on_result)
+            msg = "the queue went away"
+            raise ComfyUIError(msg)
+
+    kind = Kind(
+        name="_refinable",
+        service=HalfwayFailingRefiner(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+    )
+    monkeypatch.setitem(KINDS, kind.name, kind)
+    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
+    candidates = config.paths.candidates / "ork" / "_test"
+    candidates.mkdir(parents=True)
+    (candidates / "grunt.2.txt").write_bytes(b"the original")
+
+    with pytest.raises(SystemExit):
+        app(
+            _refine_argv("--count", "2"),
+            exit_on_error=False,
+            result_action="return_value",
+        )
+
+    captured = capsys.readouterr()
+    # The Candidate that did land is still reported, and the failure surfaces
+    # as the ordinary error line rather than a timer traceback.
+    assert "Wrote" in captured.out
+    assert "the queue went away" in captured.err
