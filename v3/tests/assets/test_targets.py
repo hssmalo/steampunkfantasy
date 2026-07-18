@@ -41,3 +41,23 @@ def test_unit_level_kind_covers_the_race_then_its_units(test_kind: Kind) -> None
         "ork_char_b1",
     ]
     assert {target.level for target in found[1:]} == {"unit"}
+
+
+def test_model_level_kind_covers_the_races_models() -> None:
+    # No Kind targets models yet; the field is the hook the Model Kind lands on.
+    kind = Kind(
+        name="_model",
+        service=FakeService(),
+        subdir="_model",
+        extension="stl",
+        targets=frozenset({"model"}),
+    )
+
+    found = targets(kind, "ork")
+
+    assert [target.name for target in found][:3] == [
+        "troll",
+        "grunt",
+        "ork_elite_infantry",
+    ]
+    assert {target.level for target in found} == {"model"}
