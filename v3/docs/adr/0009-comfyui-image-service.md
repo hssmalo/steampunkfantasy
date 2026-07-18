@@ -123,9 +123,10 @@ Issue 50 overturns this ADR's "Patch only prompt + seed" and the amendment
 above's "the negative prompt remain[s] untouched in both operations". The patch
 set is now **prompt + negative prompt + seed + the sole `LoadImage`**.
 
-- **The Negative Prompt lives in `prompts/image-negative.txt`**, resolved under
-  `paths.prompts`, and is **required** — a missing file is a hard error, not a
-  fallback to the Workflow's authored value.
+- **The Negative Prompt lives in `prompts/image-negative.txt`** and is
+  **required** — a missing file is a hard error, not a fallback to the
+  Workflow's authored value. (The amendment below makes that path configured
+  rather than hardcoded; the default is unchanged.)
 - **It replaces, it does not append.** Whatever the Workflow authors on its
   negative encoder is overwritten wholesale, exactly as the positive already
   is. The point is that the effective Negative Prompt is readable in one
@@ -143,3 +144,35 @@ set is now **prompt + negative prompt + seed + the sole `LoadImage`**.
 
 Model names, steps, cfg, and LoRAs remain untouched. The single `_request` seam
 and the stdlib-only constraint are unaffected.
+
+## Amendment (2026-07-18) — both prompt files are configured, not hardcoded
+
+Issue 50 first shipped the Negative Prompt as a hardcoded basename under
+`paths.prompts`, following the precedent of the positive preamble. Review
+rejected that precedent rather than extending it: **both** prompt files are now
+named by config, under `[assets.image]`.
+
+```toml
+[assets.image]
+prompt = "{paths.prompts}/image.txt"
+negative_prompt = "{paths.prompts}/image-negative.txt"
+```
+
+- **They follow the Workflow keys' pattern**, interpolating under a `paths.*`
+  root exactly as `ComfyUIEnvConfig.workflow` does under `paths.workflows`.
+  A prompt file and a Workflow file are the same kind of thing — an authored
+  input the Service reads by path — so they are configured the same way.
+- **They sit in `[assets.image]`, not in an Environment block**, because one
+  pair serves both Environments and both operations. Putting them per-Environment
+  would invite exactly the drift this issue set out to remove.
+- **Neither key has a default.** A missing one fails at config load, not at
+  generate time — the same bargain `refine_workflow` already makes.
+- **The positive was retrofitted for symmetry.** Making the negative
+  configurable while the positive stayed a string literal would have left the
+  more-edited of the two files the less-reachable one. This is scope beyond
+  issue 50, taken deliberately: the hardcoding had never been examined as a
+  decision, only inherited.
+
+The shipped default paths are unchanged, so no existing checkout moves a file.
+
+Nothing else about this ADR changes.

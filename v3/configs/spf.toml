@@ -18,6 +18,8 @@ count = 1
 
 [assets.image]
 count = 3
+prompt = "{paths.prompts}/image.txt"
+negative_prompt = "{paths.prompts}/image-negative.txt"
 
 [assets.image.comfyui]
 env = "local"

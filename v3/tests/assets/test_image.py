@@ -25,7 +25,7 @@ _MINI = _FIXTURES / "mini_workflow.json"
 _MINI_REFINE = _FIXTURES / "mini_refine_workflow.json"
 _PNG = b"\x89PNG\r\n\x1a\n"
 _POSITIVE = "2"  # the positive text node in mini_workflow.json
-_NEGATIVE = "3"  # the negative text node in mini_workflow.json
+_NEGATIVE_NODE = "3"  # the negative text node in mini_workflow.json
 _SAMPLER = "5"  # the KSampler in mini_workflow.json
 _NEGATIVE_TEXT = "blurry, watermarked"
 
@@ -142,12 +142,19 @@ def _make_env(
     (races / "gnome.toml").write_text(_GNOME_TOML, encoding="utf-8")
     prompts = tmp_path / "prompts"
     prompts.mkdir()
-    (prompts / "image.txt").write_text("Preamble one.\ntwo.\n", encoding="utf-8")
-    (prompts / "image-negative.txt").write_text(_NEGATIVE_TEXT, encoding="utf-8")
+    positive = prompts / "image.txt"
+    negative = prompts / "image-negative.txt"
+    positive.write_text("Preamble one.\ntwo.\n", encoding="utf-8")
+    negative.write_text(_NEGATIVE_TEXT, encoding="utf-8")
     monkeypatch.setattr(config.paths, "races", races)
     monkeypatch.setattr(config.paths, "prompts", prompts)
+    monkeypatch.setattr(config.paths, "project", tmp_path)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
+    # Both prompt files are configured paths now, so the CLI reads them from
+    # here rather than from `paths.prompts` plus a hardcoded basename.
+    monkeypatch.setattr(config.assets.image, "prompt", positive)
+    monkeypatch.setattr(config.assets.image, "negative_prompt", negative)
 
     comfy = _FakeRequest(fail=fail)
     monkeypatch.setattr(comfyui, "_request", comfy)
@@ -155,11 +162,9 @@ def _make_env(
     # committed fixture so the flow runs without a per-machine local.json.
     monkeypatch.setattr(img.IMAGE.service, "_workflow_path", _MINI)
     monkeypatch.setattr(img.IMAGE.service, "_refine_workflow_path", _MINI_REFINE)
-    # Likewise the Negative Prompt: the service bound the real repo path at
+    # Likewise the Negative Prompt: the service bound the configured path at
     # import, so aim it at this project's own file.
-    monkeypatch.setattr(
-        img.IMAGE.service, "_negative_path", prompts / "image-negative.txt"
-    )
+    monkeypatch.setattr(img.IMAGE.service, "_negative_path", negative)
     return _ImageEnv(tmp_path, comfy)
 
 
@@ -198,8 +203,9 @@ def test_build_service_points_at_the_selected_env(
     # uses the same Environment's authored edit graph.
     refine = config.paths.workflows / cu.cloud.refine_workflow
     assert service._refine_workflow_path == refine
-    # The Negative Prompt file is shared, not per-Environment (issue 50, D2).
-    assert service._negative_path == config.paths.prompts / "image-negative.txt"
+    # The Negative Prompt file is shared, not per-Environment (issue 50, D2),
+    # so it comes off `assets.image` rather than the Environment block.
+    assert service._negative_path == config.assets.image.negative_prompt
 
 
 def test_build_service_rejects_an_unknown_env(
@@ -226,8 +232,9 @@ def test_cli_unit_image_writes_candidates(
     assert "5" in out  # the seed is printed
     # The composed prompt is echoed before the request goes out.
     assert "A stout ogre grunt hefting a huge wrench" in out
-    # The Negative Prompt is static, so only its path is named (issue 50, D7).
-    assert "image-negative.txt" in out
+    # The Negative Prompt is static, so only its path is named — project-
+    # relative, short enough to read and to retype (issue 50, D7).
+    assert "Negative: prompts/image-negative.txt" in out
     # Each Candidate's path is reported as it lands (one "Wrote" per image).
     assert out.count("Wrote ") == 3
     assert "ogre_grunt.1.png" in out
@@ -239,7 +246,9 @@ def test_cli_unit_image_patches_the_authored_negative_prompt(
 ) -> None:
     _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
 
-    negatives = [g[_NEGATIVE]["inputs"]["text"] for g in image_env.comfy.submissions]
+    negatives = [
+        g[_NEGATIVE_NODE]["inputs"]["text"] for g in image_env.comfy.submissions
+    ]
     assert negatives == [_NEGATIVE_TEXT] * 3  # every job in the batch
 
 
@@ -263,7 +272,7 @@ def test_cli_refine_image_names_the_negative_prompt_file(
         "1",
     )
 
-    assert "image-negative.txt" in capsys.readouterr().out
+    assert "Negative: prompts/image-negative.txt" in capsys.readouterr().out
 
 
 def test_cli_unit_image_prompt_composes_preamble_name_description(

@@ -8,7 +8,6 @@ subcommands accept, and the first concrete generate subcommand,
 
 import random
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Annotated
 
 import cyclopts
@@ -39,14 +38,20 @@ def _validate_kind(_type: type, value: str) -> None:
 Kind = Annotated[str, cyclopts.Parameter(validator=_validate_kind)]
 
 
-def _negative_prompt_path() -> Path:
-    """Where the Image Service reads its Negative Prompt from (issue 50, D7).
+def _negative_prompt_echo() -> str:
+    """Return the `Negative:` line naming where the Service reads it (D7).
 
     Echoed by path, not by content: unlike the composed positive prompt it is
     static and version-controlled, so naming the file keeps it discoverable
-    without scrolling the varying prompt off screen.
+    without scrolling the varying prompt off screen. Shown project-relative
+    (as `race.py` does) — short enough to read and to retype.
     """
-    return config.paths.prompts / "image-negative.txt"
+    path = config.assets.image.negative_prompt
+    try:
+        shown = str(path.relative_to(config.paths.project))
+    except ValueError:  # configured outside the project; absolute is all we have
+        shown = str(path)
+    return f"Negative: {shown}"
 
 
 def _validate_lineage(_type: type, value: str) -> None:
@@ -139,9 +144,7 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     # only when an image is what is being refined.
     stdout.print(correction, style="dim", markup=False)
     if kind == "image":
-        stdout.print(
-            f"Negative: {_negative_prompt_path()}", style="dim", soft_wrap=True
-        )
+        stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
         refine(
@@ -172,8 +175,9 @@ def image(
 ) -> None:
     """Generate image Candidates for a RACE, or a UNIT of it.
 
-    The prompt is composed from `prompts/image.txt` plus the target's name
-    and description; a target without a description is a hard error.
+    The prompt is composed from the configured preamble file
+    (`assets.image.prompt`, by default `prompts/image.txt`) plus the target's
+    name and description; a target without a description is a hard error.
     """
     opts = opts or AssetOpts()
 
@@ -197,7 +201,7 @@ def image(
         )
         raise SystemExit(1)
 
-    system = (config.paths.prompts / "image.txt").read_text(encoding="utf-8")
+    system = config.assets.image.prompt.read_text(encoding="utf-8")
     prompt = f"Subject: {human_name}.\nDetails: {description}\n{system}"
 
     count, seed = opts.resolve()
@@ -205,7 +209,7 @@ def image(
 
     # Show the composed prompt (dimmed) before sending it to the Service.
     stdout.print(prompt, style="dim", markup=False)
-    stdout.print(f"Negative: {_negative_prompt_path()}", style="dim", soft_wrap=True)
+    stdout.print(_negative_prompt_echo(), style="dim", soft_wrap=True)
 
     try:
         generate(

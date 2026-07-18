@@ -64,9 +64,17 @@ class ComfyUIConfig(StrictModel):
 
 
 class ImageAssetConfig(StrictModel):
-    """Image asset settings: count plus the ComfyUI provider config."""
+    """Image asset settings: count, the two prompt files, and the provider.
+
+    Both prompt files are configured paths rather than hardcoded basenames,
+    following `ComfyUIEnvConfig`'s Workflow keys. They sit here and not in an
+    Environment block because one pair serves both Environments and both
+    operations (see ADR 0009's fifth amendment).
+    """
 
     count: int
+    prompt: Path
+    negative_prompt: Path
     comfyui: ComfyUIConfig
 
 

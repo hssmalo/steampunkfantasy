@@ -239,8 +239,9 @@ seed — plus, for a refine Workflow, the sole `LoadImage`'s filename.
 _Avoid_: pipeline, graph (in user-facing text).
 
 **Negative Prompt** (image generation):
-What an image should _not_ contain, authored in `prompts/image-negative.txt`
-and patched into a Workflow's negative encoder at generation time. One file
+What an image should _not_ contain, authored in the file named by
+`assets.image.negative_prompt` (by default `prompts/image-negative.txt`) and
+patched into a Workflow's negative encoder at generation time. One file
 serves both Environments and both operations (generate and refine), and it
 **replaces** whatever the Workflow authored rather than adding to it. Required
 — a missing file is an error, not a fall-through.
