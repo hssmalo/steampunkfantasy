@@ -34,3 +34,20 @@ def test_survey_reports_one_row_per_target_with_its_asset(
     assert by_name["ork_infantry"].asset is None
     # Rows follow targets() order: the race first, then units as declared.
     assert [row.target.name for row in found.rows][:2] == ["ork", "ork_infantry"]
+
+
+def test_survey_lists_candidate_lineages_sorted_numerically(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    assets_root, candidates_root = stores
+    for lineage in ["10", "2", "4.3", "4.1", "2.1", "4"]:
+        _write(candidates_root, f"grunt.{lineage}.txt")
+
+    found = survey(
+        test_kind, "ork", assets_root=assets_root, candidates_root=candidates_root
+    )
+
+    by_name = {row.target.name: row for row in found.rows}
+    # Dotted components sort as integers: 10 comes last, not after 1.
+    assert by_name["grunt"].candidates == ["2", "2.1", "4", "4.1", "4.3", "10"]
+    assert by_name["ork_infantry"].candidates == []
