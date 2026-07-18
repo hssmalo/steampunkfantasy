@@ -1,0 +1,36 @@
+"""The Survey: a Kind's Targets for a Race, checked against the two stores."""
+
+from pathlib import Path
+
+import pytest
+
+from spf.assets import Kind, survey
+
+
+@pytest.fixture
+def stores(tmp_path: Path) -> tuple[Path, Path]:
+    """Return empty `(assets_root, candidates_root)` under tmp."""
+    return tmp_path / "assets", tmp_path / "candidates"
+
+
+def _write(root: Path, name: str, content: bytes = b"x") -> Path:
+    """Write `content` to `<root>/ork/_test/<name>`, making parents."""
+    path = root / "ork" / "_test" / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content)
+    return path
+
+
+def test_survey_reports_one_row_per_target_with_its_asset(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    assets_root, _ = stores
+    grunt_asset = _write(assets_root, "grunt.txt")
+
+    found = survey(test_kind, "ork", assets_root=assets_root)
+
+    by_name = {row.target.name: row for row in found.rows}
+    assert by_name["grunt"].asset == grunt_asset
+    assert by_name["ork_infantry"].asset is None
+    # Rows follow targets() order: the race first, then units as declared.
+    assert [row.target.name for row in found.rows][:2] == ["ork", "ork_infantry"]
