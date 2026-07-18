@@ -51,3 +51,20 @@ def test_survey_lists_candidate_lineages_sorted_numerically(
     # Dotted components sort as integers: 10 comes last, not after 1.
     assert by_name["grunt"].candidates == ["2", "2.1", "4", "4.1", "4.3", "10"]
     assert by_name["ork_infantry"].candidates == []
+
+
+def test_survey_keeps_digits_that_belong_to_the_target_name(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    # `ork_char_b1` is a real ork unit key ending in a digit. Splitting on the
+    # first dot, or treating the trailing "1" as a Lineage, would misfile these.
+    assets_root, candidates_root = stores
+    _write(candidates_root, "ork_char_b1.2.txt")
+    _write(candidates_root, "ork_char_b1.4.1.txt")
+
+    found = survey(
+        test_kind, "ork", assets_root=assets_root, candidates_root=candidates_root
+    )
+
+    by_name = {row.target.name: row for row in found.rows}
+    assert by_name["ork_char_b1"].candidates == ["2", "4.1"]
