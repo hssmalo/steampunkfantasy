@@ -26,10 +26,19 @@ Generating, refining, and promoting Assets. Candidates are addressed by
 **Lineage** — a dotted 1-based index that both `--from` and `--pick` take.
 
 ```console
+# What's left? One row per Target, with its Asset status and Candidate count.
+# Omit the race to cover every validating race; --kind narrows to one kind.
+uv run spf assets list goblin
+uv run spf assets list goblin --candidates   # expand rows into Lineages
+
 # Generate Candidates for a race, or one unit of it (--count, --seed)
 uv run spf assets image goblin
 uv run spf assets image goblin goblin_infantry
 # -> candidates/goblin/images/goblin_infantry.{1,2,3}.png
+
+# Cover several Targets at once. At most one selector may be given.
+uv run spf assets image goblin --all       # the race and every unit
+uv run spf assets image goblin --missing   # every Target with no Asset yet
 
 # Refine one Candidate by applying a Correction to it. The Correction is the
 # whole prompt, verbatim; results land under the derived name <NAME>.<LINEAGE>.
