@@ -40,12 +40,45 @@ class FakeService:
         return values
 
 
+@dataclass
+class FakeRefiner(FakeService):
+    """A `FakeService` that additionally refines, recording what it was given."""
+
+    seen_init: bytes | None = None
+    seen_source: str | None = None
+
+    def refine(
+        self,
+        source: str,
+        init: bytes,
+        count: int,
+        *,
+        seed: int | None = None,
+        on_result: Callable[[bytes | str], None] | None = None,
+    ) -> Sequence[bytes | str]:
+        """Return the first `count` canned values, recording the Correction."""
+        self.seen_init = init
+        self.seen_source = source
+        return self.generate(source, count, seed=seed, on_result=on_result)
+
+
 @pytest.fixture
 def test_kind() -> Kind:
     """Return a throwaway binary kind laid out at `<race>/_test/<name>.txt`."""
     return Kind(
         name="_test",
         service=FakeService(),
+        subdir="_test",
+        extension="txt",
+    )
+
+
+@pytest.fixture
+def refinable_kind() -> Kind:
+    """Return a throwaway kind whose Service can refine as well as generate."""
+    return Kind(
+        name="_refinable",
+        service=FakeRefiner(),
         subdir="_test",
         extension="txt",
     )

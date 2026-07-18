@@ -24,6 +24,7 @@ def _build_service() -> ComfyUIService:
     return ComfyUIService(
         base_url=env.base_url,
         workflow_path=env.workflow,
+        refine_workflow_path=env.refine_workflow,
         api_key_env=env.api_key_env,
         timeout_s=comfyui.timeout_s,
     )

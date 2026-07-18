@@ -180,6 +180,10 @@ def test_build_service_points_at_the_selected_env(
     assert service._base_url == cu.cloud.base_url
     assert service._workflow_path == config.paths.workflows / cu.cloud.workflow
     assert service._api_key_env == cu.cloud.api_key_env
+    # The Environment's refine Workflow is wired through too, so a Refinement
+    # uses the same Environment's authored edit graph.
+    refine = config.paths.workflows / cu.cloud.refine_workflow
+    assert service._refine_workflow_path == refine
 
 
 def test_build_service_rejects_an_unknown_env(

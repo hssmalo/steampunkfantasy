@@ -11,7 +11,7 @@ issue registers its own.
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 
 class Service(Protocol):
@@ -33,6 +33,34 @@ class Service(Protocol):
         `on_result`, when given, is called with each value in order as it
         becomes available, so a caller can persist results incrementally instead
         of waiting for the whole batch; the full sequence is still returned.
+        """
+        ...
+
+
+@runtime_checkable
+class Refiner(Protocol):
+    """A `Service` that can additionally refine an existing Candidate.
+
+    An *optional* capability: `Service.generate` stays exactly as it is, so
+    Kinds that have no image concept never grow one. A Kind's Service is
+    checked against this protocol at refine time, so an unsupported Kind
+    fails with a clean message rather than an `AttributeError`.
+    """
+
+    def refine(
+        self,
+        source: str,
+        init: bytes,
+        count: int,
+        *,
+        seed: int | None = None,
+        on_result: Callable[[bytes | str], None] | None = None,
+    ) -> Sequence[bytes | str]:
+        """Return `count` values refining `init` by the Correction `source`.
+
+        `source` is the Correction, applied verbatim; `init` is the source
+        Candidate's own bytes. `seed` and `on_result` behave exactly as they
+        do for `generate`.
         """
         ...
 

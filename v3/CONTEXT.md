@@ -200,8 +200,8 @@ _Avoid_: artifact (that's a Rendering build output), resource, media
 **Candidate**:
 A raw, uncurated Asset produced by a generate step, awaiting human review.
 Candidates are non-canonical and gitignored, written under `candidates/<race>/…`
-mirroring the Asset layout. Promoting exactly one Candidate commits it as the
-Asset; the rest are discarded.
+mirroring the Asset layout and addressed by Lineage. Promoting exactly one
+Candidate commits it as the Asset; the rest are discarded.
 _Avoid_: draft, option, variant, sample
 
 **Lore** (asset):
@@ -232,6 +232,27 @@ _Avoid_: shell environment (unrelated), backend, target.
 
 **Workflow** (image generation):
 A ComfyUI API-format graph (JSON) naming the nodes and models one generation
-runs. Per-Environment: `cloud.json` is committed, `local.json` is per-machine.
-The Image Service patches only the positive prompt and a per-job seed into it.
+runs. Per-Environment, and one each for generating and refining: `cloud.json`
+and `cloud-refine.json` are committed, the `local*` ones are per-machine. The
+Image Service patches only the positive prompt and a per-job seed into it —
+plus, for a refine Workflow, the sole `LoadImage`'s filename.
 _Avoid_: pipeline, graph (in user-facing text).
+
+**Refinement**:
+Generating Candidates from an existing Candidate plus a Correction, rather than
+from a Race description. Chains, because the result is itself a Candidate.
+_Avoid_: edit, variation, touch-up, img2img (an implementation mechanism, not
+the domain operation)
+
+**Correction**:
+The verbatim edit prompt a Refinement applies ("make the hat brass instead of
+leather"). Used as the whole positive prompt — no description, no wrapper — and
+always phrased positively, since the negative prompt is never patched.
+_Avoid_: instruction, tweak, fix, note
+
+**Lineage**:
+The dotted 1-based Candidate index (`2`, `2.1`, `2.1.3`) recording derivation:
+`2.1` is the first Candidate of the Refinement of Candidate `2`. Readable
+straight off the filename, so no provenance is recorded anywhere else. The
+coordinate both `refine --from` and `promote --pick` take.
+_Avoid_: version, revision, generation, history
