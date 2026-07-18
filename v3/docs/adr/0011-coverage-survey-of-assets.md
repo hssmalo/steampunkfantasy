@@ -69,7 +69,11 @@ and makes the pure half trivially testable.
   section exists so this is visible rather than silent — it is how the real
   `gigant_snake_cavalry.png` typo surfaced.
 - **Coverage of a Race whose TOML fails to validate is not reported at all**,
-  per ADR 0004: `list_races(validate=True)`, silent omission.
-- `list` **always exits 0.** A missing Asset is a normal state, not a failure.
+  per ADR 0004: `list_races(validate=True)`, silent omission. Silence is right
+  for the sweep, but *naming* such a Race is a request that cannot be answered,
+  so the explicit path reports it on stderr and exits 1 rather than raising a
+  `ValidationError` traceback.
+- `list` **exits 0 whenever it reports coverage.** A missing Asset is a normal
+  state, not a failure; only an unanswerable request exits non-zero.
 - **Out of scope:** fuzzy "did you mean" suggestions on Orphans; status filters
   (`--missing` / `--promoted`) on `list`.

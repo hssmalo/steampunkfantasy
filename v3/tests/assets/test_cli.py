@@ -303,6 +303,30 @@ def test_list_command_surfaces_orphans_under_unknown(
 
 
 @pytest.mark.usefixtures("registered_kind")
+def test_list_command_errors_on_an_explicitly_named_invalid_race(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # The bare-race sweep omits a non-validating race silently (ADR 0004), but
+    # naming one explicitly must say so rather than raise ValidationError.
+    races_dir = tmp_path / "broken-races"
+    races_dir.mkdir()
+    (races_dir / "gnome.toml").write_text("[races.gnome]\nname = 123\n")
+    monkeypatch.setattr(config.paths, "races", races_dir)
+
+    with pytest.raises(SystemExit) as excinfo:
+        app(
+            ["assets", "list", "gnome", "--kind", "_test"],
+            exit_on_error=False,
+            result_action="return_value",
+        )
+
+    assert excinfo.value.code == 1
+    assert "gnome" in capsys.readouterr().err
+
+
+@pytest.mark.usefixtures("registered_kind")
 def test_list_command_defaults_to_every_registered_kind(
     capsys: pytest.CaptureFixture[str],
 ) -> None:

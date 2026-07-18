@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Annotated
 
 import cyclopts
+import pydantic
 
 from spf import races
 from spf.assets import (
@@ -139,7 +140,9 @@ def list_assets(
     `--candidates` expands each row into its Candidate Lineages, marking the
     one the Asset was promoted from.
 
-    Missing Assets are a normal state, so this always exits 0.
+    Missing Assets are a normal state, so reporting coverage always exits 0.
+    A RACE named explicitly but failing to validate cannot be reported at all,
+    and exits 1; the omitted-RACE sweep skips such races silently (ADR 0004).
     """
     race_names: list[t.RaceName] = (
         [race] if race is not None else races.list_races(validate=True)
@@ -147,7 +150,17 @@ def list_assets(
     kinds = [get_kind(kind)] if kind is not None else list(KINDS.values())
 
     for race_name in race_names:
-        stdout.print(f"[bold]{races.get_metadata(race_name).name}[/]", highlight=False)
+        try:
+            # `get_race` validates the whole RaceConfig, so this one guard also
+            # covers the `survey` calls below.
+            metadata = races.get_metadata(race_name)
+        except pydantic.ValidationError:
+            stderr.print(
+                f"[red]Error:[/] race '{race_name}' does not validate, "
+                "so its coverage cannot be reported"
+            )
+            raise SystemExit(1) from None
+        stdout.print(f"[bold]{metadata.name}[/]", highlight=False)
         for asset_kind in kinds:
             found = survey(
                 asset_kind,
