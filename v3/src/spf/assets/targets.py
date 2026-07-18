@@ -43,4 +43,14 @@ def targets(kind: Kind, race: t.RaceName) -> list[Target]:
                 level="race",
             )
         )
+    if "unit" in kind.targets:
+        found.extend(
+            Target(
+                name=name,
+                human_name=unit.name,
+                description=unit.description,
+                level="unit",
+            )
+            for name, unit in races.get_units(race).items()
+        )
     return found
