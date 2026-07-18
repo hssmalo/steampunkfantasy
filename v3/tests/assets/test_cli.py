@@ -84,7 +84,7 @@ def test_promote_command_unknown_kind_errors(
         )
 
 
-# --- Cycle 8: the refine command --------------------------------------------
+# --- the refine command -----------------------------------------------------
 
 
 @pytest.fixture
@@ -349,7 +349,7 @@ def test_list_command_defaults_to_every_registered_kind(
     assert "Ork" in capsys.readouterr().out
 
 
-# --- Cycle 9: refining an already-promoted Asset -----------------------------
+# --- refining an already-promoted Asset -------------------------------------
 
 
 def _promote_asset(content: bytes = b"the committed asset") -> Path:
@@ -427,7 +427,7 @@ def test_refine_promoted_errors_cleanly_without_an_asset(
     assert "grunt.txt" in capsys.readouterr().err
 
 
-# --- Cycle 10: elapsed time per Candidate ------------------------------------
+# --- elapsed time per Candidate ---------------------------------------------
 
 
 @pytest.mark.usefixtures("refinable_registered_kind")

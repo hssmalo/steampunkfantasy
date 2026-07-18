@@ -21,7 +21,7 @@ from spf.assets.kinds import Kind, Refiner
 from spf.config import config
 
 LINEAGE_PATTERN = re.compile(r"^[1-9][0-9]*(\.[1-9][0-9]*)*$")
-_INDEX_PATTERN = re.compile(r"^[1-9][0-9]*$")
+INDEX_PATTERN = re.compile(r"^[1-9][0-9]*$")
 
 
 def validate_lineage(lineage: str) -> str:
@@ -50,7 +50,7 @@ def _split_lineage(stem: str) -> tuple[str, str] | None:
     """
     parts = stem.split(".")
     cut = len(parts)
-    while cut > 1 and _INDEX_PATTERN.match(parts[cut - 1]):
+    while cut > 1 and INDEX_PATTERN.match(parts[cut - 1]):
         cut -= 1
     if cut == len(parts):
         return None

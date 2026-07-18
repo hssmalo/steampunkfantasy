@@ -221,7 +221,7 @@ def test_promote_overwrites_existing_asset_silently(
     assert asset.read_bytes() == b"three"
 
 
-# --- Cycle 6: refine ---------------------------------------------------------
+# --- refine: generating from an existing Candidate --------------------------
 
 
 def _seed_candidate(
@@ -374,7 +374,7 @@ def test_refine_rejects_a_malformed_lineage(
         )
 
 
-# --- Cycle 7: kinds whose Service cannot refine ------------------------------
+# --- kinds whose Service cannot refine --------------------------------------
 
 
 def test_refine_rejects_a_kind_whose_service_cannot_refine(
@@ -395,7 +395,7 @@ def test_refine_rejects_a_kind_whose_service_cannot_refine(
         )
 
 
-# --- Cycle 8: candidate indices are allocated past what is already on disk ---
+# --- candidate indices are allocated past what is already on disk -----------
 
 
 def test_generate_twice_appends_rather_than_overwriting(
@@ -519,7 +519,7 @@ def test_refining_the_same_candidate_twice_continues_the_numbering(
     assert second == [base / "grunt.2.3.txt", base / "grunt.2.4.txt"]
 
 
-# --- Cycle 9: staging a promoted Asset back as a Candidate -------------------
+# --- staging a promoted Asset back as a Candidate ---------------------------
 
 
 def test_stage_promoted_copies_the_asset_into_the_candidate_store(
