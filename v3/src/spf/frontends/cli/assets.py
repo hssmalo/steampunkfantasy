@@ -430,7 +430,7 @@ def image(
 
     The prompt is composed from the configured preamble file
     (`assets.image.prompt`, by default `prompts/image.txt`) plus the target's
-    name and description; a target without a description is a hard error.
+    name and Brief; a target without a Brief is a hard error.
     """
     opts = opts or AssetOpts()
     kind = get_kind("image")
@@ -451,10 +451,9 @@ def _generate_image(
     kind: AssetKind, race: t.RaceName, target: Target, opts: AssetOpts
 ) -> None:
     """Generate Candidates for one Target, reporting each as it lands."""
-    if not target.brief.strip():
+    if not target.brief:  # already normalized by targets(), so no .strip()
         stderr.print(
-            f"[red]Error:[/] no description for {target.name!r}, "
-            "cannot generate an image"
+            f"[red]Error:[/] no brief for {target.name!r}, cannot generate an image"
         )
         raise SystemExit(1)
 
