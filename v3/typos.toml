@@ -8,10 +8,7 @@ extend-exclude = [
     # Service overwrites at generate time, not prose we maintain.
     "workflows/cloud.json",
     "workflows/local.example.json",
-    # ADR 0011 documents the Orphan feature using gigant_snake_cavalry.png as
-    # its worked example, in prose and in sample CLI output. An ADR *about* a
-    # typo will always contain that typo; sweeping it would falsify a decision
-    # record.
+    # An ADR about a typo will always contain that typo.
     "docs/adr/0011-coverage-survey-of-assets.md",
 ]
 
