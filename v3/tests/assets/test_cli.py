@@ -489,6 +489,36 @@ def test_list_command_prints_a_brief_containing_brackets_intact(
     assert "A raider in [brass] plate." in capsys.readouterr().out
 
 
+def test_list_command_prints_the_brief_before_the_lineages(
+    partly_briefed_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # Mirrors the row's own left-to-right column order.
+    generate(
+        partly_briefed_kind,
+        source="a description",
+        race="ork",
+        name="grunt",
+        count=2,
+        candidates_root=config.paths.candidates,
+    )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs", "--candidates"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    lines = [_ANSI.sub("", line) for line in capsys.readouterr().out.splitlines()]
+    grunt_at = next(i for i, line in enumerate(lines) if "grunt" in line)
+    rest = lines[grunt_at + 1 :]
+    # The Brief reflows over as many lines as it needs, so this is an ordering
+    # assertion rather than a fixed offset from the row.
+    brief = races.get_units("ork")["grunt"].description.split()[0]
+    brief_at = next(i for i, line in enumerate(rest) if brief in line)
+    lineage_at = next(i for i, line in enumerate(rest) if line.strip() == "1, 2")
+    assert brief_at < lineage_at
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 
