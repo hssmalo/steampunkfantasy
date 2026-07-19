@@ -1,5 +1,6 @@
 """S5: the shared `spf assets promote` CLI command over a throwaway kind."""
 
+import operator
 import re
 from collections.abc import Callable, Sequence
 from pathlib import Path
@@ -24,6 +25,7 @@ def registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
@@ -96,6 +98,7 @@ def refinable_registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
@@ -475,6 +478,7 @@ def test_refine_command_survives_a_service_raising_mid_batch(
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")

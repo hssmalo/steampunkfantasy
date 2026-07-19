@@ -416,7 +416,7 @@ def _generate_image(
     kind: AssetKind, race: t.RaceName, target: Target, opts: AssetOpts
 ) -> None:
     """Generate Candidates for one Target, reporting each as it lands."""
-    if not target.description.strip():
+    if not target.brief.strip():
         stderr.print(
             f"[red]Error:[/] no description for {target.name!r}, "
             "cannot generate an image"
@@ -424,7 +424,7 @@ def _generate_image(
         raise SystemExit(1)
 
     system = config.assets.image.prompt.read_text(encoding="utf-8")
-    prompt = f"Subject: {target.human_name}.\nDetails: {target.description}\n{system}"
+    prompt = f"Subject: {target.human_name}.\nDetails: {target.brief}\n{system}"
 
     count, seed = opts.resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")

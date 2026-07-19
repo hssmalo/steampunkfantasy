@@ -5,6 +5,7 @@ A throwaway `FakeService` returning canned bytes and a matching throwaway
 that land in the child issues. Nothing here lives in `src/`.
 """
 
+import operator
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
@@ -71,6 +72,7 @@ def test_kind() -> Kind:
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
 
 
@@ -83,4 +85,5 @@ def refinable_kind() -> Kind:
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
