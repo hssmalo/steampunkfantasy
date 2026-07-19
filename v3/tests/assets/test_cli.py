@@ -394,6 +394,38 @@ def test_list_command_marks_only_the_rows_with_no_brief(
     assert "no brief" not in grunt_line
 
 
+_ANSI = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def test_list_command_keeps_the_candidate_count_aligned(
+    partly_briefed_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # The marker occupies a fixed-width slot, so the count starts at the same
+    # column whether or not the row is marked (ADR 0014).
+    for name in ("troll", "grunt"):
+        generate(
+            partly_briefed_kind,
+            source="a description",
+            race="ork",
+            name=name,
+            count=2,
+            candidates_root=config.paths.candidates,
+        )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    lines = [_ANSI.sub("", line) for line in capsys.readouterr().out.splitlines()]
+    marked = next(line for line in lines if "troll" in line)
+    unmarked = next(line for line in lines if "grunt" in line)
+    assert "no brief" in marked  # the two cases the slot has to line up
+    assert "no brief" not in unmarked
+    assert marked.index("2 candidates") == unmarked.index("2 candidates")
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 
