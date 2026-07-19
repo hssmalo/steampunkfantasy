@@ -1,5 +1,6 @@
 """S2 + S3: the generate and promote spine functions."""
 
+import operator
 from pathlib import Path
 
 import pytest
@@ -58,6 +59,7 @@ def test_generate_threads_seed_to_service(tmp_path: Path) -> None:
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
     generate(
         kind,
@@ -90,6 +92,7 @@ def test_generate_without_subdir_writes_flat_text(tmp_path: Path) -> None:
         subdir=None,
         extension="md",
         targets=frozenset({"race"}),
+        brief=operator.attrgetter("description"),
     )
     paths = generate(
         lore_kind,

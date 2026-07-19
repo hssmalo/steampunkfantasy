@@ -9,6 +9,8 @@ and registers the Kind. The provider — one stdlib client across local ComfyUI
 and Comfy Cloud — lives in `spf.assets.comfyui` (see ADR 0009).
 """
 
+import operator
+
 from spf.assets.comfyui import ComfyUIService
 from spf.assets.kinds import Kind, register_kind
 from spf.config import config
@@ -39,5 +41,6 @@ IMAGE = register_kind(
         subdir="images",
         extension="png",
         targets=frozenset({"race", "unit"}),
+        brief=operator.attrgetter("description"),
     )
 )

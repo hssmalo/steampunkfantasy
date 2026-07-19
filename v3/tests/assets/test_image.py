@@ -348,7 +348,7 @@ def test_cli_count_override_beats_config(image_env: _ImageEnv) -> None:
     assert [p.name for p in images.glob("*.png")] == ["ogre_grunt.1.png"]
 
 
-def test_cli_blank_unit_description_exits_without_writing(
+def test_cli_blank_unit_brief_exits_without_writing(
     image_env: _ImageEnv, capsys: pytest.CaptureFixture[str]
 ) -> None:
     with pytest.raises(SystemExit) as excinfo:
@@ -356,10 +356,10 @@ def test_cli_blank_unit_description_exits_without_writing(
 
     assert excinfo.value.code == 1
     assert not image_env.candidates.exists()
-    assert "no description" in capsys.readouterr().err
+    assert "no brief" in capsys.readouterr().err
 
 
-def test_cli_blank_race_description_exits_without_writing(
+def test_cli_blank_race_brief_exits_without_writing(
     image_env: _ImageEnv,
 ) -> None:
     with pytest.raises(SystemExit) as excinfo:
