@@ -100,3 +100,21 @@ def test_brief_is_whitespace_normalized() -> None:
     found = targets(kind, "ork")
 
     assert found[0].brief == "A brutal raider, clad in brass plate."
+
+
+def test_a_kind_can_compose_its_brief_from_several_fields() -> None:
+    # Regression guard for the callable (ADR 0014): a Kind's Brief need not be
+    # one field, so `brief` cannot be narrowed to a field name or a bool.
+    kind = Kind(
+        name="_composed",
+        service=FakeService(),
+        subdir="_composed",
+        extension="txt",
+        targets=frozenset({"race"}),
+        brief=lambda entry: f"{entry.name}: {entry.description}",
+    )
+
+    found = targets(kind, "ork")
+
+    assert found[0].brief.startswith("Ork: ")
+    assert len(found[0].brief) > len("Ork: ")
