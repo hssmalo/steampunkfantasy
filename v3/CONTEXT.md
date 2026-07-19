@@ -227,6 +227,18 @@ for the generation step.
 _Note_: overloads the domain **Model** (a single figure in a Unit); a Model
 asset is the printable mesh *of* such a figure.
 
+**Brief** (asset generation):
+The authored TOML text a Kind generates a Target's Candidates from — for an
+Image, the Target's `description` field. Which text that is, is declared by the
+Kind itself (`Kind.brief`), so a Kind that generates from something other than
+`description` needs no change to the Targets or the listing code (ADR 0014).
+Distinct from the Prompt, which is *composed* from the Brief plus the configured
+preamble. A Target without a Brief cannot be generated for, so `spf assets list`
+marks it `no brief`.
+_Avoid_: prompt (that's the composed string), seed (that's the RNG seed),
+description (the TOML field name; for an Image the two coincide, for another
+Kind they may not)
+
 **Environment** (image generation):
 A configured ComfyUI target — `local` (a contributor's own ComfyUI) or `cloud`
 (Comfy Cloud) — the Image Service submits to, selected by
