@@ -82,3 +82,21 @@ def test_kind_declares_which_text_its_targets_are_briefed_from() -> None:
     found = targets(kind, "ork")
 
     assert found[0].brief == "ORK"
+
+
+def test_brief_is_whitespace_normalized() -> None:
+    # Briefs are authored as multi-line TOML strings, but a Brief is one
+    # paragraph of prose: it is normalized here rather than at display, so the
+    # text sent to the Service is the text shown (ADR 0014).
+    kind = Kind(
+        name="_ragged",
+        service=FakeService(),
+        subdir="_ragged",
+        extension="txt",
+        targets=frozenset({"race"}),
+        brief=lambda _entry: "  A brutal raider,\n  clad in   brass plate.\n",
+    )
+
+    found = targets(kind, "ork")
+
+    assert found[0].brief == "A brutal raider, clad in brass plate."

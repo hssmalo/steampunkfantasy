@@ -26,7 +26,8 @@ class Target:
     brief: str
     """The authored text this Target's Kind generates from (ADR 0014).
 
-    Empty when the Target has no Brief.
+    Always whitespace-normalized: newlines and runs of spaces collapsed to a
+    single space, both ends stripped. Empty when the Target has no Brief.
     """
 
     level: TargetLevel
@@ -52,7 +53,7 @@ def targets(kind: Kind, race: t.RaceName) -> list[Target]:
         Target(
             name=name,
             human_name=entry.name,
-            brief=kind.brief(entry),
+            brief=" ".join(kind.brief(entry).split()),
             level=level,
         )
         for level, getter in _LEVELS.items()
