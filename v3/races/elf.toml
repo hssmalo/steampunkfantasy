@@ -1302,7 +1302,7 @@ size = "Medium"
 cost.mp = 8
 cost.xp = 32
 armor = [6, 6, 6, 6]
-description = '''An elegant elf riding a giant eagle. The elf is wielding an anti-tank gun.
+description = '''An elegant elf riding a giant eagle. The elf is wielding an anti-tank rifle.
 '''
 
 
