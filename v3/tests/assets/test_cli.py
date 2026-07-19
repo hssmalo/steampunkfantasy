@@ -445,6 +445,22 @@ def test_list_command_expands_briefs_under_briefs(
     assert races.get_units("ork")["grunt"].description.split()[0] in lines[grunt_at + 1]
 
 
+@pytest.mark.usefixtures("partly_briefed_kind")
+def test_list_command_says_so_when_briefs_finds_no_brief(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    lines = capsys.readouterr().out.splitlines()
+    troll_at = next(i for i, line in enumerate(lines) if "troll" in line)
+    # A blank line would read as a rendering bug rather than a missing Brief.
+    assert "No brief" in lines[troll_at + 1]
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 
