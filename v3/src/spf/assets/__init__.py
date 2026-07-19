@@ -16,7 +16,13 @@ from spf.assets.kinds import (
     get_kind,
     register_kind,
 )
-from spf.assets.spine import generate, promote, refine, validate_lineage
+from spf.assets.spine import (
+    generate,
+    promote,
+    refine,
+    stage_promoted,
+    validate_lineage,
+)
 from spf.assets.survey import Coverage, Survey, survey
 from spf.assets.targets import Target, targets
 
@@ -33,6 +39,7 @@ __all__ = [
     "promote",
     "refine",
     "register_kind",
+    "stage_promoted",
     "survey",
     "targets",
     "validate_lineage",

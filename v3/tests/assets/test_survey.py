@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.assets import Kind, survey
+from spf.assets import Kind, stage_promoted, survey
 
 
 @pytest.fixture
@@ -168,3 +168,33 @@ def test_survey_extends_orphans_to_candidates_when_asked(
     # By default the Unknown section covers Assets only.
     assert default.orphans == []
     assert detailed.orphans == [stray]
+
+
+def test_survey_recognizes_a_staged_promoted_asset_as_promoted(
+    test_kind: Kind, stores: tuple[Path, Path]
+) -> None:
+    # `stage_promoted` is a plain copy, so the staged Candidate is
+    # byte-identical to the Asset and `--candidates` renders it as
+    # "N (promoted)" with no labelling code of its own (ADR 0012).
+    assets_root, candidates_root = stores
+    _write(assets_root, "grunt.txt", b"the committed asset")
+    _write(candidates_root, "grunt.1.txt", b"something else")
+
+    lineage = stage_promoted(
+        test_kind,
+        race="ork",
+        name="grunt",
+        candidates_root=candidates_root,
+        assets_root=assets_root,
+    )
+    found = survey(
+        test_kind,
+        "ork",
+        assets_root=assets_root,
+        candidates_root=candidates_root,
+        with_candidates=True,
+    )
+
+    by_name = {row.target.name: row for row in found.rows}
+    assert lineage == "2"
+    assert by_name["grunt"].promoted_from == [lineage]
