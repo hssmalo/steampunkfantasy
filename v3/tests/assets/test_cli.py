@@ -352,6 +352,48 @@ def test_list_command_defaults_to_every_registered_kind(
     assert "Ork" in capsys.readouterr().out
 
 
+@pytest.fixture
+def partly_briefed_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
+    """Register a throwaway kind whose Troll Target has no Brief.
+
+    The missing Brief is forced by the Kind's own extractor rather than taken
+    from a race that happens to be unbriefed today, so briefing that race in
+    the TOML cannot silently stop exercising the no-Brief path.
+    """
+    kind = Kind(
+        name="_test",
+        service=FakeService(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+        brief=lambda entry: "" if entry.name == "Troll" else entry.description,
+    )
+    monkeypatch.setitem(KINDS, kind.name, kind)
+    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
+    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
+    return kind
+
+
+@pytest.mark.usefixtures("partly_briefed_kind")
+def test_list_command_marks_only_the_rows_with_no_brief(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A red X on a Brief-less row means "blocked", not "queued": nothing can be
+    # generated for it until someone writes the Brief.
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    troll_line = next(line for line in out.splitlines() if "troll" in line)
+    assert "no brief" in troll_line
+    # Asymmetric (D6): a briefed row is left exactly as it was.
+    grunt_line = next(line for line in out.splitlines() if "grunt" in line)
+    assert "no brief" not in grunt_line
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 

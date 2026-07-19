@@ -40,6 +40,10 @@ from spf.schemas import type_aliases as t
 
 _SEED_BOUND = 2**31
 
+# Marks a Target that cannot be generated for at all. A plain literal of known
+# width, so the fixed-width slot it reserves is padded exactly.
+_NO_BRIEF = "no brief"
+
 # UNIT, --all and --missing pick *which* Targets to generate for, so at most one
 # may be given. LimitedChoice() defaults to min=0, max=1: exactly that rule.
 _SELECTION = cyclopts.Group("Selection", validator=cyclopts.validators.LimitedChoice())
@@ -154,13 +158,18 @@ def _print_lineages(row: Coverage) -> None:
 def _print_coverage(row: Coverage) -> None:
     """Print one Coverage row: key first, human name dimmed, then status."""
     status = "[green]\N{CHECK MARK}[/]" if row.asset else "[red]\N{BALLOT X}[/]"
+    # Asymmetric (ADR 0014): only a Brief-less row is marked, so a fully
+    # briefed race renders exactly as it did before the column existed. The
+    # slot is still occupied when there is nothing to say, so the candidate
+    # count starts at the same column on every row.
+    brief = " " * len(_NO_BRIEF) if row.target.brief else f"[red]{_NO_BRIEF}[/]"
     count = f"{len(row.candidates)} candidates" if row.candidates else ""
     # The name columns pad the *plain* value before the markup wraps it:
     # padding an already-marked-up string counts the tag characters and
     # misaligns every column after it.
     stdout.print(
         f"  - {row.target.name:<32} [dim]{row.target.human_name:<32}[/]"
-        f" {status} {count}",
+        f" {status} {brief} {count}",
         highlight=False,
         soft_wrap=True,  # a coverage row is scanned or piped, never reflowed
     )
