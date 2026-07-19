@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 from cyclopts.exceptions import CycloptsError
 
+from spf import races
 from spf.assets import Kind, generate, promote
 from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
@@ -424,6 +425,24 @@ def test_list_command_keeps_the_candidate_count_aligned(
     assert "no brief" in marked  # the two cases the slot has to line up
     assert "no brief" not in unmarked
     assert marked.index("2 candidates") == unmarked.index("2 candidates")
+
+
+@pytest.mark.usefixtures("partly_briefed_kind")
+def test_list_command_expands_briefs_under_briefs(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Unlike --candidates, --briefs prints for every row: the job is
+    # proofreading the text before spending GPU time on it.
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    lines = out.splitlines()
+    grunt_at = next(i for i, line in enumerate(lines) if "grunt" in line)
+    assert races.get_units("ork")["grunt"].description.split()[0] in lines[grunt_at + 1]
 
 
 # --- refining an already-promoted Asset -------------------------------------

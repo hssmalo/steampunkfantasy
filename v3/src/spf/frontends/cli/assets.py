@@ -155,6 +155,23 @@ def _print_lineages(row: Coverage) -> None:
     stdout.print(f"      {', '.join(parts)}", highlight=False, soft_wrap=True)
 
 
+def _print_brief(row: Coverage) -> None:
+    """Print a row's Brief, wrapped, or a red note when it has none."""
+    if not row.target.brief:
+        stdout.print("      [red]No brief[/]", highlight=False)
+        return
+    stdout.print(
+        f"      {row.target.brief}",
+        style="dim",
+        # A Brief is arbitrary authored prose: a `[` in it must not parse as a
+        # Rich tag and swallow the rest of the line.
+        markup=False,
+        highlight=False,
+        # Deliberately no soft_wrap: unlike a coverage row or a Lineage list, a
+        # Brief is read rather than copied or piped, so it should reflow.
+    )
+
+
 def _print_coverage(row: Coverage) -> None:
     """Print one Coverage row: key first, human name dimmed, then status."""
     status = "[green]\N{CHECK MARK}[/]" if row.asset else "[red]\N{BALLOT X}[/]"
@@ -180,6 +197,7 @@ def list_assets(
     *,
     kind: Kind | None = None,
     candidates: bool = False,
+    briefs: bool = False,
 ) -> None:
     """Report which Targets have Assets, and how many Candidates are waiting.
 
@@ -187,6 +205,11 @@ def list_assets(
     covered. `--kind` restricts it to one registered Asset kind, and
     `--candidates` expands each row into its Candidate Lineages, marking the
     one the Asset was promoted from.
+
+    A Target with no Brief — the authored text its kind generates from — is
+    marked `no brief`: nothing can be generated for it until one is written.
+    `--briefs` expands each row into its Brief, for proofreading the text
+    before spending generation time on it.
 
     Missing Assets are a normal state, so reporting coverage always exits 0.
     A RACE named explicitly but failing to validate cannot be reported at all,
@@ -220,6 +243,9 @@ def list_assets(
             stdout.print(f"  {asset_kind.name.title()}", highlight=False)
             for row in found.rows:
                 _print_coverage(row)
+                # Brief first, then Lineages: mirrors the row's own columns.
+                if briefs:
+                    _print_brief(row)
                 if candidates and row.candidates:
                     _print_lineages(row)
             if found.orphans:
