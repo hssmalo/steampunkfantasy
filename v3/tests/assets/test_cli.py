@@ -1,6 +1,5 @@
 """S5: the shared `spf assets promote` CLI command over a throwaway kind."""
 
-import operator
 import re
 from collections.abc import Callable, Sequence
 from pathlib import Path
@@ -14,24 +13,13 @@ from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
-from tests.assets.conftest import FakeRefiner, FakeService
+from tests.assets.conftest import FakeRefiner, fake_kind, register_kind
 
 
 @pytest.fixture
 def registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway kind and point the config roots under tmp."""
-    kind = Kind(
-        name="_test",
-        service=FakeService(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-        brief=operator.attrgetter("description"),
-    )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
-    return kind
+    return register_kind(fake_kind(), monkeypatch, tmp_path)
 
 
 def test_promote_command_lands_picked_candidate(registered_kind: Kind) -> None:
@@ -93,17 +81,9 @@ def test_promote_command_unknown_kind_errors(
 @pytest.fixture
 def refinable_registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway refinable kind with a Candidate already on disk."""
-    kind = Kind(
-        name="_refinable",
-        service=FakeRefiner(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-        brief=operator.attrgetter("description"),
+    kind = register_kind(
+        fake_kind(name="_refinable", service=FakeRefiner()), monkeypatch, tmp_path
     )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
     candidates = config.paths.candidates / "ork" / "_test"
     candidates.mkdir(parents=True)
     (candidates / "grunt.2.txt").write_bytes(b"the original")
@@ -361,18 +341,10 @@ def partly_briefed_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind
     from a race that happens to be unbriefed today, so briefing that race in
     the TOML cannot silently stop exercising the no-Brief path.
     """
-    kind = Kind(
-        name="_test",
-        service=FakeService(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-        brief=lambda entry: "" if entry.name == "Troll" else entry.description,
+    kind = fake_kind(
+        brief=lambda entry: "" if entry.name == "Troll" else entry.description
     )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
-    return kind
+    return register_kind(kind, monkeypatch, tmp_path)
 
 
 @pytest.mark.usefixtures("partly_briefed_kind")
@@ -468,17 +440,8 @@ def test_list_command_prints_a_brief_containing_brackets_intact(
 ) -> None:
     # A Brief is arbitrary authored prose, so a `[` in it must reach the
     # terminal rather than being parsed as a Rich markup tag.
-    kind = Kind(
-        name="_test",
-        service=FakeService(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-        brief=lambda _entry: "A raider in [brass] plate.",
-    )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
+    kind = fake_kind(brief=lambda _entry: "A raider in [brass] plate.")
+    register_kind(kind, monkeypatch, tmp_path)
 
     app(
         ["assets", "list", "ork", "--kind", "_test", "--briefs"],
@@ -526,17 +489,7 @@ def test_list_command_indents_a_wrapped_brief_under_its_row(
 ) -> None:
     # A Brief long enough to wrap must carry the same indent on every line,
     # rather than falling back to the left margin on the continuations.
-    kind = Kind(
-        name="_test",
-        service=FakeService(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-        brief=lambda _entry: "brass " * 60,
-    )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
+    register_kind(fake_kind(brief=lambda _entry: "brass " * 60), monkeypatch, tmp_path)
 
     app(
         ["assets", "list", "ork", "--kind", "_test", "--briefs"],
@@ -674,14 +627,7 @@ def test_refine_command_survives_a_service_raising_mid_batch(
             msg = "the queue went away"
             raise ComfyUIError(msg)
 
-    kind = Kind(
-        name="_refinable",
-        service=HalfwayFailingRefiner(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-        brief=operator.attrgetter("description"),
-    )
+    kind = fake_kind(name="_refinable", service=HalfwayFailingRefiner())
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     candidates = config.paths.candidates / "ork" / "_test"
