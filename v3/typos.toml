@@ -8,6 +8,8 @@ extend-exclude = [
     # Service overwrites at generate time, not prose we maintain.
     "workflows/cloud.json",
     "workflows/local.example.json",
+    # An ADR about a typo will always contain that typo.
+    "docs/adr/0011-coverage-survey-of-assets.md",
 ]
 
 [default]
@@ -15,12 +17,17 @@ extend-exclude = [
 extend-ignore-re = ["(?Rm)^.*(#|//)\\s*typos:\\s*ignore$"]
 
 [default.extend-words]
-# Domain misspellings that the default `typos` dictionary does not catch.
-# `just spell` flags these; `just spell-fix` rewrites every occurrence across
-# races/, rules/, and src/ (incl. the `type_aliases.py` enums). A few keys are
-# embedded in identifier keys (shrapnell_spit, cloacking_device,
-# tentacle_craclespears) whose references are rewritten in the same sweep — run
-# `just check` afterward to confirm nothing desynced.
+# Domain misspellings the default `typos` dictionary does not catch. `just spell`
+# flags them; `just spell-fix` rewrites every occurrence repo-wide, including
+# inside identifier keys — run `just check` afterward to confirm nothing desynced.
+#
+# Matching is word-level, *after* typos splits on `_` and camelCase. So `cracle`
+# never reaches `tentacle_craclespears`: `craclespears` is one token there. Hence
+# exact-token entries alongside a base word — they are not duplicates, and
+# deleting one as redundant silently stops guarding the compound.
+#
+# `extend-words` also rejects the multi-correction array form, so there is no
+# flag-but-do-not-fix option; leave uncertain candidates out entirely.
 accurazy = "accuracy"
 addion = "addition"
 alot = "a lot"
@@ -35,9 +42,11 @@ caos = "chaos"
 cloacking = "cloaking"
 cload = "cloud"
 cracle = "crackle"
+craclespears = "cracklespears"
 craftmanship = "craftsmanship"
 depoloy = "deploy"
 destroid = "destroyed"
+dinaosour = "dinosaur"
 endurence = "endurance"
 enemis = "enemies"
 esscape = "escape"
@@ -50,6 +59,7 @@ firng = "firing"
 flys = "flies"
 forrest = "forest"
 furrious = "furious"
+gigant = "giant"
 gunnrey = "gunnery"
 healin = "healing"
 hexe = "hex"
@@ -59,12 +69,16 @@ imunity = "immunity"
 infangry = "infantry"
 infantery = "infantry"
 infantri = "infantry"
+meca = "mecha"
 monstosity = "monstrosity"
 mysteri = "mystery"
 neighbohring = "neighboring"
 neutrilize = "neutralize"
 ordes = "orders"
 outfints = "outfits"
+pachephalosourus = "pachycephalosaurus"
+pachyephalosaurus = "pachycephalosaurus"
+pachyephalosourus = "pachycephalosaurus"
 pluss = "plus"
 psycic = "psychic"
 reistance = "resistance"

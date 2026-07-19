@@ -77,7 +77,7 @@ def test_survey_reports_asset_files_matching_no_target_as_orphans(
     # longer matches any unit key, so it silently covers nothing.
     assets_root, candidates_root = stores
     _write(assets_root, "grunt.txt")
-    typo = _write(assets_root, "gigant_snake_cavalry.txt")
+    typo = _write(assets_root, "gigant_snake_cavalry.txt")  # typos: ignore
 
     found = survey(
         test_kind, "ork", assets_root=assets_root, candidates_root=candidates_root
@@ -151,7 +151,7 @@ def test_survey_extends_orphans_to_candidates_when_asked(
     test_kind: Kind, stores: tuple[Path, Path]
 ) -> None:
     assets_root, candidates_root = stores
-    stray = _write(candidates_root, "gigant_snake_cavalry.2.txt")
+    stray = _write(candidates_root, "gigant_snake_cavalry.2.txt")  # typos: ignore
     _write(candidates_root, "grunt.2.txt")
 
     default = survey(
