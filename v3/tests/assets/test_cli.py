@@ -461,6 +461,34 @@ def test_list_command_says_so_when_briefs_finds_no_brief(
     assert "No brief" in lines[troll_at + 1]
 
 
+def test_list_command_prints_a_brief_containing_brackets_intact(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A Brief is arbitrary authored prose, so a `[` in it must reach the
+    # terminal rather than being parsed as a Rich markup tag.
+    kind = Kind(
+        name="_test",
+        service=FakeService(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+        brief=lambda _entry: "A raider in [brass] plate.",
+    )
+    monkeypatch.setitem(KINDS, kind.name, kind)
+    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
+    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    assert "A raider in [brass] plate." in capsys.readouterr().out
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 
