@@ -11,10 +11,9 @@ actually on disk is `survey`'s job.
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from typing import Protocol
 
 from spf import races
-from spf.assets.kinds import Kind, TargetLevel
+from spf.assets.kinds import Described, Kind, TargetLevel
 from spf.schemas import type_aliases as t
 
 
@@ -24,21 +23,20 @@ class Target:
 
     name: str
     human_name: str
-    description: str
+    brief: str
+    """The authored text this Target's Kind generates from (ADR 0014).
+
+    Always whitespace-normalized: newlines and runs of spaces collapsed to a
+    single space, both ends stripped. Empty when the Target has no Brief.
+    """
+
     level: TargetLevel
-
-
-class _Described(Protocol):
-    """The shape every level's entries share: a display name and a blurb."""
-
-    name: str
-    description: str
 
 
 # Every level resolves to a mapping of key to described entry, so the race
 # level -- a single object -- is wrapped in one to match. Insertion order is
 # the order Targets come back in: race, then units, then models.
-_LEVELS: dict[TargetLevel, Callable[[t.RaceName], Mapping[str, _Described]]] = {
+_LEVELS: dict[TargetLevel, Callable[[t.RaceName], Mapping[str, Described]]] = {
     "race": lambda race: {race: races.get_metadata(race)},
     "unit": races.get_units,
     "model": races.get_models,
@@ -55,7 +53,7 @@ def targets(kind: Kind, race: t.RaceName) -> list[Target]:
         Target(
             name=name,
             human_name=entry.name,
-            description=entry.description,
+            brief=" ".join(kind.brief(entry).split()),
             level=level,
         )
         for level, getter in _LEVELS.items()

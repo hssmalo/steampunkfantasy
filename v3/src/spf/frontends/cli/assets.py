@@ -7,6 +7,7 @@ subcommands accept, and the first concrete generate subcommand,
 """
 
 import random
+import textwrap
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -39,6 +40,14 @@ from spf.console import stderr, stdout
 from spf.schemas import type_aliases as t
 
 _SEED_BOUND = 2**31
+
+# Marks a Target that cannot be generated for at all. A plain literal of known
+# width, so the fixed-width slot it reserves is padded exactly.
+_NO_BRIEF = "no brief"
+
+# A Brief is printed under its row, indented past the "  - " bullet.
+_BRIEF_INDENT = " " * 6
+_BRIEF_MIN_WIDTH = 20
 
 # UNIT, --all and --missing pick *which* Targets to generate for, so at most one
 # may be given. LimitedChoice() defaults to min=0, max=1: exactly that rule.
@@ -151,16 +160,46 @@ def _print_lineages(row: Coverage) -> None:
     stdout.print(f"      {', '.join(parts)}", highlight=False, soft_wrap=True)
 
 
+def _print_brief(row: Coverage) -> None:
+    """Print a row's Brief, wrapped under a hanging indent, or a red note."""
+    if not row.target.brief:
+        stdout.print(f"{_BRIEF_INDENT}[red]No brief[/]", highlight=False)
+        return
+    # Wrapped here rather than by Rich so the continuation lines carry the same
+    # indent as the first without the block being right-filled to the terminal
+    # width. A Brief is already normalized to a single paragraph by `targets()`,
+    # so there are no blank lines or hard breaks for `wrap` to mangle.
+    width = max(stdout.width - len(_BRIEF_INDENT), _BRIEF_MIN_WIDTH)
+    for line in textwrap.wrap(row.target.brief, width=width):
+        stdout.print(
+            f"{_BRIEF_INDENT}{line}",
+            style="dim",
+            # A Brief is arbitrary authored prose: a `[` in it must not parse
+            # as a Rich tag and swallow the rest of the line.
+            markup=False,
+            highlight=False,
+            soft_wrap=True,  # already wrapped; let it through untouched
+        )
+
+
 def _print_coverage(row: Coverage) -> None:
     """Print one Coverage row: key first, human name dimmed, then status."""
     status = "[green]\N{CHECK MARK}[/]" if row.asset else "[red]\N{BALLOT X}[/]"
+    # Asymmetric (ADR 0014): only a Brief-less row is marked, so a fully
+    # briefed race renders exactly as it did before the column existed. The
+    # slot is still occupied when there is nothing to say, so the candidate
+    # count starts at the same column on every row.
+    brief = " " * len(_NO_BRIEF) if row.target.brief else f"[red]{_NO_BRIEF}[/]"
     count = f"{len(row.candidates)} candidates" if row.candidates else ""
     # The name columns pad the *plain* value before the markup wraps it:
     # padding an already-marked-up string counts the tag characters and
     # misaligns every column after it.
     stdout.print(
+        # rstrip so an unmarked row with no count does not trail the empty
+        # slot's padding; a row that has a count is unaffected, so the slot
+        # still lines the counts up.
         f"  - {row.target.name:<32} [dim]{row.target.human_name:<32}[/]"
-        f" {status} {count}",
+        f" {status} {brief} {count}".rstrip(),
         highlight=False,
         soft_wrap=True,  # a coverage row is scanned or piped, never reflowed
     )
@@ -171,6 +210,7 @@ def list_assets(
     *,
     kind: Kind | None = None,
     candidates: bool = False,
+    briefs: bool = False,
 ) -> None:
     """Report which Targets have Assets, and how many Candidates are waiting.
 
@@ -178,6 +218,11 @@ def list_assets(
     covered. `--kind` restricts it to one registered Asset kind, and
     `--candidates` expands each row into its Candidate Lineages, marking the
     one the Asset was promoted from.
+
+    A Target with no Brief — the authored text its kind generates from — is
+    marked `no brief`: nothing can be generated for it until one is written.
+    `--briefs` expands each row into its Brief, for proofreading the text
+    before spending generation time on it.
 
     Missing Assets are a normal state, so reporting coverage always exits 0.
     A RACE named explicitly but failing to validate cannot be reported at all,
@@ -211,6 +256,9 @@ def list_assets(
             stdout.print(f"  {asset_kind.name.title()}", highlight=False)
             for row in found.rows:
                 _print_coverage(row)
+                # Brief first, then Lineages: mirrors the row's own columns.
+                if briefs:
+                    _print_brief(row)
                 if candidates and row.candidates:
                     _print_lineages(row)
             if found.orphans:
@@ -395,7 +443,7 @@ def image(
 
     The prompt is composed from the configured preamble file
     (`assets.image.prompt`, by default `prompts/image.txt`) plus the target's
-    name and description; a target without a description is a hard error.
+    name and Brief; a target without a Brief is a hard error.
     """
     opts = opts or AssetOpts()
     kind = get_kind("image")
@@ -416,15 +464,14 @@ def _generate_image(
     kind: AssetKind, race: t.RaceName, target: Target, opts: AssetOpts
 ) -> None:
     """Generate Candidates for one Target, reporting each as it lands."""
-    if not target.description.strip():
+    if not target.brief:  # already normalized by targets(), so no .strip()
         stderr.print(
-            f"[red]Error:[/] no description for {target.name!r}, "
-            "cannot generate an image"
+            f"[red]Error:[/] no brief for {target.name!r}, cannot generate an image"
         )
         raise SystemExit(1)
 
     system = config.assets.image.prompt.read_text(encoding="utf-8")
-    prompt = f"Subject: {target.human_name}.\nDetails: {target.description}\n{system}"
+    prompt = f"Subject: {target.human_name}.\nDetails: {target.brief}\n{system}"
 
     count, seed = opts.resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")

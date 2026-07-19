@@ -7,28 +7,19 @@ from pathlib import Path
 import pytest
 from cyclopts.exceptions import CycloptsError
 
+from spf import races
 from spf.assets import Kind, generate, promote
 from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
-from tests.assets.conftest import FakeRefiner, FakeService
+from tests.assets.conftest import FakeRefiner, fake_kind, register_kind
 
 
 @pytest.fixture
 def registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway kind and point the config roots under tmp."""
-    kind = Kind(
-        name="_test",
-        service=FakeService(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-    )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
-    return kind
+    return register_kind(fake_kind(), monkeypatch, tmp_path)
 
 
 def test_promote_command_lands_picked_candidate(registered_kind: Kind) -> None:
@@ -90,16 +81,9 @@ def test_promote_command_unknown_kind_errors(
 @pytest.fixture
 def refinable_registered_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
     """Register a throwaway refinable kind with a Candidate already on disk."""
-    kind = Kind(
-        name="_refinable",
-        service=FakeRefiner(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
+    kind = register_kind(
+        fake_kind(name="_refinable", service=FakeRefiner()), monkeypatch, tmp_path
     )
-    monkeypatch.setitem(KINDS, kind.name, kind)
-    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
-    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
     candidates = config.paths.candidates / "ork" / "_test"
     candidates.mkdir(parents=True)
     (candidates / "grunt.2.txt").write_bytes(b"the original")
@@ -349,6 +333,180 @@ def test_list_command_defaults_to_every_registered_kind(
     assert "Ork" in capsys.readouterr().out
 
 
+@pytest.fixture
+def partly_briefed_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
+    """Register a throwaway kind whose Troll Target has no Brief.
+
+    The missing Brief is forced by the Kind's own extractor rather than taken
+    from a race that happens to be unbriefed today, so briefing that race in
+    the TOML cannot silently stop exercising the no-Brief path.
+    """
+    kind = fake_kind(
+        brief=lambda entry: "" if entry.name == "Troll" else entry.description
+    )
+    return register_kind(kind, monkeypatch, tmp_path)
+
+
+@pytest.mark.usefixtures("partly_briefed_kind")
+def test_list_command_marks_only_the_rows_with_no_brief(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A red X on a Brief-less row means "blocked", not "queued": nothing can be
+    # generated for it until someone writes the Brief.
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    troll_line = next(line for line in out.splitlines() if "troll" in line)
+    assert "no brief" in troll_line
+    # Asymmetric (D6): a briefed row is left exactly as it was.
+    grunt_line = next(line for line in out.splitlines() if "grunt" in line)
+    assert "no brief" not in grunt_line
+
+
+_ANSI = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def test_list_command_keeps_the_candidate_count_aligned(
+    partly_briefed_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # The marker occupies a fixed-width slot, so the count starts at the same
+    # column whether or not the row is marked (ADR 0014).
+    for name in ("troll", "grunt"):
+        generate(
+            partly_briefed_kind,
+            source="a description",
+            race="ork",
+            name=name,
+            count=2,
+            candidates_root=config.paths.candidates,
+        )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    lines = [_ANSI.sub("", line) for line in capsys.readouterr().out.splitlines()]
+    marked = next(line for line in lines if "troll" in line)
+    unmarked = next(line for line in lines if "grunt" in line)
+    assert "no brief" in marked  # the two cases the slot has to line up
+    assert "no brief" not in unmarked
+    assert marked.index("2 candidates") == unmarked.index("2 candidates")
+
+
+@pytest.mark.usefixtures("partly_briefed_kind")
+def test_list_command_expands_briefs_under_briefs(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Unlike --candidates, --briefs prints for every row: the job is
+    # proofreading the text before spending GPU time on it.
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    out = capsys.readouterr().out
+    lines = out.splitlines()
+    grunt_at = next(i for i, line in enumerate(lines) if "grunt" in line)
+    assert races.get_units("ork")["grunt"].description.split()[0] in lines[grunt_at + 1]
+
+
+@pytest.mark.usefixtures("partly_briefed_kind")
+def test_list_command_says_so_when_briefs_finds_no_brief(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    lines = capsys.readouterr().out.splitlines()
+    troll_at = next(i for i, line in enumerate(lines) if "troll" in line)
+    # A blank line would read as a rendering bug rather than a missing Brief.
+    assert "No brief" in lines[troll_at + 1]
+
+
+def test_list_command_prints_a_brief_containing_brackets_intact(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A Brief is arbitrary authored prose, so a `[` in it must reach the
+    # terminal rather than being parsed as a Rich markup tag.
+    kind = fake_kind(brief=lambda _entry: "A raider in [brass] plate.")
+    register_kind(kind, monkeypatch, tmp_path)
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    assert "A raider in [brass] plate." in capsys.readouterr().out
+
+
+def test_list_command_prints_the_brief_before_the_lineages(
+    partly_briefed_kind: Kind, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # Mirrors the row's own left-to-right column order.
+    generate(
+        partly_briefed_kind,
+        source="a description",
+        race="ork",
+        name="grunt",
+        count=2,
+        candidates_root=config.paths.candidates,
+    )
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs", "--candidates"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    lines = [_ANSI.sub("", line) for line in capsys.readouterr().out.splitlines()]
+    grunt_at = next(i for i, line in enumerate(lines) if "grunt" in line)
+    rest = lines[grunt_at + 1 :]
+    # The Brief reflows over as many lines as it needs, so this is an ordering
+    # assertion rather than a fixed offset from the row.
+    brief = races.get_units("ork")["grunt"].description.split()[0]
+    brief_at = next(i for i, line in enumerate(rest) if brief in line)
+    lineage_at = next(i for i, line in enumerate(rest) if line.strip() == "1, 2")
+    assert brief_at < lineage_at
+
+
+def test_list_command_indents_a_wrapped_brief_under_its_row(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A Brief long enough to wrap must carry the same indent on every line,
+    # rather than falling back to the left margin on the continuations.
+    register_kind(fake_kind(brief=lambda _entry: "brass " * 60), monkeypatch, tmp_path)
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    wrapped = [
+        line
+        for line in capsys.readouterr().out.splitlines()
+        if line.lstrip().startswith("brass")
+    ]
+    assert len(wrapped) > 1  # it really did wrap, so continuations exist
+    assert all(line.startswith(" " * 6) for line in wrapped)
+    assert not any(line.endswith(" ") for line in wrapped)
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 
@@ -469,13 +627,7 @@ def test_refine_command_survives_a_service_raising_mid_batch(
             msg = "the queue went away"
             raise ComfyUIError(msg)
 
-    kind = Kind(
-        name="_refinable",
-        service=HalfwayFailingRefiner(),
-        subdir="_test",
-        extension="txt",
-        targets=frozenset({"race", "unit"}),
-    )
+    kind = fake_kind(name="_refinable", service=HalfwayFailingRefiner())
     monkeypatch.setitem(KINDS, kind.name, kind)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     candidates = config.paths.candidates / "ork" / "_test"

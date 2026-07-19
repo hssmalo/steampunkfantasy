@@ -16,6 +16,13 @@ from typing import Literal, Protocol, runtime_checkable
 TargetLevel = Literal["race", "unit", "model"]
 
 
+class Described(Protocol):
+    """The shape every level's entries share: a display name and a blurb."""
+
+    name: str
+    description: str
+
+
 class Service(Protocol):
     """Generates the raw content for a Kind's Candidates."""
 
@@ -77,6 +84,13 @@ class Kind:
     extension: str
     targets: frozenset[TargetLevel]
     """The levels this Kind can depict: an Image targets a Race or a Unit."""
+
+    brief: Callable[[Described], str]
+    """Extracts the Brief — the authored text this Kind generates from.
+
+    A callable rather than a field name because a Kind may compose its Brief
+    from several fields, or from the whole entry (ADR 0014).
+    """
 
 
 KINDS: dict[str, Kind] = {}
