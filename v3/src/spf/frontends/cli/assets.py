@@ -185,8 +185,11 @@ def _print_coverage(row: Coverage) -> None:
     # padding an already-marked-up string counts the tag characters and
     # misaligns every column after it.
     stdout.print(
+        # rstrip so an unmarked row with no count does not trail the empty
+        # slot's padding; a row that has a count is unaffected, so the slot
+        # still lines the counts up.
         f"  - {row.target.name:<32} [dim]{row.target.human_name:<32}[/]"
-        f" {status} {brief} {count}",
+        f" {status} {brief} {count}".rstrip(),
         highlight=False,
         soft_wrap=True,  # a coverage row is scanned or piped, never reflowed
     )
