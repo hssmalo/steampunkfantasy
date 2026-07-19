@@ -17,24 +17,17 @@ extend-exclude = [
 extend-ignore-re = ["(?Rm)^.*(#|//)\\s*typos:\\s*ignore$"]
 
 [default.extend-words]
-# Domain misspellings that the default `typos` dictionary does not catch.
-# `just spell` flags these; `just spell-fix` rewrites every occurrence across
-# races/, rules/, armies/, src/ (incl. the `type_aliases.py` enums), and tests/.
-# Some are embedded in identifier keys (shrapnell_spit, cloacking_device,
-# tentacle_craclespears) whose references are rewritten in the same sweep — run
-# `just check` afterward to confirm nothing desynced.
+# Domain misspellings the default `typos` dictionary does not catch. `just spell`
+# flags them; `just spell-fix` rewrites every occurrence repo-wide, including
+# inside identifier keys — run `just check` afterward to confirm nothing desynced.
 #
-# Matching is word-level, applied *after* typos splits identifiers on `_` and
-# camelCase boundaries. So `cracle` does not reach `tentacle_craclespears`:
-# `craclespears` is a single token there, and `cracle` is not a standalone word
-# inside it. That is why exact-token entries like `craclespears` sit alongside
-# `cracle` — they are not redundant, and removing one as a duplicate silently
-# reopens the hole. When a misspelling is glued into a compound, add the whole
-# compound as its own entry.
+# Matching is word-level, *after* typos splits on `_` and camelCase. So `cracle`
+# never reaches `tentacle_craclespears`: `craclespears` is one token there. Hence
+# exact-token entries alongside a base word — they are not duplicates, and
+# deleting one as redundant silently stops guarding the compound.
 #
-# There is no flag-but-do-not-fix option here: `extend-words` rejects the
-# multi-correction array form, so an uncertain candidate must be left out
-# entirely rather than added speculatively.
+# `extend-words` also rejects the multi-correction array form, so there is no
+# flag-but-do-not-fix option; leave uncertain candidates out entirely.
 accurazy = "accuracy"
 addion = "addition"
 alot = "a lot"
