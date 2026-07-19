@@ -519,6 +519,41 @@ def test_list_command_prints_the_brief_before_the_lineages(
     assert brief_at < lineage_at
 
 
+def test_list_command_indents_a_wrapped_brief_under_its_row(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A Brief long enough to wrap must carry the same indent on every line,
+    # rather than falling back to the left margin on the continuations.
+    kind = Kind(
+        name="_test",
+        service=FakeService(),
+        subdir="_test",
+        extension="txt",
+        targets=frozenset({"race", "unit"}),
+        brief=lambda _entry: "brass " * 60,
+    )
+    monkeypatch.setitem(KINDS, kind.name, kind)
+    monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
+    monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
+
+    app(
+        ["assets", "list", "ork", "--kind", "_test", "--briefs"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    wrapped = [
+        line
+        for line in capsys.readouterr().out.splitlines()
+        if line.lstrip().startswith("brass")
+    ]
+    assert len(wrapped) > 1  # it really did wrap, so continuations exist
+    assert all(line.startswith(" " * 6) for line in wrapped)
+    assert not any(line.endswith(" ") for line in wrapped)
+
+
 # --- refining an already-promoted Asset -------------------------------------
 
 

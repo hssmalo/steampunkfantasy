@@ -7,6 +7,7 @@ subcommands accept, and the first concrete generate subcommand,
 """
 
 import random
+import textwrap
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -43,6 +44,10 @@ _SEED_BOUND = 2**31
 # Marks a Target that cannot be generated for at all. A plain literal of known
 # width, so the fixed-width slot it reserves is padded exactly.
 _NO_BRIEF = "no brief"
+
+# A Brief is printed under its row, indented past the "  - " bullet.
+_BRIEF_INDENT = " " * 6
+_BRIEF_MIN_WIDTH = 20
 
 # UNIT, --all and --missing pick *which* Targets to generate for, so at most one
 # may be given. LimitedChoice() defaults to min=0, max=1: exactly that rule.
@@ -156,20 +161,25 @@ def _print_lineages(row: Coverage) -> None:
 
 
 def _print_brief(row: Coverage) -> None:
-    """Print a row's Brief, wrapped, or a red note when it has none."""
+    """Print a row's Brief, wrapped under a hanging indent, or a red note."""
     if not row.target.brief:
-        stdout.print("      [red]No brief[/]", highlight=False)
+        stdout.print(f"{_BRIEF_INDENT}[red]No brief[/]", highlight=False)
         return
-    stdout.print(
-        f"      {row.target.brief}",
-        style="dim",
-        # A Brief is arbitrary authored prose: a `[` in it must not parse as a
-        # Rich tag and swallow the rest of the line.
-        markup=False,
-        highlight=False,
-        # Deliberately no soft_wrap: unlike a coverage row or a Lineage list, a
-        # Brief is read rather than copied or piped, so it should reflow.
-    )
+    # Wrapped here rather than by Rich so the continuation lines carry the same
+    # indent as the first without the block being right-filled to the terminal
+    # width. A Brief is already normalized to a single paragraph by `targets()`,
+    # so there are no blank lines or hard breaks for `wrap` to mangle.
+    width = max(stdout.width - len(_BRIEF_INDENT), _BRIEF_MIN_WIDTH)
+    for line in textwrap.wrap(row.target.brief, width=width):
+        stdout.print(
+            f"{_BRIEF_INDENT}{line}",
+            style="dim",
+            # A Brief is arbitrary authored prose: a `[` in it must not parse
+            # as a Rich tag and swallow the rest of the line.
+            markup=False,
+            highlight=False,
+            soft_wrap=True,  # already wrapped; let it through untouched
+        )
 
 
 def _print_coverage(row: Coverage) -> None:
