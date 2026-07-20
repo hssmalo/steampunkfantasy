@@ -18,9 +18,16 @@ from spf.schemas.race import RaceConfig
 
 
 class Named(Protocol):
-    """Anything carrying a display name -- a Unit, Model or Equipment entry."""
+    """Anything carrying a display name -- a Unit, Model or Equipment entry.
 
-    name: str
+    A read-only property rather than an attribute, so frozen entries satisfy
+    it: the linter only ever reads a name.
+    """
+
+    @property
+    def name(self) -> str:
+        """The display name shown to players."""
+        ...
 
 
 @dataclass(frozen=True)
