@@ -23,11 +23,11 @@ army = (
     )
     .upgrade_all_models(
         ("dwarf_infantry", 0),
-        equipment_name="trenchcoat_of_resistance",
+        equipment_name="trench_coat_of_resistance",
         race_config=cfg,
     )
     .upgrade_all_models(
-        ("dwarf_infantry", 0), equipment_name="industrial_small_arms", race_config=cfg
+        ("dwarf_infantry", 0), equipment_name="industrial_small_arms_production", race_config=cfg
     )
     .duplicate_unit(("dwarf_infantry", 0))
     .duplicate_unit(("dwarf_infantry", 0))

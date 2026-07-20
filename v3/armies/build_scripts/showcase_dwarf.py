@@ -17,7 +17,7 @@ army = (
     army.add_unit("steampowerarmor", race_config=cfg)
     .upgrade_all_models(
         ("steampowerarmor", 0),
-        equipment_name="multi_barreled_heavy_musket",
+        equipment_name="multibarreled_heavy_musket",
         race_config=cfg,
     )
     .upgrade_all_models(
