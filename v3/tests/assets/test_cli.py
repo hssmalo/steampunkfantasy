@@ -14,6 +14,7 @@ from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
 from tests.assets.conftest import FakeRefiner, fake_kind, register_kind
+from tests.conftest import unwrapped
 
 
 @pytest.fixture
@@ -176,7 +177,7 @@ def test_refine_command_errors_cleanly_on_a_kind_that_cannot_refine(
     with pytest.raises(SystemExit):
         app(argv, exit_on_error=False, result_action="return_value")
 
-    assert "does not support refinement" in capsys.readouterr().err
+    assert "does not support refinement" in unwrapped(capsys.readouterr().err)
 
 
 def test_image_command_errors_cleanly_on_an_unknown_unit(
@@ -367,9 +368,6 @@ def test_list_command_marks_only_the_rows_with_no_brief(
     assert "no brief" not in grunt_line
 
 
-_ANSI = re.compile(r"\x1b\[[0-9;]*m")
-
-
 def test_list_command_keeps_the_candidate_count_aligned(
     partly_briefed_kind: Kind, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -391,7 +389,7 @@ def test_list_command_keeps_the_candidate_count_aligned(
         result_action="return_value",
     )
 
-    lines = [_ANSI.sub("", line) for line in capsys.readouterr().out.splitlines()]
+    lines = capsys.readouterr().out.splitlines()
     marked = next(line for line in lines if "troll" in line)
     unmarked = next(line for line in lines if "grunt" in line)
     assert "no brief" in marked  # the two cases the slot has to line up
@@ -471,7 +469,7 @@ def test_list_command_prints_the_brief_before_the_lineages(
         result_action="return_value",
     )
 
-    lines = [_ANSI.sub("", line) for line in capsys.readouterr().out.splitlines()]
+    lines = capsys.readouterr().out.splitlines()
     grunt_at = next(i for i, line in enumerate(lines) if "grunt" in line)
     rest = lines[grunt_at + 1 :]
     # The Brief reflows over as many lines as it needs, so this is an ordering
@@ -645,7 +643,7 @@ def test_refine_command_survives_a_service_raising_mid_batch(
     # The Candidate that did land is still reported, and the failure surfaces
     # as the ordinary error line rather than a timer traceback.
     assert "Wrote" in captured.out
-    assert "the queue went away" in captured.err
+    assert "the queue went away" in unwrapped(captured.err)
 
 
 @pytest.fixture

@@ -19,6 +19,7 @@ from spf.assets import comfyui, get_kind
 from spf.assets import image as img
 from spf.config import config
 from spf.frontends.cli import app
+from tests.conftest import unwrapped
 
 _FIXTURES = Path(__file__).parent / "fixtures"
 _MINI = _FIXTURES / "mini_workflow.json"
@@ -262,7 +263,7 @@ def test_cli_unit_image_writes_candidates(
     written = sorted(p.name for p in images.glob("*.png"))
     assert written == ["ogre_grunt.1.png", "ogre_grunt.2.png", "ogre_grunt.3.png"]
     assert (images / "ogre_grunt.1.png").read_bytes().startswith(_PNG)
-    out = capsys.readouterr().out
+    out = unwrapped(capsys.readouterr().out)
     assert "5" in out  # the seed is printed
     # The composed prompt is echoed before the request goes out.
     assert "A stout ogre grunt hefting a huge wrench" in out
@@ -384,7 +385,7 @@ def test_cli_failed_job_surfaces_red_error(
         _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
 
     assert excinfo.value.code == 1
-    err = capsys.readouterr().err
+    err = unwrapped(capsys.readouterr().err)
     assert "image generation failed" in err
     assert "CUDA out of memory" in err  # ComfyUI's node_errors surfaced
 
