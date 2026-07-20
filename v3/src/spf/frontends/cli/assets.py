@@ -456,9 +456,11 @@ def image(
 
     # Partition before generating rather than skipping mid-loop (ADR 0015), so
     # the batch's real shape is on screen before any GPU time is spent on it.
-    briefed = [target for target in selected if target.brief]
+    briefed: list[Target] = []
     for target in selected:
-        if not target.brief:
+        if target.brief:
+            briefed.append(target)
+        else:
             stderr.print(f"[yellow]Warning:[/] no brief for {target.name!r}, skipping")
 
     if not briefed:
@@ -476,6 +478,9 @@ def _generate_image(
     kind: AssetKind, race: t.RaceName, target: Target, opts: AssetOpts
 ) -> None:
     """Generate Candidates for one Target, reporting each as it lands."""
+    # Unreachable from `image()`, which partitions Brief-less Targets out and
+    # warns instead (ADR 0015). Kept as the genuine error path for any other
+    # caller rather than replaced by an assert.
     if not target.brief:  # already normalized by targets(), so no .strip()
         stderr.print(
             f"[red]Error:[/] no brief for {target.name!r}, cannot generate an image"

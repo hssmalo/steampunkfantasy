@@ -366,8 +366,10 @@ def test_cli_blank_race_brief_warns_without_writing(
 ) -> None:
     _run("assets", "image", "gnome")
 
+    captured = capsys.readouterr()
     assert not image_env.candidates.exists()
-    assert "Nothing to generate." in capsys.readouterr().out
+    assert "no brief" in captured.err
+    assert "Nothing to generate." in captured.out
 
 
 def test_cli_failed_job_surfaces_red_error(

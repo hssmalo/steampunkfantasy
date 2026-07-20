@@ -679,6 +679,55 @@ def test_image_command_skips_a_brief_less_target_without_dying(
     captured = capsys.readouterr()
     assert "troll" in captured.err  # said so, rather than skipping silently
     assert "Promote one with" in captured.out  # and the briefed rows still ran
+    # A partial batch has generated output to speak for itself (ADR 0015).
+    assert "Nothing to generate." not in captured.out
+
+
+@pytest.mark.usefixtures("partly_briefed_image_kind")
+def test_image_command_skips_brief_less_targets_under_missing(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # The case that opened issue 61: --missing selects every Asset-less Target,
+    # so the Brief-less one used to abort the batch on its way past.
+    app(
+        ["assets", "image", "ork", "--missing"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    captured = capsys.readouterr()
+    assert "troll" in captured.err
+    assert "Promote one with" in captured.out
+
+
+def test_image_command_warns_once_per_brief_less_target(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # One line per Target, not one grouped line for the batch (ADR 0015), so
+    # two gaps have to produce two warnings.
+    register_kind(
+        fake_kind(
+            name="image",
+            brief=lambda entry: (
+                "" if entry.name in {"Troll", "Grunt"} else entry.description
+            ),
+        ),
+        monkeypatch,
+        tmp_path,
+    )
+
+    app(
+        ["assets", "image", "ork", "--all"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    warnings = [
+        line for line in capsys.readouterr().err.splitlines() if "no brief" in line
+    ]
+    assert len(warnings) == 2
 
 
 @pytest.mark.usefixtures("partly_briefed_image_kind")
