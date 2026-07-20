@@ -234,7 +234,7 @@ Kind itself (`Kind.brief`), so a Kind that generates from something other than
 `description` needs no change to the Targets or the listing code (ADR 0014).
 Distinct from the Prompt, which is *composed* from the Brief plus the configured
 preamble. A Target without a Brief cannot be generated for, so `spf assets list`
-marks it `no brief`.
+marks it `no brief` and `spf assets image` warns and skips it (ADR 0015).
 _Avoid_: prompt (that's the composed string), seed (that's the RNG seed),
 description (the TOML field name; for an Image the two coincide, for another
 Kind they may not)

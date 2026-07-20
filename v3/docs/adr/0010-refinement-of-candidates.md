@@ -61,8 +61,9 @@ This follows from the choice above and stands or falls with it — under classic
 img2img, prompt replacement would be actively wrong, since a bare "remove one
 arm" gives the sampler nothing to reconstruct from at high denoise.
 
-Consequently `refine` never looks up a description, and the "no description ⇒
-hard error" rule that `spf assets image` enforces does not apply to it.
+Consequently `refine` never looks up a description, and the "no Brief ⇒ warn
+and skip" rule that `spf assets image` enforces (ADR 0015; a hard error when
+this was written) does not apply to it.
 
 **The negative prompt stays unpatched** (ADR 0009), so a Correction is always a
 *positive* statement. This is not a limitation to work around: the negative
