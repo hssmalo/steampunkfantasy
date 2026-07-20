@@ -33,10 +33,13 @@ def _key_forms(key: str, conventions: LintConfig) -> set[str]:
     form. That is what makes `darkelf_infantry` require the name "Dark Elf
     Infantry" while rejecting "Darkelf Infantry" -- keeping the raw key would
     accept both spellings and hide exactly the defects this rule exists for.
+
+    An alias matches a whole underscore-delimited segment, not any substring,
+    so `darkelf` rewrites `darkelf` and `roboprosthetic_darkelf` but could
+    never bite a segment that merely contains those letters.
     """
-    canonical = key
-    for alias, expansion in conventions.aliases.items():
-        canonical = canonical.replace(alias, expansion)
+    segments = [conventions.aliases.get(segment, segment) for segment in key.split("_")]
+    canonical = "_".join(segments)
 
     forms = {canonical}
     for prefix in conventions.optional_key_prefixes:

@@ -117,6 +117,19 @@ def test_alias_is_unidirectional(key: str, name: str) -> None:
     assert rules.check_key_name(key, name, CONVENTIONS) is not None
 
 
+def test_alias_matches_whole_segments_only() -> None:
+    """An alias rewrites a segment, never a substring of a longer word.
+
+    With `elf` aliased, `dark_elf` must be touched but `darkelf` -- where
+    `elf` is only a tail of the segment -- must not, or the anchoring has
+    regressed to a substring replace.
+    """
+    conventions = LintConfig(aliases={"elf": "fairy"})
+
+    assert rules.check_key_name("dark_elf", "Dark Fairy", conventions) is None
+    assert rules.check_key_name("darkelf", "Darfairy", conventions) is not None
+
+
 @pytest.mark.parametrize(
     ("key", "name"),
     [

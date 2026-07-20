@@ -58,17 +58,17 @@ def lint_race_config(
     race: t.RaceName, race_config: RaceConfig, conventions: LintConfig
 ) -> list[Finding]:
     """Return every finding for an already-loaded, schema-valid Race."""
-    findings = [
-        Finding(
-            race=race,
-            section="races",
-            key=race,
-            rule="race-capitalized",
-            message=message,
+    findings: list[Finding] = []
+    if (message := rules.check_capitalized(race_config.races[race].name)) is not None:
+        findings.append(
+            Finding(
+                race=race,
+                section="races",
+                key=race,
+                rule="race-capitalized",
+                message=message,
+            )
         )
-        for name in [race_config.races[race].name]
-        if (message := rules.check_capitalized(name)) is not None
-    ]
     sections: dict[str, Mapping[str, Named]] = {
         "units": race_config.units,
         "models": race_config.models,
