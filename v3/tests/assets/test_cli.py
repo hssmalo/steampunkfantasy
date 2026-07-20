@@ -646,3 +646,53 @@ def test_refine_command_survives_a_service_raising_mid_batch(
     # as the ordinary error line rather than a timer traceback.
     assert "Wrote" in captured.out
     assert "the queue went away" in captured.err
+
+
+@pytest.fixture
+def partly_briefed_image_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Kind:
+    """Stand in for the image Kind with the Troll Target left Brief-less.
+
+    `image` resolves its Kind by name rather than taking `--kind`, so the
+    substitution happens in `KINDS` under the real name. As with
+    `partly_briefed_kind`, the gap is forced by the extractor rather than
+    borrowed from a race that happens to be unbriefed today.
+    """
+    kind = fake_kind(
+        name="image",
+        brief=lambda entry: "" if entry.name == "Troll" else entry.description,
+    )
+    return register_kind(kind, monkeypatch, tmp_path)
+
+
+@pytest.mark.usefixtures("partly_briefed_image_kind")
+def test_image_command_skips_a_brief_less_target_without_dying(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Issue 61: the Brief-less Troll must not cost the rest of the batch the
+    # GPU time it was queued for.
+    app(
+        ["assets", "image", "ork", "--all"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    captured = capsys.readouterr()
+    assert "troll" in captured.err  # said so, rather than skipping silently
+    assert "Promote one with" in captured.out  # and the briefed rows still ran
+
+
+@pytest.mark.usefixtures("partly_briefed_image_kind")
+def test_image_command_reports_an_entirely_brief_less_batch_as_nothing_to_do(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Exiting 0 in silence would read as a crash; the closing line is what
+    # makes "there was nothing to generate" a deliberate outcome.
+    app(
+        ["assets", "image", "ork", "troll"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    captured = capsys.readouterr()
+    assert "troll" in captured.err
+    assert "Nothing to generate." in captured.out

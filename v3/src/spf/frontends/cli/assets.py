@@ -443,7 +443,7 @@ def image(
 
     The prompt is composed from the configured preamble file
     (`assets.image.prompt`, by default `prompts/image.txt`) plus the target's
-    name and Brief; a target without a Brief is a hard error.
+    name and Brief; a target without a Brief is warned about and skipped.
     """
     opts = opts or AssetOpts()
     kind = get_kind("image")
@@ -454,8 +454,20 @@ def image(
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
+    # Partition before generating rather than skipping mid-loop (ADR 0015), so
+    # the batch's real shape is on screen before any GPU time is spent on it.
+    briefed = [target for target in selected if target.brief]
     for target in selected:
-        if len(selected) > 1:
+        if not target.brief:
+            stderr.print(f"[yellow]Warning:[/] no brief for {target.name!r}, skipping")
+
+    if not briefed:
+        # Exiting 0 in silence would read as a crash rather than an outcome.
+        stdout.print("Nothing to generate.")
+        return
+
+    for target in briefed:
+        if len(briefed) > 1:
             stdout.print(f"[green]{target.name}[/]")
         _generate_image(kind, race, target, opts)
 
