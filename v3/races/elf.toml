@@ -477,10 +477,10 @@ rows = [
 	"6+: shaken",
 ]
 
-[units.polar_bear_riders]
+[units.dire_polar_bear_riders]
 race = "elf"
 name = "Dire Polar Bear Riders"
-models = ["polar_bear_riders"]
+models = ["dire_polar_bear_riders"]
 size = "Medium"
 cost.mp = 8
 cost.xp = 32
@@ -490,23 +490,23 @@ description = '''A huge  dire polar bear with one two elf riding the bear. The f
 '''
 
 
-[units.polar_bear_riders.special]
+[units.dire_polar_bear_riders.special]
 "Resistance" = "Poison[3]"
 "Fire Order" = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded"
 
-[units.polar_bear_riders.shaken]
+[units.dire_polar_bear_riders.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.polar_bear_riders.orders.fire]
+[units.dire_polar_bear_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 
-[units.polar_bear_riders.orders.movement]
+[units.dire_polar_bear_riders.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
-[units.polar_bear_riders.damage_tables.Regular]
+[units.dire_polar_bear_riders.damage_tables.Regular]
 rows = [
 	"2-7: +1 to future damage, Bleed[4]",
 	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
@@ -517,7 +517,7 @@ notes = [
 	"if one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
 ]
 
-[units.polar_bear_riders.damage_tables.Psychic]
+[units.dire_polar_bear_riders.damage_tables.Psychic]
 rows = [
 	"6+: shaken",
 ]
@@ -810,7 +810,7 @@ damage = "d6-1"
 ap = 3
 
 [models.elite_elf_scout]
-name = "Elite Elf scout"
+name = "Elite Elf Scout"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
@@ -834,7 +834,7 @@ ap = 2
 "Pre-Assault Retreat" = "[3+]"
 
 [models.elf_scout]
-name = "Elf scout"
+name = "Elf Scout"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
@@ -873,7 +873,7 @@ ap = 2
 name = "Elf Archer"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:2"]
-equipment = ["bow_free"]
+equipment = ["elf_bow_free"]
 type = ["Bio", "Infantry", "Archer", "Walking"]
 
 [models.elf_archer.assault]
@@ -891,7 +891,7 @@ ap = 2
 name = "Superb Elf Archer"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["bow_free"]
+equipment = ["elf_bow_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 replaces = "elf_archer"
 cost.xp = 6
@@ -1001,14 +1001,14 @@ ap = 2
 [models.bear_rider.assault.special]
 "Cunning Assault" = "[1 for 3]"
 
-[models.polar_bear_riders]
+[models.dire_polar_bear_riders]
 name = "Dire Polar Bear Riders"
 race = "elf"
 equipment_limit = ["Independent:∞"]
 equipment = ["gatling_gun", "elf_flame_arrow_free"]
 type = ["Bio", "Cavalry", "Walking"]
 
-[models.polar_bear_riders.assault]
+[models.dire_polar_bear_riders.assault]
 strength = [9, 6, 3, 1]
 strength_die = "5+"
 deflection = [2, 0, 0, 0]
@@ -1016,10 +1016,10 @@ deflection_die = "5+"
 damage = "d6+2"
 ap = 2
 
-[models.polar_bear_riders.assault.special]
+[models.dire_polar_bear_riders.assault.special]
 "Cunning Assault" = "[1 for 3]"
 
-[models.sauropod]
+[models.sauropod_riders]
 name = "Sauropod Riders"
 race = "elf"
 equipment_limit = ["Independent:∞"]
@@ -1032,7 +1032,7 @@ equipment = [
 ]
 type = ["Bio", "Cavalry", "Walking"]
 
-[models.sauropod.assault]
+[models.sauropod_riders.assault]
 strength = [2, 0, 0, 0]
 strength_die = "5+"
 deflection = [0, 0, 0, 0]
@@ -1055,14 +1055,14 @@ deflection_die = "5+"
 damage = "d6"
 ap = 4
 
-[models.crew]
+[models.oliphant_crew]
 name = "Oliphant Crew"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["bow_free", "crew_hand_grenade"]
+equipment = ["elf_bow_free", "crew_hand_grenade"]
 type = ["Bio", "Crew", "Walking"]
 
-[models.crew.assault]
+[models.oliphant_crew.assault]
 strength = [0, 0, 0, 0]
 strength_die = "5+"
 deflection = [0, 0, 0, 0]
@@ -1074,7 +1074,7 @@ ap = "N/A"
 name = "Hydra Crew"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["bow_free"]
+equipment = ["elf_bow_free"]
 type = ["Bio", "Crew", "Walking"]
 
 [models.hydra_crew.assault]
@@ -1134,10 +1134,10 @@ ap = 2
 "Pre-Assault Retreat" = "5+"
 
 [models.pegasus_rider]
-name = "Pegasus_rider"
+name = "Pegasus Rider"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
-equipment = ["bow_free", "shriek_smg_free"]
+equipment = ["elf_bow_free", "shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking", "Flying"]
 
 [models.pegasus_rider.special]
@@ -1187,8 +1187,8 @@ ap = 2
 
 [units.sauropod_riders]
 race = "elf"
-name = "Sauropod Rider"
-models = ["sauropod"]
+name = "Sauropod Riders"
+models = ["sauropod_riders"]
 size = "Huge"
 cost.mp = 8
 cost.xp = 48
@@ -1234,8 +1234,8 @@ rows = [
 
 [units.armored_oliphant_riders]
 race = "elf"
-name = "Oliphant Rider"
-models = ["oliphant", "crew", "crew", "crew", "crew"]
+name = "Armored Oliphant Riders"
+models = ["oliphant", "oliphant_crew", "oliphant_crew", "oliphant_crew", "oliphant_crew"]
 size = "Large"
 cost.mp = 8
 cost.xp = 24
@@ -1660,22 +1660,22 @@ ap = "0"
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "set enemy on fire"
 
-[equipment.bow_free]
+[equipment.elf_bow_free]
 name = "Elf Bow"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
-[equipment.bow_free.range]
+[equipment.elf_bow_free.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = "0"
 
-[equipment.bow_free.range.special]
+[equipment.elf_bow_free.range.special]
 "Range" = "+1 range if you are flying"
 "Ammo" = "Always treated as loaded"
 
-[equipment.bow_free.model_special]
+[equipment.elf_bow_free.model_special]
 "To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
 
 [equipment.assault_archer]
@@ -1706,27 +1706,27 @@ ap = "N/A"
 [equipment.illusion_weapon.range.special]
 "Ammo" = "Always treated as loaded. Fire in both gunnery phases."
 
-[equipment.seeker_arrow]
+[equipment.seeker_arrows]
 name = "Seeker Arrows"
 race = "elf"
 requires = [["Special Arrows:3"], ["type:Archer", "type:Cavalry"]]
 upgrade_all = true
 cost.cp = 8
 
-[equipment.seeker_arrow.model_special]
+[equipment.seeker_arrows.model_special]
 "To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +3 to hit"
 
-[equipment.seeker_arrow.range]
+[equipment.seeker_arrows.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 0
 
-[equipment.seeker_arrow.range.special]
+[equipment.seeker_arrows.range.special]
 "Range" = "+1 range if you are flying"
 "Ammo" = "Limited Ammo(3)"
 
-[equipment.elven_seeker_arrow]
+[equipment.elven_seeker_arrows]
 name = "Elven Seeker Arrows"
 race = "elf"
 upgrade_all = false
@@ -1734,21 +1734,21 @@ cost.cp = 6
 requires = [["Special Arrows:2"], ["type:Archer"], ["type:SuperElite"]]
 description = '''The pride of elven craftsmanship. A programmable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
 
-[equipment.elven_seeker_arrow.model_special]
+[equipment.elven_seeker_arrows.model_special]
 "To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +5 to hit"
 
-[equipment.elven_seeker_arrow.range]
+[equipment.elven_seeker_arrows.range]
 range = 10
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 0
 
-[equipment.elven_seeker_arrow.range.special]
+[equipment.elven_seeker_arrows.range.special]
 "Range" = "Elven Seeker Arrow do not need line of sight (but cannot target hidden units)"
 "Ammo" = "Limited Ammo[1]. Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
 "Sniper" = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
 
-[equipment.rocket_arrow]
+[equipment.bow_with_rocket_arrows]
 name = "Bow with Rocket Arrows"
 race = "elf"
 requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
@@ -1756,16 +1756,16 @@ cost.cp = 8
 upgrade_all = true
 description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc"
 
-[equipment.rocket_arrow.range]
+[equipment.bow_with_rocket_arrows.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.rocket_arrow.model_special]
+[equipment.bow_with_rocket_arrows.model_special]
 "To Hit (2)" = "Inaccurate: -1 to Hit"
 
-[equipment.rocket_arrow.range.special]
+[equipment.bow_with_rocket_arrows.range.special]
 "Ammo" = "Always treated as loaded"
 "Fumble" = "If fumble, take d6-4 in damage."
 
@@ -1907,7 +1907,7 @@ ap = "5"
 "Area" = "[4+]"
 
 [equipment.deflection_field]
-name = "Deflection_field"
+name = "Deflection Field"
 race = "elf"
 requires = [["Independent:1"], ["type:Vehicle"]]
 cost.cp = 8
