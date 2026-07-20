@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+from pydantic import Field
+
 from spf.schemas import StrictModel
 
 
@@ -86,7 +88,30 @@ class AssetsConfig(StrictModel):
     model: AssetKindConfig = AssetKindConfig(count=2)
 
 
+class LintConfig(StrictModel):
+    """Naming conventions the Race-data linter treats as legitimate.
+
+    Divergences between a key and its display name are allowed only by rule,
+    never per instance -- an annotation on a single entry would let a real
+    defect be silenced by marking it intentional.
+    """
+
+    aliases: dict[str, str] = Field(default_factory=dict)
+    """Key spellings rewritten before comparison, e.g. `darkelf` to `dark_elf`.
+
+    Applied to the key only, so the name must match the expansion.
+    """
+
+    optional_key_prefixes: list[str] = Field(default_factory=list)
+    optional_key_suffixes: list[str] = Field(default_factory=list)
+    """Affixes a key may carry that its display name omits, e.g. `_free`."""
+
+    function_words: list[str] = Field(default_factory=list)
+    """Words that must stay lowercase anywhere but the start of a name."""
+
+
 class SteamPunkFantasyConfig(StrictModel):
     paths: PathsConfig
     render: RenderConfig = RenderConfig()
     assets: AssetsConfig
+    lint: LintConfig = LintConfig()
