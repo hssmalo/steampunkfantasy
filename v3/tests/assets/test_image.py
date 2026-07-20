@@ -381,7 +381,9 @@ def test_cli_failed_job_surfaces_red_error(
         _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
 
     assert excinfo.value.code == 1
-    err = capsys.readouterr().err
+    # Unwrapped: the subject is that the detail reaches the user, not where
+    # Rich happened to break the line for the current terminal width.
+    err = " ".join(capsys.readouterr().err.split())
     assert "image generation failed" in err
     assert "CUDA out of memory" in err  # ComfyUI's node_errors surfaced
 
