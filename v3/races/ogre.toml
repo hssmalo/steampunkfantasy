@@ -226,7 +226,7 @@ description = '''Ogre assault scouts are armed with a sword and a gear pistol. A
 tip ='''
 Emphasis is put on fighting multiple enemies simultaneously with their long swords. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. '''
 
-models = ["ogre_assault_scout"]
+models = ["ogre_scout"]
 size = "Large"
 cost.mp = 8
 cost.xp = 16
@@ -390,7 +390,7 @@ rows = [
 
 [units.main_engine]
 race = "ogre"
-name = "Main engine"
+name = "Main Engine"
 models = ["main_engine"]
 size = "Huge"
 cost.ip = 32
@@ -628,14 +628,14 @@ deflection_die = "5+"
 damage = "d6"
 ap = 1
 
-[models.ogre_assault_scout]
+[models.ogre_scout]
 name = "Ogre Scout"
 race = "ogre"
 equipment_limit = ["Independent:∞", "Hands:2", "Reserve Melee:1"]
 equipment = ["gear_pistol", "gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 
-[models.ogre_assault_scout.assault]
+[models.ogre_scout.assault]
 strength = [6, 2, 1, 1]
 strength_die = "5+"
 deflection = [3, 0, 0, 0]
@@ -647,7 +647,7 @@ ap = 3
 name = "Ogre Scout Engineer"
 race = "ogre"
 cost.xp = 16
-replaces = "ogre_assault_scout"
+replaces = "ogre_scout"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
@@ -821,7 +821,7 @@ ap = 3
 "Disconnected" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.elite_ogre_infantry]
-name = "Ogre Elite Infantry"
+name = "Elite Ogre Infantry"
 race = "ogre"
 replaces = "ogre_infantry"
 cost.xp = 4
@@ -1007,7 +1007,7 @@ damage = "d8-2"
 ap = 2
 
 [equipment.fancy_arquebus_broadside]
-name = "Fancy Arquebus broadside"
+name = "Fancy Arquebus Broadside"
 race = "ogre"
 requires = [["Broadside:1"], ["type:Mechanical"]]
 cost.cp = 24
