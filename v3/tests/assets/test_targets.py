@@ -62,7 +62,7 @@ def test_model_level_kind_covers_the_races_models() -> None:
     assert [target.name for target in found][:3] == [
         "troll",
         "grunt",
-        "ork_elite_infantry",
+        "elite_ork_infantry",
     ]
     assert {target.level for target in found} == {"model"}
 

@@ -16,7 +16,7 @@ army = (
     .upgrade_unit(
         ("ork_infantry", 0),
         model_key=("ork_infantry", 0),
-        upgrade_model_name="ork_elite_infantry",
+        upgrade_model_name="elite_ork_infantry",
         race_config=cfg,
     )
     .upgrade_all_models(

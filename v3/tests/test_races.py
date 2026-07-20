@@ -142,7 +142,7 @@ def test_spawn_rule_invalid_format() -> None:
     config_dict = _goblin_raw()
 
     # Change the Spawn special rule to have no colon
-    config_dict["equipment"]["snake_arrow"]["range"]["special"]["Spawn"] = (
+    config_dict["equipment"]["snake_arrows"]["range"]["special"]["Spawn"] = (
         "Place one hidden tiny snake"
     )
 
@@ -157,7 +157,7 @@ def test_spawn_rule_undefined_spawn_id() -> None:
     config_dict = _goblin_raw()
 
     # Reference an undefined spawn ID
-    config_dict["equipment"]["snake_arrow"]["range"]["special"]["Spawn"] = (
+    config_dict["equipment"]["snake_arrows"]["range"]["special"]["Spawn"] = (
         "unknown_spawn: Place one hidden tiny snake"
     )
 

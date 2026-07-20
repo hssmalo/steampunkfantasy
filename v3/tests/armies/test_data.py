@@ -802,9 +802,9 @@ def test_upgrade_all_models_adds_to_all(
     )
     # Use equipment that doesn't consume limited slots
     army = army.upgrade_all_models(
-        ("goblin_infantry", 0), equipment_name="poison_dagger", race_config=goblin_race
+        ("goblin_infantry", 0), equipment_name="poison_deflection_dagger", race_config=goblin_race
     )
-    assert all("poison_dagger" in m.upgrades for m in army.units[0].models)
+    assert all("poison_deflection_dagger" in m.upgrades for m in army.units[0].models)
 
 
 def test_upgrade_all_models_does_not_mutate_original(
