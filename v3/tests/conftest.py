@@ -16,7 +16,22 @@ for _var in ("FORCE_COLOR", "COLORTERM"):
     os.environ.pop(_var, None)
 os.environ["TERM"] = "dumb"
 
-# Rich otherwise takes its width from the invoking terminal, so anything that
-# wraps — a Brief, a long error — depends on the size of the window the suite
-# happens to be run from. Pin it, or `COLUMNS=60` fails three tests.
+# Rich otherwise takes its width from the invoking terminal, so where a message
+# wraps depends on the window the suite happens to be run from. Pinning it makes
+# a run reproducible — but it is deliberately *not* what makes these tests pass:
+# they are green with this line deleted at every width from 40 to 250, because
+# the ones that match on a message compare it `unwrapped`. Keep it that way. A
+# test that only passes at 100 is a test that will fail on someone's laptop.
 os.environ["COLUMNS"] = "100"
+
+
+def unwrapped(text: str) -> str:
+    """Collapse Rich's line breaks so a message can be matched as one string.
+
+    Rich wraps console output to the terminal width, and the break can land
+    inside the very phrase a test is looking for, splitting "does not support
+    refinement" across two lines. Where the subject is *that the message
+    reached the user*, rather than how it was laid out, assert against this
+    instead of the raw capture.
+    """
+    return " ".join(text.split())
