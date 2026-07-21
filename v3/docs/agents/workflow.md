@@ -17,7 +17,10 @@ For non-trivial features and fixes, follow this workflow:
 
 ## Wrapping up
 
-- When the implementation is done, push the commits to a **new PR**.
+- When the implementation is done, push the commits to a **new PR**. Open it
+  **ready for review, not as a draft** — `gh pr create` (no `--draft`). A plan
+  or issue that says to open a draft is overridden by this default unless the
+  human asks for a draft explicitly.
 - **Don't clean anything up** (worktree, branch, scratch files) until told to —
   the PR is reviewed before merging.
 - The human squash-merges the PR at the end.
