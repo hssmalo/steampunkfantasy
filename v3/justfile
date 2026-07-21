@@ -1,7 +1,7 @@
 default: check
 
 # Run all quality gates in order, stopping on the first failure.
-check: fmt-check lint validate spell test typecheck
+check: fmt-check lint validate lint-races spell test typecheck
 
 # Auto-format the codebase with ruff.
 fmt:
@@ -49,3 +49,7 @@ validate:
     uv run spf rules hexes > /dev/null
     uv run spf rules specials > /dev/null
     uv run spf rules tokens > /dev/null
+
+# Lint race data for name and key consistency.
+lint-races:
+    uv run spf race lint

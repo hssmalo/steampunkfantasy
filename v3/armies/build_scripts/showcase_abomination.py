@@ -22,7 +22,7 @@ army = (
 army = (
     army.add_unit("giant_frog_riders", race_config=cfg)
     .upgrade_all_models(
-        ("giant_frog_riders", 0), equipment_name="frog_armor", race_config=cfg
+        ("giant_frog_riders", 0), equipment_name="frog_cavalry_armor", race_config=cfg
     )
     .upgrade_all_models(
         ("giant_frog_riders", 0),

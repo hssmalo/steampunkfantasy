@@ -3,9 +3,9 @@
 import configaroo
 import cyclopts
 
-from spf import races
+from spf import lint, races
 from spf.config import config
-from spf.console import stdout
+from spf.console import stderr, stdout
 from spf.schemas import type_aliases as t
 from spf.schemas.race import RaceConfig
 
@@ -20,6 +20,7 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(list_models, name="models")
     app.command(list_equipment, name="equipment")
     app.command(list_things, name="things")
+    app.command(lint_race, name="lint")
 
 
 def list_races() -> None:
@@ -99,3 +100,36 @@ def list_things(race_name: t.RaceName) -> None:
     _print_models(race)
     stdout.print("[bold]Equipment[/]")
     _print_equipment(race)
+
+
+def lint_race(race_name: t.RaceName | None = None) -> None:
+    """Check Race data for name and key inconsistencies.
+
+    Lints every Race that validates when given no argument. Style is a soft
+    gate layered on the hard one: a Race that fails schema validation is
+    skipped rather than reported, because `just validate` owns that failure
+    and would otherwise report it twice (ADR 0016).
+    """
+    valid = races.list_races(validate=True)
+    to_lint: list[t.RaceName]
+    if race_name is None:
+        to_lint = valid
+    elif race_name not in valid:
+        stderr.print(f"{race_name}: skipped (does not validate)")
+        return
+    else:
+        to_lint = [race_name]
+
+    findings = [finding for name in to_lint for finding in lint.lint_race(name)]
+    for finding in findings:
+        location = f"{finding.section}.{finding.key}"
+        # Soft-wrapped so a finding is always exactly one line: these are
+        # meant to be grepped, and Rich would otherwise fold the long ones at
+        # the terminal width, splitting a key away from its rule.
+        stdout.print(
+            f"races/{finding.race}.toml  {location}  {finding.rule}  {finding.message}",
+            highlight=False,
+            soft_wrap=True,
+        )
+    if findings:
+        raise SystemExit(1)
