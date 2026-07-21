@@ -2,6 +2,8 @@
 
 [races.dwarf]
 name = "Dwarf"
+description = "Dwarfs are sturdd, though and robust and about 1.6m in height."
+
 
 [units]
 
@@ -17,6 +19,8 @@ models = [
 size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
+description = "Dwarf infantry wielding a musket"
+
 
 [units.dwarf_infantry.shaken]
 speed = "slow"
@@ -59,6 +63,8 @@ models = ["dwarf_brother_in_arms", "dwarf_brother_in_arms"]
 size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
+description = '''Two Twin Dwarfs in heavy armor fighting side by side wielding a musket.
+'''
 
 [units.dwarf_brother_in_arms.shaken]
 speed = "slow"
@@ -108,6 +114,9 @@ armor = [7, 6, 6, 5]
 cost.mp = 16
 cost.cp = 8
 cost.ip = 8
+description = '''A dwarf in steampunk powerarmor wielding a multibarrled heavy musket.
+'''
+
 
 [units.steampowerarmor.shaken]
 speed = "slow"
@@ -159,6 +168,9 @@ armor = [0, 0, 0, 0]
 cost.cp = 16
 cost.xp = 16
 cost.mp = 8
+description = '''A dwarf in a mini zeppelin. The zeppelin carries only one dwarf which barely fits in the zeppelin. The dwarf is wielding an axe. On the zeppelin there is a machine throwing axes.
+'''
+
 
 [units.mini_zeppelin.shaken]
 speed = "slow"
@@ -192,9 +204,11 @@ rows = [
 race = "dwarf"
 name = "Transport Zeppelin"
 models = ["transport_zeppelin"]
-size = "Medium"
+size = "Large"
 armor = [6, 5, 0, 0]
 cost.cp = 16
+description = '''A civilian steampunk zeppelin.
+'''
 
 [units.transport_zeppelin.shaken]
 speed = "fast_fly"
@@ -239,6 +253,8 @@ armor = [7, 0, 0, 0]
 cost.cp = 24
 cost.xp = 16
 cost.mp = 8
+description = '''An Anti-tank gun on wheels ready to fire. On the side there are two dwarfs standing.
+'''
 
 [units.dwarf_at_gun.shaken]
 speed = "still"
@@ -278,6 +294,9 @@ models = ["gunblasterwagon"]
 size = "Large"
 armor = [8, 10, 10, 7]
 cost.ip = 24
+description = '''An heavy tank with braodside weapons firing to the sides
+'''
+
 
 [units.gunblasterwagon.shaken]
 speed = "still"
@@ -353,6 +372,9 @@ models = ["dw42"]
 size = "Large"
 armor = [13, 10, 10, 9]
 cost.ip = 72
+description = '''heavily armored tank with a very big gun point straight forward.
+'''
+
 
 [units.dw42.shaken]
 speed = "still"
@@ -424,6 +446,9 @@ models = ["zap"]
 size = "Large"
 armor = [10, 8, 8, 7]
 cost.ip = 32
+description = '''A steampunk tank with futureistick weapon with two barrels firing forward. It also has weapons firing all round the tank.
+'''
+
 
 [units.zap.shaken]
 speed = "still"
@@ -498,6 +523,8 @@ size = "Huge"
 armor = [8, 8, 8, 8]
 cost.ip = 96
 cost.xp = 48
+description = '''A huge zeppelin firing its main gun toward the ground. 
+'''
 
 [units.zeppelin.shaken]
 speed = "slow_fly"
@@ -545,6 +572,9 @@ models = ["tamed_balrog"]
 size = "Huge"
 armor = [8, 7, 7, 6]
 cost.xp = 96
+description = '''A burning balrog with a flaming whip.
+'''
+
 
 [units.tamed_balrog.shaken]
 speed = "slow"
