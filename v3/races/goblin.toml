@@ -157,7 +157,7 @@ rows = [
 
 [units.goblin_infantry_carrier]
 race = "goblin"
-name = "Goblin Infantry carrier"
+name = "Goblin Infantry Carrier"
 models = ["goblin_infantry_carrier"]
 size = "Large"
 armor = [10, 6, 5, 4]
@@ -298,7 +298,7 @@ rows = [
 
 [units.heavy_carrier]
 race = "goblin"
-name = "Heavy carrier"
+name = "Heavy Carrier"
 models = ["heavy_carrier"]
 size = "Large"
 armor = [10, 8, 6, 4]
@@ -574,7 +574,7 @@ ap = 2
 name = "Giant Snake Cavalry"
 race = "goblin"
 equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:3"]
-equipment = ["goblin_bow", "snake_arrow"]
+equipment = ["goblin_bow", "snake_arrows"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.giant_snake_cavalry.assault]
@@ -658,7 +658,7 @@ ap = 2
 [models.modified_truck]
 name = "Modified Truck"
 race = "goblin"
-equipment = ["auto_bow", "goblin_grenade_free", "goblin_grenade_free"]
+equipment = ["goblin_auto_bow", "goblin_grenade_free", "goblin_grenade_free"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
@@ -718,7 +718,7 @@ ap = 2
 [equipment]
 
 [equipment.goblin_bow]
-name = "Goblin bow"
+name = "Goblin Bow"
 race = "goblin"
 requires = [["Hands:2"], ["type:Infantry"]]
 
@@ -732,68 +732,68 @@ ap = 1
 "Ammo" = "Always treated as loaded"
 
 
-[equipment.seeker_arrow]
-name = "Seeker arrows"
+[equipment.seeker_arrows]
+name = "Seeker Arrows"
 race = "goblin"
 requires = [["Special Arrows:3"], ["type:Infantry"]]
 cost.cp = 8
 upgrade_all = true
 
-[equipment.seeker_arrow.model_special]
+[equipment.seeker_arrows.model_special]
 "To Hit (2)" = "Enhanced Arrow: +2 to hit"
 
-[equipment.seeker_arrow.range]
+[equipment.seeker_arrows.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = 1
 
-[equipment.seeker_arrow.range.special]
+[equipment.seeker_arrows.range.special]
 "Ammo" = "Limited Ammo[3]"
 
 
 
-[equipment.snake_arrow]
-name = "Snake arrows"
+[equipment.snake_arrows]
+name = "Snake Arrows"
 race = "goblin"
 requires = [["Special Arrows:3"],["type:Cavalry"]]
 #description = "Attached to the arrow is a small container with a tiny snake inside which is released when the arrow lands"
 
 
-[equipment.snake_arrow.range]
+[equipment.snake_arrows.range]
 range = 2
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.snake_arrow.range.special]
+[equipment.snake_arrows.range.special]
 "Ammo" = "Limited Ammo[3]"
 "Spawn" = "tiny_snake: Place one hidden tiny snake in an empty hex within normal range"
 
 
 
-[equipment.assassin_seeker_arrow]
-name = "Seeker Assassin Arrow"
+[equipment.seeker_assassin_arrows]
+name = "Seeker Assassin Arrows"
 race = "goblin"
 requires = [["Hands:2"], ["type:Infantry"]]
 cost.cp = 16
 upgrade_all = true
 
-[equipment.assassin_seeker_arrow.model_special]
+[equipment.seeker_assassin_arrows.model_special]
 "To Hit (2)" = "+2 to hit if using seeker arrow"
 
-[equipment.assassin_seeker_arrow.range]
+[equipment.seeker_assassin_arrows.range]
 range = 4
 angle = [true, true, true, true]
 damage = "d4-2"
 ap = 1
 
-[equipment.assassin_seeker_arrow.range.special]
+[equipment.seeker_assassin_arrows.range.special]
 "Ammo" = "Limited Ammo[4]. Each model have one assassin seeker arrow each, which may be used once per game. Spend one limited ammo per model firing this weapon."
 "Extra Damage" = "Poison[12]"
 
 [equipment.gear_bow]
-name = "Gear bow"
+name = "Gear Bow"
 race = "goblin"
 cost.cp = 8
 upgrade_all = true
@@ -830,7 +830,7 @@ fast_fly = [
 ]
 
 [equipment.poison_bow]
-name = "Poison bow"
+name = "Poison Bow"
 race = "goblin"
 cost.cp = 16
 upgrade_all = true
@@ -876,18 +876,18 @@ still = [["Load", "-"], ["-", "Load"]]
 
 
 
-[equipment.poison_dagger]
+[equipment.poison_deflection_dagger]
 name = "Poison Deflection Dagger"
 race = "goblin"
 cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
-[equipment.poison_dagger.assault]
+[equipment.poison_deflection_dagger.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
-[equipment.poison_dagger.assault.special]
+[equipment.poison_deflection_dagger.assault.special]
 "Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
 
 [equipment.combat_screw_driver]
@@ -930,18 +930,18 @@ ap = 2
 "Ammo" = "Always treated as loaded"
 
 
-[equipment.auto_bow]
+[equipment.goblin_auto_bow]
 name = "Goblin Auto Bow"
 race = "goblin"
 requires = []
 
-[equipment.auto_bow.range]
+[equipment.goblin_auto_bow.range]
 range = 2
 angle = [true, true, true, false]
 damage = "d4-2"
 ap = 1
 
-[equipment.auto_bow.range.special]
+[equipment.goblin_auto_bow.range.special]
 "Ammo" = "Always treated as loaded"
 "Multiple Shots" = "Shoot three times per fire order"
 
@@ -983,17 +983,17 @@ still = [
 deflection.add = [4, 0, 0, 0]
 deflection_die.replace = "6+"
 
-[equipment.archer]
+[equipment.archer_specialization]
 name = "Archer Specialization"
 race = "goblin"
 cost.xp = 8
 upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
-[equipment.archer.unit_special]
+[equipment.archer_specialization.unit_special]
 "Fire Order" = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon"
 
-[equipment.archer.model_special]
+[equipment.archer_specialization.model_special]
 "To Hit (2)" = "Good shot: +1 to hit"
 
 [equipment.acid_grenade]

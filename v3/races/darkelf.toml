@@ -499,15 +499,15 @@ race = "darkelf"
 name = "Multicultural Infantry"
 models = [
     "darkelf_officer",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
 ]
 size = "Medium"
 armor = [0, 0, 0, 0]
@@ -558,12 +558,12 @@ rows = [
 race = "darkelf"
 name = "Multicultural Trainee"
 models = [
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
-    "multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
+    "generic_multicultural_infantry",
 ]
 size = "Medium"
 armor = [0, 0, 0, 0]
@@ -592,7 +592,7 @@ rows = [
 
 [units.roboprosthetic_darkelf]
 race = "darkelf"
-name = "Roboprosthetic DarkElf"
+name = "Roboprosthetic Dark Elf"
 models = [
     "roboprosthetic_darkelf",
     "roboprosthetic_darkelf",
@@ -1011,14 +1011,14 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 "Penalty" = "Reroll all success in assault while crawling"
 
-[models.multicultural_infantry]
+[models.generic_multicultural_infantry]
 name = "Generic Multicultural Infantry"
 race = "darkelf"
 equipment_limit = []
 equipment = ["collar"]
 type = ["Bio", "Infantry", "Walking"]
 
-[models.multicultural_infantry.assault]
+[models.generic_multicultural_infantry.assault]
 strength = [1, 1, 1, 1]
 strength_die = "5+"
 deflection = [0, 0, 0, 0]
@@ -1032,7 +1032,7 @@ race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = []
 type = ["Bio", "Dwalf", "Infantry", "Walking"]
-replaces = "multicultural_infantry"
+replaces = "generic_multicultural_infantry"
 cost.mp = 1
 description = "HalfDwarf and HalfElf (Elf or Darkelf). More loyal to the Darkelf than not."
 
@@ -1050,7 +1050,7 @@ race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = []
 type = ["Bio", "Gnolf", "Infantry", "Walking"]
-replaces = "multicultural_infantry"
+replaces = "generic_multicultural_infantry"
 cost.mp = 1
 cost.xp = 1
 cost.cp = -1
@@ -1064,17 +1064,17 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.orlf_infantry]
+[models.orlf]
 name = "Orlf"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = []
 type = ["Bio", "Orlf", "Infantry", "Walking"]
-replaces = "multicultural_infantry"
+replaces = "generic_multicultural_infantry"
 cost.mp = 4
 description = "HalfOrk and HalfElf. More loyal to the Darkelf compared to regular multicultural infantry"
 
-[models.orlf_infantry.assault]
+[models.orlf.assault]
 strength = [2, 0, 0, 0]
 strength_die = "6+"
 deflection = [1, 0, 0, 0]
@@ -1082,7 +1082,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.orlf_infantry.assault.special]
+[models.orlf.assault.special]
 "Ork Reroll" = "[3]"
 
 [models.ogrin_infantry]
@@ -1091,7 +1091,7 @@ race = "darkelf"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
 type = ["Bio", "Ogrin", "Infantry", "Walking"]
-replaces = "multicultural_infantry"
+replaces = "generic_multicultural_infantry"
 cost.mp = 3
 description = "HalfOgre and HalfGoblin."
 
@@ -1107,7 +1107,7 @@ ap = 2
 name = "Dark Elf Officer"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
-equipment = ["tesla_whip", "remote_control", "officers_mask"]
+equipment = ["tesla_whip", "remote_control", "officer_mask"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 
 [models.darkelf_officer.unit_special]
@@ -1129,8 +1129,8 @@ ap = 0
 "Cunning Assault" = "[1 for 3]"
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
 
-[models.darkelf_elite_infantry]
-name = "DarkElf Elite Infantry"
+[models.elite_darkelf_infantry]
+name = "Elite Dark Elf Infantry"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
@@ -1138,10 +1138,10 @@ type = ["Bio", "Elite", "Infantry", "Walking"]
 replaces = "darkelf_infantry"
 cost.xp = 4
 
-[models.darkelf_elite_infantry.unit_special]
+[models.elite_darkelf_infantry.unit_special]
 "Improved Resistance" = "Unit gain resistance Psychic[1] while at least one elite is alive"
 
-[models.darkelf_elite_infantry.assault]
+[models.elite_darkelf_infantry.assault]
 strength = [2, 2, 1, 1]
 strength_die = "5+"
 deflection = [4, 2, 1, 1]
@@ -1149,7 +1149,7 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.darkelf_elite_infantry.assault.special]
+[models.elite_darkelf_infantry.assault.special]
 "Cunning Assault" = "[1 for 2]"
 "Counter Attack" = "Each deflections counts as both a hit and a deflection"
 "Penalty" = "Reroll all success in assault while crawling"
@@ -1222,7 +1222,7 @@ ap = 2
 "Penalty" = "Reroll all success in assault while crawling"
 
 [models.roboprosthetic_darkelf]
-name = "Dark Elf Infantry"
+name = "Roboprosthetic Dark Elf"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
@@ -1241,7 +1241,7 @@ ap = 2
 "Penalty" = "Reroll all success in assault while crawling"
 
 [models.elite_roboprosthetic_darkelf]
-name = "Elite Roboprosthetic DarkElf"
+name = "Elite Roboprosthetic Dark Elf"
 race = "darkelf"
 equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle"]
@@ -1301,21 +1301,21 @@ requires = []
 "Extra Damage" = "Poison[4][1 for 2], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.remote_control]
-name = "Remote control"
+name = "Remote Control"
 race = "darkelf"
 requires = []
 
 [equipment.remote_control.unit_special]
-"Activate" = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
+"Activate" = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
 "Note" = "Neither this unit or the trainee units are immune to poison clouds"
 
-[equipment.officers_mask]
+[equipment.officer_mask]
 name = "Officer Mask"
 race = "darkelf"
 requires = []
 description = ""
 
-[equipment.officers_mask.unit_special]
+[equipment.officer_mask.unit_special]
 "Protection" = "If the officer is the only alive model, this unit becomes immune to poisons and poison clouds"
 
 [equipment.collar]
@@ -1500,7 +1500,7 @@ still = [["-", "Throw"]]
 slow = [["-", "Throw"]]
 crawl = [["-", "Throw"]]
 
-[equipment.mortar1a]
+[equipment.mortar_1a]
 name = "Mortar 1A"
 race = "darkelf"
 cost.cp = 64
@@ -1508,18 +1508,18 @@ cost.xp = 32
 upgrade_all = true
 requires = [["Shared:1"], ["type:Infantry"]]
 
-[equipment.mortar1a.range]
+[equipment.mortar_1a.range]
 range = 10
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.mortar1a.range.special]
+[equipment.mortar_1a.range.special]
 "Range" = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 "Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
 "Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
 
-[equipment.mortar11b]
+[equipment.mortar_1_1b]
 name = "Mortar 1.1B"
 race = "darkelf"
 cost.cp = 32
@@ -1527,13 +1527,13 @@ cost.xp = 16
 upgrade_all = true
 requires = [["Shared:1"], ["type:Infantry"]]
 
-[equipment.mortar11b.range]
+[equipment.mortar_1_1b.range]
 range = 10
 angle = [true, true, true, true]
 damage = "N.A"
 ap = 0
 
-[equipment.mortar11b.range.special]
+[equipment.mortar_1_1b.range.special]
 "Range" = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 "Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
 "Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
@@ -1605,7 +1605,7 @@ ap = 2
 "Ammo" = "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon"
 
 [equipment.acid_breath]
-name = "Acid breath"
+name = "Acid Breath"
 race = "darkelf"
 requires = []
 
@@ -1620,7 +1620,7 @@ ap = 0
 "Bonus" = "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
 
 [equipment.fire_breath]
-name = "Fire breath"
+name = "Fire Breath"
 race = "darkelf"
 requires = []
 
@@ -1680,7 +1680,7 @@ ap = 1
 "Multiple Shots" = "Fire two time per functional head (minor and major)"
 
 [equipment.shrapnel_breath]
-name = "Shrapnel breath"
+name = "Shrapnel Breath"
 race = "darkelf"
 requires = []
 
@@ -1695,8 +1695,8 @@ ap = 2
 "Area" = "[4+] at point blank range, Area[6+] at normal and long range. Single model large units are hit d4 times and single model huge units are hit d8 times."
 "Ammo" = "Always treated as loaded"
 
-[equipment.gasmask]
-name = "Gas mask assault training"
+[equipment.gas_mask_assault_training]
+name = "Gas Mask Assault Training"
 race = "darkelf"
 cost.xp = 4
 upgrade_all = true
@@ -1705,10 +1705,10 @@ requires = [
     ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
 ]
 
-[equipment.gasmask.unit_special]
+[equipment.gas_mask_assault_training.unit_special]
 "Immunity" = "Unit becomes immune to poison clouds"
 
-[equipment.gasmask.assault.special]
+[equipment.gas_mask_assault_training.assault.special]
 "Bonus" = "When assaulting hexes with poison cloud +50% in assault and assault deflection"
 "Improved Extra Damage" = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
 
@@ -1787,7 +1787,7 @@ upgrade_all = true
 "Protection" = "Unit gains 1 endurance token per Dwalf model"
 
 [equipment.ogrin_bow]
-name = "Ogrin bow"
+name = "Ogrin Bow"
 race = "darkelf"
 requires = [["Hands:2"], ["type:Ogrin", "type:Orlf"]]
 cost.cp = 8

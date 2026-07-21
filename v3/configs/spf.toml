@@ -39,3 +39,12 @@ api_key_env = "SPF_COMFYUI_API_KEY"
 
 [assets.model]
 count = 2
+
+[lint]
+# Key spellings the linter expands before comparing against a display name.
+aliases = { darkelf = "dark_elf" }
+# Affixes a key may carry that its display name legitimately omits.
+optional_key_prefixes = ["greater_"]
+optional_key_suffixes = ["_free"]
+# Words that must stay lowercase anywhere but the start of a name.
+function_words = ["of", "with", "in"]

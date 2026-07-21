@@ -24,7 +24,7 @@
       "name": "ork_infantry",
       "models": [
         {
-          "name": "ork_elite_infantry",
+          "name": "elite_ork_infantry",
           "upgrades": [
             "clockwork_power_spear",
             "clockwork_wings"
@@ -57,7 +57,7 @@
       "name": "ork_infantry",
       "models": [
         {
-          "name": "ork_elite_infantry",
+          "name": "elite_ork_infantry",
           "upgrades": [
             "clockwork_power_spear",
             "clockwork_wings"

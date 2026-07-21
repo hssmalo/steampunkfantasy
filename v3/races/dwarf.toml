@@ -56,29 +56,29 @@ rows = [
 	"4+: Unit shaken",
 ]
 
-[units.dwarf_brothersinarms]
+[units.dwarf_brother_in_arms]
 race = "dwarf"
 name = "Dwarf Brother in Arms"
-models = ["dwarf_brotherinarms", "dwarf_brotherinarms"]
+models = ["dwarf_brother_in_arms", "dwarf_brother_in_arms"]
 size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 description = '''Two Twin Dwarfs in heavy armor fighting side by side wielding a musket.
 '''
 
-[units.dwarf_brothersinarms.shaken]
+[units.dwarf_brother_in_arms.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.dwarf_brothersinarms.special]
+[units.dwarf_brother_in_arms.special]
 "Resistance" = "Poison[3], Fire[2]"
 "Take Cover" = "[still][-1]"
 
-[units.dwarf_brothersinarms.orders.movement]
+[units.dwarf_brother_in_arms.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
-[units.dwarf_brothersinarms.orders.fire]
+[units.dwarf_brother_in_arms.orders.fire]
 still = [
     ["Fire", "-"],
     ["-", "Fire"],
@@ -88,14 +88,14 @@ still = [
     ["-", "Load"],
 ]
 
-[units.dwarf_brothersinarms.damage_tables.Regular]
+[units.dwarf_brother_in_arms.damage_tables.Regular]
 rows = [
 	"2-6: kill 1 model",
 	"7-9: Kill 1 model, roll d6 Psychic damage",
 	"10+: Unit killed",
 ]
 
-[units.dwarf_brothersinarms.damage_tables.Psychic]
+[units.dwarf_brother_in_arms.damage_tables.Psychic]
 rows = [
 	"5+: Unit shaken",
 ]
@@ -634,14 +634,14 @@ ap = 2
 [models.dwarf_infantry.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-[models.dwarf_brotherinarms]
+[models.dwarf_brother_in_arms]
 name = "Dwarf Brother in Arms"
 race = "dwarf"
 equipment_limit = ["Hands:2", "Shared:1", "Independent:∞"]
 equipment = ["musket"]
 type = ["Infantry", "Walking", "Bio", "Brother in Arms", "Elite"]
 
-[models.dwarf_brotherinarms.assault]
+[models.dwarf_brother_in_arms.assault]
 strength = [3, 1, 1, 1]
 strength_die = "4+"
 deflection = [1, 0, 0, 0]
@@ -649,11 +649,11 @@ deflection_die = '4+'
 damage = "d6"
 ap = 2
 
-[models.dwarf_brotherinarms.assault.special]
+[models.dwarf_brother_in_arms.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
 [models.elite_dwarf_infantry]
-name = "Dwarf Elite Infantry"
+name = "Elite Dwarf Infantry"
 race = "dwarf"
 equipment_limit = ["Hands:2", "Shared:1", "Independent:∞"]
 equipment = ["musket"]
@@ -679,8 +679,8 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 
 #Note to self: give them cunning assault defence
-[models.elite_steampowerarmor]
-name = "Dwarf Elite SteamPowerArmor"
+[models.elite_dwarf_steampowerarmor]
+name = "Elite Dwarf SteamPowerArmor"
 race = "dwarf"
 equipment_limit = ["Hands:2", "Shared:1", "Independent:∞"]
 equipment = ["heavy_musket_free"]
@@ -688,14 +688,14 @@ type = ["Elite", "Steampowerarmor", "Walking", "Bio"]
 cost.xp = 24
 replaces = "steampowerarmor"
 
-[models.elite_steampowerarmor.special]
+[models.elite_dwarf_steampowerarmor.special]
 "To Hit" = "good shot: +1 to hit"
 
-[models.elite_steampowerarmor.unit_special]
+[models.elite_dwarf_steampowerarmor.unit_special]
 "Improved Resistance" = "unit gains Psychic resistance 1 as long as 1 elite model is alive"
 "Protection" = "Unit gains 1 endurance token per elite in unit. See general rules for effect"
 
-[models.elite_steampowerarmor.assault]
+[models.elite_dwarf_steampowerarmor.assault]
 strength = [4, 3, 3, 3]
 strength_die = "4+"
 deflection = [2, 1, 1, 1]
@@ -703,11 +703,11 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_steampowerarmor.assault.special]
+[models.elite_dwarf_steampowerarmor.assault.special]
 "Cunning Assault" = "[1 for 2]"
 "Cunning Assault Defense" = "[1][4+]"
 
-[models.battle_medic]
+[models.dwarf_battle_medic]
 name = "Dwarf Battle Medic"
 race = "dwarf"
 equipment_limit = ["Hands:2", "Shared:1", "Independent:∞"]
@@ -716,12 +716,12 @@ type = ["Elite", "Steampowerarmor", "Walking", "Bio"]
 cost.xp = 24
 replaces = "steampowerarmor"
 
-[models.battle_medic.unit_special]
+[models.dwarf_battle_medic.unit_special]
 "Improved Resistance" = "unit gains Psychic resistance 2 as long as 1 battle medic is alive"
 "Heal" = "Unit gains: Heal[1, any, Healing 1]"
 "Protection" = "Unit gains 1 endurance token and this model counts as elites for life of vest support. See general rules for effect"
 
-[models.battle_medic.assault]
+[models.dwarf_battle_medic.assault]
 strength = [4, 3, 3, 3]
 strength_die = "4+"
 deflection = [4, 1, 1, 1]
@@ -729,10 +729,10 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.battle_medic.assault.special]
+[models.dwarf_battle_medic.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-[models.steampower_engineer]
+[models.dwarf_steampowerarmor_engineer]
 name = "Dwarf Steampowerarmor Engineer"
 race = "dwarf"
 equipment_limit = ["Hands:2", "Shared:1", "Independent:∞"]
@@ -741,10 +741,10 @@ type = ["Steampowerarmor", "Walking", "Bio"]
 cost.xp = 24
 replaces = "steampowerarmor"
 
-[models.steampower_engineer.unit_special]
+[models.dwarf_steampowerarmor_engineer.unit_special]
 "Repair" = "Unit gains: Repair[3, any, Healing 1]"
 
-[models.steampower_engineer.assault]
+[models.dwarf_steampowerarmor_engineer.assault]
 strength = [3, 2, 2, 1]
 strength_die = "4+"
 deflection = [0, 0, 0, 0]
@@ -752,10 +752,10 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.steampower_engineer.assault.special]
+[models.dwarf_steampowerarmor_engineer.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-[models.engineer]
+[models.dwarf_engineer]
 name = "Dwarf Engineer"
 race = "dwarf"
 equipment_limit = ["Hands:2", "Shared:1", "Independent:∞"]
@@ -764,10 +764,10 @@ type = ["Infantry", "Walking", "Bio"]
 cost.xp = 16
 replaces = "dwarf_infantry"
 
-[models.engineer.unit_special]
+[models.dwarf_engineer.unit_special]
 "Repair" = "Unit gains: Repair[3, any, Healing 1]"
 
-[models.engineer.assault]
+[models.dwarf_engineer.assault]
 strength = [2, 0, 0, 0]
 strength_die = "4+"
 deflection = [1, 0, 0, 0]
@@ -775,7 +775,7 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.engineer.assault.special]
+[models.dwarf_engineer.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
 [models.steampowerarmor]
@@ -892,7 +892,7 @@ damage = "d6-2"
 ap = 3
 
 [models.dw42]
-name = "dw42"
+name = "DW42"
 race = "dwarf"
 equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["tank_gun"]
@@ -970,8 +970,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.industrial_small_arms]
-name = "Industrial Small Arms production"
+[equipment.industrial_small_arms_production]
+name = "Industrial Small Arms Production"
 race = "dwarf"
 cost.ip = 4
 cost.cp = -12
@@ -979,7 +979,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"]]
 
 [equipment.musket_with_springloaded_axe]
-name = "Musket With Springloaded Axe"
+name = "Musket with Springloaded Axe"
 race = "dwarf"
 cost.cp = 8
 upgrade_all = true
@@ -1002,7 +1002,7 @@ damage.replace = "d6-2 + d6 Psychic damage"
 slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
 
 [equipment.double_barreled_musket_with_springloaded_axe]
-name = "Doubled Barreled Musket With Springloaded Axe"
+name = "Double Barreled Musket with Springloaded Axe"
 race = "dwarf"
 cost.cp = 16
 upgrade_all = true
@@ -1116,33 +1116,33 @@ requires = [["Independent:1"], ["type:Steampowerarmor"]]
 [equipment.jet_pack.unit_special]
 "Movement" = "Once per game in any single movement phase, instead of your normal movement, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex, but keep your orientation. This may initialize an assault if the hex is occupied by enemy forces."
 
-[equipment.superblaster]
+[equipment.super_blaster]
 name = "Super Blaster"
 race = "dwarf"
 cost.cp = 32
 upgrade_all = false
 requires = [["type:Steampowerarmor"], ["type:Elite"], ["Hands:2"]]
 
-[equipment.superblaster.range]
+[equipment.super_blaster.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6+2"
 ap = 9
 
-[equipment.bigblaster]
+[equipment.big_blaster]
 name = "Big Blaster"
 race = "dwarf"
 cost.cp = 4
 upgrade_all = false
 requires = [["type:Infantry"], ["Shared:1"]]
 
-[equipment.bigblaster.range]
+[equipment.big_blaster.range]
 range = 2
 angle = [true, true, true, true]
 damage = "d6+1"
 ap = 7
 
-[equipment.bigblaster.range.special]
+[equipment.big_blaster.range.special]
 "Ammo" = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
 
 [equipment.vest_of_life_support]
@@ -1168,25 +1168,25 @@ requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 [equipment.stabilizer.orders_gained.fire]
 slow = [["-", "aim"], ["aim", "-"]]
 
-[equipment.trenchcoat_of_resistance]
+[equipment.trench_coat_of_resistance]
 name = "Trench Coat of Resistance"
 race = "dwarf"
 cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
-[equipment.trenchcoat_of_resistance.unit_special]
+[equipment.trench_coat_of_resistance.unit_special]
 "Improved Resistance" = "Unit improves poison resistance and fire resistance with 1"
 "Immunity" = "Unit gains immunity to minor acid"
 
-[equipment.brotherinarms_armor]
+[equipment.brother_in_arms_armor]
 name = "Brother in Arms Armor"
 race = "dwarf"
 cost.ip = 4
 upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
-[equipment.brotherinarms_armor.unit_special]
+[equipment.brother_in_arms_armor.unit_special]
 "Protection" = "Unit gains 2 endurance tokens per elite model in the unit. See general rules for effect. Stacks with vest of life support. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Unit gains [4,3,3,3] in armor"
 
 [equipment.steamblower]
@@ -1382,7 +1382,7 @@ damage = "d6"
 ap = 4
 
 [equipment.double_barreled_long_range_heavy_musket]
-name = "Double Barreled Long_Range Heavy Musket"
+name = "Double Barreled Long Range Heavy Musket"
 race = "dwarf"
 cost.cp = 8
 upgrade_all = true
@@ -1397,20 +1397,20 @@ ap = 3
 [equipment.double_barreled_long_range_heavy_musket.range.special]
 "Multiple Shots" = "Fire two shots per fire order per model"
 
-[equipment.multi_barreled_heavy_musket]
+[equipment.multibarreled_heavy_musket]
 name = "Multibarreled Heavy Musket"
 race = "dwarf"
 cost.cp = 8
 upgrade_all = true
 requires = [["Hands:2"], ["type:Steampowerarmor"]]
 
-[equipment.multi_barreled_heavy_musket.range]
+[equipment.multibarreled_heavy_musket.range]
 range = 3
 angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.multi_barreled_heavy_musket.range.special]
+[equipment.multibarreled_heavy_musket.range.special]
 "Multiple Shots" = "Fire three shots per model"
 
 [equipment.rocket_jackhammer]
