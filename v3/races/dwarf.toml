@@ -523,7 +523,7 @@ size = "Huge"
 armor = [8, 8, 8, 8]
 cost.ip = 96
 cost.xp = 48
-description = '''A huge zeppelin firing its main gun toward the ground. 
+description = '''A huge zeppelin firing its main gun toward the ground.
 '''
 
 [units.zeppelin.shaken]
