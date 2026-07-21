@@ -2,6 +2,8 @@
 
 [races.gnome]
 name = "gnome"
+description = "Gnome with a mohawk and lots of gadgets. Gnomes are about 1.5m in height"
+
 
 [spawns.mechanical_rat]
 unit = "mechanical_rat"
@@ -23,6 +25,8 @@ models = [
 size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
+description = '''A Gnome infantry with a mohawk and wielding a ww1 style rifle. On the belt there hangs a small ww1 style pistol.
+'''
 
 [units.gnome_infantry.special]
 "Take Cover" = "[still][-2]"
@@ -73,6 +77,9 @@ size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
 cost.cp = 16
+description = '''A gnome with a mohawk and wielding a ww1 type rifle, riding on a steampunk atv. 
+'''
+
 
 [units.quad_bike.special]
 "Note" = "May not enter buildings"
@@ -121,8 +128,11 @@ rows = [
 race = "gnome"
 name = "Assault Bots"
 models = ["assault_bot", "assault_bot", "assault_bot", "assault_bot"]
-size = "Medium"
+size = "Small"
 armor = [0, 0, 0, 0]
+description = '''These are small robots design for assault. One of the arm is replaced with a blade. In the other it wields an axe
+'''
+
 
 [units.assault_bots.shaken]
 speed = "slow"
@@ -143,6 +153,9 @@ name = "Mechanical Rat"
 models = ["mechanical_rat"]
 size = "Tiny"
 armor = [0, 0, 0, 0]
+description = '''Tiny robotic rat.
+'''
+
 
 [units.mechanical_rat.shaken]
 speed = "still"
@@ -165,6 +178,9 @@ armor = [4, 3, 0, 0]
 cost.mp = 8
 cost.xp = 16
 cost.cp = 16
+description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycle there is a mortar weapon.
+'''
+
 
 [units.gnome_motorcycle.special]
 "Evation" = "Elusive[fast]: additional -1 to be hit while fast"
@@ -207,6 +223,9 @@ models = ["ballista"]
 size = "Large"
 armor = [0, 0, 0, 0]
 cost.cp = 24
+description = '''A robot firing a ballista.
+'''
+
 
 [units.ballista_drone.shaken]
 speed = "still"
@@ -241,6 +260,9 @@ models = ["ballista_tractor_markI"]
 size = "Large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
+description = '''An armored steampunk tractor firing a big ballista. On the back of the tractor there is a mortar.
+'''
+
 
 [units.ballista_tractor_markI.special]
 "Fire Order" = "Fires and loads both weapons simultaneously"
@@ -307,6 +329,9 @@ models = ["ballista_tractor_markII"]
 size = "Large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
+description = '''An armored steampunk tractor firing a big fancy ballista. 
+'''
+
 
 [units.ballista_tractor_markII.shaken]
 speed = "still"
@@ -370,6 +395,9 @@ models = ["ballista_tractor_markIII"]
 size = "Large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
+description = '''An armored steampunk tractor firing a big ballista. It also has weapons firing to the sides.
+'''
+
 
 [units.ballista_tractor_MarkIII.special]
 "Fire Order" = "Fires and loads both weapons at fire and load actions"
@@ -437,6 +465,9 @@ size = "Large"
 armor = [0, 0, 0, 0]
 cost.ip = 24
 cost.xp = 8
+description = '''A steampunk helicopter with lots of gadgedts and firing a gatling gun. The gnome driving the helicopter have a mohawk.
+'''
+
 
 [units.gnome_helicopter.special]
 "Fire Order" = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously"

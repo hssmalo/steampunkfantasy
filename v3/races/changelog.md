@@ -5,7 +5,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 17.07.2026 | Abomination  | Mothership renamed flagship, fog manipulator became fog poisonizer          | Did not fit the image I wanted any more                                             |
+| 21.07.2026 | Gnome        | Made assault bots small                                                     | No ingame effect                                                                     |
+| 17.07.2026 | Abomination  | Mothership renamed flagship, fog manipulator became fog poisonizer          | Did not fit the image I wanted any more                                              |
 | 17.07.2026 | Abomination  | Removed Mechanical Tentacle entries                                         | Did not fit the image I wanted any more.                                             |
 | 17.07.2026 | Abomination  | Frog Armor cost reduction from 8 to 4 cp                                    | Showcase army no longer violates rules. Frogs are still extremely fragile            |
 | 14.07.2026 | Ogre         | Panther gained Terror[4]                                                    | It fit the description, and it seemed to need a slight boost.                        |
