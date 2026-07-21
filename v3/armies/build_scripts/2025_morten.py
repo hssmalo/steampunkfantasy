@@ -27,7 +27,9 @@ army = (
         race_config=cfg,
     )
     .upgrade_all_models(
-        ("dwarf_infantry", 0), equipment_name="industrial_small_arms_production", race_config=cfg
+        ("dwarf_infantry", 0),
+        equipment_name="industrial_small_arms_production",
+        race_config=cfg,
     )
     .duplicate_unit(("dwarf_infantry", 0))
     .duplicate_unit(("dwarf_infantry", 0))

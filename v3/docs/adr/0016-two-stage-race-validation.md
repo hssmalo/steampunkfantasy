@@ -16,6 +16,6 @@ immediately after `validate` in the recipe order precisely so validation fails
 first and owns that message.
 
 **Consequence:** "the linter silently ignores invalid Races" is the design, not
-a bug. Do not make the linter error on an unparseable Race — a green
+a bug. Do not make the linter error on an unparsable Race — a green
 `lint-races` means *every Race that validates is clean*, and `validate` is what
 guarantees that set is all of them.
