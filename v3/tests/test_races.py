@@ -111,6 +111,11 @@ def _goblin_raw() -> dict:
     return Configuration.from_file(spf_config.paths.races / "goblin.toml").to_dict()
 
 
+def _gnome_raw() -> dict:
+    """Load gnome.toml as a raw dict (strings, not parsed models)."""
+    return Configuration.from_file(spf_config.paths.races / "gnome.toml").to_dict()
+
+
 def test_spawn_validation_invalid_unit() -> None:
     # Load a valid config from TOML (BeforeValidator fields are still raw strings)
     config_dict = _goblin_raw()
@@ -139,10 +144,10 @@ def test_spawn_validation_invalid_equipment() -> None:
 
 
 def test_spawn_rule_invalid_format() -> None:
-    config_dict = _goblin_raw()
+    config_dict = _gnome_raw()
 
     # Change the Spawn special rule to have no colon
-    config_dict["equipment"]["snake_arrows"]["range"]["special"]["Spawn"] = (
+    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"]["Spawn"] = (
         "Place one hidden tiny snake"
     )
 
@@ -154,11 +159,11 @@ def test_spawn_rule_invalid_format() -> None:
 
 
 def test_spawn_rule_undefined_spawn_id() -> None:
-    config_dict = _goblin_raw()
+    config_dict = _gnome_raw()
 
     # Reference an undefined spawn ID
-    config_dict["equipment"]["snake_arrows"]["range"]["special"]["Spawn"] = (
-        "unknown_spawn: Place one hidden tiny snake"
+    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"]["Spawn"] = (
+        "unknown_spawn: Place one assault bot"
     )
 
     with pytest.raises(

@@ -16,6 +16,9 @@ models = ["mechahydra"]
 size = "Huge"
 cost.ip = 48
 armor = [9, 8, 8, 7]
+description = '''Robot Hydra with 6 minor heads, one major head and lasers shooting out of all eyes.
+'''
+
 
 [units.mechahydra.shaken]
 speed = "still"
@@ -51,6 +54,9 @@ size = "Huge"
 armor = [11, 8, 8, 7]
 cost.ip = 96
 cost.xp = 96
+description = '''A robotic red dragon breathing fire
+'''
+
 
 [units.mechanical_red_dragon.special]
 Resistance = "Fire[2]"
@@ -84,6 +90,9 @@ size = "Huge"
 armor = [11, 8, 8, 7]
 cost.ip = 96
 cost.xp = 96
+description = '''Robotic iron dragon breathing acid.
+'''
+
 
 [units.mechanical_iron_dragon.special]
 Resistance = "Fire[2]"
@@ -126,6 +135,9 @@ models = ["queen_yy"]
 size = "Large"
 armor = [12, 10, 8, 7]
 cost.ip = 64
+description = '''Large steampunk tank with a fixed turret firing straight forward.
+'''
+
 
 [units.queen_yy.special]
 "Fire Order" = "You fire 2 independent heavy rifles in addition to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the release as an firing option, you may place the poison cloud[12] during pre assault step in any movement phase, including contested hexes for assaults"
@@ -199,6 +211,8 @@ models = ["queen_xy"]
 size = "Large"
 armor = [11, 10, 8, 7]
 cost.ip = 24
+description = '''Large steampunk tank with no weapons, just poison gas exiting from the tracks.
+'''
 
 [units.queen_xy.special]
 "Fire Order" = "If you use the order release as an firing option, you may place a poison cloud[12] during any movement phase in any the hex you are in, including contested hexes for assaults"
@@ -273,6 +287,9 @@ armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.cp = 16
 cost.xp = 48
+description = '''An sinister elf riding an robotic horse. The horse breaths fire
+'''
+
 
 [units.nightmare_mechanical_cavalry.special]
 "Fire Order" = "Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"
@@ -318,6 +335,8 @@ armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.cp = 16
 cost.xp = 24
+description = '''An sinister elf riding a steampunk robotic horse. The elf is wielding a crossbow in one hand and a small smg in another.
+'''
 
 [units.elite_mechanical_cavalry.special]
 "Fire Order" = "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases"
@@ -363,6 +382,9 @@ models = ["mechanical_assault_spider"]
 size = "Medium"
 armor = [7, 7, 7, 7]
 cost.ip = 16
+description = '''A giant black steampunk robotic spider with a weapon replacing the head.
+'''
+
 
 [units.mechanical_assault_spider.shaken]
 speed = "still"
@@ -401,6 +423,9 @@ models = ["mechanical_scorpion"]
 size = "Large"
 armor = [9, 7, 6, 5]
 cost.ip = 16
+description = '''A large robotic scorpion with a gatling gun on its tail.
+'''
+
 
 [units.mechanical_scorpion.shaken]
 speed = "still"
@@ -444,6 +469,9 @@ models = [
 size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 24
+description = '''An elegant but sinister elf with lots of steampunk gadgdets wielding a ww1 style rifle
+'''
+
 
 [units.darkelf_infantry.special]
 "Take Cover" = "[still,crawl][-2]"
@@ -513,6 +541,9 @@ size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
+description = '''An elf dominatrix with a whip in the center. All slaves wear collars and are of different races, a dwarf (1.6m in height), a gnome (1.5m in height), an ogre (4m in height) a goblin (1m in height), abomination (lovecraft inspired humanoid creatures with tentancles. 1.8m in height) and an ork (about 2m in height)
+'''
+
 
 [units.multicultural_infantry.special]
 "Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
@@ -603,6 +634,9 @@ size = "Medium"
 armor = [3, 3, 3, 3]
 cost.mp = 16
 cost.cp = 12
+description = '''An elegant but sinister elf with some robotic limbs.
+'''
+
 
 [units.roboprosthetic_darkelf.special]
 "Take Cover" = "[still,crawl][-2]"
@@ -661,6 +695,9 @@ size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
+description = '''An elegant but sinister elf assassin wielding a poison dager.
+'''
+
 
 [units.assassin.special]
 "Take Cover" = "[still,crawl][-3]"
@@ -713,6 +750,8 @@ size = "Medium"
 armor = [3, 3, 3, 3]
 cost.mp = 8
 cost.cp = 24
+description = '''An elegant but sinister elf assassin wielding a poison dager. The assassin has some robotic limbs
+'''
 
 [units.roboprosthetic_assassin.special]
 "Take Cover" = "[still,crawl][-3]"
@@ -765,6 +804,8 @@ models = ["scout"]
 size = "Medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
+description = '''An elegant but sinister elf hiding in ruins.
+'''
 
 [units.scout.special]
 "Forward Position" = "[2]"

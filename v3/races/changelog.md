@@ -5,6 +5,9 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 23.07.2026 | Goblin       | SnakeCavalry remake: less tiny snakes, given assassin arrows.               | Did not like the Giant Snake Cavalry being a spawning to many tiny snakes            |
+| 23.07.2026 | Goblin       | Seeker arrow requires 2 special arrow and has limited arrow[2] instead of 3 | You can now have both assassin arrows andr regular seeker arrows available           |
+| 23.07.2026 | Goblin       | Assassin arrow requires 1 special arrow                                     | No real impact on game, but fits better                                              |
 | 21.07.2026 | Gnome        | Made assault bots small                                                     | No ingame effect                                                                     |
 | 17.07.2026 | Abomination  | Mothership renamed flagship, fog manipulator became fog poisonizer          | Did not fit the image I wanted any more                                              |
 | 17.07.2026 | Abomination  | Removed Mechanical Tentacle entries                                         | Did not fit the image I wanted any more.                                             |

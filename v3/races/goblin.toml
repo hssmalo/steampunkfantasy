@@ -77,6 +77,7 @@ size = "Large"
 cost.mp = 4
 cost.xp = 24
 
+
 description = '''One giant scary snake with two goblin riding the. The goblin are wielding a bow each. In addition the battlefield is littered with tiny snakes, hiding in the grass below.
 '''
 
@@ -89,14 +90,16 @@ Decent endurance, decent in assault with an devastating poison if they hit, and 
 '''
 
 
+
 [units.giant_snake_cavalry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [units.giant_snake_cavalry.special]
-"Fire Order" = "You may either fire two regular arrows or one special arrow (arrow with limited ammo)."
+"Fire Order" = "You may either fire two regular arrows or two special arrow (arrow with limited ammo)."
 "Forward Position" = "[1]"
 "Terror" = "[6](range=1)"
+"Spawn" =  "tiny_snake: At start of battle, place a hidden tiny snake in the same hex as the snake_cavalry"
 
 [units.giant_snake_cavalry.orders.fire]
 still = [["Fire", "Fire"]]
@@ -135,11 +138,12 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [units.tiny_snake.special]
-"Hidden" = "When put on the battlefield, unit is hidden. Does not have terror while hidden."
+"Hidden" = "This unit start hidden"
+"Movement" = "This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting."
 "Terror" = "[4](range=1)"
 
 [units.tiny_snake.orders.movement]
-slow = [["-", "-",  "Chase"], ["Reveal", "-", "-"]]
+slow = [["-", "-",  "Chase"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
@@ -573,8 +577,8 @@ ap = 2
 [models.giant_snake_cavalry]
 name = "Giant Snake Cavalry"
 race = "goblin"
-equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:3"]
-equipment = ["goblin_bow", "snake_arrows"]
+equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:4"]
+equipment = ["goblin_bow", "seeker_assassin_arrows_free"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.giant_snake_cavalry.assault]
@@ -735,7 +739,7 @@ ap = 1
 [equipment.seeker_arrows]
 name = "Seeker Arrows"
 race = "goblin"
-requires = [["Special Arrows:3"], ["type:Infantry"]]
+requires = [["Special Arrows:2"], ["type:Infantry"]]
 cost.cp = 8
 upgrade_all = true
 
@@ -749,33 +753,14 @@ damage = "d4-2"
 ap = 1
 
 [equipment.seeker_arrows.range.special]
-"Ammo" = "Limited Ammo[3]"
-
-
-
-[equipment.snake_arrows]
-name = "Snake Arrows"
-race = "goblin"
-requires = [["Special Arrows:3"],["type:Cavalry"]]
-#description = "Attached to the arrow is a small container with a tiny snake inside which is released when the arrow lands"
-
-
-[equipment.snake_arrows.range]
-range = 2
-angle = [true, true, true, true]
-damage = "N/A"
-ap = "N/A"
-
-[equipment.snake_arrows.range.special]
-"Ammo" = "Limited Ammo[3]"
-"Spawn" = "tiny_snake: Place one hidden tiny snake in an empty hex within normal range"
+"Ammo" = "Limited Ammo[2]"
 
 
 
 [equipment.seeker_assassin_arrows]
 name = "Seeker Assassin Arrows"
 race = "goblin"
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Special Arrows:1"], ["type:Infantry"]]
 cost.cp = 16
 upgrade_all = true
 
@@ -789,15 +774,37 @@ damage = "d4-2"
 ap = 1
 
 [equipment.seeker_assassin_arrows.range.special]
-"Ammo" = "Limited Ammo[4]. Each model have one assassin seeker arrow each, which may be used once per game. Spend one limited ammo per model firing this weapon."
+"Ammo" = "Limited Ammo[1]"
 "Extra Damage" = "Poison[12]"
+
+
+[equipment.seeker_assassin_arrows_free]
+name = "Seeker Assassin Arrows"
+race = "goblin"
+cost.cp = 16
+upgrade_all = true
+
+[equipment.seeker_assassin_arrows_free.model_special]
+"To Hit (2)" = "+2 to hit if using seeker arrow"
+
+[equipment.seeker_assassin_arrows_free.range]
+range = 4
+angle = [true, true, true, true]
+damage = "d4-2"
+ap = 1
+
+[equipment.seeker_assassin_arrows_free.range.special]
+"Ammo" = "Limited Ammo[1]"
+"Extra Damage" = "Poison[12]"
+
+
 
 [equipment.gear_bow]
 name = "Gear Bow"
 race = "goblin"
 cost.cp = 8
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry","type:Cavalry"]]
 
 [equipment.gear_bow.range]
 range = 3
@@ -834,7 +841,7 @@ name = "Poison Bow"
 race = "goblin"
 cost.cp = 16
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry"]]
+requires = [["Hands:2"], ["type:Infantry","type:Cavalry"]]
 
 [equipment.poison_bow.range]
 range = 2

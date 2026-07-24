@@ -1154,9 +1154,17 @@ cost.cp = 24
 upgrade_all = true
 requires = [["type:Infantry"], ["Hands:2"]]
 
-[equipment.assault_bot_mortar.unit_special]
+
+
+[equipment.assault_bot_mortar.range]
+range = 4
+angle = [true, true, true, true]
+damage = "n.a"
+ap = 0
+
+[equipment.assault_bot_mortar.range.special]
 "Note" = "No regular damage"
-"Spawn" = "assault_bots: When firing, place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."
+"Spawn" = "assault_bots: Place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."
 
 [equipment.assault_bot_mortar_vehicle]
 race = "gnome"

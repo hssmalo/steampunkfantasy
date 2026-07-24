@@ -2,7 +2,7 @@
 
 [races.ork]
 name = "Ork"
-description = "A band of bloodthirsty orks that clearly love chaos"
+description = "A band of bloodthirsty orks that clearly love chaos. About 2m in height"
 
 [spawns.ork_champion]
 unit = "champion"
