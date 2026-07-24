@@ -120,6 +120,7 @@ type Size = Literal["Tiny", "Small", "Medium", "Large", "Huge", "Enormous"]
 type UnitSpecial = Literal[
     "Hans Sverre's favorite rule",
     "Hans Sverre's second favorite rule",
+    "Enormous",
     "Phoenix",
     "Immunity",
     "Resistance",
@@ -150,6 +151,7 @@ type UnitSpecial = Literal[
     "Terror",
     "Poison Cloud",
     "Fog",
+    "Surprise",
     "Illusion",
     "Tentacle",
     "Darkelf Officer",
@@ -167,6 +169,7 @@ type UnitSpecial = Literal[
     "Note",
     "Side Weapon",
     "Steady",
+    "Out of the fog",
 ]
 
 type ModelSpecial = Literal[
@@ -189,6 +192,7 @@ type AssaultSpecial = Literal[
     "Counter Attack",
     "Bonus",
     "Improvement",
+    "Size",
     "Ork Reroll",
     "Penalty",
     "Angle",
@@ -225,6 +229,7 @@ type RangeSpecial = Literal[
     "Insanity",
     "Multipurpose",
     "Spawn",
+    "LoS",
 ]
 
 type ModelType = Literal[

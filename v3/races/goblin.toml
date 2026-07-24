@@ -167,7 +167,7 @@ size = "Large"
 armor = [10, 6, 5, 4]
 cost.ip = 16
 
-description = '''An Armored Carrier, armed with a light mortar, and deploying small goblin to the battlefield. The goblin swarm out of the vehicle in large numbers. It is very fast while driving straight forward. 
+description = '''An Armored Carrier, armed with a light mortar, and deploying small goblin to the battlefield. The goblin swarm out of the vehicle in large numbers. It is very fast while driving straight forward.
 '''
 
 
@@ -175,7 +175,7 @@ lore = '''Since Goblin infantry are smaller than the other races, you can pack m
 '''
 
 tip = '''
-Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if you are lucky. Well armored from the front, less so from the sides and rear. 
+Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if you are lucky. Well armored from the front, less so from the sides and rear.
 '''
 
 

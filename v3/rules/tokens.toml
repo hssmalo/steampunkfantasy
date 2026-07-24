@@ -10,7 +10,7 @@ remove = "Only by healing ability"
 [tokens.plus_minus_one]
 name = "-1 to hit, +1 to be hit "
 phases = []
-effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults."
+effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects"
 remove = "Only by repair ability"
 
 
