@@ -75,6 +75,23 @@ def _asset_path(root: Path, kind: Kind, *, race: str, name: str) -> Path:
     return _asset_dir(root, kind, race=race) / f"{name}.{kind.extension}"
 
 
+def asset_for(
+    kind: Kind,
+    race: str,
+    *,
+    name: str,
+    assets_root: Path = config.paths.assets,
+) -> Path | None:
+    """Return the committed Asset for `name`, or `None` when there is none.
+
+    The read-only counterpart to `promote`: the one place that answers "is
+    there art for this Target?", shared by the Survey and by the Renderings
+    that embed Assets.
+    """
+    path = _asset_path(assets_root, kind, race=race, name=name)
+    return path if path.is_file() else None
+
+
 def _next_index(directory: Path, kind: Kind, *, name: str) -> int:
     """Return the index a new Candidate of `name` should take.
 

@@ -27,6 +27,7 @@ _HTML_DOCUMENT = """\
 body {{ font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 48rem; }}
 table {{ border-collapse: collapse; }}
 th, td {{ border: 1px solid #ccc; padding: 0.25rem 0.5rem; }}
+img {{ max-width: 20rem; height: auto; display: block; }}
 </style>
 </head>
 <body>

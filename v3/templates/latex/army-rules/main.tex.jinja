@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[margin=2cm]{geometry}
 \usepackage{textcomp}
+\usepackage{graphicx}
 
 \title{\VAR{source.nick | latex_escape}}
 \author{\VAR{source.race | latex_escape} --- \VAR{source.points} points}
@@ -8,9 +9,25 @@
 \begin{document}
 \maketitle
 
+\BLOCK{if source.race_image}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{\VAR{source.race_image | posix_path}}
+\end{center}
+\newpage
+\BLOCK{endif}
+
 \BLOCK{for unit in source.units}
 \section{\VAR{unit.name | latex_escape}\BLOCK{if unit.count > 1} (\VAR{unit.count}$\times$)\BLOCK{endif}}
 
+% With art, the stat block and the image sit side by side; without it, the
+% stat block runs full width. Everything below resumes full width either way.
+% The `\vspace{0pt}` in each minipage aligns their *tops*: without it `[t]`
+% aligns first baselines, and an image's baseline is its bottom edge, which
+% would drop the stat block to the foot of the picture.
+\BLOCK{if unit.image}
+\begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
+\BLOCK{endif}
 \textbf{Size:} \VAR{unit.size | latex_escape} \\
 \textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
 \BLOCK{if unit.armor}
@@ -26,6 +43,14 @@
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
+\BLOCK{if unit.image}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\textwidth}
+\vspace{0pt}
+\includegraphics[width=\linewidth]{\VAR{unit.image | posix_path}}
+\end{minipage}
+\BLOCK{endif}
+
 \BLOCK{for name, rows, notes in unit.damage_tables}
 
 \noindent\textbf{Damage Table: \VAR{name | latex_escape}}

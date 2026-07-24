@@ -17,6 +17,7 @@ from spf.assets.kinds import (
     register_kind,
 )
 from spf.assets.spine import (
+    asset_for,
     generate,
     promote,
     refine,
@@ -34,6 +35,7 @@ __all__ = [
     "Survey",
     "Target",
     "TargetLevel",
+    "asset_for",
     "generate",
     "get_kind",
     "promote",

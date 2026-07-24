@@ -8,7 +8,7 @@ templates emit LaTeX. The factory takes an injectable `templates_root` so tests
 can point it at fixture templates.
 """
 
-from pathlib import Path
+from pathlib import Path, PurePath
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -38,6 +38,33 @@ def latex_escape(value: object) -> str:
     return "".join(_LATEX_SPECIAL.get(char, char) for char in str(value))
 
 
+def posix_path(value: PurePath | str) -> str:
+    r"""Return `value` with forward slashes, whatever the platform separator is.
+
+    A native-Windows path is backslash-separated, and a backslash means
+    something else in both output languages: it opens a control sequence in
+    LaTeX (`C:\repo` compiles as `\r`) and escapes punctuation in CommonMark
+    (`..\..` renders as `....`). Forward slashes are accepted by LaTeX engines
+    and browsers on Windows too, so they are what both families emit.
+    """
+    return PurePath(value).as_posix()
+
+
+def relative_to(value: PurePath, start: PurePath) -> str:
+    """Return `value` as a path relative to the directory `start`.
+
+    Markdown documents reference art relatively rather than absolutely, because
+    a root-absolute path resolves against the *authority* of a `file://` URL:
+    opened across a UNC boundary — `file://wsl.localhost/<distro>/…` — it drops
+    the share name and the image 404s (ADR 0017). LaTeX keeps absolute paths,
+    since it compiles in a temporary directory.
+
+    `walk_up=True` because the two paths are siblings: the result has to be
+    able to climb with `..`.
+    """
+    return posix_path(value.relative_to(start, walk_up=True))
+
+
 def make_environments(templates_root: Path | None = None) -> dict[Family, Environment]:
     """Build the per-family Jinja2 environments.
 
@@ -57,11 +84,11 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
         keep_trailing_newline=True,
     )
     latex.filters["latex_escape"] = latex_escape
-    return {
-        "markdown": Environment(
-            loader=FileSystemLoader(root / "markdown"),
-            autoescape=False,  # noqa: S701  templates emit Markdown/LaTeX, not HTML (ADR 0005)
-            keep_trailing_newline=True,
-        ),
-        "latex": latex,
-    }
+    latex.filters["posix_path"] = posix_path
+    markdown = Environment(
+        loader=FileSystemLoader(root / "markdown"),
+        autoescape=False,  # noqa: S701  templates emit Markdown/LaTeX, not HTML (ADR 0005)
+        keep_trailing_newline=True,
+    )
+    markdown.filters["relative_to"] = relative_to
+    return {"markdown": markdown, "latex": latex}

@@ -412,3 +412,184 @@ def test_render_army_rules_missing_army_exits_nonzero(tmp_path: Path) -> None:
 
     assert excinfo.value.code == 1
     assert not out.exists()
+
+
+# --- build_reference: Image Assets on the view-model ------------------------
+
+
+class _FakeLookup:
+    """An `ImageLookup` returning a canned path, recording every call."""
+
+    def __init__(self, path: Path | None) -> None:
+        self.path = path
+        self.calls: list[tuple[str, str]] = []
+
+    def __call__(self, race: str, name: str) -> Path | None:
+        self.calls.append((race, name))
+        return self.path
+
+
+def test_build_reference_populates_images_from_the_injected_lookup() -> None:
+    image = Path("/assets/goblin/images/art.png")
+    lookup = _FakeLookup(image)
+
+    reference = build_reference(
+        _army(_unit(name="Squad"), race="goblin"),
+        stem="test",
+        image_for=lookup,
+    )
+
+    assert reference.race_image == image
+    assert [unit.image for unit in reference.units] == [image]
+
+
+def test_build_reference_looks_images_up_by_toml_key_not_display_name() -> None:
+    # The Target that addresses an Asset is the TOML key, which `Unit.name`
+    # carries; `unit.config.name` is the display name shown in the document.
+    lookup = _FakeLookup(None)
+    unit = _unit(name="Goblin Infantry")
+    unit = Unit(name="goblin_infantry", config=unit.config, models=unit.models)
+
+    build_reference(
+        _army(unit, race="goblin"),
+        stem="test",
+        image_for=lookup,
+    )
+
+    assert lookup.calls == [("goblin", "goblin"), ("goblin", "goblin_infantry")]
+
+
+def test_build_reference_leaves_images_none_when_there_is_no_art() -> None:
+    reference = build_reference(
+        _army(_unit()),
+        stem="test",
+        image_for=_FakeLookup(None),
+    )
+
+    assert reference.race_image is None
+    assert [unit.image for unit in reference.units] == [None]
+
+
+# --- Templates: embedded Image Assets (drives the real templates) ----------
+
+_ART = Path("/assets/goblin/images/art.png")
+
+
+def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None:
+    # Relative to the written document, not absolute: a root-absolute path
+    # loses the share name when the file is opened across a UNC boundary,
+    # such as `file://wsl.localhost/<distro>/...` (ADR 0017).
+    art = tmp_path / "assets" / "art.png"
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(art)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "![goblin](../assets/art.png)" in text
+    assert "![Squad](../assets/art.png)" in text
+
+
+def test_army_rules_markdown_emits_no_image_markup_without_art(
+    tmp_path: Path,
+) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(None)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    assert "![" not in out.read_text(encoding="utf-8")
+
+
+def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
+    tmp_path: Path,
+) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(_ART)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\usepackage{graphicx}" in text
+    # Absolute here: the engine compiles in a temporary directory, so a
+    # document-relative path would not resolve.
+    # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
+    # break `\includegraphics`.
+    assert rf"\includegraphics[width=\linewidth]{{{_ART}}}" in text
+    assert r"\begin{minipage}" in text
+
+
+def test_army_rules_latex_keeps_the_full_width_stat_block_without_art(
+    tmp_path: Path,
+) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(None)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\includegraphics" not in text
+    assert r"\begin{minipage}" not in text
+    assert r"\textbf{Size:}" in text
+
+
+@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
+def test_render_army_rules_pdf_compiles_with_an_underscored_image_path(
+    tmp_path: Path,
+) -> None:
+    # The compile happens in a temp directory, so this also pins that an
+    # absolute path resolves regardless of the engine's CWD (ADR 0017) — and
+    # that an underscore in the filename needs no escaping.
+    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(art)
+    )
+
+    out = render(
+        ARMY_RULES, reference, fmt=get_format("pdf"), name="test", output_root=tmp_path
+    )
+
+    assert out.stat().st_size > 0
+
+
+def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None:
+    # The demo army's race has committed Unit art, so the default render does
+    # embed images — `--no-images` is what removes them.
+    with_art = tmp_path / "with-art.md"
+    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="markdown", out=with_art))
+    assert "![" in with_art.read_text(encoding="utf-8")
+
+    out = tmp_path / "no-art.md"
+    render_army_rules(
+        DEMO_ARMY, opts=RenderOpts(format="markdown", out=out, no_images=True)
+    )
+
+    assert "![" not in out.read_text(encoding="utf-8")

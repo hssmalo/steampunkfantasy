@@ -3,19 +3,38 @@
 This is a *presentation* transposition (ADR 0007), like `spf.render.cards`.
 It reads only the resolved `Army` — no `race_config`,
 no rules loading, no full special-rule text (that belongs to the Rulebook
-product). No I/O, no templates.
+product). No templates.
+
+Its one touch of disk is the `ImageLookup`, which asks the committed Asset
+store whether a Target has art (ADR 0017); it is injected, so a test can build
+a reference without a filesystem at all.
 """
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
+from pathlib import Path
 
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
+from spf.assets.image import IMAGE
+from spf.assets.spine import asset_for
 from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
 type _Specials = list[tuple[str, str]]
+
+type ImageLookup = Callable[[t.RaceName, str], Path | None]
+"""Answers "what art is committed for this Target?" — see `committed_image`."""
+
+
+def committed_image(race: t.RaceName, name: str) -> Path | None:
+    """Return the committed Image Asset for `name`, or `None` when there is none."""
+    return asset_for(IMAGE, race, name=name)
+
+
+def no_image(race: t.RaceName, name: str) -> None:
+    """Lookup that finds nothing — what `--no-images` passes."""
 
 
 def _roll_text(roll: t.DamageRoll) -> str:
@@ -76,6 +95,7 @@ class UnitEntry:
     """One distinct Unit configuration, with a count of identical duplicates."""
 
     name: str
+    image: Path | None
     count: int
     size: t.Size
     model_summary: list[str]
@@ -96,6 +116,7 @@ class ArmyReference:
     stem: str
     nick: str
     race: t.RaceName
+    race_image: Path | None
     points: int
     units: list[UnitEntry]
 
@@ -139,9 +160,12 @@ def _model_entry(model: Model) -> ModelEntry:
     )
 
 
-def _unit_entry(unit: Unit) -> UnitEntry:
+def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> UnitEntry:
     return UnitEntry(
         name=unit.config.name,
+        # `unit.name` is the TOML key, which is what addresses an Asset;
+        # `unit.config.name` above is the display name.
+        image=image_for(race, unit.name),
         count=1,
         size=unit.config.size,
         model_summary=_count_summary(unit.models, lambda m: m.config.name),
@@ -177,12 +201,27 @@ def _collapse_units(entries: Sequence[UnitEntry]) -> list[UnitEntry]:
     return collapsed
 
 
-def build_reference(army: Army, *, stem: str) -> ArmyReference:
-    """Build an `ArmyReference` from a resolved Army."""
+def build_reference(
+    army: Army, *, stem: str, image_for: ImageLookup = committed_image
+) -> ArmyReference:
+    """Build an `ArmyReference` from a resolved Army.
+
+    `image_for` resolves Image Assets; it defaults to the committed store and
+    is swapped for `no_image` by `--no-images`. A Target with no committed art
+    simply gets `None` — the templates then emit nothing, leaving "what is
+    missing" to the Survey (ADR 0011).
+    """
     return ArmyReference(
         stem=stem,
         nick=army.nick,
         race=army.race,
+        # The race Target's name is the race name itself.
+        race_image=image_for(army.race, army.race),
         points=army.cost().to_points(),
-        units=_collapse_units([_unit_entry(unit) for unit in army.units]),
+        units=_collapse_units(
+            [
+                _unit_entry(unit, race=army.race, image_for=image_for)
+                for unit in army.units
+            ]
+        ),
     )
