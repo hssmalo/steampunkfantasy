@@ -412,3 +412,59 @@ def test_render_army_rules_missing_army_exits_nonzero(tmp_path: Path) -> None:
 
     assert excinfo.value.code == 1
     assert not out.exists()
+
+
+# --- build_reference: Image Assets on the view-model ------------------------
+
+
+class _FakeLookup:
+    """An `ImageLookup` returning a canned path, recording every call."""
+
+    def __init__(self, path: Path | None) -> None:
+        self.path = path
+        self.calls: list[tuple[str, str]] = []
+
+    def __call__(self, race: str, name: str) -> Path | None:
+        self.calls.append((race, name))
+        return self.path
+
+
+def test_build_reference_populates_images_from_the_injected_lookup() -> None:
+    image = Path("/assets/goblin/images/art.png")
+    lookup = _FakeLookup(image)
+
+    reference = build_reference(
+        _army(_unit(name="Squad"), race="goblin"),
+        stem="test",
+        image_for=lookup,
+    )
+
+    assert reference.race_image == image
+    assert [unit.image for unit in reference.units] == [image]
+
+
+def test_build_reference_looks_images_up_by_toml_key_not_display_name() -> None:
+    # The Target that addresses an Asset is the TOML key, which `Unit.name`
+    # carries; `unit.config.name` is the display name shown in the document.
+    lookup = _FakeLookup(None)
+    unit = _unit(name="Goblin Infantry")
+    unit = Unit(name="goblin_infantry", config=unit.config, models=unit.models)
+
+    build_reference(
+        _army(unit, race="goblin"),
+        stem="test",
+        image_for=lookup,
+    )
+
+    assert lookup.calls == [("goblin", "goblin"), ("goblin", "goblin_infantry")]
+
+
+def test_build_reference_leaves_images_none_when_there_is_no_art() -> None:
+    reference = build_reference(
+        _army(_unit()),
+        stem="test",
+        image_for=_FakeLookup(None),
+    )
+
+    assert reference.race_image is None
+    assert [unit.image for unit in reference.units] == [None]
