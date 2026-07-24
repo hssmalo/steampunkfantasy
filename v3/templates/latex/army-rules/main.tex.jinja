@@ -13,6 +13,7 @@
 \begin{center}
 \includegraphics[width=0.5\textwidth]{\VAR{source.race_image}}
 \end{center}
+\newpage
 \BLOCK{endif}
 
 \BLOCK{for unit in source.units}
@@ -34,13 +35,6 @@
 \BLOCK{endif}
 \textbf{Points:} \VAR{unit.points} \\
 \textbf{Shaken:} \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
-\BLOCK{if unit.image}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.34\textwidth}
-\vspace{0pt}
-\includegraphics[width=\linewidth]{\VAR{unit.image}}
-\end{minipage}
-\BLOCK{endif}
 
 \BLOCK{if unit.specials}
 \begin{itemize}
@@ -49,6 +43,14 @@
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
+\BLOCK{if unit.image}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\textwidth}
+\vspace{0pt}
+\includegraphics[width=\linewidth]{\VAR{unit.image}}
+\end{minipage}
+\BLOCK{endif}
+
 \BLOCK{for name, rows, notes in unit.damage_tables}
 
 \noindent\textbf{Damage Table: \VAR{name | latex_escape}}

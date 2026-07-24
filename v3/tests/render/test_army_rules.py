@@ -476,8 +476,12 @@ _ART = Path("/assets/goblin/images/art.png")
 
 
 def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None:
+    # Relative to the written document, not absolute: a root-absolute path
+    # loses the share name when the file is opened across a UNC boundary,
+    # such as `file://wsl.localhost/<distro>/...` (ADR 0017).
+    art = tmp_path / "assets" / "art.png"
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(_ART)
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(art)
     )
 
     out = render(
@@ -489,8 +493,8 @@ def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None
     )
 
     text = out.read_text(encoding="utf-8")
-    assert f"![goblin]({_ART})" in text
-    assert f"![Squad]({_ART})" in text
+    assert "![goblin](../assets/art.png)" in text
+    assert "![Squad](../assets/art.png)" in text
 
 
 def test_army_rules_markdown_emits_no_image_markup_without_art(
@@ -528,6 +532,8 @@ def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
 
     text = out.read_text(encoding="utf-8")
     assert r"\usepackage{graphicx}" in text
+    # Absolute here: the engine compiles in a temporary directory, so a
+    # document-relative path would not resolve.
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
     assert rf"\includegraphics[width=\linewidth]{{{_ART}}}" in text

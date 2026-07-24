@@ -218,7 +218,7 @@ short prose field, the seed — not the Lore)
 **Image** (asset):
 A 2D image Asset depicting a Race or Unit, generated from its `description`.
 Stored under `assets/<race>/images/`. Embedded by the Army Reference Rendering,
-which references the committed file by absolute path rather than copying it
+which references the committed file where it lies rather than copying it
 (ADR 0017).
 
 **Model** (asset):

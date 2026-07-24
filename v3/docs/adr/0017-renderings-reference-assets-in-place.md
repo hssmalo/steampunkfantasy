@@ -1,33 +1,43 @@
-# Renderings reference committed Assets by absolute path
+# Renderings reference committed Assets in place, never copying them
 
 ADR 0006 settled that generated Assets are committed under `assets/` and
 curated by hand. The Army Reference is the first Rendering to *use* them, which
 forces a question the generation side never had to answer: what does the
 rendered document say where the art goes?
 
-## An absolute path into the committed store
+## A path into the committed store, whose form is the family's business
 
-**Decision: the view-model carries an absolute `Path` to the committed Asset,
-and both template families emit it verbatim.** Nothing is copied, nothing is
-inlined, nothing is generated at render time.
+**Decision: the view-model carries an absolute `Path` to the committed Asset;
+each template family emits it in whatever form resolves for its own output.**
+Nothing is copied, nothing is inlined, nothing is generated at render time.
 
-An absolute path is the one form that works unchanged in both families. LaTeX
-compiles in a temporary directory (`latex_to_pdf`), but `\includegraphics`
-resolves against the filesystem rather than the compiler's CWD, so no
-`\graphicspath` and no staging is needed. HTML opened from disk resolves
-`src="/home/…/art.png"` as `file:///home/…/art.png`.
+LaTeX emits the absolute path. It compiles in a temporary directory
+(`latex_to_pdf`), so a document-relative path would not resolve, but
+`\includegraphics` resolves against the filesystem rather than the compiler's
+CWD — no `\graphicspath` and no staging needed.
+
+Markdown emits the path **relative to the written document**, via the
+`relative_to` filter and the output directory that `render()` binds alongside
+the source. An absolute path was tried first and is wrong for HTML: a
+root-absolute `src` resolves against the *authority* of a `file://` URL, so a
+document opened across a UNC boundary — `file://wsl.localhost/<distro>/…`, the
+normal way to read WSL output from Windows — silently drops the share name and
+every image 404s. A relative `src` sidesteps the question by never naming a
+root.
+
+That the two families disagree is the point: the view-model says *which* Asset,
+and each family decides how to spell it.
 
 Rejected:
 
-- **A path relative to `output/`.** It breaks under LaTeX's temporary
-  directory, and it is not even knowable when the template runs: the output
-  directory is decided by `render()` afterwards, and `--out` can override it.
 - **Copying the art into `output/`.** It breaks the render seam's "one
   template, one file out" invariant and duplicates committed bytes on every
   render.
 - **Data-URI embedding.** A committed image is ~2.5 MB; inlining the
   eleven a mid-sized army needs yields a ~37 MB HTML file. It would also change
-  `md_to_html`, a derivation shared by every Product, to serve one Product.
+  `md_to_html`, a derivation shared by every Product, to serve one Product. It
+  remains the option to reach for if genuinely portable HTML is ever wanted —
+  it is the only form that survives being emailed.
 
 ## Missing art is silence, not a placeholder
 
@@ -51,10 +61,14 @@ finds nothing, so the templates need no opt-out conditional of their own.
 
 ## Consequences
 
-- **The intermediate `.md` and `.tex` are not portable off this machine.** They
-  name paths inside this checkout. That is acceptable: `output/` is gitignored
-  throwaway, and the two artifacts anyone actually shares — the PDF, and HTML
-  opened locally — embed or resolve the art fine.
+- **Neither the `.md`/`.html` nor the `.tex` is portable off this machine.**
+  The LaTeX names paths inside this checkout; the Markdown and HTML resolve
+  only from where they were written, so moving the `.html` elsewhere breaks its
+  images. That is acceptable: `output/` is gitignored throwaway, and the PDF —
+  the artifact anyone actually shares — embeds the art outright.
+- **`render()` resolves the output path before rendering the template**, not
+  after, because a template that references a neighbouring file has to know
+  where its own output lands.
 - **PDFs are heavy.** LaTeX embeds each PNG at full resolution regardless of the
   displayed width, so a twelve-Unit army lands in the tens of megabytes.
   Fixing that means render-time downscaling plus a cache, which is a larger

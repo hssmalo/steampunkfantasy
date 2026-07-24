@@ -1,11 +1,11 @@
 # {{ source.nick }} — {{ source.race }} — {{ source.points }} points
 {% if source.race_image %}
-![{{ source.race }}]({{ source.race_image }})
+![{{ source.race }}]({{ source.race_image | relative_to(output_dir) }})
 {% endif %}
 {%- for unit in source.units %}
 ## {{ unit.name }}{% if unit.count > 1 %} ({{ unit.count }}×){% endif %}
 {% if unit.image %}
-![{{ unit.name }}]({{ unit.image }})
+![{{ unit.name }}]({{ unit.image | relative_to(output_dir) }})
 {% endif %}
 - Size: {{ unit.size }}
 - Models: {{ unit.model_summary | join(', ') }}
