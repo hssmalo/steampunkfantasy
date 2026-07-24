@@ -8,7 +8,6 @@ templates emit LaTeX. The factory takes an injectable `templates_root` so tests
 can point it at fixture templates.
 """
 
-import os.path
 from pathlib import Path, PurePath
 
 from jinja2 import Environment, FileSystemLoader
@@ -51,7 +50,7 @@ def posix_path(value: PurePath | str) -> str:
     return PurePath(value).as_posix()
 
 
-def relative_to(value: Path, start: Path) -> str:
+def relative_to(value: PurePath, start: PurePath) -> str:
     """Return `value` as a path relative to the directory `start`.
 
     Markdown documents reference art relatively rather than absolutely, because
@@ -60,10 +59,10 @@ def relative_to(value: Path, start: Path) -> str:
     the share name and the image 404s (ADR 0017). LaTeX keeps absolute paths,
     since it compiles in a temporary directory.
 
-    `os.path.relpath`, not `Path.relative_to`: the two paths are siblings, so
-    the result needs to be able to climb with `..`.
+    `walk_up=True` because the two paths are siblings: the result has to be
+    able to climb with `..`.
     """
-    return posix_path(os.path.relpath(value, start))
+    return posix_path(value.relative_to(start, walk_up=True))
 
 
 def make_environments(templates_root: Path | None = None) -> dict[Family, Environment]:
