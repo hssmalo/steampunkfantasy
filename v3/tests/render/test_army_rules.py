@@ -572,3 +572,18 @@ def test_render_army_rules_pdf_compiles_with_an_underscored_image_path(
     )
 
     assert out.stat().st_size > 0
+
+
+def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None:
+    # The demo army's race has committed Unit art, so the default render does
+    # embed images — `--no-images` is what removes them.
+    with_art = tmp_path / "with-art.md"
+    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="markdown", out=with_art))
+    assert "![" in with_art.read_text(encoding="utf-8")
+
+    out = tmp_path / "no-art.md"
+    render_army_rules(
+        DEMO_ARMY, opts=RenderOpts(format="markdown", out=out, no_images=True)
+    )
+
+    assert "![" not in out.read_text(encoding="utf-8")

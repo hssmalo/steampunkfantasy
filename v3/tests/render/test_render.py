@@ -75,6 +75,14 @@ def test_md_to_html_is_standalone_document() -> None:
     assert 'charset="utf-8"' in html
 
 
+def test_md_to_html_constrains_image_width() -> None:
+    # Markdown has no sizing syntax, so a committed Image Asset would otherwise
+    # render at its native pixel width.
+    html = md_to_html("![art](/assets/goblin/images/art.png)\n")
+    assert '<img src="/assets/goblin/images/art.png"' in html
+    assert "max-width: 20rem" in html
+
+
 # --- 7.3 latex_to_pdf behavior ---------------------------------------------
 
 
