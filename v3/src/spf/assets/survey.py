@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from spf.assets.kinds import Kind
-from spf.assets.spine import _asset_dir, _asset_path, _split_lineage
+from spf.assets.spine import _asset_dir, _split_lineage, asset_for
 from spf.assets.targets import Target, targets
 from spf.config import config
 from spf.schemas import type_aliases as t
@@ -61,7 +61,7 @@ def survey(
     found = targets(kind, race)
     rows = []
     for target in found:
-        asset = _asset_for(assets_root, kind, target, race=race)
+        asset = asset_for(kind, race, name=target.name, assets_root=assets_root)
         lineages = sorted(waiting.get(target.name, []), key=_lineage_key)
         rows.append(
             Coverage(
@@ -88,12 +88,6 @@ def survey(
             for lineage in sorted(waiting[name], key=_lineage_key)
         ]
     return Survey(rows=rows, orphans=orphans)
-
-
-def _asset_for(root: Path, kind: Kind, target: Target, *, race: str) -> Path | None:
-    """Return the committed Asset for `target`, or `None` when there is none."""
-    path = _asset_path(root, kind, race=race, name=target.name)
-    return path if path.is_file() else None
 
 
 def _promoted_from(

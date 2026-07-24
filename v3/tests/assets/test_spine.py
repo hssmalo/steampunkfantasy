@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.assets import Kind, generate, promote, refine, stage_promoted
+from spf.assets import Kind, asset_for, generate, promote, refine, stage_promoted
 from tests.assets.conftest import FakeRefiner, FakeService
 
 
@@ -623,3 +623,24 @@ def test_promote_then_stage_promoted_round_trips_the_bytes(
     assert (base / f"grunt.{lineage}.txt").read_bytes() == (
         base / "grunt.2.txt"
     ).read_bytes()
+
+
+# --- asset_for: the public committed-Asset lookup ---------------------------
+
+
+def test_asset_for_returns_the_path_of_a_committed_asset(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    asset = tmp_path / "orks" / "_test" / "grunt.txt"
+    asset.parent.mkdir(parents=True)
+    asset.write_bytes(b"committed")
+
+    found = asset_for(test_kind, "orks", name="grunt", assets_root=tmp_path)
+
+    assert found == asset
+
+
+def test_asset_for_returns_none_when_nothing_is_committed(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    assert asset_for(test_kind, "orks", name="grunt", assets_root=tmp_path) is None
