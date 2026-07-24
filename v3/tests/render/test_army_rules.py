@@ -468,3 +468,44 @@ def test_build_reference_leaves_images_none_when_there_is_no_art() -> None:
 
     assert reference.race_image is None
     assert [unit.image for unit in reference.units] == [None]
+
+
+# --- Templates: embedded Image Assets (drives the real templates) ----------
+
+_ART = Path("/assets/goblin/images/art.png")
+
+
+def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(_ART)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert f"![goblin]({_ART})" in text
+    assert f"![Squad]({_ART})" in text
+
+
+def test_army_rules_markdown_emits_no_image_markup_without_art(
+    tmp_path: Path,
+) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(None)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    assert "![" not in out.read_text(encoding="utf-8")
