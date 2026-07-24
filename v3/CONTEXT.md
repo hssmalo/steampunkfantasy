@@ -217,8 +217,9 @@ short prose field, the seed — not the Lore)
 
 **Image** (asset):
 A 2D image Asset depicting a Race or Unit, generated from its `description`.
-Stored under `assets/<race>/images/`. May later be embedded by a Rendering —
-that embedding is out of scope for the generation step.
+Stored under `assets/<race>/images/`. Embedded by the Army Reference Rendering,
+which references the committed file by absolute path rather than copying it
+(ADR 0017).
 
 **Model** (asset):
 A 3D-mesh Asset (for on-demand printing) depicting a Unit or Model, stored
