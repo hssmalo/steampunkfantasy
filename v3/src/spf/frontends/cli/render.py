@@ -55,10 +55,12 @@ class RenderOpts:
     no_images: Annotated[
         bool,
         cyclopts.Parameter(
+            # The auto-derived negative would read `--no-no-images`.
+            negative="",
             help=(
                 "Leave committed Image Assets out of the document "
                 "(currently affects 'army-rules' only)."
-            )
+            ),
         ),
     ] = False
 

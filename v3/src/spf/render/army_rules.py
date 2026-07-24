@@ -3,7 +3,11 @@
 This is a *presentation* transposition (ADR 0007), like `spf.render.cards`.
 It reads only the resolved `Army` — no `race_config`,
 no rules loading, no full special-rule text (that belongs to the Rulebook
-product). No I/O, no templates.
+product). No templates.
+
+Its one touch of disk is the `ImageLookup`, which asks the committed Asset
+store whether a Target has art (ADR 0017); it is injected, so a test can build
+a reference without a filesystem at all.
 """
 
 from collections.abc import Callable, Sequence
