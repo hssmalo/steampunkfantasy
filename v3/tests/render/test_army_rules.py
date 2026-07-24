@@ -509,3 +509,66 @@ def test_army_rules_markdown_emits_no_image_markup_without_art(
     )
 
     assert "![" not in out.read_text(encoding="utf-8")
+
+
+def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
+    tmp_path: Path,
+) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(_ART)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\usepackage{graphicx}" in text
+    # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
+    # break `\includegraphics`.
+    assert rf"\includegraphics[width=\linewidth]{{{_ART}}}" in text
+    assert r"\begin{minipage}" in text
+
+
+def test_army_rules_latex_keeps_the_full_width_stat_block_without_art(
+    tmp_path: Path,
+) -> None:
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(None)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\includegraphics" not in text
+    assert r"\begin{minipage}" not in text
+    assert r"\textbf{Size:}" in text
+
+
+@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
+def test_render_army_rules_pdf_compiles_with_an_underscored_image_path(
+    tmp_path: Path,
+) -> None:
+    # The compile happens in a temp directory, so this also pins that an
+    # absolute path resolves regardless of the engine's CWD (ADR 0017) — and
+    # that an underscore in the filename needs no escaping.
+    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(art)
+    )
+
+    out = render(
+        ARMY_RULES, reference, fmt=get_format("pdf"), name="test", output_root=tmp_path
+    )
+
+    assert out.stat().st_size > 0

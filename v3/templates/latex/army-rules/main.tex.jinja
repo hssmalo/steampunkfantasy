@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[margin=2cm]{geometry}
 \usepackage{textcomp}
+\usepackage{graphicx}
 
 \title{\VAR{source.nick | latex_escape}}
 \author{\VAR{source.race | latex_escape} --- \VAR{source.points} points}
@@ -8,9 +9,20 @@
 \begin{document}
 \maketitle
 
+\BLOCK{if source.race_image}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{\VAR{source.race_image}}
+\end{center}
+\BLOCK{endif}
+
 \BLOCK{for unit in source.units}
 \section{\VAR{unit.name | latex_escape}\BLOCK{if unit.count > 1} (\VAR{unit.count}$\times$)\BLOCK{endif}}
 
+% With art, the stat block and the image sit side by side; without it, the
+% stat block runs full width. Everything below resumes full width either way.
+\BLOCK{if unit.image}
+\begin{minipage}[t]{0.62\textwidth}
+\BLOCK{endif}
 \textbf{Size:} \VAR{unit.size | latex_escape} \\
 \textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
 \BLOCK{if unit.armor}
@@ -18,6 +30,12 @@
 \BLOCK{endif}
 \textbf{Points:} \VAR{unit.points} \\
 \textbf{Shaken:} \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
+\BLOCK{if unit.image}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\textwidth}
+\includegraphics[width=\linewidth]{\VAR{unit.image}}
+\end{minipage}
+\BLOCK{endif}
 
 \BLOCK{if unit.specials}
 \begin{itemize}
