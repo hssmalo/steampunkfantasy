@@ -20,8 +20,12 @@
 
 % With art, the stat block and the image sit side by side; without it, the
 % stat block runs full width. Everything below resumes full width either way.
+% The `\vspace{0pt}` in each minipage aligns their *tops*: without it `[t]`
+% aligns first baselines, and an image's baseline is its bottom edge, which
+% would drop the stat block to the foot of the picture.
 \BLOCK{if unit.image}
 \begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
 \BLOCK{endif}
 \textbf{Size:} \VAR{unit.size | latex_escape} \\
 \textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
@@ -33,6 +37,7 @@
 \BLOCK{if unit.image}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.34\textwidth}
+\vspace{0pt}
 \includegraphics[width=\linewidth]{\VAR{unit.image}}
 \end{minipage}
 \BLOCK{endif}
