@@ -28,6 +28,13 @@ root.
 That the two families disagree is the point: the view-model says *which* Asset,
 and each family decides how to spell it.
 
+Both spell it with **forward slashes**, via the `posix_path` filter, whatever
+the platform separator is. A backslash is not a separator to either output
+language: it opens a control sequence in LaTeX and escapes punctuation in
+CommonMark, where `..\..\art.png` renders as `....%5Cart.png`. LaTeX engines
+and browsers accept forward slashes on Windows, so nothing is lost by never
+emitting the native separator.
+
 Rejected:
 
 - **Copying the art into `output/`.** It breaks the render seam's "one

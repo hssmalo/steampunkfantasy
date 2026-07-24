@@ -8,8 +8,8 @@ templates emit LaTeX. The factory takes an injectable `templates_root` so tests
 can point it at fixture templates.
 """
 
-import os
-from pathlib import Path
+import os.path
+from pathlib import Path, PurePath
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -39,6 +39,18 @@ def latex_escape(value: object) -> str:
     return "".join(_LATEX_SPECIAL.get(char, char) for char in str(value))
 
 
+def posix_path(value: PurePath | str) -> str:
+    r"""Return `value` with forward slashes, whatever the platform separator is.
+
+    A native-Windows path is backslash-separated, and a backslash means
+    something else in both output languages: it opens a control sequence in
+    LaTeX (`C:\repo` compiles as `\r`) and escapes punctuation in CommonMark
+    (`..\..` renders as `....`). Forward slashes are accepted by LaTeX engines
+    and browsers on Windows too, so they are what both families emit.
+    """
+    return PurePath(value).as_posix()
+
+
 def relative_to(value: Path, start: Path) -> str:
     """Return `value` as a path relative to the directory `start`.
 
@@ -51,7 +63,7 @@ def relative_to(value: Path, start: Path) -> str:
     `os.path.relpath`, not `Path.relative_to`: the two paths are siblings, so
     the result needs to be able to climb with `..`.
     """
-    return os.path.relpath(value, start)
+    return posix_path(os.path.relpath(value, start))
 
 
 def make_environments(templates_root: Path | None = None) -> dict[Family, Environment]:
@@ -73,6 +85,7 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
         keep_trailing_newline=True,
     )
     latex.filters["latex_escape"] = latex_escape
+    latex.filters["posix_path"] = posix_path
     markdown = Environment(
         loader=FileSystemLoader(root / "markdown"),
         autoescape=False,  # noqa: S701  templates emit Markdown/LaTeX, not HTML (ADR 0005)

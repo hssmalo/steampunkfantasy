@@ -11,7 +11,7 @@
 
 \BLOCK{if source.race_image}
 \begin{center}
-\includegraphics[width=0.5\textwidth]{\VAR{source.race_image}}
+\includegraphics[width=0.5\textwidth]{\VAR{source.race_image | posix_path}}
 \end{center}
 \newpage
 \BLOCK{endif}
@@ -47,7 +47,7 @@
 \end{minipage}\hfill
 \begin{minipage}[t]{0.34\textwidth}
 \vspace{0pt}
-\includegraphics[width=\linewidth]{\VAR{unit.image}}
+\includegraphics[width=\linewidth]{\VAR{unit.image | posix_path}}
 \end{minipage}
 \BLOCK{endif}
 

@@ -1,18 +1,19 @@
 """Tests for the spf.render foundation."""
 
+import os.path
 import shutil
 import tempfile
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import pytest
 from jinja2 import TemplateNotFound
 
 from spf.config import config
 from spf.frontends.cli.render import DEFAULT_FORMAT, RenderOpts
-from spf.render import Product, render
+from spf.render import Product, environments, render
 from spf.render.derivations import RenderError, latex_to_pdf, md_to_html
-from spf.render.environments import make_environments
+from spf.render.environments import make_environments, posix_path, relative_to
 from spf.render.formats import FORMATS, get_format
 from spf.render.products import PRODUCTS, get_product, register_product
 
@@ -59,6 +60,41 @@ def test_injected_templates_root_loads_fixture() -> None:
     envs = make_environments(templates_root=FIXTURES)
     template = envs["markdown"].get_template("_test/main.md.jinja")
     assert "Name" in template.render(source=FakeSource())
+
+
+# --- Path filters: separators must survive Markdown and LaTeX ---------------
+
+
+def test_relative_to_climbs_out_of_the_output_directory() -> None:
+    assert (
+        relative_to(Path("/repo/assets/elf/images/art.png"), Path("/repo/output/rules"))
+        == "../../assets/elf/images/art.png"
+    )
+
+
+def test_relative_to_emits_forward_slashes_on_windows(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # CommonMark reads a backslash as an escape, so a Windows-separated
+    # `..\..\art.png` renders as `....%5Cart.png` and the image 404s. Running
+    # on Windows means both of these at once — a separated relpath, and a
+    # `PurePath` that understands it — so the simulation patches both.
+    monkeypatch.setattr(
+        os.path, "relpath", lambda *_: r"..\..\assets\elf\images\art.png"
+    )
+    monkeypatch.setattr(environments, "PurePath", PureWindowsPath)
+
+    relative = relative_to(Path("art.png"), Path("out"))
+
+    assert relative == "../../assets/elf/images/art.png"
+
+
+def test_posix_path_emits_forward_slashes_for_a_windows_path() -> None:
+    # A backslash opens a control sequence in LaTeX, so
+    # `\includegraphics{C:\repo\art.png}` compiles as `\r` and `\a`, not a name.
+    windows = PureWindowsPath(r"C:\repo\assets\elf\images\art.png")
+
+    assert posix_path(windows) == "C:/repo/assets/elf/images/art.png"
 
 
 # --- 7.2 md_to_html ---------------------------------------------------------
