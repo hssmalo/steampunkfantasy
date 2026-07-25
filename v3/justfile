@@ -1,7 +1,7 @@
 default: check
 
 # Run all quality gates in order, stopping on the first failure.
-check: fmt-check lint validate lint-races spell test typecheck
+check: fmt-check lint spell validate lint-races test typecheck
 
 # Auto-format the codebase with ruff.
 fmt:

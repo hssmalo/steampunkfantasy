@@ -35,12 +35,12 @@ army = (
 )
 
 
-# x4 squid
+# x4 confusiator
 army = (
-    army.add_unit("squid", race_config=cfg)
-    .duplicate_unit(("squid", 0))
-    .duplicate_unit(("squid", 0))
-    .duplicate_unit(("squid", 0))
+    army.add_unit("confusiator", race_config=cfg)
+    .duplicate_unit(("confusiator", 0))
+    .duplicate_unit(("confusiator", 0))
+    .duplicate_unit(("confusiator", 0))
 )
 
 
