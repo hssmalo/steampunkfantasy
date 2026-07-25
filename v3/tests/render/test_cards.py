@@ -20,6 +20,7 @@ from spf.schemas.race import (
     ShakenConfig,
     UnitConfig,
 )
+from tests.render.conftest import FakeLookup
 
 ENGINE = config.render.latex.engine
 
@@ -150,8 +151,8 @@ def test_orders_speeds_follow_canonical_order() -> None:
 # --- build_deck: flat rows for the Markdown family --------------------------
 
 
-def _army(*units: Unit, nick: str = "Test") -> Army:
-    return Army(race="elf", nick=nick, units=list(units))
+def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
+    return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
 
 
 def test_build_deck_flat_rows_one_entry_per_option() -> None:
@@ -258,6 +259,49 @@ def test_build_deck_carries_shaken_to_units_not_cards() -> None:
     assert unit_orders.shaken_fire == "No weapons"
     # Shaken is not an order option, so it never becomes a card.
     assert all("flee" not in str(card.rows) for card in deck.cards)
+
+
+# --- build_deck: Image Assets on the view-model -----------------------------
+
+
+def test_build_deck_populates_images_from_the_injected_lookup() -> None:
+    image = Path("/assets/goblin/images/art.png")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
+    )
+
+    deck = build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(image)
+    )
+
+    assert [u.image for u in deck.units] == [image]
+    assert len(deck.cards) == 2  # one Movement card, one Fire card
+    assert all(card.image == image for card in deck.cards)
+
+
+def test_build_deck_looks_images_up_once_per_unit_by_toml_key() -> None:
+    # The Target that addresses an Asset is the TOML key, which `Unit.name`
+    # carries; `unit.config.name` is the display name printed on the card.
+    lookup = FakeLookup(None)
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]}),
+        name="Goblin Infantry",
+    )
+    unit = Unit(name="goblin_infantry", config=unit.config, models=unit.models)
+
+    build_deck(_army(unit, race="goblin"), stem="test", image_for=lookup)
+
+    # One lookup per Unit, not one per card.
+    assert lookup.calls == [("goblin", "goblin_infantry")]
+
+
+def test_build_deck_leaves_images_none_when_there_is_no_art() -> None:
+    unit = _unit(orders=OrdersConfig(movement={"still": [["A"]]}))
+
+    deck = build_deck(_army(unit), stem="test", image_for=FakeLookup(None))
+
+    assert [u.image for u in deck.units] == [None]
+    assert all(card.image is None for card in deck.cards)
 
 
 # --- _safe_stem -------------------------------------------------------------
