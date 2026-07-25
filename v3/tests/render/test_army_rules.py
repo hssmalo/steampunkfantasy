@@ -27,7 +27,7 @@ from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
 from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, RangeRoll
-from tests.render.conftest import FakeLookup
+from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
 
@@ -461,8 +461,6 @@ def test_build_reference_leaves_images_none_when_there_is_no_art() -> None:
 
 # --- Templates: embedded Image Assets (drives the real templates) ----------
 
-_ART = Path("/assets/goblin/images/art.png")
-
 
 def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None:
     # Relative to the written document, not absolute: a root-absolute path
@@ -508,7 +506,7 @@ def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
     tmp_path: Path,
 ) -> None:
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(_ART)
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(ART)
     )
 
     out = render(
@@ -525,7 +523,7 @@ def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
     # document-relative path would not resolve.
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
-    assert rf"\includegraphics[width=\linewidth]{{{_ART}}}" in text
+    assert rf"\includegraphics[width=\linewidth]{{{ART}}}" in text
     assert r"\begin{minipage}" in text
 
 

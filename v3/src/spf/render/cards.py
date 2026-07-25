@@ -92,12 +92,14 @@ def _cards(
 def _unit_orders(
     unit: Unit, *, race: t.RaceName, image_for: ImageLookup
 ) -> tuple[UnitOrders, list[OrderCard]]:
-    """Build the flat table and card list for a single Unit."""
+    """Build the flat table and card list for a single Unit.
+
+    The Asset is addressed by `unit.name`, the TOML key, not by
+    `unit.config.name`, the display name. One lookup serves the flat table and
+    every card the Unit produces.
+    """
     merged = unit.orders()
     shaken = unit.config.shaken
-    # `unit.name` is the TOML key, which is what addresses an Asset;
-    # `unit.config.name` is the display name. One lookup serves the flat
-    # table and every card the Unit produces.
     image = image_for(race, unit.name)
     unit_orders = UnitOrders(
         name=unit.config.name,
@@ -122,7 +124,10 @@ def build_deck(
 
     Each Unit contributes a flat `UnitOrders` and its transposed
     `OrderCard` set. Units producing an identical flat view (same name and
-    merged movement/fire rows) collapse to one entry.
+    merged movement/fire rows) collapse to one entry. That key is the *display*
+    name and deliberately ignores the art: an Asset is addressed by TOML key,
+    and no race has two Unit keys sharing a display name, so the "same name,
+    different art" collision cannot arise today.
 
     `image_for` resolves Image Assets; it defaults to the committed store and
     is swapped for `no_image` by `--no-images`. A Unit with no committed art
@@ -130,9 +135,6 @@ def build_deck(
     """
     units: list[UnitOrders] = []
     cards: list[OrderCard] = []
-    # The dedup key stays the *display* name, deliberately: art is addressed by
-    # TOML key, and no race has two Unit keys sharing a display name, so the
-    # "same name, different art" collision cannot arise today.
     seen: list[tuple[str, _Rows, _Rows]] = []
     for unit in army.units:
         unit_orders, unit_cards = _unit_orders(

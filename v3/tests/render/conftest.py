@@ -2,6 +2,9 @@
 
 from pathlib import Path
 
+ART = Path("/assets/goblin/images/art.png")
+"""A committed Image Asset that no test needs to exist on disk."""
+
 
 class FakeLookup:
     """An `ImageLookup` returning a canned path, recording every call."""

@@ -22,7 +22,7 @@ from spf.schemas.race import (
     ShakenConfig,
     UnitConfig,
 )
-from tests.render.conftest import FakeLookup
+from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
 
@@ -325,7 +325,6 @@ def test_safe_stem_collapses_runs_and_strips_ends() -> None:
 # --- CLI: render cards end-to-end (drives the real templates) ---------------
 
 DEMO_ARMY = "demo"
-_ART = Path("/assets/goblin/images/art.png")
 
 
 def test_render_cards_markdown_has_tables_and_shaken(tmp_path: Path) -> None:
@@ -409,7 +408,7 @@ def test_cards_markdown_emits_no_image_markup_without_art(tmp_path: Path) -> Non
 def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
     out = render(
         CARDS,
-        _art_deck(_ART),
+        _art_deck(ART),
         fmt=get_format("latex"),
         name="test",
         output_root=tmp_path,
@@ -422,7 +421,7 @@ def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
     assert r"\renewcommand{\bcfoot}{Fire}" in text
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
-    assert rf"\includegraphics[width=\cardartwidth]{{{_ART.as_posix()}}}" in text
+    assert rf"\includegraphics[width=\cardartwidth]{{{ART.as_posix()}}}" in text
 
 
 def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:
