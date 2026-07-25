@@ -1,0 +1,10 @@
+# The Rulebook Index: what the Rulebook contains, in the order it contains it
+# (ADR 0018). Each section names a Section Kind, which decides how its source
+# is read and which template partial renders it.
+
+title = "SteamPunkFantasy Rulebook"
+
+[[sections]]
+kind = "markdown"
+source = "round.md"
+title = "The Round"
