@@ -422,7 +422,7 @@ def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
     assert r"\renewcommand{\bcfoot}{Fire}" in text
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
-    assert rf"\includegraphics[width=\cardartwidth]{{{_ART}}}" in text
+    assert rf"\includegraphics[width=\cardartwidth]{{{_ART.as_posix()}}}" in text
 
 
 def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:

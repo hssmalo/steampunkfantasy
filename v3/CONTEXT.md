@@ -177,6 +177,7 @@ rows. Units that produce identical cards collapse to one set (no duplicates).
 The back of a card carries the Unit's Image Asset, with the Unit name above it
 and the order kind below; a Unit with no committed art keeps the same layout
 minus the picture, so the back still identifies the card.
+
 _Avoid_: order sheet, unit card (a card is one option, not one Unit)
 
 **Army Reference**:
