@@ -14,9 +14,10 @@ import cyclopts
 from spf.armies import io
 from spf.console import stderr, stdout
 from spf.render import Product, render
-from spf.render.army_rules import build_reference, committed_image, no_image
+from spf.render.army_rules import build_reference
 from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
+from spf.render.images import committed_image, no_image
 from spf.render.products import register_product
 
 DEFAULT_FORMAT = "pdf"
@@ -57,10 +58,7 @@ class RenderOpts:
         cyclopts.Parameter(
             # The auto-derived negative would read `--no-no-images`.
             negative="",
-            help=(
-                "Leave committed Image Assets out of the document "
-                "(currently affects 'army-rules' only)."
-            ),
+            help="Leave committed Image Assets out of the document.",
         ),
     ] = False
 
@@ -84,7 +82,9 @@ def render_cards(
         raise SystemExit(1) from None
 
     stem = _safe_stem(army_name)
-    deck = build_deck(army, stem=stem)
+    deck = build_deck(
+        army, stem=stem, image_for=no_image if opts.no_images else committed_image
+    )
     fmt = get_format(opts.format)
     out = render(CARDS, deck, fmt=fmt, name=stem, out=opts.out)
     stdout.print(f"Wrote {out}")

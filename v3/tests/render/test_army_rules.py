@@ -27,6 +27,7 @@ from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
 from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, RangeRoll
+from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
 
@@ -417,21 +418,9 @@ def test_render_army_rules_missing_army_exits_nonzero(tmp_path: Path) -> None:
 # --- build_reference: Image Assets on the view-model ------------------------
 
 
-class _FakeLookup:
-    """An `ImageLookup` returning a canned path, recording every call."""
-
-    def __init__(self, path: Path | None) -> None:
-        self.path = path
-        self.calls: list[tuple[str, str]] = []
-
-    def __call__(self, race: str, name: str) -> Path | None:
-        self.calls.append((race, name))
-        return self.path
-
-
 def test_build_reference_populates_images_from_the_injected_lookup() -> None:
     image = Path("/assets/goblin/images/art.png")
-    lookup = _FakeLookup(image)
+    lookup = FakeLookup(image)
 
     reference = build_reference(
         _army(_unit(name="Squad"), race="goblin"),
@@ -446,7 +435,7 @@ def test_build_reference_populates_images_from_the_injected_lookup() -> None:
 def test_build_reference_looks_images_up_by_toml_key_not_display_name() -> None:
     # The Target that addresses an Asset is the TOML key, which `Unit.name`
     # carries; `unit.config.name` is the display name shown in the document.
-    lookup = _FakeLookup(None)
+    lookup = FakeLookup(None)
     unit = _unit(name="Goblin Infantry")
     unit = Unit(name="goblin_infantry", config=unit.config, models=unit.models)
 
@@ -463,7 +452,7 @@ def test_build_reference_leaves_images_none_when_there_is_no_art() -> None:
     reference = build_reference(
         _army(_unit()),
         stem="test",
-        image_for=_FakeLookup(None),
+        image_for=FakeLookup(None),
     )
 
     assert reference.race_image is None
@@ -472,8 +461,6 @@ def test_build_reference_leaves_images_none_when_there_is_no_art() -> None:
 
 # --- Templates: embedded Image Assets (drives the real templates) ----------
 
-_ART = Path("/assets/goblin/images/art.png")
-
 
 def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None:
     # Relative to the written document, not absolute: a root-absolute path
@@ -481,7 +468,7 @@ def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None
     # such as `file://wsl.localhost/<distro>/...` (ADR 0017).
     art = tmp_path / "assets" / "art.png"
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(art)
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(art)
     )
 
     out = render(
@@ -501,7 +488,7 @@ def test_army_rules_markdown_emits_no_image_markup_without_art(
     tmp_path: Path,
 ) -> None:
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(None)
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(None)
     )
 
     out = render(
@@ -519,7 +506,7 @@ def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
     tmp_path: Path,
 ) -> None:
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(_ART)
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(ART)
     )
 
     out = render(
@@ -536,7 +523,7 @@ def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
     # document-relative path would not resolve.
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
-    assert rf"\includegraphics[width=\linewidth]{{{_ART}}}" in text
+    assert rf"\includegraphics[width=\linewidth]{{{ART}}}" in text
     assert r"\begin{minipage}" in text
 
 
@@ -544,7 +531,7 @@ def test_army_rules_latex_keeps_the_full_width_stat_block_without_art(
     tmp_path: Path,
 ) -> None:
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(None)
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(None)
     )
 
     out = render(
@@ -570,7 +557,7 @@ def test_render_army_rules_pdf_compiles_with_an_underscored_image_path(
     # that an underscore in the filename needs no escaping.
     art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
     reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=_FakeLookup(art)
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(art)
     )
 
     out = render(

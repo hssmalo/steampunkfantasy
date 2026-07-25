@@ -1,16 +1,29 @@
 \documentclass[frontgrid,a4,12pt]{flacards}
 \usepackage{textcomp}
+\usepackage{graphicx}
 \pagesetup{3}{3}
 \setlength{\cardwidth}{63mm}
 \setlength{\cardheight}{88mm}
+% `\cardbox` insets the body by `\fboxsep` on each side, so art at the full
+% `\cardwidth` would overfull the line. Set this *after* `\cardwidth` above.
+\newlength{\cardartwidth}
+\setlength{\cardartwidth}{\dimexpr\cardwidth-2\fboxsep\relax}
 \renewcommand{\cardtextstylef}{\small}
 \renewcommand{\cardtextstyleb}{\small}
 \renewcommand{\brfoot}{}
 
 \begin{document}
+% Card backs: the Unit name and the order kind sit in flacards' own
+% `\bchead`/`\bcfoot` slots, so the body below is the art alone. That body must
+% never be empty — `\cardtext` appends `\\`, and `\\` in vertical mode is the
+% classic "There's no line here to end" error. Hence the `\strut` fallback.
+% Image paths are emitted raw: `latex_escape` would turn `_` into `\_` and
+% break the graphics include.
 \BLOCK{for card in source.cards}
 \renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
 \renewcommand{\flhead}{\VAR{card.kind}}
+\renewcommand{\bchead}{\VAR{card.unit_name | latex_escape}}
+\renewcommand{\bcfoot}{\VAR{card.kind}}
 \card{%
 \begin{tabular}{ll}
 \BLOCK{for speed, cells in card.rows}
@@ -18,7 +31,11 @@
 \BLOCK{endfor}
 \end{tabular}%
 }{%
-\VAR{card.unit_name | latex_escape} \\ \VAR{card.kind}%
+\BLOCK{if card.image}
+\includegraphics[width=\cardartwidth]{\VAR{card.image | posix_path}}%
+\BLOCK{else}
+\strut%
+\BLOCK{endif}
 }
 
 \BLOCK{endfor}

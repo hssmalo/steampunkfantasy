@@ -9,8 +9,10 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.config import config
-from spf.frontends.cli.render import RenderOpts, _safe_stem, render_cards
-from spf.render.cards import build_deck
+from spf.frontends.cli.render import CARDS, RenderOpts, _safe_stem, render_cards
+from spf.render import render
+from spf.render.cards import OrderCardDeck, build_deck
+from spf.render.formats import get_format
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (
     AssaultConfig,
@@ -20,6 +22,7 @@ from spf.schemas.race import (
     ShakenConfig,
     UnitConfig,
 )
+from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
 
@@ -150,8 +153,8 @@ def test_orders_speeds_follow_canonical_order() -> None:
 # --- build_deck: flat rows for the Markdown family --------------------------
 
 
-def _army(*units: Unit, nick: str = "Test") -> Army:
-    return Army(race="elf", nick=nick, units=list(units))
+def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
+    return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
 
 
 def test_build_deck_flat_rows_one_entry_per_option() -> None:
@@ -260,6 +263,49 @@ def test_build_deck_carries_shaken_to_units_not_cards() -> None:
     assert all("flee" not in str(card.rows) for card in deck.cards)
 
 
+# --- build_deck: Image Assets on the view-model -----------------------------
+
+
+def test_build_deck_populates_images_from_the_injected_lookup() -> None:
+    image = Path("/assets/goblin/images/art.png")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
+    )
+
+    deck = build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(image)
+    )
+
+    assert [u.image for u in deck.units] == [image]
+    assert len(deck.cards) == 2  # one Movement card, one Fire card
+    assert all(card.image == image for card in deck.cards)
+
+
+def test_build_deck_looks_images_up_once_per_unit_by_toml_key() -> None:
+    # The Target that addresses an Asset is the TOML key, which `Unit.name`
+    # carries; `unit.config.name` is the display name printed on the card.
+    lookup = FakeLookup(None)
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]}),
+        name="Goblin Infantry",
+    )
+    unit = Unit(name="goblin_infantry", config=unit.config, models=unit.models)
+
+    build_deck(_army(unit, race="goblin"), stem="test", image_for=lookup)
+
+    # One lookup per Unit, not one per card.
+    assert lookup.calls == [("goblin", "goblin_infantry")]
+
+
+def test_build_deck_leaves_images_none_when_there_is_no_art() -> None:
+    unit = _unit(orders=OrdersConfig(movement={"still": [["A"]]}))
+
+    deck = build_deck(_army(unit), stem="test", image_for=FakeLookup(None))
+
+    assert [u.image for u in deck.units] == [None]
+    assert all(card.image is None for card in deck.cards)
+
+
 # --- _safe_stem -------------------------------------------------------------
 
 
@@ -316,6 +362,118 @@ def test_render_cards_pdf_compiles(tmp_path: Path) -> None:
     render_cards(DEMO_ARMY, opts=RenderOpts(format="pdf", out=out))
 
     assert out.stat().st_size > 0
+
+
+# --- Templates: the Unit's art on the card back (drives the real templates) --
+
+
+def _art_deck(image: Path | None, *, name: str = "Squad") -> OrderCardDeck:
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]}),
+        name=name,
+    )
+    return build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(image)
+    )
+
+
+def test_cards_markdown_embeds_the_unit_image(tmp_path: Path) -> None:
+    # Relative to the written document, not absolute: a root-absolute path
+    # loses the share name across a UNC boundary (ADR 0017).
+    art = tmp_path / "assets" / "art.png"
+
+    out = render(
+        CARDS,
+        _art_deck(art),
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    assert "![Squad](../assets/art.png)" in out.read_text(encoding="utf-8")
+
+
+def test_cards_markdown_emits_no_image_markup_without_art(tmp_path: Path) -> None:
+    out = render(
+        CARDS,
+        _art_deck(None),
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    assert "![" not in out.read_text(encoding="utf-8")
+
+
+def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
+    out = render(
+        CARDS,
+        _art_deck(ART),
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\usepackage{graphicx}" in text
+    assert r"\renewcommand{\bchead}{Squad}" in text
+    assert r"\renewcommand{\bcfoot}{Movement}" in text
+    assert r"\renewcommand{\bcfoot}{Fire}" in text
+    # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
+    # break `\includegraphics`.
+    assert rf"\includegraphics[width=\cardartwidth]{{{ART.as_posix()}}}" in text
+
+
+def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:
+    out = render(
+        CARDS,
+        _art_deck(None),
+        fmt=get_format("latex"),
+        name="test",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\includegraphics" not in text
+    # The name and kind still identify the back of an art-less card.
+    assert r"\renewcommand{\bchead}{Squad}" in text
+    assert r"\renewcommand{\bcfoot}{Movement}" in text
+    # `\cardtext` ends the body with `\\`, so an empty body is a LaTeX error.
+    assert r"\strut" in text
+
+
+@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
+def test_cards_pdf_compiles_with_a_mixed_deck(tmp_path: Path) -> None:
+    # A deck where one Unit has art and one does not is the case that breaks if
+    # the art-less back leaves `\cardtext`'s body empty.
+    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
+    orders = OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
+    with_art = _unit(orders=orders, name="Painted")
+    without_art = _unit(orders=orders, name="Bare")
+
+    def image_for(_race: str, name: str) -> Path | None:
+        return art if name == "Painted" else None
+
+    deck = build_deck(
+        _army(with_art, without_art, race="goblin"), stem="test", image_for=image_for
+    )
+
+    out = render(CARDS, deck, fmt=get_format("pdf"), name="test", output_root=tmp_path)
+
+    assert out.stat().st_size > 0
+
+
+def test_render_cards_no_images_omits_committed_art(tmp_path: Path) -> None:
+    # The demo army's race has committed Unit art, so the default render does
+    # embed images — `--no-images` is what removes them.
+    with_art = tmp_path / "with-art.md"
+    render_cards(DEMO_ARMY, opts=RenderOpts(format="markdown", out=with_art))
+    assert "![" in with_art.read_text(encoding="utf-8")
+
+    out = tmp_path / "no-art.md"
+    render_cards(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out, no_images=True))
+
+    assert "![" not in out.read_text(encoding="utf-8")
 
 
 def test_render_cards_missing_army_exits_nonzero(tmp_path: Path) -> None:

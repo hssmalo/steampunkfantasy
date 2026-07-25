@@ -3,15 +3,20 @@
 This is a *presentation* transposition (ADR 0007). The core model exposes merged
 orders via `spf.armies.unit.Unit.orders`; this module turns those into the
 two shapes the render families need: a flat per-Unit table (Markdown family) and
-an option-index-transposed card list (LaTeX 9-per-page grid). No I/O, no
-templates.
+an option-index-transposed card list (LaTeX 9-per-page grid). No templates.
+
+Its one touch of disk is the `ImageLookup` from `spf.render.images`, which asks
+the committed Asset store whether a Target has art (ADR 0017); it is injected,
+so a test can build a deck without a filesystem at all.
 """
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Literal
 
 from spf.armies.army import Army
 from spf.armies.unit import Unit
+from spf.render.images import ImageLookup, committed_image
 from spf.schemas import type_aliases as t
 
 type _Rows = list[tuple[str, list[str]]]  # (speed, cells) per row
@@ -23,6 +28,7 @@ class OrderCard:
     """One order-type and one option-index for a Unit, Speeds as rows."""
 
     unit_name: str
+    image: Path | None  # the Unit's art, printed on the back of the card
     kind: Literal["Movement", "Fire"]
     rows: _Rows  # (speed, cells) per Speed
 
@@ -32,6 +38,7 @@ class UnitOrders:
     """A Unit's merged orders as flat tables, for the Markdown family."""
 
     name: str
+    image: Path | None
     size: str
     movement_rows: _Rows  # every (speed, cells) option, flat
     fire_rows: _Rows
@@ -59,8 +66,9 @@ def _flat_rows(orders: _Orders) -> _Rows:
 
 def _cards(
     unit_name: str,
-    kind: Literal["Movement", "Fire"],
     *,
+    image: Path | None,
+    kind: Literal["Movement", "Fire"],
     orders: _Orders,
 ) -> list[OrderCard]:
     """Transpose one order-type by option-index: card i = option i across Speeds."""
@@ -75,16 +83,27 @@ def _cards(
             if i < len(options)
         ]
         if rows:
-            cards.append(OrderCard(unit_name=unit_name, kind=kind, rows=rows))
+            cards.append(
+                OrderCard(unit_name=unit_name, image=image, kind=kind, rows=rows)
+            )
     return cards
 
 
-def _unit_orders(unit: Unit) -> tuple[UnitOrders, list[OrderCard]]:
-    """Build the flat table and card list for a single Unit."""
+def _unit_orders(
+    unit: Unit, *, race: t.RaceName, image_for: ImageLookup
+) -> tuple[UnitOrders, list[OrderCard]]:
+    """Build the flat table and card list for a single Unit.
+
+    The Asset is addressed by `unit.name`, the TOML key, not by
+    `unit.config.name`, the display name. One lookup serves the flat table and
+    every card the Unit produces.
+    """
     merged = unit.orders()
     shaken = unit.config.shaken
+    image = image_for(race, unit.name)
     unit_orders = UnitOrders(
         name=unit.config.name,
+        image=image,
         size=unit.config.size,
         movement_rows=_flat_rows(merged.movement),
         fire_rows=_flat_rows(merged.fire),
@@ -92,24 +111,35 @@ def _unit_orders(unit: Unit) -> tuple[UnitOrders, list[OrderCard]]:
         shaken_fire=shaken.fire_order,
     )
     cards = [
-        *_cards(unit.config.name, "Movement", orders=merged.movement),
-        *_cards(unit.config.name, "Fire", orders=merged.fire),
+        *_cards(unit.config.name, image=image, kind="Movement", orders=merged.movement),
+        *_cards(unit.config.name, image=image, kind="Fire", orders=merged.fire),
     ]
     return unit_orders, cards
 
 
-def build_deck(army: Army, *, stem: str) -> OrderCardDeck:
+def build_deck(
+    army: Army, *, stem: str, image_for: ImageLookup = committed_image
+) -> OrderCardDeck:
     """Build an `OrderCardDeck` from a resolved Army.
 
     Each Unit contributes a flat `UnitOrders` and its transposed
     `OrderCard` set. Units producing an identical flat view (same name and
-    merged movement/fire rows) collapse to one entry.
+    merged movement/fire rows) collapse to one entry. That key is the *display*
+    name and deliberately ignores the art: an Asset is addressed by TOML key,
+    and no race has two Unit keys sharing a display name, so the "same name,
+    different art" collision cannot arise today.
+
+    `image_for` resolves Image Assets; it defaults to the committed store and
+    is swapped for `no_image` by `--no-images`. A Unit with no committed art
+    simply gets `None` — the card back then falls back to text.
     """
     units: list[UnitOrders] = []
     cards: list[OrderCard] = []
     seen: list[tuple[str, _Rows, _Rows]] = []
     for unit in army.units:
-        unit_orders, unit_cards = _unit_orders(unit)
+        unit_orders, unit_cards = _unit_orders(
+            unit, race=army.race, image_for=image_for
+        )
         key = (unit_orders.name, unit_orders.movement_rows, unit_orders.fire_rows)
         if key in seen:
             continue
