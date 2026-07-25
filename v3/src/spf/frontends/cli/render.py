@@ -14,9 +14,10 @@ import cyclopts
 from spf.armies import io
 from spf.console import stderr, stdout
 from spf.render import Product, render
-from spf.render.army_rules import build_reference, committed_image, no_image
+from spf.render.army_rules import build_reference
 from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
+from spf.render.images import committed_image, no_image
 from spf.render.products import register_product
 
 DEFAULT_FORMAT = "pdf"

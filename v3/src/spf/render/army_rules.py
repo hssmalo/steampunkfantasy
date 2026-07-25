@@ -5,9 +5,9 @@ It reads only the resolved `Army` — no `race_config`,
 no rules loading, no full special-rule text (that belongs to the Rulebook
 product). No templates.
 
-Its one touch of disk is the `ImageLookup`, which asks the committed Asset
-store whether a Target has art (ADR 0017); it is injected, so a test can build
-a reference without a filesystem at all.
+Its one touch of disk is the `ImageLookup` from `spf.render.images`, which asks
+the committed Asset store whether a Target has art (ADR 0017); it is injected,
+so a test can build a reference without a filesystem at all.
 """
 
 from collections.abc import Callable, Sequence
@@ -17,24 +17,11 @@ from pathlib import Path
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.assets.image import IMAGE
-from spf.assets.spine import asset_for
+from spf.render.images import ImageLookup, committed_image
 from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
 type _Specials = list[tuple[str, str]]
-
-type ImageLookup = Callable[[t.RaceName, str], Path | None]
-"""Answers "what art is committed for this Target?" — see `committed_image`."""
-
-
-def committed_image(race: t.RaceName, name: str) -> Path | None:
-    """Return the committed Image Asset for `name`, or `None` when there is none."""
-    return asset_for(IMAGE, race, name=name)
-
-
-def no_image(race: t.RaceName, name: str) -> None:
-    """Lookup that finds nothing — what `--no-images` passes."""
 
 
 def _roll_text(roll: t.DamageRoll) -> str:
