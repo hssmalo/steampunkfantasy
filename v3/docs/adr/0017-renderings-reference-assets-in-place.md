@@ -83,6 +83,14 @@ finds nothing, so the templates need no opt-out conditional of their own.
 - **Layout is the template family's business.** The view-model carries a path
   and nothing about size or placement, so Markdown's lead image and LaTeX's
   side-by-side minipages can differ without the two negotiating.
-- `--no-images` lives on the shared `RenderOpts` but currently affects
-  `army-rules` only; it starts working for `cards` when that Product embeds
-  Assets.
+- `--no-images` lives on the shared `RenderOpts` and affects every Product that
+  embeds Assets.
+
+## Addendum: the seam generalised to a second Product
+
+The decision above is unchanged; only its reach is. When the Order Cards began
+carrying the Unit's art on the card back, `ImageLookup`, `committed_image` and
+`no_image` moved out of `spf/render/army_rules.py` into **`spf/render/images.py`**,
+so that no Product has to import another to ask what art is committed. They are
+now injected into `build_deck` exactly as into `build_reference`, and
+`--no-images` passes `no_image` to both.

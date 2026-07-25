@@ -173,6 +173,10 @@ whole resolved Army as one **deck** file (in PDF, nine cards to an A4 page).
 Each Unit's orders are the *merged* orders: its base `orders` unioned per Speed
 with any orders gained from equipment (`orders_gained`), appending the gained
 rows. Units that produce identical cards collapse to one set (no duplicates).
+
+The back of a card carries the Unit's Image Asset, with the Unit name above it
+and the order kind below; a Unit with no committed art keeps the same layout
+minus the picture, so the back still identifies the card.
 _Avoid_: order sheet, unit card (a card is one option, not one Unit)
 
 **Army Reference**:
@@ -217,9 +221,9 @@ short prose field, the seed — not the Lore)
 
 **Image** (asset):
 A 2D image Asset depicting a Race or Unit, generated from its `description`.
-Stored under `assets/<race>/images/`. Embedded by the Army Reference Rendering,
-which references the committed file where it lies rather than copying it
-(ADR 0017).
+Stored under `assets/<race>/images/`. Embedded by the Army Reference Rendering
+and on the back of the Order Cards, both of which reference the committed file
+where it lies rather than copying it (ADR 0017).
 
 **Model** (asset):
 A 3D-mesh Asset (for on-demand printing) depicting a Unit or Model, stored
