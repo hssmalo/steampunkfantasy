@@ -118,9 +118,9 @@ def _digest(path: Path) -> bytes:
         return hashlib.file_digest(stream, "sha256").digest()
 
 
-def _lineage_key(lineage: str) -> tuple[int, ...]:
+def _lineage_key(lineage: str) -> list[int]:
     """Return the sort key for a Lineage: `2.1` sorts before `10`, not after."""
-    return tuple(int(part) for part in lineage.split("."))
+    return [int(part) for part in lineage.split(".")]
 
 
 def _candidates_by_name(candidate_dir: Path, kind: Kind) -> dict[str, list[str]]:
