@@ -15,6 +15,10 @@
 {% for unit in source.units -%}
 ## {{ unit.name }}
 
+{% if unit.image -%}
+![{{ unit.name }}]({{ unit.image | relative_to(output_dir) }})
+
+{% endif -%}
 {{ order_table("Movement", unit.movement_rows, unit.shaken_movement) }}
 {{ order_table("Fire", unit.fire_rows, ("", unit.shaken_fire, "") if unit.shaken_fire else None) }}
 {% endfor -%}
