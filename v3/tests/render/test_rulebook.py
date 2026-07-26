@@ -151,16 +151,17 @@ def _section(
     return SectionConfig(kind=kind, source=source, title=title)
 
 
-def _rules_dir(tmp_path: Path, **files: str) -> Path:
+def _rules_dir(tmp_path: Path, files: dict[str, str]) -> Path:
+    """Write `files` (real filenames -> content) into `tmp_path` and return it."""
     tmp_path.mkdir(parents=True, exist_ok=True)
     for name, text in files.items():
-        (tmp_path / name.replace("_", ".")).write_text(text, encoding="utf-8")
+        (tmp_path / name).write_text(text, encoding="utf-8")
     return tmp_path
 
 
 def test_build_rulebook_builds_a_section_per_index_entry(tmp_path: Path) -> None:
     rules_dir = _rules_dir(
-        tmp_path, round_md="# Dropped\n\nBody.\n", setup_md="Setup.\n"
+        tmp_path, {"round.md": "# Dropped\n\nBody.\n", "setup.md": "Setup.\n"}
     )
 
     rulebook = build_rulebook(
@@ -180,7 +181,7 @@ def test_build_rulebook_builds_a_section_per_index_entry(tmp_path: Path) -> None
 
 
 def test_build_rulebook_slugs_the_title_into_an_anchor(tmp_path: Path) -> None:
-    rules_dir = _rules_dir(tmp_path, round_md="Body.\n")
+    rules_dir = _rules_dir(tmp_path, {"round.md": "Body.\n"})
 
     rulebook = build_rulebook(
         _index(_section(title="Fire & Movement, Part 2")), rules_dir=rules_dir
@@ -193,7 +194,7 @@ def test_build_rulebook_slugs_the_title_into_an_anchor(tmp_path: Path) -> None:
 def test_build_rulebook_gives_duplicate_titles_distinct_anchors(tmp_path: Path) -> None:
     # Two same-named sections would otherwise both answer to `#the-round`, and
     # every link to the second would land on the first.
-    rules_dir = _rules_dir(tmp_path, round_md="Body.\n", setup_md="More.\n")
+    rules_dir = _rules_dir(tmp_path, {"round.md": "Body.\n", "setup.md": "More.\n"})
 
     rulebook = build_rulebook(
         _index(_section(), _section(source="setup.md")), rules_dir=rules_dir
@@ -204,7 +205,7 @@ def test_build_rulebook_gives_duplicate_titles_distinct_anchors(tmp_path: Path) 
 
 
 def test_build_rulebook_rejects_an_unknown_kind_by_position(tmp_path: Path) -> None:
-    rules_dir = _rules_dir(tmp_path, round_md="Body.\n")
+    rules_dir = _rules_dir(tmp_path, {"round.md": "Body.\n"})
 
     with pytest.raises(
         ValueError, match=r"section 2: Unknown kind 'orders'"
@@ -218,7 +219,7 @@ def test_build_rulebook_rejects_an_unknown_kind_by_position(tmp_path: Path) -> N
 
 
 def test_build_rulebook_rejects_a_missing_source_by_position(tmp_path: Path) -> None:
-    rules_dir = _rules_dir(tmp_path)
+    rules_dir = _rules_dir(tmp_path, {})
 
     with pytest.raises(FileNotFoundError) as excinfo:
         build_rulebook(_index(_section(source="absent.md")), rules_dir=rules_dir)
@@ -250,7 +251,7 @@ Intro prose with **bold**.
 
 @pytest.fixture
 def rulebook(tmp_path: Path) -> Rulebook:
-    rules_dir = _rules_dir(tmp_path / "rules", round_md=_SOURCE)
+    rules_dir = _rules_dir(tmp_path / "rules", {"round.md": _SOURCE})
     return build_rulebook(_index(_section()), rules_dir=rules_dir)
 
 
@@ -357,7 +358,7 @@ def test_cli_writes_the_rulebook(tmp_path: Path) -> None:
 
 
 def test_cli_honours_an_alternate_index(tmp_path: Path) -> None:
-    _rules_dir(tmp_path, round_md=_SOURCE)
+    _rules_dir(tmp_path, {"round.md": _SOURCE})
     index = tmp_path / "alternate.toml"
     index.write_text(VALID_INDEX, encoding="utf-8")
     out = tmp_path / "rulebook.md"

@@ -20,7 +20,11 @@ raising.
 
 **Known limitations**, all deliberate for this first cut:
 
-- Tables and images are dropped rather than converted.
+- Tables are not converted. The parser runs stock `commonmark`, which has no
+  table rule at all (unlike `md_to_html`, which enables one), so a pipe table
+  arrives as ordinary paragraph text and prints with its pipes and dashes
+  intact.
+- Images are dropped entirely.
 - A link renders its text; the URL is discarded, so no `hyperref` dependency.
 - Block quotes lose their quoting and flow as ordinary paragraphs.
 - **Raw LaTeX in a Markdown source is escaped, not passed through** —
@@ -130,10 +134,12 @@ class _Converter:
                 self._start_block()
             case "bullet_list_open" | "ordered_list_open":
                 self._start_block("\n")
-                self.out.append(rf"\begin{{{_LISTS[token.type[:-5]]}}}")
+                self.out.append(
+                    rf"\begin{{{_LISTS[token.type.removesuffix('_open')]}}}"
+                )
             case "bullet_list_close" | "ordered_list_close":
                 self._start_block("\n")
-                self.out.append(rf"\end{{{_LISTS[token.type[:-6]]}}}")
+                self.out.append(rf"\end{{{_LISTS[token.type.removesuffix('_close')]}}}")
             case "list_item_open":
                 self._start_block("\n")
                 self.out.append(r"\item ")

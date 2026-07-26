@@ -12,7 +12,6 @@ from typing import Annotated
 import cyclopts
 
 from spf.armies import io
-from spf.config import config
 from spf.console import stderr, stdout
 from spf.render import Product, render
 from spf.render.army_rules import build_reference, committed_image, no_image
@@ -20,7 +19,7 @@ from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
 from spf.render.products import register_product
 from spf.render.rulebook import build_rulebook
-from spf.rules import RULEBOOK_INDEX, get_rulebook
+from spf.rules import get_rulebook, rulebook_index_path
 
 DEFAULT_FORMAT = "pdf"
 
@@ -133,7 +132,7 @@ def render_general_rules(
 ) -> None:
     """Render the general, army-agnostic rules to a rulebook."""
     opts = opts or RenderOpts()
-    index_path = index if index is not None else config.paths.rules / RULEBOOK_INDEX
+    index_path = rulebook_index_path(index)
     try:
         # Sources resolve beside the Index rather than in `rules/` always, so an
         # alternate Index is self-contained — and for the committed one the two

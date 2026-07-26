@@ -40,6 +40,12 @@ def test_text_is_latex_escaped() -> None:
     assert r"50\% of A \& B uses snake\_case \#1" in latex
 
 
+def test_variable_placeholder_renders_literally() -> None:
+    # The rules prose carries `{N}`-style placeholders. Escaping the braces is
+    # what makes them *print* as `{N}` instead of vanishing into a TeX group.
+    assert r"roll \{N\} or better" in md_to_latex("roll {N} or better\n")
+
+
 def test_strong_becomes_textbf() -> None:
     assert r"\textbf{Gunnery}" in md_to_latex("A **Gunnery** phase\n")
 

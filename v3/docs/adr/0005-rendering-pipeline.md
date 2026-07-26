@@ -7,7 +7,9 @@ Formats (markdown, html, latex, pdf). The decisions:
 **Resolved data is the view-model.** Each Product is rendered from a
 source-of-truth object passed straight into the templates — the resolved `Army`
 for Order Cards and Army Reference, the `RaceConfig` for Race Overview, the
-`rules/*.toml` configs for the Rulebook. The *same* data goes to every Format's
+`rules/*.toml` configs for the Rulebook (**superseded for the Rulebook by
+ADR 0018**: it is built from an authored index naming its sections, not from
+the contents of `rules/`). The *same* data goes to every Format's
 templates; templates stay dumb (read attributes, iterate) and carry no lookup or
 computation logic.
 
