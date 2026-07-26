@@ -14,28 +14,8 @@ from jinja2 import Environment, FileSystemLoader
 
 from spf.config import config
 from spf.render.formats import Family
-
-# Characters that must be escaped to survive a pdflatex run. Order cells carry
-# `°` (rendered via `textcomp`'s `\textdegree`) alongside the usual TeX
-# specials; `+`, `[` and `]` are safe in text mode and pass through.
-_LATEX_SPECIAL = {
-    "\\": r"\textbackslash{}",
-    "&": r"\&",
-    "%": r"\%",
-    "$": r"\$",
-    "#": r"\#",
-    "_": r"\_",
-    "{": r"\{",
-    "}": r"\}",
-    "~": r"\textasciitilde{}",
-    "^": r"\textasciicircum{}",
-    "°": r"\textdegree{}",
-}
-
-
-def latex_escape(value: object) -> str:
-    """Escape LaTeX-special characters in `value` for safe text-mode output."""
-    return "".join(_LATEX_SPECIAL.get(char, char) for char in str(value))
+from spf.render.latex_text import latex_escape
+from spf.render.md_latex import md_to_latex, shift_headings
 
 
 def posix_path(value: PurePath | str) -> str:
@@ -85,10 +65,17 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
     )
     latex.filters["latex_escape"] = latex_escape
     latex.filters["posix_path"] = posix_path
+    # Markdown that arrives inside the *data* — free-text Rulebook Sections and
+    # prose fields in the rules TOML — has no authored per-family form, so each
+    # family converts it on the way out (ADR 0005 addendum).
+    latex.filters["md_to_latex"] = md_to_latex
     markdown = Environment(
         loader=FileSystemLoader(root / "markdown"),
         autoescape=False,  # noqa: S701  templates emit Markdown/LaTeX, not HTML (ADR 0005)
         keep_trailing_newline=True,
     )
     markdown.filters["relative_to"] = relative_to
+    # The Markdown family needs no conversion — its data is already Markdown —
+    # only the source's headings pushed below the one it renders under.
+    markdown.filters["shift_headings"] = shift_headings
     return {"markdown": markdown, "latex": latex}

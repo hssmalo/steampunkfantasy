@@ -1,0 +1,3 @@
+{# A free-text Section. Its data is already Markdown; it only needs its own
+   headings pushed one level below the `##` its title renders as. -#}
+{{ section.body | shift_headings(1) }}
