@@ -2,7 +2,7 @@
 
 A battle is fought over a sequence of **Rounds**. Every Round runs through the
 same fixed list of **Phases**, in the same order, for every Army on the table.
-Nobody takes "their turn" — both sides act inside each Phase, and the Phase
+Nobody takes “their turn” — both sides act inside each Phase, and the Phase
 order is what decides who shoots before who moves.
 
 Play Rounds until the scenario's end condition is met.

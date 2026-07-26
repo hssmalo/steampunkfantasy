@@ -188,8 +188,29 @@ A Rendering covering all Units, Models, and Equipment of one Race. Built from a
 Race's `RaceConfig` (unresolved, for now).
 
 **Rulebook**:
-A Rendering of the general, army-agnostic rules. Built from the `rules/*.toml`
-configs.
+A Rendering of the general, army-agnostic rules. Built from a **Rulebook
+Index** — an ordered, authored list of Sections — not from whatever happens to
+sit in `rules/` (ADR 0018). Its sources are the rules TOML files and free-text
+Markdown files beside them.
+
+**Rulebook Index**:
+The authored TOML file listing, in order, the Sections a Rulebook contains
+(`rules/rulebook.toml`). The editorial decision of what the rulebook *is*, kept
+beside the rules as game data rather than in developer config.
+_Avoid_: manifest, table of contents (the TOC is generated *from* the index)
+
+**Section**:
+One entry in a Rulebook Index: a source file, the Section Kind that reads it,
+and the title it appears under. The title comes from the Index, never from the
+source, and the source's own headings nest beneath it.
+_Avoid_: chapter, part
+
+**Section Kind**:
+The shape of a Section's source, declared by the Section and bound to one parser
+and one template partial per family (`markdown`, and in future `specials`,
+`tokens`, `hexes`). The extension point for a new rules file: adding one is a
+registration, never a change to the pipeline.
+_Avoid_: type, format (Format is the output syntax)
 
 ### Generated assets (AI-authored color & atmosphere)
 
