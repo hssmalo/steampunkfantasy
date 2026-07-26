@@ -16,7 +16,7 @@
 \BLOCK{if group.title}
 \subsection{\VAR{group.title | latex_escape}}
 \BLOCK{endif}
-\BLOCK{set heading = "\\subsubsection" if group.title else "\\subsection"}
+\BLOCK{set heading = "\\subsubsection" if group.nested else "\\subsection"}
 \BLOCK{for rule in group.rules}
 \VAR{heading}{\VAR{rule.name | latex_escape}\BLOCK{if rule.short} \VAR{rule.short | latex_escape}\BLOCK{endif}}
 \BLOCK{if rule.body}
@@ -28,7 +28,7 @@
 \BLOCK{if rule.example}
 \textbf{Example:} \VAR{rule.example | md_to_latex}
 \BLOCK{endif}
-\BLOCK{if rule.token or rule.phases or rule.remove or rule.variables}
+\BLOCK{if rule.has_facts}
 \begin{itemize}
 \BLOCK{if rule.token}
   \item \textbf{Places:} \VAR{rule.token | latex_escape}

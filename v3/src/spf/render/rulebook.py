@@ -180,18 +180,32 @@ class RuleEntry:
     versions: list[tuple[str, str]]
     """(version, rule text) — a rule that reads differently per damage type."""
 
+    @property
+    def has_facts(self) -> bool:
+        """Whether the rule has anything for the facts list under its prose."""
+        return bool(self.token or self.phases or self.remove or self.variables)
+
 
 @dataclass(frozen=True)
 class RuleGroup:
     """A titled run of rules: a Specials group, or a whole Tokens file.
 
-    `title` is None when the source has no grouping of its own, which is what
-    the partials key their heading depth off — a group heading is a level the
-    reader only pays for when it carries information.
+    `title` is None when the source has no grouping of its own — a group
+    heading is a level the reader only pays for when it carries information.
     """
 
     title: str | None
     rules: list[RuleEntry]
+
+    @property
+    def nested(self) -> bool:
+        r"""Whether this group's rules sit one heading level deeper.
+
+        The decision is the view-model's, so both families make it the same
+        way; mapping the depth to `####` or `\\subsubsection` is each family's
+        own business, and stays in its partial (ADR 0005).
+        """
+        return self.title is not None
 
 
 @dataclass(frozen=True)
@@ -221,7 +235,7 @@ def _short(name: str, short: str | None) -> str | None:
     return None if not short or short == name else short
 
 
-def _token_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
+def _effect_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
     """Build the entry for a Token or Hex rule — structurally the same shape."""
     return RuleEntry(
         name=config.name,
@@ -240,7 +254,7 @@ def _token_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
 def parse_tokens(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Token names no other rule
     """Read `tokens.toml` as one untitled group of rules, in file order."""
     config = rules.get_tokens(path)
-    entries = [_token_entry(token) for token in config.tokens.values()]
+    entries = [_effect_entry(token) for token in config.tokens.values()]
     return RulesBody(explanation=None, groups=[RuleGroup(title=None, rules=entries)])
 
 
@@ -250,7 +264,7 @@ TOKENS = register_kind(SectionKind(name="tokens", parse=parse_tokens))
 def parse_hexes(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Hex names no other rule
     """Read `hexes.toml`: its document-level prose, then one untitled group."""
     config = rules.get_hexes(path)
-    entries = [_token_entry(hex_rule) for hex_rule in config.hexes.values()]
+    entries = [_effect_entry(hex_rule) for hex_rule in config.hexes.values()]
     return RulesBody(
         explanation=config.explanation,
         groups=[RuleGroup(title=None, rules=entries)],
@@ -260,23 +274,26 @@ def parse_hexes(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001
 HEXES = register_kind(SectionKind(name="hexes", parse=parse_hexes))
 
 
-def _special_entry(
+def _resolve_token(
     key: str, config: SpecialRuleConfig, context: RulesContext, source: Path
-) -> RuleEntry:
-    """Build the entry for one Special, resolving the Token it places.
+) -> str | None:
+    """Resolve the Token a Special places, to the display name the reader sees.
 
-    Resolution is strict: an unknown Token names the offending rule and its
+    Strict: an unknown Token fails the build, naming the offending rule and its
     file, because a reference that quietly renders as nothing is how
     `token = "minor acid"` survived in the data for as long as it did.
     """
-    token = None
-    if config.token is not None:
-        try:
-            token = context.token_name(config.token)
-        except ValueError as err:
-            msg = f"{source.name}: rule {key!r} references {err}"
-            raise ValueError(msg) from None
+    if config.token is None:
+        return None
+    try:
+        return context.token_name(config.token)
+    except ValueError as err:
+        msg = f"{source.name}: rule {key!r} references {err}"
+        raise ValueError(msg) from None
 
+
+def _special_entry(config: SpecialRuleConfig, token: str | None) -> RuleEntry:
+    """Build the entry for one Special, given its already-resolved Token."""
     return RuleEntry(
         name=config.name,
         short=_short(config.name, config.short),
@@ -303,7 +320,7 @@ def parse_specials(path: Path, context: RulesContext) -> RulesBody:
         RuleGroup(
             title=title,
             rules=[
-                _special_entry(key, special, context, path)
+                _special_entry(special, _resolve_token(key, special, context, path))
                 for key, special in specials.items()
             ],
         )

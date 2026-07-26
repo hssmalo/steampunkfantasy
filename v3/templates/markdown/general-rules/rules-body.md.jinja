@@ -20,7 +20,7 @@
 {%- if group.title %}
 ### {{ group.title }}
 {% endif -%}
-{%- set hashes = "####" if group.title else "###" -%}
+{%- set hashes = "####" if group.nested else "###" -%}
 
 {%- for rule in group.rules %}
 {{ hashes }} {{ rule.name }}{% if rule.short %} {{ rule.short }}{% endif %}
@@ -34,7 +34,7 @@
 **Example:** {{ rule.example }}
 {% endif -%}
 
-{%- if rule.token or rule.phases or rule.remove or rule.variables %}
+{%- if rule.has_facts %}
 {% if rule.token %}- **Places:** {{ rule.token }}
 {% endif -%}
 {%- if rule.phases %}- **Phases:** {{ rule.phases | join(", ") }}
