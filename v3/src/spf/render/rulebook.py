@@ -211,11 +211,21 @@ def _variables(
     return [(name, constraint_text(spec)) for name, spec in (variables or {}).items()]
 
 
+def _short(name: str, short: str | None) -> str | None:
+    """Return the heading's suffix: `short`, unless it is the name over again.
+
+    `short` is the compact form the Army Reference prints in place of the full
+    rule; some rules simply repeat their name there, and a Rulebook heading
+    reading "Fumble Fumble" is noise the reader has to look past.
+    """
+    return None if not short or short == name else short
+
+
 def _token_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
     """Build the entry for a Token or Hex rule — structurally the same shape."""
     return RuleEntry(
         name=config.name,
-        short=config.short,
+        short=_short(config.name, config.short),
         body=config.effect,
         description=None,
         example=None,
@@ -269,7 +279,7 @@ def _special_entry(
 
     return RuleEntry(
         name=config.name,
-        short=config.short,
+        short=_short(config.name, config.short),
         body=config.explanation,
         description=config.description,
         example=config.example,

@@ -411,6 +411,22 @@ def test_specials_kind_resolves_a_token_to_its_display_name(tmp_path: Path) -> N
     assert cunning.description == "Any cunning way to take out armoured units."
 
 
+def test_specials_kind_drops_a_short_that_only_repeats_the_name(
+    tmp_path: Path,
+) -> None:
+    # `short` is the Army Reference's compact override; when it is just the
+    # name again, the Rulebook heading would read "Fumble Fumble".
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    (fumble,) = body.groups[2].rules
+    assert fumble.name == "Fumble"
+    assert fumble.short is None
+
+
 def test_specials_kind_carries_the_versions_map(tmp_path: Path) -> None:
     rules_dir = _rules_dir(
         tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
