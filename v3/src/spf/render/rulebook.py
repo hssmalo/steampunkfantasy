@@ -21,10 +21,53 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
+from spf import rules
 from spf.schemas.rulebook import RulebookConfig
 
 _H1 = re.compile(r"^#\s")
 _NON_SLUG = re.compile(r"[^a-z0-9]+")
+
+TOKENS_SOURCE = "tokens.toml"
+
+
+class RulesContext:
+    """Access to sibling rules files, for cross-referencing parsers.
+
+    A Special names the Token it places, but the Index decides only what is
+    *rendered* — a Rulebook may resolve that reference without a Tokens Section
+    in it at all. So the context loads what a parser asks for, from beside the
+    Index, rather than from what the Index happens to name.
+
+    Loading is lazy and cached: a Rulebook with no cross-references touches no
+    file its Index did not name.
+    """
+
+    def __init__(self, rules_dir: Path) -> None:
+        """Resolve sibling rules files against `rules_dir`."""
+        self.rules_dir = rules_dir
+        self._tokens: dict[str, str] | None = None
+
+    def _token_names(self) -> dict[str, str]:
+        """Token key -> display name, read once from `tokens.toml`."""
+        if self._tokens is None:
+            config = rules.get_tokens(self.rules_dir / TOKENS_SOURCE)
+            self._tokens = {key: token.name for key, token in config.tokens.items()}
+        return self._tokens
+
+    def token_name(self, key: str) -> str:
+        """Display name of Token `key`.
+
+        Raises `ValueError` listing the known keys when there is no such Token:
+        a reference that silently renders as nothing is a rule the reader never
+        learns about.
+        """
+        names = self._token_names()
+        try:
+            return names[key]
+        except KeyError:
+            known = ", ".join(names) or "(none)"
+            msg = f"unknown token {key!r}; known tokens: {known}"
+            raise ValueError(msg) from None
 
 
 @dataclass(frozen=True)

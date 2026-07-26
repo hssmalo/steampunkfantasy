@@ -16,6 +16,7 @@ from spf.render.rulebook import (
     KINDS,
     MARKDOWN,
     Rulebook,
+    RulesContext,
     Section,
     SectionKind,
     build_rulebook,
@@ -115,6 +116,61 @@ def test_unknown_kind_lists_the_known_kinds() -> None:
         ValueError, match=r"Unknown kind 'orders'; known kinds: .*markdown"
     ):
         get_kind("orders")
+
+
+# --- RulesContext -----------------------------------------------------------
+
+TOKENS_SOURCE = """\
+[tokens]
+
+[tokens.minor_acid]
+name = "Minor Acid"
+effect = "Roll a die."
+
+[tokens.poison]
+name = "Poison"
+short = "[N]"
+effect = "Roll a d{N}."
+"""
+
+
+def test_rules_context_resolves_a_token_to_its_display_name(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(tmp_path, {"tokens.toml": TOKENS_SOURCE})
+
+    assert RulesContext(rules_dir).token_name("minor_acid") == "Minor Acid"
+
+
+def test_rules_context_rejects_an_unknown_token_listing_the_known_ones(
+    tmp_path: Path,
+) -> None:
+    rules_dir = _rules_dir(tmp_path, {"tokens.toml": TOKENS_SOURCE})
+
+    with pytest.raises(ValueError, match=r"unknown token 'minor acid'") as excinfo:
+        RulesContext(rules_dir).token_name("minor acid")
+
+    message = str(excinfo.value)
+    assert "known tokens:" in message
+    assert "minor_acid" in message
+    assert "poison" in message
+
+
+def test_rules_context_touches_no_file_until_asked(tmp_path: Path) -> None:
+    # The Index controls what is *rendered*; a Rulebook with no cross-reference
+    # must not need a tokens file to exist at all.
+    context = RulesContext(tmp_path)
+
+    with pytest.raises(FileNotFoundError):
+        context.token_name("minor_acid")
+
+
+def test_rules_context_loads_the_tokens_file_once(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(tmp_path, {"tokens.toml": TOKENS_SOURCE})
+    context = RulesContext(rules_dir)
+
+    assert context.token_name("poison") == "Poison"
+    (rules_dir / "tokens.toml").unlink()
+
+    assert context.token_name("minor_acid") == "Minor Acid"
 
 
 # --- The markdown kind's parser ---------------------------------------------
