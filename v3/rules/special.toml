@@ -24,7 +24,7 @@ explanation = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to
 name = "Assault minor acid"
 short = "[1 for {N}]"
 explanation = "Targets gets one minor token for each {N} hits."
-token = "minor acid"
+token = "minor_acid"
 
 [assault.minor_acid.variables]
 N = { type = "int", min = 1, max = 4 }

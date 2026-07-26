@@ -13,16 +13,25 @@ from spf.render import render
 from spf.render.formats import get_format
 from spf.render.products import PRODUCTS
 from spf.render.rulebook import (
+    HEXES,
     KINDS,
     MARKDOWN,
+    SPECIALS,
+    TOKENS,
     Rulebook,
+    RuleEntry,
+    RuleGroup,
+    RulesBody,
     RulesContext,
     Section,
     SectionKind,
     build_rulebook,
     constraint_text,
     get_kind,
+    parse_hexes,
     parse_markdown,
+    parse_specials,
+    parse_tokens,
     register_kind,
 )
 from spf.rules import get_rulebook
@@ -218,6 +227,231 @@ def test_markdown_kind_keeps_a_hash_that_is_not_a_heading(tmp_path: Path) -> Non
     source.write_text("Roll #1 on the table.\n", encoding="utf-8")
 
     assert parse_markdown(source, RulesContext(tmp_path)) == "Roll #1 on the table.\n"
+
+
+# --- The tokens kind's parser -----------------------------------------------
+
+FULL_TOKENS_SOURCE = """\
+[tokens]
+
+[tokens.poison]
+name = "Poison"
+short = "[N]"
+phases = ["Agony 3"]
+remove = "When it kills a model"
+effect = \"\"\"Roll a d{N}.
+- Ignore armour
+- Apply the damage
+\"\"\"
+
+[tokens.poison.variables]
+N = { type = "int", values = [2, 4, 6] }
+
+[tokens.terror]
+name = "Terror"
+phases = ["Agony 0"]
+effect = "Acts as if the unit has Terror."
+"""
+
+
+def test_tokens_kind_is_registered() -> None:
+    assert KINDS["tokens"] is TOKENS
+    assert TOKENS.parse is parse_tokens
+
+
+def test_tokens_kind_yields_one_untitled_group_in_file_order(tmp_path: Path) -> None:
+    source = tmp_path / "tokens.toml"
+    source.write_text(FULL_TOKENS_SOURCE, encoding="utf-8")
+
+    body = parse_tokens(source, RulesContext(tmp_path))
+
+    assert isinstance(body, RulesBody)
+    assert body.explanation is None
+    (group,) = body.groups
+    assert isinstance(group, RuleGroup)
+    assert group.title is None
+    assert [rule.name for rule in group.rules] == ["Poison", "Terror"]
+
+
+def test_tokens_kind_carries_every_field_across(tmp_path: Path) -> None:
+    source = tmp_path / "tokens.toml"
+    source.write_text(FULL_TOKENS_SOURCE, encoding="utf-8")
+
+    (group,) = parse_tokens(source, RulesContext(tmp_path)).groups
+    poison, terror = group.rules
+
+    assert isinstance(poison, RuleEntry)
+    assert poison.short == "[N]"
+    assert poison.phases == ["Agony 3"]
+    assert poison.remove == "When it kills a model"
+    assert poison.variables == [("N", "one of 2, 4, 6")]
+    # The effect is Markdown and stays Markdown: its bullets are a real list.
+    assert poison.body.splitlines()[1] == "- Ignore armour"
+    assert poison.token is None
+    assert poison.versions == []
+    assert terror.short is None
+    assert terror.remove is None
+    assert terror.variables == []
+
+
+# --- The hexes kind's parser ------------------------------------------------
+
+HEXES_SOURCE = """\
+explanation = "Hex effects trigger during movement."
+
+[hexes]
+
+[hexes.fog]
+name = "Fog"
+effect = "Blocks line of sight."
+remove = "Remove one Fog per hex in the aftermath phase"
+"""
+
+
+def test_hexes_kind_is_registered() -> None:
+    assert KINDS["hexes"] is HEXES
+    assert HEXES.parse is parse_hexes
+
+
+def test_hexes_kind_keeps_the_document_level_explanation(tmp_path: Path) -> None:
+    # The only one of the three sources with prose above its table.
+    source = tmp_path / "hexes.toml"
+    source.write_text(HEXES_SOURCE, encoding="utf-8")
+
+    body = parse_hexes(source, RulesContext(tmp_path))
+
+    assert body.explanation == "Hex effects trigger during movement."
+    (group,) = body.groups
+    assert group.title is None
+    (fog,) = group.rules
+    assert fog.name == "Fog"
+    assert fog.body == "Blocks line of sight."
+    assert fog.remove == "Remove one Fog per hex in the aftermath phase"
+
+
+# --- The specials kind's parser ---------------------------------------------
+
+SPECIALS_SOURCE = """\
+[assault]
+
+[assault.minor_acid]
+name = "Assault Minor Acid"
+short = "[1 for {N}]"
+explanation = "Targets get one minor acid token for each {N} hits."
+token = "minor_acid"
+
+[assault.minor_acid.variables]
+N = { type = "int", min = 1, max = 4 }
+
+[assault.cunning_assault]
+name = "Cunning Assault"
+short = "[{N}]"
+explanation = "Add +1 to all future damage tokens."
+example = "Hit four times and you add two tokens."
+description = "Any cunning way to take out armoured units."
+
+[unit]
+
+[unit.resistance]
+name = "Resistance"
+short = "{version}[{N}]"
+explanation = "Improved resilience versus {version} damage."
+
+[unit.resistance.versions]
+regular = "Regular damage is reduced by {N}."
+psychic = "Psychic damage is reduced by {N}."
+
+[weapon]
+
+[weapon.fumble]
+name = "Fumble"
+short = "Fumble"
+explanation = "A natural 1 to hit is a fumble."
+"""
+
+
+def test_specials_kind_is_registered() -> None:
+    assert KINDS["specials"] is SPECIALS
+    assert SPECIALS.parse is parse_specials
+
+
+def test_specials_kind_yields_one_titled_group_per_schema_group(
+    tmp_path: Path,
+) -> None:
+    # Where a rule applies is information, so the groups stay groups rather
+    # than being flattened into one alphabetical list.
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    assert body.explanation is None
+    assert [group.title for group in body.groups] == ["Assault", "Unit", "Weapon"]
+    assault, unit, weapon = body.groups
+    assert [rule.name for rule in assault.rules] == [
+        "Assault Minor Acid",
+        "Cunning Assault",
+    ]
+    assert [rule.name for rule in unit.rules] == ["Resistance"]
+    assert [rule.name for rule in weapon.rules] == ["Fumble"]
+
+
+def test_specials_kind_resolves_a_token_to_its_display_name(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    acid, cunning = body.groups[0].rules
+    assert acid.token == "Minor Acid"  # noqa: S105  a game Token's name, not a credential
+    assert cunning.token is None
+    assert cunning.example == "Hit four times and you add two tokens."
+    assert cunning.description == "Any cunning way to take out armoured units."
+
+
+def test_specials_kind_carries_the_versions_map(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    (resistance,) = body.groups[1].rules
+    assert resistance.versions == [
+        ("regular", "Regular damage is reduced by {N}."),
+        ("psychic", "Psychic damage is reduced by {N}."),
+    ]
+
+
+def test_specials_kind_rejects_an_unresolvable_token(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(
+        tmp_path,
+        {
+            "special.toml": SPECIALS_SOURCE.replace('"minor_acid"', '"minor acid"'),
+            "tokens.toml": TOKENS_SOURCE,
+        },
+    )
+
+    with pytest.raises(ValueError, match=r"unknown token 'minor acid'") as excinfo:
+        parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    message = str(excinfo.value)
+    assert "special.toml" in message
+    assert "'minor_acid'" in message  # the rule that carries the bad reference
+    assert "known tokens:" in message
+
+
+def test_specials_kind_parses_the_committed_file() -> None:
+    # The real data: strict resolution means every committed `token =` has to
+    # name a Token that actually exists.
+    body = parse_specials(
+        config.paths.rules / "special.toml", RulesContext(config.paths.rules)
+    )
+
+    tokens = {rule.token for group in body.groups for rule in group.rules if rule.token}
+    assert tokens == {"Minor Acid", "Poison"}
 
 
 # --- build_rulebook ---------------------------------------------------------

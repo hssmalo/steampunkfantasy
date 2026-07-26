@@ -23,7 +23,13 @@ from pathlib import Path
 
 from spf import rules
 from spf.schemas.rulebook import RulebookConfig
-from spf.schemas.rules import IntVariableConfig, StringVariableConfig
+from spf.schemas.rules import (
+    HexRuleConfig,
+    IntVariableConfig,
+    SpecialRuleConfig,
+    StringVariableConfig,
+    TokenRuleConfig,
+)
 
 _H1 = re.compile(r"^#\s")
 _NON_SLUG = re.compile(r"[^a-z0-9]+")
@@ -138,6 +144,169 @@ def parse_markdown(path: Path, context: RulesContext) -> str:  # noqa: ARG001  e
 
 
 MARKDOWN = register_kind(SectionKind(name="markdown", parse=parse_markdown))
+
+
+@dataclass(frozen=True)
+class RuleEntry:
+    """One Special, Token, or Hex rule, as the Rulebook shows it.
+
+    Every field the three schemas hold, flattened into one shape: the Army
+    Reference carries a Special's `short` override text, while the *full* rule
+    text belongs here (CONTEXT.md). A field the source leaves out is `None` or
+    empty, and the partials emit nothing for it.
+    """
+
+    name: str
+    short: str | None
+    body: str
+    """The rule itself — a Special's `explanation`, a Token's or Hex's
+    `effect`. Markdown."""
+
+    description: str | None
+    """Markdown: what the rule represents, rather than what it does."""
+
+    example: str | None
+    """Markdown."""
+
+    phases: list[str]
+    remove: str | None
+    token: str | None
+    """The **display name** of the Token this rule places, already resolved
+    from the source's key (decision 17), or None."""
+
+    variables: list[tuple[str, str]]
+    """(name, constraint phrase), in the order the source declares them."""
+
+    versions: list[tuple[str, str]]
+    """(version, rule text) — a rule that reads differently per damage type."""
+
+
+@dataclass(frozen=True)
+class RuleGroup:
+    """A titled run of rules: a Specials group, or a whole Tokens file.
+
+    `title` is None when the source has no grouping of its own, which is what
+    the partials key their heading depth off — a group heading is a level the
+    reader only pays for when it carries information.
+    """
+
+    title: str | None
+    rules: list[RuleEntry]
+
+
+@dataclass(frozen=True)
+class RulesBody:
+    """The body of a structured Section: optional prose plus grouped rules."""
+
+    explanation: str | None
+    """Markdown prose above the rules; only `hexes.toml` has any."""
+
+    groups: list[RuleGroup]
+
+
+def _variables(
+    variables: dict[str, IntVariableConfig | StringVariableConfig] | None,
+) -> list[tuple[str, str]]:
+    """Render a rule's variable constraints as (name, phrase) pairs."""
+    return [(name, constraint_text(spec)) for name, spec in (variables or {}).items()]
+
+
+def _token_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
+    """Build the entry for a Token or Hex rule — structurally the same shape."""
+    return RuleEntry(
+        name=config.name,
+        short=config.short,
+        body=config.effect,
+        description=None,
+        example=None,
+        phases=list(config.phases),
+        remove=config.remove,
+        token=None,
+        variables=_variables(config.variables),
+        versions=[],
+    )
+
+
+def parse_tokens(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Token names no other rule
+    """Read `tokens.toml` as one untitled group of rules, in file order."""
+    config = rules.get_tokens(path)
+    entries = [_token_entry(token) for token in config.tokens.values()]
+    return RulesBody(explanation=None, groups=[RuleGroup(title=None, rules=entries)])
+
+
+TOKENS = register_kind(SectionKind(name="tokens", parse=parse_tokens))
+
+
+def parse_hexes(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Hex names no other rule
+    """Read `hexes.toml`: its document-level prose, then one untitled group."""
+    config = rules.get_hexes(path)
+    entries = [_token_entry(hex_rule) for hex_rule in config.hexes.values()]
+    return RulesBody(
+        explanation=config.explanation,
+        groups=[RuleGroup(title=None, rules=entries)],
+    )
+
+
+HEXES = register_kind(SectionKind(name="hexes", parse=parse_hexes))
+
+
+def _special_entry(
+    key: str, config: SpecialRuleConfig, context: RulesContext, source: Path
+) -> RuleEntry:
+    """Build the entry for one Special, resolving the Token it places.
+
+    Resolution is strict: an unknown Token names the offending rule and its
+    file, because a reference that quietly renders as nothing is how
+    `token = "minor acid"` survived in the data for as long as it did.
+    """
+    token = None
+    if config.token is not None:
+        try:
+            token = context.token_name(config.token)
+        except ValueError as err:
+            msg = f"{source.name}: rule {key!r} references {err}"
+            raise ValueError(msg) from None
+
+    return RuleEntry(
+        name=config.name,
+        short=config.short,
+        body=config.explanation,
+        description=config.description,
+        example=config.example,
+        phases=[],
+        remove=None,
+        token=token,
+        variables=_variables(config.variables),
+        versions=list((config.versions or {}).items()),
+    )
+
+
+def parse_specials(path: Path, context: RulesContext) -> RulesBody:
+    """Read `special.toml` as one titled group per group in the schema.
+
+    Where a Special applies — in an Assault, on a Unit, on a Weapon — is
+    information the reader needs, so the groups stay groups rather than being
+    flattened into one alphabetical list (decision 15).
+    """
+    config = rules.get_specials(path)
+    groups = [
+        RuleGroup(
+            title=title,
+            rules=[
+                _special_entry(key, special, context, path)
+                for key, special in specials.items()
+            ],
+        )
+        for title, specials in (
+            ("Assault", config.assault),
+            ("Unit", config.unit),
+            ("Weapon", config.weapon),
+        )
+    ]
+    return RulesBody(explanation=None, groups=groups)
+
+
+SPECIALS = register_kind(SectionKind(name="specials", parse=parse_specials))
 
 
 @dataclass(frozen=True)
