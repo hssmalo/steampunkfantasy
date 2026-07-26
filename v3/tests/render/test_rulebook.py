@@ -1,10 +1,17 @@
 """Tests for the Rulebook product: index, kind registry, view-model, CLI."""
 
+import shutil
 from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
 
+from spf.config import config
+from spf.frontends.cli.render import GENERAL_RULES, RenderOpts, render_general_rules
+from spf.frontends.cli.rules import list_rulebook
+from spf.render import render
+from spf.render.formats import get_format
+from spf.render.products import PRODUCTS
 from spf.render.rulebook import (
     KINDS,
     MARKDOWN,
@@ -18,6 +25,9 @@ from spf.render.rulebook import (
 )
 from spf.rules import get_rulebook
 from spf.schemas.rulebook import RulebookConfig, SectionConfig
+from tests.conftest import unwrapped
+
+ENGINE = config.render.latex.engine
 
 VALID_INDEX = """\
 title = "Test Rulebook"
@@ -142,6 +152,7 @@ def _section(
 
 
 def _rules_dir(tmp_path: Path, **files: str) -> Path:
+    tmp_path.mkdir(parents=True, exist_ok=True)
     for name, text in files.items():
         (tmp_path / name.replace("_", ".")).write_text(text, encoding="utf-8")
     return tmp_path
@@ -221,3 +232,178 @@ def test_build_rulebook_accepts_an_empty_index(tmp_path: Path) -> None:
     rulebook = build_rulebook(_index(), rules_dir=tmp_path)
 
     assert rulebook.sections == []
+
+
+# --- End-to-end rendering against the real templates ------------------------
+
+_SOURCE = """\
+# Dropped by the parser
+
+Intro prose with **bold**.
+
+## A Subheading
+
+- one
+- two
+"""
+
+
+@pytest.fixture
+def rulebook(tmp_path: Path) -> Rulebook:
+    rules_dir = _rules_dir(tmp_path / "rules", round_md=_SOURCE)
+    return build_rulebook(_index(_section()), rules_dir=rules_dir)
+
+
+def test_render_markdown_links_the_contents_to_an_anchor(
+    tmp_path: Path, rulebook: Rulebook
+) -> None:
+    out = render(
+        GENERAL_RULES,
+        rulebook,
+        fmt=get_format("markdown"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert out == tmp_path / "general-rules" / "rulebook.md"
+    assert "# Test Rulebook" in text
+    assert "- [The Round](#the-round)" in text
+    # `md_to_html` emits no heading ids, so the anchor has to be explicit.
+    assert '<a id="the-round"></a>' in text
+    assert "## The Round" in text
+
+
+def test_render_markdown_shifts_source_headings_below_the_section(
+    tmp_path: Path, rulebook: Rulebook
+) -> None:
+    out = render(
+        GENERAL_RULES,
+        rulebook,
+        fmt=get_format("markdown"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "### A Subheading" in text
+    assert "\n## A Subheading" not in text
+    assert "Dropped by the parser" not in text
+
+
+def test_render_html_resolves_the_contents_link(
+    tmp_path: Path, rulebook: Rulebook
+) -> None:
+    out = render(
+        GENERAL_RULES,
+        rulebook,
+        fmt=get_format("html"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+
+    html = out.read_text(encoding="utf-8")
+    assert 'href="#the-round"' in html
+    assert 'id="the-round"' in html
+
+
+def test_render_latex_has_furniture_and_converted_body(
+    tmp_path: Path, rulebook: Rulebook
+) -> None:
+    out = render(
+        GENERAL_RULES,
+        rulebook,
+        fmt=get_format("latex"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\title{Test Rulebook}" in text
+    assert r"\tableofcontents" in text
+    assert r"\section{The Round}" in text
+    assert r"\subsection{A Subheading}" in text
+    assert r"\textbf{bold}" in text
+    assert r"\begin{itemize}" in text
+    assert "Dropped by the parser" not in text
+
+
+@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
+def test_render_the_committed_rulebook_compiles_to_pdf(tmp_path: Path) -> None:
+    # The real index over the real sources: the check that authored rules prose
+    # actually survives the converter and the engine.
+    real = build_rulebook(get_rulebook(), rules_dir=config.paths.rules)
+
+    out = render(
+        GENERAL_RULES,
+        real,
+        fmt=get_format("pdf"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+
+    assert out.stat().st_size > 0
+
+
+# --- The CLI ----------------------------------------------------------------
+
+
+def test_cli_writes_the_rulebook(tmp_path: Path) -> None:
+    out = tmp_path / "rulebook.md"
+
+    render_general_rules(opts=RenderOpts(format="markdown", out=out))
+
+    assert "SteamPunkFantasy Rulebook" in out.read_text(encoding="utf-8")
+
+
+def test_cli_honours_an_alternate_index(tmp_path: Path) -> None:
+    _rules_dir(tmp_path, round_md=_SOURCE)
+    index = tmp_path / "alternate.toml"
+    index.write_text(VALID_INDEX, encoding="utf-8")
+    out = tmp_path / "rulebook.md"
+
+    render_general_rules(index=index, opts=RenderOpts(format="markdown", out=out))
+
+    assert "# Test Rulebook" in out.read_text(encoding="utf-8")
+
+
+def test_cli_reports_a_missing_index_on_stderr(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    with pytest.raises(SystemExit) as excinfo:
+        render_general_rules(index=tmp_path / "absent.toml")
+
+    assert excinfo.value.code == 1
+    assert "Error:" in unwrapped(capsys.readouterr().err)
+
+
+def test_cli_reports_an_unknown_kind_on_stderr(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    index = tmp_path / "bad.toml"
+    index.write_text(
+        'title = "Bad"\n\n[[sections]]\nkind = "orders"\n'
+        'source = "round.md"\ntitle = "Orders"\n',
+        encoding="utf-8",
+    )
+
+    with pytest.raises(SystemExit) as excinfo:
+        render_general_rules(index=index)
+
+    assert excinfo.value.code == 1
+    assert "Unknown kind 'orders'" in unwrapped(capsys.readouterr().err)
+
+
+def test_general_rules_product_is_registered() -> None:
+    assert PRODUCTS["general-rules"] is GENERAL_RULES
+
+
+def test_rules_rulebook_lists_the_committed_sections(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # What `just validate` runs: resolving the Index is what validates it.
+    list_rulebook()
+
+    out = unwrapped(capsys.readouterr().out)
+    assert "SteamPunkFantasy Rulebook" in out
+    assert "1. The Round (markdown)" in out

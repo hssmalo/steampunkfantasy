@@ -1,0 +1,24 @@
+{#
+  The Rulebook, Markdown family. Stays dumb (ADR 0005): it lays out the title,
+  the contents list, and one heading per Section, then defers the Section's own
+  shape to the partial named by its Kind.
+
+  The explicit `<a id>` is required, not decorative: `md_to_html` does not
+  generate heading ids, so without it every contents link breaks in the derived
+  HTML. Raw HTML passes through CommonMark untouched and is harmless in a plain
+  `.md`.
+#}
+# {{ source.title }}
+
+## Contents
+
+{% for section in source.sections -%}
+- [{{ section.title }}](#{{ section.anchor }})
+{% endfor %}
+{% for section in source.sections %}
+<a id="{{ section.anchor }}"></a>
+
+## {{ section.title }}
+
+{% include "general-rules/" ~ section.kind ~ ".md.jinja" %}
+{% endfor %}

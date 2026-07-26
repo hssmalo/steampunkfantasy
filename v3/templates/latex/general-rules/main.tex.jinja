@@ -1,0 +1,25 @@
+% The Rulebook, LaTeX family. Stays dumb (ADR 0005): title block, table of
+% contents, then one `\section` per Section, deferring each Section's shape to
+% the partial named by its Kind.
+%
+% `fontenc` with T1 is not optional here: rules prose carries em dashes and
+% other non-ASCII punctuation, which the default font encoding cannot set.
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\title{\VAR{source.title | latex_escape}}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\BLOCK{for section in source.sections}
+\section{\VAR{section.title | latex_escape}}
+\BLOCK{include "general-rules/" ~ section.kind ~ ".tex.jinja"}
+\newpage
+\BLOCK{endfor}
+\end{document}
