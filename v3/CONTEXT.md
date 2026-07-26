@@ -95,6 +95,11 @@ an exact value, a range, or an "at least" threshold.
 **Special** (special rule):
 A named rule that modifies a Unit, Model, Equipment, Assault, or Range beyond
 the base stats. Defined in `rules/special.toml` and referenced by name.
+
+A Special may name the Token it places (`token = "minor_acid"`). The key is a
+Token key in `rules/tokens.toml`, and the Rulebook resolves it to that Token's
+display name — strictly, so a reference to a Token that does not exist fails the
+build rather than rendering as nothing.
 _Avoid_: ability, trait, perk
 
 **Spawn**:
@@ -212,9 +217,11 @@ _Avoid_: chapter, part
 
 **Section Kind**:
 The shape of a Section's source, declared by the Section and bound to one parser
-and one template partial per family (`markdown`, and in future `specials`,
-`tokens`, `hexes`). The extension point for a new rules file: adding one is a
-registration, never a change to the pipeline.
+and one template partial per family (`markdown`, `specials`, `tokens`, `hexes`).
+The extension point for a new rules file: adding one is a registration, never a
+change to the pipeline. A parser is also handed a shared context over the
+sibling rules files, so a Kind can resolve cross-references (a Special's Token)
+whether or not the Index renders what it points at.
 _Avoid_: type, format (Format is the output syntax)
 
 ### Generated assets (AI-authored color & atmosphere)
