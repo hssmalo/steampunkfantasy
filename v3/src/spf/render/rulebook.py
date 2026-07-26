@@ -23,6 +23,7 @@ from pathlib import Path
 
 from spf import rules
 from spf.schemas.rulebook import RulebookConfig
+from spf.schemas.rules import IntVariableConfig, StringVariableConfig
 
 _H1 = re.compile(r"^#\s")
 _NON_SLUG = re.compile(r"[^a-z0-9]+")
@@ -75,11 +76,11 @@ class SectionKind:
     """A registered kind of Rulebook Section: how its source is read."""
 
     name: str
-    parse: Callable[[Path], object]
-    """Source path -> the Section's body, in whatever shape the Kind's partials
-    expect. Plan 2 widens this to also take a shared rules context, so that a
-    Kind can resolve cross-references; keeping the type here makes that a
-    one-line change."""
+    parse: Callable[[Path, RulesContext], object]
+    """Source path and the build's shared `RulesContext` -> the Section's body,
+    in whatever shape the Kind's partials expect. Every parser is handed the
+    context whether or not it cross-references anything; the context is lazy,
+    so ignoring it costs nothing."""
 
 
 KINDS: dict[str, SectionKind] = {}
@@ -101,7 +102,30 @@ def get_kind(name: str) -> SectionKind:
         raise ValueError(msg) from None
 
 
-def parse_markdown(path: Path) -> str:
+def constraint_text(variable: IntVariableConfig | StringVariableConfig) -> str:
+    """Describe what `variable` may be, as a reader-facing phrase.
+
+    The schema states a constraint as bounds or an enumeration; a rulebook
+    states it as English. Enumerated values win over bounds when both are
+    given: the list is the stricter, and more useful, statement.
+    """
+    if variable.values:
+        listed = ", ".join(str(value) for value in variable.values)
+        return f"one of {listed}"
+    if not isinstance(variable, IntVariableConfig):
+        return "text"
+    match variable.min, variable.max:
+        case None, None:
+            return "integer"
+        case low, None:
+            return f"integer, at least {low}"
+        case None, high:
+            return f"integer, at most {high}"
+        case low, high:
+            return f"integer, {low}-{high}"
+
+
+def parse_markdown(path: Path, context: RulesContext) -> str:  # noqa: ARG001  every parser takes the context; free text cross-references nothing
     """Read a free-text Markdown Section, dropping its H1 lines.
 
     A Section's heading always comes from the Index's `title`, so an H1 in the
@@ -169,6 +193,7 @@ def build_rulebook(index: RulebookConfig, *, rules_dir: Path) -> Rulebook:
     """
     sections: list[Section] = []
     taken: set[str] = set()
+    context = RulesContext(rules_dir)
     for position, config in enumerate(index.sections, start=1):
         where = f"Rulebook Index section {position}"
         try:
@@ -187,7 +212,7 @@ def build_rulebook(index: RulebookConfig, *, rules_dir: Path) -> Rulebook:
                 kind=kind.name,
                 title=config.title,
                 anchor=_anchor(config.title, taken),
-                body=kind.parse(source),
+                body=kind.parse(source, context),
             )
         )
     return Rulebook(title=index.title, sections=sections)

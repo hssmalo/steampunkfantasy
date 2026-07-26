@@ -20,12 +20,14 @@ from spf.render.rulebook import (
     Section,
     SectionKind,
     build_rulebook,
+    constraint_text,
     get_kind,
     parse_markdown,
     register_kind,
 )
 from spf.rules import get_rulebook
 from spf.schemas.rulebook import RulebookConfig, SectionConfig
+from spf.schemas.rules import IntVariableConfig, StringVariableConfig
 from tests.conftest import unwrapped
 
 ENGINE = config.render.latex.engine
@@ -103,7 +105,7 @@ def test_markdown_kind_is_registered() -> None:
 
 
 def test_registry_registers_and_looks_up() -> None:
-    kind = SectionKind(name="_probe", parse=lambda path: path.read_text())
+    kind = SectionKind(name="_probe", parse=lambda path, _context: path.read_text())
     try:
         assert register_kind(kind) is kind
         assert get_kind("_probe") is kind
@@ -173,6 +175,30 @@ def test_rules_context_loads_the_tokens_file_once(tmp_path: Path) -> None:
     assert context.token_name("minor_acid") == "Minor Acid"
 
 
+# --- The constraint formatter -----------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("variable", "expected"),
+    [
+        (IntVariableConfig(type="int", min=1, max=4), "integer, 1-4"),
+        (IntVariableConfig(type="int", values=[2, 4, 6]), "one of 2, 4, 6"),
+        (IntVariableConfig(type="int", min=1), "integer, at least 1"),
+        (IntVariableConfig(type="int", max=6), "integer, at most 6"),
+        (IntVariableConfig(type="int"), "integer"),
+        (
+            StringVariableConfig(type="str", values=["regular", "psychic"]),
+            "one of regular, psychic",
+        ),
+        (StringVariableConfig(type="str"), "text"),
+    ],
+)
+def test_constraint_text_describes_a_variable(
+    variable: IntVariableConfig | StringVariableConfig, expected: str
+) -> None:
+    assert constraint_text(variable) == expected
+
+
 # --- The markdown kind's parser ---------------------------------------------
 
 
@@ -180,7 +206,7 @@ def test_markdown_kind_drops_h1_lines(tmp_path: Path) -> None:
     source = tmp_path / "round.md"
     source.write_text("# The Round\n\nBody text.\n\n## Phases\n", encoding="utf-8")
 
-    body = parse_markdown(source)
+    body = parse_markdown(source, RulesContext(tmp_path))
 
     assert "# The Round" not in body
     assert "Body text." in body
@@ -191,7 +217,7 @@ def test_markdown_kind_keeps_a_hash_that_is_not_a_heading(tmp_path: Path) -> Non
     source = tmp_path / "round.md"
     source.write_text("Roll #1 on the table.\n", encoding="utf-8")
 
-    assert parse_markdown(source) == "Roll #1 on the table.\n"
+    assert parse_markdown(source, RulesContext(tmp_path)) == "Roll #1 on the table.\n"
 
 
 # --- build_rulebook ---------------------------------------------------------
@@ -283,6 +309,26 @@ def test_build_rulebook_rejects_a_missing_source_by_position(tmp_path: Path) -> 
     message = str(excinfo.value)
     assert "section 1" in message
     assert "absent.md" in message
+
+
+def test_build_rulebook_gives_every_parser_a_shared_context(tmp_path: Path) -> None:
+    # One context per build, so a file read for section 1 is not read again for
+    # section 4 — and rooted where the sources are.
+    rules_dir = _rules_dir(tmp_path, {"round.md": "Body.\n", "setup.md": "More.\n"})
+    seen: list[RulesContext] = []
+    kind = SectionKind(name="_probe", parse=lambda _path, context: seen.append(context))
+    register_kind(kind)
+    try:
+        build_rulebook(
+            _index(_section(kind="_probe"), _section(kind="_probe", source="setup.md")),
+            rules_dir=rules_dir,
+        )
+    finally:
+        KINDS.pop("_probe", None)
+
+    first, second = seen
+    assert first is second
+    assert first.rules_dir == rules_dir
 
 
 def test_build_rulebook_accepts_an_empty_index(tmp_path: Path) -> None:
