@@ -1,0 +1,56 @@
+% The shared body of a structured Section — specials, tokens, hexes. All three
+% Kinds parse to one `RulesBody`, so all three render through here; each Kind
+% keeps its own partial as the seam where the shapes will diverge.
+%
+% A rule sits one sectioning level below its group, and a group only exists
+% when the source groups its rules — so an ungrouped file does not spend a
+% level on a heading it has no title for.
+%
+% Prose fields are Markdown and go through `md_to_latex`; short strings (names,
+% phases, removal conditions) are plain text and only need escaping.
+\BLOCK{set body = section.body}
+\BLOCK{if body.explanation}
+\VAR{body.explanation | md_to_latex}
+\BLOCK{endif}
+\BLOCK{for group in body.groups}
+\BLOCK{if group.title}
+\subsection{\VAR{group.title | latex_escape}}
+\BLOCK{endif}
+\BLOCK{set heading = "\\subsubsection" if group.title else "\\subsection"}
+\BLOCK{for rule in group.rules}
+\VAR{heading}{\VAR{rule.name | latex_escape}\BLOCK{if rule.short} \VAR{rule.short | latex_escape}\BLOCK{endif}}
+\BLOCK{if rule.body}
+\VAR{rule.body | md_to_latex}
+\BLOCK{endif}
+\BLOCK{if rule.description}
+\textbf{Represents:} \VAR{rule.description | md_to_latex}
+\BLOCK{endif}
+\BLOCK{if rule.example}
+\textbf{Example:} \VAR{rule.example | md_to_latex}
+\BLOCK{endif}
+\BLOCK{if rule.token or rule.phases or rule.remove or rule.variables}
+\begin{itemize}
+\BLOCK{if rule.token}
+  \item \textbf{Places:} \VAR{rule.token | latex_escape}
+\BLOCK{endif}
+\BLOCK{if rule.phases}
+  \item \textbf{Phases:} \VAR{rule.phases | join(", ") | latex_escape}
+\BLOCK{endif}
+\BLOCK{if rule.remove}
+  \item \textbf{Removed:} \VAR{rule.remove | latex_escape}
+\BLOCK{endif}
+\BLOCK{for name, constraint in rule.variables}
+  \item \textbf{\VAR{name | latex_escape}:} \VAR{constraint | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{if rule.versions}
+\textbf{Versions}
+\begin{itemize}
+\BLOCK{for version, text in rule.versions}
+  \item \textbf{\VAR{version | latex_escape}:} \VAR{text | md_to_latex}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endfor}
+\BLOCK{endfor}

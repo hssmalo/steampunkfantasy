@@ -665,6 +665,95 @@ def test_render_latex_has_furniture_and_converted_body(
     assert "Dropped by the parser" not in text
 
 
+# --- The structured Kinds' partials, over the real rules files --------------
+
+
+@pytest.fixture
+def real_rulebook() -> Rulebook:
+    """Build the committed Index over the committed sources."""
+    return build_rulebook(get_rulebook(), rules_dir=config.paths.rules)
+
+
+@pytest.fixture
+def real_markdown(tmp_path: Path, real_rulebook: Rulebook) -> str:
+    out = render(
+        GENERAL_RULES,
+        real_rulebook,
+        fmt=get_format("markdown"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+@pytest.fixture
+def real_latex(tmp_path: Path, real_rulebook: Rulebook) -> str:
+    out = render(
+        GENERAL_RULES,
+        real_rulebook,
+        fmt=get_format("latex"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+def test_markdown_partials_nest_specials_below_their_group(real_markdown: str) -> None:
+    assert "### Assault\n" in real_markdown
+    assert "### Unit\n" in real_markdown
+    assert "### Weapon\n" in real_markdown
+    assert "#### Cunning Assault [{N}]" in real_markdown
+    # Tokens have no groups, so a token rule keeps the shallower level.
+    assert "### Minor Acid\n" in real_markdown
+
+
+def test_markdown_partials_render_the_structured_details(real_markdown: str) -> None:
+    assert "- **Places:** Minor Acid" in real_markdown
+    assert "- **N:** integer, 1-4" in real_markdown
+    assert "- **Phases:** Agony 1" in real_markdown
+    assert "**Example:** If you hit" in real_markdown
+    assert "**Versions**" in real_markdown
+    assert "- **psychic:**" in real_markdown
+    # `hexes.toml`'s document-level prose leads its Section.
+    assert "Hex based effects are triggered" in real_markdown
+
+
+def test_markdown_partials_keep_a_prose_bullet_list_a_list(real_markdown: str) -> None:
+    # `unit.heal`'s explanation is Markdown; its bullets must stay bullets.
+    assert "\n- Extinguish one fire. Cost 3." in real_markdown
+
+
+def test_latex_partials_nest_specials_below_their_group(real_latex: str) -> None:
+    assert r"\section{Special Rules}" in real_latex
+    assert r"\subsection{Assault}" in real_latex
+    assert r"\subsubsection{Cunning Assault [\{N\}]}" in real_latex
+    # Tokens have no groups, so a token rule is a subsection, not a deeper one.
+    assert r"\subsection{Minor Acid}" in real_latex
+
+
+def test_latex_partials_render_the_structured_details(real_latex: str) -> None:
+    assert r"\textbf{Places:} Minor Acid" in real_latex
+    assert r"\textbf{N:} integer, 1-4" in real_latex
+    assert r"\textbf{Phases:} Agony 1" in real_latex
+    assert r"\textbf{Example:} If you hit" in real_latex
+    assert r"\textbf{Versions}" in real_latex
+    assert r"\textbf{psychic:}" in real_latex
+
+
+def test_latex_partials_convert_a_prose_bullet_list(real_latex: str) -> None:
+    assert r"\item Extinguish one fire. Cost 3." in real_latex
+
+
+def test_latex_partials_keep_the_acid_damage_table_verbatim(real_latex: str) -> None:
+    # `tokens.acid.effect` is a tab-indented block, so CommonMark reads it as a
+    # code block and it reaches `verbatim` — which is what preserves its
+    # column alignment. The likeliest place for this output to look wrong.
+    after = real_latex.split(r"\begin{verbatim}", maxsplit=1)[1]
+    table = after.split(r"\end{verbatim}", maxsplit=1)[0]
+    assert "1 : Downgrade from acid to minor acid." in table
+    assert "8 : Roll three times on this table." in table
+
+
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
 def test_render_the_committed_rulebook_compiles_to_pdf(tmp_path: Path) -> None:
     # The real index over the real sources: the check that authored rules prose
