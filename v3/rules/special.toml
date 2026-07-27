@@ -17,6 +17,13 @@ description = "This represent any cunning way to take out heavily armored units 
 [assault.cunning_assault.variables]
 N = { type = "int", min = 1, max = 4 }
 
+
+[assault.fire]
+name = "Fire"
+short = ""
+explanation = "All enemy units hit at least once in assault gets an fire token."
+
+
 [assault.cunning_assault_defence]
 name = "Cunning Assault Defence"
 short = "[{N}, {M}+]"
@@ -30,6 +37,18 @@ token = "minor_acid"
 
 [assault.minor_acid.variables]
 N = { type = "int", min = 1, max = 4 }
+
+[assault.gear_disruption]
+name = "Gear Disruption"
+short = "[{N}+][1 for M]"
+explanation = "Only applies when target is a drone. Roll a die per {M} hits. The drone gets one shaken token per roll of {N}+."
+
+[assault.gear_disruption.variables]
+N = { type = "int", min = 1, max = 6 }
+M = { type = "int", min = 1, max = 4 }
+
+
+
 
 [assault.poison]
 name = "Assault Poison"
@@ -163,58 +182,58 @@ explanation = "Roll a die per area of effect damage. Ignore the damage at {N}+"
 [unit.evation.variables]
 N = { type = "int", min = 1, max = 6 }
 
-[weapon]
+[range]
 
-[weapon.burst]
+[range.burst]
 name = "Burst"
 short = "[{N}]"
 explanation = "This weapon can have, and must be loaded with {N} ammo to be fired. However, when the weapon is fired, it is fired {N} times (per model) at the same enemy unit."
 
-[weapon.burst.variables]
+[range.burst.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[weapon.limited_ammo]
+[range.limited_ammo]
 name = "Limited Ammo"
 explanation = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
 short = "[{N}]"
 
-[weapon.limited_ammo.variables]
+[range.limited_ammo.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[weapon.gear_disruption]
+[range.gear_disruption]
 name = "Gear Disruption"
 short = "[{N}+]"
-explanation = "Only applies when target is a drone. Roll 1 + one die per minor acid token on target. The drone gets one shaken token per roll of {N}+. Major acid counts as 3 minor acid tokens in this regard. (1st shaken token is duplicated as always)"
+explanation = "Only applies when target is a drone. The drone gets one shaken token per roll of {N}+."
 
-[weapon.gear_disruption.variables]
+[range.gear_disruption.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[weapon.fire]
+[range.fire]
 name = "Fire"
 short = ""
-explanation = "Any unit hit at least once (in assault or by range weapon) is set on fire"
+explanation = "Any unit hit at least once  is set on fire"
 
-[weapon.minor_acid]
+[range.minor_acid]
 name = "Minor Acid"
 short = "Minor Acid"
 explanation = "Target gets a minor acid token"
 token = "minor_acid"
 
-[weapon.poison]
+[range.poison]
 name = "Poison"
 short = "{N}"
 explanation = "Target gets a poison[{N}] token"
 token = "poison"
 
-[weapon.poison.variables]
+[range.poison.variables]
 N = { type = "int", min = 1, max = 12 }
 
-[weapon.fumble]
+[range.fumble]
 name = "Fumble"
 short = "Fumble"
 explanation = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
 
-[weapon.critical]
+[range.critical]
 name = "Critical"
 short = "Critical"
 explanation = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"

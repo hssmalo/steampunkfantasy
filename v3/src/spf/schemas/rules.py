@@ -56,7 +56,7 @@ class SpecialRuleConfig(StrictModel):
 class SpecialRulesConfig(StrictModel):
     assault: dict[str, SpecialRuleConfig]
     unit: dict[str, SpecialRuleConfig]
-    weapon: dict[str, SpecialRuleConfig]
+    range: dict[str, SpecialRuleConfig]
 
 
 #

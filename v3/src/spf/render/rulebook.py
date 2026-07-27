@@ -311,7 +311,7 @@ def _special_entry(config: SpecialRuleConfig, token: str | None) -> RuleEntry:
 def parse_specials(path: Path, context: RulesContext) -> RulesBody:
     """Read `special.toml` as one titled group per group in the schema.
 
-    Where a Special applies — in an Assault, on a Unit, on a Weapon — is
+    Where a Special applies — in an Assault, on a Unit, on a Range — is
     information the reader needs, so the groups stay groups rather than being
     flattened into one alphabetical list (decision 15).
     """
@@ -327,7 +327,7 @@ def parse_specials(path: Path, context: RulesContext) -> RulesBody:
         for title, specials in (
             ("Assault", config.assault),
             ("Unit", config.unit),
-            ("Weapon", config.weapon),
+            ("Range", config.range),
         )
     ]
     return RulesBody(explanation=None, groups=groups)
