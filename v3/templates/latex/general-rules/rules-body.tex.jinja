@@ -28,23 +28,21 @@
 \BLOCK{if rule.example}
 \textbf{Example:} \VAR{rule.example | md_to_latex}
 \BLOCK{endif}
-\BLOCK{if rule.has_facts}
-\begin{itemize}
 \BLOCK{if rule.token}
-  \item \textbf{Places:} \VAR{rule.token | latex_escape}
+\textbf{Places:} \VAR{rule.token | latex_escape}
 \BLOCK{endif}
 \BLOCK{if rule.phases}
-  \item \textbf{Phases:} \VAR{rule.phases | join(", ") | latex_escape}
+\textbf{Phases:} \VAR{rule.phases | join(", ") | latex_escape}
 \BLOCK{endif}
 \BLOCK{if rule.remove}
-  \item \textbf{Removed:} \VAR{rule.remove | latex_escape}
+\textbf{Removed:} \VAR{rule.remove | latex_escape}
 \BLOCK{endif}
 \BLOCK{for name, constraint in rule.variables}
-  \item \textbf{\VAR{name | latex_escape}:} \VAR{constraint | latex_escape}
+
+\textbf{\VAR{name | latex_escape}:} \VAR{constraint | latex_escape}
 \BLOCK{endfor}
-\end{itemize}
-\BLOCK{endif}
 \BLOCK{if rule.versions}
+
 \textbf{Versions}
 \begin{itemize}
 \BLOCK{for version, text in rule.versions}

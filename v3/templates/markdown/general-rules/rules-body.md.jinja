@@ -35,13 +35,17 @@
 {% endif -%}
 
 {%- if rule.has_facts %}
-{% if rule.token %}- **Places:** {{ rule.token }}
+{% if rule.token %}
+**Places:** {{ rule.token }}
 {% endif -%}
-{%- if rule.phases %}- **Phases:** {{ rule.phases | join(", ") }}
+{%- if rule.phases %}
+**Phases:** {{ rule.phases | join(", ") }}
 {% endif -%}
-{%- if rule.remove %}- **Removed:** {{ rule.remove }}
+{%- if rule.remove %}
+**Removed:** {{ rule.remove }}
 {% endif -%}
-{%- for name, constraint in rule.variables %}- **{{ name }}:** {{ constraint }}
+{%- for name, constraint in rule.variables %}
+**{{ name }}:** {{ constraint }}
 {% endfor -%}
 {% endif -%}
 
