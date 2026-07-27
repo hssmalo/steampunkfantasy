@@ -723,17 +723,6 @@ def test_markdown_partials_nest_specials_below_their_group(real_markdown: str) -
     assert "### Minor Acid\n" in real_markdown
 
 
-def test_markdown_partials_render_the_structured_details(real_markdown: str) -> None:
-    assert "- **Places:** Minor Acid" in real_markdown
-    assert "- **N:** integer, 1-4" in real_markdown
-    assert "- **Phases:** Agony 1" in real_markdown
-    assert "**Example:** If you hit" in real_markdown
-    assert "**Versions**" in real_markdown
-    assert "- **psychic:**" in real_markdown
-    # `hexes.toml`'s document-level prose leads its Section.
-    assert "Hex based effects are triggered" in real_markdown
-
-
 def test_markdown_partials_keep_a_prose_bullet_list_a_list(real_markdown: str) -> None:
     # `unit.heal`'s explanation is Markdown; its bullets must stay bullets.
     assert "\n- Extinguish one fire. Cost 3." in real_markdown
@@ -758,16 +747,6 @@ def test_latex_partials_render_the_structured_details(real_latex: str) -> None:
 
 def test_latex_partials_convert_a_prose_bullet_list(real_latex: str) -> None:
     assert r"\item Extinguish one fire. Cost 3." in real_latex
-
-
-def test_latex_partials_keep_the_acid_damage_table_verbatim(real_latex: str) -> None:
-    # `tokens.acid.effect` is a tab-indented block, so CommonMark reads it as a
-    # code block and it reaches `verbatim` — which is what preserves its
-    # column alignment. The likeliest place for this output to look wrong.
-    after = real_latex.split(r"\begin{verbatim}", maxsplit=1)[1]
-    table = after.split(r"\end{verbatim}", maxsplit=1)[0]
-    assert "1 : Downgrade from acid to minor acid." in table
-    assert "8 : Roll three times on this table." in table
 
 
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")

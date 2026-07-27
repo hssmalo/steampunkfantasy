@@ -425,10 +425,10 @@ slow = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
 fast = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
 
 [units.main_engine.orders.movement]
-still = [["L/R", "-", "-"], ["L/R", "-", "A"]]
+still = [["L/R", "-", "(A)"]]
 slow = [
 	["L/R", "F", "L/R"],
-	["L/R", "F", "A"],
+	["L/R", "F", "(A)"],
 	["F", "L/R", "-"],
 	["F", "-", "-"]
 ]
@@ -666,7 +666,7 @@ damage = "d8"
 ap = 3
 
 [models.ogre_scout_engineer.assault.special]
-"Extra Damage" = "Gear Disruption[4+]"
+"Extra Damage" = "Gear Disruption[4+][1 for 1]"
 
 [models.ogre_hydra]
 name = "Ogre Hydra"

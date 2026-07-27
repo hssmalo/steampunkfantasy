@@ -220,13 +220,13 @@ comment = "May not deploy units while shaken"
 
 [units.transport_zeppelin.orders.movement]
 fast_fly = [
-    ["360°", "F", "F+Depoloy"],
-    ["F", "F+Depoloy", "360°"],
-    ["F", "360°", "F+Deploy"],
-    ["F+Depoloy", "F", "360°"],
-    ["360°", "F", "F"],
-    ["F", "F", "360°"],
-    ["F", "360°", "F"],
+    ["(L/R)", "F", "F+Depoloy"],
+    ["F", "F+Depoloy", "(L/R)"],
+    ["F", "(L/R)", "F+(Deploy)"],
+    ["F+Depoloy", "F", "(L/R)"],
+    ["(L/R)", "F", "F"],
+    ["F", "F", "(L/R)"],
+    ["F", "(L/R)", "F"],
 ]
 
 [units.transport_zeppelin.damage_tables.Regular]
@@ -308,31 +308,25 @@ movement_order = ["-", "-", "-"]
 
 [units.gunblasterwagon.orders.movement]
 fast = [
-    ["F", "F", "-"],
     ["F", "L/R", "-"],
     ["F", "B", "-"],
-    ["F", "F", "L/R"],
-    ["F", "F", "F+L/R"],
-    ["F", "F", "F"],
+    ["F", "F", "(L/R)"],
+    ["F", "F", "F+(L/R)"],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
+    ["L/R", "(L/R)", "-"],
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
     ["B", "rev", "-"],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
+    ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
     ["rev", "-", "-"],
-    ["A+A", "F", "F"],
-    ["A+A+L/R", "F", "F"],
+    ["A+A+(L/R)", "F", "F"],
 ]
 
 [units.gunblasterwagon.orders.fire]
@@ -393,17 +387,14 @@ fast = [
     ["F", "F", "F"],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
+    ["L/R", "(L/R)", "-"],
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
     ["B", "rev", "-"],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
+    ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
@@ -462,23 +453,18 @@ movement_order = ["-", "-", "-"]
 fast = [
     ["F", "F", "-"],
     ["F", "L/R", "-"],
-    ["F", "B", "-"],
-    ["B", "B", "-"],
-    ["F", "B", "-"],
+    ["F", "B", "(B)"],
     ["F", "F", "F"],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
+    ["L/R", "(L/R)", "-"],
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
     ["B", "rev", "-"],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
+    ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
@@ -540,8 +526,7 @@ comment = "Each shaken token counts as +1 to future damage token."
 
 [units.zeppelin.orders.movement]
 slow_fly = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
+    ["L/R", "(L/R)", "-"],
     ["F", "-", "-"],
     ["F", "L/R", "-"],
 ]
@@ -596,7 +581,7 @@ slow = [
 rest = [["-", "-", "A"]]
 
 [units.tamed_balrog.orders.fire]
-still = [["Fire", "-"], ["-", "Fire"]]
+slow = [["Fire", "-"], ["-", "Fire"]]
 
 [units.tamed_balrog.damage_tables.Regular]
 rows = [
@@ -1076,7 +1061,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "4+"
 
 [equipment.wheeled_shieldwall.assault.special]
-"Penalty" = "-1 in assault strength (per model) if speed is not still. Don't get any armor bonus in assault"
+"Penalty" = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault"
 
 [equipment.elite_crew]
 name = "Elite Crew"

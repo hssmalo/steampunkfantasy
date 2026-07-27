@@ -5,6 +5,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 27.07.2026 | All          | Introduced optional order () in a lot of units, mostly tanks                | Reduced the number of order cards and makes it easier to find a specific card        |
+| 27.07.2026 | Dwarf        | Transport Zeppelin got a lot less flexibale turn radius                     | It felt wrong for the transport zeppelin to have an unlimited turn radius.           |
 | 23.07.2026 | Abomination  | Reworked Flagship to feel like a flying sailing airship                     | I did not enjoy the old mothership, so I remade it. May still need to be balanced    |
 | 23.07.2026 | Goblin       | Seeker arrow requires 2 special arrow and has limited arrow[2] instead of 3 | You can now have both assassin arrows andr regular seeker arrows available           |
 | 23.07.2026 | Goblin       | Assassin arrow requires 1 special arrow                                     | No real impact on game, but fits better                                              |

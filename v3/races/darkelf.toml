@@ -156,17 +156,14 @@ fast = [
     ["L/R", "F", "-"],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
+    ["L/R", "(L/R)", "-"],
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
     ["B", "rev", "-"],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
+    ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
@@ -230,17 +227,14 @@ fast = [
     ["L/R", "F", "-"],
 ]
 slow = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
+    ["L/R", "(L/R)", "-"],
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
     ["B", "rev", "-"],
 ]
 still = [
-    ["L/R", "-", "-"],
-    ["L/R", "L/R", "-"],
-    ["L/R", "L/R", "L/R"],
+    ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
@@ -1339,7 +1333,7 @@ race = "darkelf"
 requires = []
 
 [equipment.tesla_whip.assault.special]
-"Extra Damage" = "Poison[4][1 for 2], Gear Disruption[6+] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
+"Extra Damage" = "Poison[4][1 for 2], Gear Disruption[6+][1 for 1] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.remote_control]
 name = "Remote Control"

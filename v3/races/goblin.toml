@@ -189,8 +189,7 @@ movement_order = ["-", "-", "-"]
 
 [units.goblin_infantry_carrier.orders.movement]
 slow = [
-	["L/R", "-", "-"],
-	["L/R", "L/R", "-"],
+	["L/R", "(L/R)", "-"],
 	["F", "L/R", "-"],
 	["B", "-", "-"],
 	["A+F", "F", "F+Deploy"],
@@ -199,12 +198,9 @@ slow = [
 ]
 fast = [["B", "-", "-"]]
 still = [
-	["L/R", "-", "-"],
-	["L/R", "L/R", "-"],
-	["L/R", "L/R", "L/R"],
+	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
-	["L/R", "A", "F"],
-	["A", "F", "-"],
+	["(L/R)", "A", "F"],
 	["rev", "-", "-"],
 ]
 
@@ -333,42 +329,31 @@ movement_order = ["-", "-", "-"]
 
 [units.heavy_carrier.orders.movement]
 slow = [
-	["L/R", "-", "-"],
-	["L/R", "L/R", "-"],
-	["F", "L/R", "-"],
-	["F", "L/R", "Deploy"],
-	["L/R", "F", "-"],
-	["L/R", "F", "Deploy"],
+	["L/R", "(L/R)", "-"],
+	["F", "(L/R)", "(Deploy)"],
+	["(L/R)", "F", "(Deploy)"],
 	["B", "-", "-"],
 	["A", "F", "-"],
-	["F", "-", "-"],
 	["B", "-", "-"],
 ]
 fast = [
-	['F', 'F', 'F+Deploy'],
-	['F', 'F', 'F'],
-	['F', 'L/R', 'F+Deploy'],
-	['F', 'L/R', 'F'],
-	['L/R', 'F', 'F'],
-	['L/R', 'F', 'F+Deploy'],
-	['F', 'F', 'L/R'],
-	['F', 'F+Deploy', 'L/R'],
+	['F', 'F', 'F+(Deploy)'],
+	['F', 'L/R', 'F+(Deploy)'],
+	['L/R', 'F', 'F+(Deploy)'],
+	['F', 'F+(Deploy)', 'L/R'],
 	['F', "B", "-"],
 ]
 still = [
-	["L/R", "-", "-"],
-	["L/R", "L/R", "-"],
-	["L/R", "L/R", "L/R"],
+	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
-	["L/R", "A", "F"],
-	["A", "F", "-"],
+	["(L/R)", "A", "F"],
 	["rev", "-", "-"],
 ]
 
 [units.heavy_carrier.orders.fire]
-fast = [["Load", "Fire"]]
-slow = [["Load", "Load"]]
-still = [["Load", "Load"]]
+fast = [["Load", "Fire"], ["Load", "Fire"]]
+slow = [["Load", "Load"], ["Load", "Fire"]]
+still = [["Load", "Load"],["Load", "Fire"]]
 
 
 
@@ -430,35 +415,24 @@ movement_order = ["-", "-", "-"]
 
 [units.modified_truck.orders.movement]
 slow = [
-	["L/R", "-", "-"],
-	["L/R", "L/R", "-"],
-	["F", "L/R", "-"],
-	["F", "L/R", "Deploy"],
-	["L/R", "F", "-"],
-	["L/R", "F", "Deploy"],
+	["L/R", "(L/R)", "-"],
+	["F", "L/R", "(Deploy)"],
+	["L/R", "F", "(Deploy)"],
 	["B", "-", "-"],
-	["A", "F", "-"],
-	["F", "-", "-"],
+	["(A)", "F", "-"],
 	["B", "-", "-"],
 ]
 fast = [
-	['F', 'F', 'Deploy'],
+	['F+(L/R)', 'F', '(Deploy)'],
 	['F', 'F', 'F'],
-	['F', 'L/R', 'F+Deploy'],
-	['F', 'L/R', 'F'],
-	['L/R', 'F', 'F'],
-	['L/R', 'F', 'F+Deploy'],
-	['F', 'F', 'L/R'],
-	['F', 'F+Deploy', 'L/R'],
+	['L/R', 'F', 'F+(Deploy)'],
+	['F', 'F+(Deploy)', 'L/R'],
 	['F', "B", "-"],
 ]
 still = [
-	["L/R", "-", "-"],
-	["L/R", "L/R", "-"],
-	["L/R", "L/R", "L/R"],
+	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
-	["L/R", "A", "F"],
-	["A", "F", "-"],
+	["(L/R)", "A", "F"],
 	["rev", "-", "-"],
 ]
 
@@ -690,7 +664,7 @@ damage = "d6-2"
 ap = 1
 
 [models.mechanical_fire_bird.assault.special]
-"Extra Damage" = "Enemy hit at least once is set on fire"
+"Extra Damage" = "Fire"
 
 [models.elite_goblin_infantry]
 name = "Elite Goblin Infantry"
@@ -895,7 +869,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [equipment.poison_deflection_dagger.assault.special]
-"Damage on Deflect" = "Each deflected hit gives enemy poison[4]"
+"Damage on Deflect" = "Each deflected hit gives enemy poison[4] token"
 
 [equipment.combat_screw_driver]
 name = "Combat Screw Driver"
