@@ -13,18 +13,30 @@ from spf.render import render
 from spf.render.formats import get_format
 from spf.render.products import PRODUCTS
 from spf.render.rulebook import (
+    HEXES,
     KINDS,
     MARKDOWN,
+    SPECIALS,
+    TOKENS,
     Rulebook,
+    RuleEntry,
+    RuleGroup,
+    RulesBody,
+    RulesContext,
     Section,
     SectionKind,
     build_rulebook,
+    constraint_text,
     get_kind,
+    parse_hexes,
     parse_markdown,
+    parse_specials,
+    parse_tokens,
     register_kind,
 )
 from spf.rules import get_rulebook
 from spf.schemas.rulebook import RulebookConfig, SectionConfig
+from spf.schemas.rules import IntVariableConfig, StringVariableConfig
 from tests.conftest import unwrapped
 
 ENGINE = config.render.latex.engine
@@ -102,7 +114,7 @@ def test_markdown_kind_is_registered() -> None:
 
 
 def test_registry_registers_and_looks_up() -> None:
-    kind = SectionKind(name="_probe", parse=lambda path: path.read_text())
+    kind = SectionKind(name="_probe", parse=lambda path, _context: path.read_text())
     try:
         assert register_kind(kind) is kind
         assert get_kind("_probe") is kind
@@ -117,6 +129,85 @@ def test_unknown_kind_lists_the_known_kinds() -> None:
         get_kind("orders")
 
 
+# --- RulesContext -----------------------------------------------------------
+
+TOKENS_SOURCE = """\
+[tokens]
+
+[tokens.minor_acid]
+name = "Minor Acid"
+effect = "Roll a die."
+
+[tokens.poison]
+name = "Poison"
+short = "[N]"
+effect = "Roll a d{N}."
+"""
+
+
+def test_rules_context_resolves_a_token_to_its_display_name(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(tmp_path, {"tokens.toml": TOKENS_SOURCE})
+
+    assert RulesContext(rules_dir).token_name("minor_acid") == "Minor Acid"
+
+
+def test_rules_context_rejects_an_unknown_token_listing_the_known_ones(
+    tmp_path: Path,
+) -> None:
+    rules_dir = _rules_dir(tmp_path, {"tokens.toml": TOKENS_SOURCE})
+
+    with pytest.raises(ValueError, match=r"unknown token 'minor acid'") as excinfo:
+        RulesContext(rules_dir).token_name("minor acid")
+
+    message = str(excinfo.value)
+    assert "known tokens:" in message
+    assert "minor_acid" in message
+    assert "poison" in message
+
+
+def test_rules_context_touches_no_file_until_asked(tmp_path: Path) -> None:
+    # The Index controls what is *rendered*; a Rulebook with no cross-reference
+    # must not need a tokens file to exist at all.
+    context = RulesContext(tmp_path)
+
+    with pytest.raises(FileNotFoundError):
+        context.token_name("minor_acid")
+
+
+def test_rules_context_loads_the_tokens_file_once(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(tmp_path, {"tokens.toml": TOKENS_SOURCE})
+    context = RulesContext(rules_dir)
+
+    assert context.token_name("poison") == "Poison"
+    (rules_dir / "tokens.toml").unlink()
+
+    assert context.token_name("minor_acid") == "Minor Acid"
+
+
+# --- The constraint formatter -----------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("variable", "expected"),
+    [
+        (IntVariableConfig(type="int", min=1, max=4), "integer, 1-4"),
+        (IntVariableConfig(type="int", values=[2, 4, 6]), "one of 2, 4, 6"),
+        (IntVariableConfig(type="int", min=1), "integer, at least 1"),
+        (IntVariableConfig(type="int", max=6), "integer, at most 6"),
+        (IntVariableConfig(type="int"), "integer"),
+        (
+            StringVariableConfig(type="str", values=["regular", "psychic"]),
+            "one of regular, psychic",
+        ),
+        (StringVariableConfig(type="str"), "text"),
+    ],
+)
+def test_constraint_text_describes_a_variable(
+    variable: IntVariableConfig | StringVariableConfig, expected: str
+) -> None:
+    assert constraint_text(variable) == expected
+
+
 # --- The markdown kind's parser ---------------------------------------------
 
 
@@ -124,7 +215,7 @@ def test_markdown_kind_drops_h1_lines(tmp_path: Path) -> None:
     source = tmp_path / "round.md"
     source.write_text("# The Round\n\nBody text.\n\n## Phases\n", encoding="utf-8")
 
-    body = parse_markdown(source)
+    body = parse_markdown(source, RulesContext(tmp_path))
 
     assert "# The Round" not in body
     assert "Body text." in body
@@ -135,7 +226,248 @@ def test_markdown_kind_keeps_a_hash_that_is_not_a_heading(tmp_path: Path) -> Non
     source = tmp_path / "round.md"
     source.write_text("Roll #1 on the table.\n", encoding="utf-8")
 
-    assert parse_markdown(source) == "Roll #1 on the table.\n"
+    assert parse_markdown(source, RulesContext(tmp_path)) == "Roll #1 on the table.\n"
+
+
+# --- The tokens kind's parser -----------------------------------------------
+
+FULL_TOKENS_SOURCE = """\
+[tokens]
+
+[tokens.poison]
+name = "Poison"
+short = "[N]"
+phases = ["Agony 3"]
+remove = "When it kills a model"
+effect = \"\"\"Roll a d{N}.
+- Ignore armour
+- Apply the damage
+\"\"\"
+
+[tokens.poison.variables]
+N = { type = "int", values = [2, 4, 6] }
+
+[tokens.terror]
+name = "Terror"
+phases = ["Agony 0"]
+effect = "Acts as if the unit has Terror."
+"""
+
+
+def test_tokens_kind_is_registered() -> None:
+    assert KINDS["tokens"] is TOKENS
+    assert TOKENS.parse is parse_tokens
+
+
+def test_tokens_kind_yields_one_untitled_group_in_file_order(tmp_path: Path) -> None:
+    source = tmp_path / "tokens.toml"
+    source.write_text(FULL_TOKENS_SOURCE, encoding="utf-8")
+
+    body = parse_tokens(source, RulesContext(tmp_path))
+
+    assert isinstance(body, RulesBody)
+    assert body.explanation is None
+    (group,) = body.groups
+    assert isinstance(group, RuleGroup)
+    assert group.title is None
+    assert [rule.name for rule in group.rules] == ["Poison", "Terror"]
+
+
+def test_tokens_kind_carries_every_field_across(tmp_path: Path) -> None:
+    source = tmp_path / "tokens.toml"
+    source.write_text(FULL_TOKENS_SOURCE, encoding="utf-8")
+
+    (group,) = parse_tokens(source, RulesContext(tmp_path)).groups
+    poison, terror = group.rules
+
+    assert isinstance(poison, RuleEntry)
+    assert poison.short == "[N]"
+    assert poison.phases == ["Agony 3"]
+    assert poison.remove == "When it kills a model"
+    assert poison.variables == [("N", "one of 2, 4, 6")]
+    # The effect is Markdown and stays Markdown: its bullets are a real list.
+    assert poison.body.splitlines()[1] == "- Ignore armour"
+    assert poison.token is None
+    assert poison.versions == []
+    assert terror.short is None
+    assert terror.remove is None
+    assert terror.variables == []
+
+
+# --- The hexes kind's parser ------------------------------------------------
+
+HEXES_SOURCE = """\
+explanation = "Hex effects trigger during movement."
+
+[hexes]
+
+[hexes.fog]
+name = "Fog"
+effect = "Blocks line of sight."
+remove = "Remove one Fog per hex in the aftermath phase"
+"""
+
+
+def test_hexes_kind_is_registered() -> None:
+    assert KINDS["hexes"] is HEXES
+    assert HEXES.parse is parse_hexes
+
+
+def test_hexes_kind_keeps_the_document_level_explanation(tmp_path: Path) -> None:
+    # The only one of the three sources with prose above its table.
+    source = tmp_path / "hexes.toml"
+    source.write_text(HEXES_SOURCE, encoding="utf-8")
+
+    body = parse_hexes(source, RulesContext(tmp_path))
+
+    assert body.explanation == "Hex effects trigger during movement."
+    (group,) = body.groups
+    assert group.title is None
+    (fog,) = group.rules
+    assert fog.name == "Fog"
+    assert fog.body == "Blocks line of sight."
+    assert fog.remove == "Remove one Fog per hex in the aftermath phase"
+
+
+# --- The specials kind's parser ---------------------------------------------
+
+SPECIALS_SOURCE = """\
+[assault]
+
+[assault.minor_acid]
+name = "Assault Minor Acid"
+short = "[1 for {N}]"
+explanation = "Targets get one minor acid token for each {N} hits."
+token = "minor_acid"
+
+[assault.minor_acid.variables]
+N = { type = "int", min = 1, max = 4 }
+
+[assault.cunning_assault]
+name = "Cunning Assault"
+short = "[{N}]"
+explanation = "Add +1 to all future damage tokens."
+example = "Hit four times and you add two tokens."
+description = "Any cunning way to take out armoured units."
+
+[unit]
+
+[unit.resistance]
+name = "Resistance"
+short = "{version}[{N}]"
+explanation = "Improved resilience versus {version} damage."
+
+[unit.resistance.versions]
+regular = "Regular damage is reduced by {N}."
+psychic = "Psychic damage is reduced by {N}."
+
+[weapon]
+
+[weapon.fumble]
+name = "Fumble"
+short = "Fumble"
+explanation = "A natural 1 to hit is a fumble."
+"""
+
+
+def test_specials_kind_is_registered() -> None:
+    assert KINDS["specials"] is SPECIALS
+    assert SPECIALS.parse is parse_specials
+
+
+def test_specials_kind_yields_one_titled_group_per_schema_group(
+    tmp_path: Path,
+) -> None:
+    # Where a rule applies is information, so the groups stay groups rather
+    # than being flattened into one alphabetical list.
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    assert body.explanation is None
+    assert [group.title for group in body.groups] == ["Assault", "Unit", "Weapon"]
+    assault, unit, weapon = body.groups
+    assert [rule.name for rule in assault.rules] == [
+        "Assault Minor Acid",
+        "Cunning Assault",
+    ]
+    assert [rule.name for rule in unit.rules] == ["Resistance"]
+    assert [rule.name for rule in weapon.rules] == ["Fumble"]
+
+
+def test_specials_kind_resolves_a_token_to_its_display_name(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    acid, cunning = body.groups[0].rules
+    assert acid.token == "Minor Acid"  # noqa: S105  a game Token's name, not a credential
+    assert cunning.token is None
+    assert cunning.example == "Hit four times and you add two tokens."
+    assert cunning.description == "Any cunning way to take out armoured units."
+
+
+def test_specials_kind_drops_a_short_that_only_repeats_the_name(
+    tmp_path: Path,
+) -> None:
+    # `short` is the Army Reference's compact override; when it is just the
+    # name again, the Rulebook heading would read "Fumble Fumble".
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    (fumble,) = body.groups[2].rules
+    assert fumble.name == "Fumble"
+    assert fumble.short is None
+
+
+def test_specials_kind_carries_the_versions_map(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(
+        tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
+    )
+
+    body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    (resistance,) = body.groups[1].rules
+    assert resistance.versions == [
+        ("regular", "Regular damage is reduced by {N}."),
+        ("psychic", "Psychic damage is reduced by {N}."),
+    ]
+
+
+def test_specials_kind_rejects_an_unresolvable_token(tmp_path: Path) -> None:
+    rules_dir = _rules_dir(
+        tmp_path,
+        {
+            "special.toml": SPECIALS_SOURCE.replace('"minor_acid"', '"minor acid"'),
+            "tokens.toml": TOKENS_SOURCE,
+        },
+    )
+
+    with pytest.raises(ValueError, match=r"unknown token 'minor acid'") as excinfo:
+        parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
+
+    message = str(excinfo.value)
+    assert "special.toml" in message
+    assert "'minor_acid'" in message  # the rule that carries the bad reference
+    assert "known tokens:" in message
+
+
+def test_specials_kind_parses_the_committed_file() -> None:
+    # The real data: strict resolution means every committed `token =` has to
+    # name a Token that actually exists.
+    body = parse_specials(
+        config.paths.rules / "special.toml", RulesContext(config.paths.rules)
+    )
+
+    tokens = {rule.token for group in body.groups for rule in group.rules if rule.token}
+    assert tokens == {"Minor Acid", "Poison"}
 
 
 # --- build_rulebook ---------------------------------------------------------
@@ -227,6 +559,26 @@ def test_build_rulebook_rejects_a_missing_source_by_position(tmp_path: Path) -> 
     message = str(excinfo.value)
     assert "section 1" in message
     assert "absent.md" in message
+
+
+def test_build_rulebook_gives_every_parser_a_shared_context(tmp_path: Path) -> None:
+    # One context per build, so a file read for section 1 is not read again for
+    # section 4 — and rooted where the sources are.
+    rules_dir = _rules_dir(tmp_path, {"round.md": "Body.\n", "setup.md": "More.\n"})
+    seen: list[RulesContext] = []
+    kind = SectionKind(name="_probe", parse=lambda _path, context: seen.append(context))
+    register_kind(kind)
+    try:
+        build_rulebook(
+            _index(_section(kind="_probe"), _section(kind="_probe", source="setup.md")),
+            rules_dir=rules_dir,
+        )
+    finally:
+        KINDS.pop("_probe", None)
+
+    first, second = seen
+    assert first is second
+    assert first.rules_dir == rules_dir
 
 
 def test_build_rulebook_accepts_an_empty_index(tmp_path: Path) -> None:
@@ -327,6 +679,95 @@ def test_render_latex_has_furniture_and_converted_body(
     assert r"\textbf{bold}" in text
     assert r"\begin{itemize}" in text
     assert "Dropped by the parser" not in text
+
+
+# --- The structured Kinds' partials, over the real rules files --------------
+
+
+@pytest.fixture
+def real_rulebook() -> Rulebook:
+    """Build the committed Index over the committed sources."""
+    return build_rulebook(get_rulebook(), rules_dir=config.paths.rules)
+
+
+@pytest.fixture
+def real_markdown(tmp_path: Path, real_rulebook: Rulebook) -> str:
+    out = render(
+        GENERAL_RULES,
+        real_rulebook,
+        fmt=get_format("markdown"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+@pytest.fixture
+def real_latex(tmp_path: Path, real_rulebook: Rulebook) -> str:
+    out = render(
+        GENERAL_RULES,
+        real_rulebook,
+        fmt=get_format("latex"),
+        name="rulebook",
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+def test_markdown_partials_nest_specials_below_their_group(real_markdown: str) -> None:
+    assert "### Assault\n" in real_markdown
+    assert "### Unit\n" in real_markdown
+    assert "### Weapon\n" in real_markdown
+    assert "#### Cunning Assault [{N}]" in real_markdown
+    # Tokens have no groups, so a token rule keeps the shallower level.
+    assert "### Minor Acid\n" in real_markdown
+
+
+def test_markdown_partials_render_the_structured_details(real_markdown: str) -> None:
+    assert "- **Places:** Minor Acid" in real_markdown
+    assert "- **N:** integer, 1-4" in real_markdown
+    assert "- **Phases:** Agony 1" in real_markdown
+    assert "**Example:** If you hit" in real_markdown
+    assert "**Versions**" in real_markdown
+    assert "- **psychic:**" in real_markdown
+    # `hexes.toml`'s document-level prose leads its Section.
+    assert "Hex based effects are triggered" in real_markdown
+
+
+def test_markdown_partials_keep_a_prose_bullet_list_a_list(real_markdown: str) -> None:
+    # `unit.heal`'s explanation is Markdown; its bullets must stay bullets.
+    assert "\n- Extinguish one fire. Cost 3." in real_markdown
+
+
+def test_latex_partials_nest_specials_below_their_group(real_latex: str) -> None:
+    assert r"\section{Special Rules}" in real_latex
+    assert r"\subsection{Assault}" in real_latex
+    assert r"\subsubsection{Cunning Assault [\{N\}]}" in real_latex
+    # Tokens have no groups, so a token rule is a subsection, not a deeper one.
+    assert r"\subsection{Minor Acid}" in real_latex
+
+
+def test_latex_partials_render_the_structured_details(real_latex: str) -> None:
+    assert r"\textbf{Places:} Minor Acid" in real_latex
+    assert r"\textbf{N:} integer, 1-4" in real_latex
+    assert r"\textbf{Phases:} Agony 1" in real_latex
+    assert r"\textbf{Example:} If you hit" in real_latex
+    assert r"\textbf{Versions}" in real_latex
+    assert r"\textbf{psychic:}" in real_latex
+
+
+def test_latex_partials_convert_a_prose_bullet_list(real_latex: str) -> None:
+    assert r"\item Extinguish one fire. Cost 3." in real_latex
+
+
+def test_latex_partials_keep_the_acid_damage_table_verbatim(real_latex: str) -> None:
+    # `tokens.acid.effect` is a tab-indented block, so CommonMark reads it as a
+    # code block and it reaches `verbatim` — which is what preserves its
+    # column alignment. The likeliest place for this output to look wrong.
+    after = real_latex.split(r"\begin{verbatim}", maxsplit=1)[1]
+    table = after.split(r"\end{verbatim}", maxsplit=1)[0]
+    assert "1 : Downgrade from acid to minor acid." in table
+    assert "8 : Roll three times on this table." in table
 
 
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")

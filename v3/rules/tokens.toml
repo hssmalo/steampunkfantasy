@@ -6,15 +6,11 @@ phases = []
 effect = "Get -1 to hit and -1 on all assault dice. In addition, psychic damage now causes crew damage instead"
 remove = "Only by healing ability"
 
-
 [tokens.plus_minus_one]
 name = "-1 to hit, +1 to be hit "
 phases = []
 effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects"
 remove = "Only by repair ability"
-
-
-
 
 [tokens.minor_acid]
 name = "Minor Acid"
@@ -22,33 +18,32 @@ phases = ["Agony 1"]
 remove = "Only as part of effect"
 effect = "Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid"
 
-
 [tokens.acid]
 name = "Acid"
 phases = ["Agony 0"]
-effect = """Roll a d8 on the following damage table:,
+effect = """Roll a d8 on the following damage table:
 
-			 1 : Downgrade from acid to minor acid.
-			 2 : +1 to future damage
-			 3 : As 2, and if unit has armor, it is reduced by 1 (all directions)
-			 4 : As 3, and place a poison cloud [4] at hex.
-			   : and all units in this hex gets a minor acid token.
-			 5 : As 4, and in addition all units within range=2 gets a minor acid token
-			 6 : As 5, and unit gains a terror token.
-			 7 : As 6 and unit is set on fire.
-			 8 : Roll three times on this table.,
+1. Downgrade from acid to minor acid.
+2. +1 to future damage
+3. As 2, and if unit has armor, it is reduced by 1 (all directions)
+4. As 3, and place a poison cloud [4] at hex, and all units in this hex gets a minor acid token.
+5. As 4, and in addition all units within range=2 gets a minor acid token
+6. As 5, and unit gains a terror token.
+7. As 6 and unit is set on fire.
+8. Roll three times on this table.,
 """
 
 [tokens.terror]
 name = "Terror"
 phases = ["Agony 0"]
-effect = "Acts as if unit has Terror[6](range=2) but effects only units of the same team"
+effect = "Acts as if unit has Terror[6] (range=2) but effects only units of the same team"
 
 [tokens.poison]
 name = "Poison"
 short = "[N]"
 phases = ["Agony 3"]
 effect = """Roll a d{N}.
+
 - Ignore armor and regular damage resistances
 - Reduce damage by poison resistances of target
 - Apply bonus to damage based on the number +future damage tokens
@@ -64,10 +59,10 @@ N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
 name = "Bleed"
 short = "[N]"
 phases = ["Agony 4"]
-effect = """Roll a d{N}.
-At 1, remove bleed token.
+effect = """Roll a d{N}. At 1, remove bleed token.
 
-Otherwise
+Otherwise:
+
 - Ignore armor and regular damage resistances
 - Apply bonus to damage based on the number +future damage tokens
 - Apply damage to the regular damage table, with the exception that bleed does not cause more bleed.

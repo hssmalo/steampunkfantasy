@@ -1,0 +1,59 @@
+{#
+  The shared body of a structured Section — specials, tokens, hexes. All three
+  Kinds parse to one `RulesBody`, so all three render through here; each Kind
+  keeps its own partial as the seam where the shapes will diverge.
+
+  A rule sits one heading level below its group, and a group only exists when
+  the source groups its rules — so an ungrouped file does not spend a heading
+  level on a heading it has no title for.
+
+  Every prose field is already Markdown and passes through untouched. Labels
+  lead the first line rather than wrapping the field, so a multi-paragraph
+  field still renders as prose instead of breaking an emphasis span.
+#}
+{%- set body = section.body -%}
+{%- if body.explanation %}
+{{ body.explanation }}
+{% endif -%}
+
+{%- for group in body.groups -%}
+{%- if group.title %}
+### {{ group.title }}
+{% endif -%}
+{%- set hashes = "####" if group.nested else "###" -%}
+
+{%- for rule in group.rules %}
+{{ hashes }} {{ rule.name }}{% if rule.short %} {{ rule.short }}{% endif %}
+{% if rule.body %}
+{{ rule.body }}
+{% endif -%}
+{%- if rule.description %}
+**Represents:** {{ rule.description }}
+{% endif -%}
+{%- if rule.example %}
+**Example:** {{ rule.example }}
+{% endif -%}
+
+{%- if rule.has_facts %}
+{% if rule.token %}
+**Places:** {{ rule.token }}
+{% endif -%}
+{%- if rule.phases %}
+**Phases:** {{ rule.phases | join(", ") }}
+{% endif -%}
+{%- if rule.remove %}
+**Removed:** {{ rule.remove }}
+{% endif -%}
+{%- for name, constraint in rule.variables %}
+**{{ name }}:** {{ constraint }}
+{% endfor -%}
+{% endif -%}
+
+{%- if rule.versions %}
+**Versions**
+
+{% for version, text in rule.versions %}- **{{ version }}:** {{ text }}
+{% endfor -%}
+{% endif -%}
+{%- endfor -%}
+{%- endfor -%}

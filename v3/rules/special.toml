@@ -24,7 +24,7 @@ explanation = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to
 name = "Assault minor acid"
 short = "[1 for {N}]"
 explanation = "Targets gets one minor token for each {N} hits."
-token = "minor acid"
+token = "minor_acid"
 
 [assault.minor_acid.variables]
 N = { type = "int", min = 1, max = 4 }
@@ -101,7 +101,7 @@ phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
 
 [unit.immunity]
 name = "Immunity"
-short = "Immunity [feature]"
+short = "[feature]"
 explanation = ""
 description = "Unit is completely immmune to given feature"
 
@@ -200,7 +200,7 @@ token = "minor_acid"
 
 [weapon.poison]
 name = "Poison"
-short = "Poison {N}"
+short = "{N}"
 explanation = "Target gets a poison[{N}] token"
 token = "poison"
 

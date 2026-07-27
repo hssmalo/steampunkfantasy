@@ -8,3 +8,20 @@ title = "SteamPunkFantasy Rulebook"
 kind = "markdown"
 source = "round.md"
 title = "The Round"
+
+# Hexes and Tokens come before Specials so that a Special's `token` reference
+# points at something the reader has already met.
+[[sections]]
+kind = "hexes"
+source = "hexes.toml"
+title = "Hex Effects"
+
+[[sections]]
+kind = "tokens"
+source = "tokens.toml"
+title = "Tokens"
+
+[[sections]]
+kind = "specials"
+source = "special.toml"
+title = "Special Rules"

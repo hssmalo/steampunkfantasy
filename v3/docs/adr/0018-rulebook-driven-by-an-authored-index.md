@@ -23,6 +23,14 @@ Nothing about a partial is registered — the convention *is* the binding, which
 keeps `main.<ext>.jinja` dumb, per ADR 0005: it loops over Sections, emits the
 heading, and includes.
 
+A parser is handed the source path *and* a context over the sibling rules
+files, because **the index controls what is rendered, not what is loaded**. A
+Special names the Token it places, and that reference has to resolve whether or
+not the index happens to contain a Tokens Section. The context loads lazily, so
+a Rulebook with no cross-references still touches no file its index did not
+name; resolution is strict, because a reference that renders as nothing is a
+rule the reader never learns about.
+
 The index lives in `rules/` and not in `configs/spf.toml` because it is game
 data — an editorial statement about the game — not developer configuration. It
 is TOML because every other authored data file is, so it loads through the
