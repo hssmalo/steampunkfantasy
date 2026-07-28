@@ -1145,7 +1145,14 @@ race = "gnome"
 name = "Assault Bot Mortar Vehicle"
 requires = [["type:Infantry"], ["Hands:2"]]
 
-[equipment.assault_bot_mortar_vehicle.unit_special]
+[equipment.assault_bot_mortar_vehicle.range]
+range = 4
+angle = [true, true, true, true]
+damage = "n.a"
+ap = 0
+
+
+[equipment.assault_bot_mortar_vehicle.range.special]
 "Note" = "No regular damage"
 "Spawn" = "assault_bots: When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."
 
