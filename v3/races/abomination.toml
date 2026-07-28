@@ -77,7 +77,7 @@ race = "abomination"
 name = "Flagship"
 models = ["flagship"]
 size = "Enormous"
-armor = [10, 9, 6, 4]
+armor = [10, 9, 8, 8]
 cost.ip = 96
 description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insantiy weapons and a greater disruptor weapons and lots of gadgets.
 '''
@@ -129,7 +129,7 @@ notes = ["Unit is destroyed if it has all of the following:no command, disabled 
 rows = [
 	"1: d6 psychic damage to all friendly units within range 2. No command",
 	"2: If flying, deacellerates to float",
-	"2: If floating, do d8 damage (ignore armor) and disable repair",
+	"2: If floating, do d8 damage (ignore armor). Disable Repair",
 	"3: Cannot accelerate",
 	"4: Cannot turn",
 	"5: Shaken",
@@ -838,12 +838,12 @@ requires = []
 
 [equipment.broadside.range]
 range = 4
-angle = ["-", "x2", "x2", "-"]
+angle = ["-", true, true, "-"]
 damage = "d6-1"
 ap = 4
 
 [equipment.broadside.range.special]
-"Multiple Shots" = "Fire once from the front hex and once from the back hex per fire order"
+"Multiple Shots" = "Fire 4 shot to 4 different units in 4 different hexes. Two of the hexes must be neighboring hexes within firing angle to the right, and the other two must be neighboring hexes within firing angle to the left"
 
 
 [equipment.greater_insanity_blast]

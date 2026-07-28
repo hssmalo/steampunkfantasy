@@ -1,0 +1,14 @@
+
+- **Gunnery 1**
+- **Movement 1**
+- **Movement 2**
+- **Movement 3**
+- **Gunnery 2**
+- **Healing and repair 1** — the first of the two windows for restoring Units.
+- **Agony 0** — major acid and terror.
+- **Agony 1** — minor acid and insanity field.
+- **Agony 2** — fire.
+- **Agony 3** — poison.
+- **Agony 4** — bleeding.
+- **Healing and repair 2** — the second restoration window.
+- **Aftermath** — remove fog, clear expired markers, etc.

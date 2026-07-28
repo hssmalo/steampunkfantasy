@@ -3,14 +3,46 @@
 [tokens.crippled_crew]
 name = "Crippled Crew"
 phases = []
-effect = "Get -1 to hit and -1 on all assault dice. In addition, psychic damage now causes crew damage instead"
+effect = "Get -1 to hit and -1 on all assault dice. In addition, if unit is also shaken, psychic damage now causes crew damage instead"
 remove = "Only by healing ability"
 
 [tokens.plus_minus_one]
 name = "-1 to hit, +1 to be hit "
 phases = []
 effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects"
-remove = "Only by repair ability"
+remove = "Only by repair ability: repair Critical."
+
+[tokens.disabled_repair]
+name = "Disabled Repair"
+phases = ["Healing 1", "Healing 2"]
+effect = "Repair ability disabled."
+remove = "This is an critical effect which may be repaired by repair critical. (however obviously this ability cannot be repaired by this unit)"
+
+[tokens.no_command]
+name = "No command"
+phases = []
+effect = "Unit cannot use command abilities"
+remove = "This is an critical effect which my be repair by repair critical."
+
+[tokens.cannot_move]
+name = "Cannot Move"
+phases = ["Movement 1", "Movement 2", "Movement 3"]
+effect = "Speed is set to still and unit cannot move. Treat all F as -"
+remove = "This is an critical effect which my be repair by repair critical."
+
+
+[tokens.cannot_accelerate]
+name = "Cannot Accelerate"
+phases = ["Movement 1", "Movement 2", "Movement 3"]
+effect = "Unit can move, but cannot increase speed. This also includes starting flying. Treat all A as -"
+remove = "This is an critical effect which my be repair by repair critical."
+
+[tokens.cannot_turn]
+name = "Cannot Move"
+phases = ["Movement 1", "Movement 2", "Movement 3"]
+effect = "Unit cannot turn. Treat all L/R and 360° as -"
+remove = "This is an critical effect which my be repair by repair critical."
+
 
 [tokens.minor_acid]
 name = "Minor Acid"
@@ -18,9 +50,22 @@ phases = ["Agony 1"]
 remove = "Only as part of effect"
 effect = "Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid"
 
+[tokens.fire]
+name = "Fire"
+phases = ["Agony 2"]
+remove = "Only as part of effect"
+effect = '''Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
+
+
+- Ignore armor and regular damage resistance
+- Apply bonus to damage based on the number +future damage tokens
+- Apply damage to the regular damage table  (apply damage after you roll damage for all fire tokens)
+'''
+
 [tokens.acid]
 name = "Acid"
 phases = ["Agony 0"]
+remove = "Downgraded as part of effect"
 effect = """Roll a d8 on the following damage table:
 
 1. Downgrade from acid to minor acid.
@@ -76,7 +121,7 @@ N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
 name = "Confused"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 remove = "Remove one token each pre-assault step in each movement phase"
-effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -."
+effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
 
 [tokens.insanity]
 name = "Insanity"

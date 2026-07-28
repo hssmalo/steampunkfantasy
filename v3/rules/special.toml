@@ -166,6 +166,17 @@ explanation = "In agony 0, roll a d{M} psychic damage on any enemy unit within r
 N = { type = "int", min = 1, max = 3 }
 M = { type = "int", values = [4, 6, 8, 10, 12] }
 
+[unit.insanity_field]
+name = "Insanity_field"
+short = "[range={N}][d{M}]"
+explanation = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insanity token"
+
+[unit.insanity_field.variables]
+N = { type = "int", min = 1, max = 3 }
+M = { type = "int", values = [4, 6, 8, 10, 12] }
+
+
+
 [unit.fear]
 name = "Fear"
 short = "[d{N}]"
@@ -182,58 +193,58 @@ explanation = "Roll a die per area of effect damage. Ignore the damage at {N}+"
 [unit.evation.variables]
 N = { type = "int", min = 1, max = 6 }
 
-[range]
+[range_]
 
-[range.burst]
+[range_.burst]
 name = "Burst"
 short = "[{N}]"
 explanation = "This weapon can have, and must be loaded with {N} ammo to be fired. However, when the weapon is fired, it is fired {N} times (per model) at the same enemy unit."
 
-[range.burst.variables]
+[range_.burst.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[range.limited_ammo]
+[range_.limited_ammo]
 name = "Limited Ammo"
 explanation = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
 short = "[{N}]"
 
-[range.limited_ammo.variables]
+[range_.limited_ammo.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[range.gear_disruption]
+[range_.gear_disruption]
 name = "Gear Disruption"
 short = "[{N}+]"
 explanation = "Only applies when target is a drone. The drone gets one shaken token per roll of {N}+."
 
-[range.gear_disruption.variables]
+[range_.gear_disruption.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[range.fire]
+[range_.fire]
 name = "Fire"
 short = ""
 explanation = "Any unit hit at least once  is set on fire"
 
-[range.minor_acid]
+[range_.minor_acid]
 name = "Minor Acid"
 short = "Minor Acid"
 explanation = "Target gets a minor acid token"
 token = "minor_acid"
 
-[range.poison]
+[range_.poison]
 name = "Poison"
 short = "{N}"
 explanation = "Target gets a poison[{N}] token"
 token = "poison"
 
-[range.poison.variables]
+[range_.poison.variables]
 N = { type = "int", min = 1, max = 12 }
 
-[range.fumble]
+[range_.fumble]
 name = "Fumble"
 short = "Fumble"
 explanation = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
 
-[range.critical]
+[range_.critical]
 name = "Critical"
 short = "Critical"
 explanation = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"

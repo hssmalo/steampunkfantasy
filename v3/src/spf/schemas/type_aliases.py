@@ -283,6 +283,7 @@ class Cost(StrictModel):
     cp: int = 0
     xp: int = 0
     ip: int = 0
+    vpm: int = 0
 
     def __add__(self, other: Self) -> Self:
         """Return element-wise sum of two costs."""
@@ -291,6 +292,7 @@ class Cost(StrictModel):
             cp=self.cp + other.cp,
             xp=self.xp + other.xp,
             ip=self.ip + other.ip,
+            vpm=self.vpm + other.vpm,
         )
 
     def __radd__(self, other: Self) -> Self:
@@ -300,7 +302,11 @@ class Cost(StrictModel):
     def __mul__(self, n: int) -> Self:
         """Return cost scaled by n."""
         return self.__class__(
-            mp=self.mp * n, cp=self.cp * n, xp=self.xp * n, ip=self.ip * n
+            mp=self.mp * n,
+            cp=self.cp * n,
+            xp=self.xp * n,
+            ip=self.ip * n,
+            vpm=self.vpm * n,
         )
 
     def __rmul__(self, n: int) -> Self:
@@ -309,7 +315,7 @@ class Cost(StrictModel):
 
     def to_points(self) -> int:
         """Return the points value: mp + cp + xp + 3 * ip."""
-        return self.mp + self.cp + self.xp + 3 * self.ip
+        return self.mp + self.cp + self.xp + 3 * self.ip + self.vpm
 
     @property
     def sort_idx(self) -> int:
@@ -328,6 +334,7 @@ class Cost(StrictModel):
             _part(self.mp, unit="mp"),
             _part(self.xp, unit="xp"),
             _part(self.cp, unit="cp"),
+            _part(self.vpm, unit="vpm"),
         ]
         return " ".join(parts)
 

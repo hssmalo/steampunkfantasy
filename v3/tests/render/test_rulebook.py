@@ -361,9 +361,9 @@ explanation = "Improved resilience versus {version} damage."
 regular = "Regular damage is reduced by {N}."
 psychic = "Psychic damage is reduced by {N}."
 
-[weapon]
+[range_]
 
-[weapon.fumble]
+[range_.fumble]
 name = "Fumble"
 short = "Fumble"
 explanation = "A natural 1 to hit is a fumble."
@@ -387,14 +387,15 @@ def test_specials_kind_yields_one_titled_group_per_schema_group(
     body = parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
 
     assert body.explanation is None
-    assert [group.title for group in body.groups] == ["Assault", "Unit", "Weapon"]
-    assault, unit, weapon = body.groups
+
+    assert [group.title for group in body.groups] == ["Assault", "Unit", "Range"]
+    assault, unit, range_ = body.groups
     assert [rule.name for rule in assault.rules] == [
         "Assault Minor Acid",
         "Cunning Assault",
     ]
     assert [rule.name for rule in unit.rules] == ["Resistance"]
-    assert [rule.name for rule in weapon.rules] == ["Fumble"]
+    assert [rule.name for rule in range_.rules] == ["Fumble"]
 
 
 def test_specials_kind_resolves_a_token_to_its_display_name(tmp_path: Path) -> None:
@@ -717,7 +718,7 @@ def real_latex(tmp_path: Path, real_rulebook: Rulebook) -> str:
 def test_markdown_partials_nest_specials_below_their_group(real_markdown: str) -> None:
     assert "### Assault\n" in real_markdown
     assert "### Unit\n" in real_markdown
-    assert "### Weapon\n" in real_markdown
+    assert "### Range\n" in real_markdown
     assert "#### Cunning Assault [{N}]" in real_markdown
     # Tokens have no groups, so a token rule keeps the shallower level.
     assert "### Minor Acid\n" in real_markdown

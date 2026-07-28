@@ -14,7 +14,7 @@ explanation = "A probe."
 
 [unit]
 
-[weapon]
+[range_]
 """
 
 TOKENS = """\

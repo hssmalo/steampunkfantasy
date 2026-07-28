@@ -327,7 +327,7 @@ def parse_specials(path: Path, context: RulesContext) -> RulesBody:
         for title, specials in (
             ("Assault", config.assault),
             ("Unit", config.unit),
-            ("Range", config.range),
+            ("Range", config.range_),
         )
     ]
     return RulesBody(explanation=None, groups=groups)

@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 28.07.2026 | Ork          | Negative vpm to elite infantry, positive to champion                        | Moved victorypoints for elite in an infantry to killing the champion instead         |
 | 27.07.2026 | All          | Introduced optional order () in a lot of units, mostly tanks                | Reduced the number of order cards and makes it easier to find a specific card        |
 | 27.07.2026 | Goblin       | Heavy Carrier can now fire on both still and slow                           | It needs to be able to shoot while still for the bow battery to work                 |
 | 27.07.2026 | Dwarf        | Transport Zeppelin got a lot less flexibale turn radius                     | It felt wrong for the transport zeppelin to have an unlimited turn radius.           |

@@ -95,6 +95,7 @@ name = "Champion"
 models = ["champion"]
 size = "Medium"
 armor = [0, 0, 0, 0]
+cost.vpm = -16
 description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor.
 '''
 
@@ -668,6 +669,7 @@ ap = 2
 name = "Elite Ork Infantry"
 race = "ork"
 cost.xp = 16
+cost.vpm = -16
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
 replaces = "ork_infantry"
