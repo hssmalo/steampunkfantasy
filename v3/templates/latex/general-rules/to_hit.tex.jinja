@@ -1,0 +1,26 @@
+% The to-hit Section: a `tabular` per category, rather than a sectioning level
+% per rule. `md_to_latex` has no table rule, so the table is built here from the
+% view-model's rows — every cell is plain text and only needs escaping.
+%
+% The note column only appears when some row in the group fills it: an empty
+% column reads as missing data rather than as nothing to say.
+\BLOCK{for group in section.body.groups}
+\subsection{\VAR{group.title | latex_escape}}
+
+\BLOCK{if group.has_notes}
+\begin{tabular}{lllp{0.4\textwidth}}
+\textbf{Modifier} & \textbf{To hit} & \textbf{To be hit} & \textbf{Note} \\
+\BLOCK{for row in group.rows}
+\VAR{row.name | latex_escape} & \VAR{row.to_hit | latex_escape} & \VAR{row.to_be_hit | latex_escape} & \VAR{row.note | default("", true) | latex_escape} \\
+\BLOCK{endfor}
+\end{tabular}
+\BLOCK{else}
+\begin{tabular}{lll}
+\textbf{Modifier} & \textbf{To hit} & \textbf{To be hit} \\
+\BLOCK{for row in group.rows}
+\VAR{row.name | latex_escape} & \VAR{row.to_hit | latex_escape} & \VAR{row.to_be_hit | latex_escape} \\
+\BLOCK{endfor}
+\end{tabular}
+\BLOCK{endif}
+\vspace{1ex}
+\BLOCK{endfor}

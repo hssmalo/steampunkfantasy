@@ -13,6 +13,7 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(list_special_rules, name="specials")
     app.command(list_token_rules, name="tokens")
     app.command(list_hex_rules, name="hexes")
+    app.command(list_to_hit_rules, name="to_hit")
     app.command(list_rulebook, name="rulebook")
 
 
@@ -29,6 +30,11 @@ def list_token_rules() -> None:
 def list_hex_rules() -> None:
     """Validate and list hex rules."""
     stdout.print(rules.get_hexes())
+
+
+def list_to_hit_rules() -> None:
+    """Validate and list to-hit modifiers."""
+    stdout.print(rules.get_to_hit())
 
 
 def list_rulebook() -> None:
