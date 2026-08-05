@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 05.08.2026 | Abomination, Gnome | Replaced remaining references to smoke with fog                       | Smoke was never a hex type; fog is the only one that exists, so the references were dead |
 | 05.08.2026 | All          | Replaced Chase with Chs on all order cards                                  | To save space                                                                        |
 | 28.07.2026 | Ork          | Negative vpm to elite infantry, positive to champion                        | Moved victorypoints for elite in an infantry to killing the champion instead         |
 | 27.07.2026 | All          | Introduced optional order () in a lot of units, mostly tanks                | Reduced the number of order cards and makes it easier to find a specific card        |
