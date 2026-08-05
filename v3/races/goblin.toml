@@ -48,7 +48,7 @@ movement_order = ["-", "-", "Flee"]
 sneak = [["Fire", "Fire"]]
 
 [units.goblin_infantry.orders.movement]
-still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
+sneak = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
 slow  = [["360°", "F", "B"]]
 
 [units.goblin_infantry.damage_tables.Regular]
