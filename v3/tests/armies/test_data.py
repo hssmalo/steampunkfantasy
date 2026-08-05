@@ -911,6 +911,32 @@ def test_duplicate_unit_is_independent(
     assert upgraded.units[1].models[0].name == "elite_soldier"
 
 
+def test_duplicate_unit_drops_nicks(nicked_army: ArmyList) -> None:
+    army = nicked_army.duplicate_unit(("squad", 0))
+    assert army.units[1].nick is None
+    assert army.units[1].models[0].nick is None
+    # The original keeps both of its nicks.
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_duplicate_unit_can_re_nick_in_one_call(nicked_army: ArmyList) -> None:
+    army = nicked_army.duplicate_unit(("squad", 0), nick="Da Gals")
+    assert army.units[1].nick == "Da Gals"
+    # Only the unit is re-nicked; the copied model slots stay un-nicked.
+    assert army.units[1].models[0].nick is None
+
+
+def test_duplicate_unit_empty_nick_raises(nicked_army: ArmyList) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        nicked_army.duplicate_unit(("squad", 0), nick=" ")
+
+
+def test_duplicate_unit_does_not_share_model_list(nicked_army: ArmyList) -> None:
+    army = nicked_army.duplicate_unit(("squad", 0))
+    assert army.units[0].models is not army.units[1].models
+
+
 def test_duplicate_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None:
     with pytest.raises(KeyError):
         one_unit_army.duplicate_unit(("nonexistent", 0))
@@ -987,6 +1013,82 @@ def test_nick_model_unknown_model_key_raises(one_unit_army: ArmyList) -> None:
         one_unit_army.nick_model(
             ("squad", 0), model_key=("nonexistent", 0), nick="Grubnak"
         )
+
+
+# ---------------------------------------------------------------------------
+# Nick survives every upgrade path
+#
+# Every upgrade_* method rebuilds its dataclass, so each reconstruction site
+# has to thread `nick` through or upgrading silently drops it. One test per
+# method, deliberately.
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def nicked_army(simple_race: RaceConfig) -> ArmyList:
+    """One nicked unit whose single model slot is nicked too."""
+    return (
+        ArmyList(race="goblin", nick="Test Army", units=[])
+        .add_unit("squad", nick="Da Lads", race_config=simple_race)
+        .nick_model(("squad", 0), model_key=("soldier", 0), nick="Grubnak")
+    )
+
+
+def test_upgrade_model_preserves_nicks(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="sword",
+        race_config=simple_race,
+    )
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_upgrade_unit_preserves_nicks_across_promotion(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_unit(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        upgrade_model_name="elite_soldier",
+        race_config=simple_race,
+    )
+    assert army.units[0].models[0].name == "elite_soldier"
+    assert army.units[0].nick == "Da Lads"
+    # A Nick belongs to the slot, not the model type.
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_upgrade_full_unit_preserves_nicks(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_full_unit(
+        ("squad", 0), upgrade_model_name="elite_soldier", race_config=simple_race
+    )
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_upgrade_all_models_preserves_nicks(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_all_models(
+        ("squad", 0), equipment_name="sword", race_config=simple_race
+    )
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_delete_unit_leaves_other_nicks_intact(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.add_unit("squad", race_config=simple_race).delete_unit(
+        ("squad", 1)
+    )
+    assert [u.nick for u in army.units] == ["Da Lads"]
 
 
 # ---------------------------------------------------------------------------

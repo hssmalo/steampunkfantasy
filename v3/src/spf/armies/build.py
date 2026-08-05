@@ -284,10 +284,23 @@ class ArmyList:
     def duplicate_unit(
         self,
         unit_key: tuple[t.UnitName, int],
+        *,
+        nick: str | None = None,
     ) -> Self:
-        """Add a copy of an existing unit to the army list."""
+        """Add a copy of an existing unit to the army list.
+
+        The copy is un-nicked at unit *and* model level — a Nick names one
+        instance, so it does not travel with a duplicate. Pass `nick=` to name
+        the copy in the same call.
+        """
+        _check_nick(nick)
         _, unit = _resolve_unit(self, unit_key=unit_key)
-        new_unit = ArmyUnit(name=unit.name, config=unit.config, models=unit.models)
+        new_unit = ArmyUnit(
+            name=unit.name,
+            config=unit.config,
+            models=[replace(model, nick=None) for model in unit.models],
+            nick=nick,
+        )
         return self.__class__(
             race=self.race, nick=self.nick, units=[*self.units, new_unit]
         )
