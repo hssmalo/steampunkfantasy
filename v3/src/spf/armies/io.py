@@ -24,11 +24,18 @@ def save_army(army: ArmyList, *, army_name: str, tournament: str | None = None) 
     data: dict[str, Any] = {
         "race": army.race,
         "nick": army.nick,
+        # A Nick is omitted entirely when unset, so army files written before
+        # nicks existed round-trip byte-identically.
         "units": [
             {
                 "name": unit.name,
+                **({"nick": unit.nick} if unit.nick is not None else {}),
                 "models": [
-                    {"name": model.name, "upgrades": list(model.upgrades)}
+                    {
+                        "name": model.name,
+                        "upgrades": list(model.upgrades),
+                        **({"nick": model.nick} if model.nick is not None else {}),
+                    }
                     for model in unit.models
                 ],
             }
@@ -129,6 +136,8 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
         if unit_name not in cfg.units:
             errors.append(f"Unit #{unit_idx} (name {unit_name!r}): unknown unit name")
             continue
+        if _is_empty_nick(unit_data.get("nick")):
+            errors.append(f"Unit #{unit_idx} ({unit_name!r}): empty nick")
         for model_idx, model_data in enumerate(unit_data["models"]):
             model_name = model_data["name"]
             if model_name not in cfg.models:
@@ -137,6 +146,11 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
                     f" (name {model_name!r}): unknown model name"
                 )
                 continue
+            if _is_empty_nick(model_data.get("nick")):
+                errors.append(
+                    f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
+                    f" ({model_name!r}): empty nick"
+                )
             errors.extend(
                 f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
                 f" ({model_name!r}): unknown equipment {upgrade!r}"
@@ -144,6 +158,15 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
                 if upgrade not in cfg.equipment
             )
     return errors
+
+
+def _is_empty_nick(nick: object) -> bool:
+    """Is this a present-but-empty Nick? Absent (`None`) means "no Nick" and is fine.
+
+    Load is strict (ADR 0004), so `""` is rejected here as it is in the builder
+    API rather than silently loading as a Nick that renders as nothing.
+    """
+    return nick is not None and not str(nick).strip()
 
 
 def _build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
@@ -161,9 +184,11 @@ def _build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
                     name=model_data["name"],
                     config=cfg.models[model_data["name"]],
                     upgrades=list(model_data["upgrades"]),
+                    nick=model_data.get("nick"),
                 )
                 for model_data in unit_data["models"]
             ],
+            nick=unit_data.get("nick"),
         )
         for unit_data in data["units"]
     ]

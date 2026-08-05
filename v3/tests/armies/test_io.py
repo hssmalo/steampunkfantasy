@@ -153,6 +153,103 @@ def test_save_json_contains_race(armies_dir: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Nick serialization
+# ---------------------------------------------------------------------------
+
+
+def test_save_omits_nick_when_unset(armies_dir: Path) -> None:
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "goblin_infantry", race_config=get_race("goblin")
+    )
+    save_army(army_list, army_name="no-nicks")
+    data = json.loads((armies_dir / "no-nicks.json").read_text())
+    assert "nick" not in data["units"][0]
+    assert "nick" not in data["units"][0]["models"][0]
+
+
+def test_save_writes_nicks_when_set(armies_dir: Path) -> None:
+    race_config = get_race("goblin")
+    army_list = (
+        ArmyList(race="goblin", nick="Test Army", units=[])
+        .add_unit("goblin_infantry", nick="Da Lads", race_config=race_config)
+        .nick_model(
+            ("goblin_infantry", 0),
+            model_key=("goblin_infantry", 0),
+            nick="Grubnak",
+        )
+    )
+    save_army(army_list, army_name="with-nicks")
+    data = json.loads((armies_dir / "with-nicks.json").read_text())
+    assert data["units"][0]["nick"] == "Da Lads"
+    assert data["units"][0]["models"][0]["nick"] == "Grubnak"
+
+
+def test_round_trip_preserves_nicks(armies_dir: Path) -> None:  # noqa: ARG001
+    race_config = get_race("goblin")
+    army_list = (
+        ArmyList(race="goblin", nick="Test Army", units=[])
+        .add_unit("goblin_infantry", nick="Da Lads", race_config=race_config)
+        .nick_model(
+            ("goblin_infantry", 0),
+            model_key=("goblin_infantry", 0),
+            nick="Grubnak",
+        )
+    )
+    save_army(army_list, army_name="nick-round-trip")
+    loaded = load_army("nick-round-trip")
+    assert loaded.units[0].nick == "Da Lads"
+    assert loaded.units[0].models[0].nick == "Grubnak"
+
+
+def test_load_army_without_nick_keys_needs_no_migration(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {
+                "name": "goblin_infantry",
+                "models": [{"name": "goblin_infantry", "upgrades": []}],
+            }
+        ],
+    }
+    (armies_dir / "legacy.json").write_text(json.dumps(data))
+    loaded = load_army("legacy")
+    assert loaded.units[0].nick is None
+    assert loaded.units[0].models[0].nick is None
+
+
+def test_load_blank_unit_nick_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [{"name": "goblin_infantry", "nick": "  ", "models": []}],
+    }
+    (armies_dir / "blank-unit-nick.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match=r"Unit #0 \('goblin_infantry'\): empty nick"):
+        load_army("blank-unit-nick")
+
+
+def test_load_blank_model_nick_raises_value_error(armies_dir: Path) -> None:
+    data = {
+        "race": "goblin",
+        "nick": "Test",
+        "units": [
+            {
+                "name": "goblin_infantry",
+                "models": [{"name": "goblin_infantry", "upgrades": [], "nick": ""}],
+            }
+        ],
+    }
+    (armies_dir / "blank-model-nick.json").write_text(json.dumps(data))
+    with pytest.raises(
+        ValueError,
+        match=r"Unit #0 \('goblin_infantry'\) / model #0 \('goblin_infantry'\):"
+        r" empty nick",
+    ):
+        load_army("blank-model-nick")
+
+
+# ---------------------------------------------------------------------------
 # Error paths
 # ---------------------------------------------------------------------------
 
