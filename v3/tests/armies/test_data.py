@@ -1905,3 +1905,32 @@ def test_resolve_populates_upgrade_equipment(
     model = resolved.units[0].models[0]
     assert len(model.upgrade_equipment) == 1
     assert model.upgrade_equipment[0].name == "Sword"
+
+
+# ---------------------------------------------------------------------------
+# display_name on the resolved tier
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_carries_nicks_across(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    resolved = nicked_army.resolve(simple_race)
+    assert resolved.units[0].nick == "Da Lads"
+    assert resolved.units[0].models[0].nick == "Grubnak"
+
+
+def test_display_name_falls_back_to_catalogue_name(
+    one_unit_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    unit = one_unit_army.resolve(simple_race).units[0]
+    assert unit.display_name == "Squad"
+    assert unit.models[0].display_name == "Soldier"
+
+
+def test_display_name_uses_the_nick(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    unit = nicked_army.resolve(simple_race).units[0]
+    assert unit.display_name == "Da Lads"
+    assert unit.models[0].display_name == "Grubnak"

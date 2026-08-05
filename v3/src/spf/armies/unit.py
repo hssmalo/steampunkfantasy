@@ -24,6 +24,11 @@ class Unit:
     nick: str | None = None
 
     @property
+    def display_name(self) -> str:
+        """The name to render: the player's Nick if set, else the catalogue name."""
+        return self.nick or self.config.name
+
+    @property
     def unit_specials(self) -> dict[t.UnitSpecial, str]:
         """Stacked unit-level specials: unit config then each model's unit_specials."""
         result: dict[t.UnitSpecial, str] = dict(self.config.special)
