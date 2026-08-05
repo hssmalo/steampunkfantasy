@@ -17,6 +17,7 @@ class Model:
     config: ModelConfig = field(repr=False)
     default_equipment: list[EquipmentConfig] = field(repr=False)
     upgrade_equipment: list[EquipmentConfig] = field(repr=False)
+    nick: str | None = None
 
     @property
     def equipment(self) -> list[EquipmentConfig]:

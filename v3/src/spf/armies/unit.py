@@ -21,6 +21,7 @@ class Unit:
     name: str
     config: UnitConfig = field(repr=False)
     models: list[Model]
+    nick: str | None = None
 
     @property
     def unit_specials(self) -> dict[t.UnitSpecial, str]:

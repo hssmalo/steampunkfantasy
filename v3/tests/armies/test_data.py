@@ -592,6 +592,29 @@ def test_add_unit_unknown_name_raises(simple_race: RaceConfig) -> None:
         )
 
 
+def test_add_unit_defaults_to_no_nick(simple_race: RaceConfig) -> None:
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "squad", race_config=simple_race
+    )
+    assert army.units[0].nick is None
+    assert army.units[0].models[0].nick is None
+
+
+def test_add_unit_stores_nick(simple_race: RaceConfig) -> None:
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "squad", nick="Boyz", race_config=simple_race
+    )
+    assert army.units[0].nick == "Boyz"
+    assert army.units[0].name == "squad"
+
+
+def test_add_unit_empty_nick_raises(simple_race: RaceConfig) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+            "squad", nick="  ", race_config=simple_race
+        )
+
+
 # ---------------------------------------------------------------------------
 # upgrade_unit
 # ---------------------------------------------------------------------------

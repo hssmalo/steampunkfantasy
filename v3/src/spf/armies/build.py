@@ -22,6 +22,7 @@ class ArmyModel:
     name: str
     config: ModelConfig = field(repr=False)
     upgrades: list[str]
+    nick: str | None = None
 
     def upgrade(self, equipment_name: str, *, race_config: RaceConfig) -> Self:
         """Return a new ArmyModel with the given equipment upgrade added.
@@ -54,6 +55,7 @@ class ArmyModel:
             name=self.name,
             config=self.config,
             upgrades=[*self.upgrades, equipment_name],
+            nick=self.nick,
         )
 
 
@@ -64,6 +66,7 @@ class ArmyUnit:
     name: str
     config: UnitConfig = field(repr=False)
     models: list[ArmyModel]
+    nick: str | None = None
 
     def upgrade_model(
         self,
@@ -80,7 +83,9 @@ class ArmyUnit:
             new_model,
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(name=self.name, config=self.config, models=new_models)
+        return self.__class__(
+            name=self.name, config=self.config, models=new_models, nick=self.nick
+        )
 
     def upgrade_unit(
         self,
@@ -103,15 +108,23 @@ class ArmyUnit:
                 f"not listed in its replaces field"
             )
             raise ValueError(msg)
+        # A Nick belongs to the slot, not the model type: the promoted model keeps
+        # it even though `upgrades` resets (that reset exists for a rules reason,
+        # and a Nick carries no rules weight).
         new_model = ArmyModel(
-            name=upgrade_model_name, config=upgrade_config, upgrades=[]
+            name=upgrade_model_name,
+            config=upgrade_config,
+            upgrades=[],
+            nick=existing.nick,
         )
         new_models = [
             *self.models[:model_idx],
             new_model,
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(name=self.name, config=self.config, models=new_models)
+        return self.__class__(
+            name=self.name, config=self.config, models=new_models, nick=self.nick
+        )
 
 
 @dataclass(frozen=True)
@@ -122,12 +135,21 @@ class ArmyList:
     nick: str
     units: list[ArmyUnit]
 
-    def add_unit(self, unit_name: t.UnitName, *, race_config: RaceConfig) -> Self:
+    def add_unit(
+        self,
+        unit_name: t.UnitName,
+        *,
+        nick: str | None = None,
+        race_config: RaceConfig,
+    ) -> Self:
         """Return a new ArmyList with the given unit appended at its default state."""
         if unit_name not in race_config.units:
             msg = f"Unknown unit '{unit_name}'"
             raise ValueError(msg)
-        new_unit = _make_default_army_unit(unit_name, race_config=race_config)
+        _check_nick(nick)
+        new_unit = _make_default_army_unit(
+            unit_name, nick=nick, race_config=race_config
+        )
         return self.__class__(
             race=self.race, nick=self.nick, units=[*self.units, new_unit]
         )
@@ -262,9 +284,11 @@ class ArmyList:
                         upgrade_equipment=[
                             race_config.equipment[eq] for eq in army_model.upgrades
                         ],
+                        nick=army_model.nick,
                     )
                     for army_model in army_unit.models
                 ],
+                nick=army_unit.nick,
             )
             for army_unit in self.units
         ]
@@ -317,14 +341,21 @@ def _make_default_army_model(
 
 
 def _make_default_army_unit(
-    unit_name: t.UnitName, *, race_config: RaceConfig
+    unit_name: t.UnitName, *, nick: str | None = None, race_config: RaceConfig
 ) -> ArmyUnit:
     unit_config = race_config.units[unit_name]
     models = [
         _make_default_army_model(model_name, race_config=race_config)
         for model_name in unit_config.models
     ]
-    return ArmyUnit(name=unit_name, config=unit_config, models=models)
+    return ArmyUnit(name=unit_name, config=unit_config, models=models, nick=nick)
+
+
+def _check_nick(nick: str | None) -> None:
+    """Reject an empty or whitespace-only Nick. `None` means "no Nick" and is fine."""
+    if nick is not None and not nick.strip():
+        msg = "Nick cannot be empty; use None for no nick"
+        raise ValueError(msg)
 
 
 def _remaining_slots(
@@ -484,6 +515,7 @@ def validate_army(army: ArmyList, *, race_config: RaceConfig) -> list[str]:
                         name=team_model.name,
                         config=team_model.config,
                         upgrades=team_model.upgrades[:j],
+                        nick=team_model.nick,
                     )
                     failed = _unsatisfied_groups(
                         equip.requires, model=partial_model, race_config=race_config
