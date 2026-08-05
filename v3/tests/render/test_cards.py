@@ -54,13 +54,14 @@ def _model(*, equipment: list[EquipmentConfig] | None = None) -> Model:
     )
 
 
-def _unit(
+def _unit(  # noqa: PLR0913  test fixture covers every Unit field under test
     *,
     orders: OrdersConfig,
     models: list[Model] | None = None,
     name: str = "Squad",
     size: t.Size = "Small",
     shaken: ShakenConfig | None = None,
+    nick: str | None = None,
 ) -> Unit:
     config = UnitConfig(
         race="elf",
@@ -71,7 +72,7 @@ def _unit(
         orders=orders,
         damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
     )
-    return Unit(name=name, config=config, models=models or [_model()])
+    return Unit(name=name, config=config, models=models or [_model()], nick=nick)
 
 
 def _equip(orders_gained: OrdersConfig, *, name: str = "SMG") -> EquipmentConfig:
@@ -244,6 +245,60 @@ def test_build_deck_keeps_distinct_units() -> None:
 
     assert len(deck.units) == 2
     assert len(deck.cards) == 2
+
+
+def test_build_deck_unit_nick_replaces_the_catalogue_name() -> None:
+    unit = _unit(orders=OrdersConfig(movement={"still": [["A"]]}), nick="Da Lads")
+
+    deck = build_deck(_army(unit), stem="test")
+
+    (unit_orders,) = deck.units
+    assert unit_orders.name == "Da Lads"
+    assert all(card.unit_name == "Da Lads" for card in deck.cards)
+
+
+def test_build_deck_un_nicked_units_still_collapse() -> None:
+    orders = OrdersConfig(movement={"still": [["A"]]})
+    units = [_unit(orders=orders, name="Infantry") for _ in range(3)]
+
+    deck = build_deck(_army(*units), stem="test")
+
+    assert len(deck.units) == 1
+    assert len(deck.cards) == 1
+
+
+def test_build_deck_differently_nicked_units_each_get_a_card_set() -> None:
+    orders = OrdersConfig(movement={"still": [["A"]]})
+    units = [_unit(orders=orders, name="Infantry", nick=n) for n in ("A", "B", "C")]
+
+    deck = build_deck(_army(*units), stem="test")
+
+    assert [u.name for u in deck.units] == ["A", "B", "C"]
+    # You nicked them to tell them apart, so each gets its own card.
+    assert [c.unit_name for c in deck.cards] == ["A", "B", "C"]
+
+
+def test_build_deck_same_nicked_units_collapse() -> None:
+    orders = OrdersConfig(movement={"still": [["A"]]})
+    units = [_unit(orders=orders, name="Infantry", nick="Boyz") for _ in range(2)]
+
+    deck = build_deck(_army(*units), stem="test")
+
+    assert [u.name for u in deck.units] == ["Boyz"]
+    assert len(deck.cards) == 1
+
+
+def test_build_deck_nicked_unit_image_still_addressed_by_toml_key() -> None:
+    lookup = FakeLookup(ART)
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        name="infantry",
+        nick="Da Lads",
+    )
+
+    build_deck(_army(unit), stem="test", image_for=lookup)
+
+    assert lookup.calls == [("elf", "infantry")]
 
 
 def test_build_deck_carries_shaken_to_units_not_cards() -> None:

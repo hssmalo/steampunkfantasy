@@ -5,7 +5,7 @@ They carry config references for validation but are not self-contained.
 Call ArmyList.resolve(race_config) to obtain a fully resolved Army.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Self
 
 from spf.schemas import type_aliases as t
@@ -22,6 +22,7 @@ class ArmyModel:
     name: str
     config: ModelConfig = field(repr=False)
     upgrades: list[str]
+    nick: str | None = None
 
     def upgrade(self, equipment_name: str, *, race_config: RaceConfig) -> Self:
         """Return a new ArmyModel with the given equipment upgrade added.
@@ -50,11 +51,7 @@ class ArmyModel:
                 f" by model '{self.name}': {detail}"
             )
             raise ValueError(msg)
-        return self.__class__(
-            name=self.name,
-            config=self.config,
-            upgrades=[*self.upgrades, equipment_name],
-        )
+        return replace(self, upgrades=[*self.upgrades, equipment_name])
 
 
 @dataclass(frozen=True)
@@ -64,6 +61,7 @@ class ArmyUnit:
     name: str
     config: UnitConfig = field(repr=False)
     models: list[ArmyModel]
+    nick: str | None = None
 
     def upgrade_model(
         self,
@@ -80,7 +78,7 @@ class ArmyUnit:
             new_model,
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(name=self.name, config=self.config, models=new_models)
+        return replace(self, models=new_models)
 
     def upgrade_unit(
         self,
@@ -103,15 +101,34 @@ class ArmyUnit:
                 f"not listed in its replaces field"
             )
             raise ValueError(msg)
+        # A Nick belongs to the slot, not the model type: the promoted model keeps
+        # it even though `upgrades` resets (that reset exists for a rules reason,
+        # and a Nick carries no rules weight).
         new_model = ArmyModel(
-            name=upgrade_model_name, config=upgrade_config, upgrades=[]
+            name=upgrade_model_name,
+            config=upgrade_config,
+            upgrades=[],
+            nick=existing.nick,
         )
         new_models = [
             *self.models[:model_idx],
             new_model,
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(name=self.name, config=self.config, models=new_models)
+        return replace(self, models=new_models)
+
+    def nick_model(
+        self, model_key: tuple[t.ModelName, int], *, nick: str | None
+    ) -> Self:
+        """Return a new ArmyUnit with the identified model slot's Nick set."""
+        check_nick(nick)
+        model_idx, model = _resolve_model(self, model_key=model_key)
+        new_models = [
+            *self.models[:model_idx],
+            replace(model, nick=nick),
+            *self.models[model_idx + 1 :],
+        ]
+        return replace(self, models=new_models)
 
 
 @dataclass(frozen=True)
@@ -122,15 +139,22 @@ class ArmyList:
     nick: str
     units: list[ArmyUnit]
 
-    def add_unit(self, unit_name: t.UnitName, *, race_config: RaceConfig) -> Self:
+    def add_unit(
+        self,
+        unit_name: t.UnitName,
+        *,
+        nick: str | None = None,
+        race_config: RaceConfig,
+    ) -> Self:
         """Return a new ArmyList with the given unit appended at its default state."""
         if unit_name not in race_config.units:
             msg = f"Unknown unit '{unit_name}'"
             raise ValueError(msg)
-        new_unit = _make_default_army_unit(unit_name, race_config=race_config)
-        return self.__class__(
-            race=self.race, nick=self.nick, units=[*self.units, new_unit]
+        check_nick(nick)
+        new_unit = _make_default_army_unit(
+            unit_name, nick=nick, race_config=race_config
         )
+        return replace(self, units=[*self.units, new_unit])
 
     def upgrade_unit(
         self,
@@ -148,7 +172,7 @@ class ArmyList:
             race_config=race_config,
         )
         new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def upgrade_model(
         self,
@@ -164,7 +188,7 @@ class ArmyList:
             model_key=model_key, equipment_name=equipment_name, race_config=race_config
         )
         new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def upgrade_full_unit(
         self,
@@ -216,16 +240,58 @@ class ArmyList:
             )
         return result
 
+    def nick_unit(self, unit_key: tuple[t.UnitName, int], *, nick: str | None) -> Self:
+        """Return a new ArmyList with the identified unit's Nick set.
+
+        Nicking never changes how anything is addressed: the unit keeps its
+        `(toml_key, occurrence)` key.
+        """
+        check_nick(nick)
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_units = [
+            *self.units[:unit_idx],
+            replace(unit, nick=nick),
+            *self.units[unit_idx + 1 :],
+        ]
+        return replace(self, units=new_units)
+
+    def nick_model(
+        self,
+        unit_key: tuple[t.UnitName, int],
+        *,
+        model_key: tuple[t.ModelName, int],
+        nick: str | None,
+    ) -> Self:
+        """Return a new ArmyList with one model slot's Nick set."""
+        # Checked before resolving, so a bad nick and a bad key raise the same
+        # way here as they do in `nick_unit`.
+        check_nick(nick)
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_unit = unit.nick_model(model_key=model_key, nick=nick)
+        new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
+        return replace(self, units=new_units)
+
     def duplicate_unit(
         self,
         unit_key: tuple[t.UnitName, int],
+        *,
+        nick: str | None = None,
     ) -> Self:
-        """Add a copy of an existing unit to the army list."""
+        """Add a copy of an existing unit to the army list.
+
+        The copy is un-nicked at unit *and* model level — a Nick names one
+        instance, so it does not travel with a duplicate. Pass `nick=` to name
+        the copy in the same call.
+        """
+        check_nick(nick)
         _, unit = _resolve_unit(self, unit_key=unit_key)
-        new_unit = ArmyUnit(name=unit.name, config=unit.config, models=unit.models)
-        return self.__class__(
-            race=self.race, nick=self.nick, units=[*self.units, new_unit]
+        new_unit = ArmyUnit(
+            name=unit.name,
+            config=unit.config,
+            models=[replace(model, nick=None) for model in unit.models],
+            nick=nick,
         )
+        return replace(self, units=[*self.units, new_unit])
 
     def delete_unit(
         self,
@@ -234,7 +300,7 @@ class ArmyList:
         """Remove a unit from the army list."""
         unit_idx, _ = _resolve_unit(self, unit_key=unit_key)
         new_units = [*self.units[:unit_idx], *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def resolve(self, race_config: RaceConfig) -> "Army":
         """Return a fully resolved Army with all equipment configs populated.
@@ -262,9 +328,11 @@ class ArmyList:
                         upgrade_equipment=[
                             race_config.equipment[eq] for eq in army_model.upgrades
                         ],
+                        nick=army_model.nick,
                     )
                     for army_model in army_unit.models
                 ],
+                nick=army_unit.nick,
             )
             for army_unit in self.units
         ]
@@ -317,14 +385,36 @@ def _make_default_army_model(
 
 
 def _make_default_army_unit(
-    unit_name: t.UnitName, *, race_config: RaceConfig
+    unit_name: t.UnitName, *, nick: str | None = None, race_config: RaceConfig
 ) -> ArmyUnit:
     unit_config = race_config.units[unit_name]
     models = [
         _make_default_army_model(model_name, race_config=race_config)
         for model_name in unit_config.models
     ]
-    return ArmyUnit(name=unit_name, config=unit_config, models=models)
+    return ArmyUnit(name=unit_name, config=unit_config, models=models, nick=nick)
+
+
+def nick_error(nick: object) -> str | None:
+    """Why this Nick is invalid, or `None` if it is fine.
+
+    The single authority on what makes a Nick valid. `check_nick` raises what this
+    returns; the load path folds it into its error list instead. A new rule added
+    here therefore reaches both callers, and phrases itself once.
+
+    Takes `object` because the load path checks raw JSON values against the same
+    rule the builder API enforces. An absent Nick (`None`) means "no Nick" and is
+    always fine.
+    """
+    if nick is not None and not str(nick).strip():
+        return "Nick cannot be empty or whitespace-only"
+    return None
+
+
+def check_nick(nick: str | None) -> None:
+    """Raise `ValueError` if the Nick is invalid. `None` means "no Nick" and is fine."""
+    if msg := nick_error(nick):
+        raise ValueError(msg)
 
 
 def _remaining_slots(
@@ -484,6 +574,7 @@ def validate_army(army: ArmyList, *, race_config: RaceConfig) -> list[str]:
                         name=team_model.name,
                         config=team_model.config,
                         upgrades=team_model.upgrades[:j],
+                        nick=team_model.nick,
                     )
                     failed = _unsatisfied_groups(
                         equip.requires, model=partial_model, race_config=race_config

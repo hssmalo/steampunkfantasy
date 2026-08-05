@@ -47,6 +47,7 @@ def _model(
     equipment: list[EquipmentConfig] | None = None,
     assault: AssaultConfig = _ASSAULT,
     model_special: dict[str, str] | None = None,
+    nick: str | None = None,
 ) -> Model:
     config = ModelConfig(
         race="elf",
@@ -63,6 +64,7 @@ def _model(
         config=config,
         default_equipment=[],
         upgrade_equipment=equipment or [],
+        nick=nick,
     )
 
 
@@ -74,6 +76,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
     shaken: ShakenConfig | None = None,
     armor: list[int] | None = None,
     unit_special: dict[str, str] | None = None,
+    nick: str | None = None,
 ) -> Unit:
     resolved_models = models or [_model()]
     config = UnitConfig(
@@ -95,7 +98,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
             }
         },
     )
-    return Unit(name=name, config=config, models=resolved_models)
+    return Unit(name=name, config=config, models=resolved_models, nick=nick)
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
@@ -283,6 +286,80 @@ def test_build_reference_army_points_counts_duplicate_units() -> None:
     reference = build_reference(_army(unit_a, unit_b, nick="Test"), stem="test")
 
     assert reference.points == unit_a.cost().to_points() + unit_b.cost().to_points()
+
+
+# --- build_reference: Nicks in the entry names and the collapse key ---------
+
+
+def test_build_reference_unit_nick_replaces_the_catalogue_name() -> None:
+    unit = _unit(name="Infantry", nick="Da Lads")
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (unit_entry,) = reference.units
+    # A Nick replaces the catalogue name outright — no parenthetical.
+    assert unit_entry.name == "Da Lads"
+
+
+def test_build_reference_model_nick_replaces_the_catalogue_name() -> None:
+    unit = _unit(models=[_model(name="Infantry", nick="Grubnak")])
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.model_summary == ["1x Grubnak"]
+    assert [m.name for m in unit_entry.models] == ["Grubnak"]
+
+
+def test_build_reference_unit_image_still_addressed_by_toml_key() -> None:
+    lookup = FakeLookup(ART)
+
+    build_reference(
+        _army(_unit(name="infantry", nick="Da Lads")), stem="test", image_for=lookup
+    )
+
+    # Nicking never changes how an Asset is addressed.
+    assert ("elf", "infantry") in lookup.calls
+
+
+def test_build_reference_un_nicked_units_still_collapse() -> None:
+    units = [_unit(name="Infantry") for _ in range(3)]
+
+    reference = build_reference(_army(*units), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.count == 3
+
+
+def test_build_reference_differently_nicked_units_do_not_collapse() -> None:
+    units = [_unit(name="Infantry", nick=nick) for nick in ("A", "B", "C")]
+
+    reference = build_reference(_army(*units), stem="test")
+
+    assert [u.name for u in reference.units] == ["A", "B", "C"]
+    assert all(u.count == 1 for u in reference.units)
+
+
+def test_build_reference_same_nicked_units_collapse() -> None:
+    units = [_unit(name="Infantry", nick="Boyz") for _ in range(2)]
+
+    reference = build_reference(_army(*units), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.name == "Boyz"
+    assert unit_entry.count == 2
+
+
+def test_build_reference_nicked_model_splits_from_identical_squadmates() -> None:
+    grunt = _model(name="Infantry")
+    named = _model(name="Infantry", nick="Grubnak")
+    unit = _unit(models=[named, grunt, grunt])
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.model_summary == ["1x Grubnak", "2x Infantry"]
+    assert [m.name for m in unit_entry.models] == ["Grubnak", "Infantry"]
 
 
 # --- build_reference: resolved assault, not raw config ----------------------

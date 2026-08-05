@@ -10,6 +10,13 @@ extend-exclude = [
     "workflows/local.example.json",
     # An ADR about a typo will always contain that typo.
     "docs/adr/0011-coverage-survey-of-assets.md",
+    # Generated army data: the Nicks in here are player-chosen names, and
+    # `just spell-fix` would rewrite them in place, desyncing the JSON from the
+    # build script that generates it. The build scripts stay spell-checked.
+    # Both shapes are needed: `*` does not cross a `/`, and armies live both
+    # directly in `armies/` and one level down in `armies/<tournament>/`.
+    "armies/*.json",
+    "armies/**/*.json",
 ]
 
 [default]

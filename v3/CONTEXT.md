@@ -131,7 +131,7 @@ A marker tracking transient state on a Unit or Model (bleeding, poison, +1
 future damage, …), placed and removed in specific Phases.
 
 **Nick**:
-The player-chosen name of an Army instance.
+The player-chosen name of an Army, Unit, or Model instance.
 _Avoid_: nickname, label, title
 
 ### Game-data maintenance

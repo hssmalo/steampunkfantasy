@@ -176,10 +176,42 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_model_line_shows_name(simple_race: RaceConfig, *, capture: Console) -> None:
+def test_model_line_shows_display_name_not_toml_key(
+    simple_race: RaceConfig, *, capture: Console
+) -> None:
     army = _army(simple_race).resolve(simple_race)
     print_army_rules(army)
-    assert "soldier" in capture.export_text()
+    output = capture.export_text()
+    # Models print by display name, matching the unit lines beside them —
+    # not by the raw snake_case TOML key.
+    assert "Soldier" in output
+    assert "soldier" not in output
+
+
+def test_model_line_shows_nick_when_set(
+    simple_race: RaceConfig, *, capture: Console
+) -> None:
+    army = (
+        _army(simple_race)
+        .nick_model(("squad", 0), model_key=("soldier", 0), nick="Grubnak")
+        .resolve(simple_race)
+    )
+    print_army_rules(army)
+    output = capture.export_text()
+    assert "Grubnak" in output
+    assert "Soldier" not in output
+
+
+def test_unit_line_shows_nick_when_set(
+    simple_race: RaceConfig, *, capture: Console
+) -> None:
+    army = (
+        _army(simple_race).nick_unit(("squad", 0), nick="Da Lads").resolve(simple_race)
+    )
+    print_army_rules(army)
+    output = capture.export_text()
+    assert "Da Lads" in output
+    assert "Squad" not in output
 
 
 def test_model_line_omits_cost_when_zero(
