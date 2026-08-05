@@ -4,9 +4,7 @@
 name = "Aim"
 phases = ["Gunnery 1", "Gunnery 2"]
 effect = "Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round."
-remove = "Place two aim tokens (unless the unit allready have one). Either remove them both when you fire, or remove one each aftermath phase. Also remove both if you enter an assault (regardless of wether you win or not)"
-
-
+remove = "Place two aim tokens (unless the unit already have one). Either remove them both when you fire, or remove one each aftermath phase. Also remove both if you enter an assault (regardless of whether you win or not)"
 
 [tokens.crippled_crew]
 name = "Crippled Crew"
@@ -38,7 +36,6 @@ phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Speed is set to still and unit cannot move. Treat all F as -"
 remove = "This is an critical effect which my be repair by repair critical."
 
-
 [tokens.cannot_accelerate]
 name = "Cannot Accelerate"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
@@ -50,7 +47,6 @@ name = "Cannot Move"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Unit cannot turn. Treat all L/R and 360° as -"
 remove = "This is an critical effect which my be repair by repair critical."
-
 
 [tokens.minor_acid]
 name = "Minor Acid"
