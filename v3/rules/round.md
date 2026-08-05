@@ -38,7 +38,7 @@ silently; you never lose a later Phase by skipping an earlier one.
 - **Agony 3** — poison. Apply damage.
 - **Agony 4** — bleeding. Apply damage.
 - **Healing and repair 2** — the second restoration window.
-- **Aftermath** — remove smoke, clear expired markers, reveal what the Round
+- **Aftermath** — remove fog, clear expired markers, reveal what the Round
   uncovered.
 
 ---

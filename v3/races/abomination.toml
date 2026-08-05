@@ -550,7 +550,7 @@ equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
 [models.abomination_infantry.special]
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog) hexes."
+"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 
 [models.abomination_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -711,7 +711,7 @@ equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
 [models.frost_88.special]
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
+"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 "To Hit" = "Double to-hit bonuses and penalties for movement speed, both for you and the target"
 
 
@@ -974,9 +974,9 @@ ap = "N/A"
 
 [equipment.fog_grenade_mortar.range.special]
 
-"Cloud" = "Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+"Cloud" = "Place two fog tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
 
-"Ammo" = "May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+"Ammo" = "May start the game without ammo, but instead place two fog tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 
 [equipment.long_range_fog_grenade_mortar]
@@ -994,9 +994,9 @@ ap = "N/A"
 
 [equipment.long_range_fog_grenade_mortar.range.special]
 
-"Cloud" = "Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+"Cloud" = "Place two fog tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
 
-"Ammo" = "May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+"Ammo" = "May start the game without ammo, but instead place two fog tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 [equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
