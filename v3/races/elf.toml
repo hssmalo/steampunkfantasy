@@ -173,7 +173,7 @@ speed = 'slow'
 movement_order = ["-", "-", "flee"]
 
 [units.illusion.orders.movement]
-slow = [["-", "-", "chase"]]
+slow = [["-", "-", "Chs"]]
 
 [units.illusion.damage_tables.Regular]
 rows = [
@@ -1241,7 +1241,7 @@ description = '''Oliphant is a big elephant with a plotform on top where there a
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
-movement_order = ["-", "-", "chase"]
+movement_order = ["-", "-", "Chs"]
 comment = "Chases closest unit, friend or foe. Assaults friendly units"
 
 [units.armored_oliphant_riders.orders.movement]

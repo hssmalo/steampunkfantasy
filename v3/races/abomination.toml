@@ -430,7 +430,7 @@ movement_order = ["-", "-", "-"]
 "Chase" = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"
 
 [units.robot_crab.orders.movement]
-fast = [["chase", "chase", "chase"]]
+fast = [["Chs", "Chs", "Chs"]]
 
 [units.robot_crab.damage_tables.Regular]
 rows = [
@@ -499,7 +499,7 @@ description = '''Abomination (scary humanoid creature with 2 arms and 4 tentacle
 
 [units.hippopotamus_riders.shaken]
 speed = "fast"
-movement_order = ["-", "chase", "chase"]
+movement_order = ["-", "Chs", "Chs"]
 fire_order = "Normal"
 
 [units.hippopotamus_riders.special]
@@ -517,7 +517,7 @@ fast = [
 	["F", "F", "360°"],
 	["F", "360°", "F"],
 	["F", "B", "-"],
-	["-", "Chase", "Chase"],
+	["-", "Chs", "Chs"],
 ]
 slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"]]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]

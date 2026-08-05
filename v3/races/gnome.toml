@@ -37,8 +37,8 @@ movement_order = ["-", "-", "flee"]
 
 [units.gnome_infantry.orders.movement]
 slow = [
-    ["Chase", "", ""],
-    ["", "", "Chase"],
+    ["Chs", "", ""],
+    ["", "", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
@@ -98,8 +98,8 @@ fast = [
 ]
 slow = [
     ["360°", "A", "F"],
-    ["Chase", "", ""],
-    ["", "", "Chase"],
+    ["Chs", "", ""],
+    ["", "", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
@@ -138,7 +138,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.assault_bots.orders.movement]
-slow = [["-", "-", "Chase"]]
+slow = [["-", "-", "Chs"]]
 
 [units.assault_bots.damage_tables.Regular]
 rows = [
@@ -161,7 +161,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.mechanical_rat.orders.movement]
-slow = [["-", "-", "Chase"]]
+slow = [["-", "-", "Chs"]]
 
 [units.mechanical_rat.damage_tables.Regular]
 rows = [

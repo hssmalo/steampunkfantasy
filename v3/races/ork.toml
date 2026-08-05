@@ -79,7 +79,7 @@ movement_order = ["-", "-", "flee"]
 "Fire Order" = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
 
 [units.troll.orders.movement]
-slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
+slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
 [units.troll.damage_tables.Regular]
 rows = [
@@ -148,12 +148,12 @@ fast = [
     ["F", "360°", "F"],
     ["F", "F", "360°"],
     ["F", "B", "360°"],
-    ["-", "chase", "chase"],
+    ["-", "Chs", "Chs"],
 ]
 slow = [
     ["360°", "360°", "360°"],
     ["360°", "F", "360°"],
-    ["-", "-", "chase"],
+    ["-", "-", "Chs"],
     ["360°", "A", "F"],
 ]
 
@@ -388,7 +388,7 @@ movement_order = ["-", "-", "flee"]
 "Fire Order" = "Cannot use ranged weapons"
 
 [units.grunt.orders.movement]
-slow = [["Chase", "-", "-"], ["-", "-", "Chase"]]
+slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
 [units.grunt.damage_tables.Regular]
 rows = [
@@ -425,15 +425,15 @@ movement_order = ["-", "-", "flee"]
 
 [units.ork_werewarg.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", ""],
-    ["360°", "A", "Chase"],
+    ["360°", "A", "Chs"],
 ]
 still = [["360°", "-", "-"], ["360°", "A", "F"]]
-fast = [["-", "Chase", "Chase"], ["F", "B", "-"]]
+fast = [["-", "Chs", "Chs"], ["F", "B", "-"]]
 
 [units.ork_werewarg.orders.fire]
 still = [
@@ -504,7 +504,7 @@ slow = [
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
-    ["-", "-", "Chase"],
+    ["-", "-", "Chs"],
 ]
 
 [units.bioengineered_ork.damage_tables.Regular]
@@ -962,8 +962,8 @@ requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings.orders_gained.movement]
-slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_fly = [["Chase", "B(slow, land)", "-"]]
+slow = [["A(fast, fly)", "Chs", "Chs"]]
+fast_fly = [["Chs", "B(slow, land)", "-"]]
 
 [equipment.clockwork_wings_free]
 name = "Clockwork Wings"
@@ -974,8 +974,8 @@ requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 strength.add = [1, 0, 0, 0]
 
 [equipment.clockwork_wings_free.orders_gained.movement]
-slow = [["A(fast, fly)", "Chase", "Chase"]]
-fast_fly = [["Chase", "B(slow, land)", "-"]]
+slow = [["A(fast, fly)", "Chs", "Chs"]]
+fast_fly = [["Chs", "B(slow, land)", "-"]]
 
 [equipment.flame_covered_axe]
 name = "Flame-covered-axe"

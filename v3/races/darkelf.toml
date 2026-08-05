@@ -476,8 +476,8 @@ movement_order = ["-", "-", "Flee"]
 
 [units.darkelf_infantry.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
@@ -552,8 +552,8 @@ movement_order = ["-", "-", "Flee"]
 
 [units.multicultural_infantry.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
 ]
@@ -602,7 +602,7 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [units.multicultural_trainee.orders.movement]
-slow = [["-", "-", "Chase"]]
+slow = [["-", "-", "Chs"]]
 
 [units.multicultural_trainee.damage_tables.Regular]
 rows = [
@@ -641,8 +641,8 @@ movement_order = ["-", "-", "Flee"]
 
 [units.roboprosthetic_darkelf.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
@@ -702,8 +702,8 @@ movement_order = ["-", "-", "Flee"]
 
 [units.assassin.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "F", "B"],
@@ -756,8 +756,8 @@ movement_order = ["-", "-", "Flee"]
 
 [units.roboprosthetic_assassin.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "F", "B"],
@@ -811,8 +811,8 @@ movement_order = ["-", "-", "Flee"]
 
 [units.scout.orders.movement]
 slow = [
-    ["Chase", "-", "-"],
-    ["-", "-", "Chase"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "F", "B"],
@@ -1778,7 +1778,7 @@ requires = [["Training:1"], ["type:Infantry"]]
 
 [equipment.hide.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
-slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
+slow = [["-", "Reveal", "Chs"], ["Hide[ruins]", "-", "-"]]
 crawl = [["Hide[ruins]", "-", "-"]]
 
 [equipment.cloaking_device]
@@ -1794,7 +1794,7 @@ requires = [["Independent:1"], ["type:Mechanical"]]
 
 [equipment.cloaking_device.orders_gained.movement]
 still = [["Reveal", "-", "-"]]
-slow = [["-", "Reveal", "Chase"]]
+slow = [["-", "Reveal", "Chs"]]
 
 [equipment.hide_free]
 name = "Hide"
@@ -1808,7 +1808,7 @@ requires = []
 
 [equipment.hide_free.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
-slow = [["-", "Reveal", "Chase"], ["Hide[ruins]", "-", "-"]]
+slow = [["-", "Reveal", "Chs"], ["Hide[ruins]", "-", "-"]]
 crawl = [["Hide[ruins]", "-", "-"]]
 
 [equipment.vest_of_life_support]

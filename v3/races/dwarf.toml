@@ -572,9 +572,9 @@ fire_order = "May not use whip"
 
 [units.tamed_balrog.orders.movement]
 slow = [
-    ["A+chase", "chase", "chase+B[rest]"],
-    ["chase", "-", "-"],
-    ["-", "-", "chase"],
+    ["Chs", "Chs", "Chs+B[rest]"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "-", "-"],
     ["360°", "F", "-"],
 ]
