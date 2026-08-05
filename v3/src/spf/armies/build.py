@@ -121,7 +121,7 @@ class ArmyUnit:
         self, model_key: tuple[t.ModelName, int], *, nick: str | None
     ) -> Self:
         """Return a new ArmyUnit with the identified model slot's Nick set."""
-        _check_nick(nick)
+        check_nick(nick)
         model_idx, model = _resolve_model(self, model_key=model_key)
         new_models = [
             *self.models[:model_idx],
@@ -150,7 +150,7 @@ class ArmyList:
         if unit_name not in race_config.units:
             msg = f"Unknown unit '{unit_name}'"
             raise ValueError(msg)
-        _check_nick(nick)
+        check_nick(nick)
         new_unit = _make_default_army_unit(
             unit_name, nick=nick, race_config=race_config
         )
@@ -246,7 +246,7 @@ class ArmyList:
         Nicking never changes how anything is addressed: the unit keeps its
         `(toml_key, occurrence)` key.
         """
-        _check_nick(nick)
+        check_nick(nick)
         unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
         new_units = [
             *self.units[:unit_idx],
@@ -265,7 +265,7 @@ class ArmyList:
         """Return a new ArmyList with one model slot's Nick set."""
         # Checked before resolving, so a bad nick and a bad key raise the same
         # way here as they do in `nick_unit`.
-        _check_nick(nick)
+        check_nick(nick)
         unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
         new_unit = unit.nick_model(model_key=model_key, nick=nick)
         new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
@@ -283,7 +283,7 @@ class ArmyList:
         instance, so it does not travel with a duplicate. Pass `nick=` to name
         the copy in the same call.
         """
-        _check_nick(nick)
+        check_nick(nick)
         _, unit = _resolve_unit(self, unit_key=unit_key)
         new_unit = ArmyUnit(
             name=unit.name,
@@ -395,19 +395,25 @@ def _make_default_army_unit(
     return ArmyUnit(name=unit_name, config=unit_config, models=models, nick=nick)
 
 
-def is_empty_nick(nick: object) -> bool:
-    """Is this a present-but-empty Nick? Absent (`None`) means "no Nick" and is fine.
+def nick_error(nick: object) -> str | None:
+    """Why this Nick is invalid, or `None` if it is fine.
+
+    The single authority on what makes a Nick valid. `check_nick` raises what this
+    returns; the load path folds it into its error list instead. A new rule added
+    here therefore reaches both callers, and phrases itself once.
 
     Takes `object` because the load path checks raw JSON values against the same
-    rule the builder API enforces.
+    rule the builder API enforces. An absent Nick (`None`) means "no Nick" and is
+    always fine.
     """
-    return nick is not None and not str(nick).strip()
+    if nick is not None and not str(nick).strip():
+        return "Nick cannot be empty or whitespace-only"
+    return None
 
 
-def _check_nick(nick: str | None) -> None:
-    """Reject an empty or whitespace-only Nick. `None` means "no Nick" and is fine."""
-    if is_empty_nick(nick):
-        msg = "Nick cannot be empty; use None for no nick"
+def check_nick(nick: str | None) -> None:
+    """Raise `ValueError` if the Nick is invalid. `None` means "no Nick" and is fine."""
+    if msg := nick_error(nick):
         raise ValueError(msg)
 
 

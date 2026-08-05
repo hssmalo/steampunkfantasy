@@ -9,7 +9,7 @@ from spf.armies.build import (
     ArmyList,
     ArmyModel,
     ArmyUnit,
-    is_empty_nick,
+    nick_error,
     validate_army,
 )
 from spf.config import config
@@ -30,8 +30,6 @@ def save_army(army: ArmyList, *, army_name: str, tournament: str | None = None) 
     data: dict[str, Any] = {
         "race": army.race,
         "nick": army.nick,
-        # A Nick is omitted entirely when unset, so army files written before
-        # nicks existed round-trip byte-identically.
         "units": [
             {
                 "name": unit.name,
@@ -48,7 +46,7 @@ def save_army(army: ArmyList, *, army_name: str, tournament: str | None = None) 
             for unit in army.units
         ],
     }
-    path.write_text(json.dumps(data, indent=2))
+    path.write_text(json.dumps(data, indent=2) + "\n")
 
 
 def load_army(
@@ -142,8 +140,8 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
         if unit_name not in cfg.units:
             errors.append(f"Unit #{unit_idx} (name {unit_name!r}): unknown unit name")
             continue
-        if is_empty_nick(unit_data.get("nick")):
-            errors.append(f"Unit #{unit_idx} ({unit_name!r}): empty nick")
+        if unit_nick_error := nick_error(unit_data.get("nick")):
+            errors.append(f"Unit #{unit_idx} ({unit_name!r}): {unit_nick_error}")
         for model_idx, model_data in enumerate(unit_data["models"]):
             model_name = model_data["name"]
             if model_name not in cfg.models:
@@ -152,10 +150,10 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
                     f" (name {model_name!r}): unknown model name"
                 )
                 continue
-            if is_empty_nick(model_data.get("nick")):
+            if model_nick_error := nick_error(model_data.get("nick")):
                 errors.append(
                     f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
-                    f" ({model_name!r}): empty nick"
+                    f" ({model_name!r}): {model_nick_error}"
                 )
             errors.extend(
                 f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"

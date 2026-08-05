@@ -152,6 +152,13 @@ def test_save_json_contains_race(armies_dir: Path) -> None:
     assert data["race"] == "goblin"
 
 
+def test_save_ends_file_with_a_newline(armies_dir: Path) -> None:
+    """Otherwise every saved army is dirty the moment end-of-file-fixer sees it."""
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[])
+    save_army(army_list, army_name="trailing-newline")
+    assert (armies_dir / "trailing-newline.json").read_text().endswith("}\n")
+
+
 # ---------------------------------------------------------------------------
 # Nick serialization
 # ---------------------------------------------------------------------------
@@ -225,7 +232,10 @@ def test_load_blank_unit_nick_raises_value_error(armies_dir: Path) -> None:
         "units": [{"name": "goblin_infantry", "nick": "  ", "models": []}],
     }
     (armies_dir / "blank-unit-nick.json").write_text(json.dumps(data))
-    with pytest.raises(ValueError, match=r"Unit #0 \('goblin_infantry'\): empty nick"):
+    with pytest.raises(
+        ValueError,
+        match=r"Unit #0 \('goblin_infantry'\): Nick cannot be empty",
+    ):
         load_army("blank-unit-nick")
 
 
@@ -244,7 +254,7 @@ def test_load_blank_model_nick_raises_value_error(armies_dir: Path) -> None:
     with pytest.raises(
         ValueError,
         match=r"Unit #0 \('goblin_infantry'\) / model #0 \('goblin_infantry'\):"
-        r" empty nick",
+        r" Nick cannot be empty",
     ):
         load_army("blank-model-nick")
 
