@@ -917,6 +917,79 @@ def test_duplicate_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None
 
 
 # ---------------------------------------------------------------------------
+# nick_unit / nick_model
+# ---------------------------------------------------------------------------
+
+
+def test_nick_unit_sets_nick(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.nick_unit(("squad", 0), nick="Da Lads")
+    assert army.units[0].nick == "Da Lads"
+
+
+def test_nick_unit_addresses_the_right_occurrence(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.duplicate_unit(("squad", 0)).nick_unit(
+        ("squad", 1), nick="Da Lads"
+    )
+    assert army.units[0].nick is None
+    assert army.units[1].nick == "Da Lads"
+
+
+def test_nick_unit_does_not_mutate_original(one_unit_army: ArmyList) -> None:
+    one_unit_army.nick_unit(("squad", 0), nick="Da Lads")
+    assert one_unit_army.units[0].nick is None
+
+
+def test_nick_unit_clears_with_none(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.nick_unit(("squad", 0), nick="Da Lads")
+    assert army.nick_unit(("squad", 0), nick=None).units[0].nick is None
+
+
+def test_nick_unit_empty_nick_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        one_unit_army.nick_unit(("squad", 0), nick="   ")
+
+
+def test_nick_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.nick_unit(("nonexistent", 0), nick="Da Lads")
+
+
+def test_nick_model_sets_nick(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.nick_model(
+        ("squad", 0), model_key=("soldier", 0), nick="Grubnak"
+    )
+    assert army.units[0].models[0].nick == "Grubnak"
+    assert army.units[0].nick is None
+
+
+def test_nick_model_leaves_squadmates_alone(simple_race: RaceConfig) -> None:
+    two_model_unit = ArmyUnit(
+        name="squad",
+        config=simple_race.units["squad"],
+        models=[
+            ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=[])
+            for _ in range(2)
+        ],
+    )
+    army = ArmyList(race="goblin", nick="Test Army", units=[two_model_unit]).nick_model(
+        ("squad", 0), model_key=("soldier", 1), nick="Grubnak"
+    )
+    assert [m.nick for m in army.units[0].models] == [None, "Grubnak"]
+
+
+def test_nick_model_empty_nick_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        one_unit_army.nick_model(("squad", 0), model_key=("soldier", 0), nick="")
+
+
+def test_nick_model_unknown_model_key_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.nick_model(
+            ("squad", 0), model_key=("nonexistent", 0), nick="Grubnak"
+        )
+
+
+# ---------------------------------------------------------------------------
 # delete_unit
 # ---------------------------------------------------------------------------
 

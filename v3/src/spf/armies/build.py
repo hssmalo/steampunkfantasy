@@ -5,7 +5,7 @@ They carry config references for validation but are not self-contained.
 Call ArmyList.resolve(race_config) to obtain a fully resolved Army.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Self
 
 from spf.schemas import type_aliases as t
@@ -126,6 +126,21 @@ class ArmyUnit:
             name=self.name, config=self.config, models=new_models, nick=self.nick
         )
 
+    def nick_model(
+        self, model_key: tuple[t.ModelName, int], *, nick: str | None
+    ) -> Self:
+        """Return a new ArmyUnit with the identified model slot's Nick set."""
+        _check_nick(nick)
+        model_idx, model = _resolve_model(self, model_key=model_key)
+        new_models = [
+            *self.models[:model_idx],
+            replace(model, nick=nick),
+            *self.models[model_idx + 1 :],
+        ]
+        return self.__class__(
+            name=self.name, config=self.config, models=new_models, nick=self.nick
+        )
+
 
 @dataclass(frozen=True)
 class ArmyList:
@@ -237,6 +252,34 @@ class ArmyList:
                 race_config=race_config,
             )
         return result
+
+    def nick_unit(self, unit_key: tuple[t.UnitName, int], *, nick: str | None) -> Self:
+        """Return a new ArmyList with the identified unit's Nick set.
+
+        Nicking never changes how anything is addressed: the unit keeps its
+        `(toml_key, occurrence)` key.
+        """
+        _check_nick(nick)
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_units = [
+            *self.units[:unit_idx],
+            replace(unit, nick=nick),
+            *self.units[unit_idx + 1 :],
+        ]
+        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+
+    def nick_model(
+        self,
+        unit_key: tuple[t.UnitName, int],
+        *,
+        model_key: tuple[t.ModelName, int],
+        nick: str | None,
+    ) -> Self:
+        """Return a new ArmyList with one model slot's Nick set."""
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_unit = unit.nick_model(model_key=model_key, nick=nick)
+        new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
+        return self.__class__(race=self.race, nick=self.nick, units=new_units)
 
     def duplicate_unit(
         self,
