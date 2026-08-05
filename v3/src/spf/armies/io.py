@@ -75,13 +75,13 @@ def print_army(army: Army) -> None:
         cost = unit.cost()
         pts = cost.to_points()
         stdout.print(
-            f"[bold]{unit.config.name}[/] - {cost} [yellow]({pts} pts)[/]",
+            f"[bold]{unit.display_name}[/] - {cost} [yellow]({pts} pts)[/]",
             highlight=False,
         )
         for model in unit.models:
             equip_names = [e.name for e in model.equipment]
             equip_str = f" ({', '.join(equip_names)})" if equip_names else ""
-            stdout.print(f"  - {model.name}{equip_str}", highlight=False)
+            stdout.print(f"  - {model.display_name}{equip_str}", highlight=False)
     cost = army.cost()
     stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
@@ -91,7 +91,7 @@ def print_army_rules(army: Army) -> None:
     stdout.rule(f"{army.nick} — {army.race.title()} Army")
     for unit in army.units:
         stdout.print(
-            f"- [yellow]{unit.config.name}[/] - {unit.cost()}", highlight=False
+            f"- [yellow]{unit.display_name}[/] - {unit.cost()}", highlight=False
         )
         if unit.unit_specials:
             stdout.print("  - [dim]Specials:[/]", highlight=False)
@@ -100,7 +100,7 @@ def print_army_rules(army: Army) -> None:
         for model in unit.models:
             model_pts = model.cost().to_points()
             cost_str = f" ({model_pts} pts)" if model_pts else ""
-            stdout.print(f"  - {model.name}{cost_str}", highlight=False)
+            stdout.print(f"  - {model.display_name}{cost_str}", highlight=False)
             if model.model_specials:
                 stdout.print("    - [dim]Specials:[/]", highlight=False)
             for key, special in model.model_specials.items():
