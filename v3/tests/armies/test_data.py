@@ -1008,6 +1008,12 @@ def test_nick_model_empty_nick_raises(one_unit_army: ArmyList) -> None:
         one_unit_army.nick_model(("squad", 0), model_key=("soldier", 0), nick="")
 
 
+def test_nick_model_checks_the_nick_before_the_key(one_unit_army: ArmyList) -> None:
+    # Same order as nick_unit, so a bad nick reports as a bad nick either way.
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        one_unit_army.nick_model(("nonexistent", 0), model_key=("soldier", 0), nick=" ")
+
+
 def test_nick_model_unknown_model_key_raises(one_unit_army: ArmyList) -> None:
     with pytest.raises(KeyError):
         one_unit_army.nick_model(

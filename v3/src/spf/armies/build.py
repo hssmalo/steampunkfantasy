@@ -51,12 +51,7 @@ class ArmyModel:
                 f" by model '{self.name}': {detail}"
             )
             raise ValueError(msg)
-        return self.__class__(
-            name=self.name,
-            config=self.config,
-            upgrades=[*self.upgrades, equipment_name],
-            nick=self.nick,
-        )
+        return replace(self, upgrades=[*self.upgrades, equipment_name])
 
 
 @dataclass(frozen=True)
@@ -83,9 +78,7 @@ class ArmyUnit:
             new_model,
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(
-            name=self.name, config=self.config, models=new_models, nick=self.nick
-        )
+        return replace(self, models=new_models)
 
     def upgrade_unit(
         self,
@@ -122,9 +115,7 @@ class ArmyUnit:
             new_model,
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(
-            name=self.name, config=self.config, models=new_models, nick=self.nick
-        )
+        return replace(self, models=new_models)
 
     def nick_model(
         self, model_key: tuple[t.ModelName, int], *, nick: str | None
@@ -137,9 +128,7 @@ class ArmyUnit:
             replace(model, nick=nick),
             *self.models[model_idx + 1 :],
         ]
-        return self.__class__(
-            name=self.name, config=self.config, models=new_models, nick=self.nick
-        )
+        return replace(self, models=new_models)
 
 
 @dataclass(frozen=True)
@@ -165,9 +154,7 @@ class ArmyList:
         new_unit = _make_default_army_unit(
             unit_name, nick=nick, race_config=race_config
         )
-        return self.__class__(
-            race=self.race, nick=self.nick, units=[*self.units, new_unit]
-        )
+        return replace(self, units=[*self.units, new_unit])
 
     def upgrade_unit(
         self,
@@ -185,7 +172,7 @@ class ArmyList:
             race_config=race_config,
         )
         new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def upgrade_model(
         self,
@@ -201,7 +188,7 @@ class ArmyList:
             model_key=model_key, equipment_name=equipment_name, race_config=race_config
         )
         new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def upgrade_full_unit(
         self,
@@ -266,7 +253,7 @@ class ArmyList:
             replace(unit, nick=nick),
             *self.units[unit_idx + 1 :],
         ]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def nick_model(
         self,
@@ -276,10 +263,13 @@ class ArmyList:
         nick: str | None,
     ) -> Self:
         """Return a new ArmyList with one model slot's Nick set."""
+        # Checked before resolving, so a bad nick and a bad key raise the same
+        # way here as they do in `nick_unit`.
+        _check_nick(nick)
         unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
         new_unit = unit.nick_model(model_key=model_key, nick=nick)
         new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def duplicate_unit(
         self,
@@ -301,9 +291,7 @@ class ArmyList:
             models=[replace(model, nick=None) for model in unit.models],
             nick=nick,
         )
-        return self.__class__(
-            race=self.race, nick=self.nick, units=[*self.units, new_unit]
-        )
+        return replace(self, units=[*self.units, new_unit])
 
     def delete_unit(
         self,
@@ -312,7 +300,7 @@ class ArmyList:
         """Remove a unit from the army list."""
         unit_idx, _ = _resolve_unit(self, unit_key=unit_key)
         new_units = [*self.units[:unit_idx], *self.units[unit_idx + 1 :]]
-        return self.__class__(race=self.race, nick=self.nick, units=new_units)
+        return replace(self, units=new_units)
 
     def resolve(self, race_config: RaceConfig) -> "Army":
         """Return a fully resolved Army with all equipment configs populated.
@@ -407,9 +395,18 @@ def _make_default_army_unit(
     return ArmyUnit(name=unit_name, config=unit_config, models=models, nick=nick)
 
 
+def is_empty_nick(nick: object) -> bool:
+    """Is this a present-but-empty Nick? Absent (`None`) means "no Nick" and is fine.
+
+    Takes `object` because the load path checks raw JSON values against the same
+    rule the builder API enforces.
+    """
+    return nick is not None and not str(nick).strip()
+
+
 def _check_nick(nick: str | None) -> None:
     """Reject an empty or whitespace-only Nick. `None` means "no Nick" and is fine."""
-    if nick is not None and not nick.strip():
+    if is_empty_nick(nick):
         msg = "Nick cannot be empty; use None for no nick"
         raise ValueError(msg)
 
