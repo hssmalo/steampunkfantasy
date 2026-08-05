@@ -41,6 +41,11 @@ def get_hexes(path: Path | None = None) -> r.HexRulesConfig:
     return _get_rules(path, "hexes.toml").convert_model(r.HexRulesConfig)
 
 
+def get_to_hit(path: Path | None = None) -> r.ToHitConfig:
+    """Get rules for to-hit modifiers."""
+    return _get_rules(path, "to_hit.toml").convert_model(r.ToHitConfig)
+
+
 def rulebook_index_path(path: Path | None = None) -> Path:
     """Resolve `path` against the committed Index, the default when it is None.
 

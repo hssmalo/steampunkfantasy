@@ -28,6 +28,7 @@ from spf.schemas.rules import (
     IntVariableConfig,
     SpecialRuleConfig,
     StringVariableConfig,
+    ToHitModifier,
     TokenRuleConfig,
 )
 
@@ -334,6 +335,95 @@ def parse_specials(path: Path, context: RulesContext) -> RulesBody:
 
 
 SPECIALS = register_kind(SectionKind(name="specials", parse=parse_specials))
+
+
+@dataclass(frozen=True)
+class ModifierRow:
+    """One line of the to-hit table: a source of modifiers and what it does."""
+
+    name: str
+    to_hit: str
+    to_be_hit: str
+    """Modifiers as authored (`+1`, `0`, `-N`) — a signed string, not a number,
+    because `-N` stands for a value the rule itself supplies."""
+
+    note: str | None
+    """When the modifier applies, or what it stacks with. None when unqualified."""
+
+
+@dataclass(frozen=True)
+class ModifierGroup:
+    """A titled run of modifier rows: one category of the to-hit table."""
+
+    title: str
+    rows: list[ModifierRow]
+
+    @property
+    def has_notes(self) -> bool:
+        """Whether any row has a note, and so whether to spend a column on it."""
+        return any(row.note for row in self.rows)
+
+
+@dataclass(frozen=True)
+class ToHitBody:
+    """The body of the to-hit Section: the table, one group per category."""
+
+    groups: list[ModifierGroup]
+
+
+TO_HIT_TITLES = {
+    "speed": "Speeds",
+    "terrain": "Terrain",
+    "order": "Orders",
+    "range": "Range",
+    "angle": "Angle",
+    "size": "Size",
+    "unit_ability": "Unit Abilities",
+    "weapon_ability": "Weapon Abilities",
+    "token": "Tokens",
+}
+"""Category field -> the heading the reader sees. A category missing from here
+still renders, under a title derived from its field name: a new category the
+author adds to the schema must not silently vanish from the Rulebook."""
+
+
+def _category_title(field: str) -> str:
+    """Heading for a to-hit category, authored or derived from the field name."""
+    return TO_HIT_TITLES.get(field, field.replace("_", " ").title())
+
+
+def _modifier_row(config: ToHitModifier) -> ModifierRow:
+    """Build one row of the to-hit table."""
+    return ModifierRow(
+        name=config.name,
+        to_hit=config.to_hit,
+        to_be_hit=config.to_be_hit,
+        note=config.note or None,
+    )
+
+
+def parse_to_hit(path: Path, context: RulesContext) -> ToHitBody:  # noqa: ARG001  a modifier names no other rule
+    """Read `to_hit.toml` as one titled group per category of modifier.
+
+    The categories come from the schema's own field order rather than a list
+    kept here, so the file's authored order is the order the reader gets, and
+    adding a category is a change to the schema alone. Empty categories are
+    dropped: a heading with no rows under it is a promise the table does not
+    keep.
+    """
+    config = rules.get_to_hit(path)
+    groups = [
+        ModifierGroup(
+            title=_category_title(field),
+            rows=[_modifier_row(modifier) for modifier in modifiers.values()],
+        )
+        for field in type(config).model_fields
+        if (modifiers := getattr(config, field))
+    ]
+    return ToHitBody(groups=groups)
+
+
+TO_HIT = register_kind(SectionKind(name="to_hit", parse=parse_to_hit))
 
 
 @dataclass(frozen=True)

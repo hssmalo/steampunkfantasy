@@ -1,0 +1,25 @@
+{#
+  The to-hit Section: a table per category, rather than a heading per rule. A
+  modifier is one line of data — name, two numbers, a condition — so prose
+  headings would bury the comparison the reader actually came for.
+
+  The note column only appears when some row in the group fills it: an empty
+  column reads as missing data rather than as nothing to say.
+#}
+{%- for group in section.body.groups %}
+### {{ group.title }}
+
+{% if group.has_notes -%}
+| Modifier | To hit | To be hit | Note |
+| -------- | ------ | --------- | ---- |
+{% for row in group.rows -%}
+| {{ row.name }} | {{ row.to_hit }} | {{ row.to_be_hit }} | {{ row.note or "" }} |
+{% endfor -%}
+{%- else -%}
+| Modifier | To hit | To be hit |
+| -------- | ------ | --------- |
+{% for row in group.rows -%}
+| {{ row.name }} | {{ row.to_hit }} | {{ row.to_be_hit }} |
+{% endfor -%}
+{%- endif -%}
+{% endfor -%}
