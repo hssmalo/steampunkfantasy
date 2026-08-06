@@ -26,7 +26,7 @@ from spf.schemas.race import (
 from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
-from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, RangeRoll
+from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, ModelType, RangeRoll
 from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
@@ -41,20 +41,21 @@ _ASSAULT = AssaultConfig(
 )
 
 
-def _model(
+def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under test
     *,
     name: str = "Soldier",
     equipment: list[EquipmentConfig] | None = None,
     assault: AssaultConfig = _ASSAULT,
     model_special: dict[str, str] | None = None,
     nick: str | None = None,
+    types: list[ModelType] | None = None,
 ) -> Model:
     config = ModelConfig(
         race="elf",
         name=name,  # pyright: ignore[reportArgumentType]
         equipment_limit=[],  # pyright: ignore[reportArgumentType]
         equipment=[],
-        type=["Infantry"],
+        type=types or ["Infantry"],
         assault=assault,
         cost=None,
         special=model_special or {},  # pyright: ignore[reportArgumentType]
@@ -133,6 +134,7 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.count == 1
     assert unit_entry.size == "Small"
     assert unit_entry.model_summary == ["1x Soldier"]
+    assert unit_entry.types == ["Infantry"]
     assert unit_entry.armor == [10, 8, 6, 4]
     assert unit_entry.points == unit.cost().to_points()
     assert unit_entry.shaken_speed == "slow"
@@ -232,7 +234,7 @@ def test_build_reference_dedups_identical_ranged_equipment_within_a_model() -> N
 
 
 def test_build_reference_collapses_identical_models_within_a_unit() -> None:
-    elite = _model(name="Elite Infantry")
+    elite = _model(name="Elite Infantry", types=["Infantry", "Elite"])
     grunt = _model(name="Infantry")
     unit = _unit(models=[elite, grunt, grunt, elite])
 
@@ -240,7 +242,18 @@ def test_build_reference_collapses_identical_models_within_a_unit() -> None:
 
     (unit_entry,) = reference.units
     assert unit_entry.model_summary == ["2x Elite Infantry", "2x Infantry"]
+    assert unit_entry.types == ["Infantry"]
     assert [m.name for m in unit_entry.models] == ["Elite Infantry", "Infantry"]
+
+
+def test_build_reference_types_is_empty_when_models_share_nothing() -> None:
+    walker = _model(name="Trooper", types=["Bio", "Infantry", "Walking"])
+    wagon = _model(name="Wagon", types=["Vehicle", "Mechanical", "Tracked"])
+
+    reference = build_reference(_army(_unit(models=[walker, wagon])), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.types == []
 
 
 def test_build_reference_keeps_distinct_model_upgrades_separate() -> None:

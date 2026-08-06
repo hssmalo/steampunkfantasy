@@ -120,6 +120,11 @@ A Unit's physical scale, Tiny through Enormous.
 A Model's classification (Infantry, Cavalry, Vehicle, Mechanical, …), used by
 Equipment requirements and rules.
 
+**Common Type**:
+The Types shared by *every* Model in a Unit — the intersection of the Models'
+Types. Summarises a Unit's classification when its Models differ; empty when
+they share nothing.
+
 ### Board and state
 
 **Hex**:

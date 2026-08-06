@@ -9,6 +9,9 @@
 {% endif %}
 - Size: {{ unit.size }}
 - Models: {{ unit.model_summary | join(', ') }}
+{%- if unit.types %}
+- Type: {{ unit.types | join(', ') }}
+{%- endif %}
 {%- if unit.armor %}
 - Armor: {{ unit.armor | join('/') }}
 {%- endif %}

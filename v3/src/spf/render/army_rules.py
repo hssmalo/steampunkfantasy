@@ -86,6 +86,7 @@ class UnitEntry:
     count: int
     size: t.Size
     model_summary: list[str]
+    types: list[t.ModelType]
     armor: list[int] | None
     points: int
     shaken_speed: t.Speed
@@ -156,6 +157,7 @@ def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> Unit
         count=1,
         size=unit.config.size,
         model_summary=_count_summary(unit.models, lambda m: m.display_name),
+        types=unit.common_types,
         armor=list(unit.config.armor) if unit.config.armor is not None else None,
         points=unit.cost().to_points(),
         shaken_speed=unit.config.shaken.speed,
