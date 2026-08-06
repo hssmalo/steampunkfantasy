@@ -128,7 +128,7 @@ movement_order = ["-", "-", "flee"]
 "Repair" = "Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of models alive"
 
 [units.steampowerarmor.orders.movement]
-slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.steampowerarmor.orders.fire]
