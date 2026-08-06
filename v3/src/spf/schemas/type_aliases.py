@@ -232,6 +232,9 @@ type RangeSpecial = Literal[
     "LoS",
 ]
 
+# The order of this literal is meaningful: it is the canonical order a Unit's
+# common Types are printed in (see `Unit.common_types`). Re-ordering it changes
+# rendered output.
 type ModelType = Literal[
     "Elite",
     "SuperElite",

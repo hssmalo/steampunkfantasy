@@ -30,6 +30,9 @@
 \BLOCK{endif}
 \textbf{Size:} \VAR{unit.size | latex_escape} \\
 \textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
+\BLOCK{if unit.types}
+\textbf{Type:} \VAR{unit.types | join(', ') | latex_escape} \\
+\BLOCK{endif}
 \BLOCK{if unit.armor}
 \textbf{Armor:} \VAR{unit.armor | join(', ')} \\
 \BLOCK{endif}
