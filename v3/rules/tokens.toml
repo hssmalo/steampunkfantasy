@@ -1,16 +1,23 @@
+explanation = """When placing Aim or Shaken on a unit for the first time, place two tokens of the given type. Otherwise, place only one.
+
+No other token is placed this way. Confused in particular is an exception: it works differently, and this rule does not cover it.
+
+Follow the instructions for each token.
+"""
+
 [tokens]
 
 [tokens.shaken]
 name = "Shaken"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 effect = "While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit"
-remove = "First time a unit is shaken, place two shaken tokens. If it is already shaken place only one. Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
+remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
 
 [tokens.aim]
 name = "Aim"
 phases = ["Gunnery 1", "Gunnery 2"]
 effect = "Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round."
-remove = "Place two aim tokens (unless the unit already have one). Either remove them both when you fire, or remove one each aftermath phase. Also remove both if you enter an assault (regardless of whether you win or not)"
+remove = "Either remove all aim tokens when you fire, or remove one each aftermath phase. Also remove all of them if you enter an assault (regardless of whether you win or not)"
 
 [tokens.crippled_crew]
 name = "Crippled Crew"
