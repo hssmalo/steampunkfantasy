@@ -1,5 +1,11 @@
 [tokens]
 
+[tokens.shaken]
+name = "Shaken"
+phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
+effect = "While shaken set unit speed to the spefied speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit"
+remove = "First time a unit is shaken, place two shaken tokens. If it is already shaken place only one. Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
+
 [tokens.aim]
 name = "Aim"
 phases = ["Gunnery 1", "Gunnery 2"]
