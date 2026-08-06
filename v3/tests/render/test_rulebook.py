@@ -132,6 +132,8 @@ def test_unknown_kind_lists_the_known_kinds() -> None:
 # --- RulesContext -----------------------------------------------------------
 
 TOKENS_SOURCE = """\
+explanation = "How tokens work."
+
 [tokens]
 
 [tokens.minor_acid]
@@ -232,6 +234,8 @@ def test_markdown_kind_keeps_a_hash_that_is_not_a_heading(tmp_path: Path) -> Non
 # --- The tokens kind's parser -----------------------------------------------
 
 FULL_TOKENS_SOURCE = """\
+explanation = "Place two of a token the first time, one thereafter."
+
 [tokens]
 
 [tokens.poison]
@@ -266,7 +270,7 @@ def test_tokens_kind_yields_one_untitled_group_in_file_order(tmp_path: Path) -> 
     body = parse_tokens(source, RulesContext(tmp_path))
 
     assert isinstance(body, RulesBody)
-    assert body.explanation is None
+    assert body.explanation == "Place two of a token the first time, one thereafter."
     (group,) = body.groups
     assert isinstance(group, RuleGroup)
     assert group.title is None
@@ -314,7 +318,7 @@ def test_hexes_kind_is_registered() -> None:
 
 
 def test_hexes_kind_keeps_the_document_level_explanation(tmp_path: Path) -> None:
-    # The only one of the three sources with prose above its table.
+    # One of the two sources with prose above its table; tokens.toml is the other.
     source = tmp_path / "hexes.toml"
     source.write_text(HEXES_SOURCE, encoding="utf-8")
 
