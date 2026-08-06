@@ -68,7 +68,7 @@ short = "[{N}+]"
 explanation = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
 
 [assault.pre_assault_retreat.variables]
-N = { type = "int", min = 1, max = 6 }
+N = { type = "int", min = 2, max = 6 }
 
 [unit]
 
@@ -191,7 +191,7 @@ short = "[{N}+]"
 explanation = "Roll a die per area of effect damage. Ignore the damage at {N}+"
 
 [unit.evation.variables]
-N = { type = "int", min = 1, max = 6 }
+N = { type = "int", min = 2, max = 6 }
 
 [range_]
 
@@ -217,7 +217,7 @@ short = "[{N}+]"
 explanation = "Only applies when target is a drone. The drone gets one shaken token per roll of {N}+."
 
 [range_.gear_disruption.variables]
-N = { type = "int", min = 2, max = 10 }
+N = { type = "int", min = 2, max = 6 }
 
 [range_.fire]
 name = "Fire"
@@ -237,7 +237,7 @@ explanation = "Target gets a poison[{N}] token"
 token = "poison"
 
 [range_.poison.variables]
-N = { type = "int", min = 1, max = 12 }
+N = { type = "int", min = 4, max = 12 }
 
 [range_.fumble]
 name = "Fumble"
