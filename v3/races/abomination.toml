@@ -1009,7 +1009,7 @@ damage = "N/A"
 ap = "N/A"
 
 [equipment.multipurpose_mortar.range.special]
-"Multipurpose" = "Either place two fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
+"Multipurpose" = "Either place two fog tokens in one hex and two fog tokens in another hex, or give two different units one minor acid each. All targets must be within normal range."
 
 [equipment.double_barreled_oversized_musket]
 name = "Double Barreled Oversized Musket"
@@ -1071,13 +1071,13 @@ damage = "N/A"
 ap = "N/A"
 
 [equipment.fog_poisonizer.range.special]
-"Cloud" = "Make a fog within normal range into a poison fog[4]"
+"Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
 "Ammo" = "Always treated as loaded"
 "Order" = "May be used in both gunnery phases"
 
 
 [equipment.greater_fog_poisonizer]
-name = "Fog Poisonizer"
+name = "Greater Fog Poisonizer"
 race = "abomination"
 
 [equipment.greater_fog_poisonizer.range]
@@ -1087,7 +1087,7 @@ damage = "N/A"
 ap = "N/A"
 
 [equipment.greater_fog_poisonizer.range.special]
-"Cloud" = "Make a fog within normal range into a poison fog[4]"
+"Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
 "Ammo" = "Always treated as loaded"
 
 
