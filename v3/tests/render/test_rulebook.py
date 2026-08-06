@@ -277,6 +277,16 @@ def test_tokens_kind_yields_one_untitled_group_in_file_order(tmp_path: Path) -> 
     assert [rule.name for rule in group.rules] == ["Poison", "Terror"]
 
 
+def test_tokens_kind_keeps_the_document_level_explanation(tmp_path: Path) -> None:
+    # The twin of the hexes case: both sources carry prose above their table.
+    source = tmp_path / "tokens.toml"
+    source.write_text(FULL_TOKENS_SOURCE, encoding="utf-8")
+
+    body = parse_tokens(source, RulesContext(tmp_path))
+
+    assert body.explanation == "Place two of a token the first time, one thereafter."
+
+
 def test_tokens_kind_carries_every_field_across(tmp_path: Path) -> None:
     source = tmp_path / "tokens.toml"
     source.write_text(FULL_TOKENS_SOURCE, encoding="utf-8")
