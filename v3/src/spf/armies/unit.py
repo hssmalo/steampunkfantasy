@@ -10,6 +10,11 @@ from spf.schemas.race import OrdersConfig, UnitConfig
 # Canonical Speed ordering for stable merged-order output.
 _SPEED_ORDER: list[t.Speed] = list(get_args(t.Speed.__value__))
 
+# Canonical Model Type ordering for stable common-type output. The order of the
+# `ModelType` literal is meaningful: it is what the army-rules Type line is
+# sorted by.
+_MODEL_TYPE_ORDER: list[t.ModelType] = list(get_args(t.ModelType.__value__))
+
 
 @dataclass(frozen=True)
 class Unit:
@@ -35,6 +40,19 @@ class Unit:
         for model in self.models:
             result |= model.unit_specials
         return result
+
+    @property
+    def common_types(self) -> list[t.ModelType]:
+        """Types shared by every Model in the unit, in canonical ModelType order.
+
+        Empty when the unit has no models, or when its models share no type.
+        """
+        if not self.models:
+            return []
+        shared = set(self.models[0].config.type)
+        for model in self.models[1:]:
+            shared &= set(model.config.type)
+        return [model_type for model_type in _MODEL_TYPE_ORDER if model_type in shared]
 
     def cost(self) -> t.Cost:
         """Full unit cost: base + upgrade model costs + equipment costs.

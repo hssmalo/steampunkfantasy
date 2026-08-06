@@ -16,6 +16,8 @@ from spf.armies.build import (
     _satisfies_requires,
     _unsatisfied_groups,
 )
+from spf.armies.model import Model
+from spf.armies.unit import Unit
 from spf.races import get_race
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (
@@ -1940,3 +1942,74 @@ def test_display_name_uses_the_nick(
     unit = nicked_army.resolve(simple_race).units[0]
     assert unit.display_name == "Da Lads"
     assert unit.models[0].display_name == "Grubnak"
+
+
+# ---------------------------------------------------------------------------
+# Unit.common_types
+# ---------------------------------------------------------------------------
+
+
+def _typed_model(*types: t.ModelType, name: str = "Trooper") -> Model:
+    """Build a resolved Model whose only interesting property is its type list."""
+    return Model(
+        name=name.lower().replace(" ", "_"),
+        config=ModelConfig(
+            race="goblin",
+            name=name,  # pyright: ignore[reportArgumentType]
+            equipment_limit=[],  # pyright: ignore[reportArgumentType]
+            equipment=[],
+            type=list(types),
+            assault=_ASSAULT,
+            cost=None,
+        ),
+        default_equipment=[],
+        upgrade_equipment=[],
+    )
+
+
+def _typed_unit(*models: Model, simple_race: RaceConfig) -> Unit:
+    return Unit(name="squad", config=simple_race.units["squad"], models=list(models))
+
+
+def test_common_types_identical_models(simple_race: RaceConfig) -> None:
+    unit = _typed_unit(
+        _typed_model("Bio", "Infantry", "Walking"),
+        _typed_model("Bio", "Infantry", "Walking"),
+        simple_race=simple_race,
+    )
+    assert unit.common_types == ["Bio", "Infantry", "Walking"]
+
+
+def test_common_types_partial_overlap_drops_the_extra(simple_race: RaceConfig) -> None:
+    unit = _typed_unit(
+        _typed_model("Bio", "Infantry", "Walking"),
+        _typed_model("Bio", "Infantry", "Walking", "Elite", name="Elite Trooper"),
+        simple_race=simple_race,
+    )
+    assert unit.common_types == ["Bio", "Infantry", "Walking"]
+
+
+def test_common_types_uses_canonical_order_not_declaration_order(
+    simple_race: RaceConfig,
+) -> None:
+    unit = _typed_unit(
+        _typed_model("Walking", "Bio", "Infantry"),
+        _typed_model("Infantry", "Walking", "Bio"),
+        simple_race=simple_race,
+    )
+    assert unit.common_types == ["Bio", "Infantry", "Walking"]
+
+
+def test_common_types_zero_overlap_is_empty(simple_race: RaceConfig) -> None:
+    unit = _typed_unit(
+        _typed_model("Vehicle", "Mechanical", "Bio Crew", "Tracked", name="Wagon"),
+        _typed_model("Bio", "Infantry", "Walking"),
+        simple_race=simple_race,
+    )
+    assert unit.common_types == []
+
+
+def test_common_types_of_a_unit_with_no_models_is_empty(
+    simple_race: RaceConfig,
+) -> None:
+    assert _typed_unit(simple_race=simple_race).common_types == []
