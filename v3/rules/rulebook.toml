@@ -21,7 +21,7 @@ title = "SteamPunkFantasy Rulebook"
 # [[sections]]
 # Setup/The map
 # ToBe Written. Need to decide how setup should be done.
-# 
+#
 
 # [[section]]
 # Terrain and Line of sight
@@ -39,15 +39,15 @@ title = "SteamPunkFantasy Rulebook"
 
 
 # [[section]]
-# Movment orders
+# Movement orders
 # ToBe Decesided if needed as reference or not.
-# Some special orders might be usefull in army-rules with --extended option.
+# Some special orders might be useful in army-rules with --extended option.
 # But others definitively not.
 # F, and L/R is not needed as reference when playing, but description of Chs and Help are more relevant
 
 # [[section]]
 # Fire orders
-# Some special orders might be usefull in army-rules with --extended option.
+# Some special orders might be useful in army-rules with --extended option.
 # But others definitively not.
 
 
@@ -68,7 +68,7 @@ title = "SteamPunkFantasy Rulebook"
 # [[sections]]
 # Damage
 # Needed in full rules and maybe some of the tables in quick rules.
-# (maybe seperate out important tables in seperate table)
+# (maybe separate out important tables in separate table)
 
 # [[sections]]
 # Assault retreat
@@ -83,7 +83,7 @@ title = "SteamPunkFantasy Rulebook"
 # [[sections]]
 # Assault decision hiaracy
 # Needed in full rules and quick rules.
-# 
+#
 
 
 
@@ -93,7 +93,7 @@ kind = "markdown"
 source = "round.md"
 title = "The Round"
 #Some of the tables needed in quick rules.
-#Seperate out tables in seperate sources.
+#Separate out tables in separate sources.
 
 
 # Hexes and Tokens come before Specials so that a Special's `token` reference
@@ -120,5 +120,3 @@ kind = "specials"
 source = "special.toml"
 title = "Special Rules"
 # To be added to army-rules with --extended options. Only options used by the given army should be printed.
-
-
