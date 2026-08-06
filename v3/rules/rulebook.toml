@@ -4,10 +4,97 @@
 
 title = "SteamPunkFantasy Rulebook"
 
+
+# Section in comments needs to be ordered correctly.
+
+
+# [[sections]]
+# build your army
+# Only needed in full rulebook.
+
+# [[sections]]
+# victory points
+# Only needed in full rulebook.
+
+
+
+# [[sections]]
+# Setup/The map
+# ToBe Written. Need to decide how setup should be done.
+# 
+
+# [[section]]
+# Terrain and Line of sight
+# Summary table might needed in quick rules.
+
+# [[section]]
+# Angles.
+# These are used a lot, and for a lot of different things. Needs to be general
+# Only needed in full rulebook.
+
+
+# [[section]]
+# General Orders
+# One table needed also in quickrules (?)
+
+
+# [[section]]
+# Movment orders
+# ToBe Decesided if needed as reference or not.
+# Some special orders might be usefull in army-rules with --extended option.
+# But others definitively not.
+# F, and L/R is not needed as reference when playing, but description of Chs and Help are more relevant
+
+# [[section]]
+# Fire orders
+# Some special orders might be usefull in army-rules with --extended option.
+# But others definitively not.
+
+
+# [[sections]]
+# Assault
+#
+
+# [[sections]]
+# Assault retreat
+# Needed in full rules and quick rules. (probably not in army-rules with --extended option)
+
+
+# [[sections]
+# Assault example
+# Assault is complex and might need a concrete example.
+# Only needed in full rulebook
+
+# [[sections]]
+# Damage
+# Needed in full rules and maybe some of the tables in quick rules.
+# (maybe seperate out important tables in seperate table)
+
+# [[sections]]
+# Assault retreat
+# Needed in full rules and quick rules. (alternatively in army-rules with --extended option)
+
+
+# [[sections]]
+# Decision hiaracy
+# Needed in full rules and quick rules.
+
+
+# [[sections]]
+# Assault decision hiaracy
+# Needed in full rules and quick rules.
+# 
+
+
+
+
 [[sections]]
 kind = "markdown"
 source = "round.md"
 title = "The Round"
+#Some of the tables needed in quick rules.
+#Seperate out tables in seperate sources.
+
 
 # Hexes and Tokens come before Specials so that a Special's `token` reference
 # points at something the reader has already met.
@@ -15,13 +102,23 @@ title = "The Round"
 kind = "hexes"
 source = "hexes.toml"
 title = "Hex Effects"
+# To be added to army-rules with --extended options. Only options used by the given army should be printed.
+
+
+
 
 [[sections]]
 kind = "tokens"
 source = "tokens.toml"
 title = "Tokens"
+# To be added to army-rules with --extended options. Only options used by the given army should be printed.
+
+
 
 [[sections]]
 kind = "specials"
 source = "special.toml"
 title = "Special Rules"
+# To be added to army-rules with --extended options. Only options used by the given army should be printed.
+
+
