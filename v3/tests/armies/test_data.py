@@ -1967,15 +1967,15 @@ def _typed_model(*types: t.ModelType, name: str = "Trooper") -> Model:
     )
 
 
-def _typed_unit(*models: Model, simple_race: RaceConfig) -> Unit:
-    return Unit(name="squad", config=simple_race.units["squad"], models=list(models))
+def _typed_unit(*models: Model, race: RaceConfig) -> Unit:
+    return Unit(name="squad", config=race.units["squad"], models=list(models))
 
 
 def test_common_types_identical_models(simple_race: RaceConfig) -> None:
     unit = _typed_unit(
         _typed_model("Bio", "Infantry", "Walking"),
         _typed_model("Bio", "Infantry", "Walking"),
-        simple_race=simple_race,
+        race=simple_race,
     )
     assert unit.common_types == ["Bio", "Infantry", "Walking"]
 
@@ -1984,7 +1984,7 @@ def test_common_types_partial_overlap_drops_the_extra(simple_race: RaceConfig) -
     unit = _typed_unit(
         _typed_model("Bio", "Infantry", "Walking"),
         _typed_model("Bio", "Infantry", "Walking", "Elite", name="Elite Trooper"),
-        simple_race=simple_race,
+        race=simple_race,
     )
     assert unit.common_types == ["Bio", "Infantry", "Walking"]
 
@@ -1992,19 +1992,22 @@ def test_common_types_partial_overlap_drops_the_extra(simple_race: RaceConfig) -
 def test_common_types_uses_canonical_order_not_declaration_order(
     simple_race: RaceConfig,
 ) -> None:
+    # Mechanical/Infantry/Cavalry are canonically in that order, which is
+    # neither the declaration order below nor alphabetical order — so this
+    # pins the ModelType literal as the sort key and nothing else.
     unit = _typed_unit(
-        _typed_model("Walking", "Bio", "Infantry"),
-        _typed_model("Infantry", "Walking", "Bio"),
-        simple_race=simple_race,
+        _typed_model("Cavalry", "Infantry", "Mechanical", name="Rider"),
+        _typed_model("Infantry", "Mechanical", "Cavalry", name="Other Rider"),
+        race=simple_race,
     )
-    assert unit.common_types == ["Bio", "Infantry", "Walking"]
+    assert unit.common_types == ["Mechanical", "Infantry", "Cavalry"]
 
 
 def test_common_types_zero_overlap_is_empty(simple_race: RaceConfig) -> None:
     unit = _typed_unit(
         _typed_model("Vehicle", "Mechanical", "Bio Crew", "Tracked", name="Wagon"),
         _typed_model("Bio", "Infantry", "Walking"),
-        simple_race=simple_race,
+        race=simple_race,
     )
     assert unit.common_types == []
 
@@ -2012,4 +2015,4 @@ def test_common_types_zero_overlap_is_empty(simple_race: RaceConfig) -> None:
 def test_common_types_of_a_unit_with_no_models_is_empty(
     simple_race: RaceConfig,
 ) -> None:
-    assert _typed_unit(simple_race=simple_race).common_types == []
+    assert _typed_unit(race=simple_race).common_types == []
