@@ -1758,7 +1758,7 @@ requires = [
 ]
 
 [equipment.poison_fog_grenade.unit_special]
-"Fire Order" = "Use twice per game, use an throw fire order to place 2 fog tokens and 2 poison cloud[6] tokens in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
+"Fire Order" = "Use twice per game, use an throw fire order to place fog and poison cloud[6] in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
 
 [equipment.poison_fog_grenade.orders_gained.fire]
 still = [["-", "Throw"], ["Throw", "-"]]

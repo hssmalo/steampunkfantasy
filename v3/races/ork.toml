@@ -1293,7 +1293,7 @@ damage = "d12"
 ap = 5
 
 [equipment.big_gun.range.special]
-"Cloud" = "Place two fog tokens in the hex directly ahead of this unit"
+"Cloud" = "Place fog in the hex directly ahead of this unit"
 
 [equipment.spear_shooter]
 race = "ork"
