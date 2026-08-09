@@ -88,7 +88,7 @@ description = '''Huge flagship floating above the ground armed with a greater fo
 "Surprise" = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
 "Fire Order" = "Fire and loads all weapons simultaneously"
 "Repair" = "[3, self, 2nd Healing]"
-"Officer" = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360⁰ into either an F movement or an aim order."
+"Officer" = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360° into either an F movement or an aim order."
 
 
 [units.flagship.shaken]
@@ -1089,7 +1089,7 @@ ap = "N/A"
 [equipment.greater_fog_poisonizer.range.special]
 "Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
 "Ammo" = "Always treated as loaded"
-
+"Order" = "May be used in both gunnery phases independent of other weapons"
 
 
 [equipment.frog_spit]
