@@ -22,18 +22,23 @@
 \BLOCK{if rule.body}
 \VAR{rule.body | md_to_latex}
 \BLOCK{endif}
+
 \BLOCK{if rule.description}
 \textbf{Represents:} \VAR{rule.description | md_to_latex}
 \BLOCK{endif}
+
 \BLOCK{if rule.example}
 \textbf{Example:} \VAR{rule.example | md_to_latex}
 \BLOCK{endif}
+
 \BLOCK{if rule.token}
 \textbf{Places:} \VAR{rule.token | latex_escape}
 \BLOCK{endif}
+
 \BLOCK{if rule.phases}
 \textbf{Phases:} \VAR{rule.phases | join(", ") | latex_escape}
 \BLOCK{endif}
+
 \BLOCK{if rule.remove}
 \textbf{Removed:} \VAR{rule.remove | latex_escape}
 \BLOCK{endif}

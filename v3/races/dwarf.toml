@@ -128,7 +128,7 @@ movement_order = ["-", "-", "flee"]
 "Repair" = "Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of models alive"
 
 [units.steampowerarmor.orders.movement]
-slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.steampowerarmor.orders.fire]
@@ -572,9 +572,9 @@ fire_order = "May not use whip"
 
 [units.tamed_balrog.orders.movement]
 slow = [
-    ["A+chase", "chase", "chase+B[rest]"],
-    ["chase", "-", "-"],
-    ["-", "-", "chase"],
+    ["Chs", "Chs", "Chs+B[rest]"],
+    ["Chs", "-", "-"],
+    ["-", "-", "Chs"],
     ["360°", "-", "-"],
     ["360°", "F", "-"],
 ]

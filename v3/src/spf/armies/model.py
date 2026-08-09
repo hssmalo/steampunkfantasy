@@ -17,6 +17,12 @@ class Model:
     config: ModelConfig = field(repr=False)
     default_equipment: list[EquipmentConfig] = field(repr=False)
     upgrade_equipment: list[EquipmentConfig] = field(repr=False)
+    nick: str | None = None
+
+    @property
+    def display_name(self) -> str:
+        """The name to render: the player's Nick if set, else the catalogue name."""
+        return self.nick or self.config.name
 
     @property
     def equipment(self) -> list[EquipmentConfig]:

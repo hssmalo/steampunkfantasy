@@ -16,6 +16,8 @@ from spf.armies.build import (
     _satisfies_requires,
     _unsatisfied_groups,
 )
+from spf.armies.model import Model
+from spf.armies.unit import Unit
 from spf.races import get_race
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (
@@ -592,6 +594,29 @@ def test_add_unit_unknown_name_raises(simple_race: RaceConfig) -> None:
         )
 
 
+def test_add_unit_defaults_to_no_nick(simple_race: RaceConfig) -> None:
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "squad", race_config=simple_race
+    )
+    assert army.units[0].nick is None
+    assert army.units[0].models[0].nick is None
+
+
+def test_add_unit_stores_nick(simple_race: RaceConfig) -> None:
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "squad", nick="Boyz", race_config=simple_race
+    )
+    assert army.units[0].nick == "Boyz"
+    assert army.units[0].name == "squad"
+
+
+def test_add_unit_empty_nick_raises(simple_race: RaceConfig) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+            "squad", nick="  ", race_config=simple_race
+        )
+
+
 # ---------------------------------------------------------------------------
 # upgrade_unit
 # ---------------------------------------------------------------------------
@@ -888,9 +913,190 @@ def test_duplicate_unit_is_independent(
     assert upgraded.units[1].models[0].name == "elite_soldier"
 
 
+def test_duplicate_unit_drops_nicks(nicked_army: ArmyList) -> None:
+    army = nicked_army.duplicate_unit(("squad", 0))
+    assert army.units[1].nick is None
+    assert army.units[1].models[0].nick is None
+    # The original keeps both of its nicks.
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_duplicate_unit_can_re_nick_in_one_call(nicked_army: ArmyList) -> None:
+    army = nicked_army.duplicate_unit(("squad", 0), nick="Da Gals")
+    assert army.units[1].nick == "Da Gals"
+    # Only the unit is re-nicked; the copied model slots stay un-nicked.
+    assert army.units[1].models[0].nick is None
+
+
+def test_duplicate_unit_empty_nick_raises(nicked_army: ArmyList) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        nicked_army.duplicate_unit(("squad", 0), nick=" ")
+
+
+def test_duplicate_unit_does_not_share_model_list(nicked_army: ArmyList) -> None:
+    army = nicked_army.duplicate_unit(("squad", 0))
+    assert army.units[0].models is not army.units[1].models
+
+
 def test_duplicate_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None:
     with pytest.raises(KeyError):
         one_unit_army.duplicate_unit(("nonexistent", 0))
+
+
+# ---------------------------------------------------------------------------
+# nick_unit / nick_model
+# ---------------------------------------------------------------------------
+
+
+def test_nick_unit_sets_nick(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.nick_unit(("squad", 0), nick="Da Lads")
+    assert army.units[0].nick == "Da Lads"
+
+
+def test_nick_unit_addresses_the_right_occurrence(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.duplicate_unit(("squad", 0)).nick_unit(
+        ("squad", 1), nick="Da Lads"
+    )
+    assert army.units[0].nick is None
+    assert army.units[1].nick == "Da Lads"
+
+
+def test_nick_unit_does_not_mutate_original(one_unit_army: ArmyList) -> None:
+    one_unit_army.nick_unit(("squad", 0), nick="Da Lads")
+    assert one_unit_army.units[0].nick is None
+
+
+def test_nick_unit_clears_with_none(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.nick_unit(("squad", 0), nick="Da Lads")
+    assert army.nick_unit(("squad", 0), nick=None).units[0].nick is None
+
+
+def test_nick_unit_empty_nick_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        one_unit_army.nick_unit(("squad", 0), nick="   ")
+
+
+def test_nick_unit_unknown_unit_key_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.nick_unit(("nonexistent", 0), nick="Da Lads")
+
+
+def test_nick_model_sets_nick(one_unit_army: ArmyList) -> None:
+    army = one_unit_army.nick_model(
+        ("squad", 0), model_key=("soldier", 0), nick="Grubnak"
+    )
+    assert army.units[0].models[0].nick == "Grubnak"
+    assert army.units[0].nick is None
+
+
+def test_nick_model_leaves_squadmates_alone(simple_race: RaceConfig) -> None:
+    two_model_unit = ArmyUnit(
+        name="squad",
+        config=simple_race.units["squad"],
+        models=[
+            ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=[])
+            for _ in range(2)
+        ],
+    )
+    army = ArmyList(race="goblin", nick="Test Army", units=[two_model_unit]).nick_model(
+        ("squad", 0), model_key=("soldier", 1), nick="Grubnak"
+    )
+    assert [m.nick for m in army.units[0].models] == [None, "Grubnak"]
+
+
+def test_nick_model_empty_nick_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        one_unit_army.nick_model(("squad", 0), model_key=("soldier", 0), nick="")
+
+
+def test_nick_model_checks_the_nick_before_the_key(one_unit_army: ArmyList) -> None:
+    # Same order as nick_unit, so a bad nick reports as a bad nick either way.
+    with pytest.raises(ValueError, match="Nick cannot be empty"):
+        one_unit_army.nick_model(("nonexistent", 0), model_key=("soldier", 0), nick=" ")
+
+
+def test_nick_model_unknown_model_key_raises(one_unit_army: ArmyList) -> None:
+    with pytest.raises(KeyError):
+        one_unit_army.nick_model(
+            ("squad", 0), model_key=("nonexistent", 0), nick="Grubnak"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Nick survives every upgrade path
+#
+# Every upgrade_* method rebuilds its dataclass, so each reconstruction site
+# has to thread `nick` through or upgrading silently drops it. One test per
+# method, deliberately.
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def nicked_army(simple_race: RaceConfig) -> ArmyList:
+    """One nicked unit whose single model slot is nicked too."""
+    return (
+        ArmyList(race="goblin", nick="Test Army", units=[])
+        .add_unit("squad", nick="Da Lads", race_config=simple_race)
+        .nick_model(("squad", 0), model_key=("soldier", 0), nick="Grubnak")
+    )
+
+
+def test_upgrade_model_preserves_nicks(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="sword",
+        race_config=simple_race,
+    )
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_upgrade_unit_preserves_nicks_across_promotion(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_unit(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        upgrade_model_name="elite_soldier",
+        race_config=simple_race,
+    )
+    assert army.units[0].models[0].name == "elite_soldier"
+    assert army.units[0].nick == "Da Lads"
+    # A Nick belongs to the slot, not the model type.
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_upgrade_full_unit_preserves_nicks(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_full_unit(
+        ("squad", 0), upgrade_model_name="elite_soldier", race_config=simple_race
+    )
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_upgrade_all_models_preserves_nicks(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.upgrade_all_models(
+        ("squad", 0), equipment_name="sword", race_config=simple_race
+    )
+    assert army.units[0].nick == "Da Lads"
+    assert army.units[0].models[0].nick == "Grubnak"
+
+
+def test_delete_unit_leaves_other_nicks_intact(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    army = nicked_army.add_unit("squad", race_config=simple_race).delete_unit(
+        ("squad", 1)
+    )
+    assert [u.nick for u in army.units] == ["Da Lads"]
 
 
 # ---------------------------------------------------------------------------
@@ -1707,3 +1913,106 @@ def test_resolve_populates_upgrade_equipment(
     model = resolved.units[0].models[0]
     assert len(model.upgrade_equipment) == 1
     assert model.upgrade_equipment[0].name == "Sword"
+
+
+# ---------------------------------------------------------------------------
+# display_name on the resolved tier
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_carries_nicks_across(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    resolved = nicked_army.resolve(simple_race)
+    assert resolved.units[0].nick == "Da Lads"
+    assert resolved.units[0].models[0].nick == "Grubnak"
+
+
+def test_display_name_falls_back_to_catalogue_name(
+    one_unit_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    unit = one_unit_army.resolve(simple_race).units[0]
+    assert unit.display_name == "Squad"
+    assert unit.models[0].display_name == "Soldier"
+
+
+def test_display_name_uses_the_nick(
+    nicked_army: ArmyList, *, simple_race: RaceConfig
+) -> None:
+    unit = nicked_army.resolve(simple_race).units[0]
+    assert unit.display_name == "Da Lads"
+    assert unit.models[0].display_name == "Grubnak"
+
+
+# ---------------------------------------------------------------------------
+# Unit.common_types
+# ---------------------------------------------------------------------------
+
+
+def _typed_model(*types: t.ModelType, name: str = "Trooper") -> Model:
+    """Build a resolved Model whose only interesting property is its type list."""
+    return Model(
+        name=name.lower().replace(" ", "_"),
+        config=ModelConfig(
+            race="goblin",
+            name=name,  # pyright: ignore[reportArgumentType]
+            equipment_limit=[],  # pyright: ignore[reportArgumentType]
+            equipment=[],
+            type=list(types),
+            assault=_ASSAULT,
+            cost=None,
+        ),
+        default_equipment=[],
+        upgrade_equipment=[],
+    )
+
+
+def _typed_unit(*models: Model, race: RaceConfig) -> Unit:
+    return Unit(name="squad", config=race.units["squad"], models=list(models))
+
+
+def test_common_types_identical_models(simple_race: RaceConfig) -> None:
+    unit = _typed_unit(
+        _typed_model("Bio", "Infantry", "Walking"),
+        _typed_model("Bio", "Infantry", "Walking"),
+        race=simple_race,
+    )
+    assert unit.common_types == ["Bio", "Infantry", "Walking"]
+
+
+def test_common_types_partial_overlap_drops_the_extra(simple_race: RaceConfig) -> None:
+    unit = _typed_unit(
+        _typed_model("Bio", "Infantry", "Walking"),
+        _typed_model("Bio", "Infantry", "Walking", "Elite", name="Elite Trooper"),
+        race=simple_race,
+    )
+    assert unit.common_types == ["Bio", "Infantry", "Walking"]
+
+
+def test_common_types_uses_canonical_order_not_declaration_order(
+    simple_race: RaceConfig,
+) -> None:
+    # Mechanical/Infantry/Cavalry are canonically in that order, which is
+    # neither the declaration order below nor alphabetical order — so this
+    # pins the ModelType literal as the sort key and nothing else.
+    unit = _typed_unit(
+        _typed_model("Cavalry", "Infantry", "Mechanical", name="Rider"),
+        _typed_model("Infantry", "Mechanical", "Cavalry", name="Other Rider"),
+        race=simple_race,
+    )
+    assert unit.common_types == ["Mechanical", "Infantry", "Cavalry"]
+
+
+def test_common_types_zero_overlap_is_empty(simple_race: RaceConfig) -> None:
+    unit = _typed_unit(
+        _typed_model("Vehicle", "Mechanical", "Bio Crew", "Tracked", name="Wagon"),
+        _typed_model("Bio", "Infantry", "Walking"),
+        race=simple_race,
+    )
+    assert unit.common_types == []
+
+
+def test_common_types_of_a_unit_with_no_models_is_empty(
+    simple_race: RaceConfig,
+) -> None:
+    assert _typed_unit(race=simple_race).common_types == []

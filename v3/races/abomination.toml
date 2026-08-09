@@ -88,7 +88,7 @@ description = '''Huge flagship floating above the ground armed with a greater fo
 "Surprise" = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
 "Fire Order" = "Fire and loads all weapons simultaneously"
 "Repair" = "[3, self, 2nd Healing]"
-"Officer" = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360⁰ into either an F movement or an aim order."
+"Officer" = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360° into either an F movement or an aim order."
 
 
 [units.flagship.shaken]
@@ -430,7 +430,7 @@ movement_order = ["-", "-", "-"]
 "Chase" = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"
 
 [units.robot_crab.orders.movement]
-fast = [["chase", "chase", "chase"]]
+fast = [["Chs", "Chs", "Chs"]]
 
 [units.robot_crab.damage_tables.Regular]
 rows = [
@@ -499,7 +499,7 @@ description = '''Abomination (scary humanoid creature with 2 arms and 4 tentacle
 
 [units.hippopotamus_riders.shaken]
 speed = "fast"
-movement_order = ["-", "chase", "chase"]
+movement_order = ["-", "Chs", "Chs"]
 fire_order = "Normal"
 
 [units.hippopotamus_riders.special]
@@ -517,7 +517,7 @@ fast = [
 	["F", "F", "360°"],
 	["F", "360°", "F"],
 	["F", "B", "-"],
-	["-", "Chase", "Chase"],
+	["-", "Chs", "Chs"],
 ]
 slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"]]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
@@ -550,7 +550,7 @@ equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
 [models.abomination_infantry.special]
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog) hexes."
+"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 
 [models.abomination_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -711,7 +711,7 @@ equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
 [models.frost_88.special]
-"Fog" = "Double to-hit penalties in smoke/fog and ignore to-hit penalty for enemies in smoke/fog. (however does not ignore line of sight through smoke/fog hexes)"
+"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 "To Hit" = "Double to-hit bonuses and penalties for movement speed, both for you and the target"
 
 
@@ -974,9 +974,9 @@ ap = "N/A"
 
 [equipment.fog_grenade_mortar.range.special]
 
-"Cloud" = "Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+"Cloud" = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
 
-"Ammo" = "May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+"Ammo" = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 
 [equipment.long_range_fog_grenade_mortar]
@@ -994,9 +994,9 @@ ap = "N/A"
 
 [equipment.long_range_fog_grenade_mortar.range.special]
 
-"Cloud" = "Place two smoke tokens in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+"Cloud" = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
 
-"Ammo" = "May start the game without ammo, but instead place two smoke tokens in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+"Ammo" = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 [equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
@@ -1009,7 +1009,7 @@ damage = "N/A"
 ap = "N/A"
 
 [equipment.multipurpose_mortar.range.special]
-"Multipurpose" = "Either place two fog[4] tokens in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
+"Multipurpose" = "Either place fog in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
 
 [equipment.double_barreled_oversized_musket]
 name = "Double Barreled Oversized Musket"
@@ -1071,13 +1071,13 @@ damage = "N/A"
 ap = "N/A"
 
 [equipment.fog_poisonizer.range.special]
-"Cloud" = "Make a fog within normal range into a poison fog[4]"
+"Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
 "Ammo" = "Always treated as loaded"
 "Order" = "May be used in both gunnery phases"
 
 
 [equipment.greater_fog_poisonizer]
-name = "Fog Poisonizer"
+name = "Greater Fog Poisonizer"
 race = "abomination"
 
 [equipment.greater_fog_poisonizer.range]
@@ -1087,9 +1087,9 @@ damage = "N/A"
 ap = "N/A"
 
 [equipment.greater_fog_poisonizer.range.special]
-"Cloud" = "Make a fog within normal range into a poison fog[4]"
+"Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
 "Ammo" = "Always treated as loaded"
-
+"Order" = "May be used in both gunnery phases independent of other weapons"
 
 
 [equipment.frog_spit]

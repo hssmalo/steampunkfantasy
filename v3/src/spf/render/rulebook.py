@@ -253,10 +253,13 @@ def _effect_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
 
 
 def parse_tokens(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Token names no other rule
-    """Read `tokens.toml` as one untitled group of rules, in file order."""
+    """Read `tokens.toml`: its document-level prose, then one untitled group."""
     config = rules.get_tokens(path)
     entries = [_effect_entry(token) for token in config.tokens.values()]
-    return RulesBody(explanation=None, groups=[RuleGroup(title=None, rules=entries)])
+    return RulesBody(
+        explanation=config.explanation,
+        groups=[RuleGroup(title=None, rules=entries)],
+    )
 
 
 TOKENS = register_kind(SectionKind(name="tokens", parse=parse_tokens))

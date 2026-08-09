@@ -120,6 +120,11 @@ A Unit's physical scale, Tiny through Enormous.
 A Model's classification (Infantry, Cavalry, Vehicle, Mechanical, …), used by
 Equipment requirements and rules.
 
+**Common Type**:
+The Types shared by *every* Model in a Unit — the intersection of the Models'
+Types. Summarises a Unit's classification when its Models differ; empty when
+they share nothing.
+
 ### Board and state
 
 **Hex**:
@@ -131,7 +136,7 @@ A marker tracking transient state on a Unit or Model (bleeding, poison, +1
 future damage, …), placed and removed in specific Phases.
 
 **Nick**:
-The player-chosen name of an Army instance.
+The player-chosen name of an Army, Unit, or Model instance.
 _Avoid_: nickname, label, title
 
 ### Game-data maintenance

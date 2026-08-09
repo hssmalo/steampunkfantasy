@@ -4,6 +4,7 @@
   "units": [
     {
       "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
       "models": [
         {
           "name": "elite_goblin_infantry",
@@ -41,6 +42,7 @@
     },
     {
       "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
       "models": [
         {
           "name": "elite_goblin_infantry",
@@ -78,6 +80,7 @@
     },
     {
       "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
       "models": [
         {
           "name": "elite_goblin_infantry",
@@ -115,6 +118,7 @@
     },
     {
       "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
       "models": [
         {
           "name": "elite_goblin_infantry",
@@ -152,6 +156,7 @@
     },
     {
       "name": "goblin_infantry",
+      "nick": "Goblin Infantry with Poison Bow",
       "models": [
         {
           "name": "goblin_infantry",
@@ -181,6 +186,7 @@
     },
     {
       "name": "goblin_infantry",
+      "nick": "Goblin Infantry with Poison Bow",
       "models": [
         {
           "name": "goblin_infantry",

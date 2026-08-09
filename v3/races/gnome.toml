@@ -37,8 +37,8 @@ movement_order = ["-", "-", "flee"]
 
 [units.gnome_infantry.orders.movement]
 slow = [
-    ["Chase", "", ""],
-    ["", "", "Chase"],
+    ["Chs", "", ""],
+    ["", "", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
@@ -98,8 +98,8 @@ fast = [
 ]
 slow = [
     ["360°", "A", "F"],
-    ["Chase", "", ""],
-    ["", "", "Chase"],
+    ["Chs", "", ""],
+    ["", "", "Chs"],
     ["360°", "F", "360°"],
     ["360°", "360°", "360°"],
     ["360°", "B", "-"],
@@ -138,7 +138,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [units.assault_bots.orders.movement]
-slow = [["-", "-", "Chase"]]
+slow = [["-", "-", "Chs"]]
 
 [units.assault_bots.damage_tables.Regular]
 rows = [
@@ -161,7 +161,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [units.mechanical_rat.orders.movement]
-slow = [["-", "-", "Chase"]]
+slow = [["-", "-", "Chs"]]
 
 [units.mechanical_rat.damage_tables.Regular]
 rows = [
@@ -302,7 +302,7 @@ rows = [
 	"1-2: +3 to future damage",
 	"3: +1 to be hit, -1 to hit",
 	"4: Rotate unit 180°",
-	"5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
+	"5: Place fog and poison cloud[8] in this and all adjacent hexes.",
 	"6: set on fire",
 ]
 
@@ -361,7 +361,7 @@ rows = [
 	"1-2: +3 to future damage",
 	"3: +1 to be hit, -1 to hit",
 	"4: Rotate unit 180°",
-	"5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
+	"5: Place fog and poison cloud[8] in this and all adjacent hexes.",
 	"6: set on fire",
 ]
 
@@ -423,7 +423,7 @@ rows = [
 	"1-2: +3 to future damage",
 	"3: +1 to be hit, -1 to hit",
 	"4: Rotate unit 180°",
-	"5: Place Poison Cloud[8] and smoke in this and all adjacent hexes.",
+	"5: Place fog and poison cloud[8] in this and all adjacent hexes.",
 	"6: set on fire",
 ]
 
@@ -1264,7 +1264,7 @@ ap = 5
 [equipment.experimental_guided_missile.range.special]
 "Type" = "Minor Acid"
 "Indirect Fire" = "Do not need line of sight to target"
-"Range" = "Increase range with (max 16). Roll each time you fire. If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)"
+"Range" = "Increase range with d4+d12 (max 16 min 2). Roll each time you fire. If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)"
 "Fumble" = "If Fumble, you are covered in minor acid"
 
 [equipment.experimental_guided_missile.model_special]
@@ -1285,7 +1285,7 @@ ap = 3
 
 [equipment.helicopter_mounted_experimental_nail_gun.range.special]
 "Multiple Shots" = "Fire d12 shots each time it is fired at the same unit"
-"Fumble" = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed"
+"Fumble" = "If fumble add +1 to future damage to self"
 "Note" = "Difficult to fire forward: -1 to hit firing forward"
 
 [equipment.experimental_nail_gun]

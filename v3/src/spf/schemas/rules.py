@@ -72,6 +72,7 @@ class TokenRuleConfig(StrictModel):
 
 
 class TokenRulesConfig(StrictModel):
+    explanation: str
     tokens: dict[str, TokenRuleConfig]
 
 

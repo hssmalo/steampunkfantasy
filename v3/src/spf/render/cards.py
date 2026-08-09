@@ -95,14 +95,14 @@ def _unit_orders(
     """Build the flat table and card list for a single Unit.
 
     The Asset is addressed by `unit.name`, the TOML key, not by
-    `unit.config.name`, the display name. One lookup serves the flat table and
-    every card the Unit produces.
+    `unit.display_name`, the player's Nick or the catalogue name. One lookup
+    serves the flat table and every card the Unit produces.
     """
     merged = unit.orders()
     shaken = unit.config.shaken
     image = image_for(race, unit.name)
     unit_orders = UnitOrders(
-        name=unit.config.name,
+        name=unit.display_name,
         image=image,
         size=unit.config.size,
         movement_rows=_flat_rows(merged.movement),
@@ -111,8 +111,10 @@ def _unit_orders(
         shaken_fire=shaken.fire_order,
     )
     cards = [
-        *_cards(unit.config.name, image=image, kind="Movement", orders=merged.movement),
-        *_cards(unit.config.name, image=image, kind="Fire", orders=merged.fire),
+        *_cards(
+            unit.display_name, image=image, kind="Movement", orders=merged.movement
+        ),
+        *_cards(unit.display_name, image=image, kind="Fire", orders=merged.fire),
     ]
     return unit_orders, cards
 
@@ -124,10 +126,12 @@ def build_deck(
 
     Each Unit contributes a flat `UnitOrders` and its transposed
     `OrderCard` set. Units producing an identical flat view (same name and
-    merged movement/fire rows) collapse to one entry. That key is the *display*
-    name and deliberately ignores the art: an Asset is addressed by TOML key,
-    and no race has two Unit keys sharing a display name, so the "same name,
-    different art" collision cannot arise today.
+    merged movement/fire rows) collapse to one entry. That key is the
+    `display_name` — so a Nick participates in it with no special-casing, and
+    differently-nicked Units each get their own card set (ADR 0019). It
+    deliberately ignores the art: an Asset is addressed by TOML key, and no race
+    has two Unit keys sharing a display name, so the "same name, different art"
+    collision cannot arise today.
 
     `image_for` resolves Image Assets; it defaults to the committed store and
     is swapped for `no_image` by `--no-images`. A Unit with no committed art

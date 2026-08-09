@@ -18,6 +18,8 @@ explanation = "A probe."
 """
 
 TOKENS = """\
+explanation = "How tokens work."
+
 [tokens]
 
 [tokens.probe]
@@ -55,7 +57,10 @@ def test_get_tokens_reads_an_explicit_path(tmp_path: Path) -> None:
     path = tmp_path / "tokens.toml"
     path.write_text(TOKENS, encoding="utf-8")
 
-    assert rules.get_tokens(path).tokens["probe"].name == "Probe Token"
+    index = rules.get_tokens(path)
+
+    assert index.explanation == "How tokens work."
+    assert index.tokens["probe"].name == "Probe Token"
 
 
 def test_get_hexes_defaults_to_the_committed_file() -> None:

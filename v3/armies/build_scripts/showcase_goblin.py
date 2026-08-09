@@ -9,7 +9,7 @@ army = ArmyList("goblin", "Showcase Goblin", [])
 
 # 4x Elite Goblin Infantry w Grenadier, Gear bow, Acid Grenade
 army = (
-    army.add_unit("goblin_infantry", race_config=cfg)
+    army.add_unit("goblin_infantry", race_config=cfg, nick="Elite Goblin Grenadier")
     .upgrade_full_unit(
         ("goblin_infantry", 0),
         upgrade_model_name="elite_goblin_infantry",
@@ -24,18 +24,20 @@ army = (
     .upgrade_all_models(
         ("goblin_infantry", 0), equipment_name="gear_bow", race_config=cfg
     )
-    .duplicate_unit(("goblin_infantry", 0))
-    .duplicate_unit(("goblin_infantry", 0))
-    .duplicate_unit(("goblin_infantry", 0))
+    .duplicate_unit(("goblin_infantry", 0), nick="Elite Goblin Grenadier")
+    .duplicate_unit(("goblin_infantry", 0), nick="Elite Goblin Grenadier")
+    .duplicate_unit(("goblin_infantry", 0), nick="Elite Goblin Grenadier")
 )
 
 # 2x Goblin Infantry w Poison bow
 army = (
-    army.add_unit("goblin_infantry", race_config=cfg)
+    army.add_unit(
+        "goblin_infantry", race_config=cfg, nick="Goblin Infantry with Poison Bow"
+    )
     .upgrade_all_models(
         ("goblin_infantry", 4), equipment_name="poison_bow", race_config=cfg
     )
-    .duplicate_unit(("goblin_infantry", 4))
+    .duplicate_unit(("goblin_infantry", 4), nick="Goblin Infantry with Poison Bow")
 )
 
 # 6x Goblin Infantry

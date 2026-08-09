@@ -5,7 +5,13 @@ from pathlib import Path
 from typing import Any
 
 from spf.armies.army import Army
-from spf.armies.build import ArmyList, ArmyModel, ArmyUnit, validate_army
+from spf.armies.build import (
+    ArmyList,
+    ArmyModel,
+    ArmyUnit,
+    nick_error,
+    validate_army,
+)
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
@@ -27,15 +33,20 @@ def save_army(army: ArmyList, *, army_name: str, tournament: str | None = None) 
         "units": [
             {
                 "name": unit.name,
+                **({"nick": unit.nick} if unit.nick is not None else {}),
                 "models": [
-                    {"name": model.name, "upgrades": list(model.upgrades)}
+                    {
+                        "name": model.name,
+                        "upgrades": list(model.upgrades),
+                        **({"nick": model.nick} if model.nick is not None else {}),
+                    }
                     for model in unit.models
                 ],
             }
             for unit in army.units
         ],
     }
-    path.write_text(json.dumps(data, indent=2))
+    path.write_text(json.dumps(data, indent=2) + "\n")
 
 
 def load_army(
@@ -68,13 +79,13 @@ def print_army(army: Army) -> None:
         cost = unit.cost()
         pts = cost.to_points()
         stdout.print(
-            f"[bold]{unit.config.name}[/] - {cost} [yellow]({pts} pts)[/]",
+            f"[bold]{unit.display_name}[/] - {cost} [yellow]({pts} pts)[/]",
             highlight=False,
         )
         for model in unit.models:
             equip_names = [e.name for e in model.equipment]
             equip_str = f" ({', '.join(equip_names)})" if equip_names else ""
-            stdout.print(f"  - {model.name}{equip_str}", highlight=False)
+            stdout.print(f"  - {model.display_name}{equip_str}", highlight=False)
     cost = army.cost()
     stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
@@ -84,7 +95,7 @@ def print_army_rules(army: Army) -> None:
     stdout.rule(f"{army.nick} — {army.race.title()} Army")
     for unit in army.units:
         stdout.print(
-            f"- [yellow]{unit.config.name}[/] - {unit.cost()}", highlight=False
+            f"- [yellow]{unit.display_name}[/] - {unit.cost()}", highlight=False
         )
         if unit.unit_specials:
             stdout.print("  - [dim]Specials:[/]", highlight=False)
@@ -93,7 +104,7 @@ def print_army_rules(army: Army) -> None:
         for model in unit.models:
             model_pts = model.cost().to_points()
             cost_str = f" ({model_pts} pts)" if model_pts else ""
-            stdout.print(f"  - {model.name}{cost_str}", highlight=False)
+            stdout.print(f"  - {model.display_name}{cost_str}", highlight=False)
             if model.model_specials:
                 stdout.print("    - [dim]Specials:[/]", highlight=False)
             for key, special in model.model_specials.items():
@@ -129,6 +140,8 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
         if unit_name not in cfg.units:
             errors.append(f"Unit #{unit_idx} (name {unit_name!r}): unknown unit name")
             continue
+        if unit_nick_error := nick_error(unit_data.get("nick")):
+            errors.append(f"Unit #{unit_idx} ({unit_name!r}): {unit_nick_error}")
         for model_idx, model_data in enumerate(unit_data["models"]):
             model_name = model_data["name"]
             if model_name not in cfg.models:
@@ -137,6 +150,11 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
                     f" (name {model_name!r}): unknown model name"
                 )
                 continue
+            if model_nick_error := nick_error(model_data.get("nick")):
+                errors.append(
+                    f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
+                    f" ({model_name!r}): {model_nick_error}"
+                )
             errors.extend(
                 f"Unit #{unit_idx} ({unit_name!r}) / model #{model_idx}"
                 f" ({model_name!r}): unknown equipment {upgrade!r}"
@@ -161,9 +179,11 @@ def _build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
                     name=model_data["name"],
                     config=cfg.models[model_data["name"]],
                     upgrades=list(model_data["upgrades"]),
+                    nick=model_data.get("nick"),
                 )
                 for model_data in unit_data["models"]
             ],
+            nick=unit_data.get("nick"),
         )
         for unit_data in data["units"]
     ]

@@ -48,7 +48,7 @@ movement_order = ["-", "-", "Flee"]
 sneak = [["Fire", "Fire"]]
 
 [units.goblin_infantry.orders.movement]
-still = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
+sneak = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
 slow  = [["360°", "F", "B"]]
 
 [units.goblin_infantry.damage_tables.Regular]
@@ -106,7 +106,7 @@ still = [["Fire", "Fire"]]
 
 [units.giant_snake_cavalry.orders.movement]
 still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
-slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chase", "-"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chs", "-"]]
 
 [units.giant_snake_cavalry.damage_tables.Regular]
 rows = [
@@ -143,7 +143,7 @@ movement_order = ["-", "-", "Flee"]
 "Terror" = "[4](range=1)"
 
 [units.tiny_snake.orders.movement]
-slow = [["-", "-",  "Chase"]]
+slow = [["-", "-",  "Chs"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [

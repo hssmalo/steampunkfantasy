@@ -30,6 +30,9 @@
 \BLOCK{endif}
 \textbf{Size:} \VAR{unit.size | latex_escape} \\
 \textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
+\BLOCK{if unit.types}
+\textbf{Type:} \VAR{unit.types | join(', ') | latex_escape} \\
+\BLOCK{endif}
 \BLOCK{if unit.armor}
 \textbf{Armor:} \VAR{unit.armor | join(', ')} \\
 \BLOCK{endif}
@@ -74,15 +77,20 @@
 \subsection{\VAR{model.name | latex_escape}}
 
 \textbf{Equipment:} \VAR{model.equipment_summary | join(', ') | latex_escape} \\
-\textbf{Assault:} strength \VAR{model.assault_strength | join(',')} (\VAR{model.assault_strength_die | latex_escape}),
-deflection \VAR{model.assault_deflection | join(',')} (\VAR{model.assault_deflection_die | latex_escape}),
-damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 
-\BLOCK{if model.specials or model.assault_specials}
+\BLOCK{if model.specials}
 \begin{itemize}
 \BLOCK{for name, text in model.specials}
 \item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
 \BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\textbf{Assault:} strength \VAR{model.assault_strength | join(',')} (\VAR{model.assault_strength_die | latex_escape}),
+deflection \VAR{model.assault_deflection | join(',')} (\VAR{model.assault_deflection_die | latex_escape}),
+damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
+
+\BLOCK{if model.assault_specials}
+\begin{itemize}
 \BLOCK{for name, text in model.assault_specials}
 \item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
 \BLOCK{endfor}

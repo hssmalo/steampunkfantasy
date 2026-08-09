@@ -86,6 +86,7 @@ class UnitEntry:
     count: int
     size: t.Size
     model_summary: list[str]
+    types: list[t.ModelType]
     armor: list[int] | None
     points: int
     shaken_speed: t.Speed
@@ -133,7 +134,7 @@ def _model_entry(model: Model) -> ModelEntry:
     ranged_equipment = [equip for equip in model.equipment if equip.range is not None]
     assault = model.assault()
     return ModelEntry(
-        name=model.config.name,
+        name=model.display_name,
         equipment_summary=_count_summary(model.equipment, lambda e: e.name),
         specials=list(model.model_specials.items()),
         assault_strength=list(assault.strength),
@@ -149,13 +150,14 @@ def _model_entry(model: Model) -> ModelEntry:
 
 def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> UnitEntry:
     return UnitEntry(
-        name=unit.config.name,
+        name=unit.display_name,
         # `unit.name` is the TOML key, which is what addresses an Asset;
-        # `unit.config.name` above is the display name.
+        # `unit.display_name` above is the player's Nick or the catalogue name.
         image=image_for(race, unit.name),
         count=1,
         size=unit.config.size,
-        model_summary=_count_summary(unit.models, lambda m: m.config.name),
+        model_summary=_count_summary(unit.models, lambda m: m.display_name),
+        types=unit.common_types,
         armor=list(unit.config.armor) if unit.config.armor is not None else None,
         points=unit.cost().to_points(),
         shaken_speed=unit.config.shaken.speed,

@@ -196,11 +196,11 @@ still = [
 slow = [
 	["360°", "F", "360°"],
 	["360°", "B", "360°"],
-	["A+360°", "Chase", "Chase"],
+	["A+360°", "Chs", "Chs"],
 	["Follow", "Follow", "Follow"],
 ]
 fast = [
-	["-", "Chase", "Chase"],
+	["-", "Chs", "Chs"],
 	["360°", "F", "B"],
 	["Follow", "Follow", "Follow"]
 ]
@@ -258,7 +258,7 @@ fast = [
 	["360°", "F", "F"],
 	["F", "360°", "F"],
 	["F", "F", "360°"],
-	["-", "Chase", "Chase"],
+	["-", "Chs", "Chs"],
 	["360°", "F", "B"],
 ]
 
@@ -327,7 +327,7 @@ fast = [
 rest = [["-", "-", "-"]]
 still = [["360°", "360°", "B[rest]"]]
 slow = [["360°", "F", "B"]]
-fast = [["Chase", "Chase", "Chase + B"]]
+fast = [["Chs", "Chs", "Chs + B"]]
 
 [units.drone_swarm.damage_tables.Regular]
 rows = [
