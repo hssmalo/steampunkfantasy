@@ -1,0 +1,14 @@
+% The to-hit Section. `md_to_latex` has no table rule, so the table is built
+% here from the view-model's rows — every cell is plain text and only needs
+% escaping.
+\begin{tabular}{lrrp{0.5\textwidth}}
+& \textbf{To hit} & \textbf{To be hit} & \textbf{Note} \\
+\BLOCK{for group in section.body.groups}
+\hline
+\textbf{\VAR{group.title | latex_escape}} & & & \\
+\BLOCK{for row in group.rows}
+\VAR{row.name | latex_escape} & \VAR{row.to_hit | latex_escape} & \VAR{row.to_be_hit | latex_escape} & \VAR{row.note | default("", true) | latex_escape} \\
+\BLOCK{endfor}
+\BLOCK{endfor}
+\end{tabular}
+\vspace{1ex}

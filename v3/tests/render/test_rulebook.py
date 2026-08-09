@@ -17,6 +17,7 @@ from spf.render.rulebook import (
     KINDS,
     MARKDOWN,
     SPECIALS,
+    TO_HIT,
     TOKENS,
     Rulebook,
     RuleEntry,
@@ -31,6 +32,7 @@ from spf.render.rulebook import (
     parse_hexes,
     parse_markdown,
     parse_specials,
+    parse_to_hit,
     parse_tokens,
     register_kind,
 )
@@ -485,6 +487,89 @@ def test_specials_kind_parses_the_committed_file() -> None:
     assert tokens == {"Minor Acid", "Poison"}
 
 
+# --- The to_hit kind's parser -----------------------------------------------
+
+TO_HIT_SOURCE = """\
+[speed.still]
+name = "Still"
+to_hit = "+1"
+to_be_hit = "+1"
+
+[speed.flying]
+name = "Flying"
+to_hit = "-1"
+to_be_hit = "-1"
+note = "stacks with still, slow, and fast"
+
+[terrain.fog]
+name = "Fog"
+to_hit = "-1"
+to_be_hit = "-1"
+
+[order]
+
+[range]
+
+[angle]
+
+[size]
+
+[unit_ability]
+
+[weapon_ability]
+
+[token]
+"""
+
+
+def test_to_hit_kind_is_registered() -> None:
+    assert KINDS["to_hit"] is TO_HIT
+    assert TO_HIT.parse is parse_to_hit
+
+
+def test_to_hit_kind_yields_one_titled_group_per_category(tmp_path: Path) -> None:
+    source = tmp_path / "to_hit.toml"
+    source.write_text(TO_HIT_SOURCE, encoding="utf-8")
+
+    body = parse_to_hit(source, RulesContext(tmp_path))
+
+    # Empty categories are dropped: a heading with no rows says nothing.
+    assert [group.title for group in body.groups] == ["Speeds", "Terrain"]
+
+
+def test_to_hit_kind_carries_every_field_across(tmp_path: Path) -> None:
+    source = tmp_path / "to_hit.toml"
+    source.write_text(TO_HIT_SOURCE, encoding="utf-8")
+
+    speeds, _ = parse_to_hit(source, RulesContext(tmp_path)).groups
+
+    still, flying = speeds.rows
+    assert (still.name, still.to_hit, still.to_be_hit) == ("Still", "+1", "+1")
+    assert still.note is None  # an unwritten note is None, not the empty string
+    assert flying.note == "stacks with still, slow, and fast"
+    assert speeds.has_notes
+
+
+def test_to_hit_kind_reports_a_group_with_no_notes(tmp_path: Path) -> None:
+    # Drives the column count in both families' partials.
+    source = tmp_path / "to_hit.toml"
+    source.write_text(TO_HIT_SOURCE, encoding="utf-8")
+
+    _, terrain = parse_to_hit(source, RulesContext(tmp_path)).groups
+
+    assert not terrain.has_notes
+
+
+def test_to_hit_kind_parses_the_committed_file() -> None:
+    body = parse_to_hit(
+        config.paths.rules / "to_hit.toml", RulesContext(config.paths.rules)
+    )
+
+    titles = [group.title for group in body.groups]
+    assert titles[0] == "Speeds"
+    assert "Unit Abilities" in titles  # the mapped, not the derived, title
+
+
 # --- build_rulebook ---------------------------------------------------------
 
 
@@ -762,6 +847,24 @@ def test_latex_partials_render_the_structured_details(real_latex: str) -> None:
 
 def test_latex_partials_convert_a_prose_bullet_list(real_latex: str) -> None:
     assert r"\item Extinguish one fire. Cost 3." in real_latex
+
+
+def test_markdown_partials_tabulate_the_to_hit_modifiers(real_markdown: str) -> None:
+    assert "### Speeds\n" in real_markdown
+    assert "| Flying | -1 | -1 | stacks with still, slow, and fast |" in real_markdown
+    # A group with no notes spends no column on them.
+    assert "| On-Edge of Firing-Angle | -1 | 0 |\n" in real_markdown
+
+
+def test_latex_partials_tabulate_the_to_hit_modifiers(real_latex: str) -> None:
+    assert r"\section{To-Hit Modifiers}" in real_latex
+    assert r"\subsection{Unit Abilities}" in real_latex
+    # `md_to_latex` has no table rule, so the rows are built by the partial.
+    assert r"Camouflage[terrain] & 0 & -1 & when unit is in the given terrain \\" in (
+        real_latex
+    )
+    # A group with no notes spends no column on them.
+    assert "Enhanced Accuracy & +1 & 0 \\\\" in real_latex
 
 
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
