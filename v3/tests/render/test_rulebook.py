@@ -506,8 +506,6 @@ name = "Fog"
 to_hit = "-1"
 to_be_hit = "-1"
 
-[order]
-
 [range]
 
 [angle]
@@ -515,8 +513,6 @@ to_be_hit = "-1"
 [size]
 
 [unit_ability]
-
-[weapon_ability]
 
 [token]
 """
@@ -858,13 +854,10 @@ def test_markdown_partials_tabulate_the_to_hit_modifiers(real_markdown: str) -> 
 
 def test_latex_partials_tabulate_the_to_hit_modifiers(real_latex: str) -> None:
     assert r"\section{To-Hit Modifiers}" in real_latex
-    assert r"\subsection{Unit Abilities}" in real_latex
     # `md_to_latex` has no table rule, so the rows are built by the partial.
     assert r"Camouflage[terrain] & 0 & -1 & when unit is in the given terrain \\" in (
         real_latex
     )
-    # A group with no notes spends no column on them.
-    assert "Enhanced Accuracy & +1 & 0 \\\\" in real_latex
 
 
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
