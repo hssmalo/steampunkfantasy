@@ -931,7 +931,7 @@ ap = 2
 name = "Zeppelin"
 race = "dwarf"
 equipment_limit = ["Independent:∞"]
-equipment = ["array_of_enhanced_heavy_muskets", "fear_ray", "zeppelin_gun"]
+equipment = ["array_of_enhanced_heavy_muskets", "fear_ray_free", "zeppelin_gun"]
 type = ["Flying", "Zeppelin"]
 
 [models.zeppelin.assault]

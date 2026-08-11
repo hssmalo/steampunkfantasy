@@ -81,15 +81,6 @@ to_hit = "0"
 to_be_hit = "-1"
 
 #
-# Orders
-#
-[order.aim]
-name = "Aim"
-to_hit = "+2"
-to_be_hit = "0"
-note = "aim bonus lasts 1 round"
-
-#
 # Range
 #
 [range.point_blank]
@@ -139,6 +130,8 @@ to_be_hit = "+2"
 #
 # Unit abilities
 #
+#ToDo: rename to model special
+
 [unit_ability.good_shot]
 name = "Good Shot"
 to_hit = "+1"
@@ -182,15 +175,15 @@ to_be_hit = "-1"
 note = "when unit is in the given terrain"
 
 [unit_ability.take_cover]
-name = "Take Cover[speed]"
+name = "Take Cover[speed][N]"
 to_hit = "0"
-to_be_hit = "-N"
+to_be_hit = "+N"
 note = "when unit is in the given speed"
 
 [unit_ability.elusive]
-name = "Elusive[speed]"
+name = "Elusive[speed][N]"
 to_hit = "0"
-to_be_hit = "-N"
+to_be_hit = "+N"
 note = "when unit is in the given speed"
 
 [unit_ability.optimal_at_point_blank]
@@ -199,10 +192,7 @@ to_hit = "+1"
 to_be_hit = "0"
 note = "firing at enemies at point blank range only"
 
-#
-# Weapon abilities
-#
-[weapon_ability.enhanced_accuracy]
+[unit_ability.enhanced_accuracy]
 name = "Enhanced Accuracy"
 to_hit = "+1"
 to_be_hit = "0"
@@ -224,3 +214,9 @@ to_be_hit = "+1"
 name = "Crippled Crew"
 to_hit = "-1"
 to_be_hit = "0"
+
+[token.aim]
+name = "Aim"
+to_hit = "+2"
+to_be_hit = "0"
+note = "aim bonus lasts 1 round"

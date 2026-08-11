@@ -5,6 +5,7 @@ captures *why* a rule was changed.
 
 | Date | Description | Why |
 | ---------- | ------------------------------ | ------------------------------ |
+| 11.08.2026 | tweaked to_hit.toml            | Internal logic presentation    |
 | 06.08.2026 | bugfixed some possible values  | bugfix                         |
 | 06.08.2026 | Aim and Shaken now follow one general first-placement rule; re-aiming an already-aimed unit adds a token instead of nothing | Aim stated the rule in its own words and meant something different; unified so Aim and Shaken behave alike |
 | 05.08.2026 | added aim, and added orders    | Completing the rules           |

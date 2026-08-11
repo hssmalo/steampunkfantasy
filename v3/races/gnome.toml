@@ -707,12 +707,11 @@ equipment_limit = [
 equipment = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
 type = ["Bio Crew", "Helicopter", "Flying", "Tinkerer"]
 replaces = "gnome_helicopter"
-cost.xp = 24
+cost.xp = 16
 cost.cp = -8
 
 [models.tinkerer_helicopter.unit_special]
-"Repair" = "Improved Quick fix: Repair[2, self, 1st healing phase]"
-"Movement" = "May move normally even if shaken"
+"Repair" = "[2, self, 1st healing phase]"
 
 [models.tinkerer_helicopter.special]
 "To Hit" = "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
@@ -1143,7 +1142,6 @@ ap = 0
 [equipment.assault_bot_mortar_vehicle]
 race = "gnome"
 name = "Assault Bot Mortar Vehicle"
-requires = [["type:Infantry"], ["Hands:2"]]
 
 [equipment.assault_bot_mortar_vehicle.range]
 range = 4
@@ -1285,7 +1283,7 @@ ap = 3
 
 [equipment.helicopter_mounted_experimental_nail_gun.range.special]
 "Multiple Shots" = "Fire d12 shots each time it is fired at the same unit"
-"Fumble" = "If fumble add +1 to future damage to self"
+"Fumble" = "If fumble add one +1 future damage token to self"
 "Note" = "Difficult to fire forward: -1 to hit firing forward"
 
 [equipment.experimental_nail_gun]

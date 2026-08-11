@@ -1448,7 +1448,6 @@ ap = 5
 [equipment.smg_free]
 name = "SMG"
 race = "elf"
-requires = [["Hands:2"]]
 
 [equipment.smg_free.range]
 range = 4

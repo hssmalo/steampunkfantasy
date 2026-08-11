@@ -1438,7 +1438,6 @@ slow = [["Fire", "Fire"]]
 [equipment.smg_free]
 name = "SMG"
 race = "darkelf"
-requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.smg_free.range]
 range = 3
@@ -1469,7 +1468,6 @@ ap = 2
 [equipment.crossbow_free]
 name = "Crossbow"
 race = "darkelf"
-requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.crossbow_free.range]
 range = 2

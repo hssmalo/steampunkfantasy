@@ -755,8 +755,6 @@ ap = 1
 [equipment.seeker_assassin_arrows_free]
 name = "Seeker Assassin Arrows"
 race = "goblin"
-cost.cp = 16
-upgrade_all = true
 
 [equipment.seeker_assassin_arrows_free.model_special]
 "To Hit (2)" = "+2 to hit if using seeker arrow"

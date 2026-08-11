@@ -109,10 +109,8 @@ class ToHitModifier(StrictModel):
 class ToHitConfig(StrictModel):
     speed: dict[str, ToHitModifier]
     terrain: dict[str, ToHitModifier]
-    order: dict[str, ToHitModifier]
     range: dict[str, ToHitModifier]
     angle: dict[str, ToHitModifier]
     size: dict[str, ToHitModifier]
     unit_ability: dict[str, ToHitModifier]
-    weapon_ability: dict[str, ToHitModifier]
     token: dict[str, ToHitModifier]

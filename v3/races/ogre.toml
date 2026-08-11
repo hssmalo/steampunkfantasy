@@ -1035,7 +1035,7 @@ ap = 4
 [equipment.gear_pistol]
 name = "Gear Pistol"
 race = "ogre"
-requires = [["Hands:2"], ["type:Scout"]]
+requires = [["Hands:1"], ["type:Scout"]]
 
 [equipment.gear_pistol.range]
 range = 3
