@@ -31,7 +31,9 @@ def check_default_equipment_fits(
     claimed: dict[t.EquipmentHolder, int] = {}
     for key in model.equipment:
         # A default naming an equipment key that is not in the catalogue is a
-        # different defect, and the loader raises on it before an army resolves.
+        # different defect: `ArmyList.resolve` raises a KeyError on it. Skipping
+        # it keeps the linter reporting the defects it *can* see rather than
+        # dying on the data it was asked to inspect.
         if (equip := equipment.get(key)) is None:
             continue
         for holder, count in holders.claims(equip).items():

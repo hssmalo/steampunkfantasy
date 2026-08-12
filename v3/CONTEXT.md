@@ -43,14 +43,12 @@ _Avoid_: free equipment, base equipment
 **Upgrade Equipment**:
 Equipment a player buys for a Model, adding to its Cost. Never yields a Holder
 to anything else.
-_Avoid_: paid equipment, add-on
 
 **Holder**:
 A named place on a Model where Equipment sits, with a limited capacity — Hands,
 Tentacles, Reserve Melee and so on. Each piece of Equipment claims capacity in
 one; a Model that has run out of capacity in a Holder can carry no more
 Equipment there. Sixteen Holders exist in the game data.
-_Avoid_: slot, mount, hardpoint
 
 ### Cost and points
 

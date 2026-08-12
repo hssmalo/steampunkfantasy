@@ -39,7 +39,9 @@ class Model:
         """
         return [
             *retained_defaults(
-                self.config, self.default_equipment, self.upgrade_equipment
+                self.config,
+                defaults=self.default_equipment,
+                upgrades=self.upgrade_equipment,
             ),
             *self.upgrade_equipment,
         ]

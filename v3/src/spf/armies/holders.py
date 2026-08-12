@@ -38,6 +38,7 @@ def capacity(model_config: ModelConfig) -> dict[t.EquipmentHolder, int]:
 
 def retained_defaults(
     model_config: ModelConfig,
+    *,
     defaults: list[EquipmentConfig],
     upgrades: list[EquipmentConfig],
 ) -> list[EquipmentConfig]:

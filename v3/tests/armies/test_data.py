@@ -1429,20 +1429,18 @@ def test_validate_army_still_catches_genuine_slot_overflow(
 # ---------------------------------------------------------------------------
 
 
-def _race_with_default(
-    simple_race: RaceConfig, default: EquipmentConfig, *, key: str = "basic_sword"
-) -> RaceConfig:
-    """Give the soldier one default equipment entry, keyed as `key`."""
+def _race_with_default(simple_race: RaceConfig, default: EquipmentConfig) -> RaceConfig:
+    """Give the soldier one default equipment entry, keyed `basic_sword`."""
     return RaceConfig(
         races=simple_race.races,
         units=simple_race.units,
         models={
             **simple_race.models,
             "soldier": simple_race.models["soldier"].model_copy(
-                update={"equipment": [key]}
+                update={"equipment": ["basic_sword"]}
             ),
         },
-        equipment={**simple_race.equipment, key: default},
+        equipment={**simple_race.equipment, "basic_sword": default},
     )
 
 
