@@ -11,7 +11,7 @@ from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import rules
+from spf.lint import holders, rules
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import RaceConfig
@@ -76,6 +76,18 @@ def lint_race_config(
                 message=message,
             )
         )
+    for model_key, model in race_config.models.items():
+        message = holders.check_default_equipment_fits(model, race_config.equipment)
+        if message is not None:
+            findings.append(
+                Finding(
+                    race=race,
+                    section="models",
+                    key=model_key,
+                    rule="default-equipment-limit",
+                    message=message,
+                )
+            )
     sections: dict[str, Mapping[str, Named]] = {
         "units": race_config.units,
         "models": race_config.models,

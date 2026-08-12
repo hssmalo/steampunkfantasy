@@ -8,8 +8,16 @@ linter looks at.
 
 from dataclasses import dataclass
 
-from spf.lint import collect
+from spf.lint import collect, holders
+from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
+from spf.schemas.race import (
+    AssaultConfig,
+    EquipmentConfig,
+    ModelConfig,
+    RaceConfig,
+    RaceMetadata,
+)
 
 CONVENTIONS = LintConfig(
     aliases={"darkelf": "dark_elf"},
@@ -79,3 +87,133 @@ def test_title_case_cannot_see_past_an_underscore() -> None:
 
     assert [finding.rule for finding in first_pass] == ["no-underscore"]
     assert [finding.rule for finding in second_pass] == ["title-case"]
+
+
+# ---------------------------------------------------------------------------
+# Default equipment must fit the model's holder limits
+# ---------------------------------------------------------------------------
+
+_ASSAULT = AssaultConfig(
+    strength=[1, 0, 0, 0],
+    strength_die="4+",
+    deflection=[1, 0, 0, 0],
+    deflection_die="4+",
+    damage="d4",
+    ap=0,
+)
+
+
+def _equipment(name: str, *, requires: list[list[str]]) -> EquipmentConfig:
+    """Build an equipment entry carrying only a name and its holder claims."""
+    return EquipmentConfig(
+        race="ogre",
+        name=name,  # pyright: ignore[reportArgumentType]
+        requires=requires,  # pyright: ignore[reportArgumentType]
+    )
+
+
+def _model(*, limits: list[str], defaults: list[str]) -> ModelConfig:
+    """Build a model config carrying only its holder limits and default keys."""
+    return ModelConfig(
+        race="ogre",
+        name="Scout Engineer",  # pyright: ignore[reportArgumentType]
+        equipment_limit=limits,  # pyright: ignore[reportArgumentType]
+        equipment=defaults,
+        type=["Infantry"],
+        assault=_ASSAULT,
+    )
+
+
+def test_defaults_within_the_limits_are_silent() -> None:
+    """A model whose defaults fit has nothing to report."""
+    model = _model(limits=["Hands:2"], defaults=["rifle"])
+    catalogue = {"rifle": _equipment("Rifle", requires=[["Hands:2"]])}
+
+    assert holders.check_default_equipment_fits(model, catalogue) is None
+
+
+def test_defaults_claiming_an_undeclared_holder_are_reported() -> None:
+    """The ogre scout engineer case: a Reserve Melee sword on a Hands-only model."""
+    model = _model(limits=["Independent:∞", "Hands:2"], defaults=["ogre_sword_free"])
+    catalogue = {
+        "ogre_sword_free": _equipment("Ogre Sword", requires=[["Reserve Melee:1"]])
+    }
+
+    message = holders.check_default_equipment_fits(model, catalogue)
+
+    assert message == "defaults claim Reserve Melee:1 but the limit is 0"
+
+
+def test_defaults_are_measured_together_not_one_at_a_time() -> None:
+    """Two defaults that each fit alone can still over-commit the holder."""
+    model = _model(limits=["Hands:2"], defaults=["rifle", "pistol"])
+    catalogue = {
+        "rifle": _equipment("Rifle", requires=[["Hands:2"]]),
+        "pistol": _equipment("Pistol", requires=[["Hands:1"]]),
+    }
+
+    message = holders.check_default_equipment_fits(model, catalogue)
+
+    assert message == "defaults claim Hands:3 but the limit is 2"
+
+
+def test_every_over_committed_holder_is_named() -> None:
+    """One message covers all the holders that need fixing."""
+    model = _model(limits=["Hands:1"], defaults=["rig"])
+    catalogue = {"rig": _equipment("Rig", requires=[["Hands:2"], ["Grenades:1"]])}
+
+    message = holders.check_default_equipment_fits(model, catalogue)
+
+    assert message is not None
+    assert "Hands:2 but the limit is 1" in message
+    assert "Grenades:1 but the limit is 0" in message
+
+
+def test_type_requirements_never_over_commit_a_holder() -> None:
+    """`type:` says who may take the equipment, not where it sits."""
+    model = _model(limits=["Hands:2"], defaults=["rifle"])
+    catalogue = {
+        "rifle": _equipment("Rifle", requires=[["Hands:2"], ["type:Infantry"]])
+    }
+
+    assert holders.check_default_equipment_fits(model, catalogue) is None
+
+
+def test_over_committed_defaults_surface_as_a_finding() -> None:
+    """The rule reaches `lint_race_config` and locates the model it fired on."""
+    race_config = RaceConfig(
+        races={"ogre": RaceMetadata(name="Ogre")},
+        units={},
+        models={
+            "ogre_scout_engineer": _model(
+                limits=["Hands:2"], defaults=["ogre_sword_free"]
+            )
+        },
+        equipment={
+            "ogre_sword_free": _equipment("Ogre Sword", requires=[["Reserve Melee:1"]])
+        },
+    )
+
+    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS)
+
+    (finding,) = [f for f in findings if f.rule == "default-equipment-limit"]
+    assert finding.section == "models"
+    assert finding.key == "ogre_scout_engineer"
+    assert "Reserve Melee:1" in finding.message
+
+
+def test_real_races_have_exactly_one_over_committed_model() -> None:
+    """`ogre.ogre_scout_engineer` is a real, known-bad model held back on purpose.
+
+    hssmalo is keeping the TOML defect in place so this rule is exercised
+    against real data rather than only against fixtures. Once the data is
+    fixed, update this test -- probably to "no findings at all".
+    """
+    findings = [
+        (race, finding.key)
+        for race in t.RaceName.__value__.__args__
+        for finding in collect.lint_race(race)
+        if finding.rule == "default-equipment-limit"
+    ]
+
+    assert findings == [("ogre", "ogre_scout_engineer")]
