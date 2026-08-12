@@ -1,7 +1,8 @@
-import os,sys,inspect
+import os, sys, inspect
+
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir) 
+sys.path.insert(0, parent_dir)
 
 import data
 
@@ -13,65 +14,63 @@ darkelf = data.Race.from_toml("darkelf")
 abomination = data.Race.from_toml("abomination")
 
 
-
 op1 = data.Team("Dwarf SteamPowerArmor with Balrog Assault")
 
-sp = op1.add_unit(dwarf.units.steampowerarmor, name = 'SteamPowerArmor')
+sp = op1.add_unit(dwarf.units.steampowerarmor, name="SteamPowerArmor")
 op1.add_equipment(sp, dwarf.equipments.vest_of_life_support)
 op1.add_equipment(sp, dwarf.equipments.multi_barrled_heavy_musket)
 
-op1.add_unit(dwarf.units.tamed_balrog, name='Tamed Balrog')
+op1.add_unit(dwarf.units.tamed_balrog, name="Tamed Balrog")
 
 op1.add_unit(dwarf.units.zap)
-op1.add_unit(dwarf.units.dwarf_infantry, name ='Dwarf Infantry')
-
+op1.add_unit(dwarf.units.dwarf_infantry, name="Dwarf Infantry")
 
 
 oliphant = data.Team("Oliphant attack")
 
-oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders')
-#oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders2')
-#oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders3')
-#oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders4')
+oliphant.add_unit(elf.units.armored_oliphant_riders, name="Oliphant Riders")
+# oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders2')
+# oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders3')
+# oliphant.add_unit(elf.units.armored_oliphant_riders, name='Oliphant Riders4')
 
 
-oliphant.add_unit(elf.units.e34, name = 'Elf Main Battle Tank')
-#oliphant.add_unit(elf.units.e34, name = 'Main Elf Battletank2')
+oliphant.add_unit(elf.units.e34, name="Elf Main Battle Tank")
+# oliphant.add_unit(elf.units.e34, name = 'Main Elf Battletank2')
 
 
+inf = oliphant.add_unit(elf.units.elf_infantry, name="Elf Infantry")
+# oliphant.add_equipment(inf, elf.equipments.at_rifle)
 
-inf = oliphant.add_unit(elf.units.elf_infantry, name='Elf Infantry')
-#oliphant.add_equipment(inf, elf.equipments.at_rifle)
 
-
-insanity = data.Team('Insanity')
+insanity = data.Team("Insanity")
 
 inf1 = insanity.add_unit(abomination.units.abomination_infantry)
 insanity.add_equipment(inf1, abomination.equipments.fog_grenade_mortar)
 
-#inf2 = insanity.add_unit(abomination.units.abomination_infantry)
-#insanity.add_equipment(inf2, abomination.equipments.fog_grenade_mortar)
+# inf2 = insanity.add_unit(abomination.units.abomination_infantry)
+# insanity.add_equipment(inf2, abomination.equipments.fog_grenade_mortar)
 
 insanity.add_unit(abomination.units.horror)
 
 frog1 = insanity.add_unit(abomination.units.gigant_frog_riders)
-#frog2 = insanity.add_unit(abomination.units.gigant_frog_riders)
-#frog3 = insanity.add_unit(abomination.units.gigant_frog_riders)
-#frog4 = insanity.add_unit(abomination.units.gigant_frog_riders)
+# frog2 = insanity.add_unit(abomination.units.gigant_frog_riders)
+# frog3 = insanity.add_unit(abomination.units.gigant_frog_riders)
+# frog4 = insanity.add_unit(abomination.units.gigant_frog_riders)
 
 insanity.add_equipment(frog1, abomination.equipments.frog_armor)
 insanity.add_equipment(frog1, abomination.equipments.tentacle_craclespears)
-#insanity.add_equipment(frog2, abomination.equipments.frog_armor)
-#insanity.add_equipment(frog2, abomination.equipments.tentacle_craclespears)
-#insanity.add_equipment(frog3, abomination.equipments.frog_armor)
-#insanity.add_equipment(frog3, abomination.equipments.tentacle_craclespears)
-#insanity.add_equipment(frog4, abomination.equipments.frog_armor)
-#insanity.add_equipment(frog4, abomination.equipments.tentacle_craclespears)
+# insanity.add_equipment(frog2, abomination.equipments.frog_armor)
+# insanity.add_equipment(frog2, abomination.equipments.tentacle_craclespears)
+# insanity.add_equipment(frog3, abomination.equipments.frog_armor)
+# insanity.add_equipment(frog3, abomination.equipments.tentacle_craclespears)
+# insanity.add_equipment(frog4, abomination.equipments.frog_armor)
+# insanity.add_equipment(frog4, abomination.equipments.tentacle_craclespears)
 
 insanity.add_unit(abomination.units.squ)
-#insanity.add_unit(abomination.units.squ)
-#insanity.add_unit(abomination.units.squ)
-#insanity.add_unit(abomination.units.squ)
+# insanity.add_unit(abomination.units.squ)
+# insanity.add_unit(abomination.units.squ)
+# insanity.add_unit(abomination.units.squ)
 
-import IPython; IPython.embed()
+import IPython
 
+IPython.embed()

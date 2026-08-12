@@ -2,8 +2,6 @@ from data import Team
 from data import Costimized_unit
 
 
+import IPython
 
-
-
-
-import IPython; IPython.embed()
+IPython.embed()

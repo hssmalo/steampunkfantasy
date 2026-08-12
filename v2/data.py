@@ -113,7 +113,7 @@ class Race:
         for name, unit in self.units.items():
             txt = txt + unit.write_info(long_=long_, format_=format_)
 
-            #if format_ == "tex":
+            # if format_ == "tex":
             #    txt = txt + "\\clearpage"
 
         if format_ == "tex":
@@ -215,7 +215,7 @@ class Team:
 
             txt = txt + unit.write_info(long_=long_, format_=format_, nickname=name)
 
-            #if format_ == "tex":
+            # if format_ == "tex":
             #    txt = txt + "\\clearpage"
 
             if format_ == "tex":
@@ -733,7 +733,7 @@ class Model:
         if format_ == "tex":
             from pprint import pprint
 
-            pprint('fuck you')
+            pprint("fuck you")
             pprint(self.info.assault.special)
 
             try:

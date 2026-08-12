@@ -8,6 +8,7 @@ Call ArmyList.resolve(race_config) to obtain a fully resolved Army.
 from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Self
 
+from spf.armies import holders
 from spf.schemas import type_aliases as t
 from spf.schemas.race import ModelConfig, RaceConfig, UnitConfig
 
@@ -422,29 +423,16 @@ def _remaining_slots(
 ) -> dict[t.EquipmentHolder, int]:
     """Compute remaining holder slots after accounting for all upgrade equipment.
 
-    Default equipment is never counted: when upgrades are present, defaults are
-    discarded entirely. This also applies when checking whether the first upgrade
-    can be added — adding any upgrade replaces the defaults, so they do not
-    occupy slots for that check either.
-
-    Slot usage is read from each equipment's requires field. In practice, holder
-    requirements always appear in single-item OR-groups, so iterating all items
-    in all groups gives the correct usage.
+    Default equipment is never counted, and must stay that way: an upgrade is
+    legal iff the *upgrades alone* fit the limits. Counting defaults here would
+    retroactively invalidate saved armies. Defaults instead yield their holders
+    to upgrades after the fact, in `Model.equipment` — see ADR-0020.
     """
-    slots: dict[t.EquipmentHolder, int] = {
-        limit.holder: limit.limit for limit in model.config.equipment_limit
-    }
-    # Defaults are discarded whenever upgrades are added, so only upgrades consume
-    # slots. This holds even for the first upgrade: adding it replaces all defaults.
+    slots = holders.capacity(model.config)
     for equip_key in model.upgrades:
-        for req_group in race_config.equipment[equip_key].requires:
-            for req in req_group:
-                if (
-                    req.key != "type"
-                    and isinstance(req.value, int)
-                    and req.key in slots
-                ):
-                    slots[req.key] -= req.value  # type: ignore[index]
+        for holder, count in holders.claims(race_config.equipment[equip_key]).items():
+            if holder in slots:
+                slots[holder] -= count
     return slots
 
 

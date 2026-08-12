@@ -1,11 +1,11 @@
 from data import Team
 import subprocess
 
-e = Team('Elf')
-d = Team('Dwarf')
-de = Team('DarkElf')
-o  = Team('Ork')
-g  = Team('Gnome')
+e = Team("Elf")
+d = Team("Dwarf")
+de = Team("DarkElf")
+o = Team("Ork")
+g = Team("Gnome")
 
 e.from_toml()
 d.from_toml()
@@ -20,9 +20,5 @@ o.write_pdf()
 g.write_pdf()
 
 
-subprocess.call(['pdflatex', 'armies.tex'])
-subprocess.call(['pdflatex', 'armies.tex'])
-
-
-
-
+subprocess.call(["pdflatex", "armies.tex"])
+subprocess.call(["pdflatex", "armies.tex"])

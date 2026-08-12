@@ -450,7 +450,8 @@ def test_format_failed_group_slot_shows_available(simple_race: RaceConfig) -> No
 def test_remaining_slots_does_not_count_default_equipment(
     race_with_defaults: RaceConfig,
 ) -> None:
-    # Defaults are always discarded when upgrades are added, so they must never
+    # Upgrade legality is decided by the upgrades alone (ADR-0020): defaults
+    # yield their holders instead of blocking a purchase, so they must never
     # consume slots. A soldier with a Hands:2 default but no upgrades should
     # still show Hands:2 free.
     soldier = ArmyModel(
