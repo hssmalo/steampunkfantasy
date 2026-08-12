@@ -324,35 +324,32 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
         load_army("bad-upgrade")
 
 
-def test_load_geir_arne_army_is_valid() -> None:
-    """Integration test: Test that an army is loaded and validated."""
-    army = load_army("2025/geir_arne")
-    assert isinstance(army, Army)
-
-
 @pytest.mark.parametrize(
-    ("army_name", "expected_cost"),
+    "army_name",
     [
-        ("demo", t.Cost(mp=16, cp=8, xp=12, ip=32)),
-        ("2025/geir_arne", t.Cost(mp=96, cp=124, xp=96, ip=96, vpm=-48)),
-        ("2025/morten", t.Cost(mp=96, cp=96, xp=96, ip=96)),
-        ("showcase/abomination", t.Cost(mp=96, cp=96, xp=96, ip=96)),
-        ("showcase/dwarf", t.Cost(mp=96, cp=96, xp=96, ip=96)),
-        ("showcase/elf", t.Cost(mp=80, cp=96, xp=96, ip=96)),
-        ("showcase/goblin", t.Cost(mp=96, cp=96, xp=96, ip=96)),
+        "demo",
+        "2025/geir_arne",
+        "2025/morten",
+        "showcase/abomination",
+        "showcase/dwarf",
+        "showcase/elf",
+        "showcase/goblin",
     ],
 )
-def test_saved_armies_keep_their_totals(army_name: str, expected_cost: t.Cost) -> None:
-    """Every saved army still loads, and none of them changed price.
+def test_every_saved_army_loads_and_validates(army_name: str) -> None:
+    """Integration test: every committed army still loads and passes validation.
 
-    Retaining Default Equipment (ADR-0020) changes what these armies *carry* --
-    their specials, assault stats and orders all move. It must not change what
-    they *cost*: `Unit.cost()` prices upgrades only, and retained defaults are
-    free. These totals are the ones the armies had before the rule changed.
+    `load_army` validates by default, so this fails if a rules change makes a
+    saved loadout illegal. Retaining Default Equipment (ADR-0020) changes what
+    these armies *carry* -- specials, assault stats and orders all move -- but
+    an army that was legal must stay legal.
+
+    Deliberately asserts no point totals: those follow the Race TOML, so pinning
+    them here would turn every balance change into a failing test.
+    `test_retained_defaults_do_not_change_what_a_unit_costs` pins the cost
+    invariant on a synthetic Race instead.
     """
-    army = load_army(army_name)
-
-    assert army.cost() == expected_cost
+    assert isinstance(load_army(army_name), Army)
 
 
 def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:
