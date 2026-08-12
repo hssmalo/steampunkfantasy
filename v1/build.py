@@ -10,7 +10,7 @@ from data import Team
 ARMIES = dict(
     OnlyTanks="48ip",
     Attacker="48ip, 6mp",
-    Defender="6ip, 36mp, 36cp, 36xp",
+    Defender="6ip, 36mp, 36cp, 36xp", 
     AltDefender="48mp, 48cp, 48xp",
     standard="24ip 24mp 24cp 24xp",
     advanced="24ip 48mp 24cp 24xp 24command",
@@ -50,7 +50,7 @@ class Costs:
 
     def __sub__(self, other):
         """Subtract one Costs from another"""
-
+        
         return self.__class__(
             **{k: s - getattr(other, k) for k, s in self.__dict__.items()}
         )
@@ -118,3 +118,5 @@ def print_units(team, units):
         f"\n     {'Total':<25} "
         f"{sum((unit_costs[u] * c for u, c in units.items()), Costs())}"
     )
+
+
