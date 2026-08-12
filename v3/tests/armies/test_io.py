@@ -337,17 +337,13 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
     ],
 )
 def test_every_saved_army_loads_and_validates(army_name: str) -> None:
-    """Integration test: every committed army still loads and passes validation.
+    """Check that every committed army loads and passes validation.
 
     `load_army` validates by default, so this fails if a rules change makes a
-    saved loadout illegal. Retaining Default Equipment (ADR-0020) changes what
-    these armies *carry* -- specials, assault stats and orders all move -- but
-    an army that was legal must stay legal.
+    saved loadout illegal.
 
-    Deliberately asserts no point totals: those follow the Race TOML, so pinning
+    Asserts no point totals on purpose: those follow the Race TOML, so pinning
     them here would turn every balance change into a failing test.
-    `test_retained_defaults_do_not_change_what_a_unit_costs` pins the cost
-    invariant on a synthetic Race instead.
     """
     assert isinstance(load_army(army_name), Army)
 
