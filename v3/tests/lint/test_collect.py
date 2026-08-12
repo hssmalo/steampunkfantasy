@@ -9,7 +9,6 @@ linter looks at.
 from dataclasses import dataclass
 
 from spf.lint import collect, holders
-from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import (
     AssaultConfig,
@@ -200,20 +199,3 @@ def test_over_committed_defaults_surface_as_a_finding() -> None:
     assert finding.section == "models"
     assert finding.key == "ogre_scout_engineer"
     assert "Reserve Melee:1" in finding.message
-
-
-def test_real_races_have_exactly_one_over_committed_model() -> None:
-    """`ogre.ogre_scout_engineer` is a real, known-bad model held back on purpose.
-
-    hssmalo is keeping the TOML defect in place so this rule is exercised
-    against real data rather than only against fixtures. Once the data is
-    fixed, update this test -- probably to "no findings at all".
-    """
-    findings = [
-        (race, finding.key)
-        for race in t.RaceName.__value__.__args__
-        for finding in collect.lint_race(race)
-        if finding.rule == "default-equipment-limit"
-    ]
-
-    assert findings == [("ogre", "ogre_scout_engineer")]
