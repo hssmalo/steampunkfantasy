@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 11.08.2026 | Gnome        | Frostray, reduced range and damage by one.                                  | Seemed overpowered, needed a debuff and range 3 makes it more difficult to use       |
 | 11.08.2026 | Gnome        | Tweaked Tinkerer Helicopter                                                 | Balance, and  movement rule did not fit anymore after remake of damage tables        |
 | 05.08.2026 | Abomination, Gnome | Replaced remaining references to smoke with fog                       | Fog makes more thematicly sense, especially after abomination                        |
 | 05.08.2026 | All          | Replaced Chase with Chs on all order cards                                  | To save space                                                                        |
