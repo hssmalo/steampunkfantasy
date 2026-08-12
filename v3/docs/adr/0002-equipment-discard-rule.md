@@ -1,5 +1,7 @@
 # Upgrade equipment replaces all default equipment
 
+> Superseded by [ADR-0020](0020-defaults-yield-holders-to-upgrades.md).
+
 When a Model has any paid **upgrade** equipment, all of its **default** (free)
 equipment is discarded. `Model.equipment` returns `upgrade_equipment` if it is
 non-empty, otherwise `default_equipment` — the two are never combined.

@@ -28,9 +28,29 @@ Model slot may be swapped for a costed upgrade Model.
 _Avoid_: miniature, figure, piece
 
 **Equipment**:
-Weapons or gear attached to a Model. Either default (free, baked into the Model)
-or an upgrade (paid). Modifies assault, range, orders, and specials.
+Weapons or gear attached to a Model, claiming capacity in one of its Holders.
+Modifies assault, range, orders, and specials. Comes in two kinds: Default
+Equipment and Upgrade Equipment.
 _Avoid_: gear, item, weapon, kit
+
+**Default Equipment**:
+The Equipment a Model carries before a player spends anything on it. Costs
+nothing, and is listed by the Model rather than chosen. A Model's Defaults yield
+to its Upgrades under Holder pressure, so buying an Upgrade only costs a Default
+its place when the two compete for the same Holder.
+_Avoid_: free equipment, base equipment
+
+**Upgrade Equipment**:
+Equipment a player buys for a Model, adding to its Cost. Never yields a Holder
+to anything else.
+_Avoid_: paid equipment, add-on
+
+**Holder**:
+A named place on a Model where Equipment sits, with a limited capacity — Hands,
+Tentacles, Reserve Melee and so on. Each piece of Equipment claims capacity in
+one; a Model that has run out of capacity in a Holder can carry no more
+Equipment there. Sixteen Holders exist in the game data.
+_Avoid_: slot, mount, hardpoint
 
 ### Cost and points
 
