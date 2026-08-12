@@ -450,7 +450,8 @@ def test_format_failed_group_slot_shows_available(simple_race: RaceConfig) -> No
 def test_remaining_slots_does_not_count_default_equipment(
     race_with_defaults: RaceConfig,
 ) -> None:
-    # Defaults are always discarded when upgrades are added, so they must never
+    # Upgrade legality is decided by the upgrades alone (ADR-0020): defaults
+    # yield their holders instead of blocking a purchase, so they must never
     # consume slots. A soldier with a Hands:2 default but no upgrades should
     # still show Hands:2 free.
     soldier = ArmyModel(
@@ -1424,59 +1425,27 @@ def test_validate_army_still_catches_genuine_slot_overflow(
 
 
 # ---------------------------------------------------------------------------
-# Resolved Model.equipment — upgrades replace defaults
+# Resolved Model.equipment — defaults yield holders to upgrades (ADR-0020)
 # ---------------------------------------------------------------------------
 
 
-def test_model_equipment_no_upgrades_returns_defaults(simple_race: RaceConfig) -> None:
-    # Add default equipment to soldier for this test
-    sword_free = EquipmentConfig(
-        race="goblin",
-        name="Basic Sword",
-        cost=None,
-        requires=[],
-    )
-    race = RaceConfig(
+def _race_with_default(simple_race: RaceConfig, default: EquipmentConfig) -> RaceConfig:
+    """Give the soldier one default equipment entry, keyed `basic_sword`."""
+    return RaceConfig(
         races=simple_race.races,
         units=simple_race.units,
         models={
+            **simple_race.models,
             "soldier": simple_race.models["soldier"].model_copy(
                 update={"equipment": ["basic_sword"]}
             ),
-            "elite_soldier": simple_race.models["elite_soldier"],
         },
-        equipment={**simple_race.equipment, "basic_sword": sword_free},
+        equipment={**simple_race.equipment, "basic_sword": default},
     )
-    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
-        "squad", race_config=race
-    )
-    resolved = army.resolve(race)
-    model = resolved.units[0].models[0]
-    assert len(model.default_equipment) == 1
-    assert model.upgrade_equipment == []
-    assert model.equipment == model.default_equipment
 
 
-def test_model_equipment_upgrades_present_discards_defaults(
-    simple_race: RaceConfig,
-) -> None:
-    sword_free = EquipmentConfig(
-        race="goblin",
-        name="Basic Sword",
-        cost=None,
-        requires=[],
-    )
-    race = RaceConfig(
-        races=simple_race.races,
-        units=simple_race.units,
-        models={
-            "soldier": simple_race.models["soldier"].model_copy(
-                update={"equipment": ["basic_sword"]}
-            ),
-            "elite_soldier": simple_race.models["elite_soldier"],
-        },
-        equipment={**simple_race.equipment, "basic_sword": sword_free},
-    )
+def _soldier_with_sword(race: RaceConfig) -> Model:
+    """Resolve a one-soldier army that has bought the Hands:1 `sword` upgrade."""
     army = (
         ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
@@ -1487,12 +1456,157 @@ def test_model_equipment_upgrades_present_discards_defaults(
             race_config=race,
         )
     )
-    resolved = army.resolve(race)
-    model = resolved.units[0].models[0]
-    # defaults have basic_sword; upgrade has sword
-    # — upgrades replace defaults, so only sword
-    assert model.equipment == model.upgrade_equipment
-    assert all(e.name != "Basic Sword" for e in model.equipment)
+    return army.resolve(race).units[0].models[0]
+
+
+def test_model_equipment_no_upgrades_returns_defaults(simple_race: RaceConfig) -> None:
+    """With nothing bought, the model runs exactly its default loadout."""
+    sword_free = EquipmentConfig(race="goblin", name="Basic Sword", requires=[])
+    race = _race_with_default(simple_race, sword_free)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    model = army.resolve(race).units[0].models[0]
+
+    assert len(model.default_equipment) == 1
+    assert model.upgrade_equipment == []
+    assert model.equipment == model.default_equipment
+
+
+def test_model_equipment_keeps_a_default_that_claims_no_holder(
+    simple_race: RaceConfig,
+) -> None:
+    """A default with no `requires` occupies nothing, so no upgrade can evict it."""
+    sword_free = EquipmentConfig(race="goblin", name="Basic Sword", requires=[])
+
+    model = _soldier_with_sword(_race_with_default(simple_race, sword_free))
+
+    assert [equip.name for equip in model.equipment] == ["Basic Sword", "Sword"]
+
+
+def test_model_equipment_evicts_a_default_the_upgrade_crowds_out(
+    simple_race: RaceConfig,
+) -> None:
+    """A Hands:2 default cannot fit beside a Hands:1 upgrade in a Hands:2 model."""
+    two_handed = EquipmentConfig(
+        race="goblin",
+        name="Great Sword",
+        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+    )
+
+    model = _soldier_with_sword(_race_with_default(simple_race, two_handed))
+
+    assert [equip.name for equip in model.equipment] == ["Sword"]
+
+
+def test_model_equipment_keeps_a_default_in_an_untouched_holder(
+    simple_race: RaceConfig,
+) -> None:
+    """The Abomination case: the upgrade takes Hands, the Grenades default stays."""
+    grenade = EquipmentConfig(
+        race="goblin",
+        name="Grenade",
+        requires=[["Grenades:1"]],  # pyright: ignore[reportArgumentType]
+    )
+
+    model = _soldier_with_sword(_race_with_default(simple_race, grenade))
+
+    assert [equip.name for equip in model.equipment] == ["Grenade", "Sword"]
+
+
+def test_model_equipment_orders_retained_defaults_before_upgrades(
+    simple_race: RaceConfig,
+) -> None:
+    """Order is load-bearing for specials and Stackers: defaults, then upgrades."""
+    banner = EquipmentConfig(race="goblin", name="Banner", requires=[])
+
+    model = _soldier_with_sword(_race_with_default(simple_race, banner))
+
+    assert model.equipment == [*model.default_equipment, *model.upgrade_equipment]
+
+
+def test_model_specials_let_the_upgrade_win_over_a_retained_default(
+    simple_race: RaceConfig,
+) -> None:
+    """Paid kit wins a conflict, because upgrades are merged last."""
+    default = EquipmentConfig(
+        race="goblin",
+        name="Basic Sword",
+        requires=[],
+        model_special={"To Hit": "from the default"},
+    )
+    upgrade = EquipmentConfig(
+        race="goblin",
+        name="Magic Sword",
+        cost=t.Cost(cp=5),
+        upgrade_all=True,
+        requires=[],
+        model_special={"To Hit": "from the upgrade"},
+    )
+    model = Model(
+        name="soldier",
+        config=simple_race.models["soldier"],
+        default_equipment=[default],
+        upgrade_equipment=[upgrade],
+    )
+
+    assert model.model_specials["To Hit"] == "from the upgrade"
+
+
+def test_assault_applies_a_retained_default_stacker_before_the_upgrade(
+    simple_race: RaceConfig,
+) -> None:
+    """A retained default's Stacker is applied, and applied first.
+
+    `add` then `replace` lands on the replaced value; the reverse order would
+    end on 3, so this pins the sequence and not merely that both ran.
+    """
+    default = EquipmentConfig(
+        race="goblin",
+        name="Basic Sword",
+        requires=[],
+        assault=EquipmentAssaultConfig(strength=Stacker(add=[2, 0, 0, 0])),
+    )
+    upgrade = EquipmentConfig(
+        race="goblin",
+        name="Magic Sword",
+        cost=t.Cost(cp=5),
+        upgrade_all=True,
+        requires=[],
+        assault=EquipmentAssaultConfig(strength=Stacker(replace=[7, 0, 0, 0])),
+    )
+    model = Model(
+        name="soldier",
+        config=simple_race.models["soldier"],
+        default_equipment=[default],
+        upgrade_equipment=[upgrade],
+    )
+
+    assert model.assault().strength == [7, 0, 0, 0]
+
+
+def test_retained_defaults_do_not_change_what_a_unit_costs(
+    simple_race: RaceConfig,
+) -> None:
+    """Retained defaults are costless and stay costless -- army totals must not move."""
+    banner = EquipmentConfig(race="goblin", name="Banner", requires=[])
+    race = _race_with_default(simple_race, banner)
+    plain = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+    upgraded = plain.upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="sword",
+        race_config=race,
+    )
+
+    sword_cost = race.equipment["sword"].cost
+    assert sword_cost is not None
+    assert plain.resolve(race).units[0].cost() + sword_cost == (
+        upgraded.resolve(race).units[0].cost()
+    )
 
 
 # ---------------------------------------------------------------------------
