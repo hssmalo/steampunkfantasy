@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, field
 
+from spf.armies.holders import retained_defaults
 from spf.schemas import type_aliases as t
 from spf.schemas.race import AssaultConfig, EquipmentConfig, ModelConfig, Stacker
 
@@ -26,11 +27,22 @@ class Model:
 
     @property
     def equipment(self) -> list[EquipmentConfig]:
-        """Effective equipment.
+        """Effective equipment: surviving defaults first, then upgrades.
 
-        When any upgrade equipment is present, all default equipment is discarded.
+        Defaults yield Holder capacity to upgrades, per-holder and in
+        declaration order — an upgrade only costs a default its place when the
+        two compete for the same Holder. Upgrades are never evicted. See
+        ADR-0020.
+
+        The order matters downstream: specials merge last-wins and `assault()`
+        applies Stackers in sequence, so paid kit wins a conflict.
         """
-        return self.upgrade_equipment or self.default_equipment
+        return [
+            *retained_defaults(
+                self.config, self.default_equipment, self.upgrade_equipment
+            ),
+            *self.upgrade_equipment,
+        ]
 
     @property
     def unit_specials(self) -> dict[t.UnitSpecial, str]:
