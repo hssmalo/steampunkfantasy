@@ -19,11 +19,18 @@
 % classic "There's no line here to end" error. Hence the `\strut` fallback.
 % Image paths are emitted raw: `latex_escape` would turn `_` into `\_` and
 % break the graphics include.
+% On an Equipment's cards `\bcfoot` names it above the kind, so the deck can be
+% sorted by loadout (ADR 0021). `\bcfoot` is already typeset in a card-width
+% box, so a long name wraps on its own — no `\parbox` needed.
 \BLOCK{for card in source.cards}
 \renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
 \renewcommand{\flhead}{\VAR{card.kind}}
 \renewcommand{\bchead}{\VAR{card.unit_name | latex_escape}}
+\BLOCK{if card.equipment}
+\renewcommand{\bcfoot}{\VAR{card.equipment | latex_escape}\\\VAR{card.kind}}
+\BLOCK{else}
 \renewcommand{\bcfoot}{\VAR{card.kind}}
+\BLOCK{endif}
 \card{%
 \begin{tabular}{ll}
 \BLOCK{for speed, cells in card.rows}

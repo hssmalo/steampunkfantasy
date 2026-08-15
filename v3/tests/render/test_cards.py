@@ -691,11 +691,35 @@ def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
     text = out.read_text(encoding="utf-8")
     assert r"\usepackage{graphicx}" in text
     assert r"\renewcommand{\bchead}{Squad}" in text
+    # A base card names the kind alone — there is no Equipment behind it.
     assert r"\renewcommand{\bcfoot}{Movement}" in text
     assert r"\renewcommand{\bcfoot}{Fire}" in text
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
     assert rf"\includegraphics[width=\cardartwidth]{{{ART.as_posix()}}}" in text
+
+
+def test_cards_latex_names_the_equipment_above_the_kind_on_its_backs(
+    tmp_path: Path,
+) -> None:
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide & Seek")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        models=[_model(equipment=[hide])],
+    )
+    deck = build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(None)
+    )
+
+    out = render(
+        CARDS, deck, fmt=get_format("latex"), name="test", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    # The name is LaTeX-escaped, and `\bcfoot` wraps it within the card box.
+    assert r"\renewcommand{\bcfoot}{Hide \& Seek\\Movement}" in text
+    # The base card of the same Unit still names the kind alone.
+    assert r"\renewcommand{\bcfoot}{Movement}" in text
 
 
 def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:
@@ -723,7 +747,15 @@ def test_cards_pdf_compiles_with_a_mixed_deck(tmp_path: Path) -> None:
     art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
     orders = OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
     with_art = _unit(orders=orders, name="Painted")
-    without_art = _unit(orders=orders, name="Bare")
+    # The longest equipment name in any race is 44 characters; `\bcfoot` must
+    # wrap it inside the card box rather than overfull the line.
+    longest = _equip(
+        OrdersConfig(movement={"crawl": [["C"]]}),
+        name="Double Barreled Musket with Springloaded Axe",
+    )
+    without_art = _unit(
+        orders=orders, name="Bare", models=[_model(equipment=[longest])]
+    )
 
     def image_for(_race: str, name: str) -> Path | None:
         return art if name == "Painted" else None
