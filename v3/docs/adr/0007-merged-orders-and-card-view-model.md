@@ -1,5 +1,10 @@
 # Merged orders on the resolved model; card shaping in the render layer
 
+> The card-shaping decision below is superseded by
+> [ADR-0021](0021-order-cards-partition-by-source.md): the transposition is
+> applied once per Order Source, not once per Unit. The merged-orders decision
+> and the additivity of `orders_gained` still stand — ADR-0021 rests on them.
+
 The Order Card Product (issue #18) is the first consumer of two things that were
 modelled but never used: equipment `orders_gained`, and any presentation of a
 Unit's orders. Two decisions settle how orders reach a card.

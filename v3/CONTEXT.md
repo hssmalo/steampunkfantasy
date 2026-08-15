@@ -193,20 +193,38 @@ Markdown family, PDF derives (via pdflatex) from the LaTeX family.
 
 **Order Card**:
 A single printed card carrying one *order option* — one Order type (Movement
-**or** Fire, never both) for one Unit — showing that option's cells across every
-Speed the Unit has it at (e.g. one Movement card lists `still`, `slow`, `fast`
-rows for option 1; option 2 is the next card). The Order Card Product renders a
-whole resolved Army as one **deck** file (in PDF, nine cards to an A4 page).
+**or** Fire, never both) for one **Order Source** of one Unit — showing that
+option's cells across every Speed it applies at (e.g. one Movement card lists
+`still`, `slow`, `fast` rows for option 1; option 2 is the next card). The Order
+Card Product renders a whole resolved Army as one **deck** file (in PDF, nine
+cards to an A4 page).
 
-Each Unit's orders are the *merged* orders: its base `orders` unioned per Speed
-with any orders gained from equipment (`orders_gained`), appending the gained
-rows. Units that produce identical cards collapse to one set (no duplicates).
+A Unit's *merged* orders are its base `orders` unioned per Speed with any orders
+gained from equipment (`orders_gained`), appending the gained rows. That merged
+view is what the Markdown family shows. The LaTeX deck instead transposes each
+Order Source separately, so no card mixes base rows with an equipment's gained
+rows (ADR 0021). Units that produce identical cards collapse to one set (no
+duplicates).
 
 The back of a card carries the Unit's Image Asset, with the Unit name above it
 and the order kind below; a Unit with no committed art keeps the same layout
-minus the picture, so the back still identifies the card.
+minus the picture, so the back still identifies the card. On an Equipment's
+cards, that Equipment's name sits above the order kind.
 
 _Avoid_: order sheet, unit card (a card is one option, not one Unit)
+
+**Order Source**:
+What a Card Set's orders come from: the base Unit, or one Equipment that
+modifies its orders (`orders_gained`). Sources are independent — `orders_gained`
+is additive (ADR 0007) — so a Unit's deck is the sum of its sources' Card Sets,
+and a player fields a loadout by taking the base set plus one set per Equipment
+carried.
+_Avoid_: origin, provenance, owner
+
+**Card Set**:
+The Order Cards one Order Source contributes for one order kind. Shared between
+Units only when every card in it applies to every Unit sharing it.
+_Avoid_: deck (a deck is the whole Army's cards), stack, pile
 
 **Army Reference**:
 A Rendering of the exact rules pertaining to one Army, built from a resolved

@@ -351,7 +351,7 @@ def test_build_deck_base_cards_name_no_equipment() -> None:
     assert all(card.equipment is None for card in deck.cards)
 
 
-def test_build_deck_an_equipments_cards_carry_its_display_name() -> None:
+def test_build_deck_equipment_cards_carry_its_display_name() -> None:
     hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
     unit = _unit(
         orders=OrdersConfig(movement={"still": [["A"]]}),
