@@ -151,6 +151,121 @@ def test_orders_speeds_follow_canonical_order() -> None:
     assert list(merged.movement) == ["still", "slow", "fast"]
 
 
+# --- Unit.orders_by_source() -------------------------------------------------
+
+
+def test_orders_by_source_base_only_unit_yields_one_source() -> None:
+    unit = _unit(orders=OrdersConfig(movement={"still": [["A"]]}))
+
+    (base,) = unit.orders_by_source()
+
+    assert base.source is None
+    assert base.orders.movement == {"still": [["A"]]}
+
+
+def test_orders_by_source_lists_base_then_each_equipment() -> None:
+    smg = _equip(OrdersConfig(fire={"still": [["Fire", "Fire"]]}))
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg])],
+    )
+
+    base, gained = unit.orders_by_source()
+
+    assert base.source is None
+    assert base.orders.fire == {"still": [["-"]]}
+    assert gained.source == "SMG"
+    assert gained.orders.fire == {"still": [["Fire", "Fire"]]}
+
+
+def test_orders_by_source_drops_a_gained_row_matching_a_base_row() -> None:
+    smg = _equip(OrdersConfig(fire={"still": [["-"], ["Fire"]]}))
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg])],
+    )
+
+    _, gained = unit.orders_by_source()
+
+    assert gained.orders.fire == {"still": [["Fire"]]}
+
+
+def test_orders_by_source_omits_an_equipment_whose_rows_are_all_redundant() -> None:
+    smg = _equip(OrdersConfig(fire={"still": [["-"]]}))
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg])],
+    )
+
+    sources = unit.orders_by_source()
+
+    assert [s.source for s in sources] == [None]
+
+
+def test_orders_by_source_keeps_a_row_two_equipment_both_grant() -> None:
+    # Sources are independent: either may be absent from a loadout, so each
+    # keeps its own copy of a row the other also grants.
+    smg_a = _equip(OrdersConfig(fire={"still": [["Fire"]]}), name="SMG-A")
+    smg_b = _equip(OrdersConfig(fire={"still": [["Fire"]]}), name="SMG-B")
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg_a]), _model(equipment=[smg_b])],
+    )
+
+    _, first, second = unit.orders_by_source()
+
+    assert (first.source, second.source) == ("SMG-A", "SMG-B")
+    assert first.orders.fire == {"still": [["Fire"]]}
+    assert second.orders.fire == {"still": [["Fire"]]}
+
+
+def test_orders_by_source_unions_equipment_sharing_a_display_name() -> None:
+    # darkelf `hide` and `hide_free` are distinct keys both displayed as "Hide";
+    # nothing enforces that their gained rows stay identical.
+    hide = _equip(OrdersConfig(movement={"crawl": [["A"]]}), name="Hide")
+    hide_free = _equip(OrdersConfig(movement={"crawl": [["A"], ["B"]]}), name="Hide")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["S"]]}),
+        models=[_model(equipment=[hide]), _model(equipment=[hide_free])],
+    )
+
+    _, gained = unit.orders_by_source()
+
+    assert gained.source == "Hide"
+    assert gained.orders.movement == {"crawl": [["A"], ["B"]]}
+
+
+def test_orders_by_source_speeds_follow_canonical_order() -> None:
+    hide = _equip(
+        OrdersConfig(movement={"fast": [["F"]], "still": [["S"]], "slow": [["L"]]}),
+        name="Hide",
+    )
+    unit = _unit(
+        orders=OrdersConfig(movement={"crawl": [["C"]]}),
+        models=[_model(equipment=[hide])],
+    )
+
+    _, gained = unit.orders_by_source()
+
+    assert gained.orders.movement is not None
+    assert list(gained.orders.movement) == ["still", "slow", "fast"]
+
+
+def test_orders_is_the_fold_of_orders_by_source() -> None:
+    # The regression bar: folding the sources reproduces the merged view.
+    hide = _equip(OrdersConfig(movement={"crawl": [["360°"]]}), name="Hide")
+    smg = _equip(OrdersConfig(fire={"still": [["Fire"], ["-"]]}), name="SMG")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["-"]]}),
+        models=[_model(equipment=[hide, smg])],
+    )
+
+    merged = unit.orders()
+
+    assert merged.movement == {"still": [["A"]], "crawl": [["360°"]]}
+    assert merged.fire == {"still": [["-"], ["Fire"]]}
+
+
 # --- build_deck: flat rows for the Markdown family --------------------------
 
 
