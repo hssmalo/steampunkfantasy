@@ -338,6 +338,110 @@ def test_build_deck_uneven_option_counts_drop_speed_from_later_cards() -> None:
     ]
 
 
+# --- build_deck: one Card Set per Order Source --------------------------------
+
+
+def test_build_deck_base_cards_name_no_equipment() -> None:
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert all(card.equipment is None for card in deck.cards)
+
+
+def test_build_deck_an_equipments_cards_carry_its_display_name() -> None:
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        models=[_model(equipment=[hide])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert [(c.equipment, c.rows) for c in deck.cards] == [
+        (None, [("still", ["A"])]),
+        ("Hide", [("crawl", ["C"])]),
+    ]
+
+
+def test_build_deck_never_mixes_base_and_gained_rows_on_one_card() -> None:
+    # F2: base Speeds have different row counts, so an option index that is a
+    # base row at one Speed was a gained row at another before ADR 0021.
+    hide = _equip(
+        OrdersConfig(movement={"still": [["H0"], ["H1"]], "crawl": [["H2"]]}),
+        name="Hide",
+    )
+    unit = _unit(
+        orders=OrdersConfig(
+            movement={"still": [["S0"]], "slow": [["L0"], ["L1"], ["L2"]]}
+        ),
+        models=[_model(equipment=[hide])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    base_cells = {"S0", "L0", "L1", "L2"}
+    for card in deck.cards:
+        cells = {cell for _, cells in card.rows for cell in cells}
+        mixes = bool(cells & base_cells) and bool(cells - base_cells)
+        assert not mixes, f"card mixes base and gained rows: {card}"
+    # And the base cards are exactly what a Unit without Hide would produce.
+    assert [c.rows for c in deck.cards if c.equipment is None] == [
+        [("still", ["S0"]), ("slow", ["L0"])],
+        [("slow", ["L1"])],
+        [("slow", ["L2"])],
+    ]
+
+
+def test_build_deck_orders_cards_base_first_then_each_equipment() -> None:
+    hide = _equip(
+        OrdersConfig(movement={"crawl": [["C"]]}, fire={"still": [["HF"]]}), name="Hide"
+    )
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]}),
+        models=[_model(equipment=[hide])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert [(c.equipment, c.kind) for c in deck.cards] == [
+        (None, "Movement"),
+        (None, "Fire"),
+        ("Hide", "Movement"),
+        ("Hide", "Fire"),
+    ]
+
+
+def test_build_deck_two_equipment_each_get_their_own_card_set() -> None:
+    # No committed army fields two order-modifying equipment on one Unit, so
+    # this case is defined by a synthetic fixture (decision 7).
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
+    wings = _equip(OrdersConfig(movement={"fast": [["W"]]}), name="Wings")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        models=[_model(equipment=[hide, wings])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert [c.equipment for c in deck.cards] == [None, "Hide", "Wings"]
+
+
+def test_build_deck_units_differing_by_equipment_each_get_a_full_base_set() -> None:
+    # The sharing invariant: a Card Set is shared only when every card in it
+    # applies to every Unit sharing it, so the base cards are printed twice.
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
+    orders = OrdersConfig(movement={"still": [["A"]], "slow": [["B"]]})
+    plain = _unit(orders=orders, name="Infantry")
+    hidden = _unit(orders=orders, name="Infantry", models=[_model(equipment=[hide])])
+
+    deck = build_deck(_army(plain, hidden), stem="test")
+
+    assert [c.equipment for c in deck.cards] == [None, None, "Hide"]
+
+
 # --- build_deck: dedup and shaken -------------------------------------------
 
 
