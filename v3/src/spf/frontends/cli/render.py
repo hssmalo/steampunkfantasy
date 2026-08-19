@@ -39,6 +39,10 @@ ARMY_RULES = register_product(Product(name="army-rules"))
 # `<family>/general-rules/main.<ext>.jinja`, plus one partial per Section Kind.
 GENERAL_RULES = register_product(Product(name="general-rules"))
 
+# The Army Pack Product: templates live at
+# `<family>/army-pack/main.<ext>.jinja`.
+ARMY_PACK = register_product(Product(name="army-pack"))
+
 
 def _validate_format(_type: type, value: str) -> None:
     """Reject a `--format` value not registered in the Format registry."""

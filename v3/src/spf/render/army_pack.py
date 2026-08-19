@@ -11,12 +11,37 @@ each get complete pages, because a Pack's whole point is that a player's own
 pages are handable on their own (decision D4).
 """
 
+import re
 from collections.abc import Sequence
 from dataclasses import dataclass
 
 from spf.armies.army import Army
 from spf.render.army_rules import ArmyReference, build_reference
 from spf.render.images import ImageLookup, committed_image
+
+_NON_SLUG = re.compile(r"[^a-z0-9]+")
+
+
+def _slug(label: str) -> str:
+    """Reduce `label` to a lowercase, dash-separated anchor."""
+    return _NON_SLUG.sub("-", label.lower()).strip("-")
+
+
+def _anchor(label: str, taken: set[str]) -> str:
+    """Return a slug of `label` not already in `taken`.
+
+    Two Armies may legitimately share a Label, but not an anchor: every link
+    to the second would otherwise land on the first. Mirrors
+    `spf.render.rulebook._anchor`.
+    """
+    slug = _slug(label)
+    anchor = slug
+    suffix = 1
+    while anchor in taken:
+        suffix += 1
+        anchor = f"{slug}-{suffix}"
+    taken.add(anchor)
+    return anchor
 
 
 @dataclass(frozen=True)
@@ -26,6 +51,9 @@ class PackEntry:
     label: str
     """The name the Army appears under in the Pack's contents — the Index
     entry's `label`, or the Army's Nick when the Index gives none (D12)."""
+
+    anchor: str
+    """Slug of `label`, unique within the Pack, for the Markdown TOC."""
 
     reference: ArmyReference
 
@@ -52,14 +80,15 @@ def build_pack(
     `io.load_pack_armies` returns. A missing Label falls back to the Army's
     Nick (D12).
     """
-    return ArmyPack(
-        title=title,
-        stem=stem,
-        entries=[
+    taken: set[str] = set()
+    entries: list[PackEntry] = []
+    for label, army in armies:
+        resolved_label = label if label is not None else army.nick
+        entries.append(
             PackEntry(
-                label=label if label is not None else army.nick,
+                label=resolved_label,
+                anchor=_anchor(resolved_label, taken),
                 reference=build_reference(army, stem=stem, image_for=image_for),
             )
-            for label, army in armies
-        ],
-    )
+        )
+    return ArmyPack(title=title, stem=stem, entries=entries)

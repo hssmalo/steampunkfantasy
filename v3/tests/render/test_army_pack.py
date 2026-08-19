@@ -1,5 +1,6 @@
 """Tests for the Army Pack product: index, loader, view-model, CLI."""
 
+import re
 from pathlib import Path
 
 import pytest
@@ -9,10 +10,17 @@ from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.build import ArmyList
 from spf.config import config
+from spf.frontends.cli.render import ARMY_PACK, ARMY_RULES
+from spf.render import render
 from spf.render.army_pack import ArmyPack, PackEntry, build_pack
 from spf.render.army_rules import build_reference
+from spf.render.formats import get_format
+from spf.render.images import no_image
+from spf.render.products import PRODUCTS
 from spf.schemas.army_pack import ArmyPackConfig, PackArmyConfig
 from tests.render.conftest import FakeLookup
+
+DEMO_ARMY = "demo"
 
 VALID_INDEX = """\
 title = "SPF 2025 Tournament"
@@ -242,3 +250,117 @@ def test_build_pack_is_an_army_pack_of_pack_entries() -> None:
 
     assert isinstance(pack, ArmyPack)
     assert isinstance(pack.entries[0], PackEntry)
+
+
+# --- Templates: army-pack renders through the shared reference-body --------
+
+
+def _demo_pack(**labels: str | None) -> ArmyPack:
+    armies = [(label, io.load_army(DEMO_ARMY)) for label in labels.values()] or [
+        (None, io.load_army(DEMO_ARMY))
+    ]
+    return build_pack(armies, title="Test Pack", stem="pack", image_for=no_image)
+
+
+def test_army_pack_product_is_registered() -> None:
+    assert PRODUCTS["army-pack"] is ARMY_PACK
+
+
+def test_army_pack_latex_has_one_section_per_army_and_a_toc(tmp_path: Path) -> None:
+    pack = build_pack(
+        [("Geir Arne", io.load_army(DEMO_ARMY)), ("Morten", io.load_army(DEMO_ARMY))],
+        title="Test Pack",
+        stem="pack",
+        image_for=no_image,
+    )
+
+    out = render(
+        ARMY_PACK, pack, fmt=get_format("latex"), name="pack", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert text.count(r"\section{Geir Arne}") == 1
+    assert text.count(r"\section{Morten}") == 1
+    assert r"\tableofcontents" in text
+    assert r"\clearpage" in text
+
+
+def test_army_pack_latex_unit_markup_matches_standalone_army_rules(
+    tmp_path: Path,
+) -> None:
+    # The strongest available check of the §2 invariant: the Pack's rendering
+    # of a Unit is byte-identical to the Army Reference's, once the heading
+    # command is normalised for the deeper nesting level.
+    army = io.load_army(DEMO_ARMY)
+    pack = build_pack(
+        [(None, army)], title="Test Pack", stem="pack", image_for=no_image
+    )
+    reference = build_reference(army, stem="demo", image_for=no_image)
+
+    pack_out = render(
+        ARMY_PACK, pack, fmt=get_format("latex"), name="pack", output_root=tmp_path
+    )
+    reference_out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("latex"),
+        name="demo",
+        output_root=tmp_path,
+    )
+
+    pack_text = pack_out.read_text(encoding="utf-8")
+    reference_text = reference_out.read_text(encoding="utf-8")
+    # Normalise the Pack's one-level-deeper sectioning back to the standalone
+    # commands before comparing the unit/model/equipment markup itself. A
+    # single regex pass (longest command first) avoids `\subsection` and
+    # `\subsubsection` clobbering each other under sequential `str.replace`.
+    shift_back = {
+        r"\subsubsection": r"\subsection",
+        r"\subsection": r"\section",
+        r"\paragraph": r"\subsubsection",
+    }
+    normalised = re.sub(
+        r"\\subsubsection|\\subsection|\\paragraph",
+        lambda m: shift_back[m.group()],
+        pack_text,
+    )
+    for line in reference_text.splitlines():
+        if line.startswith((r"\section{", r"\subsection{", r"\subsubsection{")):
+            assert line in normalised
+
+
+def test_army_pack_markdown_has_one_heading_per_army_and_toc_anchors(
+    tmp_path: Path,
+) -> None:
+    pack = build_pack(
+        [("Geir Arne", io.load_army(DEMO_ARMY)), ("Morten", io.load_army(DEMO_ARMY))],
+        title="Test Pack",
+        stem="pack",
+        image_for=no_image,
+    )
+
+    out = render(
+        ARMY_PACK, pack, fmt=get_format("markdown"), name="pack", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "## Geir Arne" in text
+    assert "## Morten" in text
+    assert '<a id="geir-arne"></a>' in text
+    assert '<a id="morten"></a>' in text
+    assert "[Geir Arne](#geir-arne)" in text
+    assert "[Morten](#morten)" in text
+    # Units render one level below the per-army `##` heading.
+    assert "### " in text
+
+
+def test_army_pack_html_is_a_document(tmp_path: Path) -> None:
+    pack = _demo_pack(a="Geir Arne")
+
+    out = render(
+        ARMY_PACK, pack, fmt=get_format("html"), name="pack", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "<!DOCTYPE html>" in text
+    assert "Geir Arne" in text
