@@ -34,8 +34,8 @@ def _build_service(
     env/profile raises here (a config typo, worth failing loudly at invoke).
 
     Only the generate Workflow path is resolved; the refine Workflow is
-    resolved lazily when a Refinement is actually run, so a contributor
-    with no local refine graph can still generate (issue 99).
+    resolved lazily when a Refinement is actually run, so generating does
+    not require a refine Workflow to exist.
     """
     comfyui = config.assets.image.comfyui
     env_name = env if env is not None else comfyui.env
@@ -64,12 +64,10 @@ def _build_service(
 
 
 def _lazy_refine_path(workflows_root: Path, env: str, profile: str) -> Path:
-    """Return the refine Workflow path, or a placeholder if absent.
+    """Return the refine Workflow path, without checking that it exists.
 
-    The path is returned without checking whether the file exists, matching
-    the pre-profile behaviour where a missing refine file was fine until a
-    Refinement was actually run. This avoids regressing contributors who have
-    only a generate Workflow locally.
+    A missing refine file is fine until a Refinement is actually run, so a
+    contributor with only a generate Workflow locally can still generate.
     """
     return workflows_root / env / f"{profile}{REFINE_SUFFIX}.json"
 
@@ -78,7 +76,7 @@ def _resolve_refine(*, env: str | None = None, profile: str | None = None) -> Pa
     """Resolve and validate the refine Workflow path for a Refinement.
 
     Called only from the refine CLI path, where a missing refine file is
-    a hard error (issue 99, spec line 152).
+    a hard error.
     """
     comfyui = config.assets.image.comfyui
     env_name = env if env is not None else comfyui.env
