@@ -1,4 +1,4 @@
-\documentclass[frontgrid,a4,12pt]{flacards}
+\documentclass[frontgrid,backgrid,a4paper,12pt]{flacards}
 \usepackage{textcomp}
 \usepackage{graphicx}
 \pagesetup{3}{3}
@@ -8,6 +8,12 @@
 % `\cardwidth` would overfull the line. Set this *after* `\cardwidth` above.
 \newlength{\cardartwidth}
 \setlength{\cardartwidth}{\dimexpr\cardwidth-2\fboxsep\relax}
+
+% Make sure the card grid is printed centered on the page, for both even and odd
+\newlength{\cardgridwidth}
+\setlength{\cardgridwidth}{\dimexpr3\cardwidth+2\fboxrule\relax}
+\geometry{reset,a4paper,noheadfoot,vmargin=1cm,textwidth=\cardgridwidth,hcentering}
+
 \renewcommand{\cardtextstylef}{\small}
 \renewcommand{\cardtextstyleb}{\small}
 \renewcommand{\brfoot}{}
