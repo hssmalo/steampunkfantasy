@@ -6,9 +6,13 @@ import pytest
 from pydantic import ValidationError
 
 from spf.armies import io
+from spf.armies.army import Army
 from spf.armies.build import ArmyList
 from spf.config import config
+from spf.render.army_pack import ArmyPack, PackEntry, build_pack
+from spf.render.army_rules import build_reference
 from spf.schemas.army_pack import ArmyPackConfig, PackArmyConfig
+from tests.render.conftest import FakeLookup
 
 VALID_INDEX = """\
 title = "SPF 2025 Tournament"
@@ -169,3 +173,72 @@ def test_load_pack_armies_invalid_entry_propagates_underlying_reason(
 
     with pytest.raises(ValueError, match="could not be loaded: "):
         io.load_pack_armies(index, base_dir=armies_dir)
+
+
+# --- build_pack: the view-model (no filesystem) ------------------------------
+
+
+def _army(*, nick: str = "Test", race: str = "goblin") -> Army:
+    return Army(race=race, nick=nick, units=[])  # pyright: ignore[reportArgumentType]
+
+
+def test_build_pack_preserves_entry_order() -> None:
+    armies = [(None, _army(nick="C")), (None, _army(nick="A")), (None, _army(nick="B"))]
+
+    pack = build_pack(armies, title="Test Pack", stem="pack")
+
+    assert [entry.label for entry in pack.entries] == ["C", "A", "B"]
+    assert pack.title == "Test Pack"
+    assert pack.stem == "pack"
+
+
+def test_build_pack_label_overrides_the_nick() -> None:
+    armies = [("Geir Arne", _army(nick="Showcase Dwarf"))]
+
+    pack = build_pack(armies, title="Test", stem="pack")
+
+    assert pack.entries[0].label == "Geir Arne"
+
+
+def test_build_pack_absent_label_falls_back_to_nick() -> None:
+    armies = [(None, _army(nick="Showcase Dwarf"))]
+
+    pack = build_pack(armies, title="Test", stem="pack")
+
+    assert pack.entries[0].label == "Showcase Dwarf"
+
+
+def test_build_pack_keeps_two_armies_of_the_same_race_both_in_full() -> None:
+    armies = [
+        (None, _army(nick="Player A", race="goblin")),
+        (None, _army(nick="Player B", race="goblin")),
+    ]
+
+    pack = build_pack(armies, title="Test", stem="pack")
+
+    assert [entry.label for entry in pack.entries] == ["Player A", "Player B"]
+
+
+def test_build_pack_entry_reference_matches_standalone_build_reference() -> None:
+    army = _army(nick="Standalone")
+
+    pack = build_pack([(None, army)], title="Test", stem="pack")
+    standalone = build_reference(army, stem="pack")
+
+    assert pack.entries[0].reference == standalone
+
+
+def test_build_pack_passes_the_injected_image_lookup_through() -> None:
+    lookup = FakeLookup(None)
+    army = _army(nick="Test", race="goblin")
+
+    build_pack([(None, army)], title="Test", stem="pack", image_for=lookup)
+
+    assert ("goblin", "goblin") in lookup.calls
+
+
+def test_build_pack_is_an_army_pack_of_pack_entries() -> None:
+    pack = build_pack([(None, _army())], title="Test", stem="pack")
+
+    assert isinstance(pack, ArmyPack)
+    assert isinstance(pack.entries[0], PackEntry)
