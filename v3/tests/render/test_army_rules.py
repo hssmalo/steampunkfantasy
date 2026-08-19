@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
@@ -13,6 +14,7 @@ from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
 from spf.render import render
 from spf.render.army_rules import _roll_text, build_reference
 from spf.render.formats import get_format
+from spf.render.images import no_image
 from spf.schemas.race import (
     AssaultConfig,
     EquipmentAssaultConfig,
@@ -670,3 +672,38 @@ def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None
     )
 
     assert "![" not in out.read_text(encoding="utf-8")
+
+
+# --- Golden output: pins the pre-split army-rules templates byte-for-byte ---
+#
+# Safety net for the reference-body extraction (issue #100 §2): the split must
+# be a pure refactor, so this must keep passing byte-for-byte across it.
+# `image_for=no_image` keeps the fixture independent of the committed Asset
+# store's contents.
+
+GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
+
+
+@pytest.mark.parametrize(
+    ("fmt_name", "golden_name"),
+    [("markdown", "army_rules.md"), ("latex", "army_rules.tex")],
+)
+def test_army_rules_output_matches_golden_file(
+    tmp_path: Path, fmt_name: str, golden_name: str
+) -> None:
+    reference = build_reference(
+        io.load_army(DEMO_ARMY), stem="demo", image_for=no_image
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format(fmt_name),
+        name="demo",
+        output_root=tmp_path,
+    )
+
+    # `.rstrip`: the committed golden file passes through the end-of-file-fixer
+    # pre-commit hook, which trims trailing blank lines the templates emit.
+    golden = (GOLDEN_DIR / golden_name).read_text(encoding="utf-8")
+    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
