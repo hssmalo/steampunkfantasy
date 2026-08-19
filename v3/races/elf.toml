@@ -804,7 +804,7 @@ name = "Elite Elf Scout"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
-type = ["Bio", "Walking", "Elite"]
+type = ["Bio", "Walking", "Elite", "Infantry", "Archer"]
 
 [models.elite_elf_scout.special]
 "To Hit" = "Good shot +1"
@@ -864,7 +864,7 @@ name = "Elf Archer"
 race = "elf"
 equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:2"]
 equipment = ["elf_bow_free"]
-type = ["Bio", "Infantry", "Archer", "Walking"]
+type = ["Bio", "Archer", "Walking"]
 
 [models.elf_archer.assault]
 strength = [1, 1, 1, 1]
@@ -1607,7 +1607,7 @@ deflection_die.replace = "5+"
 [equipment.elf_flame_arrow]
 name = "Elf Flame Arrow"
 race = "elf"
-requires = [["Hands:2"], ["type:Infantry", "type:Cavalry", "type:Crew"]]
+requires = [["Hands:2"], ["type:Archer", "type:Cavalry", "type:Crew"]]
 cost.cp = 32
 upgrade_all = true
 
@@ -1740,7 +1740,7 @@ ap = 0
 [equipment.bow_with_rocket_arrows]
 name = "Bow with Rocket Arrows"
 race = "elf"
-requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Hands:2"], ["type:Archer", "type:Cavalry"]]
 cost.cp = 8
 upgrade_all = true
 description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc"
@@ -1820,7 +1820,6 @@ ap = "3"
 [equipment.grenade]
 name = "Grenade"
 race = "elf"
-requires = [["Independent:1"]]
 
 [equipment.grenade.range]
 range = 1
@@ -1836,7 +1835,7 @@ ap = "7"
 [equipment.hand_grenade]
 name = "Hand Grenade"
 race = "elf"
-requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Independent:1"], ["type:Infantry", "type:Archer"]]
 cost.cp = 8
 upgrade_all = true
 
@@ -1919,7 +1918,7 @@ upgrade_all = true
 [equipment.camouflage]
 name = "Camouflage"
 race = "elf"
-requires = [["Independent:1"], ["type:Infantry"]]
+requires = [["Independent:1"], ["type:Infantry", "type:Archer"]]
 cost.cp = 8
 upgrade_all = true
 
