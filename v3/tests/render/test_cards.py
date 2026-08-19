@@ -151,6 +151,139 @@ def test_orders_speeds_follow_canonical_order() -> None:
     assert list(merged.movement) == ["still", "slow", "fast"]
 
 
+# --- Unit.orders_by_source() -------------------------------------------------
+
+
+def test_orders_by_source_base_only_unit_yields_one_source() -> None:
+    unit = _unit(orders=OrdersConfig(movement={"still": [["A"]]}))
+
+    (base,) = unit.orders_by_source()
+
+    assert base.source is None
+    assert base.orders.movement == {"still": [["A"]]}
+
+
+def test_orders_by_source_lists_base_then_each_equipment() -> None:
+    smg = _equip(OrdersConfig(fire={"still": [["Fire", "Fire"]]}))
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg])],
+    )
+
+    base, gained = unit.orders_by_source()
+
+    assert base.source is None
+    assert base.orders.fire == {"still": [["-"]]}
+    assert gained.source == "SMG"
+    assert gained.orders.fire == {"still": [["Fire", "Fire"]]}
+
+
+def test_orders_by_source_drops_a_gained_row_matching_a_base_row() -> None:
+    smg = _equip(OrdersConfig(fire={"still": [["-"], ["Fire"]]}))
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg])],
+    )
+
+    _, gained = unit.orders_by_source()
+
+    assert gained.orders.fire == {"still": [["Fire"]]}
+
+
+def test_orders_by_source_omits_an_equipment_whose_rows_are_all_redundant() -> None:
+    smg = _equip(OrdersConfig(fire={"still": [["-"]]}))
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg])],
+    )
+
+    sources = unit.orders_by_source()
+
+    assert [s.source for s in sources] == [None]
+
+
+def test_orders_by_source_keeps_a_row_two_equipment_both_grant() -> None:
+    # Sources are independent: either may be absent from a loadout, so each
+    # keeps its own copy of a row the other also grants.
+    smg_a = _equip(OrdersConfig(fire={"still": [["Fire"]]}), name="SMG-A")
+    smg_b = _equip(OrdersConfig(fire={"still": [["Fire"]]}), name="SMG-B")
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[smg_a]), _model(equipment=[smg_b])],
+    )
+
+    _, first, second = unit.orders_by_source()
+
+    assert (first.source, second.source) == ("SMG-A", "SMG-B")
+    assert first.orders.fire == {"still": [["Fire"]]}
+    assert second.orders.fire == {"still": [["Fire"]]}
+
+
+def test_orders_by_source_unions_equipment_sharing_a_display_name() -> None:
+    # darkelf `hide` and `hide_free` are distinct keys both displayed as "Hide";
+    # nothing enforces that their gained rows stay identical.
+    hide = _equip(OrdersConfig(movement={"crawl": [["A"]]}), name="Hide")
+    hide_free = _equip(OrdersConfig(movement={"crawl": [["A"], ["B"]]}), name="Hide")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["S"]]}),
+        models=[_model(equipment=[hide]), _model(equipment=[hide_free])],
+    )
+
+    _, gained = unit.orders_by_source()
+
+    assert gained.source == "Hide"
+    assert gained.orders.movement == {"crawl": [["A"], ["B"]]}
+
+
+def test_orders_by_source_speeds_follow_canonical_order() -> None:
+    hide = _equip(
+        OrdersConfig(movement={"fast": [["F"]], "still": [["S"]], "slow": [["L"]]}),
+        name="Hide",
+    )
+    unit = _unit(
+        orders=OrdersConfig(movement={"crawl": [["C"]]}),
+        models=[_model(equipment=[hide])],
+    )
+
+    _, gained = unit.orders_by_source()
+
+    assert gained.orders.movement is not None
+    assert list(gained.orders.movement) == ["still", "slow", "fast"]
+
+
+def test_orders_is_the_fold_of_orders_by_source() -> None:
+    # The regression bar: folding the sources reproduces the merged view.
+    hide = _equip(OrdersConfig(movement={"crawl": [["360°"]]}), name="Hide")
+    smg = _equip(OrdersConfig(fire={"still": [["Fire"], ["-"]]}), name="SMG")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["-"]]}),
+        models=[_model(equipment=[hide, smg])],
+    )
+
+    merged = unit.orders()
+
+    assert merged.movement == {"still": [["A"]], "crawl": [["360°"]]}
+    assert merged.fire == {"still": [["-"], ["Fire"]]}
+
+
+def test_orders_groups_a_repeated_equipment_name_with_its_first_appearance() -> None:
+    # Grouping by display name is what makes one Card Set per Order Source, and
+    # it is the one way the merged view can differ from the pre-ADR-0021 merge:
+    # equipment encountered A, B, A merge as A, A, B rather than A, B, A. No
+    # committed army carries two order-modifying equipment at all, let alone a
+    # repeated display name among three.
+    first = _equip(OrdersConfig(fire={"still": [["A1"]]}), name="Hide")
+    other = _equip(OrdersConfig(fire={"still": [["B1"]]}), name="Wings")
+    again = _equip(OrdersConfig(fire={"still": [["A2"]]}), name="Hide")
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[first, other, again])],
+    )
+
+    assert [s.source for s in unit.orders_by_source()] == [None, "Hide", "Wings"]
+    assert unit.orders().fire == {"still": [["-"], ["A1"], ["A2"], ["B1"]]}
+
+
 # --- build_deck: flat rows for the Markdown family --------------------------
 
 
@@ -221,6 +354,110 @@ def test_build_deck_uneven_option_counts_drop_speed_from_later_cards() -> None:
         [("still", ["S0"]), ("slow", ["L0"])],
         [("still", ["S1"])],
     ]
+
+
+# --- build_deck: one Card Set per Order Source --------------------------------
+
+
+def test_build_deck_base_cards_name_no_equipment() -> None:
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert all(card.equipment is None for card in deck.cards)
+
+
+def test_build_deck_equipment_cards_carry_its_display_name() -> None:
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        models=[_model(equipment=[hide])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert [(c.equipment, c.rows) for c in deck.cards] == [
+        (None, [("still", ["A"])]),
+        ("Hide", [("crawl", ["C"])]),
+    ]
+
+
+def test_build_deck_never_mixes_base_and_gained_rows_on_one_card() -> None:
+    # F2: base Speeds have different row counts, so an option index that is a
+    # base row at one Speed was a gained row at another before ADR 0021.
+    hide = _equip(
+        OrdersConfig(movement={"still": [["H0"], ["H1"]], "crawl": [["H2"]]}),
+        name="Hide",
+    )
+    unit = _unit(
+        orders=OrdersConfig(
+            movement={"still": [["S0"]], "slow": [["L0"], ["L1"], ["L2"]]}
+        ),
+        models=[_model(equipment=[hide])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    base_cells = {"S0", "L0", "L1", "L2"}
+    for card in deck.cards:
+        cells = {cell for _, cells in card.rows for cell in cells}
+        mixes = bool(cells & base_cells) and bool(cells - base_cells)
+        assert not mixes, f"card mixes base and gained rows: {card}"
+    # And the base cards are exactly what a Unit without Hide would produce.
+    assert [c.rows for c in deck.cards if c.equipment is None] == [
+        [("still", ["S0"]), ("slow", ["L0"])],
+        [("slow", ["L1"])],
+        [("slow", ["L2"])],
+    ]
+
+
+def test_build_deck_orders_cards_base_first_then_each_equipment() -> None:
+    hide = _equip(
+        OrdersConfig(movement={"crawl": [["C"]]}, fire={"still": [["HF"]]}), name="Hide"
+    )
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]}),
+        models=[_model(equipment=[hide])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert [(c.equipment, c.kind) for c in deck.cards] == [
+        (None, "Movement"),
+        (None, "Fire"),
+        ("Hide", "Movement"),
+        ("Hide", "Fire"),
+    ]
+
+
+def test_build_deck_two_equipment_each_get_their_own_card_set() -> None:
+    # No committed army fields two order-modifying equipment on one Unit, so
+    # this case is defined by a synthetic fixture (decision 7).
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
+    wings = _equip(OrdersConfig(movement={"fast": [["W"]]}), name="Wings")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        models=[_model(equipment=[hide, wings])],
+    )
+
+    deck = build_deck(_army(unit), stem="test")
+
+    assert [c.equipment for c in deck.cards] == [None, "Hide", "Wings"]
+
+
+def test_build_deck_units_differing_by_equipment_each_get_a_full_base_set() -> None:
+    # The sharing invariant: a Card Set is shared only when every card in it
+    # applies to every Unit sharing it, so the base cards are printed twice.
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide")
+    orders = OrdersConfig(movement={"still": [["A"]], "slow": [["B"]]})
+    plain = _unit(orders=orders, name="Infantry")
+    hidden = _unit(orders=orders, name="Infantry", models=[_model(equipment=[hide])])
+
+    deck = build_deck(_army(plain, hidden), stem="test")
+
+    assert [c.equipment for c in deck.cards] == [None, None, "Hide"]
 
 
 # --- build_deck: dedup and shaken -------------------------------------------
@@ -472,11 +709,38 @@ def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
     text = out.read_text(encoding="utf-8")
     assert r"\usepackage{graphicx}" in text
     assert r"\renewcommand{\bchead}{Squad}" in text
+    # A base card names the kind alone — there is no Equipment behind it.
     assert r"\renewcommand{\bcfoot}{Movement}" in text
     assert r"\renewcommand{\bcfoot}{Fire}" in text
     # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
     # break `\includegraphics`.
     assert rf"\includegraphics[width=\cardartwidth]{{{ART.as_posix()}}}" in text
+
+
+def test_cards_latex_names_the_equipment_under_the_kind_on_its_fronts(
+    tmp_path: Path,
+) -> None:
+    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide & Seek")
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}),
+        models=[_model(equipment=[hide])],
+    )
+    deck = build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(None)
+    )
+
+    out = render(
+        CARDS, deck, fmt=get_format("latex"), name="test", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    # The name is LaTeX-escaped, and `\flhead` wraps it within the card box.
+    assert r"\renewcommand{\flhead}{Movement\\Hide \& Seek}" in text
+    # The base card of the same Unit still names the kind alone, and the back
+    # of an equipment card carries no equipment name at all.
+    assert r"\renewcommand{\flhead}{Movement}" in text
+    assert r"\renewcommand{\bcfoot}{Movement}" in text
+    assert not any("Hide" in line for line in text.splitlines() if "bcfoot" in line)
 
 
 def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:
@@ -504,7 +768,15 @@ def test_cards_pdf_compiles_with_a_mixed_deck(tmp_path: Path) -> None:
     art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
     orders = OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
     with_art = _unit(orders=orders, name="Painted")
-    without_art = _unit(orders=orders, name="Bare")
+    # The longest equipment name in any race is 44 characters; `\flhead` must
+    # wrap it inside the card box rather than overfull the line.
+    longest = _equip(
+        OrdersConfig(movement={"crawl": [["C"]]}),
+        name="Double Barreled Musket with Springloaded Axe",
+    )
+    without_art = _unit(
+        orders=orders, name="Bare", models=[_model(equipment=[longest])]
+    )
 
     def image_for(_race: str, name: str) -> Path | None:
         return art if name == "Painted" else None

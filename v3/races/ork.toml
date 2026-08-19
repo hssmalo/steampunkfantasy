@@ -16,7 +16,6 @@ size = "Medium"
 cost.mp = 16
 description = "Bloodthirsty ork in leather rags wielding a napleonic style musket with a bajonet"
 
-
 [units.ork_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -40,18 +39,16 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 
 [units.ork_infantry.damage_tables.Regular]
 rows = [
-	"1-5: Kill 1 model",
-	"6-7: Kill 1 model, Psychic damage[d6]",
-	"8+: Unit destroyed",
+    "1-5: Kill 1 model",
+    "6-7: Kill 1 model, Psychic damage[d6]",
+    "8+: Unit destroyed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+    "If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 ]
 
 [units.ork_infantry.damage_tables.Psychic]
-rows = [
-	"4+: shaken",
-]
+rows = ["4+: shaken"]
 
 [units]
 
@@ -63,7 +60,7 @@ size = "Huge"
 cost.xp = 48
 cost.cp = 8
 armor = [0, 0, 0, 0]
-description =  '''Giant brown bloodthirsty troll wielding a gatling gun
+description = '''Giant brown bloodthirsty troll wielding a gatling gun
 '''
 
 lore = "At the end of the game, the troll runs out of ammo"
@@ -158,9 +155,9 @@ slow = [
 ]
 
 [units.warg_rider.orders.fire]
-still = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
-slow = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
-fast = [["Load", "-"], ["fire", "-"], ["-", "fire"]]
+still = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
+slow = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
+fast = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [units.warg_rider.damage_tables.Psychic]
 rows = [
@@ -534,7 +531,6 @@ armor = [12, 10, 8, 7]
 description = '''An orkish steampunk version of the french world war II tank Char  B1
 '''
 
-
 [units.ork_char_b1.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -593,27 +589,27 @@ still = [
 
 [units.ork_char_b1.damage_tables.Regular]
 rows = [
-	"1-3: +1 to future damage",
-	"4: as 1-3, shaken",
-	"5-8: as 4, Critical Damage[d6]",
-	"9+: Unit Destroyed",
+    "1-3: +1 to future damage",
+    "4: as 1-3, shaken",
+    "5-8: as 4, Critical Damage[d6]",
+    "9+: Unit Destroyed",
 ]
 
 [units.ork_char_b1.damage_tables.Critical]
 rows = [
-	"1: Cannot Rotate",
-	"2: Cannot move",
-	"3: -1 to hit, +1 to be hit (ranged and assault)",
-	"4-5: +3 to future damage",
-	"6: Unit set on fire",
+    "1: Cannot Rotate",
+    "2: Cannot move",
+    "3: -1 to hit, +1 to be hit (ranged and assault)",
+    "4-5: +3 to future damage",
+    "6: Unit set on fire",
 ]
 
 [units.ork_char_b1.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
-	"12+: Unit destroyed",
+    "4-5: Crippled Crew, if already shaken double initial Crew damage",
+    "6-7: as 4-5, shaken",
+    "8-11: as 6-7, +3 to future Crew damage",
+    "12+: Unit destroyed",
 ]
 
 [units.ork_char_b1.special]
@@ -1067,8 +1063,8 @@ ap = 2
 "Ammo" = "May load up  up to 2 ammo and fire them one at a time"
 
 [equipment.ork_pistol.orders_gained.fire]
-still = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "-"], ["-", "fire"]]
-slow = [["fire", "-"], ["-", "fire"]]
+still = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "-"], ["-", "Fire"]]
+slow = [["Fire", "-"], ["-", "Fire"]]
 
 [equipment.pyro]
 name = "Pyro"
@@ -1340,6 +1336,6 @@ ap = 2
 "Note" = "ps! It is not recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon separately"
 
 [equipment.assault_musket.orders_gained.fire]
-still = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "fire"]]
-slow = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "fire"]]
-fast = [["Load(2)", "-"], ["-", "Load(2)"], ["fire", "fire"]]
+still = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "Fire"]]
+slow = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "Fire"]]
+fast = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "Fire"]]

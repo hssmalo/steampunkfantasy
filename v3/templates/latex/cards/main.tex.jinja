@@ -2,6 +2,7 @@
 \usepackage{textcomp}
 \usepackage{graphicx}
 \pagesetup{3}{3}
+\setlength{\fboxsep}{2mm}  % Margins inside card
 \setlength{\cardwidth}{63mm}
 \setlength{\cardheight}{88mm}
 % `\cardbox` insets the body by `\fboxsep` on each side, so art at the full
@@ -25,9 +26,19 @@
 % classic "There's no line here to end" error. Hence the `\strut` fallback.
 % Image paths are emitted raw: `latex_escape` would turn `_` into `\_` and
 % break the graphics include.
+% On an Equipment's cards the front names it under the order kind, so the deck
+% can be sorted by loadout with the fronts face up (ADR 0021). It shares
+% `\flhead` rather than taking a free slot: flacards overlays all three head
+% boxes at full `\cardwidth`, so a long name in `\frhead` would run into the
+% kind. Stacked in `\flhead` it wraps inside the same box instead.
 \BLOCK{for card in source.cards}
-\renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
 \renewcommand{\flhead}{\VAR{card.kind}}
+\BLOCK{if card.equipment}
+%\renewcommand{\flhead}{\VAR{card.kind}\\\VAR{card.equipment | latex_escape}}
+\renewcommand{\frfoot}{\VAR{card.equipment | latex_escape}\\\VAR{card.unit_name | latex_escape}}
+\BLOCK{else}
+\renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
+\BLOCK{endif}
 \renewcommand{\bchead}{\VAR{card.unit_name | latex_escape}}
 \renewcommand{\bcfoot}{\VAR{card.kind}}
 \card{%

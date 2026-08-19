@@ -1,9 +1,12 @@
 """Order Card view-model: shape a resolved Army into a printable deck.
 
-This is a *presentation* transposition (ADR 0007). The core model exposes merged
-orders via `spf.armies.unit.Unit.orders`; this module turns those into the
-two shapes the render families need: a flat per-Unit table (Markdown family) and
-an option-index-transposed card list (LaTeX 9-per-page grid). No templates.
+This is a *presentation* transposition (ADR 0007). The core model exposes a
+Unit's orders two ways: merged, via `spf.armies.unit.Unit.orders`, and split by
+Order Source, via `Unit.orders_by_source`. This module turns them into the two
+shapes the render families need: a flat per-Unit table off the merged view
+(Markdown family) and an option-index-transposed card list, transposed once per
+Order Source so no card mixes base and gained rows (LaTeX 9-per-page grid, ADR
+0021). No templates.
 
 Its one touch of disk is the `ImageLookup` from `spf.render.images`, which asks
 the committed Asset store whether a Target has art (ADR 0017); it is injected,
@@ -25,12 +28,13 @@ type _Orders = dict[t.Speed, list[list[str]]] | None  # one order-type, per Spee
 
 @dataclass(frozen=True)
 class OrderCard:
-    """One order-type and one option-index for a Unit, Speeds as rows."""
+    """One order-type and one option-index for one Order Source of a Unit."""
 
     unit_name: str
     image: Path | None  # the Unit's art, printed on the back of the card
     kind: Literal["Movement", "Fire"]
     rows: _Rows  # (speed, cells) per Speed
+    equipment: str | None  # the Equipment that granted these orders; None = base
 
 
 @dataclass(frozen=True)
@@ -70,8 +74,9 @@ def _cards(
     image: Path | None,
     kind: Literal["Movement", "Fire"],
     orders: _Orders,
+    equipment: str | None,
 ) -> list[OrderCard]:
-    """Transpose one order-type by option-index: card i = option i across Speeds."""
+    """Transpose one Order Source's order-type: card i = option i across Speeds."""
     if not orders:
         return []
     width = max(len(options) for options in orders.values())
@@ -84,7 +89,13 @@ def _cards(
         ]
         if rows:
             cards.append(
-                OrderCard(unit_name=unit_name, image=image, kind=kind, rows=rows)
+                OrderCard(
+                    unit_name=unit_name,
+                    image=image,
+                    kind=kind,
+                    rows=rows,
+                    equipment=equipment,
+                )
             )
     return cards
 
@@ -93,6 +104,10 @@ def _unit_orders(
     unit: Unit, *, race: t.RaceName, image_for: ImageLookup
 ) -> tuple[UnitOrders, list[OrderCard]]:
     """Build the flat table and card list for a single Unit.
+
+    The flat table is the merged view; the cards are one Card Set per Order
+    Source, so a player can pull an Equipment's cards out and still hold a
+    complete deck for the Unit without it (ADR 0021).
 
     The Asset is addressed by `unit.name`, the TOML key, not by
     `unit.display_name`, the player's Nick or the catalogue name. One lookup
@@ -110,12 +125,24 @@ def _unit_orders(
         shaken_movement=[shaken.speed, *shaken.movement_order],
         shaken_fire=shaken.fire_order,
     )
-    cards = [
-        *_cards(
-            unit.display_name, image=image, kind="Movement", orders=merged.movement
-        ),
-        *_cards(unit.display_name, image=image, kind="Fire", orders=merged.fire),
-    ]
+    # Cards are transposed per Order Source, keeping each Unit's cards
+    # contiguous: base Movement then Fire, then the same pair per Equipment.
+    cards: list[OrderCard] = []
+    for sourced in unit.orders_by_source():
+        by_kind: list[tuple[Literal["Movement", "Fire"], _Orders]] = [
+            ("Movement", sourced.orders.movement),
+            ("Fire", sourced.orders.fire),
+        ]
+        for kind, orders in by_kind:
+            cards.extend(
+                _cards(
+                    unit.display_name,
+                    image=image,
+                    kind=kind,
+                    orders=orders,
+                    equipment=sourced.source,
+                )
+            )
     return unit_orders, cards
 
 
@@ -124,9 +151,15 @@ def build_deck(
 ) -> OrderCardDeck:
     """Build an `OrderCardDeck` from a resolved Army.
 
-    Each Unit contributes a flat `UnitOrders` and its transposed
-    `OrderCard` set. Units producing an identical flat view (same name and
-    merged movement/fire rows) collapse to one entry. That key is the
+    Each Unit contributes a flat `UnitOrders` and its transposed `OrderCard`
+    sets. Units producing an identical flat view (same name and merged
+    movement/fire rows) collapse to one entry — every card then applies to
+    every Unit sharing it, which is the invariant the collapse rests on. Two
+    Units of one catalogue Unit differing by Equipment differ in their merged
+    rows too, so they do not collapse and each gets its own full set (ADR
+    0021) — unless the Equipment's rows are wholly redundant, and such an
+    Equipment contributes no cards to drop. The key does not look at Order
+    Source itself. That key is the
     `display_name` — so a Nick participates in it with no special-casing, and
     differently-nicked Units each get their own card set (ADR 0019). It
     deliberately ignores the art: an Asset is addressed by TOML key, and no race
