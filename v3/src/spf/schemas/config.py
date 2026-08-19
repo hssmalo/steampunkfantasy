@@ -35,11 +35,10 @@ class AssetKindConfig(StrictModel):
 
 
 class ComfyUIEnvConfig(StrictModel):
-    """A single ComfyUI Environment: where to reach it and what to run."""
+    """A single ComfyUI Environment: where to reach it and its default Profile."""
 
     base_url: str
-    workflow: Path
-    refine_workflow: Path
+    profile: str
     api_key_env: str = ""
 
 
@@ -48,20 +47,22 @@ class ComfyUIConfig(StrictModel):
 
     env: str = "local"
     timeout_s: int = 900
+    profile: str = ""
     local: ComfyUIEnvConfig
     cloud: ComfyUIEnvConfig
 
-    def selected(self) -> ComfyUIEnvConfig:
-        """Return the Environment block named by `env`.
+    def selected(self, name: str | None = None) -> ComfyUIEnvConfig:
+        """Return the Environment block named by `name` (or `self.env`).
 
         Raises `ValueError` naming the two valid Environments when
-        `env` is neither (mirrors `spf.assets.get_kind`).
+        the name is neither (mirrors `spf.assets.get_kind`).
         """
-        if self.env == "local":
+        env_name = name if name is not None else self.env
+        if env_name == "local":
             return self.local
-        if self.env == "cloud":
+        if env_name == "cloud":
             return self.cloud
-        msg = f"Unknown ComfyUI env {self.env!r}; known envs: local, cloud"
+        msg = f"Unknown ComfyUI env {env_name!r}; known envs: local, cloud"
         raise ValueError(msg)
 
 
@@ -69,7 +70,7 @@ class ImageAssetConfig(StrictModel):
     """Image asset settings: count, the two prompt files, and the provider.
 
     Both prompt files are configured paths rather than hardcoded basenames,
-    following `ComfyUIEnvConfig`'s Workflow keys. They sit here and not in an
+    following the Workflows' resolved paths. They sit here and not in an
     Environment block because one pair serves both Environments and both
     operations (see ADR 0009's fifth amendment).
     """

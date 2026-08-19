@@ -31,8 +31,8 @@ from spf.assets import (
     targets,
     validate_lineage,
 )
-from spf.assets import image as _image  # noqa: F401  registers the "image" Kind
-from spf.assets.comfyui import ComfyUIError
+from spf.assets import image as _image
+from spf.assets.comfyui import ComfyUIError, ComfyUIService
 from spf.assets.kinds import KINDS
 from spf.assets.kinds import Kind as AssetKind
 from spf.config import config
@@ -128,6 +128,56 @@ class AssetOpts:
         """
         seed = self.seed if self.seed is not None else random.randrange(_SEED_BOUND)  # noqa: S311  seed, not cryptographic
         return self.count or config.assets.image.count, seed
+
+
+@dataclass
+class ImageOpts:
+    """Image-specific options: env and profile selection."""
+
+    env: str | None = None
+    profile: str | None = None
+
+    def resolve_env_profile(self) -> tuple[str, str]:
+        """Return `(env, profile)` with resolution precedence.
+
+        Per axis: config -> env var -> flag, last wins.
+        """
+        comfyui = config.assets.image.comfyui
+        env_name = self.env if self.env is not None else comfyui.env
+        profile_name = (
+            self.profile or comfyui.profile or comfyui.selected(env_name).profile
+        )
+        return env_name, profile_name
+
+
+def _resolve_image_service(
+    image_opts: ImageOpts, *, validate_refine: bool = False
+) -> tuple[ComfyUIService, str, str]:
+    """Resolve env/profile, build the ComfyUIService, and return all three.
+
+    Set ``validate_refine`` when the call site is a refinement (the refine
+    Workflow must exist). For generate, the refine Workflow is lazily
+    resolved so contributors without one can still generate.
+    """
+    try:
+        env_name, profile_name = image_opts.resolve_env_profile()
+    except ValueError as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+    try:
+        svc = _image._build_service(  # noqa: SLF001  wiring the factory
+            env=env_name, profile=profile_name
+        )
+    except ValueError as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+    if validate_refine:
+        try:
+            _image._resolve_refine(env=env_name, profile=profile_name)  # noqa: SLF001
+        except ValueError as err:
+            stderr.print(f"[red]Error:[/] {err}")
+            raise SystemExit(1) from None
+    return svc, env_name, profile_name
 
 
 def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Target:
@@ -352,6 +402,7 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     ] = None,
     promoted: Annotated[bool, cyclopts.Parameter(group=_SOURCE)] = False,
     opts: Annotated[AssetOpts | None, cyclopts.Parameter(name="*")] = None,
+    image_opts: Annotated[ImageOpts | None, cyclopts.Parameter(name="*")] = None,
 ) -> None:
     """Refine an existing Candidate by applying a CORRECTION to it.
 
@@ -366,10 +417,31 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     race description, because an instruction-edit model is trained on
     instructions. Results land under the derived name `NAME.LINEAGE`, so
     refining `2` writes `2.1`, `2.2`, … and the original is left alone.
+
+    `--env` and `--profile` apply only to image assets and select the ComfyUI
+    Environment and Profile. Passing `--profile` with a non-image kind errors.
     """
     asset_kind = get_kind(kind)
+    image_opts = image_opts or ImageOpts()
+
+    if (
+        image_opts.env is not None or image_opts.profile is not None
+    ) and asset_kind.name != "image":
+        stderr.print("[red]Error:[/] --env/--profile apply only to image assets")
+        raise SystemExit(1) from None
+
+    svc: ComfyUIService | None = None
+    env_name: str | None = None
+    profile_name: str | None = None
+    if asset_kind.name == "image":
+        svc, env_name, profile_name = _resolve_image_service(
+            image_opts, validate_refine=True
+        )
+
     count, seed = (opts or AssetOpts()).resolve()
-    stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
+
+    if env_name is not None and profile_name is not None:
+        stdout.print(f"Env: {env_name}  Profile: {profile_name}")
 
     # Show what is actually sent (dimmed), matching `image`; here it is just
     # the Correction. The Negative Prompt is an image concern, so name its file
@@ -393,6 +465,7 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
                 seed=seed,
                 candidates_root=config.paths.candidates,
                 on_candidate=on_candidate,
+                service=svc,
             )
     except (OSError, ComfyUIError, TypeError, ValueError) as err:
         stderr.print(f"[red]Error:[/] refinement failed: {err}")
@@ -427,13 +500,14 @@ def _image_targets(
     return [_resolve_target(kind, race, unit)]
 
 
-def image(
+def image(  # noqa: PLR0913  CLI surface, parameters are fixed
     race: t.RaceName,
     unit: Annotated[str | None, cyclopts.Parameter(group=_SELECTION)] = None,
     *,
     all_: Annotated[bool, cyclopts.Parameter(name="--all", group=_SELECTION)] = False,
     missing: Annotated[bool, cyclopts.Parameter(group=_SELECTION)] = False,
     opts: Annotated[AssetOpts | None, cyclopts.Parameter(name="*")] = None,
+    image_opts: Annotated[ImageOpts | None, cyclopts.Parameter(name="*")] = None,
 ) -> None:
     """Generate image Candidates for a RACE, or a UNIT of it.
 
@@ -444,9 +518,15 @@ def image(
     The prompt is composed from the configured preamble file
     (`assets.image.prompt`, by default `prompts/image.txt`) plus the target's
     name and Brief; a target without a Brief is warned about and skipped.
+
+    `--env` and `--profile` select the ComfyUI Environment and Profile.
+    Resolution order per axis: config -> env var -> flag, last wins.
     """
     opts = opts or AssetOpts()
+    image_opts = image_opts or ImageOpts()
     kind = get_kind("image")
+
+    svc, env_name, profile_name = _resolve_image_service(image_opts)
 
     try:
         selected = _image_targets(kind, race, unit, all_=all_, missing=missing)
@@ -471,11 +551,17 @@ def image(
     for target in briefed:
         if len(briefed) > 1:
             stdout.print(f"[green]{target.name}[/]")
-        _generate_image(kind, race, target, opts)
+        _generate_image(kind, race, target, opts, svc, env_name, profile_name)
 
 
-def _generate_image(
-    kind: AssetKind, race: t.RaceName, target: Target, opts: AssetOpts
+def _generate_image(  # noqa: PLR0913  internal seam, parameters are fixed
+    kind: AssetKind,
+    race: t.RaceName,
+    target: Target,
+    opts: AssetOpts,
+    svc: ComfyUIService,
+    env_name: str,
+    profile_name: str,
 ) -> None:
     """Generate Candidates for one Target, reporting each as it lands."""
     # Unreachable from `image()`, which partitions Brief-less Targets out and
@@ -492,6 +578,7 @@ def _generate_image(
 
     count, seed = opts.resolve()
     stdout.print(f"Seed: {seed}  (rerun with --seed {seed} to reproduce)")
+    stdout.print(f"Env: {env_name}  Profile: {profile_name}")
 
     # Show the composed prompt (dimmed) before sending it to the Service.
     stdout.print(prompt, style="dim", markup=False)
@@ -508,6 +595,7 @@ def _generate_image(
                 seed=seed,
                 candidates_root=config.paths.candidates,
                 on_candidate=on_candidate,
+                service=svc,
             )
     except (OSError, ComfyUIError) as err:
         stderr.print(f"[red]Error:[/] image generation failed: {err}")

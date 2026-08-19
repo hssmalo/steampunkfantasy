@@ -1,39 +1,64 @@
 # Workflows
 
 A **Workflow** is a ComfyUI API-format graph (JSON) naming the nodes and models
-one image generation runs. The Image Asset Service submits one per configured
-**Environment** (`assets.image.comfyui.env`), patching *only* the positive
-prompt and a per-job seed into it — everything else (model, steps, cfg, LoRAs,
-negative prompt) runs exactly as authored.
+one image generation runs. The Image Asset Service submits one per resolved
+**Environment** and **Profile**, patching *only* the positive prompt and a
+per-job seed into it — everything else (model, steps, cfg, LoRAs, negative
+prompt) runs exactly as authored.
 
-Each Environment has two Workflows: one for generating, one for **Refinement**
-(`spf assets refine`). A refine Workflow uses an instruction-edit model
-(Qwen-Image-Edit) and takes one extra patch point — the init image.
+Each **Profile** is a named pair of Workflows: one for generating, one for
+**Refinement** (`spf assets refine`). A refine Workflow uses an instruction-edit
+model (Qwen-Image-Edit) and takes one extra patch point — the init image.
 
 ## Files
 
-- **`cloud.json`** — committed. Submitted to Comfy Cloud when `env = "cloud"`.
-  A Qwen-Image (Apache-2.0) graph, reconciled against Cloud's model inventory.
-- **`cloud-refine.json`** — committed. The Refinement graph for Comfy Cloud,
-  on Qwen-Image-Edit-2511 (+ its matching 4-step Lightning LoRA).
-- **`local.example.json`** — committed reference, the same Qwen-Image export.
-- **`local.json`** — **git-ignored, per-machine.** Used when `env = "local"`.
-- **`local-refine.json`** — **git-ignored, per-machine.** The local Refinement
-  graph. A missing file is fine until you actually run a Refinement, which then
-  fails with a clean error rather than breaking `spf assets image`.
+Workflows live under `workflows/<env>/`, one directory per Environment:
+
+- **`workflows/cloud/`** — committed. Submitted to Comfy Cloud when
+  `env = "cloud"`.
+- **`workflows/local/`** — **gitignored, per-machine.** Used when
+  `env = "local"`.
+- **`workflows/examples/`** — committed reference. Never scanned for
+  Profiles; not a valid Environment.
+
+Within an env directory, a Profile is the filename stem of a `*.json` file.
+The generate Workflow is `<profile>.json`; the refine Workflow is
+`<profile>-refine.json`. For example, the `qwen` Profile under `cloud` is:
+
+```
+workflows/cloud/qwen.json           # generate
+workflows/cloud/qwen-refine.json     # refine
+```
+
+The default Profile is configured per-env (`assets.image.comfyui.local.profile`
+and `assets.image.comfyui.cloud.profile`). Override with `--profile` or
+`SPF_COMFYUI_PROFILE`.
+
+## Adding a Profile
+
+1. Export the graph from ComfyUI using **Save (API Format)**, *not* the plain
+   Save (that exports UI format, which the Service cannot run).
+2. Drop it into `workflows/<env>/<name>.json` (generate) and
+   `workflows/<env>/<name>-refine.json` (refine).
+3. Select it with `--profile <name>` or set it as the default in config.
+4. No config edit is needed for the Service to discover it.
 
 ## Running locally
 
-Copy `local.example.json` to `local.json` if you run this exact Qwen setup:
+Copy `workflows/examples/qwen.json` to both locations if you run this exact
+Qwen setup:
 
 ```sh
-cp workflows/local.example.json workflows/local.json
+mkdir -p workflows/local
+cp workflows/examples/qwen.json workflows/local/qwen.json
 ```
 
-Or drop your own ComfyUI export at `local.json` — in ComfyUI use
-**Save (API Format)**, *not* the plain Save (that exports UI format, which the
-Service cannot run). The graph must have exactly one sampler (`KSampler` /
-`KSamplerAdvanced`) whose `positive` input links to a text node.
+Then author a refine graph at `workflows/local/qwen-refine.json`. A missing
+refine file is fine until you actually run a Refinement, which then fails with
+a clean error rather than breaking `spf assets image`.
+
+The graph must have exactly one sampler (`KSampler` / `KSamplerAdvanced`)
+whose `positive` input links to a text node.
 
 ## Authoring a refine Workflow
 
@@ -46,7 +71,7 @@ they are worth checking deliberately.
   patches the sole `LoadImage` and rejects a graph with any other number.
 - **Set the output resolution explicitly.** Refine output size comes from the
   `VAEEncode` of the scaled init image, not from an `EmptySD3LatentImage`. Use
-  **`ImageScale` at `width=1328, height=1328`**, matching `cloud.json`. The
+  **`ImageScale` at `width=1328, height=1328`**, matching `cloud/qwen.json`. The
   stock template's `FluxKontextImageScale` takes no parameters and silently
   caps at ~1 MP (it gave 1024×1024), and `ImageScaleToTotalPixels` at the
   equivalent 1.76 MP gave 1360×1360 — its `resolution_steps` does not round
@@ -58,8 +83,8 @@ they are worth checking deliberately.
   surfaces as a `ComfyUIError` about producing no images.
 - **Author the negative prompt in.** The template's negative encoder is empty,
   which silently drops the standing guardrail. Copy the stock Qwen negative
-  from `cloud.json`. The Service never patches the negative prompt, so it is
-  tuned here or not at all.
+  from `cloud/qwen.json`. The Service never patches the negative prompt, so it
+  is tuned here or not at all.
 - **Match the LoRA's generation to the UNet's.** A 2509 Lightning LoRA on a
   2511 UNet loads without erroring and quietly degrades the output, which at
   4 steps / cfg 1 reads as "the edit model is bad."
@@ -74,3 +99,11 @@ graph's `CLIPTextEncode` names it `text`. The Service accepts either.
 API-format JSON is **export-only**: editing a graph in a text editor is often
 easier than in the Cloud UI, but the result generally will not load back onto
 the canvas.
+
+## Licensing
+
+For any model whose output we might sell, prefer **Apache-2.0 weights**
+(Qwen-Image, FLUX.1 schnell). Avoid **FLUX.1 dev** (non-commercial weights)
+and **FLUX.1 Krea [dev]** (inherits dev's non-commercial licence). Since
+Profiles carry no metadata by design, this constraint lives here in the README
+rather than in code.

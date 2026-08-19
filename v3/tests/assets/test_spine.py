@@ -55,7 +55,7 @@ def test_generate_threads_seed_to_service(tmp_path: Path) -> None:
     service = FakeService()
     kind = Kind(
         name="_seedy",
-        service=service,
+        service_factory=lambda: service,
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),
@@ -88,7 +88,7 @@ def test_generate_honors_count(tmp_path: Path, test_kind: Kind) -> None:
 def test_generate_without_subdir_writes_flat_text(tmp_path: Path) -> None:
     lore_kind = Kind(
         name="_lore",
-        service=FakeService(values=("chapter one", "chapter two")),
+        service_factory=lambda: FakeService(values=("chapter one", "chapter two")),
         subdir=None,
         extension="md",
         targets=frozenset({"race"}),
@@ -316,7 +316,7 @@ def test_refine_hands_the_service_the_candidate_bytes_and_correction(
         candidates_root=tmp_path,
     )
 
-    service = refinable_kind.service
+    service = refinable_kind.service_factory()
     assert isinstance(service, FakeRefiner)
     assert service.seen_init == b"the candidate's own bytes"
     assert service.seen_source == "make the hat brass"  # verbatim, no wrapper

@@ -186,3 +186,39 @@ negative_prompt = "{paths.prompts}/image-negative.txt"
 The shipped default paths are unchanged, so no existing checkout moves a file.
 
 Nothing else about this ADR changes.
+
+## Amendment (2026-08-19) — the Workflow pair is discovered per Profile, not configured
+
+Issue 99 introduces **Profiles**: a named pair of Workflows within an
+Environment, discovered by directory scan rather than declared in config.
+This contradicts the original Consequences bullet **"Config is
+per-environment, not per-workflow"** and the fifth amendment's framing of
+prompt files as "following the Workflow keys' pattern" — the Workflow keys
+themselves are now gone from config.
+
+- **Workflow paths are discovered, not configured.** `ComfyUIEnvConfig` drops
+  `workflow` and `refine_workflow` in favor of a `profile` key naming the
+  default Profile for that Environment. The actual Workflow paths are resolved
+  by scanning `workflows/<env>/<profile>.json` and
+  `workflows/<env>/<profile>-refine.json`. Adding a new model is a file drop
+  with no config edit.
+- **The trade-off is honest.** A typo'd filename is now a runtime discovery
+  failure instead of a config-load failure — the error surfaces at CLI
+  invocation, before any GPU time, but no longer at import. This is bought in
+  exchange for the zero-config file-drop model.
+- **Profile is an axis orthogonal to Environment.** The same Profile name need
+  not exist in both Environments. `ComfyUIConfig.profile` is a top-level
+  override slot (empty by default), targetable by `SPF_COMFYUI_PROFILE`, so the
+  env var can override the per-env default without knowing which env is active.
+- **The `examples/` directory is excluded from the scan.** It holds a
+  committed reference Workflow but is never a valid Environment.
+- **CLI flags `--env` and `--profile`** are added to `spf assets image` and
+  `spf assets refine`. Resolution order per axis: config -> env var -> flag,
+  last wins. `--profile` with a non-image kind errors.
+- **`Kind.service` becomes `Kind.service_factory`.** Import-time service
+  construction is unfrozen; the CLI builds the service from the resolved
+  (env, profile) and passes it down. Nothing scans the filesystem or
+  validates config at import.
+
+The prompt-file keys in `[assets.image]` are unaffected — they still follow
+the pattern of naming authored inputs by configured path.

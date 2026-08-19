@@ -347,16 +347,25 @@ Kind they may not)
 **Environment** (image generation):
 A configured ComfyUI target — `local` (a contributor's own ComfyUI) or `cloud`
 (Comfy Cloud) — the Image Service submits to, selected by
-`assets.image.comfyui.env`. Each Environment runs its own Workflow against its
-own models; the same request may yield different images in each.
+`assets.image.comfyui.env` or `--env`. Each Environment runs its own Workflows
+against its own models; the same request may yield different images in each.
 _Avoid_: shell environment (unrelated), backend, target.
+
+**Profile** (image generation):
+A named pair of Workflows within an Environment — one to generate, one to
+refine — identified by the filename stem under `workflows/<env>/`. Discovered
+by scanning that directory, not declared in config. Each Environment has its
+own set; the same Profile name need not exist in both. Selected by the
+per-env `profile` config key or `--profile`.
+_Avoid_: model (bound twice already), variant, preset.
 
 **Workflow** (image generation):
 A ComfyUI API-format graph (JSON) naming the nodes and models one generation
-runs. Per-Environment, and one each for generating and refining: `cloud.json`
-and `cloud-refine.json` are committed, the `local*` ones are per-machine. The
-Image Service patches only the positive prompt, the Negative Prompt, and the
-seed — plus, for a refine Workflow, the sole `LoadImage`'s filename.
+runs. Laid out per Environment per Profile under `workflows/<env>/`:
+`<profile>.json` for generating, `<profile>-refine.json` for refining.
+`cloud/` is committed; `local/` is gitignored per-machine. The Image Service
+patches only the positive prompt, the Negative Prompt, and the seed — plus,
+for a refine Workflow, the sole `LoadImage`'s filename.
 _Avoid_: pipeline, graph (in user-facing text).
 
 **Negative Prompt** (image generation):

@@ -9,7 +9,7 @@ from tests.assets.conftest import FakeService
 def test_race_level_kind_covers_the_race_itself() -> None:
     kind = Kind(
         name="_lore",
-        service=FakeService(),
+        service_factory=lambda: FakeService(),  # noqa: PLW0108
         subdir="_lore",
         extension="txt",
         targets=frozenset({"race"}),
@@ -50,7 +50,7 @@ def test_model_level_kind_covers_the_races_models() -> None:
     # No Kind targets models yet; the field is the hook the Model Kind lands on.
     kind = Kind(
         name="_model",
-        service=FakeService(),
+        service_factory=lambda: FakeService(),  # noqa: PLW0108
         subdir="_model",
         extension="stl",
         targets=frozenset({"model"}),
@@ -72,7 +72,7 @@ def test_kind_declares_which_text_its_targets_are_briefed_from() -> None:
     # something other than `description` needs no change here (ADR 0014).
     kind = Kind(
         name="_named",
-        service=FakeService(),
+        service_factory=lambda: FakeService(),  # noqa: PLW0108
         subdir="_named",
         extension="txt",
         targets=frozenset({"race"}),
@@ -90,7 +90,7 @@ def test_brief_is_whitespace_normalized() -> None:
     # text sent to the Service is the text shown (ADR 0014).
     kind = Kind(
         name="_ragged",
-        service=FakeService(),
+        service_factory=lambda: FakeService(),  # noqa: PLW0108
         subdir="_ragged",
         extension="txt",
         targets=frozenset({"race"}),
@@ -107,7 +107,7 @@ def test_a_kind_can_compose_its_brief_from_several_fields() -> None:
     # one field, so `brief` cannot be narrowed to a field name or a bool.
     kind = Kind(
         name="_composed",
-        service=FakeService(),
+        service_factory=lambda: FakeService(),  # noqa: PLW0108
         subdir="_composed",
         extension="txt",
         targets=frozenset({"race"}),
