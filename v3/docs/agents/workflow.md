@@ -15,6 +15,25 @@ For non-trivial features and fixes, follow this workflow:
 - Make a commit after each red-green cycle. Individual commit messages can be
   short and specific.
 
+## Comments in source code
+
+Comments are read long after the work that produced them is forgotten. Write
+them for that reader.
+
+- **Never refer to transient context**: no implementation plans, issue or PR
+  numbers, branch names, "for now", "as discussed", "new behavior", or
+  before/after comparisons with the code that was just replaced. Anything that
+  stops being true the minute the issue is merged doesn't belong in the source
+  — that context goes in the commit message, the PR description, or the issue.
+- **Do refer to durable context**: ADRs in `docs/adr/` (by number) and the
+  vocabulary defined in `CONTEXT.md`. Use the glossary's terms rather than
+  synonyms.
+- **Keep comments short and focused** — a line or two explaining *why*, right
+  next to the code it explains. No multi-paragraph comments: if an explanation
+  needs paragraphs, it's a design decision and belongs in an ADR, which the
+  comment can then point at.
+- Don't restate what the code already says.
+
 ## Wrapping up
 
 - When the implementation is done, push the commits to a **new PR**. Open it
