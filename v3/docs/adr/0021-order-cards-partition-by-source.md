@@ -1,8 +1,8 @@
 # Order Cards are transposed per Order Source, not per Unit
 
-An Order Card back names the Equipment that granted its orders (issue #78), so
-that a player can pull one Equipment's cards out of a deck and field the Unit
-without it. That is impossible under ADR 0007's card shaping: it transposes the
+An Order Card names the Equipment that granted its orders (issue #78), so that a
+player can pull one Equipment's cards out of a deck and field the Unit without
+it. That is impossible under ADR 0007's card shaping: it transposes the
 *merged* orders by option index, and because Speeds have different base row
 counts, one index is a base row at one Speed and an Equipment's gained row at
 another. Darkelf Infantry with Hide produces two such mixed cards — cards that
@@ -13,7 +13,9 @@ rather than once per Unit.** An Order Source is the base Unit or one
 order-modifying Equipment. Base rows transpose among base rows only — so the
 base Card Set of any Unit is exactly what ADR 0007 already produced for a Unit
 with no order-modifying Equipment — and each Equipment transposes its own gained
-rows into its own Card Set, naming itself on the back.
+rows into its own Card Set, naming itself on the **front** of every card in it,
+under the order kind. The front is where the name has to be: sorting a deck by
+loadout is done with the cards face up, the same side that is read in play.
 
 ADR 0007's transposition *rule* is unchanged, and its merged-orders decision
 still stands: `Unit.orders()` remains the merged view the Markdown family and
@@ -61,5 +63,12 @@ would make building the second deck physically impossible.
   granting the same row each keep their copy, since either may be absent from a
   loadout. The *merged* view still drops the duplicate, so `Unit.orders()` is
   unaffected.
+- The Equipment name shares the order kind's own header slot rather than taking
+  a free one: flacards overlays all three header boxes at full card width, so a
+  long name in the opposite corner would run into the kind. Stacked under it,
+  the name wraps inside one box — the 44-character dwarf
+  `Double Barreled Musket with Springloaded Axe` sets over two lines with no
+  overfull box. The card back is unchanged: Unit name, art, order kind.
 - Only the LaTeX family changes. The Markdown card family renders flat per-Unit
-  tables from `Unit.orders()` and has no card back; its output is byte-identical.
+  tables from `Unit.orders()` and has no card front; its output is
+  byte-identical.

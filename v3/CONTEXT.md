@@ -206,10 +206,12 @@ Order Source separately, so no card mixes base rows with an equipment's gained
 rows (ADR 0021). Units that produce identical cards collapse to one set (no
 duplicates).
 
-The back of a card carries the Unit's Image Asset, with the Unit name above it
-and the order kind below; a Unit with no committed art keeps the same layout
-minus the picture, so the back still identifies the card. On an Equipment's
-cards, that Equipment's name sits above the order kind.
+The front of a card carries the order kind, the option's rows, and the Unit
+name; on an Equipment's cards the Equipment's name sits under the order kind, so
+a deck can be sorted by loadout face up. The back carries the Unit's Image
+Asset, with the Unit name above it and the order kind below; a Unit with no
+committed art keeps the same layout minus the picture, so the back still
+identifies the card.
 
 _Avoid_: order sheet, unit card (a card is one option, not one Unit)
 

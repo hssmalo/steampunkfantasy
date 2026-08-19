@@ -699,7 +699,7 @@ def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
     assert rf"\includegraphics[width=\cardartwidth]{{{ART.as_posix()}}}" in text
 
 
-def test_cards_latex_names_the_equipment_above_the_kind_on_its_backs(
+def test_cards_latex_names_the_equipment_under_the_kind_on_its_fronts(
     tmp_path: Path,
 ) -> None:
     hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide & Seek")
@@ -716,10 +716,13 @@ def test_cards_latex_names_the_equipment_above_the_kind_on_its_backs(
     )
 
     text = out.read_text(encoding="utf-8")
-    # The name is LaTeX-escaped, and `\bcfoot` wraps it within the card box.
-    assert r"\renewcommand{\bcfoot}{Hide \& Seek\\Movement}" in text
-    # The base card of the same Unit still names the kind alone.
+    # The name is LaTeX-escaped, and `\flhead` wraps it within the card box.
+    assert r"\renewcommand{\flhead}{Movement\\Hide \& Seek}" in text
+    # The base card of the same Unit still names the kind alone, and the back
+    # of an equipment card carries no equipment name at all.
+    assert r"\renewcommand{\flhead}{Movement}" in text
     assert r"\renewcommand{\bcfoot}{Movement}" in text
+    assert not any("Hide" in line for line in text.splitlines() if "bcfoot" in line)
 
 
 def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:
