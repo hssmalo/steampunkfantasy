@@ -364,3 +364,55 @@ def test_army_pack_html_is_a_document(tmp_path: Path) -> None:
     text = out.read_text(encoding="utf-8")
     assert "<!DOCTYPE html>" in text
     assert "Geir Arne" in text
+
+
+# --- Images: ADR 0017 relative paths, at the Army Pack's own output depth --
+
+
+def test_army_pack_markdown_image_paths_are_relative_to_its_own_output_dir(
+    tmp_path: Path,
+) -> None:
+    # `output/army-pack/` sits at the same depth as `output/army-rules/`, so a
+    # committed Asset resolves the same way relative to either.
+    art = tmp_path / "assets" / "art.png"
+    army = io.load_army(DEMO_ARMY)
+    lookup = FakeLookup(art)
+    pack = build_pack(
+        [("Geir Arne", army)], title="Test Pack", stem="pack", image_for=lookup
+    )
+
+    out = render(
+        ARMY_PACK, pack, fmt=get_format("markdown"), name="pack", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "](../assets/art.png)" in text
+
+
+def test_army_pack_no_images_omits_committed_art(tmp_path: Path) -> None:
+    army = io.load_army(DEMO_ARMY)
+    lookup = FakeLookup(tmp_path / "assets" / "art.png")
+    with_art = build_pack(
+        [("Geir Arne", army)], title="Test Pack", stem="pack", image_for=lookup
+    )
+    without_art = build_pack(
+        [("Geir Arne", army)], title="Test Pack", stem="pack", image_for=no_image
+    )
+
+    with_out = render(
+        ARMY_PACK,
+        with_art,
+        fmt=get_format("markdown"),
+        name="with-art",
+        output_root=tmp_path,
+    )
+    without_out = render(
+        ARMY_PACK,
+        without_art,
+        fmt=get_format("markdown"),
+        name="without-art",
+        output_root=tmp_path,
+    )
+
+    assert "![" in with_out.read_text(encoding="utf-8")
+    assert "![" not in without_out.read_text(encoding="utf-8")
