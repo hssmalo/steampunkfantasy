@@ -859,7 +859,7 @@ ap = "N/A"
 
 
 [equipment.greater_insanity_blast.range.special]
-"Insanity" = "Only effects bio units. Any unit effected by the greater insanity blast gets an insanity token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)"
+"Insanity" = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)"
 "LoS" = "Trace line of sight from front of the unit"
 
 
@@ -877,7 +877,7 @@ ap = "N/A"
 
 [equipment.insanity_contraption.range.special]
 
-"Insanity" = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insanity token in addition to the regular effect of Psychic damage."
+"Insanity" = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
 "Ammo" =	"Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
 
 
@@ -893,7 +893,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [equipment.multipurpose_gun.range.special]
-"Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insanity token, in addition to the normal effects of the Psychic damage table"
+"Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insane token, in addition to the normal effects of the Psychic damage table"
 
 [equipment.tentacle_cracklespears]
 name = "Tentacle CrackleSpears"

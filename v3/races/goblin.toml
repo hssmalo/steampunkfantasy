@@ -96,10 +96,11 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [units.giant_snake_cavalry.special]
-"Fire Order" = "You may either fire two regular arrows or two special arrow (arrow with limited ammo)."
+"Fire Order" = "You may fire two regular poison bow and use hallucinating poison spit once per fire order"
 "Forward Position" = "[1]"
 "Terror" = "[6](range=1)"
-"Spawn" =  "tiny_snake: At start of battle, place a hidden tiny snake in the same hex as the snake_cavalry"
+"Hypnotizing Gaze" = "(range=1)"
+"Spawn" =  "tiny_snake: At start of battle, place a hidden tiny snake in the same hex as the Snake Cavalry"
 
 [units.giant_snake_cavalry.orders.fire]
 still = [["Fire", "Fire"]]
@@ -551,8 +552,8 @@ ap = 2
 [models.giant_snake_cavalry]
 name = "Giant Snake Cavalry"
 race = "goblin"
-equipment_limit = ["Independent:∞", "Hands:2", "Special Arrows:4"]
-equipment = ["goblin_bow", "seeker_assassin_arrows_free"]
+equipment_limit = ["Independent:∞", "Hands:2"]
+equipment = ["poison_bow_free", "hallucinating_poison_spit"]
 type = ["Bio", "Cavalry", "Walking"]
 
 [models.giant_snake_cavalry.assault]
@@ -825,6 +826,39 @@ ap = 1
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "Poison[4]"
 "Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+
+
+
+[equipment.poison_bow_free]
+name = "Poison Bow"
+race = "goblin"
+
+[equipment.poison_bow_free.range]
+range = 2
+angle = [true, true, true, true]
+damage = "d4-2 + d4 Crew damage"
+ap = 1
+
+[equipment.poison_bow_free.range.special]
+"Ammo" = "Always treated as loaded"
+"Extra Damage" = "Poison[4]"
+"Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+
+
+
+[equipment.hallucinating_poison_spit]
+name = "Hallucinating Poison Spit"
+race = "goblin"
+
+[equipment.hallucinating_poison_spit.range]
+range = 3
+angle = [true, true, true, true]
+damage = "N/A"
+ap = "N/A"
+
+[equipment.hallucinating_poison_spit.range.special]
+"Ammo" = "Always treated as loaded"
+"Extra Damage" = "Poison[4], Confused"
 
 
 [equipment.ogre_rifle]
