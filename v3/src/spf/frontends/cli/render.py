@@ -184,7 +184,10 @@ def render_army_pack(
             pack_index = io.get_army_pack(index)
             armies = io.load_pack_armies(pack_index, base_dir=index.parent)
             title = pack_index.title
-            stem = _safe_stem(index.parent.name)
+            # `.resolve()`: a bare relative `--index pack.toml` has a `.parent`
+            # of `.`, whose `.name` is empty — deriving the stem from the
+            # resolved path always finds the real directory name.
+            stem = _safe_stem(index.resolve().parent.name) or ARMY_PACK_STEM
         else:
             armies = [(None, io.load_army(name)) for name in army_names]
             title = ARMY_PACK_TITLE

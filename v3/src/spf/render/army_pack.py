@@ -11,37 +11,13 @@ each get complete pages, because a Pack's whole point is that a player's own
 pages are handable on their own (decision D4).
 """
 
-import re
 from collections.abc import Sequence
 from dataclasses import dataclass
 
 from spf.armies.army import Army
+from spf.render.anchors import anchor as _anchor
 from spf.render.army_rules import ArmyReference, build_reference
 from spf.render.images import ImageLookup, committed_image
-
-_NON_SLUG = re.compile(r"[^a-z0-9]+")
-
-
-def _slug(label: str) -> str:
-    """Reduce `label` to a lowercase, dash-separated anchor."""
-    return _NON_SLUG.sub("-", label.lower()).strip("-")
-
-
-def _anchor(label: str, taken: set[str]) -> str:
-    """Return a slug of `label` not already in `taken`.
-
-    Two Armies may legitimately share a Label, but not an anchor: every link
-    to the second would otherwise land on the first. Mirrors
-    `spf.render.rulebook._anchor`.
-    """
-    slug = _slug(label)
-    anchor = slug
-    suffix = 1
-    while anchor in taken:
-        suffix += 1
-        anchor = f"{slug}-{suffix}"
-    taken.add(anchor)
-    return anchor
 
 
 @dataclass(frozen=True)

@@ -476,6 +476,22 @@ def test_cli_stem_defaults_to_the_index_parent_directory_name(
     assert (tmp_path / "output" / "army-pack" / "2025.md").exists()
 
 
+def test_cli_stem_from_a_bare_relative_index_uses_the_resolved_directory(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A bare relative `--index pack.toml` has a `.parent` of `.`, whose `.name`
+    # is empty — the stem must come from the *resolved* directory, not fall
+    # through to a hidden `output/army-pack/.md`.
+    index_path = _write_pack_dir(tmp_path)
+    monkeypatch.setattr(config.paths, "output", tmp_path / "output")
+    monkeypatch.chdir(index_path.parent)
+
+    render_army_pack(index=Path("pack.toml"), opts=RenderOpts(format="markdown"))
+
+    assert (tmp_path / "output" / "army-pack" / "2025.md").exists()
+    assert not (tmp_path / "output" / "army-pack" / ".md").exists()
+
+
 def test_cli_stem_defaults_to_army_pack_in_ad_hoc_mode(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
