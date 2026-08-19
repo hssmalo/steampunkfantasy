@@ -1,6 +1,7 @@
 """Tests for the Army Pack product: index, loader, view-model, CLI."""
 
 import re
+import shutil
 from pathlib import Path
 
 import pytest
@@ -10,7 +11,7 @@ from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.build import ArmyList
 from spf.config import config
-from spf.frontends.cli.render import ARMY_PACK, ARMY_RULES
+from spf.frontends.cli.render import ARMY_PACK, ARMY_RULES, RenderOpts, render_army_pack
 from spf.render import render
 from spf.render.army_pack import ArmyPack, PackEntry, build_pack
 from spf.render.army_rules import build_reference
@@ -18,9 +19,11 @@ from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.products import PRODUCTS
 from spf.schemas.army_pack import ArmyPackConfig, PackArmyConfig
+from tests.conftest import unwrapped
 from tests.render.conftest import FakeLookup
 
 DEMO_ARMY = "demo"
+ENGINE = config.render.latex.engine
 
 VALID_INDEX = """\
 title = "SPF 2025 Tournament"
@@ -416,3 +419,147 @@ def test_army_pack_no_images_omits_committed_art(tmp_path: Path) -> None:
 
     assert "![" in with_out.read_text(encoding="utf-8")
     assert "![" not in without_out.read_text(encoding="utf-8")
+
+
+# --- The CLI ------------------------------------------------------------
+
+
+def _write_pack_dir(tmp_path: Path) -> Path:
+    """Write a pack directory with two Army JSON files and an Index."""
+    pack_dir = tmp_path / "2025"
+    pack_dir.mkdir()
+    (pack_dir / "geir_arne.json").write_text(
+        '{"race": "goblin", "nick": "Geir Arne\'s Army", "units": []}'
+    )
+    (pack_dir / "morten.json").write_text(
+        '{"race": "goblin", "nick": "Morten\'s Army", "units": []}'
+    )
+    (pack_dir / "pack.toml").write_text(
+        'title = "SPF 2025 Tournament"\n\n'
+        '[[armies]]\narmy = "geir_arne"\nlabel = "Geir Arne"\n\n'
+        '[[armies]]\narmy = "morten"\n',
+        encoding="utf-8",
+    )
+    return pack_dir / "pack.toml"
+
+
+def test_cli_index_mode_writes_the_pack(tmp_path: Path) -> None:
+    index = _write_pack_dir(tmp_path)
+    out = tmp_path / "out" / "pack.md"
+
+    render_army_pack(index=index, opts=RenderOpts(format="markdown", out=out))
+
+    text = out.read_text(encoding="utf-8")
+    assert "# SPF 2025 Tournament" in text
+    assert "## Geir Arne" in text
+    assert "## Morten" in text
+
+
+def test_cli_ad_hoc_mode_uses_army_nicks_and_default_title(tmp_path: Path) -> None:
+    out = tmp_path / "pack.md"
+
+    render_army_pack(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
+
+    text = out.read_text(encoding="utf-8")
+    assert "# Army Pack" in text
+    assert "## The Iron Claws" in text  # demo Army's Nick, ad-hoc mode (D12)
+
+
+def test_cli_stem_defaults_to_the_index_parent_directory_name(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    index = _write_pack_dir(tmp_path)
+    monkeypatch.setattr(config.paths, "output", tmp_path / "output")
+
+    render_army_pack(index=index, opts=RenderOpts(format="markdown"))
+
+    assert (tmp_path / "output" / "army-pack" / "2025.md").exists()
+
+
+def test_cli_stem_defaults_to_army_pack_in_ad_hoc_mode(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(config.paths, "output", tmp_path / "output")
+
+    render_army_pack(DEMO_ARMY, opts=RenderOpts(format="markdown"))
+
+    assert (tmp_path / "output" / "army-pack" / "army-pack.md").exists()
+
+
+def test_cli_rejects_both_index_and_army_names(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    index = _write_pack_dir(tmp_path)
+
+    with pytest.raises(SystemExit) as excinfo:
+        render_army_pack(DEMO_ARMY, index=index)
+
+    assert excinfo.value.code == 1
+    assert "exactly one of" in unwrapped(capsys.readouterr().err)
+
+
+def test_cli_rejects_neither_index_nor_army_names(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    with pytest.raises(SystemExit) as excinfo:
+        render_army_pack()
+
+    assert excinfo.value.code == 1
+    assert "exactly one of" in unwrapped(capsys.readouterr().err)
+
+
+def test_cli_reports_a_missing_index_on_stderr(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    with pytest.raises(SystemExit) as excinfo:
+        render_army_pack(index=tmp_path / "absent.toml")
+
+    assert excinfo.value.code == 1
+    assert "Error:" in unwrapped(capsys.readouterr().err)
+
+
+def test_cli_reports_a_missing_army_in_the_index_on_stderr(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    pack_dir = tmp_path / "2025"
+    pack_dir.mkdir()
+    (pack_dir / "pack.toml").write_text(
+        'title = "Test"\n\n[[armies]]\narmy = "nope"\n', encoding="utf-8"
+    )
+
+    with pytest.raises(SystemExit) as excinfo:
+        render_army_pack(index=pack_dir / "pack.toml")
+
+    assert excinfo.value.code == 1
+    err = unwrapped(capsys.readouterr().err)
+    assert "Army 1" in err
+    assert "'nope'" in err
+
+
+def test_cli_reports_an_unknown_ad_hoc_army_on_stderr(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    with pytest.raises(SystemExit) as excinfo:
+        render_army_pack("no-such-army")
+
+    assert excinfo.value.code == 1
+    assert "Error:" in unwrapped(capsys.readouterr().err)
+
+
+def test_army_pack_product_registered_under_cli(tmp_path: Path) -> None:
+    index = _write_pack_dir(tmp_path)
+    out = tmp_path / "pack.md"
+
+    render_army_pack(index=index, opts=RenderOpts(format="markdown", out=out))
+
+    assert out.exists()
+
+
+@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
+def test_render_army_pack_pdf_compiles(tmp_path: Path) -> None:
+    index = _write_pack_dir(tmp_path)
+    out = tmp_path / "pack.pdf"
+
+    render_army_pack(index=index, opts=RenderOpts(format="pdf", out=out))
+
+    assert out.stat().st_size > 0

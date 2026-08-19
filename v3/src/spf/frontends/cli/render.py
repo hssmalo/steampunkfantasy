@@ -14,6 +14,7 @@ import cyclopts
 from spf.armies import io
 from spf.console import stderr, stdout
 from spf.render import Product, render
+from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
 from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
@@ -21,6 +22,12 @@ from spf.render.images import committed_image, no_image
 from spf.render.products import register_product
 from spf.render.rulebook import build_rulebook
 from spf.rules import get_rulebook, rulebook_index_path
+
+ARMY_PACK_TITLE = "Army Pack"
+
+# The Army Pack's stem in ad-hoc mode (D3): it names no single Index directory
+# to derive one from.
+ARMY_PACK_STEM = "army-pack"
 
 DEFAULT_FORMAT = "pdf"
 
@@ -151,8 +158,55 @@ def render_general_rules(
     stdout.print(f"Wrote {out}")
 
 
+def render_army_pack(
+    *army_names: str,
+    index: Annotated[
+        Path | None,
+        cyclopts.Parameter(help="Army Pack Index; Armies resolve beside it."),
+    ] = None,
+    opts: Annotated[RenderOpts | None, cyclopts.Parameter(name="*")] = None,
+) -> None:
+    """Render several Armies' rules into one Army Pack.
+
+    Either `--index` names an authored Army Pack Index (D3), or one or more
+    Army load names are given directly as an ad-hoc escape hatch — never
+    both, and never neither.
+    """
+    opts = opts or RenderOpts()
+    if bool(index) == bool(army_names):
+        stderr.print(
+            "[red]Error:[/] give exactly one of --index INDEX or one or more Army names"
+        )
+        raise SystemExit(1)
+
+    try:
+        if index is not None:
+            pack_index = io.get_army_pack(index)
+            armies = io.load_pack_armies(pack_index, base_dir=index.parent)
+            title = pack_index.title
+            stem = _safe_stem(index.parent.name)
+        else:
+            armies = [(None, io.load_army(name)) for name in army_names]
+            title = ARMY_PACK_TITLE
+            stem = ARMY_PACK_STEM
+    except (FileNotFoundError, ValueError) as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+
+    pack = build_pack(
+        armies,
+        title=title,
+        stem=stem,
+        image_for=no_image if opts.no_images else committed_image,
+    )
+    fmt = get_format(opts.format)
+    out = render(ARMY_PACK, pack, fmt=fmt, name=stem, out=opts.out)
+    stdout.print(f"Wrote {out}")
+
+
 def add_commands(app: cyclopts.App) -> None:
     """Add render commands to the CLI."""
     app.command(render_cards, name="cards")
     app.command(render_army_rules, name="army-rules")
     app.command(render_general_rules, name="general-rules")
+    app.command(render_army_pack, name="army-pack")
