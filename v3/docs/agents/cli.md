@@ -32,8 +32,10 @@ uv run spf assets list goblin
 uv run spf assets list goblin --candidates   # expand rows into Lineages
 
 # Generate Candidates for a race, or one unit of it (--count, --seed)
+# --env and --profile select the ComfyUI Environment and Profile
 uv run spf assets image goblin
 uv run spf assets image goblin goblin_infantry
+uv run spf assets image goblin --env cloud --profile krea2
 # -> candidates/goblin/images/goblin_infantry.{1,2,3}.png
 
 # Cover several Targets at once. At most one selector may be given.
@@ -42,6 +44,7 @@ uv run spf assets image goblin --missing   # every Target with no Asset yet
 
 # Refine one Candidate by applying a Correction to it. The Correction is the
 # whole prompt, verbatim; results land under the derived name <NAME>.<LINEAGE>.
+# --env and --profile also apply to refine (image only).
 uv run spf assets refine goblin image goblin_infantry --from 2 \
     "make the hat brass instead of leather"
 # -> candidates/goblin/images/goblin_infantry.2.{1,2,3}.png
@@ -55,6 +58,7 @@ uv run spf assets promote goblin image goblin_infantry --pick 2.1
 # -> assets/goblin/images/goblin_infantry.png
 ```
 
-Refinement needs a `refine_workflow` authored for the selected Environment
-(`assets.image.comfyui.env`); see `workflows/README.md`. It is available only
-for kinds whose Service implements it — currently image alone.
+Refinement needs a refine Workflow authored for the resolved Environment and
+Profile (`--env` / `--profile`, or the config defaults); see
+`workflows/README.md`. It is available only for kinds whose Service implements
+it — currently image alone.

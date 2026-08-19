@@ -6,8 +6,8 @@ extend-exclude = [
     "templates/card_standar.tex",
     # Third-party ComfyUI exports: the embedded positive-prompt text is data the
     # Service overwrites at generate time, not prose we maintain.
-    "workflows/cloud.json",
-    "workflows/local.example.json",
+    "workflows/cloud/*.json",
+    "workflows/examples/*.json",
     # An ADR about a typo will always contain that typo.
     "docs/adr/0011-coverage-survey-of-assets.md",
     # Generated army data: the Nicks in here are player-chosen names, and
