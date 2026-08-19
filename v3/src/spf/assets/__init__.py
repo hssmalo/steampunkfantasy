@@ -16,6 +16,11 @@ from spf.assets.kinds import (
     get_kind,
     register_kind,
 )
+from spf.assets.profiles import (
+    available,
+    resolve,
+    resolve_refine,
+)
 from spf.assets.spine import (
     asset_for,
     generate,
@@ -36,11 +41,14 @@ __all__ = [
     "Target",
     "TargetLevel",
     "asset_for",
+    "available",
     "generate",
     "get_kind",
     "promote",
     "refine",
     "register_kind",
+    "resolve",
+    "resolve_refine",
     "stage_promoted",
     "survey",
     "targets",
