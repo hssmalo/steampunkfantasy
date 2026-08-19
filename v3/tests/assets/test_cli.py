@@ -9,6 +9,7 @@ from cyclopts.exceptions import CycloptsError
 
 from spf import races
 from spf.assets import Kind, generate, promote
+from spf.assets import image as _image
 from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
 from spf.config import config
@@ -659,7 +660,16 @@ def partly_briefed_image_kind(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -
         name="image",
         brief=lambda entry: "" if entry.name == "Troll" else entry.description,
     )
-    return register_kind(kind, monkeypatch, tmp_path)
+    register_kind(kind, monkeypatch, tmp_path)
+    # The CLI calls _image._build_service to resolve env/profile; stub it
+    # so the fake Kind tests don't hit the real filesystem.
+    svc = kind.service_factory()
+    monkeypatch.setattr(
+        _image,
+        "_build_service",
+        lambda *, env=None, profile=None: svc,  # noqa: ARG005
+    )
+    return kind
 
 
 @pytest.mark.usefixtures("partly_briefed_image_kind")
@@ -705,7 +715,7 @@ def test_image_command_warns_once_per_brief_less_target(
 ) -> None:
     # One line per Target, not one grouped line for the batch (ADR 0015), so
     # two gaps have to produce two warnings.
-    register_kind(
+    kind = register_kind(
         fake_kind(
             name="image",
             brief=lambda entry: (
@@ -714,6 +724,12 @@ def test_image_command_warns_once_per_brief_less_target(
         ),
         monkeypatch,
         tmp_path,
+    )
+    svc = kind.service_factory()
+    monkeypatch.setattr(
+        _image,
+        "_build_service",
+        lambda *, env=None, profile=None: svc,  # noqa: ARG005
     )
 
     app(

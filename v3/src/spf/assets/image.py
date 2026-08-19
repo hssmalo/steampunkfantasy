@@ -33,7 +33,7 @@ def _build_service(
     """
     comfyui = config.assets.image.comfyui
     env_name = env if env is not None else comfyui.env
-    env_block = comfyui.selected()  # raises on unknown env
+    env_block = comfyui.selected(env_name)
 
     profile_name = profile or comfyui.profile or env_block.profile
 

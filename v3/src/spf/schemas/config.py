@@ -51,17 +51,18 @@ class ComfyUIConfig(StrictModel):
     local: ComfyUIEnvConfig
     cloud: ComfyUIEnvConfig
 
-    def selected(self) -> ComfyUIEnvConfig:
-        """Return the Environment block named by `env`.
+    def selected(self, name: str | None = None) -> ComfyUIEnvConfig:
+        """Return the Environment block named by `name` (or `self.env`).
 
         Raises `ValueError` naming the two valid Environments when
-        `env` is neither (mirrors `spf.assets.get_kind`).
+        the name is neither (mirrors `spf.assets.get_kind`).
         """
-        if self.env == "local":
+        env_name = name if name is not None else self.env
+        if env_name == "local":
             return self.local
-        if self.env == "cloud":
+        if env_name == "cloud":
             return self.cloud
-        msg = f"Unknown ComfyUI env {self.env!r}; known envs: local, cloud"
+        msg = f"Unknown ComfyUI env {env_name!r}; known envs: local, cloud"
         raise ValueError(msg)
 
 

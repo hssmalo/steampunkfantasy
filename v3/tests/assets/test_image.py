@@ -19,6 +19,7 @@ from spf.assets import comfyui, get_kind
 from spf.assets import image as img
 from spf.config import config
 from spf.frontends.cli import app
+from tests.assets.conftest import FakeService, fake_kind, register_kind
 from tests.conftest import unwrapped
 
 _FIXTURES = Path(__file__).parent / "fixtures"
@@ -269,6 +270,44 @@ def test_build_service_rejects_an_unknown_env(
         img._build_service()
 
 
+def test_build_service_profile_flag_overrides_config(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr(config.assets.image.comfyui, "env", "local")
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.paths, "project", tmp_path)
+    workflows = tmp_path / "workflows" / "local"
+    workflows.mkdir(parents=True)
+    (workflows / "qwen.json").write_text("{}")
+    (workflows / "qwen-refine.json").write_text("{}")
+    (workflows / "alt.json").write_text("{}")
+    (workflows / "alt-refine.json").write_text("{}")
+
+    svc = img._build_service(profile="alt")
+    assert svc._workflow_path == workflows / "alt.json"
+
+
+def test_build_service_env_flag_overrides_config(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr(config.assets.image.comfyui, "env", "local")
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.paths, "project", tmp_path)
+    local = tmp_path / "workflows" / "local"
+    local.mkdir(parents=True)
+    (local / "qwen.json").write_text("{}")
+    (local / "qwen-refine.json").write_text("{}")
+    cloud = tmp_path / "workflows" / "cloud"
+    cloud.mkdir(parents=True)
+    (cloud / "qwen.json").write_text("{}")
+    (cloud / "qwen-refine.json").write_text("{}")
+
+    svc = img._build_service(env="cloud")
+    assert svc._base_url == config.assets.image.comfyui.cloud.base_url
+
+
 # --- CLI flow (provider-agnostic, over the scripted seam) -------------------
 
 
@@ -474,3 +513,75 @@ def test_cli_magic_all_unit_is_gone() -> None:
     # `image <race> all` used to mean --all; it is now just an unknown unit.
     with pytest.raises(SystemExit):
         _run("assets", "image", "dwarf", "all")
+
+
+# --- env/profile CLI flags ---------------------------------------------------
+
+
+def test_cli_image_echos_env_and_profile(
+    image_env: _ImageEnv,  # noqa: ARG001  ensures the image kind is patched
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5")
+
+    out = capsys.readouterr().out
+    assert "Env: local  Profile: qwen" in out
+
+
+def test_cli_image_flag_overrides_env(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _make_env(monkeypatch, tmp_path)  # sets up the patched service
+    cloud = tmp_path / "workflows" / "cloud"
+    cloud.mkdir(parents=True)
+    (cloud / "qwen.json").write_text(_MINI.read_text(encoding="utf-8"))
+    (cloud / "qwen-refine.json").write_text(_MINI_REFINE.read_text(encoding="utf-8"))
+
+    _run("assets", "image", "ogre", "ogre_grunt", "--seed", "5", "--env", "cloud")
+
+    out = capsys.readouterr().out
+    assert "Env: cloud  Profile: qwen" in out
+
+
+def test_cli_image_unknown_profile_errors(
+    image_env: _ImageEnv,  # noqa: ARG001  ensures the image kind is patched
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    with pytest.raises(SystemExit):
+        _run("assets", "image", "ogre", "ogre_grunt", "--profile", "nope")
+
+    err = capsys.readouterr().err
+    assert "unknown profile" in err
+
+
+def test_cli_refine_rejects_profile_for_non_image_kind(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    register_kind(
+        fake_kind(name="_lore", service=FakeService()),
+        monkeypatch,
+        tmp_path,
+    )
+    candidates = config.paths.candidates / "ork" / "_test"
+    candidates.mkdir(parents=True)
+    (candidates / "grunt.2.txt").write_bytes(b"x")
+
+    with pytest.raises(SystemExit):
+        _run(
+            "assets",
+            "refine",
+            "ork",
+            "_lore",
+            "grunt",
+            "--from",
+            "2",
+            "--profile",
+            "qwen",
+            "fix it",
+        )
+
+    assert "--profile applies only to image assets" in capsys.readouterr().err
