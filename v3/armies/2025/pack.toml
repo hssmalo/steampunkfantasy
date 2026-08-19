@@ -1,0 +1,9 @@
+title = "SPF 2025 Tournament"
+
+[[armies]]
+army = "geir_arne"
+label = "Geir Arne"
+
+[[armies]]
+army = "morten"
+label = "Morten"

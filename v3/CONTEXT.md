@@ -182,9 +182,9 @@ serves authoring and inspection, not gameplay reference.
 _Avoid_: export, document, output
 
 **Product**:
-One of the four kinds of gameplay reference we generate: **Order Card**, **Army
-Reference**, **Race Overview**, **Rulebook**. Each Product binds to one
-source-of-truth object and is rendered through a template family.
+One of the five kinds of gameplay reference we generate: **Order Card**, **Army
+Reference**, **Army Pack**, **Race Overview**, **Rulebook**. Each Product binds
+to one source-of-truth object and is rendered through a template family.
 
 **Format**:
 An output syntax a Product renders to: `markdown`, `html`, `latex`, `pdf`.
@@ -235,6 +235,33 @@ specials (the short override text — full rule text belongs to the Rulebook),
 and damage tables. Orders are *not* part of it; those live on the Order Cards.
 Identically-configured Units (and identical Models within a Unit) appear once.
 _Avoid_: army sheet, roster printout
+
+**Army Pack**:
+A Rendering binding the Army References of several Armies into one document —
+a tournament's field in a single file, so a player can see both their own
+Army and every competitor's. Built from an **Army Pack Index**. Each Army
+starts on a fresh page and is complete on its own: nothing is shared or
+deduplicated across Armies, so an organiser can hand one player their pages.
+It renders an Army's rules through the *same* authored body template the Army
+Reference does, so the two can never drift apart.
+_Avoid_: booklet, compendium, tournament pack (a pack of showcase Armies is
+not a tournament)
+
+**Army Pack Index**:
+The authored TOML file naming, in order, the Armies an Army Pack contains
+(`armies/<dir>/pack.toml`), plus the Pack's title. Armies resolve relative to
+the Index's own directory. An entry may carry a **Label**; a directory scan
+deliberately is not used, because a roster is an editorial statement about who
+is in the event, not a listing of whatever files happen to be present
+(ADR 0018).
+_Avoid_: roster file, manifest
+
+**Label** (Army Pack):
+The name an Army appears under in a Pack's contents — typically the player's
+name. Distinct from the Army's Nick: the Nick belongs to the Army wherever it
+is fielded, the Label says who is fielding it *at this event*. Defaults to the
+Nick when the Index does not give one.
+_Avoid_: nick (that is the Army's own name), player (a Label need not be one)
 
 **Race Overview**:
 A Rendering covering all Units, Models, and Equipment of one Race. Built from a
