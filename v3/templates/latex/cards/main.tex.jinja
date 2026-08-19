@@ -32,11 +32,12 @@
 % boxes at full `\cardwidth`, so a long name in `\frhead` would run into the
 % kind. Stacked in `\flhead` it wraps inside the same box instead.
 \BLOCK{for card in source.cards}
-\renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
-\BLOCK{if card.equipment}
-\renewcommand{\flhead}{\VAR{card.kind}\\\VAR{card.equipment | latex_escape}}
-\BLOCK{else}
 \renewcommand{\flhead}{\VAR{card.kind}}
+\BLOCK{if card.equipment}
+%\renewcommand{\flhead}{\VAR{card.kind}\\\VAR{card.equipment | latex_escape}}
+\renewcommand{\frfoot}{\VAR{card.equipment | latex_escape}\\\VAR{card.unit_name | latex_escape}}
+\BLOCK{else}
+\renewcommand{\frfoot}{\VAR{card.unit_name | latex_escape}}
 \BLOCK{endif}
 \renewcommand{\bchead}{\VAR{card.unit_name | latex_escape}}
 \renewcommand{\bcfoot}{\VAR{card.kind}}
