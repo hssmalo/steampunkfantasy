@@ -131,7 +131,7 @@ def test_refine_command_passes_the_correction_verbatim(
 ) -> None:
     app(_refine_argv("--count", "1"), exit_on_error=False, result_action="return_value")
 
-    service = refinable_registered_kind.service
+    service = refinable_registered_kind.service_factory()
     assert isinstance(service, FakeRefiner)
     # No prompts/image.txt preamble, no race description: just the Correction.
     assert service.seen_source == "make the hat brass"

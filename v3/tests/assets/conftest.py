@@ -80,11 +80,10 @@ def fake_kind(
     layout fields are fixed here rather than exposed as arguments: the tests
     that vary them are exactly the ones that should not be using this.
     """
+    svc = FakeService() if service is None else service
     return Kind(
         name=name,
-        # Built per call, not shared as a default: a `FakeService` records the
-        # seed it last saw, so one instance across tests would leak that.
-        service=FakeService() if service is None else service,
+        service_factory=lambda svc=svc: svc,
         subdir="_test",
         extension="txt",
         targets=frozenset({"race", "unit"}),

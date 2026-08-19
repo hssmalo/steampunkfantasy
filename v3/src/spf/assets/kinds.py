@@ -79,7 +79,7 @@ class Kind:
     """A registered kind of Asset."""
 
     name: str
-    service: Service
+    service_factory: Callable[[], Service]
     subdir: str | None
     extension: str
     targets: frozenset[TargetLevel]

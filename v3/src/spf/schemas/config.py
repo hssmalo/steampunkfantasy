@@ -35,11 +35,10 @@ class AssetKindConfig(StrictModel):
 
 
 class ComfyUIEnvConfig(StrictModel):
-    """A single ComfyUI Environment: where to reach it and what to run."""
+    """A single ComfyUI Environment: where to reach it and its default Profile."""
 
     base_url: str
-    workflow: Path
-    refine_workflow: Path
+    profile: str
     api_key_env: str = ""
 
 
@@ -48,6 +47,7 @@ class ComfyUIConfig(StrictModel):
 
     env: str = "local"
     timeout_s: int = 900
+    profile: str = ""
     local: ComfyUIEnvConfig
     cloud: ComfyUIEnvConfig
 
@@ -69,7 +69,7 @@ class ImageAssetConfig(StrictModel):
     """Image asset settings: count, the two prompt files, and the provider.
 
     Both prompt files are configured paths rather than hardcoded basenames,
-    following `ComfyUIEnvConfig`'s Workflow keys. They sit here and not in an
+    following the Workflows' resolved paths. They sit here and not in an
     Environment block because one pair serves both Environments and both
     operations (see ADR 0009's fifth amendment).
     """

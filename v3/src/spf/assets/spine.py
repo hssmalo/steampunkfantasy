@@ -17,7 +17,7 @@ import shutil
 from collections.abc import Callable
 from pathlib import Path
 
-from spf.assets.kinds import Kind, Refiner
+from spf.assets.kinds import Kind, Refiner, Service
 from spf.config import config
 
 LINEAGE_PATTERN = re.compile(r"^[1-9][0-9]*(\.[1-9][0-9]*)*$")
@@ -155,6 +155,7 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     seed: int | None = None,
     candidates_root: Path = config.paths.candidates,
     on_candidate: Callable[[Path], None] | None = None,
+    service: Service | None = None,
 ) -> list[Path]:
     """Generate `count` Candidates for `source` and write them to disk.
 
@@ -168,11 +169,12 @@ def generate(  # noqa: PLR0913  the seam's parameters are fixed by the assets-fo
     right after it is written. Returns the written paths in order. `seed` is threaded
     straight to the Service (see `Service`).
     """
+    svc = service or kind.service_factory()
     directory = _asset_dir(candidates_root, kind, race=race)
     paths, persist = _candidate_writer(
         directory, kind, name=name, on_candidate=on_candidate
     )
-    kind.service.generate(source, count, seed=seed, on_result=persist)
+    svc.generate(source, count, seed=seed, on_result=persist)
     return paths
 
 
@@ -187,6 +189,7 @@ def refine(  # noqa: PLR0913  mirrors `generate`, plus the Lineage being refined
     seed: int | None = None,
     candidates_root: Path = config.paths.candidates,
     on_candidate: Callable[[Path], None] | None = None,
+    service: Service | None = None,
 ) -> list[Path]:
     """Refine the Candidate at `lineage`, writing `count` new Candidates.
 
@@ -205,8 +208,8 @@ def refine(  # noqa: PLR0913  mirrors `generate`, plus the Lineage being refined
     missing, and `TypeError` when the Kind's Service cannot refine.
     """
     validate_lineage(lineage)
-    service = kind.service
-    if not isinstance(service, Refiner):
+    svc = service or kind.service_factory()
+    if not isinstance(svc, Refiner):
         msg = f"Kind {kind.name!r} does not support refinement"
         raise TypeError(msg)
 
@@ -219,7 +222,7 @@ def refine(  # noqa: PLR0913  mirrors `generate`, plus the Lineage being refined
     paths, persist = _candidate_writer(
         directory, kind, name=f"{name}.{lineage}", on_candidate=on_candidate
     )
-    service.refine(source, init.read_bytes(), count, seed=seed, on_result=persist)
+    svc.refine(source, init.read_bytes(), count, seed=seed, on_result=persist)
     return paths
 
 

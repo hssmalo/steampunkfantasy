@@ -186,20 +186,35 @@ def _make_env(
     monkeypatch.setattr(config.paths, "project", tmp_path)
     monkeypatch.setattr(config.paths, "candidates", tmp_path / "candidates")
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
-    # Both prompt files are configured paths now, so the CLI reads them from
-    # here rather than from `paths.prompts` plus a hardcoded basename.
     monkeypatch.setattr(config.assets.image, "prompt", positive)
     monkeypatch.setattr(config.assets.image, "negative_prompt", negative)
+    # Set up workflow files so _build_service can resolve them
+    workflows = tmp_path / "workflows" / "local"
+    workflows.mkdir(parents=True)
+    (workflows / "qwen.json").write_text(_MINI.read_text(encoding="utf-8"))
+    (workflows / "qwen-refine.json").write_text(
+        _MINI_REFINE.read_text(encoding="utf-8")
+    )
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.assets.image.comfyui, "env", "local")
 
     comfy = _FakeRequest(fail=fail)
     monkeypatch.setattr(comfyui, "_request", comfy)
-    # The wired service points at the (gitignored) real workflow; aim it at the
-    # committed fixture so the flow runs without a per-machine local.json.
-    monkeypatch.setattr(img.IMAGE.service, "_workflow_path", _MINI)
-    monkeypatch.setattr(img.IMAGE.service, "_refine_workflow_path", _MINI_REFINE)
-    # Likewise the Negative Prompt: the service bound the configured path at
-    # import, so aim it at this project's own file.
-    monkeypatch.setattr(img.IMAGE.service, "_negative_path", negative)
+    # Monkeypatch _build_service to return a service pointing at the fixture
+    # workflows and the scripted ComfyUI seam, since Kind is frozen and
+    # its service_factory cannot be reassigned.
+    _original_build = img._build_service
+
+    def _patched_build(
+        *, env: str | None = None, profile: str | None = None
+    ) -> comfyui.ComfyUIService:
+        svc = _original_build(env=env, profile=profile)
+        svc._workflow_path = _MINI
+        svc._refine_workflow_path = _MINI_REFINE
+        svc._negative_path = negative
+        return svc
+
+    monkeypatch.setattr(img, "_build_service", _patched_build)
     return _ImageEnv(tmp_path, comfy)
 
 
@@ -220,26 +235,29 @@ def test_image_kind_is_registered() -> None:
     kind = get_kind("image")
     assert kind.subdir == "images"
     assert kind.extension == "png"
-    assert isinstance(kind.service, comfyui.ComfyUIService)
+    svc = kind.service_factory()
+    assert isinstance(svc, comfyui.ComfyUIService)
 
 
 def test_build_service_points_at_the_selected_env(
     monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
 ) -> None:
     cu = config.assets.image.comfyui
     monkeypatch.setattr(cu, "env", "cloud")
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.paths, "project", tmp_path)
+    workflows = tmp_path / "workflows" / "cloud"
+    workflows.mkdir(parents=True)
+    (workflows / "qwen.json").write_text("{}")
+    (workflows / "qwen-refine.json").write_text("{}")
 
     service = img._build_service()
 
     assert service._base_url == cu.cloud.base_url
-    assert service._workflow_path == config.paths.workflows / cu.cloud.workflow
+    assert service._workflow_path == workflows / "qwen.json"
     assert service._api_key_env == cu.cloud.api_key_env
-    # The Environment's refine Workflow is wired through too, so a Refinement
-    # uses the same Environment's authored edit graph.
-    refine = config.paths.workflows / cu.cloud.refine_workflow
-    assert service._refine_workflow_path == refine
-    # The Negative Prompt file is shared, not per-Environment (issue 50, D2),
-    # so it comes off `assets.image` rather than the Environment block.
+    assert service._refine_workflow_path == workflows / "qwen-refine.json"
     assert service._negative_path == config.assets.image.negative_prompt
 
 
