@@ -674,12 +674,13 @@ def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None
     assert "![" not in out.read_text(encoding="utf-8")
 
 
-# --- Golden output: pins the pre-split army-rules templates byte-for-byte ---
+# --- Golden output: pins the standalone army-rules output byte-for-byte ----
 #
-# Safety net for the reference-body extraction (issue #100 §2): the split must
-# be a pure refactor, so this must keep passing byte-for-byte across it.
-# `image_for=no_image` keeps the fixture independent of the committed Asset
-# store's contents.
+# `main.tex.jinja`/`main.md.jinja` are a thin wrapper around the shared
+# `reference-body` partial (also used by the Army Pack); this pins their
+# combined output so a future change to either can't silently drift the
+# standalone Army Reference. `image_for=no_image` keeps the fixture
+# independent of the committed Asset store's contents.
 
 GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
 

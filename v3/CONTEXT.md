@@ -257,10 +257,11 @@ is in the event, not a listing of whatever files happen to be present
 _Avoid_: roster file, manifest
 
 **Label** (Army Pack):
-The name an Army appears under in a Pack's contents — typically the player's
-name. Distinct from the Army's Nick: the Nick belongs to the Army wherever it
-is fielded, the Label says who is fielding it *at this event*. Defaults to the
-Nick when the Index does not give one.
+An optional Index entry field — typically the player's name — combined with
+the Army's Nick as "Label: Nick" in a Pack's contents. Distinct from the
+Army's Nick: the Nick belongs to the Army wherever it is fielded, the Label
+says who is fielding it *at this event*. An entry without a Label appears
+under its Nick alone.
 _Avoid_: nick (that is the Army's own name), player (a Label need not be one)
 
 **Race Overview**:

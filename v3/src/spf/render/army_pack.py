@@ -4,11 +4,11 @@ Like `spf.render.army_rules`, this is a *presentation* transposition (ADR
 0007): frozen dataclasses, no template logic, no disk access except the
 injected `ImageLookup`. It is pure — it takes already-resolved Armies, so a
 test builds a pack with no filesystem at all — and reuses `build_reference`
-per Army rather than reimplementing any of it (issue #100 §3.2).
+per Army rather than reimplementing any of it.
 
 No cross-Army deduplication of any kind: two players fielding the same Race
 each get complete pages, because a Pack's whole point is that a player's own
-pages are handable on their own (decision D4).
+pages are handable on their own.
 """
 
 from collections.abc import Sequence
@@ -25,8 +25,9 @@ class PackEntry:
     """One Army's place in an Army Pack: its Label and its Army Reference."""
 
     label: str
-    """The name the Army appears under in the Pack's contents — the Index
-    entry's `label`, or the Army's Nick when the Index gives none (D12)."""
+    """The name the Army appears under in the Pack's contents: the Index
+    entry's `label` combined with the Army's Nick as `"<label>: <nick>"`, or
+    the Nick alone when the Index gives no `label`."""
 
     anchor: str
     """Slug of `label`, unique within the Pack, for the Markdown TOC."""
@@ -52,14 +53,16 @@ def build_pack(
 ) -> ArmyPack:
     """Build an `ArmyPack` from already-resolved Armies, in the given order.
 
-    `armies` pairs each Army with an optional Label override — the shape
-    `io.load_pack_armies` returns. A missing Label falls back to the Army's
-    Nick (D12).
+    `armies` pairs each Army with an optional Label — the shape
+    `io.load_pack_armies` returns. A given Label is combined with the Army's
+    Nick as `"<label>: <nick>"`, so a Pack entry always names both who is
+    playing and what they're playing; a missing Label falls back to the Nick
+    alone.
     """
     taken: set[str] = set()
     entries: list[PackEntry] = []
     for label, army in armies:
-        resolved_label = label if label is not None else army.nick
+        resolved_label = f"{label}: {army.nick}" if label is not None else army.nick
         entries.append(
             PackEntry(
                 label=resolved_label,

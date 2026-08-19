@@ -25,8 +25,8 @@ from spf.rules import get_rulebook, rulebook_index_path
 
 ARMY_PACK_TITLE = "Army Pack"
 
-# The Army Pack's stem in ad-hoc mode (D3): it names no single Index directory
-# to derive one from.
+# The Army Pack's stem in ad-hoc mode: it names no single Index directory to
+# derive one from.
 ARMY_PACK_STEM = "army-pack"
 
 DEFAULT_FORMAT = "pdf"
@@ -168,9 +168,9 @@ def render_army_pack(
 ) -> None:
     """Render several Armies' rules into one Army Pack.
 
-    Either `--index` names an authored Army Pack Index (D3), or one or more
-    Army load names are given directly as an ad-hoc escape hatch — never
-    both, and never neither.
+    Either `--index` names an authored Army Pack Index, or one or more Army
+    load names are given directly as an ad-hoc escape hatch — never both,
+    and never neither.
     """
     opts = opts or RenderOpts()
     if bool(index) == bool(army_names):

@@ -1,4 +1,4 @@
-"""Schema for the Army Pack Index (issue #100, mirroring ADR 0018).
+"""Schema for the Army Pack Index (mirroring ADR 0018).
 
 The Index is the authored TOML that says which Armies an Army Pack contains,
 in what order, and under what title — a directory scan has no order, silently
@@ -16,7 +16,8 @@ class PackArmyConfig(StrictModel):
     """The Army's load name, resolved relative to the Index's own directory."""
 
     label: str | None = None
-    """The name the Army appears under in the Pack; defaults to its Nick."""
+    """Combined with the Army's Nick as `"<label>: <nick>"` in the Pack;
+    omitted, the Army appears under its Nick alone."""
 
 
 class ArmyPackConfig(StrictModel):

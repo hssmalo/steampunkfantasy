@@ -203,12 +203,12 @@ def test_build_pack_preserves_entry_order() -> None:
     assert pack.stem == "pack"
 
 
-def test_build_pack_label_overrides_the_nick() -> None:
+def test_build_pack_label_is_combined_with_the_nick() -> None:
     armies = [("Geir Arne", _army(nick="Showcase Dwarf"))]
 
     pack = build_pack(armies, title="Test", stem="pack")
 
-    assert pack.entries[0].label == "Geir Arne"
+    assert pack.entries[0].label == "Geir Arne: Showcase Dwarf"
 
 
 def test_build_pack_absent_label_falls_back_to_nick() -> None:
@@ -282,8 +282,8 @@ def test_army_pack_latex_has_one_section_per_army_and_a_toc(tmp_path: Path) -> N
     )
 
     text = out.read_text(encoding="utf-8")
-    assert text.count(r"\section{Geir Arne}") == 1
-    assert text.count(r"\section{Morten}") == 1
+    assert text.count(r"\section{Geir Arne: The Iron Claws}") == 1
+    assert text.count(r"\section{Morten: The Iron Claws}") == 1
     assert r"\tableofcontents" in text
     assert r"\clearpage" in text
 
@@ -291,9 +291,10 @@ def test_army_pack_latex_has_one_section_per_army_and_a_toc(tmp_path: Path) -> N
 def test_army_pack_latex_unit_markup_matches_standalone_army_rules(
     tmp_path: Path,
 ) -> None:
-    # The strongest available check of the §2 invariant: the Pack's rendering
-    # of a Unit is byte-identical to the Army Reference's, once the heading
-    # command is normalised for the deeper nesting level.
+    # The strongest available check that the Pack and the standalone Army
+    # Reference share one body template: the Pack's rendering of a Unit is
+    # byte-identical to the Army Reference's, once the heading command is
+    # normalised for the deeper nesting level.
     army = io.load_army(DEMO_ARMY)
     pack = build_pack(
         [(None, army)], title="Test Pack", stem="pack", image_for=no_image
@@ -347,12 +348,12 @@ def test_army_pack_markdown_has_one_heading_per_army_and_toc_anchors(
     )
 
     text = out.read_text(encoding="utf-8")
-    assert "## Geir Arne" in text
-    assert "## Morten" in text
-    assert '<a id="geir-arne"></a>' in text
-    assert '<a id="morten"></a>' in text
-    assert "[Geir Arne](#geir-arne)" in text
-    assert "[Morten](#morten)" in text
+    assert "## Geir Arne: The Iron Claws" in text
+    assert "## Morten: The Iron Claws" in text
+    assert '<a id="geir-arne-the-iron-claws"></a>' in text
+    assert '<a id="morten-the-iron-claws"></a>' in text
+    assert "[Geir Arne: The Iron Claws](#geir-arne-the-iron-claws)" in text
+    assert "[Morten: The Iron Claws](#morten-the-iron-claws)" in text
     # Units render one level below the per-army `##` heading.
     assert "### " in text
 
@@ -451,8 +452,8 @@ def test_cli_index_mode_writes_the_pack(tmp_path: Path) -> None:
 
     text = out.read_text(encoding="utf-8")
     assert "# SPF 2025 Tournament" in text
-    assert "## Geir Arne" in text
-    assert "## Morten" in text
+    assert "## Geir Arne: Geir Arne's Army" in text
+    assert "## Morten's Army" in text
 
 
 def test_cli_ad_hoc_mode_uses_army_nicks_and_default_title(tmp_path: Path) -> None:
@@ -462,7 +463,7 @@ def test_cli_ad_hoc_mode_uses_army_nicks_and_default_title(tmp_path: Path) -> No
 
     text = out.read_text(encoding="utf-8")
     assert "# Army Pack" in text
-    assert "## The Iron Claws" in text  # demo Army's Nick, ad-hoc mode (D12)
+    assert "## The Iron Claws" in text  # demo Army's Nick: ad-hoc mode gives no Label
 
 
 def test_cli_stem_defaults_to_the_index_parent_directory_name(
