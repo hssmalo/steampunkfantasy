@@ -1,0 +1,13 @@
+title = "Steampunkfantasy Showcase Armies"
+
+[[armies]]
+army = "abomination"
+
+[[armies]]
+army = "dwarf"
+
+[[armies]]
+army = "elf"
+
+[[armies]]
+army = "goblin"

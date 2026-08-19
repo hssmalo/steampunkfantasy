@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from configaroo import Configuration
+
 from spf.armies.army import Army
 from spf.armies.build import (
     ArmyList,
@@ -15,6 +17,7 @@ from spf.armies.build import (
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
+from spf.schemas.army_pack import ArmyPackConfig
 from spf.schemas.race import RaceConfig
 
 
@@ -49,6 +52,28 @@ def save_army(army: ArmyList, *, army_name: str, tournament: str | None = None) 
     path.write_text(json.dumps(data, indent=2) + "\n")
 
 
+def _load_army_at(path: Path, *, label: str, validate: bool) -> Army:
+    """Deserialize and resolve an Army from the JSON file at `path`.
+
+    Builds an ArmyList, optionally validates it, then calls resolve() to return
+    a fully resolved Army. No race_config is needed after this call. `label`
+    names the Army in error messages — the load name for `load_army`, or the
+    Army's Pack position for `load_pack_armies`.
+    """
+    if not path.exists():
+        msg = f"No army file found for {label} at {path}"
+        raise FileNotFoundError(msg)
+    data: dict[str, Any] = json.loads(path.read_text())
+    cfg = get_race(data["race"])
+    army_list = _build_army_list(data, cfg=cfg)
+    if validate:
+        errors = validate_army(army_list, race_config=cfg)
+        if errors:
+            msg = f"Loaded army {label} is invalid:\n" + "\n".join(errors)
+            raise ValueError(msg)
+    return army_list.resolve(cfg)
+
+
 def load_army(
     army_name: str, *, tournament: str | None = None, validate: bool = True
 ) -> Army:
@@ -58,18 +83,44 @@ def load_army(
     a fully resolved Army. No race_config is needed after this call.
     """
     path = config.paths.armies / (tournament or "") / f"{army_name}.json"
-    if not path.exists():
-        msg = f"No army file found for '{army_name}' at {path}"
-        raise FileNotFoundError(msg)
-    data: dict[str, Any] = json.loads(path.read_text())
-    cfg = get_race(data["race"])
-    army_list = _build_army_list(data, cfg=cfg)
-    if validate:
-        errors = validate_army(army_list, race_config=cfg)
-        if errors:
-            msg = f"Loaded army '{army_name}' is invalid:\n" + "\n".join(errors)
-            raise ValueError(msg)
-    return army_list.resolve(cfg)
+    return _load_army_at(path, label=f"'{army_name}'", validate=validate)
+
+
+def get_army_pack(path: Path) -> ArmyPackConfig:
+    """Read an Army Pack Index from `path`."""
+    return (
+        Configuration.from_file(path)
+        .add_envs({}, prefix="SPF_")
+        .parse_dynamic()
+        .convert_model(ArmyPackConfig)
+    )
+
+
+def load_pack_armies(
+    index: ArmyPackConfig, *, base_dir: Path
+) -> list[tuple[str | None, Army]]:
+    """Load every Army an Army Pack Index names, resolved against `base_dir`.
+
+    Army references resolve relative to the Index's own directory (mirroring
+    ADR 0018's Rulebook Sections), so `base_dir` is the Index's parent, not
+    `config.paths.armies`. A failure names both the Army and its 1-based
+    position, as a human counts down the Index file — a player silently
+    missing from the Pack is failed at a table, so the whole build fails
+    rather than skipping the Army (ADR 0018).
+    """
+    armies: list[tuple[str | None, Army]] = []
+    for position, entry in enumerate(index.armies, start=1):
+        path = base_dir / f"{entry.army}.json"
+        try:
+            army = _load_army_at(path, label=f"'{entry.army}'", validate=True)
+        except (FileNotFoundError, ValueError) as err:
+            msg = (
+                f"Army {position} ({entry.army!r}) in the Army Pack Index"
+                f" could not be loaded: {err}"
+            )
+            raise type(err)(msg) from None
+        armies.append((entry.label, army))
+    return armies
 
 
 def print_army(army: Army) -> None:
