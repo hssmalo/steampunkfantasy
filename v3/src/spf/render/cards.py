@@ -155,8 +155,11 @@ def build_deck(
     sets. Units producing an identical flat view (same name and merged
     movement/fire rows) collapse to one entry — every card then applies to
     every Unit sharing it, which is the invariant the collapse rests on. Two
-    Units differing only by Equipment have different merged rows, so they do
-    not collapse and each gets its own full set (ADR 0021). That key is the
+    Units of one catalogue Unit differing by Equipment differ in their merged
+    rows too, so they do not collapse and each gets its own full set (ADR
+    0021) — unless the Equipment's rows are wholly redundant, and such an
+    Equipment contributes no cards to drop. The key does not look at Order
+    Source itself. That key is the
     `display_name` — so a Nick participates in it with no special-casing, and
     differently-nicked Units each get their own card set (ADR 0019). It
     deliberately ignores the art: an Asset is addressed by TOML key, and no race

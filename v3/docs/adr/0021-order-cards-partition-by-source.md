@@ -58,7 +58,10 @@ would make building the second deck physically impossible.
   when one does.
 - Two Equipment sharing a display name (darkelf `hide` and `hide_free`) are one
   Order Source, unioning their rows. Taking the first would silently drop rows if
-  the two keys ever diverge.
+  the two keys ever diverge. Grouping them is also the only way the merged view
+  can differ from the pre-partition merge: equipment encountered A, B, A merge as
+  A, A, B. The rows are the same and no committed army carries two
+  order-modifying Equipment at all, so nothing observable changes today.
 - Card Sets are not deduplicated against each other across sources: two Equipment
   granting the same row each keep their copy, since either may be absent from a
   loadout. The *merged* view still drops the duplicate, so `Unit.orders()` is

@@ -266,6 +266,24 @@ def test_orders_is_the_fold_of_orders_by_source() -> None:
     assert merged.fire == {"still": [["-"], ["Fire"]]}
 
 
+def test_orders_groups_a_repeated_equipment_name_with_its_first_appearance() -> None:
+    # Grouping by display name is what makes one Card Set per Order Source, and
+    # it is the one way the merged view can differ from the pre-ADR-0021 merge:
+    # equipment encountered A, B, A merge as A, A, B rather than A, B, A. No
+    # committed army carries two order-modifying equipment at all, let alone a
+    # repeated display name among three.
+    first = _equip(OrdersConfig(fire={"still": [["A1"]]}), name="Hide")
+    other = _equip(OrdersConfig(fire={"still": [["B1"]]}), name="Wings")
+    again = _equip(OrdersConfig(fire={"still": [["A2"]]}), name="Hide")
+    unit = _unit(
+        orders=OrdersConfig(fire={"still": [["-"]]}),
+        models=[_model(equipment=[first, other, again])],
+    )
+
+    assert [s.source for s in unit.orders_by_source()] == [None, "Hide", "Wings"]
+    assert unit.orders().fire == {"still": [["-"], ["A1"], ["A2"], ["B1"]]}
+
+
 # --- build_deck: flat rows for the Markdown family --------------------------
 
 
@@ -750,7 +768,7 @@ def test_cards_pdf_compiles_with_a_mixed_deck(tmp_path: Path) -> None:
     art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
     orders = OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
     with_art = _unit(orders=orders, name="Painted")
-    # The longest equipment name in any race is 44 characters; `\bcfoot` must
+    # The longest equipment name in any race is 44 characters; `\flhead` must
     # wrap it inside the card box rather than overfull the line.
     longest = _equip(
         OrdersConfig(movement={"crawl": [["C"]]}),

@@ -155,11 +155,16 @@ class Unit:
         This is the fold of `orders_by_source()` — one merge algorithm, two
         views (ADR 0021). The fold deduplicates *across* sources, which the
         split view deliberately does not.
+
+        Output is unchanged from the pre-partition merge for every committed
+        army. The one input that would differ is equipment encountered as A, B,
+        A under two display names: the rows are the same, but A's group together
+        rather than straddling B's.
         """
         sources = self.orders_by_source()
         return OrdersConfig(
-            fire=_fold([s.orders.fire for s in sources]),
-            movement=_fold([s.orders.movement for s in sources]),
+            fire=_merge_across_sources([s.orders.fire for s in sources]),
+            movement=_merge_across_sources([s.orders.movement for s in sources]),
         )
 
 
@@ -176,36 +181,45 @@ def _in_speed_order(orders: _SpeedRows | None) -> _SpeedRows:
     }
 
 
+def _new_rows(rows: list[list[str]], *, seen: list[list[str]]) -> list[list[str]]:
+    """Return `rows` in order, dropping any already in `seen` or repeated here."""
+    kept: list[list[str]] = []
+    for row in rows:
+        if list(row) not in seen and list(row) not in kept:
+            kept.append(list(row))
+    return kept
+
+
 def _gained_rows(gained: list[_SpeedRows | None], *, base: _SpeedRows) -> _SpeedRows:
     """Union gained rows per Speed, dropping rows the base already carries."""
     merged: _SpeedRows = {}
     for speed in _SPEED_ORDER:
         rows: list[list[str]] = []
         for gained_map in gained:
-            for row in (gained_map or {}).get(speed, []):
-                if list(row) not in base.get(speed, []) and list(row) not in rows:
-                    rows.append(list(row))
+            rows += _new_rows(
+                (gained_map or {}).get(speed, []), seen=[*base.get(speed, []), *rows]
+            )
         if rows:
             merged[speed] = rows
     return merged
 
 
-def _fold(sources: list[_SpeedRows | None]) -> _SpeedRows | None:
+def _merge_across_sources(
+    rows_per_source: list[_SpeedRows | None],
+) -> _SpeedRows | None:
     """Concatenate one order-type across sources, dropping exact duplicates.
 
     The base is the first entry and is copied verbatim; only later sources are
     deduplicated against what has accumulated, which is what keeps the merged
     view byte-identical to the pre-partition merge.
     """
-    first, *gained = sources
+    first, *gained = rows_per_source
     base = first or {}
     merged: _SpeedRows = {}
     for speed in _SPEED_ORDER:
         rows: list[list[str]] = [list(row) for row in base.get(speed, [])]
         for gained_map in gained:
-            for row in (gained_map or {}).get(speed, []):
-                if list(row) not in rows:
-                    rows.append(list(row))
+            rows += _new_rows((gained_map or {}).get(speed, []), seen=rows)
         if rows or speed in base:
             merged[speed] = rows
     return merged or None
