@@ -584,4 +584,4 @@ def test_cli_refine_rejects_profile_for_non_image_kind(
             "fix it",
         )
 
-    assert "--profile applies only to image assets" in capsys.readouterr().err
+    assert "--env/--profile apply only to image assets" in capsys.readouterr().err

@@ -144,8 +144,40 @@ class ImageOpts:
         """
         comfyui = config.assets.image.comfyui
         env_name = self.env if self.env is not None else comfyui.env
-        profile_name = self.profile or comfyui.profile or comfyui.selected().profile
+        profile_name = (
+            self.profile or comfyui.profile or comfyui.selected(env_name).profile
+        )
         return env_name, profile_name
+
+
+def _resolve_image_service(
+    image_opts: ImageOpts, *, validate_refine: bool = False
+) -> tuple[ComfyUIService, str, str]:
+    """Resolve env/profile, build the ComfyUIService, and return all three.
+
+    Set ``validate_refine`` when the call site is a refinement (the refine
+    Workflow must exist). For generate, the refine Workflow is lazily
+    resolved so contributors without one can still generate (issue 99).
+    """
+    try:
+        env_name, profile_name = image_opts.resolve_env_profile()
+    except ValueError as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+    try:
+        svc = _image._build_service(  # noqa: SLF001  wiring the factory
+            env=env_name, profile=profile_name
+        )
+    except ValueError as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+    if validate_refine:
+        try:
+            _image._resolve_refine(env=env_name, profile=profile_name)  # noqa: SLF001
+        except ValueError as err:
+            stderr.print(f"[red]Error:[/] {err}")
+            raise SystemExit(1) from None
+    return svc, env_name, profile_name
 
 
 def _resolve_target(kind: AssetKind, race: t.RaceName, unit: str | None) -> Target:
@@ -395,25 +427,16 @@ def refine_asset(  # noqa: PLR0913  mirrors promote, plus the Correction and opt
     if (
         image_opts.env is not None or image_opts.profile is not None
     ) and asset_kind.name != "image":
-        stderr.print("[red]Error:[/] --profile applies only to image assets")
+        stderr.print("[red]Error:[/] --env/--profile apply only to image assets")
         raise SystemExit(1) from None
 
     svc: ComfyUIService | None = None
     env_name: str | None = None
     profile_name: str | None = None
     if asset_kind.name == "image":
-        try:
-            env_name, profile_name = image_opts.resolve_env_profile()
-        except ValueError as err:
-            stderr.print(f"[red]Error:[/] {err}")
-            raise SystemExit(1) from None
-        try:
-            svc = _image._build_service(  # noqa: SLF001  wiring the factory
-                env=env_name, profile=profile_name
-            )
-        except ValueError as err:
-            stderr.print(f"[red]Error:[/] {err}")
-            raise SystemExit(1) from None
+        svc, env_name, profile_name = _resolve_image_service(
+            image_opts, validate_refine=True
+        )
 
     count, seed = (opts or AssetOpts()).resolve()
 
@@ -503,19 +526,7 @@ def image(  # noqa: PLR0913  CLI surface, parameters are fixed
     image_opts = image_opts or ImageOpts()
     kind = get_kind("image")
 
-    try:
-        env_name, profile_name = image_opts.resolve_env_profile()
-    except ValueError as err:
-        stderr.print(f"[red]Error:[/] {err}")
-        raise SystemExit(1) from None
-
-    try:
-        svc = _image._build_service(  # noqa: SLF001  wiring the factory
-            env=env_name, profile=profile_name
-        )
-    except ValueError as err:
-        stderr.print(f"[red]Error:[/] {err}")
-        raise SystemExit(1) from None
+    svc, env_name, profile_name = _resolve_image_service(image_opts)
 
     try:
         selected = _image_targets(kind, race, unit, all_=all_, missing=missing)
