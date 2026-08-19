@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("dwarf")
 
-army = ArmyList("dwarf", "Showcase Dwarf", [])
+army = ArmyList("dwarf", "Flying Dwarfs", [])
 
 # x6 Dwarf Infantry
 army = (

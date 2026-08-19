@@ -1,0 +1,16 @@
+# {{ source.title }}
+
+## Contents
+
+{% for entry in source.entries -%}
+- [{{ entry.label }}](#{{ entry.anchor }})
+{% endfor %}
+{% for entry in source.entries %}
+<a id="{{ entry.anchor }}"></a>
+
+## {{ entry.label }}
+
+{%- set reference = entry.reference -%}
+{%- set hashes = "###" -%}
+{% include "army-rules/reference-body.md.jinja" %}
+{% endfor %}
