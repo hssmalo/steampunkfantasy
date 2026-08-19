@@ -157,7 +157,7 @@ def _resolve_image_service(
 
     Set ``validate_refine`` when the call site is a refinement (the refine
     Workflow must exist). For generate, the refine Workflow is lazily
-    resolved so contributors without one can still generate (issue 99).
+    resolved so contributors without one can still generate.
     """
     try:
         env_name, profile_name = image_opts.resolve_env_profile()
