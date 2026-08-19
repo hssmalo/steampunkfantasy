@@ -149,6 +149,7 @@ type UnitSpecial = Literal[
     "Suicide",
     "LoS",
     "Terror",
+    "Hypnotizing Gaze",
     "Poison Cloud",
     "Fog",
     "Surprise",

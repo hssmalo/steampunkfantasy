@@ -22,6 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from spf import rules
+from spf.render.anchors import anchor as _anchor
 from spf.schemas.rulebook import RulebookConfig
 from spf.schemas.rules import (
     HexRuleConfig,
@@ -33,7 +34,6 @@ from spf.schemas.rules import (
 )
 
 _H1 = re.compile(r"^#\s")
-_NON_SLUG = re.compile(r"[^a-z0-9]+")
 
 TOKENS_SOURCE = "tokens.toml"
 
@@ -450,27 +450,6 @@ class Rulebook:
 
     title: str
     sections: list[Section]
-
-
-def _slug(title: str) -> str:
-    """Reduce `title` to a lowercase, dash-separated anchor."""
-    return _NON_SLUG.sub("-", title.lower()).strip("-")
-
-
-def _anchor(title: str, taken: set[str]) -> str:
-    """Return a slug of `title` not already in `taken`.
-
-    Two Sections may legitimately share a title, but not an anchor: every link
-    to the second would otherwise land on the first.
-    """
-    slug = _slug(title)
-    anchor = slug
-    suffix = 1
-    while anchor in taken:
-        suffix += 1
-        anchor = f"{slug}-{suffix}"
-    taken.add(anchor)
-    return anchor
 
 
 def build_rulebook(index: RulebookConfig, *, rules_dir: Path) -> Rulebook:

@@ -1051,7 +1051,7 @@ name = "Ork Pistol"
 race = "ork"
 cost.cp = 4
 upgrade_all = true
-requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
+requires = [["type:Infantry", "type:Cavalry"], ["Hands:1"]]
 
 [equipment.ork_pistol.range]
 range = 3

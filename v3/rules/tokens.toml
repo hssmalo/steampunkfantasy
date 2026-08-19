@@ -13,6 +13,7 @@ phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 effect = "While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit"
 remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
 
+
 [tokens.aim]
 name = "Aim"
 phases = ["Gunnery 1", "Gunnery 2"]
@@ -140,11 +141,18 @@ phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 remove = "Remove one token each pre-assault step in each movement phase"
 effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
 
-[tokens.insanity]
-name = "Insanity"
+[tokens.insane]
+name = "Insane"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go"
+effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hyptnotized token and replace it with insane. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go"
+
+
+[tokens.hypnotized]
+name = "Hypnotized"
+phases = ["Movement 1", "Movement 2", "Movement 3"]
+remove = "When unit is not longer shaken"
+effect = "Can only be given to bio units which are already shaken, and not insane. Any flee order is treatet as do nothing, stand still. In addition, Reduce assault strength 50% rounded down. "
 
 [tokens.hidden]
 name = "Hidden"

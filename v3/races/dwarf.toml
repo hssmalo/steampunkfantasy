@@ -1145,7 +1145,7 @@ name = "Stabilizer"
 race = "dwarf"
 cost.cp = 16
 upgrade_all = true
-requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
+requires = [["type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.stabilizer.model_special]
 "To Hit" = "Enhanced accuracy. +1 to hit"

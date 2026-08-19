@@ -1,0 +1,25 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{graphicx}
+
+\title{\VAR{source.title | latex_escape}}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\BLOCK{for entry in source.entries}
+\section{\VAR{entry.label | latex_escape}}
+
+\BLOCK{set reference = entry.reference}
+\BLOCK{set unit_heading = "\\subsection"}
+\BLOCK{set model_heading = "\\subsubsection"}
+\BLOCK{set equip_heading = "\\paragraph"}
+\BLOCK{include "army-rules/reference-body.tex.jinja"}
+\clearpage
+\BLOCK{endfor}
+\end{document}

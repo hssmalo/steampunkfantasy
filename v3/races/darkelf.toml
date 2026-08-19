@@ -1419,7 +1419,7 @@ name = "SMG"
 race = "darkelf"
 cost.cp = 4
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.smg.range]
 range = 3
@@ -1454,7 +1454,7 @@ name = "Crossbow"
 race = "darkelf"
 cost.cp = 8
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
+requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.crossbow.range]
 range = 2
@@ -1509,29 +1509,6 @@ ap = 0
 "Area" = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
 "Extra Damage" = "No regular damage, but Poison[8] and set on fire"
 "Ammo" = "Always treated as loaded"
-
-[equipment.poison_gas_grenade]
-name = "Poison Gas Grenade"
-race = "darkelf"
-cost.cp = 4
-upgrade_all = true
-requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
-
-[equipment.poison_gas_grenade.range]
-range = 2
-angle = [true, true, true, true]
-damage = "N.A."
-ap = 0
-
-[equipment.poison_gas_grenade.range.special]
-"Cloud" = "Place a Poison Cloud[6] within normal range"
-"Ammo" = "Limited Ammo[2]"
-"Order" = "Used by Throw order"
-
-[equipment.poison_gas_grenade.orders_gained.fire]
-still = [["-", "Throw"]]
-slow = [["-", "Throw"]]
-crawl = [["-", "Throw"]]
 
 [equipment.mortar_1a]
 name = "Mortar 1A"
@@ -1735,7 +1712,7 @@ cost.xp = 4
 upgrade_all = true
 requires = [
     ["Independent:1"],
-    ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
+    ["type:Roboprosthetic", "type:Infantry"]
 ]
 
 [equipment.gas_mask_assault_training.unit_special]
