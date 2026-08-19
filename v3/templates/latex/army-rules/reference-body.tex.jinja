@@ -1,0 +1,111 @@
+{#
+  The shared body of an Army's rules: one heading block per distinct Unit,
+  models nested below. Both the Army Reference and the Army Pack (issue #100
+  §2) render an Army's rules through this one partial, so the two can never
+  drift apart.
+
+  `reference` is the ArmyReference to render. `unit_heading`, `model_heading`,
+  and `equip_heading` are the sectioning commands a Unit, its Models, and
+  their ranged Equipment render at — `army-rules/main` sets them to
+  `\section`/`\subsection`/`\subsubsection` for a standalone document;
+  `army-pack/main` sets them one level deeper, since each Army already sits
+  under its own `\section` heading in the Pack.
+#}
+\BLOCK{for unit in reference.units}
+\VAR{unit_heading}{\VAR{unit.name | latex_escape}\BLOCK{if unit.count > 1} (\VAR{unit.count}$\times$)\BLOCK{endif}}
+
+% With art, the stat block and the image sit side by side; without it, the
+% stat block runs full width. Everything below resumes full width either way.
+% The `\vspace{0pt}` in each minipage aligns their *tops*: without it `[t]`
+% aligns first baselines, and an image's baseline is its bottom edge, which
+% would drop the stat block to the foot of the picture.
+\BLOCK{if unit.image}
+\begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
+\BLOCK{endif}
+\textbf{Size:} \VAR{unit.size | latex_escape} \\
+\textbf{Models:} \VAR{unit.model_summary | join(', ') | latex_escape} \\
+\BLOCK{if unit.types}
+\textbf{Type:} \VAR{unit.types | join(', ') | latex_escape} \\
+\BLOCK{endif}
+\BLOCK{if unit.armor}
+\textbf{Armor:} \VAR{unit.armor | join(', ')} \\
+\BLOCK{endif}
+\textbf{Points:} \VAR{unit.points} \\
+\textbf{Shaken:} \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
+
+\BLOCK{if unit.specials}
+\begin{itemize}
+\BLOCK{for name, text in unit.specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{if unit.image}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\textwidth}
+\vspace{0pt}
+\includegraphics[width=\linewidth]{\VAR{unit.image | posix_path}}
+\end{minipage}
+\BLOCK{endif}
+
+\BLOCK{for name, rows, notes in unit.damage_tables}
+
+\noindent\textbf{Damage Table: \VAR{name | latex_escape}}
+
+\begin{tabular}{ll}
+\BLOCK{for roll, effect in rows}
+\VAR{roll | latex_escape} & \VAR{effect | latex_escape} \\
+\BLOCK{endfor}
+\end{tabular}
+\BLOCK{if notes}
+\begin{itemize}
+\BLOCK{for note in notes}
+\item \VAR{note | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\vspace{1ex}
+\BLOCK{endfor}
+
+\BLOCK{for model in unit.models}
+\VAR{model_heading}{\VAR{model.name | latex_escape}}
+
+\textbf{Equipment:} \VAR{model.equipment_summary | join(', ') | latex_escape} \\
+
+\BLOCK{if model.specials}
+\begin{itemize}
+\BLOCK{for name, text in model.specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\textbf{Assault:} strength \VAR{model.assault_strength | join(',')} (\VAR{model.assault_strength_die | latex_escape}),
+deflection \VAR{model.assault_deflection | join(',')} (\VAR{model.assault_deflection_die | latex_escape}),
+damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
+
+\BLOCK{if model.assault_specials}
+\begin{itemize}
+\BLOCK{for name, text in model.assault_specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+
+\BLOCK{for equip in model.equipment}
+\VAR{equip_heading}{\VAR{equip.name | latex_escape}}
+
+\textbf{Range:} \VAR{equip.range}, angle \VAR{equip.angle | join(',') | latex_escape}, damage \VAR{equip.damage | latex_escape}, AP \VAR{equip.ap}
+
+\BLOCK{if equip.specials}
+\begin{itemize}
+\BLOCK{for name, text in equip.specials}
+\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endfor}
+\BLOCK{endfor}
+
+\newpage
+\BLOCK{endfor}
