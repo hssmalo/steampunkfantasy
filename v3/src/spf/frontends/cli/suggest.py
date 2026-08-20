@@ -9,7 +9,12 @@ import difflib
 from collections.abc import Iterable
 
 # Above this many candidates, a "Did you mean ...?" is a vocabulary dump.
-_MAX_SUGGESTIONS = 5
+_MAX_SUGGESTIONS = 8
+
+# A typo has one intended target, so the fuzzy pass offers a shortlist rather
+# than a whole family, and only over candidates this similar.
+_MAX_FUZZY = 3
+_CUTOFF = 0.6
 
 
 def _normalize(value: str) -> str:
@@ -27,18 +32,35 @@ def suggest(value: str, options: Iterable[str]) -> list[str]:
     # family is offered.
     substring = sorted(
         (option for option in options if normalized in _normalize(option)),
-        key=lambda option: (len(option), option),
+        key=_rank,
     )
     # The fuzzy pass only covers typos, where nothing contains the value at all.
     # Running both would answer "Reroll" with "Recoil" as well as "Ork Reroll".
     # It matches on normalized forms too, so a typo shouted in caps still lands.
-    canonical: dict[str, str] = {}
-    for option in options:
-        canonical.setdefault(_normalize(option), option)
-    fuzzy = difflib.get_close_matches(normalized, canonical, n=3, cutoff=0.6)
-
-    matches = substring or [canonical[match] for match in fuzzy]
+    matches = substring or _fuzzy(normalized, options)
     return list(dict.fromkeys(matches))
+
+
+def _rank(option: str) -> tuple[int, str]:
+    """Order shortest-first, alphabetically among equals."""
+    return (len(option), option)
+
+
+def _fuzzy(normalized: str, options: list[str]) -> list[str]:
+    """Return the closest options by similarity, ranked by `_rank` among ties.
+
+    Scored here rather than by `difflib.get_close_matches`, which orders equally
+    similar candidates arbitrarily — "To Hit (3)" ahead of "To Hit (2)" — and so
+    would contradict the substring pass on the same family.
+    """
+    matcher = difflib.SequenceMatcher(b=normalized)
+    scored: list[tuple[float, str]] = []
+    for option in options:
+        matcher.set_seq1(_normalize(option))
+        if matcher.ratio() >= _CUTOFF:
+            scored.append((matcher.ratio(), option))
+    scored.sort(key=lambda scored_option: (-scored_option[0], _rank(scored_option[1])))
+    return [option for _, option in scored[:_MAX_FUZZY]]
 
 
 def _did_you_mean(suggestions: list[str]) -> str:

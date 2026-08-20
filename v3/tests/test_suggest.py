@@ -2,7 +2,7 @@
 
 import pytest
 
-from spf.frontends.cli.suggest import resolve_or_raise, suggest
+from spf.frontends.cli.suggest import _MAX_SUGGESTIONS, resolve_or_raise, suggest
 
 OPTIONS = [
     "Ork Reroll",
@@ -96,8 +96,9 @@ def test_suggest_normalises_the_fuzzy_pass_too() -> None:
 def test_resolve_does_not_dump_the_vocabulary_for_a_vague_value() -> None:
     # A one-letter value is a substring of nearly everything; listing all of it
     # is the wall of text the suggestions exist to replace.
+    crowded = [f"Fire Order {n}" for n in range(_MAX_SUGGESTIONS + 1)]
     with pytest.raises(ValueError, match=r"^Unknown special ") as excinfo:
-        resolve_or_raise("e", OPTIONS, noun="special", see="spf rules specials")
+        resolve_or_raise("e", crowded, noun="special", see="spf rules specials")
     assert "Did you mean" not in str(excinfo.value)
     assert "spf rules specials" in str(excinfo.value)
 
@@ -106,3 +107,9 @@ def test_resolve_still_offers_a_whole_family() -> None:
     with pytest.raises(ValueError, match=r"^Unknown special ") as excinfo:
         resolve_or_raise("cunning", OPTIONS, noun="special", see="spf rules specials")
     assert "Did you mean" in str(excinfo.value)
+
+
+def test_suggest_breaks_fuzzy_ties_the_way_substring_matches_break_them() -> None:
+    # "tohit" reaches the fuzzy pass, where "To Hit (2)" and "To Hit (3)" score
+    # identically — they must still come out shortest-then-alphabetical.
+    assert suggest("tohit", OPTIONS) == ["To Hit", "To Hit (2)", "To Hit (3)"]
