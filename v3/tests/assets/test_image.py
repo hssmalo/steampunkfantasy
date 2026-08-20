@@ -168,6 +168,29 @@ class _ImageEnv:
         return [g[_SAMPLER]["inputs"]["seed"] for g in self.comfy.submissions]
 
 
+def _install_workflows(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """Point config at a `local` Profile built from the committed fixtures.
+
+    `workflows/local/` is per-machine and gitignored, so a test that lets
+    `_build_service` resolve against the real tree passes or fails on how the
+    machine happens to be set up. Every such test goes through here instead.
+    """
+    workflows = tmp_path / "workflows" / "local"
+    workflows.mkdir(parents=True)
+    (workflows / "qwen.json").write_text(_MINI.read_text(encoding="utf-8"))
+    (workflows / "qwen-refine.json").write_text(
+        _MINI_REFINE.read_text(encoding="utf-8")
+    )
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.assets.image.comfyui, "env", "local")
+
+
+@pytest.fixture
+def workflows_root(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """Resolve Profiles against tmp fixtures rather than the machine."""
+    _install_workflows(monkeypatch, tmp_path)
+
+
 def _make_env(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *, fail: bool = False
 ) -> _ImageEnv:
@@ -189,15 +212,7 @@ def _make_env(
     monkeypatch.setattr(config.paths, "assets", tmp_path / "assets")
     monkeypatch.setattr(config.assets.image, "prompt", positive)
     monkeypatch.setattr(config.assets.image, "negative_prompt", negative)
-    # Set up workflow files so _build_service can resolve them
-    workflows = tmp_path / "workflows" / "local"
-    workflows.mkdir(parents=True)
-    (workflows / "qwen.json").write_text(_MINI.read_text(encoding="utf-8"))
-    (workflows / "qwen-refine.json").write_text(
-        _MINI_REFINE.read_text(encoding="utf-8")
-    )
-    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
-    monkeypatch.setattr(config.assets.image.comfyui, "env", "local")
+    _install_workflows(monkeypatch, tmp_path)
 
     comfy = _FakeRequest(fail=fail)
     monkeypatch.setattr(comfyui, "_request", comfy)
@@ -232,6 +247,7 @@ def _run(*argv: str) -> None:
 # --- Kind registration + service wiring -------------------------------------
 
 
+@pytest.mark.usefixtures("workflows_root")
 def test_image_kind_is_registered() -> None:
     kind = get_kind("image")
     assert kind.subdir == "images"
