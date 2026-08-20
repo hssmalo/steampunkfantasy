@@ -9,8 +9,11 @@ import cyclopts
 
 from spf.config import config
 from spf.frontends import cli
+from spf.version import spf_version
 
-app = cyclopts.App(help="SteamPunkFantasy")
+# Passed as the callable rather than the string: cyclopts then resolves the
+# version when `--version` is used, not at import.
+app = cyclopts.App(help="SteamPunkFantasy", version=spf_version)
 
 # Subcommands
 army_app = app.command(cyclopts.App(name="army", help="Work with a specific army."))
