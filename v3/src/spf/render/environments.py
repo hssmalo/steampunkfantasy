@@ -79,6 +79,7 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
     # The Markdown family needs no conversion — its data is already Markdown —
     # only the source's headings pushed below the one it renders under.
     markdown.filters["shift_headings"] = shift_headings
+
     # A global rather than render context: every document stamps the version it
     # was rendered by, and no render call site should have to thread it through.
     version = spf_version()

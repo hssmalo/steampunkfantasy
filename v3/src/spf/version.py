@@ -7,17 +7,11 @@ maintained here alongside it.
 
 from importlib.metadata import PackageNotFoundError, version
 
-UNKNOWN_VERSION = "unknown"
-"""Stand-in for a source tree with no installed `spf` distribution."""
+UNKNOWN_VERSION = "unknown"  # Stand-in when `spf` is not installed
 
 
 def spf_version() -> str:
-    """Return the version of the installed `spf` distribution.
-
-    Every rendered document resolves its version stamp through here, so a
-    missing distribution degrades to `UNKNOWN_VERSION` rather than failing the
-    render outright.
-    """
+    """Return the version of the installed `spf` distribution."""
     try:
         return version("spf")
     except PackageNotFoundError:

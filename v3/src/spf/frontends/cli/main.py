@@ -11,8 +11,6 @@ from spf.config import config
 from spf.frontends import cli
 from spf.version import spf_version
 
-# Passed as the callable rather than the string: cyclopts then resolves the
-# version when `--version` is used, not at import.
 app = cyclopts.App(help="SteamPunkFantasy", version=spf_version)
 
 # Subcommands
