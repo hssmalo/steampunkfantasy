@@ -4,8 +4,11 @@ default: check
 check: fmt-check lint spell validate lint-races test typecheck
 
 # Cut a release: bump the CalVer version, re-lock, commit, tag, and push.
+# Runs from the repository root, where both `bumpver.toml` and `.git` live —
+# bumpver only warns, then skips committing, when it is run without a `.git`
+# beside it. Note that `--dry` does not exercise any of that.
 release *args:
-    uv run bumpver update --patch {{args}}
+    cd .. && uv run --project v3 bumpver update --patch {{args}}
 
 # Auto-format the codebase with ruff.
 fmt:

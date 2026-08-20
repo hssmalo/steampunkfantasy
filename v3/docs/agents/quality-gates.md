@@ -31,8 +31,14 @@ just release    # Bump the CalVer version with bumpver, re-lock, commit, tag, an
 ```
 
 `just release` is run **locally by a human**, never from CI: it commits, tags,
-and pushes in one step. Pass `--dry` through (`just release --dry`) to see the
-version transition without touching anything.
+and pushes in one step. The release config lives in `bumpver.toml` at the
+*repository root* rather than in `v3/pyproject.toml`, and the recipe runs from
+there — bumpver looks for `.git` in its working directory and merely warns,
+then skips committing, when it does not find one.
+
+Pass `--dry` through (`just release --dry`) to preview the version transition.
+Be aware that `--dry` only prints the file diffs: it exercises neither the
+commit/tag/push nor the `uv lock` pre-commit hook.
 
 **Run `just check` before committing.** The underlying tools (`uv run pytest`,
 `uv run ruff`, `uv run pyright`, `uv run typos`) can still be invoked directly
