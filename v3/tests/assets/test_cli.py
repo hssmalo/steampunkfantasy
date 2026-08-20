@@ -785,6 +785,7 @@ def _workflows_at(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *rel: str) ->
         path.write_text("{}")
     monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
     monkeypatch.setattr(config.paths, "project", tmp_path)
+    monkeypatch.setattr(config.assets.image.comfyui, "profile", "")
 
 
 def test_profiles_command_passes_when_committed_envs_resolve(

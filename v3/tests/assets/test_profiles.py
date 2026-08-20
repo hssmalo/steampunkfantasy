@@ -148,3 +148,11 @@ def test_check_skips_an_env_not_set_up_on_this_machine(tmp_path: Path) -> None:
     # fact about the machine, not a broken configuration.
     status = check(workflows, "local", "qwen", project_root=project)
     assert status.state == "not-set-up"
+
+
+def test_check_skips_an_env_directory_that_offers_no_profiles(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    (workflows / "local").mkdir(parents=True)
+    # Created but not yet populated: still a fact about the machine.
+    status = check(workflows, "local", "qwen", project_root=project)
+    assert status.state == "not-set-up"

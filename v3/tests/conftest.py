@@ -16,6 +16,13 @@ for _var in ("FORCE_COLOR", "COLORTERM"):
     os.environ.pop(_var, None)
 os.environ["TERM"] = "dumb"
 
+# `spf.config` folds SPF_COMFYUI_ENV/PROFILE into the Configuration at import,
+# so a contributor's exported ComfyUI selection would otherwise decide which
+# Environment and Profile the suite resolves against. Tests pin what they need
+# on `config` directly; the ambient selection is not theirs to inherit.
+for _var in ("SPF_COMFYUI_ENV", "SPF_COMFYUI_PROFILE"):
+    os.environ.pop(_var, None)
+
 # Rich otherwise takes its width from the invoking terminal, so where a message
 # wraps depends on the window the suite happens to be run from. Pinning it makes
 # a run reproducible — but it is deliberately *not* what makes these tests pass:

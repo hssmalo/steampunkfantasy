@@ -183,6 +183,9 @@ def _install_workflows(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     )
     monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
     monkeypatch.setattr(config.assets.image.comfyui, "env", "local")
+    # The global override outranks the per-env Profile, so leave it clear or
+    # the fixture writes `qwen.json` and resolution looks for something else.
+    monkeypatch.setattr(config.assets.image.comfyui, "profile", "")
 
 
 @pytest.fixture

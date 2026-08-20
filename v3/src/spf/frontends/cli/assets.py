@@ -625,7 +625,10 @@ def profiles() -> None:
     comfyui = config.assets.image.comfyui
     broken = False
     for env_name in _ENV_NAMES:
-        profile_name = comfyui.profile or comfyui.selected(env_name).profile
+        # Each Environment's own configured Profile, not the global override:
+        # the question is whether the committed config and the committed
+        # Workflows agree, which an ad-hoc runtime selection cannot answer.
+        profile_name = comfyui.selected(env_name).profile
         status = check(
             config.paths.workflows,
             env_name,

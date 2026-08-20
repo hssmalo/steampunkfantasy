@@ -87,9 +87,9 @@ def check(
 ) -> ProfileStatus:
     """Report whether `env`'s configured Profile resolves to a Workflow."""
     env_dir = workflows_root / env
-    if not env_dir.is_dir():
+    if not available(workflows_root, env):
         shown = _relative_path(env_dir, project_root)
-        return ProfileStatus(env, profile, "not-set-up", f"no {shown}/")
+        return ProfileStatus(env, profile, "not-set-up", f"no workflows in {shown}/")
     try:
         path = resolve(workflows_root, env, profile, project_root=project_root)
     except ValueError as err:
