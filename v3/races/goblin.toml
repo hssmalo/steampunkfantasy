@@ -139,7 +139,7 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [units.tiny_snake.special]
-"Hidden" = "This unit start hidden"
+"Hidden" = "Start with a hidden token"
 "Movement" = "This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting."
 "Terror" = "[4](range=1)"
 
@@ -494,7 +494,7 @@ movement_order = ["-", "F", "F"]
 
 [units.mechanical_fire_bird.special]
 "Phoenix" = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
-"Immunity" = "fire"
+"Immunity" = "Fire"
 
 [units.mechanical_fire_bird.orders.movement]
 fast_fly = [
@@ -981,7 +981,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 [equipment.commando.unit_special]
 "Take Cover" = "[still][-4]"
 "Evation" = "[2+]"
-"Hidden" = "Unit has the Hidden and Hide[ruins, forest] special effects."
+"Hidden" = "Start with a Hidden token."
 "Forward Position" = "[2]"
 "Fire Order" = "In any round you have reveal bonus, you may fire a bow three times (either a regular arrow or an special arrow each time) at one target or throw three grenades at one target"
 
@@ -989,7 +989,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 still = [
 	["-", "-", "Reveal"],
 	["360°", "F", "Reveal"],
-	["Hide[ruins]", "-", "-"]
+	["Hide[ruins, forest]", "-", "-"]
 ]
 
 [equipment.commando.assault]

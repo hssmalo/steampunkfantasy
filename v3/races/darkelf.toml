@@ -96,7 +96,7 @@ description = '''Robotic iron dragon breathing acid.
 
 [units.mechanical_iron_dragon.special]
 Resistance = "Fire[2]"
-Immunity = "Acid and gear disruption"
+Immunity = "Acid and Gear Disruption"
 
 [units.mechanical_iron_dragon.shaken]
 speed = "slow"
@@ -541,7 +541,7 @@ description = '''An elf dominatrix with a whip in the center. All slaves wear co
 
 [units.multicultural_infantry.special]
 "Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
-"Darkelf Officer" = "If there are no darkelf_officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving."
+"Darkelf Officer" = "If there are no Darkelf Officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving."
 "Spawn" = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit"
 "Forward Position" = "[2]"
 "Fire Order" = "Activate order only available while officer is alive"
@@ -1174,7 +1174,7 @@ replaces = "darkelf_infantry"
 cost.xp = 4
 
 [models.elite_darkelf_infantry.unit_special]
-"Improved Resistance" = "Unit gain resistance Psychic[1] while at least one elite is alive"
+"Improved Resistance" = "Psychic[1] while at least one elite is alive"
 
 [models.elite_darkelf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -1285,7 +1285,7 @@ replaces = "roboprosthetic_darkelf"
 cost.cp = 4
 
 [models.elite_roboprosthetic_darkelf.unit_special]
-"Improved Resistance" = "Unit gain resistance Psychic[1] while at least one elite is alive"
+"Improved Resistance" = "Psychic[1] while at least one elite is alive"
 
 [models.elite_roboprosthetic_darkelf.assault]
 strength = [2, 1, 1, 1]
@@ -1351,7 +1351,7 @@ requires = []
 description = ""
 
 [equipment.officer_mask.unit_special]
-"Protection" = "If the officer is the only alive model, this unit becomes immune to poisons and poison clouds"
+"Immunity" = "If the officer is the only alive model, this unit becomes immune to poisons and poison clouds"
 
 [equipment.collar]
 name = "Collar"
@@ -1716,7 +1716,7 @@ requires = [
 ]
 
 [equipment.gas_mask_assault_training.unit_special]
-"Immunity" = "Unit becomes immune to poison clouds"
+"Immunity" = "Poison Clouds"
 
 [equipment.gas_mask_assault_training.assault.special]
 "Bonus" = "When assaulting hexes with poison cloud +50% in assault and assault deflection"
@@ -1747,7 +1747,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
 
 [equipment.hide.unit_special]
-"Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
+"Hidden" = "Unit starts with a Hidden token"
 "Forward Position" = "[1]"
 "Camouflage" = "[swamp][-1]"
 
@@ -1764,7 +1764,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Mechanical"]]
 
 [equipment.cloaking_device.unit_special]
-"Hidden" = "Gains the Hidden special effects"
+"Hidden" = "Start with a Hidden token"
 "Forward Position" = "[1]"
 
 [equipment.cloaking_device.orders_gained.movement]
@@ -1777,7 +1777,7 @@ race = "darkelf"
 requires = []
 
 [equipment.hide_free.unit_special]
-"Hidden" = "Unit has the Hidden and Hide[ruins] special effects"
+"Hidden" = "Start with Hidden token"
 "Forward Position" = "[1]"
 "Camouflage" = "[swamp][-1]"
 
@@ -1794,7 +1794,7 @@ requires = [["Independent:1"], ["type:Dwalf"]]
 upgrade_all = true
 
 [equipment.vest_of_life_support.unit_special]
-"Protection" = "Unit gains 1 endurance token per Dwalf model"
+"Protection" = "1 endurance token per Dwalf model"
 
 [equipment.ogrin_bow]
 name = "Ogrin Bow"

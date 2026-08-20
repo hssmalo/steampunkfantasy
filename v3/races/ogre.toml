@@ -295,7 +295,7 @@ speed = "slow"
 movement_order = ["-", "-", "-"]
 
 [units.drone_swarm.special]
-"Suicide" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
+"Trap" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 "Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 "Evation" = "[3+]"
 "Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."

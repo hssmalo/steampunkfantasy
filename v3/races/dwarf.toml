@@ -650,7 +650,7 @@ replaces = "dwarf_infantry"
 "To Hit" = "good shot: +1 to hit"
 
 [models.elite_dwarf_infantry.unit_special]
-"Improved Resistance" = "unit gains Psychic resistance 2 as long as 1 elite model is alive"
+"Improved Resistance" = "Psychic[2] as long as 1 elite model is alive"
 
 [models.elite_dwarf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -677,8 +677,8 @@ replaces = "steampowerarmor"
 "To Hit" = "good shot: +1 to hit"
 
 [models.elite_dwarf_steampowerarmor.unit_special]
-"Improved Resistance" = "unit gains Psychic resistance 1 as long as 1 elite model is alive"
-"Protection" = "Unit gains 1 endurance token per elite in unit. See general rules for effect"
+"Improved Resistance" = "Psychic[1] as long as 1 elite model is alive"
+"Protection" = "1 endurance token per elite in unit."
 
 [models.elite_dwarf_steampowerarmor.assault]
 strength = [4, 3, 3, 3]
@@ -702,9 +702,9 @@ cost.xp = 24
 replaces = "steampowerarmor"
 
 [models.dwarf_battle_medic.unit_special]
-"Improved Resistance" = "unit gains Psychic resistance 2 as long as 1 battle medic is alive"
-"Heal" = "Unit gains: Heal[1, any, Healing 1]"
-"Protection" = "Unit gains 1 endurance token and this model counts as elites for life of vest support. See general rules for effect"
+"Improved Resistance" = "Psychic[2] as long as 1 battle medic is alive"
+"Heal" = "[1, any, Healing 1]"
+"Protection" = "1 endurance token and this model counts as elites for life of vest support."
 
 [models.dwarf_battle_medic.assault]
 strength = [4, 3, 3, 3]
@@ -727,7 +727,7 @@ cost.xp = 24
 replaces = "steampowerarmor"
 
 [models.dwarf_steampowerarmor_engineer.unit_special]
-"Repair" = "Unit gains: Repair[3, any, Healing 1]"
+"Repair" = "[3, any, Healing 1]"
 
 [models.dwarf_steampowerarmor_engineer.assault]
 strength = [3, 2, 2, 1]
@@ -750,7 +750,7 @@ cost.xp = 16
 replaces = "dwarf_infantry"
 
 [models.dwarf_engineer.unit_special]
-"Repair" = "Unit gains: Repair[3, any, Healing 1]"
+"Repair" = "Repair[3, any, Healing 1]"
 
 [models.dwarf_engineer.assault]
 strength = [2, 0, 0, 0]
@@ -809,7 +809,7 @@ replaces = "mini_zeppelin"
 cost.xp = 8
 
 [models.engineer_mini_zeppelin.unit_special]
-"Repair" = "Unit gains: Repair[2, self, Healing 1]"
+"Repair" = "Repair[2, self, Healing 1]"
 
 [models.engineer_mini_zeppelin.assault]
 strength = [4, 1, 1, 1]
@@ -1054,7 +1054,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
 [equipment.wheeled_shieldwall.unit_special]
-"Protection" = "Unit gains [5,0,0,0] in armor"
+"Protection" = "[5,0,0,0] in armor"
 
 [equipment.wheeled_shieldwall.assault]
 deflection.add = [1, 0, 0, 0]
@@ -1138,7 +1138,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.vest_of_life_support.unit_special]
-"Protection" = "Unit gains 1 endurance token per regular model  and 2 endurance tokens per elite model in the unit. See general rules for effect"
+"Protection" = "1 endurance token per regular model  and 2 endurance tokens per elite model in the unit."
 
 [equipment.stabilizer]
 name = "Stabilizer"
@@ -1162,7 +1162,7 @@ requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.trench_coat_of_resistance.unit_special]
 "Improved Resistance" = "Unit improves poison resistance and fire resistance with 1"
-"Immunity" = "Unit gains immunity to minor acid"
+"Immunity" = "Minor Acid"
 
 [equipment.brother_in_arms_armor]
 name = "Brother in Arms Armor"
@@ -1172,7 +1172,7 @@ upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
 [equipment.brother_in_arms_armor.unit_special]
-"Protection" = "Unit gains 2 endurance tokens per elite model in the unit. See general rules for effect. Stacks with vest of life support. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Unit gains [4,3,3,3] in armor"
+"Protection (2)" = "2 endurance tokens per elite model in the unit. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Add [4,3,3,3] in armor"
 
 [equipment.steamblower]
 name = "Steamblower"
@@ -1442,7 +1442,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:AT Gun"]]
 
 [equipment.hide.unit_special]
-"Hidden" = "Start the game with a hidden token."
+"Hidden" = "Start with a hidden token."
 "Forward Position" = "[1]"
 "Camouflage" = "[hill][-1]"
 

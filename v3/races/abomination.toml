@@ -85,7 +85,7 @@ description = '''Huge flagship floating above the ground armed with a greater fo
 [units.flagship.special]
 "Enormous" = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
 "Fog" = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token. If it has an into the fog token, and at least one part of the unit is not inside a fog, replace the into the fog with an out of the fog token. Out of the fog token is removed in aftermath phase"
-"Surprise" = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
+"Terror" = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
 "Fire Order" = "Fire and loads all weapons simultaneously"
 "Repair" = "[3, self, 2nd Healing]"
 "Officer" = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360° into either an F movement or an aim order."
@@ -240,7 +240,7 @@ movement_order = ["-", "-", "flee"]
 [units.abomination_infantry.special]
 "Take Cover" = "[still][-2]"
 "Terror" = "[6](range=1)"
-"Tentacle" = "If given additional tentacle weapons, they fire simultaneously with other weapons on regular Fire(s) order, not Fire(b) order"
+"Fire Order" = "If given additional tentacle weapons, they fire simultaneously with other weapons on regular Fire(s) order, not Fire(b) order"
 
 [units.abomination_infantry.orders.fire]
 still = [
@@ -289,7 +289,7 @@ movement_order = ["-", "-", "-"]
 "Fog" = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
 "Poison Cloud" = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
 "Resistance" = "Poison[12]"
-"Immunity" = "acid and fire"
+"Immunity" = "Acid and Fire"
 "Forward Position" = "[3]"
 "Note" = "loses terror, poison cloud when standing in water"
 
@@ -929,7 +929,7 @@ upgrade_all = true
 requires = [["Tentacles:1"], ["type:Infantry"]]
 
 [equipment.tentacle_shield.unit_special]
-"Protection" = "Unit gain [3, 2, 0, 0] in armor. Do not stack"
+"Protection" = "[3, 2, 0, 0] in armor."
 
 [equipment.tentacle_shield.assault]
 deflection.add = [2, 0, 0, 0]
@@ -947,7 +947,7 @@ description = """Abominations excel in water manipulation. A thin layer of water
 Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
 [equipment.water_shield.unit_special]
-"Resistance" = "Acid[1], Poison[1], Fire[1], Regular[1]. Armor assist: if this unit gain armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
+"Resistance" = "Acid[1], Poison[1], Fire[1], Regular[1]. Armor assist: if this unit have armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
 
 [equipment.frog_cavalry_armor]
 name = "Frog Cavalry Armor"
@@ -957,7 +957,7 @@ upgrade_all = true
 requires = [["type:Frog"]]
 
 [equipment.frog_cavalry_armor.unit_special]
-"Protection" = "Unit gain [4, 4, 3, 0] in armor."
+"Protection" = "[4, 4, 3, 0] in armor."
 
 [equipment.fog_grenade_mortar]
 name = "Fog Grenade Mortar"

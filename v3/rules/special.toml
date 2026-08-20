@@ -2,8 +2,8 @@
 
 [assault]
 
-[assault.reroll_assault]
-name = "Ork Reroll Assault"
+[assault.reroll        ]
+name = "Ork Reroll"
 short = "[{N}]"
 explanation = "Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll {N} dice per wave of rerolls. Thus {N} may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls."
 

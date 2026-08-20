@@ -182,7 +182,7 @@ description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycl
 
 
 [units.gnome_motorcycle.special]
-"Evation" = "Elusive[fast]: additional -1 to be hit while fast"
+"Ellusive" = "[fast]"
 
 [units.gnome_motorcycle.shaken]
 speed = "slow"
@@ -735,7 +735,7 @@ cost.xp = 4
 
 [models.elite_gnome_infantry.unit_special]
 "Fire Order" = "Treat any gunnery phase without any other order as fire(res) order instead (for this model only.)"
-"Resistance" = "Unit gains Psychic[1] as long as at least one elite model is alive."
+"Resistance" = "Psychic[1] as long as at least one elite model is alive."
 
 [models.elite_gnome_infantry.assault]
 strength = [1, 1, 1, 1]

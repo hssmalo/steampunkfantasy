@@ -1,19 +1,252 @@
-[unit_specials]
+#Til Geirarne:
+#kommentert ut references er special some ikke er skrevet men some kanskje burde være det
+#Note to self er ting some ejg skal gjøre.
+#Eksplisitt ditt navn, ta en titt.
 
-[unit_specials.Phoenix]
+[UnitSpecial]
+
+[UnitSpecial.Phoenix]
+
 references = []
 
-[unit_specials.Immunity]
+
+[UnitSpecial.Enormous]
+
+references = []
+#references = [Special.two_hex_unit]
+
+
+[UnitSpecial.Immunity]
+
 references = ["special.immunity"]
 
-[unit_specials.Extra_Damage]
-# references are guaranteed, potentials are not
+
+#To Geir Arne: versions, how to do?
+[UnitSpecial.Resistance]
+
+references = ["special.resistance"]
+
+#Note to self: rewrite as resistance (2) etc.
+[UnitSpecial.Improved_Resistance]
+
+references = ["special.resistance"]
+
+
+#Note: many of these adds armor. Instead we could have an add armor feature in equipment which modifies the armor of a unit. All of these are replace
+[UnitSpecial.protection]
+
+references = ["token.endurance"]
+
+#rules maybe needed not written into specials
+#references=['Special.armor_assist]
+
+[UnitSpecial.Take_Cover]
+
+#references=[Special.see_to_hit_table]
+
+
+[UnitSpecial.Camouflage]
+
+#references=[Special.see_to_hit_table]
+
+[UnitSpecial.Evation]
+
+references= [UnitSpecial.Evation]
+
+[UnitSpecial.Ellusive]
+
+#references= [UnitSpecial.see_to_hit_table]
+
+
+[UnitSpecial.hidden]
+
+#Note to self: make an orders.rules explanation and move hide and reveale to order.special. keep hidden unit special.
+references= [Token.hidden]
+
+[UnitSpecial.Movement]
+
 references = []
-potential_references = [
-    "token.minor_acid",
-    "token.poison",
-    "token.fire",
-    "token.confused",
-    "token.insane",
-    "token.hypnotized"
-]
+
+
+[UnitSpecial.Chase]
+
+references = []
+#references = [orders.chase]
+
+
+[UnitSpecial.Pet]
+
+#note to self, look into other units which has similar rules.
+references = []
+
+
+[UnitSpecial.Transport]
+
+#note to self: write all these as similar as possible
+references = []
+#references = [UnitSpecial.Transport, orders.deploy]
+
+
+[UnitSpecial.Tow]
+
+#Note to self: splitt between towing another unit and being towed.
+references = []
+#references = [UnitSpecial.Tow]
+
+[UnitSpecial.Fire_Order]
+
+references = []
+
+
+[UnitSpecial.Trap]
+
+references = []
+potential_references = ['hexes.goblin_acid_trap', 'hexes.drone_trap']
+
+[UnitSpecial.Reload]
+
+references = []
+
+
+[UnitSpecial.Regeneration]
+
+references = [special.heal]
+
+
+[UnitSpecial.Heal]
+
+references = [special.heal]
+
+[UnitSpecial.Heads]
+
+#not to self: not extremely elegant rule...
+references = []
+
+[UnitSpecial.Repair]
+
+references = [special.Repair]
+
+
+#To Geir Arne: dette referrer til å bli reparert... bedre navn?
+[UnitSpecial.Repairing]
+
+references = []
+
+
+[UnitSpecial.Terror]
+
+references = [special.Terror]
+
+[UnitSpecial.Hyptnotizing_Gaze]
+
+references = [special.Hyptnotizing_Gaze]
+
+
+#Note to self: look further at fog specails!!!
+#Modifications to be hit should be a unit ability, and to_hit penalties model abilities...
+#
+[UnitSpecial.Fog]
+
+# ???
+references = [hexes.fog]
+
+#Note to self: Flagship ability rename to into the fog
+#references = [tokens.into_the_fog, tokens.out_of_the_fog]
+
+[ModelSpecial.Fog]
+
+references = [hexes.fog]
+#references = [special.see_to_hit_table]
+
+[UnitSpecial.Illusion]
+
+references = []
+#references = [special.illusion]
+
+
+
+[UnitSpecial.Darkelf_Officer]
+
+references = []
+
+[UnitSpecial.Officer]
+
+references = []
+
+#Geir Arne: spesielt, psychic resistance
+potential_references = [special.resistance]
+#potential_references = [special.remove_shaken]
+
+
+[UnitSpecial.Pre-Assault_Retreat]
+
+# Note to self: write label and special the same way
+references = [special.pre_asssault_retreat]
+
+
+[UnitSpecial.Stacing_Limit]
+
+references = []
+
+
+
+[UnitSpecial.Spawn]
+
+references = []
+
+
+[UnitSpecial.Transfer]
+
+references = []
+
+[UnitSpecial.Vulnerability]
+
+references = []
+#references = [special.vulnerability]
+
+
+[UnitSpecial.Setup]
+
+references = []
+
+
+[UnitSpecial.Forward_position]
+
+references = [special.forward_position]
+
+
+[UnitSpecial.Activate]
+
+#Note to self, remove latex commands
+references = []
+
+
+[UnitSpecial.Note]
+
+#Note to self: review these
+references = []
+
+
+[UnitSpecial.Side_Weapon]
+
+references = []
+
+
+[UnitSpecial.Steady]
+
+references = []
+#references = [special.see_to_hit_table]
+
+
+
+
+
+
+
+
+
+[Range.Extra_Damage]
+
+#references are garanted, potentials are not
+references = []
+potential_references = ["token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
