@@ -1,19 +1,19 @@
-[UnitSpecial]
+[unit_specials]
 
-[UnitSpecial.Phoenix]
-
+[unit_specials.Phoenix]
 references = []
 
-
-
-[UnitSpecial.Immunity]
-
+[unit_specials.Immunity]
 references = ["special.immunity"]
 
-
-
-[UnitSpecial.Extra_Damage]
-
-#references are garanted, potentials are not
+[unit_specials.Extra_Damage]
+# references are guaranteed, potentials are not
 references = []
-potential_references = ["token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
+potential_references = [
+    "token.minor_acid",
+    "token.poison",
+    "token.fire",
+    "token.confused",
+    "token.insane",
+    "token.hypnotized"
+]
