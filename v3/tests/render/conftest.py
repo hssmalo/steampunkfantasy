@@ -2,6 +2,10 @@
 
 from pathlib import Path
 
+import pytest
+
+from spf.render import environments
+
 ART = Path("/assets/goblin/images/art.png")
 """A committed Image Asset that no test needs to exist on disk."""
 
@@ -18,3 +22,14 @@ class FakeLookup:
         """Record the Target asked about, then return the canned path."""
         self.calls.append((race, name))
         return self.path
+
+
+PINNED_VERSION = "1999.12.0"
+"""A version no release will ever carry, so version-stamped output stays stable."""
+
+
+@pytest.fixture
+def pinned_version(monkeypatch: pytest.MonkeyPatch) -> str:
+    """Pin the version the templates stamp, decoupling output from the release."""
+    monkeypatch.setattr(environments, "spf_version", lambda: PINNED_VERSION)
+    return PINNED_VERSION

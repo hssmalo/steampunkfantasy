@@ -3,9 +3,22 @@
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage{graphicx}
+\usepackage{fancyhdr}
+
+% A tiny version stamp in the footer of every page. `\maketitle` switches its
+% own page to the `plain` style, so `plain` is redefined to match — otherwise
+% the stamp is missing from exactly the page most people look at.
+\newcommand{\versionfoot}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%  the page number the table of contents points at
+  \fancyfoot[R]{\tiny v\VAR{spf_version}}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+\pagestyle{fancy}
+\versionfoot
+\fancypagestyle{plain}{\versionfoot}
 
 \title{\VAR{source.title | latex_escape}}
-\date{}
 
 \begin{document}
 \maketitle

@@ -15,6 +15,7 @@ from spf.render.derivations import RenderError, latex_to_pdf, md_to_html
 from spf.render.environments import make_environments, posix_path, relative_to
 from spf.render.formats import FORMATS, get_format
 from spf.render.products import PRODUCTS, get_product, register_product
+from spf.version import spf_version
 
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "templates"
 ENGINE = config.render.latex.engine
@@ -280,3 +281,22 @@ def test_format_choices_derive_from_registry() -> None:
     assert DEFAULT_FORMAT == "pdf"
     assert RenderOpts().format == "pdf"
     assert DEFAULT_FORMAT in FORMATS
+
+
+# --- Version global ---------------------------------------------------------
+
+
+def test_environments_expose_the_version_to_both_families() -> None:
+    envs = make_environments(templates_root=FIXTURES)
+    assert envs["markdown"].globals["spf_version"] == spf_version()
+    assert envs["latex"].globals["spf_version"] == spf_version()
+
+
+def test_markdown_template_can_reference_the_version() -> None:
+    envs = make_environments(templates_root=FIXTURES)
+    assert envs["markdown"].from_string("{{ spf_version }}").render() == spf_version()
+
+
+def test_latex_template_can_reference_the_version() -> None:
+    envs = make_environments(templates_root=FIXTURES)
+    assert envs["latex"].from_string(r"\VAR{spf_version}").render() == spf_version()

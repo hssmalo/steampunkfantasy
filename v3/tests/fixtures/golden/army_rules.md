@@ -1,5 +1,7 @@
 # The Iron Claws — goblin — 132 points
 
+*v1999.12.0*
+
 ## Goblin Infantry
 
 - Size: Small
