@@ -16,6 +16,7 @@ from spf.config import config
 from spf.render.formats import Family
 from spf.render.latex_text import latex_escape
 from spf.render.md_latex import md_to_latex, shift_headings
+from spf.version import spf_version
 
 
 def posix_path(value: PurePath | str) -> str:
@@ -78,4 +79,9 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
     # The Markdown family needs no conversion — its data is already Markdown —
     # only the source's headings pushed below the one it renders under.
     markdown.filters["shift_headings"] = shift_headings
+    # A global rather than render context: every document stamps the version it
+    # was rendered by, and no render call site should have to thread it through.
+    version = spf_version()
+    latex.globals["spf_version"] = version
+    markdown.globals["spf_version"] = version
     return {"markdown": markdown, "latex": latex}
