@@ -9,7 +9,9 @@ This module is pure filesystem: no HTTP, no config import at module scope.
 Roots are passed as arguments so it is trivially testable with `tmp_path`.
 """
 
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Literal
 
 REFINE_SUFFIX = "-refine"
 _EXCLUDED_ENVS = frozenset({"examples"})
@@ -65,6 +67,36 @@ def resolve(
     raise ValueError(msg)
 
 
+@dataclass(frozen=True)
+class ProfileStatus:
+    """The outcome of checking one Environment's configured Profile.
+
+    `not-set-up` is distinct from `broken`: an Environment directory that is
+    not committed (`workflows/local/`) is absent on a fresh clone, which says
+    nothing about whether the configuration is right.
+    """
+
+    env: str
+    profile: str
+    state: Literal["ok", "broken", "not-set-up"]
+    detail: str = ""
+
+
+def check(
+    workflows_root: Path, env: str, profile: str, *, project_root: Path
+) -> ProfileStatus:
+    """Report whether `env`'s configured Profile resolves to a Workflow."""
+    env_dir = workflows_root / env
+    if not available(workflows_root, env):
+        shown = _relative_path(env_dir, project_root)
+        return ProfileStatus(env, profile, "not-set-up", f"no workflows in {shown}/")
+    try:
+        path = resolve(workflows_root, env, profile, project_root=project_root)
+    except ValueError as err:
+        return ProfileStatus(env, profile, "broken", str(err))
+    return ProfileStatus(env, profile, "ok", _relative_path(path, project_root))
+
+
 def resolve_refine(
     workflows_root: Path, env: str, profile: str, *, project_root: Path
 ) -> Path:
@@ -78,3 +110,44 @@ def resolve_refine(
     shown = _relative_path(path, project_root)
     msg = f"profile '{profile}' has no refine workflow (expected {shown})"
     raise ValueError(msg)
+
+
+@dataclass(frozen=True)
+class ProfileInfo:
+    """One discovered Profile, and whether it is complete and configured."""
+
+    name: str
+    path: str
+    has_refine: bool
+    configured: bool
+
+
+@dataclass(frozen=True)
+class EnvReport:
+    """Everything one Environment offers, plus how its configured Profile fares.
+
+    `profiles` is what the Environment *has*; `status` is whether what config
+    *asks for* is there. They are separate questions: an Environment can offer
+    three working Profiles and still be misconfigured.
+    """
+
+    env: str
+    status: ProfileStatus
+    profiles: list[ProfileInfo]
+
+
+def describe(
+    workflows_root: Path, env: str, profile: str, *, project_root: Path
+) -> EnvReport:
+    """List `env`'s Profiles alongside the verdict on its configured one."""
+    status = check(workflows_root, env, profile, project_root=project_root)
+    infos = [
+        ProfileInfo(
+            name=name,
+            path=_relative_path(workflows_root / env / f"{name}.json", project_root),
+            has_refine=(workflows_root / env / f"{name}{REFINE_SUFFIX}.json").is_file(),
+            configured=name == profile,
+        )
+        for name in available(workflows_root, env)
+    ]
+    return EnvReport(env=env, status=status, profiles=infos)

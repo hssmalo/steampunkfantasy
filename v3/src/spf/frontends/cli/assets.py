@@ -35,9 +35,11 @@ from spf.assets import image as _image
 from spf.assets.comfyui import ComfyUIError, ComfyUIService
 from spf.assets.kinds import KINDS
 from spf.assets.kinds import Kind as AssetKind
+from spf.assets.profiles import EnvReport, describe
 from spf.config import config
 from spf.console import stderr, stdout
 from spf.schemas import type_aliases as t
+from spf.schemas.config import COMFYUI_ENV_NAMES
 
 _SEED_BOUND = 2**31
 
@@ -67,6 +69,7 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(promote_asset, name="promote")
     app.command(refine_asset, name="refine")
     app.command(image, name="image")
+    app.command(profiles, name="profiles")
 
 
 def _validate_kind(_type: type, value: str | None) -> None:
@@ -526,13 +529,16 @@ def image(  # noqa: PLR0913  CLI surface, parameters are fixed
     image_opts = image_opts or ImageOpts()
     kind = get_kind("image")
 
-    svc, env_name, profile_name = _resolve_image_service(image_opts)
-
+    # Arguments are validated before the Service is built, so a mistyped unit
+    # is reported as such rather than as whatever the machine's ComfyUI
+    # Environment happens to be missing.
     try:
         selected = _image_targets(kind, race, unit, all_=all_, missing=missing)
     except ValueError as err:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
+
+    svc, env_name, profile_name = _resolve_image_service(image_opts)
 
     # Partition before generating rather than skipping mid-loop (ADR 0015), so
     # the batch's real shape is on screen before any GPU time is spent on it.
@@ -604,3 +610,61 @@ def _generate_image(  # noqa: PLR0913  internal seam, parameters are fixed
     stdout.print(
         f"Promote one with: spf assets promote {race} image {target.name} --pick N"
     )
+
+
+def _print_env(report: EnvReport, *, selected: bool) -> None:
+    """Print one Environment's heading and its Profiles."""
+    marker = "  [cyan](selected)[/]" if selected else ""
+    if report.status.state == "not-set-up":
+        # Absent is a fact about this machine, not a fault: `workflows/local/`
+        # is gitignored, so a fresh clone legitimately has only the committed
+        # Environments.
+        stdout.print(
+            f"[bold]{report.env}[/]{marker}  [dim]not set up "
+            f"({report.status.detail})[/]",
+            highlight=False,
+        )
+        return
+
+    stdout.print(f"[bold]{report.env}[/]{marker}", highlight=False)
+    width = max(len(p.name) for p in report.profiles)
+    for profile in report.profiles:
+        # The configured Profile is the one this Environment uses when nothing
+        # overrides it, so it is worth picking out of a list of equals.
+        bullet = "[green]*[/]" if profile.configured else " "
+        note = "" if profile.has_refine else "  [yellow](no refine workflow)[/]"
+        stdout.print(
+            f"  {bullet} {profile.name:<{width}}  [dim]{profile.path}[/]{note}",
+            highlight=False,
+        )
+
+
+def profiles() -> None:
+    """List the ComfyUI Profiles each Environment offers, and check the configured one.
+
+    Prints every Profile found under `workflows/<env>/`, marking the one each
+    Environment is configured to use. An Environment whose directory is absent
+    is reported and skipped rather than failed: `workflows/local/` is per-machine
+    and gitignored, so a fresh clone legitimately has only the committed ones.
+    Exits non-zero when a Profile that *should* resolve does not, which is a
+    configuration error — this is what `just validate` runs it for.
+    """
+    comfyui = config.assets.image.comfyui
+    broken: list[str] = []
+    for env_name in COMFYUI_ENV_NAMES:
+        # Each Environment's own configured Profile, not the global override:
+        # the question is whether the committed config and the committed
+        # Workflows agree, which an ad-hoc runtime selection cannot answer.
+        report = describe(
+            config.paths.workflows,
+            env_name,
+            comfyui.selected(env_name).profile,
+            project_root=config.paths.project,
+        )
+        _print_env(report, selected=env_name == comfyui.env)
+        if report.status.state == "broken":
+            broken.append(report.status.detail)
+    for detail in broken:
+        stderr.print(f"[red]Error:[/] {detail}")
+    if broken:
+        raise SystemExit(1)

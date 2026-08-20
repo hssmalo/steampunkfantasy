@@ -55,6 +55,7 @@ validate:
     uv run spf rules tokens > /dev/null
     uv run spf rules to_hit > /dev/null
     uv run spf rules rulebook > /dev/null
+    uv run spf assets profiles > /dev/null
 
 # Lint race data for name and key consistency.
 lint-races:

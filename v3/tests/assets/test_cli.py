@@ -195,6 +195,22 @@ def test_image_command_errors_cleanly_on_an_unknown_unit(
     assert "grunt" in err
 
 
+def test_image_command_reports_a_bad_unit_before_an_unresolvable_env(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A typo in the arguments outranks a ComfyUI Environment that cannot be
+    # resolved: the caller is told what they got wrong, not what the machine
+    # is missing.
+    argv = ["assets", "image", "ork", "nosuchunit", "--env", "nosuchenv"]
+
+    with pytest.raises(SystemExit):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+    err = capsys.readouterr().err
+    assert "nosuchunit" in err
+    assert "nosuchenv" not in err
+
+
 def test_list_command_reports_coverage_for_one_race(
     registered_kind: Kind, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -759,3 +775,92 @@ def test_image_command_reports_an_entirely_brief_less_batch_as_nothing_to_do(
     captured = capsys.readouterr()
     assert "troll" in captured.err
     assert "Nothing to generate." in captured.out
+
+
+def _workflows_at(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *rel: str) -> None:
+    """Point config at a tmp workflows tree holding exactly `rel`."""
+    for r in rel:
+        path = tmp_path / "workflows" / r
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("{}")
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.paths, "project", tmp_path)
+    monkeypatch.setattr(config.assets.image.comfyui, "profile", "")
+
+
+def test_profiles_command_passes_when_committed_envs_resolve(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/qwen.json")
+
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    out = unwrapped(capsys.readouterr().out)
+    assert "cloud" in out
+    # An env with no directory here is a fact about the machine, not a failure.
+    assert "local" in out
+
+
+def test_profiles_command_fails_when_a_committed_env_is_misconfigured(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/somethingelse.json")
+
+    with pytest.raises(SystemExit):
+        app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    assert "somethingelse" in unwrapped(capsys.readouterr().err)
+
+
+def test_profiles_command_lists_every_available_profile(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/qwen.json", "cloud/krea2.json")
+
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    out = unwrapped(capsys.readouterr().out)
+    # The configured Profile is `qwen`; `krea2` is only discoverable by listing.
+    assert "krea2" in out
+
+
+def test_profiles_command_marks_the_configured_profile(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/qwen.json", "cloud/krea2.json")
+
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    lines = capsys.readouterr().out.splitlines()
+    marked = [line for line in lines if line.strip().startswith("*")]
+    assert len(marked) == 1
+    assert "qwen" in marked[0]
+
+
+def test_profiles_command_flags_a_profile_missing_its_refine_workflow(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/qwen.json", "cloud/qwen-refine.json")
+
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+    complete = unwrapped(capsys.readouterr().out)
+
+    _workflows_at(monkeypatch, tmp_path / "b", "cloud/qwen.json")
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+    incomplete = unwrapped(capsys.readouterr().out)
+
+    assert "no refine" not in complete
+    assert "no refine" in incomplete
+
+
+def test_profiles_command_shows_which_env_is_selected(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/qwen.json", "local/qwen.json")
+    monkeypatch.setattr(config.assets.image.comfyui, "env", "cloud")
+
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    lines = [ln for ln in capsys.readouterr().out.splitlines() if "selected" in ln]
+    assert len(lines) == 1
+    assert "cloud" in lines[0]

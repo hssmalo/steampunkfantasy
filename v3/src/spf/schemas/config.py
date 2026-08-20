@@ -1,6 +1,7 @@
 """Schema for configuration of SteamPunkFantasy."""
 
 from pathlib import Path
+from typing import Literal, get_args
 
 from pydantic import Field
 
@@ -34,6 +35,17 @@ class AssetKindConfig(StrictModel):
     count: int
 
 
+type ComfyUIEnvName = Literal["local", "cloud"]
+"""The ComfyUI Environments this project knows about.
+
+One Environment per committed `workflows/<env>/` directory. Kept as a Literal
+so the names have a single source: `ComfyUIConfig` derives its lookup and its
+error message from it, and `spf assets profiles` iterates it.
+"""
+
+COMFYUI_ENV_NAMES: tuple[ComfyUIEnvName, ...] = get_args(ComfyUIEnvName.__value__)
+
+
 class ComfyUIEnvConfig(StrictModel):
     """A single ComfyUI Environment: where to reach it and its default Profile."""
 
@@ -58,11 +70,11 @@ class ComfyUIConfig(StrictModel):
         the name is neither (mirrors `spf.assets.get_kind`).
         """
         env_name = name if name is not None else self.env
-        if env_name == "local":
-            return self.local
-        if env_name == "cloud":
-            return self.cloud
-        msg = f"Unknown ComfyUI env {env_name!r}; known envs: local, cloud"
+        if env_name in COMFYUI_ENV_NAMES:
+            block: ComfyUIEnvConfig = getattr(self, env_name)
+            return block
+        known = ", ".join(COMFYUI_ENV_NAMES)
+        msg = f"Unknown ComfyUI env {env_name!r}; known envs: {known}"
         raise ValueError(msg)
 
 

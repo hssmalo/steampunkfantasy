@@ -16,9 +16,26 @@ just spell      # Spell-check with typos
 just spell-fix  # Fix spelling errors with typos
 just test       # Run the test suite quietly (accepts extra pytest args, e.g. `just test -k foo`)
 just fix        # Auto-fix lint issues, then reformat
-just validate   # Validate all the TOML files via the spf CLI
+just validate   # Validate the TOML files and the ComfyUI profiles via the spf CLI
 just lint-races # Lint race data for name and key consistency (spf race lint)
 ```
+
+## Tests depend only on tracked files
+
+A test may read the real filesystem only for files **git tracks** — `races/`,
+`rules/`, `configs/spf.toml`, `workflows/cloud/`, `workflows/examples/`. Those
+are byte-identical on every machine, so they carry real signal.
+
+Anything gitignored or per-machine — `workflows/local/`, `.envrc`, a local
+ComfyUI install — must never be a precondition. A test that depends on one
+passes or fails on how the machine happens to be set up: green for whoever
+wrote it, red in a fresh clone or worktree, and green again for anyone whose
+shell exports a different default. Point such a test at `tmp_path` instead
+(see `_install_workflows` in `tests/assets/test_image.py`).
+
+Whether the committed config and the committed data actually agree is a
+separate question, and it belongs in `just validate` — where `spf assets
+profiles` checks it — not in the test suite.
 
 ## Releases
 

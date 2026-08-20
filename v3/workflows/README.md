@@ -34,6 +34,25 @@ The default Profile is configured per-env (`assets.image.comfyui.local.profile`
 and `assets.image.comfyui.cloud.profile`). Override with `--profile` or
 `SPF_COMFYUI_PROFILE`.
 
+## Listing what is here
+
+`spf assets profiles` lists every Profile each Environment offers, marks the
+one that Environment is configured to use, and flags any missing its refine
+Workflow:
+
+```console
+$ spf assets profiles
+local  (selected)  not set up (no workflows in workflows/local/)
+cloud
+    krea2  workflows/cloud/krea2.json  (no refine workflow)
+  * qwen   workflows/cloud/qwen.json
+```
+
+Because Profiles are discovered rather than declared, this is the only way to
+see what is actually available. It exits non-zero when a *configured* Profile
+does not resolve, which is why `just validate` runs it; an Environment with no
+directory is reported and skipped, so a fresh clone passes.
+
 ## Adding a Profile
 
 1. Export the graph from ComfyUI using **Save (API Format)**, *not* the plain
