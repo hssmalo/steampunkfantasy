@@ -76,6 +76,21 @@ wheels = [
 ]
 
 [[package]]
+name = "bumpver"
+version = "2026.1132"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "colorama" },
+    { name = "lexid" },
+    { name = "toml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/25/22/c0c9bf9e7ad6877e4c7c3dedd464e390d9fadb8927c61d6d77547eb17539/bumpver-2026.1132.tar.gz", hash = "sha256:80b223c23fca9bc9dd569b7a44680949d34bee23a738860d9a9b36f1abe3b0e0", size = 116784, upload-time = "2026-05-22T18:40:32.333Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ab/d6/45c1bf6bcf7b3f174ec0c7fe2d7dce773cbc853cfd8fde06c3153104ffff/bumpver-2026.1132-py2.py3-none-any.whl", hash = "sha256:b060170e7ff5d9ad7043a9d3d6288c7175f9c126744d08a2d6ef9b8377f6bd60", size = 65963, upload-time = "2026-05-22T18:40:30.515Z" },
+]
+
+[[package]]
 name = "cachetools"
 version = "7.1.4"
 source = { registry = "https://pypi.org/simple" }
@@ -421,6 +436,15 @@ wheels = [
 ]
 
 [[package]]
+name = "lexid"
+version = "2021.1006"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/0b/28a3f9abc75abbf1fa996eb2dd77e1e33a5d1aac62566e3f60a8ec8b8a22/lexid-2021.1006.tar.gz", hash = "sha256:509a3a4cc926d3dbf22b203b18a4c66c25e6473fb7c0e0d30374533ac28bafe5", size = 11525, upload-time = "2021-04-02T20:18:34.668Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/e3/35764404a4b7e2021be1f88f42264c2e92e0c4720273559a62461ce64a47/lexid-2021.1006-py2.py3-none-any.whl", hash = "sha256:5526bb5606fd74c7add23320da5f02805bddd7c77916f2dc1943e6bada8605ed", size = 7587, upload-time = "2021-04-02T20:18:33.129Z" },
+]
+
+[[package]]
 name = "markdown-it-py"
 version = "4.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -660,7 +684,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess" },
+    { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [
@@ -1254,7 +1278,7 @@ wheels = [
 
 [[package]]
 name = "spf"
-version = "0.1.0"
+version = "2026.7.0"
 source = { editable = "." }
 dependencies = [
     { name = "codetiming" },
@@ -1269,6 +1293,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "bumpver" },
     { name = "ipython" },
     { name = "prek" },
     { name = "pyright" },
@@ -1291,6 +1316,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "bumpver", specifier = ">=2026.1132" },
     { name = "ipython", specifier = ">=9.12.0" },
     { name = "prek", specifier = ">=0.3.8" },
     { name = "pyright", specifier = ">=1.1.408" },

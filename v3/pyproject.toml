@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "spf"
-version = "0.1.0"
+version = "2026.7.0"
 description = "SteamPunkFantasy"
 readme = "README.md"
 authors = [
@@ -28,12 +28,35 @@ spf = "spf.__main__:main"
 
 [dependency-groups]
 dev = [
+    "bumpver>=2026.1132",
     "ipython>=9.12.0",
     "prek>=0.3.8",
     "pyright>=1.1.408",
     "pytest>=9.0.3",
     "ruff>=0.15.9",
     "typos>=1.45.0",
+]
+
+#
+# Bumpver - cut a CalVer release
+#
+[tool.bumpver]
+# The v-prefix lives only in the tag/current_version; `{pep440_version}` strips it
+# so `[project].version` stays a bare PEP 440 string.
+current_version = "v2026.7.0"
+version_pattern = "vYYYY.MM.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+pre_commit_hook = ".pre-commit-bumpver.sh"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+    'version = "{pep440_version}"',
 ]
 
 #
