@@ -8,7 +8,7 @@
 # The v-prefix lives only in the tag/current_version; `{pep440_version}` strips
 # it so `[project].version` stays a bare PEP 440 string.
 [bumpver]
-current_version = "v2026.7.0"
+current_version = "v2026.8.0"
 version_pattern = "vYYYY.MM.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 tag_message = "{new_version}"
