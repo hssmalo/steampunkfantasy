@@ -16,11 +16,14 @@ for _var in ("FORCE_COLOR", "COLORTERM"):
     os.environ.pop(_var, None)
 os.environ["TERM"] = "dumb"
 
-# `spf.config` folds SPF_COMFYUI_ENV/PROFILE into the Configuration at import,
-# so a contributor's exported ComfyUI selection would otherwise decide which
-# Environment and Profile the suite resolves against. Tests pin what they need
-# on `config` directly; the ambient selection is not theirs to inherit.
-for _var in ("SPF_COMFYUI_ENV", "SPF_COMFYUI_PROFILE"):
+# `SPF_` is the project's namespace: `spf.config`, `spf.rules` and `spf.armies.io`
+# all fold `SPF_`-prefixed variables into their Configuration at import, so any
+# exported one can decide what the suite resolves against — a contributor's
+# `SPF_COMFYUI_ENV=cloud` picked the Environment for the whole run. Clearing the
+# namespace wholesale keeps that true of variables added later, which an explicit
+# list would not. Tests pin what they need on `config`, or set their own vars
+# through `monkeypatch` after this has run; the ambient ones are not theirs.
+for _var in [_name for _name in os.environ if _name.startswith("SPF_")]:
     os.environ.pop(_var, None)
 
 # Rich otherwise takes its width from the invoking terminal, so where a message

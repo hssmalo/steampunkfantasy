@@ -110,3 +110,44 @@ def resolve_refine(
     shown = _relative_path(path, project_root)
     msg = f"profile '{profile}' has no refine workflow (expected {shown})"
     raise ValueError(msg)
+
+
+@dataclass(frozen=True)
+class ProfileInfo:
+    """One discovered Profile, and whether it is complete and configured."""
+
+    name: str
+    path: str
+    has_refine: bool
+    configured: bool
+
+
+@dataclass(frozen=True)
+class EnvReport:
+    """Everything one Environment offers, plus how its configured Profile fares.
+
+    `profiles` is what the Environment *has*; `status` is whether what config
+    *asks for* is there. They are separate questions: an Environment can offer
+    three working Profiles and still be misconfigured.
+    """
+
+    env: str
+    status: ProfileStatus
+    profiles: list[ProfileInfo]
+
+
+def describe(
+    workflows_root: Path, env: str, profile: str, *, project_root: Path
+) -> EnvReport:
+    """List `env`'s Profiles alongside the verdict on its configured one."""
+    status = check(workflows_root, env, profile, project_root=project_root)
+    infos = [
+        ProfileInfo(
+            name=name,
+            path=_relative_path(workflows_root / env / f"{name}.json", project_root),
+            has_refine=(workflows_root / env / f"{name}{REFINE_SUFFIX}.json").is_file(),
+            configured=name == profile,
+        )
+        for name in available(workflows_root, env)
+    ]
+    return EnvReport(env=env, status=status, profiles=infos)

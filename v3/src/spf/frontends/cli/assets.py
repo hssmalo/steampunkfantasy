@@ -35,10 +35,11 @@ from spf.assets import image as _image
 from spf.assets.comfyui import ComfyUIError, ComfyUIService
 from spf.assets.kinds import KINDS
 from spf.assets.kinds import Kind as AssetKind
-from spf.assets.profiles import check
+from spf.assets.profiles import EnvReport, describe
 from spf.config import config
 from spf.console import stderr, stdout
 from spf.schemas import type_aliases as t
+from spf.schemas.config import COMFYUI_ENV_NAMES
 
 _SEED_BOUND = 2**31
 
@@ -611,41 +612,59 @@ def _generate_image(  # noqa: PLR0913  internal seam, parameters are fixed
     )
 
 
-_ENV_NAMES = ("local", "cloud")
+def _print_env(report: EnvReport, *, selected: bool) -> None:
+    """Print one Environment's heading and its Profiles."""
+    marker = "  [cyan](selected)[/]" if selected else ""
+    if report.status.state == "not-set-up":
+        # Absent is a fact about this machine, not a fault: `workflows/local/`
+        # is gitignored, so a fresh clone legitimately has only the committed
+        # Environments.
+        stdout.print(
+            f"[bold]{report.env}[/]{marker}  [dim]not set up "
+            f"({report.status.detail})[/]",
+            highlight=False,
+        )
+        return
+
+    stdout.print(f"[bold]{report.env}[/]{marker}", highlight=False)
+    width = max(len(p.name) for p in report.profiles)
+    for profile in report.profiles:
+        # The configured Profile is the one this Environment uses when nothing
+        # overrides it, so it is worth picking out of a list of equals.
+        bullet = "[green]*[/]" if profile.configured else " "
+        note = "" if profile.has_refine else "  [yellow](no refine workflow)[/]"
+        stdout.print(
+            f"  {bullet} {profile.name:<{width}}  [dim]{profile.path}[/]{note}",
+            highlight=False,
+        )
 
 
 def profiles() -> None:
-    """Check that each ComfyUI Environment's configured Profile resolves.
+    """List the ComfyUI Profiles each Environment offers, and check the configured one.
 
-    An Environment whose directory is absent is reported and skipped rather
-    than failed: `workflows/local/` is per-machine and gitignored, so a fresh
-    clone legitimately has only the committed ones. Exits non-zero when a
-    Profile that *should* resolve does not, which is a configuration error.
+    Prints every Profile found under `workflows/<env>/`, marking the one each
+    Environment is configured to use. An Environment whose directory is absent
+    is reported and skipped rather than failed: `workflows/local/` is per-machine
+    and gitignored, so a fresh clone legitimately has only the committed ones.
+    Exits non-zero when a Profile that *should* resolve does not, which is a
+    configuration error — this is what `just validate` runs it for.
     """
     comfyui = config.assets.image.comfyui
-    broken = False
-    for env_name in _ENV_NAMES:
+    broken: list[str] = []
+    for env_name in COMFYUI_ENV_NAMES:
         # Each Environment's own configured Profile, not the global override:
         # the question is whether the committed config and the committed
         # Workflows agree, which an ad-hoc runtime selection cannot answer.
-        profile_name = comfyui.selected(env_name).profile
-        status = check(
+        report = describe(
             config.paths.workflows,
             env_name,
-            profile_name,
+            comfyui.selected(env_name).profile,
             project_root=config.paths.project,
         )
-        if status.state == "ok":
-            stdout.print(
-                f"[green]ok[/]        {env_name}/{profile_name}  {status.detail}",
-                highlight=False,
-            )
-        elif status.state == "not-set-up":
-            stdout.print(
-                f"[dim]not set up[/] {env_name}  ({status.detail})", highlight=False
-            )
-        else:
-            broken = True
-            stderr.print(f"[red]Error:[/] {status.detail}")
+        _print_env(report, selected=env_name == comfyui.env)
+        if report.status.state == "broken":
+            broken.append(report.status.detail)
+    for detail in broken:
+        stderr.print(f"[red]Error:[/] {detail}")
     if broken:
         raise SystemExit(1)

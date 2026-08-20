@@ -4,7 +4,13 @@ from pathlib import Path
 
 import pytest
 
-from spf.assets.profiles import available, check, resolve, resolve_refine
+from spf.assets.profiles import (
+    available,
+    check,
+    describe,
+    resolve,
+    resolve_refine,
+)
 
 
 def _touch(root: Path, *rel: str) -> None:
@@ -156,3 +162,43 @@ def test_check_skips_an_env_directory_that_offers_no_profiles(tmp_path: Path) ->
     # Created but not yet populated: still a fact about the machine.
     status = check(workflows, "local", "qwen", project_root=project)
     assert status.state == "not-set-up"
+
+
+def test_describe_lists_every_profile_in_the_env(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "local/qwen.json", "local/krea2.json")
+
+    report = describe(workflows, "local", "qwen", project_root=project)
+
+    assert [p.name for p in report.profiles] == ["krea2", "qwen"]
+
+
+def test_describe_marks_the_configured_profile(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "local/qwen.json", "local/krea2.json")
+
+    report = describe(workflows, "local", "qwen", project_root=project)
+
+    assert [p.name for p in report.profiles if p.configured] == ["qwen"]
+
+
+def test_describe_flags_a_profile_without_a_refine_workflow(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "local/qwen.json", "local/qwen-refine.json", "local/krea2.json")
+
+    report = describe(workflows, "local", "qwen", project_root=project)
+
+    assert {p.name: p.has_refine for p in report.profiles} == {
+        "qwen": True,
+        "krea2": False,
+    }
+
+
+def test_describe_reports_an_env_that_is_not_set_up(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "cloud/qwen.json")
+
+    report = describe(workflows, "local", "qwen", project_root=project)
+
+    assert report.status.state == "not-set-up"
+    assert report.profiles == []
