@@ -682,6 +682,8 @@ def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None
 # standalone Army Reference. `image_for=no_image` keeps the fixture
 # independent of the committed Asset store's contents.
 
+# The version is pinned for this comparison: the documents stamp the version
+# that rendered them, which would otherwise drift the goldens every release.
 GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
 
 
@@ -689,6 +691,7 @@ GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
     ("fmt_name", "golden_name"),
     [("markdown", "army_rules.md"), ("latex", "army_rules.tex")],
 )
+@pytest.mark.usefixtures("pinned_version")
 def test_army_rules_output_matches_golden_file(
     tmp_path: Path, fmt_name: str, golden_name: str
 ) -> None:

@@ -12,6 +12,8 @@
 | shaken:{% for cell in shaken_cells %} {{ cell }} |{% endfor %}{{ ' |' * (ncols - shaken_cells | length) }}
 {% endif -%}
 {% endmacro -%}
+*v{{ spf_version }}*
+
 {% for unit in source.units -%}
 ## {{ unit.name }}
 

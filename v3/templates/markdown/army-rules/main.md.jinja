@@ -1,4 +1,6 @@
 # {{ source.nick }} — {{ source.race }} — {{ source.points }} points
+
+*v{{ spf_version }}*
 {% if source.race_image %}
 ![{{ source.race }}]({{ source.race_image | relative_to(output_dir) }})
 {% endif %}
