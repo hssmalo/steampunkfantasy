@@ -775,3 +775,37 @@ def test_image_command_reports_an_entirely_brief_less_batch_as_nothing_to_do(
     captured = capsys.readouterr()
     assert "troll" in captured.err
     assert "Nothing to generate." in captured.out
+
+
+def _workflows_at(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *rel: str) -> None:
+    """Point config at a tmp workflows tree holding exactly `rel`."""
+    for r in rel:
+        path = tmp_path / "workflows" / r
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("{}")
+    monkeypatch.setattr(config.paths, "workflows", tmp_path / "workflows")
+    monkeypatch.setattr(config.paths, "project", tmp_path)
+
+
+def test_profiles_command_passes_when_committed_envs_resolve(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/qwen.json")
+
+    app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    out = unwrapped(capsys.readouterr().out)
+    assert "cloud" in out
+    # An env with no directory here is a fact about the machine, not a failure.
+    assert "local" in out
+
+
+def test_profiles_command_fails_when_a_committed_env_is_misconfigured(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _workflows_at(monkeypatch, tmp_path, "cloud/somethingelse.json")
+
+    with pytest.raises(SystemExit):
+        app(["assets", "profiles"], exit_on_error=False, result_action="return_value")
+
+    assert "somethingelse" in unwrapped(capsys.readouterr().err)

@@ -35,6 +35,7 @@ from spf.assets import image as _image
 from spf.assets.comfyui import ComfyUIError, ComfyUIService
 from spf.assets.kinds import KINDS
 from spf.assets.kinds import Kind as AssetKind
+from spf.assets.profiles import check
 from spf.config import config
 from spf.console import stderr, stdout
 from spf.schemas import type_aliases as t
@@ -67,6 +68,7 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(promote_asset, name="promote")
     app.command(refine_asset, name="refine")
     app.command(image, name="image")
+    app.command(profiles, name="profiles")
 
 
 def _validate_kind(_type: type, value: str | None) -> None:
@@ -607,3 +609,40 @@ def _generate_image(  # noqa: PLR0913  internal seam, parameters are fixed
     stdout.print(
         f"Promote one with: spf assets promote {race} image {target.name} --pick N"
     )
+
+
+_ENV_NAMES = ("local", "cloud")
+
+
+def profiles() -> None:
+    """Check that each ComfyUI Environment's configured Profile resolves.
+
+    An Environment whose directory is absent is reported and skipped rather
+    than failed: `workflows/local/` is per-machine and gitignored, so a fresh
+    clone legitimately has only the committed ones. Exits non-zero when a
+    Profile that *should* resolve does not, which is a configuration error.
+    """
+    comfyui = config.assets.image.comfyui
+    broken = False
+    for env_name in _ENV_NAMES:
+        profile_name = comfyui.profile or comfyui.selected(env_name).profile
+        status = check(
+            config.paths.workflows,
+            env_name,
+            profile_name,
+            project_root=config.paths.project,
+        )
+        if status.state == "ok":
+            stdout.print(
+                f"[green]ok[/]        {env_name}/{profile_name}  {status.detail}",
+                highlight=False,
+            )
+        elif status.state == "not-set-up":
+            stdout.print(
+                f"[dim]not set up[/] {env_name}  ({status.detail})", highlight=False
+            )
+        else:
+            broken = True
+            stderr.print(f"[red]Error:[/] {status.detail}")
+    if broken:
+        raise SystemExit(1)

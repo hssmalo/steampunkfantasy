@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from spf.assets.profiles import available, resolve, resolve_refine
+from spf.assets.profiles import available, check, resolve, resolve_refine
 
 
 def _touch(root: Path, *rel: str) -> None:
@@ -121,3 +121,30 @@ def test_resolve_refine_error_shows_project_relative_path(tmp_path: Path) -> Non
     _touch(workflows, "local/qwen.json")
     with pytest.raises(ValueError, match=r"workflows/local/qwen-refine\.json"):
         resolve_refine(workflows, "local", "qwen", project_root=project)
+
+
+def test_check_reports_ok_when_the_configured_profile_resolves(
+    tmp_path: Path,
+) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "cloud/qwen.json")
+    status = check(workflows, "cloud", "qwen", project_root=project)
+    assert status.state == "ok"
+    assert status.detail == "workflows/cloud/qwen.json"
+
+
+def test_check_reports_broken_when_the_profile_is_missing(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "cloud/krea2.json")
+    status = check(workflows, "cloud", "qwen", project_root=project)
+    assert status.state == "broken"
+    assert "krea2" in status.detail  # names what the env does offer
+
+
+def test_check_skips_an_env_not_set_up_on_this_machine(tmp_path: Path) -> None:
+    workflows, project = _workflows(tmp_path)
+    _touch(workflows, "cloud/qwen.json")
+    # `workflows/local/` is per-machine and gitignored, so its absence is a
+    # fact about the machine, not a broken configuration.
+    status = check(workflows, "local", "qwen", project_root=project)
+    assert status.state == "not-set-up"

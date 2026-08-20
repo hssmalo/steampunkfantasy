@@ -9,7 +9,9 @@ This module is pure filesystem: no HTTP, no config import at module scope.
 Roots are passed as arguments so it is trivially testable with `tmp_path`.
 """
 
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Literal
 
 REFINE_SUFFIX = "-refine"
 _EXCLUDED_ENVS = frozenset({"examples"})
@@ -63,6 +65,36 @@ def resolve(
     names = available(workflows_root, env)
     msg = f"unknown profile '{profile}' for env '{env}'; available: {', '.join(names)}"
     raise ValueError(msg)
+
+
+@dataclass(frozen=True)
+class ProfileStatus:
+    """The outcome of checking one Environment's configured Profile.
+
+    `not-set-up` is distinct from `broken`: an Environment directory that is
+    not committed (`workflows/local/`) is absent on a fresh clone, which says
+    nothing about whether the configuration is right.
+    """
+
+    env: str
+    profile: str
+    state: Literal["ok", "broken", "not-set-up"]
+    detail: str = ""
+
+
+def check(
+    workflows_root: Path, env: str, profile: str, *, project_root: Path
+) -> ProfileStatus:
+    """Report whether `env`'s configured Profile resolves to a Workflow."""
+    env_dir = workflows_root / env
+    if not env_dir.is_dir():
+        shown = _relative_path(env_dir, project_root)
+        return ProfileStatus(env, profile, "not-set-up", f"no {shown}/")
+    try:
+        path = resolve(workflows_root, env, profile, project_root=project_root)
+    except ValueError as err:
+        return ProfileStatus(env, profile, "broken", str(err))
+    return ProfileStatus(env, profile, "ok", _relative_path(path, project_root))
 
 
 def resolve_refine(
