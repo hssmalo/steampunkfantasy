@@ -195,6 +195,22 @@ def test_image_command_errors_cleanly_on_an_unknown_unit(
     assert "grunt" in err
 
 
+def test_image_command_reports_a_bad_unit_before_an_unresolvable_env(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A typo in the arguments outranks a ComfyUI Environment that cannot be
+    # resolved: the caller is told what they got wrong, not what the machine
+    # is missing.
+    argv = ["assets", "image", "ork", "nosuchunit", "--env", "nosuchenv"]
+
+    with pytest.raises(SystemExit):
+        app(argv, exit_on_error=False, result_action="return_value")
+
+    err = capsys.readouterr().err
+    assert "nosuchunit" in err
+    assert "nosuchenv" not in err
+
+
 def test_list_command_reports_coverage_for_one_race(
     registered_kind: Kind, capsys: pytest.CaptureFixture[str]
 ) -> None:

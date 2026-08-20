@@ -526,13 +526,16 @@ def image(  # noqa: PLR0913  CLI surface, parameters are fixed
     image_opts = image_opts or ImageOpts()
     kind = get_kind("image")
 
-    svc, env_name, profile_name = _resolve_image_service(image_opts)
-
+    # Arguments are validated before the Service is built, so a mistyped unit
+    # is reported as such rather than as whatever the machine's ComfyUI
+    # Environment happens to be missing.
     try:
         selected = _image_targets(kind, race, unit, all_=all_, missing=missing)
     except ValueError as err:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
+
+    svc, env_name, profile_name = _resolve_image_service(image_opts)
 
     # Partition before generating rather than skipping mid-loop (ADR 0015), so
     # the batch's real shape is on screen before any GPU time is spent on it.
