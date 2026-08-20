@@ -13,8 +13,13 @@ def show(key: str) -> None:
 def test_show_accepts_a_key_in_the_wrong_case(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
+    # The key is canonicalised, so the lowercase spelling finds the same rows
+    # the canonical one does rather than being rejected.
+    show("Ork Reroll")
+    canonical = capsys.readouterr().out
     show("ork reroll")
-    assert "Ork Reroll" not in capsys.readouterr().err
+    assert "A  Model:     Grunt" in canonical
+    assert capsys.readouterr().out == canonical
 
 
 def test_show_reports_range_specials(capsys: pytest.CaptureFixture[str]) -> None:

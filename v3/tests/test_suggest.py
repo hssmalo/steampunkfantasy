@@ -85,3 +85,24 @@ def test_resolve_points_at_the_listing_command_when_it_has_no_guess() -> None:
     assert str(excinfo.value) == (
         "Unknown special \"zzz\". Run 'spf rules specials' to see all special rules."
     )
+
+
+def test_suggest_normalises_the_fuzzy_pass_too() -> None:
+    # "SNIPR" is a substring of nothing, so it falls to the fuzzy pass — which
+    # must fold case there as well, not only in the substring pass.
+    assert suggest("SNIPR", OPTIONS) == ["Sniper"]
+
+
+def test_resolve_does_not_dump_the_vocabulary_for_a_vague_value() -> None:
+    # A one-letter value is a substring of nearly everything; listing all of it
+    # is the wall of text the suggestions exist to replace.
+    with pytest.raises(ValueError, match=r"^Unknown special ") as excinfo:
+        resolve_or_raise("e", OPTIONS, noun="special", see="spf rules specials")
+    assert "Did you mean" not in str(excinfo.value)
+    assert "spf rules specials" in str(excinfo.value)
+
+
+def test_resolve_still_offers_a_whole_family() -> None:
+    with pytest.raises(ValueError, match=r"^Unknown special ") as excinfo:
+        resolve_or_raise("cunning", OPTIONS, noun="special", see="spf rules specials")
+    assert "Did you mean" in str(excinfo.value)

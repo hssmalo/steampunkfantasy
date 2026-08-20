@@ -8,6 +8,9 @@ candidates here and phrase its own message.
 import difflib
 from collections.abc import Iterable
 
+# Above this many candidates, a "Did you mean ...?" is a vocabulary dump.
+_MAX_SUGGESTIONS = 5
+
 
 def _normalize(value: str) -> str:
     """Casefold and collapse internal whitespace, so matching ignores both."""
@@ -28,8 +31,13 @@ def suggest(value: str, options: Iterable[str]) -> list[str]:
     )
     # The fuzzy pass only covers typos, where nothing contains the value at all.
     # Running both would answer "Reroll" with "Recoil" as well as "Ork Reroll".
-    matches = substring or difflib.get_close_matches(value, options, n=3, cutoff=0.6)
+    # It matches on normalized forms too, so a typo shouted in caps still lands.
+    canonical: dict[str, str] = {}
+    for option in options:
+        canonical.setdefault(_normalize(option), option)
+    fuzzy = difflib.get_close_matches(normalized, canonical, n=3, cutoff=0.6)
 
+    matches = substring or [canonical[match] for match in fuzzy]
     return list(dict.fromkeys(matches))
 
 
@@ -59,10 +67,15 @@ def resolve_or_raise(value: str, options: Iterable[str], *, noun: str, see: str)
     if len(equal) == 1:
         return equal[0]
 
+    # `suggest` is deliberately uncapped, so a whole family survives — but a
+    # value too vague to guess matches most of the vocabulary, and reprinting
+    # it is the wall of text these messages exist to replace. Past that point
+    # there is no guess worth offering, so point at the listing instead.
     suggestions = suggest(value, options)
+    guessable = 0 < len(suggestions) <= _MAX_SUGGESTIONS
     tail = (
         _did_you_mean(suggestions)
-        if suggestions
+        if guessable
         else f"Run {see!r} to see all {noun} rules."
     )
     msg = f'Unknown {noun} "{value}". {tail}'
