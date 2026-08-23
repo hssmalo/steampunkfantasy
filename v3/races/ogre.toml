@@ -779,7 +779,7 @@ damage = "d8"
 ap = 3
 
 [models.main_engine.assault.special]
-"Disconnected" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+"Retreat" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.artillery_wagon]
 name = "Artillery Wagon"
@@ -800,7 +800,7 @@ damage = "d8"
 ap = 3
 
 [models.artillery_wagon.assault.special]
-"Disconnected" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+"Retreat" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.broadside_wagon]
 name = "Broadside Wagon"
@@ -818,7 +818,7 @@ damage = "d8"
 ap = 3
 
 [models.broadside_wagon.assault.special]
-"Disconnected" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
+"Retreat" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.elite_ogre_infantry]
 name = "Elite Ogre Infantry"

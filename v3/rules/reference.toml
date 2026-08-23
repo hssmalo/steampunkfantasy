@@ -13,7 +13,7 @@ references = []
 [UnitSpecial.Enormous]
 
 references = []
-#references = [Special.two_hex_unit]
+#references = ["Special.two_hex_unit"]
 
 
 [UnitSpecial.Immunity]
@@ -38,30 +38,30 @@ references = ["special.resistance"]
 references = ["token.endurance"]
 
 #rules maybe needed not written into specials
-#references=['Special.armor_assist]
+#references=["Special.armor_assist"]
 
 [UnitSpecial.Take_Cover]
 
-#references=[Special.see_to_hit_table]
+#references=["Special.see_to_hit_table"]
 
 
 [UnitSpecial.Camouflage]
 
-#references=[Special.see_to_hit_table]
+#references=["Special.see_to_hit_table"]
 
 [UnitSpecial.Evation]
 
-references= [UnitSpecial.Evation]
+references= ["UnitSpecial.Evation"]
 
 [UnitSpecial.Ellusive]
 
-#references= [UnitSpecial.see_to_hit_table]
+#references= ["UnitSpecial.see_to_hit_table"]
 
 
 [UnitSpecial.hidden]
 
 #Note to self: make an orders.rules explanation and move hide and reveale to order.special. keep hidden unit special.
-references= [Token.hidden]
+references= ["Token.hidden"]
 
 [UnitSpecial.Movement]
 
@@ -71,7 +71,7 @@ references = []
 [UnitSpecial.Chase]
 
 references = []
-#references = [orders.chase]
+#references = ["orders.chase"]
 
 
 [UnitSpecial.Pet]
@@ -84,14 +84,14 @@ references = []
 
 #note to self: write all these as similar as possible
 references = []
-#references = [UnitSpecial.Transport, orders.deploy]
+#references = ["UnitSpecial.Transport", "orders.deploy"]
 
 
 [UnitSpecial.Tow]
 
 #Note to self: splitt between towing another unit and being towed.
 references = []
-#references = [UnitSpecial.Tow]
+#references = ["UnitSpecial.Tow"]
 
 [UnitSpecial.Fire_Order]
 
@@ -110,12 +110,12 @@ references = []
 
 [UnitSpecial.Regeneration]
 
-references = [special.heal]
+references = ["special.heal"]
 
 
 [UnitSpecial.Heal]
 
-references = [special.heal]
+references = ["special.heal"]
 
 [UnitSpecial.Heads]
 
@@ -124,7 +124,7 @@ references = []
 
 [UnitSpecial.Repair]
 
-references = [special.Repair]
+references = ["special.Repair"]
 
 
 #To Geir Arne: dette referrer til å bli reparert... bedre navn?
@@ -135,11 +135,11 @@ references = []
 
 [UnitSpecial.Terror]
 
-references = [special.Terror]
+references = ["special.Terror"]
 
 [UnitSpecial.Hyptnotizing_Gaze]
 
-references = [special.Hyptnotizing_Gaze]
+references = ["special.Hyptnotizing_Gaze"]
 
 
 #Note to self: look further at fog specails!!!
@@ -148,20 +148,15 @@ references = [special.Hyptnotizing_Gaze]
 [UnitSpecial.Fog]
 
 # ???
-references = [hexes.fog]
+references = ["hexes.fog"]
 
 #Note to self: Flagship ability rename to into the fog
-#references = [tokens.into_the_fog, tokens.out_of_the_fog]
-
-[ModelSpecial.Fog]
-
-references = [hexes.fog]
-#references = [special.see_to_hit_table]
+#references = ["tokens.into_the_fog", "tokens.out_of_the_fog"]
 
 [UnitSpecial.Illusion]
 
 references = []
-#references = [special.illusion]
+#references = ["special.illusion"]
 
 
 
@@ -174,14 +169,14 @@ references = []
 references = []
 
 #Geir Arne: spesielt, psychic resistance
-potential_references = [special.resistance]
-#potential_references = [special.remove_shaken]
+potential_references = ["special.resistance"]
+#potential_references = ["special.remove_shaken"]
 
 
 [UnitSpecial.Pre-Assault_Retreat]
 
 # Note to self: write label and special the same way
-references = [special.pre_asssault_retreat]
+references = ["special.pre_asssault_retreat"]
 
 
 [UnitSpecial.Stacing_Limit]
@@ -202,7 +197,7 @@ references = []
 [UnitSpecial.Vulnerability]
 
 references = []
-#references = [special.vulnerability]
+#references = ["special.vulnerability"]
 
 
 [UnitSpecial.Setup]
@@ -212,7 +207,7 @@ references = []
 
 [UnitSpecial.Forward_position]
 
-references = [special.forward_position]
+references = ["special.forward_position"]
 
 
 [UnitSpecial.Activate]
@@ -235,18 +230,233 @@ references = []
 [UnitSpecial.Steady]
 
 references = []
-#references = [special.see_to_hit_table]
+#references = ["special.see_to_hit_table"]
 
 
+[ModelSpecial.To_Hit]
+
+references = []
+#references = ["special.see_to_hit_table"]
+
+[ModelSpecial.Not_Yet_Dead]
+
+references = []
+#references = ["special.not_yet_dead"]
+
+[ModelSpecial.Fog]
+
+references = ["hexes.fog"]
+#references = ["special.see_to_hit_table"]
+
+[ModelSpecial.Escape_Artist]
+
+#Note to self, this rule is not Knut proof.
+references = []
+
+#Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
+[AssaultSpecial.Extra_Damage]
+
+#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed
+potential_references = ["special.assault.fire", "special.assault.poison", "special.assault.minor_acid","token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized", "special.assault.gear_disruption"]
+
+[AssaultSpecial.Cunning_Assault]
+
+references = ["special.assault.cunning_assault"]
+
+[AssaultSpecial.Cunning_Deflection]
+
+references = ["special.assault.cunning_assault_deflection"]
+
+[AssaultSpecial.Cunning_Defence]
+
+references = ["special.assault.cunning_assault_defence"]
+
+[AssaultSpecial.Damage_on_Deflect]
+
+references = []
+potential_references = ["token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
 
 
+[AssaultSpecial.Overrun]
+
+#Only one use, maybe more in future
+references = []
+potential_references = ["token.shaken"]
 
 
+[AssaultSpecial.Counter_Attack]
+
+references = []
 
 
+[AssaultSpecial.Bonus]
+
+references = []
+
+
+[AssaultSpecial.Size]
+
+references = []
+
+
+[AssaultSpecial.Ork_Reroll]
+
+references = ["special.assault.ork_reroll"]
+
+
+[AssaultSpecial.Penalty]
+
+#Note to self, a nice category by itself, but the one is, is it really needed?
+references = []
+
+
+[AssaultSpecial.Angle]
+
+#one use... is there a better way of showing different damage stats from different angles???
+references = []
+
+
+[AssaultSpecial.Stench]
+
+references = ["token.poison"]
+#references = [???.crew_damage]
+
+
+[AssaultSpecial.Fear]
+
+#Note to self: it is a unit special in special, but an assault special in the races
+references = ["special.fear"]
+#references = ["???.psychic_damage"]
+
+[AssaultSpecial.Retreat]
+
+potential_references = ["special.unit.pre-assault_retreat"]
+
+#Note to self FlyBy and Lands not used.
 
 [Range.Extra_Damage]
 
 #references are garanted, potentials are not
 references = []
-potential_references = ["token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
+potential_references = ["token.acid", "token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
+
+[Range.Critical]
+
+#Til Geir Arne: hvor irriterende er det at range også er et keyword???
+#Set jeg har brukt range_ i special.toml :(
+references = ["special.range_.critical"]
+potential-references = ["token.fire"]
+
+
+[Range.Fumble]
+
+#Note to self: rewrite these.
+references = ["special.range_.critical"]
+potential_references = ["token.acid", "token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
+
+
+[Range.Sniper]
+
+references = []
+#references = ["special.range_.sniper"]
+
+[Range.Improved_Aim]
+
+references = []
+#potential_references =["???.crew_damage""]
+
+
+[Range.Indirect_Fire]
+
+#Note to self: look at Do Experimental Guided Missiles
+references = []
+#Note to self: maybe write
+#potential_references =["special.range_.indirect_fire"]
+
+
+[Range.Multiple_shots]
+
+references = []
+
+
+[Range.Area]
+
+#Note to self, make sure all area effects uses area key word!!!
+references = []
+#references = ["special.area"]
+
+
+[Range.Bonus]
+
+#Note to self, make to-hit bonuses/penalties a model special
+#move some to extra damage
+references = []
+
+[Range.Focus_Fire]
+
+#Note to self, rewrite: Focus Fire = 6
+references = []
+#references = ["special.range_.focus_fire"]
+
+
+[Range.Ammo]
+
+#Note to self, make sure they are written the same way
+references = []
+
+
+[Range.Order]
+
+#Note to self, loot at shared weapons: hand held Cannon, Harpoon gun,
+references = []
+
+[Range.Drag]
+
+#note to self: OMG, bæææ
+references = []
+
+
+[Range.Range]
+
+#note to self: add indirect fire to seeker arrows,
+#note to self: add an target hex for area effect
+references = []
+
+[Range.Burst]
+
+#Note to self: remove words to all these
+references = ["special.range_.burst"]
+
+
+[Range.Recoil]
+
+references = []
+
+
+[Range.Type]
+
+references = []
+
+
+[Range.Cloud]
+
+#Note to self: make more consistent
+references = []
+potential_references = ["hexes.fog", "hexes.poison_cloud"]
+
+
+[Range.Insanity]
+
+#Note to self: make more consistent
+references = []
+potential_references = ["tokens.insanity"]
+
+
+[Range.Multipurpose]
+
+references = []
+
+
+[Range.LoS]
+
+references = []

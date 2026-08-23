@@ -650,7 +650,7 @@ replaces = "dwarf_infantry"
 "To Hit" = "good shot: +1 to hit"
 
 [models.elite_dwarf_infantry.unit_special]
-"Improved Resistance" = "Psychic[2] as long as 1 elite model is alive"
+"Resistance 2" = "Psychic[2] as long as 1 elite model is alive"
 
 [models.elite_dwarf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -677,7 +677,7 @@ replaces = "steampowerarmor"
 "To Hit" = "good shot: +1 to hit"
 
 [models.elite_dwarf_steampowerarmor.unit_special]
-"Improved Resistance" = "Psychic[1] as long as 1 elite model is alive"
+"Resistance 2" = "Psychic[1] as long as 1 elite model is alive"
 "Protection" = "1 endurance token per elite in unit."
 
 [models.elite_dwarf_steampowerarmor.assault]
@@ -702,7 +702,7 @@ cost.xp = 24
 replaces = "steampowerarmor"
 
 [models.dwarf_battle_medic.unit_special]
-"Improved Resistance" = "Psychic[2] as long as 1 battle medic is alive"
+"Resistance 2" = "Psychic[2] as long as 1 battle medic is alive"
 "Heal" = "[1, any, Healing 1]"
 "Protection" = "1 endurance token and this model counts as elites for life of vest support."
 
@@ -1161,7 +1161,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
 [equipment.trench_coat_of_resistance.unit_special]
-"Improved Resistance" = "Unit improves poison resistance and fire resistance with 1"
+"Resistance 2" = "Unit improves poison resistance and fire resistance with 1"
 "Immunity" = "Minor Acid"
 
 [equipment.brother_in_arms_armor]
@@ -1172,7 +1172,7 @@ upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
 [equipment.brother_in_arms_armor.unit_special]
-"Protection (2)" = "2 endurance tokens per elite model in the unit. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Add [4,3,3,3] in armor"
+"Protection 2" = "2 endurance tokens per elite model in the unit. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Add [4,3,3,3] in armor"
 
 [equipment.steamblower]
 name = "Steamblower"

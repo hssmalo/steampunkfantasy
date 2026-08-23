@@ -1174,7 +1174,7 @@ replaces = "darkelf_infantry"
 cost.xp = 4
 
 [models.elite_darkelf_infantry.unit_special]
-"Improved Resistance" = "Psychic[1] while at least one elite is alive"
+"Resistance 2" = "Psychic[1] while at least one elite is alive"
 
 [models.elite_darkelf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -1285,7 +1285,7 @@ replaces = "roboprosthetic_darkelf"
 cost.cp = 4
 
 [models.elite_roboprosthetic_darkelf.unit_special]
-"Improved Resistance" = "Psychic[1] while at least one elite is alive"
+"Resistance 2" = "Psychic[1] while at least one elite is alive"
 
 [models.elite_roboprosthetic_darkelf.assault]
 strength = [2, 1, 1, 1]
@@ -1574,7 +1574,7 @@ requires = [["Independent:1"], ["type:Roboprosthetic"]]
 strength.add = [1, 0, 0, 0]
 
 [equipment.poison_claws.assault.special]
-"Improved Extra Damage" = "Poison[4][1 for 1]"
+"Extra Damage 2" = "Poison[4][1 for 1]"
 
 [equipment.poison_spray]
 name = "Poison Spray"
@@ -1626,8 +1626,7 @@ damage = "-"
 ap = 0
 
 [equipment.acid_breath.range.special]
-"Extra Damage" = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid"
-"Bonus" = "In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
+"Extra Damage" = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid. In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
 
 [equipment.fire_breath]
 name = "Fire Breath"
@@ -1686,7 +1685,7 @@ damage = "d4-3"
 ap = 1
 
 [equipment.laser_eyes.range.special]
-"Critical" = "If Critical: unit is set on fire."
+"Critical" = "unit is set on fire."
 "Multiple Shots" = "Fire two time per functional head (minor and major)"
 
 [equipment.shrapnel_breath]
@@ -1720,7 +1719,7 @@ requires = [
 
 [equipment.gas_mask_assault_training.assault.special]
 "Bonus" = "When assaulting hexes with poison cloud +50% in assault and assault deflection"
-"Improved Extra Damage" = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
+"Extra Damage 2" = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
 
 [equipment.poison_fog_grenade]
 name = "Poison Fog Grenade"

@@ -183,6 +183,8 @@ description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycl
 
 [units.gnome_motorcycle.special]
 "Ellusive" = "[fast]"
+"Pre-Assault Retreat" = "4+"
+
 
 [units.gnome_motorcycle.shaken]
 speed = "slow"
@@ -666,8 +668,7 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.gnome_motorcycle.assault.special]
-"Retreat" = "Pre-Assault Retreat[4+]"
+
 
 [models.gnome_helicopter]
 name = "Gnome Helicopter"
@@ -860,7 +861,7 @@ ap = 0
 
 [equipment.acid_splash.range.special]
 "Note" = "No regular damage"
-"Type" = "Minor Acid"
+"Extra Damage" = "Minor Acid"
 
 [equipment.tinkerer_gun]
 name = "Tinkerer Gun"
@@ -918,7 +919,7 @@ ap = 0
 [equipment.poison_dart.range.special]
 "Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
 "Ammo" = "Always treated as loaded"
-"Type" = "Poison[4]"
+"Extra Damage" = "Poison[4]"
 
 [equipment.acid_balloon]
 name = "Acid Balloon"
@@ -934,7 +935,7 @@ ap = 0
 [equipment.acid_balloon.range.special]
 "Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
 "Ammo" = "Always treated as loaded"
-"Type" = "Minor Acid"
+"Extra Damage" = "Minor Acid"
 
 [equipment.grinder]
 name = "Grinder"
@@ -999,7 +1000,7 @@ ap = 0
 
 [equipment.green_gas_launcher.range.special]
 "Area" = "Choose one hex (per model firing this weapon) within normal range: Area(5+)"
-"Type" = "Poison[6]"
+"Extra Damage" = "Poison[6]"
 "Multipurpose" = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
 "Ammo" = "Always treated as loaded"
 
@@ -1018,7 +1019,7 @@ ap = 0
 
 [equipment.helicopter_mounted_green_gas_launcher.range.special]
 "Area" = "Choose one hex within range: Area(5+)"
-"Type" = "Poison[4]"
+"Extra Damage" = "Poison[4]"
 
 [equipment.experimental_plasma_gun]
 race = "gnome"
@@ -1035,7 +1036,7 @@ ap = 6
 
 [equipment.experimental_plasma_gun.range.special]
 "Fumble" = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes at least one model to die, remove the model carrying the plasma gun first."
-"Critical" = "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire"
+"Critical" = "set the enemy on fire"
 
 [equipment.helicopter_mounted_experimental_plasma_gun]
 race = "gnome"
@@ -1052,7 +1053,7 @@ ap = 6
 
 [equipment.helicopter_mounted_experimental_plasma_gun.range.special]
 "Fumble" = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter"
-"Critical" = "If you roll a natural 6 on to hit (and hit the target) you set the enemy on fire"
+"Critical" = "set the enemy on fire"
 "Note" = "Difficulty firing forward: Get -1 to hit in forward direction"
 
 [equipment.helicopter_gatling_gun]
@@ -1174,7 +1175,7 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [equipment.improved_medical_armor.unit_special]
-"Improved Resistance" = "Fire[6], Poison[6], acid[1] and Psychic[1] (improve by 1 if unit has Psychic resistance from another source)"
+"Resistance 2" = "Fire[6], Poison[6], acid[1] and Psychic[1] (improve by 1 if unit has Psychic resistance from another source)"
 
 [equipment.medical_armor]
 race = "gnome"
@@ -1184,7 +1185,7 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [equipment.medical_armor.unit_special]
-"Improved Resistance" = "Fire[2], Poison[2], and Psychic[1] (improve by 1 if unit has Psychic resistance from another source)"
+"Resistance 2" = "Fire[2], Poison[2], and Psychic[1] (improve by 1 if unit has Psychic resistance from another source)"
 
 [equipment.plasma_shield_generator]
 race = "gnome"
@@ -1194,7 +1195,7 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [equipment.plasma_shield_generator.unit_special]
-"Improved Resistance" = "Regular[d4]  (roll d4 every time it is hit with some regular damage)"
+"Resistance 2" = "Regular[d4]  (roll d4 every time it is hit with some regular damage)"
 "Vulnerability" = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
 
 [equipment.plasma_shield_generator.assault]
@@ -1202,7 +1203,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
 [equipment.plasma_shield_generator.assault.special]
-"Bonus" = "Fire"
+"Extra Damage 2" = "Fire"
 
 [equipment.quadbike_lance]
 race = "gnome"
@@ -1230,7 +1231,7 @@ deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
 
 [equipment.improved_plasma_shield_generator.assault.special]
-"Bonus" = "Fire"
+"Extra Damage 2" = "Fire"
 
 [equipment.splintbombgrenade_launcher]
 race = "gnome"
@@ -1317,6 +1318,6 @@ ap = 2
 
 [equipment.experimental_death_ray.range.special]
 "Improved Aim" = "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token"
-"Order" = "May keep aiming instead of firing or loading."
+"Order" = "May keep aiming even while having aim already"
 "Multiple Shots" = "If you hit your enemy, roll for damage 4 times"
 "Fumble" = "In agony phase 0, roll a die per aim-token for death ray. If you roll at least one 1, add minor acid to self, if you rolled at least two 1s, death ray explodes and unit is killed."

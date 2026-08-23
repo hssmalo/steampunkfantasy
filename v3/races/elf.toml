@@ -821,7 +821,7 @@ ap = 2
 "Cunning Assault" = "[1 for 2]"
 
 [models.elite_elf_scout.unit_special]
-"Pre-Assault Retreat" = "[3+]"
+"Pre-Assault Retreat" = "3+"
 
 [models.elf_scout]
 name = "Elf Scout"
@@ -890,8 +890,8 @@ cost.xp = 6
 "To Hit" = "Great Shot: +2 to hit"
 
 [models.superb_elf_archer.unit_special]
-"Improved Resistance" = "Unit gains resistance Psychic[2] while at least one superelite model is alive"
-"Pre-Assault Retreat" = "unit gains Pre-assault retreat[3+] as long as at least 1 superelite is alive"
+"Resistance 2" = "Psychic[2] while at least one superelite model is alive"
+"Pre-Assault Retreat" = "3+ as long as at least 1 superelite is alive"
 
 [models.superb_elf_archer.assault]
 strength = [1, 1, 1, 1]
@@ -932,8 +932,8 @@ type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 "To Hit" = "Great Shot: +2 to hit"
 
 [models.superelite_elf_infantry.unit_special]
-"Improved Resistance" = "Unit gains resistance Psychic[2] while at least one superelite model is alive"
-"Pre-Assault Retreat" = "unit gains Pre-assault retreat[4+] as long as at least 1 superelite is alive"
+"Resistance 2" = "Psychic[2] while at least one superelite model is alive"
+"Pre-Assault Retreat" = "4+ as long as at least 1 superelite is alive"
 
 [models.superelite_elf_infantry.assault]
 strength = [3, 1, 1, 1]
@@ -959,8 +959,8 @@ type = ["Bio", "Infantry", "Walking", "Elite"]
 "To Hit" = "Good Shot: +1 to hit"
 
 [models.elite_elf_infantry.unit_special]
-"Improved Resistance" = "Unit gains resistance Psychic[1] while at least one superelite model is alive"
-"Pre-Assault Retreat" = "unit gains Pre-assault retreat[5+] as long as at least 1 elite is alive"
+"Resistance 2" = "Psychic[1] while at least one superelite model is alive"
+"Pre-Assault Retreat" = "5+ as long as at least 1 elite is alive"
 
 [models.elite_elf_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -1160,7 +1160,7 @@ cost.xp = 4
 "To Hit" = "Good shot: +1"
 
 [models.elite_pachycephalosaurus_rider.unit_special]
-"Improved Resistance" = "Unit gains resistance Psychic[1] while at least one elite is alive"
+"Resistance 2" = "Psychic[1] while at least one elite is alive"
 "Pre-Assault Retreat" = "3+ if at least one elite present"
 
 [models.elite_pachycephalosaurus_rider.assault]
@@ -1443,7 +1443,7 @@ ap = 5
 
 #ToDo: define Critical in rules
 [equipment.teslaburstlaser.range.special]
-"Critical" = "If [Critical]: the enemy is shaken, in addition to it's normal effect."
+"Critical" = "the enemy is shaken, in addition to it's normal effect."
 
 [equipment.smg_free]
 name = "SMG"
@@ -1677,7 +1677,7 @@ upgrade_all = true
 [equipment.assault_archer.assault]
 
 [equipment.assault_archer.assault.special]
-"Retreat" = "Unit gains aim if you manage to pre-escape an assault"
+"Retreat" = "Unit gains aim if you manage to pre-assault escape"
 
 [equipment.illusion_weapon]
 name = "Illusion Weapon"

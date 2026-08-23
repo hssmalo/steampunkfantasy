@@ -1177,4 +1177,4 @@ race = "abomination"
 requires = []
 
 [equipment.mechanical_melee_contraption.assault.special]
-"Improvement" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"
+"Bonus 2" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"

@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 19.08.2026 | Gonome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
 | 19.08.2026 | Goblin       | Reworked snake cavalry                                                      | To make it cooler and more unique                                                    |
 | 19.08.2026 | Darkelf      | Removed Poison Gas Grenade                                                  | Did not seem necessary. Still has access to poison fog grenade                       |
 | 11.08.2026 | Gnome        | Frostray, reduced range and damage by one.                                  | Seemed overpowered, needed a debuff and range 3 makes it more difficult to use       |
