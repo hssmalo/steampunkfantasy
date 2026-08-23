@@ -38,27 +38,29 @@ jobs:
         id: cache-texlive
         uses: actions/cache@v4
         with:
-          path: /usr/local/texlive
+          path: ${{ github.workspace }}/.texlive
           key: texlive-${{ runner.os }}-${{ hashFiles('v3/templates/latex/requirements.txt') }}
 
+      # TEXDIR lives under the workspace (not /usr/local) because the runner
+      # user doesn't own /usr/local and install-tl has no sudo fallback.
       - name: Install a minimal TeX Live
         if: steps.cache-texlive.outputs.cache-hit != 'true'
         run: |
           curl -fsSL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | tar xz
           cd install-tl-*
-          cat > texlive.profile <<'PROFILE'
+          cat > texlive.profile <<PROFILE
           selected_scheme scheme-infraonly
-          TEXDIR /usr/local/texlive
-          TEXMFLOCAL /usr/local/texlive/texmf-local
-          TEXMFSYSVAR /usr/local/texlive/texmf-var
-          TEXMFSYSCONFIG /usr/local/texlive/texmf-config
+          TEXDIR ${{ github.workspace }}/.texlive
+          TEXMFLOCAL ${{ github.workspace }}/.texlive/texmf-local
+          TEXMFSYSVAR ${{ github.workspace }}/.texlive/texmf-var
+          TEXMFSYSCONFIG ${{ github.workspace }}/.texlive/texmf-config
           PROFILE
           ./install-tl --profile=texlive.profile
 
       - name: Install the manifest's LaTeX packages
         run: |
-          echo "/usr/local/texlive/bin/x86_64-linux" >> "$GITHUB_PATH"
-          export PATH="/usr/local/texlive/bin/x86_64-linux:$PATH"
+          echo "${{ github.workspace }}/.texlive/bin/x86_64-linux" >> "$GITHUB_PATH"
+          export PATH="${{ github.workspace }}/.texlive/bin/x86_64-linux:$PATH"
           tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet
           packages=$(sed 's/#.*//' v3/templates/latex/requirements.txt)
           tlmgr install $packages
