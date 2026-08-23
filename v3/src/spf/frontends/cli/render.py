@@ -12,7 +12,9 @@ from typing import Annotated
 import cyclopts
 
 from spf.armies import io
+from spf.config import config
 from spf.console import stderr, stdout
+from spf.lint import latex
 from spf.render import Product, render
 from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
@@ -207,9 +209,32 @@ def render_army_pack(
     stdout.print(f"Wrote {out}")
 
 
+def lint_latex() -> None:
+    """Check that every LaTeX package a template uses is in the manifest.
+
+    A *lint over authored data*, mirroring `spf race lint`: the manifest and
+    the templates are both authored, so a missing entry is a soft gate rather
+    than a schema failure.
+    """
+    templates_dir = config.paths.templates / "latex"
+    manifest_path = templates_dir / "requirements.txt"
+    missing = latex.unlisted_packages(templates_dir, manifest_path)
+    for name in missing:
+        # Soft-wrapped so a finding is always exactly one line, as `race
+        # lint`'s findings are.
+        stdout.print(
+            f"templates/latex/requirements.txt  missing-package  {name}",
+            highlight=False,
+            soft_wrap=True,
+        )
+    if missing:
+        raise SystemExit(1)
+
+
 def add_commands(app: cyclopts.App) -> None:
     """Add render commands to the CLI."""
     app.command(render_cards, name="cards")
     app.command(render_army_rules, name="army-rules")
     app.command(render_general_rules, name="general-rules")
     app.command(render_army_pack, name="army-pack")
+    app.command(lint_latex, name="lint")
