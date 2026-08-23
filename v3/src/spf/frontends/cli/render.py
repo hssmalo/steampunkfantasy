@@ -86,7 +86,7 @@ class RenderOpts:
     ] = False
 
 
-def _safe_stem(name: str) -> str:
+def safe_stem(name: str) -> str:
     """Slugify `name` to a filename stem of letters, digits, and single dashes."""
     return re.sub(r"[^A-Za-z0-9]+", "-", name).strip("-")
 
@@ -104,7 +104,7 @@ def render_cards(
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    stem = _safe_stem(army_name)
+    stem = safe_stem(army_name)
     deck = build_deck(
         army, stem=stem, image_for=no_image if opts.no_images else committed_image
     )
@@ -126,7 +126,7 @@ def render_army_rules(
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    stem = _safe_stem(army_name)
+    stem = safe_stem(army_name)
     reference = build_reference(
         army, stem=stem, image_for=no_image if opts.no_images else committed_image
     )
@@ -189,7 +189,7 @@ def render_army_pack(
             # `.resolve()`: a bare relative `--index pack.toml` has a `.parent`
             # of `.`, whose `.name` is empty — deriving the stem from the
             # resolved path always finds the real directory name.
-            stem = _safe_stem(index.resolve().parent.name) or ARMY_PACK_STEM
+            stem = safe_stem(index.resolve().parent.name) or ARMY_PACK_STEM
         else:
             armies = [(None, io.load_army(name)) for name in army_names]
             title = ARMY_PACK_TITLE
