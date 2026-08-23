@@ -8,7 +8,7 @@ non-empty, otherwise `default_equipment` — the two are never combined.
 
 **Why:** an upgrade occupies the same slot (hands, mount, hardpoint) as the free
 default it replaces, so a paid weapon supersedes the default rather than stacking
-on top of it. Modelling this as "any upgrade discards all defaults" keeps loadout
+on top of it. Modeling this as "any upgrade discards all defaults" keeps loadout
 and cost unambiguous.
 
 **Consequence:** there is no partial upgrade — a Model either runs its full

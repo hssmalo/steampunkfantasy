@@ -7,7 +7,7 @@
 - Add `__add__` and `__radd__` to `Cost` to support `a + b` and `sum([...], start=Cost())` syntax
 - Add `__mul__` and `__rmul__` to `Cost` to support `cost * n` and `n * cost` syntax
 - Add `to_points()` to `Cost` to encapsulate the canonical points formula
-- Remove the private `_add_cost` helper from `armies/data.py` in favour of `+`
+- Remove the private `_add_cost` helper from `armies/data.py` in favor of `+`
 - Simplify manual field-by-field multiplication sites to use `cost * n`
 - Update `unit_points` to delegate to `cost.to_points()`
 
@@ -15,7 +15,7 @@
 
 - No changes to the four cost dimensions (`mp`, `cp`, `xp`, `ip`) or their meaning
 - No new CLI commands or display changes
-- No changes to TOML format or serialisation
+- No changes to TOML format or serialization
 
 ## Capabilities
 

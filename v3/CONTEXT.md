@@ -88,12 +88,12 @@ govern moving (turn, forward, flee, …).
 _Avoid_: command, action
 
 **Assault**:
-Melee combat. Characterised by strength, deflection, damage, and armour
+Melee combat. Characterized by strength, deflection, damage, and armor
 penetration, resolved per facing Angle.
 _Avoid_: melee, close combat
 
 **Range** (ranged attack):
-A ranged weapon's attack profile: reach, firing angle, damage, and armour
+A ranged weapon's attack profile: reach, firing angle, damage, and armor
 penetration.
 _Avoid_: shooting, ranged
 
@@ -140,7 +140,7 @@ Equipment requirements and rules.
 
 **Common Type**:
 The Types shared by *every* Model in a Unit — the intersection of the Models'
-Types. Summarises a Unit's classification when its Models differ; empty when
+Types. Summarizes a Unit's classification when its Models differ; empty when
 they share nothing.
 
 ### Board and state
@@ -241,7 +241,7 @@ A Rendering binding the Army References of several Armies into one document —
 a tournament's field in a single file, so a player can see both their own
 Army and every competitor's. Built from an **Army Pack Index**. Each Army
 starts on a fresh page and is complete on its own: nothing is shared or
-deduplicated across Armies, so an organiser can hand one player their pages.
+deduplicated across Armies, so an organizer can hand one player their pages.
 It renders an Army's rules through the *same* authored body template the Army
 Reference does, so the two can never drift apart.
 _Avoid_: booklet, compendium, tournament pack (a pack of showcase Armies is

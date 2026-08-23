@@ -88,7 +88,7 @@ def test_tlmgr_packages_defaults_to_the_package_name(tmp_path: Path) -> None:
     assert latex.tlmgr_packages(manifest) == ["fancyhdr"]
 
 
-def test_tlmgr_packages_honours_explicit_override(tmp_path: Path) -> None:
+def test_tlmgr_packages_honors_explicit_override(tmp_path: Path) -> None:
     """`tlmgr` overrides the name when the LaTeX and TL package names differ."""
     manifest = tmp_path / "requirements.toml"
     manifest.write_text('[[package]]\nname = "graphicx"\ntlmgr = "graphics"\n')

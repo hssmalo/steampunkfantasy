@@ -294,7 +294,7 @@ def test_army_pack_latex_unit_markup_matches_standalone_army_rules(
     # The strongest available check that the Pack and the standalone Army
     # Reference share one body template: the Pack's rendering of a Unit is
     # byte-identical to the Army Reference's, once the heading command is
-    # normalised for the deeper nesting level.
+    # normalized for the deeper nesting level.
     army = io.load_army(DEMO_ARMY)
     pack = build_pack(
         [(None, army)], title="Test Pack", stem="pack", image_for=no_image
@@ -314,7 +314,7 @@ def test_army_pack_latex_unit_markup_matches_standalone_army_rules(
 
     pack_text = pack_out.read_text(encoding="utf-8")
     reference_text = reference_out.read_text(encoding="utf-8")
-    # Normalise the Pack's one-level-deeper sectioning back to the standalone
+    # Normalize the Pack's one-level-deeper sectioning back to the standalone
     # commands before comparing the unit/model/equipment markup itself. A
     # single regex pass (longest command first) avoids `\subsection` and
     # `\subsubsection` clobbering each other under sequential `str.replace`.
@@ -323,14 +323,14 @@ def test_army_pack_latex_unit_markup_matches_standalone_army_rules(
         r"\subsection": r"\section",
         r"\paragraph": r"\subsubsection",
     }
-    normalised = re.sub(
+    normalized = re.sub(
         r"\\subsubsection|\\subsection|\\paragraph",
         lambda m: shift_back[m.group()],
         pack_text,
     )
     for line in reference_text.splitlines():
         if line.startswith((r"\section{", r"\subsection{", r"\subsubsection{")):
-            assert line in normalised
+            assert line in normalized
 
 
 def test_army_pack_markdown_has_one_heading_per_army_and_toc_anchors(

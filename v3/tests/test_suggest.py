@@ -87,7 +87,7 @@ def test_resolve_points_at_the_listing_command_when_it_has_no_guess() -> None:
     )
 
 
-def test_suggest_normalises_the_fuzzy_pass_too() -> None:
+def test_suggest_normalizes_the_fuzzy_pass_too() -> None:
     # "SNIPR" is a substring of nothing, so it falls to the fuzzy pass — which
     # must fold case there as well, not only in the substring pass.
     assert suggest("SNIPR", OPTIONS) == ["Sniper"]

@@ -175,7 +175,7 @@ def test_survey_recognizes_a_staged_promoted_asset_as_promoted(
 ) -> None:
     # `stage_promoted` is a plain copy, so the staged Candidate is
     # byte-identical to the Asset and `--candidates` renders it as
-    # "N (promoted)" with no labelling code of its own (ADR 0012).
+    # "N (promoted)" with no labeling code of its own (ADR 0012).
     assets_root, candidates_root = stores
     _write(assets_root, "grunt.txt", b"the committed asset")
     _write(candidates_root, "grunt.1.txt", b"something else")

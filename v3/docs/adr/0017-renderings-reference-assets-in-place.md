@@ -74,7 +74,7 @@ finds nothing, so the templates need no opt-out conditional of their own.
   images. That is acceptable: `output/` is gitignored throwaway, and the PDF —
   the artifact anyone actually shares — embeds the art outright.
 - **`render()` resolves the output path before rendering the template**, not
-  after, because a template that references a neighbouring file has to know
+  after, because a template that references a neighboring file has to know
   where its own output lands.
 - **PDFs are heavy.** LaTeX embeds each PNG at full resolution regardless of the
   displayed width, so a twelve-Unit army lands in the tens of megabytes.
@@ -86,7 +86,7 @@ finds nothing, so the templates need no opt-out conditional of their own.
 - `--no-images` lives on the shared `RenderOpts` and affects every Product that
   embeds Assets.
 
-## Addendum: the seam generalised to a second Product
+## Addendum: the seam generalized to a second Product
 
 The decision above is unchanged; only its reach is. When the Order Cards began
 carrying the Unit's art on the card back, `ImageLookup`, `committed_image` and

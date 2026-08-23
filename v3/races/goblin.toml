@@ -239,7 +239,7 @@ size = "Large"
 armor = [8,8,8,6]
 cost.ip = 24
 
-description = '''Fairly well armored bipedal mechanised walker. On one side the bipedal mech has a big weapon (big mortar) which fires the dreaded stinkbomb at enemies, while on the left it is is armed with two light mortars.
+description = '''Fairly well armored bipedal mechanized walker. On one side the bipedal mech has a big weapon (big mortar) which fires the dreaded stinkbomb at enemies, while on the left it is is armed with two light mortars.
 '''
 
 lore = '''These are the pride of goblin innovation, the first tank which walks on two legs. Or at least, that is what the goblin claim.

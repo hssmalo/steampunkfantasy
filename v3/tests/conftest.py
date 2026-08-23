@@ -2,16 +2,16 @@
 
 Pytest imports this before any test module, and therefore before
 `spf.console` constructs its Rich Consoles — which is what makes the
-environment pinning below effective. A Console reads its colour and width
+environment pinning below effective. A Console reads its color and width
 settings once, at construction, so none of this works as a fixture.
 """
 
 import os
 
-# Rich emits colour and bold when FORCE_COLOR is set, and those escapes land in
+# Rich emits color and bold when FORCE_COLOR is set, and those escapes land in
 # `capsys` output — where a test asserting on layout sees `'\x1b[32m4.1'`
 # instead of `'4.1'`. Some terminals, CI runners and agent harnesses set it.
-# These tests assert on text, not styling, so the suite runs uncoloured.
+# These tests assert on text, not styling, so the suite runs uncolored.
 for _var in ("FORCE_COLOR", "COLORTERM"):
     os.environ.pop(_var, None)
 os.environ["TERM"] = "dumb"

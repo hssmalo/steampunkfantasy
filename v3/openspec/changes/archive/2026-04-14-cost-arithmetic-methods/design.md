@@ -6,7 +6,7 @@
 - Scaling by model count is done inline with four manual multiplications
 - The points formula `mp + cp + xp + 3 * ip` is computed inline in `unit_points`
 
-Adding dunder methods to `Cost` centralises all arithmetic in the model itself.
+Adding dunder methods to `Cost` centralizes all arithmetic in the model itself.
 
 ## Goals / Non-Goals
 
@@ -19,7 +19,7 @@ Adding dunder methods to `Cost` centralises all arithmetic in the model itself.
 **Non-Goals:**
 - Subtraction, division, or comparison operators — not needed today
 - `Cost * Cost` — no meaningful use case
-- Changes to serialisation, TOML format, or CLI output
+- Changes to serialization, TOML format, or CLI output
 
 ## Decisions
 
@@ -35,7 +35,7 @@ The existing `_add_cost` handles a `None` second argument (treating it as zero).
 
 ### Decision: `to_points()` owns the formula
 
-`mp + cp + xp + 3 * ip` is a domain rule that belongs on `Cost`, not scattered across call sites. Centralising it means the formula can be changed in one place.
+`mp + cp + xp + 3 * ip` is a domain rule that belongs on `Cost`, not scattered across call sites. Centralizing it means the formula can be changed in one place.
 
 ## Risks / Trade-offs
 
@@ -49,4 +49,4 @@ The existing `_add_cost` handles a `None` second argument (treating it as zero).
 3. Replace inline multiplications with `cost * num_models`
 4. Update `unit_points` to call `cost.to_points()`
 5. Delete `_add_cost`
-6. Run tests — no behaviour change expected
+6. Run tests — no behavior change expected

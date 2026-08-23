@@ -6,7 +6,7 @@ ComfyUI and a cloud-hosted one?
 
 Everything below is checked against primary sources (ComfyUI's own `server.py`,
 `nodes.py`, `comfy/sample.py`, `script_examples/`, docs.comfy.org, and the model
-licence texts). Where a claim could not be traced to a primary source it is
+license texts). Where a claim could not be traced to a primary source it is
 listed under [Unverified / open questions](#unverified--open-questions) rather
 than smoothed over.
 
@@ -128,7 +128,7 @@ bytes. Feed it the three fields straight out of `outputs`.
   "two model inventories" risk.
 - `GET /queue`, `POST /queue` (`clear` / `delete`), `POST /interrupt`,
   `POST /free` (`unload_models`, `free_memory`), `GET /system_stats`.
-- `GET /api/jobs` and `GET /api/jobs/{job_id}` — a newer, *normalised* job view
+- `GET /api/jobs` and `GET /api/jobs/{job_id}` — a newer, *normalized* job view
   (see §5); `GET /prompt` returns just `{"exec_info": {"queue_remaining": N}}`.
 
 ### Websocket vs polling
@@ -156,11 +156,11 @@ progress for free by submitting N jobs and printing as each completes.
 
 ## 2. Workflow JSON — UI format vs API format
 
-Two distinct serialisations
+Two distinct serializations
 ([official docs](https://docs.comfy.org/development/api-development/workflow-api-format)):
 
 - **UI format** (`File → Save`) — the editable graph: node positions, sizes,
-  colours, groups, links. **The `/prompt` endpoint does not accept this.**
+  colors, groups, links. **The `/prompt` endpoint does not accept this.**
   Posting it is one of the most common causes of a `node_errors` 400.
 - **API format** (`File → Export (API)`) — flat dict, **keyed by node id as a
   string**, each value having `class_type` and `inputs`. Links are
@@ -250,7 +250,7 @@ batch element, consuming generator state.** Consequences:
   the next draw from the same seeded generator. It is *not* N copies of the same
   image.
 - Fixed seed + fixed checkpoint + fixed workflow + same machine/torch/device →
-  **reproducible**. This is the standard, relied-upon behaviour of the whole
+  **reproducible**. This is the standard, relied-upon behavior of the whole
   ComfyUI ecosystem.
 - **Across machines / GPUs / torch versions it is NOT guaranteed.** The noise
   tensor from `torch.manual_seed` is stable, but the sampling math afterwards runs
@@ -365,7 +365,7 @@ to our design.
   **API access requires a paid tier — the free tier is excluded.**
   → Note the **concurrency cap of 1** on the cheapest tier. Our N-jobs-per-batch
   mapping still works (jobs queue; the cap throttles, it doesn't error), but a
-  `count=4` batch on Standard is serialised.
+  `count=4` batch on Standard is serialized.
 
 ### (b) API Nodes / "Partner Nodes" — hosted *models* called from *inside* a workflow. **Not what we want.**
 
@@ -467,7 +467,7 @@ Plus fp8 weights: the
 [official Flux tutorial](https://docs.comfy.org/tutorials/flux/flux-1-text-to-image)
 notes Flux is **12B params, ~23 GB** at full precision, recommends the fp16 T5
 text encoder only *"when your VRAM is greater than 32GB"*, and offers
-`t5xxl_fp8_e4m3fn` and fp8 checkpoints for low-VRAM machines. GGUF quantised
+`t5xxl_fp8_e4m3fn` and fp8 checkpoints for low-VRAM machines. GGUF quantized
 variants exist but are **community custom nodes (ComfyUI-GGUF), not core** — which
 means using them breaks the "core nodes only" portability rule from §2. Don't.
 
@@ -482,14 +482,14 @@ news is that this is precisely the scenario the two-backend design was built for
 ## 8. Model licensing — which checkpoints can we pin if SPF is ever sold?
 
 SteamPunkFantasy may eventually be sold, so this constrains the pin. Note the
-critical distinction the licences themselves draw: **the licence on the *model
-weights* is not the same as the licence on the *outputs*.**
+critical distinction the licenses themselves draw: **the license on the *model
+weights* is not the same as the license on the *outputs*.**
 
-| Model | Licence | Commercial use of **outputs**? | Commercial use of the **weights**? |
+| Model | License | Commercial use of **outputs**? | Commercial use of the **weights**? |
 |---|---|---|---|
 | **SDXL 1.0** | [CreativeML Open RAIL++-M](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md) | **Yes** | **Yes** — explicitly permits hosting/SaaS and redistribution, subject to the Attachment A use-based restrictions (which you must pass on downstream) |
 | **FLUX.1 [schnell]** | **Apache 2.0** ([model card](https://huggingface.co/black-forest-labs/FLUX.1-schnell)) | **Yes** | **Yes** — fully permissive. 1–4 steps. |
-| **FLUX.1 [dev]** | [FLUX.1 [dev] Non-Commercial License](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md) | **Yes** — BFL disclaims ownership of Outputs and permits commercial exploitation of them, *except* to train competing models | **No** — the weights are restricted to a "Non-Commercial Purpose"; production/revenue-generating use of the model needs a paid BFL licence |
+| **FLUX.1 [dev]** | [FLUX.1 [dev] Non-Commercial License](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md) | **Yes** — BFL disclaims ownership of Outputs and permits commercial exploitation of them, *except* to train competing models | **No** — the weights are restricted to a "Non-Commercial Purpose"; production/revenue-generating use of the model needs a paid BFL license |
 | **Stable Diffusion 3.5 Large** | [Stability AI Community License](https://stability.ai/community-license-agreement) | **Yes** | **Yes, conditionally** — free for commercial use only if you have **< $1M total annual revenue**; above that you need an Enterprise License |
 | **Qwen-Image** | **Apache 2.0** ([model card](https://huggingface.co/Qwen/Qwen-Image)) | **Yes** | **Yes** — fully permissive; a strong, current, genuinely open option |
 
@@ -499,7 +499,7 @@ and Qwen-Image carry it.
 
 **Avoid pinning FLUX.1 [dev] as the default.** The nuance is subtle and worth
 stating precisely, because it's widely misreported: *outputs* from dev **can** be
-sold — the licence explicitly permits commercial exploitation of Outputs. What is
+sold — the license explicitly permits commercial exploitation of Outputs. What is
 forbidden is using the *weights* for a commercial purpose. Generating art for a
 game you sell is a commercial use of the model, even if the resulting image is
 fine to ship. **That's a lawyer question, not an engineering one**, and the whole
@@ -586,7 +586,7 @@ concrete win — the ComfyUI migration costs us **zero** new dependencies.
 - **Concurrency:** a local ComfyUI runs one job at a time from a FIFO queue —
   submitting our N candidate jobs up front is safe and pipelines nicely. Comfy
   Cloud caps concurrent API workflows at **1 / 3 / 5** by tier; excess jobs queue
-  (up to 100). So `count=4` on the $20 tier is serialised, not rejected.
+  (up to 100). So `count=4` on the $20 tier is serialized, not rejected.
 - **Seed range mismatch:** our `_SEED_BOUND = 2**31` is far below KSampler's
   `0xffffffffffffffff`. Harmless (a subset is still a valid seed space), but if we
   want the printed `--seed` to round-trip identically into a workflow, keep our own

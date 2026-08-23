@@ -25,7 +25,7 @@ purchase would be worse than either rule it replaced.
 ## A Default that claims no Holder is permanent
 
 Equipment with no requirements occupies nothing, so nothing can crowd it out. It
-now survives every Upgrade. This is the largest behavioural change in the rule:
+now survives every Upgrade. This is the largest behavioral change in the rule:
 roughly forty equipment entries across thirty Models, mostly vehicle main guns,
 which the old rule threw away the moment a vehicle bought anything.
 

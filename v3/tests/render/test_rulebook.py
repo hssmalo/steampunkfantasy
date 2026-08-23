@@ -246,7 +246,7 @@ short = "[N]"
 phases = ["Agony 3"]
 remove = "When it kills a model"
 effect = \"\"\"Roll a d{N}.
-- Ignore armour
+- Ignore armor
 - Apply the damage
 \"\"\"
 
@@ -302,7 +302,7 @@ def test_tokens_kind_carries_every_field_across(tmp_path: Path) -> None:
     assert poison.remove == "When it kills a model"
     assert poison.variables == [("N", "one of 2, 4, 6")]
     # The effect is Markdown and stays Markdown: its bullets are a real list.
-    assert poison.body.splitlines()[1] == "- Ignore armour"
+    assert poison.body.splitlines()[1] == "- Ignore armor"
     assert poison.token is None
     assert poison.versions == []
     assert terror.short is None
@@ -364,7 +364,7 @@ name = "Cunning Assault"
 short = "[{N}]"
 explanation = "Add +1 to all future damage tokens."
 example = "Hit four times and you add two tokens."
-description = "Any cunning way to take out armoured units."
+description = "Any cunning way to take out armored units."
 
 [unit]
 
@@ -425,7 +425,7 @@ def test_specials_kind_resolves_a_token_to_its_display_name(tmp_path: Path) -> N
     assert acid.token == "Minor Acid"  # noqa: S105  a game Token's name, not a credential
     assert cunning.token is None
     assert cunning.example == "Hit four times and you add two tokens."
-    assert cunning.description == "Any cunning way to take out armoured units."
+    assert cunning.description == "Any cunning way to take out armored units."
 
 
 def test_specials_kind_drops_a_short_that_only_repeats_the_name(
@@ -888,7 +888,7 @@ def test_cli_writes_the_rulebook(tmp_path: Path) -> None:
     assert "SteamPunkFantasy Rulebook" in out.read_text(encoding="utf-8")
 
 
-def test_cli_honours_an_alternate_index(tmp_path: Path) -> None:
+def test_cli_honors_an_alternate_index(tmp_path: Path) -> None:
     _rules_dir(tmp_path, {"round.md": _SOURCE})
     index = tmp_path / "alternate.toml"
     index.write_text(VALID_INDEX, encoding="utf-8")

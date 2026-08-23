@@ -50,7 +50,7 @@ def retained_defaults(
 
     Capacity is exactly what the Model declares — a Model whose Defaults
     over-claim its own limits loses one even with no upgrades bought. That is
-    the deliberate simple behaviour, guarded by the `default-equipment-limit`
+    the deliberate simple behavior, guarded by the `default-equipment-limit`
     lint rule rather than by tolerance logic here.
     """
     remaining = capacity(model_config)

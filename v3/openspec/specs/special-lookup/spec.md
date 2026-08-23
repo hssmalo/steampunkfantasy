@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Defines the behaviour of the `spf special show` command, which searches all races for units, models, and equipment that carry a given special key.
+Defines the behavior of the `spf special show` command, which searches all races for units, models, and equipment that carry a given special key.
 
 ## Requirements
 

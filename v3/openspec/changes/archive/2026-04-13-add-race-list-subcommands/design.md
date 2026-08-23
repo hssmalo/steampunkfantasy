@@ -39,4 +39,4 @@ Each line: `f"- {name:<24} {cost_str}"` — matches the alignment style of `list
 ## Risks / Trade-offs
 
 - **`cost = None` display** — using a dash placeholder keeps column widths stable but looks different from `Cost.__str__`. This is acceptable since "no cost defined" is a meaningful data state.
-- **`__str__` on a Pydantic model** — Pydantic's `__repr__` is customised; adding `__str__` is safe and won't affect serialisation.
+- **`__str__` on a Pydantic model** — Pydantic's `__repr__` is customized; adding `__str__` is safe and won't affect serialization.

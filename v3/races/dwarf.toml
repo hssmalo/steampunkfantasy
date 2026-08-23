@@ -663,7 +663,7 @@ ap = 2
 [models.elite_dwarf_infantry.assault.special]
 "Cunning Assault" = "[1 for 2]"
 
-#Note to self: give them cunning assault defence
+#Note to self: give them cunning assault defense
 [models.elite_dwarf_steampowerarmor]
 name = "Elite Dwarf SteamPowerArmor"
 race = "dwarf"

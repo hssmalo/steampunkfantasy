@@ -19,7 +19,7 @@ Concatenation fails on four counts, three of them fatal:
 - **PDF-only.** Concatenation is a PDF operation, so `markdown` and `html`
   would have no Army Pack at all — stranding the hyperlink half of #73.
 - **A new dependency** for PDF manipulation, where aggregation needs none.
-- Only the fourth count favours it: concatenation would need no template
+- Only the fourth count favors it: concatenation would need no template
   change. That is the cost we accept, and it buys something else (below).
 
 Aggregation requires splitting the `army-rules` templates into a thin document

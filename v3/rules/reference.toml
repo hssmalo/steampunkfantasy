@@ -267,9 +267,9 @@ references = ["special.assault.cunning_assault"]
 
 references = ["special.assault.cunning_assault_deflection"]
 
-[AssaultSpecial.Cunning_Defence]
+[AssaultSpecial.Cunning_Defense]
 
-references = ["special.assault.cunning_assault_defence"]
+references = ["special.assault.cunning_assault_defense"]
 
 [AssaultSpecial.Damage_on_Deflect]
 

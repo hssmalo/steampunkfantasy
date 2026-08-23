@@ -6,7 +6,7 @@
 > and the additivity of `orders_gained` still stand — ADR-0021 rests on them.
 
 The Order Card Product (issue #18) is the first consumer of two things that were
-modelled but never used: equipment `orders_gained`, and any presentation of a
+modeled but never used: equipment `orders_gained`, and any presentation of a
 Unit's orders. Two decisions settle how orders reach a card.
 
 **A Unit's orders are merged on the resolved model.** `Unit.orders()` returns a

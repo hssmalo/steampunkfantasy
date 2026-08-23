@@ -24,8 +24,8 @@ short = ""
 explanation = "All enemy units hit at least once in assault gets an fire token."
 
 
-[assault.cunning_assault_defence]
-name = "Cunning Assault Defence"
+[assault.cunning_assault_defense]
+name = "Cunning Assault Defense"
 short = "[{N}, {M}+]"
 explanation = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
 

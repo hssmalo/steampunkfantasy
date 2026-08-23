@@ -2,7 +2,7 @@
 
 The provider internals (patching, submit/poll/fetch, retries) are covered in
 `test_comfyui.py`. Here we test the *wiring*: that the Kind is registered,
-that `_build_service` honours the configured Environment, and that the
+that `_build_service` honors the configured Environment, and that the
 `spf assets image` command composes prompts and writes Candidates end-to-end
 over a monkeypatched `comfyui._request`.
 """

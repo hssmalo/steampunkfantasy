@@ -123,6 +123,6 @@ the canvas.
 
 For any model whose output we might sell, prefer **Apache-2.0 weights**
 (Qwen-Image, FLUX.1 schnell). Avoid **FLUX.1 dev** (non-commercial weights)
-and **FLUX.1 Krea [dev]** (inherits dev's non-commercial licence). Since
+and **FLUX.1 Krea [dev]** (inherits dev's non-commercial license). Since
 Profiles carry no metadata by design, this constraint lives here in the README
 rather than in code.

@@ -76,7 +76,7 @@ def test_relative_to_emits_forward_slashes_on_windows() -> None:
     # CommonMark reads a backslash as an escape, so a Windows-separated
     # `..\..\art.png` renders as `....%5Cart.png` and the image 404s. On
     # Windows a `Path` *is* a `WindowsPath`, of which `PureWindowsPath` is the
-    # pure flavour — so passing one exercises the real separator behavior.
+    # pure flavor — so passing one exercises the real separator behavior.
     relative = relative_to(
         PureWindowsPath(r"C:\repo\assets\elf\images\art.png"),
         PureWindowsPath(r"C:\repo\output\army-rules"),

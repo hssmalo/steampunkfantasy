@@ -18,7 +18,7 @@ from spf.render.products import Product
 SOURCE_VAR = "source"
 
 # The directory the rendered file lands in, bound alongside it so a template can
-# reference a neighbouring file relatively (see `relative_to` in `environments`).
+# reference a neighboring file relatively (see `relative_to` in `environments`).
 OUTPUT_DIR_VAR = "output_dir"
 
 
@@ -45,7 +45,7 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     existing file is overwritten silently.
     """
     # Resolved before the template runs: a template that references a
-    # neighbouring file needs to know where its own output lands.
+    # neighboring file needs to know where its own output lands.
     if out is None:
         root = output_root if output_root is not None else config.paths.output
         out = root / product.name / f"{name}.{fmt.extension}"
