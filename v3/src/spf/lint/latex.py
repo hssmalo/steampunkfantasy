@@ -6,6 +6,7 @@ than exercising rendering itself.
 """
 
 import re
+import tomllib
 from pathlib import Path
 
 _PACKAGE_LINE = re.compile(r"\\(?:usepackage|documentclass)(?:\[[^\]]*\])?\{([^}]*)\}")
@@ -40,14 +41,34 @@ def packages_in_templates(templates_dir: Path) -> set[str]:
     return names
 
 
+def _packages(manifest_path: Path) -> list[dict[str, str]]:
+    """Parse a `requirements.toml` manifest's `[[package]]` tables."""
+    data = tomllib.loads(manifest_path.read_text())
+    return data.get("package", [])
+
+
 def read_manifest(manifest_path: Path) -> set[str]:
-    """Parse a requirements manifest: one package per line, `#` comments stripped."""
-    names: set[str] = set()
-    for line in manifest_path.read_text().splitlines():
-        name = line.split("#", 1)[0].strip()
-        if name:
-            names.add(name)
-    return names
+    r"""Return every LaTeX package name the manifest declares.
+
+    A `[[package]]` entry with no `name` — a transitive TL dependency no
+    `\usepackage` line names directly — contributes nothing here.
+    """
+    return {pkg["name"] for pkg in _packages(manifest_path) if "name" in pkg}
+
+
+def tlmgr_packages(manifest_path: Path) -> list[str]:
+    """Return, sorted and deduplicated, the TeX Live packages tlmgr installs.
+
+    A LaTeX package name doesn't always match its TL package: an entry's
+    `tlmgr` key overrides it when they differ, defaulting to `name`. Every
+    entry has one or the other — `read_manifest` and `_packages` are the
+    only callers that ever see a name-less, `tlmgr`-only entry.
+    """
+    names = {
+        pkg["tlmgr"] if "tlmgr" in pkg else pkg["name"]
+        for pkg in _packages(manifest_path)
+    }
+    return sorted(names)
 
 
 def unlisted_packages(templates_dir: Path, manifest_path: Path) -> list[str]:

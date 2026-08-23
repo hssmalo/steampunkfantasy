@@ -209,21 +209,29 @@ def render_army_pack(
     stdout.print(f"Wrote {out}")
 
 
-def lint_latex() -> None:
+def lint_latex(*, tlmgr: bool = False) -> None:
     """Check that every LaTeX package a template uses is in the manifest.
 
     A *lint over authored data*, mirroring `spf race lint`: the manifest and
     the templates are both authored, so a missing entry is a soft gate rather
     than a schema failure.
+
+    `--tlmgr` instead prints the manifest's deduplicated TeX Live package
+    list, one per line, for `docs.yml`'s `tlmgr install` step — skipping the
+    lint check entirely.
     """
     templates_dir = config.paths.templates / "latex"
-    manifest_path = templates_dir / "requirements.txt"
+    manifest_path = templates_dir / "requirements.toml"
+    if tlmgr:
+        for name in latex.tlmgr_packages(manifest_path):
+            stdout.print(name, highlight=False, soft_wrap=True)
+        return
     missing = latex.unlisted_packages(templates_dir, manifest_path)
     for name in missing:
         # Soft-wrapped so a finding is always exactly one line, as `race
         # lint`'s findings are.
         stdout.print(
-            f"templates/latex/requirements.txt  missing-package  {name}",
+            f"templates/latex/requirements.toml  missing-package  {name}",
             highlight=False,
             soft_wrap=True,
         )

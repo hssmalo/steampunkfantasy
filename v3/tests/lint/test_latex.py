@@ -62,12 +62,58 @@ def test_packages_in_templates_scans_every_tex_jinja_file(tmp_path: Path) -> Non
     assert latex.packages_in_templates(tmp_path) == {"fancyhdr", "graphicx"}
 
 
-def test_read_manifest_strips_comments_and_blank_lines(tmp_path: Path) -> None:
-    """A manifest entry may carry a trailing `#` comment; blanks are skipped."""
-    manifest = tmp_path / "requirements.txt"
-    manifest.write_text("graphicx  # for images\n\nfancyhdr\n")
+def test_read_manifest_returns_every_named_package(tmp_path: Path) -> None:
+    """Each `[[package]]` table's `name` is checked against template usage."""
+    manifest = tmp_path / "requirements.toml"
+    manifest.write_text(
+        '[[package]]\nname = "graphicx"\n\n[[package]]\nname = "fancyhdr"\n'
+    )
 
     assert latex.read_manifest(manifest) == {"graphicx", "fancyhdr"}
+
+
+def test_read_manifest_ignores_transitive_entries(tmp_path: Path) -> None:
+    """An entry with only `tlmgr` (no `name`) names nothing a template can use."""
+    manifest = tmp_path / "requirements.toml"
+    manifest.write_text('[[package]]\nname = "graphicx"\n\n[[package]]\ntlmgr = "ec"\n')
+
+    assert latex.read_manifest(manifest) == {"graphicx"}
+
+
+def test_tlmgr_packages_defaults_to_the_package_name(tmp_path: Path) -> None:
+    """An entry without an explicit `tlmgr` key installs under its own name."""
+    manifest = tmp_path / "requirements.toml"
+    manifest.write_text('[[package]]\nname = "fancyhdr"\n')
+
+    assert latex.tlmgr_packages(manifest) == ["fancyhdr"]
+
+
+def test_tlmgr_packages_honours_explicit_override(tmp_path: Path) -> None:
+    """`tlmgr` overrides the name when the LaTeX and TL package names differ."""
+    manifest = tmp_path / "requirements.toml"
+    manifest.write_text('[[package]]\nname = "graphicx"\ntlmgr = "graphics"\n')
+
+    assert latex.tlmgr_packages(manifest) == ["graphics"]
+
+
+def test_tlmgr_packages_includes_transitive_entries(tmp_path: Path) -> None:
+    """A `tlmgr`-only entry with no `name` still needs installing."""
+    manifest = tmp_path / "requirements.toml"
+    manifest.write_text('[[package]]\nname = "graphicx"\n\n[[package]]\ntlmgr = "ec"\n')
+
+    assert latex.tlmgr_packages(manifest) == ["ec", "graphicx"]
+
+
+def test_tlmgr_packages_deduplicates_and_sorts(tmp_path: Path) -> None:
+    """Two LaTeX names sharing one TL package collapse to a single entry."""
+    manifest = tmp_path / "requirements.toml"
+    manifest.write_text(
+        '[[package]]\nname = "fontenc"\ntlmgr = "latex"\n\n'
+        '[[package]]\nname = "textcomp"\ntlmgr = "latex"\n\n'
+        '[[package]]\nname = "parskip"\n'
+    )
+
+    assert latex.tlmgr_packages(manifest) == ["latex", "parskip"]
 
 
 def test_unlisted_packages_reports_only_missing_ones(tmp_path: Path) -> None:
@@ -77,8 +123,8 @@ def test_unlisted_packages_reports_only_missing_ones(tmp_path: Path) -> None:
     (templates_dir / "main.tex.jinja").write_text(
         "\\usepackage{graphicx}\n\\usepackage{unlisted}\n"
     )
-    manifest_path = templates_dir / "requirements.txt"
-    manifest_path.write_text("graphicx\n")
+    manifest_path = templates_dir / "requirements.toml"
+    manifest_path.write_text('[[package]]\nname = "graphicx"\n')
 
     assert latex.unlisted_packages(templates_dir, manifest_path) == ["unlisted"]
 
@@ -90,7 +136,7 @@ def test_unlisted_packages_empty_when_manifest_covers_everything(
     templates_dir = tmp_path / "latex"
     templates_dir.mkdir()
     (templates_dir / "main.tex.jinja").write_text(r"\usepackage{graphicx}")
-    manifest_path = templates_dir / "requirements.txt"
-    manifest_path.write_text("graphicx\n")
+    manifest_path = templates_dir / "requirements.toml"
+    manifest_path.write_text('[[package]]\nname = "graphicx"\n')
 
     assert latex.unlisted_packages(templates_dir, manifest_path) == []
