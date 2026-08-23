@@ -146,8 +146,20 @@ they share nothing.
 ### Board and state
 
 **Hex**:
-A single tile of the hex-based board. May carry terrain effects that apply in
-particular Phases.
+A single tile of the hex-based board. May carry Terrain, and may have Hex
+Effects placed on it.
+
+**Terrain**:
+A permanent feature of the board — forest, building, ruins, swamp — fixed at
+setup. Terrain is never placed or removed during play, though a rule may
+*replace* one Terrain with another (a destroyed building becomes ruins).
+
+**Hex Effect**:
+A transient effect placed on a Hex during play — fog, a poison cloud, a trap —
+and removed again in a particular Phase. Distinguished from Terrain by being
+placed and removable; a Hex Effect may still modify to-hit the way Terrain
+does.
+_Avoid_: "terrain effect" for this — that names Terrain, not a Hex Effect.
 
 **Token**:
 A marker tracking transient state on a Unit or Model (bleeding, poison, +1
