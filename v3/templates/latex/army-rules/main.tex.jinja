@@ -5,8 +5,6 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 
-
-
 % A tiny version stamp in the footer of every page. `\maketitle` switches its
 % own page to the `plain` style, so `plain` is redefined to match — otherwise
 % the stamp is missing from exactly the page most people look at.
@@ -16,16 +14,11 @@
   \fancyfoot[R]{\tiny v\VAR{spf_version}}%
   \renewcommand{\headrulewidth}{0pt}%
 }
-
-
 \hypersetup{
-    colorlinks=true, %set true if you want colored links
-    linktoc=all,     %set to all if you want both sections and subsections linked
-    linkcolor=blue,  %choose some color if you want links to stand out
+    colorlinks=true, % set true if you want colored links
+    linktoc=all,     % set to all if you want both sections and subsections linked
+    linkcolor=blue,  % choose some color if you want links to stand out
 }
-
-
-
 \pagestyle{fancy}
 \versionfoot
 \fancypagestyle{plain}{\versionfoot}

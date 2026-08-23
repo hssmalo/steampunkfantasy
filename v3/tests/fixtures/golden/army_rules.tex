@@ -3,6 +3,7 @@
 \usepackage{textcomp}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
 
 % A tiny version stamp in the footer of every page. `\maketitle` switches its
 % own page to the `plain` style, so `plain` is redefined to match — otherwise
@@ -13,6 +14,11 @@
   \fancyfoot[R]{\tiny v1999.12.0}%
   \renewcommand{\headrulewidth}{0pt}%
 }
+\hypersetup{
+    colorlinks=true, % set true if you want colored links
+    linktoc=all,     % set to all if you want both sections and subsections linked
+    linkcolor=blue,  % choose some color if you want links to stand out
+}
 \pagestyle{fancy}
 \versionfoot
 \fancypagestyle{plain}{\versionfoot}
@@ -22,6 +28,8 @@
 
 \begin{document}
 \maketitle
+\setcounter{tocdepth}{1}
+\tableofcontents
 
 
 \section{Goblin Infantry}
