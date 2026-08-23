@@ -12,6 +12,9 @@
 name = "flacards" # \documentclass — order card decks (texlive-latex-extra)
 
 [[package]]
+name = "hyperref"
+
+[[package]]
 name = "fancyhdr"
 
 [[package]]
