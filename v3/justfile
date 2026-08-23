@@ -1,7 +1,7 @@
 default: check
 
 # Run all quality gates in order, stopping on the first failure.
-check: fmt-check lint spell validate lint-races test typecheck
+check: fmt-check lint spell validate lint-races lint-latex test typecheck
 
 # Cut a release: bump the CalVer version, re-lock, commit, tag, and push.
 release *args:
@@ -60,3 +60,11 @@ validate:
 # Lint race data for name and key consistency.
 lint-races:
     uv run spf race lint
+
+# Check that every LaTeX package used by a template is in the manifest.
+lint-latex:
+    uv run spf render lint
+
+# Build every published Product/Format into output/, plus the Site Index.
+render-site:
+    uv run spf render site

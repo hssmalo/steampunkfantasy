@@ -1,0 +1,13 @@
+flacards        # \documentclass — order card decks (texlive-latex-extra)
+fancyhdr
+fontenc
+geometry
+graphicx
+parskip
+textcomp
+
+# Transitive font dependencies. No \usepackage line names these directly, so
+# `spf render lint` cannot discover them — they exist only because a template
+# loads `[T1]{fontenc}`, which needs actual T1-encoded fonts to render with.
+ec        # T1-encoded Computer Modern fonts
+cm-super  # scalable T1 fonts, needed at the sizes the templates use

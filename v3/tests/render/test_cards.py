@@ -9,7 +9,7 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.config import config
-from spf.frontends.cli.render import CARDS, RenderOpts, _safe_stem, render_cards
+from spf.frontends.cli.render import CARDS, RenderOpts, render_cards, safe_stem
 from spf.render import render
 from spf.render.cards import OrderCardDeck, build_deck
 from spf.render.formats import get_format
@@ -598,20 +598,20 @@ def test_build_deck_leaves_images_none_when_there_is_no_art() -> None:
     assert all(card.image is None for card in deck.cards)
 
 
-# --- _safe_stem -------------------------------------------------------------
+# --- safe_stem -------------------------------------------------------------
 
 
-def test_safe_stem_keeps_safe_characters() -> None:
-    assert _safe_stem("elf-warband-2025") == "elf-warband-2025"
+def testsafe_stem_keeps_safe_characters() -> None:
+    assert safe_stem("elf-warband-2025") == "elf-warband-2025"
 
 
-def test_safe_stem_slugifies_unsafe_characters() -> None:
-    assert _safe_stem("Geir Arne's army") == "Geir-Arne-s-army"
+def testsafe_stem_slugifies_unsafe_characters() -> None:
+    assert safe_stem("Geir Arne's army") == "Geir-Arne-s-army"
 
 
-def test_safe_stem_collapses_runs_and_strips_ends() -> None:
-    assert _safe_stem("2025/geir_arne") == "2025-geir-arne"
-    assert _safe_stem("  spaced  ") == "spaced"
+def testsafe_stem_collapses_runs_and_strips_ends() -> None:
+    assert safe_stem("2025/geir_arne") == "2025-geir-arne"
+    assert safe_stem("  spaced  ") == "spaced"
 
 
 # --- CLI: render cards end-to-end (drives the real templates) ---------------

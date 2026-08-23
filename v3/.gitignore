@@ -4,6 +4,7 @@
 
 # Rendered output
 output/
+*.pdf
 
 # Uncurated Asset candidates (Assets themselves are committed)
 candidates/
