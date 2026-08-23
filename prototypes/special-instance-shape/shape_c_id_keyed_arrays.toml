@@ -1,0 +1,67 @@
+# PROTOTYPE — throwaway. Wayfinder ticket #112, Shape C (the third that
+# suggested itself while building A and B).
+#
+# Id-keyed arrays of tables: [[<source>.specials.<id>]]. The KEY is the id —
+# no invented handle, no `id` field — and the array makes repeats native.
+# Closest to today's `"Resistance" = "..."` line-per-special reading.
+
+# ---------------------------------------------------------------- case: repeats
+# ---------------------------------------------------------------- case: version ref
+[[units.armored_unicorn_rider.specials.resistance]]
+args.version = "poison"
+args.N = 12
+
+[[units.armored_unicorn_rider.specials.resistance]]
+args.version = "fire"
+args.N = 3
+
+[[units.armored_unicorn_rider.specials.resistance]]
+args.version = "acid"
+args.N = 1
+
+[[units.armored_unicorn_rider.specials.fire_order]]
+name = "Autoloader"
+text = "any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+
+# The "Officer" / "Officer 2" pair: same key, twice. No suffix, no handle.
+[[units.armored_unicorn_rider.specials.officer]]
+text = "Grants Psychic resistance 1 to the other unit in this hex"
+
+[[units.armored_unicorn_rider.specials.officer]]
+text = "remove one shaken token on any biological unit in the same hex in 2nd healing phase"
+
+[[units.armored_unicorn_rider.specials.stacking_limit]]
+text = "May share a hex with a huge unit"
+
+# ---------------------------------------------------------------- case: args
+[[units.goblin_horde.specials.terror]]
+args.N = 6
+args.range = 1
+
+# ------------------------------------------- case: free text ALONGSIDE args
+[[units.flagship.specials.terror]]
+args.N = 8
+args.range = 1
+text = "Only while this unit has an out of the fog token."
+
+[[units.flagship.specials.repair]]
+args.N = 3
+args.target = "self"
+args.phase = "2nd_healing"
+
+# ---------------------------------------------------------- case: atmospheric name
+[[units.whip_handler.models.whip_handler.specials.to_hit]]
+name = "Excellent Whip Handling"
+args.ability = "excellent_shot"
+
+# ---------------------------------------------------------- case: intended replace
+# `replace` needs no target: the key IS the target. This overwrites whatever
+# `to_hit` instances the model already had.
+[[equipment.stabilizer.model_specials.to_hit]]
+name = "Enhanced Accuracy"
+args.ability = "good_shot"
+replace = true
+
+# ------------------------- case: repeat across sources (today's " 2" suffix)
+[[equipment.healing_syringe.unit_specials.heal]]
+text = "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."

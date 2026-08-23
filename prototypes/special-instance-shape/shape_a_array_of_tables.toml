@@ -1,0 +1,87 @@
+# PROTOTYPE — throwaway. Wayfinder ticket #112, Shape A.
+#
+# Array of tables: [[<source>.specials]], every instance a full table.
+# Repeats are free; the id is just a field.
+
+# ---------------------------------------------------------------- case: repeats
+# ---------------------------------------------------------------- case: version ref
+# races/elf.toml [units.armored_unicorn_rider.special]
+#   "Resistance"     = "Poison[12], Fire[3], Acid[1]"
+#   "Officer"        = "Grants Psychic resistance 1 ..."
+#   "Officer 2"      = "remove one shaken token ..."
+[[units.armored_unicorn_rider.specials]]
+id = "resistance"
+args.version = "poison"
+args.N = 12
+
+[[units.armored_unicorn_rider.specials]]
+id = "resistance"
+args.version = "fire"
+args.N = 3
+
+[[units.armored_unicorn_rider.specials]]
+id = "resistance"
+args.version = "acid"
+args.N = 1
+
+[[units.armored_unicorn_rider.specials]]
+id = "fire_order"
+name = "Autoloader"
+text = "any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+
+[[units.armored_unicorn_rider.specials]]
+id = "officer"
+text = "Grants Psychic resistance 1 to the other unit in this hex"
+
+[[units.armored_unicorn_rider.specials]]
+id = "officer"
+text = "remove one shaken token on any biological unit in the same hex in 2nd healing phase"
+
+[[units.armored_unicorn_rider.specials]]
+id = "stacking_limit"
+text = "May share a hex with a huge unit"
+
+# ---------------------------------------------------------------- case: args
+# races/goblin.toml  "Terror" = "[6](range=1)"
+[[units.goblin_horde.specials]]
+id = "terror"
+args.N = 6
+args.range = 1
+
+# ------------------------------------------- case: free text ALONGSIDE args
+# races/abomination.toml [units.flagship.special]
+#   "Terror" = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
+#   "Repair" = "[3, self, 2nd Healing]"
+[[units.flagship.specials]]
+id = "terror"
+args.N = 8
+args.range = 1
+text = "Only while this unit has an out of the fog token."
+
+[[units.flagship.specials]]
+id = "repair"
+args.N = 3
+args.target = "self"
+args.phase = "2nd_healing"
+
+# ---------------------------------------------------------- case: atmospheric name
+# races/dwarf.toml  "To Hit" = "Excellent Whip Handling (counts as Excellent shot, +2 to hit)"
+[[units.whip_handler.models.whip_handler.specials]]
+id = "to_hit"
+name = "Excellent Whip Handling"
+args.ability = "excellent_shot"
+
+# ---------------------------------------------------------- case: intended replace
+# races/dwarf.toml [equipment.stabilizer.model_special]
+#   "To Hit" = "Enhanced accuracy. +1 to hit"
+[[equipment.stabilizer.model_specials]]
+id = "to_hit"
+name = "Enhanced Accuracy"
+args.ability = "good_shot"
+replace = true
+
+# ------------------------- case: repeat across sources (today's " 2" suffix)
+# races/ork.toml [equipment.healing_syringe.unit_special]  "Heal 2" = "..."
+[[equipment.healing_syringe.unit_specials]]
+id = "heal"
+text = "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."

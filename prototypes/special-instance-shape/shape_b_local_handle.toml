@@ -1,0 +1,80 @@
+# PROTOTYPE — throwaway. Wayfinder ticket #112, Shape B.
+#
+# Dict keyed by a LOCAL INSTANCE HANDLE: [<source>.specials.<handle>].
+# The handle is invented per instance; `id` is a field. `replace` names the
+# handle it overwrites.
+
+# ---------------------------------------------------------------- case: repeats
+# ---------------------------------------------------------------- case: version ref
+[units.armored_unicorn_rider.specials.resistance_poison]
+id = "resistance"
+args.version = "poison"
+args.N = 12
+
+[units.armored_unicorn_rider.specials.resistance_fire]
+id = "resistance"
+args.version = "fire"
+args.N = 3
+
+[units.armored_unicorn_rider.specials.resistance_acid]
+id = "resistance"
+args.version = "acid"
+args.N = 1
+
+[units.armored_unicorn_rider.specials.autoloader]
+id = "fire_order"
+name = "Autoloader"
+text = "any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+
+# NOTE the two handles below are invented purely to keep the keys distinct.
+[units.armored_unicorn_rider.specials.officer_psychic_resistance]
+id = "officer"
+text = "Grants Psychic resistance 1 to the other unit in this hex"
+
+[units.armored_unicorn_rider.specials.officer_unshaken]
+id = "officer"
+text = "remove one shaken token on any biological unit in the same hex in 2nd healing phase"
+
+[units.armored_unicorn_rider.specials.stacking_limit]
+id = "stacking_limit"
+text = "May share a hex with a huge unit"
+
+# ---------------------------------------------------------------- case: args
+[units.goblin_horde.specials.terror]
+id = "terror"
+args.N = 6
+args.range = 1
+
+# ------------------------------------------- case: free text ALONGSIDE args
+[units.flagship.specials.fog_terror]
+id = "terror"
+args.N = 8
+args.range = 1
+text = "Only while this unit has an out of the fog token."
+
+[units.flagship.specials.repair]
+id = "repair"
+args.N = 3
+args.target = "self"
+args.phase = "2nd_healing"
+
+# ---------------------------------------------------------- case: atmospheric name
+[units.whip_handler.models.whip_handler.specials.whip_handling]
+id = "to_hit"
+name = "Excellent Whip Handling"
+args.ability = "excellent_shot"
+
+# ---------------------------------------------------------- case: intended replace
+# The equipment must name the handle it overwrites — `whip_handling` — which
+# lives in a DIFFERENT file's model. Handles have to be globally addressable
+# for this to work at all.
+[equipment.stabilizer.model_specials.enhanced_accuracy]
+id = "to_hit"
+name = "Enhanced Accuracy"
+args.ability = "good_shot"
+replace = "whip_handling"
+
+# ------------------------- case: repeat across sources (today's " 2" suffix)
+[equipment.healing_syringe.unit_specials.syringe_heal]
+id = "heal"
+text = "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."
