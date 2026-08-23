@@ -12,7 +12,9 @@ from typing import Annotated
 import cyclopts
 
 from spf.armies import io
+from spf.config import config
 from spf.console import stderr, stdout
+from spf.lint import latex
 from spf.render import Product, render
 from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
@@ -84,7 +86,7 @@ class RenderOpts:
     ] = False
 
 
-def _safe_stem(name: str) -> str:
+def safe_stem(name: str) -> str:
     """Slugify `name` to a filename stem of letters, digits, and single dashes."""
     return re.sub(r"[^A-Za-z0-9]+", "-", name).strip("-")
 
@@ -102,7 +104,7 @@ def render_cards(
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    stem = _safe_stem(army_name)
+    stem = safe_stem(army_name)
     deck = build_deck(
         army, stem=stem, image_for=no_image if opts.no_images else committed_image
     )
@@ -124,7 +126,7 @@ def render_army_rules(
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    stem = _safe_stem(army_name)
+    stem = safe_stem(army_name)
     reference = build_reference(
         army, stem=stem, image_for=no_image if opts.no_images else committed_image
     )
@@ -187,7 +189,7 @@ def render_army_pack(
             # `.resolve()`: a bare relative `--index pack.toml` has a `.parent`
             # of `.`, whose `.name` is empty — deriving the stem from the
             # resolved path always finds the real directory name.
-            stem = _safe_stem(index.resolve().parent.name) or ARMY_PACK_STEM
+            stem = safe_stem(index.resolve().parent.name) or ARMY_PACK_STEM
         else:
             armies = [(None, io.load_army(name)) for name in army_names]
             title = ARMY_PACK_TITLE
@@ -207,9 +209,40 @@ def render_army_pack(
     stdout.print(f"Wrote {out}")
 
 
+def lint_latex(*, tlmgr: bool = False) -> None:
+    """Check that every LaTeX package a template uses is in the manifest.
+
+    A *lint over authored data*, mirroring `spf race lint`: the manifest and
+    the templates are both authored, so a missing entry is a soft gate rather
+    than a schema failure.
+
+    `--tlmgr` instead prints the manifest's deduplicated TeX Live package
+    list, one per line, for `docs.yml`'s `tlmgr install` step — skipping the
+    lint check entirely.
+    """
+    templates_dir = config.paths.templates / "latex"
+    manifest_path = templates_dir / "requirements.toml"
+    if tlmgr:
+        for name in latex.tlmgr_packages(manifest_path):
+            stdout.print(name, highlight=False, soft_wrap=True)
+        return
+    missing = latex.unlisted_packages(templates_dir, manifest_path)
+    for name in missing:
+        # Soft-wrapped so a finding is always exactly one line, as `race
+        # lint`'s findings are.
+        stdout.print(
+            f"templates/latex/requirements.toml  missing-package  {name}",
+            highlight=False,
+            soft_wrap=True,
+        )
+    if missing:
+        raise SystemExit(1)
+
+
 def add_commands(app: cyclopts.App) -> None:
     """Add render commands to the CLI."""
     app.command(render_cards, name="cards")
     app.command(render_army_rules, name="army-rules")
     app.command(render_general_rules, name="general-rules")
     app.command(render_army_pack, name="army-pack")
+    app.command(lint_latex, name="lint")

@@ -1,0 +1,42 @@
+# Every LaTeX package the templates use (`\usepackage`/`\documentclass`
+# names, which `spf render lint` checks templates against via `name`), plus
+# the TeX Live package tlmgr installs it under when that differs from the
+# LaTeX name — a `tlmgr` key overrides `name`, since a few core LaTeX
+# packages don't ship as their own installable TL package.
+#
+# `spf render lint --tlmgr` prints the deduplicated tlmgr package list
+# `docs.yml` installs from, so this file is the only place that mapping
+# needs updating.
+
+[[package]]
+name = "flacards" # \documentclass — order card decks (texlive-latex-extra)
+
+[[package]]
+name = "fancyhdr"
+
+[[package]]
+name = "fontenc"
+tlmgr = "latex" # fontenc.sty ships inside the base "latex" TL package
+
+[[package]]
+name = "geometry"
+
+[[package]]
+name = "graphicx"
+tlmgr = "graphics" # graphicx.sty ships in the "graphics" TL package
+
+[[package]]
+name = "parskip"
+
+[[package]]
+name = "textcomp"
+tlmgr = "latex" # textcomp.sty ships inside the base "latex" TL package
+
+# Transitive font dependencies. No \usepackage line names these directly, so
+# `spf render lint` cannot discover them — they exist only because a template
+# loads `[T1]{fontenc}`, which needs actual T1-encoded fonts to render with.
+[[package]]
+tlmgr = "ec" # T1-encoded Computer Modern fonts
+
+[[package]]
+tlmgr = "cm-super" # scalable T1 fonts, needed at the sizes the templates use
