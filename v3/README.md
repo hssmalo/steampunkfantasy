@@ -1,5 +1,7 @@
 # SteamPunkFantasy
 
+**[Rules](https://hssmalo.github.io/steampunkfantasy)**
+
 Use [`uv`](https://docs.astral.sh/uv/getting-started/installation/) for Python management.
 
 ## Command line interface
