@@ -49,7 +49,7 @@ jobs:
           curl -fsSL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | tar xz
           cd install-tl-*
           cat > texlive.profile <<PROFILE
-          selected_scheme scheme-infraonly
+          selected_scheme scheme-basic
           TEXDIR ${{ github.workspace }}/.texlive
           TEXMFLOCAL ${{ github.workspace }}/.texlive/texmf-local
           TEXMFSYSVAR ${{ github.workspace }}/.texlive/texmf-var
@@ -57,12 +57,19 @@ jobs:
           PROFILE
           ./install-tl --profile=texlive.profile
 
+      # requirements.txt names LaTeX packages (\usepackage names, for
+      # `spf render lint`'s purposes), which isn't always the name tlmgr
+      # installs it under: fontenc and textcomp ship inside the "latex"
+      # TL package (already present via scheme-basic) and graphicx.sty
+      # lives in the "graphics" TL package.
       - name: Install the manifest's LaTeX packages
         run: |
           echo "${{ github.workspace }}/.texlive/bin/x86_64-linux" >> "$GITHUB_PATH"
           export PATH="${{ github.workspace }}/.texlive/bin/x86_64-linux:$PATH"
           tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet
-          packages=$(sed 's/#.*//' v3/templates/latex/requirements.txt)
+          packages=$(sed 's/#.*//' v3/templates/latex/requirements.txt \
+            | sed -e 's/^fontenc$/latex/' -e 's/^textcomp$/latex/' -e 's/^graphicx$/graphics/' \
+            | sort -u)
           tlmgr install $packages
 
       - name: Build the site
