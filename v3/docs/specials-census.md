@@ -176,22 +176,22 @@ Legend for the **Category** column:
 | Rule | 2026-08-19 (per #101) | Now |
 |---|---|---|
 | `assault.reroll` (#101 called it `reroll_assault`; current key is `reroll`) | unreachable | **Reachable** — "Ork Reroll" matches by `name`. |
-| `assault.fire` | unreachable | Still unreachable — no assault label named "Fire" exists. Near-duplicate of `range_.fire` (see below); candidate for merging into one multi-slot rule rather than staying dead in both slots. |
+| `assault.fire` → `assault_fire` (#113) | unreachable | Still unreachable — no assault label named "Fire" exists. Per #113's resolution this is a genuinely distinct rule from `range_fire` (different variables/bounds), not a merge candidate — stays a separate dead id needing either a label or a TODO-marked removal. |
 | `assault.cunning_assault_defence` | unreachable | **Reachable** — "Cunning Assault Defense" matches once the spelling drift is reconciled. |
-| `assault.minor_acid` | unreachable | Still unreachable. Near-duplicate of `range_.minor_acid`; same merge candidate as `fire`. |
-| `assault.gear_disruption` | unreachable | Still unreachable. Near-duplicate of `range_.gear_disruption`; same merge candidate. |
-| `assault.poison` | unreachable | Still unreachable — but "Stench" (assault, ork/troll) grants `Poison[6]` inline instead of using this rule. Recommend Stench route through `assault.poison` rather than staying bespoke. |
+| `assault.minor_acid` → `assault_minor_acid` (#113) | unreachable | Still unreachable. Per #113, distinct from `range_minor_acid`, not a merge candidate. |
+| `assault.gear_disruption` → `assault_gear_disruption` (#113) | unreachable | Still unreachable. Per #113, distinct from `range_gear_disruption`, not a merge candidate. |
+| `assault.poison` → `assault_poison` (#113) | unreachable | Still unreachable — but "Stench" (assault, ork/troll) grants `Poison[6]` inline instead of using this rule. Recommend Stench route through `assault_poison` rather than staying bespoke. |
 | `assault.pre_assault_retreat` | unreachable | **Reachable, but wrong slot** — "Pre-Assault Retreat" is a unit label; the rule's own comment already calls for moving it to `[unit]`. |
 | `unit.hide` | unreachable | Still unreachable — no unit label named "Hide" exists (the actual "Hidden" label points at `tokens.hidden` instead, a different rule entirely). `unit.hide`'s `terrain` variable looks orphaned; flag for a decision on whether it's dead or meant to converge with Hidden. |
 | `unit.insanity_field` | unreachable | Still unreachable by exact label — Horror's "Terror" label carries the insanity-field text in free prose instead (the exact case #101 flagged). Decision 9's atmospheric-name instance shape is the natural fix, but that's a design decision for a grilling ticket, not settled here. |
 | `unit.fear` | unreachable | **Reachable, confirmed wrong slot** — moves to `[assault]` per the owner's comment. |
 | `range_.limited_ammo` | unreachable | **Reachable** — "Ammo" matches once the wording drift is reconciled. |
-| `range_.gear_disruption` | unreachable | Still unreachable; merge candidate with `assault.gear_disruption` (see above). |
-| `range_.fire` | unreachable | Still unreachable; merge candidate with `assault.fire` (see above). |
-| `range_.minor_acid` | unreachable | Still unreachable; merge candidate with `assault.minor_acid` (see above). |
-| `range_.poison` | unreachable | Still unreachable; merge candidate with `assault.poison` (see above). |
+| `range_.gear_disruption` → `range_gear_disruption` (#113) | unreachable | Still unreachable; distinct rule from `assault_gear_disruption` per #113 (see above). |
+| `range_.fire` → `range_fire` (#113) | unreachable | Still unreachable; distinct rule from `assault_fire` per #113 (see above). |
+| `range_.minor_acid` → `range_minor_acid` (#113) | unreachable | Still unreachable; distinct rule from `assault_minor_acid` per #113 (see above). |
+| `range_.poison` → `range_poison` (#113) | unreachable | Still unreachable; distinct rule from `assault_poison` per #113 (see above). |
 
-**4 of the 15 become reachable outright** (reroll, cunning_assault_defence, limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix, 2 more). **4 rule pairs are near-duplicate assault/range_ text** (`fire`, `minor_acid`, `poison`, `gear_disruption`) that decision 3's multi-slot mechanism was built to replace — each pair should probably collapse into one multi-slot rule instead of staying as two dead-and-live copies. **2 stay genuinely orphaned** (`unit.hide`, `unit.insanity_field`) pending design decisions outside this ticket's scope.
+**4 of the 15 become reachable outright** (reroll, cunning_assault_defence, limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix). The 8 `assault_*`/`range_*` pairs stay unreachable and, per [#113's resolution](https://github.com/hssmalo/steampunkfantasy/issues/113) (settled after this census's data-gathering started — flat namespace, no multi-slot merge for these four: the assault forms count hits, the range forms are flat, different variables and bounds), are **not** multi-slot merge candidates as this census first guessed — each keeps its own renamed id and either gets a label or a TODO-marked removal. **2 stay genuinely orphaned** (`unit.hide`, `unit.insanity_field`) pending design decisions outside this ticket's scope.
 
 ## Missing-rule-text count (decision 2 stub countdown)
 
@@ -217,7 +217,7 @@ Per the ticket's instruction, these are flagged rather than settled:
 1. **`enhanced_accuracy`'s to-hit value is fixed at `+1` in `to_hit.toml`, but race data needs +1, +3, and +5** (three "bad at long range + enhanced accuracy" compound instances differ only in this number). The rule needs a variable, not a constant.
 2. **"Great Shot: +2 to hit" text-matches `excellent_shot`'s value (+2), not `superb_shot`'s (+3)**, despite the superficial word "Great" suggesting the bigger bonus. Confirm which id it should map to before treating it as a clean spelling-only match.
 3. **Compound To Hit values need the instance-args shape from #112** to express "id A or id B, conditional" and "id A plus a bespoke clause" — flagging that the census surfaced real cases needing that shape, not asking to resolve the shape here.
-4. **Four rule pairs in `special.toml` (`fire`, `minor_acid`, `poison`, `gear_disruption`) are near-duplicated verbatim across `[assault]` and `[range_]`**, each with no reachable label in one or both slots. These look like exactly what decision 3's multi-slot mechanism exists to replace — recommend collapsing each pair into one multi-slot rule during migration rather than keeping two copies (one dead).
+4. ~~Four rule pairs in `special.toml` (`fire`, `minor_acid`, `poison`, `gear_disruption`) look like multi-slot merge candidates~~ — **settled by [#113](https://github.com/hssmalo/steampunkfantasy/issues/113)** while this census was in progress: each pair is genuinely two different rules (different variables/bounds), renamed to `assault_*`/`range_*` rather than merged. No longer open; noted here only so the reasoning isn't lost.
 5. **`unit.hide` looks orphaned.** No label named "Hide" exists; "Hidden" (a different label) already resolves cleanly to `tokens.hidden`. Is `unit.hide` dead, or does something still need to reference it?
 6. **`unit.insanity_field` stays unreachable by exact label** — Horror's "Terror" label carries insanity-field content in free prose instead. The natural fix is decision 9's atmospheric-name instance shape (an instance of `terror` with a local name/version), but that's a modeling decision for a grilling ticket, not this census.
 7. **Possible label duplicates, name closeness only — not confirmed:**
