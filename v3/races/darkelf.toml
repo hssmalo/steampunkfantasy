@@ -1587,7 +1587,7 @@ requires = [["Hands:2"], ["type:Roboprosthetic", "type:Infantry"]]
 damage.replace = "d6-2 + d6 Crew damage"
 
 [equipment.poison_spray.assault.special]
-"Improved Extra Damage" = "Poison[4][1 for 2]"
+"Extra Damage 3" = "Poison[4][1 for 2]"
 
 [equipment.poison_spray.range]
 range = 2

@@ -909,7 +909,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
 [equipment.tentacle_cracklespears.assault.special]
-"Improved Extra Damage" = "If assault in a hex with fog, each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears."
+"Extra Damage 3" = "If assault in a hex with fog, each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]
 name = "Tentacle Axes"

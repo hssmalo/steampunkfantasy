@@ -182,7 +182,7 @@ type ModelSpecial = Literal[
 type AssaultSpecial = Literal[
     "Extra Damage",
     "Extra Damage 2",
-    "Improved Extra Damage",
+    "Extra Damage 3",
     "Cunning Assault",
     "Cunning Deflection",
     "Cunning Assault Defense",
