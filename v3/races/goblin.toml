@@ -2,12 +2,10 @@
 
 [races.goblin]
 name = "Goblin"
-
 description = "Goblin are small humanoid creatures, about 1m in height. Sneaky infantry, viewed as somewhat primitive but has proven to have done some surprisingly well done engineering jobs"
 
 [spawns.tiny_snake]
 unit = "tiny_snake"
-
 
 [units]
 
@@ -22,7 +20,6 @@ models = [
 ]
 size = "Small"
 cost.mp = 8
-
 description = '''A Goblin armed with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger.
 '''
 
@@ -487,7 +484,6 @@ How the goblin manage to make this marvel of a rebuild mechanism is a mystery.
 tip = '''Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set an enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it har to hit, some armor protects from regular muskets and rifles, while simulatiously requires a few shots to disensamble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy.
 '''
 
-
 [units.mechanical_fire_bird.shaken]
 speed = "fast_fly"
 movement_order = ["-", "F", "F"]
@@ -497,11 +493,7 @@ movement_order = ["-", "F", "F"]
 "Immunity" = "Fire"
 
 [units.mechanical_fire_bird.orders.movement]
-fast_fly = [
-	["L/R+F", "F", "F+L/R"],
-	["F", "F", "F"],
-	["F+L/R", "F+L/R", "F"]
-]
+fast_fly = [["L/R+F", "F", "F+L/R"], ["F", "F", "F"], ["F+L/R", "F+L/R", "F"]]
 
 [units.mechanical_fire_bird.orders.fire]
 fast = [["-", "Load"], ["-", "Fire"]]
@@ -519,17 +511,20 @@ notes = [
 ]
 
 [units.mechanical_fire_bird.damage_tables.Inner]
-rows = [
-	"1-5: add one minor acid token",
-	"6+: Remove reassemble token",
-]
+rows = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
 
 [models]
 
 [models.goblin_infantry]
 name = "Goblin Infantry"
 race = "goblin"
-equipment_limit = ["Independent:∞", "Hands:2", "Grenades:3", "Specialization:1", "Special Arrows:3"]
+equipment_limit = [
+	"Independent:∞",
+	"Hands:2",
+	"Grenades:3",
+	"Specialization:1",
+	"Special Arrows:3"
+]
 equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Walking"]
 
@@ -546,8 +541,6 @@ ap = 2
 
 [models.goblin_infantry.assault.special]
 "Cunning Assault" = "[1 for 1]"
-
-
 
 [models.giant_snake_cavalry]
 name = "Giant Snake Cavalry"
@@ -567,8 +560,6 @@ ap = 2
 [models.giant_snake_cavalry.assault.special]
 "Extra Damage" = "Poison[8](1 for 2)"
 
-
-
 [models.tiny_snake]
 name = "Tiny Snake"
 race = "goblin"
@@ -587,7 +578,6 @@ ap = 0
 [models.tiny_snake.assault.special]
 "Extra Damage" = "Poison[6](1 for 1)"
 "Bonus" = "If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection"
-
 
 [models.bipedal_mech]
 name = "Bipedal Mech"
@@ -681,7 +671,7 @@ replaces = "goblin_infantry"
 
 [models.elite_goblin_infantry.unit_special]
 "Resistance 2" = "Psychic[1] as long as at least one elite model is alive."
-"Pre-Assault Retreat" = "6+, improved by 1 per elite in unit)"
+"Pre-Assault Retreat" = "6+, improved by 1 per elite in unit."
 
 [models.elite_goblin_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -710,7 +700,6 @@ ap = 1
 [equipment.goblin_bow.range.special]
 "Ammo" = "Always treated as loaded"
 
-
 [equipment.seeker_arrows]
 name = "Seeker Arrows"
 race = "goblin"
@@ -729,8 +718,6 @@ ap = 1
 
 [equipment.seeker_arrows.range.special]
 "Ammo" = "Limited Ammo[2]"
-
-
 
 [equipment.seeker_assassin_arrows]
 name = "Seeker Assassin Arrows"
@@ -752,7 +739,6 @@ ap = 1
 "Ammo" = "Limited Ammo[1]"
 "Extra Damage" = "Poison[12]"
 
-
 [equipment.seeker_assassin_arrows_free]
 name = "Seeker Assassin Arrows"
 race = "goblin"
@@ -770,14 +756,12 @@ ap = 1
 "Ammo" = "Limited Ammo[1]"
 "Extra Damage" = "Poison[12]"
 
-
-
 [equipment.gear_bow]
 name = "Gear Bow"
 race = "goblin"
 cost.cp = 8
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry","type:Cavalry"]]
+requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.gear_bow.range]
 range = 3
@@ -786,7 +770,7 @@ damage = "d4-2"
 ap = 1
 
 [equipment.gear_bow.range.special]
-"Ammo"= "Always treated as loaded"
+"Ammo" = "Always treated as loaded"
 "Extra Damage" = "Gear Disruption[6+]"
 
 #To Do: Consider the applications carefully
@@ -814,7 +798,7 @@ name = "Poison Bow"
 race = "goblin"
 cost.cp = 16
 upgrade_all = true
-requires = [["Hands:2"], ["type:Infantry","type:Cavalry"]]
+requires = [["Hands:2"], ["type:Infantry", "type:Cavalry"]]
 
 [equipment.poison_bow.range]
 range = 2
@@ -826,8 +810,6 @@ ap = 1
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "Poison[4]"
 "Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
-
-
 
 [equipment.poison_bow_free]
 name = "Poison Bow"
@@ -844,8 +826,6 @@ ap = 1
 "Extra Damage" = "Poison[4]"
 "Bonus" = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
 
-
-
 [equipment.hallucinating_poison_spit]
 name = "Hallucinating Poison Spit"
 race = "goblin"
@@ -859,7 +839,6 @@ ap = "N/A"
 [equipment.hallucinating_poison_spit.range.special]
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "Poison[4], Confused"
-
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -878,7 +857,7 @@ ap = "2"
 "Movement" = "Unit is destroyed if trying to land in an impassable or overcrowded hex."
 
 [equipment.ogre_rifle.range.special]
-"Recoil"  = "After firing this weapon, set speed to slow flying"
+"Recoil" = "After firing this weapon, set speed to slow flying"
 "Note" = "Remember to track ammo."
 
 [equipment.ogre_rifle.orders_gained.movement]
@@ -886,8 +865,6 @@ slow_fly = [["rev", "-", "B[still]"]]
 
 [equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]
-
-
 
 [equipment.poison_deflection_dagger]
 name = "Poison Deflection Dagger"
@@ -941,7 +918,6 @@ ap = 2
 
 [equipment.goblin_grenade_free.range.special]
 "Ammo" = "Always treated as loaded"
-
 
 [equipment.goblin_auto_bow]
 name = "Goblin Auto Bow"
@@ -1027,7 +1003,6 @@ ap = 0
 "Ammo" = "Always treated as loaded"
 "Extra Damage" = "No regular damage, but Minor Acid"
 
-
 [equipment.poison_grenade]
 name = "Poison Grenade"
 race = "goblin"
@@ -1040,7 +1015,6 @@ range = 1
 angle = [true, true, true, true]
 damage = "d4 Crew damage"
 ap = 0
-
 
 [equipment.poison_grenade.range.special]
 "Type" = "Thrown weapon"
@@ -1093,8 +1067,7 @@ ap = 2
 "Extra Damage" = "In addition to normal damage, choose one (for all shots): add Minor Acid, Poison[6] or Gear Disruption[6+]"
 
 [equipment.goblin_bow_battery.model_special]
-"To Hit (2)" = 	"Imprecise weapon[Bow Battery]: -1 to hit"
-
+"To Hit (2)" = "Imprecise weapon[Bow Battery]: -1 to hit"
 
 [equipment.heavy_crossbow]
 name = "Heavy Crossbow"
@@ -1113,7 +1086,6 @@ ap = 4
 
 [equipment.heavy_crossbow.model_special]
 "To Hit (3)" = "Enhanced accuracy[Heavy Crossbow]: +1 to hit"
-
 
 [equipment.stinkbomb]
 name = "StinkBomb"
@@ -1142,7 +1114,6 @@ angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
 
-
 [equipment.ring_of_fire.range.special]
 "Area" = "[6+] target at all enemies within exactly range 2"
 "Extra Damage" = "Fire"
@@ -1155,7 +1126,6 @@ cost.xp = 8
 upgrade_all = true
 
 [equipment.assault_archer.assault]
-
 
 [equipment.assault_archer.assault.special]
 "Retreat" = "Unit gains aim if you manage to pre-escape an assault"
