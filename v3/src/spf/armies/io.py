@@ -15,12 +15,13 @@ from spf.armies.build import (
     nick_error,
     validate_army,
 )
+from spf.armies.model import Model
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
 from spf.render.specials import special_lines
 from spf.schemas.army_pack import ArmyPackConfig
-from spf.schemas.race import RaceConfig
+from spf.schemas.race import EquipmentConfig, RaceConfig
 
 
 def list_armies() -> list[Path]:
@@ -143,6 +144,64 @@ def print_army(army: Army) -> None:
     stdout.print(f"\n[dim]Total cost:[/]  {cost}", highlight=False)
 
 
+def _print_note(note: str, *, indent: int) -> None:
+    """Print a record's `note` — a sibling of its Specials, not one (ADR 0024)."""
+    if note:
+        stdout.print(f"{' ' * indent}- [dim]Note:[/] {escape(note)}", highlight=False)
+
+
+def _print_specials(lines: list[tuple[str, str]], *, indent: int) -> None:
+    """Print one slot's rendered Special lines under a `Specials:` heading."""
+    if not lines:
+        return
+    stdout.print(f"{' ' * indent}- [dim]Specials:[/]", highlight=False)
+    for heading, special in lines:
+        # A signature is full of square brackets, which are Rich's own markup:
+        # printed raw, `[range=1]` would vanish as a tag.
+        stdout.print(
+            f"{' ' * (indent + 2)}- [blue]{escape(heading)}:[/] {escape(special)}",
+            highlight=False,
+        )
+
+
+def _print_equipment_rules(equip: EquipmentConfig) -> None:
+    """Print one Equipment's line, its note, and its ranged profile."""
+    cost_str = f" ({equip.cost})" if equip.cost is not None else ""
+    stdout.print(f"    - {equip.name}{cost_str}", highlight=False)
+    _print_note(equip.note, indent=6)
+    if equip.range is None:
+        return
+    ranged = equip.range
+    angle_str = "".join("*" if angle else "." for angle in ranged.angle)
+    stdout.print(
+        f"      - Range: {ranged.range} [{angle_str}],"
+        f" Damage {ranged.damage}, AP {ranged.ap}",
+        highlight=False,
+    )
+    _print_note(ranged.note, indent=8)
+
+
+def _print_model_rules(model: Model) -> None:
+    """Print one Model's line, its Specials, its Equipment and its assault."""
+    model_pts = model.cost().to_points()
+    cost_str = f" ({model_pts} pts)" if model_pts else ""
+    stdout.print(f"  - {model.display_name}{cost_str}", highlight=False)
+    _print_specials(special_lines(model.model_specials), indent=4)
+    _print_note(model.config.note, indent=4)
+    for equip in model.equipment:
+        _print_equipment_rules(equip)
+    assault = model.assault()
+    str_angles = "/".join(str(s) for s in assault.strength)
+    def_angles = "/".join(str(d) for d in assault.deflection)
+    stdout.print(
+        f"    - Assault: Strength [{str_angles}]/{assault.strength_die}"
+        f" Deflect [{def_angles}]/{assault.deflection_die}"
+        f" Damage {assault.damage} AP {assault.ap}",
+        highlight=False,
+    )
+    _print_note(assault.note, indent=6)
+
+
 def print_army_rules(army: Army) -> None:
     """Pretty-print a resolved Army as a rules-reference view."""
     stdout.rule(f"{army.nick} — {army.race.title()} Army")
@@ -150,48 +209,10 @@ def print_army_rules(army: Army) -> None:
         stdout.print(
             f"- [yellow]{unit.display_name}[/] - {unit.cost()}", highlight=False
         )
-        unit_specials = special_lines(unit.unit_specials)
-        if unit_specials:
-            stdout.print("  - [dim]Specials:[/]", highlight=False)
-            for heading, special in unit_specials:
-                # A signature is full of square brackets, which are Rich's own
-                # markup: printed raw, `[range=1]` would vanish as a tag.
-                stdout.print(
-                    f"    - [blue]{escape(heading)}:[/] {escape(special)}",
-                    highlight=False,
-                )
+        _print_specials(special_lines(unit.unit_specials), indent=2)
+        _print_note(unit.config.note, indent=2)
         for model in unit.models:
-            model_pts = model.cost().to_points()
-            cost_str = f" ({model_pts} pts)" if model_pts else ""
-            stdout.print(f"  - {model.display_name}{cost_str}", highlight=False)
-            model_specials = special_lines(model.model_specials)
-            if model_specials:
-                stdout.print("    - [dim]Specials:[/]", highlight=False)
-            for heading, special in model_specials:
-                stdout.print(
-                    f"      - [blue]{escape(heading)}:[/] {escape(special)}",
-                    highlight=False,
-                )
-            for equip in model.equipment:
-                equip_cost_str = f" ({equip.cost})" if equip.cost is not None else ""
-                stdout.print(f"    - {equip.name}{equip_cost_str}", highlight=False)
-                if equip.range is not None:
-                    r = equip.range
-                    angle_str = "".join("*" if a else "." for a in r.angle)
-                    stdout.print(
-                        f"      - Range: {r.range} [{angle_str}],"
-                        f" Damage {r.damage}, AP {r.ap}",
-                        highlight=False,
-                    )
-            assault = model.assault()
-            str_angles = "/".join(str(s) for s in assault.strength)
-            def_angles = "/".join(str(d) for d in assault.deflection)
-            stdout.print(
-                f"    - Assault: Strength [{str_angles}]/{assault.strength_die}"
-                f" Deflect [{def_angles}]/{assault.deflection_die}"
-                f" Damage {assault.damage} AP {assault.ap}",
-                highlight=False,
-            )
+            _print_model_rules(model)
     stdout.print(f"\n[dim]Total cost:[/]  {army.cost()}", highlight=False)
 
 

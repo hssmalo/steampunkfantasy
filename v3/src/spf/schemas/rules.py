@@ -7,7 +7,7 @@ checking is what makes the data safe to write.
 """
 
 import re
-from typing import Annotated, ClassVar, Literal, Self
+from typing import Annotated, ClassVar, Literal, Self, TypeIs
 
 from pydantic import Field, StringConstraints, model_validator
 
@@ -26,6 +26,16 @@ namespace registry is the loader's job; the shape is checked here.
 
 _DIE = re.compile(r"^d\d+$")
 
+
+def _is_int(value: object) -> TypeIs[int]:
+    """Whether a value is a number a rule can interpolate.
+
+    `bool` subclasses `int` in Python, but `N = true` is no count, so a bool is
+    not accepted anywhere an int is asked for.
+    """
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
 type Slot = Literal["unit", "model", "assault", "range"]
 type Modifier = Literal["-2", "-1", "0", "+1", "+2", "+3", "-N", "+N"]
 """A to-hit modifier as authored — a signed string, not a number, because `-N`
@@ -41,7 +51,14 @@ class IntVariableConfig(StrictModel):
     values: list[int] | None = None
 
     def validate_value(self, value: int) -> int:
-        """Validate the given value."""
+        """Validate the given value.
+
+        The type is checked before the bounds: a variable declaring neither
+        `min`, `max` nor `values` still constrains what may be written.
+        """
+        if not _is_int(value):
+            msg = f"Value {value} is not an int"
+            raise ValueError(msg)
         if self.min is not None and value < self.min:
             msg = f"Value {value} less than minimum {self.min}"
             raise ValueError(msg)
@@ -61,7 +78,12 @@ class StringVariableConfig(StrictModel):
     values: list[str] | None = None
 
     def validate_value(self, value: str) -> str:
-        """Validate the given value."""
+        """Validate the given value, its type before its value set."""
+        if not isinstance(value, str):
+            # ValueError, not TypeError: every way a value can fail a variable
+            # is one kind of answer to the caller, which reports them alike.
+            msg = f"Value {value} is not a str"
+            raise ValueError(msg)  # noqa: TRY004
         if self.values is not None and value not in self.values:
             msg = f"Value {value} not any of {self.values}"
             raise ValueError(msg)
@@ -75,7 +97,7 @@ class DieVariableConfig(StrictModel):
 
     def validate_value(self, value: str) -> str:
         """Validate the given value."""
-        if not _DIE.match(value):
+        if not isinstance(value, str) or not _DIE.match(value):
             msg = f"Value {value} is not a die"
             raise ValueError(msg)
         return value
@@ -108,7 +130,7 @@ class UnionVariableConfig(StrictModel):
         The bounds constrain the numeric member only: a die is not a number,
         so `d20` is out of no range.
         """
-        if isinstance(value, int) and "int" in self.type:
+        if _is_int(value) and "int" in self.type:
             return IntVariableConfig(
                 type="int", min=self.min, max=self.max
             ).validate_value(self._check_values(value))
@@ -194,9 +216,11 @@ class SpecialRuleConfig(RuleRecord):
     slots: list[Slot] = Field(min_length=1)
     """Where this id may be used. Rendering derives its groups from this."""
 
-    versions: dict[str, "VersionOverlay"] = Field(default_factory=dict)
-    """Rule-local prose keyed by ref value, for a rule that reads differently
-    per version. A version with no overlay inherits the target's own text."""
+    versions: dict[Ref, "VersionOverlay"] = Field(default_factory=dict)
+    """Rule-local prose for a rule that reads differently per version, keyed by
+    the very ref an instance's version argument carries — so the overlay is
+    found by lookup and a key pointing nowhere is caught rather than ignored. A
+    version with no overlay inherits the target's own text."""
 
 
 class VersionOverlay(StrictModel):

@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 
 from spf.armies.holders import retained_defaults
-from spf.armies.specials import merge_specials
+from spf.armies.specials import join_notes, merge_specials
 from spf.schemas import type_aliases as t
 from spf.schemas.race import AssaultConfig, EquipmentConfig, ModelConfig, Stacker
 from spf.schemas.special import Specials
@@ -93,6 +93,7 @@ class Model:
         damage: t.Die = self.config.assault.damage
         ap: t.ArmorPenetration = self.config.assault.ap
         instances = [self.config.assault.specials]
+        notes: list[str] = []
 
         for equip in self.equipment:
             ea = equip.assault
@@ -133,6 +134,7 @@ class Model:
             if ea.ap is not None:
                 ap = _apply_ap(ap, stacker=ea.ap, equip_name=equip.name)
             instances.append(ea.specials)
+            notes.append(ea.note)
 
         return AssaultConfig(
             strength=strength,
@@ -142,6 +144,7 @@ class Model:
             damage=damage,
             ap=ap,
             specials=merge_specials(*instances),
+            note=join_notes(self.config.assault.note, *notes),
         )
 
 

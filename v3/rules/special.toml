@@ -210,19 +210,19 @@ effect = "Gives improved resilience versus {version} damage"
 version = { type = "ref", namespaces = ["damage_type"] }
 N = { type = ["int", "die"], min = 1, max = 12 }
 
-[special.resistance.versions.regular]
+[special.resistance.versions."damage_type.regular"]
 effect = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
 
-[special.resistance.versions.psychic]
+[special.resistance.versions."damage_type.psychic"]
 effect = "Any damage explicitly named psychic damage is reduced damage by {N}"
 
-[special.resistance.versions.fire]
+[special.resistance.versions."damage_type.fire"]
 effect = "Any damage rolled by fire token is effect is reduced damage by {N}. It is also reduced with respect to stop burning by {N}"
 
-[special.resistance.versions.poison]
+[special.resistance.versions."damage_type.poison"]
 effect = "Any damage rolled by poison token effect reduced damage by {N}"
 
-[special.resistance.versions.acid]
+[special.resistance.versions."damage_type.acid"]
 effect = "Any die rolled by acid or minor acid token is reduced by {N}."
 
 [special.heal]

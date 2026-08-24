@@ -96,13 +96,33 @@ def _load_registry(rules_dir: Path) -> Registry:
     loaded = {
         file_name: _LOADERS[file_name](rules_dir / file_name) for file_name in wanted
     }
-    return Registry(
+    registry = Registry(
         namespaces=namespaces,
         records={
             name: getattr(loaded[namespace.file], namespace.table)
             for name, namespace in namespaces.items()
         },
     )
+    _check_version_keys(registry)
+    return registry
+
+
+def _check_version_keys(registry: Registry) -> None:
+    """Resolve every version overlay's key, which is a ref like any other.
+
+    An overlay is looked up by the ref an instance's version argument carries,
+    so a key resolving to no record is prose no reader will ever see.
+    """
+    dangling = sorted(
+        f"'{identifier}': {version}"
+        for identifier, rule in registry.specials.items()
+        for version in rule.versions
+        if registry.record(version) is None
+    )
+    if dangling:
+        refs = ", ".join(dangling)
+        msg = f"A version overlay is keyed by a ref resolving to no record: {refs}"
+        raise ValueError(msg)
 
 
 def check_instances(
@@ -216,9 +236,9 @@ def _check_ref(
 
 
 def _check_scalar(value: int | str, variable: r.ScalarVariableConfig) -> str | None:
-    """Check a scalar arg against the bounds and value set its variable declares."""
+    """Check a scalar arg against the type, bounds and value set it declares."""
     try:
         variable.validate_value(value)  # pyright: ignore[reportArgumentType]
-    except (ValueError, TypeError) as err:
+    except ValueError as err:
         return str(err)
     return None

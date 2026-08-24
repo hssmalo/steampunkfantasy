@@ -23,11 +23,6 @@ name = "Still"
 to_hit = "+1"
 to_be_hit = "+1"
 
-[speed.sneak]
-name = "Sneak"
-to_hit = "+1"
-to_be_hit = "0"
-
 [speed.crawl]
 name = "Crawl"
 to_hit = "+1"
@@ -42,6 +37,13 @@ to_be_hit = "0"
 name = "Fast"
 to_hit = "-1"
 to_be_hit = "-1"
+
+# Sneak sits after Fast because this order is the one every orders table is
+# rendered in, and a Unit's Sneak rows read below its ground speeds.
+[speed.sneak]
+name = "Sneak"
+to_hit = "+1"
+to_be_hit = "0"
 
 [speed.still_fly]
 name = "Still Fly"

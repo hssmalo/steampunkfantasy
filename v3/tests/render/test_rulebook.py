@@ -377,10 +377,10 @@ slots = ["unit"]
 signature = "{version}[{N}]"
 effect = "Improved resilience versus {version} damage."
 
-[special.resistance.versions.regular]
+[special.resistance.versions."damage_type.regular"]
 effect = "Regular damage is reduced by {N}."
 
-[special.resistance.versions.psychic]
+[special.resistance.versions."damage_type.psychic"]
 effect = "Psychic damage is reduced by {N}."
 
 [special.fumble]

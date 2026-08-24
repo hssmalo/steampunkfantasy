@@ -60,6 +60,17 @@ def _registry() -> reg.Registry:
                 "fear": r.SpecialRuleConfig.model_validate(
                     {"name": "Fear", "slots": ["assault"], "effect": "Causes fear."}
                 ),
+                "endurance": r.SpecialRuleConfig.model_validate(
+                    {
+                        "name": "Endurance",
+                        "slots": ["unit"],
+                        "effect": "Gets {N} endurance tokens as a {model_class}.",
+                        "variables": {
+                            "N": {"type": "int"},
+                            "model_class": {"type": "str"},
+                        },
+                    }
+                ),
                 "shadowed": r.SpecialRuleConfig.model_validate(
                     {
                         "name": "Shadowed",
@@ -249,6 +260,24 @@ def test_a_ref_targets_variable_is_required_too() -> None:
     assert "terrain" in error
 
 
+def test_an_unbounded_int_arg_is_still_type_checked() -> None:
+    # `endurance.N` declares no min, max or values, so the type is the whole
+    # constraint -- and it is the constraint that gets interpolated.
+    (error,) = check(
+        {"endurance": [{"args": {"N": "not a number", "model_class": "elite model"}}]}
+    )
+
+    assert "N" in error
+    assert "not an int" in error
+
+
+def test_an_unbounded_str_arg_is_still_type_checked() -> None:
+    (error,) = check({"endurance": [{"args": {"N": 2, "model_class": 7}}]})
+
+    assert "model_class" in error
+    assert "not a str" in error
+
+
 def test_a_variable_a_ref_target_does_not_lend_is_still_unknown() -> None:
     (error,) = check(
         {
@@ -372,4 +401,19 @@ def test_an_incomplete_rules_file_fails_to_load(tmp_path: Path) -> None:
     )
 
     with pytest.raises(ValidationError, match="has neither"):
+        reg.load_registry(rules_dir)
+
+
+def test_a_version_overlay_pointing_nowhere_fails_to_load(tmp_path: Path) -> None:
+    # A version overlay is keyed by a ref, so a typo is a ref that resolves to
+    # no record -- otherwise the overlay is silently invisible.
+    rules_dir = _copied_rules(tmp_path)
+    (rules_dir / "special.toml").write_text(
+        '[special.fear]\nname = "Fear"\nslots = ["assault"]\n'
+        'effect = "Causes fear."\n'
+        '\n[special.fear.versions."damage_type.nonesuch"]\n'
+        'effect = "Fear of the unknown."\n'
+    )
+
+    with pytest.raises(ValueError, match=r"damage_type\.nonesuch"):
         reg.load_registry(rules_dir)

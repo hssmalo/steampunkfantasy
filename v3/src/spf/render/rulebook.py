@@ -356,7 +356,11 @@ def _resolve_tokens(
 
 
 def _special_entry(config: SpecialRuleConfig, token: str | None) -> RuleEntry:
-    """Build the entry for one Special, given its already-resolved Tokens."""
+    """Build the entry for one Special, given its already-resolved Tokens.
+
+    A version overlay is keyed by a ref; the reader is inside the rule already,
+    so the heading drops the namespace the key qualifies it with.
+    """
     return RuleEntry(
         name=config.name,
         short=_signature(config.name, config.signature),
@@ -368,7 +372,8 @@ def _special_entry(config: SpecialRuleConfig, token: str | None) -> RuleEntry:
         token=token,
         variables=_variables(config.variables),
         versions=[
-            (version, overlay.effect) for version, overlay in config.versions.items()
+            (version.partition(".")[2], overlay.effect)
+            for version, overlay in config.versions.items()
         ],
     )
 

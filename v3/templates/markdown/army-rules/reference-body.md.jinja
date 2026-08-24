@@ -28,6 +28,9 @@
 {% for name, text in unit.specials %}
 - **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if unit.note %}
+- **Note**: {{ unit.note }}
+{%- endif %}
 {% for name, rows, notes in unit.damage_tables %}
 **Damage Table: {{ name }}**
 
@@ -48,9 +51,18 @@
 {% for name, text in model.specials %}
 - **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if model.note %}
+- **Note**: {{ model.note }}
+{%- endif %}
+{%- for name, text in model.equipment_notes %}
+- **Note ({{ name }})**: {{ text }}
+{%- endfor %}
 {% for name, text in model.assault_specials %}
 - **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if model.assault_note %}
+- **Note**: {{ model.assault_note }}
+{%- endif %}
 {% for equip in model.equipment %}
 {{ hashes }}## {{ equip.name }}
 
@@ -58,6 +70,9 @@
 {%- for name, text in equip.specials %}
 - **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if equip.note %}
+- **Note**: {{ equip.note }}
+{%- endif %}
 {% endfor %}
 {% endfor %}
 ---

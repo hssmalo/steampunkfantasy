@@ -2,6 +2,20 @@
 
 from spf.schemas.special import Specials
 
+NOTE_SEPARATOR = "; "
+"""Between the notes of two sources resolved into one record."""
+
+
+def join_notes(*notes: str) -> str:
+    """Join every source's `note` into the one the resolved record carries.
+
+    `note` is a sibling of `specials` rather than one of them (ADR 0024), so it
+    has no instances to keep apart — a chain of sources collapses to one string,
+    dropping the empty ones and any repeat.
+    """
+    kept = list(dict.fromkeys(note for note in notes if note))
+    return NOTE_SEPARATOR.join(kept)
+
 
 def merge_specials(*sources: Specials) -> Specials:
     """Accumulate every source's instances, resetting where one replaces.

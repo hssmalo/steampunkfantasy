@@ -200,8 +200,69 @@ def test_a_union_bounds_only_its_numeric_member() -> None:
     assert variable.validate_value("d20") == "d20"
 
 
+def test_a_version_overlay_is_keyed_by_a_ref() -> None:
+    special = r.SpecialRuleConfig.model_validate(
+        {
+            "name": "Resistance",
+            "slots": ["unit"],
+            "effect": "Improved resilience versus {version}.",
+            "variables": {"version": {"type": "ref", "namespaces": ["damage_type"]}},
+            "versions": {"damage_type.regular": {"effect": "Reduced by {N}."}},
+        }
+    )
+
+    assert list(special.versions) == ["damage_type.regular"]
+
+
+def test_a_version_overlay_keyed_by_a_bare_id_is_rejected() -> None:
+    with pytest.raises(ValidationError):
+        r.SpecialRuleConfig.model_validate(
+            {
+                "name": "Resistance",
+                "slots": ["unit"],
+                "effect": "Improved resilience versus {version}.",
+                "versions": {"regular": {"effect": "Reduced by {N}."}},
+            }
+        )
+
+
 def test_a_union_rejects_a_value_of_neither_type() -> None:
     variable = r.UnionVariableConfig(type=["int", "die"])
 
     with pytest.raises(ValueError, match="not an int or a die"):
         variable.validate_value("six")
+
+
+# --- A variable's own type is checked before its bounds ---------------------
+
+
+def test_an_unbounded_int_still_rejects_a_string() -> None:
+    variable = r.IntVariableConfig(type="int")
+
+    assert variable.validate_value(7) == 7
+    with pytest.raises(ValueError, match="not an int"):
+        variable.validate_value("not a number")  # pyright: ignore[reportArgumentType]
+
+
+def test_an_int_rejects_a_bool() -> None:
+    # `bool` is a subclass of `int` in Python, but `N = true` is not a number
+    # any rule can interpolate.
+    variable = r.IntVariableConfig(type="int")
+
+    with pytest.raises(ValueError, match="not an int"):
+        variable.validate_value(True)  # noqa: FBT003  the point of the test
+
+
+def test_an_unbounded_string_still_rejects_an_int() -> None:
+    variable = r.StringVariableConfig(type="str")
+
+    assert variable.validate_value("elite model") == "elite model"
+    with pytest.raises(ValueError, match="not a str"):
+        variable.validate_value(7)  # pyright: ignore[reportArgumentType]
+
+
+def test_a_union_rejects_a_bool_for_its_int_member() -> None:
+    variable = r.UnionVariableConfig(type=["int", "die"])
+
+    with pytest.raises(ValueError, match="not an int or a die"):
+        variable.validate_value(True)  # noqa: FBT003  the point of the test

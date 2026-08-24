@@ -64,6 +64,15 @@ class ModelEntry:
     assault_damage: t.Die
     assault_ap: t.ArmorPenetration
     assault_specials: _Specials
+    note: str
+    assault_note: str
+    equipment_notes: list[tuple[str, str]]
+    """(Equipment name, note) for each rangeless Equipment carrying one.
+
+    A rangeless Equipment gets no sub-entry of its own, so its note is printed
+    against the Model carrying it and labeled with the Equipment's name.
+    """
+
     equipment: list["EquipmentEntry"]
 
 
@@ -77,6 +86,7 @@ class EquipmentEntry:
     damage: t.Die
     ap: t.ArmorPenetration
     specials: _Specials
+    note: str
 
 
 @dataclass(frozen=True)
@@ -95,6 +105,7 @@ class UnitEntry:
     shaken_movement: list[str]
     shaken_fire: str
     specials: _Specials
+    note: str
     damage_tables: list[tuple[str, list[tuple[str, str]], list[str]]]
     models: list[ModelEntry]
 
@@ -120,6 +131,7 @@ def _equipment_entry(equip: EquipmentConfig) -> EquipmentEntry:
         damage=equip.range.damage,
         ap=equip.range.ap,
         specials=special_lines(equip.range.specials),
+        note=equip.range.note,
     )
 
 
@@ -146,6 +158,15 @@ def _model_entry(model: Model) -> ModelEntry:
         assault_damage=assault.damage,
         assault_ap=assault.ap,
         assault_specials=special_lines(assault.specials),
+        note=model.config.note,
+        assault_note=assault.note,
+        equipment_notes=_dedup(
+            [
+                (equip.name, equip.note)
+                for equip in model.equipment
+                if equip.note and equip.range is None
+            ]
+        ),
         equipment=_dedup([_equipment_entry(e) for e in ranged_equipment]),
     )
 
@@ -160,12 +181,16 @@ def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> Unit
         size=load_registry().display_name(f"size.{unit.config.size}"),
         model_summary=_count_summary(unit.models, lambda m: m.display_name),
         types=unit.common_types,
-        armor=list(unit.config.armor) if unit.config.armor is not None else None,
+        # `unit.armor`, not `unit.config.armor`: a Model or an Equipment may
+        # raise a Unit's armor, and the grant is only visible in the stacked
+        # value (ADR 0024).
+        armor=list(unit.armor) if unit.armor is not None else None,
         points=unit.cost().to_points(),
         shaken_speed=unit.config.shaken.speed,
         shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
         specials=special_lines(unit.unit_specials),
+        note=unit.config.note,
         damage_tables=[
             (
                 name,
