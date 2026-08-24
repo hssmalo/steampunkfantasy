@@ -930,7 +930,7 @@ def test_markdown_partials_tabulate_the_to_hit_modifiers(real_markdown: str) -> 
     assert "### Speeds\n" in real_markdown
     assert "| Flying | -1 | -1 | Stacks with still, slow, and fast |" in real_markdown
     # A group with no notes spends no column on them.
-    assert "| On-Edge of Firing-Angle | -1 | 0 |\n" in real_markdown
+    assert "| On Edge | -1 | 0 |\n" in real_markdown
 
 
 def test_latex_partials_tabulate_the_to_hit_modifiers(real_latex: str) -> None:

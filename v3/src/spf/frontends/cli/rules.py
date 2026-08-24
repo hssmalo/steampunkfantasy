@@ -1,8 +1,9 @@
 """Rules commands for the SteamPunkFantasy CLI."""
 
 import cyclopts
+from pydantic import ValidationError
 
-from spf import rules
+from spf import countdown, lint, races, registry, rules
 from spf.config import config
 from spf.console import stderr, stdout
 from spf.render.rulebook import build_rulebook
@@ -17,6 +18,8 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(list_modifier_rules, name="modifiers")
     app.command(list_namespaces, name="namespaces")
     app.command(list_rulebook, name="rulebook")
+    app.command(lint_rules, name="lint")
+    app.command(list_todos, name="todos")
 
 
 def list_special_rules() -> None:
@@ -67,3 +70,61 @@ def list_rulebook() -> None:
         # Parentheses, not brackets: Rich would read `[markdown]` as a style tag
         # and swallow it.
         stdout.print(f"{position}. {section.title} ({section.kind})")
+
+
+def lint_rules() -> None:
+    """Check the rule registries for name and key inconsistencies.
+
+    A sibling of `spf race lint`, not an extension of it: the registries are
+    their own vocabulary and are linted whether or not any Race is readable.
+    Style is a soft gate layered on the hard one, so a `rules/*.toml` that
+    fails schema validation is skipped rather than reported here -- `just
+    validate` owns that failure and would otherwise report it twice (ADR 0016).
+    """
+    try:
+        loaded = registry.load_registry()
+    except (ValueError, ValidationError):
+        stderr.print("rules: skipped (does not validate)")
+        return
+
+    findings = lint.lint_registry(loaded, config.lint)
+    for finding in findings:
+        # Soft-wrapped so a finding is always exactly one line: these are meant
+        # to be grepped, and Rich would otherwise fold the long ones at the
+        # terminal width, splitting a key away from its rule.
+        stdout.print(
+            f"rules/{finding.file}  {finding.namespace}.{finding.key}"
+            f"  {finding.rule}  {finding.message}",
+            highlight=False,
+            soft_wrap=True,
+        )
+    if findings:
+        raise SystemExit(1)
+
+
+def _print_entries(title: str, entries: list[countdown.RuleEntry]) -> None:
+    """Print one countdown section, its size in the heading."""
+    stdout.print(f"[bold]{title}[/] ({len(entries)})")
+    for entry in entries:
+        stdout.print(f"- {entry.ref:<40} {entry.name}", highlight=False)
+        if entry.todo:
+            # First line only: a todo may carry rescued design notes running to
+            # a paragraph, and this is a count, not the reading list itself.
+            stdout.print(f"    {entry.todo.splitlines()[0]}", highlight=False)
+
+
+def list_todos() -> None:
+    """Count what the rule registries still owe the game designer.
+
+    Three separate countdowns, and deliberately outside `just check`: none of
+    them is a gate, and a permanent warning tier rots (ADR 0024).
+    """
+    loaded = registry.load_registry()
+    _print_entries("Unwritten rule text", countdown.unwritten(loaded))
+    stdout.print()
+    _print_entries("Open questions on written rules", countdown.open_questions(loaded))
+    stdout.print()
+    used = countdown.used_special_ids(
+        races.get_race(name) for name in races.list_races(validate=True)
+    )
+    _print_entries("Unreachable Specials", countdown.unreachable(loaded, used))

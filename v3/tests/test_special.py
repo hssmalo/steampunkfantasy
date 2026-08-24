@@ -15,9 +15,9 @@ def test_show_accepts_a_key_in_the_wrong_case(
 ) -> None:
     # The key is canonicalised, so the shouted spelling finds the same rows the
     # canonical one does rather than being rejected.
-    show("REROLL")
+    show("ORK_REROLL")
     canonical = capsys.readouterr().out
-    show("reroll")
+    show("ork_reroll")
     assert "A  Model:     Grunt" in canonical
     assert capsys.readouterr().out == canonical
 
@@ -51,8 +51,8 @@ def test_show_names_an_instance_that_renamed_itself(
 
 
 def test_show_suggests_a_near_miss() -> None:
-    with pytest.raises(CycloptsError, match=r'Did you mean "reroll"\?'):
-        show("rerol")
+    with pytest.raises(CycloptsError, match=r'Did you mean "ork_reroll"\?'):
+        show("ork_rerol")
 
 
 def test_show_points_at_the_listing_command_for_nonsense() -> None:

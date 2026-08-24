@@ -1205,7 +1205,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[[models.orlf.assault.specials.reroll]]
+[[models.orlf.assault.specials.ork_reroll]]
 args.N = 3
 
 [models.ogrin_infantry]

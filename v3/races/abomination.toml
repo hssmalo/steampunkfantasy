@@ -755,7 +755,7 @@ equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Floating", "Flying", "Bio Crew"]
 
 [[models.flagship.specials.to_hit]]
-args.ability = "ability.out_of_fog"
+args.ability = "ability.out_of_the_fog"
 
 [models.flagship.assault]
 strength = [36, 24, 24, 12]

@@ -78,13 +78,13 @@ to_hit = "+1"
 to_be_hit = "0"
 effect = "Range = 1"
 
-[distance.normal]
+[distance.normal_range]
 name = "Normal Range"
 to_hit = "0"
 to_be_hit = "0"
 effect = "Within weapon range"
 
-[distance.long]
+[distance.long_range]
 name = "Long Range"
 to_hit = "-2"
 to_be_hit = "0"
@@ -94,7 +94,7 @@ effect = "Within max 2x of weapon range"
 # Angle
 #
 [angle.on_edge]
-name = "On-Edge of Firing-Angle"
+name = "On Edge"
 to_hit = "-1"
 to_be_hit = "0"
 
@@ -163,7 +163,7 @@ name = "Bad at Long Range"
 to_hit = "-2"
 to_be_hit = "0"
 effect = "To-hit penalty at long range only"
-see_also = ["distance.long"]
+see_also = ["distance.long_range"]
 
 [ability.steady]
 name = "Steady"
@@ -244,7 +244,7 @@ to_hit = "-2"
 to_be_hit = "0"
 effect = "Applies while the unit is not connected to a main engine"
 
-[ability.out_of_fog]
+[ability.out_of_the_fog]
 name = "Out of the Fog"
 to_hit = "+1"
 to_be_hit = "0"

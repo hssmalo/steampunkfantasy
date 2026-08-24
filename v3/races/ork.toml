@@ -695,7 +695,7 @@ ap = 2
 [[models.grunt.assault.specials.cunning_assault]]
 args.N = 3
 
-[[models.grunt.assault.specials.reroll]]
+[[models.grunt.assault.specials.ork_reroll]]
 args.N = 3
 
 [models.elite_ork_infantry]
@@ -724,7 +724,7 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-[[models.elite_ork_infantry.assault.specials.reroll]]
+[[models.elite_ork_infantry.assault.specials.ork_reroll]]
 args.N = 3
 
 [[models.elite_ork_infantry.assault.specials.cunning_assault]]
@@ -748,7 +748,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[[models.ork_infantry.assault.specials.reroll]]
+[[models.ork_infantry.assault.specials.ork_reroll]]
 args.N = 3
 
 [[models.ork_infantry.assault.specials.cunning_assault]]
@@ -769,7 +769,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[[models.ork_werewarg.assault.specials.reroll]]
+[[models.ork_werewarg.assault.specials.ork_reroll]]
 args.N = 3
 
 [[models.ork_werewarg.assault.specials.cunning_assault]]
@@ -790,7 +790,7 @@ deflection = [2, 0, 0, 0]
 damage = "d6"
 ap = "N/A"
 
-[[models.champion.assault.specials.reroll]]
+[[models.champion.assault.specials.ork_reroll]]
 args.N = 3
 
 [[models.champion.assault.specials.cunning_assault]]
@@ -811,7 +811,7 @@ damage = "d6-2"
 ap = 2
 deflection = [2, 2, 1, 1]
 
-[[models.warg_rider.assault.specials.reroll]]
+[[models.warg_rider.assault.specials.ork_reroll]]
 args.N = 3
 
 [[models.warg_rider.assault.specials.cunning_assault]]
@@ -837,7 +837,7 @@ damage = "d8+3 (from front), else d8"
 ap = 10
 deflection = [12, 2, 2, 2]
 
-[[models.hammerhead.assault.specials.reroll]]
+[[models.hammerhead.assault.specials.ork_reroll]]
 args.N = 6
 
 [[models.hammerhead.assault.specials.angle]]
@@ -858,7 +858,7 @@ damage = "d6"
 ap = 2
 deflection = [0, 0, 0, 0]
 
-[[models.battlewagon.assault.specials.reroll]]
+[[models.battlewagon.assault.specials.ork_reroll]]
 args.N = 3
 
 [models.bioengineered_ork]
@@ -876,7 +876,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[[models.bioengineered_ork.assault.specials.reroll]]
+[[models.bioengineered_ork.assault.specials.ork_reroll]]
 args.N = 3
 
 [[models.bioengineered_ork.assault.specials.cunning_assault]]
@@ -902,7 +902,7 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[[models.elite_bioengineered_ork.assault.specials.reroll]]
+[[models.elite_bioengineered_ork.assault.specials.ork_reroll]]
 args.N = 6
 
 [[models.elite_bioengineered_ork.assault.specials.cunning_assault]]
@@ -923,7 +923,7 @@ deflection_die = "6+"
 damage = "d6"
 ap = 3
 
-[[models.ork_char_b1.assault.specials.reroll]]
+[[models.ork_char_b1.assault.specials.ork_reroll]]
 args.N = 3
 
 [models.speedhead]
@@ -944,7 +944,7 @@ ap = 3
 [[models.speedhead.unit_specials.pre_assault_retreat]]
 args.N = 4
 
-[[models.speedhead.assault.specials.reroll]]
+[[models.speedhead.assault.specials.ork_reroll]]
 args.N = 6
 
 [equipment]

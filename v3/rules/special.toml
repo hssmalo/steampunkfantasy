@@ -6,13 +6,13 @@
 #
 # Assault
 #
-[special.reroll]
+[special.ork_reroll]
 name = "Ork Reroll"
 slots = ["assault"]
 signature = "[{N}]"
 effect = "Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll {N} dice per wave of rerolls. Thus {N} may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls."
 
-[special.reroll.variables]
+[special.ork_reroll.variables]
 N = { type = "int" }
 
 [special.cunning_assault]
@@ -718,7 +718,7 @@ todo = "Rule text not yet written: which firing order a weapon is used with. Nam
 name = "Range"
 slots = ["range"]
 todo = "Rule text not yet written: how a weapon's range value is modified, or which hex it may target."
-see_also = ["distance.normal", "distance.long"]
+see_also = ["distance.normal_range", "distance.long_range"]
 
 [special.recoil]
 name = "Recoil"

@@ -389,7 +389,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
                 strength=Stacker(add=[1, 0, 0, 0]),
                 damage=Stacker(replace="d8"),
                 ap=Stacker(add=1),
-                specials={"reroll": [SpecialInstance(args={"N": 3})]},
+                specials={"ork_reroll": [SpecialInstance(args={"N": 3})]},
             )
         }
     )

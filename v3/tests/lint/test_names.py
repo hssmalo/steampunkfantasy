@@ -6,7 +6,7 @@ rules are string predicates precisely so these tests stay this cheap.
 
 import pytest
 
-from spf.lint import rules
+from spf.lint import names
 from spf.schemas.config import LintConfig
 
 CONVENTIONS = LintConfig(
@@ -30,7 +30,7 @@ CONVENTIONS = LintConfig(
 )
 def test_slugify(name: str, expected: str) -> None:
     """Names lowercase, and runs of non-alphanumerics collapse to one '_'."""
-    assert rules.slugify(name) == expected
+    assert names.slugify(name) == expected
 
 
 @pytest.mark.parametrize(
@@ -50,7 +50,7 @@ def test_slugify_does_not_split_camel_case(name: str, expected: str) -> None:
     *never* to `steam_power_armor`. Splitting on case would flag the whole
     CamelCase population of the data as broken.
     """
-    assert rules.slugify(name) == expected
+    assert names.slugify(name) == expected
 
 
 @pytest.mark.parametrize(
@@ -64,7 +64,7 @@ def test_slugify_does_not_split_camel_case(name: str, expected: str) -> None:
 )
 def test_key_name_accepts_agreement(key: str, name: str) -> None:
     """A key that slugifies from its own name is clean."""
-    assert rules.check_key_name(key, name, CONVENTIONS) is None
+    assert names.check_key_name(key, name, CONVENTIONS) is None
 
 
 @pytest.mark.parametrize(
@@ -78,7 +78,7 @@ def test_key_name_accepts_agreement(key: str, name: str) -> None:
 )
 def test_key_name_rejects_disagreement(key: str, name: str) -> None:
     """Number and content disagreements both fall out of slug comparison."""
-    message = rules.check_key_name(key, name, CONVENTIONS)
+    message = names.check_key_name(key, name, CONVENTIONS)
 
     assert message is not None
     assert key in message
@@ -95,7 +95,7 @@ def test_key_name_rejects_disagreement(key: str, name: str) -> None:
 )
 def test_alias_expands_the_key(key: str, name: str) -> None:
     """An alias rewrites the key, including mid-key, before comparing."""
-    assert rules.check_key_name(key, name, CONVENTIONS) is None
+    assert names.check_key_name(key, name, CONVENTIONS) is None
 
 
 @pytest.mark.parametrize(
@@ -114,7 +114,7 @@ def test_alias_is_unidirectional(key: str, name: str) -> None:
     alias would silently accept all three spellings, which is the exact
     defect class the linter exists to catch.
     """
-    assert rules.check_key_name(key, name, CONVENTIONS) is not None
+    assert names.check_key_name(key, name, CONVENTIONS) is not None
 
 
 def test_alias_matches_whole_segments_only() -> None:
@@ -126,8 +126,8 @@ def test_alias_matches_whole_segments_only() -> None:
     """
     conventions = LintConfig(aliases={"elf": "fairy"})
 
-    assert rules.check_key_name("dark_elf", "Dark Fairy", conventions) is None
-    assert rules.check_key_name("darkelf", "Darfairy", conventions) is not None
+    assert names.check_key_name("dark_elf", "Dark Fairy", conventions) is None
+    assert names.check_key_name("darkelf", "Darfairy", conventions) is not None
 
 
 @pytest.mark.parametrize(
@@ -141,7 +141,7 @@ def test_alias_matches_whole_segments_only() -> None:
 )
 def test_optional_affixes_are_accepted_either_way(key: str, name: str) -> None:
     """A key may carry `_free` or `greater_` that its name omits."""
-    assert rules.check_key_name(key, name, CONVENTIONS) is None
+    assert names.check_key_name(key, name, CONVENTIONS) is None
 
 
 @pytest.mark.parametrize(
@@ -149,12 +149,12 @@ def test_optional_affixes_are_accepted_either_way(key: str, name: str) -> None:
 )
 def test_no_underscore_rejects_leaked_keys(name: str) -> None:
     """An underscore in a display name is a key string that leaked."""
-    assert rules.check_no_underscore(name) is not None
+    assert names.check_no_underscore(name) is not None
 
 
 def test_no_underscore_accepts_clean_name() -> None:
     """A name without underscores passes."""
-    assert rules.check_no_underscore("Pegasus Rider") is None
+    assert names.check_no_underscore("Pegasus Rider") is None
 
 
 @pytest.mark.parametrize(
@@ -178,7 +178,7 @@ def test_title_case_accepts(name: str) -> None:
     "In Formation" shows a function word is *not* lowercased in first
     position -- it is only mid-name that `in` must stay lowercase.
     """
-    assert rules.check_title_case(name, CONVENTIONS.function_words) is None
+    assert names.check_title_case(name, CONVENTIONS.function_words) is None
 
 
 @pytest.mark.parametrize(
@@ -187,7 +187,7 @@ def test_title_case_accepts(name: str) -> None:
 )
 def test_title_case_rejects_lowercase_words(name: str) -> None:
     """Every word must start uppercase unless it is a function word."""
-    assert rules.check_title_case(name, CONVENTIONS.function_words) is not None
+    assert names.check_title_case(name, CONVENTIONS.function_words) is not None
 
 
 @pytest.mark.parametrize(
@@ -204,25 +204,40 @@ def test_title_case_requires_lowercase_function_words(name: str) -> None:
     Permitting both spellings is what let `Musket With Springloaded Axe` and
     `Bow with Rocket Arrows` coexist in the data.
     """
-    assert rules.check_title_case(name, CONVENTIONS.function_words) is not None
+    assert names.check_title_case(name, CONVENTIONS.function_words) is not None
 
 
 @pytest.mark.parametrize("key", ["ballista_tractor_markI", "ballista_tractor_MarkIII"])
 def test_key_lowercase_rejects(key: str) -> None:
     """Keys carrying uppercase are flagged."""
-    assert rules.check_key_lowercase(key) is not None
+    assert names.check_key_lowercase(key) is not None
 
 
 def test_key_lowercase_accepts() -> None:
     """An all-lowercase key passes."""
-    assert rules.check_key_lowercase("ballista_tractor_mark_iii") is None
+    assert names.check_key_lowercase("ballista_tractor_mark_iii") is None
 
 
 def test_capitalized_rejects_lowercase_race_name() -> None:
     """A Race's display name must be capitalized."""
-    assert rules.check_capitalized("gnome") is not None
+    assert names.check_capitalized("gnome") is not None
 
 
 def test_capitalized_accepts() -> None:
     """A capitalized Race name passes."""
-    assert rules.check_capitalized("Gnome") is None
+    assert names.check_capitalized("Gnome") is None
+
+
+@pytest.mark.parametrize("name", ["Elf Bow ", " Elf Bow", "Elf Bow\n"])
+def test_trimmed_rejects_padded_names(name: str) -> None:
+    """Padding reaches the page, and no other rule sees it.
+
+    `slugify` strips the edges, so a padded name is still the slug of its key
+    and passes key-name; this is the only rule that looks.
+    """
+    assert names.check_trimmed(name) is not None
+
+
+def test_trimmed_accepts_inner_spaces() -> None:
+    """Only the edges are the rule's business."""
+    assert names.check_trimmed("Elf Bow") is None

@@ -11,7 +11,7 @@ from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import holders, rules
+from spf.lint import holders, names
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import RaceConfig
@@ -45,19 +45,10 @@ def lint_entries(
     race: str, section: str, entries: Mapping[str, Named], conventions: LintConfig
 ) -> list[Finding]:
     """Apply every entry-level rule to each key/name pair in `entries`."""
-    checks = {
-        "key-name": lambda key, name: rules.check_key_name(key, name, conventions),
-        "no-underscore": lambda _key, name: rules.check_no_underscore(name),
-        "title-case": lambda _key, name: rules.check_title_case(
-            name, conventions.function_words
-        ),
-        "key-lowercase": lambda key, _name: rules.check_key_lowercase(key),
-    }
     return [
         Finding(race=race, section=section, key=key, rule=rule, message=message)
         for key, entry in entries.items()
-        for rule, check in checks.items()
-        if (message := check(key, entry.name)) is not None
+        for rule, message in names.check_name(key, entry.name, conventions)
     ]
 
 
@@ -66,7 +57,7 @@ def lint_race_config(
 ) -> list[Finding]:
     """Return every finding for an already-loaded, schema-valid Race."""
     findings: list[Finding] = []
-    if (message := rules.check_capitalized(race_config.races[race].name)) is not None:
+    if (message := names.check_capitalized(race_config.races[race].name)) is not None:
         findings.append(
             Finding(
                 race=race,

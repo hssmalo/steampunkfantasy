@@ -36,13 +36,14 @@ to_hit = "-1"
 to_be_hit = "0"
 see_also = ["special.heal", "token.shaken", "damage_type.psychic"]
 
-[tokens.plus_minus_one]
-name = "-1 to hit, +1 to be hit "
+[tokens.critical_damage]
+name = "Critical Damage"
 effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects"
 remove = "Only by repair ability: repair Critical."
 to_hit = "-1"
 to_be_hit = "+1"
 see_also = ["special.repair", "special.critical"]
+todo = "Named here for the first time: the record carried a description of its own numbers rather than a name. Confirm what a player calls this token."
 
 [tokens.disabled_repair]
 name = "Disabled Repair"
@@ -52,7 +53,7 @@ remove = "This is an critical effect which may be repaired by repair critical. (
 see_also = ["special.repair"]
 
 [tokens.no_command]
-name = "No command"
+name = "No Command"
 phases = []
 effect = "Unit cannot use command abilities"
 remove = "This is an critical effect which my be repair by repair critical."

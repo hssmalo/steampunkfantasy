@@ -6,7 +6,7 @@ Race schema -- a rule is testable with a single `(key, name)` pair.
 """
 
 import re
-from collections.abc import Collection
+from collections.abc import Collection, Iterator
 
 from spf.schemas.config import LintConfig
 
@@ -91,6 +91,18 @@ def check_title_case(name: str, function_words: Collection[str]) -> str | None:
     return None
 
 
+def check_trimmed(name: str) -> str | None:
+    """Check that `name` carries no leading or trailing whitespace.
+
+    Its own rule because `slugify` strips edges: without this, a name padded
+    with a space is the slug of its key and every other rule is satisfied,
+    while the padding still reaches the page.
+    """
+    if name != name.strip():
+        return f"name {name!r} has leading or trailing whitespace"
+    return None
+
+
 def check_key_lowercase(key: str) -> str | None:
     """Check that `key` carries no uppercase characters."""
     if key != key.lower():
@@ -103,3 +115,24 @@ def check_capitalized(name: str) -> str | None:
     if name[:1].islower():
         return f"name {name!r} is not capitalized"
     return None
+
+
+def check_name(
+    key: str, name: str, conventions: LintConfig
+) -> Iterator[tuple[str, str]]:
+    """Yield `(rule, message)` for every name rule the pair breaks.
+
+    The four rules that apply to any keyed, named entry, bundled so the Race
+    linter and the registry linter run the same set rather than each keeping
+    its own copy of the list.
+    """
+    checks = {
+        "key-name": lambda: check_key_name(key, name, conventions),
+        "no-underscore": lambda: check_no_underscore(name),
+        "trimmed": lambda: check_trimmed(name),
+        "title-case": lambda: check_title_case(name, conventions.function_words),
+        "key-lowercase": lambda: check_key_lowercase(key),
+    }
+    for rule, check in checks.items():
+        if (message := check()) is not None:
+            yield rule, message
