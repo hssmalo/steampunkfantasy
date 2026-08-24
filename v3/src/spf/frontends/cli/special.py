@@ -58,7 +58,7 @@ def special_rows(registry: Registry) -> list[SpecialRow]:
     return [
         SpecialRow(
             marks=_slot_marks(rule.slots),
-            label=key,
+            label=f"{key}{rule.signature or ''}",
             text=rule.effect or "",
             is_todo=False,
         )
