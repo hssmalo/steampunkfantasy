@@ -1,6 +1,6 @@
 """Special commands for the SteamPunkFantasy CLI."""
 
-from collections.abc import Sequence
+from collections.abc import Collection, Sequence
 from typing import Annotated
 
 import cyclopts
@@ -16,13 +16,18 @@ from spf.schemas.race import RaceConfig
 from spf.schemas.rules import Slot, SpecialRuleConfig
 from spf.schemas.special import Specials
 
-_SLOT_MARKS: dict[Slot, str] = {
-    "unit": "U   ",
-    "model": " M  ",
-    "assault": "  A ",
-    "range": "   R",
-}
-"""The UMAR column: which of the four slots a row was found in."""
+_SLOT_ORDER: tuple[Slot, ...] = ("unit", "model", "assault", "range")
+"""The Slots the UMAR column has a position for, in the order it prints them."""
+
+
+def _slot_marks(slots: Collection[Slot]) -> str:
+    """Build the UMAR column: one fixed position per Slot, blank where absent.
+
+    A Special may declare several Slots, so the column is built from a set
+    rather than looked up: fixed positions are what let a reader scan the
+    column, and what lets a multi-Slot record stay one row.
+    """
+    return "".join(slot[0].upper() if slot in slots else " " for slot in _SLOT_ORDER)
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -56,7 +61,7 @@ def _holders(race: RaceConfig, slot: Slot) -> list[tuple[str, Specials]]:
     granted by the Unit, by a Model or by Equipment, while a Range Special
     hangs off Equipment alone, because a range profile never sits on a Model.
     """
-    mark = _SLOT_MARKS[slot]
+    mark = _slot_marks([slot])
     models = race.models.values()
     equipment = race.equipment.values()
     match slot:
