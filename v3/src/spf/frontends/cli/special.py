@@ -73,9 +73,16 @@ def _row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
     )
 
 
-def special_rows(registry: Registry) -> list[SpecialRow]:
-    """Build one row per Special in the Registry, sorted by Identifier."""
-    return [_row(key, rule) for key, rule in sorted(registry.specials.items())]
+def special_rows(registry: Registry, *, slot: Slot | None = None) -> list[SpecialRow]:
+    """Build one row per Special in the Registry, sorted by Identifier.
+
+    `slot` keeps the Specials declaring it, whatever else they also declare.
+    """
+    return [
+        _row(key, rule)
+        for key, rule in sorted(registry.specials.items())
+        if slot is None or slot in rule.slots
+    ]
 
 
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:

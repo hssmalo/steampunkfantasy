@@ -79,6 +79,34 @@ def test_a_written_rules_text_is_its_effect() -> None:
     assert row.is_todo is False
 
 
+def test_a_slot_keeps_every_special_declaring_it() -> None:
+    # A multi-Slot Special belongs to each Slot it declares, and keeps its
+    # combined marks there — the filter chooses rows, it does not rewrite them.
+    registry = _registry(
+        to_hit=_rule(slots=["unit", "range"], effect="."),
+        snipe=_rule(slots=["range"], effect="."),
+        fend=_rule(slots=["model"], effect="."),
+    )
+
+    rows = special_rows(registry, slot="range")
+
+    assert [(row.label, row.marks) for row in rows] == [
+        ("snipe", "   R"),
+        ("to_hit", "U  R"),
+    ]
+
+
+def test_no_slot_returns_every_record_once() -> None:
+    registry = _registry(
+        to_hit=_rule(slots=["unit", "range"], effect="."),
+        fend=_rule(slots=["model"], effect="."),
+    )
+
+    rows = special_rows(registry)
+
+    assert sorted(row.label for row in rows) == ["fend", "to_hit"]
+
+
 def test_a_stubs_text_is_the_first_line_of_its_todo() -> None:
     # A `todo` can run to a paragraph, and the row is one line.
     registry = _registry(aim=_rule(todo="Rule text not yet written.\nAsk Hans."))
