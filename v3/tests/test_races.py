@@ -171,3 +171,21 @@ def test_spawn_rule_undefined_spawn_id() -> None:
         match="references undefined spawn ID 'unknown_spawn'",
     ):
         RaceConfig.model_validate(config_dict)
+
+
+@pytest.mark.parametrize("race_name", list_races())
+def test_the_gate_reaches_every_race_file(race_name: str) -> None:
+    """Pin that every committed Race is loaded through the Special gate.
+
+    The gate resolves instances, and the Race files carry none yet, so what
+    this asserts is the wiring: an unresolvable instance added to any of the
+    eight files fails its load rather than passing unread.
+    """
+    config_dict = Configuration.from_file(
+        spf_config.paths.races / f"{race_name}.toml"
+    ).to_dict()
+    unit = next(iter(config_dict["units"].values()))
+    unit["specials"] = {"no_such_rule": [{}]}
+
+    with pytest.raises(ValidationError, match="is not a Special id"):
+        RaceConfig.model_validate(config_dict)

@@ -3,8 +3,10 @@
 from dataclasses import dataclass, field
 
 from spf.armies.holders import retained_defaults
+from spf.armies.specials import merge_specials
 from spf.schemas import type_aliases as t
 from spf.schemas.race import AssaultConfig, EquipmentConfig, ModelConfig, Stacker
+from spf.schemas.special import Specials
 
 
 @dataclass(frozen=True)
@@ -62,6 +64,22 @@ class Model:
             result |= equip.model_special
         return result
 
+    @property
+    def unit_special_instances(self) -> Specials:
+        """Unit-level instances: model config then each equipment in order."""
+        return merge_specials(
+            self.config.unit_specials,
+            *(equip.unit_specials for equip in self.equipment),
+        )
+
+    @property
+    def model_special_instances(self) -> Specials:
+        """Model-level instances: model config then each equipment in order."""
+        return merge_specials(
+            self.config.specials,
+            *(equip.model_specials for equip in self.equipment),
+        )
+
     def cost(self) -> t.Cost:
         """Return intrinsic upgrade cost: sum of upgrade equipment costs.
 
@@ -91,6 +109,7 @@ class Model:
         damage: t.Die = self.config.assault.damage
         ap: t.ArmorPenetration = self.config.assault.ap
         special: dict[t.AssaultSpecial, str] = dict(self.config.assault.special)
+        instances = [self.config.assault.specials]
 
         for equip in self.equipment:
             ea = equip.assault
@@ -131,6 +150,7 @@ class Model:
             if ea.ap is not None:
                 ap = _apply_ap(ap, stacker=ea.ap, equip_name=equip.name)
             special |= ea.special
+            instances.append(ea.specials)
 
         return AssaultConfig(
             strength=strength,
@@ -140,6 +160,7 @@ class Model:
             damage=damage,
             ap=ap,
             special=special,
+            specials=merge_specials(*instances),
         )
 
 

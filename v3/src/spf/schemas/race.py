@@ -4,8 +4,10 @@ from typing import Any, Self
 
 from pydantic import Field, model_validator
 
+from spf import registry
 from spf.schemas import StrictModel
 from spf.schemas import type_aliases as t
+from spf.schemas.special import Specials
 
 
 class RaceMetadata(StrictModel):
@@ -25,6 +27,27 @@ class ShakenConfig(StrictModel):
     comment: str = ""
 
 
+class Stacker[T](StrictModel):
+    add: T | None = None
+    replace: T | None = None
+    extend: T | None = None
+
+
+class UnitStatModifierConfig(StrictModel):
+    """Modifiers a Model or an Equipment applies to the stats of its Unit.
+
+    The list of fields *is* the scope fence: `extra="forbid"` rejects a
+    modifier of anything not named here, so widening it is a visible act
+    rather than an open-ended effects engine (ADR 0024).
+
+    `armor` gets the full `Stacker`. Every case in the data is additive —
+    `[3, 2, 0, 0]` on a Unit whose base armor is `[8, 6, 5, 4]` is a grant, and
+    overwriting would *drop* that Unit's front arc from 8 to 3.
+    """
+
+    armor: Stacker[t.Angles[int]] | None = None
+
+
 class UnitConfig(StrictModel):
     race: t.RaceName
     name: t.UnitName
@@ -37,6 +60,8 @@ class UnitConfig(StrictModel):
     cost: t.Cost | None = None
     shaken: ShakenConfig
     special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
+    specials: Specials = Field(default_factory=dict)
+    note: str = ""
     orders: OrdersConfig
     armor: t.Angles[int] | None = None
     damage_tables: dict[t.DamageTableName, t.DamageTable]
@@ -50,6 +75,8 @@ class AssaultConfig(StrictModel):
     damage: t.Die
     ap: t.ArmorPenetration
     special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
+    specials: Specials = Field(default_factory=dict)
+    note: str = ""
 
 
 class ModelConfig(StrictModel):
@@ -64,12 +91,10 @@ class ModelConfig(StrictModel):
     replaces: t.ModelName | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
-
-
-class Stacker[T](StrictModel):
-    add: T | None = None
-    replace: T | None = None
-    extend: T | None = None
+    unit_specials: Specials = Field(default_factory=dict)
+    specials: Specials = Field(default_factory=dict)
+    unit: UnitStatModifierConfig | None = None
+    note: str = ""
 
 
 class EquipmentAssaultConfig(StrictModel):
@@ -80,6 +105,8 @@ class EquipmentAssaultConfig(StrictModel):
     damage: Stacker[t.Die] | None = None
     ap: Stacker[t.ArmorPenetration] | None = None
     special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
+    specials: Specials = Field(default_factory=dict)
+    note: str = ""
 
 
 class EquipmentRangeConfig(StrictModel):
@@ -88,6 +115,8 @@ class EquipmentRangeConfig(StrictModel):
     damage: t.Die
     ap: t.ArmorPenetration
     special: dict[t.RangeSpecial, str] = Field(default_factory=dict)
+    specials: Specials = Field(default_factory=dict)
+    note: str = ""
 
 
 class EquipmentConfig(StrictModel):
@@ -101,6 +130,10 @@ class EquipmentConfig(StrictModel):
     range: EquipmentRangeConfig | None = None
     unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     model_special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
+    unit_specials: Specials = Field(default_factory=dict)
+    model_specials: Specials = Field(default_factory=dict)
+    unit: UnitStatModifierConfig | None = None
+    note: str = ""
     orders_gained: OrdersConfig | None = None
 
     @model_validator(mode="after")
@@ -149,6 +182,57 @@ class RaceConfig(StrictModel):
     models: dict[str, ModelConfig]
     equipment: dict[str, EquipmentConfig]
     spawns: dict[str, SpawnConfig] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def check_special_instances(self) -> Self:
+        """Resolve every Special instance against the rule registries.
+
+        The hard gate (ADR 0024). It runs here rather than per record because
+        the message has to name the holder the instance sits on, and every
+        error is collected so one load names them all.
+        """
+        rules = registry.load_registry()
+        errors: list[str] = []
+        for unit in self.units.values():
+            errors += registry.check_instances(
+                unit.specials,
+                slot="unit",
+                context=f"unit '{unit.name}'",
+                registry=rules,
+            )
+        for model in self.models.values():
+            where = f"model '{model.name}'"
+            errors += registry.check_instances(
+                model.unit_specials, slot="unit", context=where, registry=rules
+            )
+            errors += registry.check_instances(
+                model.specials, slot="model", context=where, registry=rules
+            )
+            errors += registry.check_instances(
+                model.assault.specials, slot="assault", context=where, registry=rules
+            )
+        for equip in self.equipment.values():
+            where = f"equipment '{equip.name}'"
+            errors += registry.check_instances(
+                equip.unit_specials, slot="unit", context=where, registry=rules
+            )
+            errors += registry.check_instances(
+                equip.model_specials, slot="model", context=where, registry=rules
+            )
+            if equip.assault is not None:
+                errors += registry.check_instances(
+                    equip.assault.specials,
+                    slot="assault",
+                    context=where,
+                    registry=rules,
+                )
+            if equip.range is not None:
+                errors += registry.check_instances(
+                    equip.range.specials, slot="range", context=where, registry=rules
+                )
+        if errors:
+            raise ValueError("\n".join(errors))
+        return self
 
     @model_validator(mode="after")
     def check_spawns(self) -> Self:

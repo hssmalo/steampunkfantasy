@@ -1,0 +1,209 @@
+"""The rule registries, and the hard gate over Special instances (ADR 0024).
+
+A Race file names a rule by its identifier, so the identifier *is* the mapping
+between the two files and is checked because it is the lookup key rather than a
+claim about one. Everything here runs at load time: if a violation means the
+resolver cannot produce correct output it is a schema failure, and only an
+untidy corpus is left to lint.
+"""
+
+import re
+from dataclasses import dataclass, field
+from functools import cache
+from pathlib import Path
+from typing import cast
+
+from spf import rules
+from spf.config import config
+from spf.schemas import rules as r
+from spf.schemas.special import Specials
+
+SPECIAL = "special"
+"""The namespace a Special instance's id is looked up in."""
+
+_REF = re.compile(r"^([a-z][a-z0-9_]*)\.([a-z][a-z0-9_]*)$")
+
+_LOADERS = {
+    "special.toml": rules.get_specials,
+    "tokens.toml": rules.get_tokens,
+    "hexes.toml": rules.get_hexes,
+    "terrain.toml": rules.get_terrain,
+    "modifiers.toml": rules.get_modifiers,
+    "namespaces.toml": rules.get_namespaces,
+}
+
+
+@dataclass(frozen=True)
+class Registry:
+    """Every namespace's records, keyed the way a ref addresses them.
+
+    `records[namespace][id]` is the whole lookup surface: the namespace is an
+    abstract name declared in `rules/namespaces.toml`, never a path into the
+    file layout, which is what keeps a table rename out of the Race files.
+    """
+
+    records: dict[str, dict[str, r.RuleRecord]]
+    namespaces: dict[str, r.NamespaceConfig] = field(default_factory=dict)
+
+    @property
+    def specials(self) -> dict[str, r.SpecialRuleConfig]:
+        """The Special registry: the ids a Race file may write an instance of."""
+        return cast("dict[str, r.SpecialRuleConfig]", self.records.get(SPECIAL, {}))
+
+    def record(self, ref: str) -> r.RuleRecord | None:
+        """Resolve a fully qualified reference, or None if it points nowhere."""
+        match = _REF.match(ref)
+        if match is None:
+            return None
+        namespace, identifier = match.groups()
+        return self.records.get(namespace, {}).get(identifier)
+
+
+def load_registry(rules_dir: Path | None = None) -> Registry:
+    """Read every registry `rules/namespaces.toml` declares.
+
+    Loading validates every record, so record completeness — exactly-one-of
+    the meaning fields and `todo` — is checked here too, and a rules file that
+    fails it fails every Race load with it.
+    """
+    return _load_registry(rules_dir if rules_dir is not None else config.paths.rules)
+
+
+@cache
+def _load_registry(rules_dir: Path) -> Registry:
+    """Read and cache the registries under one rules directory."""
+    namespaces = rules.get_namespaces(rules_dir / "namespaces.toml").namespaces
+    wanted = {namespace.file for namespace in namespaces.values()}
+    if unreadable := wanted - set(_LOADERS):
+        files = ", ".join(sorted(unreadable))
+        msg = f"No loader for the rules file(s) a namespace declares: {files}"
+        raise ValueError(msg)
+    loaded = {
+        file_name: _LOADERS[file_name](rules_dir / file_name) for file_name in wanted
+    }
+    return Registry(
+        namespaces=namespaces,
+        records={
+            name: getattr(loaded[namespace.file], namespace.table)
+            for name, namespace in namespaces.items()
+        },
+    )
+
+
+def check_instances(
+    specials: Specials, *, slot: r.Slot, context: str, registry: Registry
+) -> list[str]:
+    """Check one slot's instances against the registries, listing what is wrong.
+
+    Every check is reported rather than raised, so one load names every broken
+    instance instead of the first.
+    """
+    errors: list[str] = []
+    for identifier, instances in specials.items():
+        rule = registry.specials.get(identifier)
+        if rule is None:
+            errors.append(f"{context}: '{identifier}' is not a Special id")
+            continue
+        if slot not in rule.slots:
+            slots = ", ".join(rule.slots)
+            errors.append(
+                f"{context}: '{identifier}' is not a {slot} Special;"
+                f" it declares {slots}"
+            )
+            continue
+        for instance in instances:
+            where = f"{context}: '{identifier}'"
+            variables, collisions = _variables(
+                instance.args, rule=rule, registry=registry
+            )
+            errors += [f"{where}: {collision}" for collision in collisions]
+            errors += [
+                f"{where}: {problem}"
+                for problem in _check_args(instance.args, variables, registry=registry)
+            ]
+    return errors
+
+
+def _variables(
+    args: dict[str, int | str], *, rule: r.SpecialRuleConfig, registry: Registry
+) -> tuple[dict[str, r.VariableConfig], list[str]]:
+    """Collect the variables an instance's args are checked against.
+
+    The union of the rule's own variables and those of every ref target it
+    names — a ref's arguments travel with the ref, which is what collapses the
+    hand-spelled "Good shot: +1 to hit" variants into one id. A target's ref
+    may name a further target, so this walks until nothing new appears.
+    """
+    variables = dict(rule.variables)
+    errors: list[str] = []
+    pending = list(variables.items())
+    while pending:
+        name, variable = pending.pop()
+        value = args.get(name)
+        if not isinstance(variable, r.RefVariableConfig) or not isinstance(value, str):
+            continue
+        target = registry.record(value)
+        if target is None:
+            continue  # reported when the args themselves are checked
+        for lent, lent_variable in target.variables.items():
+            if lent in variables:
+                errors.append(
+                    f"variable '{lent}' of '{value}' collides with one already in"
+                    " scope; rename one of the two"
+                )
+            else:
+                variables[lent] = lent_variable
+                pending.append((lent, lent_variable))
+    return variables, errors
+
+
+def _check_args(
+    args: dict[str, int | str],
+    variables: dict[str, r.VariableConfig],
+    *,
+    registry: Registry,
+) -> list[str]:
+    """Check the args are exactly the declared variables, each with a legal value."""
+    known = ", ".join(sorted(variables)) or "none"
+    errors = [f"missing argument '{name}'" for name in variables.keys() - args.keys()]
+    errors += [
+        f"unknown argument '{name}'; the rule takes {known}"
+        for name in args.keys() - variables.keys()
+    ]
+    for name, variable in variables.items():
+        if (value := args.get(name)) is None:
+            continue
+        problem = (
+            _check_ref(value, variable, registry=registry)
+            if isinstance(variable, r.RefVariableConfig)
+            else _check_scalar(value, variable)
+        )
+        if problem is not None:
+            errors.append(f"argument '{name}': {problem}")
+    return errors
+
+
+def _check_ref(
+    value: int | str, variable: r.RefVariableConfig, *, registry: Registry
+) -> str | None:
+    """Check that a ref resolves, and that it lands in the permitted value set."""
+    if not isinstance(value, str) or (match := _REF.match(value)) is None:
+        return f"'{value}' is not a reference; write '<namespace>.<id>'"
+    namespace, identifier = match.groups()
+    if namespace not in variable.namespaces:
+        permitted = ", ".join(variable.namespaces)
+        return f"'{value}' points into '{namespace}'; permitted: {permitted}"
+    if identifier not in registry.records.get(namespace, {}):
+        return f"'{value}' resolves to no record"
+    if variable.values is not None and value not in variable.values:
+        return f"'{value}' not any of {variable.values}"
+    return None
+
+
+def _check_scalar(value: int | str, variable: r.ScalarVariableConfig) -> str | None:
+    """Check a scalar arg against the bounds and value set its variable declares."""
+    try:
+        variable.validate_value(value)  # pyright: ignore[reportArgumentType]
+    except (ValueError, TypeError) as err:
+        return str(err)
+    return None

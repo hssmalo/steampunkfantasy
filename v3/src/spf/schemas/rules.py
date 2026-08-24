@@ -102,14 +102,43 @@ class UnionVariableConfig(StrictModel):
     max: int | None = None
     values: list[int | str] | None = None
 
+    def validate_value(self, value: int | str) -> int | str:
+        """Validate the given value against whichever member type it matches.
 
-type VariableConfig = (
-    IntVariableConfig
-    | StringVariableConfig
-    | DieVariableConfig
-    | RefVariableConfig
-    | UnionVariableConfig
+        The bounds constrain the numeric member only: a die is not a number,
+        so `d20` is out of no range.
+        """
+        if isinstance(value, int) and "int" in self.type:
+            return IntVariableConfig(
+                type="int", min=self.min, max=self.max
+            ).validate_value(self._check_values(value))
+        if isinstance(value, str) and "die" in self.type and _DIE.match(value):
+            return self._check_values(value)
+        if isinstance(value, str) and "str" in self.type:
+            return self._check_values(value)
+        msg = f"Value {value} is not {_or_list(self.type)}"
+        raise ValueError(msg)
+
+    def _check_values[T: (int, str)](self, value: T) -> T:
+        """Check the value against the explicit subset, when one is declared."""
+        if self.values is not None and value not in self.values:
+            msg = f"Value {value} not any of {self.values}"
+            raise ValueError(msg)
+        return value
+
+
+def _or_list(types: list[ScalarType]) -> str:
+    """Spell a union of scalar types as English: `an int or a die`."""
+    worded = [f"{'an' if scalar.startswith('i') else 'a'} {scalar}" for scalar in types]
+    return f"{', '.join(worded[:-1])} or {worded[-1]}"
+
+
+type ScalarVariableConfig = (
+    IntVariableConfig | StringVariableConfig | DieVariableConfig | UnionVariableConfig
 )
+"""A variable whose value is written out, rather than pointed at."""
+
+type VariableConfig = ScalarVariableConfig | RefVariableConfig
 
 
 class RuleRecord(StrictModel):

@@ -180,3 +180,27 @@ def test_a_namespace_names_where_its_registry_lives() -> None:
     hexes = namespaces.namespaces["hex"]
     assert (hexes.file, hexes.table, hexes.group) == ("hexes.toml", "hexes", "terrain")
     assert namespaces.damage_type["acid"].name == "Acid"
+
+
+def test_a_union_value_may_be_either_member_type() -> None:
+    variable = r.UnionVariableConfig(type=["int", "die"], min=1, max=12)
+
+    assert variable.validate_value(6) == 6
+    assert variable.validate_value("d6") == "d6"
+
+
+def test_a_union_bounds_only_its_numeric_member() -> None:
+    variable = r.UnionVariableConfig(type=["int", "die"], min=1, max=12)
+
+    with pytest.raises(ValueError, match="greater than maximum"):
+        variable.validate_value(20)
+    # A die is not a number, so `d20` is out of no range -- the union says
+    # which shapes are legal, the bounds say which numbers are.
+    assert variable.validate_value("d20") == "d20"
+
+
+def test_a_union_rejects_a_value_of_neither_type() -> None:
+    variable = r.UnionVariableConfig(type=["int", "die"])
+
+    with pytest.raises(ValueError, match="not an int or a die"):
+        variable.validate_value("six")

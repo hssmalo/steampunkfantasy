@@ -4,8 +4,10 @@ from dataclasses import dataclass, field
 from typing import get_args
 
 from spf.armies.model import Model
+from spf.armies.specials import merge_specials
 from spf.schemas import type_aliases as t
-from spf.schemas.race import OrdersConfig, UnitConfig
+from spf.schemas.race import OrdersConfig, UnitConfig, UnitStatModifierConfig
+from spf.schemas.special import Specials
 
 # Canonical Speed ordering for stable merged-order output.
 _SPEED_ORDER: list[t.Speed] = list(get_args(t.Speed.__value__))
@@ -54,6 +56,36 @@ class Unit:
         for model in self.models:
             result |= model.unit_specials
         return result
+
+    @property
+    def unit_special_instances(self) -> Specials:
+        """Unit-level instances: unit config then each model's contribution."""
+        return merge_specials(
+            self.config.specials,
+            *(model.unit_special_instances for model in self.models),
+        )
+
+    @property
+    def armor(self) -> t.Angles[int] | None:
+        """Armor after every Model's and Equipment's modifier, in chain order.
+
+        Multiplicity follows the purchase (ADR 0024). A Model-declared modifier
+        applies once per Model slot declaring it; an Equipment's applies once
+        for the Unit when `upgrade_all` (a fixture bought once) and once per
+        Model carrying it otherwise. Only `add` multiplies — four Models each
+        replacing armor with `[6,6,6,6]` can only produce `[6,6,6,6]`.
+        """
+        armor = None if self.config.armor is None else list(self.config.armor)
+        bought: set[str] = set()
+        for model in self.models:
+            armor = _stack_armor(armor, model.config.unit, source=model.config.name)
+            for equip in model.equipment:
+                if equip.upgrade_all:
+                    if equip.name in bought:
+                        continue
+                    bought.add(equip.name)
+                armor = _stack_armor(armor, equip.unit, source=equip.name)
+        return armor
 
     @property
     def common_types(self) -> list[t.ModelType]:
@@ -166,6 +198,29 @@ class Unit:
             fire=_merge_across_sources([s.orders.fire for s in sources]),
             movement=_merge_across_sources([s.orders.movement for s in sources]),
         )
+
+
+def _stack_armor(
+    current: list[int] | None, stats: UnitStatModifierConfig | None, *, source: str
+) -> list[int] | None:
+    """Apply one source's armor modifier to the running value.
+
+    A Unit with no armor of its own has no arc protected, so an `add` grants
+    exactly what it adds rather than needing a base to sit on.
+    """
+    if stats is None or stats.armor is None:
+        return current
+    stacker = stats.armor
+    if stacker.replace is not None:
+        return list(stacker.replace)
+    if stacker.add is not None:
+        base = current if current is not None else [0] * len(stacker.add)
+        return [a + b for a, b in zip(base, stacker.add, strict=True)]
+    if stacker.extend is not None:
+        msg = f"'{source}': cannot use 'extend' on unit armor; use 'add' or 'replace'"
+        raise ValueError(msg)
+    msg = f"'{source}': empty Stacker on unit armor"
+    raise ValueError(msg)
 
 
 type _SpeedRows = dict[t.Speed, list[list[str]]]
