@@ -16,7 +16,7 @@ models = [
     "dwarf_infantry",
     "dwarf_infantry"
 ]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
 description = "Dwarf infantry wielding a musket"
@@ -26,9 +26,18 @@ description = "Dwarf infantry wielding a musket"
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.dwarf_infantry.special]
-"Resistance" = "Poison[2], Fire[1]"
-"Take Cover" = "[still][-2]"
+[[units.dwarf_infantry.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
+
+[[units.dwarf_infantry.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 1
+
+[[units.dwarf_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
 
 [units.dwarf_infantry.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "360°", "F"]]
@@ -60,7 +69,7 @@ rows = [
 race = "dwarf"
 name = "Dwarf Brother in Arms"
 models = ["dwarf_brother_in_arms", "dwarf_brother_in_arms"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 description = '''Two Twin Dwarfs in heavy armor fighting side by side wielding a musket.
@@ -70,9 +79,18 @@ description = '''Two Twin Dwarfs in heavy armor fighting side by side wielding a
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.dwarf_brother_in_arms.special]
-"Resistance" = "Poison[3], Fire[2]"
-"Take Cover" = "[still][-1]"
+[[units.dwarf_brother_in_arms.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 3
+
+[[units.dwarf_brother_in_arms.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
+
+[[units.dwarf_brother_in_arms.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -1
 
 [units.dwarf_brother_in_arms.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
@@ -109,7 +127,7 @@ models = [
     "steampowerarmor",
     "steampowerarmor"
 ]
-size = "Medium"
+size = "medium"
 armor = [7, 6, 6, 5]
 cost.mp = 16
 cost.cp = 8
@@ -122,10 +140,28 @@ description = '''A dwarf in steampunk powerarmor wielding a multibarrled heavy m
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.steampowerarmor.special]
-"Resistance" = "Poison[4], Fire[2], Acid[1]"
-"Steady" = "[slow]: +1 to hit, +1 to-be hit while slow"
-"Repair" = "Automatic Repair: Repair[N, self, 2nd healing phase] where N is the number of models alive"
+[[units.steampowerarmor.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 4
+
+[[units.steampowerarmor.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
+
+[[units.steampowerarmor.specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 1
+
+[[units.steampowerarmor.specials.to_hit]]
+args.ability = "ability.steady"
+text = "Applies while slow"
+
+[[units.steampowerarmor.specials.repair]]
+name = "Automatic Repair"
+args.N = "one per alive model"
+args.unit = "self"
+args.phase = "2nd Healing"
+text = "N is the number of models alive"
 
 [units.steampowerarmor.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
@@ -163,13 +199,14 @@ rows = [
 race = "dwarf"
 name = "Mini Zeppelin"
 models = ["mini_zeppelin", "mini_zeppelin", "mini_zeppelin"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.cp = 16
 cost.xp = 16
 cost.mp = 8
 description = '''A dwarf in a mini zeppelin. The zeppelin carries only one dwarf which barely fits in the zeppelin. The dwarf is wielding an axe. On the zeppelin there is a machine throwing axes.
 '''
+note = "Floats"
 
 
 [units.mini_zeppelin.shaken]
@@ -177,10 +214,12 @@ speed = "slow"
 movement_order = ["random", "-", "-"]
 fire_order = "Normal"
 
-[units.mini_zeppelin.special]
-"Resistance" = "Poison[3]"
-"Note" = "Floats"
-"Movement" = "random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutralize the effect of the weather"
+[[units.mini_zeppelin.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 3
+
+[[units.mini_zeppelin.specials.movement]]
+text = "random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutralize the effect of the weather"
 
 [units.mini_zeppelin.orders.movement]
 fast = [["random", "L/R+F", "F"], ["random", "F", "F"], ["random", "F", "B"]]
@@ -204,7 +243,7 @@ rows = [
 race = "dwarf"
 name = "Transport Zeppelin"
 models = ["transport_zeppelin"]
-size = "Large"
+size = "large"
 armor = [6, 5, 0, 0]
 cost.cp = 16
 description = '''A civilian steampunk zeppelin.
@@ -215,8 +254,8 @@ speed = "fast_fly"
 movement_order = ["-", "F", "F"]
 comment = "May not deploy units while shaken"
 
-[units.transport_zeppelin.special]
-"Transport" = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall"
+[[units.transport_zeppelin.specials.transport]]
+text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall"
 
 [units.transport_zeppelin.orders.movement]
 fast_fly = [
@@ -248,7 +287,7 @@ rows = [
 race = "dwarf"
 name = "Dwarf AT-gun"
 models = ["dwarf_at_gun"]
-size = "Large"
+size = "large"
 armor = [7, 0, 0, 0]
 cost.cp = 24
 cost.xp = 16
@@ -260,8 +299,13 @@ description = '''An Anti-tank gun on wheels ready to fire. On the side there are
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.dwarf_at_gun.special]
-"Resistance" = "Poison[2], Fire[1]"
+[[units.dwarf_at_gun.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
+
+[[units.dwarf_at_gun.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 1
 
 [units.dwarf_at_gun.orders.movement]
 slow = [["-", "360°", "B[Rest]"], ["-", "F", "B[Rest]"]]
@@ -291,7 +335,7 @@ rows = [
 race = "dwarf"
 name = "GunBlasterWagon"
 models = ["gunblasterwagon"]
-size = "Large"
+size = "large"
 armor = [8, 10, 10, 7]
 cost.ip = 24
 description = '''An heavy tank with braodside weapons firing to the sides
@@ -302,9 +346,12 @@ description = '''An heavy tank with braodside weapons firing to the sides
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.gunblasterwagon.special]
-"Resistance" = "Fire[2]"
-"Movement" = "Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."
+[[units.gunblasterwagon.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
+
+[[units.gunblasterwagon.specials.movement]]
+text = "Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."
 
 [units.gunblasterwagon.orders.movement]
 fast = [
@@ -363,7 +410,7 @@ rows = [
 race = "dwarf"
 name = "Dw42"
 models = ["dw42"]
-size = "Large"
+size = "large"
 armor = [13, 10, 10, 9]
 cost.ip = 72
 description = '''heavily armored tank with a very big gun point straight forward.
@@ -374,8 +421,9 @@ description = '''heavily armored tank with a very big gun point straight forward
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.dw42.special]
-"Resistance" = "Fire[2]"
+[[units.dw42.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
 
 [units.dw42.orders.movement]
 fast = [
@@ -434,7 +482,7 @@ rows = [
 race = "dwarf"
 name = "Zap"
 models = ["zap"]
-size = "Large"
+size = "large"
 armor = [10, 8, 8, 7]
 cost.ip = 32
 description = '''A steampunk tank with futureistick weapon with two barrels firing forward. It also has weapons firing all round the tank.
@@ -445,9 +493,12 @@ description = '''A steampunk tank with futureistick weapon with two barrels firi
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.zap.special]
-"Fire Order" = "Fire and load all weapons at the same time"
-"Resistance" = "Fire[2]"
+[[units.zap.specials.fire_order]]
+text = "Fire and load all weapons at the same time"
+
+[[units.zap.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
 
 [units.zap.orders.movement]
 fast = [
@@ -505,12 +556,13 @@ rows = [
 race = "dwarf"
 name = "Zeppelin"
 models = ["zeppelin"]
-size = "Huge"
+size = "huge"
 armor = [8, 8, 8, 8]
 cost.ip = 96
 cost.xp = 48
 description = '''A huge zeppelin firing its main gun toward the ground.
 '''
+note = "Withering Ray: May replace forest with rough terrain in the hex it is standing"
 
 [units.zeppelin.shaken]
 speed = "slow_fly"
@@ -518,11 +570,16 @@ movement_order = ["-", "-", "F"]
 fire_order = "Fire one less weapon system per shaken token."
 comment = "Each shaken token counts as +1 to future damage token."
 
-[units.zeppelin.special]
-"Steady" = "+1 to hit, +1 to be hit."
-"Repair" = "[2, self, healing 2]"
-"Vulnerability" = "When damaged, add 1 to the result for each shaken token on the Zeppelin."
-"Note" = "Withering Ray: May replace forest with rough terrain in the hex it is standing"
+[[units.zeppelin.specials.to_hit]]
+args.ability = "ability.steady"
+
+[[units.zeppelin.specials.repair]]
+args.N = 2
+args.unit = "self"
+args.phase = "2nd Healing"
+
+[[units.zeppelin.specials.vulnerability]]
+text = "When damaged, add 1 to the result for each shaken token on the Zeppelin."
 
 [units.zeppelin.orders.movement]
 slow_fly = [
@@ -554,7 +611,7 @@ rows = [
 race = "dwarf"
 name = "Tamed Balrog"
 models = ["tamed_balrog"]
-size = "Huge"
+size = "huge"
 armor = [8, 7, 7, 6]
 cost.xp = 96
 description = '''A burning balrog with a flaming whip.
@@ -566,9 +623,17 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 fire_order = "May not use whip"
 
-[units.tamed_balrog.special]
-"Resistance" = "Fire[12], Poison[6]"
-"Terror" = "[8][range=2]"
+[[units.tamed_balrog.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 12
+
+[[units.tamed_balrog.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 6
+
+[[units.tamed_balrog.specials.terror]]
+args.N = 2
+args.M = 8
 
 [units.tamed_balrog.orders.movement]
 slow = [
@@ -616,8 +681,8 @@ deflection_die = 'n.a.'
 damage = "d6-2"
 ap = 2
 
-[models.dwarf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.dwarf_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.dwarf_brother_in_arms]
 name = "Dwarf Brother in Arms"
@@ -634,8 +699,8 @@ deflection_die = '4+'
 damage = "d6"
 ap = 2
 
-[models.dwarf_brother_in_arms.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.dwarf_brother_in_arms.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.elite_dwarf_infantry]
 name = "Elite Dwarf Infantry"
@@ -646,11 +711,13 @@ type = ["Elite", "Infantry", "Walking", "Bio"]
 cost.xp = 4
 replaces = "dwarf_infantry"
 
-[models.elite_dwarf_infantry.special]
-"To Hit" = "good shot: +1 to hit"
+[[models.elite_dwarf_infantry.specials.to_hit]]
+args.ability = "ability.good_shot"
 
-[models.elite_dwarf_infantry.unit_special]
-"Resistance 2" = "Psychic[2] as long as 1 elite model is alive"
+[[models.elite_dwarf_infantry.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 2
+text = "As long as 1 elite model is alive"
 
 [models.elite_dwarf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -660,10 +727,8 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_dwarf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
-
-#Note to self: give them cunning assault defense
+[[models.elite_dwarf_infantry.assault.specials.cunning_assault]]
+args.N = 2
 [models.elite_dwarf_steampowerarmor]
 name = "Elite Dwarf SteamPowerArmor"
 race = "dwarf"
@@ -673,12 +738,17 @@ type = ["Elite", "Steampowerarmor", "Walking", "Bio"]
 cost.xp = 24
 replaces = "steampowerarmor"
 
-[models.elite_dwarf_steampowerarmor.special]
-"To Hit" = "good shot: +1 to hit"
+[[models.elite_dwarf_steampowerarmor.specials.to_hit]]
+args.ability = "ability.good_shot"
 
-[models.elite_dwarf_steampowerarmor.unit_special]
-"Resistance 2" = "Psychic[1] as long as 1 elite model is alive"
-"Protection" = "1 endurance token per elite in unit."
+[[models.elite_dwarf_steampowerarmor.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "As long as 1 elite model is alive"
+
+[[models.elite_dwarf_steampowerarmor.unit_specials.endurance]]
+args.N = 1
+args.model_class = "elite model"
 
 [models.elite_dwarf_steampowerarmor.assault]
 strength = [4, 3, 3, 3]
@@ -688,9 +758,12 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_dwarf_steampowerarmor.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Cunning Assault Defense" = "[1][4+]"
+[[models.elite_dwarf_steampowerarmor.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.elite_dwarf_steampowerarmor.assault.specials.cunning_assault_defense]]
+args.N = 1
+args.M = 4
 
 [models.dwarf_battle_medic]
 name = "Dwarf Battle Medic"
@@ -701,10 +774,20 @@ type = ["Elite", "Steampowerarmor", "Walking", "Bio"]
 cost.xp = 24
 replaces = "steampowerarmor"
 
-[models.dwarf_battle_medic.unit_special]
-"Resistance 2" = "Psychic[2] as long as 1 battle medic is alive"
-"Heal" = "[1, any, Healing 1]"
-"Protection" = "1 endurance token and this model counts as elites for life of vest support."
+[[models.dwarf_battle_medic.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 2
+text = "As long as 1 battle medic is alive"
+
+[[models.dwarf_battle_medic.unit_specials.heal]]
+args.N = 1
+args.unit = "any"
+args.phase = "1st Healing"
+
+[[models.dwarf_battle_medic.unit_specials.endurance]]
+args.N = 1
+args.model_class = "model"
+text = "This model counts as an elite for Vest of Life Support"
 
 [models.dwarf_battle_medic.assault]
 strength = [4, 3, 3, 3]
@@ -714,8 +797,8 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.dwarf_battle_medic.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.dwarf_battle_medic.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.dwarf_steampowerarmor_engineer]
 name = "Dwarf Steampowerarmor Engineer"
@@ -726,8 +809,10 @@ type = ["Steampowerarmor", "Walking", "Bio"]
 cost.xp = 24
 replaces = "steampowerarmor"
 
-[models.dwarf_steampowerarmor_engineer.unit_special]
-"Repair" = "[3, any, Healing 1]"
+[[models.dwarf_steampowerarmor_engineer.unit_specials.repair]]
+args.N = 3
+args.unit = "any"
+args.phase = "1st Healing"
 
 [models.dwarf_steampowerarmor_engineer.assault]
 strength = [3, 2, 2, 1]
@@ -737,8 +822,8 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.dwarf_steampowerarmor_engineer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.dwarf_steampowerarmor_engineer.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.dwarf_engineer]
 name = "Dwarf Engineer"
@@ -749,8 +834,10 @@ type = ["Infantry", "Walking", "Bio"]
 cost.xp = 16
 replaces = "dwarf_infantry"
 
-[models.dwarf_engineer.unit_special]
-"Repair" = "Repair[3, any, Healing 1]"
+[[models.dwarf_engineer.unit_specials.repair]]
+args.N = 3
+args.unit = "any"
+args.phase = "1st Healing"
 
 [models.dwarf_engineer.assault]
 strength = [2, 0, 0, 0]
@@ -760,8 +847,8 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.dwarf_engineer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.dwarf_engineer.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.steampowerarmor]
 name = "SteamPowerArmor"
@@ -778,8 +865,8 @@ deflection_die = 'n.a.'
 damage = "d6-2"
 ap = 2
 
-[models.steampowerarmor.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.steampowerarmor.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.mini_zeppelin]
 name = "Mini Zeppelin"
@@ -796,8 +883,9 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.mini_zeppelin.assault.special]
-"Cunning Assault Defense" = "[1][4+]"
+[[models.mini_zeppelin.assault.specials.cunning_assault_defense]]
+args.N = 1
+args.M = 4
 
 [models.engineer_mini_zeppelin]
 name = "Engineer Mini Zeppelin"
@@ -808,8 +896,10 @@ type = ["Open Vehicle", "Floating", "Bio"]
 replaces = "mini_zeppelin"
 cost.xp = 8
 
-[models.engineer_mini_zeppelin.unit_special]
-"Repair" = "Repair[2, self, Healing 1]"
+[[models.engineer_mini_zeppelin.unit_specials.repair]]
+args.N = 2
+args.unit = "self"
+args.phase = "1st Healing"
 
 [models.engineer_mini_zeppelin.assault]
 strength = [4, 1, 1, 1]
@@ -819,8 +909,9 @@ deflection_die = "4+"
 damage = "d6-2"
 ap = 2
 
-[models.engineer_mini_zeppelin.assault.special]
-"Cunning Assault Defense" = "[2][4+]"
+[[models.engineer_mini_zeppelin.assault.specials.cunning_assault_defense]]
+args.N = 2
+args.M = 4
 
 [models.transport_zeppelin]
 name = "Transport Zeppelin"
@@ -844,8 +935,9 @@ equipment_limit = []
 equipment = ["flaming_whip"]
 type = ["Monster", "Walking", "Bio"]
 
-[models.tamed_balrog.special]
-"To Hit" = "Excellent Whip Handling (counts as Excellent shot, +2 to hit)"
+[[models.tamed_balrog.specials.to_hit]]
+name = "Excellent Whip Handling"
+args.ability = "ability.excellent_shot"
 
 [models.tamed_balrog.assault]
 strength = [6, 4, 3, 2]
@@ -855,8 +947,8 @@ deflection_die = 'n.a.'
 damage = "d6"
 ap = 6
 
-[models.tamed_balrog.assault.special]
-"Extra Damage" = "Fire"
+[[models.tamed_balrog.assault.specials.extra_damage]]
+text = "Fire"
 
 [models.gunblasterwagon]
 name = "GunBlasterWagon"
@@ -865,8 +957,8 @@ equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["broadside_guns"]
 type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
 
-[models.gunblasterwagon.special]
-"To Hit" = "optimal Point blank: +1 to hit at point blank range"
+[[models.gunblasterwagon.specials.to_hit]]
+args.ability = "ability.optimal_at_point_blank"
 
 [models.gunblasterwagon.assault]
 strength = [2, 2, 2, 2]
@@ -898,8 +990,8 @@ equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["array_of_heavy_muskets", "zap", "twin_fear_ray_free"]
 type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
 
-[models.zap.special]
-"To Hit" = "Loses aim when moving away from the hex where it aimed"
+[[models.zap.specials.to_hit]]
+args.ability = "ability.aim_lost_when_moving"
 
 [models.zap.assault]
 strength = [4, 3, 3, 2]
@@ -924,8 +1016,8 @@ deflection_die = "n.a"
 damage = "d6-2"
 ap = 2
 
-[models.dwarf_at_gun.assault.special]
-"Retreat" = "Is automatically destroyed if forced to retreat in an assault"
+[[models.dwarf_at_gun.assault.specials.retreat]]
+text = "Is automatically destroyed if forced to retreat in an assault"
 
 [models.zeppelin]
 name = "Zeppelin"
@@ -976,8 +1068,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.musket_with_springloaded_axe.range.special]
-"Ammo" = "Gun automatically loaded after an assault"
+[[equipment.musket_with_springloaded_axe.range.specials.ammo]]
+text = "Gun automatically loaded after an assault"
 
 [equipment.musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
@@ -999,9 +1091,11 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.double_barreled_musket_with_springloaded_axe.range.special]
-"Multiple Shots" = "Fire two shots (per model) for each shot"
-"Ammo" = "Gun automatically loaded after an assault"
+[[equipment.double_barreled_musket_with_springloaded_axe.range.specials.multiple_shots]]
+text = "Fire two shots (per model) for each shot"
+
+[[equipment.double_barreled_musket_with_springloaded_axe.range.specials.ammo]]
+text = "Gun automatically loaded after an assault"
 
 [equipment.double_barreled_musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
@@ -1030,8 +1124,8 @@ cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Vehicle"]]
 
-[equipment.infantry_platform.unit_special]
-"Movement" = "Tank Riders: While an infantry is in slow, and sharing a hex with this vehicle, you may use the movement order of the vehicle instead of your infantry movement when placing orders. Speed of infantry is set to slow after movement"
+[[equipment.infantry_platform.unit_specials.movement]]
+text = "Tank Riders: While an infantry is in slow, and sharing a hex with this vehicle, you may use the movement order of the vehicle instead of your infantry movement when placing orders. Speed of infantry is set to slow after movement"
 
 [equipment.springloaded_vehicle_assault_weapons]
 name = "Springloaded Vehicle Assault Weapons"
@@ -1053,15 +1147,15 @@ cost.cp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 
-[equipment.wheeled_shieldwall.unit_special]
-"Protection" = "[5,0,0,0] in armor"
+[equipment.wheeled_shieldwall.unit]
+armor.add = [5, 0, 0, 0]
 
 [equipment.wheeled_shieldwall.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "4+"
 
-[equipment.wheeled_shieldwall.assault.special]
-"Penalty" = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault"
+[[equipment.wheeled_shieldwall.assault.specials.penalty]]
+text = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault"
 
 [equipment.elite_crew]
 name = "Elite Crew"
@@ -1070,8 +1164,8 @@ cost.xp = 16
 upgrade_all = true
 requires = [["Independent:1"], ["type:Vehicle"]]
 
-[equipment.elite_crew.model_special]
-"To Hit" = "Gains good shot: +1 to hit"
+[[equipment.elite_crew.model_specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [equipment.axethrower_machine]
 name = "AxeThrower Machine"
@@ -1084,11 +1178,11 @@ angle = [true, true, false, false]
 damage = "d6-2"
 ap = 2
 
-[equipment.axethrower_machine.range.special]
-"Multiple Shots" = "Fire x2 per fire order per model"
+[[equipment.axethrower_machine.range.specials.multiple_shots]]
+text = "Fire x2 per fire order per model"
 
-[equipment.axethrower_machine.model_special]
-"To Hit" = "+1 to hit if range to enemy is an even number, -1 to hit if it is an odd number"
+[[equipment.axethrower_machine.model_specials.to_hit]]
+args.ability = "ability.even_range"
 
 [equipment.jet_pack]
 name = "Jet Pack"
@@ -1098,8 +1192,8 @@ cost.xp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Steampowerarmor"]]
 
-[equipment.jet_pack.unit_special]
-"Movement" = "Once per game in any single movement phase, instead of your normal movement, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex, but keep your orientation. This may initialize an assault if the hex is occupied by enemy forces."
+[[equipment.jet_pack.unit_specials.movement]]
+text = "Once per game in any single movement phase, instead of your normal movement, jump your unit up to 3 hexes from your current hex. Ignore any hex between your current and target hex, but keep your orientation. This may initialize an assault if the hex is occupied by enemy forces."
 
 [equipment.super_blaster]
 name = "Super Blaster"
@@ -1127,8 +1221,8 @@ angle = [true, true, true, true]
 damage = "d6+1"
 ap = 7
 
-[equipment.big_blaster.range.special]
-"Ammo" = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
+[[equipment.big_blaster.range.specials.ammo]]
+text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
@@ -1137,8 +1231,13 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
-[equipment.vest_of_life_support.unit_special]
-"Protection" = "1 endurance token per regular model  and 2 endurance tokens per elite model in the unit."
+[[equipment.vest_of_life_support.unit_specials.endurance]]
+args.N = 1
+args.model_class = "regular model"
+
+[[equipment.vest_of_life_support.unit_specials.endurance]]
+args.N = 2
+args.model_class = "elite model"
 
 [equipment.stabilizer]
 name = "Stabilizer"
@@ -1147,8 +1246,8 @@ cost.cp = 16
 upgrade_all = true
 requires = [["type:Steampowerarmor"], ["Independent:1"]]
 
-[equipment.stabilizer.model_special]
-"To Hit" = "Enhanced accuracy. +1 to hit"
+[[equipment.stabilizer.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
 [equipment.stabilizer.orders_gained.fire]
 slow = [["-", "aim"], ["aim", "-"]]
@@ -1160,9 +1259,18 @@ cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 
-[equipment.trench_coat_of_resistance.unit_special]
-"Resistance 2" = "Unit improves poison resistance and fire resistance with 1"
-"Immunity" = "Minor Acid"
+[[equipment.trench_coat_of_resistance.unit_specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 1
+text = "Improves the unit's own poison resistance by 1"
+
+[[equipment.trench_coat_of_resistance.unit_specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 1
+text = "Improves the unit's own fire resistance by 1"
+
+[[equipment.trench_coat_of_resistance.unit_specials.immunity]]
+args.feature = "token.minor_acid"
 
 [equipment.brother_in_arms_armor]
 name = "Brother in Arms Armor"
@@ -1171,8 +1279,13 @@ cost.ip = 4
 upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
-[equipment.brother_in_arms_armor.unit_special]
-"Protection 2" = "2 endurance tokens per elite model in the unit. In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]. Add [4,3,3,3] in armor"
+[[equipment.brother_in_arms_armor.unit_specials.endurance]]
+args.N = 2
+args.model_class = "elite model"
+text = "In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]"
+
+[equipment.brother_in_arms_armor.unit]
+armor.add = [4, 3, 3, 3]
 
 [equipment.steamblower]
 name = "Steamblower"
@@ -1187,8 +1300,8 @@ angle = [true, true, true, true]
 damage = "d6-2+d4 Crew damage"
 ap = 2
 
-[equipment.steamblower.range.special]
-"Area" = "Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4"
+[[equipment.steamblower.range.specials.area]]
+text = "Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4"
 
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
@@ -1201,10 +1314,14 @@ angle = [true, true, true, true]
 damage = "N.A"
 ap = 0
 
-[equipment.poison_gas_grenade.range.special]
-"Cloud" = "Place a poison cloud[4] within normal range"
-"Ammo" = "Always treated as loaded"
-"Order" = "Activated by throw order"
+[[equipment.poison_gas_grenade.range.specials.cloud]]
+text = "Place a poison cloud[4] within normal range"
+
+[[equipment.poison_gas_grenade.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.poison_gas_grenade.range.specials.order]]
+text = "Activated by throw order"
 
 [equipment.flaming_whip]
 name = "Flaming Whip"
@@ -1217,8 +1334,8 @@ angle = [true, true, false, false]
 damage = "N.A"
 ap = 0
 
-[equipment.flaming_whip.range.special]
-"Extra Damage" = "Fire"
+[[equipment.flaming_whip.range.specials.extra_damage]]
+text = "Fire"
 
 [equipment.fear_ray_free]
 name = "Fear Ray"
@@ -1242,8 +1359,8 @@ angle = [true, false, false, false]
 damage = "d6 Psychic damage"
 ap = 0
 
-[equipment.twin_fear_ray_free.range.special]
-"Multiple Shots" = "Fire two times at same target"
+[[equipment.twin_fear_ray_free.range.specials.multiple_shots]]
+text = "Fire two times at same target"
 
 [equipment.fear_ray]
 name = "Fear Ray"
@@ -1291,8 +1408,8 @@ angle = [true, false, false, false]
 damage = "d6 +1 +(+3 if penetrating all armor)"
 ap = 9
 
-[equipment.tank_gun.range.special]
-"Ammo" = "Load unstable: If it hits the target, it in addition to normal damage it gets gets Area(5+) effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
+[[equipment.tank_gun.range.specials.ammo]]
+text = "Load unstable: If it hits the target, it in addition to normal damage it gets gets Area(5+) effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
 
 [equipment.array_of_enhanced_heavy_muskets]
 name = "Array of Enhanced Heavy Muskets"
@@ -1379,8 +1496,8 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.double_barreled_long_range_heavy_musket.range.special]
-"Multiple Shots" = "Fire two shots per fire order per model"
+[[equipment.double_barreled_long_range_heavy_musket.range.specials.multiple_shots]]
+text = "Fire two shots per fire order per model"
 
 [equipment.multibarreled_heavy_musket]
 name = "Multibarreled Heavy Musket"
@@ -1395,8 +1512,8 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.multibarreled_heavy_musket.range.special]
-"Multiple Shots" = "Fire three shots per model"
+[[equipment.multibarreled_heavy_musket.range.specials.multiple_shots]]
+text = "Fire three shots per model"
 
 [equipment.rocket_jackhammer]
 name = "Rocket Jackhammer"
@@ -1431,8 +1548,8 @@ angle = ["0", "x2", "x2", "0"]
 damage = "d6+2"
 ap = 7
 
-[equipment.broadside_guns.range.special]
-"Cloud" = "After firing these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired."
+[[equipment.broadside_guns.range.specials.cloud]]
+text = "After firing these weapon, place a Poison Cloud[4] at point blank range from any of the directions that fired."
 
 [equipment.hide]
 name = "Hide"
@@ -1441,10 +1558,15 @@ cost.xp = 32
 upgrade_all = true
 requires = [["Training:1"], ["type:AT Gun"]]
 
-[equipment.hide.unit_special]
-"Hidden" = "Start with a hidden token."
-"Forward Position" = "[1]"
-"Camouflage" = "[hill][-1]"
+[[equipment.hide.unit_specials.hidden]]
+text = "Start with a hidden token."
+
+[[equipment.hide.unit_specials.forward_position]]
+args.N = 1
+
+[[equipment.hide.unit_specials.to_hit]]
+args.ability = "ability.camouflage"
+args.terrain = "terrain.hill"
 
 [equipment.hide.orders_gained.movement]
 still = [["Reveal", "-", "-"]]

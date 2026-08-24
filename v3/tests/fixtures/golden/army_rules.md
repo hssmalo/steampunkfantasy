@@ -10,11 +10,11 @@
 - Points: 28
 - Shaken: slow [-, -, Flee] / Can't use weapons
 
-- **Take Cover**: [sneak][-2]
+- **To Hit**: Take Cover[Sneak][-2]
 - **Fire Order**: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
-- **Evation**: [4+]
-- **Resistance 2**: Psychic[1] as long as at least one elite model is alive.
-- **Pre-Assault Retreat**: 6+, improved by 1 per elite in unit.
+- **Evasion**: [4+]
+- **Resistance**: Psychic[1]. As long as at least one elite model is alive
+- **Pre-Assault Retreat**: [6+]. Improved by 1 per elite in unit
 
 **Damage Table: Regular**
 
@@ -37,9 +37,9 @@
 - Equipment: 1x Goblin Bow, 1x Goblin Grenade, 1x Combat Screw Driver
 - Assault: strength 2/1/1/1 (6+), deflection 5/0/0/0 (6+), damage d4-2, AP 2
 
-- **To Hit**: +2 to hit with thrown weapons
+- **To Hit**: Thrown Weapons[2]
 
-- **Cunning Assault**: [1 for 1]
+- **Cunning Assault**: [1]
 - **Cunning Deflection**: Each deflected hit counts as hits for cunning assault purposes.
 
 #### Goblin Bow
@@ -57,9 +57,9 @@
 - Equipment: 1x Goblin Bow, 1x Goblin Grenade
 - Assault: strength 2/1/1/1 (6+), deflection 4/0/0/0 (6+), damage d4-2, AP 2
 
-- **To Hit**: +2 to hit with thrown weapons
+- **To Hit**: Thrown Weapons[2]
 
-- **Cunning Assault**: [1 for 1]
+- **Cunning Assault**: [1]
 
 #### Goblin Bow
 
@@ -77,7 +77,7 @@
 - Assault: strength 1/1/1/1 (6+), deflection 0/0/0/0 (6+), damage d6-2, AP 2
 
 
-- **Cunning Assault**: [1 for 1]
+- **Cunning Assault**: [1]
 
 #### Goblin Bow
 
@@ -99,10 +99,10 @@
 - Points: 8
 - Shaken: slow [-, -, Flee] / Can't use weapons
 
-- **Take Cover**: [sneak][-2]
+- **To Hit**: Take Cover[Sneak][-2]
 - **Fire Order**: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
-- **Evation**: [4+]
-- **Pre-Assault Retreat**: 6+
+- **Evasion**: [4+]
+- **Pre-Assault Retreat**: [6+]
 
 **Damage Table: Regular**
 
@@ -126,7 +126,7 @@
 - Assault: strength 1/1/1/1 (6+), deflection 0/0/0/0 (6+), damage d6-2, AP 2
 
 
-- **Cunning Assault**: [1 for 1]
+- **Cunning Assault**: [1]
 
 #### Goblin Bow
 
@@ -188,8 +188,8 @@
 - Equipment: 1x Goblin Bow Battery, 1x Heavy Crossbow
 - Assault: strength 16/8/1/1 (6+), deflection 16/0/0/0 (6+), damage d6-2, AP 2
 
-- **To Hit (2)**: Imprecise weapon[Bow Battery]: -1 to hit
-- **To Hit (3)**: Enhanced accuracy[Heavy Crossbow]: +1 to hit
+- **Imprecise Weapon**: Bad Shot
+- **To Hit**: Enhanced Accuracy
 
 
 #### Goblin Bow Battery

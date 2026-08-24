@@ -41,7 +41,7 @@ race = "ogre"
 name = "Ogre Grunt"
 description = "A stout ogre grunt hefting a huge wrench"
 models = []
-size = "Small"
+size = "small"
 [units.ogre_grunt.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -52,7 +52,7 @@ movement_order = ["-", "-", "flee"]
 race = "ogre"
 name = "Ogre Blank"
 models = []
-size = "Small"
+size = "small"
 [units.ogre_blank.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -73,7 +73,7 @@ race = "dwarf"
 name = "Dwarf Grunt"
 description = "A dwarf grunt swinging a riveted club"
 models = []
-size = "Small"
+size = "small"
 [units.dwarf_grunt.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -85,7 +85,7 @@ race = "dwarf"
 name = "Dwarf Scout"
 description = "A wiry dwarf scout with a spyglass"
 models = []
-size = "Small"
+size = "small"
 [units.dwarf_scout.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]

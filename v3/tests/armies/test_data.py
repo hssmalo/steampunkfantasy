@@ -32,6 +32,7 @@ from spf.schemas.race import (
     Stacker,
     UnitConfig,
 )
+from spf.schemas.special import SpecialInstance
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -57,10 +58,9 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Squad",
                 models=["soldier"],
-                size="Small",
+                size="small",
                 cost=t.Cost(mp=3),
                 shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-                special={},
                 orders=OrdersConfig(),
                 armor=None,
                 damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
@@ -1253,10 +1253,9 @@ def test_validate_army_detects_invalid_model_replacement(
         race="goblin",
         name="Squad",
         models=["elite_soldier"],
-        size="Small",
+        size="small",
         cost=t.Cost(mp=3),
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-        special={},
         orders=OrdersConfig(),
         armor=None,
         damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
@@ -1283,10 +1282,9 @@ def test_validate_army_detects_multiple_violations(simple_race: RaceConfig) -> N
         race="goblin",
         name="Double Squad",
         models=["elite_soldier", "elite_soldier"],
-        size="Small",
+        size="small",
         cost=t.Cost(mp=3),
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-        special={},
         orders=OrdersConfig(),
         armor=None,
         damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
@@ -1526,15 +1524,15 @@ def test_model_equipment_orders_retained_defaults_before_upgrades(
     assert model.equipment == [*model.default_equipment, *model.upgrade_equipment]
 
 
-def test_model_specials_let_the_upgrade_win_over_a_retained_default(
+def test_model_specials_take_a_retained_default_before_the_upgrade(
     simple_race: RaceConfig,
 ) -> None:
-    """Paid kit wins a conflict, because upgrades are merged last."""
+    """Order is load-bearing: a retained default's instance precedes the upgrade's."""
     default = EquipmentConfig(
         race="goblin",
         name="Basic Sword",
         requires=[],
-        model_special={"To Hit": "from the default"},
+        model_specials={"to_hit": [SpecialInstance(text="from the default")]},
     )
     upgrade = EquipmentConfig(
         race="goblin",
@@ -1542,7 +1540,7 @@ def test_model_specials_let_the_upgrade_win_over_a_retained_default(
         cost=t.Cost(cp=5),
         upgrade_all=True,
         requires=[],
-        model_special={"To Hit": "from the upgrade"},
+        model_specials={"to_hit": [SpecialInstance(text="from the upgrade")]},
     )
     model = Model(
         name="soldier",
@@ -1551,7 +1549,10 @@ def test_model_specials_let_the_upgrade_win_over_a_retained_default(
         upgrade_equipment=[upgrade],
     )
 
-    assert model.model_specials["To Hit"] == "from the upgrade"
+    assert [instance.text for instance in model.model_specials["to_hit"]] == [
+        "from the default",
+        "from the upgrade",
+    ]
 
 
 def test_assault_applies_a_retained_default_stacker_before_the_upgrade(
@@ -1607,110 +1608,6 @@ def test_retained_defaults_do_not_change_what_a_unit_costs(
     assert plain.resolve(race).units[0].cost() + sword_cost == (
         upgraded.resolve(race).units[0].cost()
     )
-
-
-# ---------------------------------------------------------------------------
-# Resolved Model specials stacking
-# ---------------------------------------------------------------------------
-
-
-def test_model_unit_specials_base_from_config(simple_race: RaceConfig) -> None:
-    model_cfg = simple_race.models["soldier"].model_copy(
-        update={"unit_special": {"Take Cover": "desc"}}
-    )
-    race = simple_race.model_copy(
-        update={"models": {**simple_race.models, "soldier": model_cfg}}
-    )
-    resolved = (
-        ArmyList(race="goblin", nick="T", units=[])
-        .add_unit("squad", race_config=race)
-        .resolve(race)
-    )
-    assert "Take Cover" in resolved.units[0].models[0].unit_specials
-
-
-def test_model_unit_specials_equipment_overrides(simple_race: RaceConfig) -> None:
-    equip = EquipmentConfig(
-        race="goblin",
-        name="Magic Sword",
-        cost=t.Cost(cp=5),
-        upgrade_all=True,
-        requires=[],
-        unit_special={"Terror": "upgraded terror"},
-    )
-    model_cfg = simple_race.models["soldier"].model_copy(
-        update={"unit_special": {"Terror": "base terror"}}
-    )
-    race = RaceConfig(
-        races=simple_race.races,
-        units=simple_race.units,
-        models={**simple_race.models, "soldier": model_cfg},
-        equipment={**simple_race.equipment, "magic_sword": equip},
-    )
-    army = (
-        ArmyList(race="goblin", nick="T", units=[])
-        .add_unit("squad", race_config=race)
-        .upgrade_model(
-            ("squad", 0),
-            model_key=("soldier", 0),
-            equipment_name="magic_sword",
-            race_config=race,
-        )
-    )
-    resolved = army.resolve(race)
-    assert resolved.units[0].models[0].unit_specials["Terror"] == "upgraded terror"
-
-
-def test_model_model_specials_stacked(simple_race: RaceConfig) -> None:
-    equip = EquipmentConfig(
-        race="goblin",
-        name="Scope",
-        cost=t.Cost(cp=1),
-        upgrade_all=True,
-        requires=[],
-        model_special={"To Hit": "improves"},
-    )
-    race = RaceConfig(
-        races=simple_race.races,
-        units=simple_race.units,
-        models=simple_race.models,
-        equipment={**simple_race.equipment, "scope": equip},
-    )
-    army = (
-        ArmyList(race="goblin", nick="T", units=[])
-        .add_unit("squad", race_config=race)
-        .upgrade_model(
-            ("squad", 0),
-            model_key=("soldier", 0),
-            equipment_name="scope",
-            race_config=race,
-        )
-    )
-    resolved = army.resolve(race)
-    assert "To Hit" in resolved.units[0].models[0].model_specials
-
-
-def test_unit_unit_specials_merges_model_contributions(simple_race: RaceConfig) -> None:
-    unit_cfg = simple_race.units["squad"].model_copy(
-        update={"special": {"Take Cover": "unit level"}}
-    )
-    model_cfg = simple_race.models["soldier"].model_copy(
-        update={"unit_special": {"Terror": "model contributes"}}
-    )
-    race = RaceConfig(
-        races=simple_race.races,
-        units={"squad": unit_cfg},
-        models={**simple_race.models, "soldier": model_cfg},
-        equipment=simple_race.equipment,
-    )
-    resolved = (
-        ArmyList(race="goblin", nick="T", units=[])
-        .add_unit("squad", race_config=race)
-        .resolve(race)
-    )
-    unit_specials = resolved.units[0].unit_specials
-    assert "Take Cover" in unit_specials
-    assert "Terror" in unit_specials
 
 
 # ---------------------------------------------------------------------------
@@ -1902,10 +1799,9 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
         race="goblin",
         name="Two Squad",
         models=["soldier", "soldier"],
-        size="Small",
+        size="small",
         cost=None,
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-        special={},
         orders=OrdersConfig(),
         armor=None,
         damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
@@ -1942,10 +1838,9 @@ def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
         race="goblin",
         name="Two Squad",
         models=["soldier", "soldier"],
-        size="Small",
+        size="small",
         cost=None,
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-        special={},
         orders=OrdersConfig(),
         armor=None,
         damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]

@@ -166,15 +166,30 @@ because deleting the `Literal`s already moves all vocabulary validation to
 runtime, and moving the schemas too would relocate essentially every static check
 in one step. Schema checking is what makes the data safe to write.
 
-### Completeness: exactly-one-of
+### Completeness: at-least-one-of
 
-A record is either complete or an explicit stub — never both, never neither — so
-a `todo` cannot outlive the writing of the rule it marks. Stubs are marked by the
-**presence of `todo`**, never by the absence of prose (#113), and `todo` carries
-*what* is missing, so it is a place for design intent rather than a flag.
+A record is complete, or an explicit stub, or complete with an open question —
+never nothing. Stubs are marked by the **presence of `todo`** together with the
+absence of a meaning field, never by the absence of prose alone (#113), and
+`todo` carries *what* is missing, so it is a place for design intent rather than
+a flag.
 
-The constraint is **exactly-one-of(⟨the registry's meaning-bearing fields⟩,
-`todo`)**, *not* exactly-one-of(`effect`, `todo`). `effect` is not the
+> **Amended during the migration.** This section originally read
+> *exactly*-one-of: a record was complete or a stub, never both. Carrying the
+> migration out showed that rules out the case that turned out to matter most —
+> a **written** rule with an open design question against it. `enhanced_accuracy`
+> is fully written and its bonus is fixed at +1 while the Race data grants +1,
+> +3 and +5; `cunning_assault_defense` may be `cunning_deflection` under another
+> name; `hide` and `insanity_field` are written and reachable from no label.
+> Under exactly-one-of these can only be TOML comments, which the countdown
+> cannot see — so the one mechanism for making design debt *countable* was
+> unavailable to exactly the rules whose debt is easiest to forget, because they
+> look finished. The cost is that `todo` alone no longer means "stub", so the
+> countdown distinguishes the two: unwritten rule text is records with no
+> meaning field, open questions are records with both.
+
+The constraint is over **⟨the registry's meaning-bearing fields⟩** and
+`todo`, *not* over `effect` and `todo`. `effect` is not the
 meaning-bearer on every record: on a modifier record, `to_hit` / `to_be_hit` are.
 Keyed on `effect`, the rule would manufacture **28 stubs** for modifier records
 nobody considers unfinished, inflating the ~45 real stubs to ~73 and destroying
@@ -185,7 +200,7 @@ unwritten rule.
 satisfy a validator restates the numbers and is trusted by no one.
 
 Mechanically this is `todo: str | None` plus one shared
-`@model_validator(mode="after")` on the base, and a `ClassVar` tuple per subclass
+`@model_validator(mode="after")` on the base rejecting only the empty record, and a `ClassVar` tuple per subclass
 naming its meaning fields — `("effect",)` for `special` / `token` / `hex`,
 `("to_hit", "to_be_hit")` for the modifier registries. One line per registry,
 beside that registry's own fields.
@@ -560,7 +575,7 @@ loads all eight Races and every `rules` command:
 | Every ref resolves, and its value lands in the permitted set | refs |
 | Args validate against the union of the rule's `variables` and every ref target's | ref args |
 | Cross-slot `replace` is rejected | merge rule 4 |
-| Record completeness: exactly-one-of(meaning fields, `todo`) | completeness |
+| Record completeness: a meaning field or `todo`, never neither | completeness |
 | Instance envelope closed — *free from `StrictModel`* | args |
 | Stat-modifier fence — *free from `StrictModel`* | seven stats |
 

@@ -1,8 +1,10 @@
 # Migrating to the Special data model
 
 The decision is [ADR-0024](adr/0024-specials-are-identified-instances-over-a-registry.md).
-This file is the plan for carrying it out. **Nothing here has been executed** —
-the wayfinding effort that produced the ADR deliberately stopped at the decision.
+This file is the plan for carrying it out. **It has been executed**; what
+follows is the plan as written, kept as the record of what was intended. Where
+execution diverged, the commit that diverged says why, and ADR-0024 carries an
+amendment to its completeness rule.
 
 The identifier census this plan works from is
 [`docs/specials-census.md`](specials-census.md): 97 labels, each with a chosen
@@ -242,8 +244,10 @@ keys in `schemas/race.py` and `armies/` become `str`. The `+N`/`-N` members of t
 `Modifier` Literal also go, since those parameters now live in `variables` and
 `signature`.
 
-`speed` and `size` leave `type_aliases.py` in 1.5, not here — they become
-registries rather than disappearing.
+`speed` and `size` become registries in 1.5 rather than disappearing, but their
+aliases leave `type_aliases.py` here: validating a Race's `size` against the
+registry needs the gate, so 1.5 promotes the vocabulary and this phase deletes
+the aliases.
 
 ## The sweep
 

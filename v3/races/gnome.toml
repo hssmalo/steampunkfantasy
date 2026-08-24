@@ -22,14 +22,16 @@ models = [
     "gnome_infantry",
     "gnome_infantry"
 ]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
 description = '''A Gnome infantry with a mohawk and wielding a ww1 style rifle. On the belt there hangs a small ww1 style pistol.
 '''
 
-[units.gnome_infantry.special]
-"Take Cover" = "[still][-2]"
+[[units.gnome_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
 
 [units.gnome_infantry.shaken]
 speed = "slow"
@@ -73,16 +75,14 @@ rows = [
 race = "gnome"
 name = "Quad Bike"
 models = ["quad_bike", "quad_bike", "quad_bike", "quad_bike"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
 cost.cp = 16
 description = '''A gnome with a mohawk and wielding a ww1 type rifle, riding on a steampunk atv.
 '''
+note = "May not enter buildings"
 
-
-[units.quad_bike.special]
-"Note" = "May not enter buildings"
 
 [units.quad_bike.shaken]
 speed = "slow"
@@ -127,7 +127,7 @@ rows = [
 race = "gnome"
 name = "Assault Bots"
 models = ["assault_bot", "assault_bot", "assault_bot", "assault_bot"]
-size = "Small"
+size = "small"
 armor = [0, 0, 0, 0]
 description = '''These are small robots design for assault. One of the arm is replaced with a blade. In the other it wields an axe
 '''
@@ -150,7 +150,7 @@ rows = [
 race = "gnome"
 name = "Mechanical Rat"
 models = ["mechanical_rat"]
-size = "Tiny"
+size = "tiny"
 armor = [0, 0, 0, 0]
 description = '''Tiny robotic rat.
 '''
@@ -172,7 +172,7 @@ rows = [
 race = "gnome"
 name = "Gnome Motorcycle"
 models = ["gnome_motorcycle", "gnome_motorcycle", "gnome_motorcycle"]
-size = "Medium"
+size = "medium"
 armor = [4, 3, 0, 0]
 cost.mp = 8
 cost.xp = 16
@@ -181,9 +181,13 @@ description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycl
 '''
 
 
-[units.gnome_motorcycle.special]
-"Ellusive" = "[fast]"
-"Pre-Assault Retreat" = "4+"
+[[units.gnome_motorcycle.specials.to_hit]]
+args.ability = "ability.elusive"
+args.speed = "speed.fast"
+args.N = -1
+
+[[units.gnome_motorcycle.specials.pre_assault_retreat]]
+args.N = 4
 
 
 [units.gnome_motorcycle.shaken]
@@ -221,7 +225,7 @@ rows = [
 race = "gnome"
 name = "Ballista Drone"
 models = ["ballista"]
-size = "Large"
+size = "large"
 armor = [0, 0, 0, 0]
 cost.cp = 24
 description = '''A robot firing a ballista.
@@ -258,15 +262,15 @@ rows = [
 race = "gnome"
 name = "Ballista Tractor, Mark I"
 models = ["ballista_tractor_mark_i"]
-size = "Large"
+size = "large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
 description = '''An armored steampunk tractor firing a big ballista. On the back of the tractor there is a mortar.
 '''
 
 
-[units.ballista_tractor_mark_i.special]
-"Fire Order" = "Fires and loads both weapons simultaneously"
+[[units.ballista_tractor_mark_i.specials.fire_order]]
+text = "Fires and loads both weapons simultaneously"
 
 [units.ballista_tractor_mark_i.shaken]
 speed = "still"
@@ -320,7 +324,7 @@ rows = [
 race = "gnome"
 name = "Ballista Tractor, Mark II"
 models = ["ballista_tractor_mark_ii"]
-size = "Large"
+size = "large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
 description = '''An armored steampunk tractor firing a big fancy ballista.
@@ -379,15 +383,15 @@ rows = [
 race = "gnome"
 name = "Ballista Tractor, Mark III"
 models = ["ballista_tractor_mark_iii"]
-size = "Large"
+size = "large"
 armor = [12, 8, 8, 7]
 cost.ip = 32
 description = '''An armored steampunk tractor firing a big ballista. It also has weapons firing to the sides.
 '''
 
 
-[units.ballista_tractor_mark_iii.special]
-"Fire Order" = "Fires and loads both weapons at fire and load actions"
+[[units.ballista_tractor_mark_iii.specials.fire_order]]
+text = "Fires and loads both weapons at fire and load actions"
 
 [units.ballista_tractor_mark_iii.shaken]
 speed = "still"
@@ -441,7 +445,7 @@ rows = [
 race = "gnome"
 name = "Gnome Helicopter"
 models = ["gnome_helicopter"]
-size = "Large"
+size = "large"
 armor = [0, 0, 0, 0]
 cost.ip = 24
 cost.xp = 8
@@ -449,8 +453,8 @@ description = '''A steampunk helicopter with lots of gadgedts and firing a gatli
 '''
 
 
-[units.gnome_helicopter.special]
-"Fire Order" = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously"
+[[units.gnome_helicopter.specials.fire_order]]
+text = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously"
 
 [units.gnome_helicopter.shaken]
 speed = "still"
@@ -533,8 +537,8 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.gnome_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.gnome_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.quad_bike]
 name = "Quad Bike"
@@ -558,8 +562,9 @@ equipment_limit = ["Independent:∞"]
 equipment = []
 type = ["Drone", "Walking", "Mechanical"]
 
-[models.assault_bot.unit_special]
-"Setup" = "Can only enter play through mortars or drop weapons"
+[[models.assault_bot.unit_specials.setup]]
+replace = true
+text = "Can only enter play through mortars or drop weapons"
 
 [models.assault_bot.assault]
 strength = [1, 0, 0, 0]
@@ -569,8 +574,8 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.assault_bot.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.assault_bot.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.mechanical_rat]
 name = "Mechanical Rat"
@@ -579,8 +584,8 @@ equipment_limit = ["Independent:∞"]
 equipment = []
 type = ["Drone", "Walking", "Mechanical"]
 
-[models.mechanical_rat.unit_special]
-"Setup" = "Can only enter play through tinkerer ability"
+[[models.mechanical_rat.unit_specials.setup]]
+text = "Can only enter play through tinkerer ability"
 
 [models.mechanical_rat.assault]
 strength = [3, 0, 0, 0]
@@ -590,8 +595,8 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.mechanical_rat.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.mechanical_rat.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.ballista_tractor_mark_i]
 name = "Ballista Tractor Mark I"
@@ -682,11 +687,18 @@ equipment_limit = [
 equipment = ["acidic_napalm_bomb", "helicopter_gatling_gun"]
 type = ["Bio Crew", "Helicopter", "Flying"]
 
-[models.gnome_helicopter.unit_special]
-"Repair" = "Quick fix: Repair[1, self, 1st healing phase]"
+[[models.gnome_helicopter.unit_specials.repair]]
+name = "Quick fix"
+args.N = 1
+args.unit = "self"
+args.phase = "1st Healing"
 
-[models.gnome_helicopter.special]
-"To Hit" = "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
+[[models.gnome_helicopter.specials.to_hit]]
+args.ability = "ability.good_shot"
+
+[[models.gnome_helicopter.specials.to_hit]]
+args.ability = "ability.excellent_shot"
+text = "Replaces the good shot bonus while the helicopter hovers still in the air"
 
 [models.gnome_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -711,11 +723,17 @@ replaces = "gnome_helicopter"
 cost.xp = 16
 cost.cp = -8
 
-[models.tinkerer_helicopter.unit_special]
-"Repair" = "[2, self, 1st healing phase]"
+[[models.tinkerer_helicopter.unit_specials.repair]]
+args.N = 2
+args.unit = "self"
+args.phase = "1st Healing"
 
-[models.tinkerer_helicopter.special]
-"To Hit" = "Good Shot: +1 to hit or Excellent Shot: +2 to hit if helicopter is hovering still in the air (still flying)."
+[[models.tinkerer_helicopter.specials.to_hit]]
+args.ability = "ability.good_shot"
+
+[[models.tinkerer_helicopter.specials.to_hit]]
+args.ability = "ability.excellent_shot"
+text = "Replaces the good shot bonus while the helicopter hovers still in the air"
 
 [models.tinkerer_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -734,9 +752,13 @@ type = ["Bio", "Elite", "Infantry", "Walking"]
 replaces = "gnome_infantry"
 cost.xp = 4
 
-[models.elite_gnome_infantry.unit_special]
-"Fire Order" = "Treat any gunnery phase without any other order as fire(res) order instead (for this model only.)"
-"Resistance" = "Psychic[1] as long as at least one elite model is alive."
+[[models.elite_gnome_infantry.unit_specials.fire_order]]
+text = "Treat any gunnery phase without any other order as fire(res) order instead (for this model only.)"
+
+[[models.elite_gnome_infantry.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "As long as at least one elite model is alive"
 
 [models.elite_gnome_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -746,8 +768,8 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.elite_gnome_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.elite_gnome_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.gnome_tinkerer]
 name = "Gnome Tinkerer"
@@ -759,8 +781,8 @@ cost.xp = 16
 cost.cp = -12
 replaces = "gnome_infantry"
 
-[models.gnome_tinkerer.unit_special]
-"Spawn" = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+[[models.gnome_tinkerer.unit_specials.spawn]]
+text = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
 [models.gnome_tinkerer.assault]
 strength = [1, 1, 1, 1]
@@ -770,8 +792,8 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.gnome_tinkerer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.gnome_tinkerer.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.quadbike_tinkerer]
 name = "QuadBike Tinkerer"
@@ -783,8 +805,8 @@ cost.xp = 16
 cost.cp = -12
 replaces = "quad_bike"
 
-[models.quadbike_tinkerer.unit_special]
-"Spawn" = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+[[models.quadbike_tinkerer.unit_specials.spawn]]
+text = "mechanical_rat: Once per game in any shooting phase place a mechanical rat unit in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
 
 [models.quadbike_tinkerer.assault]
 strength = [1, 1, 1, 1]
@@ -794,8 +816,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.quadbike_tinkerer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.quadbike_tinkerer.assault.specials.cunning_assault]]
+args.N = 2
 
 [equipment]
 
@@ -832,8 +854,8 @@ angle = [true, false, false, false]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
-[equipment.enhanced_ballista.range.special]
-"Bonus" = "Enhanced Accuracy: +1 to hit"
+[[equipment.enhanced_ballista.range.specials.bonus]]
+text = "Enhanced Accuracy: +1 to hit"
 
 [equipment.array_of_heavy_muskets]
 name = "Array of Heavy Muskets"
@@ -859,9 +881,11 @@ angle = [true, true, true, true]
 damage = "-"
 ap = 0
 
-[equipment.acid_splash.range.special]
-"Note" = "No regular damage"
-"Extra Damage" = "Minor Acid"
+[[equipment.acid_splash.range.specials.no_damage]]
+args.damage_type = "damage_type.regular"
+
+[[equipment.acid_splash.range.specials.extra_damage]]
+text = "Minor Acid"
 
 [equipment.tinkerer_gun]
 name = "Tinkerer Gun"
@@ -885,9 +909,11 @@ angle = [true, true, true, true]
 damage = "d4-2"
 ap = 1
 
-[equipment.light_smg.range.special]
-"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire(res) orders is given, but you may only use one reserve weapon at any given time."
-"Ammo" = "Always treated as loaded"
+[[equipment.light_smg.range.specials.multipurpose]]
+text = "Reserve weapon: may use this weapon instead of main gun when fire(res) orders is given, but you may only use one reserve weapon at any given time."
+
+[[equipment.light_smg.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.smg]
 name = "SMG"
@@ -900,10 +926,14 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 
-[equipment.smg.range.special]
-"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
-"Multiple Shots" = "Fire two shots per fire reserve order"
-"Ammo" = "Always treated as loaded"
+[[equipment.smg.range.specials.multipurpose]]
+text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+
+[[equipment.smg.range.specials.multiple_shots]]
+text = "Fire two shots per fire reserve order"
+
+[[equipment.smg.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.poison_dart]
 name = "Poison Dart"
@@ -916,10 +946,14 @@ angle = [true, true, true, true]
 damage = "-"
 ap = 0
 
-[equipment.poison_dart.range.special]
-"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
-"Ammo" = "Always treated as loaded"
-"Extra Damage" = "Poison[4]"
+[[equipment.poison_dart.range.specials.multipurpose]]
+text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+
+[[equipment.poison_dart.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.poison_dart.range.specials.extra_damage]]
+text = "Poison[4]"
 
 [equipment.acid_balloon]
 name = "Acid Balloon"
@@ -932,10 +966,14 @@ angle = [true, true, true, true]
 damage = "-"
 ap = 0
 
-[equipment.acid_balloon.range.special]
-"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
-"Ammo" = "Always treated as loaded"
-"Extra Damage" = "Minor Acid"
+[[equipment.acid_balloon.range.specials.multipurpose]]
+text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+
+[[equipment.acid_balloon.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.acid_balloon.range.specials.extra_damage]]
+text = "Minor Acid"
 
 [equipment.grinder]
 name = "Grinder"
@@ -948,9 +986,11 @@ angle = [true, true, true, true]
 damage = "d8-2"
 ap = 2
 
-[equipment.grinder.range.special]
-"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time."
-"Ammo" = "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used"
+[[equipment.grinder.range.specials.multipurpose]]
+text = "Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time."
+
+[[equipment.grinder.range.specials.ammo]]
+text = "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used"
 
 [equipment.mechanical_owl]
 name = "Mechanical Owl"
@@ -959,8 +999,9 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipment.mechanical_owl.model_special]
-"To Hit" = "Gives all weapons the enhanced accuracy (+1 to hit) trait"
+[[equipment.mechanical_owl.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
+text = "Applies to every weapon the model carries"
 
 [equipment.frost_ray]
 race = "gnome"
@@ -975,8 +1016,8 @@ angle = [true, true, true, true]
 damage = "d4-3 + d6 Psychic + d4 Crew damage"
 ap = 0
 
-[equipment.frost_ray.range.special]
-"Order" = "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step"
+[[equipment.frost_ray.range.specials.order]]
+text = "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step"
 
 [equipment.frost_ray.orders_gained.fire]
 still = [["-", "amplified fire"]]
@@ -998,11 +1039,17 @@ angle = [true, true, true, true]
 damage = "d6 Psychic damage + d4 Crew damage"
 ap = 0
 
-[equipment.green_gas_launcher.range.special]
-"Area" = "Choose one hex (per model firing this weapon) within normal range: Area(5+)"
-"Extra Damage" = "Poison[6]"
-"Multipurpose" = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
-"Ammo" = "Always treated as loaded"
+[[equipment.green_gas_launcher.range.specials.area]]
+text = "Choose one hex (per model firing this weapon) within normal range: Area(5+)"
+
+[[equipment.green_gas_launcher.range.specials.extra_damage]]
+text = "Poison[6]"
+
+[[equipment.green_gas_launcher.range.specials.multipurpose]]
+text = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
+
+[[equipment.green_gas_launcher.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.helicopter_mounted_green_gas_launcher]
 race = "gnome"
@@ -1017,9 +1064,11 @@ angle = [true, true, true, true]
 damage = "d6 Psychic damage + d4 Crew damage"
 ap = 0
 
-[equipment.helicopter_mounted_green_gas_launcher.range.special]
-"Area" = "Choose one hex within range: Area(5+)"
-"Extra Damage" = "Poison[4]"
+[[equipment.helicopter_mounted_green_gas_launcher.range.specials.area]]
+text = "Choose one hex within range: Area(5+)"
+
+[[equipment.helicopter_mounted_green_gas_launcher.range.specials.extra_damage]]
+text = "Poison[4]"
 
 [equipment.experimental_plasma_gun]
 race = "gnome"
@@ -1034,9 +1083,11 @@ angle = [true, true, true, true]
 damage = "d12-3"
 ap = 6
 
-[equipment.experimental_plasma_gun.range.special]
-"Fumble" = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes at least one model to die, remove the model carrying the plasma gun first."
-"Critical" = "set the enemy on fire"
+[[equipment.experimental_plasma_gun.range.specials.fumble]]
+text = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes at least one model to die, remove the model carrying the plasma gun first."
+
+[[equipment.experimental_plasma_gun.range.specials.critical]]
+text = "set the enemy on fire"
 
 [equipment.helicopter_mounted_experimental_plasma_gun]
 race = "gnome"
@@ -1051,10 +1102,14 @@ angle = [true, true, true, false]
 damage = "d12-3"
 ap = 6
 
-[equipment.helicopter_mounted_experimental_plasma_gun.range.special]
-"Fumble" = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter"
-"Critical" = "set the enemy on fire"
-"Note" = "Difficulty firing forward: Get -1 to hit in forward direction"
+[[equipment.helicopter_mounted_experimental_plasma_gun.range.specials.fumble]]
+text = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter"
+
+[[equipment.helicopter_mounted_experimental_plasma_gun.range.specials.critical]]
+text = "set the enemy on fire"
+
+[[equipment.helicopter_mounted_experimental_plasma_gun.model_specials.to_hit]]
+args.ability = "ability.difficulty_firing_forward"
 
 [equipment.helicopter_gatling_gun]
 race = "gnome"
@@ -1067,10 +1122,14 @@ angle = [true, false, false, false]
 damage = "d6-1"
 ap = 6
 
-[equipment.helicopter_gatling_gun.range.special]
-"Multiple Shots" = "Fire once at all enemy units within range and within angle of fire"
-"Focus Fire" = "If aim, instead use focus fire, roll 6 dice at same unit"
-"Bonus" = "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"
+[[equipment.helicopter_gatling_gun.range.specials.multiple_shots]]
+text = "Fire once at all enemy units within range and within angle of fire"
+
+[[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
+text = "If aim, instead use focus fire, roll 6 dice at same unit"
+
+[[equipment.helicopter_gatling_gun.range.specials.bonus]]
+text = "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"
 
 [equipment.acidic_napalm_bomb]
 race = "gnome"
@@ -1083,9 +1142,11 @@ angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
 
-[equipment.acidic_napalm_bomb.range.special]
-"Area" = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
-"Ammo" = "Limited Ammo[2]"
+[[equipment.acidic_napalm_bomb.range.specials.area]]
+text = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+
+[[equipment.acidic_napalm_bomb.range.specials.limited_ammo]]
+args.N = 2
 
 [equipment.extra_acidic_napalm_bomb]
 race = "gnome"
@@ -1100,9 +1161,11 @@ angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
 
-[equipment.extra_acidic_napalm_bomb.range.special]
-"Area" = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
-"Ammo" = "Limited Ammo[3]"
+[[equipment.extra_acidic_napalm_bomb.range.specials.area]]
+text = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+
+[[equipment.extra_acidic_napalm_bomb.range.specials.limited_ammo]]
+args.N = 3
 
 [equipment.major_acidic_napalm_bomb]
 race = "gnome"
@@ -1117,9 +1180,11 @@ angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
 
-[equipment.major_acidic_napalm_bomb.range.special]
-"Area" = "Choose a hex within normal range: Area(4+): acid and any unit hit at least one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)"
-"Ammo" = "Limited Ammo[2]"
+[[equipment.major_acidic_napalm_bomb.range.specials.area]]
+text = "Choose a hex within normal range: Area(4+): acid and any unit hit at least one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)"
+
+[[equipment.major_acidic_napalm_bomb.range.specials.limited_ammo]]
+args.N = 2
 
 [equipment.assault_bot_mortar]
 race = "gnome"
@@ -1136,9 +1201,11 @@ angle = [true, true, true, true]
 damage = "n.a"
 ap = 0
 
-[equipment.assault_bot_mortar.range.special]
-"Note" = "No regular damage"
-"Spawn" = "assault_bots: Place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."
+[[equipment.assault_bot_mortar.range.specials.no_damage]]
+args.damage_type = "damage_type.regular"
+
+[[equipment.assault_bot_mortar.range.specials.spawn]]
+text = "assault_bots: Place an assault bot with number of models equal to the number of models firing this weapon (from this unit) in an empty hex within range 4 (note, you do not need line of sight to the hex). Requires to be loaded to be used, just as a normal weapon."
 
 [equipment.assault_bot_mortar_vehicle]
 race = "gnome"
@@ -1151,9 +1218,11 @@ damage = "n.a"
 ap = 0
 
 
-[equipment.assault_bot_mortar_vehicle.range.special]
-"Note" = "No regular damage"
-"Spawn" = "assault_bots: When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."
+[[equipment.assault_bot_mortar_vehicle.range.specials.no_damage]]
+args.damage_type = "damage_type.regular"
+
+[[equipment.assault_bot_mortar_vehicle.range.specials.spawn]]
+text = "assault_bots: When firing, place an assault bot with 4 models in an empty hex within range 4. Requires to be loaded to be used, just as a normal weapon."
 
 [equipment.assault_bot_dropper]
 race = "gnome"
@@ -1162,10 +1231,14 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Helicopter"], ["Helicopter Drop:1"]]
 
-[equipment.assault_bot_dropper.unit_special]
-"Note" = "No regular damage"
-"Spawn" = "assault_bots: When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon."
-"Reload" = "Limited Ammo[3]"
+[[equipment.assault_bot_dropper.unit_specials.no_damage]]
+args.damage_type = "damage_type.regular"
+
+[[equipment.assault_bot_dropper.unit_specials.spawn]]
+text = "assault_bots: When firing, place three assault bot units with 4 models in an empty hex within range 1 (max 2 in same hex). Requires to be loaded to be used, just as a normal weapon."
+
+[[equipment.assault_bot_dropper.unit_specials.reload]]
+text = "Limited Ammo[3]"
 
 [equipment.improved_medical_armor]
 race = "gnome"
@@ -1174,8 +1247,22 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipment.improved_medical_armor.unit_special]
-"Resistance 2" = "Fire[6], Poison[6], acid[1] and Psychic[1] (improve by 1 if unit has Psychic resistance from another source)"
+[[equipment.improved_medical_armor.unit_specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 6
+
+[[equipment.improved_medical_armor.unit_specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 6
+
+[[equipment.improved_medical_armor.unit_specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 1
+
+[[equipment.improved_medical_armor.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "(improve by 1 if unit has Psychic resistance from another source)"
 
 [equipment.medical_armor]
 race = "gnome"
@@ -1184,8 +1271,18 @@ cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipment.medical_armor.unit_special]
-"Resistance 2" = "Fire[2], Poison[2], and Psychic[1] (improve by 1 if unit has Psychic resistance from another source)"
+[[equipment.medical_armor.unit_specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
+
+[[equipment.medical_armor.unit_specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
+
+[[equipment.medical_armor.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "(improve by 1 if unit has Psychic resistance from another source)"
 
 [equipment.plasma_shield_generator]
 race = "gnome"
@@ -1194,16 +1291,20 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipment.plasma_shield_generator.unit_special]
-"Resistance 2" = "Regular[d4]  (roll d4 every time it is hit with some regular damage)"
-"Vulnerability" = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
+[[equipment.plasma_shield_generator.unit_specials.resistance]]
+args.version = "damage_type.regular"
+args.N = "d4"
+text = "(roll d4 every time it is hit with some regular damage)"
+
+[[equipment.plasma_shield_generator.unit_specials.vulnerability]]
+text = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
 
 [equipment.plasma_shield_generator.assault]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
-[equipment.plasma_shield_generator.assault.special]
-"Extra Damage 2" = "Fire"
+[[equipment.plasma_shield_generator.assault.specials.extra_damage]]
+text = "Fire"
 
 [equipment.quadbike_lance]
 race = "gnome"
@@ -1222,16 +1323,20 @@ cost.cp = 16
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipment.improved_plasma_shield_generator.unit_special]
-"Resistance" = "Regular[d8] (roll d8 every time it is hit with some regular damage)"
-"Vulnerability" = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
+[[equipment.improved_plasma_shield_generator.unit_specials.resistance]]
+args.version = "damage_type.regular"
+args.N = "d8"
+text = "(roll d8 every time it is hit with some regular damage)"
+
+[[equipment.improved_plasma_shield_generator.unit_specials.vulnerability]]
+text = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
 
 [equipment.improved_plasma_shield_generator.assault]
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
 
-[equipment.improved_plasma_shield_generator.assault.special]
-"Extra Damage 2" = "Fire"
+[[equipment.improved_plasma_shield_generator.assault.specials.extra_damage]]
+text = "Fire"
 
 [equipment.splintbombgrenade_launcher]
 race = "gnome"
@@ -1244,8 +1349,8 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 2
 
-[equipment.splintbombgrenade_launcher.range.special]
-"Area" = "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)"
+[[equipment.splintbombgrenade_launcher.range.specials.area]]
+text = "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)"
 
 [equipment.experimental_guided_missile]
 race = "gnome"
@@ -1260,14 +1365,21 @@ angle = [true, true, true, true]
 damage = "d6 + d6 Psychic"
 ap = 5
 
-[equipment.experimental_guided_missile.range.special]
-"Extra Damage" = "Minor Acid"
-"Indirect Fire" = "Do not need line of sight to target"
-"Range" = "Increase range with d4+d12 (max 16 min 2). Roll each time you fire. If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)"
-"Fumble" = "If Fumble, you are covered in minor acid"
+[[equipment.experimental_guided_missile.range.specials.extra_damage]]
+text = "Minor Acid"
 
-[equipment.experimental_guided_missile.model_special]
-"To Hit" = "Guided[Guided Missile]: +4 to hit"
+[[equipment.experimental_guided_missile.range.specials.indirect_fire]]
+text = "Do not need line of sight to target"
+
+[[equipment.experimental_guided_missile.range.specials.range]]
+text = "Increase range with d4+d12 (max 16 min 2). Roll each time you fire. If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)"
+
+[[equipment.experimental_guided_missile.range.specials.fumble]]
+text = "If Fumble, you are covered in minor acid"
+
+[[equipment.experimental_guided_missile.model_specials.to_hit]]
+args.ability = "ability.guided"
+args.N = 4
 
 [equipment.helicopter_mounted_experimental_nail_gun]
 race = "gnome"
@@ -1282,9 +1394,11 @@ angle = [true, true, true, false]
 damage = "d6-2"
 ap = 3
 
-[equipment.helicopter_mounted_experimental_nail_gun.range.special]
-"Multiple Shots" = "Fire d12 shots each time it is fired at the same unit"
-"Fumble" = "If fumble add one +1 future damage token to self"
+[[equipment.helicopter_mounted_experimental_nail_gun.range.specials.multiple_shots]]
+text = "Fire d12 shots each time it is fired at the same unit"
+
+[[equipment.helicopter_mounted_experimental_nail_gun.range.specials.fumble]]
+text = "If fumble add one +1 future damage token to self"
 
 [equipment.experimental_nail_gun]
 race = "gnome"
@@ -1299,9 +1413,11 @@ angle = [true, true, true, false]
 damage = "d6-2"
 ap = 3
 
-[equipment.experimental_nail_gun.range.special]
-"Multiple Shots" = "Fire d12 shots each time and all at the same unit"
-"Fumble" = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed"
+[[equipment.experimental_nail_gun.range.specials.multiple_shots]]
+text = "Fire d12 shots each time and all at the same unit"
+
+[[equipment.experimental_nail_gun.range.specials.fumble]]
+text = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed"
 
 [equipment.experimental_death_ray]
 race = "gnome"
@@ -1316,8 +1432,14 @@ angle = [true, true, true, false]
 damage = "d6-6"
 ap = 2
 
-[equipment.experimental_death_ray.range.special]
-"Improved Aim" = "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token"
-"Order" = "May keep aiming even while having aim already"
-"Multiple Shots" = "If you hit your enemy, roll for damage 4 times"
-"Fumble" = "In agony phase 0, roll a die per aim-token for death ray. If you roll at least one 1, add minor acid to self, if you rolled at least two 1s, death ray explodes and unit is killed."
+[[equipment.experimental_death_ray.range.specials.improved_aim]]
+text = "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token"
+
+[[equipment.experimental_death_ray.range.specials.order]]
+text = "May keep aiming even while having aim already"
+
+[[equipment.experimental_death_ray.range.specials.multiple_shots]]
+text = "If you hit your enemy, roll for damage 4 times"
+
+[[equipment.experimental_death_ray.range.specials.fumble]]
+text = "In agony phase 0, roll a die per aim-token for death ray. If you roll at least one 1, add minor acid to self, if you rolled at least two 1s, death ray explodes and unit is killed."

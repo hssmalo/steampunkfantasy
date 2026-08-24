@@ -87,5 +87,5 @@ title = "Special Rules"
 # To be added to army-rules with --extended options. Only options used by the given army should be printed.
 [[sections]]
 kind = "to_hit"
-source = "to_hit.toml"
+source = "modifiers.toml"
 title = "To-Hit Modifiers"

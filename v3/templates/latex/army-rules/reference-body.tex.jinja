@@ -33,11 +33,14 @@
 \textbf{Points:} \VAR{unit.points} \\
 \textbf{Shaken:} \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
 
-\BLOCK{if unit.specials}
+\BLOCK{if unit.specials or unit.note}
 \begin{itemize}
 \BLOCK{for name, text in unit.specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
+\BLOCK{if unit.note}
+\item \textbf{Note}: \VAR{unit.note | latex_escape}
+\BLOCK{endif}
 \end{itemize}
 \BLOCK{endif}
 \BLOCK{if unit.image}
@@ -72,10 +75,16 @@
 
 \textbf{Equipment:} \VAR{model.equipment_summary | join(', ') | latex_escape} \\
 
-\BLOCK{if model.specials}
+\BLOCK{if model.specials or model.note or model.equipment_notes}
 \begin{itemize}
 \BLOCK{for name, text in model.specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
+\BLOCK{endfor}
+\BLOCK{if model.note}
+\item \textbf{Note}: \VAR{model.note | latex_escape}
+\BLOCK{endif}
+\BLOCK{for name, text in model.equipment_notes}
+\item \textbf{Note (\VAR{name | latex_escape})}: \VAR{text | latex_escape}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -83,11 +92,14 @@
 deflection \VAR{model.assault_deflection | join(',')} (\VAR{model.assault_deflection_die | latex_escape}),
 damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 
-\BLOCK{if model.assault_specials}
+\BLOCK{if model.assault_specials or model.assault_note}
 \begin{itemize}
 \BLOCK{for name, text in model.assault_specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
+\BLOCK{if model.assault_note}
+\item \textbf{Note}: \VAR{model.assault_note | latex_escape}
+\BLOCK{endif}
 \end{itemize}
 \BLOCK{endif}
 
@@ -96,11 +108,14 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 
 \textbf{Range:} \VAR{equip.range}, angle \VAR{equip.angle | join(',') | latex_escape}, damage \VAR{equip.damage | latex_escape}, AP \VAR{equip.ap}
 
-\BLOCK{if equip.specials}
+\BLOCK{if equip.specials or equip.note}
 \begin{itemize}
 \BLOCK{for name, text in equip.specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
+\BLOCK{if equip.note}
+\item \textbf{Note}: \VAR{equip.note | latex_escape}
+\BLOCK{endif}
 \end{itemize}
 \BLOCK{endif}
 \BLOCK{endfor}

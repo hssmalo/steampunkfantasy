@@ -17,25 +17,34 @@ position — what a human counts down the Index file.
 """
 
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
 from spf import rules
+from spf.registry import Registry, load_registry
 from spf.render.anchors import anchor as _anchor
 from spf.schemas.rulebook import RulebookConfig
 from spf.schemas.rules import (
+    DieVariableConfig,
     HexRuleConfig,
-    IntVariableConfig,
+    ModifierRuleConfig,
+    RefVariableConfig,
+    RuleRecord,
     SpecialRuleConfig,
     StringVariableConfig,
-    ToHitModifier,
+    TerrainRuleConfig,
     TokenRuleConfig,
+    VariableConfig,
 )
 
 _H1 = re.compile(r"^#\s")
 
 TOKENS_SOURCE = "tokens.toml"
+TERRAIN_SOURCE = "terrain.toml"
+HEXES_SOURCE = "hexes.toml"
+
+TOKEN_NAMESPACE = "token."  # noqa: S105  a game Token's namespace, not a credential
 
 
 class RulesContext:
@@ -53,14 +62,38 @@ class RulesContext:
     def __init__(self, rules_dir: Path) -> None:
         """Resolve sibling rules files against `rules_dir`."""
         self.rules_dir = rules_dir
-        self._tokens: dict[str, str] | None = None
+        self._registry: Registry | None = None
+        self._tokens: dict[str, TokenRuleConfig] | None = None
+        self._terrain: dict[str, TerrainRuleConfig] | None = None
+        self._hexes: dict[str, HexRuleConfig] | None = None
+
+    def registry(self) -> Registry:
+        """Return every registry `namespaces.toml` declares, read once."""
+        if self._registry is None:
+            self._registry = load_registry(self.rules_dir)
+        return self._registry
+
+    def tokens(self) -> dict[str, TokenRuleConfig]:
+        """Return the Token registry, read once from `tokens.toml`."""
+        if self._tokens is None:
+            self._tokens = rules.get_tokens(self.rules_dir / TOKENS_SOURCE).tokens
+        return self._tokens
+
+    def terrain(self) -> dict[str, TerrainRuleConfig]:
+        """Return the Terrain registry, read once from `terrain.toml`."""
+        if self._terrain is None:
+            self._terrain = rules.get_terrain(self.rules_dir / TERRAIN_SOURCE).terrain
+        return self._terrain
+
+    def hexes(self) -> dict[str, HexRuleConfig]:
+        """Return the Hex Effect registry, read once from `hexes.toml`."""
+        if self._hexes is None:
+            self._hexes = rules.get_hexes(self.rules_dir / HEXES_SOURCE).hexes
+        return self._hexes
 
     def _token_names(self) -> dict[str, str]:
-        """Token key -> display name, read once from `tokens.toml`."""
-        if self._tokens is None:
-            config = rules.get_tokens(self.rules_dir / TOKENS_SOURCE)
-            self._tokens = {key: token.name for key, token in config.tokens.items()}
-        return self._tokens
+        """Token key -> display name."""
+        return {key: token.name for key, token in self.tokens().items()}
 
     def token_name(self, key: str) -> str:
         """Display name of Token `key`.
@@ -109,19 +142,29 @@ def get_kind(name: str) -> SectionKind:
         raise ValueError(msg) from None
 
 
-def constraint_text(variable: IntVariableConfig | StringVariableConfig) -> str:
+def constraint_text(variable: VariableConfig) -> str:
     """Describe what `variable` may be, as a reader-facing phrase.
 
-    The schema states a constraint as bounds or an enumeration; a rulebook
-    states it as English. Enumerated values win over bounds when both are
-    given: the list is the stricter, and more useful, statement.
+    The schema states a constraint as bounds, an enumeration or a namespace; a
+    rulebook states it as English. Enumerated values win over bounds when both
+    are given: the list is the stricter, and more useful, statement.
     """
+    if isinstance(variable, RefVariableConfig):
+        listed = ", ".join(variable.values or variable.namespaces)
+        return f"any {listed}"
+    if isinstance(variable, DieVariableConfig):
+        return "die"
     if variable.values:
         listed = ", ".join(str(value) for value in variable.values)
         return f"one of {listed}"
-    if not isinstance(variable, IntVariableConfig):
+    if isinstance(variable, StringVariableConfig):
         return "text"
-    match variable.min, variable.max:
+    return _bounds_text(variable.min, variable.max)
+
+
+def _bounds_text(low: int | None, high: int | None) -> str:
+    """Describe an integer variable's bounds as a reader-facing phrase."""
+    match low, high:
         case None, None:
             return "integer"
         case low, None:
@@ -160,8 +203,7 @@ class RuleEntry:
     name: str
     short: str | None
     body: str
-    """The rule itself — a Special's `explanation`, a Token's or Hex's
-    `effect`. Markdown."""
+    """The rule itself — its `effect`. Markdown."""
 
     description: str | None
     """Markdown: what the rule represents, rather than what it does."""
@@ -172,8 +214,8 @@ class RuleEntry:
     phases: list[str]
     remove: str | None
     token: str | None
-    """The **display name** of the Token this rule places, already resolved
-    from the source's key (decision 17), or None."""
+    """The **display name(s)** of the Token this rule places, already resolved
+    from the source's ref (decision 17), or None."""
 
     variables: list[tuple[str, str]]
     """(name, constraint phrase), in the order the source declares them."""
@@ -220,31 +262,42 @@ class RulesBody:
 
 
 def _variables(
-    variables: dict[str, IntVariableConfig | StringVariableConfig] | None,
+    variables: dict[str, VariableConfig],
 ) -> list[tuple[str, str]]:
     """Render a rule's variable constraints as (name, phrase) pairs."""
-    return [(name, constraint_text(spec)) for name, spec in (variables or {}).items()]
+    return [(name, constraint_text(spec)) for name, spec in variables.items()]
 
 
-def _short(name: str, short: str | None) -> str | None:
-    """Return the heading's suffix: `short`, unless it is the name over again.
+def _signature(name: str, signature: str | None) -> str | None:
+    """Return the heading's suffix: `signature`, unless it is the name again.
 
-    `short` is the compact form the Army Reference prints in place of the full
-    rule; some rules simply repeat their name there, and a Rulebook heading
-    reading "Fumble Fumble" is noise the reader has to look past.
+    `signature` is the compact form the Army Reference prints in place of the
+    full rule; some rules simply repeat their name there, and a Rulebook
+    heading reading "Fumble Fumble" is noise the reader has to look past.
     """
-    return None if not short or short == name else short
+    return None if not signature or signature == name else signature
+
+
+def written[RecordT: RuleRecord](records: dict[str, RecordT]) -> dict[str, RecordT]:
+    """Keep the records that carry a rule, dropping the stubs.
+
+    A stub is design intent addressed to the game designer — `spf rules todos`
+    is where it is counted. A Rulebook heading with nothing under it promises
+    the reader a rule that has not been written. A record that carries both a
+    rule and a `todo` is written, and belongs here.
+    """
+    return {key: record for key, record in records.items() if record.written}
 
 
 def _effect_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
     """Build the entry for a Token or Hex rule — structurally the same shape."""
     return RuleEntry(
         name=config.name,
-        short=_short(config.name, config.short),
-        body=config.effect,
-        description=None,
-        example=None,
-        phases=list(config.phases),
+        short=_signature(config.name, config.signature),
+        body=config.effect or "",
+        description=config.flavor,
+        example=config.example,
+        phases=list(getattr(config, "phases", [])),
         remove=config.remove,
         token=None,
         variables=_variables(config.variables),
@@ -255,7 +308,7 @@ def _effect_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
 def parse_tokens(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Token names no other rule
     """Read `tokens.toml`: its document-level prose, then one untitled group."""
     config = rules.get_tokens(path)
-    entries = [_effect_entry(token) for token in config.tokens.values()]
+    entries = [_effect_entry(token) for token in written(config.tokens).values()]
     return RulesBody(
         explanation=config.explanation,
         groups=[RuleGroup(title=None, rules=entries)],
@@ -268,7 +321,7 @@ TOKENS = register_kind(SectionKind(name="tokens", parse=parse_tokens))
 def parse_hexes(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001  a Hex names no other rule
     """Read `hexes.toml`: its document-level prose, then one untitled group."""
     config = rules.get_hexes(path)
-    entries = [_effect_entry(hex_rule) for hex_rule in config.hexes.values()]
+    entries = [_effect_entry(hex_rule) for hex_rule in written(config.hexes).values()]
     return RulesBody(
         explanation=config.explanation,
         groups=[RuleGroup(title=None, rules=entries)],
@@ -278,63 +331,79 @@ def parse_hexes(path: Path, context: RulesContext) -> RulesBody:  # noqa: ARG001
 HEXES = register_kind(SectionKind(name="hexes", parse=parse_hexes))
 
 
-def _resolve_token(
+def _resolve_tokens(
     key: str, config: SpecialRuleConfig, context: RulesContext, source: Path
 ) -> str | None:
-    """Resolve the Token a Special places, to the display name the reader sees.
+    """Resolve the Tokens a Special places, to the display names the reader sees.
 
-    Strict: an unknown Token fails the build, naming the offending rule and its
-    file, because a reference that quietly renders as nothing is how
-    `token = "minor acid"` survived in the data for as long as it did.
+    Only `token.*` places resolve here: naming a Hex Effect or another Special
+    is legal, and rendering the whole reference graph is #73's. Strict on the
+    Tokens it does resolve — an unknown one fails the build, naming the
+    offending rule and its file, because a reference that quietly renders as
+    nothing is how `token = "minor acid"` survived in the data as long as it
+    did.
     """
-    if config.token is None:
-        return None
-    try:
-        return context.token_name(config.token)
-    except ValueError as err:
-        msg = f"{source.name}: rule {key!r} references {err}"
-        raise ValueError(msg) from None
+    names: list[str] = []
+    for ref in config.places:
+        if not ref.startswith(TOKEN_NAMESPACE):
+            continue
+        try:
+            names.append(context.token_name(ref.removeprefix(TOKEN_NAMESPACE)))
+        except ValueError as err:
+            msg = f"{source.name}: rule {key!r} references {err}"
+            raise ValueError(msg) from None
+    return ", ".join(names) or None
 
 
 def _special_entry(config: SpecialRuleConfig, token: str | None) -> RuleEntry:
-    """Build the entry for one Special, given its already-resolved Token."""
+    """Build the entry for one Special, given its already-resolved Tokens.
+
+    A version overlay is keyed by a ref; the reader is inside the rule already,
+    so the heading drops the namespace the key qualifies it with.
+    """
     return RuleEntry(
         name=config.name,
-        short=_short(config.name, config.short),
-        body=config.explanation,
-        description=config.description,
+        short=_signature(config.name, config.signature),
+        body=config.effect or "",
+        description=config.flavor,
         example=config.example,
         phases=[],
         remove=None,
         token=token,
         variables=_variables(config.variables),
-        versions=list((config.versions or {}).items()),
+        versions=[
+            (version.partition(".")[2], overlay.effect)
+            for version, overlay in config.versions.items()
+        ],
     )
 
 
+SLOT_TITLES = (("assault", "Assault"), ("unit", "Unit"), ("range", "Range"))
+"""Special slot -> the heading the reader sees, in reading order. A rule
+declaring several slots is listed under each of them."""
+
+
 def parse_specials(path: Path, context: RulesContext) -> RulesBody:
-    """Read `special.toml` as one titled group per group in the schema.
+    """Read `special.toml` as one titled group per slot a Special may sit in.
 
     Where a Special applies — in an Assault, on a Unit, on a Range — is
     information the reader needs, so the groups stay groups rather than being
-    flattened into one alphabetical list (decision 15).
+    flattened into one alphabetical list (decision 15). The grouping comes from
+    each record's `slots`, not from the file's layout (ADR 0024).
     """
-    config = rules.get_specials(path)
+    specials = written(rules.get_specials(path).special)
     groups = [
         RuleGroup(
             title=title,
             rules=[
-                _special_entry(special, _resolve_token(key, special, context, path))
+                _special_entry(special, _resolve_tokens(key, special, context, path))
                 for key, special in specials.items()
+                if slot in special.slots
             ],
         )
-        for title, specials in (
-            ("Assault", config.assault),
-            ("Unit", config.unit),
-            ("Range", config.range_),
-        )
+        for slot, title in SLOT_TITLES
     ]
-    return RulesBody(explanation=None, groups=groups)
+    return RulesBody(explanation=None, groups=[g for g in groups if g.rules])
 
 
 SPECIALS = register_kind(SectionKind(name="specials", parse=parse_specials))
@@ -374,56 +443,63 @@ class ToHitBody:
     groups: list[ModifierGroup]
 
 
-TO_HIT_TITLES = {
-    "speed": "Speeds",
-    "terrain": "Terrain",
-    "order": "Orders",
-    "range": "Range",
-    "angle": "Angle",
-    "size": "Size",
-    "unit_ability": "Unit Abilities",
-    "weapon_ability": "Weapon Abilities",
-    "token": "Tokens",
-}
-"""Category field -> the heading the reader sees. A category missing from here
-still renders, under a title derived from its field name: a new category the
-author adds to the schema must not silently vanish from the Rulebook."""
+def _modifier_rows(records: Mapping[str, RuleRecord]) -> list[ModifierRow]:
+    """Build the rows for the records in one namespace that carry modifiers.
 
-
-def _category_title(field: str) -> str:
-    """Heading for a to-hit category, authored or derived from the field name."""
-    return TO_HIT_TITLES.get(field, field.replace("_", " ").title())
-
-
-def _modifier_row(config: ToHitModifier) -> ModifierRow:
-    """Build one row of the to-hit table."""
-    return ModifierRow(
-        name=config.name,
-        to_hit=config.to_hit,
-        to_be_hit=config.to_be_hit,
-        note=config.note or None,
-    )
-
-
-def parse_to_hit(path: Path, context: RulesContext) -> ToHitBody:  # noqa: ARG001  a modifier names no other rule
-    """Read `to_hit.toml` as one titled group per category of modifier.
-
-    The categories come from the schema's own field order rather than a list
-    kept here, so the file's authored order is the order the reader gets, and
-    adding a category is a change to the schema alone. Empty categories are
-    dropped: a heading with no rows under it is a promise the table does not
-    keep.
+    Membership is a query, not a list: a record belongs in the table when it
+    has numbers to contribute. Whether its `effect` is the note column's short
+    "when this applies" phrase follows from the registry it sits in — on a
+    record whose *meaning* is its two numbers it is exactly that phrase, while
+    on a Token or a Terrain it is the whole rule, which belongs in that
+    registry's own Section instead.
     """
-    config = rules.get_to_hit(path)
-    groups = [
-        ModifierGroup(
-            title=_category_title(field),
-            rows=[_modifier_row(modifier) for modifier in modifiers.values()],
+    rows = [
+        ModifierRow(
+            name=record.name,
+            to_hit=_modifier(record, "to_hit"),
+            to_be_hit=_modifier(record, "to_be_hit"),
+            note=(record.effect if isinstance(record, ModifierRuleConfig) else None)
+            or None,
         )
-        for field in type(config).model_fields
-        if (modifiers := getattr(config, field))
+        for record in records.values()
     ]
-    return ToHitBody(groups=groups)
+    return [row for row in rows if row.to_hit or row.to_be_hit]
+
+
+def _modifier(record: RuleRecord, field: str) -> str:
+    """One of a record's two to-hit numbers, or empty where it carries none.
+
+    Only some registries define the two fields at all, and this is the one
+    place that has to treat "the registry has no such column" and "this record
+    left it out" alike.
+    """
+    return getattr(record, field, None) or ""
+
+
+def parse_to_hit(path: Path, context: RulesContext) -> ToHitBody:  # noqa: ARG001  the table is a view over every registry, not over one file
+    """Read the to-hit table: one titled group per namespace that feeds it.
+
+    The numbers live on whichever record owns the id — a Terrain, a Hex Effect
+    and a Token carry their own, so the table is a *view* over the registries
+    rather than a second copy of them (ADR 0024). Group order is the
+    declaration order of `namespaces.toml`, each title is the namespace's own
+    display name, and a namespace declaring `group` renders under that one's
+    heading — which is how Fog, a Hex Effect that behaves like Terrain for
+    to-hit purposes, lands among the Terrain rows. Empty groups are dropped: a
+    heading with no rows under it is a promise the table does not keep.
+    """
+    registry = context.registry()
+    grouped: dict[str, list[ModifierRow]] = {}
+    for name, namespace in registry.namespaces.items():
+        group = namespace.group or name
+        grouped.setdefault(group, []).extend(_modifier_rows(registry.records[name]))
+    return ToHitBody(
+        groups=[
+            ModifierGroup(title=registry.namespaces[group].name, rows=rows)
+            for group, rows in grouped.items()
+            if rows
+        ]
+    )
 
 
 TO_HIT = register_kind(SectionKind(name="to_hit", parse=parse_to_hit))

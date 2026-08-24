@@ -98,6 +98,9 @@ simultainiously = "simultaneously"
 simultainiusly = "simultaneously"
 simultaniuously = "simultaneously"
 simultaniusly = "simultaneously"
+# Norwegian, kept because the game designer's notes are preserved verbatim
+# inside `todo` fields, where a `# typos: ignore` marker cannot reach.
+som = "som"
 spesialization = "specialization"
 spitt = "spit"
 swards = "swords"

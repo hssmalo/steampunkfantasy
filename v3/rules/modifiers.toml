@@ -1,0 +1,288 @@
+# The five modifier registries: everything that shifts a to-hit roll and is
+# not a Terrain, a Hex Effect or a Token. Those three own their own records and
+# carry `to_hit` / `to_be_hit` inline, so nothing here is a copy of a key
+# defined elsewhere (ADR 0024).
+#
+# `speed` and `size` own vocabularies the rest of the data spells: a Unit's
+# `size`, a Unit's `shaken.speed`, and the Speed keys of every orders table.
+
+#
+# Speed
+#
+[speed.all]
+name = "All"
+todo = "Not a speed a unit can be in: the wildcard key an orders table uses for a row that applies at every speed. Decide whether it belongs in this registry at all."
+
+[speed.rest]
+name = "Rest"
+to_hit = "+1"
+to_be_hit = "+1"
+
+[speed.still]
+name = "Still"
+to_hit = "+1"
+to_be_hit = "+1"
+
+[speed.crawl]
+name = "Crawl"
+to_hit = "+1"
+to_be_hit = "+1"
+
+[speed.slow]
+name = "Slow"
+to_hit = "0"
+to_be_hit = "0"
+
+[speed.fast]
+name = "Fast"
+to_hit = "-1"
+to_be_hit = "-1"
+
+# Sneak sits after Fast because this order is the one every orders table is
+# rendered in, and a Unit's Sneak rows read below its ground speeds.
+[speed.sneak]
+name = "Sneak"
+to_hit = "+1"
+to_be_hit = "0"
+
+[speed.still_fly]
+name = "Still Fly"
+see_also = ["speed.still", "speed.flying"]
+todo = "Rule text not yet written: the flying speeds carry no numbers of their own because flying stacks with the ground speed. State whether that composition is what the sheet means."
+
+[speed.slow_fly]
+name = "Slow Fly"
+see_also = ["speed.slow", "speed.flying"]
+todo = "Rule text not yet written: see speed.still_fly."
+
+[speed.fast_fly]
+name = "Fast Fly"
+see_also = ["speed.fast", "speed.flying"]
+todo = "Rule text not yet written: see speed.still_fly."
+
+[speed.setup_speed]
+name = "Setup Speed"
+to_hit = "+1"
+to_be_hit = "+1"
+
+[speed.flying]
+name = "Flying"
+to_hit = "-1"
+to_be_hit = "-1"
+effect = "Stacks with still, slow, and fast"
+
+#
+# Distance
+#
+[distance.point_blank]
+name = "Point-Blank"
+to_hit = "+1"
+to_be_hit = "0"
+effect = "Range = 1"
+
+[distance.normal_range]
+name = "Normal Range"
+to_hit = "0"
+to_be_hit = "0"
+effect = "Within weapon range"
+
+[distance.long_range]
+name = "Long Range"
+to_hit = "-2"
+to_be_hit = "0"
+effect = "Within max 2x of weapon range"
+
+#
+# Angle
+#
+[angle.on_edge]
+name = "On Edge"
+to_hit = "-1"
+to_be_hit = "0"
+
+#
+# Size
+#
+[size.tiny]
+name = "Tiny"
+to_hit = "0"
+to_be_hit = "-1"
+
+[size.small]
+name = "Small"
+todo = "No to-hit numbers: the table jumps from tiny to huge. State whether small, medium and large are all unmodified, or whether small should shade towards tiny."
+
+[size.medium]
+name = "Medium"
+todo = "No to-hit numbers: presumably the unmodified baseline the others are measured against, but the table has never said so."
+
+[size.large]
+name = "Large"
+todo = "No to-hit numbers: the table jumps from tiny to huge. State whether large should shade towards huge."
+
+[size.huge]
+name = "Huge"
+to_hit = "0"
+to_be_hit = "+1"
+
+[size.enormous]
+name = "Enormous"
+to_hit = "0"
+to_be_hit = "+2"
+
+#
+# Abilities
+#
+[ability.good_shot]
+name = "Good Shot"
+to_hit = "+1"
+to_be_hit = "0"
+
+[ability.excellent_shot]
+name = "Excellent Shot"
+to_hit = "+2"
+to_be_hit = "0"
+todo = "Three Race occurrences spell this \"Great Shot\", whose word suggests Superb Shot while its +2 is this record's. Confirm which rule those three mean."
+see_also = ["ability.superb_shot"]
+
+[ability.superb_shot]
+name = "Superb Shot"
+to_hit = "+3"
+to_be_hit = "0"
+
+[ability.bad_shot]
+name = "Bad Shot"
+to_hit = "-1"
+to_be_hit = "0"
+
+[ability.terrible_shot]
+name = "Terrible Shot"
+to_hit = "-2"
+to_be_hit = "0"
+
+[ability.bad_at_long_range]
+name = "Bad at Long Range"
+to_hit = "-2"
+to_be_hit = "0"
+effect = "To-hit penalty at long range only"
+see_also = ["distance.long_range"]
+
+[ability.steady]
+name = "Steady"
+to_hit = "+1"
+to_be_hit = "+1"
+
+[ability.camouflage]
+name = "Camouflage"
+signature = "[{terrain}]"
+to_hit = "0"
+to_be_hit = "-1"
+effect = "Applies when the unit is in the given terrain"
+todo = "Its condition is a terrain while Take Cover's and Elusive's is a speed. Confirm that a condition may be either, rather than the three wanting one shape."
+see_also = ["ability.take_cover", "ability.elusive"]
+
+[ability.camouflage.variables]
+terrain = { type = "ref", namespaces = ["terrain"] }
+
+[ability.take_cover]
+name = "Take Cover"
+signature = "[{speed}][{N}]"
+to_hit = "0"
+to_be_hit = "+N"
+effect = "Applies when the unit is in the given speed"
+
+[ability.take_cover.variables]
+speed = { type = "ref", namespaces = ["speed"] }
+N = { type = "int" }
+
+[ability.elusive]
+name = "Elusive"
+signature = "[{speed}][{N}]"
+to_hit = "0"
+to_be_hit = "+N"
+effect = "Applies when the unit is in the given speed"
+todo = "The one Race occurrence gives a speed and no number; it is migrated as -1, the weakest value Take Cover uses. Confirm the intended number."
+
+[ability.elusive.variables]
+speed = { type = "ref", namespaces = ["speed"] }
+N = { type = "int" }
+
+[ability.optimal_at_point_blank]
+name = "Optimal at Point Blank"
+to_hit = "+1"
+to_be_hit = "0"
+effect = "Firing at enemies at point blank range only"
+see_also = ["distance.point_blank"]
+
+[ability.enhanced_accuracy]
+name = "Enhanced Accuracy"
+to_hit = "+1"
+to_be_hit = "0"
+todo = "The bonus is fixed at +1 here, but the Race data grants +1, +3 and +5. This rule wants a variable, the way take_cover and elusive have one."
+
+[ability.thrown_weapons]
+name = "Thrown Weapons"
+signature = "[{N}]"
+to_hit = "+N"
+to_be_hit = "0"
+effect = "Applies to thrown weapons only"
+
+[ability.thrown_weapons.variables]
+N = { type = "int", min = 1, max = 3 }
+
+[ability.guided]
+name = "Guided"
+signature = "[{N}]"
+to_hit = "+N"
+to_be_hit = "0"
+effect = "The weapon steers itself towards its target"
+
+[ability.guided.variables]
+N = { type = "int", min = 1, max = 6 }
+
+[ability.need_command]
+name = "Need Command"
+to_hit = "-2"
+to_be_hit = "0"
+effect = "Applies while the unit is not connected to a main engine"
+
+[ability.out_of_the_fog]
+name = "Out of the Fog"
+to_hit = "+1"
+to_be_hit = "0"
+effect = "Applies while the unit holds an out of the fog token"
+see_also = ["hex.fog"]
+
+[ability.difficulty_firing_forward]
+name = "Difficulty Firing Forward"
+to_hit = "-1"
+to_be_hit = "0"
+effect = "Applies when firing in the forward direction"
+
+[ability.double_speed_modifiers]
+name = "Double Speed Modifiers"
+effect = "Doubles the to-hit modifiers for movement speed, for this unit and for its target"
+see_also = ["speed.fast", "speed.still"]
+todo = "No numbers of its own: it scales whatever the speed registry says. State how that composes with the other modifiers."
+
+[ability.ignore_fast_penalty]
+name = "Ignore Fast Penalty"
+effect = "Ignores the to-hit penalty for moving fast"
+see_also = ["speed.fast", "speed.flying"]
+todo = "No numbers of its own: it cancels a modifier rather than adding one. Say whether it cancels the target's penalty too, which two Race occurrences claim and one does not."
+
+[ability.even_range]
+name = "Even Range"
+effect = "Shifts the roll by the parity of the range to the target"
+todo = "No single number: the one Race occurrence gives +1 at an even range and -1 at an odd one. Decide whether the registry should carry a pair of numbers."
+
+[ability.aim_lost_when_moving]
+name = "Aim Lost When Moving"
+effect = "The unit loses its aim when it moves away from the hex it aimed from"
+see_also = ["token.aim"]
+todo = "Rule text not yet written, and no numbers: this removes a token rather than shifting a roll, so decide whether it belongs in this registry."
+
+[ability.ranged_reroll]
+name = "Ranged Reroll"
+effect = "Rerolls to-hit dice on the terms the Race data states"
+todo = "Rule text not yet written, and no numbers: rerolling is not a modifier, so decide whether it belongs in this registry."

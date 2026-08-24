@@ -13,7 +13,7 @@ unit = "multicultural_trainee"
 race = "darkelf"
 name = "MechaHydra"
 models = ["mechahydra"]
-size = "Huge"
+size = "huge"
 cost.ip = 48
 armor = [9, 8, 8, 7]
 description = '''Robot Hydra with 6 minor heads, one major head and lasers shooting out of all eyes.
@@ -24,11 +24,20 @@ description = '''Robot Hydra with 6 minor heads, one major head and lasers shoot
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.mechahydra.special]
-"Repair" = "[1, self, 2nd Healing]"
-"Heads" = "1 major head, 6 minor head. Keep track of number of functional minor heads at any time, Poison spits, laser eyes and assault is dependent on the number of functional heads."
-"Forward Position" = "[1]"
-"Resistance" = "Fire[1]"
+[[units.mechahydra.specials.repair]]
+args.N = 1
+args.unit = "self"
+args.phase = "2nd Healing"
+
+[[units.mechahydra.specials.heads]]
+text = "1 major head, 6 minor head. Keep track of number of functional minor heads at any time, Poison spits, laser eyes and assault is dependent on the number of functional heads."
+
+[[units.mechahydra.specials.forward_position]]
+args.N = 1
+
+[[units.mechahydra.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 1
 
 [units.mechahydra.orders.fire]
 still = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"]]
@@ -50,7 +59,7 @@ rows = [
 race = "darkelf"
 name = "Mechanical Red Dragon"
 models = ["mechanical_red_dragon"]
-size = "Huge"
+size = "huge"
 armor = [11, 8, 8, 7]
 cost.ip = 96
 cost.xp = 96
@@ -58,9 +67,13 @@ description = '''A robotic red dragon breathing fire
 '''
 
 
-[units.mechanical_red_dragon.special]
-Resistance = "Fire[2]"
-Immunity = "Acid and Gear Disruption"
+[[units.mechanical_red_dragon.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
+
+[[units.mechanical_red_dragon.specials.immunity]]
+args.feature = "damage_type.acid"
+text = "Also immune to Gear Disruption"
 
 [units.mechanical_red_dragon.shaken]
 speed = "slow"
@@ -86,7 +99,7 @@ rows = [
 race = "darkelf"
 name = "Mechanical Iron Dragon"
 models = ["mechanical_iron_dragon"]
-size = "Huge"
+size = "huge"
 armor = [11, 8, 8, 7]
 cost.ip = 96
 cost.xp = 96
@@ -94,9 +107,13 @@ description = '''Robotic iron dragon breathing acid.
 '''
 
 
-[units.mechanical_iron_dragon.special]
-Resistance = "Fire[2]"
-Immunity = "Acid and Gear Disruption"
+[[units.mechanical_iron_dragon.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
+
+[[units.mechanical_iron_dragon.specials.immunity]]
+args.feature = "damage_type.acid"
+text = "Also immune to Gear Disruption"
 
 [units.mechanical_iron_dragon.shaken]
 speed = "slow"
@@ -132,16 +149,19 @@ rows = [
 race = "darkelf"
 name = "Queen YY"
 models = ["queen_yy"]
-size = "Large"
+size = "large"
 armor = [12, 10, 8, 7]
 cost.ip = 64
 description = '''Large steampunk tank with a fixed turret firing straight forward.
 '''
 
 
-[units.queen_yy.special]
-"Fire Order" = "You fire 2 independent heavy rifles in addition to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the release as an firing option, you may place the poison cloud[12] during pre assault step in any movement phase, including contested hexes for assaults"
-"Resistance" = "Acid[2]"
+[[units.queen_yy.specials.fire_order]]
+text = "You fire 2 independent heavy rifles in addition to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the release as an firing option, you may place the poison cloud[12] during pre assault step in any movement phase, including contested hexes for assaults"
+
+[[units.queen_yy.specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 2
 
 [units.queen_yy.shaken]
 speed = 'still'
@@ -205,14 +225,14 @@ rows = [
 race = "darkelf"
 name = "Queen XY"
 models = ["queen_xy"]
-size = "Large"
+size = "large"
 armor = [11, 10, 8, 7]
 cost.ip = 24
 description = '''Large steampunk tank with no weapons, just poison gas exiting from the tracks.
 '''
 
-[units.queen_xy.special]
-"Fire Order" = "If you use the order release as an firing option, you may place a poison cloud[12] during any movement phase in any the hex you are in, including contested hexes for assaults"
+[[units.queen_xy.specials.fire_order]]
+text = "If you use the order release as an firing option, you may place a poison cloud[12] during any movement phase in any the hex you are in, including contested hexes for assaults"
 
 [units.queen_xy.shaken]
 speed = 'still'
@@ -276,7 +296,7 @@ rows = [
 race = "darkelf"
 name = "Nightmare Mechanical Cavalry"
 models = ["nightmare_mechanical_cavalry", "nightmare_mechanical_cavalry"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.cp = 16
@@ -285,8 +305,8 @@ description = '''An sinister elf riding an robotic horse. The horse breaths fire
 '''
 
 
-[units.nightmare_mechanical_cavalry.special]
-"Fire Order" = "Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"
+[[units.nightmare_mechanical_cavalry.specials.fire_order]]
+text = "Fire SMG in both 1st and 2nd fire phase, and breath only in 2nd fire phase"
 
 [units.nightmare_mechanical_cavalry.shaken]
 speed = "slow"
@@ -324,7 +344,7 @@ rows = [
 race = "darkelf"
 name = "Elite Mechanical Cavalry"
 models = ["elite_mechanical_cavalry", "elite_mechanical_cavalry"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.cp = 16
@@ -332,8 +352,8 @@ cost.xp = 24
 description = '''An sinister elf riding a steampunk robotic horse. The elf is wielding a crossbow in one hand and a small smg in another.
 '''
 
-[units.elite_mechanical_cavalry.special]
-"Fire Order" = "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases"
+[[units.elite_mechanical_cavalry.specials.fire_order]]
+text = "Fires SMG independently of crossbow, and the SMG fires in all gunnery phases"
 
 [units.elite_mechanical_cavalry.shaken]
 speed = "slow"
@@ -373,7 +393,7 @@ rows = [
 race = "darkelf"
 name = "Mechanical Assault Spider"
 models = ["mechanical_assault_spider"]
-size = "Medium"
+size = "medium"
 armor = [7, 7, 7, 7]
 cost.ip = 16
 description = '''A giant black steampunk robotic spider with a weapon replacing the head.
@@ -414,7 +434,7 @@ rows = [
 race = "darkelf"
 name = "Mechanical Scorpion"
 models = ["mechanical_scorpion"]
-size = "Large"
+size = "large"
 armor = [9, 7, 6, 5]
 cost.ip = 16
 description = '''A large robotic scorpion with a gatling gun on its tail.
@@ -460,15 +480,22 @@ models = [
     "darkelf_infantry",
     "darkelf_infantry",
 ]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 24
 description = '''An elegant but sinister elf with lots of steampunk gadgdets wielding a ww1 style rifle
 '''
 
 
-[units.darkelf_infantry.special]
-"Take Cover" = "[still,crawl][-2]"
+[[units.darkelf_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
+
+[[units.darkelf_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.crawl"
+args.N = -2
 
 [units.darkelf_infantry.shaken]
 speed = "slow"
@@ -531,7 +558,7 @@ models = [
     "generic_multicultural_infantry",
     "generic_multicultural_infantry",
 ]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
@@ -539,12 +566,21 @@ description = '''An elf dominatrix with a whip in the center. All slaves wear co
 '''
 
 
-[units.multicultural_infantry.special]
-"Transfer" = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
-"Darkelf Officer" = "If there are no Darkelf Officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving."
-"Spawn" = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit"
-"Forward Position" = "[2]"
-"Fire Order" = "Activate order only available while officer is alive"
+[[units.multicultural_infantry.specials.transfer]]
+text = "If number of alive models in this unit is less than 10, you may transfer models from multicultural trainee from a unit in this hex in aftermath phase, such that you have a maximum of 10 models in this unit"
+
+[[units.multicultural_infantry.specials.officer]]
+name = "Darkelf Officer"
+text = "If there are no Darkelf Officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving."
+
+[[units.multicultural_infantry.specials.spawn]]
+text = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit"
+
+[[units.multicultural_infantry.specials.forward_position]]
+args.N = 2
+
+[[units.multicultural_infantry.specials.fire_order]]
+text = "Activate order only available while officer is alive"
 
 [units.multicultural_infantry.shaken]
 speed = "slow"
@@ -590,12 +626,13 @@ models = [
     "generic_multicultural_infantry",
     "generic_multicultural_infantry",
 ]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 description = "Consists of Dwarfs, Elves, Orks, Goblin, Ogres, Abominations and Gnomes"
 
-[units.multicultural_trainee.special]
-"Darkelf Officer" = "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
+[[units.multicultural_trainee.specials.officer]]
+name = "Darkelf Officer"
+text = "If there are no Darkelf officer on the game map, this unit rebel and switch sides"
 
 [units.multicultural_trainee.shaken]
 speed = "slow"
@@ -624,7 +661,7 @@ models = [
     "roboprosthetic_darkelf",
     "roboprosthetic_darkelf",
 ]
-size = "Medium"
+size = "medium"
 armor = [3, 3, 3, 3]
 cost.mp = 16
 cost.cp = 12
@@ -632,8 +669,15 @@ description = '''An elegant but sinister elf with some robotic limbs.
 '''
 
 
-[units.roboprosthetic_darkelf.special]
-"Take Cover" = "[still,crawl][-2]"
+[[units.roboprosthetic_darkelf.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
+
+[[units.roboprosthetic_darkelf.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.crawl"
+args.N = -2
 
 [units.roboprosthetic_darkelf.shaken]
 speed = "slow"
@@ -685,7 +729,7 @@ rows = [
 race = "darkelf"
 name = "Assassin"
 models = ["assassin"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
@@ -693,8 +737,15 @@ description = '''An elegant but sinister elf assassin wielding a poison dager.
 '''
 
 
-[units.assassin.special]
-"Take Cover" = "[still,crawl][-3]"
+[[units.assassin.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -3
+
+[[units.assassin.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.crawl"
+args.N = -3
 
 [units.assassin.shaken]
 speed = "slow"
@@ -740,15 +791,22 @@ rows = [
 race = "darkelf"
 name = "Roboprosthetic Assassin"
 models = ["roboprosthetic_assassin"]
-size = "Medium"
+size = "medium"
 armor = [3, 3, 3, 3]
 cost.mp = 8
 cost.cp = 24
 description = '''An elegant but sinister elf assassin wielding a poison dager. The assassin has some robotic limbs
 '''
 
-[units.roboprosthetic_assassin.special]
-"Take Cover" = "[still,crawl][-3]"
+[[units.roboprosthetic_assassin.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -3
+
+[[units.roboprosthetic_assassin.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.crawl"
+args.N = -3
 
 [units.roboprosthetic_assassin.shaken]
 speed = "slow"
@@ -795,15 +853,24 @@ rows = [
 race = "darkelf"
 name = "Scout"
 models = ["scout"]
-size = "Medium"
+size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 description = '''An elegant but sinister elf hiding in ruins.
 '''
 
-[units.scout.special]
-"Forward Position" = "[2]"
-"Take Cover" = "[still,crawl][-3]"
+[[units.scout.specials.forward_position]]
+args.N = 2
+
+[[units.scout.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -3
+
+[[units.scout.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.crawl"
+args.N = -3
 
 [units.scout.shaken]
 speed = "slow"
@@ -867,10 +934,15 @@ deflection_die = "5+"
 damage = "d6"
 ap = 2
 
-[models.mechahydra.assault.special]
-"Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
-"Extra Damage" = "Poison[6][1 for 2]"
-"Cunning Assault Defense" = "[3][5+]"
+[[models.mechahydra.assault.specials.bonus]]
+text = "+3 assault strength  and +1 assault deflection per alive head"
+
+[[models.mechahydra.assault.specials.extra_damage]]
+text = "Poison[6][1 for 2]"
+
+[[models.mechahydra.assault.specials.cunning_assault_defense]]
+args.N = 3
+args.M = 5
 
 [models.mechanical_red_dragon]
 name = "Mechanical Red Dragon"
@@ -887,8 +959,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 7
 
-[models.mechanical_red_dragon.assault.special]
-"Lands" = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
+[[models.mechanical_red_dragon.assault.specials.lands]]
+text = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
 
 [models.mechanical_iron_dragon]
 name = "Mechanical Iron Dragon"
@@ -905,8 +977,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 7
 
-[models.mechanical_iron_dragon.assault.special]
-"Lands" = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
+[[models.mechanical_iron_dragon.assault.specials.lands]]
+text = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
 
 [models.queen_yy]
 name = "Queen YY"
@@ -915,8 +987,8 @@ equipment_limit = ["Independent:∞"]
 equipment = ["acid_cannon", "heavy_rifle", "heavy_rifle"]
 type = ["Bio Crew", "Vehicle", "Mechanical", "Tracked"]
 
-[models.queen_yy.special]
-"To Hit" = "Excellent shot: +2 to hit"
+[[models.queen_yy.specials.to_hit]]
+args.ability = "ability.excellent_shot"
 
 [models.queen_yy.assault]
 strength = [5, 4, 3, 2]
@@ -926,10 +998,14 @@ deflection_die = "6+"
 damage = "d6-1"
 ap = 3
 
-[models.queen_yy.assault.special]
-"Extra Damage" = "Poison[6][1 for 1]"
-"Fear" = "[8]"
-"Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+[[models.queen_yy.assault.specials.extra_damage]]
+text = "Poison[6][1 for 1]"
+
+[[models.queen_yy.assault.specials.fear]]
+args.N = 8
+
+[[models.queen_yy.assault.specials.retreat]]
+text = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
 
 [models.queen_xy]
 name = "Queen XY"
@@ -946,10 +1022,14 @@ deflection_die = "6+"
 damage = "d6-1"
 ap = 3
 
-[models.queen_xy.assault.special]
-"Extra Damage" = "Poison[6][1 for 1]"
-"Fear" = "[8]"
-"Retreat" = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+[[models.queen_xy.assault.specials.extra_damage]]
+text = "Poison[6][1 for 1]"
+
+[[models.queen_xy.assault.specials.fear]]
+args.N = 8
+
+[[models.queen_xy.assault.specials.retreat]]
+text = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
 
 [models.elite_mechanical_cavalry]
 name = "Elite Mechanical Cavalry"
@@ -958,8 +1038,12 @@ equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["smg_free", "crossbow_free"]
 type = ["Bio", "Elite", "Cavalry", "Walking"]
 
-[models.elite_mechanical_cavalry.special]
-"To Hit" = "Good Shot: +1 to hit, Negates to-hit penalty for shooting while moving fast"
+[[models.elite_mechanical_cavalry.specials.to_hit]]
+args.ability = "ability.good_shot"
+
+[[models.elite_mechanical_cavalry.specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
+text = "Applies while shooting"
 
 [models.elite_mechanical_cavalry.assault]
 strength = [4, 2, 1, 1]
@@ -976,8 +1060,8 @@ equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["smg_free", "nightmare_breath"]
 type = ["Bio", "Elite", "Cavalry", "Walking"]
 
-[models.nightmare_mechanical_cavalry.special]
-"To Hit" = "Good Shot: +1 to hit"
+[[models.nightmare_mechanical_cavalry.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.nightmare_mechanical_cavalry.assault]
 strength = [3, 2, 1, 1]
@@ -994,8 +1078,8 @@ equipment_limit = ["Training:1", "Independent:∞"]
 equipment = ["head_gun"]
 type = ["Mechanical", "Drone", "Walking"]
 
-[models.mechanical_assault_spider.special]
-"To Hit" = "Good Shot: +1 to hit"
+[[models.mechanical_assault_spider.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.mechanical_assault_spider.assault]
 strength = [6, 4, 2, 1]
@@ -1005,8 +1089,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 7
 
-[models.mechanical_assault_spider.assault.special]
-"Extra Damage" = "Poison[6][1 for 2]"
+[[models.mechanical_assault_spider.assault.specials.extra_damage]]
+text = "Poison[6][1 for 2]"
 
 [models.mechanical_scorpion]
 name = "Mechanical Scorpion"
@@ -1023,9 +1107,11 @@ deflection_die = "6+"
 damage = "d6"
 ap = 3
 
-[models.mechanical_scorpion.assault.special]
-"Fear" = "[8]"
-"Extra Damage" = "Poison[12][1 for 2]"
+[[models.mechanical_scorpion.assault.specials.fear]]
+args.N = 8
+
+[[models.mechanical_scorpion.assault.specials.extra_damage]]
+text = "Poison[12][1 for 2]"
 
 [models.darkelf_infantry]
 name = "Dark Elf Infantry"
@@ -1042,9 +1128,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.darkelf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Penalty" = "Reroll all success in assault while crawling"
+[[models.darkelf_infantry.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.darkelf_infantry.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
 
 [models.generic_multicultural_infantry]
 name = "Generic Multicultural Infantry"
@@ -1117,8 +1205,8 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.orlf.assault.special]
-"Ork Reroll" = "[3]"
+[[models.orlf.assault.specials.ork_reroll]]
+args.N = 3
 
 [models.ogrin_infantry]
 name = "Ogrin Infantry"
@@ -1145,12 +1233,14 @@ equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["tesla_whip", "remote_control", "officer_mask"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 
-[models.darkelf_officer.unit_special]
-"Officer Order" = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
-"Officer" = "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+[[models.darkelf_officer.unit_specials.officer_order]]
+text = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
 
-[models.darkelf_officer.special]
-"Escape Artist" = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes"
+[[models.darkelf_officer.unit_specials.officer]]
+text = "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+
+[[models.darkelf_officer.specials.escape_artist]]
+text = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes"
 
 [models.darkelf_officer.assault]
 strength = [3, 2, 1, 1]
@@ -1160,9 +1250,11 @@ deflection_die = "6+"
 damage = "d6"
 ap = 0
 
-[models.darkelf_officer.assault.special]
-"Cunning Assault" = "[1 for 3]"
-"Counter Attack" = "Each deflections counts as both a hit and a deflection"
+[[models.darkelf_officer.assault.specials.cunning_assault]]
+args.N = 3
+
+[[models.darkelf_officer.assault.specials.counter_attack]]
+text = "Each deflections counts as both a hit and a deflection"
 
 [models.elite_darkelf_infantry]
 name = "Elite Dark Elf Infantry"
@@ -1173,8 +1265,10 @@ type = ["Bio", "Elite", "Infantry", "Walking"]
 replaces = "darkelf_infantry"
 cost.xp = 4
 
-[models.elite_darkelf_infantry.unit_special]
-"Resistance 2" = "Psychic[1] while at least one elite is alive"
+[[models.elite_darkelf_infantry.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "While at least one elite is alive"
 
 [models.elite_darkelf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -1184,10 +1278,14 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.elite_darkelf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Counter Attack" = "Each deflections counts as both a hit and a deflection"
-"Penalty" = "Reroll all success in assault while crawling"
+[[models.elite_darkelf_infantry.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.elite_darkelf_infantry.assault.specials.counter_attack]]
+text = "Each deflections counts as both a hit and a deflection"
+
+[[models.elite_darkelf_infantry.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
 
 [models.assassin]
 name = "Assassin"
@@ -1196,8 +1294,8 @@ equipment_limit = ["Shared: 1", "Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle", "hide_free"]
 type = ["Bio", "Elite", "Infantry", "Walking"]
 
-[models.assassin.special]
-"To Hit" = "Good Shot: +1 to hit"
+[[models.assassin.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.assassin.assault]
 strength = [6, 4, 2, 1]
@@ -1207,11 +1305,17 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.assassin.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Extra Damage" = "Poison[12][1 for 2]"
-"Counter Attack" = "Each deflections counts as both a hit and a deflection"
-"Penalty" = "Reroll all success in assault while crawling"
+[[models.assassin.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.assassin.assault.specials.extra_damage]]
+text = "Poison[12][1 for 2]"
+
+[[models.assassin.assault.specials.counter_attack]]
+text = "Each deflections counts as both a hit and a deflection"
+
+[[models.assassin.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
 
 [models.roboprosthetic_assassin]
 name = "Roboprosthetic Assassin"
@@ -1220,8 +1324,8 @@ equipment_limit = ["Hands:2", "Training:1", "Independent:∞"]
 equipment = ["rifle", "hide_free"]
 type = ["Bio", "Elite", "Infantry", "Roboprosthetic", "Walking"]
 
-[models.roboprosthetic_assassin.special]
-"To Hit" = "Good Shot: +1 to hit"
+[[models.roboprosthetic_assassin.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.roboprosthetic_assassin.assault]
 strength = [6, 4, 2, 1]
@@ -1231,11 +1335,17 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.roboprosthetic_assassin.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Extra Damage" = "Poison[12][1 for 2]"
-"Counter Attack" = "Each deflections counts as both a hit and a deflection"
-"Penalty" = "Reroll all success in assault while crawling"
+[[models.roboprosthetic_assassin.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.roboprosthetic_assassin.assault.specials.extra_damage]]
+text = "Poison[12][1 for 2]"
+
+[[models.roboprosthetic_assassin.assault.specials.counter_attack]]
+text = "Each deflections counts as both a hit and a deflection"
+
+[[models.roboprosthetic_assassin.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
 
 [models.scout]
 name = "Scout"
@@ -1252,9 +1362,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.scout.assault.special]
-"Cunning Assault" = "[1 for 1]"
-"Penalty" = "Reroll all success in assault while crawling"
+[[models.scout.assault.specials.cunning_assault]]
+args.N = 1
+
+[[models.scout.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
 
 [models.roboprosthetic_darkelf]
 name = "Roboprosthetic Dark Elf"
@@ -1271,9 +1383,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.roboprosthetic_darkelf.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Penalty" = "Reroll all success in assault while crawling"
+[[models.roboprosthetic_darkelf.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.roboprosthetic_darkelf.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
 
 [models.elite_roboprosthetic_darkelf]
 name = "Elite Roboprosthetic Dark Elf"
@@ -1284,8 +1398,10 @@ type = ["Bio", "Elite", "Infantry", "Walking", "Roboprosthetic"]
 replaces = "roboprosthetic_darkelf"
 cost.cp = 4
 
-[models.elite_roboprosthetic_darkelf.unit_special]
-"Resistance 2" = "Psychic[1] while at least one elite is alive"
+[[models.elite_roboprosthetic_darkelf.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "While at least one elite is alive"
 
 [models.elite_roboprosthetic_darkelf.assault]
 strength = [2, 1, 1, 1]
@@ -1295,10 +1411,14 @@ deflection_die = ""
 damage = "d6-2"
 ap = 2
 
-[models.elite_roboprosthetic_darkelf.assault.special]
-"Cunning Assault" = "[1 for 2]"
-"Penalty" = "Reroll all success in assault while crawling"
-"Counter Attack" = "Each deflections counts as both a hit and a deflection"
+[[models.elite_roboprosthetic_darkelf.assault.specials.cunning_assault]]
+args.N = 2
+
+[[models.elite_roboprosthetic_darkelf.assault.specials.penalty]]
+text = "Reroll all success in assault while crawling"
+
+[[models.elite_roboprosthetic_darkelf.assault.specials.counter_attack]]
+text = "Each deflections counts as both a hit and a deflection"
 
 [equipment]
 
@@ -1324,25 +1444,25 @@ angle = [true, true, false, false]
 damage = "d6"
 ap = 6
 
-[equipment.head_gun.range.special]
-"Extra Damage" = "Poison[6]"
+[[equipment.head_gun.range.specials.extra_damage]]
+text = "Poison[6]"
 
 [equipment.tesla_whip]
 name = "Tesla Whip"
 race = "darkelf"
 requires = []
 
-[equipment.tesla_whip.assault.special]
-"Extra Damage" = "Poison[4][1 for 2], Gear Disruption[6+][1 for 1] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
+[[equipment.tesla_whip.assault.specials.extra_damage]]
+text = "Poison[4][1 for 2], Gear Disruption[6+][1 for 1] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.remote_control]
 name = "Remote Control"
 race = "darkelf"
 requires = []
+note = "Neither this unit or the trainee units are immune to poison clouds"
 
-[equipment.remote_control.unit_special]
-"Activate" = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
-"Note" = "Neither this unit or the trainee units are immune to poison clouds"
+[[equipment.remote_control.unit_specials.activate]]
+text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
 
 [equipment.officer_mask]
 name = "Officer Mask"
@@ -1350,16 +1470,18 @@ race = "darkelf"
 requires = []
 description = ""
 
-[equipment.officer_mask.unit_special]
-"Immunity" = "If the officer is the only alive model, this unit becomes immune to poisons and poison clouds"
+[[equipment.officer_mask.unit_specials.immunity]]
+args.feature = "hex.poison_cloud"
+args.N = 6
+text = "If the officer is the only alive model, this unit becomes immune to poisons and poison clouds, of any strength"
 
 [equipment.collar]
 name = "Collar"
 race = "darkelf"
 requires = []
 
-[equipment.collar.unit_special]
-"Poison Cloud" = "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated."
+[[equipment.collar.unit_specials.poison_cloud]]
+text = "If triggered by a multicultural officer, place a poison cloud[6] in all hexes this unit enters, including the hex it was standing in when activated."
 
 [equipment.tail_gatling_gun]
 name = "Tail Gatling Gun"
@@ -1372,11 +1494,17 @@ angle = [true, false, false, false]
 damage = "d6 + d6 Psychic damage"
 ap = 3
 
-[equipment.tail_gatling_gun.range.special]
-"Focus Fire" = "When using aim: roll 6 dice at same unit."
-"Area" = "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range"
-"Extra Damage" = "Minor acid"
-"Ammo" = "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
+[[equipment.tail_gatling_gun.range.specials.focus_fire]]
+text = "When using aim: roll 6 dice at same unit."
+
+[[equipment.tail_gatling_gun.range.specials.area]]
+text = "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range"
+
+[[equipment.tail_gatling_gun.range.specials.extra_damage]]
+text = "Minor acid"
+
+[[equipment.tail_gatling_gun.range.specials.ammo]]
+text = "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
 
 [equipment.heavy_rifle]
 name = "Heavy Rifle"
@@ -1400,8 +1528,8 @@ angle = [true, true, false, false]
 damage = "d6+d8 Psychic damage + d6 Crew damage"
 ap = 3
 
-[equipment.acid_cannon.range.special]
-"Extra Damage" = "Acid. In addition, if you hit target, place an minor acid on all units in hex"
+[[equipment.acid_cannon.range.specials.extra_damage]]
+text = "Acid. In addition, if you hit target, place an minor acid on all units in hex"
 
 [equipment.mechanical_imp]
 name = "Mechanical Imp"
@@ -1411,8 +1539,8 @@ cost.xp = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
-[equipment.mechanical_imp.unit_special]
-"Reload" = "Mechanical robotic imps helps all models in unit to reload it's weapons. Treat any weapons as always loaded."
+[[equipment.mechanical_imp.unit_specials.reload]]
+text = "Mechanical robotic imps helps all models in unit to reload it's weapons. Treat any weapons as always loaded."
 
 [equipment.smg]
 name = "SMG"
@@ -1427,9 +1555,11 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 
-[equipment.smg.range.special]
-"Ammo" = "Always treated as loaded"
-"Multiple Shots" = "Fires two times each time it is fired"
+[[equipment.smg.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.smg.range.specials.multiple_shots]]
+text = "Fires two times each time it is fired"
 
 [equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
@@ -1445,9 +1575,11 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 
-[equipment.smg_free.range.special]
-"Ammo" = "Always treated as loaded"
-"Multiple Shots" = "Fires two times (per model) each time it is fired"
+[[equipment.smg_free.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.smg_free.range.specials.multiple_shots]]
+text = "Fires two times (per model) each time it is fired"
 
 [equipment.crossbow]
 name = "Crossbow"
@@ -1462,8 +1594,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.crossbow.range.special]
-"Extra Damage" = "Poison[6], Minor Acid"
+[[equipment.crossbow.range.specials.extra_damage]]
+text = "Poison[6], Minor Acid"
 
 [equipment.crossbow_free]
 name = "Crossbow"
@@ -1475,8 +1607,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.crossbow_free.range.special]
-"Extra Damage" = "Poison[6], Minor Acid"
+[[equipment.crossbow_free.range.specials.extra_damage]]
+text = "Poison[6], Minor Acid"
 
 [equipment.enhanced_crossbow]
 name = "Enhanced Crossbow"
@@ -1491,8 +1623,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.enhanced_crossbow.range.special]
-"Extra Damage" = "Poison[8], Minor Acid"
+[[equipment.enhanced_crossbow.range.specials.extra_damage]]
+text = "Poison[8], Minor Acid"
 
 [equipment.nightmare_breath]
 name = "Nightmare Breath"
@@ -1505,10 +1637,14 @@ angle = [true, false, false, false]
 damage = "d8 Crew damage"
 ap = 0
 
-[equipment.nightmare_breath.range.special]
-"Area" = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
-"Extra Damage" = "No regular damage, but Poison[8] and set on fire"
-"Ammo" = "Always treated as loaded"
+[[equipment.nightmare_breath.range.specials.area]]
+text = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
+
+[[equipment.nightmare_breath.range.specials.extra_damage]]
+text = "No regular damage, but Poison[8] and set on fire"
+
+[[equipment.nightmare_breath.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.mortar_1a]
 name = "Mortar 1A"
@@ -1524,10 +1660,14 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.mortar_1a.range.special]
-"Range" = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
-"Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
-"Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
+[[equipment.mortar_1a.range.specials.range]]
+text = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
+
+[[equipment.mortar_1a.range.specials.cloud]]
+text = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+
+[[equipment.mortar_1a.range.specials.indirect_fire]]
+text = "May use line of sight of any friendly unit on the battle field."
 
 [equipment.mortar_1_1b]
 name = "Mortar 1.1B"
@@ -1543,26 +1683,14 @@ angle = [true, true, true, true]
 damage = "N.A"
 ap = 0
 
-[equipment.mortar_1_1b.range.special]
-"Range" = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
-"Cloud" = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
-"Indirect Fire" = "May use line of sight of any friendly unit on the battle field."
+[[equipment.mortar_1_1b.range.specials.range]]
+text = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 
-# ToDo Move to Ogre? Make DarkElf immune
-#[equipment.glitterbomb_mortar]
-#name = "Glitterbomb Mortar"
-#race = "darkelf"
-#cost.cp = 48
-#upgrade_all = true
-#requires = [["Shared:1"], ["type:Infantry"]]
-#[equipment.glitterbomb_mortar.range]
-#range = 8
-#angle = [true, true, true, true]
-#damage = "N.A"
-#ap = 0
-#special = ["Choose a hex within range. Area(5+): A unit hit at least once gains a terror token",
-#    "Indirect fire: may use line of sight of any friendly unit on the battle field.",
-#]
+[[equipment.mortar_1_1b.range.specials.cloud]]
+text = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+
+[[equipment.mortar_1_1b.range.specials.indirect_fire]]
+text = "May use line of sight of any friendly unit on the battle field."
 [equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
@@ -1573,8 +1701,8 @@ requires = [["Independent:1"], ["type:Roboprosthetic"]]
 [equipment.poison_claws.assault]
 strength.add = [1, 0, 0, 0]
 
-[equipment.poison_claws.assault.special]
-"Extra Damage 2" = "Poison[4][1 for 1]"
+[[equipment.poison_claws.assault.specials.extra_damage]]
+text = "Poison[4][1 for 1]"
 
 [equipment.poison_spray]
 name = "Poison Spray"
@@ -1586,8 +1714,8 @@ requires = [["Hands:2"], ["type:Roboprosthetic", "type:Infantry"]]
 [equipment.poison_spray.assault]
 damage.replace = "d6-2 + d6 Crew damage"
 
-[equipment.poison_spray.assault.special]
-"Extra Damage 3" = "Poison[4][1 for 2]"
+[[equipment.poison_spray.assault.specials.extra_damage]]
+text = "Poison[4][1 for 2]"
 
 [equipment.poison_spray.range]
 range = 2
@@ -1595,8 +1723,8 @@ angle = [true, true, true, true]
 damage = "d6 Crew damage"
 ap = 0
 
-[equipment.poison_spray.range.special]
-"Extra Damage" = "Poison[6]"
+[[equipment.poison_spray.range.specials.extra_damage]]
+text = "Poison[6]"
 
 [equipment.integrated_pistol]
 name = "Integrated Pistol"
@@ -1611,8 +1739,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.integrated_pistol.range.special]
-"Ammo" = "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon"
+[[equipment.integrated_pistol.range.specials.ammo]]
+text = "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon"
 
 [equipment.acid_breath]
 name = "Acid Breath"
@@ -1625,8 +1753,8 @@ angle = [true, false, false, false]
 damage = "-"
 ap = 0
 
-[equipment.acid_breath.range.special]
-"Extra Damage" = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid. In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
+[[equipment.acid_breath.range.specials.extra_damage]]
+text = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid. In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
 
 [equipment.fire_breath]
 name = "Fire Breath"
@@ -1639,10 +1767,14 @@ angle = [true, false, false, false]
 damage = "-"
 ap = 0
 
-[equipment.fire_breath.range.special]
-"Area" = "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range."
-"Extra Damage" = "No regular damage, but Poison[6] and set on fire."
-"Bonus" = "Any unit within long range and in front arc gets a minor acid token"
+[[equipment.fire_breath.range.specials.area]]
+text = "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range."
+
+[[equipment.fire_breath.range.specials.extra_damage]]
+text = "No regular damage, but Poison[6] and set on fire."
+
+[[equipment.fire_breath.range.specials.bonus]]
+text = "Any unit within long range and in front arc gets a minor acid token"
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1655,9 +1787,11 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[equipment.poison_spit.range.special]
-"Extra Damage" = "Poison[8]."
-"Multiple Shots" = "Fire one time per functional minor head"
+[[equipment.poison_spit.range.specials.extra_damage]]
+text = "Poison[8]."
+
+[[equipment.poison_spit.range.specials.multiple_shots]]
+text = "Fire one time per functional minor head"
 
 [equipment.shrapnel_spit]
 name = "Shrapnel Spit"
@@ -1670,8 +1804,8 @@ angle = [true, true, false, false]
 damage = "d4-2"
 ap = 1
 
-[equipment.shrapnel_spit.range.special]
-"Area" = "Choose a hex within normal range. Area[1+] at point blank range, Area[4+] otherwise. Single model large units are hit d4 times, while single model huge units are hit d8 times."
+[[equipment.shrapnel_spit.range.specials.area]]
+text = "Choose a hex within normal range. Area[1+] at point blank range, Area[4+] otherwise. Single model large units are hit d4 times, while single model huge units are hit d8 times."
 
 [equipment.laser_eyes]
 name = "Laser Eyes"
@@ -1684,9 +1818,11 @@ angle = [true, true, false, false]
 damage = "d4-3"
 ap = 1
 
-[equipment.laser_eyes.range.special]
-"Critical" = "unit is set on fire."
-"Multiple Shots" = "Fire two time per functional head (minor and major)"
+[[equipment.laser_eyes.range.specials.critical]]
+text = "unit is set on fire."
+
+[[equipment.laser_eyes.range.specials.multiple_shots]]
+text = "Fire two time per functional head (minor and major)"
 
 [equipment.shrapnel_breath]
 name = "Shrapnel Breath"
@@ -1699,10 +1835,14 @@ angle = [true, false, false, false]
 damage = "d6-2"
 ap = 2
 
-[equipment.shrapnel_breath.range.special]
-"Range" = "Target one hex within front arc and within long range"
-"Area" = "[4+] at point blank range, Area[6+] at normal and long range. Single model large units are hit d4 times and single model huge units are hit d8 times."
-"Ammo" = "Always treated as loaded"
+[[equipment.shrapnel_breath.range.specials.range]]
+text = "Target one hex within front arc and within long range"
+
+[[equipment.shrapnel_breath.range.specials.area]]
+text = "[4+] at point blank range, Area[6+] at normal and long range. Single model large units are hit d4 times and single model huge units are hit d8 times."
+
+[[equipment.shrapnel_breath.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.gas_mask_assault_training]
 name = "Gas Mask Assault Training"
@@ -1714,12 +1854,16 @@ requires = [
     ["type:Roboprosthetic", "type:Infantry"]
 ]
 
-[equipment.gas_mask_assault_training.unit_special]
-"Immunity" = "Poison Clouds"
+[[equipment.gas_mask_assault_training.unit_specials.immunity]]
+args.feature = "hex.poison_cloud"
+args.N = 6
+text = "Immune to a poison cloud of any strength"
 
-[equipment.gas_mask_assault_training.assault.special]
-"Bonus" = "When assaulting hexes with poison cloud +50% in assault and assault deflection"
-"Extra Damage 2" = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
+[[equipment.gas_mask_assault_training.assault.specials.bonus]]
+text = "When assaulting hexes with poison cloud +50% in assault and assault deflection"
+
+[[equipment.gas_mask_assault_training.assault.specials.extra_damage]]
+text = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
 
 [equipment.poison_fog_grenade]
 name = "Poison Fog Grenade"
@@ -1731,8 +1875,8 @@ requires = [
     ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
 ]
 
-[equipment.poison_fog_grenade.unit_special]
-"Fire Order" = "Use twice per game, use an throw fire order to place fog and poison cloud[6] in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
+[[equipment.poison_fog_grenade.unit_specials.fire_order]]
+text = "Use twice per game, use an throw fire order to place fog and poison cloud[6] in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
 
 [equipment.poison_fog_grenade.orders_gained.fire]
 still = [["-", "Throw"], ["Throw", "-"]]
@@ -1745,10 +1889,15 @@ cost.xp = 16
 upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
 
-[equipment.hide.unit_special]
-"Hidden" = "Unit starts with a Hidden token"
-"Forward Position" = "[1]"
-"Camouflage" = "[swamp][-1]"
+[[equipment.hide.unit_specials.hidden]]
+text = "Unit starts with a Hidden token"
+
+[[equipment.hide.unit_specials.forward_position]]
+args.N = 1
+
+[[equipment.hide.unit_specials.to_hit]]
+args.ability = "ability.camouflage"
+args.terrain = "terrain.swamp"
 
 [equipment.hide.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
@@ -1762,9 +1911,11 @@ cost.ip = 8
 upgrade_all = true
 requires = [["Independent:1"], ["type:Mechanical"]]
 
-[equipment.cloaking_device.unit_special]
-"Hidden" = "Start with a Hidden token"
-"Forward Position" = "[1]"
+[[equipment.cloaking_device.unit_specials.hidden]]
+text = "Start with a Hidden token"
+
+[[equipment.cloaking_device.unit_specials.forward_position]]
+args.N = 1
 
 [equipment.cloaking_device.orders_gained.movement]
 still = [["Reveal", "-", "-"]]
@@ -1775,10 +1926,15 @@ name = "Hide"
 race = "darkelf"
 requires = []
 
-[equipment.hide_free.unit_special]
-"Hidden" = "Start with Hidden token"
-"Forward Position" = "[1]"
-"Camouflage" = "[swamp][-1]"
+[[equipment.hide_free.unit_specials.hidden]]
+text = "Start with Hidden token"
+
+[[equipment.hide_free.unit_specials.forward_position]]
+args.N = 1
+
+[[equipment.hide_free.unit_specials.to_hit]]
+args.ability = "ability.camouflage"
+args.terrain = "terrain.swamp"
 
 [equipment.hide_free.orders_gained.movement]
 still = [["Reveal", "-", "-"], ["Hide[ruins]", "-", "-"]]
@@ -1792,8 +1948,9 @@ cost.cp = 8
 requires = [["Independent:1"], ["type:Dwalf"]]
 upgrade_all = true
 
-[equipment.vest_of_life_support.unit_special]
-"Protection" = "1 endurance token per Dwalf model"
+[[equipment.vest_of_life_support.unit_specials.endurance]]
+args.N = 1
+args.model_class = "Dwalf model"
 
 [equipment.ogrin_bow]
 name = "Ogrin Bow"
@@ -1802,8 +1959,8 @@ requires = [["Hands:2"], ["type:Ogrin", "type:Orlf"]]
 cost.cp = 8
 upgrade_all = true
 
-[equipment.ogrin_bow.unit_special]
-"Fire Order" = "All models with bows always fire in all gunnery phases"
+[[equipment.ogrin_bow.unit_specials.fire_order]]
+text = "All models with bows always fire in all gunnery phases"
 
 [equipment.ogrin_bow.range]
 range = 2
@@ -1811,8 +1968,8 @@ angle = [true, true, true, true]
 damage = "d8-2"
 ap = 1
 
-[equipment.ogrin_bow.range.special]
-"Ammo" = "Always treated as loaded"
+[[equipment.ogrin_bow.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.war_axe]
 name = "War Axe"
@@ -1831,8 +1988,8 @@ requires = [["Hands:2"], ["type:Gnolf"]]
 cost.cp = 4
 upgrade_all = false
 
-[equipment.experimental_acid_smg.unit_special]
-"Fire Order" = "All models with smg always fire in all gunnery phases"
+[[equipment.experimental_acid_smg.unit_specials.fire_order]]
+text = "All models with smg always fire in all gunnery phases"
 
 [equipment.experimental_acid_smg.range]
 range = 2
@@ -1840,8 +1997,14 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 
-[equipment.experimental_acid_smg.range.special]
-"Ammo" = "Always treated as loaded."
-"Multiple Shots" = "Fires two times each time it is fired"
-"Extra Damage" = "Minor Acid"
-"Fumble" = "Unit Gains one minor acid token (per fumble)"
+[[equipment.experimental_acid_smg.range.specials.ammo]]
+text = "Always treated as loaded."
+
+[[equipment.experimental_acid_smg.range.specials.multiple_shots]]
+text = "Fires two times each time it is fired"
+
+[[equipment.experimental_acid_smg.range.specials.extra_damage]]
+text = "Minor Acid"
+
+[[equipment.experimental_acid_smg.range.specials.fumble]]
+text = "Unit Gains one minor acid token (per fumble)"

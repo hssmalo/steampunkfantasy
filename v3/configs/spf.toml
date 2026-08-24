@@ -46,4 +46,4 @@ aliases = { darkelf = "dark_elf" }
 optional_key_prefixes = ["greater_"]
 optional_key_suffixes = ["_free"]
 # Words that must stay lowercase anywhere but the start of a name.
-function_words = ["of", "with", "in"]
+function_words = ["at", "in", "of", "on", "the", "with"]

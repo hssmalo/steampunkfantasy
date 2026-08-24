@@ -1,0 +1,23 @@
+{
+  "race": "dwarf",
+  "nick": "The Rolling Wall",
+  "units": [
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {"name": "dwarf_infantry", "upgrades": ["wheeled_shieldwall"]},
+        {"name": "dwarf_infantry", "upgrades": []},
+        {"name": "dwarf_infantry", "upgrades": []},
+        {"name": "dwarf_infantry", "upgrades": []}
+      ]
+    },
+    {
+      "name": "mini_zeppelin",
+      "models": [
+        {"name": "mini_zeppelin", "upgrades": []},
+        {"name": "mini_zeppelin", "upgrades": []},
+        {"name": "mini_zeppelin", "upgrades": []}
+      ]
+    }
+  ]
+}

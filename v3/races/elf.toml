@@ -11,7 +11,7 @@ description = '''Elf are elegant and approximately 2m in height'''
 race = "elf"
 name = "Elf Hydra"
 models = ["elf_hydra", "hydra_crew", "hydra_crew", "hydra_crew", "hydra_crew"]
-size = "Huge"
+size = "huge"
 cost.mp = 24
 cost.xp = 96
 
@@ -22,11 +22,17 @@ description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, wi
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.elf_hydra.special]
-"Regeneration" = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
-"Heads" = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
-"Fire Order" = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
-"Forward Position" = "[1]"
+[[units.elf_hydra.specials.regeneration]]
+text = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
+
+[[units.elf_hydra.specials.heads]]
+text = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+
+[[units.elf_hydra.specials.fire_order]]
+text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
+
+[[units.elf_hydra.specials.forward_position]]
+args.N = 1
 
 [units.elf_hydra.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"]]
@@ -57,7 +63,7 @@ rows = [
 race = "elf"
 name = "Elf Infantry"
 models = ["elf_infantry", "elf_infantry", "elf_infantry", "elf_infantry"]
-size = "Medium"
+size = "medium"
 cost.mp = 24
 description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
 '''
@@ -66,8 +72,10 @@ description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.elf_infantry.special]
-"Take Cover" = "[still][-2]"
+[[units.elf_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
 
 [units.elf_infantry.orders.fire]
 still = [
@@ -107,7 +115,7 @@ rows = [
 race = "elf"
 name = "Elf Archer"
 models = ["elf_archer", "elf_archer", "elf_archer", "elf_archer"]
-size = "Medium"
+size = "medium"
 cost.mp = 24
 cost.xp = 8
 description = '''An elegant elf wielding an steampunk bow. The bow has some clockwork gears.
@@ -118,11 +126,19 @@ description = '''An elegant elf wielding an steampunk bow. The bow has some cloc
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.elf_archer.special]
-"Take Cover" = "[still][-2]"
-"Forward Position" = "[2]"
-"Pre-Assault Retreat" = "5+"
-"Fire Order" = "You may either fire one regular arrow, or one special arrow each fire order (arrows with limited ammo)"
+[[units.elf_archer.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
+
+[[units.elf_archer.specials.forward_position]]
+args.N = 2
+
+[[units.elf_archer.specials.pre_assault_retreat]]
+args.N = 5
+
+[[units.elf_archer.specials.fire_order]]
+text = "You may either fire one regular arrow, or one special arrow each fire order (arrows with limited ammo)"
 
 [units.elf_archer.orders.fire]
 still = [["Fire", "Fire"]]
@@ -157,16 +173,20 @@ rows = [
 race = "elf"
 name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
-size = "Medium"
+size = "medium"
 cost.cp = 8
 description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
 '''
 
 
-[units.illusion.special]
-"Illusion" = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does Psychic damage, it would require you to tell the enemy that this unit does not have a Psychic damage table, which would give the illusion away."
-"Movement" = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
-"Forward Position" = "[2]"
+[[units.illusion.specials.illusion]]
+text = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does Psychic damage, it would require you to tell the enemy that this unit does not have a Psychic damage table, which would give the illusion away."
+
+[[units.illusion.specials.movement]]
+text = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
+
+[[units.illusion.specials.forward_position]]
+args.N = 2
 
 [units.illusion.shaken]
 speed = 'slow'
@@ -188,7 +208,7 @@ notes = [
 race = "elf"
 name = "Elf Scout"
 models = ["elf_scout"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 description = '''An elegant elf scout hiding in the forest and observing the battlefield. On the scouts back is an ww1 style rifle.
 '''
@@ -198,8 +218,10 @@ description = '''An elegant elf scout hiding in the forest and observing the bat
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.elf_scout.special]
-"Take Cover" = "[still][-3]"
+[[units.elf_scout.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -3
 
 [units.elf_scout.orders.fire]
 still = [
@@ -235,7 +257,7 @@ rows = [
 race = "elf"
 name = "Elite Elf Scout"
 models = ["elite_elf_scout"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 cost.xp = 8
 description = '''An elite elegant elf scout hiding in the forest and observing the battlefield. The scout uses camoufage paint. On the scouts back is an ww1 style rifle.
@@ -246,9 +268,14 @@ description = '''An elite elegant elf scout hiding in the forest and observing t
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.elite_elf_scout.special]
-"Take Cover" = "[still][-3]"
-"Camouflage" = "[forest][-1]"
+[[units.elite_elf_scout.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -3
+
+[[units.elite_elf_scout.specials.to_hit]]
+args.ability = "ability.camouflage"
+args.terrain = "terrain.forest"
 
 [units.elite_elf_scout.orders.fire]
 still = [
@@ -284,7 +311,7 @@ rows = [
 race = "elf"
 name = "E34"
 models = ["e34"]
-size = "Large"
+size = "large"
 cost.ip = 48
 armor = [10, 9, 9, 8]
 description = '''An elegant steampunk tank with a main gun on a rotating turret. On the turret two small arms guns are pointing out of the turret and in the same direction as the main gun.
@@ -352,14 +379,14 @@ rows = [
 race = "elf"
 name = "Tattoo Ink"
 models = ["tattoo_ink"]
-size = "Medium"
+size = "medium"
 cost.ip = 16
 armor = [8, 6, 6, 6]
 description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret. '''
 
 
-[units.tattoo_ink.special]
-"Fire Order" = "May fire two SMG (and each SMG fire twice) in addition to PentaGun any time a fire order is given. One of the SMG must fire in same angle as PentaGun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only PentaGun do."
+[[units.tattoo_ink.specials.fire_order]]
+text = "May fire two SMG (and each SMG fire twice) in addition to PentaGun any time a fire order is given. One of the SMG must fire in same angle as PentaGun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only PentaGun do."
 
 [units.tattoo_ink.shaken]
 speed = "still"
@@ -429,7 +456,7 @@ rows = [
 race = "elf"
 name = "Bear Rider"
 models = ["bear_rider"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 cost.xp = 24
 armor = [7, 6, 6, 6]
@@ -438,8 +465,9 @@ description = '''An medium sized bear with one elf riding the bear. The elf is w
 
 
 
-[units.bear_rider.special]
-Resistance = "Poison[3]"
+[[units.bear_rider.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 3
 
 [units.bear_rider.shaken]
 speed = "slow"
@@ -473,7 +501,7 @@ rows = [
 race = "elf"
 name = "Dire Polar Bear Riders"
 models = ["dire_polar_bear_riders"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 cost.xp = 32
 cost.cp = 24
@@ -482,9 +510,12 @@ description = '''A huge  dire polar bear with one two elf riding the bear. The f
 '''
 
 
-[units.dire_polar_bear_riders.special]
-"Resistance" = "Poison[3]"
-"Fire Order" = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded"
+[[units.dire_polar_bear_riders.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 3
+
+[[units.dire_polar_bear_riders.specials.fire_order]]
+text = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded"
 
 [units.dire_polar_bear_riders.shaken]
 speed = "slow"
@@ -518,7 +549,7 @@ rows = [
 race = "elf"
 name = "Armored Unicorn Rider"
 models = ["armored_unicorn_rider"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 cost.xp = 24
 cost.cp = 8
@@ -531,13 +562,40 @@ description = '''An elegant armored elf riding on an armored unicorn. The elf is
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.armored_unicorn_rider.special]
-"Resistance" = "Poison[12], Fire[3], Acid[1]"
-"Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
-"Officer" = "Grants Psychic resistance 1 to the other unit in this hex"
-"Officer 2" = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
-"Heal" = "Either: heal[3, self, 1st healing] or heal[2, any, 1st healing]"
-"Stacking Limit" = "May share a hex with a huge unit"
+[[units.armored_unicorn_rider.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 12
+
+[[units.armored_unicorn_rider.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 3
+
+[[units.armored_unicorn_rider.specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 1
+
+[[units.armored_unicorn_rider.specials.fire_order]]
+text = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+
+[[units.armored_unicorn_rider.specials.officer]]
+text = "Grants Psychic resistance 1 to the other unit in this hex"
+
+[[units.armored_unicorn_rider.specials.officer]]
+text = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+
+[[units.armored_unicorn_rider.specials.heal]]
+args.N = 3
+args.unit = "self"
+args.phase = "1st Healing"
+text = "Either this healing or the other, never both"
+
+[[units.armored_unicorn_rider.specials.heal]]
+args.N = 2
+args.unit = "any"
+args.phase = "1st Healing"
+
+[[units.armored_unicorn_rider.specials.stacking_limit]]
+text = "May share a hex with a huge unit"
 
 [units.armored_unicorn_rider.orders.fire]
 still = [["-", "-"], ["-", "Fire Burst(5)"], ["Fire Burst(5)", "-"]]
@@ -582,7 +640,7 @@ models = [
 	"pachycephalosaurus_rider",
 	"pachycephalosaurus_rider",
 ]
-size = "Medium"
+size = "medium"
 cost.mp = 16
 cost.xp = 24
 cost.cp = 24
@@ -590,9 +648,12 @@ armor = [3, 3, 0, 0]
 description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus'''
 
 
-[units.pachycephalosaurus_riders.special]
-"Resistance" = "Poison[2]"
-"Fire Order" = "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only."
+[[units.pachycephalosaurus_riders.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
+
+[[units.pachycephalosaurus_riders.specials.fire_order]]
+text = "Fire SMG in both gunnery phases regardless of orders. Fire orders are for twin-gun only."
 
 [units.pachycephalosaurus_riders.shaken]
 speed = "slow"
@@ -667,15 +728,18 @@ rows = [
 race = "elf"
 name = "Pegasus Rider"
 models = ["pegasus_rider", "pegasus_rider"]
-size = "Medium"
+size = "medium"
 cost.mp = 16
 cost.xp = 24
 description = ''' An elegant elf wielding a bow riding a pegasus. A pegasus is a horse with wings. An smg is placed on the sadle of the pegasus.'''
 
 
-[units.pegasus_rider.special]
-"Fire Order" = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
-"Resistance" = "Poison[2]"
+[[units.pegasus_rider.specials.fire_order]]
+text = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+
+[[units.pegasus_rider.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
 
 [units.pegasus_rider.shaken]
 speed = "slow_fly"
@@ -776,10 +840,14 @@ deflection_die = "5+"
 damage = "d6"
 ap = 2
 
-[models.elf_hydra.assault.special]
-"Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
-"Extra Damage" = "Poison[6][1 for 2]"
-"Fear" = "[6]"
+[[models.elf_hydra.assault.specials.bonus]]
+text = "+3 assault strength  and +1 assault deflection per alive head"
+
+[[models.elf_hydra.assault.specials.extra_damage]]
+text = "Poison[6][1 for 2]"
+
+[[models.elf_hydra.assault.specials.fear]]
+args.N = 6
 
 [models.tattoo_ink]
 name = "Tattoo Ink"
@@ -788,8 +856,8 @@ equipment_limit = ["Independent:∞", "Minor Gun:1"]
 equipment = ["pentagun", "smg_free"]
 type = ["Mechanical", "Bio Crew", "Vehicle", "Tracked"]
 
-[models.tattoo_ink.special]
-"To Hit" = "Ignore to-hit penalties for moving fast"
+[[models.tattoo_ink.specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
 
 [models.tattoo_ink.assault]
 strength = [3, 2, 2, 2]
@@ -806,8 +874,8 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["rifle"]
 type = ["Bio", "Walking", "Elite", "Infantry", "Archer"]
 
-[models.elite_elf_scout.special]
-"To Hit" = "Good shot +1"
+[[models.elite_elf_scout.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.elite_elf_scout.assault]
 strength = [2, 2, 2, 2]
@@ -817,11 +885,11 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_elf_scout.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.elite_elf_scout.assault.specials.cunning_assault]]
+args.N = 2
 
-[models.elite_elf_scout.unit_special]
-"Pre-Assault Retreat" = "3+"
+[[models.elite_elf_scout.unit_specials.pre_assault_retreat]]
+args.N = 3
 
 [models.elf_scout]
 name = "Elf Scout"
@@ -838,8 +906,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elf_scout.assault.special]
-"Cunning Assault" = "[1 for 2"
+[[models.elf_scout.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.elf_infantry]
 name = "Elf Infantry"
@@ -856,8 +924,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.elf_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.elf_archer]
 name = "Elf Archer"
@@ -874,8 +942,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elf_archer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.elf_archer.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.superb_elf_archer]
 name = "Superb Elf Archer"
@@ -886,12 +954,18 @@ type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 replaces = "elf_archer"
 cost.xp = 6
 
-[models.superb_elf_archer.special]
-"To Hit" = "Great Shot: +2 to hit"
+[[models.superb_elf_archer.specials.to_hit]]
+name = "Great Shot"
+args.ability = "ability.excellent_shot"
 
-[models.superb_elf_archer.unit_special]
-"Resistance 2" = "Psychic[2] while at least one superelite model is alive"
-"Pre-Assault Retreat" = "3+ as long as at least 1 superelite is alive"
+[[models.superb_elf_archer.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 2
+text = "While at least one superelite model is alive"
+
+[[models.superb_elf_archer.unit_specials.pre_assault_retreat]]
+args.N = 3
+text = "As long as at least 1 superelite is alive"
 
 [models.superb_elf_archer.assault]
 strength = [1, 1, 1, 1]
@@ -901,8 +975,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.superb_elf_archer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.superb_elf_archer.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.illusion]
 name = "Illusion"
@@ -928,12 +1002,18 @@ cost.xp = 6
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 
-[models.superelite_elf_infantry.special]
-"To Hit" = "Great Shot: +2 to hit"
+[[models.superelite_elf_infantry.specials.to_hit]]
+name = "Great Shot"
+args.ability = "ability.excellent_shot"
 
-[models.superelite_elf_infantry.unit_special]
-"Resistance 2" = "Psychic[2] while at least one superelite model is alive"
-"Pre-Assault Retreat" = "4+ as long as at least 1 superelite is alive"
+[[models.superelite_elf_infantry.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 2
+text = "While at least one superelite model is alive"
+
+[[models.superelite_elf_infantry.unit_specials.pre_assault_retreat]]
+args.N = 4
+text = "As long as at least 1 superelite is alive"
 
 [models.superelite_elf_infantry.assault]
 strength = [3, 1, 1, 1]
@@ -943,8 +1023,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.superelite_elf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.superelite_elf_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.elite_elf_infantry]
 name = "Elite Elf Infantry"
@@ -955,12 +1035,17 @@ cost.xp = 4
 replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite"]
 
-[models.elite_elf_infantry.special]
-"To Hit" = "Good Shot: +1 to hit"
+[[models.elite_elf_infantry.specials.to_hit]]
+args.ability = "ability.good_shot"
 
-[models.elite_elf_infantry.unit_special]
-"Resistance 2" = "Psychic[1] while at least one superelite model is alive"
-"Pre-Assault Retreat" = "5+ as long as at least 1 elite is alive"
+[[models.elite_elf_infantry.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "While at least one superelite model is alive"
+
+[[models.elite_elf_infantry.unit_specials.pre_assault_retreat]]
+args.N = 5
+text = "As long as at least 1 elite is alive"
 
 [models.elite_elf_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -970,8 +1055,8 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_elf_infantry.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.elite_elf_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.bear_rider]
 name = "Bear Rider"
@@ -988,8 +1073,8 @@ deflection_die = "5+"
 damage = "d6+1"
 ap = 2
 
-[models.bear_rider.assault.special]
-"Cunning Assault" = "[1 for 3]"
+[[models.bear_rider.assault.specials.cunning_assault]]
+args.N = 3
 
 [models.dire_polar_bear_riders]
 name = "Dire Polar Bear Riders"
@@ -1006,8 +1091,8 @@ deflection_die = "5+"
 damage = "d6+2"
 ap = 2
 
-[models.dire_polar_bear_riders.assault.special]
-"Cunning Assault" = "[1 for 3]"
+[[models.dire_polar_bear_riders.assault.specials.cunning_assault]]
+args.N = 3
 
 [models.sauropod_riders]
 name = "Sauropod Riders"
@@ -1082,8 +1167,8 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["at_rifle", "grenade"]
 type = ["Bio", "Cavalry", "Flying", "Walking"]
 
-[models.eagle_rider.special]
-"To Hit" = "Good shot: +1 to hit"
+[[models.eagle_rider.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.eagle_rider.assault]
 strength = [6, 6, 6, 4]
@@ -1093,13 +1178,17 @@ deflection_die = "3+"
 damage = "d6-1"
 ap = 3
 
-[models.eagle_rider.assault.special]
-"Extra Damage" = "Always attacks weakest point of armor"
-"Cunning Assault" = "[1 for 3]"
-"FlyBy" = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault"
+[[models.eagle_rider.assault.specials.extra_damage]]
+text = "Always attacks weakest point of armor"
 
-[models.eagle_rider.unit_special]
-"Pre-Assault Retreat" = "3+"
+[[models.eagle_rider.assault.specials.cunning_assault]]
+args.N = 3
+
+[[models.eagle_rider.assault.specials.fly_by]]
+text = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault"
+
+[[models.eagle_rider.unit_specials.pre_assault_retreat]]
+args.N = 3
 
 [models.pachycephalosaurus_rider]
 name = "Pachycephalosaurus Rider"
@@ -1116,12 +1205,15 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.pachycephalosaurus_rider.assault.special]
-"Extra Damage" = "poison[4][1 for 2]"
-"Cunning Assault" = "[1 for 3]"
+[[models.pachycephalosaurus_rider.assault.specials.extra_damage]]
+text = "poison[4][1 for 2]"
 
-[models.pachycephalosaurus_rider.unit_special]
-"Pre-Assault Retreat" = "5+"
+[[models.pachycephalosaurus_rider.assault.specials.cunning_assault]]
+args.N = 3
+
+[[models.pachycephalosaurus_rider.unit_specials.pre_assault_retreat]]
+replace = true
+args.N = 5
 
 [models.pegasus_rider]
 name = "Pegasus Rider"
@@ -1130,8 +1222,8 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["elf_bow_free", "shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking", "Flying"]
 
-[models.pegasus_rider.special]
-"To Hit" = "Good shot: +1 to hit"
+[[models.pegasus_rider.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.pegasus_rider.assault]
 strength = [4, 3, 2, 1]
@@ -1141,11 +1233,13 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.pegasus_rider.assault.special]
-"Cunning Assault" = "[1 for 3]"
+[[models.pegasus_rider.assault.specials.cunning_assault]]
+args.N = 3
 
-[models.pegasus_rider.unit_special]
-"Pre-Assault Retreat" = "throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
+[[models.pegasus_rider.unit_specials.pre_assault_retreat]]
+replace = true
+args.N = 5
+text = "Throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
 
 [models.elite_pachycephalosaurus_rider]
 name = "Elite Pachycephalosaurus Rider"
@@ -1156,12 +1250,17 @@ type = ["Bio", "Cavalry", "Walking"]
 replaces = "pachycephalosaurus_rider"
 cost.xp = 4
 
-[models.elite_pachycephalosaurus_rider.special]
-"To Hit" = "Good shot: +1"
+[[models.elite_pachycephalosaurus_rider.specials.to_hit]]
+args.ability = "ability.good_shot"
 
-[models.elite_pachycephalosaurus_rider.unit_special]
-"Resistance 2" = "Psychic[1] while at least one elite is alive"
-"Pre-Assault Retreat" = "3+ if at least one elite present"
+[[models.elite_pachycephalosaurus_rider.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "While at least one elite is alive"
+
+[[models.elite_pachycephalosaurus_rider.unit_specials.pre_assault_retreat]]
+args.N = 3
+text = "If at least one elite present"
 
 [models.elite_pachycephalosaurus_rider.assault]
 strength = [6, 2, 2, 1]
@@ -1171,15 +1270,17 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_pachycephalosaurus_rider.assault.special]
-"Extra Damage" = "poison[4][1 for 2]"
-"Cunning Assault" = "[1 for 3]"
+[[models.elite_pachycephalosaurus_rider.assault.specials.extra_damage]]
+text = "poison[4][1 for 2]"
+
+[[models.elite_pachycephalosaurus_rider.assault.specials.cunning_assault]]
+args.N = 3
 
 [units.sauropod_riders]
 race = "elf"
 name = "Sauropod Riders"
 models = ["sauropod_riders"]
-size = "Huge"
+size = "huge"
 cost.mp = 8
 cost.xp = 48
 cost.cp = 48
@@ -1187,10 +1288,15 @@ armor = [4, 3, 3, 3]
 description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. Souropod is a plant eating dinosour with long necks and walking on 4 legs. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour it is towing a big napoleonic steampunk cannon. The cannon points backwards'''
 
 
-[units.sauropod_riders.special]
-"Resistance" = "Poison[4]"
-"Fire Order" = "Fire and load all weapons simultaneously"
-"Setup" = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
+[[units.sauropod_riders.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 4
+
+[[units.sauropod_riders.specials.fire_order]]
+text = "Fire and load all weapons simultaneously"
+
+[[units.sauropod_riders.specials.setup]]
+text = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
 
 [units.sauropod_riders.shaken]
 speed = "slow"
@@ -1226,7 +1332,7 @@ rows = [
 race = "elf"
 name = "Armored Oliphant Riders"
 models = ["oliphant", "oliphant_crew", "oliphant_crew", "oliphant_crew", "oliphant_crew"]
-size = "Large"
+size = "large"
 cost.mp = 8
 cost.xp = 24
 cost.cp = 24
@@ -1235,9 +1341,12 @@ description = '''Oliphant is a big elephant with a plotform on top where there a
 '''
 
 
-[units.armored_oliphant_riders.special]
-"Resistance" = "Poison[2]"
-"Fire Order" = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
+[[units.armored_oliphant_riders.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
+
+[[units.armored_oliphant_riders.specials.fire_order]]
+text = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
@@ -1288,7 +1397,7 @@ rows = [
 race = "elf"
 name = "Eagle Rider"
 models = ["eagle_rider"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 cost.xp = 32
 armor = [6, 6, 6, 6]
@@ -1297,8 +1406,9 @@ description = '''An elegant elf riding a giant eagle. The elf is wielding an ant
 
 
 
-[units.eagle_rider.special]
-"Resistance" = "Poison[2]"
+[[units.eagle_rider.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
 
 [units.eagle_rider.shaken]
 speed = "slow"
@@ -1338,8 +1448,8 @@ equipment_limit = ["Independent:∞"]
 equipment = ["shriek_smg_free"]
 type = ["Bio", "Cavalry", "Walking"]
 
-[models.armored_unicorn_rider.special]
-"To Hit" = "Superb shot: +3 to hit"
+[[models.armored_unicorn_rider.specials.to_hit]]
+args.ability = "ability.superb_shot"
 
 [models.armored_unicorn_rider.assault]
 strength = [9, 6, 3, 2]
@@ -1349,11 +1459,11 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[models.armored_unicorn_rider.assault.special]
-"Cunning Assault" = "[1 for 3]"
+[[models.armored_unicorn_rider.assault.specials.cunning_assault]]
+args.N = 3
 
-[models.armored_unicorn_rider.unit_special]
-"Pre-Assault Retreat" = "3+"
+[[models.armored_unicorn_rider.unit_specials.pre_assault_retreat]]
+args.N = 3
 
 [equipment]
 
@@ -1368,8 +1478,8 @@ angle = [true, true, true, true]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
-[equipment.main_tank_gun.unit_special]
-"Fire Order" = "Double barreled: May load up to 2 ammo, and fire them one at a time"
+[[equipment.main_tank_gun.unit_specials.fire_order]]
+text = "Double barreled: May load up to 2 ammo, and fire them one at a time"
 
 [equipment.towed_main_gun]
 name = "Towed Main Gun"
@@ -1393,8 +1503,8 @@ angle = [false, true, false, false]
 damage = "d6 Psychic"
 ap = "N/A"
 
-[equipment.thunderroar.range.special]
-"Multiple Shots" = "May fire once to the right and once to the left each time you fire"
+[[equipment.thunderroar.range.specials.multiple_shots]]
+text = "May fire once to the right and once to the left each time you fire"
 
 [equipment.light_mortar]
 name = "Light Mortar"
@@ -1407,9 +1517,11 @@ angle = [false, false, true, false]
 damage = "d6-2"
 ap = 2
 
-[equipment.light_mortar.range.special]
-"Area" = "[5+]"
-"Range" = "A Hex within normal range"
+[[equipment.light_mortar.range.specials.area]]
+text = "[5+]"
+
+[[equipment.light_mortar.range.specials.range]]
+text = "A Hex within normal range"
 
 [equipment.pentagun]
 name = "PentaGun"
@@ -1422,8 +1534,8 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = 5
 
-[equipment.pentagun.unit_special]
-"Fire Order" = "May be load up to 5 shots, fire them one at a time"
+[[equipment.pentagun.unit_specials.fire_order]]
+text = "May be load up to 5 shots, fire them one at a time"
 
 [equipment.teslaburstlaser]
 name = "TeslaBurstLaser"
@@ -1438,12 +1550,10 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = 5
 
-[equipment.teslaburstlaser.unit_special]
-"Fire Order" = "May be load up to 5 shots, fire them one at a time"
-
-#ToDo: define Critical in rules
-[equipment.teslaburstlaser.range.special]
-"Critical" = "the enemy is shaken, in addition to it's normal effect."
+[[equipment.teslaburstlaser.unit_specials.fire_order]]
+text = "May be load up to 5 shots, fire them one at a time"
+[[equipment.teslaburstlaser.range.specials.critical]]
+text = "the enemy is shaken, in addition to it's normal effect."
 
 [equipment.smg_free]
 name = "SMG"
@@ -1455,8 +1565,8 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 
-[equipment.smg_free.range.special]
-"Multiple Shots" = "Fire two shot per fire order (per smg in the unit)"
+[[equipment.smg_free.range.specials.multiple_shots]]
+text = "Fire two shot per fire order (per smg in the unit)"
 
 [equipment.twin_guns]
 name = "Twin Guns"
@@ -1469,9 +1579,11 @@ angle = [true, false, false, false]
 damage = "d6"
 ap = 4
 
-[equipment.twin_guns.range.special]
-"Multiple Shots" = "x2 shots per fire order"
-"Bonus" = "Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range"
+[[equipment.twin_guns.range.specials.multiple_shots]]
+text = "x2 shots per fire order"
+
+[[equipment.twin_guns.range.specials.bonus]]
+text = "Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range"
 
 [equipment.twin_rifle]
 name = "Twin Rifle"
@@ -1484,11 +1596,11 @@ angle = [true, true, true, true]
 damage = "d6 -2"
 ap = 2
 
-[equipment.twin_rifle.range.special]
-"Multiple Shots" = "Fires two times at same unit per shot."
+[[equipment.twin_rifle.range.specials.multiple_shots]]
+text = "Fires two times at same unit per shot."
 
-[equipment.twin_rifle.unit_special]
-"Side Weapon" = "Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"
+[[equipment.twin_rifle.unit_specials.side_weapon]]
+text = "Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"
 
 [equipment.acid_breath]
 name = "Acid Breath"
@@ -1501,8 +1613,8 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[equipment.acid_breath.range.special]
-"Extra Damage" = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+[[equipment.acid_breath.range.specials.extra_damage]]
+text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1515,9 +1627,11 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[equipment.poison_spit.range.special]
-"Extra Damage" = "Poison[6]."
-"Multiple Shots" = "Fire one time per alive minor head"
+[[equipment.poison_spit.range.specials.extra_damage]]
+text = "Poison[6]."
+
+[[equipment.poison_spit.range.specials.multiple_shots]]
+text = "Fire one time per alive minor head"
 
 [equipment.gatling_gun]
 name = "Gatling Gun"
@@ -1530,9 +1644,11 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = "3"
 
-[equipment.gatling_gun.range.special]
-"Focus Fire" = "When using aim: roll 6 dice at same unit."
-"Area" = "If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one chosen direction. Avoids firing at hexes with friendly units"
+[[equipment.gatling_gun.range.specials.focus_fire]]
+text = "When using aim: roll 6 dice at same unit."
+
+[[equipment.gatling_gun.range.specials.area]]
+text = "If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one chosen direction. Avoids firing at hexes with friendly units"
 
 [equipment.shriek_smg_free]
 name = "Shriek SMG"
@@ -1545,8 +1661,8 @@ angle = [true, true, false, false]
 damage = "d4 -2 + d6 Psychic damage"
 ap = 2
 
-[equipment.shriek_smg_free.range.special]
-"Burst" = "[5]: Must have loaded 5 ammo to be fired, but each time it is fired, its fired 5 times (per model)"
+[[equipment.shriek_smg_free.range.specials.burst]]
+args.N = 5
 
 [equipment.oliphant_gatling_guns]
 name = "Oliphant Gatling Guns"
@@ -1560,10 +1676,14 @@ angle = [false, true, true, false]
 damage = "d6-1"
 ap = "3"
 
-[equipment.oliphant_gatling_guns.range.special]
-"Multiple Shots" = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
-"Focus Fire" = "When using aim, roll 6 dice at same unit."
-"Area" = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."
+[[equipment.oliphant_gatling_guns.range.specials.multiple_shots]]
+text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
+
+[[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
+text = "When using aim, roll 6 dice at same unit."
+
+[[equipment.oliphant_gatling_guns.range.specials.area]]
+text = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."
 
 [equipment.at_rifle_free]
 name = "AT Rifle"
@@ -1601,8 +1721,8 @@ strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
-[equipment.teslacoil_lance.assault.special]
-"Overrun" = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
+[[equipment.teslacoil_lance.assault.specials.overrun]]
+text = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
 
 [equipment.elf_flame_arrow]
 name = "Elf Flame Arrow"
@@ -1617,13 +1737,25 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = "0"
 
-[equipment.elf_flame_arrow.model_special]
-"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
+[[equipment.elf_flame_arrow.model_specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
+text = "Applies to the target's penalty as well, and to flying as well as fast"
 
-[equipment.elf_flame_arrow.range.special]
-"Range" = "+1 range if you are flying"
-"Ammo" = "Always treated as loaded"
-"Extra Damage" = "set enemy on fire"
+[[equipment.elf_flame_arrow.model_specials.to_hit]]
+args.ability = "ability.bad_at_long_range"
+text = "Doubles the long-range penalty"
+
+[[equipment.elf_flame_arrow.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
+
+[[equipment.elf_flame_arrow.range.specials.range]]
+text = "+1 range if you are flying"
+
+[[equipment.elf_flame_arrow.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.elf_flame_arrow.range.specials.extra_damage]]
+text = "set enemy on fire"
 
 [equipment.elf_flame_arrow.orders_gained.fire]
 still = [['Fire', 'Fire']]
@@ -1641,13 +1773,25 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = "0"
 
-[equipment.elf_flame_arrow_free.model_special]
-"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
+[[equipment.elf_flame_arrow_free.model_specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
+text = "Applies to the target's penalty as well, and to flying as well as fast"
 
-[equipment.elf_flame_arrow_free.range.special]
-"Range" = "+1 range if you are flying"
-"Ammo" = "Always treated as loaded"
-"Extra Damage" = "set enemy on fire"
+[[equipment.elf_flame_arrow_free.model_specials.to_hit]]
+args.ability = "ability.bad_at_long_range"
+text = "Doubles the long-range penalty"
+
+[[equipment.elf_flame_arrow_free.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
+
+[[equipment.elf_flame_arrow_free.range.specials.range]]
+text = "+1 range if you are flying"
+
+[[equipment.elf_flame_arrow_free.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.elf_flame_arrow_free.range.specials.extra_damage]]
+text = "set enemy on fire"
 
 [equipment.elf_bow_free]
 name = "Elf Bow"
@@ -1660,12 +1804,22 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = "0"
 
-[equipment.elf_bow_free.range.special]
-"Range" = "+1 range if you are flying"
-"Ammo" = "Always treated as loaded"
+[[equipment.elf_bow_free.range.specials.range]]
+text = "+1 range if you are flying"
 
-[equipment.elf_bow_free.model_special]
-"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +1 to hit"
+[[equipment.elf_bow_free.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.elf_bow_free.model_specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
+text = "Applies to the target's penalty as well, and to flying as well as fast"
+
+[[equipment.elf_bow_free.model_specials.to_hit]]
+args.ability = "ability.bad_at_long_range"
+text = "Doubles the long-range penalty"
+
+[[equipment.elf_bow_free.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
 [equipment.assault_archer]
 name = "Assault Archer"
@@ -1676,8 +1830,8 @@ upgrade_all = true
 
 [equipment.assault_archer.assault]
 
-[equipment.assault_archer.assault.special]
-"Retreat" = "Unit gains aim if you manage to pre-assault escape"
+[[equipment.assault_archer.assault.specials.retreat]]
+text = "Unit gains aim if you manage to pre-assault escape"
 
 [equipment.illusion_weapon]
 name = "Illusion Weapon"
@@ -1692,8 +1846,8 @@ angle = [true, true, true, true]
 damage = "d6 Psychic damage"
 ap = "N/A"
 
-[equipment.illusion_weapon.range.special]
-"Ammo" = "Always treated as loaded. Fire in both gunnery phases."
+[[equipment.illusion_weapon.range.specials.ammo]]
+text = "Always treated as loaded. Fire in both gunnery phases."
 
 [equipment.seeker_arrows]
 name = "Seeker Arrows"
@@ -1702,8 +1856,17 @@ requires = [["Special Arrows:3"], ["type:Archer", "type:Cavalry"]]
 upgrade_all = true
 cost.cp = 8
 
-[equipment.seeker_arrows.model_special]
-"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +3 to hit"
+[[equipment.seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
+text = "Applies to the target's penalty as well, and to flying as well as fast"
+
+[[equipment.seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.bad_at_long_range"
+text = "Doubles the long-range penalty"
+
+[[equipment.seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
+text = "Grants +3 to hit rather than +1"
 
 [equipment.seeker_arrows.range]
 range = 4
@@ -1711,9 +1874,11 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 0
 
-[equipment.seeker_arrows.range.special]
-"Range" = "+1 range if you are flying"
-"Ammo" = "Limited Ammo(3)"
+[[equipment.seeker_arrows.range.specials.range]]
+text = "+1 range if you are flying"
+
+[[equipment.seeker_arrows.range.specials.limited_ammo]]
+args.N = 3
 
 [equipment.elven_seeker_arrows]
 name = "Elven Seeker Arrows"
@@ -1723,8 +1888,17 @@ cost.cp = 6
 requires = [["Special Arrows:2"], ["type:Archer"], ["type:SuperElite"]]
 description = '''The pride of elven craftsmanship. A programmable arrow which always hits its target, almost regardless of range. Maybe not the most cost effective, they are still in high demand. Thus they are only given to the most elite archers, and all others are highly envious.'''
 
-[equipment.elven_seeker_arrows.model_special]
-"To Hit (2)" = "Ignore to-hit penalty (both self and target) for moving fast and flying. Bad at long range: double to-hit penalties at long range. Enhanced accuracy: +5 to hit"
+[[equipment.elven_seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.ignore_fast_penalty"
+text = "Applies to the target's penalty as well, and to flying as well as fast"
+
+[[equipment.elven_seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.bad_at_long_range"
+text = "Doubles the long-range penalty"
+
+[[equipment.elven_seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
+text = "Grants +5 to hit rather than +1"
 
 [equipment.elven_seeker_arrows.range]
 range = 10
@@ -1732,10 +1906,15 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 0
 
-[equipment.elven_seeker_arrows.range.special]
-"Range" = "Elven Seeker Arrow do not need line of sight (but cannot target hidden units)"
-"Ammo" = "Limited Ammo[1]. Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
-"Sniper" = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
+[[equipment.elven_seeker_arrows.range.specials.range]]
+text = "Elven Seeker Arrow do not need line of sight (but cannot target hidden units)"
+
+[[equipment.elven_seeker_arrows.range.specials.limited_ammo]]
+args.N = 1
+text = "Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
+
+[[equipment.elven_seeker_arrows.range.specials.sniper]]
+text = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
 
 [equipment.bow_with_rocket_arrows]
 name = "Bow with Rocket Arrows"
@@ -1751,12 +1930,15 @@ angle = [true, true, true, true]
 damage = "d6-1"
 ap = 3
 
-[equipment.bow_with_rocket_arrows.model_special]
-"To Hit (2)" = "Inaccurate: -1 to Hit"
+[[equipment.bow_with_rocket_arrows.model_specials.to_hit]]
+name = "Inaccurate"
+args.ability = "ability.bad_shot"
 
-[equipment.bow_with_rocket_arrows.range.special]
-"Ammo" = "Always treated as loaded"
-"Fumble" = "If fumble, take d6-4 in damage."
+[[equipment.bow_with_rocket_arrows.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.bow_with_rocket_arrows.range.specials.fumble]]
+text = "If fumble, take d6-4 in damage."
 
 [equipment.rifle]
 name = "Rifle"
@@ -1782,8 +1964,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = "2"
 
-[equipment.enhanced_rifle.model_special]
-"To Hit" = "Enhanced accuracy: +1 to hit"
+[[equipment.enhanced_rifle.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
 [equipment.sniper_rifle]
 name = "Sniper Rifle"
@@ -1798,9 +1980,11 @@ angle = [true, false, false, true]
 damage = "d6-2"
 ap = "3"
 
-[equipment.sniper_rifle.range.special]
-"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
-"Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+[[equipment.sniper_rifle.range.specials.improved_aim]]
+text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
+
+[[equipment.sniper_rifle.range.specials.sniper]]
+text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
 [equipment.sniper_rifle_free]
 name = "Sniper Rifle"
@@ -1813,9 +1997,11 @@ angle = [true, false, false, false]
 damage = "d6-2"
 ap = "3"
 
-[equipment.sniper_rifle_free.range.special]
-"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
-"Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+[[equipment.sniper_rifle_free.range.specials.improved_aim]]
+text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
+
+[[equipment.sniper_rifle_free.range.specials.sniper]]
+text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
 [equipment.grenade]
 name = "Grenade"
@@ -1827,10 +2013,14 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = "7"
 
-[equipment.grenade.range.special]
-"Area" = "[5+]"
-"Range" = "Target any hex within normal range"
-"Ammo" = "Always loaded"
+[[equipment.grenade.range.specials.area]]
+text = "[5+]"
+
+[[equipment.grenade.range.specials.range]]
+text = "Target any hex within normal range"
+
+[[equipment.grenade.range.specials.ammo]]
+text = "Always loaded"
 
 [equipment.hand_grenade]
 name = "Hand Grenade"
@@ -1845,11 +2035,17 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = "5"
 
-[equipment.hand_grenade.range.special]
-"Area" = "[5+] if used by a unit with 1-2 alive models, [4+] if used by a unit with 3-4 models"
-"Range" = "Target any hex within normal range"
-"Ammo" = "Always loaded"
-"Order" = "Used with Throw order"
+[[equipment.hand_grenade.range.specials.area]]
+text = "[5+] if used by a unit with 1-2 alive models, [4+] if used by a unit with 3-4 models"
+
+[[equipment.hand_grenade.range.specials.range]]
+text = "Target any hex within normal range"
+
+[[equipment.hand_grenade.range.specials.ammo]]
+text = "Always loaded"
+
+[[equipment.hand_grenade.range.specials.order]]
+text = "Used with Throw order"
 
 [equipment.hand_grenade.orders_gained.fire]
 still = [["-", "Throw"]]
@@ -1868,11 +2064,17 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = "5"
 
-[equipment.crew_hand_grenade.range.special]
-"Area" = "[4+]"
-"Range" = "Target any hex within normal range"
-"Ammo" = "Always loaded"
-"Order" = "Used with Throw order"
+[[equipment.crew_hand_grenade.range.specials.area]]
+text = "[4+]"
+
+[[equipment.crew_hand_grenade.range.specials.range]]
+text = "Target any hex within normal range"
+
+[[equipment.crew_hand_grenade.range.specials.ammo]]
+text = "Always loaded"
+
+[[equipment.crew_hand_grenade.range.specials.order]]
+text = "Used with Throw order"
 
 [equipment.crew_hand_grenade.orders_gained.fire]
 still = [["-", "Throw"]]
@@ -1890,9 +2092,11 @@ angle = [true, true, false, false]
 damage = "d6"
 ap = "5"
 
-[equipment.heavy_mortar.range.special]
-"Range" = "Target one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of target hex."
-"Area" = "[4+]"
+[[equipment.heavy_mortar.range.specials.range]]
+text = "Target one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of target hex."
+
+[[equipment.heavy_mortar.range.specials.area]]
+text = "[4+]"
 
 [equipment.deflection_field]
 name = "Deflection Field"
@@ -1912,8 +2116,8 @@ requires = [["Independent:1"], ["type:Vehicle"]]
 cost.xp = 16
 upgrade_all = true
 
-[equipment.elite_tank_crew.model_special]
-"To Hit (2)" = "model gain good shoot: +1 to hit"
+[[equipment.elite_tank_crew.model_specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [equipment.camouflage]
 name = "Camouflage"
@@ -1922,5 +2126,6 @@ requires = [["Independent:1"], ["type:Infantry", "type:Archer"]]
 cost.cp = 8
 upgrade_all = true
 
-[equipment.camouflage.unit_special]
-Camouflage = "[forest][-1]"
+[[equipment.camouflage.unit_specials.to_hit]]
+args.ability = "ability.camouflage"
+args.terrain = "terrain.forest"

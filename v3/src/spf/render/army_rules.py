@@ -1,9 +1,9 @@
 """Army Reference view-model: shape a resolved Army into a nested rules view.
 
 This is a *presentation* transposition (ADR 0007), like `spf.render.cards`.
-It reads only the resolved `Army` — no `race_config`,
-no rules loading, no full special-rule text (that belongs to the Rulebook
-product). No templates.
+It reads the resolved `Army` and, for the name and signature of every Special
+instance on it, the rule registries (ADR 0024) — no `race_config`, no full
+special-rule text (that belongs to the Rulebook product). No templates.
 
 Its one touch of disk is the `ImageLookup` from `spf.render.images`, which asks
 the committed Asset store whether a Target has art (ADR 0017); it is injected,
@@ -17,7 +17,9 @@ from pathlib import Path
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
+from spf.registry import load_registry
 from spf.render.images import ImageLookup, committed_image
+from spf.render.specials import special_lines
 from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
@@ -62,6 +64,15 @@ class ModelEntry:
     assault_damage: t.Die
     assault_ap: t.ArmorPenetration
     assault_specials: _Specials
+    note: str
+    assault_note: str
+    equipment_notes: list[tuple[str, str]]
+    """(Equipment name, note) for each rangeless Equipment carrying one.
+
+    A rangeless Equipment gets no sub-entry of its own, so its note is printed
+    against the Model carrying it and labeled with the Equipment's name.
+    """
+
     equipment: list["EquipmentEntry"]
 
 
@@ -75,6 +86,7 @@ class EquipmentEntry:
     damage: t.Die
     ap: t.ArmorPenetration
     specials: _Specials
+    note: str
 
 
 @dataclass(frozen=True)
@@ -84,15 +96,16 @@ class UnitEntry:
     name: str
     image: Path | None
     count: int
-    size: t.Size
+    size: str
     model_summary: list[str]
     types: list[t.ModelType]
     armor: list[int] | None
     points: int
-    shaken_speed: t.Speed
+    shaken_speed: str
     shaken_movement: list[str]
     shaken_fire: str
     specials: _Specials
+    note: str
     damage_tables: list[tuple[str, list[tuple[str, str]], list[str]]]
     models: list[ModelEntry]
 
@@ -117,7 +130,8 @@ def _equipment_entry(equip: EquipmentConfig) -> EquipmentEntry:
         angle=list(equip.range.angle),
         damage=equip.range.damage,
         ap=equip.range.ap,
-        specials=list(equip.range.special.items()),
+        specials=special_lines(equip.range.specials),
+        note=equip.range.note,
     )
 
 
@@ -136,14 +150,23 @@ def _model_entry(model: Model) -> ModelEntry:
     return ModelEntry(
         name=model.display_name,
         equipment_summary=_count_summary(model.equipment, lambda e: e.name),
-        specials=list(model.model_specials.items()),
+        specials=special_lines(model.model_specials),
         assault_strength=list(assault.strength),
         assault_strength_die=assault.strength_die,
         assault_deflection=list(assault.deflection),
         assault_deflection_die=assault.deflection_die,
         assault_damage=assault.damage,
         assault_ap=assault.ap,
-        assault_specials=list(assault.special.items()),
+        assault_specials=special_lines(assault.specials),
+        note=model.config.note,
+        assault_note=assault.note,
+        equipment_notes=_dedup(
+            [
+                (equip.name, equip.note)
+                for equip in model.equipment
+                if equip.note and equip.range is None
+            ]
+        ),
         equipment=_dedup([_equipment_entry(e) for e in ranged_equipment]),
     )
 
@@ -155,15 +178,19 @@ def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> Unit
         # `unit.display_name` above is the player's Nick or the catalogue name.
         image=image_for(race, unit.name),
         count=1,
-        size=unit.config.size,
+        size=load_registry().display_name(f"size.{unit.config.size}"),
         model_summary=_count_summary(unit.models, lambda m: m.display_name),
         types=unit.common_types,
-        armor=list(unit.config.armor) if unit.config.armor is not None else None,
+        # `unit.armor`, not `unit.config.armor`: a Model or an Equipment may
+        # raise a Unit's armor, and the grant is only visible in the stacked
+        # value (ADR 0024).
+        armor=list(unit.armor) if unit.armor is not None else None,
         points=unit.cost().to_points(),
         shaken_speed=unit.config.shaken.speed,
         shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
-        specials=list(unit.unit_specials.items()),
+        specials=special_lines(unit.unit_specials),
+        note=unit.config.note,
         damage_tables=[
             (
                 name,

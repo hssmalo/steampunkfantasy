@@ -19,11 +19,12 @@ from typing import Literal
 
 from spf.armies.army import Army
 from spf.armies.unit import Unit
+from spf.registry import load_registry
 from spf.render.images import ImageLookup, committed_image
 from spf.schemas import type_aliases as t
 
 type _Rows = list[tuple[str, list[str]]]  # (speed, cells) per row
-type _Orders = dict[t.Speed, list[list[str]]] | None  # one order-type, per Speed
+type _Orders = dict[str, list[list[str]]] | None  # one order-type, per Speed
 
 
 @dataclass(frozen=True)
@@ -119,7 +120,7 @@ def _unit_orders(
     unit_orders = UnitOrders(
         name=unit.display_name,
         image=image,
-        size=unit.config.size,
+        size=load_registry().display_name(f"size.{unit.config.size}"),
         movement_rows=_flat_rows(merged.movement),
         fire_rows=_flat_rows(merged.fire),
         shaken_movement=[shaken.speed, *shaken.movement_order],

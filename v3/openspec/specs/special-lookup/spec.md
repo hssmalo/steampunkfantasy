@@ -6,16 +6,16 @@ Defines the behavior of the `spf special show` command, which searches all races
 
 ## Requirements
 
-### Requirement: Special key is constrained to known values
-The `special show` command SHALL accept only valid special keys — members of `UnitSpecial`, `ModelSpecial`, or `AssaultSpecial`. The CLI SHALL enumerate all valid choices so the user can discover them without reading source code.
+### Requirement: Special key is constrained to the registry
+The `special show` command SHALL accept only identifiers the Special registry declares (ADR 0024). The registry's key set is the corpus, so the command cannot disagree with the rules data about what a Special is.
 
 #### Scenario: Valid special key accepted
-- **WHEN** the user runs `spf special show "Immunity"`
+- **WHEN** the user runs `spf special show "immunity"`
 - **THEN** the command executes without error
 
 #### Scenario: Invalid special key rejected
-- **WHEN** the user runs `spf special show "NotASpecial"`
-- **THEN** cyclopts rejects the input before execution and lists valid choices
+- **WHEN** the user runs `spf special show "not_a_special"`
+- **THEN** the command reports the key as unknown and suggests near matches from the registry
 
 ### Requirement: Races loaded from filesystem
 The command SHALL derive the race list from `races.list_races()`. Races whose TOML files fail validation SHALL be silently skipped.
@@ -40,25 +40,30 @@ For each race that has at least one match, the command SHALL print the race disp
 - **THEN** the race produces no output at all
 
 ### Requirement: All match locations searched
-The command SHALL search all locations where each special type can appear:
-- `UnitSpecial`: `units.special`, `models.unit_special`, `equipment.unit_special`
-- `ModelSpecial`: `models.special`, `equipment.model_special`
-- `AssaultSpecial`: `models.assault.special`, `equipment.assault.special`
+A rule declares where it is legal in its `slots` field, and the command SHALL search the locations belonging to each slot the rule declares:
+- `unit`: `units.specials`, `models.unit_specials`, `equipment.unit_specials`
+- `model`: `models.specials`, `equipment.model_specials`
+- `assault`: `models.assault.specials`, `equipment.assault.specials`
+- `range`: `equipment.range.specials`
 
-A special key that belongs to multiple categories (e.g. "Fog" in both `UnitSpecial` and `ModelSpecial`) SHALL be searched in all applicable locations.
+A rule declaring several slots SHALL be searched in every location those slots cover.
 
 #### Scenario: Unit-level special found
-- **WHEN** a unit's `special` dict contains the queried key
+- **WHEN** a unit's `specials` table contains the queried id
 - **THEN** a line beginning with `Unit:` and the unit name appears in the output
 
 #### Scenario: Model assault special found
-- **WHEN** a model's `assault.special` dict contains the queried key
+- **WHEN** a model's `assault.specials` table contains the queried id
 - **THEN** a line beginning with `Model:` and the model name appears in the output
 
 #### Scenario: Equipment special found
-- **WHEN** an equipment item's `unit_special` or `model_special` dict contains the queried key
+- **WHEN** an equipment item's `unit_specials` or `model_specials` table contains the queried id
 - **THEN** a line beginning with `Equipment:` and the equipment name appears in the output
 
-#### Scenario: Dual-category special searched in both categories
-- **WHEN** the queried key belongs to both `UnitSpecial` and `ModelSpecial`
-- **THEN** the command searches both `units.special` / `models.unit_special` / `equipment.unit_special` AND `models.special` / `equipment.model_special`
+#### Scenario: Multi-slot special searched in every slot it declares
+- **WHEN** the queried rule declares both the `unit` and `model` slots
+- **THEN** the command searches the locations of both slots
+
+#### Scenario: A holder yields one line per instance
+- **WHEN** a holder carries the queried id several times, each instance with its own arguments
+- **THEN** each instance produces its own line, because a slot holds N instances rather than one value

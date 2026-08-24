@@ -24,10 +24,12 @@ from spf.schemas.race import (
     ShakenConfig,
     Stacker,
     UnitConfig,
+    UnitStatModifierConfig,
 )
 from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
+from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, ModelType, RangeRoll
 from tests.render.conftest import ART, FakeLookup
 
@@ -48,9 +50,10 @@ def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under 
     name: str = "Soldier",
     equipment: list[EquipmentConfig] | None = None,
     assault: AssaultConfig = _ASSAULT,
-    model_special: dict[str, str] | None = None,
+    model_specials: Specials | None = None,
     nick: str | None = None,
     types: list[ModelType] | None = None,
+    note: str = "",
 ) -> Model:
     config = ModelConfig(
         race="elf",
@@ -60,7 +63,8 @@ def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under 
         type=types or ["Infantry"],
         assault=assault,
         cost=None,
-        special=model_special or {},  # pyright: ignore[reportArgumentType]
+        specials=model_specials or {},
+        note=note,
     )
     return Model(
         name=name,
@@ -78,8 +82,9 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
     size: str = "Small",
     shaken: ShakenConfig | None = None,
     armor: list[int] | None = None,
-    unit_special: dict[str, str] | None = None,
+    unit_specials: Specials | None = None,
     nick: str | None = None,
+    note: str = "",
 ) -> Unit:
     resolved_models = models or [_model()]
     config = UnitConfig(
@@ -93,7 +98,8 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
         ),
         orders=OrdersConfig(),
         armor=armor,
-        special=unit_special or {},  # pyright: ignore[reportArgumentType]
+        specials=unit_specials or {},
+        note=note,
         damage_tables={  # pyright: ignore[reportArgumentType]
             "Regular": {
                 "rows": ["1: Fine", "2: Dead"],
@@ -123,7 +129,7 @@ def test_roll_text_renders_each_roll_variant() -> None:
 def test_build_reference_basic_unit_and_model_fields() -> None:
     unit = _unit(
         armor=[10, 8, 6, 4],
-        unit_special={"Take Cover": "[sneak][-2]"},
+        unit_specials={"evasion": [SpecialInstance(args={"N": 4})]},
     )
 
     reference = build_reference(_army(unit, nick="The Iron Claws"), stem="test")
@@ -142,7 +148,7 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_speed == "slow"
     assert unit_entry.shaken_movement == ["-", "-", "flee"]
     assert unit_entry.shaken_fire == "No weapons"
-    assert unit_entry.specials == [("Take Cover", "[sneak][-2]")]
+    assert unit_entry.specials == [("Evasion", "[4+]")]
     assert unit_entry.damage_tables == [
         ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
     ]
@@ -155,12 +161,16 @@ def _equip(
     *,
     name: str = "Rifle",
     range_config: RangeConfig | None = None,
+    unit_stats: UnitStatModifierConfig | None = None,
+    note: str = "",
 ) -> EquipmentConfig:
     return EquipmentConfig(
         race="elf",  # pyright: ignore[reportArgumentType]
         name=name,
         requires=[],
         range=range_config,
+        unit=unit_stats,
+        note=note,
     )
 
 
@@ -185,7 +195,7 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
             angle=[True, False, False, False],
             damage="d6",
             ap=2,
-            special={"Sniper": "[+1]"},  # pyright: ignore[reportArgumentType]
+            specials={"sniper": [SpecialInstance(text="Choose the model")]},
         ),
     )
     unit = _unit(models=[_model(equipment=[musket])])
@@ -201,7 +211,7 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
     assert equip_entry.angle == [True, False, False, False]
     assert equip_entry.damage == "d6"
     assert equip_entry.ap == 2
-    assert equip_entry.specials == [("Sniper", "[+1]")]
+    assert equip_entry.specials == [("Sniper", "Choose the model")]
 
 
 def test_build_reference_rangeless_equipment_gets_no_sub_entry() -> None:
@@ -285,8 +295,8 @@ def test_build_reference_collapses_identical_units_with_count() -> None:
 
 
 def test_build_reference_keeps_distinct_units_separate() -> None:
-    unit_a = _unit(name="Infantry", size="Small")
-    unit_b = _unit(name="Archer", size="Small")
+    unit_a = _unit(name="Infantry", size="small")
+    unit_b = _unit(name="Archer", size="small")
 
     reference = build_reference(_army(unit_a, unit_b), stem="test")
 
@@ -388,7 +398,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
                 strength=Stacker(add=[1, 0, 0, 0]),
                 damage=Stacker(replace="d8"),
                 ap=Stacker(add=1),
-                special={"Bonus": "[+1 strength]"},  # pyright: ignore[reportArgumentType]
+                specials={"ork_reroll": [SpecialInstance(args={"N": 3})]},
             )
         }
     )
@@ -405,7 +415,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_strength_die == resolved.strength_die
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
-    assert model_entry.assault_specials == [("Bonus", "[+1 strength]")]
+    assert model_entry.assault_specials == [("Ork Reroll", "[3]")]
 
 
 # --- Templates: two-column damage table (drives the real templates) --------
@@ -674,6 +684,140 @@ def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None
     assert "![" not in out.read_text(encoding="utf-8")
 
 
+# --- Armor grants and notes: what a Special no longer carries ---------------
+
+
+def test_unit_entry_armor_stacks_an_equipment_grant() -> None:
+    shieldwall = _equip(
+        name="ShieldWall",
+        unit_stats=UnitStatModifierConfig(armor=Stacker(add=[5, 0, 0, 0])),
+    )
+    unit = _unit(armor=[3, 2, 1, 0], models=[_model(equipment=[shieldwall])])
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.armor == [8, 2, 1, 0]
+
+
+def test_unit_entry_armor_rejects_an_unusable_stacker() -> None:
+    # Reachable only because the reference reads the stacked value: a data
+    # error nothing consumes can never be caught.
+    broken = _equip(
+        name="ShieldWall",
+        unit_stats=UnitStatModifierConfig(armor=Stacker(extend=[5, 0, 0, 0])),
+    )
+    unit = _unit(armor=[3, 2, 1, 0], models=[_model(equipment=[broken])])
+
+    with pytest.raises(ValueError, match="cannot use 'extend' on unit armor"):
+        build_reference(_army(unit), stem="test")
+
+
+def test_unit_entry_carries_the_unit_note() -> None:
+    unit = _unit(note="May not enter buildings")
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (unit_entry,) = reference.units
+    assert unit_entry.note == "May not enter buildings"
+
+
+def test_model_entry_carries_the_model_and_assault_notes() -> None:
+    assault = AssaultConfig(
+        strength=[1, 0, 0, 0],
+        strength_die="4+",
+        deflection=[1, 0, 0, 0],
+        deflection_die="4+",
+        damage="d4",
+        ap=0,
+        note="Fights on after losing a limb",
+    )
+    unit = _unit(models=[_model(note="Floats", assault=assault)])
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (model_entry,) = reference.units[0].models
+    assert model_entry.note == "Floats"
+    assert model_entry.assault_note == "Fights on after losing a limb"
+
+
+def test_model_entry_carries_the_note_of_a_rangeless_equipment() -> None:
+    # An Equipment with no ranged profile gets no sub-entry of its own, so its
+    # note is printed against the Model carrying it, labeled by Equipment.
+    control = _equip(name="Remote Control", note="Grants no immunity")
+    unit = _unit(models=[_model(equipment=[control, control])])
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (model_entry,) = reference.units[0].models
+    assert model_entry.equipment_notes == [("Remote Control", "Grants no immunity")]
+
+
+def test_equipment_entry_carries_the_range_note() -> None:
+    rifle = _equip(
+        name="Ogre Rifle",
+        range_config=RangeConfig(
+            range=4,
+            angle=[True, False, False, False],
+            damage="d6",
+            ap=1,
+            note="Remember to track ammo.",
+        ),
+    )
+    unit = _unit(models=[_model(equipment=[rifle])])
+
+    reference = build_reference(_army(unit), stem="test")
+
+    (equipment_entry,) = reference.units[0].models[0].equipment
+    assert equipment_entry.note == "Remember to track ammo."
+
+
+def test_render_army_rules_markdown_prints_every_note(tmp_path: Path) -> None:
+    rifle = _equip(
+        name="Ogre Rifle",
+        range_config=RangeConfig(
+            range=4,
+            angle=[True, False, False, False],
+            damage="d6",
+            ap=1,
+            note="Remember to track ammo.",
+        ),
+    )
+    control = _equip(name="Remote Control", note="Grants no immunity")
+    unit = _unit(
+        note="May not enter buildings",
+        models=[_model(note="Floats", equipment=[rifle, control])],
+    )
+    reference = build_reference(_army(unit), stem="test", image_for=no_image)
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="t",
+        output_root=tmp_path,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "- **Note**: May not enter buildings" in text
+    assert "- **Note**: Floats" in text
+    assert "- **Note**: Remember to track ammo." in text
+    assert "- **Note (Remote Control)**: Grants no immunity" in text
+
+
+def test_render_army_rules_latex_prints_every_note(tmp_path: Path) -> None:
+    unit = _unit(note="May not enter buildings", models=[_model(note="Floats")])
+    reference = build_reference(_army(unit), stem="test", image_for=no_image)
+
+    out = render(
+        ARMY_RULES, reference, fmt=get_format("latex"), name="t", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\item \textbf{Note}: May not enter buildings" in text
+    assert r"\item \textbf{Note}: Floats" in text
+
+
 # --- Golden output: pins the standalone army-rules output byte-for-byte ----
 #
 # `main.tex.jinja`/`main.md.jinja` are a thin wrapper around the shared
@@ -710,4 +854,31 @@ def test_army_rules_output_matches_golden_file(
     # `.rstrip`: the committed golden file passes through the end-of-file-fixer
     # pre-commit hook, which trims trailing blank lines the templates emit.
     golden = (GOLDEN_DIR / golden_name).read_text(encoding="utf-8")
+    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
+
+
+# The demo Army fields no Unit whose armor an Equipment raises and no holder
+# carrying a `note`, so a second Army covers both — the two things the
+# Specials migration moved out of a Special and onto the record itself.
+FIXTURE_ARMIES = Path(__file__).parent.parent / "fixtures" / "armies"
+
+
+@pytest.mark.usefixtures("pinned_version")
+def test_army_rules_output_matches_golden_file_with_granted_armor_and_notes(
+    tmp_path: Path,
+) -> None:
+    army = io._load_army_at(
+        FIXTURE_ARMIES / "dwarf_shieldwall.json", label="fixture", validate=True
+    )
+    reference = build_reference(army, stem="shieldwall", image_for=no_image)
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="shieldwall",
+        output_root=tmp_path,
+    )
+
+    golden = (GOLDEN_DIR / "army_rules_dwarf.md").read_text(encoding="utf-8")
     assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")

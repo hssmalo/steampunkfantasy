@@ -1,0 +1,45 @@
+# The namespace registry: every namespace a reference may point into, and
+# where its records live (ADR 0024). A namespace is an abstract name, not a
+# path into the file layout — that is what keeps every ref two segments long
+# and a table rename out of the Race files.
+#
+# Declaration order is display-group order for the to-hit table. A namespace
+# may declare `group` to render under another's heading.
+
+[namespaces]
+special = { name = "Specials", file = "special.toml", table = "special" }
+speed = { name = "Speeds", file = "modifiers.toml", table = "speed" }
+terrain = { name = "Terrain", file = "terrain.toml", table = "terrain" }
+hex = { name = "Hex Effects", file = "hexes.toml", table = "hexes", group = "terrain" }
+distance = { name = "Distance", file = "modifiers.toml", table = "distance" }
+angle = { name = "Angle", file = "modifiers.toml", table = "angle" }
+size = { name = "Size", file = "modifiers.toml", table = "size" }
+ability = { name = "Abilities", file = "modifiers.toml", table = "ability" }
+token = { name = "Tokens", file = "tokens.toml", table = "tokens" }
+damage_type = { name = "Damage Types", file = "namespaces.toml", table = "damage_type" }
+
+# The damage-type registry: the categories of harm a Resistance or an Immunity
+# is against. It lives here because it is small and has no file of its own.
+
+[damage_type.regular]
+name = "Regular"
+todo = "Rule text not yet written: what counts as regular damage, and how the regular damage table is read."
+
+[damage_type.psychic]
+name = "Psychic"
+todo = "Rule text not yet written: what psychic damage is, and which units it can affect."
+
+[damage_type.fire]
+name = "Fire"
+see_also = ["token.fire"]
+todo = "Rule text not yet written. Distinct from token.fire: this is the category of harm, that is the marker on the table."
+
+[damage_type.poison]
+name = "Poison"
+see_also = ["token.poison"]
+todo = "Rule text not yet written. Distinct from token.poison: this is the category of harm, that is the marker on the table."
+
+[damage_type.acid]
+name = "Acid"
+see_also = ["token.acid", "token.minor_acid"]
+todo = "Rule text not yet written. Distinct from token.acid: this is the category of harm, that is the marker on the table."

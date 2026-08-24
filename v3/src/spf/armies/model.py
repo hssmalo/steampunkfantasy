@@ -3,8 +3,10 @@
 from dataclasses import dataclass, field
 
 from spf.armies.holders import retained_defaults
+from spf.armies.specials import join_notes, merge_specials
 from spf.schemas import type_aliases as t
 from spf.schemas.race import AssaultConfig, EquipmentConfig, ModelConfig, Stacker
+from spf.schemas.special import Specials
 
 
 @dataclass(frozen=True)
@@ -47,20 +49,20 @@ class Model:
         ]
 
     @property
-    def unit_specials(self) -> dict[t.UnitSpecial, str]:
-        """Stacked unit-level specials: model config then each equipment in order."""
-        result: dict[t.UnitSpecial, str] = dict(self.config.unit_special)
-        for equip in self.equipment:
-            result |= equip.unit_special
-        return result
+    def unit_specials(self) -> Specials:
+        """Unit-level instances: model config then each equipment in order."""
+        return merge_specials(
+            self.config.unit_specials,
+            *(equip.unit_specials for equip in self.equipment),
+        )
 
     @property
-    def model_specials(self) -> dict[t.ModelSpecial, str]:
-        """Stacked model-level specials: model config then each equipment in order."""
-        result: dict[t.ModelSpecial, str] = dict(self.config.special)
-        for equip in self.equipment:
-            result |= equip.model_special
-        return result
+    def model_specials(self) -> Specials:
+        """Model-level instances: model config then each equipment in order."""
+        return merge_specials(
+            self.config.specials,
+            *(equip.model_specials for equip in self.equipment),
+        )
 
     def cost(self) -> t.Cost:
         """Return intrinsic upgrade cost: sum of upgrade equipment costs.
@@ -90,7 +92,8 @@ class Model:
         deflection_die: t.DieResult = self.config.assault.deflection_die
         damage: t.Die = self.config.assault.damage
         ap: t.ArmorPenetration = self.config.assault.ap
-        special: dict[t.AssaultSpecial, str] = dict(self.config.assault.special)
+        instances = [self.config.assault.specials]
+        notes: list[str] = []
 
         for equip in self.equipment:
             ea = equip.assault
@@ -130,7 +133,8 @@ class Model:
                 )
             if ea.ap is not None:
                 ap = _apply_ap(ap, stacker=ea.ap, equip_name=equip.name)
-            special |= ea.special
+            instances.append(ea.specials)
+            notes.append(ea.note)
 
         return AssaultConfig(
             strength=strength,
@@ -139,7 +143,8 @@ class Model:
             deflection_die=deflection_die,
             damage=damage,
             ap=ap,
-            special=special,
+            specials=merge_specials(*instances),
+            note=join_notes(self.config.assault.note, *notes),
         )
 
 

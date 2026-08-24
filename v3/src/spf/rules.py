@@ -41,9 +41,19 @@ def get_hexes(path: Path | None = None) -> r.HexRulesConfig:
     return _get_rules(path, "hexes.toml").convert_model(r.HexRulesConfig)
 
 
-def get_to_hit(path: Path | None = None) -> r.ToHitConfig:
-    """Get rules for to-hit modifiers."""
-    return _get_rules(path, "to_hit.toml").convert_model(r.ToHitConfig)
+def get_terrain(path: Path | None = None) -> r.TerrainRulesConfig:
+    """Get rules for terrain."""
+    return _get_rules(path, "terrain.toml").convert_model(r.TerrainRulesConfig)
+
+
+def get_modifiers(path: Path | None = None) -> r.ModifiersConfig:
+    """Get the five registries of to-hit modifiers."""
+    return _get_rules(path, "modifiers.toml").convert_model(r.ModifiersConfig)
+
+
+def get_namespaces(path: Path | None = None) -> r.NamespacesConfig:
+    """Get the namespace registry, and the damage types it carries."""
+    return _get_rules(path, "namespaces.toml").convert_model(r.NamespacesConfig)
 
 
 def rulebook_index_path(path: Path | None = None) -> Path:

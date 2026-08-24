@@ -26,8 +26,11 @@
 - Points: {{ unit.points }}
 - Shaken: {{ unit.shaken_speed }} [{{ unit.shaken_movement | join(', ') }}] / {{ unit.shaken_fire }}
 {% for name, text in unit.specials %}
-- **{{ name }}**: {{ text }}
+- **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if unit.note %}
+- **Note**: {{ unit.note }}
+{%- endif %}
 {% for name, rows, notes in unit.damage_tables %}
 **Damage Table: {{ name }}**
 
@@ -46,18 +49,30 @@
 - Equipment: {{ model.equipment_summary | join(', ') }}
 - Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
 {% for name, text in model.specials %}
-- **{{ name }}**: {{ text }}
+- **{{ name }}**{% if text %}: {{ text }}{% endif %}
+{%- endfor %}
+{%- if model.note %}
+- **Note**: {{ model.note }}
+{%- endif %}
+{%- for name, text in model.equipment_notes %}
+- **Note ({{ name }})**: {{ text }}
 {%- endfor %}
 {% for name, text in model.assault_specials %}
-- **{{ name }}**: {{ text }}
+- **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if model.assault_note %}
+- **Note**: {{ model.assault_note }}
+{%- endif %}
 {% for equip in model.equipment %}
 {{ hashes }}## {{ equip.name }}
 
 - Range: {{ equip.range }}, angle {{ equip.angle | join('/') }}, damage {{ equip.damage }}, AP {{ equip.ap }}
 {%- for name, text in equip.specials %}
-- **{{ name }}**: {{ text }}
+- **{{ name }}**{% if text %}: {{ text }}{% endif %}
 {%- endfor %}
+{%- if equip.note %}
+- **Note**: {{ equip.note }}
+{%- endif %}
 {% endfor %}
 {% endfor %}
 ---
