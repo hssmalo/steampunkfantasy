@@ -355,5 +355,5 @@ def test_an_incomplete_rules_file_fails_to_load(tmp_path: Path) -> None:
         '[special.fear]\nname = "Fear"\nslots = ["assault"]\n'
     )
 
-    with pytest.raises(ValidationError, match="exactly one of"):
+    with pytest.raises(ValidationError, match="has neither"):
         reg.load_registry(rules_dir)

@@ -25,22 +25,23 @@ def test_a_record_is_a_stub_when_it_carries_only_a_todo() -> None:
 
 
 def test_a_record_may_be_neither_complete_nor_a_stub() -> None:
-    with pytest.raises(ValidationError, match="exactly one of"):
+    with pytest.raises(ValidationError, match="has neither"):
         r.SpecialRuleConfig.model_validate({"name": "Fumble", "slots": ["range"]})
 
 
-def test_a_record_may_not_be_both_complete_and_a_stub() -> None:
-    # A `todo` that outlives the writing of its rule is a countdown that never
-    # reaches zero.
-    with pytest.raises(ValidationError, match="exactly one of"):
-        r.SpecialRuleConfig.model_validate(
-            {
-                "name": "Fumble",
-                "slots": ["range"],
-                "effect": "A natural 1 is a fumble.",
-                "todo": "Reword this.",
-            }
-        )
+def test_a_written_rule_may_carry_an_open_question() -> None:
+    # A design question about a *finished* rule is the easiest kind to forget,
+    # because the record looks done. `todo` is what makes it countable.
+    record = r.SpecialRuleConfig.model_validate(
+        {
+            "name": "Fumble",
+            "slots": ["range"],
+            "effect": "A natural 1 is a fumble.",
+            "todo": "Is this the same rule as Misfire?",
+        }
+    )
+
+    assert record.written
 
 
 def test_completeness_is_keyed_on_the_meaning_fields_of_the_registry() -> None:
@@ -55,14 +56,14 @@ def test_completeness_is_keyed_on_the_meaning_fields_of_the_registry() -> None:
 
 
 def test_a_modifier_without_numbers_is_a_stub() -> None:
-    with pytest.raises(ValidationError, match="exactly one of"):
+    with pytest.raises(ValidationError, match="has neither"):
         r.ModifierRuleConfig.model_validate({"name": "Medium"})
 
 
 def test_a_terrain_record_means_its_prose_not_its_numbers() -> None:
     # Terrain carries to-hit numbers but its rules are unwritten; keyed on the
     # numbers, every terrain record would count as finished.
-    with pytest.raises(ValidationError, match="exactly one of"):
+    with pytest.raises(ValidationError, match="has neither"):
         r.TerrainRuleConfig.model_validate(
             {"name": "Forest", "to_hit": "0", "to_be_hit": "-1"}
         )

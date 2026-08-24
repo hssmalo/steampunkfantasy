@@ -281,9 +281,10 @@ def written[RecordT: RuleRecord](records: dict[str, RecordT]) -> dict[str, Recor
 
     A stub is design intent addressed to the game designer — `spf rules todos`
     is where it is counted. A Rulebook heading with nothing under it promises
-    the reader a rule that has not been written.
+    the reader a rule that has not been written. A record that carries both a
+    rule and a `todo` is written, and belongs here.
     """
-    return {key: record for key, record in records.items() if record.todo is None}
+    return {key: record for key, record in records.items() if record.written}
 
 
 def _effect_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:

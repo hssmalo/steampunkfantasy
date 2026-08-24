@@ -171,16 +171,23 @@ class RuleRecord(StrictModel):
 
     @model_validator(mode="after")
     def _check_completeness(self) -> Self:
-        """Require exactly one of the meaning fields and `todo`."""
+        """Require a meaning field or `todo`, and allow both.
+
+        A written rule may still carry an open question — whether two rules
+        are duplicates, whether a fixed value wants a variable — and that
+        question is only worth writing down if the countdown can see it.
+        """
         written = any(getattr(self, field) for field in self.MEANING_FIELDS)
-        if written == (self.todo is not None):
+        if not written and self.todo is None:
             fields = " / ".join(self.MEANING_FIELDS)
-            msg = (
-                f"{self.name!r}: a record needs exactly one of {fields} and todo, "
-                f"not {'both' if written else 'neither'}"
-            )
+            msg = f"{self.name!r}: a record needs {fields} or todo, and has neither"
             raise ValueError(msg)
         return self
+
+    @property
+    def written(self) -> bool:
+        """Whether the rule itself is written, whatever `todo` also asks."""
+        return any(getattr(self, field) for field in self.MEANING_FIELDS)
 
 
 class SpecialRuleConfig(RuleRecord):

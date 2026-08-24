@@ -207,9 +207,8 @@ to_be_hit = "0"
 effect = "Firing at enemies at point blank range only"
 see_also = ["distance.point_blank"]
 
-# The bonus is fixed at +1 here, but the Race data grants +1, +3 and +5 — this
-# rule wants a variable, the way take_cover and elusive have one.
 [ability.enhanced_accuracy]
 name = "Enhanced Accuracy"
 to_hit = "+1"
 to_be_hit = "0"
+todo = "The bonus is fixed at +1 here, but the Race data grants +1, +3 and +5. This rule wants a variable, the way take_cover and elusive have one."

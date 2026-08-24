@@ -36,14 +36,13 @@ effect = "All enemy units hit at least once in assault gets an fire token."
 places = ["token.fire"]
 see_also = ["special.range_fire"]
 
-# Named close enough to the assault Special "Cunning Deflection" that the two
-# may be one ability under two names — the Race data has both.
 [special.cunning_assault_defense]
 name = "Cunning Assault Defense"
 slots = ["assault"]
 signature = "[{N}, {M}+]"
 effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
-see_also = ["special.cunning_assault"]
+see_also = ["special.cunning_assault", "special.cunning_deflection"]
+todo = "Named close enough to \"Cunning Deflection\" that the two may be one ability under two names. The Race data has both; decide whether to merge them."
 
 [special.cunning_assault_defense.variables]
 N = { type = "int" }
@@ -231,13 +230,13 @@ N = { type = "int", min = 1, max = 10 }
 unit = { type = "str", values = ["self", "any"] }
 phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
 
-# Reachable from no Race label — is this rule dead, or is the label missing?
 [special.hide]
 name = "Hide"
 slots = ["unit"]
 signature = "{terrain}"
 effect = "If you are in {terrain} you may use the hide order: remove your unit from the board, replace it with a hidden token."
 places = ["token.hidden"]
+todo = "Reachable from no Race label. Is this rule dead, or is the label missing?"
 
 [special.hide.variables]
 terrain = { type = "ref", namespaces = ["terrain"] }
@@ -264,7 +263,6 @@ see_also = ["token.shaken"]
 [special.hypnotizing_gaze.variables]
 N = { type = "int", min = 1, max = 3 }
 
-# Reachable by no exact label: Horror's "Terror" carries this rule in prose.
 [special.insanity_field]
 name = "Insanity Field"
 slots = ["unit"]
@@ -272,6 +270,7 @@ signature = "[range={N}][d{M}]"
 effect = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token"
 places = ["token.insane"]
 see_also = ["token.shaken", "damage_type.psychic"]
+todo = "Reachable by no exact label: Horror's \"Terror\" carries this rule in its prose. The atmospheric name is the natural home for it, so decide whether Terror should become an instance of this rule."
 
 [special.insanity_field.variables]
 N = { type = "int", min = 1, max = 3 }
