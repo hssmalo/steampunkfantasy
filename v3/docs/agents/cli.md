@@ -20,6 +20,28 @@ uv run spf race show goblin models.goblin_infantry
 uv run spf race show goblin equipment.goblin_bow
 ```
 
+## Specials
+
+One row per Special in the registry, prefixed with a **UMAR** column — `U`nit,
+`M`odel, `A`ssault, `R`ange — at four fixed positions, so a Special declaring
+several Slots is marked in each. Rows are one logical line each, which makes the
+output greppable.
+
+```console
+# Every Special: UMAR, identifier and signature, then the effect (or its todo)
+uv run spf special list
+uv run spf special list --slot range   # only Specials declaring `range`
+uv run spf special list | grep poison
+
+# Where one Special is actually used: its occurrences across every race
+uv run spf special show ork_reroll
+```
+
+`spf rules specials` is a different command for a different reader: it validates
+the registry and dumps the raw records, and is the sibling of the six other
+`spf rules <registry>` commands. `spf special list` is the reader-facing
+overview. Keep them separate.
+
 ## Assets
 
 Generating, refining, and promoting Assets. Candidates are addressed by
