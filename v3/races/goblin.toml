@@ -18,7 +18,7 @@ models = [
 	"goblin_infantry",
 	"goblin_infantry"
 ]
-size = "Small"
+size = "small"
 cost.mp = 8
 description = '''A Goblin armed with bow and grenades. Goblin are small in size, excellent in sneaking and avoiding danger.
 '''
@@ -76,7 +76,7 @@ rows = [
 race = "goblin"
 name = "Giant Snake Cavalry"
 models = ["giant_snake_cavalry"]
-size = "Large"
+size = "large"
 cost.mp = 4
 cost.xp = 24
 
@@ -142,7 +142,7 @@ rows = [
 race = "goblin"
 name = "Tiny Snake"
 models = ["tiny_snake", "tiny_snake"]
-size = "Tiny"
+size = "tiny"
 
 description = "Two tiny snakes hiding in the grass, ready to bite anyone that comes too close"
 
@@ -181,7 +181,7 @@ rows = [
 race = "goblin"
 name = "Goblin Infantry Carrier"
 models = ["goblin_infantry_carrier"]
-size = "Large"
+size = "large"
 armor = [10, 6, 5, 4]
 cost.ip = 16
 
@@ -257,7 +257,7 @@ rows = [
 race = "goblin"
 name = "Bipedal Mech"
 models = ["bipedal_mech"]
-size = "Large"
+size = "large"
 armor = [8,8,8,6]
 cost.ip = 24
 
@@ -322,7 +322,7 @@ rows = [
 race = "goblin"
 name = "Heavy Carrier"
 models = ["heavy_carrier"]
-size = "Large"
+size = "large"
 armor = [10, 8, 6, 4]
 cost.ip = 32
 
@@ -416,7 +416,7 @@ rows = [
 race = "goblin"
 name = "Modified Truck"
 models = ["modified_truck"]
-size = "Medium"
+size = "medium"
 armor = [4, 3, 2, 1]
 cost.ip = 8
 
@@ -503,7 +503,7 @@ rows = [
 race = "goblin"
 name = "Mechanical Fire Bird"
 models = ["mechanical_fire_bird"]
-size = "Medium"
+size = "medium"
 armor = [5, 4, 4, 3]
 cost.ip = 24
 description = '''A robot modeled after the classical phoenix. Flies fast, trying to set all enemies around it on fire. Inside the robot is an remarkable reassemble mechanism which can rebuild the robot almost from scratch.

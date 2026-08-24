@@ -17,19 +17,21 @@ A resolved `Model` SHALL hold `default_equipment: tuple[EquipmentConfig, ...]` (
 - **WHEN** a `Model` has one or more entries in `upgrade_equipment`
 - **THEN** `model.equipment` SHALL return `model.upgrade_equipment` and SHALL NOT include any entry from `model.default_equipment`
 
-### Requirement: Model exposes stacked unit and model specials
-`Model.unit_specials` SHALL return a `dict[UnitSpecial, str]` formed by merging: `model.config.unit_special`, then each `equip.unit_special` for equipment in `model.equipment` in order. Later entries override earlier ones. `Model.model_specials` SHALL return a `dict[ModelSpecial, str]` formed by merging `model.config.special`, then each `equip.model_special` in order.
+### Requirement: Model exposes accumulated unit and model specials
+`Model.unit_specials` SHALL return a `Specials` mapping — id to list of instances — formed by accumulating `model.config.unit_specials`, then each `equip.unit_specials` for equipment in `model.equipment` in order. `Model.model_specials` SHALL do the same over `model.config.specials` and each `equip.model_specials`.
 
-#### Scenario: Equipment unit_special overrides model config unit_special for same key
-- **WHEN** both `model.config.unit_special` and an equipment's `unit_special` contain the same key
-- **THEN** `model.unit_specials` SHALL contain the equipment's value for that key
+Accumulation is the default and keeps every instance: the data layer never merges two instances into one, because they may carry different arguments and joining their prose is a rendering decision (ADR 0024). An instance marked `replace` SHALL clear the instances of its id contributed *earlier* in the chain, leaving itself and anything contributed later.
 
-#### Scenario: Model config model_special preserved when no equipment overrides it
-- **WHEN** `model.config.special` has a key that no equipment's `model_special` shares
-- **THEN** `model.model_specials` SHALL include that key with its original value
+#### Scenario: Equipment and model config both contribute the same id
+- **WHEN** both `model.config.unit_specials` and an equipment's `unit_specials` carry the same id
+- **THEN** `model.unit_specials` SHALL contain both instances under that id, in chain order
 
-#### Scenario: All equipment specials are merged in equipment order
-- **WHEN** two equipment pieces each contribute different keys to `unit_special`
+#### Scenario: An equipment instance marked replace resets the id
+- **WHEN** an equipment's instance of an id sets `replace = true`
+- **THEN** `model.unit_specials` SHALL contain only that instance for the id, and not what earlier sources contributed
+
+#### Scenario: All equipment specials are accumulated in equipment order
+- **WHEN** two equipment pieces each contribute different ids to `unit_specials`
 - **THEN** `model.unit_specials` SHALL contain entries from both
 
 ### Requirement: Model exposes resolved AssaultConfig via assault()
@@ -74,16 +76,20 @@ A resolved `Model` SHALL hold `default_equipment: tuple[EquipmentConfig, ...]` (
 - **WHEN** a model has two upgrade equipment pieces with costs `Cost(mp=2)` and `Cost(cp=3)`
 - **THEN** `model.cost()` SHALL return `Cost(mp=2, cp=3)`
 
-### Requirement: Unit exposes stacked unit specials
-`Unit.unit_specials` SHALL return a `dict[UnitSpecial, str]` formed by merging: `unit.config.special`, then each `model.unit_specials` for models in `unit.models` in order. Later entries override earlier ones.
+### Requirement: Unit exposes accumulated unit specials
+`Unit.unit_specials` SHALL return a `Specials` mapping formed by accumulating `unit.config.specials`, then each `model.unit_specials` for models in `unit.models` in order, under the same accumulate-and-reset rule.
 
 #### Scenario: Unit config specials are the base
 - **WHEN** no model contributes any unit specials
-- **THEN** `unit.unit_specials` SHALL equal `unit.config.special`
+- **THEN** `unit.unit_specials` SHALL equal `unit.config.specials`
 
-#### Scenario: Model unit_specials override unit config for same key
-- **WHEN** a model's `unit_specials` contains a key also in `unit.config.special`
-- **THEN** `unit.unit_specials` SHALL use the model's value
+#### Scenario: Several models granting one id each contribute an instance
+- **WHEN** several of a unit's models each grant the same id without `replace`
+- **THEN** `unit.unit_specials` SHALL contain one instance per granting model
+
+#### Scenario: Models granting one id with replace collapse to one instance
+- **WHEN** every model granting an id marks its instance `replace`
+- **THEN** `unit.unit_specials` SHALL contain exactly one instance for that id
 
 ### Requirement: Unit.cost() returns the full unit cost with upgrade_all semantics
 `Unit.cost()` SHALL return the sum of: `unit.config.cost` (or `Cost()` if None), plus upgrade model costs, plus equipment costs applying `upgrade_all` logic. For each model's `upgrade_equipment`: if `upgrade_all is False`, the cost is multiplied by `len(unit.models)`; otherwise the cost is added flat. Model upgrade cost (when a model replaced a default) is added flat per model.

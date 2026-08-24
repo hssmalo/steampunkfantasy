@@ -60,16 +60,17 @@ The system SHALL provide a function to retrieve the complete, validated `ArmyCon
 - **WHEN** `get_army(army_name)` is called for an army with no corresponding TOML file
 - **THEN** it raises an appropriate error indicating the file is not found
 
-### Requirement: Support Regeneration unit special
-The system SHALL accept `"Regeneration"` as a valid `UnitSpecial` key in unit special dicts.
+### Requirement: Special ids are accepted by the registry, not by a list
+The system SHALL accept a Special id in a Race file if and only if the Special registry declares it and declares the slot it is used in (ADR 0024). No hand-kept list of acceptable labels exists, so adding a rule to `rules/special.toml` is the whole of what makes it authorable.
 
-#### Scenario: Regeneration key validates
-- **WHEN** a TOML unit entry contains `[units.xxx.special]` with a `"Regeneration"` key
+#### Scenario: A declared id validates
+- **WHEN** a TOML unit entry contains `[[units.xxx.specials.regeneration]]` and the registry declares `regeneration` in the `unit` slot
 - **THEN** it parses without a validation error
 
-### Requirement: Support Hans Sverre's second favorite rule unit special
-The system SHALL accept `"Hans Sverre's second favorite rule"` as a valid `UnitSpecial` key in unit special dicts.
+#### Scenario: An undeclared id is rejected
+- **WHEN** a TOML unit entry names an id the registry does not declare
+- **THEN** loading fails, naming the holder and the unknown id
 
-#### Scenario: Hans Sverre's second favorite rule key validates
-- **WHEN** a TOML unit entry contains `[units.xxx.special]` with a `"Hans Sverre's second favorite rule"` key
-- **THEN** it parses without a validation error
+#### Scenario: A declared id used in the wrong slot is rejected
+- **WHEN** a TOML entry uses an id in a slot its rule's `slots` field does not list
+- **THEN** loading fails, naming the slots the rule does declare
