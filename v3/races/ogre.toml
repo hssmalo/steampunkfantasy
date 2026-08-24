@@ -10,7 +10,7 @@ description = "Ogres are large intelligent humanoids typically about 4m in heigh
 race = "ogre"
 name = "Ogre Hydra"
 models = ["ogre_hydra", "ogre_hydra_crew", "ogre_hydra_crew"]
-size = "Huge"
+size = "huge"
 cost.mp = 16
 cost.xp = 96
 
@@ -83,7 +83,7 @@ Versus regular infantry ogres are at a clear disadvantage since they only  fire 
 
 
 models = ["ogre_infantry", "ogre_infantry"]
-size = "Large"
+size = "large"
 cost.mp = 16
 
 [units.ogre_infantry.shaken]
@@ -136,7 +136,7 @@ lore = '''The ogres realize that being big comes with some big disadvantages, th
 
 tip = '''Due to being smaller and having some armor they are far better protected compared to Ogre infantry. However, the robots are not as good in close combat compared to the regular ogre infantry. They also cost cp (craftpoints) instead of mp (manpower) and thus may be viewed as more expensive'''
 
-size = "Medium"
+size = "medium"
 cost.cp = 16
 armor = [3, 3, 0, 0]
 
@@ -178,7 +178,7 @@ notes = [
 race = "ogre"
 name = "Pet Panther"
 models = ["pet_panther"]
-size = "Medium"
+size = "medium"
 cost.xp = 8
 description = "A Panther is a big scare cat with huge theeth"
 
@@ -242,7 +242,7 @@ tip ='''
 Emphasis is put on fighting multiple enemies simultaneously with their long swords. Although maybe not the most skilled assault unit, few enemies can feel safe if hit by the large ogre sword. While not in an assault it switches to use the gear pistol instead, while always supporting the artillery with scout action when they can. '''
 
 models = ["ogre_scout"]
-size = "Large"
+size = "large"
 cost.mp = 8
 cost.xp = 16
 
@@ -295,7 +295,7 @@ rows = [
 race = "ogre"
 name = "Drone Swarm"
 models = ["drone_swarm", "drone_swarm", "drone_swarm", "drone_swarm"]
-size = "Tiny"
+size = "tiny"
 cost.cp = 4
 description = '''A drone swarm consists of 4 tiny floating drones, each carrying a gear pistol. A gear pistol is a clockwork steampunk pistol. '''
 
@@ -362,7 +362,7 @@ rows = [
 race = "ogre"
 name = "Repair Drone"
 models = ["repair_drone", "repair_drone", "repair_drone", "repair_drone"]
-size = "Tiny"
+size = "tiny"
 cost.cp = 16
 description = "A tiny drones designed to repair other robots and vehicles."
 
@@ -394,7 +394,7 @@ rows = [
 race = "ogre"
 name = "Medic Drone"
 models = ["medic_drone", "medic_drone", "medic_drone", "medic_drone"]
-size = "Tiny"
+size = "tiny"
 description = "A tiny drone designed to heal infantry."
 
 lore = "They have become the ogre assault scouts best friends"
@@ -429,7 +429,7 @@ rows = [
 race = "ogre"
 name = "Main Engine"
 models = ["main_engine"]
-size = "Huge"
+size = "huge"
 cost.ip = 32
 armor = [12, 10, 10, 8]
 description = '''The main engine is a huge vehicle which tows one or more armed and armored wagons behind. It can carry lots of tiny drones and has a huge cannon firing straight forward. It is very well armored from front and side'''
@@ -510,7 +510,7 @@ rows = [
 race = "ogre"
 name = "Broadside Wagon"
 models = ["broadside_wagon"]
-size = "Large"
+size = "large"
 cost.ip = 8
 armor = [2, 10, 10, 8]
 description = '''Broadside wagon is pulled by the main engine, and is specialized in broadside fire where lots of heavy hand-weapons are fired to both sides at the same time.
@@ -561,7 +561,7 @@ rows = [
 race = "ogre"
 name = "Artillery Wagon"
 models = ["artillery_wagon"]
-size = "Large"
+size = "large"
 cost.ip = 32
 armor = [2, 10, 10, 8]
 description = '''Artillery wagons need to be towed and are armed with a huge artillery which can fire indirectly.'''

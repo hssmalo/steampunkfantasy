@@ -69,7 +69,7 @@ _UNIT: dict[str, object] = {
     "race": "goblin",
     "name": "Squad",
     "models": ["soldier"],
-    "size": "Small",
+    "size": "small",
     "shaken": {"speed": "slow", "movement_order": ["-", "-", "flee"]},
     "orders": {},
     "damage_tables": {"Regular": {"rows": ["1: Fine", "2: Dead"]}},
@@ -148,3 +148,32 @@ def test_a_model_declares_instances_in_two_slots() -> None:
 
     assert loaded.models["soldier"].unit_specials["officer"]
     assert loaded.models["soldier"].assault.specials["retreat"]
+
+
+# ---------------------------------------------------------------------------
+# The vocabularies the modifier registries own
+# ---------------------------------------------------------------------------
+
+
+def test_a_unit_names_a_size_the_registry_declares() -> None:
+    assert race(unit={"size": "huge"}).units["squad"].size == "huge"
+
+
+def test_a_size_spelled_as_a_display_name_fails_the_race() -> None:
+    with pytest.raises(ValidationError, match="'Medium' is not a size"):
+        race(unit={"size": "Medium"})
+
+
+def test_an_unknown_shaken_speed_fails_the_race() -> None:
+    with pytest.raises(ValidationError, match="'crawling' is not a speed"):
+        race(unit={"shaken": {"speed": "crawling", "movement_order": ["-"]}})
+
+
+def test_an_unknown_speed_in_an_orders_table_fails_the_race() -> None:
+    with pytest.raises(ValidationError, match="'dawdle' is not a speed"):
+        race(unit={"orders": {"movement": {"dawdle": [["-"]]}}})
+
+
+def test_an_unknown_speed_in_gained_orders_fails_the_race() -> None:
+    with pytest.raises(ValidationError, match="'dawdle' is not a speed"):
+        race(equipment={"orders_gained": {"fire": {"dawdle": [["Fire"]]}}})

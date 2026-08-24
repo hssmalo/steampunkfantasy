@@ -5,12 +5,20 @@ from typing import get_args
 
 from spf.armies.model import Model
 from spf.armies.specials import merge_specials
+from spf.registry import load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.race import OrdersConfig, UnitConfig, UnitStatModifierConfig
 from spf.schemas.special import Specials
 
-# Canonical Speed ordering for stable merged-order output.
-_SPEED_ORDER: list[t.Speed] = list(get_args(t.Speed.__value__))
+
+def _speed_order() -> list[str]:
+    """Canonical Speed ordering for stable merged-order output.
+
+    The declaration order of the `speed` registry, which owns the vocabulary
+    (ADR 0024); re-ordering `rules/modifiers.toml` changes rendered output.
+    """
+    return list(load_registry().records["speed"])
+
 
 # Canonical Model Type ordering for stable common-type output. The order of the
 # `ModelType` literal is meaningful: it is what the army-rules Type line is
@@ -50,19 +58,11 @@ class Unit:
         return self.nick or self.config.name
 
     @property
-    def unit_specials(self) -> dict[t.UnitSpecial, str]:
-        """Stacked unit-level specials: unit config then each model's unit_specials."""
-        result: dict[t.UnitSpecial, str] = dict(self.config.special)
-        for model in self.models:
-            result |= model.unit_specials
-        return result
-
-    @property
-    def unit_special_instances(self) -> Specials:
+    def unit_specials(self) -> Specials:
         """Unit-level instances: unit config then each model's contribution."""
         return merge_specials(
             self.config.specials,
-            *(model.unit_special_instances for model in self.models),
+            *(model.unit_specials for model in self.models),
         )
 
     @property
@@ -181,8 +181,8 @@ class Unit:
 
         Per order-type (fire/movement) and per Speed: base rows first, then each
         equipment's gained rows, dropping exact-duplicate rows. Speeds present
-        only in equipment appear too. Speeds are ordered by the canonical Speed
-        literal order. Source configs are never mutated.
+        only in equipment appear too. Speeds are ordered by the `speed`
+        registry's declaration order. Source configs are never mutated.
 
         This is the fold of `orders_by_source()` — one merge algorithm, two
         views (ADR 0021). The fold deduplicates *across* sources, which the
@@ -223,7 +223,7 @@ def _stack_armor(
     raise ValueError(msg)
 
 
-type _SpeedRows = dict[t.Speed, list[list[str]]]
+type _SpeedRows = dict[str, list[list[str]]]
 
 
 def _in_speed_order(orders: _SpeedRows | None) -> _SpeedRows:
@@ -231,7 +231,7 @@ def _in_speed_order(orders: _SpeedRows | None) -> _SpeedRows:
     orders = orders or {}
     return {
         speed: [list(row) for row in orders[speed]]
-        for speed in _SPEED_ORDER
+        for speed in _speed_order()
         if speed in orders
     }
 
@@ -248,7 +248,7 @@ def _new_rows(rows: list[list[str]], *, seen: list[list[str]]) -> list[list[str]
 def _gained_rows(gained: list[_SpeedRows | None], *, base: _SpeedRows) -> _SpeedRows:
     """Union gained rows per Speed, dropping rows the base already carries."""
     merged: _SpeedRows = {}
-    for speed in _SPEED_ORDER:
+    for speed in _speed_order():
         rows: list[list[str]] = []
         for gained_map in gained:
             rows += _new_rows(
@@ -271,7 +271,7 @@ def _merge_across_sources(
     first, *gained = rows_per_source
     base = first or {}
     merged: _SpeedRows = {}
-    for speed in _SPEED_ORDER:
+    for speed in _speed_order():
         rows: list[list[str]] = [list(row) for row in base.get(speed, [])]
         for gained_map in gained:
             rows += _new_rows((gained_map or {}).get(speed, []), seen=rows)

@@ -49,23 +49,7 @@ class Model:
         ]
 
     @property
-    def unit_specials(self) -> dict[t.UnitSpecial, str]:
-        """Stacked unit-level specials: model config then each equipment in order."""
-        result: dict[t.UnitSpecial, str] = dict(self.config.unit_special)
-        for equip in self.equipment:
-            result |= equip.unit_special
-        return result
-
-    @property
-    def model_specials(self) -> dict[t.ModelSpecial, str]:
-        """Stacked model-level specials: model config then each equipment in order."""
-        result: dict[t.ModelSpecial, str] = dict(self.config.special)
-        for equip in self.equipment:
-            result |= equip.model_special
-        return result
-
-    @property
-    def unit_special_instances(self) -> Specials:
+    def unit_specials(self) -> Specials:
         """Unit-level instances: model config then each equipment in order."""
         return merge_specials(
             self.config.unit_specials,
@@ -73,7 +57,7 @@ class Model:
         )
 
     @property
-    def model_special_instances(self) -> Specials:
+    def model_specials(self) -> Specials:
         """Model-level instances: model config then each equipment in order."""
         return merge_specials(
             self.config.specials,
@@ -108,7 +92,6 @@ class Model:
         deflection_die: t.DieResult = self.config.assault.deflection_die
         damage: t.Die = self.config.assault.damage
         ap: t.ArmorPenetration = self.config.assault.ap
-        special: dict[t.AssaultSpecial, str] = dict(self.config.assault.special)
         instances = [self.config.assault.specials]
 
         for equip in self.equipment:
@@ -149,7 +132,6 @@ class Model:
                 )
             if ea.ap is not None:
                 ap = _apply_ap(ap, stacker=ea.ap, equip_name=equip.name)
-            special |= ea.special
             instances.append(ea.specials)
 
         return AssaultConfig(
@@ -159,7 +141,6 @@ class Model:
             deflection_die=deflection_die,
             damage=damage,
             ap=ap,
-            special=special,
             specials=merge_specials(*instances),
         )
 

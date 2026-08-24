@@ -286,8 +286,8 @@ def test_build_reference_collapses_identical_units_with_count() -> None:
 
 
 def test_build_reference_keeps_distinct_units_separate() -> None:
-    unit_a = _unit(name="Infantry", size="Small")
-    unit_b = _unit(name="Archer", size="Small")
+    unit_a = _unit(name="Infantry", size="small")
+    unit_b = _unit(name="Archer", size="small")
 
     reference = build_reference(_army(unit_a, unit_b), stem="test")
 

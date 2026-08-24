@@ -13,7 +13,6 @@ from spf.frontends.cli.render import CARDS, RenderOpts, render_cards, safe_stem
 from spf.render import render
 from spf.render.cards import OrderCardDeck, build_deck
 from spf.render.formats import get_format
-from spf.schemas import type_aliases as t
 from spf.schemas.race import (
     AssaultConfig,
     EquipmentConfig,
@@ -59,7 +58,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every Unit field under test
     orders: OrdersConfig,
     models: list[Model] | None = None,
     name: str = "Squad",
-    size: t.Size = "Small",
+    size: str = "small",
     shaken: ShakenConfig | None = None,
     nick: str | None = None,
 ) -> Unit:

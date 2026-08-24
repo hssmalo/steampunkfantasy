@@ -58,6 +58,17 @@ class Registry:
         namespace, identifier = match.groups()
         return self.records.get(namespace, {}).get(identifier)
 
+    def display_name(self, ref: str) -> str:
+        """Return a record's own name, which is how an identifier is printed.
+
+        The registry is the single definition site for a name (ADR 0024), so a
+        Race file spelling `size = "huge"` renders as the `size` registry says.
+        A ref pointing nowhere falls back to its identifier rather than
+        raising: the load-time gate is what rejects those.
+        """
+        record = self.record(ref)
+        return record.name if record is not None else ref.partition(".")[2] or ref
+
 
 def load_registry(rules_dir: Path | None = None) -> Registry:
     """Read every registry `rules/namespaces.toml` declares.

@@ -17,6 +17,7 @@ from pathlib import Path
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
+from spf.registry import load_registry
 from spf.render.images import ImageLookup, committed_image
 from spf.render.specials import special_lines
 from spf.schemas import type_aliases as t
@@ -85,12 +86,12 @@ class UnitEntry:
     name: str
     image: Path | None
     count: int
-    size: t.Size
+    size: str
     model_summary: list[str]
     types: list[t.ModelType]
     armor: list[int] | None
     points: int
-    shaken_speed: t.Speed
+    shaken_speed: str
     shaken_movement: list[str]
     shaken_fire: str
     specials: _Specials
@@ -137,7 +138,7 @@ def _model_entry(model: Model) -> ModelEntry:
     return ModelEntry(
         name=model.display_name,
         equipment_summary=_count_summary(model.equipment, lambda e: e.name),
-        specials=special_lines(model.model_special_instances),
+        specials=special_lines(model.model_specials),
         assault_strength=list(assault.strength),
         assault_strength_die=assault.strength_die,
         assault_deflection=list(assault.deflection),
@@ -156,7 +157,7 @@ def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> Unit
         # `unit.display_name` above is the player's Nick or the catalogue name.
         image=image_for(race, unit.name),
         count=1,
-        size=unit.config.size,
+        size=load_registry().display_name(f"size.{unit.config.size}"),
         model_summary=_count_summary(unit.models, lambda m: m.display_name),
         types=unit.common_types,
         armor=list(unit.config.armor) if unit.config.armor is not None else None,
@@ -164,7 +165,7 @@ def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> Unit
         shaken_speed=unit.config.shaken.speed,
         shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
-        specials=special_lines(unit.unit_special_instances),
+        specials=special_lines(unit.unit_specials),
         damage_tables=[
             (
                 name,

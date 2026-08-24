@@ -150,7 +150,7 @@ def print_army_rules(army: Army) -> None:
         stdout.print(
             f"- [yellow]{unit.display_name}[/] - {unit.cost()}", highlight=False
         )
-        unit_specials = special_lines(unit.unit_special_instances)
+        unit_specials = special_lines(unit.unit_specials)
         if unit_specials:
             stdout.print("  - [dim]Specials:[/]", highlight=False)
             for heading, special in unit_specials:
@@ -164,7 +164,7 @@ def print_army_rules(army: Army) -> None:
             model_pts = model.cost().to_points()
             cost_str = f" ({model_pts} pts)" if model_pts else ""
             stdout.print(f"  - {model.display_name}{cost_str}", highlight=False)
-            model_specials = special_lines(model.model_special_instances)
+            model_specials = special_lines(model.model_specials)
             if model_specials:
                 stdout.print("    - [dim]Specials:[/]", highlight=False)
             for heading, special in model_specials:

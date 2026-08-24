@@ -16,12 +16,12 @@ class RaceMetadata(StrictModel):
 
 
 class OrdersConfig(StrictModel):
-    fire: dict[t.Speed, list[t.FireOrder]] | None = None
-    movement: dict[t.Speed, list[t.MovementOrder]] | None = None
+    fire: dict[str, list[t.FireOrder]] | None = None
+    movement: dict[str, list[t.MovementOrder]] | None = None
 
 
 class ShakenConfig(StrictModel):
-    speed: t.Speed
+    speed: str
     movement_order: t.MovementOrder
     fire_order: str = "Can't use weapons"
     comment: str = ""
@@ -56,10 +56,9 @@ class UnitConfig(StrictModel):
     lore: str = ""
     ai_guid: str = ""
     models: list[str]
-    size: t.Size
+    size: str
     cost: t.Cost | None = None
     shaken: ShakenConfig
-    special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
     specials: Specials = Field(default_factory=dict)
     note: str = ""
     orders: OrdersConfig
@@ -74,7 +73,6 @@ class AssaultConfig(StrictModel):
     deflection_die: t.DieResult
     damage: t.Die
     ap: t.ArmorPenetration
-    special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
     specials: Specials = Field(default_factory=dict)
     note: str = ""
 
@@ -89,8 +87,6 @@ class ModelConfig(StrictModel):
     assault: AssaultConfig
     cost: t.Cost | None = None
     replaces: t.ModelName | None = None
-    unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
-    special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
     unit_specials: Specials = Field(default_factory=dict)
     specials: Specials = Field(default_factory=dict)
     unit: UnitStatModifierConfig | None = None
@@ -104,7 +100,6 @@ class EquipmentAssaultConfig(StrictModel):
     deflection_die: Stacker[t.DieResult] | None = None
     damage: Stacker[t.Die] | None = None
     ap: Stacker[t.ArmorPenetration] | None = None
-    special: dict[t.AssaultSpecial, str] = Field(default_factory=dict)
     specials: Specials = Field(default_factory=dict)
     note: str = ""
 
@@ -114,7 +109,6 @@ class EquipmentRangeConfig(StrictModel):
     angle: t.Angles[bool | str]
     damage: t.Die
     ap: t.ArmorPenetration
-    special: dict[t.RangeSpecial, str] = Field(default_factory=dict)
     specials: Specials = Field(default_factory=dict)
     note: str = ""
 
@@ -128,8 +122,6 @@ class EquipmentConfig(StrictModel):
     requires: list[list[t.ParsedRequirement]] = Field(default_factory=list)
     assault: EquipmentAssaultConfig | None = None
     range: EquipmentRangeConfig | None = None
-    unit_special: dict[t.UnitSpecial, str] = Field(default_factory=dict)
-    model_special: dict[t.ModelSpecial, str] = Field(default_factory=dict)
     unit_specials: Specials = Field(default_factory=dict)
     model_specials: Specials = Field(default_factory=dict)
     unit: UnitStatModifierConfig | None = None
@@ -181,6 +173,25 @@ def _validate_specials(spawns: set[str], specials: Specials, *, context: str) ->
                     f"spawn ID '{spawn_id}'"
                 )
                 raise ValueError(msg)
+
+
+def _order_speeds(orders: OrdersConfig | None) -> list[str]:
+    """Every Speed an orders table is keyed by, fire rows then movement rows."""
+    if orders is None:
+        return []
+    return [*(orders.fire or {}), *(orders.movement or {})]
+
+
+def _check_ids(
+    values: list[str], *, namespace: str, context: str, rules: registry.Registry
+) -> list[str]:
+    """Report every value that is not an identifier in the named registry."""
+    known = rules.records.get(namespace, {})
+    return [
+        f"{context}: '{value}' is not a {namespace}"
+        for value in values
+        if value not in known
+    ]
 
 
 class RaceConfig(StrictModel):
@@ -237,6 +248,39 @@ class RaceConfig(StrictModel):
                 errors += registry.check_instances(
                     equip.range.specials, slot="range", context=where, registry=rules
                 )
+        if errors:
+            raise ValueError("\n".join(errors))
+        return self
+
+    @model_validator(mode="after")
+    def check_vocabulary(self) -> Self:
+        """Check every Speed and Size against the registry that owns it.
+
+        A Unit's `size`, its `shaken.speed` and the keys of every orders table
+        are identifiers in the `size` and `speed` registries (ADR 0024), so
+        they are checked the same way a Special id is — against the registry,
+        not against a list kept alongside it.
+        """
+        rules = registry.load_registry()
+        errors: list[str] = []
+        for unit in self.units.values():
+            where = f"unit '{unit.name}'"
+            errors += _check_ids(
+                [unit.size], namespace="size", context=where, rules=rules
+            )
+            errors += _check_ids(
+                [unit.shaken.speed, *_order_speeds(unit.orders)],
+                namespace="speed",
+                context=where,
+                rules=rules,
+            )
+        for equip in self.equipment.values():
+            errors += _check_ids(
+                _order_speeds(equip.orders_gained),
+                namespace="speed",
+                context=f"equipment '{equip.name}'",
+                rules=rules,
+            )
         if errors:
             raise ValueError("\n".join(errors))
         return self

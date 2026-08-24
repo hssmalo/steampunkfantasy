@@ -206,7 +206,7 @@ def unit(
         race="goblin",
         name="Squad",  # pyright: ignore[reportArgumentType]
         models=["soldier"] * len(models),
-        size="Small",
+        size="small",
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=OrdersConfig(),
         armor=armor,
@@ -222,7 +222,7 @@ def test_a_models_unit_specials_stack_model_config_then_equipment() -> None:
         upgrades=[equipment("kit", unit_specials={"heal": [instance("kit")]})],
     )
 
-    assert texts(slot.unit_special_instances, "heal") == ["model", "kit"]
+    assert texts(slot.unit_specials, "heal") == ["model", "kit"]
 
 
 def test_a_models_specials_stack_model_config_then_equipment() -> None:
@@ -231,7 +231,7 @@ def test_a_models_specials_stack_model_config_then_equipment() -> None:
         upgrades=[equipment("kit", model_specials={"to_hit": [instance("kit")]})],
     )
 
-    assert texts(slot.model_special_instances, "to_hit") == ["model", "kit"]
+    assert texts(slot.model_specials, "to_hit") == ["model", "kit"]
 
 
 def test_an_equipment_may_replace_a_special_a_model_declares() -> None:
@@ -242,7 +242,7 @@ def test_an_equipment_may_replace_a_special_a_model_declares() -> None:
         ],
     )
 
-    assert texts(slot.model_special_instances, "to_hit") == ["kit"]
+    assert texts(slot.model_specials, "to_hit") == ["kit"]
 
 
 def test_assault_specials_stack_model_config_then_equipment() -> None:
@@ -261,7 +261,7 @@ def test_a_units_specials_stack_unit_config_then_each_model() -> None:
         specials={"heal": [instance("unit")]},
     )
 
-    assert texts(squad.unit_special_instances, "heal") == ["unit", "first", "second"]
+    assert texts(squad.unit_specials, "heal") == ["unit", "first", "second"]
 
 
 def test_an_equipment_may_replace_a_special_the_unit_declares() -> None:
@@ -278,7 +278,7 @@ def test_an_equipment_may_replace_a_special_the_unit_declares() -> None:
         specials={"heal": [instance("unit")]},
     )
 
-    assert texts(squad.unit_special_instances, "heal") == ["kit"]
+    assert texts(squad.unit_specials, "heal") == ["kit"]
 
 
 def test_replace_does_not_cross_slots() -> None:
@@ -290,7 +290,7 @@ def test_replace_does_not_cross_slots() -> None:
     )
 
     assert texts(slot.assault().specials, "extra_damage") == ["assault"]
-    assert texts(slot.model_special_instances, "extra_damage") == ["model"]
+    assert texts(slot.model_specials, "extra_damage") == ["model"]
 
 
 # ---------------------------------------------------------------------------

@@ -45,10 +45,9 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Squad",
                 models=["soldier"],
-                size="Small",
+                size="small",
                 cost=t.Cost(mp=3),
                 shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-                special={},
                 orders=OrdersConfig(),
                 armor=None,
                 damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]

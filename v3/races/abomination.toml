@@ -12,7 +12,7 @@ description = '''Humanoid creatures with 4 to 8 tentacles. About 1.8m in height
 race = "abomination"
 name = "Confusiator"
 models = ["confusiator_tank"]
-size = "Large"
+size = "large"
 armor = [8, 6, 5, 4]
 cost.ip = 24
 description = '''Horrifying steampunk tank with a rotating turret with a beamweapon causing confusion
@@ -76,7 +76,7 @@ rows = [
 race = "abomination"
 name = "Flagship"
 models = ["flagship"]
-size = "Enormous"
+size = "enormous"
 armor = [10, 9, 8, 8]
 cost.ip = 96
 description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insantiy weapons and a greater disruptor weapons and lots of gadgets.
@@ -163,7 +163,7 @@ rows = [
 race = "abomination"
 name = "Frost 88"
 models = ["frost_88"]
-size = "Large"
+size = "large"
 armor = [10, 8, 7, 6]
 cost.ip = 48
 description = '''Steampunk heavy armored vehicle, without a turret, but with two weapons firing forwards, a frost ray and water jet
@@ -240,7 +240,7 @@ models = [
 	"abomination_infantry",
 	"abomination_infantry",
 ]
-size = "Medium"
+size = "medium"
 cost.mp = 32
 
 description = '''An abomination is an humanoid creature with 4 tentacles and two arms. They are about 1.8m height. They are wielding a futuristic horror weapon. The tentacles are about 0.8m in length. Abomination are amphibious. Inspired by Lovecraft
@@ -294,7 +294,7 @@ rows = [
 race = "abomination"
 name = "Horror"
 models = ["horror"]
-size = "Huge"
+size = "huge"
 cost.xp = 32
 armor = [6, 4, 2, 1]
 description = '''A huge scary unfamiliar monster  with a cloud of poison and disease around it. A monster inspired by lovecraft
@@ -356,7 +356,7 @@ rows = [
 race = "abomination"
 name = "Shriek Monstrosity"
 models = ["shriek_monstrosity"]
-size = "Large"
+size = "large"
 cost.xp = 24
 description = '''A flying monster bird scaring the enemy with a deadly scream.
 '''
@@ -399,7 +399,7 @@ rows = [
 race = "abomination"
 name = "Water Elemental"
 models = ["water_elemental", "water_elemental", "water_elemental", "water_elemental"]
-size = "Medium"
+size = "medium"
 description = '''A water elemental is a robot that looks like a water elemental, and throws corrosive water and poison at the enemy.
 '''
 
@@ -466,7 +466,7 @@ models = [
 	"robot_crab",
 	"robot_crab",
 ]
-size = "Tiny"
+size = "tiny"
 cost.cp = 4
 armor = [3, 3, 3, 3]
 description = '''These are tiny robot crabs, which swarm in big numbers.
@@ -493,7 +493,7 @@ rows = [
 race = "abomination"
 name = "Giant Frog Riders"
 models = ["giant_frog_rider", "giant_frog_rider"]
-size = "Medium"
+size = "medium"
 cost.mp = 8
 cost.xp = 16
 description = '''An abomination (humandoid creature with 4 tentacles, inspired by lovecraft) is riding a giant frog. The frog spits poison. The abomination is small compared to the frog. The abomiantion is wielding a steampowered melee weapon. There is a fluid tube connected to the melee weapon.
@@ -545,7 +545,7 @@ rows = [
 race = "abomination"
 name = "Hippopotamus Riders"
 models = ["hippopotamus_riders"]
-size = "Large"
+size = "large"
 cost.mp = 8
 cost.xp = 32
 armor = [6, 5, 4, 2]
