@@ -1,6 +1,7 @@
 """Special commands for the SteamPunkFantasy CLI."""
 
 from collections.abc import Collection, Sequence
+from dataclasses import dataclass
 from typing import Annotated
 
 import cyclopts
@@ -33,6 +34,36 @@ def _slot_marks(slots: Collection[Slot]) -> str:
 def add_commands(app: cyclopts.App) -> None:
     """Add special commands to the CLI."""
     app.command(show_special, name="show")
+
+
+@dataclass(frozen=True)
+class SpecialRow:
+    """One Special as the list prints it: marks, label, and one line of text."""
+
+    marks: str
+    """The UMAR column."""
+
+    label: str
+    """Identifier and Signature, uninterpolated."""
+
+    text: str
+    """The effect, or the first line of `todo`."""
+
+    is_todo: bool
+    """Whether `text` is designer prose rather than rule text."""
+
+
+def special_rows(registry: Registry) -> list[SpecialRow]:
+    """Build one row per Special in the Registry, sorted by Identifier."""
+    return [
+        SpecialRow(
+            marks=_slot_marks(rule.slots),
+            label=key,
+            text=rule.effect or "",
+            is_todo=False,
+        )
+        for key, rule in sorted(registry.specials.items())
+    ]
 
 
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:
