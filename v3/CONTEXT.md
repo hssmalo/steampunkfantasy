@@ -111,14 +111,111 @@ The roll portion of a Damage row that a rolled result is checked against —
 an exact value, a range, or an "at least" threshold.
 
 **Special** (special rule):
-A named rule that modifies a Unit, Model, Equipment, Assault, or Range beyond
-the base stats. Defined in `rules/special.toml` and referenced by name.
+A rule that modifies a Unit, Model, Equipment, Assault, or Range beyond the base
+stats. Defined once in `rules/special.toml` and referred to by **Identifier**,
+never by its display name (ADR-0024). Race data carries **Instances** of a
+Special, not copies of it.
 
-A Special may name the Token it places (`token = "minor_acid"`). The key is a
-Token key in `rules/tokens.toml`, and the Rulebook resolves it to that Token's
-display name — strictly, so a reference to a Token that does not exist fails the
-build rather than rendering as nothing.
-_Avoid_: ability, trait, perk
+A Special declares the **Slots** it is legal in, the **Variables** its Instances
+may supply, and what it **places** — the Token or Hex Effect it causes.
+_Avoid_: ability, trait, perk; label (a label was the old display-name key)
+
+**Identifier** (id):
+The snake_case key that names a rule inside its Registry — `assault_poison`,
+`good_shot`. The single vocabulary shared by rules data and race data, and the
+lookup key, so a bad one fails the build rather than resolving to nothing.
+_Avoid_: label, key (bare), name (the Display Name is a different thing)
+
+**Display Name**:
+The human-readable name of a rule (`"Assault Poison"`), living in exactly one
+place — the `name` field of its record. Never parameterized: parameters live in
+the **Signature**. Race data never spells it.
+
+**Atmospheric Name**:
+An optional Display Name carried by a single **Instance**, overriding the rule's
+own name where that Instance is printed — one Unit's `to_hit` printing as
+"Excellent Whip Handling". The *vocabulary* stays central; what is *printed* may
+be local.
+_Avoid_: alias, nickname (Nick is an Army/Unit/Model name), flavor name
+
+**Instance**:
+One occurrence of a Special on a Unit, Model, or Equipment: an **Identifier**
+plus typed **Args**, and optionally free `text`, an **Atmospheric Name**, and
+`replace`. A holder may carry several Instances of the same Identifier — three
+`resistance` for three damage types — and they stay distinct.
+_Avoid_: entry, occurrence, usage
+
+**Slot**:
+Where a Special sits on the thing that carries it: `unit`, `model`, `assault`,
+or `range`. A rule declares the Slots it is legal in, and using it elsewhere is
+a load-time error. One rule may be legal in several Slots.
+
+**Registry**:
+A table in `rules/` that *owns* a vocabulary: its Identifier set **is** the legal
+value set for its **Namespace**, it is the single definition site for each
+record's name and text, and deleting it destroys a concept. Contrast an
+**overlay**, which only annotates Identifiers another Registry owns — overlays
+are inlined into their owner's record rather than modeled separately.
+_Avoid_: table, lookup, catalogue (the Race is the catalogue)
+
+**Namespace**:
+The abstract single-segment name a **Ref** is qualified by — `special`, `token`,
+`hex`, `terrain`, `ability`, `damage_type`. Declared in `rules/namespaces.toml`,
+which maps it to the file and table holding it, so a Namespace name never encodes
+the file layout. The list is open: adding one is a single line.
+
+**Ref** (reference):
+A typed pointer into rules data, always fully qualified as `<namespace>.<id>` —
+`token.poison`, `hex.fog`. One value type with one syntax wherever a reference
+appears: as an **Arg**, in a record's `places` or `see_also`, or as the target of
+a **Version** overlay. Every Ref is *structural* — a declared field or a typed
+Arg, never a name mentioned in prose — which is what makes the reference graph
+traversable.
+_Avoid_: link, pointer, cross-reference
+
+**Variable** / **Arg**:
+A rule declares **Variables** (a name, a type, and constraints); an **Instance**
+supplies **Args** for them under `args.*`. An Instance's legal Arg set is the
+union of its rule's Variables and those of every Ref target it resolves, so a
+Ref's parameters travel with it.
+
+**Signature**:
+The compact printed form of a rule, a template over its Variables —
+`"[{N}, {M}+]"`. A bare `{var}` on a Ref-valued Variable renders the *target's*
+Display Name. Replaces the old convention of encoding parameters inside a name.
+_Avoid_: short, format, pattern
+
+**Version**:
+Rule-local prose keyed by a Ref value: a rule saying "when this Ref resolves to
+*that*, here is my text for it" — `resistance`'s per-damage-type wording. An
+overlay on the target, not a second kind of reference; a rule with no Version for
+a value inherits the target's own text.
+
+**Stub**:
+A record whose rule text is not yet written, marked by the presence of a `todo`
+field carrying *what* is missing. A record is either complete or a Stub, never
+both and never neither, and Stubs are **counted** rather than gated.
+_Avoid_: placeholder, TODO (the field is `todo`; the concept is a Stub)
+
+**Stat Modifier**:
+A change an Equipment or Model makes to a stat it does not own, spelled with the
+`Stacker` verbs `add` / `replace` / `extend`. Seven stats are modifiable and no
+others: six Model assault stats plus a Unit's `armor`. Only `add` multiplies
+across Models; `replace` is always applied once.
+_Note_: `replace` is also an **Instance** key, where it means "ignore what came
+before" over a *set* of Instances rather than over a *value*. The gloss is the
+same; the vocabularies are deliberately separate, and `add` and `extend` never
+appear on an Instance.
+
+**Source Chain**:
+The fixed order in which Specials and Stat Modifiers reach a Unit or Model: Unit
+config → each Model's `unit_special`; Model config → each Equipment in order
+(retained Defaults first, then Upgrades). Instances **accumulate** along it — the
+default is to keep all of them — and an Instance marked `replace` is a **reset
+point**, clearing every earlier Instance of that Identifier while leaving
+anything contributed later. The chain is what makes "earlier" mean anything, so
+`replace` never makes ordering irrelevant.
+_Avoid_: merge order, precedence, override
 
 **Spawn**:
 The creation and placement of a new Unit on the battlefield during play, triggered by an event (e.g. game setup, shooting, or model death). Defined by a Spawn Rule.
@@ -184,6 +281,28 @@ intent — spelling fixes, casing — are not Changelog material.
 It records the *reasoning*, not the mechanical edit (git already records that).
 _Avoid_: history, release notes, git log (git records the edit; the Changelog
 records the intent)
+
+**Hard gate**:
+A check that runs when game data is *loaded* — a schema failure, raised by
+pydantic and surfaced by `just validate` and by any command that reads the data.
+Where a violation means the resolver cannot produce correct output, the check
+belongs here. Best of all is a rule that makes the defect **unrepresentable**
+rather than merely detected: a closed model, an explicit field list.
+_Avoid_: validation (too broad), error (names the outcome, not the gate)
+
+**Soft gate**:
+A lint check over a corpus that loads fine but is untidy — key/name agreement,
+naming conventions. Run by `spf race lint` / `spf rules lint` and their `just`
+recipes. There is exactly one severity: **lint speaks ⇒ the build fails.** There
+is deliberately no warning tier, because output from a green build goes unread.
+_Avoid_: warning, advisory
+
+**Countdown**:
+A number that should go down but gates nothing — unwritten rule text (**Stubs**),
+and rules no Instance reaches. Reported by `spf rules todos`, which sits outside
+`just check` and is run deliberately. A Countdown is the right shape wherever
+gating would demand a hand-maintained allowlist of the acceptable cases.
+_Avoid_: warning (that would imply a tier the Soft gate does not have), backlog
 
 ### Rendering (generated reference artifacts)
 
