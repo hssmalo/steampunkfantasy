@@ -182,7 +182,7 @@ comment = "If sharing a hex with an Infantry, you may give the pet follow orders
 
 [units.pet_panther.special]
 "Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
-"Evation" = "[4+]"
+"Evasion" = "[4+]"
 "Terror" = "[4]"
 
 
@@ -297,7 +297,7 @@ movement_order = ["-", "-", "-"]
 [units.drone_swarm.special]
 "Trap" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 "Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
-"Evation" = "[3+]"
+"Evasion" = "[3+]"
 "Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
 
 [units.drone_swarm.orders.fire]
@@ -350,7 +350,7 @@ movement_order = ["-", "-", "-"]
 [units.repair_drone.special]
 "Repair" = "Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models"
 "Repairing" = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
-"Evation" = "[3+]"
+"Evasion" = "[3+]"
 
 [units.repair_drone.orders.movement]
 slow = [["360°", "F", "360°"]]
@@ -378,7 +378,7 @@ movement_order = ["-", "-", "-"]
 [units.medic_drone.special]
 "Heal" = "Heal[N, other, 2nd healing] where N is the number of alive medic drones models"
 "Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
-"Evation" = "[3+]"
+"Evasion" = "[3+]"
 
 [units.medic_drone.orders.movement]
 fast = [["Help", "Help", "Help"]]

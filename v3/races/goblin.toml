@@ -39,7 +39,7 @@ movement_order = ["-", "-", "Flee"]
 [units.goblin_infantry.special]
 "Take Cover" = "[sneak][-2]"
 "Fire Order" = "You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order."
-"Evation" = "[4+]"
+"Evasion" = "[4+]"
 
 [units.goblin_infantry.orders.fire]
 sneak = [["Fire", "Fire"]]
@@ -956,7 +956,7 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 
 [equipment.commando.unit_special]
 "Take Cover" = "[still][-4]"
-"Evation" = "[2+]"
+"Evasion" = "[2+]"
 "Hidden" = "Start with a Hidden token."
 "Forward Position" = "[2]"
 "Fire Order" = "In any round you have reveal bonus, you may fire a bow three times (either a regular arrow or an special arrow each time) at one target or throw three grenades at one target"

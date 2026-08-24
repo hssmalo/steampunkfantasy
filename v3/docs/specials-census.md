@@ -32,9 +32,9 @@ Legend for the **Category** column:
 | Camouflage | `to_hit` (version `camouflage`) | hit | `to_hit.toml#unit_ability.camouflage`; args `[terrain][-1]` already match the rule's `{speed}`-style shape (here keyed by terrain, not speed — note the mismatch, see judgement calls). |
 | Chase | `chase` | orders | Orders-namespace intent; also the subject of `rules/orders_items.md`. |
 | Darkelf Officer | `officer` (atmospheric name) | missing | No `officer` rule exists anywhere; also see Officer/Officer 2/Officer Order below — one missing rule family. |
-| Ellusive | `to_hit` (version `elusive`) | hit + drift | Label spelling "Ellusive" vs rule id `elusive`; correct spelling wins. |
+| Elusive | `to_hit` (version `elusive`) | hit | Label was misspelled "Ellusive"; renamed to match the rule id `elusive`. |
 | Enormous | `enormous` | missing | Bespoke per-unit mechanic (2-hex footprint); no shared rule. Naming collision with `to_hit.toml#size.enormous` (different concept) — flag. |
-| Evation | `evasion` | drift | Matches `special.toml#unit.evation` directly; "Evation" is a typo, correct spelling is "Evasion". |
+| Evasion | `evasion` | slug | `special.toml#unit.evasion`; label and rule were both misspelled "Evation" and are renamed. |
 | Fire Order | `fire_order` | orders | Orders-namespace intent (49 occurrences — most-used unit label). |
 | Fog | `fog` | multi | Two distinct meanings across races (impassable-hex chase rule vs to-hit-penalty rule) under one label — same multi-slot problem as the Bonus/Extra Damage/LoS/Spawn family, just within one slot instead of across slots. Flag. |
 | Forward Position | `forward_position` | slug | `special.toml#unit.forward_position`. |
@@ -127,8 +127,8 @@ Legend for the **Category** column:
 | Bonus 2 | `bonus` | suffix + missing | Collapses onto `bonus`. |
 | Counter Attack | `counter_attack` | missing | No rule anywhere. |
 | Cunning Assault | `cunning_assault` | slug | `special.toml#assault.cunning_assault`. |
-| Cunning Assault Defense | `cunning_assault_defence` | drift | Label "Defense" vs rule "Defence" — pick one spelling (repo already leans British: "Defence" wins if consistency with the rule file matters more than US spelling elsewhere — flag as a judgement call either way). |
-| Cunning Deflection | `cunning_deflection` | missing | No rule; name is close to Cunning Assault Defence — possibly the same ability under two names, possibly genuinely distinct. Flag. |
+| Cunning Assault Defense | `cunning_assault_defense` | slug | `special.toml#assault.cunning_assault_defense`; the rule's British spelling was the one outlier and is renamed to the American spelling the repo standardizes on. |
+| Cunning Deflection | `cunning_deflection` | missing | No rule; name is close to Cunning Assault Defense — possibly the same ability under two names, possibly genuinely distinct. Flag. |
 | Damage on Deflect | `damage_on_deflect` | missing | No rule anywhere. |
 | Extra Damage | `extra_damage` | multi + missing | Multi-slot (also range); no shared rule text in either slot. |
 | Extra Damage 2 | `extra_damage` | suffix + missing | Collapses onto `extra_damage`. |
@@ -177,7 +177,7 @@ Legend for the **Category** column:
 |---|---|---|
 | `assault.reroll` (#101 called it `reroll_assault`; current key is `reroll`) | unreachable | **Reachable** — "Ork Reroll" matches by `name`. |
 | `assault.fire` → `assault_fire` (#113) | unreachable | Still unreachable — no assault label named "Fire" exists. Per #113's resolution this is a genuinely distinct rule from `range_fire` (different variables/bounds), not a merge candidate — stays a separate dead id needing either a label or a TODO-marked removal. |
-| `assault.cunning_assault_defence` | unreachable | **Reachable** — "Cunning Assault Defense" matches once the spelling drift is reconciled. |
+| `assault.cunning_assault_defense` | unreachable | **Reachable** — "Cunning Assault Defense" matches once the spelling drift is reconciled. |
 | `assault.minor_acid` → `assault_minor_acid` (#113) | unreachable | Still unreachable. Per #113, distinct from `range_minor_acid`, not a merge candidate. |
 | `assault.gear_disruption` → `assault_gear_disruption` (#113) | unreachable | Still unreachable. Per #113, distinct from `range_gear_disruption`, not a merge candidate. |
 | `assault.poison` → `assault_poison` (#113) | unreachable | Still unreachable — but "Stench" (assault, ork/troll) grants `Poison[6]` inline instead of using this rule. Recommend Stench route through `assault_poison` rather than staying bespoke. |
@@ -191,7 +191,7 @@ Legend for the **Category** column:
 | `range_.minor_acid` → `range_minor_acid` (#113) | unreachable | Still unreachable; distinct rule from `assault_minor_acid` per #113 (see above). |
 | `range_.poison` → `range_poison` (#113) | unreachable | Still unreachable; distinct rule from `assault_poison` per #113 (see above). |
 
-**4 of the 15 become reachable outright** (reroll, cunning_assault_defence, limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix). The 8 `assault_*`/`range_*` pairs stay unreachable and, per [#113's resolution](https://github.com/hssmalo/steampunkfantasy/issues/113) (settled after this census's data-gathering started — flat namespace, no multi-slot merge for these four: the assault forms count hits, the range forms are flat, different variables and bounds), are **not** multi-slot merge candidates as this census first guessed — each keeps its own renamed id and either gets a label or a TODO-marked removal. **2 stay genuinely orphaned** (`unit.hide`, `unit.insanity_field`) pending design decisions outside this ticket's scope.
+**4 of the 15 become reachable outright** (reroll, cunning_assault_defense, limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix). The 8 `assault_*`/`range_*` pairs stay unreachable and, per [#113's resolution](https://github.com/hssmalo/steampunkfantasy/issues/113) (settled after this census's data-gathering started — flat namespace, no multi-slot merge for these four: the assault forms count hits, the range forms are flat, different variables and bounds), are **not** multi-slot merge candidates as this census first guessed — each keeps its own renamed id and either gets a label or a TODO-marked removal. **2 stay genuinely orphaned** (`unit.hide`, `unit.insanity_field`) pending design decisions outside this ticket's scope.
 
 ## Missing-rule-text count (decision 2 stub countdown)
 
@@ -207,7 +207,7 @@ sense), `escape_artist`, `not_yet_dead`, `angle`, `bonus`, `counter_attack`,
 
 This is an **upper bound**: several of these are suspected duplicates of each
 other pending the judgement calls below (Multiple Shots/Burst, Cunning
-Deflection/Cunning Assault Defence, Improved Extra Damage/Extra Damage) — each
+Deflection/Cunning Assault Defense, Improved Extra Damage/Extra Damage) — each
 confirmed duplicate removes one id from the count rather than adding a stub.
 
 ## Open judgement calls
@@ -229,5 +229,5 @@ Per the ticket's instruction, these are flagged rather than settled:
    - Range "Order" collides by name with the future `orders` ref namespace (decision 7) — it means "this weapon's firing-order restriction," not a unit order.
    - Unit "Fog" and Model "Fog" mean two different things (impassable-hex chase rule vs to-hit-penalty-doubling), which decision 3's multi-slot mechanism resolves structurally — but pick display names that don't require reading the slot to disambiguate.
 9. **Camouflage's args use `[terrain]`, but `to_hit.toml#unit_ability.camouflage`'s note says "when unit is in the given terrain"** — consistent, but Take Cover/Elusive key off `[speed]` while Camouflage keys off `[terrain]`; worth confirming the `unit_ability` shape accepts either as its "condition" variable rather than being speed-only.
-10. **Cunning Assault Defense/Defence spelling**: repo convention elsewhere leans on the rule file's British "Defence," but "Cunning Assault Defense" (American) is what most race files actually use. Pick one; either direction is a one-line rename.
+10. ~~**Cunning Assault Defense/Defence spelling**~~ — **settled**: the repo standardizes on American English, so the rule id and name became `cunning_assault_defense` / "Cunning Assault Defense", matching the label the race files already use.
 11. **Regeneration composes `Heal[...]` in every occurrence's free text but has no rule of its own** — is it meant to become a formal wrapper rule (`regeneration` referencing `heal`), or stay bespoke prose that happens to mention Heal?

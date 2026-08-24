@@ -194,12 +194,12 @@ explanation = "In pre-assault phase, roll a d{N} psychic damage. If enemy become
 [unit.fear.variables]
 N = { type = "int", values = [4, 6, 8, 10, 12] }
 
-[unit.evation]
-name = "Evation"
+[unit.evasion]
+name = "Evasion"
 short = "[{N}+]"
 explanation = "Roll a die per area of effect damage. Ignore the damage at {N}+"
 
-[unit.evation.variables]
+[unit.evasion.variables]
 N = { type = "int", min = 2, max = 6 }
 
 [range_]

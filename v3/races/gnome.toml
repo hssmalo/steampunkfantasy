@@ -182,7 +182,7 @@ description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycl
 
 
 [units.gnome_motorcycle.special]
-"Ellusive" = "[fast]"
+"Elusive" = "[fast]"
 "Pre-Assault Retreat" = "4+"
 
 

@@ -49,11 +49,11 @@ references = ["token.endurance"]
 
 #references=["Special.see_to_hit_table"]
 
-[UnitSpecial.Evation]
+[UnitSpecial.Evasion]
 
-references= ["UnitSpecial.Evation"]
+references= ["UnitSpecial.Evasion"]
 
-[UnitSpecial.Ellusive]
+[UnitSpecial.Elusive]
 
 #references= ["UnitSpecial.see_to_hit_table"]
 

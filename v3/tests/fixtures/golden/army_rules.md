@@ -12,7 +12,7 @@
 
 - **Take Cover**: [sneak][-2]
 - **Fire Order**: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
-- **Evation**: [4+]
+- **Evasion**: [4+]
 - **Resistance 2**: Psychic[1] as long as at least one elite model is alive.
 - **Pre-Assault Retreat**: 6+, improved by 1 per elite in unit.
 
@@ -101,7 +101,7 @@
 
 - **Take Cover**: [sneak][-2]
 - **Fire Order**: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
-- **Evation**: [4+]
+- **Evasion**: [4+]
 - **Pre-Assault Retreat**: 6+
 
 **Damage Table: Regular**
