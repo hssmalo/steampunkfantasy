@@ -147,9 +147,9 @@ def test_spawn_rule_invalid_format() -> None:
     config_dict = _gnome_raw()
 
     # Change the Spawn special rule to have no colon
-    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"]["Spawn"] = (
-        "Place one hidden tiny snake"
-    )
+    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"] = {
+        "Spawn": "Place one hidden tiny snake"
+    }
 
     with pytest.raises(
         ValidationError,
@@ -162,9 +162,9 @@ def test_spawn_rule_undefined_spawn_id() -> None:
     config_dict = _gnome_raw()
 
     # Reference an undefined spawn ID
-    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"]["Spawn"] = (
-        "unknown_spawn: Place one assault bot"
-    )
+    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"] = {
+        "Spawn": "unknown_spawn: Place one assault bot"
+    }
 
     with pytest.raises(
         ValidationError,
@@ -177,9 +177,9 @@ def test_spawn_rule_undefined_spawn_id() -> None:
 def test_the_gate_reaches_every_race_file(race_name: str) -> None:
     """Pin that every committed Race is loaded through the Special gate.
 
-    The gate resolves instances, and the Race files carry none yet, so what
-    this asserts is the wiring: an unresolvable instance added to any of the
-    eight files fails its load rather than passing unread.
+    Every file's own instances resolve, so what this adds is the wiring: an
+    unresolvable instance put into any of the eight fails its load rather than
+    passing unread.
     """
     config_dict = Configuration.from_file(
         spf_config.paths.races / f"{race_name}.toml"

@@ -20,8 +20,10 @@ description = "Bloodthirsty ork in leather rags wielding a napleonic style muske
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.ork_infantry.special]
-"Take Cover" = "[still][-2]"
+[[units.ork_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
 
 [units.ork_infantry.orders.fire]
 still = [
@@ -69,11 +71,22 @@ lore = "At the end of the game, the troll runs out of ammo"
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.troll.special]
-"Forward Position" = "[1]"
-"Regeneration" = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
-"Resistance" = "Poison[2], Acid[1]"
-"Fire Order" = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
+[[units.troll.specials.forward_position]]
+args.N = 1
+
+[[units.troll.specials.regeneration]]
+text = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
+
+[[units.troll.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
+
+[[units.troll.specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 1
+
+[[units.troll.specials.fire_order]]
+text = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
 
 [units.troll.orders.movement]
 slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
@@ -101,8 +114,8 @@ description = '''An ork warhero with clockwork wings on its back. The ork is wie
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.champion.special]
-"Spawn" = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
+[[units.champion.specials.spawn]]
+text = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
 
 [units.champion.damage_tables.Regular]
 rows = [
@@ -136,8 +149,8 @@ description = '''An ork riding a warg (warg is a huge angry wolf with big teeth)
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.warg_rider.special]
-"Fire Order" = "only available if given ranged weapons"
+[[units.warg_rider.specials.fire_order]]
+text = "only available if given ranged weapons"
 
 [units.warg_rider.orders.movement]
 fast = [
@@ -190,8 +203,8 @@ description = '''An fast steampunk armored car with a flamethrower in front and 
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.speedhead.special]
-"Fire Order" = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so"
+[[units.speedhead.specials.fire_order]]
+text = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so"
 
 [units.speedhead.orders.movement]
 slow = [["L/R", "F", "L/R"], ["F", "-", "-"], ["A", "F", "F"]]
@@ -296,9 +309,11 @@ still = [
     ["rev", "-", "-"],
 ]
 
-[units.hammerhead.special]
-"Fire Order" = "All 4 harpoon gun must fire at same sector"
-"Movement" = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
+[[units.hammerhead.specials.fire_order]]
+text = "All 4 harpoon gun must fire at same sector"
+
+[[units.hammerhead.specials.movement]]
+text = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
 
 [units.battlewagon]
 race = "ork"
@@ -316,9 +331,11 @@ description = '''A steampunk armored carrier with a gun pointing directly ahead,
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.battlewagon.special]
-"Transport" = "May transport up to 2 infantry. Treat any movement in movement phase 3 order as including an optional +Deploy(range=1) order. May deploy directly in assault. If Battlewagon enters an assault, you may optionally deploy 1 infantry to join the assault."
-"Fire Order" = "Fire all weapons simultaneously"
+[[units.battlewagon.specials.transport]]
+text = "May transport up to 2 infantry. Treat any movement in movement phase 3 order as including an optional +Deploy(range=1) order. May deploy directly in assault. If Battlewagon enters an assault, you may optionally deploy 1 infantry to join the assault."
+
+[[units.battlewagon.specials.fire_order]]
+text = "Fire all weapons simultaneously"
 
 [units.battlewagon.damage_tables.Regular]
 rows = [
@@ -380,9 +397,11 @@ description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brazz amule
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.grunt.special]
-"Forward Position" = "[2]"
-"Fire Order" = "Cannot use ranged weapons"
+[[units.grunt.specials.forward_position]]
+args.N = 2
+
+[[units.grunt.specials.fire_order]]
+text = "Cannot use ranged weapons"
 
 [units.grunt.orders.movement]
 slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
@@ -415,10 +434,17 @@ description = '''An ork werewarg is amix between a warg and and ork, wielding a 
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.ork_werewarg.special]
-"Take Cover" = "[still][-2]"
-"Regeneration" = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
-"Resistance" = "Poison[2]."
+[[units.ork_werewarg.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
+
+[[units.ork_werewarg.specials.regeneration]]
+text = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
+
+[[units.ork_werewarg.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 2
 
 [units.ork_werewarg.orders.movement]
 slow = [
@@ -480,10 +506,21 @@ description = '''An bloodthirsty ork in finer clothes with 4 arms and wielding 4
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.bioengineered_ork.special]
-"Take Cover" = "[still][-2]"
-"Resistance" = "Poison[1], Fire[1]"
-"Immunity" = "Minor Acid"
+[[units.bioengineered_ork.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
+
+[[units.bioengineered_ork.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 1
+
+[[units.bioengineered_ork.specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 1
+
+[[units.bioengineered_ork.specials.immunity]]
+args.feature = "token.minor_acid"
 
 [units.bioengineered_ork.orders.fire]
 still = [
@@ -612,12 +649,8 @@ rows = [
     "12+: Unit destroyed",
 ]
 
-[units.ork_char_b1.special]
-"Fire Order" = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for them separately"
-
-#
-# Models
-#
+[[units.ork_char_b1.specials.fire_order]]
+text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for them separately"
 [models]
 
 [models.troll]
@@ -627,8 +660,8 @@ equipment = ['troll_gatling_gun']
 type = ["Monster", "Walking"]
 equipment_limit = ["Hands:2", "Independent:∞"]
 
-[models.troll.special]
-"To Hit" = "Terrible Shot: -2 to hit"
+[[models.troll.specials.to_hit]]
+args.ability = "ability.terrible_shot"
 
 [models.troll.assault]
 strength = [18, 2, 2, 2]
@@ -638,9 +671,11 @@ deflection_die = "6+"
 damage = "d12"
 ap = 2
 
-[models.troll.assault.special]
-"Fear" = "[8]"
-"Stench" = "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 Crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and Crew damage only to units with a Crew damage table"
+[[models.troll.assault.specials.fear]]
+args.N = 8
+
+[[models.troll.assault.specials.stench]]
+text = "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 Crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and Crew damage only to units with a Crew damage table"
 
 [models.grunt]
 name = "Grunt"
@@ -657,9 +692,11 @@ deflection_die = "-"
 damage = "d6-2"
 ap = 2
 
-[models.grunt.assault.special]
-"Cunning Assault" = "[1 for 3]"
-"Ork Reroll" = "[3]"
+[[models.grunt.assault.specials.cunning_assault]]
+args.N = 3
+
+[[models.grunt.assault.specials.reroll]]
+args.N = 3
 
 [models.elite_ork_infantry]
 name = "Elite Ork Infantry"
@@ -671,11 +708,13 @@ equipment = []
 replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 
-[models.elite_ork_infantry.special]
-"Not Yet Dead" = "ork_champion: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit this model is attached to. Champion does not retain any of the abilities from the unit, and has a separate unit and model entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
+[[models.elite_ork_infantry.specials.not_yet_dead]]
+text = "ork_champion: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit this model is attached to. Champion does not retain any of the abilities from the unit, and has a separate unit and model entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
 
-[models.elite_ork_infantry.unit_special]
-"Resistance 2" = "Psychic[1] while at least one elite is alive"
+[[models.elite_ork_infantry.unit_specials.resistance]]
+args.version = "damage_type.psychic"
+args.N = 1
+text = "While at least one elite is alive"
 
 [models.elite_ork_infantry.assault]
 strength = [3, 2, 2, 2]
@@ -685,9 +724,11 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-[models.elite_ork_infantry.assault.special]
-"Ork Reroll" = "[3]"
-"Cunning Assault" = "[1 for 3]"
+[[models.elite_ork_infantry.assault.specials.reroll]]
+args.N = 3
+
+[[models.elite_ork_infantry.assault.specials.cunning_assault]]
+args.N = 3
 
 [models.ork_infantry]
 name = "Ork Infantry"
@@ -696,8 +737,8 @@ equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipment = ['ork_musket']
 type = ["Infantry", "Walking"]
 
-[models.ork_infantry.special]
-"To Hit" = "Bad shot, -1 to hit"
+[[models.ork_infantry.specials.to_hit]]
+args.ability = "ability.bad_shot"
 
 [models.ork_infantry.assault]
 strength = [2, 2, 2, 2]
@@ -707,9 +748,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.ork_infantry.assault.special]
-"Ork Reroll" = "[3]"
-"Cunning Assault" = "[1 for 3]"
+[[models.ork_infantry.assault.specials.reroll]]
+args.N = 3
+
+[[models.ork_infantry.assault.specials.cunning_assault]]
+args.N = 3
 
 [models.ork_werewarg]
 name = "Ork WereWarg"
@@ -726,9 +769,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.ork_werewarg.assault.special]
-"Ork Reroll" = "[3]"
-"Cunning Assault" = "[1 for 3]"
+[[models.ork_werewarg.assault.specials.reroll]]
+args.N = 3
+
+[[models.ork_werewarg.assault.specials.cunning_assault]]
+args.N = 3
 
 [models.champion]
 name = "Champion"
@@ -745,9 +790,11 @@ deflection = [2, 0, 0, 0]
 damage = "d6"
 ap = "N/A"
 
-[models.champion.assault.special]
-"Ork Reroll" = "[3]"
-"Cunning Assault" = "[1 for 2]"
+[[models.champion.assault.specials.reroll]]
+args.N = 3
+
+[[models.champion.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.warg_rider]
 name = "Warg Rider"
@@ -764,9 +811,11 @@ damage = "d6-2"
 ap = 2
 deflection = [2, 2, 1, 1]
 
-[models.warg_rider.assault.special]
-"Ork Reroll" = "[3]"
-"Cunning Assault" = "[1 for 4]"
+[[models.warg_rider.assault.specials.reroll]]
+args.N = 3
+
+[[models.warg_rider.assault.specials.cunning_assault]]
+args.N = 4
 
 [models.hammerhead]
 name = "Hammerhead"
@@ -788,9 +837,11 @@ damage = "d8+3 (from front), else d8"
 ap = 10
 deflection = [12, 2, 2, 2]
 
-[models.hammerhead.assault.special]
-"Ork Reroll" = "[6]"
-"Angle" = "ap 2 (from non-front arcs)"
+[[models.hammerhead.assault.specials.reroll]]
+args.N = 6
+
+[[models.hammerhead.assault.specials.angle]]
+text = "ap 2 (from non-front arcs)"
 
 [models.battlewagon]
 name = "Battlewagon"
@@ -807,8 +858,8 @@ damage = "d6"
 ap = 2
 deflection = [0, 0, 0, 0]
 
-[models.battlewagon.assault.special]
-"Ork Reroll" = "[3]"
+[[models.battlewagon.assault.specials.reroll]]
+args.N = 3
 
 [models.bioengineered_ork]
 name = "BioEngineered Ork"
@@ -825,9 +876,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.bioengineered_ork.assault.special]
-"Ork Reroll" = "[3]"
-"Cunning Assault" = "[1 for 2]"
+[[models.bioengineered_ork.assault.specials.reroll]]
+args.N = 3
+
+[[models.bioengineered_ork.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.elite_bioengineered_ork]
 name = "Elite BioEngineered Ork"
@@ -838,8 +891,8 @@ cost.xp = 4
 type = ["Bio", "Infantry", "Walking", "Elite"]
 replaces = "bioengineered_ork"
 
-[models.elite_bioengineered_ork.special]
-"To Hit" = "Good shot, +1 to hit"
+[[models.elite_bioengineered_ork.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.elite_bioengineered_ork.assault]
 strength = [4, 3, 3, 3]
@@ -849,9 +902,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_bioengineered_ork.assault.special]
-"Ork Reroll" = "[6]"
-"Cunning Assault" = "[1 for 2]"
+[[models.elite_bioengineered_ork.assault.specials.reroll]]
+args.N = 6
+
+[[models.elite_bioengineered_ork.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.ork_char_b1]
 name = "Ork Char B1"
@@ -868,8 +923,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 3
 
-[models.ork_char_b1.assault.special]
-"Ork Reroll" = "[3]"
+[[models.ork_char_b1.assault.specials.reroll]]
+args.N = 3
 
 [models.speedhead]
 name = "Speedhead"
@@ -886,11 +941,11 @@ deflection_die = "6+"
 damage = "d8"
 ap = 3
 
-[models.speedhead.unit_special]
-"Pre-Assault Retreat" = "[4+]"
+[[models.speedhead.unit_specials.pre_assault_retreat]]
+args.N = 4
 
-[models.speedhead.assault.special]
-"Ork Reroll" = "[6]"
+[[models.speedhead.assault.specials.reroll]]
+args.N = 6
 
 [equipment]
 
@@ -906,9 +961,11 @@ angle = [true, false, false, false]
 damage = "d10"
 ap = 3
 
-[equipment.troll_gatling_gun.range.special]
-"Area" = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
-"Bonus" = "Replace any forest at point blank range with a Rough terrain"
+[[equipment.troll_gatling_gun.range.specials.area]]
+text = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
+
+[[equipment.troll_gatling_gun.range.specials.bonus]]
+text = "Replace any forest at point blank range with a Rough terrain"
 
 [equipment.ork_musket]
 name = "Ork Musket"
@@ -932,16 +989,18 @@ requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
-[equipment.clockwork_shield.unit_special]
-"Resistance" = "Regular[1]"
+[[equipment.clockwork_shield.unit_specials.resistance]]
+args.version = "damage_type.regular"
+args.N = 1
 
 [equipment.clockwork_shield_free]
 name = "Clockwork Shield"
 race = "ork"
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
-[equipment.clockwork_shield_free.unit_special]
-"Resistance" = "Regular[1]"
+[[equipment.clockwork_shield_free.unit_specials.resistance]]
+args.version = "damage_type.regular"
+args.N = 1
 
 [equipment.clockwork_shield_free.assault]
 deflection.add = [1, 0, 0, 0]
@@ -983,8 +1042,8 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 [equipment.flame_covered_axe.assault]
 damage.replace = "d6+1 + d4 Crew damage"
 
-[equipment.flame_covered_axe.assault.special]
-"Extra Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+[[equipment.flame_covered_axe.assault.specials.extra_damage]]
+text = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 [equipment.flame_covered_axe_free]
 name = "Flame-covered-axe"
@@ -994,8 +1053,8 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 [equipment.flame_covered_axe_free.assault]
 damage.replace = "d6+1 + d4 Crew damage"
 
-[equipment.flame_covered_axe_free.assault.special]
-"Extra Damage" = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+[[equipment.flame_covered_axe_free.assault.specials.extra_damage]]
+text = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
 
 [equipment.poison_spikes]
 name = "Poison Spikes"
@@ -1004,8 +1063,8 @@ cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
-[equipment.poison_spikes.assault.special]
-"Damage on Deflect" = "Place a poison[4] token on any enemy which you deflected an attack from"
+[[equipment.poison_spikes.assault.specials.damage_on_deflect]]
+text = "Place a poison[4] token on any enemy which you deflected an attack from"
 
 [equipment.clockwork_monocular]
 name = "Clockwork Monocular"
@@ -1014,8 +1073,9 @@ cost.cp = 4
 upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
-[equipment.clockwork_monocular.model_special]
-"To Hit (2)" = "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
+[[equipment.clockwork_monocular.model_specials.to_hit]]
+args.ability = "ability.ranged_reroll"
+text = "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
 
 [equipment.clockwork_spear]
 name = "Clockwork Spear"
@@ -1027,8 +1087,8 @@ requires = [["type:Infantry", "type:Grunt", "type:Cavalry"], ["Hands:1"]]
 [equipment.clockwork_spear.assault]
 damage.replace = "d8"
 
-[equipment.clockwork_spear.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[equipment.clockwork_spear.assault.specials.cunning_assault]]
+args.N = 2
 
 [equipment.clockwork_power_spear]
 name = "Clockwork Power Spear"
@@ -1043,8 +1103,8 @@ ap.replace = 4
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
-[equipment.clockwork_power_spear.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[equipment.clockwork_power_spear.assault.specials.cunning_assault]]
+args.N = 2
 
 [equipment.ork_pistol]
 name = "Ork Pistol"
@@ -1059,8 +1119,8 @@ angle = [true, true, false, false]
 damage = "d6-1"
 ap = 2
 
-[equipment.ork_pistol.range.special]
-"Ammo" = "May load up  up to 2 ammo and fire them one at a time"
+[[equipment.ork_pistol.range.specials.ammo]]
+text = "May load up  up to 2 ammo and fire them one at a time"
 
 [equipment.ork_pistol.orders_gained.fire]
 still = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "-"], ["-", "Fire"]]
@@ -1080,16 +1140,23 @@ angle = [true, true, false, false]
 damage = "N.A"
 ap = 0
 
-[equipment.pyro.model_special]
-"To Hit (2)" = "Expert throw: +2 to hit while throwing pyro grenade"
+[[equipment.pyro.model_specials.to_hit]]
+name = "Expert Throw"
+args.ability = "ability.excellent_shot"
+text = "Applies while throwing a pyro grenade"
 
-[equipment.pyro.unit_special]
-"Resistance 3" = "Fire[2]"
+[[equipment.pyro.unit_specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 2
 
-[equipment.pyro.range.special]
-"Order" = "Used with Throw order"
-"Extra Damage" = "Set on fire"
-"Ammo" = "Always treated as loaded"
+[[equipment.pyro.range.specials.order]]
+text = "Used with Throw order"
+
+[[equipment.pyro.range.specials.extra_damage]]
+text = "Set on fire"
+
+[[equipment.pyro.range.specials.ammo]]
+text = "Always treated as loaded"
 
 [equipment.pyro.orders_gained.fire]
 all = [["-", "Throw"]]
@@ -1107,8 +1174,8 @@ angle = [true, false, false, false]
 damage = "d6 +3 if penetrating armor"
 ap = 9
 
-[equipment.hand_held_cannon.range.special]
-"Order" = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+[[equipment.hand_held_cannon.range.specials.order]]
+text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
 
 [equipment.war_drum]
 name = "War Drum"
@@ -1117,9 +1184,12 @@ cost.xp = 8
 upgrade_all = true
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
-[equipment.war_drum.unit_special]
-"Movement" = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
-"Terror" = "[6](range=1)"
+[[equipment.war_drum.unit_specials.movement]]
+text = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
+
+[[equipment.war_drum.unit_specials.terror]]
+args.N = 1
+args.M = 6
 
 [equipment.harpoon_gun]
 name = "Harpoon Gun"
@@ -1134,9 +1204,11 @@ angle = [true, false, false, false]
 damage = "d6-2"
 ap = 2
 
-[equipment.harpoon_gun.range.special]
-"Order" = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
-"Drag" = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+[[equipment.harpoon_gun.range.specials.order]]
+text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+
+[[equipment.harpoon_gun.range.specials.drag]]
+text = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
 
 [equipment.harpoon_gun_free]
 name = "Harpoon Gun"
@@ -1149,9 +1221,11 @@ angle = [true, false, false, false]
 damage = "d6-2"
 ap = 2
 
-[equipment.harpoon_gun_free.range.special]
-"Order" = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
-"Drag" = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+[[equipment.harpoon_gun_free.range.specials.order]]
+text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+
+[[equipment.harpoon_gun_free.range.specials.drag]]
+text = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
 
 [equipment.grenade_sling]
 name = "Grenade Sling"
@@ -1165,12 +1239,16 @@ range = 3
 angle = [true, true, true, true]
 damage = "d6"
 ap = 6
+note = "It is a 1 handed weapon but may not be combined with another sling"
 
-[equipment.grenade_sling.range.special]
-"Area" = "If fired from a unit with 3-4 models: Area[4+], if fired from a unit with 1-2 models: Area[5+]"
-"Range" = "Target one hex within normal range"
-"Bonus" = "If combined with the pyro, the pyro gains standard range of 3 instead of 1."
-"Note" = "It is a 1 handed weapon but may not be combined with another sling"
+[[equipment.grenade_sling.range.specials.area]]
+text = "If fired from a unit with 3-4 models: Area[4+], if fired from a unit with 1-2 models: Area[5+]"
+
+[[equipment.grenade_sling.range.specials.range]]
+text = "Target one hex within normal range"
+
+[[equipment.grenade_sling.range.specials.bonus]]
+text = "If combined with the pyro, the pyro gains standard range of 3 instead of 1."
 
 [equipment.shriek]
 race = "ork"
@@ -1183,8 +1261,8 @@ angle = [false, false, true, true]
 damage = "d4-2+ d6 Psychic damage"
 ap = 2
 
-[equipment.shriek.range.special]
-"Burst" = "[5] Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
+[[equipment.shriek.range.specials.burst]]
+args.N = 5
 
 [equipment.speed_cannon]
 race = "ork"
@@ -1197,8 +1275,8 @@ angle = [false, false, true, true]
 damage = "d6+1"
 ap = 6
 
-[equipment.speed_cannon.range.special]
-"Burst" = "[5] Must have loaded 5 ammo to be fired, but each time it is fired, it's fired 5 times"
+[[equipment.speed_cannon.range.specials.burst]]
+args.N = 5
 
 [equipment.flamethrower]
 race = "ork"
@@ -1211,10 +1289,14 @@ angle = [true, false, false, false]
 damage = "N.A"
 ap = 0
 
-[equipment.flamethrower.range.special]
-"Area" = "Fire at all possible hexes possible simultaneously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc."
-"Extra Damage" = "set on Fire"
-"Ammo" = "Limited Ammo[3]"
+[[equipment.flamethrower.range.specials.area]]
+text = "Fire at all possible hexes possible simultaneously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc."
+
+[[equipment.flamethrower.range.specials.extra_damage]]
+text = "set on Fire"
+
+[[equipment.flamethrower.range.specials.limited_ammo]]
+args.N = 3
 
 [equipment.rotating_pop_gun]
 race = "ork"
@@ -1227,8 +1309,8 @@ angle = [true, true, true, true]
 damage = "d6 + (d8 Crew damage when penetrating all armor)"
 ap = 7
 
-[equipment.rotating_pop_gun.range.special]
-"Extra Damage" = "Poison[8]"
+[[equipment.rotating_pop_gun.range.specials.extra_damage]]
+text = "Poison[8]"
 
 [equipment.heavy_forward_gun]
 race = "ork"
@@ -1248,8 +1330,8 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
-[equipment.tankscalper.assault.special]
-"Extra Damage 2" = "May replace regular damage with d8 Crew damage. Note: Crew damage ignore armor"
+[[equipment.tankscalper.assault.specials.extra_damage]]
+text = "May replace regular damage with d8 Crew damage. Note: Crew damage ignore armor"
 
 [equipment.healing_syringe]
 race = "ork"
@@ -1258,8 +1340,11 @@ cost.cp = 2
 upgrade_all = true
 requires = [["type:Infantry", "type:Cavalry", "type:Grunt"], ["Hands:1"]]
 
-[equipment.healing_syringe.unit_special]
-"Heal 2" = "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."
+[[equipment.healing_syringe.unit_specials.heal]]
+args.N = 1
+args.unit = "any"
+args.phase = "1st Healing"
+text = "In 1st Healing phase you may replace any ONE bleeding token on any unit in this hex with a Poison[4] token."
 
 [equipment.hand_catapult]
 race = "ork"
@@ -1274,9 +1359,11 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 6
 
-[equipment.hand_catapult.range.special]
-"Area" = "If fired from a unit with 3-4 models within normal range: Area[4+], if fired from a unit with 1-2 models at normal range: Area[5+], if fired from a unit with 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area[6+]"
-"Range" = "Choose one hex within normal range or one hex within long range."
+[[equipment.hand_catapult.range.specials.area]]
+text = "If fired from a unit with 3-4 models within normal range: Area[4+], if fired from a unit with 1-2 models at normal range: Area[5+], if fired from a unit with 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area[6+]"
+
+[[equipment.hand_catapult.range.specials.range]]
+text = "Choose one hex within normal range or one hex within long range."
 
 [equipment.big_gun]
 race = "ork"
@@ -1288,8 +1375,8 @@ angle = [true, false, false, false]
 damage = "d12"
 ap = 5
 
-[equipment.big_gun.range.special]
-"Cloud" = "Place fog in the hex directly ahead of this unit"
+[[equipment.big_gun.range.specials.cloud]]
+text = "Place fog in the hex directly ahead of this unit"
 
 [equipment.spear_shooter]
 race = "ork"
@@ -1311,9 +1398,11 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 3
 
-[equipment.grenade_launcher.range.special]
-"Range" = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex"
-"Area" = "[2+]"
+[[equipment.grenade_launcher.range.specials.range]]
+text = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex"
+
+[[equipment.grenade_launcher.range.specials.area]]
+text = "[2+]"
 
 [equipment.assault_musket]
 race = "ork"
@@ -1327,13 +1416,13 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
+note = "ps! It is not recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon separately"
 
-[equipment.assault_musket.model_special]
-"To Hit (2)" = "Enhanced Accuracy[Assault Musket]: +1 to hit"
+[[equipment.assault_musket.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
-[equipment.assault_musket.range.special]
-"Ammo" = "May load up to 4 ammo. If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' setting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1"
-"Note" = "ps! It is not recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon separately"
+[[equipment.assault_musket.range.specials.ammo]]
+text = "May load up to 4 ammo. If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' setting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1"
 
 [equipment.assault_musket.orders_gained.fire]
 still = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "Fire"]]

@@ -464,7 +464,6 @@ def test_render_army_rules_markdown_has_title_and_unit_sections(
     assert "---" in text
     assert "### " in text  # a Model subsection
     assert "Movement" not in text
-    assert "Fire Order" in text or "Take Cover" in text  # a unit special
     assert "| 0-5 | Kill 1 model |" in text  # a two-column damage-table row
 
 

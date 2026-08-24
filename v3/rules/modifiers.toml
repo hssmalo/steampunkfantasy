@@ -140,6 +140,8 @@ to_be_hit = "0"
 name = "Excellent Shot"
 to_hit = "+2"
 to_be_hit = "0"
+todo = "Three Race occurrences spell this \"Great Shot\", whose word suggests Superb Shot while its +2 is this record's. Confirm which rule those three mean."
+see_also = ["ability.superb_shot"]
 
 [ability.superb_shot]
 name = "Superb Shot"
@@ -174,6 +176,8 @@ signature = "[{terrain}]"
 to_hit = "0"
 to_be_hit = "-1"
 effect = "Applies when the unit is in the given terrain"
+todo = "Its condition is a terrain while Take Cover's and Elusive's is a speed. Confirm that a condition may be either, rather than the three wanting one shape."
+see_also = ["ability.take_cover", "ability.elusive"]
 
 [ability.camouflage.variables]
 terrain = { type = "ref", namespaces = ["terrain"] }
@@ -195,6 +199,7 @@ signature = "[{speed}][{N}]"
 to_hit = "0"
 to_be_hit = "+N"
 effect = "Applies when the unit is in the given speed"
+todo = "The one Race occurrence gives a speed and no number; it is migrated as -1, the weakest value Take Cover uses. Confirm the intended number."
 
 [ability.elusive.variables]
 speed = { type = "ref", namespaces = ["speed"] }
@@ -212,3 +217,70 @@ name = "Enhanced Accuracy"
 to_hit = "+1"
 to_be_hit = "0"
 todo = "The bonus is fixed at +1 here, but the Race data grants +1, +3 and +5. This rule wants a variable, the way take_cover and elusive have one."
+
+[ability.thrown_weapons]
+name = "Thrown Weapons"
+signature = "[{N}]"
+to_hit = "+N"
+to_be_hit = "0"
+effect = "Applies to thrown weapons only"
+
+[ability.thrown_weapons.variables]
+N = { type = "int", min = 1, max = 3 }
+
+[ability.guided]
+name = "Guided"
+signature = "[{N}]"
+to_hit = "+N"
+to_be_hit = "0"
+effect = "The weapon steers itself towards its target"
+
+[ability.guided.variables]
+N = { type = "int", min = 1, max = 6 }
+
+[ability.need_command]
+name = "Need Command"
+to_hit = "-2"
+to_be_hit = "0"
+effect = "Applies while the unit is not connected to a main engine"
+
+[ability.out_of_fog]
+name = "Out of the Fog"
+to_hit = "+1"
+to_be_hit = "0"
+effect = "Applies while the unit holds an out of the fog token"
+see_also = ["hex.fog"]
+
+[ability.difficulty_firing_forward]
+name = "Difficulty Firing Forward"
+to_hit = "-1"
+to_be_hit = "0"
+effect = "Applies when firing in the forward direction"
+
+[ability.double_speed_modifiers]
+name = "Double Speed Modifiers"
+effect = "Doubles the to-hit modifiers for movement speed, for this unit and for its target"
+see_also = ["speed.fast", "speed.still"]
+todo = "No numbers of its own: it scales whatever the speed registry says. State how that composes with the other modifiers."
+
+[ability.ignore_fast_penalty]
+name = "Ignore Fast Penalty"
+effect = "Ignores the to-hit penalty for moving fast"
+see_also = ["speed.fast", "speed.flying"]
+todo = "No numbers of its own: it cancels a modifier rather than adding one. Say whether it cancels the target's penalty too, which two Race occurrences claim and one does not."
+
+[ability.even_range]
+name = "Even Range"
+effect = "Shifts the roll by the parity of the range to the target"
+todo = "No single number: the one Race occurrence gives +1 at an even range and -1 at an odd one. Decide whether the registry should carry a pair of numbers."
+
+[ability.aim_lost_when_moving]
+name = "Aim Lost When Moving"
+effect = "The unit loses its aim when it moves away from the hex it aimed from"
+see_also = ["token.aim"]
+todo = "Rule text not yet written, and no numbers: this removes a token rather than shifting a roll, so decide whether it belongs in this registry."
+
+[ability.ranged_reroll]
+name = "Ranged Reroll"
+effect = "Rerolls to-hit dice on the terms the Race data states"
+todo = "Rule text not yet written, and no numbers: rerolling is not a modifier, so decide whether it belongs in this registry."

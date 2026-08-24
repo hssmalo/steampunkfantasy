@@ -51,3 +51,7 @@ todo = "Rule text not yet written: movement cost, and whether sand dunes block l
 [terrain.swamp]
 name = "Swamp"
 todo = "Rule text not yet written, and no to-hit numbers either: swamp is used by darkelf Camouflage but has never had a record. Decide what it does before the numbers."
+
+[terrain.hill]
+name = "Hill"
+todo = "Rule text not yet written, and no to-hit numbers either: hill is used by dwarf Camouflage but has never had a record. Decide what it does before the numbers."

@@ -83,11 +83,9 @@ see_also = ["special.range_poison"]
 N = { type = "int", values = [4, 6, 8, 10, 12] }
 M = { type = "int", min = 1, max = 4 }
 
-#ToDo
-#This should be a unit ability, because it does not make sense models of the same unit  have different pre assault retreat
 [special.pre_assault_retreat]
 name = "Pre-Assault Retreat"
-slots = ["assault"]
+slots = ["unit"]
 signature = "[{N}+]"
 effect = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
 see_also = ["special.retreat"]
@@ -108,6 +106,8 @@ see_also = ["special.pre_assault_retreat"]
 name = "Extra Damage"
 slots = ["assault", "range"]
 todo = """Rule text not yet written, in either slot.
+
+The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
 
 From reference.toml:
 #Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
@@ -132,6 +132,57 @@ todo = """Rule text not yet written.
 From reference.toml:
 #Only one use, maybe more in future
 potential_references = ["token.shaken"]"""
+
+[special.angle]
+name = "Angle"
+slots = ["assault"]
+todo = "Rule text not yet written: armor penetration depends on the arc an assault comes from. Unrelated to the angle modifier registry despite the name — decide whether one of the two should be renamed."
+see_also = ["special.size"]
+
+[special.bonus]
+name = "Bonus"
+slots = ["assault", "range"]
+todo = "Rule text not yet written, in either slot: every occurrence spells out its own bonus in prose."
+see_also = ["special.penalty"]
+
+[special.counter_attack]
+name = "Counter Attack"
+slots = ["assault"]
+todo = "Rule text not yet written: every occurrence reads \"each deflection counts as both a hit and a deflection\"."
+
+[special.cunning_deflection]
+name = "Cunning Deflection"
+slots = ["assault"]
+todo = "Rule text not yet written. Named close enough to Cunning Assault Defense that the two may be one ability under two names; decide whether to merge them."
+see_also = ["special.cunning_assault", "special.cunning_assault_defense"]
+
+[special.fly_by]
+name = "Fly By"
+slots = ["assault"]
+todo = "Rule text not yet written: a flying unit assaulting a ground unit and returning to the air."
+
+[special.lands]
+name = "Lands"
+slots = ["assault"]
+todo = "Rule text not yet written: a flying unit forced into a ground assault, and what its speed becomes."
+
+[special.penalty]
+name = "Penalty"
+slots = ["assault"]
+todo = "Rule text not yet written: presumed the opposite of Bonus, but every occurrence spells out its own penalty in prose."
+see_also = ["special.bonus"]
+
+[special.size]
+name = "Size"
+slots = ["assault"]
+todo = "Rule text not yet written: winning an assault outright against smaller units. Unrelated to the size modifier registry despite the name — decide whether one of the two should be renamed."
+see_also = ["special.angle"]
+
+[special.stench]
+name = "Stench"
+slots = ["assault"]
+todo = "Rule text not yet written: the one occurrence grants Poison[6] and crew damage inline rather than through Assault Poison. Decide whether it should route through that rule instead."
+see_also = ["special.assault_poison"]
 
 #
 # Unit
@@ -191,11 +242,12 @@ effect = """Healing only works on biological units and removing crippled crew fo
 - Remove crippled crew token. Cost 4.
 """
 see_also = ["token.poison", "token.bleed", "token.minor_acid", "token.acid", "token.fire", "token.crippled_crew"]
+todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. Decide whether a computed value deserves a type of its own."
 
 [special.heal.variables]
-N = {type = "int", min = 1, max = 10}
-unit = {type = "str", values=["self", "any"]}
-phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
+N = { type = ["int", "str"], min = 1, max = 10 }
+unit = { type = "str", values = ["self", "any", "other"] }
+phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
 
 [special.immunity]
 name = "Immunity"
@@ -203,6 +255,8 @@ slots = ["unit"]
 signature = "[{feature}]"
 flavor = "Unit is completely immmune to given feature"
 todo = """Rule text not yet written: what "completely immune" does to each kind of feature it can name.
+
+An immunity holds at every value of its feature, but a feature whose own rule takes variables lends them to the instance, which then has to name one. Poison-cloud immunity therefore names a strength it does not mean, and immunity to Gear Disruption is carried as text because no value of its thresholds is the one meant.
 
 From reference.toml:
 #Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???"""
@@ -224,10 +278,11 @@ effect = """Repear only works on mechanical and drone units. You have {N} points
 - Degrade one acid to minor acid. Cost 4.
 """
 see_also = ["token.minor_acid", "token.acid", "token.fire", "token.shaken", "token.disabled_repair"]
+todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. Decide whether a computed value deserves a type of its own."
 
 [special.repair.variables]
-N = { type = "int", min = 1, max = 10 }
-unit = { type = "str", values = ["self", "any"] }
+N = { type = ["int", "str"], min = 1, max = 10 }
+unit = { type = "str", values = ["self", "any", "other"] }
 phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
 
 [special.hide]
@@ -278,7 +333,7 @@ M = { type = "int", values = [4, 6, 8, 10, 12] }
 
 [special.fear]
 name = "Fear"
-slots = ["unit"]
+slots = ["assault"]
 signature = "[d{N}]"
 effect = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection"
 see_also = ["token.shaken", "damage_type.psychic"]
@@ -339,6 +394,170 @@ slots = ["unit"]
 todo = "Rule text not yet written. Distinct from Repair: the Race text extends what repairing this unit can do, and needs a name that says so."
 see_also = ["special.repair"]
 
+[special.to_hit]
+name = "To Hit"
+slots = ["unit", "model"]
+signature = "[{ability}]"
+effect = "Shifts the to-hit and to-be-hit rolls by {ability}."
+see_also = ["token.aim"]
+
+[special.to_hit.variables]
+ability = { type = "ref", namespaces = ["ability"] }
+
+[special.activate]
+name = "Activate"
+slots = ["unit"]
+todo = "Rule text not yet written: this wants to point at an Order, and no orders namespace exists yet."
+
+[special.chase]
+name = "Chase"
+slots = ["unit"]
+todo = "Rule text not yet written: every occurrence bends the ordinary chase order, which is an Order rather than a Special. Wants an orders namespace."
+
+[special.enormous]
+name = "Enormous"
+slots = ["unit"]
+todo = "Rule text not yet written: a unit occupying two hexes. Unrelated to the enormous size modifier despite the name."
+see_also = ["size.enormous"]
+
+[special.fire_order]
+name = "Fire Order"
+slots = ["unit"]
+todo = "Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace."
+
+[special.fog]
+name = "Fog"
+slots = ["unit", "model"]
+todo = "Rule text not yet written, in either slot: the unit occurrences are about fog as an obstacle, the model occurrences about doubled to-hit penalties in fog. Decide whether those are one rule."
+see_also = ["hex.fog"]
+
+[special.heads]
+name = "Heads"
+slots = ["unit"]
+todo = "Rule text not yet written: the hydras track functional heads, and their spits, regeneration and assault all scale with the count."
+
+[special.hidden]
+name = "Hidden"
+slots = ["unit"]
+places = ["token.hidden"]
+todo = "Rule text not yet written: every occurrence grants a hidden token at setup. The token carries the rule; decide whether this is Hide under another name."
+see_also = ["token.hidden", "special.hide"]
+
+[special.illusion]
+name = "Illusion"
+slots = ["unit"]
+todo = "Rule text not yet written: a decoy unit that mimics a real one until it is given away."
+
+[special.los]
+name = "LoS"
+slots = ["unit", "range"]
+todo = "Rule text not yet written, in either slot: where a unit traces line of sight from, and what blocks it."
+
+[special.movement]
+name = "Movement"
+slots = ["unit"]
+todo = "Rule text not yet written: every occurrence is bespoke per-unit movement prose, and no shared concept is detectable across them."
+
+[special.no_damage]
+name = "No Damage"
+slots = ["unit", "range"]
+signature = "[{damage_type}]"
+effect = "This weapon does no {damage_type} damage at all."
+
+[special.no_damage.variables]
+damage_type = { type = "ref", namespaces = ["damage_type"] }
+
+[special.officer_order]
+name = "Officer Order"
+slots = ["unit"]
+todo = "Rule text not yet written: an officer overriding another unit's movement orders. Wants an orders namespace."
+see_also = ["special.officer"]
+
+[special.pet]
+name = "Pet"
+slots = ["unit"]
+todo = "Rule text not yet written: an animal unit following the orders of an infantry unit it shares a hex with."
+
+[special.phoenix]
+name = "Phoenix"
+slots = ["unit"]
+todo = "Rule text not yet written: a unit that reassembles itself after being temporarily destroyed."
+
+[special.poison_cloud]
+name = "Poison Cloud"
+slots = ["unit"]
+places = ["hex.poison_cloud"]
+todo = "Rule text not yet written: which hexes a unit fills with poison cloud is per unit today."
+see_also = ["hex.poison_cloud"]
+
+[special.regeneration]
+name = "Regeneration"
+slots = ["unit"]
+todo = "Rule text not yet written. Every occurrence composes Heal in its own prose but no shared rule ties the two — decide whether Regeneration is a wrapper over Heal or bespoke."
+see_also = ["special.heal"]
+
+[special.reload]
+name = "Reload"
+slots = ["unit"]
+todo = "Rule text not yet written: how a unit reloads outside the ordinary load order. Wants an orders namespace."
+see_also = ["special.limited_ammo"]
+
+[special.setup]
+name = "Setup"
+slots = ["unit"]
+todo = "Rule text not yet written: what a unit brings to the board, or how it enters play. Possible overlap with Forward Position's deployment context."
+see_also = ["special.forward_position"]
+
+[special.side_weapon]
+name = "Side Weapon"
+slots = ["unit"]
+todo = "Rule text not yet written: a weapon firing alongside a main gun, sharing its loading."
+
+[special.spawn]
+name = "Spawn"
+slots = ["unit", "range"]
+todo = "Rule text not yet written, in either slot: placing a new unit on the board. Every occurrence names the spawn it places and where it may be placed."
+
+[special.stacking_limit]
+name = "Stacking Limit"
+slots = ["unit"]
+todo = "Rule text not yet written: how many units may share a hex, and which sizes count against the limit."
+
+[special.tow]
+name = "Tow"
+slots = ["unit"]
+todo = "Rule text not yet written: the two flavors — towing and being towed — share one label today, so decide whether they are one rule."
+
+[special.transfer]
+name = "Transfer"
+slots = ["unit"]
+todo = "Rule text not yet written: moving models between two units sharing a hex."
+
+[special.transport]
+name = "Transport"
+slots = ["unit"]
+todo = "Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace."
+
+[special.vulnerability]
+name = "Vulnerability"
+slots = ["unit"]
+todo = "Rule text not yet written: the inverse of Resistance, but with no shared shape across occurrences."
+see_also = ["special.resistance"]
+
+#
+# Model
+#
+[special.escape_artist]
+name = "Escape Artist"
+slots = ["model"]
+todo = "Rule text not yet written: a model leaving the board and still counting as survived."
+
+[special.not_yet_dead]
+name = "Not Yet Dead"
+slots = ["model"]
+todo = "Rule text not yet written: a killed model returning as a unit of its own."
+see_also = ["special.spawn"]
+
 #
 # Range
 #
@@ -359,7 +578,7 @@ signature = "[{N}]"
 effect = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
 
 [special.limited_ammo.variables]
-N = { type = "int", min = 2, max = 10 }
+N = { type = "int", min = 1, max = 10 }
 
 [special.range_gear_disruption]
 name = "Range Gear Disruption"
@@ -455,3 +674,62 @@ From reference.toml:
 #Note to self: make more consistent
 potential_references = ["tokens.insanity"]"""
 see_also = ["special.insanity_field", "token.insane"]
+
+[special.ammo]
+name = "Ammo"
+slots = ["range"]
+todo = "Rule text not yet written: how a weapon is loaded and how its ammo is tracked. Most occurrences describe loading rather than the Limited Ammo rule, so the two are kept apart until somebody decides they are one."
+see_also = ["special.limited_ammo"]
+
+[special.area]
+name = "Area"
+slots = ["range"]
+todo = "Rule text not yet written: the Area(N+) mechanic is re-described inline by every hex effect and every weapon that uses it. Every occurrence states its own threshold in prose, often several at different distances, so the rule wants a shape before it wants a variable."
+
+[special.drag]
+name = "Drag"
+slots = ["range"]
+todo = "Rule text not yet written: pulling a hit unit one hex towards the firer."
+
+[special.focus_fire]
+name = "Focus Fire"
+slots = ["range"]
+todo = "Rule text not yet written: it spends the aim token differently, so it may belong on the token rather than here."
+see_also = ["token.aim"]
+
+[special.multiple_shots]
+name = "Multiple Shots"
+slots = ["range"]
+todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
+see_also = ["special.burst"]
+
+[special.multipurpose]
+name = "Multipurpose"
+slots = ["range"]
+todo = "Rule text not yet written: a weapon with more than one firing setting."
+
+[special.order]
+name = "Order"
+slots = ["range"]
+todo = "Rule text not yet written: which firing order a weapon is used with. Named for the order it takes, so it will collide with an orders namespace when one exists."
+
+[special.range]
+name = "Range"
+slots = ["range"]
+todo = "Rule text not yet written: how a weapon's range value is modified, or which hex it may target."
+see_also = ["distance.normal", "distance.long"]
+
+[special.recoil]
+name = "Recoil"
+slots = ["range"]
+todo = "Rule text not yet written: what firing does to the firer."
+
+[special.sniper]
+name = "Sniper"
+slots = ["range"]
+todo = "Rule text not yet written: choosing which model a kill removes."
+
+[special.type]
+name = "Type"
+slots = ["range"]
+todo = "Rule text not yet written: what kind of weapon this is, which today is free-text flavor."

@@ -28,11 +28,17 @@ tip = '''Low range and slow is a bad combination, but if you manage to come with
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.ogre_hydra.special]
-"Regeneration" = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
-"Heads" = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
-"Fire Order" = "Breath weapon and poison spit always treated as loaded and used with Fire(H) orders. Crew weapons are used with Load(crew) and Fire(crew) orders"
-"Forward Position" = "[1]"
+[[units.ogre_hydra.specials.regeneration]]
+text = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
+
+[[units.ogre_hydra.specials.heads]]
+text = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+
+[[units.ogre_hydra.specials.fire_order]]
+text = "Breath weapon and poison spit always treated as loaded and used with Fire(H) orders. Crew weapons are used with Load(crew) and Fire(crew) orders"
+
+[[units.ogre_hydra.specials.forward_position]]
+args.N = 1
 
 [units.ogre_hydra.orders.fire]
 still = [["Fire(H)", "Load(crew)"], ["Load(crew)", "Fire(H)"], ["Fire(H)", "Fire(crew)"], ["Fire(crew)", "Fire(H)"]]
@@ -84,8 +90,10 @@ cost.mp = 16
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
-[units.ogre_infantry.special]
-"Take Cover" = "[still][-1]"
+[[units.ogre_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -1
 
 [units.ogre_infantry.orders.fire]
 still = [
@@ -136,8 +144,10 @@ armor = [3, 3, 0, 0]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
-[units.ogre_robot.special]
-"Take Cover" = "[still][-2]"
+[[units.ogre_robot.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
 
 [units.ogre_robot.orders.fire]
 still = [
@@ -180,10 +190,15 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 comment = "If sharing a hex with an Infantry, you may give the pet follow orders even while shaken"
 
-[units.pet_panther.special]
-"Pet" = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
-"Evasion" = "[4+]"
-"Terror" = "[4]"
+[[units.pet_panther.specials.pet]]
+text = "If in a hex with either an Infantry (a unit with an model with tag Infantry), you may order it to follow the movement orders and follow. If so it gets the same speed as the Infantry"
+
+[[units.pet_panther.specials.evasion]]
+args.N = 4
+
+[[units.pet_panther.specials.terror]]
+args.N = 1
+args.M = 4
 
 
 
@@ -235,8 +250,10 @@ cost.xp = 16
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
-[units.ogre_assault_scout.special]
-"Take Cover" = "[still][-2]"
+[[units.ogre_assault_scout.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
 
 [units.ogre_assault_scout.orders.fire]
 still = [
@@ -294,11 +311,17 @@ Fire at whatever is in range whenever you can, and cover the enemy in minor acid
 speed = "slow"
 movement_order = ["-", "-", "-"]
 
-[units.drone_swarm.special]
-"Trap" = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
-"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
-"Evasion" = "[3+]"
-"Chase" = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
+[[units.drone_swarm.specials.trap]]
+text = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
+
+[[units.drone_swarm.specials.repairing]]
+text = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+
+[[units.drone_swarm.specials.evasion]]
+args.N = 3
+
+[[units.drone_swarm.specials.chase]]
+text = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
 
 [units.drone_swarm.orders.fire]
 still = [
@@ -347,10 +370,17 @@ description = "A tiny drones designed to repair other robots and vehicles."
 speed = "slow"
 movement_order = ["-", "-", "-"]
 
-[units.repair_drone.special]
-"Repair" = "Has Repair[N, other, 2nd healing] where N is the number of alive repair drones models"
-"Repairing" = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
-"Evasion" = "[3+]"
+[[units.repair_drone.specials.repair]]
+args.N = "one per alive repair drone model"
+args.unit = "other"
+args.phase = "2nd Healing"
+text = "N is the number of alive repair drone models"
+
+[[units.repair_drone.specials.repairing]]
+text = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
+
+[[units.repair_drone.specials.evasion]]
+args.N = 3
 
 [units.repair_drone.orders.movement]
 slow = [["360°", "F", "360°"]]
@@ -375,10 +405,17 @@ cost.xp = 8
 speed = "slow"
 movement_order = ["-", "-", "-"]
 
-[units.medic_drone.special]
-"Heal" = "Heal[N, other, 2nd healing] where N is the number of alive medic drones models"
-"Repairing" = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
-"Evasion" = "[3+]"
+[[units.medic_drone.specials.heal]]
+args.N = "one per alive medic drone model"
+args.unit = "other"
+args.phase = "2nd Healing"
+text = "N is the number of alive medic drone models"
+
+[[units.medic_drone.specials.repairing]]
+text = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
+
+[[units.medic_drone.specials.evasion]]
+args.N = 3
 
 [units.medic_drone.orders.movement]
 fast = [["Help", "Help", "Help"]]
@@ -407,10 +444,14 @@ It can deploy drones up to range 2, which might be a big bost, and you can put t
 speed = "slow"
 movement_order = ["-", "-", "-"]
 
-[units.main_engine.special]
-"LoS" = "Blocks Line of Sight"
-"Tow" = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
-"Transport" = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault"
+[[units.main_engine.specials.los]]
+text = "Blocks Line of Sight"
+
+[[units.main_engine.specials.tow]]
+text = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
+
+[[units.main_engine.specials.transport]]
+text = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault"
 
 [units.main_engine.orders.fire]
 still = [
@@ -486,8 +527,8 @@ Try to place the broadside wagon with enemies on all sides such that you can use
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.broadside_wagon.special]
-"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+[[units.broadside_wagon.specials.tow]]
+text = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
 
 [units.broadside_wagon.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
@@ -535,9 +576,11 @@ Indirect fire, long range, to hit bonus from scouts and huge damage is a good co
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.artillery_wagon.special]
-"Tow" = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
-"Fire Order" = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading"
+[[units.artillery_wagon.specials.tow]]
+text = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+
+[[units.artillery_wagon.specials.fire_order]]
+text = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading"
 
 [units.artillery_wagon.orders.fire]
 still = [["Fire", "Aim"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
@@ -587,8 +630,8 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Crew"]
 
-[models.ogre_hydra_crew.special]
-"To Hit" = "Good shoot: +1 to hit"
+[[models.ogre_hydra_crew.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.ogre_hydra_crew.assault]
 strength = [0, 0, 0, 0]
@@ -653,9 +696,14 @@ equipment = ["gear_pistol", "ogre_sword_free"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 description = "A regular Ogre assault scout which often carries tiny drones and which can also repair them. They have the knowledge to hit enemy drones in assaults where it hurts the most"
 
-[models.ogre_scout_engineer.unit_special]
-"Transport" = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
-"Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
+[[models.ogre_scout_engineer.unit_specials.transport]]
+text = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+
+[[models.ogre_scout_engineer.unit_specials.repair]]
+args.N = 2
+args.unit = "other"
+args.phase = "1st Healing"
+text = "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_scout_engineer.assault]
 strength = [6, 2, 1, 1]
@@ -665,8 +713,8 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
-[models.ogre_scout_engineer.assault.special]
-"Extra Damage" = "Gear Disruption[4+][1 for 1]"
+[[models.ogre_scout_engineer.assault.specials.extra_damage]]
+text = "Gear Disruption[4+][1 for 1]"
 
 [models.ogre_hydra]
 name = "Ogre Hydra"
@@ -683,10 +731,14 @@ deflection_die = "5+"
 damage = "d6"
 ap = 2
 
-[models.ogre_hydra.assault.special]
-"Bonus" = "+3 assault strength  and +1 assault deflection per alive head"
-"Extra Damage" = "Poison[6][1 for 2]"
-"Fear" = "[6]"
+[[models.ogre_hydra.assault.specials.bonus]]
+text = "+3 assault strength  and +1 assault deflection per alive head"
+
+[[models.ogre_hydra.assault.specials.extra_damage]]
+text = "Poison[6][1 for 2]"
+
+[[models.ogre_hydra.assault.specials.fear]]
+args.N = 6
 
 [models.drone_swarm]
 name = "Drone Swarm"
@@ -695,8 +747,8 @@ equipment_limit = ["Independent:∞"]
 equipment = ["tiny_fancy_gear_pistol"]
 type = ["Mechanical", "Floating", "Drone"]
 
-[models.drone_swarm.special]
-"To Hit" = "Superb shot: +3 to hit"
+[[models.drone_swarm.specials.to_hit]]
+args.ability = "ability.superb_shot"
 
 [models.drone_swarm.assault]
 strength = [1, 0, 0, 0]
@@ -706,8 +758,9 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.drone_swarm.unit_special]
-"Pre-Assault Retreat" = "4+"
+[[models.drone_swarm.unit_specials.pre_assault_retreat]]
+replace = true
+args.N = 4
 
 [models.repair_drone]
 name = "Repair Drone"
@@ -724,8 +777,9 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.repair_drone.unit_special]
-"Pre-Assault Retreat" = "4+"
+[[models.repair_drone.unit_specials.pre_assault_retreat]]
+replace = true
+args.N = 4
 
 [models.medic_drone]
 name = "Medic Drone"
@@ -742,8 +796,9 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.medic_drone.unit_special]
-"Pre-Assault Retreat" = "4+"
+[[models.medic_drone.unit_specials.pre_assault_retreat]]
+replace = true
+args.N = 4
 
 [models.healing_drone]
 name = "Healing Drone"
@@ -760,8 +815,8 @@ deflection_die = "5+"
 damage = "d4-2"
 ap = 0
 
-[models.healing_drone.unit_special]
-"Pre-Assault Retreat" = "4+"
+[[models.healing_drone.unit_specials.pre_assault_retreat]]
+args.N = 4
 
 [models.main_engine]
 name = "Main Engine"
@@ -778,8 +833,8 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
-[models.main_engine.assault.special]
-"Retreat" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+[[models.main_engine.assault.specials.retreat]]
+text = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.artillery_wagon]
 name = "Artillery Wagon"
@@ -788,8 +843,8 @@ equipment_limit = ["Independent:∞"]
 equipment = ["ogre_artillery"]
 type = ["Mechanical", "Towed", "Drone"]
 
-[models.artillery_wagon.special]
-"To Hit" = "Need command: -2 to hit if unit is not connected to a main engine"
+[[models.artillery_wagon.specials.to_hit]]
+args.ability = "ability.need_command"
 
 [models.artillery_wagon.assault]
 strength = [6, 6, 6, 3]
@@ -799,8 +854,8 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
-[models.artillery_wagon.assault.special]
-"Retreat" = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+[[models.artillery_wagon.assault.specials.retreat]]
+text = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.broadside_wagon]
 name = "Broadside Wagon"
@@ -817,8 +872,8 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
-[models.broadside_wagon.assault.special]
-"Retreat" = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
+[[models.broadside_wagon.assault.specials.retreat]]
+text = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
 
 [models.elite_ogre_infantry]
 name = "Elite Ogre Infantry"
@@ -829,8 +884,8 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
 
-[models.elite_ogre_infantry.special]
-"To Hit" = "Good shot: +1 to hit"
+[[models.elite_ogre_infantry.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.elite_ogre_infantry.assault]
 strength = [4, 2, 1, 1]
@@ -849,8 +904,8 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Elite"]
 
-[models.elite_ogre_robot.special]
-"To Hit" = "Good shot: +1 to hit"
+[[models.elite_ogre_robot.specials.to_hit]]
+args.ability = "ability.good_shot"
 
 [models.elite_ogre_robot.assault]
 strength = [2, 1, 1, 1]
@@ -869,8 +924,10 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Medic"]
 
-[models.ogre_medic.unit_special]
-"Heal" = "Healing[1, any, 1st healing]"
+[[models.ogre_medic.unit_specials.heal]]
+args.N = 1
+args.unit = "any"
+args.phase = "1st Healing"
 
 [models.ogre_medic.assault]
 strength = [3, 2, 1, 1]
@@ -880,8 +937,8 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
-[models.ogre_medic.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.ogre_medic.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.ogre_engineer]
 name = "Ogre Engineer"
@@ -892,9 +949,14 @@ equipment_limit = ["Independent:∞", "Hands:2"]
 equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 
-[models.ogre_engineer.unit_special]
-"Transport" = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
-"Repair" = "[2, other, 1st healing]. Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
+[[models.ogre_engineer.unit_specials.transport]]
+text = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+
+[[models.ogre_engineer.unit_specials.repair]]
+args.N = 2
+args.unit = "other"
+args.phase = "1st Healing"
+text = "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
 
 [models.ogre_engineer.assault]
 strength = [3, 2, 1, 1]
@@ -904,8 +966,8 @@ deflection_die = "5+"
 damage = "d8"
 ap = 2
 
-[models.ogre_engineer.assault.special]
-"Cunning Assault" = "[1 for 2]"
+[[models.ogre_engineer.assault.specials.cunning_assault]]
+args.N = 2
 
 [equipment]
 
@@ -922,9 +984,11 @@ angle = [true, true, true, true]
 damage = "d8-2"
 ap = 3
 
-[equipment.ogre_sniper_rifle.range.special]
-"Improved Aim" = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 Psychic damage and +d6 Crew damage when aiming"
-"Sniper" = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+[[equipment.ogre_sniper_rifle.range.specials.improved_aim]]
+text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 Psychic damage and +d6 Crew damage when aiming"
+
+[[equipment.ogre_sniper_rifle.range.specials.sniper]]
+text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -959,12 +1023,15 @@ angle = [true, true, true, true]
 damage = "d8 (+3 if penetrating all armor)"
 ap = 6
 
-[equipment.ogre_artillery.range.special]
-"Extra Damage" = "If you hit enemy, in addition to regular damage, Area[5+], AP=4, damage=d8 in the target hex"
-"Indirect Fire" = "May use line of sight of any scout instead of its own."
+[[equipment.ogre_artillery.range.specials.extra_damage]]
+text = "If you hit enemy, in addition to regular damage, Area[5+], AP=4, damage=d8 in the target hex"
 
-[equipment.ogre_artillery.model_special]
-"To Hit" = "If a scout has line of sight to target, the unit gains good shot: +1 to hit"
+[[equipment.ogre_artillery.range.specials.indirect_fire]]
+text = "May use line of sight of any scout instead of its own."
+
+[[equipment.ogre_artillery.model_specials.to_hit]]
+args.ability = "ability.good_shot"
+text = "Applies while a scout has line of sight to the target"
 
 [equipment.fancy_ogre_rifle]
 name = "Fancy Ogre Rifle"
@@ -992,8 +1059,8 @@ angle = [true, true, true, true]
 damage = "d8"
 ap = 2
 
-[equipment.enhanced_fancy_ogre_rifle.model_special]
-"To Hit (2)" = "enhanced accuracy: +1 to hit"
+[[equipment.enhanced_fancy_ogre_rifle.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
 [equipment.ogre_broadside]
 name = "Ogre Broadside"
@@ -1056,14 +1123,14 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[equipment.fancy_gear_pistol.range.special]
-"Extra Damage" = "Minor Acid"
+[[equipment.fancy_gear_pistol.range.specials.extra_damage]]
+text = "Minor Acid"
 
-[equipment.fancy_gear_pistol.model_special]
-"To Hit (2)" = "Enhanced accuracy: +1 to hit"
+[[equipment.fancy_gear_pistol.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
-[equipment.fancy_gear_pistol.unit_special]
-"Fire Order" = "May load up to 2 shots, and fire them one at a time"
+[[equipment.fancy_gear_pistol.unit_specials.fire_order]]
+text = "May load up to 2 shots, and fire them one at a time"
 
 [equipment.tiny_fancy_gear_pistol]
 name = "Tiny Fancy Gear Pistol"
@@ -1076,19 +1143,19 @@ angle = [true, true, true, true]
 damage = "d4-2"
 ap = 0
 
-[equipment.tiny_fancy_gear_pistol.range.special]
-"Extra Damage" = "Minor Acid"
+[[equipment.tiny_fancy_gear_pistol.range.specials.extra_damage]]
+text = "Minor Acid"
 
-[equipment.tiny_fancy_gear_pistol.unit_special]
-"Fire Order" = "Start with two ammo, use them one at a time"
+[[equipment.tiny_fancy_gear_pistol.unit_specials.fire_order]]
+text = "Start with two ammo, use them one at a time"
 
 [equipment.ogre_sword_free]
 name = "Ogre Sword"
 race = "ogre"
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
-[equipment.ogre_sword_free.assault.special]
-"Bonus" = "+1 assault strength per enemy model in assault (forward direction only)"
+[[equipment.ogre_sword_free.assault.specials.bonus]]
+text = "+1 assault strength per enemy model in assault (forward direction only)"
 
 [equipment.ogre_sword]
 name = "Ogre Sword"
@@ -1097,8 +1164,8 @@ cost.cp = 8
 upgrade_all = true
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
-[equipment.ogre_sword.assault.special]
-"Bonus" = "+1 assault strength per enemy model in assault (forward direction only)"
+[[equipment.ogre_sword.assault.specials.bonus]]
+text = "+1 assault strength per enemy model in assault (forward direction only)"
 
 [equipment.fancy_ogre_sword]
 name = "Fancy Ogre Sword"
@@ -1107,8 +1174,8 @@ cost.cp = 12
 upgrade_all = false
 requires = [["Reserve Melee:1"], ["type:Scout"], ["type:Elite"]]
 
-[equipment.fancy_ogre_sword.assault.special]
-"Bonus" = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
+[[equipment.fancy_ogre_sword.assault.specials.bonus]]
+text = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
 
 [equipment.fancy_warhammer]
 name = "Fancy WarHammer"
@@ -1132,8 +1199,8 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[equipment.acid_breath.range.special]
-"Extra Damage" = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+[[equipment.acid_breath.range.specials.extra_damage]]
+text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1146,6 +1213,8 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[equipment.poison_spit.range.special]
-"Extra Damage" = "Poison[6]."
-"Multiple Shots" = "Fire one time per alive minor head"
+[[equipment.poison_spit.range.specials.extra_damage]]
+text = "Poison[6]."
+
+[[equipment.poison_spit.range.specials.multiple_shots]]
+text = "Fire one time per alive minor head"

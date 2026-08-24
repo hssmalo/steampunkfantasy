@@ -82,13 +82,27 @@ cost.ip = 96
 description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insantiy weapons and a greater disruptor weapons and lots of gadgets.
 '''
 
-[units.flagship.special]
-"Enormous" = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
-"Fog" = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token. If it has an into the fog token, and at least one part of the unit is not inside a fog, replace the into the fog with an out of the fog token. Out of the fog token is removed in aftermath phase"
-"Terror" = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
-"Fire Order" = "Fire and loads all weapons simultaneously"
-"Repair" = "[3, self, 2nd Healing]"
-"Officer" = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360° into either an F movement or an aim order."
+[[units.flagship.specials.enormous]]
+text = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
+
+[[units.flagship.specials.fog]]
+text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token. If it has an into the fog token, and at least one part of the unit is not inside a fog, replace the into the fog with an out of the fog token. Out of the fog token is removed in aftermath phase"
+
+[[units.flagship.specials.terror]]
+args.N = 1
+args.M = 8
+text = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
+
+[[units.flagship.specials.fire_order]]
+text = "Fire and loads all weapons simultaneously"
+
+[[units.flagship.specials.repair]]
+args.N = 3
+args.unit = "self"
+args.phase = "2nd Healing"
+
+[[units.flagship.specials.officer]]
+text = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360° into either an F movement or an aim order."
 
 
 [units.flagship.shaken]
@@ -160,8 +174,8 @@ description = '''Steampunk heavy armored vehicle, without a turret, but with two
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.frost_88.special]
-"Fire Order" = "Fire(wj) fires the water jet, while Fire(fr) fires frost ray. Track ammo only for main gun, while frost ray is always loaded"
+[[units.frost_88.specials.fire_order]]
+text = "Fire(wj) fires the water jet, while Fire(fr) fires frost ray. Track ammo only for main gun, while frost ray is always loaded"
 
 [units.frost_88.orders.movement]
 slow = [
@@ -237,10 +251,17 @@ description = '''An abomination is an humanoid creature with 4 tentacles and two
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.abomination_infantry.special]
-"Take Cover" = "[still][-2]"
-"Terror" = "[6](range=1)"
-"Fire Order" = "If given additional tentacle weapons, they fire simultaneously with other weapons on regular Fire(s) order, not Fire(b) order"
+[[units.abomination_infantry.specials.to_hit]]
+args.ability = "ability.take_cover"
+args.speed = "speed.still"
+args.N = -2
+
+[[units.abomination_infantry.specials.terror]]
+args.N = 1
+args.M = 6
+
+[[units.abomination_infantry.specials.fire_order]]
+text = "If given additional tentacle weapons, they fire simultaneously with other weapons on regular Fire(s) order, not Fire(b) order"
 
 [units.abomination_infantry.orders.fire]
 still = [
@@ -278,20 +299,36 @@ cost.xp = 32
 armor = [6, 4, 2, 1]
 description = '''A huge scary unfamiliar monster  with a cloud of poison and disease around it. A monster inspired by lovecraft
 '''
+note = "loses terror, poison cloud when standing in water"
 
 
 [units.horror.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.horror.special]
-"Terror" = "While in fog (in agony phases): Terror[12](Range=1), Insanity Filed[range=1][d6]"
-"Fog" = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
-"Poison Cloud" = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
-"Resistance" = "Poison[12]"
-"Immunity" = "Acid and Fire"
-"Forward Position" = "[3]"
-"Note" = "loses terror, poison cloud when standing in water"
+[[units.horror.specials.terror]]
+args.N = 1
+args.M = 12
+text = "While in fog (in agony phases): Terror[12](Range=1), Insanity Filed[range=1][d6]"
+
+[[units.horror.specials.fog]]
+text = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
+
+[[units.horror.specials.poison_cloud]]
+text = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
+
+[[units.horror.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 12
+
+[[units.horror.specials.immunity]]
+args.feature = "damage_type.acid"
+
+[[units.horror.specials.immunity]]
+args.feature = "damage_type.fire"
+
+[[units.horror.specials.forward_position]]
+args.N = 3
 
 
 [units.horror.orders.movement]
@@ -329,8 +366,9 @@ description = '''A flying monster bird scaring the enemy with a deadly scream.
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.shriek_monstrosity.special]
-"Resistance" = "Poison[3]"
+[[units.shriek_monstrosity.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 3
 
 
 [units.shriek_monstrosity.orders.movement]
@@ -376,11 +414,24 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 comment = "Remove all resistances and immunities while shaken"
 
-[units.water_elemental.special]
-"Repair" = "[1, self, 2nd healing]"
-"Resistance" = "Acid[2], Regular[2]"
-"Immunity" = "Fire"
-"Fire Order" = "Fire and load all weapons simultaneously"
+[[units.water_elemental.specials.repair]]
+args.N = 1
+args.unit = "self"
+args.phase = "2nd Healing"
+
+[[units.water_elemental.specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 2
+
+[[units.water_elemental.specials.resistance]]
+args.version = "damage_type.regular"
+args.N = 2
+
+[[units.water_elemental.specials.immunity]]
+args.feature = "damage_type.fire"
+
+[[units.water_elemental.specials.fire_order]]
+text = "Fire and load all weapons simultaneously"
 
 [units.water_elemental.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
@@ -426,8 +477,8 @@ description = '''These are tiny robot crabs, which swarm in big numbers.
 speed = "still"
 movement_order = ["-", "-", "-"]
 
-[units.robot_crab.special]
-"Chase" = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"
+[[units.robot_crab.specials.chase]]
+text = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"
 
 [units.robot_crab.orders.movement]
 fast = [["Chs", "Chs", "Chs"]]
@@ -453,9 +504,13 @@ description = '''An abomination (humandoid creature with 4 tentacles, inspired b
 speed = "slow"
 movement_order = ["-", "-", "flee"]
 
-[units.giant_frog_riders.special]
-"Resistance" = "Poison[4]"
-"Terror" = "[8](range=1)"
+[[units.giant_frog_riders.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 4
+
+[[units.giant_frog_riders.specials.terror]]
+args.N = 1
+args.M = 8
 
 [units.giant_frog_riders.orders.fire]
 still = [["-", "Load"], ["Load", "-"]]
@@ -502,9 +557,12 @@ speed = "fast"
 movement_order = ["-", "Chs", "Chs"]
 fire_order = "Normal"
 
-[units.hippopotamus_riders.special]
-"Resistance" = "Poison[3]"
-"Fire Order" = "Fire(mm) fires multipurpose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
+[[units.hippopotamus_riders.specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 3
+
+[[units.hippopotamus_riders.specials.fire_order]]
+text = "Fire(mm) fires multipurpose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
 
 [units.hippopotamus_riders.orders.fire]
 still = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
@@ -549,8 +607,8 @@ equipment_limit = ["Independent:∞", "Hands:2", "Tentacles:4"]
 equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
-[models.abomination_infantry.special]
-"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+[[models.abomination_infantry.specials.fog]]
+text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 
 [models.abomination_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -560,9 +618,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.abomination_infantry.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
-"Cunning Assault" = "[1 for 2]"
+[[models.abomination_infantry.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
+
+[[models.abomination_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.hippopotamus_riders]
 name = "Hippopotamus Riders"
@@ -571,8 +631,8 @@ equipment_limit = ["Independent:∞"]
 equipment = ["multipurpose_mortar", "double_barreled_oversized_musket"]
 type = ["Bio", "Walking", "Amphibian"]
 
-[models.hippopotamus_riders.special]
-"To Hit" = "Double to-hit bonuses and penalties for movement speed, both for you and the target"
+[[models.hippopotamus_riders.specials.to_hit]]
+args.ability = "ability.double_speed_modifiers"
 
 [models.hippopotamus_riders.assault]
 strength = [12, 6, 3, 3]
@@ -582,8 +642,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-[models.hippopotamus_riders.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
+[[models.hippopotamus_riders.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
 
 
 
@@ -602,8 +662,8 @@ deflection_die = "4+"
 damage = "d6"
 ap = 2
 
-[models.horror.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
+[[models.horror.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
 
 
 [models.shriek_monstrosity]
@@ -637,8 +697,8 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-[models.water_elemental.assault.special]
-"Extra Damage" = "Gear Disruption[5+][1 for 2], Minor Acid[1 for 2], Poison[6][1 for 2]"
+[[models.water_elemental.assault.specials.extra_damage]]
+text = "Gear Disruption[5+][1 for 2], Minor Acid[1 for 2], Poison[6][1 for 2]"
 
 [models.robot_crab]
 name = "Robot Crab"
@@ -656,9 +716,11 @@ deflection_die = "6+"
 damage = "d6"
 ap = 0
 
-[models.robot_crab.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
-"Cunning Assault" = "[1 for 1]"
+[[models.robot_crab.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
+
+[[models.robot_crab.assault.specials.cunning_assault]]
+args.N = 1
 
 [models.confusiator_tank]
 name = "Confusiator Tank"
@@ -667,8 +729,8 @@ equipment = ["confusion_stinger"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Floating", "Bio Crew"]
 
-[models.confusiator_tank.special]
-"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+[[models.confusiator_tank.specials.fog]]
+text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 
 [models.confusiator_tank.assault]
 strength = [12, 1, 1, 1]
@@ -678,9 +740,12 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.confusiator_tank.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
-"Cunning Assault Defense" = "[6][6+]"
+[[models.confusiator_tank.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
+
+[[models.confusiator_tank.assault.specials.cunning_assault_defense]]
+args.N = 6
+args.M = 6
 
 [models.flagship]
 name = "Flagship"
@@ -689,8 +754,8 @@ equipment = ["broadside", "side_weapons", "greater_insanity_blast", "greater_dis
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Floating", "Flying", "Bio Crew"]
 
-[models.flagship.special]
-"To Hit" = "Flagship gains +1 to hit while having an out of fog token"
+[[models.flagship.specials.to_hit]]
+args.ability = "ability.out_of_fog"
 
 [models.flagship.assault]
 strength = [36, 24, 24, 12]
@@ -700,8 +765,8 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.flagship.assault.special]
-"Size" = "Automatically considered winning without assault taking place versus large or smaller units. Ie the enemy retreat but neither you or them suffer any additional damage from assault"
+[[models.flagship.assault.specials.size]]
+text = "Automatically considered winning without assault taking place versus large or smaller units. Ie the enemy retreat but neither you or them suffer any additional damage from assault"
 
 [models.frost_88]
 name = "Frost 88"
@@ -710,9 +775,11 @@ equipment = ["twin_frost_ray", "heavy_water_jet"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
-[models.frost_88.special]
-"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
-"To Hit" = "Double to-hit bonuses and penalties for movement speed, both for you and the target"
+[[models.frost_88.specials.fog]]
+text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+
+[[models.frost_88.specials.to_hit]]
+args.ability = "ability.double_speed_modifiers"
 
 
 [models.frost_88.assault]
@@ -723,8 +790,8 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.frost_88.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
+[[models.frost_88.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
 
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
@@ -735,11 +802,11 @@ equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Elite", "Walking"]
 replaces = "abomination_infantry"
 
-[models.elite_abomination_infantry.special]
-"To Hit" = "Good shot: +1 to hit"
+[[models.elite_abomination_infantry.specials.to_hit]]
+args.ability = "ability.good_shot"
 
-[models.elite_abomination_infantry.unit_special]
-"Vulnerability" = "All enemies within range 2 gets Psychic vulnerability of 1: Increase Psychic damage they take by 1. This ability does not stack"
+[[models.elite_abomination_infantry.unit_specials.vulnerability]]
+text = "All enemies within range 2 gets Psychic vulnerability of 1: Increase Psychic damage they take by 1. This ability does not stack"
 
 [models.elite_abomination_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -749,9 +816,11 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[models.elite_abomination_infantry.assault.special]
-"Bonus" = "+100% strength and deflections versus shaken units"
-"Cunning Assault" = "[1 for 2]"
+[[models.elite_abomination_infantry.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
+
+[[models.elite_abomination_infantry.assault.specials.cunning_assault]]
+args.N = 2
 
 [models.giant_frog_rider]
 name = "Giant Frog Rider"
@@ -764,8 +833,8 @@ equipment = [
 ]
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
 
-[models.giant_frog_rider.special]
-"Fog" = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+[[models.giant_frog_rider.specials.fog]]
+text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
 
 [models.giant_frog_rider.assault]
 strength = [4, 1, 1, 1]
@@ -775,10 +844,14 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-[models.giant_frog_rider.assault.special]
-"Cunning Assault" = "[1 for 3]"
-"Bonus" = "+100% strength and deflections versus shaken units"
-"Extra Damage" = "Poison[4][1 for 4]"
+[[models.giant_frog_rider.assault.specials.cunning_assault]]
+args.N = 3
+
+[[models.giant_frog_rider.assault.specials.bonus]]
+text = "+100% strength and deflections versus shaken units"
+
+[[models.giant_frog_rider.assault.specials.extra_damage]]
+text = "Poison[4][1 for 4]"
 
 [equipment]
 
@@ -793,9 +866,11 @@ damage = "d6 Psychic + d4 Crew damage"
 ap = "N/A"
 
 
-[equipment.confusion_stinger.range.special]
-"Multiple Shots" = "Fires 3 shot per fire order."
-"Extra Damage" = "Confusion"
+[[equipment.confusion_stinger.range.specials.multiple_shots]]
+text = "Fires 3 shot per fire order."
+
+[[equipment.confusion_stinger.range.specials.extra_damage]]
+text = "Confusion"
 
 
 [equipment.greater_disruptors]
@@ -809,10 +884,14 @@ angle = [true, true, true, false]
 damage = "d4-2"
 ap = 0
 
-[equipment.greater_disruptors.range.special]
-"Multiple Shots" = "Fires 4 shot per fire order."
-"Extra Damage" = "Gear Disruption[5+]"
-"LoS" = "Trace line of sight from either front or back part of the unit"
+[[equipment.greater_disruptors.range.specials.multiple_shots]]
+text = "Fires 4 shot per fire order."
+
+[[equipment.greater_disruptors.range.specials.extra_damage]]
+text = "Gear Disruption[5+]"
+
+[[equipment.greater_disruptors.range.specials.los]]
+text = "Trace line of sight from either front or back part of the unit"
 
 
 [equipment.side_weapons]
@@ -826,9 +905,11 @@ angle = [true, true, true, false]
 damage = "d8 crew damage"
 ap = 0
 
-[equipment.side_weapons.range.special]
-"Multiple Shots" = "Fire once to the right and once to the left per fire order"
-"LoS" = "Trace line of sight from either front or back part of the unit"
+[[equipment.side_weapons.range.specials.multiple_shots]]
+text = "Fire once to the right and once to the left per fire order"
+
+[[equipment.side_weapons.range.specials.los]]
+text = "Trace line of sight from either front or back part of the unit"
 
 
 [equipment.broadside]
@@ -842,8 +923,8 @@ angle = ["-", true, true, "-"]
 damage = "d6-1"
 ap = 4
 
-[equipment.broadside.range.special]
-"Multiple Shots" = "Fire 4 shot to 4 different units in 4 different hexes. Two of the hexes must be neighboring hexes within firing angle to the right, and the other two must be neighboring hexes within firing angle to the left"
+[[equipment.broadside.range.specials.multiple_shots]]
+text = "Fire 4 shot to 4 different units in 4 different hexes. Two of the hexes must be neighboring hexes within firing angle to the right, and the other two must be neighboring hexes within firing angle to the left"
 
 
 [equipment.greater_insanity_blast]
@@ -858,9 +939,11 @@ damage = "d10 Psychic"
 ap = "N/A"
 
 
-[equipment.greater_insanity_blast.range.special]
-"Insanity" = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)"
-"LoS" = "Trace line of sight from front of the unit"
+[[equipment.greater_insanity_blast.range.specials.insanity]]
+text = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)"
+
+[[equipment.greater_insanity_blast.range.specials.los]]
+text = "Trace line of sight from front of the unit"
 
 
 
@@ -875,10 +958,11 @@ angle = [true, true, false, false]
 damage = "d6 Psychic"
 ap = "N/A"
 
-[equipment.insanity_contraption.range.special]
+[[equipment.insanity_contraption.range.specials.insanity]]
+text = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
 
-"Insanity" = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
-"Ammo" =	"Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
+[[equipment.insanity_contraption.range.specials.ammo]]
+text = "Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
 
 
 [equipment.multipurpose_gun]
@@ -892,8 +976,8 @@ angle = [true, true, true, true]
 damage = "d6 Psychic"
 ap = "N/A"
 
-[equipment.multipurpose_gun.range.special]
-"Multipurpose" = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insane token, in addition to the normal effects of the Psychic damage table"
+[[equipment.multipurpose_gun.range.specials.multipurpose]]
+text = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insane token, in addition to the normal effects of the Psychic damage table"
 
 [equipment.tentacle_cracklespears]
 name = "Tentacle CrackleSpears"
@@ -908,8 +992,8 @@ strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
-[equipment.tentacle_cracklespears.assault.special]
-"Extra Damage 3" = "If assault in a hex with fog, each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears."
+[[equipment.tentacle_cracklespears.assault.specials.extra_damage]]
+text = "If assault in a hex with fog, each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]
 name = "Tentacle Axes"
@@ -928,8 +1012,8 @@ cost.cp = 8
 upgrade_all = true
 requires = [["Tentacles:1"], ["type:Infantry"]]
 
-[equipment.tentacle_shield.unit_special]
-"Protection" = "[3, 2, 0, 0] in armor."
+[equipment.tentacle_shield.unit]
+armor.add = [3, 2, 0, 0]
 
 [equipment.tentacle_shield.assault]
 deflection.add = [2, 0, 0, 0]
@@ -946,8 +1030,22 @@ description = """Abominations excel in water manipulation. A thin layer of water
 
 Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
-[equipment.water_shield.unit_special]
-"Resistance" = "Acid[1], Poison[1], Fire[1], Regular[1]. Armor assist: if this unit have armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
+[[equipment.water_shield.unit_specials.resistance]]
+args.version = "damage_type.acid"
+args.N = 1
+
+[[equipment.water_shield.unit_specials.resistance]]
+args.version = "damage_type.poison"
+args.N = 1
+
+[[equipment.water_shield.unit_specials.resistance]]
+args.version = "damage_type.fire"
+args.N = 1
+
+[[equipment.water_shield.unit_specials.resistance]]
+args.version = "damage_type.regular"
+args.N = 1
+text = "Armor assist: if this unit have armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
 
 [equipment.frog_cavalry_armor]
 name = "Frog Cavalry Armor"
@@ -956,8 +1054,8 @@ cost.cp = 4
 upgrade_all = true
 requires = [["type:Frog"]]
 
-[equipment.frog_cavalry_armor.unit_special]
-"Protection" = "[4, 4, 3, 0] in armor."
+[equipment.frog_cavalry_armor.unit]
+armor.add = [4, 4, 3, 0]
 
 [equipment.fog_grenade_mortar]
 name = "Fog Grenade Mortar"
@@ -972,11 +1070,11 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.fog_grenade_mortar.range.special]
+[[equipment.fog_grenade_mortar.range.specials.cloud]]
+text = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
 
-"Cloud" = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
-
-"Ammo" = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+[[equipment.fog_grenade_mortar.range.specials.ammo]]
+text = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 
 [equipment.long_range_fog_grenade_mortar]
@@ -992,11 +1090,11 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.long_range_fog_grenade_mortar.range.special]
+[[equipment.long_range_fog_grenade_mortar.range.specials.cloud]]
+text = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
 
-"Cloud" = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
-
-"Ammo" = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+[[equipment.long_range_fog_grenade_mortar.range.specials.ammo]]
+text = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 
 [equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
@@ -1008,8 +1106,8 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.multipurpose_mortar.range.special]
-"Multipurpose" = "Either place fog in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
+[[equipment.multipurpose_mortar.range.specials.multipurpose]]
+text = "Either place fog in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
 
 [equipment.double_barreled_oversized_musket]
 name = "Double Barreled Oversized Musket"
@@ -1021,9 +1119,11 @@ angle = [true, false, false, false]
 damage = "d8"
 ap = "3"
 
-[equipment.double_barreled_oversized_musket.range.special]
-"Multiple Shots" = "Fire two shot per fire order"
-"Extra Damage" = "Gear disruption[6+]"
+[[equipment.double_barreled_oversized_musket.range.specials.multiple_shots]]
+text = "Fire two shot per fire order"
+
+[[equipment.double_barreled_oversized_musket.range.specials.extra_damage]]
+text = "Gear disruption[6+]"
 
 [equipment.tentacle_dart]
 name = "Tentacle Dart"
@@ -1053,9 +1153,11 @@ angle = [true, false, false, false]
 damage = "d6 -1 Psychic damage"
 ap = "N/A"
 
-[equipment.shriek.range.special]
-"Area" = "Target enemies in all hexes within front arc (not including the hexes on the edge of firing angle) and long range. At point blank Area[4+], within normal range Area[5+] and all other hexes Area[6+]"
-"Ammo" = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo"
+[[equipment.shriek.range.specials.area]]
+text = "Target enemies in all hexes within front arc (not including the hexes on the edge of firing angle) and long range. At point blank Area[4+], within normal range Area[5+] and all other hexes Area[6+]"
+
+[[equipment.shriek.range.specials.ammo]]
+text = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo"
 
 [equipment.fog_poisonizer]
 name = "Fog Poisonizer"
@@ -1070,10 +1172,14 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.fog_poisonizer.range.special]
-"Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
-"Ammo" = "Always treated as loaded"
-"Order" = "May be used in both gunnery phases"
+[[equipment.fog_poisonizer.range.specials.cloud]]
+text = "Add poison cloud[4] to a hex with fog within normal range"
+
+[[equipment.fog_poisonizer.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.fog_poisonizer.range.specials.order]]
+text = "May be used in both gunnery phases"
 
 
 [equipment.greater_fog_poisonizer]
@@ -1086,10 +1192,14 @@ angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.greater_fog_poisonizer.range.special]
-"Cloud" = "Add poison cloud[4] to a hex with fog within normal range"
-"Ammo" = "Always treated as loaded"
-"Order" = "May be used in both gunnery phases independent of other weapons"
+[[equipment.greater_fog_poisonizer.range.specials.cloud]]
+text = "Add poison cloud[4] to a hex with fog within normal range"
+
+[[equipment.greater_fog_poisonizer.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.greater_fog_poisonizer.range.specials.order]]
+text = "May be used in both gunnery phases independent of other weapons"
 
 
 [equipment.frog_spit]
@@ -1103,10 +1213,14 @@ angle = [true, true, false, false]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.frog_spit.range.special]
-"Extra Damage" = "Poison[4]"
-"Ammo" = "Always treated as loaded"
-"Order" =  "Fire in both first and second gunnery phase independent of other weapons and orders"
+[[equipment.frog_spit.range.specials.extra_damage]]
+text = "Poison[4]"
+
+[[equipment.frog_spit.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.frog_spit.range.specials.order]]
+text = "Fire in both first and second gunnery phase independent of other weapons and orders"
 
 
 [equipment.twin_frost_ray]
@@ -1120,10 +1234,14 @@ angle = [true, false, false, false]
 damage = "d4-2+d6 Psychic damage + d4 Crew damage"
 ap = 0
 
-[equipment.twin_frost_ray.range.special]
-"Multiple Shots" = "Fire twice per fire order"
-"Ammo" = "Always treated as loaded"
-"Extra Damage" = "The target must break if possible (if it has a lower speed available). Reduce the speed one step"
+[[equipment.twin_frost_ray.range.specials.multiple_shots]]
+text = "Fire twice per fire order"
+
+[[equipment.twin_frost_ray.range.specials.ammo]]
+text = "Always treated as loaded"
+
+[[equipment.twin_frost_ray.range.specials.extra_damage]]
+text = "The target must break if possible (if it has a lower speed available). Reduce the speed one step"
 
 [equipment.heavy_water_jet]
 name = "Heavy Water Jet"
@@ -1136,8 +1254,8 @@ angle = [true, false, false, false]
 damage = "d6 (+d8 Crew damage if penetrating all armor)"
 ap = 6
 
-[equipment.heavy_water_jet.range.special]
-"Extra Damage" = "Gear Disruption[5+]"
+[[equipment.heavy_water_jet.range.specials.extra_damage]]
+text = "Gear Disruption[5+]"
 
 
 [equipment.corrosive_water_jet]
@@ -1151,8 +1269,8 @@ angle = [true, false, false, false]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.corrosive_water_jet.range.special]
-"Extra Damage" = "Gear Disruption[5+], Minor Acid"
+[[equipment.corrosive_water_jet.range.specials.extra_damage]]
+text = "Gear Disruption[5+], Minor Acid"
 
 
 [equipment.poison_water_jet]
@@ -1166,8 +1284,8 @@ angle = [true, false, false, false]
 damage = "N/A"
 ap = "N/A"
 
-[equipment.poison_water_jet.range.special]
-"Extra Damage" = "Poison[6]"
+[[equipment.poison_water_jet.range.specials.extra_damage]]
+text = "Poison[6]"
 
 
 
@@ -1176,5 +1294,5 @@ name = "Mechanical Melee Contraption"
 race = "abomination"
 requires = []
 
-[equipment.mechanical_melee_contraption.assault.special]
-"Bonus 2" = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"
+[[equipment.mechanical_melee_contraption.assault.specials.bonus]]
+text = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"
