@@ -77,3 +77,23 @@ def test_a_written_rules_text_is_its_effect() -> None:
 
     assert row.text == "Aim carefully."
     assert row.is_todo is False
+
+
+def test_a_stubs_text_is_the_first_line_of_its_todo() -> None:
+    # A `todo` can run to a paragraph, and the row is one line.
+    registry = _registry(aim=_rule(todo="Rule text not yet written.\nAsk Hans."))
+
+    (row,) = special_rows(registry)
+
+    assert row.text == "Rule text not yet written."
+    assert row.is_todo is True
+
+
+def test_a_written_rule_carrying_a_todo_still_shows_its_effect() -> None:
+    # A written rule may keep an open question; the rule text is what it has.
+    registry = _registry(aim=_rule(effect="Aim carefully.", todo="Duplicate of fend?"))
+
+    (row,) = special_rows(registry)
+
+    assert row.text == "Aim carefully."
+    assert row.is_todo is False

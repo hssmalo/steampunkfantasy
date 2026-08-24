@@ -53,17 +53,29 @@ class SpecialRow:
     """Whether `text` is designer prose rather than rule text."""
 
 
+def _row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
+    """Build the row for one Special record.
+
+    A record is either written or an explicit stub, so those are the only two
+    registers a row has: rule text, or the designer prose standing in for it.
+    """
+    if rule.written:
+        text, is_todo = rule.effect or "", False
+    else:
+        # A stub always has a `todo` — the schema admits no third state — and
+        # only its first line fits a one-line row.
+        text, is_todo = (rule.todo or "").splitlines()[0], True
+    return SpecialRow(
+        marks=_slot_marks(rule.slots),
+        label=f"{key}{rule.signature or ''}",
+        text=text,
+        is_todo=is_todo,
+    )
+
+
 def special_rows(registry: Registry) -> list[SpecialRow]:
     """Build one row per Special in the Registry, sorted by Identifier."""
-    return [
-        SpecialRow(
-            marks=_slot_marks(rule.slots),
-            label=f"{key}{rule.signature or ''}",
-            text=rule.effect or "",
-            is_todo=False,
-        )
-        for key, rule in sorted(registry.specials.items())
-    ]
+    return [_row(key, rule) for key, rule in sorted(registry.specials.items())]
 
 
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:
