@@ -1,0 +1,53 @@
+# The Terrain registry: what a hex is made of, as opposed to what has been
+# placed on it (`hexes.toml`). Terrain is permanent unless a rule destroys it;
+# a Hex Effect is transient (CONTEXT.md).
+#
+# Every record carries its to-hit numbers and nothing else: the board rules
+# these ids stand for — destructibility, line of sight, movement — are written
+# down nowhere yet, so every record is a stub.
+
+[terrain]
+
+[terrain.forest]
+name = "Forest"
+to_hit = "0"
+to_be_hit = "-1"
+see_also = ["terrain.burned_forest", "terrain.rough_terrain"]
+todo = "Rule text not yet written: line of sight, movement, and what forest is destroyed into (burned forest, or rough terrain)."
+
+[terrain.burned_forest]
+name = "Burned Forest"
+to_hit = "0"
+to_be_hit = "-1"
+see_also = ["terrain.forest"]
+todo = "Rule text not yet written: how burned forest differs from forest beyond the to-hit numbers, which are identical today."
+
+[terrain.building]
+name = "Building"
+to_hit = "0"
+to_be_hit = "-1"
+see_also = ["terrain.ruins"]
+todo = "Rule text not yet written: line of sight, movement, and destruction into ruins."
+
+[terrain.ruins]
+name = "Ruins"
+to_hit = "0"
+to_be_hit = "-1"
+see_also = ["terrain.building"]
+todo = "Rule text not yet written: line of sight and movement."
+
+[terrain.rough_terrain]
+name = "Rough Terrain"
+to_hit = "0"
+to_be_hit = "-1"
+todo = "Rule text not yet written: movement cost, and whether rough terrain blocks line of sight."
+
+[terrain.sand_dunes]
+name = "Sand Dunes"
+to_hit = "0"
+to_be_hit = "-1"
+todo = "Rule text not yet written: movement cost, and whether sand dunes block line of sight."
+
+[terrain.swamp]
+name = "Swamp"
+todo = "Rule text not yet written, and no to-hit numbers either: swamp is used by darkelf Camouflage but has never had a record. Decide what it does before the numbers."

@@ -53,7 +53,9 @@ validate:
     uv run spf rules hexes > /dev/null
     uv run spf rules specials > /dev/null
     uv run spf rules tokens > /dev/null
-    uv run spf rules to_hit > /dev/null
+    uv run spf rules terrain > /dev/null
+    uv run spf rules modifiers > /dev/null
+    uv run spf rules namespaces > /dev/null
     uv run spf rules rulebook > /dev/null
     uv run spf assets profiles > /dev/null
 

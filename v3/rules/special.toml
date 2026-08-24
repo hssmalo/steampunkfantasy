@@ -1,108 +1,185 @@
-#ToDo: Assault Fire
+# The Special registry: one flat namespace keyed by identifier, each record
+# declaring the slots it may be used in (ADR 0024). Where a Special applies is
+# a field, not a section, because `Bonus`, `Extra Damage`, `Fog`, `LoS` and
+# `Spawn` are one rule each used in several slots.
 
-[assault]
-
-[assault.reroll        ]
+#
+# Assault
+#
+[special.reroll]
 name = "Ork Reroll"
-short = "[{N}]"
-explanation = "Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll {N} dice per wave of rerolls. Thus {N} may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls."
+slots = ["assault"]
+signature = "[{N}]"
+effect = "Each natural 6 rolled in assault count as 2 hits. Further, any natural 6 rolled in assault lets you reroll {N} dice per wave of rerolls. Thus {N} may never be greater than the number of dice you have left. If any of the rerolled dice results in a natural 6, reroll again with a new wave of rerolls."
 
-[assault.cunning_assault]
+[special.reroll.variables]
+N = { type = "int" }
+
+[special.cunning_assault]
 name = "Cunning Assault"
-short = "[{N}]"
-explanation = "For each {N} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack."
+slots = ["assault"]
+signature = "[{N}]"
+effect = "For each {N} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack."
 example = "If you hit the an enemy with a unit which have Cunning Assault[1 per 2] 4 times, you will add two +1 to future damage tokens and the enemy is shaken."
-description = "This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage."
+flavor = "This represent any cunning way to take out heavily armored units in assaults, where regular hits would do little damage."
+places = ["token.shaken"]
+see_also = ["special.cunning_assault_defense"]
 
-[assault.cunning_assault.variables]
+[special.cunning_assault.variables]
 N = { type = "int", min = 1, max = 4 }
 
+#ToDo: Assault Fire
+[special.assault_fire]
+name = "Assault Fire"
+slots = ["assault"]
+effect = "All enemy units hit at least once in assault gets an fire token."
+places = ["token.fire"]
+see_also = ["special.range_fire"]
 
-[assault.fire]
-name = "Fire"
-short = ""
-explanation = "All enemy units hit at least once in assault gets an fire token."
-
-
-[assault.cunning_assault_defense]
+# Named close enough to the assault Special "Cunning Deflection" that the two
+# may be one ability under two names — the Race data has both.
+[special.cunning_assault_defense]
 name = "Cunning Assault Defense"
-short = "[{N}, {M}+]"
-explanation = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
+slots = ["assault"]
+signature = "[{N}, {M}+]"
+effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
+see_also = ["special.cunning_assault"]
 
-[assault.minor_acid]
-name = "Assault minor acid"
-short = "[1 for {N}]"
-explanation = "Targets gets one minor token for each {N} hits."
-token = "minor_acid"
+[special.cunning_assault_defense.variables]
+N = { type = "int" }
+M = { type = "int", min = 1, max = 6 }
 
-[assault.minor_acid.variables]
+[special.assault_minor_acid]
+name = "Assault Minor Acid"
+slots = ["assault"]
+signature = "[1 for {N}]"
+effect = "Targets gets one minor token for each {N} hits."
+places = ["token.minor_acid"]
+see_also = ["special.range_minor_acid"]
+
+[special.assault_minor_acid.variables]
 N = { type = "int", min = 1, max = 4 }
 
-[assault.gear_disruption]
-name = "Gear Disruption"
-short = "[{N}+][1 for M]"
-explanation = "Only applies when target is a drone. Roll a die per {M} hits. The drone gets one shaken token per roll of {N}+."
+[special.assault_gear_disruption]
+name = "Assault Gear Disruption"
+slots = ["assault"]
+signature = "[{N}+][1 for {M}]"
+effect = "Only applies when target is a drone. Roll a die per {M} hits. The drone gets one shaken token per roll of {N}+."
+places = ["token.shaken"]
+see_also = ["special.range_gear_disruption"]
 
-[assault.gear_disruption.variables]
+[special.assault_gear_disruption.variables]
 N = { type = "int", min = 1, max = 6 }
 M = { type = "int", min = 1, max = 4 }
 
-
-
-
-[assault.poison]
+[special.assault_poison]
 name = "Assault Poison"
-short = "[{N}]][1 for {M}]"
-explanation = "Targets gets one poison[N] token for each {M} hits."
-token = "poison"
+slots = ["assault"]
+signature = "[{N}][1 for {M}]"
+effect = "Targets gets one poison[{N}] token for each {M} hits."
+places = ["token.poison"]
+see_also = ["special.range_poison"]
 
-[assault.poison.variables]
+[special.assault_poison.variables]
 N = { type = "int", values = [4, 6, 8, 10, 12] }
 M = { type = "int", min = 1, max = 4 }
 
 #ToDo
 #This should be a unit ability, because it does not make sense models of the same unit  have different pre assault retreat
-[assault.pre_assault_retreat]
-name = "Assault preretreat"
-short = "[{N}+]"
-explanation = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
+[special.pre_assault_retreat]
+name = "Pre-Assault Retreat"
+slots = ["assault"]
+signature = "[{N}+]"
+effect = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
+see_also = ["special.retreat"]
 
-[assault.pre_assault_retreat.variables]
+[special.pre_assault_retreat.variables]
 N = { type = "int", min = 2, max = 6 }
 
-[unit]
+[special.retreat]
+name = "Retreat"
+slots = ["assault"]
+todo = """Rule text not yet written. Distinct from Pre-Assault Retreat, or the same rule twice — decide which.
 
-[unit.forward_position]
+From reference.toml:
+potential_references = ["special.unit.pre-assault_retreat"]"""
+see_also = ["special.pre_assault_retreat"]
+
+[special.extra_damage]
+name = "Extra Damage"
+slots = ["assault", "range"]
+todo = """Rule text not yet written, in either slot.
+
+From reference.toml:
+#Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
+#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed
+potential_references = ["special.assault.fire", "special.assault.poison", "special.assault.minor_acid","token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized", "special.assault.gear_disruption"]
+#references are garanted, potentials are not
+potential_references = ["token.acid", "token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]"""
+
+[special.damage_on_deflect]
+name = "Damage on Deflect"
+slots = ["assault"]
+todo = """Rule text not yet written.
+
+From reference.toml:
+potential_references = ["token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]"""
+
+[special.overrun]
+name = "Overrun"
+slots = ["assault"]
+todo = """Rule text not yet written.
+
+From reference.toml:
+#Only one use, maybe more in future
+potential_references = ["token.shaken"]"""
+
+#
+# Unit
+#
+[special.forward_position]
 name = "Forward Position"
-short = "[N]"
-explanation = "At setup this unit may setup upt to {N} hexes away from normal setup area."
+slots = ["unit"]
+signature = "[{N}]"
+effect = "At setup this unit may setup upt to {N} hexes away from normal setup area."
 
-[unit.forward_position.variables]
+[special.forward_position.variables]
 N = { type = "int", min = 1, max = 3 }
 
 #To Geir Arne. How to do this???
-[unit.resistance]
+[special.resistance]
 name = "Resistance"
-short = "{version}[{N}]"
-explanation = "Gives improved resilience versus {version} damage"
-
-[unit.resistance.versions]
-regular = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
-psychic = "Any damage explicitly named psychic damage is reduced damage by {N}"
-fire = "Any damage rolled by fire token is effect is reduced damage by {N}. It is also reduced with respect to stop burning by {N}"
-poison = "Any damage rolled by poison token effect reduced damage by {N}"
-acid = "Any die rolled by acid or minor acid token is reduced by {N}."
+slots = ["unit"]
+signature = "{version}[{N}]"
+effect = "Gives improved resilience versus {version} damage"
 
 ###Note, may see if I need more.
 ###Note, modified acid rule to align with the others...
 ###Note: to do, change all units which have acid resistance to follow the the rule instead of old
-[unit.resistance.variables]
-versions = { type = "str", values = ["regular", "psychic", "fire", "poison"] }
+[special.resistance.variables]
+version = { type = "ref", namespaces = ["damage_type"] }
+N = { type = ["int", "die"], min = 1, max = 12 }
 
-[unit.heal]
+[special.resistance.versions.regular]
+effect = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
+
+[special.resistance.versions.psychic]
+effect = "Any damage explicitly named psychic damage is reduced damage by {N}"
+
+[special.resistance.versions.fire]
+effect = "Any damage rolled by fire token is effect is reduced damage by {N}. It is also reduced with respect to stop burning by {N}"
+
+[special.resistance.versions.poison]
+effect = "Any damage rolled by poison token effect reduced damage by {N}"
+
+[special.resistance.versions.acid]
+effect = "Any die rolled by acid or minor acid token is reduced by {N}."
+
+[special.heal]
 name = "Heal"
-short = "[{N}, {unit}, {phase}]"
-explanation = """Healing only works on biological units and removing crippled crew for units with bio crew. You have{N}points to spend on the following actions:
+slots = ["unit"]
+signature = "[{N}, {unit}, {phase}]"
+effect = """Healing only works on biological units and removing crippled crew for units with bio crew. You have{N}points to spend on the following actions:
 
 - Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
 - Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
@@ -114,26 +191,31 @@ explanation = """Healing only works on biological units and removing crippled cr
 - Degrade one acid to minor acid. Cost 4.
 - Remove crippled crew token. Cost 4.
 """
+see_also = ["token.poison", "token.bleed", "token.minor_acid", "token.acid", "token.fire", "token.crippled_crew"]
 
-[unit.heal.variables]
+[special.heal.variables]
 N = {type = "int", min = 1, max = 10}
 unit = {type = "str", values=["self", "any"]}
 phase  = {type = "str", values=["1st Healing", "2nd Healing"]}
 
-[unit.immunity]
+[special.immunity]
 name = "Immunity"
-short = "[feature]"
-explanation = ""
-description = "Unit is completely immmune to given feature"
+slots = ["unit"]
+signature = "[{feature}]"
+flavor = "Unit is completely immmune to given feature"
+todo = """Rule text not yet written: what "completely immune" does to each kind of feature it can name.
 
-[unit.immunity.variables]
-#Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???  # typos: ignore
-feature = {type = "str" }
+From reference.toml:
+#Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???"""
 
-[unit.repair]
+[special.immunity.variables]
+feature = { type = "ref", namespaces = ["token", "hex", "special", "damage_type"] }
+
+[special.repair]
 name = "Repair"
-short = "[{N}, {unit}, {phase}]"
-explanation = """Repear only works on mechanical and drone units. You have {N} points to spend on the following actions:
+slots = ["unit"]
+signature = "[{N}, {unit}, {phase}]"
+effect = """Repear only works on mechanical and drone units. You have {N} points to spend on the following actions:
 
 - Remove one +1 to future damage token. Cost 1.
 - Neutralize one minor acid. Cost 1
@@ -142,118 +224,235 @@ explanation = """Repear only works on mechanical and drone units. You have {N} p
 - Remove 1 crittical damage effect. Cost 3.
 - Degrade one acid to minor acid. Cost 4.
 """
+see_also = ["token.minor_acid", "token.acid", "token.fire", "token.shaken", "token.disabled_repair"]
 
-[unit.repair.variables]
+[special.repair.variables]
 N = { type = "int", min = 1, max = 10 }
 unit = { type = "str", values = ["self", "any"] }
 phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
 
-[unit.hide]
+# Reachable from no Race label — is this rule dead, or is the label missing?
+[special.hide]
 name = "Hide"
-short = "{terrain}"
-explanation = "If you are in {terrain} you may use the hide order: remove your unit from the board, replace it with a hidden token."
+slots = ["unit"]
+signature = "{terrain}"
+effect = "If you are in {terrain} you may use the hide order: remove your unit from the board, replace it with a hidden token."
+places = ["token.hidden"]
 
-[unit.hide.variables]
-#todo, complete list
-terrain = { type = "str", values = ["ruin", "swamp", "forest", "building"] }
+[special.hide.variables]
+terrain = { type = "ref", namespaces = ["terrain"] }
 
-[unit.terror]
+[special.terror]
 name = "Terror"
-short = "[range={N}][d{M}]"
-explanation = "In agony 0, roll a d{M} psychic damage on any enemy unit within range of this unit."
+slots = ["unit"]
+signature = "[range={N}][d{M}]"
+effect = "In agony 0, roll a d{M} psychic damage on any enemy unit within range of this unit."
+see_also = ["token.terror", "damage_type.psychic"]
 
-[unit.terror.variables]
+[special.terror.variables]
 N = { type = "int", min = 1, max = 3 }
 M = { type = "int", values = [4, 6, 8, 10, 12] }
 
-[unit.hypnotizing_gaze]
+[special.hypnotizing_gaze]
 name = "Hypnotizing Gaze"
-short = "[range={N}]"
-explanation = "In agony 3, all units that are shaken within range of given unit, also becomes hyptnotized"
+slots = ["unit"]
+signature = "[range={N}]"
+effect = "In agony 3, all units that are shaken within range of given unit, also becomes hyptnotized"
+places = ["token.hypnotized"]
+see_also = ["token.shaken"]
 
-[unit.hypnotizing_gaze.variables]
+[special.hypnotizing_gaze.variables]
 N = { type = "int", min = 1, max = 3 }
 
+# Reachable by no exact label: Horror's "Terror" carries this rule in prose.
+[special.insanity_field]
+name = "Insanity Field"
+slots = ["unit"]
+signature = "[range={N}][d{M}]"
+effect = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token"
+places = ["token.insane"]
+see_also = ["token.shaken", "damage_type.psychic"]
 
-[unit.insanity_field]
-name = "Insanity_field"
-short = "[range={N}][d{M}]"
-explanation = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token"
-
-[unit.insanity_field.variables]
+[special.insanity_field.variables]
 N = { type = "int", min = 1, max = 3 }
 M = { type = "int", values = [4, 6, 8, 10, 12] }
 
-
-
-[unit.fear]
+[special.fear]
 name = "Fear"
-short = "[d{N}]"
-explanation = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection"
+slots = ["unit"]
+signature = "[d{N}]"
+effect = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection"
+see_also = ["token.shaken", "damage_type.psychic"]
 
-[unit.fear.variables]
+[special.fear.variables]
 N = { type = "int", values = [4, 6, 8, 10, 12] }
 
-[unit.evasion]
+[special.evasion]
 name = "Evasion"
-short = "[{N}+]"
-explanation = "Roll a die per area of effect damage. Ignore the damage at {N}+"
+slots = ["unit"]
+signature = "[{N}+]"
+effect = "Roll a die per area of effect damage. Ignore the damage at {N}+"
 
-[unit.evasion.variables]
+[special.evasion.variables]
 N = { type = "int", min = 2, max = 6 }
 
-[range_]
+[special.endurance]
+name = "Endurance"
+slots = ["unit"]
+signature = "[{N}, {model_class}]"
+places = ["token.endurance"]
+todo = """Rule text not yet written: how many endurance tokens a unit gets, and what it may spend them on. The Race data grants them per model and per elite model, and dwarf's Protection 2 spends one in healing phase 1 to replace a bleeding with poison[6].
 
-[range_.burst]
+From reference.toml:
+#Note: many of these adds armor. Instead we could have an add armor feature in equipment which modifies the armor of a unit. All of these are replace
+[UnitSpecial.protection]
+references = ["token.endurance"]"""
+
+[special.endurance.variables]
+N = { type = "int" }
+model_class = { type = "str" }
+
+[special.officer]
+name = "Officer"
+slots = ["unit"]
+todo = """Rule text not yet written. One missing rule family with Darkelf Officer and Officer Order.
+
+From reference.toml:
+#Geir Arne: spesielt, psychic resistance
+potential_references = ["special.resistance"]
+#potential_references = ["special.remove_shaken"]"""
+
+[special.trap]
+name = "Trap"
+slots = ["unit"]
+todo = """Rule text not yet written: which trap a unit places is per Race today.
+
+From reference.toml:
+potential_references = ['hexes.goblin_acid_trap', 'hexes.drone_trap']"""
+see_also = ["hex.goblin_acid_trap", "hex.drone_trap"]
+
+# Reference.toml asked for a better name: this is about *being* repaired, not
+# about repairing. (Til Geir Arne: dette referrer til å bli reparert... bedre
+# navn?)
+[special.repairing]
+name = "Repairing"
+slots = ["unit"]
+todo = "Rule text not yet written. Distinct from Repair: the Race text extends what repairing this unit can do, and needs a name that says so."
+see_also = ["special.repair"]
+
+#
+# Range
+#
+[special.burst]
 name = "Burst"
-short = "[{N}]"
-explanation = "This weapon can have, and must be loaded with {N} ammo to be fired. However, when the weapon is fired, it is fired {N} times (per model) at the same enemy unit."
+slots = ["range"]
+signature = "[{N}]"
+effect = "This weapon can have, and must be loaded with {N} ammo to be fired. However, when the weapon is fired, it is fired {N} times (per model) at the same enemy unit."
+see_also = ["special.limited_ammo"]
 
-[range_.burst.variables]
+[special.burst.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[range_.limited_ammo]
+[special.limited_ammo]
 name = "Limited Ammo"
-explanation = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
-short = "[{N}]"
+slots = ["range"]
+signature = "[{N}]"
+effect = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
 
-[range_.limited_ammo.variables]
+[special.limited_ammo.variables]
 N = { type = "int", min = 2, max = 10 }
 
-[range_.gear_disruption]
-name = "Gear Disruption"
-short = "[{N}+]"
-explanation = "Only applies when target is a drone. The drone gets one shaken token per roll of {N}+."
+[special.range_gear_disruption]
+name = "Range Gear Disruption"
+slots = ["range"]
+signature = "[{N}+]"
+effect = "Only applies when target is a drone. The drone gets one shaken token per roll of {N}+."
+places = ["token.shaken"]
+see_also = ["special.assault_gear_disruption"]
 
-[range_.gear_disruption.variables]
+[special.range_gear_disruption.variables]
 N = { type = "int", min = 2, max = 6 }
 
-[range_.fire]
-name = "Fire"
-short = ""
-explanation = "Any unit hit at least once  is set on fire"
+[special.range_fire]
+name = "Range Fire"
+slots = ["range"]
+effect = "Any unit hit at least once  is set on fire"
+places = ["token.fire"]
+see_also = ["special.assault_fire"]
 
-[range_.minor_acid]
-name = "Minor Acid"
-short = "Minor Acid"
-explanation = "Target gets a minor acid token"
-token = "minor_acid"
+[special.range_minor_acid]
+name = "Range Minor Acid"
+slots = ["range"]
+effect = "Target gets a minor acid token"
+places = ["token.minor_acid"]
+see_also = ["special.assault_minor_acid"]
 
-[range_.poison]
-name = "Poison"
-short = "{N}"
-explanation = "Target gets a poison[{N}] token"
-token = "poison"
+[special.range_poison]
+name = "Range Poison"
+slots = ["range"]
+signature = "{N}"
+effect = "Target gets a poison[{N}] token"
+places = ["token.poison"]
+see_also = ["special.assault_poison"]
 
-[range_.poison.variables]
+[special.range_poison.variables]
 N = { type = "int", min = 4, max = 12 }
 
-[range_.fumble]
+[special.fumble]
 name = "Fumble"
-short = "Fumble"
-explanation = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
+slots = ["range"]
+effect = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
+see_also = ["special.critical"]
 
-[range_.critical]
+# From reference.toml, on Fumble:
+# #Note to self: rewrite these.
+# potential_references = ["token.acid", "token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]
+
+# From reference.toml, on Critical:
+# #Til Geir Arne: hvor irriterende er det at range også er et keyword???
+# #Set jeg har brukt range_ i special.toml :(
+# potential-references = ["token.fire"]
+[special.critical]
 name = "Critical"
-short = "Critical"
-explanation = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"
+slots = ["range"]
+effect = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"
+see_also = ["special.fumble"]
+
+[special.improved_aim]
+name = "Improved Aim"
+slots = ["range"]
+todo = """Rule text not yet written: it modifies the aim token's bonus, so it may belong on the token rather than here.
+
+From reference.toml:
+#potential_references =["???.crew_damage""]"""
+see_also = ["token.aim"]
+
+[special.indirect_fire]
+name = "Indirect Fire"
+slots = ["range"]
+todo = """Rule text not yet written.
+
+From reference.toml:
+#Note to self: look at Do Experimental Guided Missiles
+#Note to self: maybe write
+#potential_references =["special.range_.indirect_fire"]"""
+
+[special.cloud]
+name = "Cloud"
+slots = ["range"]
+todo = """Rule text not yet written: which hex effect a Cloud weapon places is per weapon today.
+
+From reference.toml:
+#Note to self: make more consistent
+potential_references = ["hexes.fog", "hexes.poison_cloud"]"""
+see_also = ["hex.fog", "hex.poison_cloud"]
+
+[special.insanity]
+name = "Insanity"
+slots = ["range"]
+todo = """Rule text not yet written. Conceptually close to Insanity Field, which is a unit Special — decide whether this is the same rule in another slot.
+
+From reference.toml:
+#Note to self: make more consistent
+potential_references = ["tokens.insanity"]"""
+see_also = ["special.insanity_field", "token.insane"]

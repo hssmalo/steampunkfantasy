@@ -144,7 +144,7 @@ effect = "Roll a die."
 
 [tokens.poison]
 name = "Poison"
-short = "[N]"
+signature = "[{N}]"
 effect = "Roll a d{N}."
 """
 
@@ -242,7 +242,7 @@ explanation = "Place two of a token the first time, one thereafter."
 
 [tokens.poison]
 name = "Poison"
-short = "[N]"
+signature = "[{N}]"
 phases = ["Agony 3"]
 remove = "When it kills a model"
 effect = \"\"\"Roll a d{N}.
@@ -257,6 +257,10 @@ N = { type = "int", values = [2, 4, 6] }
 name = "Terror"
 phases = ["Agony 0"]
 effect = "Acts as if the unit has Terror."
+
+[tokens.endurance]
+name = "Endurance"
+todo = "Rule text not yet written."
 """
 
 
@@ -276,6 +280,7 @@ def test_tokens_kind_yields_one_untitled_group_in_file_order(tmp_path: Path) -> 
     (group,) = body.groups
     assert isinstance(group, RuleGroup)
     assert group.title is None
+    # The endurance stub is not a rule the Rulebook can show a reader yet.
     assert [rule.name for rule in group.rules] == ["Poison", "Terror"]
 
 
@@ -297,7 +302,7 @@ def test_tokens_kind_carries_every_field_across(tmp_path: Path) -> None:
     poison, terror = group.rules
 
     assert isinstance(poison, RuleEntry)
-    assert poison.short == "[N]"
+    assert poison.short == "[{N}]"
     assert poison.phases == ["Agony 3"]
     assert poison.remove == "When it kills a model"
     assert poison.variables == [("N", "one of 2, 4, 6")]
@@ -348,41 +353,46 @@ def test_hexes_kind_keeps_the_document_level_explanation(tmp_path: Path) -> None
 # --- The specials kind's parser ---------------------------------------------
 
 SPECIALS_SOURCE = """\
-[assault]
-
-[assault.minor_acid]
+[special.minor_acid]
 name = "Assault Minor Acid"
-short = "[1 for {N}]"
-explanation = "Targets get one minor acid token for each {N} hits."
-token = "minor_acid"
+slots = ["assault"]
+signature = "[1 for {N}]"
+effect = "Targets get one minor acid token for each {N} hits."
+places = ["token.minor_acid"]
 
-[assault.minor_acid.variables]
+[special.minor_acid.variables]
 N = { type = "int", min = 1, max = 4 }
 
-[assault.cunning_assault]
+[special.cunning_assault]
 name = "Cunning Assault"
-short = "[{N}]"
-explanation = "Add +1 to all future damage tokens."
+slots = ["assault"]
+signature = "[{N}]"
+effect = "Add +1 to all future damage tokens."
 example = "Hit four times and you add two tokens."
-description = "Any cunning way to take out armored units."
+flavor = "Any cunning way to take out armored units."
 
-[unit]
-
-[unit.resistance]
+[special.resistance]
 name = "Resistance"
-short = "{version}[{N}]"
-explanation = "Improved resilience versus {version} damage."
+slots = ["unit"]
+signature = "{version}[{N}]"
+effect = "Improved resilience versus {version} damage."
 
-[unit.resistance.versions]
-regular = "Regular damage is reduced by {N}."
-psychic = "Psychic damage is reduced by {N}."
+[special.resistance.versions.regular]
+effect = "Regular damage is reduced by {N}."
 
-[range_]
+[special.resistance.versions.psychic]
+effect = "Psychic damage is reduced by {N}."
 
-[range_.fumble]
+[special.fumble]
 name = "Fumble"
-short = "Fumble"
-explanation = "A natural 1 to hit is a fumble."
+slots = ["range"]
+signature = "Fumble"
+effect = "A natural 1 to hit is a fumble."
+
+[special.overrun]
+name = "Overrun"
+slots = ["assault"]
+todo = "Rule text not yet written."
 """
 
 
@@ -391,11 +401,12 @@ def test_specials_kind_is_registered() -> None:
     assert SPECIALS.parse is parse_specials
 
 
-def test_specials_kind_yields_one_titled_group_per_schema_group(
+def test_specials_kind_yields_one_titled_group_per_slot(
     tmp_path: Path,
 ) -> None:
     # Where a rule applies is information, so the groups stay groups rather
-    # than being flattened into one alphabetical list.
+    # than being flattened into one alphabetical list. The grouping comes from
+    # each record's `slots`, not from the file's layout.
     rules_dir = _rules_dir(
         tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
     )
@@ -406,6 +417,7 @@ def test_specials_kind_yields_one_titled_group_per_schema_group(
 
     assert [group.title for group in body.groups] == ["Assault", "Unit", "Range"]
     assault, unit, range_ = body.groups
+    # The Overrun stub is not a rule the Rulebook can show a reader yet.
     assert [rule.name for rule in assault.rules] == [
         "Assault Minor Acid",
         "Cunning Assault",
@@ -428,11 +440,11 @@ def test_specials_kind_resolves_a_token_to_its_display_name(tmp_path: Path) -> N
     assert cunning.description == "Any cunning way to take out armored units."
 
 
-def test_specials_kind_drops_a_short_that_only_repeats_the_name(
+def test_specials_kind_drops_a_signature_that_only_repeats_the_name(
     tmp_path: Path,
 ) -> None:
-    # `short` is the Army Reference's compact override; when it is just the
-    # name again, the Rulebook heading would read "Fumble Fumble".
+    # `signature` is the Army Reference's compact override; when it is just
+    # the name again, the Rulebook heading would read "Fumble Fumble".
     rules_dir = _rules_dir(
         tmp_path, {"special.toml": SPECIALS_SOURCE, "tokens.toml": TOKENS_SOURCE}
     )
@@ -462,12 +474,14 @@ def test_specials_kind_rejects_an_unresolvable_token(tmp_path: Path) -> None:
     rules_dir = _rules_dir(
         tmp_path,
         {
-            "special.toml": SPECIALS_SOURCE.replace('"minor_acid"', '"minor acid"'),
+            "special.toml": SPECIALS_SOURCE.replace(
+                '"token.minor_acid"', '"token.minor_acids"'
+            ),
             "tokens.toml": TOKENS_SOURCE,
         },
     )
 
-    with pytest.raises(ValueError, match=r"unknown token 'minor acid'") as excinfo:
+    with pytest.raises(ValueError, match=r"unknown token 'minor_acids'") as excinfo:
         parse_specials(rules_dir / "special.toml", RulesContext(rules_dir))
 
     message = str(excinfo.value)
@@ -484,12 +498,20 @@ def test_specials_kind_parses_the_committed_file() -> None:
     )
 
     tokens = {rule.token for group in body.groups for rule in group.rules if rule.token}
-    assert tokens == {"Minor Acid", "Poison"}
+    assert tokens == {
+        "Fire",
+        "Hidden",
+        "Hypnotized",
+        "Insane",
+        "Minor Acid",
+        "Poison",
+        "Shaken",
+    }
 
 
 # --- The to_hit kind's parser -----------------------------------------------
 
-TO_HIT_SOURCE = """\
+MODIFIERS_SOURCE = """\
 [speed.still]
 name = "Still"
 to_hit = "+1"
@@ -499,23 +521,53 @@ to_be_hit = "+1"
 name = "Flying"
 to_hit = "-1"
 to_be_hit = "-1"
-note = "stacks with still, slow, and fast"
+effect = "Stacks with still, slow, and fast"
 
-[terrain.fog]
-name = "Fog"
-to_hit = "-1"
-to_be_hit = "-1"
+[speed.all]
+name = "All"
+todo = "Not a speed a unit can be in."
 
-[range]
+[distance]
 
 [angle]
 
 [size]
 
-[unit_ability]
-
-[token]
+[ability]
 """
+
+MODIFIER_TERRAIN_SOURCE = """\
+[terrain.forest]
+name = "Forest"
+to_hit = "0"
+to_be_hit = "-1"
+todo = "Rule text not yet written."
+"""
+
+MODIFIER_HEXES_SOURCE = """\
+explanation = "Hex effects trigger during movement."
+
+[hexes]
+
+[hexes.fog]
+name = "Fog"
+effect = "Blocks line of sight."
+to_hit = "-1"
+to_be_hit = "-1"
+"""
+
+
+def _modifier_rules_dir(tmp_path: Path) -> Path:
+    """Write the four files the to-hit table is a view over."""
+    return _rules_dir(
+        tmp_path,
+        {
+            "modifiers.toml": MODIFIERS_SOURCE,
+            "terrain.toml": MODIFIER_TERRAIN_SOURCE,
+            "hexes.toml": MODIFIER_HEXES_SOURCE,
+            "tokens.toml": TOKENS_SOURCE,
+        },
+    )
 
 
 def test_to_hit_kind_is_registered() -> None:
@@ -524,41 +576,57 @@ def test_to_hit_kind_is_registered() -> None:
 
 
 def test_to_hit_kind_yields_one_titled_group_per_category(tmp_path: Path) -> None:
-    source = tmp_path / "to_hit.toml"
-    source.write_text(TO_HIT_SOURCE, encoding="utf-8")
+    rules_dir = _modifier_rules_dir(tmp_path)
 
-    body = parse_to_hit(source, RulesContext(tmp_path))
+    body = parse_to_hit(rules_dir / "modifiers.toml", RulesContext(rules_dir))
 
-    # Empty categories are dropped: a heading with no rows says nothing.
+    # Empty categories are dropped: a heading with no rows says nothing. The
+    # Tokens in this fixture carry no modifiers, so that group drops too.
     assert [group.title for group in body.groups] == ["Speeds", "Terrain"]
 
 
 def test_to_hit_kind_carries_every_field_across(tmp_path: Path) -> None:
-    source = tmp_path / "to_hit.toml"
-    source.write_text(TO_HIT_SOURCE, encoding="utf-8")
+    rules_dir = _modifier_rules_dir(tmp_path)
 
-    speeds, _ = parse_to_hit(source, RulesContext(tmp_path)).groups
+    speeds, _ = parse_to_hit(
+        rules_dir / "modifiers.toml", RulesContext(rules_dir)
+    ).groups
 
+    # A record with no numbers is not a row: membership is a query over the
+    # registry, so the `all` stub never reaches the table.
     still, flying = speeds.rows
     assert (still.name, still.to_hit, still.to_be_hit) == ("Still", "+1", "+1")
     assert still.note is None  # an unwritten note is None, not the empty string
-    assert flying.note == "stacks with still, slow, and fast"
+    assert flying.note == "Stacks with still, slow, and fast"
     assert speeds.has_notes
 
 
 def test_to_hit_kind_reports_a_group_with_no_notes(tmp_path: Path) -> None:
     # Drives the column count in both families' partials.
-    source = tmp_path / "to_hit.toml"
-    source.write_text(TO_HIT_SOURCE, encoding="utf-8")
+    rules_dir = _modifier_rules_dir(tmp_path)
 
-    _, terrain = parse_to_hit(source, RulesContext(tmp_path)).groups
+    _, terrain = parse_to_hit(
+        rules_dir / "modifiers.toml", RulesContext(rules_dir)
+    ).groups
 
     assert not terrain.has_notes
 
 
+def test_to_hit_kind_renders_fog_among_the_terrains(tmp_path: Path) -> None:
+    # Fog is a Hex Effect that behaves like Terrain for to-hit purposes, and
+    # the numbers live on the record that owns the id, wherever that is.
+    rules_dir = _modifier_rules_dir(tmp_path)
+
+    _, terrain = parse_to_hit(
+        rules_dir / "modifiers.toml", RulesContext(rules_dir)
+    ).groups
+
+    assert [row.name for row in terrain.rows] == ["Forest", "Fog"]
+
+
 def test_to_hit_kind_parses_the_committed_file() -> None:
     body = parse_to_hit(
-        config.paths.rules / "to_hit.toml", RulesContext(config.paths.rules)
+        config.paths.rules / "modifiers.toml", RulesContext(config.paths.rules)
     )
 
     titles = [group.title for group in body.groups]
@@ -847,7 +915,7 @@ def test_latex_partials_convert_a_prose_bullet_list(real_latex: str) -> None:
 
 def test_markdown_partials_tabulate_the_to_hit_modifiers(real_markdown: str) -> None:
     assert "### Speeds\n" in real_markdown
-    assert "| Flying | -1 | -1 | stacks with still, slow, and fast |" in real_markdown
+    assert "| Flying | -1 | -1 | Stacks with still, slow, and fast |" in real_markdown
     # A group with no notes spends no column on them.
     assert "| On-Edge of Firing-Angle | -1 | 0 |\n" in real_markdown
 
@@ -855,8 +923,9 @@ def test_markdown_partials_tabulate_the_to_hit_modifiers(real_markdown: str) -> 
 def test_latex_partials_tabulate_the_to_hit_modifiers(real_latex: str) -> None:
     assert r"\section{To-Hit Modifiers}" in real_latex
     # `md_to_latex` has no table rule, so the rows are built by the partial.
-    assert r"Camouflage[terrain] & 0 & -1 & when unit is in the given terrain \\" in (
-        real_latex
+    assert (
+        r"Camouflage & 0 & -1 & Applies when the unit is in the given terrain \\"
+        in (real_latex)
     )
 
 

@@ -1,11 +1,37 @@
-"""Schemas for rules TOML files."""
+"""Schemas for rules TOML files.
 
-from typing import Literal
+Every registry record shares one core — name, prose, variables, references —
+and adds only the fields its own registry needs (ADR 0024). The shapes stay
+hand-written pydantic: vocabulary validation moves to load time, but schema
+checking is what makes the data safe to write.
+"""
 
-from pydantic import Field
+import re
+from typing import Annotated, ClassVar, Literal, Self
+
+from pydantic import Field, StringConstraints, model_validator
 
 from spf.schemas import StrictModel
 from spf.schemas import type_aliases as t
+
+_REF_PATTERN = r"^[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*$"
+
+type Ref = Annotated[str, StringConstraints(pattern=_REF_PATTERN)]
+"""A reference into a registry, always `<namespace>.<id>`, always qualified.
+
+One value type with one syntax, used identically as an argument, as an entry in
+`places` / `see_also`, and as a version overlay's key. Resolving it against the
+namespace registry is the loader's job; the shape is checked here.
+"""
+
+_DIE = re.compile(r"^d\d+$")
+
+type Slot = Literal["unit", "model", "assault", "range"]
+type Modifier = Literal["-2", "-1", "0", "+1", "+2", "+3", "-N", "+N"]
+"""A to-hit modifier as authored — a signed string, not a number, because `-N`
+stands for a value the rule itself supplies."""
+
+type ScalarType = Literal["int", "str", "die"]
 
 
 class IntVariableConfig(StrictModel):
@@ -42,33 +68,117 @@ class StringVariableConfig(StrictModel):
         return value
 
 
-class SpecialRuleConfig(StrictModel):
+class DieVariableConfig(StrictModel):
+    """A variable whose value is a die rather than a number: `d6`, not `6`."""
+
+    type: Literal["die"]
+
+    def validate_value(self, value: str) -> str:
+        """Validate the given value."""
+        if not _DIE.match(value):
+            msg = f"Value {value} is not a die"
+            raise ValueError(msg)
+        return value
+
+
+class RefVariableConfig(StrictModel):
+    """A variable whose value is a reference into one or more namespaces.
+
+    The namespace *is* the value set: every member of it is legal. `values`
+    narrows that to a subset, and is the exception — a hand-maintained list is
+    what rots.
+    """
+
+    type: Literal["ref"]
+    namespaces: list[str] = Field(min_length=1)
+    values: list[Ref] | None = None
+
+
+class UnionVariableConfig(StrictModel):
+    """A variable authored as either of several scalar types: `6` or `d6`."""
+
+    type: list[ScalarType] = Field(min_length=2)
+    min: int | None = None
+    max: int | None = None
+    values: list[int | str] | None = None
+
+
+type VariableConfig = (
+    IntVariableConfig
+    | StringVariableConfig
+    | DieVariableConfig
+    | RefVariableConfig
+    | UnionVariableConfig
+)
+
+
+class RuleRecord(StrictModel):
+    """What every registry record carries, whatever registry it belongs to.
+
+    A record is either complete or an explicit stub — never both, never
+    neither. Which fields carry the meaning is the registry's own business, so
+    each subclass names them in `MEANING_FIELDS`: on a Special that is its
+    `effect`, on a modifier its two numbers.
+    """
+
+    MEANING_FIELDS: ClassVar[tuple[str, ...]] = ("effect",)
+
     name: str
-    short: str
-    explanation: str
+    effect: str | None = None
+    signature: str | None = None
+    variables: dict[str, VariableConfig] = Field(default_factory=dict)
+    flavor: str | None = None
+    """What the rule represents, rather than what it does."""
+
     example: str | None = None
-    description: str | None = None
-    token: str | None = None
-    variables: dict[str, IntVariableConfig | StringVariableConfig] | None = None
-    versions: dict[str, str] | None = None
+    todo: str | None = None
+    """What is missing. Its presence, never the absence of prose, marks a stub."""
+
+    see_also: list[Ref] = Field(default_factory=list)
+    """Editorial pointer: related reading, never load-bearing."""
+
+    places: list[Ref] = Field(default_factory=list)
+    """Mechanical consequence: this rule causes the referenced thing."""
+
+    @model_validator(mode="after")
+    def _check_completeness(self) -> Self:
+        """Require exactly one of the meaning fields and `todo`."""
+        written = any(getattr(self, field) for field in self.MEANING_FIELDS)
+        if written == (self.todo is not None):
+            fields = " / ".join(self.MEANING_FIELDS)
+            msg = (
+                f"{self.name!r}: a record needs exactly one of {fields} and todo, "
+                f"not {'both' if written else 'neither'}"
+            )
+            raise ValueError(msg)
+        return self
+
+
+class SpecialRuleConfig(RuleRecord):
+    slots: list[Slot] = Field(min_length=1)
+    """Where this id may be used. Rendering derives its groups from this."""
+
+    versions: dict[str, "VersionOverlay"] = Field(default_factory=dict)
+    """Rule-local prose keyed by ref value, for a rule that reads differently
+    per version. A version with no overlay inherits the target's own text."""
+
+
+class VersionOverlay(StrictModel):
+    effect: str
 
 
 class SpecialRulesConfig(StrictModel):
-    assault: dict[str, SpecialRuleConfig]
-    unit: dict[str, SpecialRuleConfig]
-    range_: dict[str, SpecialRuleConfig]
+    special: dict[str, SpecialRuleConfig]
 
 
 #
 # Tokens
 #
-class TokenRuleConfig(StrictModel):
-    name: str
-    effect: str
-    short: str | None = None
+class TokenRuleConfig(RuleRecord):
     phases: list[t.PhaseName] = Field(default_factory=list)
     remove: str | None = None
-    variables: dict[str, IntVariableConfig | StringVariableConfig] | None = None
+    to_hit: Modifier | None = None
+    to_be_hit: Modifier | None = None
 
 
 class TokenRulesConfig(StrictModel):
@@ -79,13 +189,10 @@ class TokenRulesConfig(StrictModel):
 #
 # Hexes
 #
-class HexRuleConfig(StrictModel):
-    name: str
-    effect: str
-    short: str | None = None
-    phases: list[t.PhaseName] = Field(default_factory=list)
+class HexRuleConfig(RuleRecord):
     remove: str | None = None
-    variables: dict[str, IntVariableConfig | StringVariableConfig] | None = None
+    to_hit: Modifier | None = None
+    to_be_hit: Modifier | None = None
 
 
 class HexRulesConfig(StrictModel):
@@ -94,23 +201,69 @@ class HexRulesConfig(StrictModel):
 
 
 #
-# To Hit Modifiers
+# Terrain
 #
-type Modifier = Literal["-2", "-1", "0", "+1", "+2", "+3", "-N", "+N"]
+class TerrainRuleConfig(RuleRecord):
+    to_hit: Modifier | None = None
+    to_be_hit: Modifier | None = None
 
 
-class ToHitModifier(StrictModel):
+class TerrainRulesConfig(StrictModel):
+    explanation: str | None = None
+    terrain: dict[str, TerrainRuleConfig]
+
+
+#
+# To-hit modifiers
+#
+class ModifierRuleConfig(RuleRecord):
+    """A record whose meaning *is* its two numbers.
+
+    `[distance.long] to_hit = "-2"` is not an unwritten rule, so keying
+    completeness on `effect` here would manufacture stubs the countdown then
+    has to look past.
+    """
+
+    MEANING_FIELDS: ClassVar[tuple[str, ...]] = ("to_hit", "to_be_hit")
+
+    to_hit: Modifier | None = None
+    to_be_hit: Modifier | None = None
+
+
+class ModifiersConfig(StrictModel):
+    """The five registries whose records are nothing but to-hit modifiers.
+
+    Field order is the order the to-hit table renders them in.
+    """
+
+    speed: dict[str, ModifierRuleConfig]
+    distance: dict[str, ModifierRuleConfig]
+    angle: dict[str, ModifierRuleConfig]
+    size: dict[str, ModifierRuleConfig]
+    ability: dict[str, ModifierRuleConfig]
+
+
+#
+# Namespaces
+#
+class NamespaceConfig(StrictModel):
+    """Where one namespace's registry lives, and what to call it.
+
+    A namespace is an abstract name, not a path: decoupling the two is what
+    keeps a ref two segments long and a table rename out of the Race files.
+    """
+
     name: str
-    to_hit: Modifier
-    to_be_hit: Modifier
-    note: str = ""
+    file: str
+    table: str
+    group: str | None = None
+    """Another namespace to render under, when the two share a display group."""
 
 
-class ToHitConfig(StrictModel):
-    speed: dict[str, ToHitModifier]
-    terrain: dict[str, ToHitModifier]
-    range: dict[str, ToHitModifier]
-    angle: dict[str, ToHitModifier]
-    size: dict[str, ToHitModifier]
-    unit_ability: dict[str, ToHitModifier]
-    token: dict[str, ToHitModifier]
+class DamageTypeRuleConfig(RuleRecord):
+    """A category of harm — what a Resistance or an Immunity is against."""
+
+
+class NamespacesConfig(StrictModel):
+    namespaces: dict[str, NamespaceConfig]
+    damage_type: dict[str, DamageTypeRuleConfig]

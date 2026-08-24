@@ -13,7 +13,9 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(list_special_rules, name="specials")
     app.command(list_token_rules, name="tokens")
     app.command(list_hex_rules, name="hexes")
-    app.command(list_to_hit_rules, name="to_hit")
+    app.command(list_terrain_rules, name="terrain")
+    app.command(list_modifier_rules, name="modifiers")
+    app.command(list_namespaces, name="namespaces")
     app.command(list_rulebook, name="rulebook")
 
 
@@ -32,9 +34,19 @@ def list_hex_rules() -> None:
     stdout.print(rules.get_hexes())
 
 
-def list_to_hit_rules() -> None:
+def list_terrain_rules() -> None:
+    """Validate and list terrain rules."""
+    stdout.print(rules.get_terrain())
+
+
+def list_modifier_rules() -> None:
     """Validate and list to-hit modifiers."""
-    stdout.print(rules.get_to_hit())
+    stdout.print(rules.get_modifiers())
+
+
+def list_namespaces() -> None:
+    """Validate and list the namespace registry and the damage types."""
+    stdout.print(rules.get_namespaces())
 
 
 def list_rulebook() -> None:

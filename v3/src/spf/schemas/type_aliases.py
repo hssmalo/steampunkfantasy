@@ -104,6 +104,9 @@ type EquipmentHolder = Literal[
     "Helicopter Side",
     "Training",
 ]
+# `rules/modifiers.toml`'s `speed` and `size` registries own these two
+# vocabularies (ADR 0024); the Literals still gate the Race schema, which
+# spells `size` in title case.
 type Speed = Literal[
     "all",
     "rest",

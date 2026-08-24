@@ -5,6 +5,10 @@ No other token is placed this way. Confused in particular is an exception: it wo
 Follow the instructions for each token.
 """
 
+# A Token that shifts a to-hit roll carries its own `to_hit` / `to_be_hit`
+# numbers: the to-hit table is a view over these records, not a second list of
+# them (ADR 0024).
+
 [tokens]
 
 [tokens.shaken]
@@ -12,6 +16,7 @@ name = "Shaken"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 effect = "While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit"
 remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
+see_also = ["special.heal", "special.repair"]
 
 
 [tokens.aim]
@@ -19,54 +24,67 @@ name = "Aim"
 phases = ["Gunnery 1", "Gunnery 2"]
 effect = "Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round."
 remove = "Either remove all aim tokens when you fire, or remove one each aftermath phase. Also remove all of them if you enter an assault (regardless of whether you win or not)"
+to_hit = "+2"
+to_be_hit = "0"
 
 [tokens.crippled_crew]
 name = "Crippled Crew"
 phases = []
 effect = "Get -1 to hit and -1 on all assault dice. In addition, if unit is also shaken, psychic damage now causes crew damage instead"
 remove = "Only by healing ability"
+to_hit = "-1"
+to_be_hit = "0"
+see_also = ["special.heal", "token.shaken", "damage_type.psychic"]
 
 [tokens.plus_minus_one]
 name = "-1 to hit, +1 to be hit "
-phases = []
 effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects"
 remove = "Only by repair ability: repair Critical."
+to_hit = "-1"
+to_be_hit = "+1"
+see_also = ["special.repair", "special.critical"]
 
 [tokens.disabled_repair]
 name = "Disabled Repair"
 phases = ["Healing 1", "Healing 2"]
 effect = "Repair ability disabled."
 remove = "This is an critical effect which may be repaired by repair critical. (however obviously this ability cannot be repaired by this unit)"
+see_also = ["special.repair"]
 
 [tokens.no_command]
 name = "No command"
 phases = []
 effect = "Unit cannot use command abilities"
 remove = "This is an critical effect which my be repair by repair critical."
+see_also = ["special.repair"]
 
 [tokens.cannot_move]
 name = "Cannot Move"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Speed is set to still and unit cannot move. Treat all F as -"
 remove = "This is an critical effect which my be repair by repair critical."
+see_also = ["special.repair", "speed.still"]
 
 [tokens.cannot_accelerate]
 name = "Cannot Accelerate"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Unit can move, but cannot increase speed. This also includes starting flying. Treat all A as -"
 remove = "This is an critical effect which my be repair by repair critical."
+see_also = ["special.repair"]
 
 [tokens.cannot_turn]
-name = "Cannot Move"
+name = "Cannot Turn"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Unit cannot turn. Treat all L/R and 360° as -"
 remove = "This is an critical effect which my be repair by repair critical."
+see_also = ["special.repair"]
 
 [tokens.minor_acid]
 name = "Minor Acid"
 phases = ["Agony 1"]
 remove = "Only as part of effect"
 effect = "Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid"
+see_also = ["token.acid", "damage_type.acid"]
 
 [tokens.fire]
 name = "Fire"
@@ -79,6 +97,7 @@ effect = '''Role a d6 and suptracked unit fire resistance if any. If this number
 - Apply bonus to damage based on the number +future damage tokens
 - Apply damage to the regular damage table  (apply damage after you roll damage for all fire tokens)
 '''
+see_also = ["damage_type.fire", "special.resistance"]
 
 [tokens.acid]
 name = "Acid"
@@ -95,15 +114,18 @@ effect = """Roll a d8 on the following damage table:
 7. As 6 and unit is set on fire.
 8. Roll three times on this table.,
 """
+places = ["token.minor_acid", "token.terror", "token.fire", "hex.poison_cloud"]
+see_also = ["damage_type.acid"]
 
 [tokens.terror]
 name = "Terror"
 phases = ["Agony 0"]
 effect = "Acts as if unit has Terror[6] (range=2) but effects only units of the same team"
+see_also = ["special.terror"]
 
 [tokens.poison]
 name = "Poison"
-short = "[N]"
+signature = "[{N}]"
 phases = ["Agony 3"]
 effect = """Roll a d{N}.
 
@@ -114,13 +136,14 @@ effect = """Roll a d{N}.
 - If poison killed a model, remove poison.
 
 If poison did not kill a model, downgrade poison one step"""
+see_also = ["damage_type.poison", "special.resistance"]
 
 [tokens.poison.variables]
 N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
 
 [tokens.bleed]
 name = "Bleed"
-short = "[N]"
+signature = "[{N}]"
 phases = ["Agony 4"]
 effect = """Roll a d{N}. At 1, remove bleed token.
 
@@ -131,6 +154,7 @@ Otherwise:
 - Apply damage to the regular damage table, with the exception that bleed does not cause more bleed.
 - If bleed killed a model, remove bleed.
 """
+see_also = ["special.heal"]
 
 [tokens.bleed.variables]
 N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
@@ -140,12 +164,15 @@ name = "Confused"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 remove = "Remove one token each pre-assault step in each movement phase"
 effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
+to_hit = "-1"
+to_be_hit = "0"
 
 [tokens.insane]
 name = "Insane"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
 effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hyptnotized token and replace it with insane. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go"
+see_also = ["token.shaken", "token.hypnotized", "special.insanity_field"]
 
 
 [tokens.hypnotized]
@@ -153,6 +180,7 @@ name = "Hypnotized"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
 effect = "Can only be given to bio units which are already shaken, and not insane. Any flee order is treatet as do nothing, stand still. In addition, Reduce assault strength 50% rounded down. "
+see_also = ["token.shaken", "token.insane", "special.hypnotizing_gaze"]
 
 [tokens.hidden]
 name = "Hidden"
@@ -165,3 +193,15 @@ While hidden replace the unit with a hidden token. If you have multiple hidden u
 Reveal order: Place your unit within 2 hexes of the hidden token and gain reveal bonuses. In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses
 
 If you reveal your self you get reveal bonuses: +2 to hit of ranged weapons and plus 50 percent assault strength and deflection for the first assault you participate in this round."""
+see_also = ["special.hide", "special.fear", "special.terror"]
+
+[tokens.endurance]
+name = "Endurance"
+phases = []
+see_also = ["special.endurance"]
+todo = """Rule text not yet written: what an endurance token is and what it may be spent on. The only description in the repo was reference.toml's, rescued below, plus the Race prose that grants them.
+
+From reference.toml:
+#Note: many of these adds armor. Instead we could have an add armor feature in equipment which modifies the armor of a unit. All of these are replace
+[UnitSpecial.protection]
+references = ["token.endurance"]"""
