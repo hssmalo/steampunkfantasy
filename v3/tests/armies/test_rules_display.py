@@ -20,6 +20,7 @@ from spf.schemas.race import (
     ShakenConfig,
     UnitConfig,
 )
+from spf.schemas.special import SpecialInstance
 
 _ASSAULT = AssaultConfig(
     strength=[2, 1, 0, 1],
@@ -44,7 +45,7 @@ def simple_race() -> RaceConfig:
                 size="Small",
                 cost=t.Cost(mp=3),
                 shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-                special={"Terror": "causes fear"},
+                specials={"terror": [SpecialInstance(args={"N": 1, "M": 6})]},
                 orders=OrdersConfig(),
                 armor=None,
                 damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
@@ -59,7 +60,9 @@ def simple_race() -> RaceConfig:
                 type=["Infantry"],
                 assault=_ASSAULT,
                 cost=None,
-                special={"To Hit": "reroll 1s"},
+                specials={
+                    "to_hit": [SpecialInstance(args={"ability": "ability.good_shot"})]
+                },
             ),
         },
         equipment={
@@ -129,7 +132,7 @@ def test_unit_specials_shown_when_present(
     print_army_rules(army)
     output = capture.export_text()
     assert "Terror" in output
-    assert "causes fear" in output
+    assert "[range=1][d6]" in output
 
 
 def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
@@ -234,7 +237,7 @@ def test_model_specials_shown(simple_race: RaceConfig, *, capture: Console) -> N
     print_army_rules(army)
     output = capture.export_text()
     assert "To Hit" in output
-    assert "reroll 1s" in output
+    assert "Good Shot" in output
 
 
 # ---------------------------------------------------------------------------

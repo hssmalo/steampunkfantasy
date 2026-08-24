@@ -152,6 +152,22 @@ def test_save_json_contains_race(armies_dir: Path) -> None:
     assert data["race"] == "goblin"
 
 
+def test_save_writes_no_specials(armies_dir: Path) -> None:
+    """An Army names catalogue entries; their Specials are read back from Race data.
+
+    So the Special data model reaches the Army file through nothing but the
+    names already in it, and no army needs migrating (ADR 0024).
+    """
+    army_list = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "goblin_infantry", race_config=get_race("goblin")
+    )
+    save_army(army_list, army_name="no-specials")
+    data = json.loads((armies_dir / "no-specials.json").read_text())
+
+    assert set(data["units"][0]) == {"name", "models"}
+    assert set(data["units"][0]["models"][0]) == {"name", "upgrades"}
+
+
 def test_save_ends_file_with_a_newline(armies_dir: Path) -> None:
     """Otherwise every saved army is dirty the moment end-of-file-fixer sees it."""
     army_list = ArmyList(race="goblin", nick="Test Army", units=[])

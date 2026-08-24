@@ -1,6 +1,6 @@
 """Schema for SteamPunkFantasy armies."""
 
-from typing import Any, Self
+from typing import Self
 
 from pydantic import Field, model_validator
 
@@ -154,26 +154,33 @@ class SpawnConfig(StrictModel):
     copy_equipment: bool = False
 
 
-def _validate_specials(
-    spawns: set[str], special_dict: dict[Any, str], *, context: str
-) -> None:
-    for rule_name, rule_value in special_dict.items():
-        if rule_name not in ("Spawn", "Not Yet Dead"):
-            continue
-        if ":" not in rule_value:
-            msg = (
-                f"Special rule '{rule_name}' in {context} must follow the format "
-                f"'[spawn_id]: [placement_text]'. Got: '{rule_value}'"
-            )
-            raise ValueError(msg)
-        spawn_id, _ = rule_value.split(":", 1)
-        spawn_id = spawn_id.strip()
-        if spawn_id not in spawns:
-            msg = (
-                f"Special rule '{rule_name}' in {context} references undefined "
-                f"spawn ID '{spawn_id}'"
-            )
-            raise ValueError(msg)
+SPAWNING_SPECIALS = ("spawn", "not_yet_dead")
+"""The Special ids whose prose names the spawn it places."""
+
+
+def _validate_specials(spawns: set[str], specials: Specials, *, context: str) -> None:
+    """Check that every spawning instance names a spawn the catalogue holds.
+
+    Which spawn a Spawn places is prose the rule has yet to formalize, so it is
+    read off the front of the instance's own `text` — `'[spawn_id]: [placement
+    text]'` — rather than out of an argument.
+    """
+    for rule_name in SPAWNING_SPECIALS:
+        for instance in specials.get(rule_name, []):
+            text = instance.text or ""
+            if ":" not in text:
+                msg = (
+                    f"Special rule '{rule_name}' in {context} must follow the format "
+                    f"'[spawn_id]: [placement_text]'. Got: '{text}'"
+                )
+                raise ValueError(msg)
+            spawn_id = text.split(":", 1)[0].strip()
+            if spawn_id not in spawns:
+                msg = (
+                    f"Special rule '{rule_name}' in {context} references undefined "
+                    f"spawn ID '{spawn_id}'"
+                )
+                raise ValueError(msg)
 
 
 class RaceConfig(StrictModel):
@@ -251,47 +258,49 @@ class RaceConfig(StrictModel):
 
         # Check all units
         for unit in self.units.values():
-            _validate_specials(spawns_keys, unit.special, context=f"unit '{unit.name}'")
+            _validate_specials(
+                spawns_keys, unit.specials, context=f"unit '{unit.name}'"
+            )
 
         # Check all models
         for model in self.models.values():
             _validate_specials(
                 spawns_keys,
-                model.unit_special,
-                context=f"model '{model.name}' unit_special",
+                model.unit_specials,
+                context=f"model '{model.name}' unit specials",
             )
             _validate_specials(
-                spawns_keys, model.special, context=f"model '{model.name}' special"
+                spawns_keys, model.specials, context=f"model '{model.name}' specials"
             )
             _validate_specials(
                 spawns_keys,
-                model.assault.special,
-                context=f"model '{model.name}' assault special",
+                model.assault.specials,
+                context=f"model '{model.name}' assault specials",
             )
 
         # Check all equipment
         for eq in self.equipment.values():
             _validate_specials(
                 spawns_keys,
-                eq.unit_special,
-                context=f"equipment '{eq.name}' unit_special",
+                eq.unit_specials,
+                context=f"equipment '{eq.name}' unit specials",
             )
             _validate_specials(
                 spawns_keys,
-                eq.model_special,
-                context=f"equipment '{eq.name}' model_special",
+                eq.model_specials,
+                context=f"equipment '{eq.name}' model specials",
             )
             if eq.assault is not None:
                 _validate_specials(
                     spawns_keys,
-                    eq.assault.special,
-                    context=f"equipment '{eq.name}' assault special",
+                    eq.assault.specials,
+                    context=f"equipment '{eq.name}' assault specials",
                 )
             if eq.range is not None:
                 _validate_specials(
                     spawns_keys,
-                    eq.range.special,
-                    context=f"equipment '{eq.name}' range special",
+                    eq.range.specials,
+                    context=f"equipment '{eq.name}' range specials",
                 )
 
         return self

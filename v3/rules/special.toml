@@ -397,7 +397,8 @@ see_also = ["special.repair"]
 [special.to_hit]
 name = "To Hit"
 slots = ["unit", "model"]
-signature = "[{ability}]"
+# The brackets belong to the ability's own signature, which travels with the ref.
+signature = "{ability}"
 effect = "Shifts the to-hit and to-be-hit rolls by {ability}."
 see_also = ["token.aim"]
 

@@ -22,6 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from spf import rules
+from spf.registry import Registry, load_registry
 from spf.render.anchors import anchor as _anchor
 from spf.schemas.rulebook import RulebookConfig
 from spf.schemas.rules import (
@@ -45,12 +46,6 @@ HEXES_SOURCE = "hexes.toml"
 
 TOKEN_NAMESPACE = "token."  # noqa: S105  a game Token's namespace, not a credential
 
-type ModifierRecord = (
-    ModifierRuleConfig | TerrainRuleConfig | HexRuleConfig | TokenRuleConfig
-)
-"""Any record that may carry to-hit numbers: the five modifier registries own
-nothing else, the other three carry theirs beside their rule."""
-
 
 class RulesContext:
     """Access to sibling rules files, for cross-referencing parsers.
@@ -67,9 +62,16 @@ class RulesContext:
     def __init__(self, rules_dir: Path) -> None:
         """Resolve sibling rules files against `rules_dir`."""
         self.rules_dir = rules_dir
+        self._registry: Registry | None = None
         self._tokens: dict[str, TokenRuleConfig] | None = None
         self._terrain: dict[str, TerrainRuleConfig] | None = None
         self._hexes: dict[str, HexRuleConfig] | None = None
+
+    def registry(self) -> Registry:
+        """Return every registry `namespaces.toml` declares, read once."""
+        if self._registry is None:
+            self._registry = load_registry(self.rules_dir)
+        return self._registry
 
     def tokens(self) -> dict[str, TokenRuleConfig]:
         """Return the Token registry, read once from `tokens.toml`."""
@@ -436,78 +438,60 @@ class ToHitBody:
     groups: list[ModifierGroup]
 
 
-TO_HIT_TITLES = {
-    "speed": "Speeds",
-    "terrain": "Terrain",
-    "order": "Orders",
-    "range": "Range",
-    "angle": "Angle",
-    "size": "Size",
-    "unit_ability": "Unit Abilities",
-    "weapon_ability": "Weapon Abilities",
-    "token": "Tokens",
-}
-"""Category field -> the heading the reader sees. A category missing from here
-still renders, under a title derived from its field name: a new category the
-author adds to the schema must not silently vanish from the Rulebook."""
-
-
-def _category_title(field: str) -> str:
-    """Heading for a to-hit category, authored or derived from the field name."""
-    return TO_HIT_TITLES.get(field, field.replace("_", " ").title())
-
-
-def _modifier_rows(
-    records: Mapping[str, ModifierRecord], *, note: bool = False
-) -> list[ModifierRow]:
-    """Build the rows for the records in one registry that carry modifiers.
+def _modifier_rows(records: Mapping[str, RuleRecord]) -> list[ModifierRow]:
+    """Build the rows for the records in one namespace that carry modifiers.
 
     Membership is a query, not a list: a record belongs in the table when it
-    has numbers to contribute. `note` says whether the registry's `effect` is
-    the short "when this applies" phrase the note column wants — on a Token it
-    is the whole rule, which belongs in the Tokens Section instead.
+    has numbers to contribute. Whether its `effect` is the note column's short
+    "when this applies" phrase follows from the registry it sits in — on a
+    record whose *meaning* is its two numbers it is exactly that phrase, while
+    on a Token or a Terrain it is the whole rule, which belongs in that
+    registry's own Section instead.
     """
-    return [
+    rows = [
         ModifierRow(
             name=record.name,
-            to_hit=record.to_hit or "",
-            to_be_hit=record.to_be_hit or "",
-            note=(record.effect if note else None) or None,
+            to_hit=_modifier(record, "to_hit"),
+            to_be_hit=_modifier(record, "to_be_hit"),
+            note=(record.effect if isinstance(record, ModifierRuleConfig) else None)
+            or None,
         )
         for record in records.values()
-        if record.to_hit or record.to_be_hit
     ]
+    return [row for row in rows if row.to_hit or row.to_be_hit]
 
 
-def parse_to_hit(path: Path, context: RulesContext) -> ToHitBody:
-    """Read the to-hit table: one titled group per registry that feeds it.
+def _modifier(record: RuleRecord, field: str) -> str:
+    """One of a record's two to-hit numbers, or empty where it carries none.
+
+    Only some registries define the two fields at all, and this is the one
+    place that has to treat "the registry has no such column" and "this record
+    left it out" alike.
+    """
+    return getattr(record, field, None) or ""
+
+
+def parse_to_hit(path: Path, context: RulesContext) -> ToHitBody:  # noqa: ARG001  the table is a view over every registry, not over one file
+    """Read the to-hit table: one titled group per namespace that feeds it.
 
     The numbers live on whichever record owns the id — a Terrain, a Hex Effect
     and a Token carry their own, so the table is a *view* over the registries
-    rather than a second copy of them (ADR 0024). The context reaches the
-    sibling registries `modifiers.toml` does not hold. Empty groups are
-    dropped: a heading with no rows under it is a promise the table does not
-    keep.
+    rather than a second copy of them (ADR 0024). Group order is the
+    declaration order of `namespaces.toml`, each title is the namespace's own
+    display name, and a namespace declaring `group` renders under that one's
+    heading — which is how Fog, a Hex Effect that behaves like Terrain for
+    to-hit purposes, lands among the Terrain rows. Empty groups are dropped: a
+    heading with no rows under it is a promise the table does not keep.
     """
-    modifiers = rules.get_modifiers(path)
-    # Fog is a Hex Effect that behaves like Terrain for to-hit purposes, so it
-    # renders among the Terrain rows rather than in a group of its own.
-    groups = [
-        ("speed", _modifier_rows(modifiers.speed, note=True)),
-        (
-            "terrain",
-            _modifier_rows(context.terrain()) + _modifier_rows(context.hexes()),
-        ),
-        ("range", _modifier_rows(modifiers.distance, note=True)),
-        ("angle", _modifier_rows(modifiers.angle, note=True)),
-        ("size", _modifier_rows(modifiers.size, note=True)),
-        ("unit_ability", _modifier_rows(modifiers.ability, note=True)),
-        ("token", _modifier_rows(context.tokens())),
-    ]
+    registry = context.registry()
+    grouped: dict[str, list[ModifierRow]] = {}
+    for name, namespace in registry.namespaces.items():
+        group = namespace.group or name
+        grouped.setdefault(group, []).extend(_modifier_rows(registry.records[name]))
     return ToHitBody(
         groups=[
-            ModifierGroup(title=_category_title(field), rows=rows)
-            for field, rows in groups
+            ModifierGroup(title=registry.namespaces[group].name, rows=rows)
+            for group, rows in grouped.items()
             if rows
         ]
     )

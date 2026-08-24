@@ -146,10 +146,10 @@ def test_spawn_validation_invalid_equipment() -> None:
 def test_spawn_rule_invalid_format() -> None:
     config_dict = _gnome_raw()
 
-    # Change the Spawn special rule to have no colon
-    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"] = {
-        "Spawn": "Place one hidden tiny snake"
-    }
+    # Change the Spawn instance's text so it names no spawn at all
+    config_dict["equipment"]["assault_bot_mortar"]["range"]["specials"]["spawn"] = [
+        {"text": "Place one hidden tiny snake"}
+    ]
 
     with pytest.raises(
         ValidationError,
@@ -162,9 +162,9 @@ def test_spawn_rule_undefined_spawn_id() -> None:
     config_dict = _gnome_raw()
 
     # Reference an undefined spawn ID
-    config_dict["equipment"]["assault_bot_mortar"]["range"]["special"] = {
-        "Spawn": "unknown_spawn: Place one assault bot"
-    }
+    config_dict["equipment"]["assault_bot_mortar"]["range"]["specials"]["spawn"] = [
+        {"text": "unknown_spawn: Place one assault bot"}
+    ]
 
     with pytest.raises(
         ValidationError,

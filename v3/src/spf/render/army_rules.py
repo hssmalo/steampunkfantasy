@@ -1,9 +1,9 @@
 """Army Reference view-model: shape a resolved Army into a nested rules view.
 
 This is a *presentation* transposition (ADR 0007), like `spf.render.cards`.
-It reads only the resolved `Army` — no `race_config`,
-no rules loading, no full special-rule text (that belongs to the Rulebook
-product). No templates.
+It reads the resolved `Army` and, for the name and signature of every Special
+instance on it, the rule registries (ADR 0024) — no `race_config`, no full
+special-rule text (that belongs to the Rulebook product). No templates.
 
 Its one touch of disk is the `ImageLookup` from `spf.render.images`, which asks
 the committed Asset store whether a Target has art (ADR 0017); it is injected,
@@ -18,6 +18,7 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.render.images import ImageLookup, committed_image
+from spf.render.specials import special_lines
 from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
@@ -117,7 +118,7 @@ def _equipment_entry(equip: EquipmentConfig) -> EquipmentEntry:
         angle=list(equip.range.angle),
         damage=equip.range.damage,
         ap=equip.range.ap,
-        specials=list(equip.range.special.items()),
+        specials=special_lines(equip.range.specials),
     )
 
 
@@ -136,14 +137,14 @@ def _model_entry(model: Model) -> ModelEntry:
     return ModelEntry(
         name=model.display_name,
         equipment_summary=_count_summary(model.equipment, lambda e: e.name),
-        specials=list(model.model_specials.items()),
+        specials=special_lines(model.model_special_instances),
         assault_strength=list(assault.strength),
         assault_strength_die=assault.strength_die,
         assault_deflection=list(assault.deflection),
         assault_deflection_die=assault.deflection_die,
         assault_damage=assault.damage,
         assault_ap=assault.ap,
-        assault_specials=list(assault.special.items()),
+        assault_specials=special_lines(assault.specials),
         equipment=_dedup([_equipment_entry(e) for e in ranged_equipment]),
     )
 
@@ -163,7 +164,7 @@ def _unit_entry(unit: Unit, *, race: t.RaceName, image_for: ImageLookup) -> Unit
         shaken_speed=unit.config.shaken.speed,
         shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
-        specials=list(unit.unit_specials.items()),
+        specials=special_lines(unit.unit_special_instances),
         damage_tables=[
             (
                 name,

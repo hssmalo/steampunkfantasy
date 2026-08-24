@@ -78,6 +78,10 @@ def _load_registry(rules_dir: Path) -> Registry:
         files = ", ".join(sorted(unreadable))
         msg = f"No loader for the rules file(s) a namespace declares: {files}"
         raise ValueError(msg)
+    if dangling := {n.group for n in namespaces.values() if n.group} - set(namespaces):
+        groups = ", ".join(sorted(dangling))
+        msg = f"A namespace renders under an undeclared group: {groups}"
+        raise ValueError(msg)
     loaded = {
         file_name: _LOADERS[file_name](rules_dir / file_name) for file_name in wanted
     }

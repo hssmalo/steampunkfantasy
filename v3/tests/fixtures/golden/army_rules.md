@@ -10,6 +10,11 @@
 - Points: 28
 - Shaken: slow [-, -, Flee] / Can't use weapons
 
+- **To Hit**: Take Cover[Sneak][-2]
+- **Fire Order**: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
+- **Evasion**: [4+]
+- **Resistance**: Psychic[1]. As long as at least one elite model is alive
+- **Pre-Assault Retreat**: [6+]. Improved by 1 per elite in unit
 
 **Damage Table: Regular**
 
@@ -32,11 +37,15 @@
 - Equipment: 1x Goblin Bow, 1x Goblin Grenade, 1x Combat Screw Driver
 - Assault: strength 2/1/1/1 (6+), deflection 5/0/0/0 (6+), damage d4-2, AP 2
 
+- **To Hit**: Thrown Weapons[2]
 
+- **Cunning Assault**: [1]
+- **Cunning Deflection**: Each deflected hit counts as hits for cunning assault purposes.
 
 #### Goblin Bow
 
 - Range: 2, angle True/True/True/True, damage d4-2, AP 1
+- **Ammo**: Always treated as loaded
 
 #### Goblin Grenade
 
@@ -48,11 +57,14 @@
 - Equipment: 1x Goblin Bow, 1x Goblin Grenade
 - Assault: strength 2/1/1/1 (6+), deflection 4/0/0/0 (6+), damage d4-2, AP 2
 
+- **To Hit**: Thrown Weapons[2]
 
+- **Cunning Assault**: [1]
 
 #### Goblin Bow
 
 - Range: 2, angle True/True/True/True, damage d4-2, AP 1
+- **Ammo**: Always treated as loaded
 
 #### Goblin Grenade
 
@@ -65,10 +77,12 @@
 - Assault: strength 1/1/1/1 (6+), deflection 0/0/0/0 (6+), damage d6-2, AP 2
 
 
+- **Cunning Assault**: [1]
 
 #### Goblin Bow
 
 - Range: 2, angle True/True/True/True, damage d4-2, AP 1
+- **Ammo**: Always treated as loaded
 
 #### Goblin Grenade
 
@@ -85,6 +99,10 @@
 - Points: 8
 - Shaken: slow [-, -, Flee] / Can't use weapons
 
+- **To Hit**: Take Cover[Sneak][-2]
+- **Fire Order**: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
+- **Evasion**: [4+]
+- **Pre-Assault Retreat**: [6+]
 
 **Damage Table: Regular**
 
@@ -108,10 +126,12 @@
 - Assault: strength 1/1/1/1 (6+), deflection 0/0/0/0 (6+), damage d6-2, AP 2
 
 
+- **Cunning Assault**: [1]
 
 #### Goblin Bow
 
 - Range: 2, angle True/True/True/True, damage d4-2, AP 1
+- **Ammo**: Always treated as loaded
 
 #### Goblin Grenade
 
@@ -129,6 +149,9 @@
 - Points: 96
 - Shaken: still [-, -, -] / Can't use weapons
 
+- **Transport**: May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantry to join the assault
+- **Forward Position**: [1]
+- **Fire Order**: Fire and load all weapons simultaneously, with identical ammo usage for all weapons
 
 **Damage Table: Regular**
 
@@ -165,15 +188,22 @@
 - Equipment: 1x Goblin Bow Battery, 1x Heavy Crossbow
 - Assault: strength 16/8/1/1 (6+), deflection 16/0/0/0 (6+), damage d6-2, AP 2
 
+- **Imprecise Weapon**: Bad Shot
+- **To Hit**: Enhanced Accuracy
 
 
 #### Goblin Bow Battery
 
 - Range: 2, angle True/True/True/True, damage d4 -2, AP 2
+- **Ammo**: May be loaded (one at a time) with up to 3 ammo
+- **Multiple Shots**: Fire d12 shots in one fire order per ammo spent, all targeted the same unit.
+- **Extra Damage**: In addition to normal damage, choose one (for all shots): add Minor Acid, Poison[6] or Gear Disruption[6+]
 
 #### Heavy Crossbow
 
 - Range: 4, angle True/False/False/False, damage d6, AP 4
+- **Ammo**: May be loaded (one at a time) with up to 3 ammo
+- **Multiple Shots**: Fire once per ammo spend per fire order
 
 
 ---

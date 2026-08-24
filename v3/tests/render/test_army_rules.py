@@ -28,6 +28,7 @@ from spf.schemas.race import (
 from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
+from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, ModelType, RangeRoll
 from tests.render.conftest import ART, FakeLookup
 
@@ -48,7 +49,7 @@ def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under 
     name: str = "Soldier",
     equipment: list[EquipmentConfig] | None = None,
     assault: AssaultConfig = _ASSAULT,
-    model_special: dict[str, str] | None = None,
+    model_specials: Specials | None = None,
     nick: str | None = None,
     types: list[ModelType] | None = None,
 ) -> Model:
@@ -60,7 +61,7 @@ def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under 
         type=types or ["Infantry"],
         assault=assault,
         cost=None,
-        special=model_special or {},  # pyright: ignore[reportArgumentType]
+        specials=model_specials or {},
     )
     return Model(
         name=name,
@@ -78,7 +79,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
     size: str = "Small",
     shaken: ShakenConfig | None = None,
     armor: list[int] | None = None,
-    unit_special: dict[str, str] | None = None,
+    unit_specials: Specials | None = None,
     nick: str | None = None,
 ) -> Unit:
     resolved_models = models or [_model()]
@@ -93,7 +94,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
         ),
         orders=OrdersConfig(),
         armor=armor,
-        special=unit_special or {},  # pyright: ignore[reportArgumentType]
+        specials=unit_specials or {},
         damage_tables={  # pyright: ignore[reportArgumentType]
             "Regular": {
                 "rows": ["1: Fine", "2: Dead"],
@@ -123,7 +124,7 @@ def test_roll_text_renders_each_roll_variant() -> None:
 def test_build_reference_basic_unit_and_model_fields() -> None:
     unit = _unit(
         armor=[10, 8, 6, 4],
-        unit_special={"Take Cover": "[sneak][-2]"},
+        unit_specials={"evasion": [SpecialInstance(args={"N": 4})]},
     )
 
     reference = build_reference(_army(unit, nick="The Iron Claws"), stem="test")
@@ -142,7 +143,7 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_speed == "slow"
     assert unit_entry.shaken_movement == ["-", "-", "flee"]
     assert unit_entry.shaken_fire == "No weapons"
-    assert unit_entry.specials == [("Take Cover", "[sneak][-2]")]
+    assert unit_entry.specials == [("Evasion", "[4+]")]
     assert unit_entry.damage_tables == [
         ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
     ]
@@ -185,7 +186,7 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
             angle=[True, False, False, False],
             damage="d6",
             ap=2,
-            special={"Sniper": "[+1]"},  # pyright: ignore[reportArgumentType]
+            specials={"sniper": [SpecialInstance(text="Choose the model")]},
         ),
     )
     unit = _unit(models=[_model(equipment=[musket])])
@@ -201,7 +202,7 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
     assert equip_entry.angle == [True, False, False, False]
     assert equip_entry.damage == "d6"
     assert equip_entry.ap == 2
-    assert equip_entry.specials == [("Sniper", "[+1]")]
+    assert equip_entry.specials == [("Sniper", "Choose the model")]
 
 
 def test_build_reference_rangeless_equipment_gets_no_sub_entry() -> None:
@@ -388,7 +389,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
                 strength=Stacker(add=[1, 0, 0, 0]),
                 damage=Stacker(replace="d8"),
                 ap=Stacker(add=1),
-                special={"Bonus": "[+1 strength]"},  # pyright: ignore[reportArgumentType]
+                specials={"reroll": [SpecialInstance(args={"N": 3})]},
             )
         }
     )
@@ -405,7 +406,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_strength_die == resolved.strength_die
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
-    assert model_entry.assault_specials == [("Bonus", "[+1 strength]")]
+    assert model_entry.assault_specials == [("Ork Reroll", "[3]")]
 
 
 # --- Templates: two-column damage table (drives the real templates) --------
@@ -464,6 +465,7 @@ def test_render_army_rules_markdown_has_title_and_unit_sections(
     assert "---" in text
     assert "### " in text  # a Model subsection
     assert "Movement" not in text
+    assert "Fire Order" in text or "Take Cover" in text  # a unit special
     assert "| 0-5 | Kill 1 model |" in text  # a two-column damage-table row
 
 

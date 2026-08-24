@@ -36,7 +36,7 @@
 \BLOCK{if unit.specials}
 \begin{itemize}
 \BLOCK{for name, text in unit.specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -75,7 +75,7 @@
 \BLOCK{if model.specials}
 \begin{itemize}
 \BLOCK{for name, text in model.specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -86,7 +86,7 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 \BLOCK{if model.assault_specials}
 \begin{itemize}
 \BLOCK{for name, text in model.assault_specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -99,7 +99,7 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 \BLOCK{if equip.specials}
 \begin{itemize}
 \BLOCK{for name, text in equip.specials}
-\item \textbf{\VAR{name | latex_escape}}: \VAR{text | latex_escape}
+\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}

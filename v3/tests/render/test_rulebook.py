@@ -511,6 +511,16 @@ def test_specials_kind_parses_the_committed_file() -> None:
 
 # --- The to_hit kind's parser -----------------------------------------------
 
+MODIFIER_NAMESPACES_SOURCE = """\
+[namespaces]
+speed = { name = "Speeds", file = "modifiers.toml", table = "speed" }
+terrain = { name = "Terrain", file = "terrain.toml", table = "terrain" }
+hex = { name = "Hexes", file = "hexes.toml", table = "hexes", group = "terrain" }
+token = { name = "Tokens", file = "tokens.toml", table = "tokens" }
+
+[damage_type]
+"""
+
 MODIFIERS_SOURCE = """\
 [speed.still]
 name = "Still"
@@ -558,10 +568,11 @@ to_be_hit = "-1"
 
 
 def _modifier_rules_dir(tmp_path: Path) -> Path:
-    """Write the four files the to-hit table is a view over."""
+    """Write the registries the to-hit table is a view over, plus their index."""
     return _rules_dir(
         tmp_path,
         {
+            "namespaces.toml": MODIFIER_NAMESPACES_SOURCE,
             "modifiers.toml": MODIFIERS_SOURCE,
             "terrain.toml": MODIFIER_TERRAIN_SOURCE,
             "hexes.toml": MODIFIER_HEXES_SOURCE,
@@ -630,8 +641,10 @@ def test_to_hit_kind_parses_the_committed_file() -> None:
     )
 
     titles = [group.title for group in body.groups]
+    # Order is `namespaces.toml`'s declaration order and each title is the
+    # namespace's own display name — neither is hand-listed here.
     assert titles[0] == "Speeds"
-    assert "Unit Abilities" in titles  # the mapped, not the derived, title
+    assert "Abilities" in titles
 
 
 # --- build_rulebook ---------------------------------------------------------

@@ -710,9 +710,10 @@ args.N = 2
 [[models.elite_goblin_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "S long as at least one elite model is alive"
+text = "As long as at least one elite model is alive"
 
 [[models.elite_goblin_infantry.unit_specials.pre_assault_retreat]]
+replace = true
 args.N = 6
 text = "Improved by 1 per elite in unit"
 

@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from configaroo import Configuration
+from rich.markup import escape
 
 from spf.armies.army import Army
 from spf.armies.build import (
@@ -17,6 +18,7 @@ from spf.armies.build import (
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
+from spf.render.specials import special_lines
 from spf.schemas.army_pack import ArmyPackConfig
 from spf.schemas.race import RaceConfig
 
@@ -148,18 +150,28 @@ def print_army_rules(army: Army) -> None:
         stdout.print(
             f"- [yellow]{unit.display_name}[/] - {unit.cost()}", highlight=False
         )
-        if unit.unit_specials:
+        unit_specials = special_lines(unit.unit_special_instances)
+        if unit_specials:
             stdout.print("  - [dim]Specials:[/]", highlight=False)
-            for key, special in unit.unit_specials.items():
-                stdout.print(f"    - [blue]{key}:[/] {special}", highlight=False)
+            for heading, special in unit_specials:
+                # A signature is full of square brackets, which are Rich's own
+                # markup: printed raw, `[range=1]` would vanish as a tag.
+                stdout.print(
+                    f"    - [blue]{escape(heading)}:[/] {escape(special)}",
+                    highlight=False,
+                )
         for model in unit.models:
             model_pts = model.cost().to_points()
             cost_str = f" ({model_pts} pts)" if model_pts else ""
             stdout.print(f"  - {model.display_name}{cost_str}", highlight=False)
-            if model.model_specials:
+            model_specials = special_lines(model.model_special_instances)
+            if model_specials:
                 stdout.print("    - [dim]Specials:[/]", highlight=False)
-            for key, special in model.model_specials.items():
-                stdout.print(f"      - [blue]{key}:[/] {special}", highlight=False)
+            for heading, special in model_specials:
+                stdout.print(
+                    f"      - [blue]{escape(heading)}:[/] {escape(special)}",
+                    highlight=False,
+                )
             for equip in model.equipment:
                 equip_cost_str = f" ({equip.cost})" if equip.cost is not None else ""
                 stdout.print(f"    - {equip.name}{equip_cost_str}", highlight=False)

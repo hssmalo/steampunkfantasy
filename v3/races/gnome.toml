@@ -758,7 +758,7 @@ text = "Treat any gunnery phase without any other order as fire(res) order inste
 [[models.elite_gnome_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "S long as at least one elite model is alive"
+text = "As long as at least one elite model is alive"
 
 [models.elite_gnome_infantry.assault]
 strength = [1, 1, 1, 1]

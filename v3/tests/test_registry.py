@@ -349,6 +349,22 @@ def test_a_namespace_naming_a_file_nothing_reads_is_rejected(tmp_path: Path) -> 
         reg.load_registry(rules_dir)
 
 
+def test_a_namespace_grouped_under_nothing_is_rejected(tmp_path: Path) -> None:
+    # A display group is another namespace, and a dangling one would drop its
+    # members out of the to-hit table without saying so.
+    rules_dir = _copied_rules(tmp_path)
+    (rules_dir / "namespaces.toml").write_text(
+        "[namespaces]\n"
+        'hex = { name = "Hexes", file = "hexes.toml", table = "hexes",'
+        ' group = "terrain" }\n'
+        "\n[damage_type.regular]\n"
+        'name = "Regular"\ntodo = "Rule text not yet written."\n'
+    )
+
+    with pytest.raises(ValueError, match="undeclared group: terrain"):
+        reg.load_registry(rules_dir)
+
+
 def test_an_incomplete_rules_file_fails_to_load(tmp_path: Path) -> None:
     rules_dir = _copied_rules(tmp_path)
     (rules_dir / "special.toml").write_text(
