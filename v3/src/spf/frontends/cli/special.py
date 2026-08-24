@@ -33,6 +33,7 @@ def _slot_marks(slots: Collection[Slot]) -> str:
 
 def add_commands(app: cyclopts.App) -> None:
     """Add special commands to the CLI."""
+    app.command(list_specials, name="list")
     app.command(show_special, name="show")
 
 
@@ -60,7 +61,9 @@ def _row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
     registers a row has: rule text, or the designer prose standing in for it.
     """
     if rule.written:
-        text, is_todo = rule.effect or "", False
+        # An effect may run to several lines; the row is one logical line, so
+        # it is folded rather than cut and the list stays greppable.
+        text, is_todo = " ".join((rule.effect or "").split()), False
     else:
         # A stub always has a `todo` — the schema admits no third state — and
         # only its first line fits a one-line row.
@@ -83,6 +86,35 @@ def special_rows(registry: Registry, *, slot: Slot | None = None) -> list[Specia
         for key, rule in sorted(registry.specials.items())
         if slot is None or slot in rule.slots
     ]
+
+
+def list_specials(*, slot: Slot | None = None) -> None:
+    """List every Special in the registry, one row each.
+
+    Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials, so a
+    Special declaring several Slots is marked in each of their positions.
+    """
+    rows = special_rows(load_registry(), slot=slot)
+    if not rows:
+        return
+
+    width = max(len(row.label) for row in rows)
+    for row in rows:
+        # Escaped before any markup is added, never after: a Signature is full
+        # of square brackets, which Rich would otherwise swallow as tags.
+        text = escape(row.text)
+        # A `todo` is designer prose rather than rule text, so it reads as a
+        # different register.
+        text = f"[dim]todo: {text}[/]" if row.is_todo else text
+        # Soft-wrapped rather than truncated: piped output is then one
+        # greppable line per Special, with nothing lost.
+        stdout.print(
+            # Padded before escaping: an escape adds backslashes that Rich
+            # then eats, so padding the escaped label would misalign the row.
+            f"{row.marks} {escape(f'{row.label:<{width}}')} {text}",
+            highlight=False,
+            soft_wrap=True,
+        )
 
 
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:

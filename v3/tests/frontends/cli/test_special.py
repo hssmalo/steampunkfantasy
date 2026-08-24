@@ -4,9 +4,18 @@
 `SpecialRuleConfig` records by hand rather than coupling to `rules/special.toml`.
 """
 
+import pytest
+
+from spf.frontends.cli import app
 from spf.frontends.cli.special import special_rows
-from spf.registry import Registry
+from spf.registry import Registry, load_registry
 from spf.schemas.rules import SpecialRuleConfig
+
+REGISTRY = load_registry()
+
+
+def _list(*args: str) -> None:
+    app(["special", "list", *args], exit_on_error=False, result_action="return_value")
 
 
 def _registry(**specials: SpecialRuleConfig) -> Registry:
@@ -115,6 +124,67 @@ def test_a_stubs_text_is_the_first_line_of_its_todo() -> None:
 
     assert row.text == "Rule text not yet written."
     assert row.is_todo is True
+
+
+def test_a_multi_line_effect_is_collapsed_onto_one_line() -> None:
+    # An effect may be a list of options; the row is one logical line, so it is
+    # folded rather than cut — a piped list stays one line per Special.
+    registry = _registry(heal=_rule(effect="Spend points:\n\n- Cure. Cost 1.\n"))
+
+    (row,) = special_rows(registry)
+
+    assert row.text == "Spend points: - Cure. Cost 1."
+
+
+def test_every_registered_special_is_exactly_one_printed_line(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _list()
+    lines = [line for line in capsys.readouterr().out.splitlines() if line.strip()]
+
+    assert len(lines) == len(REGISTRY.specials)
+
+
+def test_every_registered_special_gets_a_row_with_text() -> None:
+    rows = special_rows(REGISTRY)
+
+    assert len(rows) == len(REGISTRY.specials)
+    assert all(row.text for row in rows)
+
+
+def test_the_printed_list_marks_a_stub_as_a_todo(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _list()
+
+    assert "todo: " in capsys.readouterr().out
+
+
+def test_the_printed_list_keeps_a_signatures_brackets(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # A Signature is full of square brackets, which are Rich's own markup:
+    # printed raw, `[{N}]` would vanish as a tag.
+    _list()
+
+    assert "ork_reroll[{N}]" in capsys.readouterr().out
+
+
+def test_the_printed_list_narrows_to_one_slot(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _list("--slot", "range")
+    # The UMAR column is four fixed positions and a space; the label follows.
+    labels = {
+        line[5:].split(maxsplit=1)[0]
+        for line in capsys.readouterr().out.splitlines()
+        if line.strip()
+    }
+
+    assert "sniper" in labels
+    assert not any(label.startswith("assault_") for label in labels), (
+        "an assault-only Special has no place under --slot range"
+    )
 
 
 def test_a_written_rule_carrying_a_todo_still_shows_its_effect() -> None:
