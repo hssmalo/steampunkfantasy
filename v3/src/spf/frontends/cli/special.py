@@ -1,6 +1,7 @@
 """Special commands for the SteamPunkFantasy CLI."""
 
-from collections.abc import Sequence
+from collections.abc import Collection, Sequence
+from dataclasses import dataclass
 from typing import Annotated
 
 import cyclopts
@@ -16,18 +17,104 @@ from spf.schemas.race import RaceConfig
 from spf.schemas.rules import Slot, SpecialRuleConfig
 from spf.schemas.special import Specials
 
-_SLOT_MARKS: dict[Slot, str] = {
-    "unit": "U   ",
-    "model": " M  ",
-    "assault": "  A ",
-    "range": "   R",
-}
-"""The UMAR column: which of the four slots a row was found in."""
+_SLOT_ORDER: tuple[Slot, ...] = ("unit", "model", "assault", "range")
+"""The Slots the UMAR column has a position for, in the order it prints them."""
+
+
+def _slot_marks(slots: Collection[Slot]) -> str:
+    """Build the UMAR column: one fixed position per Slot, blank where absent.
+
+    A Special may declare several Slots, so the column is built from a set
+    rather than looked up: fixed positions are what let a reader scan the
+    column, and what lets a multi-Slot record stay one row.
+    """
+    return "".join(slot[0].upper() if slot in slots else " " for slot in _SLOT_ORDER)
 
 
 def add_commands(app: cyclopts.App) -> None:
     """Add special commands to the CLI."""
+    app.command(list_specials, name="list")
     app.command(show_special, name="show")
+
+
+@dataclass(frozen=True)
+class SpecialRow:
+    """One Special as the list prints it: marks, label, and one line of text."""
+
+    marks: str
+    """The UMAR column."""
+
+    label: str
+    """Identifier and Signature, uninterpolated."""
+
+    text: str
+    """The effect, or the first line of `todo`."""
+
+    is_stub: bool
+    """Whether the record is a Stub, so `text` is designer prose."""
+
+
+def _build_row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
+    """Build the row for one Special record.
+
+    A record is either written or an explicit Stub, so those are the only two
+    registers a row has: rule text, or the designer prose standing in for it.
+    """
+    if rule.written:
+        # An effect may run to several lines; the row is one logical line, so
+        # it is folded rather than cut and the list stays greppable.
+        text, is_stub = " ".join((rule.effect or "").split()), False
+    else:
+        # A Stub always has a `todo` — the schema admits no third state — and
+        # only its first line fits a one-line row.
+        text, is_stub = (rule.todo or "").splitlines()[0], True
+    return SpecialRow(
+        marks=_slot_marks(rule.slots),
+        label=f"{key}{rule.signature or ''}",
+        text=text,
+        is_stub=is_stub,
+    )
+
+
+def special_rows(registry: Registry, *, slot: Slot | None = None) -> list[SpecialRow]:
+    """Build one row per Special in the Registry, sorted by Identifier.
+
+    `slot` keeps the Specials declaring it, whatever else they also declare.
+    """
+    return [
+        _build_row(key, rule)
+        for key, rule in sorted(registry.specials.items())
+        if slot is None or slot in rule.slots
+    ]
+
+
+def list_specials(*, slot: Slot | None = None) -> None:
+    """List every Special in the Registry, one row each.
+
+    Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials, so a
+    Special declaring several Slots is marked in each of their positions.
+    """
+    rows = special_rows(load_registry(), slot=slot)
+    if not rows:
+        return
+
+    width = max(len(row.label) for row in rows)
+    for row in rows:
+        # Escaped before any markup is added, never after: a Signature is full
+        # of square brackets, which Rich would otherwise swallow as tags.
+        text = escape(row.text)
+        # A `todo` is designer prose rather than rule text, so it reads as a
+        # different register.
+        text = f"[dim]todo: {text}[/]" if row.is_stub else text
+        # Soft-wrapped rather than truncated: piped output is then one
+        # greppable line per Special, with nothing lost.
+        stdout.print(
+            # Padded before escaping: an escape adds backslashes that Rich
+            # then eats, so padding the escaped label would misalign the row.
+            f"{row.marks} {escape(f'{row.label:<{width}}')} {text}",
+            highlight=False,
+            soft_wrap=True,
+        )
 
 
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:
@@ -56,7 +143,7 @@ def _holders(race: RaceConfig, slot: Slot) -> list[tuple[str, Specials]]:
     granted by the Unit, by a Model or by Equipment, while a Range Special
     hangs off Equipment alone, because a range profile never sits on a Model.
     """
-    mark = _SLOT_MARKS[slot]
+    mark = _slot_marks([slot])
     models = race.models.values()
     equipment = race.equipment.values()
     match slot:
