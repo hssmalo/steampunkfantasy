@@ -71,8 +71,8 @@ _Avoid_: point adjustment, handicap, bonus points
 
 **Unit Fixture**:
 An Upgrade Equipment that a player buys once for a whole Unit, and that is
-charged a single time no matter how many of the Unit's Models carry it. Every
-other Upgrade is priced per Model: each Model carrying one adds its Cost again.
+charged a single time however many of the Unit's Models carry it. Every other
+Upgrade is priced per Model: each Model carrying one adds its Cost again.
 _Avoid_: shared equipment, unit-wide upgrade, group upgrade
 
 ### Combat and the round

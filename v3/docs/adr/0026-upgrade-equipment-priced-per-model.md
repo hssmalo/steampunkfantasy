@@ -12,8 +12,8 @@ Equipment's `upgrade_all` flag:
   its `cost` again. Arming all four Models of a four-Model Unit with the same
   weapon therefore costs four times the listed price.
 - **`upgrade_all = True` — per Unit.** The Equipment is charged once for the
-  whole Unit, deduplicated by Equipment name across the Unit's Models, however
-  many Models carry it. This is the **Unit Fixture** of `CONTEXT.md`.
+  whole Unit, however many of its Models carry it. This is the **Unit Fixture**
+  of `CONTEXT.md`.
 
 **Why:** most Equipment is a thing each Model holds, and paying per Model is the
 only pricing that matches what is on the table. Some Equipment is a single
@@ -21,6 +21,22 @@ Unit-wide fitting that the data has to hang off the Models anyway, because a
 Model is the only thing Equipment attaches to. Charging it once per Unit prices
 what the player actually bought, and keeping the distinction in the catalogue
 rather than in the pricing code means a new Unit-wide item is a data change.
+
+## The Fixture dedup is across Models, not within one
+
+`Unit.cost()` deduplicates a Fixture by Equipment name as it walks the Unit's
+Models, but it folds each Model's newly-seen names into the running set only
+*after* that Model's Equipment loop. Two copies of the same Fixture on a
+*single* Model are therefore charged twice, while one copy on each of four
+Models is charged once.
+
+This is a consequence of the loop's shape rather than a decision, and it
+disagrees with `Unit.armor`, which dedupes the same Fixtures against a set it
+updates immediately. Nothing stops a player reaching it: `ArmyModel.upgrade()`
+appends unconditionally, so the same Equipment can be bought twice on one Model
+whenever its Holders have room. The rule this ADR records is the per-Unit one;
+where the code charges twice, the code is wrong and not the record of a
+deliberate choice.
 
 ## `upgrade_all` is required wherever a `cost` is
 
