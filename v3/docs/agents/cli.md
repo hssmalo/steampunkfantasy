@@ -22,7 +22,7 @@ uv run spf race show goblin equipment.goblin_bow
 
 ## Specials
 
-One row per Special in the registry, prefixed with a **UMAR** column — `U`nit,
+One row per Special in the Registry, prefixed with a **UMAR** column — `U`nit,
 `M`odel, `A`ssault, `R`ange — at four fixed positions, so a Special declaring
 several Slots is marked in each. Rows are one logical line each, which makes the
 output greppable.

@@ -50,29 +50,29 @@ class SpecialRow:
     text: str
     """The effect, or the first line of `todo`."""
 
-    is_todo: bool
-    """Whether `text` is designer prose rather than rule text."""
+    is_stub: bool
+    """Whether the record is a Stub, so `text` is designer prose."""
 
 
-def _row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
+def _build_row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
     """Build the row for one Special record.
 
-    A record is either written or an explicit stub, so those are the only two
+    A record is either written or an explicit Stub, so those are the only two
     registers a row has: rule text, or the designer prose standing in for it.
     """
     if rule.written:
         # An effect may run to several lines; the row is one logical line, so
         # it is folded rather than cut and the list stays greppable.
-        text, is_todo = " ".join((rule.effect or "").split()), False
+        text, is_stub = " ".join((rule.effect or "").split()), False
     else:
-        # A stub always has a `todo` — the schema admits no third state — and
+        # A Stub always has a `todo` — the schema admits no third state — and
         # only its first line fits a one-line row.
-        text, is_todo = (rule.todo or "").splitlines()[0], True
+        text, is_stub = (rule.todo or "").splitlines()[0], True
     return SpecialRow(
         marks=_slot_marks(rule.slots),
         label=f"{key}{rule.signature or ''}",
         text=text,
-        is_todo=is_todo,
+        is_stub=is_stub,
     )
 
 
@@ -82,14 +82,14 @@ def special_rows(registry: Registry, *, slot: Slot | None = None) -> list[Specia
     `slot` keeps the Specials declaring it, whatever else they also declare.
     """
     return [
-        _row(key, rule)
+        _build_row(key, rule)
         for key, rule in sorted(registry.specials.items())
         if slot is None or slot in rule.slots
     ]
 
 
 def list_specials(*, slot: Slot | None = None) -> None:
-    """List every Special in the registry, one row each.
+    """List every Special in the Registry, one row each.
 
     Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials, so a
     Special declaring several Slots is marked in each of their positions.
@@ -105,7 +105,7 @@ def list_specials(*, slot: Slot | None = None) -> None:
         text = escape(row.text)
         # A `todo` is designer prose rather than rule text, so it reads as a
         # different register.
-        text = f"[dim]todo: {text}[/]" if row.is_todo else text
+        text = f"[dim]todo: {text}[/]" if row.is_stub else text
         # Soft-wrapped rather than truncated: piped output is then one
         # greppable line per Special, with nothing lost.
         stdout.print(

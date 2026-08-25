@@ -4,6 +4,8 @@
 `SpecialRuleConfig` records by hand rather than coupling to `rules/special.toml`.
 """
 
+import re
+
 import pytest
 
 from spf.frontends.cli import app
@@ -12,6 +14,9 @@ from spf.registry import Registry, load_registry
 from spf.schemas.rules import SpecialRuleConfig
 
 REGISTRY = load_registry()
+
+_ROW = re.compile(r"^(?P<marks>[UMAR ]{4}) (?P<label>\S+)")
+"""A printed row: the UMAR column, then the Identifier and its Signature."""
 
 
 def _list(*args: str) -> None:
@@ -85,7 +90,7 @@ def test_a_written_rules_text_is_its_effect() -> None:
     (row,) = special_rows(registry)
 
     assert row.text == "Aim carefully."
-    assert row.is_todo is False
+    assert row.is_stub is False
 
 
 def test_a_slot_keeps_every_special_declaring_it() -> None:
@@ -123,7 +128,7 @@ def test_a_stubs_text_is_the_first_line_of_its_todo() -> None:
     (row,) = special_rows(registry)
 
     assert row.text == "Rule text not yet written."
-    assert row.is_todo is True
+    assert row.is_stub is True
 
 
 def test_a_multi_line_effect_is_collapsed_onto_one_line() -> None:
@@ -174,12 +179,10 @@ def test_the_printed_list_narrows_to_one_slot(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     _list("--slot", "range")
-    # The UMAR column is four fixed positions and a space; the label follows.
-    labels = {
-        line[5:].split(maxsplit=1)[0]
-        for line in capsys.readouterr().out.splitlines()
-        if line.strip()
-    }
+    # A row is the UMAR column, then the label: read the label back off it
+    # rather than counting columns.
+    rows = (_ROW.match(line) for line in capsys.readouterr().out.splitlines())
+    labels = {row["label"] for row in rows if row is not None}
 
     assert "sniper" in labels
     assert not any(label.startswith("assault_") for label in labels), (
@@ -194,4 +197,4 @@ def test_a_written_rule_carrying_a_todo_still_shows_its_effect() -> None:
     (row,) = special_rows(registry)
 
     assert row.text == "Aim carefully."
-    assert row.is_todo is False
+    assert row.is_stub is False
