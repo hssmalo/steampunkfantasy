@@ -424,14 +424,8 @@ def test_model_cost_ignores_priced_default_equipment(simple_race: RaceConfig) ->
     assert _soldier(simple_race, defaults=[priced_default]).cost() == t.Cost()
 
 
-def test_model_cost_charges_a_unit_fixture_that_unit_cost_charges_once(
-    simple_race: RaceConfig,
-) -> None:
-    """Model.cost() charges an `upgrade_all` Equipment per Model, Unit.cost() once.
-
-    The divergence is intended, not a rounding error: a Model cannot see its
-    siblings, so only Unit.cost() can deduplicate a Fixture (ADR-0026).
-    """
+def test_model_cost_double_charges_a_unit_fixture(simple_race: RaceConfig) -> None:
+    """A Fixture is charged per Model; only Unit.cost() dedupes it (ADR-0026)."""
     sword = simple_race.equipment["sword"]  # upgrade_all, cp=2
     models = [_soldier(simple_race, upgrades=[sword]) for _ in range(2)]
     unit = Unit(

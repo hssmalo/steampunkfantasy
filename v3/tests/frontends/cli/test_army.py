@@ -12,6 +12,7 @@ import pytest
 
 from spf.config import config
 from spf.frontends.cli.army import list_armies, show_army
+from spf.races import get_race
 from tests.conftest import unwrapped
 
 
@@ -62,14 +63,17 @@ def test_show_army_prints_the_nick(
     assert "Snaggle's Lads" in unwrapped(capsys.readouterr().out)
 
 
-def test_show_army_prints_its_units(
+def test_show_army_prints_its_units_and_total(
     armies_dir: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
+    race = get_race("goblin")
     _write_army(armies_dir, "warband", _army_data())
 
     show_army("warband")
 
-    assert "Total cost" in unwrapped(capsys.readouterr().out)
+    printed = unwrapped(capsys.readouterr().out)
+    assert race.units["goblin_infantry"].name in printed
+    assert "Total cost" in printed
 
 
 def test_show_army_missing_file_exits_nonzero(armies_dir: Path) -> None:  # noqa: ARG001

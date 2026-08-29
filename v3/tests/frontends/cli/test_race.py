@@ -32,7 +32,7 @@ def _unfolded_console(monkeypatch: pytest.MonkeyPatch) -> None:
     These tests read a name and a cost back off one line, so the width has to
     be the test's own rather than the terminal the suite is run from.
     """
-    monkeypatch.setattr(stdout, "_width", 200)
+    monkeypatch.setattr(stdout, "width", 200)
 
 
 def _race(*args: str) -> None:
@@ -110,18 +110,20 @@ def test_a_units_row_shows_every_number_of_its_cost(
         ] == list(_COST_FIELDS), f"{name}: {printed}"
 
 
-def test_a_units_row_shows_its_own_cost_not_the_next_ones(
-    capsys: pytest.CaptureFixture[str],
+@pytest.mark.parametrize("command", ["units", "models", "equipment"])
+def test_a_row_shows_its_own_cost_not_the_next_ones(
+    command: str, *, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    # Rows are sorted by cost, so a row printed against the wrong Unit still
-    # survives the check above unless the costs differ.
+    # Rows are sorted by cost, so a row printed against the wrong entry still
+    # survives a per-row check unless the whole mapping is compared.
     race = races.get_race(RACE)
+    entries = getattr(race, command)  # each command is named for its section
     by_name = {
-        unit.name: str(unit.cost) if unit.cost else _NO_COST
-        for unit in race.units.values()
+        entry.name: str(entry.cost) if entry.cost else _NO_COST
+        for entry in entries.values()
     }
 
-    _race("units", RACE)
+    _race(command, RACE)
     rows = _rows(capsys.readouterr().out)
 
     assert dict(rows) == {name: _plain(cost).strip() for name, cost in by_name.items()}
