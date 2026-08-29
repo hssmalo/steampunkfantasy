@@ -226,6 +226,56 @@ def test_cost_to_points_zero() -> None:
     assert t.Cost().to_points() == 0
 
 
+# ---------------------------------------------------------------------------
+# Cost rendering and sorting
+# ---------------------------------------------------------------------------
+
+
+def test_cost_str_renders_every_dimension_in_order() -> None:
+    assert str(t.Cost(ip=1, mp=2, xp=3, cp=4, vpm=5)) == " 1ip  2mp  3xp  4cp  5vpm"
+
+
+def test_cost_str_grays_out_only_the_zero_dimensions() -> None:
+    assert str(t.Cost(ip=1, cp=4)) == (
+        " 1ip [gray30] 0mp[/] [gray30] 0xp[/]  4cp [gray30] 0vpm[/]"
+    )
+
+
+def test_cost_str_grays_out_an_empty_cost_entirely() -> None:
+    assert str(t.Cost()) == (
+        "[gray30] 0ip[/] [gray30] 0mp[/] [gray30] 0xp[/]"
+        " [gray30] 0cp[/] [gray30] 0vpm[/]"
+    )
+
+
+def test_cost_str_does_not_truncate_a_two_digit_value() -> None:
+    # The 2-wide field pads, it does not clip.
+    assert str(t.Cost(mp=12)) == (
+        "[gray30] 0ip[/] 12mp [gray30] 0xp[/] [gray30] 0cp[/] [gray30] 0vpm[/]"
+    )
+
+
+def test_cost_sort_idx_orders_ip_then_mp_then_xp_then_cp() -> None:
+    costs = [t.Cost(), t.Cost(cp=1), t.Cost(xp=1), t.Cost(mp=1), t.Cost(ip=1)]
+    assert sorted(costs, key=lambda cost: cost.sort_idx) == [
+        t.Cost(ip=1),
+        t.Cost(mp=1),
+        t.Cost(xp=1),
+        t.Cost(cp=1),
+        t.Cost(),
+    ]
+
+
+def test_cost_sort_idx_is_ip_dominant() -> None:
+    """A single ip outranks any pile of the lesser dimensions."""
+    assert t.Cost(ip=1).sort_idx < t.Cost(mp=999, xp=999, cp=999).sort_idx
+
+
+# ---------------------------------------------------------------------------
+# Unit and army costs
+# ---------------------------------------------------------------------------
+
+
 def test_unit_cost_base_only(
     one_unit_army: ArmyList, *, simple_race: RaceConfig
 ) -> None:
@@ -329,6 +379,71 @@ def test_army_cost_includes_upgrade_equipment(
     )
     resolved = army.resolve(simple_race)
     assert resolved.cost() == t.Cost(mp=3, cp=2)
+
+
+def _soldier(
+    race_config: RaceConfig,
+    *,
+    defaults: list[EquipmentConfig] | None = None,
+    upgrades: list[EquipmentConfig] | None = None,
+) -> Model:
+    """Build a resolved soldier carrying the given equipment."""
+    return Model(
+        name="soldier",
+        config=race_config.models["soldier"],
+        default_equipment=defaults or [],
+        upgrade_equipment=upgrades or [],
+    )
+
+
+def test_model_cost_without_upgrade_equipment_is_free(simple_race: RaceConfig) -> None:
+    assert _soldier(simple_race).cost() == t.Cost()
+
+
+def test_model_cost_sums_its_upgrade_equipment(simple_race: RaceConfig) -> None:
+    grenade = EquipmentConfig(
+        race="goblin",
+        name="Grenade",
+        cost=t.Cost(mp=1, xp=3),
+        upgrade_all=False,
+        requires=[],
+    )
+    model = _soldier(simple_race, upgrades=[simple_race.equipment["sword"], grenade])
+    assert model.cost() == t.Cost(cp=2, mp=1, xp=3)
+
+
+def test_model_cost_ignores_priced_default_equipment(simple_race: RaceConfig) -> None:
+    """Retained Defaults are free however the catalogue prices them (ADR-0020)."""
+    priced_default = EquipmentConfig(
+        race="goblin",
+        name="Issued Sword",
+        cost=t.Cost(cp=7),
+        upgrade_all=False,
+        requires=[],
+    )
+    assert _soldier(simple_race, defaults=[priced_default]).cost() == t.Cost()
+
+
+def test_model_cost_charges_a_unit_fixture_that_unit_cost_charges_once(
+    simple_race: RaceConfig,
+) -> None:
+    """Model.cost() charges an `upgrade_all` Equipment per Model, Unit.cost() once.
+
+    The divergence is intended, not a rounding error: a Model cannot see its
+    siblings, so only Unit.cost() can deduplicate a Fixture (ADR-0026).
+    """
+    sword = simple_race.equipment["sword"]  # upgrade_all, cp=2
+    models = [_soldier(simple_race, upgrades=[sword]) for _ in range(2)]
+    unit = Unit(
+        name="squad",
+        config=simple_race.units["squad"].model_copy(
+            update={"models": ["soldier", "soldier"]}
+        ),
+        models=models,
+    )
+
+    assert [model.cost() for model in models] == [t.Cost(cp=2), t.Cost(cp=2)]
+    assert unit.cost() == t.Cost(mp=3, cp=2)
 
 
 # ---------------------------------------------------------------------------
