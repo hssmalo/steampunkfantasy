@@ -15,6 +15,7 @@ from spf import races
 from spf.console import stdout
 from spf.frontends.cli import app
 from spf.frontends.cli.race import _NO_COST
+from spf.schemas.type_aliases import Cost
 
 RACE = "goblin"
 """A tracked Race holding both costed and cost-less Units."""
@@ -143,6 +144,15 @@ def test_a_unit_without_a_cost_shows_the_placeholder(
         printed = _cost_of(rows, name)
         assert printed == _plain(_NO_COST).strip()
         assert not any(char.isdigit() for char in printed), name
+
+
+def test_the_placeholder_lines_up_with_a_rendered_cost() -> None:
+    """The placeholder stands in for a Cost, so it must occupy its columns."""
+    zero_cost = _plain(str(Cost()))
+    placeholder = _plain(_NO_COST)
+
+    assert len(placeholder) == len(zero_cost)
+    assert placeholder == zero_cost.replace("0", "-")
 
 
 def test_things_prints_the_three_sections_in_order(
