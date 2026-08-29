@@ -1,0 +1,191 @@
+{
+  "race": "darkelf",
+  "nick": "Martin DarkElf",
+  "units": [
+    {
+      "name": "queen_yy",
+      "models": [
+        {
+          "name": "queen_yy",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "mechanical_scorpion",
+      "models": [
+        {
+          "name": "mechanical_scorpion",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "mechanical_scorpion",
+      "models": [
+        {
+          "name": "mechanical_scorpion",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "nightmare_mechanical_cavalry",
+      "models": [
+        {
+          "name": "nightmare_mechanical_cavalry",
+          "upgrades": []
+        },
+        {
+          "name": "nightmare_mechanical_cavalry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "nightmare_mechanical_cavalry",
+      "models": [
+        {
+          "name": "nightmare_mechanical_cavalry",
+          "upgrades": []
+        },
+        {
+          "name": "nightmare_mechanical_cavalry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg",
+            "integrated_pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "darkelf_infantry",
+      "models": [
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "darkelf_infantry",
+      "models": [
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "smg",
+            "poison_fog_grenade"
+          ]
+        }
+      ]
+    }
+  ]
+}

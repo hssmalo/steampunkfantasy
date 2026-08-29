@@ -2,8 +2,16 @@ title = "Steampunkfantasy Tournament 2025"
 
 [[armies]]
 army = "geir_arne"
-label = "Geir Arne"
+
 
 [[armies]]
 army = "morten"
-label = "Morten"
+
+
+[[armies]]
+army = "martin"
+
+
+
+[[armies]]
+army = "knut"

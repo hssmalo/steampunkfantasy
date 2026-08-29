@@ -1,0 +1,200 @@
+{
+  "race": "gnome",
+  "nick": "Knut Assault Bots",
+  "units": [
+    {
+      "name": "ballista_tractor_mark_i",
+      "models": [
+        {
+          "name": "ballista_tractor_mark_i",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ballista_tractor_mark_i",
+      "models": [
+        {
+          "name": "ballista_tractor_mark_i",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ballista_tractor_mark_i",
+      "models": [
+        {
+          "name": "ballista_tractor_mark_i",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "nick": "Mortar",
+      "models": [
+        {
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "assault_bot_mortar",
+            "green_gas_launcher",
+            "mechanical_owl",
+            "experimental_death_ray",
+            "experimental_death_ray"
+          ]
+        },
+        {
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "mechanical_owl"
+          ]
+        },
+        {
+          "name": "gnome_tinkerer",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar",
+            "mechanical_owl"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "assault_bot_mortar",
+            "green_gas_launcher"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "assault_bot_mortar",
+            "green_gas_launcher"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "assault_bot_mortar",
+            "green_gas_launcher"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "nick": "Death_Ray with Owl",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "nick": "Death_Ray with Owl",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}
