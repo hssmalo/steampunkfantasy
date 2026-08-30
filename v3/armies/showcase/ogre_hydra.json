@@ -127,19 +127,19 @@
       ]
     },
     {
-      "name": "main_engine",
+      "name": "artillery_wagon",
       "models": [
         {
-          "name": "main_engine",
+          "name": "artillery_wagon",
           "upgrades": []
         }
       ]
     },
     {
-      "name": "main_engine",
+      "name": "artillery_wagon",
       "models": [
         {
-          "name": "main_engine",
+          "name": "artillery_wagon",
           "upgrades": []
         }
       ]

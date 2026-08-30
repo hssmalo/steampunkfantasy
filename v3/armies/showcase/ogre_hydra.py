@@ -26,10 +26,10 @@ army = (
 army = army.add_unit("ogre_robot", race_config=cfg)
 
 # 3x Main Engine
-army = (
-    army.add_unit("main_engine", race_config=cfg)
-    .duplicate_unit(("main_engine", 0))
-    .duplicate_unit(("main_engine", 0))
+army = army.add_unit("main_engine", race_config=cfg)
+
+army = army.add_unit("artillery_wagon", race_config=cfg).duplicate_unit(
+    ("artillery_wagon", 0)
 )
 
 # Save the army to disk
