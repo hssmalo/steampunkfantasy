@@ -1526,7 +1526,7 @@ text = "When using aim: roll 6 dice at same unit."
 
 
 [[equipment.tail_gatling_gun.range.specials.area]]
-preamble = "If not using aim, fire once at all enemy models within range and within front arc"
+preamble = "If not using aim, fire once at all enemy models in all hexes within normal and long range"
 
 [[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 5

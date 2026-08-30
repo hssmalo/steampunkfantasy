@@ -171,11 +171,13 @@ def _check_instance(
     one instance are otherwise indistinguishable in a message.
     """
     if not instance.cases:
-        return _check_one(instance.args, rule=rule, where=where, registry=registry)
+        return _check_args_in_scope(
+            instance.args, rule=rule, where=where, registry=registry
+        )
     return [
         problem
         for number, case in enumerate(instance.cases, start=1)
-        for problem in _check_one(
+        for problem in _check_args_in_scope(
             instance.args | case.args,
             rule=rule,
             where=f"{where}, case {number}",
@@ -184,7 +186,7 @@ def _check_instance(
     ]
 
 
-def _check_one(
+def _check_args_in_scope(
     args: dict[str, int | str],
     *,
     rule: r.SpecialRuleConfig,

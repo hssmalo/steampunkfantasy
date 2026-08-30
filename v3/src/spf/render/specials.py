@@ -32,6 +32,9 @@ _INSTANCE_SEPARATOR = "; "
 _PREAMBLE_SEPARATOR = ": "
 """Between a preamble and the cases it scopes."""
 
+_VALUES_SEPARATOR = " "
+"""Between a case's own values and the prose saying when they apply."""
+
 _CASE_SEPARATOR = ", "
 """Between two cases of one instance.
 
@@ -48,9 +51,8 @@ def special_row(
     heading = instance.name or (rule.name if rule is not None else identifier)
     if instance.cases:
         return heading, _cases(instance, rule, registry)
-    signature = "" if rule is None else _interpolate(rule, instance.args, registry)
-    parts = [part for part in (signature, instance.text) if part]
-    return heading, _PROSE_SEPARATOR.join(parts)
+    signature = _signature(rule, instance.args, registry)
+    return heading, _join(_PROSE_SEPARATOR, signature, instance.text)
 
 
 def _cases(
@@ -63,15 +65,27 @@ def _cases(
     both printed: they are hand-written in one array, where a repeat is a typo
     the reader should see.
     """
-    lines = []
-    for case in instance.cases:
-        args = instance.args | case.args
-        signature = "" if rule is None else _interpolate(rule, args, registry)
-        lines.append(" ".join(part for part in (signature, case.text) if part))
-    cases = _CASE_SEPARATOR.join(line for line in lines if line)
-    if not instance.preamble:
-        return cases
-    return _PREAMBLE_SEPARATOR.join(part for part in (instance.preamble, cases) if part)
+    lines = [
+        _join(
+            _VALUES_SEPARATOR,
+            _signature(rule, instance.args | case.args, registry),
+            case.text,
+        )
+        for case in instance.cases
+    ]
+    return _join(_PREAMBLE_SEPARATOR, instance.preamble, _join(_CASE_SEPARATOR, *lines))
+
+
+def _signature(
+    rule: RuleRecord | None, args: dict[str, int | str], registry: Registry
+) -> str:
+    """Fill in the rule's signature, or nothing at all for an unknown id."""
+    return "" if rule is None else _interpolate(rule, args, registry)
+
+
+def _join(separator: str, *parts: str | None) -> str:
+    """Join the parts that are there, so an absent one leaves no separator."""
+    return separator.join(part for part in parts if part)
 
 
 def special_lines(

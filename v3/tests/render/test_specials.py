@@ -191,6 +191,14 @@ def test_two_case_shaped_instances_read_as_two_condition_groups() -> None:
     ]
 
 
+def test_a_prose_shaped_instance_is_unchanged_by_the_case_shape() -> None:
+    # The instances left prose-shaped render exactly as they always have: the
+    # signature alone, with no separator and no empty case list showing.
+    _, text = _row("area", args={"N": 5})
+
+    assert text == "[5+]"
+
+
 def test_two_cases_that_read_alike_are_both_printed() -> None:
     # Instance dedup exists because the source chain delivers repeats nobody
     # wrote; cases are hand-written in one array, so a repeat is visible.
