@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("elf")
 
-army = ArmyList("elf", "Elf Super Cavalry", [])
+army = ArmyList("elf", "Geir Arne's Super Cavalry", [])
 
 # x1 Tattoo Ink
 army = army.add_unit("tattoo_ink", race_config=cfg)

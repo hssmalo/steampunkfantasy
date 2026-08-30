@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("gnome")
 
-army = ArmyList("gnome", "Knut Assault Bots", [])
+army = ArmyList("gnome", "Knut's Assault Bots", [])
 
 # 3 Balista_tractor
 army = (
@@ -40,7 +40,7 @@ army = (
 
 # x1 Death Ray tinkerer with Mechanical owl
 army = (
-    army.add_unit("gnome_infantry", race_config=cfg, nick="Death_Ray with Owl")
+    army.add_unit("gnome_infantry", race_config=cfg, nick="Death Ray with Owl")
     .upgrade_unit(
         ("gnome_infantry", 0),
         model_key=("gnome_infantry", 0),
@@ -60,7 +60,7 @@ army = (
 
 # x1 Death Ray tinkerer
 army = (
-    army.add_unit("gnome_infantry", race_config=cfg, nick="Death_Ray with Owl")
+    army.add_unit("gnome_infantry", race_config=cfg, nick="Death Ray Tinkerer")
     .upgrade_unit(
         ("gnome_infantry", 0),
         model_key=("gnome_infantry", 0),

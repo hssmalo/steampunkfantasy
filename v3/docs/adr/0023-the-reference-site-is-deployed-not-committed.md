@@ -51,6 +51,12 @@ The `2025` tournament pack and `armies/demo.json` are excluded for a different
 reason: publishing a live tournament roster is an editorial call the build
 should not make unilaterally, and the demo army is a fixture, not a real one.
 
+**The tournament-pack half of that paragraph is superseded by ADR 0028**,
+which publishes the packs an authored Site Index names: an archived tournament
+is history rather than a live claim, and the editorial call is now written
+down by a human instead of made by the build. `armies/demo.json` stays
+excluded for the reason above.
+
 ## Whole-site failure policy
 
 ADR 0022 decided that an Army Pack fails to build entirely if any Army in its

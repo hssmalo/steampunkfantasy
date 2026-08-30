@@ -71,6 +71,6 @@ lint-rules:
 lint-latex:
     uv run spf render lint
 
-# Build every published Product/Format into output/, plus the Site Index.
+# Build every published Product/Format into output/, plus the Landing Page.
 render-site:
     uv run spf render site
