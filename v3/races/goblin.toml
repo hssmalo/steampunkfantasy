@@ -592,8 +592,10 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 
-[[models.giant_snake_cavalry.assault.specials.extra_damage]]
-text = "Poison[8](1 for 2)"
+[[models.giant_snake_cavalry.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 8
+args.M = 2
 
 [models.tiny_snake]
 name = "Tiny Snake"
@@ -610,8 +612,10 @@ deflection_die = "6+"
 damage = "d4-2"
 ap = 0
 
-[[models.tiny_snake.assault.specials.extra_damage]]
-text = "Poison[6](1 for 1)"
+[[models.tiny_snake.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 1
 
 [[models.tiny_snake.assault.specials.bonus]]
 text = "If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection"
@@ -691,8 +695,8 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 1
 
-[[models.mechanical_fire_bird.assault.specials.extra_damage]]
-text = "Fire"
+[[models.mechanical_fire_bird.assault.specials.assault_extra_damage]]
+args.version = "token.fire"
 
 [models.elite_goblin_infantry]
 name = "Elite Goblin Infantry"
@@ -784,8 +788,9 @@ ap = 1
 [[equipment.seeker_assassin_arrows.range.specials.limited_ammo]]
 args.N = 1
 
-[[equipment.seeker_assassin_arrows.range.specials.extra_damage]]
-text = "Poison[12]"
+[[equipment.seeker_assassin_arrows.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 12
 
 [equipment.seeker_assassin_arrows_free]
 name = "Seeker Assassin Arrows"
@@ -804,8 +809,9 @@ ap = 1
 [[equipment.seeker_assassin_arrows_free.range.specials.limited_ammo]]
 args.N = 1
 
-[[equipment.seeker_assassin_arrows_free.range.specials.extra_damage]]
-text = "Poison[12]"
+[[equipment.seeker_assassin_arrows_free.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 12
 
 [equipment.gear_bow]
 name = "Gear Bow"
@@ -823,8 +829,8 @@ ap = 1
 [[equipment.gear_bow.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.gear_bow.range.specials.extra_damage]]
-text = "Gear Disruption[6+]"
+[[equipment.gear_bow.range.specials.range_gear_disruption]]
+args.N = 6
 [equipment.clockwork_wings]
 name = "Clockwork Wings"
 race = "goblin"
@@ -860,8 +866,9 @@ ap = 1
 [[equipment.poison_bow.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.poison_bow.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.poison_bow.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [[equipment.poison_bow.range.specials.bonus]]
 text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
@@ -879,8 +886,9 @@ ap = 1
 [[equipment.poison_bow_free.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.poison_bow_free.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.poison_bow_free.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [[equipment.poison_bow_free.range.specials.bonus]]
 text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
@@ -898,8 +906,12 @@ ap = "N/A"
 [[equipment.hallucinating_poison_spit.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.hallucinating_poison_spit.range.specials.extra_damage]]
-text = "Poison[4], Confused"
+[[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+
+[[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
+args.version = "token.confused"
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -1078,8 +1090,9 @@ text = "Thrown weapon"
 [[equipment.acid_grenade.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.acid_grenade.range.specials.extra_damage]]
-text = "No regular damage, but Minor Acid"
+[[equipment.acid_grenade.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+text = "No regular damage."
 
 [equipment.poison_grenade]
 name = "Poison Grenade"
@@ -1100,8 +1113,9 @@ text = "Thrown weapon"
 [[equipment.poison_grenade.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.poison_grenade.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.poison_grenade.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [[equipment.poison_grenade.range.specials.bonus]]
 text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
@@ -1130,8 +1144,9 @@ angle = [true, true, true, true]
 damage = "d4 Crew damage"
 ap = "N/A"
 
-[[equipment.light_mortar.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.light_mortar.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [[equipment.light_mortar.range.specials.bonus]]
 text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
@@ -1153,8 +1168,18 @@ text = "May be loaded (one at a time) with up to 3 ammo"
 [[equipment.goblin_bow_battery.range.specials.multiple_shots]]
 text = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
 
-[[equipment.goblin_bow_battery.range.specials.extra_damage]]
-text = "In addition to normal damage, choose one (for all shots): add Minor Acid, Poison[6] or Gear Disruption[6+]"
+[[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+text = "Choose one of these, for all shots."
+
+[[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+text = "Choose one of these, for all shots."
+
+[[equipment.goblin_bow_battery.range.specials.range_gear_disruption]]
+args.N = 6
+text = "Choose one of these, for all shots."
 
 [[equipment.goblin_bow_battery.model_specials.to_hit]]
 name = "Imprecise Weapon"
@@ -1191,8 +1216,12 @@ angle = [true, true, true, false]
 damage = "d6 Psychic damage + d6 Crew damage"
 ap = "N/A"
 
-[[equipment.stinkbomb.range.specials.extra_damage]]
-text = "Minor Acid, Poison[6]"
+[[equipment.stinkbomb.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+
+[[equipment.stinkbomb.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [[equipment.stinkbomb.range.specials.area]]
 text = "If you hit the enemy, Area[5+] with same damage as main hit (with extra damage)"
@@ -1214,8 +1243,8 @@ ap = 0
 [[equipment.ring_of_fire.range.specials.area]]
 text = "[6+] target at all enemies within exactly range 2"
 
-[[equipment.ring_of_fire.range.specials.extra_damage]]
-text = "Fire"
+[[equipment.ring_of_fire.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [equipment.assault_archer]
 name = "Assault Archer"
