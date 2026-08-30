@@ -937,8 +937,10 @@ ap = 2
 [[models.mechahydra.assault.specials.bonus]]
 text = "+3 assault strength  and +1 assault deflection per alive head"
 
-[[models.mechahydra.assault.specials.extra_damage]]
-text = "Poison[6][1 for 2]"
+[[models.mechahydra.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 2
 
 [[models.mechahydra.assault.specials.cunning_assault_defense]]
 args.N = 3
@@ -998,8 +1000,10 @@ deflection_die = "6+"
 damage = "d6-1"
 ap = 3
 
-[[models.queen_yy.assault.specials.extra_damage]]
-text = "Poison[6][1 for 1]"
+[[models.queen_yy.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 1
 
 [[models.queen_yy.assault.specials.fear]]
 args.N = 8
@@ -1022,8 +1026,10 @@ deflection_die = "6+"
 damage = "d6-1"
 ap = 3
 
-[[models.queen_xy.assault.specials.extra_damage]]
-text = "Poison[6][1 for 1]"
+[[models.queen_xy.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 1
 
 [[models.queen_xy.assault.specials.fear]]
 args.N = 8
@@ -1089,8 +1095,10 @@ deflection_die = "6+"
 damage = "d6"
 ap = 7
 
-[[models.mechanical_assault_spider.assault.specials.extra_damage]]
-text = "Poison[6][1 for 2]"
+[[models.mechanical_assault_spider.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 2
 
 [models.mechanical_scorpion]
 name = "Mechanical Scorpion"
@@ -1110,8 +1118,10 @@ ap = 3
 [[models.mechanical_scorpion.assault.specials.fear]]
 args.N = 8
 
-[[models.mechanical_scorpion.assault.specials.extra_damage]]
-text = "Poison[12][1 for 2]"
+[[models.mechanical_scorpion.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 12
+args.M = 2
 
 [models.darkelf_infantry]
 name = "Dark Elf Infantry"
@@ -1308,8 +1318,10 @@ ap = 2
 [[models.assassin.assault.specials.cunning_assault]]
 args.N = 2
 
-[[models.assassin.assault.specials.extra_damage]]
-text = "Poison[12][1 for 2]"
+[[models.assassin.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 12
+args.M = 2
 
 [[models.assassin.assault.specials.counter_attack]]
 text = "Each deflections counts as both a hit and a deflection"
@@ -1338,8 +1350,10 @@ ap = 2
 [[models.roboprosthetic_assassin.assault.specials.cunning_assault]]
 args.N = 2
 
-[[models.roboprosthetic_assassin.assault.specials.extra_damage]]
-text = "Poison[12][1 for 2]"
+[[models.roboprosthetic_assassin.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 12
+args.M = 2
 
 [[models.roboprosthetic_assassin.assault.specials.counter_attack]]
 text = "Each deflections counts as both a hit and a deflection"
@@ -1444,16 +1458,24 @@ angle = [true, true, false, false]
 damage = "d6"
 ap = 6
 
-[[equipment.head_gun.range.specials.extra_damage]]
-text = "Poison[6]"
+[[equipment.head_gun.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [equipment.tesla_whip]
 name = "Tesla Whip"
 race = "darkelf"
 requires = []
 
-[[equipment.tesla_whip.assault.specials.extra_damage]]
-text = "Poison[4][1 for 2], Gear Disruption[6+][1 for 1] and if you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
+[[equipment.tesla_whip.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
+
+[[equipment.tesla_whip.assault.specials.assault_gear_disruption]]
+args.N = 6
+args.M = 1
+text = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.remote_control]
 name = "Remote Control"
@@ -1500,8 +1522,8 @@ text = "When using aim: roll 6 dice at same unit."
 [[equipment.tail_gatling_gun.range.specials.area]]
 text = "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range"
 
-[[equipment.tail_gatling_gun.range.specials.extra_damage]]
-text = "Minor acid"
+[[equipment.tail_gatling_gun.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [[equipment.tail_gatling_gun.range.specials.ammo]]
 text = "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
@@ -1528,8 +1550,9 @@ angle = [true, true, false, false]
 damage = "d6+d8 Psychic damage + d6 Crew damage"
 ap = 3
 
-[[equipment.acid_cannon.range.specials.extra_damage]]
-text = "Acid. In addition, if you hit target, place an minor acid on all units in hex"
+[[equipment.acid_cannon.range.specials.range_extra_damage]]
+args.version = "token.acid"
+text = "In addition, if you hit target, place an minor acid on all units in hex"
 
 [equipment.mechanical_imp]
 name = "Mechanical Imp"
@@ -1594,8 +1617,12 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[[equipment.crossbow.range.specials.extra_damage]]
-text = "Poison[6], Minor Acid"
+[[equipment.crossbow.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+
+[[equipment.crossbow.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.crossbow_free]
 name = "Crossbow"
@@ -1607,8 +1634,12 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[[equipment.crossbow_free.range.specials.extra_damage]]
-text = "Poison[6], Minor Acid"
+[[equipment.crossbow_free.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+
+[[equipment.crossbow_free.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.enhanced_crossbow]
 name = "Enhanced Crossbow"
@@ -1623,8 +1654,12 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[[equipment.enhanced_crossbow.range.specials.extra_damage]]
-text = "Poison[8], Minor Acid"
+[[equipment.enhanced_crossbow.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 8
+
+[[equipment.enhanced_crossbow.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.nightmare_breath]
 name = "Nightmare Breath"
@@ -1640,8 +1675,13 @@ ap = 0
 [[equipment.nightmare_breath.range.specials.area]]
 text = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
 
-[[equipment.nightmare_breath.range.specials.extra_damage]]
-text = "No regular damage, but Poison[8] and set on fire"
+[[equipment.nightmare_breath.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 8
+text = "No regular damage."
+
+[[equipment.nightmare_breath.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [[equipment.nightmare_breath.range.specials.ammo]]
 text = "Always treated as loaded"
@@ -1701,8 +1741,10 @@ requires = [["Independent:1"], ["type:Roboprosthetic"]]
 [equipment.poison_claws.assault]
 strength.add = [1, 0, 0, 0]
 
-[[equipment.poison_claws.assault.specials.extra_damage]]
-text = "Poison[4][1 for 1]"
+[[equipment.poison_claws.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 1
 
 [equipment.poison_spray]
 name = "Poison Spray"
@@ -1714,8 +1756,10 @@ requires = [["Hands:2"], ["type:Roboprosthetic", "type:Infantry"]]
 [equipment.poison_spray.assault]
 damage.replace = "d6-2 + d6 Crew damage"
 
-[[equipment.poison_spray.assault.specials.extra_damage]]
-text = "Poison[4][1 for 2]"
+[[equipment.poison_spray.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
 
 [equipment.poison_spray.range]
 range = 2
@@ -1723,8 +1767,9 @@ angle = [true, true, true, true]
 damage = "d6 Crew damage"
 ap = 0
 
-[[equipment.poison_spray.range.specials.extra_damage]]
-text = "Poison[6]"
+[[equipment.poison_spray.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [equipment.integrated_pistol]
 name = "Integrated Pistol"
@@ -1753,8 +1798,16 @@ angle = [true, false, false, false]
 damage = "-"
 ap = 0
 
-[[equipment.acid_breath.range.specials.extra_damage]]
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.acid"
 text = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid. In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
+
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [equipment.fire_breath]
 name = "Fire Breath"
@@ -1770,8 +1823,13 @@ ap = 0
 [[equipment.fire_breath.range.specials.area]]
 text = "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range."
 
-[[equipment.fire_breath.range.specials.extra_damage]]
-text = "No regular damage, but Poison[6] and set on fire."
+[[equipment.fire_breath.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+text = "No regular damage."
+
+[[equipment.fire_breath.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [[equipment.fire_breath.range.specials.bonus]]
 text = "Any unit within long range and in front arc gets a minor acid token"
@@ -1787,8 +1845,9 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[[equipment.poison_spit.range.specials.extra_damage]]
-text = "Poison[8]."
+[[equipment.poison_spit.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 8
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
 text = "Fire one time per functional minor head"
@@ -1862,8 +1921,11 @@ text = "Immune to a poison cloud of any strength"
 [[equipment.gas_mask_assault_training.assault.specials.bonus]]
 text = "When assaulting hexes with poison cloud +50% in assault and assault deflection"
 
-[[equipment.gas_mask_assault_training.assault.specials.extra_damage]]
-text = "In poison clouds you gain Poison[X][1 of 2] where X= the power of the poison gas in assaults"
+[[equipment.gas_mask_assault_training.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = "X"
+args.M = 2
+text = "In poison clouds only. X is the power of the poison gas."
 
 [equipment.poison_fog_grenade]
 name = "Poison Fog Grenade"
@@ -2003,8 +2065,8 @@ text = "Always treated as loaded."
 [[equipment.experimental_acid_smg.range.specials.multiple_shots]]
 text = "Fires two times each time it is fired"
 
-[[equipment.experimental_acid_smg.range.specials.extra_damage]]
-text = "Minor Acid"
+[[equipment.experimental_acid_smg.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [[equipment.experimental_acid_smg.range.specials.fumble]]
 text = "Unit Gains one minor acid token (per fumble)"
