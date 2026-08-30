@@ -525,11 +525,30 @@ def test_specials_kind_parses_the_committed_file() -> None:
 # --- The to_hit kind's parser -----------------------------------------------
 
 MODIFIER_NAMESPACES_SOURCE = """\
-[namespaces]
-speed = { name = "Speeds", file = "modifiers.toml", table = "speed" }
-terrain = { name = "Terrain", file = "terrain.toml", table = "terrain" }
-hex = { name = "Hexes", file = "hexes.toml", table = "hexes", group = "terrain" }
-token = { name = "Tokens", file = "tokens.toml", table = "tokens" }
+[namespaces.speed]
+name = "Speeds"
+label = "speed"
+file = "modifiers.toml"
+table = "speed"
+
+[namespaces.terrain]
+name = "Terrain"
+label = "terrain"
+file = "terrain.toml"
+table = "terrain"
+
+[namespaces.hex]
+name = "Hexes"
+label = "hex"
+file = "hexes.toml"
+table = "hexes"
+group = "terrain"
+
+[namespaces.token]
+name = "Tokens"
+label = "token"
+file = "tokens.toml"
+table = "tokens"
 
 [damage_type]
 """

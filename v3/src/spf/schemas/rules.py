@@ -350,6 +350,13 @@ class NamespaceConfig(StrictModel):
     """
 
     name: str
+    label: str
+    """What one record of this namespace is called, for a Kind Qualifier.
+
+    Required rather than derived: ten values authored once beats a
+    de-pluralizing rule that breaks on the first `name` not ending in `s`.
+    """
+
     file: str
     table: str
     group: str | None = None

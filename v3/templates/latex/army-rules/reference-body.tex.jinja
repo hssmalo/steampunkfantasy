@@ -35,8 +35,8 @@
 
 \BLOCK{if unit.specials or unit.note}
 \begin{itemize}
-\BLOCK{for name, text in unit.specials}
-\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
+\BLOCK{for line in unit.specials}
+\item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | latex_escape) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if unit.note}
 \item \textbf{Note}: \VAR{unit.note | latex_escape}
@@ -77,8 +77,8 @@
 
 \BLOCK{if model.specials or model.note or model.equipment_notes}
 \begin{itemize}
-\BLOCK{for name, text in model.specials}
-\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
+\BLOCK{for line in model.specials}
+\item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | latex_escape) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if model.note}
 \item \textbf{Note}: \VAR{model.note | latex_escape}
@@ -94,8 +94,8 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 
 \BLOCK{if model.assault_specials or model.assault_note}
 \begin{itemize}
-\BLOCK{for name, text in model.assault_specials}
-\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
+\BLOCK{for line in model.assault_specials}
+\item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | latex_escape) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if model.assault_note}
 \item \textbf{Note}: \VAR{model.assault_note | latex_escape}
@@ -110,8 +110,8 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 
 \BLOCK{if equip.specials or equip.note}
 \begin{itemize}
-\BLOCK{for name, text in equip.specials}
-\item \textbf{\VAR{name | latex_escape}}\VAR{': ' ~ (text | latex_escape) if text else ''}
+\BLOCK{for line in equip.specials}
+\item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | latex_escape) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if equip.note}
 \item \textbf{Note}: \VAR{equip.note | latex_escape}

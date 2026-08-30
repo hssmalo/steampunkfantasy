@@ -5,7 +5,6 @@
 #
 # `speed` and `size` own vocabularies the rest of the data spells: a Unit's
 # `size`, a Unit's `shaken.speed`, and the Speed keys of every orders table.
-
 #
 # Speed
 #
@@ -134,37 +133,37 @@ to_be_hit = "+2"
 # Abilities
 #
 [ability.good_shot]
-name = "Good Shot"
+name = "Good Shot [+1]"
 to_hit = "+1"
 to_be_hit = "0"
 
 [ability.excellent_shot]
-name = "Excellent Shot"
+name = "Excellent Shot [+2]"
 to_hit = "+2"
 to_be_hit = "0"
 todo = "Three Race occurrences spell this \"Great Shot\", whose word suggests Superb Shot while its +2 is this record's. Confirm which rule those three mean."
 see_also = ["ability.superb_shot"]
 
 [ability.superb_shot]
-name = "Superb Shot"
+name = "Superb Shot [+3]"
 to_hit = "+3"
 to_be_hit = "0"
 
 [ability.bad_shot]
-name = "Bad Shot"
+name = "Bad Shot [-1]"
 to_hit = "-1"
 to_be_hit = "0"
 
 [ability.terrible_shot]
-name = "Terrible Shot"
+name = "Terrible Shot [-2]"
 to_hit = "-2"
 to_be_hit = "0"
 
 [ability.bad_at_long_range]
-name = "Bad at Long Range"
+name = "Bad at Long Range [-2]"
 to_hit = "-2"
 to_be_hit = "0"
-effect = "To-hit penalty at long range only"
+effect = "Extra to-hit penalty at long range only"
 see_also = ["distance.long_range"]
 
 [ability.steady]

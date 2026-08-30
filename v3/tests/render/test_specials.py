@@ -1,7 +1,7 @@
 """Tests for presenting Special instances: signatures, headings, grouping."""
 
 from spf.registry import load_registry
-from spf.render.specials import special_lines, special_row
+from spf.render.specials import SpecialLine, special_lines, special_row
 from spf.schemas.special import SpecialInstance
 
 REGISTRY = load_registry()
@@ -101,7 +101,7 @@ def test_instances_of_one_id_group_under_one_heading() -> None:
     }
 
     assert special_lines(specials, registry=REGISTRY) == [
-        ("Resistance", "Poison[12]; Fire[3]")
+        SpecialLine("Resistance", "Poison[12]; Fire[3]", None)
     ]
 
 
@@ -110,7 +110,9 @@ def test_instances_that_read_alike_are_printed_once() -> None:
     instance = SpecialInstance(args={"version": "damage_type.psychic", "N": 1})
     specials = {"resistance": [instance, instance, instance]}
 
-    assert special_lines(specials, registry=REGISTRY) == [("Resistance", "Psychic[1]")]
+    assert special_lines(specials, registry=REGISTRY) == [
+        SpecialLine("Resistance", "Psychic[1]", None)
+    ]
 
 
 def test_atmospheric_names_keep_their_own_headings() -> None:
@@ -124,8 +126,8 @@ def test_atmospheric_names_keep_their_own_headings() -> None:
     }
 
     assert special_lines(specials, registry=REGISTRY) == [
-        ("Keen Eye", "Good Shot"),
-        ("To Hit", "Bad Shot"),
+        SpecialLine("Keen Eye", "Good Shot", None),
+        SpecialLine("To Hit", "Bad Shot", None),
     ]
 
 
@@ -135,7 +137,38 @@ def test_grouping_keeps_the_order_the_ids_were_contributed_in() -> None:
         "sniper": [SpecialInstance(text="Choose the model")],
     }
 
-    assert [heading for heading, _ in special_lines(specials, registry=REGISTRY)] == [
+    assert [line.name for line in special_lines(specials, registry=REGISTRY)] == [
         "Evasion",
         "Sniper",
     ]
+
+
+# --- anchors ----------------------------------------------------------------
+
+
+def test_a_line_carries_no_anchor_without_a_lookup() -> None:
+    specials = {"evasion": [SpecialInstance(args={"N": 4})]}
+
+    assert special_lines(specials, registry=REGISTRY)[0].anchor is None
+
+
+def test_a_lookup_is_asked_about_the_identifier_not_the_heading() -> None:
+    # An atmospheric name is what the reader sees; the Identifier is what
+    # addresses the rule, so only it can find the rule's entry.
+    specials = {"evasion": [SpecialInstance(name="Nimble", args={"N": 4})]}
+
+    (line,) = special_lines(
+        specials, registry=REGISTRY, anchor_for={"evasion": "rule-special-evasion"}.get
+    )
+
+    assert (line.name, line.anchor) == ("Nimble", "rule-special-evasion")
+
+
+def test_an_identifier_the_lookup_does_not_know_leaves_the_anchor_unset() -> None:
+    specials = {"evasion": [SpecialInstance(args={"N": 4})]}
+
+    (line,) = special_lines(
+        specials, registry=REGISTRY, anchor_for=lambda _identifier: None
+    )
+
+    assert line.anchor is None

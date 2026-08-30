@@ -1,0 +1,46 @@
+{#
+  One Army's Rules Reference: the rule Records its Specials reach, flat and
+  alphabetical across every namespace (ADR 0029). Printed after all the Units,
+  once per Army — in an Army Pack that means inside each Army's entry, so a
+  player's own pages are complete on their own.
+
+  `reference` is the `ArmyReference` to render and `hashes` the heading string
+  a Unit sits at, the same two names `reference-body` takes; the Rules
+  Reference heads at that level, as a peer of the Units it follows.
+
+  An entry's own fields are a bullet list under it rather than a run-on
+  sentence beside it: a rule's `effect` is authored prose that may itself be
+  several paragraphs or a list, so anything trailing it would be swallowed.
+
+  `md_to_html` generates no heading ids, so every anchor is an explicit
+  `<a id>` — the pattern `general-rules/main.md.jinja` and `army-pack/main`
+  already use.
+#}
+{%- if reference.rules and reference.rules.entries %}
+{{ hashes }} {{ reference.rules.title }}
+{% for entry in reference.rules.entries %}
+<a id="{{ entry.anchor }}"></a>
+{% if entry.alias_for -%}
+**{{ entry.name }}** — see {% if entry.alias_for.anchor %}[{{ entry.alias_for.heading }}](#{{ entry.alias_for.anchor }}){% else %}{{ entry.alias_for.heading }}{% endif %}
+{% else -%}
+**{{ entry.heading }}**{% if entry.text %} — {% if entry.pending %}*{{ entry.text }}*{% else %}{{ entry.text }}{% endif %}{% endif %}
+{%- if entry.fields %}
+{% if entry.phases %}
+- *Phases:* {{ entry.phases | join(', ') }}
+{%- endif %}
+{%- if entry.remove %}
+- *Removed:* {{ entry.remove }}
+{%- endif %}
+{%- if entry.to_hit %}
+- *To hit:* {{ entry.to_hit }}
+{%- endif %}
+{%- if entry.to_be_hit %}
+- *To be hit:* {{ entry.to_be_hit }}
+{%- endif %}
+{%- if entry.see_also %}
+- *See also:* {% for link in entry.see_also %}{% if not loop.first %}, {% endif %}{% if link.anchor %}[{{ link.heading }}](#{{ link.anchor }}){% else %}{{ link.heading }}{% endif %}{% endfor %}
+{%- endif %}
+{%- endif %}
+{%- endif %}
+{% endfor %}
+{%- endif %}
