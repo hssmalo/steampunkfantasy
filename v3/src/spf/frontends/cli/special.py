@@ -7,6 +7,9 @@ from typing import Annotated
 import cyclopts
 import pydantic
 from rich.markup import escape
+from rich.padding import Padding
+from rich.table import Table
+from rich.text import Text
 
 from spf import races
 from spf.console import stdout
@@ -275,8 +278,70 @@ def _matches(
     return matches
 
 
+_GUTTER = len("Variables")
+"""The label column's width: the longest label the record block prints."""
+
+
+def _print_record(record: SpecialRecord) -> None:
+    """Print the rule itself: a header line, then a labeled block."""
+    # Escaped before any markup is added, never after: a Signature is full of
+    # square brackets, which Rich would otherwise swallow as tags.
+    stdout.print(
+        f"{record.marks} {escape(record.label)}  {record.name}", highlight=False
+    )
+    stdout.print()
+
+    # A grid rather than hand-laid columns: rule prose runs to several lines,
+    # and only a table wraps it under the label gutter and keeps its newlines.
+    grid = Table.grid(padding=(0, 2))
+    # A fixed gutter rather than one sized to the record: every Special's block
+    # then lines up, whichever fields it happens to carry.
+    grid.add_column(no_wrap=True, width=_GUTTER)
+    grid.add_column()
+    fields: list[tuple[str, str | None]] = [
+        ("Effect", record.effect),
+        ("Flavor", record.flavor),
+        ("Example", record.example),
+    ]
+    for label, value in fields:
+        if value is not None:
+            # `Text` rather than markup: rule prose is arbitrary author text,
+            # and brackets in it are not tags.
+            grid.add_row(label, Text(value.strip()))
+    if record.variables:
+        grid.add_row(
+            "Variables",
+            Text("\n".join(f"{name}: {phrase}" for name, phrase in record.variables)),
+        )
+    for label, refs in [("Places", record.places), ("See also", record.see_also)]:
+        if refs:
+            grid.add_row(label, Text("\n".join(refs)))
+    if record.versions:
+        grid.add_row("Versions", _versions_grid(record.versions))
+    if record.todo is not None:
+        # Designer prose rather than rule text, so it reads as a different
+        # register — as it does in `spf special list`.
+        grid.add_row("Todo", Text(record.todo.strip(), style="dim"))
+    stdout.print(grid)
+
+
+def _versions_grid(versions: list[tuple[str, str]]) -> Table:
+    """Lay out the version overlays as a two-level sub-block.
+
+    An overlay is a full alternative effect rather than a fragment, so each ref
+    gets a line of its own with its text indented beneath.
+    """
+    grid = Table.grid()
+    grid.add_column()
+    for ref, effect in versions:
+        grid.add_row(Text(ref))
+        # Padded rather than prefixed, so the indent survives a wrap.
+        grid.add_row(Padding(Text(effect.strip()), (0, 0, 0, 2)))
+    return grid
+
+
 def show_special(special_key: SpecialKey) -> None:
-    """Show all units, models, and equipment with a given special rule.
+    """Show one Special's rule, then every Instance of it across the Races.
 
     Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials. Which
     of the four a rule is looked for in comes from the `slots` it declares, so
@@ -284,21 +349,32 @@ def show_special(special_key: SpecialKey) -> None:
     """
     registry = load_registry()
     rule = registry.specials[special_key]
-    for race_name in races.list_races():
-        stdout.print(race_name)
+    _print_record(special_record(special_key, rule, registry=registry))
 
+    stdout.print()
+    stdout.print("Instances")
+    found = False
+    for race_name in races.list_races():
         try:
             race = races.get_race(race_name)
         except pydantic.ValidationError:
+            # Tolerant listing (ADR 0004) continues, but a silent skip is
+            # indistinguishable from a Race holding no Instance.
+            stdout.print(
+                f"[dim]{race_name}: skipped (does not validate)[/]", highlight=False
+            )
             continue
 
         matches = _matches(race, key=special_key, rule=rule, registry=registry)
         if not matches:
             continue
+        found = True
 
         display_name = race.races[race_name].name
-        stdout.print(f"[bold]{display_name}[/]")
+        stdout.print(f"[bold]{display_name}[/] ({race_name})", highlight=False)
         for label, value in matches:
             # A signature is full of square brackets, which are Rich's own
             # markup: printed raw, `[range=1]` would vanish as a tag.
             stdout.print(f"  {label:<50} {escape(value)}", highlight=False)
+    if not found:
+        stdout.print("[dim](none)[/]", highlight=False)
