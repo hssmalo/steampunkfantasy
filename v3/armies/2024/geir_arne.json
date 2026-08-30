@@ -1,0 +1,75 @@
+{
+  "race": "elf",
+  "nick": "Elf Super Cavalry",
+  "units": [
+    {
+      "name": "tattoo_ink",
+      "models": [
+        {
+          "name": "tattoo_ink",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "armored_unicorn_rider",
+      "models": [
+        {
+          "name": "armored_unicorn_rider",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "pegasus_rider",
+      "models": [
+        {
+          "name": "pegasus_rider",
+          "upgrades": []
+        },
+        {
+          "name": "pegasus_rider",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "pachycephalosaurus_riders",
+      "models": [
+        {
+          "name": "pachycephalosaurus_rider",
+          "upgrades": []
+        },
+        {
+          "name": "pachycephalosaurus_rider",
+          "upgrades": []
+        },
+        {
+          "name": "pachycephalosaurus_rider",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "elf_infantry",
+      "models": [
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "elf_infantry",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}
