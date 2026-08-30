@@ -307,29 +307,32 @@ damage d6-2, AP 2
 
 \phantomsection\label{rule-damage-type-acid}%
 \noindent\textbf{Acid (damage type)} --- \textit{Rule text pending.}\begin{itemize}
-\item \textit{See also:} \hyperref[rule-token-minor-acid]{Minor Acid (token)}
+\item \textit{See also:} \hyperref[rule-token-acid]{Acid (token)}, \hyperref[rule-token-minor-acid]{Minor Acid (token)}
 \end{itemize}
 
 
 \phantomsection\label{rule-token-acid}%
 \noindent\textbf{Acid (token)} --- Roll a d8 on the following damage table:
-
-1. Downgrade from acid to minor acid.
-2. +1 to future damage
-3. As 2, and if unit has armor, it is reduced by 1 (all directions)
-4. As 3, and place a poison cloud [4] at hex, and all units in this hex gets a minor acid token.
-5. As 4, and in addition all units within range=2 gets a minor acid token
-6. As 5, and unit gains a terror token.
-7. As 6 and unit is set on fire.
-8. Roll three times on this table.,
+\begin{enumerate}
+\item Downgrade from acid to minor acid.
+\item +1 to future damage
+\item As 2, and if unit has armor, it is reduced by 1 (all directions)
+\item As 3, and place a poison cloud [4] at hex, and all units in this hex gets a minor acid token.
+\item As 4, and in addition all units within range=2 gets a minor acid token
+\item As 5, and unit gains a terror token.
+\item As 6 and unit is set on fire.
+\item Roll three times on this table.,
+\end{enumerate}
 \begin{itemize}
 \item \textit{Phases:} Agony 0
 \item \textit{Removed:} Downgraded as part of effect
+\item \textit{See also:} \hyperref[rule-damage-type-acid]{Acid (damage type)}
 \end{itemize}
 
 
 \phantomsection\label{rule-token-aim}%
-\noindent\textbf{Aim (token)} --- Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round.\begin{itemize}
+\noindent\textbf{Aim (token)} --- Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round.
+\begin{itemize}
 \item \textit{Phases:} Gunnery 1, Gunnery 2
 \item \textit{Removed:} Either remove all aim tokens when you fire, or remove one each aftermath phase. Also remove all of them if you enter an assault (regardless of whether you win or not)
 \item \textit{To hit:} +2
@@ -338,7 +341,8 @@ damage d6-2, AP 2
 
 
 \phantomsection\label{rule-special-ammo}%
-\noindent\textbf{Ammo (special)} --- Describes how a weapon is loaded and how its ammo is tracked.\begin{itemize}
+\noindent\textbf{Ammo (special)} --- Describes how a weapon is loaded and how its ammo is tracked.
+\begin{itemize}
 \item \textit{See also:} Limited Ammo (special)
 \end{itemize}
 
@@ -351,7 +355,8 @@ damage d6-2, AP 2
 
 
 \phantomsection\label{rule-special-cunning-assault}%
-\noindent\textbf{Cunning Assault (special)} --- For each \{N\} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack.\begin{itemize}
+\noindent\textbf{Cunning Assault (special)} --- For each \{N\} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack.
+\begin{itemize}
 \item \textit{See also:} Cunning Assault Defense (special)
 \end{itemize}
 
@@ -372,19 +377,37 @@ damage d6-2, AP 2
 \phantomsection\label{rule-special-evasion}%
 \noindent\textbf{Evasion (special)} --- Roll a die per area of effect damage. Ignore the damage at \{N\}+
 
+
+\phantomsection\label{rule-token-fire}%
+\noindent\textbf{Fire (token)} --- Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise\_
+\begin{itemize}
+\item Ignore armor and regular damage resistance
+\item Apply bonus to damage based on the number +future damage tokens
+\item Apply damage to the regular damage table  (apply damage after you roll damage for all fire tokens)
+\end{itemize}
+\begin{itemize}
+\item \textit{Phases:} Agony 2
+\item \textit{Removed:} Only as part of effect
+\item \textit{See also:} Fire (damage type), \hyperref[rule-special-resistance]{Resistance (special)}
+\end{itemize}
+
+
 \phantomsection\label{rule-special-fire-order}%
 \noindent\textbf{Fire Order (special)} --- \textit{Rule text pending.}
 
 \phantomsection\label{rule-special-forward-position}%
 \noindent\textbf{Forward Position (special)} --- At setup this unit may setup upt to \{N\} hexes away from normal setup area.
 
+
 \phantomsection\label{rule-alias-imprecise-weapon}%
 \noindent\textbf{Imprecise Weapon} --- see \hyperref[rule-special-to-hit]{To Hit (special)}
 
 \phantomsection\label{rule-token-minor-acid}%
-\noindent\textbf{Minor Acid (token)} --- Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid\begin{itemize}
+\noindent\textbf{Minor Acid (token)} --- Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid
+\begin{itemize}
 \item \textit{Phases:} Agony 1
 \item \textit{Removed:} Only as part of effect
+\item \textit{See also:} \hyperref[rule-token-acid]{Acid (token)}, \hyperref[rule-damage-type-acid]{Acid (damage type)}
 \end{itemize}
 
 
@@ -402,21 +425,32 @@ damage d6-2, AP 2
 
 \phantomsection\label{rule-token-poison}%
 \noindent\textbf{Poison (token)} --- Roll a d\{N\}.
+\begin{itemize}
+\item Ignore armor and regular damage resistances
+\item Reduce damage by poison resistances of target
+\item Apply bonus to damage based on the number +future damage tokens
+\item Apply damage to the regular damage table.
+\item If poison killed a model, remove poison.
+\end{itemize}
 
-- Ignore armor and regular damage resistances
-- Reduce damage by poison resistances of target
-- Apply bonus to damage based on the number +future damage tokens
-- Apply damage to the regular damage table.
-- If poison killed a model, remove poison.
-
-If poison did not kill a model, downgrade poison one step\begin{itemize}
+If poison did not kill a model, downgrade poison one step
+\begin{itemize}
 \item \textit{Phases:} Agony 3
-\item \textit{See also:} \hyperref[rule-special-resistance]{Resistance (special)}
+\item \textit{See also:} \hyperref[rule-damage-type-poison]{Poison (damage type)}, \hyperref[rule-special-resistance]{Resistance (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-hex-poison-cloud}%
+\noindent\textbf{Poison Cloud (hex)} --- Area(5+): roll a die per unit, at 5+, target unit gets a poison[N] or take dN in crew damage if it is a vehicle with a crew damage table.
+\begin{itemize}
+\item \textit{Removed:} Remove one Poison Cloud in each hex in aftermath phase
+\item \textit{See also:} \hyperref[rule-damage-type-poison]{Poison (damage type)}
 \end{itemize}
 
 
 \phantomsection\label{rule-special-pre-assault-retreat}%
-\noindent\textbf{Pre-Assault Retreat (special)} --- In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies.\begin{itemize}
+\noindent\textbf{Pre-Assault Retreat (special)} --- In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies.
+\begin{itemize}
 \item \textit{See also:} Retreat (special)
 \end{itemize}
 
@@ -425,13 +459,15 @@ If poison did not kill a model, downgrade poison one step\begin{itemize}
 \noindent\textbf{Psychic (damage type)} --- \textit{Rule text pending.}
 
 \phantomsection\label{rule-special-range-extra-damage}%
-\noindent\textbf{Range Extra Damage (special)} --- The target gets one \{version\}.\begin{itemize}
+\noindent\textbf{Range Extra Damage (special)} --- The target gets one \{version\}.
+\begin{itemize}
 \item \textit{See also:} Assault Extra Damage (special), \hyperref[rule-special-range-gear-disruption]{Range Gear Disruption (special)}
 \end{itemize}
 
 
 \phantomsection\label{rule-special-range-gear-disruption}%
-\noindent\textbf{Range Gear Disruption (special)} --- Only applies when target is a drone. The drone gets one shaken token per roll of \{N\}+.\begin{itemize}
+\noindent\textbf{Range Gear Disruption (special)} --- Only applies when target is a drone. The drone gets one shaken token per roll of \{N\}+.
+\begin{itemize}
 \item \textit{See also:} Assault Gear Disruption (special)
 \end{itemize}
 
@@ -439,8 +475,10 @@ If poison did not kill a model, downgrade poison one step\begin{itemize}
 \phantomsection\label{rule-special-resistance}%
 \noindent\textbf{Resistance (special)} --- Gives improved resilience versus \{version\} damage
 
+
 \phantomsection\label{rule-token-shaken}%
-\noindent\textbf{Shaken (token)} --- While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit\begin{itemize}
+\noindent\textbf{Shaken (token)} --- While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit
+\begin{itemize}
 \item \textit{Phases:} Gunnery 1, Movement 1, Movement 2, Movement 3, Gunnery 2
 \item \textit{Removed:} Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities
 \item \textit{See also:} Heal (special), Repair (special)
@@ -455,14 +493,24 @@ If poison did not kill a model, downgrade poison one step\begin{itemize}
 
 
 \phantomsection\label{rule-ability-take-cover}%
-\noindent\textbf{Take Cover (ability)} --- Applies when the unit is in the given speed\begin{itemize}
+\noindent\textbf{Take Cover (ability)} --- Applies when the unit is in the given speed
+\begin{itemize}
 \item \textit{To hit:} 0
 \item \textit{To be hit:} +N
 \end{itemize}
 
 
+\phantomsection\label{rule-token-terror}%
+\noindent\textbf{Terror (token)} --- Acts as if unit has Terror[6] (range=2) but effects only units of the same team
+\begin{itemize}
+\item \textit{Phases:} Agony 0
+\item \textit{See also:} Terror (special)
+\end{itemize}
+
+
 \phantomsection\label{rule-ability-thrown-weapons}%
-\noindent\textbf{Thrown Weapons (ability)} --- Applies to thrown weapons only\begin{itemize}
+\noindent\textbf{Thrown Weapons (ability)} --- Applies to thrown weapons only
+\begin{itemize}
 \item \textit{To hit:} +N
 \item \textit{To be hit:} 0
 \end{itemize}
@@ -470,6 +518,10 @@ If poison did not kill a model, downgrade poison one step\begin{itemize}
 
 \phantomsection\label{rule-special-to-hit}%
 \noindent\textbf{To Hit (special)} --- Shifts the to-hit and to-be-hit rolls by \{ability\}.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-aim]{Aim (token)}
+\end{itemize}
+
 
 \phantomsection\label{rule-special-transport}%
 \noindent\textbf{Transport (special)} --- \textit{Rule text pending.}\end{document}

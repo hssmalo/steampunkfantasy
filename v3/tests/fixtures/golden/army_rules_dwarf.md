@@ -129,6 +129,8 @@
 <a id="rule-special-cloud"></a>
 **Cloud (special)** — *Rule text pending.*
 
+- *See also:* [Fog (hex)](#rule-hex-fog), [Poison Cloud (hex)](#rule-hex-poison-cloud)
+
 <a id="rule-special-cunning-assault"></a>
 **Cunning Assault (special)** — For each {N} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack.
 
@@ -144,6 +146,8 @@
 
 <a id="rule-damage-type-fire"></a>
 **Fire (damage type)** — *Rule text pending.*
+
+- *See also:* [Fire (token)](#rule-token-fire)
 
 <a id="rule-token-fire"></a>
 **Fire (token)** — Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
@@ -183,6 +187,8 @@
 
 <a id="rule-damage-type-poison"></a>
 **Poison (damage type)** — *Rule text pending.*
+
+- *See also:* [Poison (token)](#rule-token-poison)
 
 <a id="rule-token-poison"></a>
 **Poison (token)** — Roll a d{N}.
@@ -228,3 +234,5 @@ If poison did not kill a model, downgrade poison one step
 
 <a id="rule-special-to-hit"></a>
 **To Hit (special)** — Shifts the to-hit and to-be-hit rolls by {ability}.
+
+- *See also:* [Aim (token)](#rule-token-aim)

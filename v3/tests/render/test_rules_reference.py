@@ -101,6 +101,9 @@ REGISTRY = Registry(
             "fog": _special("Fog", effect="Fog rolls in.", see_also=["hex.fog"]),
             "resistance": _special("Resistance", effect="Ignore {N} damage."),
             "burst": _special("Burst", effect="Hits every model."),
+            "corrode": _special(
+                "Corrode", effect="Corrodes the target.", see_also=["token.acid"]
+            ),
             "assault_poison": _special(
                 "Assault Poison",
                 effect="Poisons on a hit.",
@@ -124,6 +127,13 @@ REGISTRY = Registry(
                 remove="At the end of the round.",
             ),
             "poison": r.TokenRuleConfig(name="Poison", effect="Take 1 damage."),
+            "acid": r.TokenRuleConfig(
+                name="Acid",
+                effect="Set the unit on fire.",
+                places=["token.fire"],
+                see_also=["damage_type.poison"],
+            ),
+            "fire": r.TokenRuleConfig(name="Fire", effect="Take d6 damage."),
         },
         "hex": {
             "fog": r.HexRuleConfig(
@@ -194,6 +204,22 @@ def test_a_hex_reached_only_by_see_also_prints_its_rule() -> None:
     assert hex_entry.effect == "Line of sight is blocked."
 
 
+def test_a_promoted_records_own_places_are_followed() -> None:
+    # A promoted token that sets the unit on fire is no more explained without
+    # the Fire token than a seeded rule would be.
+    reference = _resolve("special.corrode")
+
+    assert set(_refs(reference)) == {"special.corrode", "token.acid", "token.fire"}
+
+
+def test_see_also_is_not_followed_from_a_promoted_record() -> None:
+    # `places` is unbounded from everything; `see_also` stays one hop from the
+    # rules the Army's own Specials reach, which is what bounds the walk.
+    reference = _resolve("special.corrode")
+
+    assert "damage_type.poison" not in _refs(reference)
+
+
 def test_see_also_is_followed_one_hop_only() -> None:
     # `special.terror` promotes `token.terror`; nothing that token points at
     # joins in turn.
@@ -228,11 +254,15 @@ def test_a_cross_reference_to_a_non_entry_carries_no_anchor() -> None:
     assert entry.see_also[0].anchor is None
 
 
-def test_a_promoted_see_also_is_not_also_a_cross_reference() -> None:
+def test_a_promoted_see_also_keeps_its_cross_reference_line() -> None:
+    # A Stub whose `see_also` is the only thing explaining it would otherwise
+    # print a heading and nothing else, beside the entry that explains it.
     reference = _resolve("special.terror")
 
     entry = next(e for e in reference.entries if e.ref == "special.terror")
-    assert entry.see_also == []
+    assert entry.see_also == [
+        rr.RuleLink(name="Terror", qualifier="token", anchor="rule-token-terror")
+    ]
 
 
 # --- Entry content ----------------------------------------------------------
@@ -328,6 +358,29 @@ def test_a_name_matching_its_records_own_name_is_no_alias() -> None:
     reference = _resolve("special.terror", aliases=[("Terror", "special.terror")])
 
     assert [e.alias_for for e in reference.entries] == [None, None]
+
+
+def test_one_name_over_two_records_gets_an_entry_each() -> None:
+    # Dropping the second would silently redirect its readers to the wrong
+    # rule, which is worse than listing the name twice.
+    reference = _resolve(
+        "special.terror",
+        "special.burst",
+        aliases=[("Dread", "special.terror"), ("Dread", "special.burst")],
+    )
+
+    dread = [e for e in reference.entries if e.name == "Dread"]
+    assert [e.alias_for.name for e in dread if e.alias_for] == ["Terror", "Burst"]
+    assert len({e.anchor for e in dread}) == 2
+
+
+def test_the_same_alias_twice_over_one_record_is_one_entry() -> None:
+    reference = _resolve(
+        "special.terror",
+        aliases=[("Insanity Field", "special.terror")] * 3,
+    )
+
+    assert [e.name for e in reference.entries].count("Insanity Field") == 1
 
 
 def test_an_alias_carries_its_own_anchor() -> None:

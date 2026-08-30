@@ -216,7 +216,7 @@
 <a id="rule-damage-type-acid"></a>
 **Acid (damage type)** — *Rule text pending.*
 
-- *See also:* [Minor Acid (token)](#rule-token-minor-acid)
+- *See also:* [Acid (token)](#rule-token-acid), [Minor Acid (token)](#rule-token-minor-acid)
 
 <a id="rule-token-acid"></a>
 **Acid (token)** — Roll a d8 on the following damage table:
@@ -233,6 +233,7 @@
 
 - *Phases:* Agony 0
 - *Removed:* Downgraded as part of effect
+- *See also:* [Acid (damage type)](#rule-damage-type-acid)
 
 <a id="rule-token-aim"></a>
 **Aim (token)** — Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round.
@@ -272,6 +273,19 @@
 <a id="rule-special-evasion"></a>
 **Evasion (special)** — Roll a die per area of effect damage. Ignore the damage at {N}+
 
+<a id="rule-token-fire"></a>
+**Fire (token)** — Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
+
+
+- Ignore armor and regular damage resistance
+- Apply bonus to damage based on the number +future damage tokens
+- Apply damage to the regular damage table  (apply damage after you roll damage for all fire tokens)
+
+
+- *Phases:* Agony 2
+- *Removed:* Only as part of effect
+- *See also:* Fire (damage type), [Resistance (special)](#rule-special-resistance)
+
 <a id="rule-special-fire-order"></a>
 **Fire Order (special)** — *Rule text pending.*
 
@@ -287,6 +301,7 @@
 
 - *Phases:* Agony 1
 - *Removed:* Only as part of effect
+- *See also:* [Acid (token)](#rule-token-acid), [Acid (damage type)](#rule-damage-type-acid)
 
 <a id="rule-special-multiple-shots"></a>
 **Multiple Shots (special)** — *Rule text pending.*
@@ -310,7 +325,13 @@
 If poison did not kill a model, downgrade poison one step
 
 - *Phases:* Agony 3
-- *See also:* [Resistance (special)](#rule-special-resistance)
+- *See also:* [Poison (damage type)](#rule-damage-type-poison), [Resistance (special)](#rule-special-resistance)
+
+<a id="rule-hex-poison-cloud"></a>
+**Poison Cloud (hex)** — Area(5+): roll a die per unit, at 5+, target unit gets a poison[N] or take dN in crew damage if it is a vehicle with a crew damage table.
+
+- *Removed:* Remove one Poison Cloud in each hex in aftermath phase
+- *See also:* [Poison (damage type)](#rule-damage-type-poison)
 
 <a id="rule-special-pre-assault-retreat"></a>
 **Pre-Assault Retreat (special)** — In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies.
@@ -352,6 +373,12 @@ If poison did not kill a model, downgrade poison one step
 - *To hit:* 0
 - *To be hit:* +N
 
+<a id="rule-token-terror"></a>
+**Terror (token)** — Acts as if unit has Terror[6] (range=2) but effects only units of the same team
+
+- *Phases:* Agony 0
+- *See also:* Terror (special)
+
 <a id="rule-ability-thrown-weapons"></a>
 **Thrown Weapons (ability)** — Applies to thrown weapons only
 
@@ -360,6 +387,8 @@ If poison did not kill a model, downgrade poison one step
 
 <a id="rule-special-to-hit"></a>
 **To Hit (special)** — Shifts the to-hit and to-be-hit rolls by {ability}.
+
+- *See also:* [Aim (token)](#rule-token-aim)
 
 <a id="rule-special-transport"></a>
 **Transport (special)** — *Rule text pending.*

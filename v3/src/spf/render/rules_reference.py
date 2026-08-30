@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 
 from spf.armies.army import Army
 from spf.registry import SPECIAL, Registry
+from spf.render.anchors import anchor as _anchor
 from spf.render.anchors import slug
 from spf.schemas.special import Specials
 
@@ -103,8 +104,9 @@ class RulesReference:
 
     entries: list[RuleEntry]
     anchors: dict[str, str] = field(default_factory=dict)
-    """Every entry's anchor, keyed by its ref, so a Unit line and its entry
-    agree on the anchor by construction."""
+    """Where each rule's own entry sits, keyed by its ref, so a Unit line and
+    that entry agree on the anchor by construction. An Alias Entry is not in
+    here: it is addressed by a name, and nothing links to it."""
 
     title: str = TITLE
 
@@ -180,16 +182,18 @@ def build(army: Army, *, registry: Registry, prefix: str = "") -> RulesReference
 
 
 def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesReference:
-    """Close `seeded` over the rule graph and shape the result into entries."""
+    """Close `seeded` over the rule graph and shape the result into entries.
+
+    `see_also` is walked one hop from the core — what the Army's Specials
+    themselves reach — and never from what promotion brings in, which is what
+    keeps the walk bounded. `places` is then closed over everything: a
+    promoted token that places a Terror token is no more explained without it
+    than a seeded rule would be (ADR 0029).
+    """
     core = _close_over_places(seeded.refs, registry)
-    promoted = _promotions(core, registry)
-    entry_refs = core | promoted
+    entry_refs = _close_over_places([*core, *_promotions(core, registry)], registry)
     anchors = {ref: f"{prefix}{_ANCHOR_PREFIX}-{slug(ref)}" for ref in entry_refs}
-    entries = [
-        _entry(ref, registry, anchors=anchors, promoted=promoted)
-        for ref in entry_refs
-        if registry.record(ref) is not None
-    ]
+    entries = [_entry(ref, registry, anchors=anchors) for ref in entry_refs]
     entries += _aliases(seeded.aliases, registry, anchors=anchors, prefix=prefix)
     entries.sort(key=lambda entry: (entry.name.casefold(), entry.qualifier))
     return RulesReference(entries=entries, anchors=anchors)
@@ -224,13 +228,7 @@ def _promotions(core: dict[str, None], registry: Registry) -> dict[str, None]:
     return promoted
 
 
-def _entry(
-    ref: str,
-    registry: Registry,
-    *,
-    anchors: dict[str, str],
-    promoted: dict[str, None],
-) -> RuleEntry:
+def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntry:
     """Shape one Record into its entry, with its cross-reference links."""
     record = registry.record(ref)
     assert record is not None  # noqa: S101  guarded by the caller
@@ -245,11 +243,13 @@ def _entry(
         to_hit=getattr(record, "to_hit", None),
         to_be_hit=getattr(record, "to_be_hit", None),
         written=record.written,
+        # Every target the reader can be sent to, linked when it is an entry
+        # here. A target that is one keeps its line: a Stub whose `see_also` is
+        # the only thing explaining it would otherwise print nothing at all.
         see_also=[
             _link(target, registry, anchors=anchors)
             for target in record.see_also
-            # A promoted target says everything it has to say in its own entry.
-            if target not in promoted and registry.record(target) is not None
+            if registry.record(target) is not None
         ],
     )
 
@@ -267,18 +267,23 @@ def _aliases(
     the list is alphabetical by the *rule's* name, which the card never said.
     """
     entries: list[RuleEntry] = []
-    seen: set[str] = set()
+    seen: set[tuple[str, str]] = set()
+    # One name may be an Instance of two different Records; each is a real
+    # entry, and `anchor` disambiguates the two so neither link lands on the
+    # other. Anchors are taken from a shared set for the same reason two names
+    # that slug alike must not.
+    taken: set[str] = set()
     for name, ref in aliases:
         record = registry.record(ref)
-        if record is None or name == record.name or name in seen:
+        if record is None or name == record.name or (name, ref) in seen:
             continue
-        seen.add(name)
+        seen.add((name, ref))
         entries.append(
             RuleEntry(
                 ref=ref,
                 name=name,
                 qualifier="",
-                anchor=f"{prefix}{_ALIAS_PREFIX}-{slug(name)}",
+                anchor=f"{prefix}{_ALIAS_PREFIX}-{_anchor(name, taken)}",
                 alias_for=_link(ref, registry, anchors=anchors),
             )
         )

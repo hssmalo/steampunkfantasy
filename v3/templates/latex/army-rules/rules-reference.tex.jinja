@@ -13,6 +13,10 @@
   sentence beside it, matching the Markdown family: a rule's `effect` is
   authored prose that may itself run to several lines.
 
+  That prose is Markdown, so it goes through `md_to_latex` — the same rule
+  `general-rules/rules-body` states. The Stub marker is our own short string
+  and only needs escaping, as `phases` and `remove` do.
+
   `\phantomsection` before each `\label`: a bare `\label` records whatever
   counter was last stepped, so every entry's link would land on the section
   heading instead. It and the `\hyperref` a Unit line carries both come from
@@ -27,7 +31,7 @@
 \BLOCK{if entry.alias_for}
 \noindent\textbf{\VAR{entry.name | latex_escape}} --- see \BLOCK{if entry.alias_for.anchor}\hyperref[\VAR{entry.alias_for.anchor}]{\VAR{entry.alias_for.heading | latex_escape}}\BLOCK{else}\VAR{entry.alias_for.heading | latex_escape}\BLOCK{endif}
 \BLOCK{else}
-\noindent\textbf{\VAR{entry.heading | latex_escape}}\BLOCK{if entry.text} --- \BLOCK{if entry.pending}\textit{\VAR{entry.text | latex_escape}}\BLOCK{else}\VAR{entry.text | latex_escape}\BLOCK{endif}\BLOCK{endif}
+\noindent\textbf{\VAR{entry.heading | latex_escape}}\BLOCK{if entry.text} --- \BLOCK{if entry.pending}\textit{\VAR{entry.text | latex_escape}}\BLOCK{else}\VAR{entry.text | md_to_latex}\BLOCK{endif}\BLOCK{endif}
 \BLOCK{if entry.fields}
 \begin{itemize}
 \BLOCK{if entry.phases}
