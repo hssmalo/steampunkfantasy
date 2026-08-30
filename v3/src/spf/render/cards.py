@@ -21,10 +21,8 @@ from spf.armies.army import Army
 from spf.armies.unit import Unit
 from spf.registry import load_registry
 from spf.render.images import ImageLookup, committed_image
+from spf.render.orders import Orders, Rows, flat_rows
 from spf.schemas import type_aliases as t
-
-type _Rows = list[tuple[str, list[str]]]  # (speed, cells) per row
-type _Orders = dict[str, list[list[str]]] | None  # one order-type, per Speed
 
 
 @dataclass(frozen=True)
@@ -34,7 +32,7 @@ class OrderCard:
     unit_name: str
     image: Path | None  # the Unit's art, printed on the back of the card
     kind: Literal["Movement", "Fire"]
-    rows: _Rows  # (speed, cells) per Speed
+    rows: Rows  # (speed, cells) per Speed
     equipment: str | None  # the Equipment that granted these orders; None = base
 
 
@@ -45,8 +43,8 @@ class UnitOrders:
     name: str
     image: Path | None
     size: str
-    movement_rows: _Rows  # every (speed, cells) option, flat
-    fire_rows: _Rows
+    movement_rows: Rows  # every (speed, cells) option, flat
+    fire_rows: Rows
     shaken_movement: list[str] | None  # speed + movement_order cells
     shaken_fire: str | None
 
@@ -60,21 +58,12 @@ class OrderCardDeck:
     cards: list[OrderCard]  # LaTeX family (9-per-page grid)
 
 
-def _flat_rows(orders: _Orders) -> _Rows:
-    """Flatten one order-type into (speed, cells) per option row, in Speed order."""
-    if not orders:
-        return []
-    return [
-        (speed, list(cells)) for speed, options in orders.items() for cells in options
-    ]
-
-
 def _cards(
     unit_name: str,
     *,
     image: Path | None,
     kind: Literal["Movement", "Fire"],
-    orders: _Orders,
+    orders: Orders,
     equipment: str | None,
 ) -> list[OrderCard]:
     """Transpose one Order Source's order-type: card i = option i across Speeds."""
@@ -121,8 +110,8 @@ def _unit_orders(
         name=unit.display_name,
         image=image,
         size=load_registry().display_name(f"size.{unit.config.size}"),
-        movement_rows=_flat_rows(merged.movement),
-        fire_rows=_flat_rows(merged.fire),
+        movement_rows=flat_rows(merged.movement),
+        fire_rows=flat_rows(merged.fire),
         shaken_movement=[shaken.speed, *shaken.movement_order],
         shaken_fire=shaken.fire_order,
     )
@@ -130,7 +119,7 @@ def _unit_orders(
     # contiguous: base Movement then Fire, then the same pair per Equipment.
     cards: list[OrderCard] = []
     for sourced in unit.orders_by_source():
-        by_kind: list[tuple[Literal["Movement", "Fire"], _Orders]] = [
+        by_kind: list[tuple[Literal["Movement", "Fire"], Orders]] = [
             ("Movement", sourced.orders.movement),
             ("Fire", sourced.orders.fire),
         ]
@@ -173,7 +162,7 @@ def build_deck(
     """
     units: list[UnitOrders] = []
     cards: list[OrderCard] = []
-    seen: list[tuple[str, _Rows, _Rows]] = []
+    seen: list[tuple[str, Rows, Rows]] = []
     for unit in army.units:
         unit_orders, unit_cards = _unit_orders(
             unit, race=army.race, image_for=image_for
