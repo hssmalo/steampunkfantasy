@@ -31,8 +31,8 @@ def merge_specials(*sources: Specials) -> Specials:
     paid-kit-wins ordering of ADR 0020.
 
     The chain is per slot. Nothing here crosses from one slot into another —
-    `assault_poison` and `range_poison` are different rules, so a replace that
-    reached across would be replacing a rule it does not name.
+    `assault_extra_damage` and `range_extra_damage` are different rules, so a
+    replace that reached across would be replacing a rule it does not name.
     """
     merged: Specials = {}
     for source in sources:

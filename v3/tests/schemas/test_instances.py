@@ -115,7 +115,15 @@ def test_an_unknown_special_id_fails_the_race() -> None:
 
 def test_a_unit_special_in_the_wrong_slot_fails_the_race() -> None:
     with pytest.raises(ValidationError, match="not a unit Special"):
-        race(unit={"specials": {"assault_poison": [{"args": {"N": 6, "M": 2}}]}})
+        race(
+            unit={
+                "specials": {
+                    "assault_extra_damage": [
+                        {"args": {"version": "token.poison", "N": 6, "M": 2}}
+                    ]
+                }
+            }
+        )
 
 
 def test_an_equipment_grants_into_the_slot_it_names() -> None:

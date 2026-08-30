@@ -72,16 +72,16 @@ def test_a_terrain_record_means_its_prose_not_its_numbers() -> None:
 def test_a_record_carries_typed_cross_references() -> None:
     special = r.SpecialRuleConfig.model_validate(
         {
-            "name": "Assault Poison",
+            "name": "Assault Extra Damage",
             "slots": ["assault"],
             "effect": "Targets get a poison token.",
             "places": ["token.poison"],
-            "see_also": ["special.range_poison"],
+            "see_also": ["special.range_extra_damage"],
         }
     )
 
     assert special.places == ["token.poison"]
-    assert special.see_also == ["special.range_poison"]
+    assert special.see_also == ["special.range_extra_damage"]
 
 
 @pytest.mark.parametrize("ref", ["Token.poison", "poison", "token.poison.strong", ""])
@@ -89,7 +89,7 @@ def test_a_reference_is_lowercase_and_two_segments(ref: str) -> None:
     with pytest.raises(ValidationError):
         r.SpecialRuleConfig.model_validate(
             {
-                "name": "Assault Poison",
+                "name": "Assault Extra Damage",
                 "slots": ["assault"],
                 "effect": "Targets get a poison token.",
                 "places": [ref],

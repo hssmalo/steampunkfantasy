@@ -498,15 +498,7 @@ def test_specials_kind_parses_the_committed_file() -> None:
     )
 
     tokens = {rule.token for group in body.groups for rule in group.rules if rule.token}
-    assert tokens == {
-        "Fire",
-        "Hidden",
-        "Hypnotized",
-        "Insane",
-        "Minor Acid",
-        "Poison",
-        "Shaken",
-    }
+    assert tokens == {"Hidden", "Hypnotized", "Insane", "Shaken"}
 
 
 # --- The to_hit kind's parser -----------------------------------------------
@@ -914,8 +906,8 @@ def test_latex_partials_nest_specials_below_their_group(real_latex: str) -> None
 
 
 def test_latex_partials_render_the_structured_details(real_latex: str) -> None:
-    assert r"\textbf{Places:} Minor Acid" in real_latex
-    assert r"\textbf{N:} integer, 1-4" in real_latex
+    assert r"\textbf{Places:} Shaken" in real_latex
+    assert r"\textbf{M:} integer, 1-4" in real_latex
     assert r"\textbf{Phases:} Agony 1" in real_latex
     assert r"\textbf{Example:} If you hit" in real_latex
     assert r"\textbf{Versions}" in real_latex
