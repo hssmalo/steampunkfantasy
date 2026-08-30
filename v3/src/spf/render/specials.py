@@ -29,6 +29,16 @@ _PROSE_SEPARATOR = ". "
 _INSTANCE_SEPARATOR = "; "
 """Between the texts of several instances sharing one heading."""
 
+_PREAMBLE_SEPARATOR = ": "
+"""Between a preamble and the cases it scopes."""
+
+_CASE_SEPARATOR = ", "
+"""Between two cases of one instance.
+
+Lighter than the separator between instances, so the condition groups of a
+rule carrying several case-shaped instances stay visibly apart.
+"""
+
 
 def special_row(
     identifier: str, instance: SpecialInstance, *, registry: Registry
@@ -36,9 +46,32 @@ def special_row(
     """Render one instance as the (heading, text) pair a reader is shown."""
     rule = registry.specials.get(identifier)
     heading = instance.name or (rule.name if rule is not None else identifier)
+    if instance.cases:
+        return heading, _cases(instance, rule, registry)
     signature = "" if rule is None else _interpolate(rule, instance.args, registry)
     parts = [part for part in (signature, instance.text) if part]
     return heading, _PROSE_SEPARATOR.join(parts)
+
+
+def _cases(
+    instance: SpecialInstance, rule: RuleRecord | None, registry: Registry
+) -> str:
+    """Render a case-shaped instance: its preamble, then its cases (ADR 0029).
+
+    Each case fills the signature with its own args over the instance's, so a
+    value constant across the cases is written once. Cases that read alike are
+    both printed: they are hand-written in one array, where a repeat is a typo
+    the reader should see.
+    """
+    lines = []
+    for case in instance.cases:
+        args = instance.args | case.args
+        signature = "" if rule is None else _interpolate(rule, args, registry)
+        lines.append(" ".join(part for part in (signature, case.text) if part))
+    cases = _CASE_SEPARATOR.join(line for line in lines if line)
+    if not instance.preamble:
+        return cases
+    return _PREAMBLE_SEPARATOR.join(part for part in (instance.preamble, cases) if part)
 
 
 def special_lines(

@@ -89,6 +89,116 @@ def test_a_rule_with_neither_signature_nor_prose_has_no_text() -> None:
     assert text == ""
 
 
+# --- a case-shaped instance -------------------------------------------------
+
+
+def test_a_preamble_precedes_the_cases_it_scopes() -> None:
+    _, text = _row(
+        "area",
+        preamble=(
+            "If not using aim, fire once at all enemy models within range"
+            " and within front arc"
+        ),
+        cases=[
+            {"args": {"N": 5}, "text": "at point blank range"},
+            {"args": {"N": 6}, "text": "at normal and long range"},
+        ],
+    )
+
+    assert text == (
+        "If not using aim, fire once at all enemy models within range and"
+        " within front arc: [5+] at point blank range, [6+] at normal and"
+        " long range"
+    )
+
+
+def test_cases_without_a_preamble_stand_on_their_own() -> None:
+    _, text = _row(
+        "area",
+        cases=[
+            {"args": {"N": 4}, "text": "at point blank"},
+            {"args": {"N": 5}, "text": "at range=2"},
+        ],
+    )
+
+    assert text == "[4+] at point blank, [5+] at range=2"
+
+
+def test_a_case_may_carry_values_without_prose() -> None:
+    _, text = _row(
+        "area",
+        preamble="Choose one hex (per model firing this weapon) within normal range",
+        cases=[{"args": {"N": 5}}],
+    )
+
+    assert text == (
+        "Choose one hex (per model firing this weapon) within normal range: [5+]"
+    )
+
+
+def test_a_case_may_carry_prose_without_values() -> None:
+    # An absent optional argument elides its group, leaving the prose alone.
+    _, text = _row("area", cases=[{"text": "at any range"}])
+
+    assert text == "at any range"
+
+
+def test_a_case_inherits_the_instances_arguments() -> None:
+    # The ref is constant across the cases, so it is written once.
+    _, text = _row(
+        "resistance",
+        args={"version": "damage_type.poison"},
+        cases=[{"args": {"N": 12}, "text": "on foot"}, {"args": {"N": 6}}],
+    )
+
+    assert text == "Poison[12] on foot, Poison[6]"
+
+
+def test_two_case_shaped_instances_read_as_two_condition_groups() -> None:
+    specials = {
+        "area": [
+            SpecialInstance.model_validate(
+                {
+                    "preamble": "If fired from a unit with 1-2 alive models",
+                    "cases": [
+                        {"args": {"N": 4}, "text": "at point blank"},
+                        {"args": {"N": 5}, "text": "at range=2"},
+                        {"args": {"N": 6}, "text": "at range=3 or 4"},
+                    ],
+                }
+            ),
+            SpecialInstance.model_validate(
+                {
+                    "preamble": "If fired from a unit with 3-4 alive models",
+                    "cases": [
+                        {"args": {"N": 2}, "text": "at point blank"},
+                        {"args": {"N": 4}, "text": "at range=2"},
+                        {"args": {"N": 5}, "text": "at range=3 or 4"},
+                    ],
+                }
+            ),
+        ]
+    }
+
+    assert special_lines(specials, registry=REGISTRY) == [
+        (
+            "Area",
+            "If fired from a unit with 1-2 alive models: [4+] at point blank,"
+            " [5+] at range=2, [6+] at range=3 or 4;"
+            " If fired from a unit with 3-4 alive models: [2+] at point blank,"
+            " [4+] at range=2, [5+] at range=3 or 4",
+        )
+    ]
+
+
+def test_two_cases_that_read_alike_are_both_printed() -> None:
+    # Instance dedup exists because the source chain delivers repeats nobody
+    # wrote; cases are hand-written in one array, so a repeat is visible.
+    _, text = _row("area", cases=[{"args": {"N": 5}}, {"args": {"N": 5}}])
+
+    assert text == "[5+], [5+]"
+
+
 # --- grouping ---------------------------------------------------------------
 
 
