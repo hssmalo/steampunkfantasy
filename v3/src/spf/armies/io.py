@@ -22,6 +22,7 @@ from spf.races import get_race
 from spf.render.specials import special_lines
 from spf.schemas.army_pack import ArmyPackConfig
 from spf.schemas.race import EquipmentConfig, RaceConfig
+from spf.schemas.site import SiteConfig
 
 
 def list_armies() -> list[Path]:
@@ -96,6 +97,16 @@ def get_army_pack(path: Path) -> ArmyPackConfig:
         .add_envs({}, prefix="SPF_")
         .parse_dynamic()
         .convert_model(ArmyPackConfig)
+    )
+
+
+def get_site_index(path: Path) -> SiteConfig:
+    """Read a Site Index from `path`."""
+    return (
+        Configuration.from_file(path)
+        .add_envs({}, prefix="SPF_")
+        .parse_dynamic()
+        .convert_model(SiteConfig)
     )
 
 

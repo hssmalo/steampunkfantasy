@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("dwarf")
 
-army = ArmyList("dwarf", "Dwarfs: SteamPowerArmor with Balrog Assault", [])
+army = ArmyList("dwarf", "Ole Petter's SteamPowerArmor with Balrog Assault", [])
 
 # x1 SteamPowerArmor with Vest of Life Support and MultiBarreled Heavy Musket
 army = (

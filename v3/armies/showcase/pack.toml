@@ -28,13 +28,7 @@ army = "gnome_air_wing"
 army = "goblin"
 
 [[armies]]
-army = "ogre_gunline"
-
-[[armies]]
 army = "ogre_hydra"
 
 [[armies]]
 army = "ork_warband"
-
-[[armies]]
-army = "ork_armored_fist"

@@ -1,6 +1,6 @@
 {
   "race": "gnome",
-  "nick": "Knut Assault Bots",
+  "nick": "Knut's Assault Bots",
   "units": [
     {
       "name": "ballista_tractor_mark_i",
@@ -154,7 +154,7 @@
     },
     {
       "name": "gnome_infantry",
-      "nick": "Death_Ray with Owl",
+      "nick": "Death Ray with Owl",
       "models": [
         {
           "name": "gnome_infantry",
@@ -176,7 +176,7 @@
     },
     {
       "name": "gnome_infantry",
-      "nick": "Death_Ray with Owl",
+      "nick": "Death Ray Tinkerer",
       "models": [
         {
           "name": "gnome_infantry",

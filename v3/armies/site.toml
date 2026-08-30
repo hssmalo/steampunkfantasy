@@ -1,0 +1,11 @@
+[[packs]]
+pack = "showcase"
+heading = "Showcase Armies"
+
+[[packs]]
+pack = "2025"
+heading = "2025 Armies"
+
+[[packs]]
+pack = "2024"
+heading = "2024 Armies"

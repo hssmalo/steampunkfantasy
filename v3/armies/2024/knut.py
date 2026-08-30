@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("ork")
 
-army = ArmyList("ork", "Ork: Send the Trolls", [])
+army = ArmyList("ork", "Knut Sends the Trolls", [])
 
 # x1 Troll
 army = army.add_unit("troll", race_config=cfg)

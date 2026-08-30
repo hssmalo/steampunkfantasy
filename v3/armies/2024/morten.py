@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("gnome")
 
-army = ArmyList("gnome", "Gnomes: Helicopter Assault", [])
+army = ArmyList("gnome", "Morten's Helicopter Assault", [])
 
 # x1 Gnome Helicopter
 army = army.add_unit("gnome_helicopter", race_config=cfg)
