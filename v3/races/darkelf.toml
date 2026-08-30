@@ -1526,11 +1526,13 @@ text = "When using aim: roll 6 dice at same unit."
 
 
 [[equipment.tail_gatling_gun.range.specials.area]]
-#preamble = "if not using aim, all hexes within normal and long range"
+preamble = "If not using aim, fire once at all enemy models in all hexes within normal and long range"
+
+[[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 5
 text = "at normal range"
 
-[[equipment.tail_gatling_gun.range.specials.area]]
+[[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 6
 text = "at long range"
 

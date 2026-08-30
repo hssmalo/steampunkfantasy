@@ -31,6 +31,19 @@ _PROSE_SEPARATOR = ". "
 _INSTANCE_SEPARATOR = "; "
 """Between the texts of several instances sharing one heading."""
 
+_PREAMBLE_SEPARATOR = ": "
+"""Between a preamble and the cases it scopes."""
+
+_VALUES_SEPARATOR = " "
+"""Between a case's own values and the prose saying when they apply."""
+
+_CASE_SEPARATOR = ", "
+"""Between two cases of one instance.
+
+Lighter than the separator between instances, so the condition groups of a
+rule carrying several case-shaped instances stay visibly apart.
+"""
+
 
 class SpecialLine(NamedTuple):
     """One line a reader is shown, and where its rule is written out.
@@ -52,9 +65,43 @@ def special_row(
     """Render one instance as the (heading, text) pair a reader is shown."""
     rule = registry.specials.get(identifier)
     heading = instance.name or (rule.name if rule is not None else identifier)
-    signature = "" if rule is None else _interpolate(rule, instance.args, registry)
-    parts = [part for part in (signature, instance.text) if part]
-    return heading, _PROSE_SEPARATOR.join(parts)
+    if instance.cases:
+        return heading, _cases(instance, rule, registry)
+    signature = _signature(rule, instance.args, registry)
+    return heading, _join(_PROSE_SEPARATOR, signature, instance.text)
+
+
+def _cases(
+    instance: SpecialInstance, rule: RuleRecord | None, registry: Registry
+) -> str:
+    """Render a case-shaped instance: its preamble, then its cases (ADR 0029).
+
+    Each case fills the signature with its own args over the instance's, so a
+    value constant across the cases is written once. Cases that read alike are
+    both printed: they are hand-written in one array, where a repeat is a typo
+    the reader should see.
+    """
+    lines = [
+        _join(
+            _VALUES_SEPARATOR,
+            _signature(rule, instance.args | case.args, registry),
+            case.text,
+        )
+        for case in instance.cases
+    ]
+    return _join(_PREAMBLE_SEPARATOR, instance.preamble, _join(_CASE_SEPARATOR, *lines))
+
+
+def _signature(
+    rule: RuleRecord | None, args: dict[str, int | str], registry: Registry
+) -> str:
+    """Fill in the rule's signature, or nothing at all for an unknown id."""
+    return "" if rule is None else _interpolate(rule, args, registry)
+
+
+def _join(separator: str, *parts: str | None) -> str:
+    """Join the parts that are there, so an absent one leaves no separator."""
+    return separator.join(part for part in parts if part)
 
 
 def special_lines(

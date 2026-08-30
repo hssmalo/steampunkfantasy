@@ -1299,9 +1299,37 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2+d4 Crew damage"
 ap = 2
+note = "Choose one hex which all models in this unit fire at"
 
 [[equipment.steamblower.range.specials.area]]
-text = "Choose one hex which all models in this unit fire at. If fired from a unit with 1-2 alive models: Area(4+) at point blank, Area(5+) at range=2, Area(6+) at range=3 or 4. If fired from a unit with 3-4 alive models: Area(2+) at point blank, Area(4+) at range=2, Area(5+) at range=3 or 4"
+preamble = "If fired from a unit with 1-2 alive models"
+
+[[equipment.steamblower.range.specials.area.cases]]
+args.N = 4
+text = "at point blank"
+
+[[equipment.steamblower.range.specials.area.cases]]
+args.N = 5
+text = "at range=2"
+
+[[equipment.steamblower.range.specials.area.cases]]
+args.N = 6
+text = "at range=3 or 4"
+
+[[equipment.steamblower.range.specials.area]]
+preamble = "If fired from a unit with 3-4 alive models"
+
+[[equipment.steamblower.range.specials.area.cases]]
+args.N = 2
+text = "at point blank"
+
+[[equipment.steamblower.range.specials.area.cases]]
+args.N = 4
+text = "at range=2"
+
+[[equipment.steamblower.range.specials.area.cases]]
+args.N = 5
+text = "at range=3 or 4"
 
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"

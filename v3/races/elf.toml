@@ -1524,7 +1524,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.light_mortar.range.specials.area]]
-text = "[5+]"
+args.N = 5
 
 [[equipment.light_mortar.range.specials.range]]
 text = "A Hex within normal range"
