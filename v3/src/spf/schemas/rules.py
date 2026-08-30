@@ -44,7 +44,18 @@ stands for a value the rule itself supplies."""
 type ScalarType = Literal["int", "str", "die"]
 
 
-class IntVariableConfig(StrictModel):
+class _VariableConfig(StrictModel):
+    """What every variable declaration carries, whatever its type."""
+
+    optional: bool = False
+    """Whether an instance may leave this variable out.
+
+    An absent optional variable elides its own `[...]` group from the rendered
+    signature, so the rule reads as though it were never declared.
+    """
+
+
+class IntVariableConfig(_VariableConfig):
     type: Literal["int"]
     min: int | None = None
     max: int | None = None
@@ -71,7 +82,7 @@ class IntVariableConfig(StrictModel):
         return value
 
 
-class StringVariableConfig(StrictModel):
+class StringVariableConfig(_VariableConfig):
     type: Literal["str"]
     min: int | None = None
     max: int | None = None
@@ -90,7 +101,7 @@ class StringVariableConfig(StrictModel):
         return value
 
 
-class DieVariableConfig(StrictModel):
+class DieVariableConfig(_VariableConfig):
     """A variable whose value is a die rather than a number: `d6`, not `6`."""
 
     type: Literal["die"]
@@ -103,7 +114,7 @@ class DieVariableConfig(StrictModel):
         return value
 
 
-class RefVariableConfig(StrictModel):
+class RefVariableConfig(_VariableConfig):
     """A variable whose value is a reference into one or more namespaces.
 
     The namespace *is* the value set: every member of it is legal. `values`
@@ -116,7 +127,7 @@ class RefVariableConfig(StrictModel):
     values: list[Ref] | None = None
 
 
-class UnionVariableConfig(StrictModel):
+class UnionVariableConfig(_VariableConfig):
     """A variable authored as either of several scalar types: `6` or `d6`."""
 
     type: list[ScalarType] = Field(min_length=2)

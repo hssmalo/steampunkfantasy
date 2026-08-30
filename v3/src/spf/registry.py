@@ -200,7 +200,11 @@ def _check_args(
 ) -> list[str]:
     """Check the args are exactly the declared variables, each with a legal value."""
     known = ", ".join(sorted(variables)) or "none"
-    errors = [f"missing argument '{name}'" for name in variables.keys() - args.keys()]
+    errors = [
+        f"missing argument '{name}'"
+        for name in variables.keys() - args.keys()
+        if not variables[name].optional
+    ]
     errors += [
         f"unknown argument '{name}'; the rule takes {known}"
         for name in args.keys() - variables.keys()

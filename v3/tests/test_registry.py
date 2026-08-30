@@ -43,7 +43,8 @@ def _registry() -> reg.Registry:
                         "slots": ["assault"],
                         "effect": "One poison token per {N} hits.",
                         "variables": {
-                            "N": {"type": "int", "values": [4, 6, 8, 10, 12]}
+                            "N": {"type": "int", "values": [4, 6, 8, 10, 12]},
+                            "M": {"type": "int", "min": 1, "max": 4, "optional": True},
                         },
                     }
                 ),
@@ -205,6 +206,16 @@ def test_an_int_arg_outside_the_declared_values_is_rejected() -> None:
 
     assert "N" in error
     assert "5" in error
+
+
+def test_an_optional_variable_may_be_left_out() -> None:
+    assert check({"assault_poison": [{"args": {"N": 6}}]}, slot="assault") == []
+
+
+def test_a_required_variable_left_out_is_still_rejected() -> None:
+    (error,) = check({"assault_poison": [{"args": {"M": 2}}]}, slot="assault")
+
+    assert "missing argument 'N'" in error
 
 
 def test_a_union_arg_may_be_a_die() -> None:
