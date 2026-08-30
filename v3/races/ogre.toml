@@ -713,8 +713,9 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
-[[models.ogre_scout_engineer.assault.specials.extra_damage]]
-text = "Gear Disruption[4+][1 for 1]"
+[[models.ogre_scout_engineer.assault.specials.assault_gear_disruption]]
+args.N = 4
+args.M = 1
 
 [models.ogre_hydra]
 name = "Ogre Hydra"
@@ -734,8 +735,10 @@ ap = 2
 [[models.ogre_hydra.assault.specials.bonus]]
 text = "+3 assault strength  and +1 assault deflection per alive head"
 
-[[models.ogre_hydra.assault.specials.extra_damage]]
-text = "Poison[6][1 for 2]"
+[[models.ogre_hydra.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 2
 
 [[models.ogre_hydra.assault.specials.fear]]
 args.N = 6
@@ -1023,7 +1026,7 @@ angle = [true, true, true, true]
 damage = "d8 (+3 if penetrating all armor)"
 ap = 6
 
-[[equipment.ogre_artillery.range.specials.extra_damage]]
+[[equipment.ogre_artillery.range.specials.area]]
 text = "If you hit enemy, in addition to regular damage, Area[5+], AP=4, damage=d8 in the target hex"
 
 [[equipment.ogre_artillery.range.specials.indirect_fire]]
@@ -1123,8 +1126,8 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
 
-[[equipment.fancy_gear_pistol.range.specials.extra_damage]]
-text = "Minor Acid"
+[[equipment.fancy_gear_pistol.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [[equipment.fancy_gear_pistol.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1143,8 +1146,8 @@ angle = [true, true, true, true]
 damage = "d4-2"
 ap = 0
 
-[[equipment.tiny_fancy_gear_pistol.range.specials.extra_damage]]
-text = "Minor Acid"
+[[equipment.tiny_fancy_gear_pistol.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [[equipment.tiny_fancy_gear_pistol.unit_specials.fire_order]]
 text = "Start with two ammo, use them one at a time"
@@ -1199,8 +1202,12 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[[equipment.acid_breath.range.specials.extra_damage]]
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.acid"
 text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1213,8 +1220,9 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[[equipment.poison_spit.range.specials.extra_damage]]
-text = "Poison[6]."
+[[equipment.poison_spit.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
 text = "Fire one time per alive minor head"
