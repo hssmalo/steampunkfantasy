@@ -268,3 +268,81 @@ def test_the_record_label_is_the_identifier_and_its_signature() -> None:
 
     assert record.label == "ork_reroll[{N}]"
     assert record.name == "Ork Reroll"
+
+
+def test_refs_render_as_the_display_name_and_the_id() -> None:
+    # The Display Name is what the reader knows the thing as; the Ref is what
+    # they type into the next command and grep the TOML for.
+    registry = Registry(
+        records={
+            "special": {
+                "aim": _rule(
+                    effect="Aim.",
+                    places=["token.shaken"],
+                    see_also=["special.fend"],
+                ),
+                "fend": _rule(name="Fend", effect="Fend."),
+            },
+            "token": {"shaken": _rule(name="Shaken", effect="Shaky.")},
+        }
+    )
+
+    record = _record("aim", registry)
+
+    assert record.places == ["Shaken (token.shaken)"]
+    assert record.see_also == ["Fend (special.fend)"]
+
+
+def test_a_ref_pointing_nowhere_falls_back_to_its_bare_id() -> None:
+    # The load-time gate is what rejects a dangling Ref; printing one is not
+    # the place to raise.
+    registry = _registry(aim=_rule(effect="Aim.", see_also=["token.nowhere"]))
+
+    record = _record("aim", registry)
+
+    assert record.see_also == ["nowhere (token.nowhere)"]
+
+
+def test_variables_are_name_and_phrase_pairs_in_declaration_order() -> None:
+    registry = _registry(
+        aim=_rule(
+            signature="[{N}, {kind}]",
+            variables={
+                "N": {"type": "int", "min": 1, "max": 4},
+                "kind": {"type": "str"},
+            },
+            effect="Aim.",
+        )
+    )
+
+    record = _record("aim", registry)
+
+    assert record.variables == [("N", "integer, 1-4"), ("kind", "text")]
+
+
+def test_versions_come_back_as_rendered_ref_and_effect_pairs() -> None:
+    # An overlay is a full alternative effect, not a fragment, so each keeps
+    # its own text under the Ref it is keyed by.
+    registry = Registry(
+        records={
+            "special": {
+                "resistance": _rule(
+                    effect="Resist.",
+                    versions={"damage_type.fire": {"effect": "Fire is reduced."}},
+                )
+            },
+            "damage_type": {"fire": _rule(name="Fire", effect="Burns.")},
+        }
+    )
+
+    record = _record("resistance", registry)
+
+    assert record.versions == [("Fire (damage_type.fire)", "Fire is reduced.")]
+
+
+def test_the_records_marks_are_the_umar_column() -> None:
+    registry = _registry(to_hit=_rule(slots=["unit", "range"], effect="Hits."))
+
+    record = _record("to_hit", registry)
+
+    assert record.marks == "U  R"
