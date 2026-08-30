@@ -181,12 +181,13 @@ def test_two_case_shaped_instances_read_as_two_condition_groups() -> None:
     }
 
     assert special_lines(specials, registry=REGISTRY) == [
-        (
+        SpecialLine(
             "Area",
             "If fired from a unit with 1-2 alive models: [4+] at point blank,"
             " [5+] at range=2, [6+] at range=3 or 4;"
             " If fired from a unit with 3-4 alive models: [2+] at point blank,"
             " [4+] at range=2, [5+] at range=3 or 4",
+            None,
         )
     ]
 

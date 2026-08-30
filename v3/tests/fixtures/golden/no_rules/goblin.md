@@ -275,8 +275,9 @@
 - Range: 2, angle True/True/True/True, damage d4 -2, AP 2
 - **Ammo**: May be loaded (one at a time) with up to 3 ammo
 - **Multiple Shots**: Fire d12 shots in one fire order per ammo spent, all targeted the same unit.
-- **Range Extra Damage**: Minor Acid. Choose one of these, for all shots.; Poison[6]. Choose one of these, for all shots.
-- **Range Gear Disruption**: [6+]. Choose one of these, for all shots.
+- **Range Extra Damage**: Minor Acid; Poison[6]
+- **Range Gear Disruption**: [6+]
+- **Note**: For each fire order, choose one of Minor Acid, Poison, or Gear Disruption as extra damage.
 
 #### Heavy Crossbow
 
