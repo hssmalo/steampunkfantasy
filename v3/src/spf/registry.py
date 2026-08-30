@@ -167,7 +167,7 @@ def _check_instance(
 
     A case-shaped instance supplies one set per case, each merged over the
     instance's own args, so a value constant across the cases is written once
-    (ADR 0029). A broken case names its 1-based position, because the cases of
+    (ADR 0030). A broken case names its 1-based position, because the cases of
     one instance are otherwise indistinguishable in a message.
     """
     if not instance.cases:
