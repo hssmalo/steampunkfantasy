@@ -13,7 +13,9 @@ from spf.schemas.race import (
     RaceConfig,
     RaceMetadata,
     ShakenConfig,
+    Stacker,
     UnitConfig,
+    UnitStatModifierConfig,
 )
 from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import Cost, ModelType
@@ -35,8 +37,15 @@ def _model_config(  # noqa: PLR0913  the fixture covers every field under test
     *,
     name: str = "Grunt",
     equipment: list[str] | None = None,
+    equipment_limit: list[str] | None = None,
     types: list[ModelType] | None = None,
     cost: Cost | None = None,
+    replaces: str | None = None,
+    unit: UnitStatModifierConfig | None = None,
+    unit_specials: Specials | None = None,
+    specials: Specials | None = None,
+    assault_specials: Specials | None = None,
+    assault_note: str = "",
     description: str = "",
     note: str = "",
 ) -> ModelConfig:
@@ -44,11 +53,17 @@ def _model_config(  # noqa: PLR0913  the fixture covers every field under test
         race=RACE,
         name=name,  # pyright: ignore[reportArgumentType]
         description=description,
-        equipment_limit=[],  # pyright: ignore[reportArgumentType]
+        equipment_limit=equipment_limit or [],  # pyright: ignore[reportArgumentType]
         equipment=equipment or [],
         type=types or ["Infantry"],
-        assault=_ASSAULT,
+        assault=_ASSAULT.model_copy(
+            update={"specials": assault_specials or {}, "note": assault_note}
+        ),
         cost=cost,
+        replaces=replaces,  # pyright: ignore[reportArgumentType]
+        unit_specials=unit_specials or {},
+        specials=specials or {},
+        unit=unit,
         note=note,
     )
 
@@ -341,3 +356,263 @@ def test_build_overview_covers_every_unit_of_a_committed_race(race_name: str) ->
     # Every anchor addresses exactly one Unit, which is what a link rests on.
     anchors = [unit.anchor for unit in overview.units]
     assert len(set(anchors)) == len(anchors)
+
+
+# --- Model entries ----------------------------------------------------------
+
+
+def test_model_entry_carries_the_declared_catalogue_fields() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(models=["boss"])},
+        models={
+            "boss": _model_config(
+                name="Goblin Boss",
+                types=["Officer", "Infantry"],
+                cost=Cost(ip=1, mp=2),
+                equipment_limit=["Hands:2", "Independent:∞"],
+                note="Never alone.",
+                description="A goblin boss, art prompt and all.",
+                assault_note="Swings wide.",
+            )
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    assert model.key == "boss"
+    assert model.name == "Goblin Boss"
+    assert model.anchor == "model-boss"
+    assert model.cost == "1ip 2mp"
+    assert model.cost_columns == ["1", "2", "", "", ""]
+    assert model.points == 5
+    # Printed in the canonical Type order, as a Unit's Type line is.
+    assert model.types == ["Infantry", "Officer"]
+    assert model.assault_strength == [1, 0, 0, 0]
+    assert model.assault_strength_die == "4+"
+    assert model.assault_deflection == [1, 0, 0, 0]
+    assert model.assault_deflection_die == "4+"
+    assert model.assault_damage == "d4"
+    assert model.assault_ap == 0
+    assert model.assault_note == "Swings wide."
+    assert model.note == "Never alone."
+    # `description` doubles as the image-generation prompt, so no entry prints it.
+    assert not hasattr(model, "description")
+
+
+def test_model_has_no_image_of_its_own() -> None:
+    lookup = FakeLookup(ART)
+    race = _race_config(
+        units={"steampowerarmor": _unit_config(models=["steampowerarmor"])},
+        models={"steampowerarmor": _model_config(name="Steampowerarmor")},
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=lookup)
+
+    (model,) = overview.models
+    assert not hasattr(model, "image")
+    # A Model sharing a Unit's key would otherwise answer with the Unit's art.
+    assert lookup.calls.count((RACE, "steampowerarmor")) == 1
+
+
+def test_model_equipment_limits_render_the_uncapped_holder_as_infinity() -> None:
+    race = _race_config(
+        models={"grunt": _model_config(equipment_limit=["Hands:2", "Grenades:∞"])}
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    assert model.equipment_limits == [("Hands", "2"), ("Grenades", "∞")]
+
+
+def test_model_links_each_permitted_equipment_once() -> None:
+    race = _race_config(
+        models={"grunt": _model_config(equipment=["club", "bow", "club"])},
+        equipment={
+            "club": _equipment_config(name="Club"),
+            "bow": _equipment_config(name="Short Bow"),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    # A second slot for the same Equipment is a capacity fact, which
+    # `equipment_limits` carries; the link addresses one entry either way.
+    assert model.equipment == [
+        RaceLink("Club", "equipment-club"),
+        RaceLink("Short Bow", "equipment-bow"),
+    ]
+
+
+# --- Inverse links (decision 3) ---------------------------------------------
+
+
+def test_model_is_fielded_in_every_unit_whose_roster_names_it() -> None:
+    race = _race_config(
+        units={
+            "squad": _unit_config(name="Squad", models=["grunt"], cost=Cost(mp=9)),
+            "warband": _unit_config(name="Warband", models=["grunt", "boss"]),
+        },
+        models={
+            "grunt": _model_config(name="Grunt"),
+            "boss": _model_config(name="Boss"),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    by_key = {model.key: model for model in overview.models}
+    # The exact inverse of the forward link a Unit entry carries.
+    assert by_key["grunt"].fielded_in == [
+        RaceLink("Squad", "unit-squad"),
+        RaceLink("Warband", "unit-warband"),
+    ]
+    assert by_key["boss"].fielded_in == [RaceLink("Warband", "unit-warband")]
+
+
+def test_a_unit_fielding_one_model_many_times_lists_it_once() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(name="Squad", models=["grunt"] * 4)},
+        models={"grunt": _model_config()},
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    assert model.fielded_in == [RaceLink("Squad", "unit-squad")]
+
+
+def test_replaces_renders_on_both_ends() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(models=["grunt"])},
+        models={
+            "grunt": _model_config(name="Grunt"),
+            "elite": _model_config(name="Elite Grunt", replaces="grunt"),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    by_key = {model.key: model for model in overview.models}
+    assert by_key["elite"].replaces == RaceLink("Grunt", "model-grunt")
+    assert by_key["elite"].replaced_by == []
+    assert by_key["grunt"].replaces is None
+    assert by_key["grunt"].replaced_by == [RaceLink("Elite Grunt", "model-elite")]
+
+
+def test_an_upgrade_model_is_reached_through_the_model_it_replaces() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(name="Squad", models=["grunt"])},
+        models={
+            "grunt": _model_config(name="Grunt"),
+            "elite": _model_config(name="Elite Grunt", replaces="grunt"),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (unit,) = overview.units
+    by_key = {model.key: model for model in overview.models}
+    # A Unit's roster names no upgrade, so `fielded_in` is empty on one and the
+    # way in is the base Model's `replaced_by`.
+    assert unit.models == [RaceLink("Grunt", "model-grunt")]
+    assert by_key["elite"].fielded_in == []
+
+
+# --- Declared deltas and Specials slots -------------------------------------
+
+
+def test_model_declares_its_unit_modifiers_rather_than_stacking_them() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(armor=[8, 6, 5, 4], models=["grunt"])},
+        models={
+            "grunt": _model_config(
+                unit=UnitStatModifierConfig(armor=Stacker(add=[3, 2, 0, 0]))
+            )
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    (unit,) = overview.units
+    assert model.unit_modifiers == ["Armor: +3/+2/0/0 to its Unit"]
+    # The grant has no value until a Unit is fielded under it, so the Unit's
+    # own declaration is untouched.
+    assert unit.armor == [8, 6, 5, 4]
+
+
+def test_model_keeps_its_three_specials_slots_apart() -> None:
+    race = _race_config(
+        models={
+            "grunt": _model_config(
+                unit_specials={"evasion": [SpecialInstance(args={"N": 4})]},
+                specials={"escape_artist": [SpecialInstance()]},
+                assault_specials={"retreat": [SpecialInstance()]},
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    assert [line.name for line in model.unit_specials] == ["Evasion"]
+    assert [line.name for line in model.specials] == ["Escape Artist"]
+    assert [line.name for line in model.assault_specials] == ["Retreat"]
+
+
+# --- Ordering (decision 9) --------------------------------------------------
+
+
+def test_models_order_by_cost_with_toml_order_breaking_ties() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(models=["cheap"])},
+        models={
+            "cheap": _model_config(name="Cheap", cost=Cost(mp=1)),
+            "tied_first": _model_config(name="Tied First", cost=Cost(mp=5)),
+            "tied_second": _model_config(name="Tied Second", cost=Cost(mp=5)),
+            "unpriced": _model_config(name="Unpriced", cost=None),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    assert [model.name for model in overview.models] == [
+        "Tied First",
+        "Tied Second",
+        "Cheap",
+        "Unpriced",
+    ]
+
+
+# --- Against the committed catalogue ----------------------------------------
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf"])
+def test_build_overview_covers_every_model_of_a_committed_race(race_name: str) -> None:
+    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+
+    overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
+
+    assert len(overview.models) == len(race.models)
+    anchors = [model.anchor for model in overview.models]
+    assert len(set(anchors)) == len(anchors)
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "ogre"])
+def test_fielded_in_is_the_exact_inverse_of_every_unit_roster(race_name: str) -> None:
+    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+
+    overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
+
+    forward = {
+        (unit.anchor, link.anchor) for unit in overview.units for link in unit.models
+    }
+    inverse = {
+        (link.anchor, model.anchor)
+        for model in overview.models
+        for link in model.fielded_in
+    }
+    assert forward == inverse
