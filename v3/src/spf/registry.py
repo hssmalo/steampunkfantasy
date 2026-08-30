@@ -170,20 +170,32 @@ def _check_instance(
     (ADR 0030). A broken case names its 1-based position, because the cases of
     one instance are otherwise indistinguishable in a message.
     """
+    errors = _check_variant(instance.variant, rule=rule, where=where)
     if not instance.cases:
-        return _check_args_in_scope(
+        return errors + _check_args_in_scope(
             instance.args, rule=rule, where=where, registry=registry
         )
-    return [
-        problem
-        for number, case in enumerate(instance.cases, start=1)
-        for problem in _check_args_in_scope(
-            instance.args | case.args,
-            rule=rule,
-            where=f"{where}, case {number}",
-            registry=registry,
+    for number, case in enumerate(instance.cases, start=1):
+        scoped = f"{where}, case {number}"
+        errors += _check_variant(case.variant, rule=rule, where=scoped)
+        errors += _check_args_in_scope(
+            instance.args | case.args, rule=rule, where=scoped, registry=registry
         )
-    ]
+    return errors
+
+
+def _check_variant(
+    variant: str | None, *, rule: r.SpecialRuleConfig, where: str
+) -> list[str]:
+    """Check that a named variant is one the rule defines (ADR 0031).
+
+    The pool is the rule's own, so the id is a lookup key like any other and a
+    miss is a load failure rather than prose the reader silently loses.
+    """
+    if variant is None or variant in rule.variants:
+        return []
+    defined = ", ".join(sorted(rule.variants)) or "none"
+    return [f"{where}: no variant '{variant}'; the rule defines {defined}"]
 
 
 def _check_args_in_scope(

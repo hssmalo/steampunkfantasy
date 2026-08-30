@@ -35,6 +35,12 @@ def _registry() -> reg.Registry:
                             },
                             "N": {"type": ["int", "die"], "min": 1, "max": 12},
                         },
+                        "variants": {
+                            "while_an_elite_lives": {
+                                "text": "While at least one elite is alive"
+                            },
+                            "versus_shaken": {"text": "Versus Shaken models"},
+                        },
                     }
                 ),
                 "venom": r.SpecialRuleConfig.model_validate(
@@ -401,6 +407,91 @@ def test_a_variable_colliding_with_a_ref_targets_variable_is_rejected() -> None:
     )
 
     assert any("terrain" in error and "collides" in error for error in errors)
+
+
+# ---------------------------------------------------------------------------
+# Every named variant is one the rule defines (ADR 0031)
+# ---------------------------------------------------------------------------
+
+
+def test_a_known_variant_resolves() -> None:
+    errors = check(
+        {
+            "resistance": [
+                {
+                    "variant": "while_an_elite_lives",
+                    "args": {"version": "damage_type.poison", "N": 4},
+                }
+            ]
+        }
+    )
+
+    assert errors == []
+
+
+def test_an_unknown_variant_is_rejected() -> None:
+    errors = check(
+        {
+            "resistance": [
+                {
+                    "variant": "while_an_elite_lved",
+                    "args": {"version": "damage_type.poison", "N": 4},
+                }
+            ]
+        }
+    )
+
+    # The pool is the rule's own, so naming it is what makes the typo findable.
+    assert errors == [
+        "unit 'Squad': 'resistance': no variant 'while_an_elite_lved';"
+        " the rule defines versus_shaken, while_an_elite_lives"
+    ]
+
+
+def test_a_variant_on_a_rule_defining_none_is_rejected() -> None:
+    errors = check({"fear": [{"variant": "whenever"}]}, slot="assault")
+
+    assert errors == [
+        "unit 'Squad': 'fear': no variant 'whenever'; the rule defines none"
+    ]
+
+
+def test_an_unknown_variant_on_a_case_names_its_position() -> None:
+    errors = check(
+        {
+            "resistance": [
+                {
+                    "args": {"version": "damage_type.poison"},
+                    "cases": [
+                        {"variant": "while_an_elite_lives", "args": {"N": 4}},
+                        {"variant": "versus_shakn", "args": {"N": 6}},
+                    ],
+                }
+            ]
+        }
+    )
+
+    assert errors == [
+        "unit 'Squad': 'resistance', case 2: no variant 'versus_shakn';"
+        " the rule defines versus_shaken, while_an_elite_lives"
+    ]
+
+
+def test_a_case_shaped_instances_own_variant_is_checked_too() -> None:
+    # The preamble slot resolves against the same pool as a case's text.
+    errors = check(
+        {
+            "resistance": [
+                {
+                    "variant": "no_such_preamble",
+                    "args": {"version": "damage_type.poison"},
+                    "cases": [{"args": {"N": 4}}],
+                }
+            ]
+        }
+    )
+
+    assert any("no variant 'no_such_preamble'" in error for error in errors)
 
 
 # ---------------------------------------------------------------------------
