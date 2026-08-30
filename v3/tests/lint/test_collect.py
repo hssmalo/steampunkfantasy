@@ -17,6 +17,7 @@ from spf.schemas.race import (
     RaceConfig,
     RaceMetadata,
 )
+from spf.schemas.special import SpecialInstance
 
 CONVENTIONS = LintConfig(
     aliases={"darkelf": "dark_elf"},
@@ -199,3 +200,42 @@ def test_over_committed_defaults_surface_as_a_finding() -> None:
     assert finding.section == "models"
     assert finding.key == "ogre_scout_engineer"
     assert "Reserve Melee:1" in finding.message
+
+
+_POOLS = {"fog": {"ignores_weather": "Ignores the weather"}}
+"""One rule's variants, the way the registry holds them."""
+
+
+def _race_carrying(instance: dict[str, object]) -> RaceConfig:
+    """Build a Race whose only Special is one instance of `fog`, on equipment."""
+    equipment = _equipment("Ogre Sword", requires=[["Hands:1"]])
+    return RaceConfig(
+        races={"ogre": RaceMetadata(name="Ogre")},
+        units={},
+        models={},
+        equipment={
+            "ogre_sword_free": equipment.model_copy(
+                update={"unit_specials": {"fog": [SpecialInstance(**instance)]}}  # pyright: ignore[reportArgumentType]
+            )
+        },
+    )
+
+
+def test_longhand_prose_surfaces_as_a_finding() -> None:
+    """The variant rule reaches `lint_race_config` and locates its holder."""
+    race_config = _race_carrying({"text": "Ignores the weather"})
+
+    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS, pools=_POOLS)
+
+    (finding,) = [f for f in findings if f.rule == "variant-longhand"]
+    assert finding.section == "equipment"
+    assert finding.key == "ogre_sword_free"
+    assert "ignores_weather" in finding.message
+
+
+def test_a_race_the_pools_say_nothing_about_is_clean() -> None:
+    race_config = _race_carrying({"text": "Ignores the weather"})
+
+    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS)
+
+    assert [f for f in findings if f.rule == "variant-longhand"] == []

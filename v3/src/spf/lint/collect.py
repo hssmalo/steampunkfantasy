@@ -5,16 +5,18 @@ mapping of key to something with a `.name`, so it is exercised with plain
 stubs. `lint_race` is the thin layer that loads real config and Race data.
 """
 
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass
 from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import holders, names
+from spf.lint import holders, names, variants
+from spf.registry import load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import RaceConfig
+from spf.schemas.special import Specials
 
 
 class Named(Protocol):
@@ -52,11 +54,51 @@ def lint_entries(
     ]
 
 
+def _special_slots(race_config: RaceConfig) -> Iterator[tuple[str, str, Specials]]:
+    """Every (section, key, instances) triple a Race hangs Specials off.
+
+    Which slots a holder has is the holder's own shape: only Equipment carries
+    a range profile, and only a Model an assault one it always has.
+    """
+    for key, unit in race_config.units.items():
+        yield "units", key, unit.specials
+    for key, model in race_config.models.items():
+        yield "models", key, model.unit_specials
+        yield "models", key, model.specials
+        yield "models", key, model.assault.specials
+    for key, equip in race_config.equipment.items():
+        yield "equipment", key, equip.unit_specials
+        yield "equipment", key, equip.model_specials
+        if equip.assault is not None:
+            yield "equipment", key, equip.assault.specials
+        if equip.range is not None:
+            yield "equipment", key, equip.range.specials
+
+
 def lint_race_config(
-    race: t.RaceName, race_config: RaceConfig, conventions: LintConfig
+    race: t.RaceName,
+    race_config: RaceConfig,
+    conventions: LintConfig,
+    *,
+    pools: Mapping[str, Mapping[str, str]] | None = None,
 ) -> list[Finding]:
-    """Return every finding for an already-loaded, schema-valid Race."""
+    """Return every finding for an already-loaded, schema-valid Race.
+
+    `pools` is each rule's variants; without it the variant rule has no pool to
+    compare against and reports nothing.
+    """
     findings: list[Finding] = []
+    for section, key, specials in _special_slots(race_config):
+        findings += [
+            Finding(
+                race=race,
+                section=section,
+                key=key,
+                rule="variant-longhand",
+                message=f"'{identifier}': {message}",
+            )
+            for identifier, message in variants.check_specials(specials, pools or {})
+        ]
     if (message := names.check_capitalized(race_config.races[race].name)) is not None:
         findings.append(
             Finding(
@@ -91,4 +133,8 @@ def lint_race_config(
 
 def lint_race(race: t.RaceName) -> list[Finding]:
     """Load `race` and return its findings, using the configured conventions."""
-    return lint_race_config(race, races.get_race(race), config.lint)
+    pools = {
+        identifier: {name: overlay.text for name, overlay in rule.variants.items()}
+        for identifier, rule in load_registry().specials.items()
+    }
+    return lint_race_config(race, races.get_race(race), config.lint, pools=pools)
