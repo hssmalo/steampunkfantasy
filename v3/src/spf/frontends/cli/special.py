@@ -285,9 +285,11 @@ _GUTTER = len("Variables")
 def _print_record(record: SpecialRecord) -> None:
     """Print the rule itself: a header line, then a labeled block."""
     # Escaped before any markup is added, never after: a Signature is full of
-    # square brackets, which Rich would otherwise swallow as tags.
+    # square brackets, and a Display Name is author prose, either of which Rich
+    # would otherwise read as tags.
     stdout.print(
-        f"{record.marks} {escape(record.label)}  {record.name}", highlight=False
+        f"{record.marks} {escape(record.label)}  {escape(record.name)}",
+        highlight=False,
     )
     stdout.print()
 
@@ -353,7 +355,7 @@ def show_special(special_key: SpecialKey) -> None:
 
     stdout.print()
     stdout.print("Instances")
-    found = False
+    found = skipped = False
     for race_name in races.list_races():
         try:
             race = races.get_race(race_name)
@@ -363,6 +365,7 @@ def show_special(special_key: SpecialKey) -> None:
             stdout.print(
                 f"[dim]{race_name}: skipped (does not validate)[/]", highlight=False
             )
+            skipped = True
             continue
 
         matches = _matches(race, key=special_key, rule=rule, registry=registry)
@@ -370,11 +373,14 @@ def show_special(special_key: SpecialKey) -> None:
             continue
         found = True
 
-        display_name = race.races[race_name].name
+        display_name = escape(race.races[race_name].name)
         stdout.print(f"[bold]{display_name}[/] ({race_name})", highlight=False)
         for label, value in matches:
             # A signature is full of square brackets, which are Rich's own
             # markup: printed raw, `[range=1]` would vanish as a tag.
             stdout.print(f"  {label:<50} {escape(value)}", highlight=False)
     if not found:
-        stdout.print("[dim](none)[/]", highlight=False)
+        # "Unused" is only a claim about the Races that loaded: a skipped one
+        # may well hold the Instances this says there are none of.
+        where = " in the Races that validate" if skipped else ""
+        stdout.print(f"[dim](none{where})[/]", highlight=False)

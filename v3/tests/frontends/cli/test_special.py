@@ -508,3 +508,36 @@ def test_show_heads_a_race_with_its_display_name_and_slug(
 
     assert "Ork (ork)" in lines
     assert "ork" not in lines
+
+
+def test_show_survives_a_display_name_that_looks_like_markup(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # A Display Name is author prose, and Rich reads a closing tag in it as an
+    # error rather than as text.
+    registry = _registry(aim=_rule(name="Aim [/] Fire", effect="Aim."))
+    monkeypatch.setattr("spf.frontends.cli.special.load_registry", lambda: registry)
+    show("aim")
+
+    assert "Aim [/] Fire" in capsys.readouterr().out
+
+
+def test_show_qualifies_none_when_a_race_was_skipped(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # "Unused" is only a claim about the Races that loaded; a skipped one may
+    # hold the very Instances this line says there are none of.
+    broken = pydantic.ValidationError.from_exception_data("RaceConfig", [])
+    real_get_race = races.get_race
+
+    def get_race(race_name: RaceName) -> RaceConfig:
+        if race_name == "goblin":
+            raise broken
+        return real_get_race(race_name)
+
+    monkeypatch.setattr(races, "get_race", get_race)
+    lines = _lines(show, "insanity_field", capsys=capsys)
+
+    assert lines[-1] == "(none in the Races that validate)"
