@@ -133,34 +133,34 @@ to_be_hit = "+2"
 # Abilities
 #
 [ability.good_shot]
-name = "Good Shot [+1]"
+name = "Good Shot"
 to_hit = "+1"
 to_be_hit = "0"
 
 [ability.excellent_shot]
-name = "Excellent Shot [+2]"
+name = "Excellent Shot"
 to_hit = "+2"
 to_be_hit = "0"
 todo = "Three Race occurrences spell this \"Great Shot\", whose word suggests Superb Shot while its +2 is this record's. Confirm which rule those three mean."
 see_also = ["ability.superb_shot"]
 
 [ability.superb_shot]
-name = "Superb Shot [+3]"
+name = "Superb Shot"
 to_hit = "+3"
 to_be_hit = "0"
 
 [ability.bad_shot]
-name = "Bad Shot [-1]"
+name = "Bad Shot"
 to_hit = "-1"
 to_be_hit = "0"
 
 [ability.terrible_shot]
-name = "Terrible Shot [-2]"
+name = "Terrible Shot"
 to_hit = "-2"
 to_be_hit = "0"
 
 [ability.bad_at_long_range]
-name = "Bad at Long Range [-2]"
+name = "Bad at Long Range"
 to_hit = "-2"
 to_be_hit = "0"
 effect = "Extra to-hit penalty at long range only"
