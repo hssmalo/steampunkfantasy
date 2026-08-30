@@ -385,10 +385,28 @@ _Avoid_: deck (a deck is the whole Army's cards), stack, pile
 **Army Reference**:
 A Rendering of the exact rules pertaining to one Army, built from a resolved
 Army. A nested Unit → Model → Equipment view of the fielded force: stats,
-specials (the short override text — full rule text belongs to the Rulebook),
-and damage tables. Orders are *not* part of it; those live on the Order Cards.
-Identically-configured Units (and identical Models within a Unit) appear once.
+specials (the short override text on the Unit line, and the full rule text for
+the rules it reaches in its **Rules Reference**), and damage tables. Orders are
+*not* part of it; those live on the Order Cards. Identically-configured Units
+(and identical Models within a Unit) appear once.
 _Avoid_: army sheet, roster printout
+
+**Rules Reference**:
+The flat, alphabetical list of rule Records an Army's Specials reach, printed
+after the Units in an Army Reference and in each Army's entry in an Army Pack.
+One entry per Record, showing the rule's general text; the Unit lines link into
+it. Omitted with `--no-rules`.
+_Avoid_: appendix, glossary, rules index
+
+**Kind Qualifier**:
+The parenthetical namespace label after a Rules Reference heading — `Fog (hex)`
+— carried by every entry, not only colliding ones.
+_Avoid_: namespace tag, suffix
+
+**Alias Entry**:
+A Rules Reference entry for an Instance's atmospheric name, pointing at the
+Record it is an occurrence of: *Insanity Field — see Terror (special)*.
+_Avoid_: alias, nickname stub, redirect
 
 **Army Pack**:
 A Rendering binding the Army References of several Armies into one document —
