@@ -42,16 +42,16 @@ army = (
 army = (
     army.add_unit("gnome_infantry", race_config=cfg, nick="Death Ray with Owl")
     .upgrade_unit(
-        ("gnome_infantry", 0),
+        ("gnome_infantry", 4),
         model_key=("gnome_infantry", 0),
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
     .upgrade_all_models(
-        ("gnome_infantry", 0), equipment_name="mechanical_owl", race_config=cfg
+        ("gnome_infantry", 4), equipment_name="mechanical_owl", race_config=cfg
     )
     .upgrade_model(
-        ("gnome_infantry", 0),
+        ("gnome_infantry", 4),
         equipment_name="experimental_death_ray",
         model_key=("gnome_tinkerer", 0),
         race_config=cfg,
@@ -62,13 +62,13 @@ army = (
 army = (
     army.add_unit("gnome_infantry", race_config=cfg, nick="Death Ray Tinkerer")
     .upgrade_unit(
-        ("gnome_infantry", 0),
+        ("gnome_infantry", 5),
         model_key=("gnome_infantry", 0),
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
     .upgrade_model(
-        ("gnome_infantry", 0),
+        ("gnome_infantry", 5),
         equipment_name="experimental_death_ray",
         model_key=("gnome_tinkerer", 0),
         race_config=cfg,
