@@ -2,16 +2,16 @@ title = "Steampunkfantasy Tournament 2025"
 
 [[armies]]
 army = "geir_arne"
-label = "Geir Arne"
+label = "Ork"
 
 [[armies]]
 army = "morten"
-label = "Morten"
+label = "Dwarf"
 
 [[armies]]
 army = "martin"
-label = "Martin"
+label = "Dark Elf"
 
 [[armies]]
 army = "knut"
-label = "Knut"
+label = "Gnome"

@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("darkelf")
 
-army = ArmyList("darkelf", "Martin DarkElf", [])
+army = ArmyList("darkelf", "Martin's DarkElves", [])
 
 # 1x Queen YY
 army = army.add_unit("queen_yy", race_config=cfg)
