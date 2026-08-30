@@ -20,6 +20,9 @@ from spf.schemas.special import SpecialInstance, Specials
 _PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
 """A signature's variable slot: `{N}`, or `{version.id}` for the raw ref."""
 
+_GROUP = re.compile(r"\[[^][]*\]")
+"""One bracketed group of a signature: `[{N}+]`, `[1 for {M}]`."""
+
 _PROSE_SEPARATOR = ". "
 """Between a signature and the instance's own prose about its occurrence."""
 
@@ -80,6 +83,12 @@ def _interpolate(
     if not rule.signature:
         return ""
 
+    def keep(match: re.Match[str]) -> str:
+        """Drop a group no argument fills, so an optional one reads as absent."""
+        names = [name for name, _ in _PLACEHOLDER.findall(match.group(0))]
+        unfilled = all(args.get(name) is None for name in names)
+        return "" if names and unfilled else match.group(0)
+
     def fill(match: re.Match[str]) -> str:
         name, raw_id = match.group(1), match.group(2)
         value = args.get(name)
@@ -95,4 +104,4 @@ def _interpolate(
         nested = _interpolate(target, args, registry, seen | {str(value)})
         return f"{target.name}{nested}"
 
-    return _PLACEHOLDER.sub(fill, rule.signature)
+    return _PLACEHOLDER.sub(fill, _GROUP.sub(keep, rule.signature))

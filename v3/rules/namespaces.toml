@@ -39,6 +39,11 @@ name = "Poison"
 see_also = ["token.poison"]
 todo = "Rule text not yet written. Distinct from token.poison: this is the category of harm, that is the marker on the table."
 
+[damage_type.crew]
+name = "Crew"
+see_also = ["token.crippled_crew"]
+todo = "Rule text not yet written: crew damage has its own damage tables and ignores armor. Vocabulary the registry owns; no Special names it yet."
+
 [damage_type.acid]
 name = "Acid"
 see_also = ["token.acid", "token.minor_acid"]
