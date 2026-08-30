@@ -7,6 +7,10 @@ identifier, and what an instance carries is a closed set of keys.
 An instance takes one of two shapes (ADR 0030): *prose-shaped*, a signature
 followed by free `text`, or *case-shaped*, a `preamble` scoping the `cases`
 that each supply their own args.
+
+Whichever prose slot the shape allows may be spelled inline or drawn from the
+rule's pool of variants by name (ADR 0031). The two are alternative spellings
+of one slot, never two layers of it.
 """
 
 from typing import Self
@@ -14,6 +18,12 @@ from typing import Self
 from pydantic import Field, model_validator
 
 from spf.schemas import StrictModel
+
+_TWO_SPELLINGS = (
+    "'variant' spells the prose slot rather than adding to it: write the"
+    " sentence inline, or name a variant of the rule, never both"
+)
+"""Why a variant and inline prose cannot share one occurrence (ADR 0031)."""
 
 
 class SpecialCase(StrictModel):
@@ -27,8 +37,18 @@ class SpecialCase(StrictModel):
     text: str | None = None
     """When these values apply: "at point blank range"."""
 
+    variant: str | None = None
+    """The rule's name for that prose, drawn from its variants (ADR 0031)."""
+
     args: dict[str, int | str] = Field(default_factory=dict)
     """Values for the rule's variables, merged over the instance's own."""
+
+    @model_validator(mode="after")
+    def _one_spelling_only(self) -> Self:
+        """Keep the prose slot spelled one way, inline or by name (ADR 0031)."""
+        if self.variant is not None and self.text is not None:
+            raise ValueError(_TWO_SPELLINGS)
+        return self
 
 
 class SpecialInstance(StrictModel):
@@ -53,6 +73,13 @@ class SpecialInstance(StrictModel):
 
     Named for its position rather than its content: some are conditions ("If
     not using aim"), most are instructions ("Choose one hex").
+    """
+
+    variant: str | None = None
+    """The rule's name for this occurrence's prose, drawn from its variants.
+
+    Which slot it fills is settled by the shape rather than by a second field
+    name: with cases it is the `preamble`, without them the `text` (ADR 0031).
     """
 
     cases: list[SpecialCase] = Field(default_factory=list)
@@ -90,6 +117,8 @@ class SpecialInstance(StrictModel):
                 " 'text' or the carrier's 'note'"
             )
             raise ValueError(msg)
+        if self.variant is not None and (self.text, self.preamble) != (None, None):
+            raise ValueError(_TWO_SPELLINGS)
         return self
 
 
