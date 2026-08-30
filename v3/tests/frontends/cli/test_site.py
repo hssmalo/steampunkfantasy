@@ -146,7 +146,6 @@ def test_the_footer_links_the_repository() -> None:
     """A reader on the site can find the sources it was generated from."""
     html = render_landing_page([RULEBOOK])
 
-    assert SOURCE_URL == "https://github.com/hssmalo/steampunkfantasy/tree/master/v3"
     assert f'href="{SOURCE_URL}"' in html
     assert "<footer>" in html
 

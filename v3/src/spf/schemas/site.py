@@ -1,9 +1,7 @@
-"""Schema for the Site Index (mirroring ADR 0018).
+"""Schema for the Site Index.
 
-The Index is the authored TOML that says which Army Packs the site publishes,
-in what order, and under what heading. Publishing is an editorial act — a glob
-over `armies/*/pack.toml` would publish whatever directory happens to exist,
-which is the reasoning ADR 0018 already applied one level down.
+The authored TOML that says which Army Packs the site publishes, in what order,
+and under what heading (ADR 0028).
 """
 
 from pydantic import Field
@@ -18,9 +16,8 @@ class SitePackConfig(StrictModel):
     """The Pack's directory under `armies/`, holding its Army Pack Index."""
 
     heading: str
-    """The Landing Page heading for the Pack's section. Deliberately not the
-    Pack's own title: that titles the Army Pack document, and retitling the
-    document must not reflow the site."""
+    """The Landing Page heading for the Pack's section — not the Pack's own
+    title, which belongs to the Army Pack document (ADR 0028)."""
 
 
 class SiteConfig(StrictModel):

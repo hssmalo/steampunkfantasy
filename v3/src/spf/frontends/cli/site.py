@@ -59,7 +59,7 @@ _PRODUCT_TITLES: dict[str, str] = {
 }
 
 # The Products a pack's table has one column of, in column order.
-_ARMY_PRODUCTS = ("army-rules", "cards")
+_ARMY_PRODUCTS = (ARMY_RULES.name, CARDS.name)
 
 _STYLE = """\
 body {
@@ -111,25 +111,28 @@ def _format_links(pages: Sequence[SitePage]) -> str:
     )
 
 
+def _product_title(product: str) -> str:
+    """Give the heading a Product appears under, or its own name if it has none."""
+    return _PRODUCT_TITLES.get(product, product)
+
+
 def _product_line(product: str, pages: Sequence[SitePage]) -> str:
     """Render a Product that stands outside a table as a labeled line."""
-    title = _PRODUCT_TITLES.get(product, product)
-    return f"<p>{escape(title)}: {_format_links(pages)}</p>"
+    return f"<p>{escape(_product_title(product))}: {_format_links(pages)}</p>"
 
 
 def _render_section(heading: str, pages: Sequence[SitePage]) -> str:
     """Render one pack: a table of its Armies, then its Army Pack below."""
     armies: dict[str, dict[str, list[SitePage]]] = {}
-    packs: dict[str, list[SitePage]] = {}
+    pack_pages: list[SitePage] = []
     for page in pages:
         if page.product == ARMY_PACK.name:
-            packs.setdefault(page.product, []).append(page)
+            pack_pages.append(page)
         else:
             armies.setdefault(page.label, {}).setdefault(page.product, []).append(page)
 
     headers = "".join(
-        f"<th>{escape(_PRODUCT_TITLES.get(product, product))}</th>"
-        for product in _ARMY_PRODUCTS
+        f"<th>{escape(_product_title(product))}</th>" for product in _ARMY_PRODUCTS
     )
     rows = [f"<tr><th>Army</th>{headers}</tr>"]
     for label, by_product in armies.items():
@@ -142,9 +145,7 @@ def _render_section(heading: str, pages: Sequence[SitePage]) -> str:
         rows.append(f"<tr><td>{escape(label)}</td>{cells}</tr>")
 
     table = "<table>\n" + "\n".join(rows) + "\n</table>"
-    below = [
-        _product_line(product, pack_pages) for product, pack_pages in packs.items()
-    ]
+    below = [_product_line(ARMY_PACK.name, pack_pages)] if pack_pages else []
     return "\n".join([f"<h2>{escape(heading)}</h2>", table, *below])
 
 
@@ -224,7 +225,6 @@ class _LoadedPack:
     """One Site Index entry, with the Army Pack Index and Armies it resolved to."""
 
     entry: SitePackConfig
-    path: Path
     index: ArmyPackConfig
     armies: list[tuple[str | None, Army]]
 
@@ -236,9 +236,7 @@ def _load_packs(site_index: SiteConfig) -> list[_LoadedPack]:
         path = config.paths.armies / entry.pack / "pack.toml"
         pack_index = io.get_army_pack(path)
         armies = io.load_pack_armies(pack_index, base_dir=path.parent)
-        packs.append(
-            _LoadedPack(entry=entry, path=path, index=pack_index, armies=armies)
-        )
+        packs.append(_LoadedPack(entry=entry, index=pack_index, armies=armies))
     return packs
 
 
@@ -265,7 +263,7 @@ def _render_pack(pack: _LoadedPack, *, output_root: Path) -> list[SitePage]:
             CARDS, deck, name=stem, listing=listing, output_root=output_root
         )
 
-    pack_stem = safe_stem(pack.path.resolve().parent.name) or ARMY_PACK_STEM
+    pack_stem = safe_stem(pack.entry.pack) or ARMY_PACK_STEM
     document = build_pack(
         pack.armies, title=pack.index.title, stem=pack_stem, image_for=committed_image
     )
@@ -299,8 +297,6 @@ def render_site() -> None:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    # The Rulebook belongs to no pack, so it carries no group and renders above
-    # every section.
     pages = _render_page(
         GENERAL_RULES,
         rulebook,
