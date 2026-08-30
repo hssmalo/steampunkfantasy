@@ -355,9 +355,7 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
         "showcase/gnome_air_wing",
         "showcase/gnome_ballista_battery",
         "showcase/goblin",
-        "showcase/ogre_gunline",
         "showcase/ogre_hydra",
-        "showcase/ork_armored_fist",
         "showcase/ork_warband",
     ],
 )

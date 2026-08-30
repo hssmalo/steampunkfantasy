@@ -111,6 +111,10 @@ description = '''Robotic iron dragon breathing acid.
 args.version = "damage_type.fire"
 args.N = 2
 
+
+[[units.mechanical_iron_dragon.specials.fire_order]]
+text = " Fire(acid): use acid and poison breath, while Fire(shrapnel) uses shrapnel breath instead"
+
 [[units.mechanical_iron_dragon.specials.immunity]]
 args.feature = "damage_type.acid"
 text = "Also immune to Gear Disruption"
@@ -968,7 +972,7 @@ text = "Assault ground: automatically assaults ground troops if it shares a hex 
 name = "Mechanical Iron Dragon"
 race = "darkelf"
 equipment_limit = []
-equipment = ["acid_breath", "shrapnel_breath"]
+equipment = ["acid_breath", "poison_breath", "shrapnel_breath"]
 type = ["Flying", "Mechanical", "Walking"]
 
 [models.mechanical_iron_dragon.assault]
@@ -1519,8 +1523,17 @@ ap = 3
 [[equipment.tail_gatling_gun.range.specials.focus_fire]]
 text = "When using aim: roll 6 dice at same unit."
 
+
+
 [[equipment.tail_gatling_gun.range.specials.area]]
-text = "If not using aim, fire once at all enemy models within range and within front arc: Area[5+] at point blank range, and Area[6+] at normal and long range"
+#preamble = "if not using aim, all hexes within normal and long range"
+args.N = 5
+text = "at normal range"
+
+[[equipment.tail_gatling_gun.range.specials.area]]
+args.N = 6
+text = "at long range"
+
 
 [[equipment.tail_gatling_gun.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1673,7 +1686,15 @@ damage = "d8 Crew damage"
 ap = 0
 
 [[equipment.nightmare_breath.range.specials.area]]
-text = "Fires at hexes within long range and within front arc. Area[4+] at point blank range, Area[6+] at all hexes within normal and long range"
+args.N = 4
+text = "at point blank range"
+
+[[equipment.nightmare_breath.range.specials.area]]
+args.N = 6
+text = "at long range"
+
+#Note: all hexes within long range and within front arc.
+
 
 [[equipment.nightmare_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
@@ -1800,14 +1821,37 @@ ap = 0
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.acid"
-text = "No normal damage, but any unit within normal range and front arc is automatically covered in Acid. Any unit above normal range but within long range and in front arc is covered in minor acid. In addition, all hexes within normal range and front arc: Area(5+) Poison[6]"
+text = "No normal damage, but any unit within normal range and front arc is automatically gets an acid token"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
+text = "any unit above normal range but within long range is automatically gets an minor acid token."
 
-[[equipment.acid_breath.range.specials.range_extra_damage]]
+
+[equipment.poison_breath]
+name = "Poison Breath"
+race = "darkelf"
+requires = []
+
+[equipment.poison_breath.range]
+range = 3
+angle = [true, false, false, false]
+damage = "-"
+ap = 0
+
+[[equipment.poison_breath.range.specials.area]]
+#preamble = "all hexes within normal range"
+args.N = 5
+
+[[equipment.poison_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
+
+
+
+
+
+
 
 [equipment.fire_breath]
 name = "Fire Breath"
@@ -1821,7 +1865,16 @@ damage = "-"
 ap = 0
 
 [[equipment.fire_breath.range.specials.area]]
-text = "Area[4+] at point blank range, area[5+] at normal range and area[6+] at long range."
+args.N = 4
+text = "at point blank"
+
+[[equipment.fire_breath.range.specials.area]]
+args.N = 5
+text = "at normal blank"
+
+[[equipment.fire_breath.range.specials.area]]
+args.N = 6
+text = "at long blank"
 
 [[equipment.fire_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
@@ -1864,7 +1917,13 @@ damage = "d4-2"
 ap = 1
 
 [[equipment.shrapnel_spit.range.specials.area]]
-text = "Choose a hex within normal range. Area[1+] at point blank range, Area[4+] otherwise. Single model large units are hit d4 times, while single model huge units are hit d8 times."
+#preamble = "Single model large units counts as d4 models, while single model huge units counts as d8 models."
+args.N = 1
+text = "at point blank"
+
+[[equipment.shrapnel_spit.range.specials.area]]
+args.N = 4
+text = "at long blank"
 
 [equipment.laser_eyes]
 name = "Laser Eyes"
@@ -1894,11 +1953,14 @@ angle = [true, false, false, false]
 damage = "d6-2"
 ap = 2
 
-[[equipment.shrapnel_breath.range.specials.range]]
-text = "Target one hex within front arc and within long range"
+[[equipment.shrapnel_breath.range.specials.area]]
+#preamble = "Single model large units counts as d4 models, while single model huge units counts as d8 models."
+args.N = 1
+text = "at point blank"
 
 [[equipment.shrapnel_breath.range.specials.area]]
-text = "[4+] at point blank range, Area[6+] at normal and long range. Single model large units are hit d4 times and single model huge units are hit d8 times."
+args.N = 4
+text = "at normal blank"
 
 [[equipment.shrapnel_breath.range.specials.ammo]]
 text = "Always treated as loaded"

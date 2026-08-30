@@ -1427,7 +1427,7 @@ race = "gnome"
 name = "Experimental Death Ray"
 cost.cp = 16
 upgrade_all = true
-requires = [["type:Tinkerer"], ["type:Infantry"]]
+requires = [["type:Tinkerer"], ["type:Infantry"], ["Hands:2"]]
 
 [equipment.experimental_death_ray.range]
 range = 8

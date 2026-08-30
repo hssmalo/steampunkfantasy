@@ -656,13 +656,20 @@ see_also = ["special.insanity_field", "token.insane"]
 [special.ammo]
 name = "Ammo"
 slots = ["range"]
-todo = "Rule text not yet written: how a weapon is loaded and how its ammo is tracked. Most occurrences describe loading rather than the Limited Ammo rule, so the two are kept apart until somebody decides they are one."
+effect = "Describes how a weapon is loaded and how its ammo is tracked."
 see_also = ["special.limited_ammo"]
+
 
 [special.area]
 name = "Area"
 slots = ["range"]
-todo = "Rule text not yet written: the Area(N+) mechanic is re-described inline by every hex effect and every weapon that uses it. Every occurrence states its own threshold in prose, often several at different distances, so the rule wants a shape before it wants a variable."
+signature = "[{N}+]"
+effect = "Roll a die per enemy model in the hex. For each die at N+, roll for damage and and add extra damage to the corresponding unit."
+
+[special.area.variables]
+N = { type = "int", min = 1, max = 6, optional = true}
+
+
 
 [special.drag]
 name = "Drag"
