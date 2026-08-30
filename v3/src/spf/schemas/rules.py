@@ -117,8 +117,8 @@ class DieVariableConfig(_VariableConfig):
 class FormulaVariableConfig(_VariableConfig):
     """A variable whose value is not known at authoring time: `X`, not `6`.
 
-    Its value is prose standing in for a number the game supplies -- "the power
-    of the poison gas" -- so there is nothing to check but that it was written.
+    Its value is prose standing in for a number the game supplies — "the power
+    of the poison gas" — so there is nothing to check but that it was written.
     """
 
     type: Literal["formula"]
