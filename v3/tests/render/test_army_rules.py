@@ -15,6 +15,7 @@ from spf.render import render
 from spf.render.army_rules import _roll_text, build_reference
 from spf.render.formats import get_format
 from spf.render.images import no_image
+from spf.render.specials import SpecialLine
 from spf.schemas.race import (
     AssaultConfig,
     EquipmentAssaultConfig,
@@ -148,7 +149,7 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_speed == "slow"
     assert unit_entry.shaken_movement == ["-", "-", "flee"]
     assert unit_entry.shaken_fire == "No weapons"
-    assert unit_entry.specials == [("Evasion", "[4+]")]
+    assert unit_entry.specials == [SpecialLine("Evasion", "[4+]", None)]
     assert unit_entry.damage_tables == [
         ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
     ]
@@ -211,7 +212,7 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
     assert equip_entry.angle == [True, False, False, False]
     assert equip_entry.damage == "d6"
     assert equip_entry.ap == 2
-    assert equip_entry.specials == [("Sniper", "Choose the model")]
+    assert equip_entry.specials == [SpecialLine("Sniper", "Choose the model", None)]
 
 
 def test_build_reference_rangeless_equipment_gets_no_sub_entry() -> None:
@@ -415,7 +416,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_strength_die == resolved.strength_die
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
-    assert model_entry.assault_specials == [("Ork Reroll", "[3]")]
+    assert model_entry.assault_specials == [SpecialLine("Ork Reroll", "[3]", None)]
 
 
 # --- Templates: two-column damage table (drives the real templates) --------

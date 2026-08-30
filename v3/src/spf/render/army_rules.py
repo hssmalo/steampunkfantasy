@@ -19,11 +19,11 @@ from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.registry import load_registry
 from spf.render.images import ImageLookup, committed_image
-from spf.render.specials import special_lines
+from spf.render.specials import SpecialLine, special_lines
 from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
-type _Specials = list[tuple[str, str]]
+type _Specials = list[SpecialLine]
 
 
 def _roll_text(roll: t.DamageRoll) -> str:

@@ -12,6 +12,8 @@ own occurrence.
 """
 
 import re
+from collections.abc import Callable
+from typing import NamedTuple
 
 from spf.registry import Registry, load_registry
 from spf.schemas.rules import RuleRecord
@@ -30,6 +32,20 @@ _INSTANCE_SEPARATOR = "; "
 """Between the texts of several instances sharing one heading."""
 
 
+class SpecialLine(NamedTuple):
+    """One line a reader is shown, and where its rule is written out.
+
+    The anchor travels beside the name rather than as a finished link: the
+    Markdown and LaTeX families need different link syntax from the same
+    value, and a display name alone cannot address a rule.
+    """
+
+    name: str
+    text: str
+    anchor: str | None
+    """Where this rule's Rules Reference entry sits, when there is one."""
+
+
 def special_row(
     identifier: str, instance: SpecialInstance, *, registry: Registry
 ) -> tuple[str, str]:
@@ -42,9 +58,12 @@ def special_row(
 
 
 def special_lines(
-    specials: Specials, *, registry: Registry | None = None
-) -> list[tuple[str, str]]:
-    """Render one slot's instances as (heading, text) lines, grouped by heading.
+    specials: Specials,
+    *,
+    registry: Registry | None = None,
+    anchor_for: Callable[[str], str | None] | None = None,
+) -> list[SpecialLine]:
+    """Render one slot's instances as lines, grouped by heading.
 
     N instances of an id become one line, in the order the ids were
     contributed. An atmospheric name is part of the grouping key rather than a
@@ -54,6 +73,10 @@ def special_lines(
     Instances that read exactly alike are printed once. Three Models of a Unit
     each granting the same Resistance say one thing between them, and the
     reader learns nothing from the second and third copy.
+
+    `anchor_for` resolves an Identifier to its Rules Reference entry. Without
+    one every line's `anchor` is `None`, which is what the console printing
+    and a `--no-rules` document want.
     """
     registry = registry if registry is not None else load_registry()
     grouped: dict[tuple[str, str], dict[str, None]] = {}
@@ -62,8 +85,12 @@ def special_lines(
             heading, text = special_row(identifier, instance, registry=registry)
             grouped.setdefault((identifier, heading), {})[text] = None
     return [
-        (heading, _INSTANCE_SEPARATOR.join(text for text in texts if text))
-        for (_, heading), texts in grouped.items()
+        SpecialLine(
+            name=heading,
+            text=_INSTANCE_SEPARATOR.join(text for text in texts if text),
+            anchor=anchor_for(identifier) if anchor_for is not None else None,
+        )
+        for (identifier, heading), texts in grouped.items()
     ]
 
 
