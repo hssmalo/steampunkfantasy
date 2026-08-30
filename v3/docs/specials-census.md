@@ -17,6 +17,11 @@ between the two counts (recent commits reworded/added references). No
 attempt is made to reconcile the exact delta — treat #101's counts as
 historical, this census as current.
 
+**Updated 2026-08-30** for the Extra Damage rework (ADR 0027): the assault and
+range Extra Damage rules are now versioned over the kinds they apply, the six
+kind-and-slot rules ADR 0024 anticipated are deleted, and four labels that never
+were Extra Damage became stubs of their own.
+
 Legend for the **Category** column:
 `slug` straight slug · `drift` wording drift to reconcile · `slot!` wrong slot ·
 `multi` multi-slot · `hit` absorbed by to_hit.toml · `ref` points at a token/hex ·
@@ -130,31 +135,31 @@ Legend for the **Category** column:
 | Cunning Assault Defense | `cunning_assault_defense` | slug | `special.toml#assault.cunning_assault_defense`; the rule's British spelling was the one outlier and is renamed to the American spelling the repo standardizes on. |
 | Cunning Deflection | `cunning_deflection` | missing | No rule; name is close to Cunning Assault Defense — possibly the same ability under two names, possibly genuinely distinct. Flag. |
 | Damage on Deflect | `damage_on_deflect` | missing | No rule anywhere. |
-| Extra Damage | `extra_damage` | multi + missing | Multi-slot (also range); no shared rule text in either slot. |
-| Extra Damage 2 | `extra_damage` | suffix + missing | Collapses onto `extra_damage`. |
+| Extra Damage | `assault_extra_damage` | slug | Written, versioned over `token` and `damage_type` (ADR 0027). The range label is a separate rule, not a multi-slot one. Two occurrences were never extra damage and became stubs of their own: `weakest_armor` (elf) and `crew_damage` (ork, a *substitution* of the regular damage). |
+| Extra Damage 2 | `assault_extra_damage` | suffix | Collapses onto `assault_extra_damage`; each occurrence becomes an instance. |
 | Fear | `fear` | slot! | **Confirmed by owner**: rule sits in `special.toml`'s unit section but the label is assault-only; move the rule to `[assault]`. |
 | FlyBy | `fly_by` | missing | No rule anywhere. |
-| Improved Extra Damage | `extra_damage` (?) | suffix? | Possible third suffix-collapse candidate onto `extra_damage`, or a genuinely distinct ability — unclear from name alone. Flag. |
+| Improved Extra Damage | `assault_extra_damage` | suffix | Third member of the suffix-collapse family; the versioned rule expresses every occurrence, so the flag is settled. |
 | Lands | `lands` | missing | No rule anywhere. |
 | Ork Reroll | `reroll` | slug | `special.toml#assault.reroll` already has `name = "Ork Reroll"` — exact match on name, only the internal id (`reroll` vs a more descriptive `ork_reroll`) is a style choice, not a drift problem. |
 | Overrun | `overrun` | missing | No rule anywhere (also flagged by #101 as an example of missing text). |
 | Penalty | `penalty` | missing | Presumed opposite of Bonus; no shared rule. |
 | Retreat | `retreat` | missing | Distinct from Pre-Assault Retreat; no shared rule. |
 | Size | `size` | missing | Auto-win-vs-smaller-units mechanic — unrelated to `to_hit.toml#size` (tiny/huge/enormous to-hit modifiers) despite the name. Naming collision, flag. |
-| Stench | `stench` | missing | This is decision 9's own worked example ("Troll Stench") — atmospheric name over a mechanic that currently has no shared rule (grants Poison[6] + d8 crew damage inline). See judgement call on assault.poison below — this could route through the existing `assault.poison` rule instead of bespoke text. |
+| Stench | `stench` | missing | This is decision 9's own worked example ("Troll Stench") — atmospheric name over a mechanic that currently has no shared rule (grants Poison[6] + d8 crew damage inline). Could route through `assault_extra_damage` instead of bespoke text. |
 
 ## Range slot (23 labels)
 
 | Label | Chosen id | Category | Notes |
 |---|---|---|---|
 | Ammo | `limited_ammo` | drift | `special.toml#range_.limited_ammo`; "Ammo" is the informal short form. |
-| Area | `area` | missing | The `Area(N+)` mechanic appears repeatedly in `hexes.toml` effect prose but has no formal rule of its own — every hex effect re-describes it inline. Candidate for its own shared rule. |
+| Area | `area` | missing | The `Area(N+)` mechanic appears repeatedly in `hexes.toml` effect prose but has no formal rule of its own — every hex effect re-describes it inline. Candidate for its own shared rule. One Extra Damage label turned out to be this rule (ADR 0027), so the stub now has an instance. |
 | Bonus | `bonus` | multi + missing | See assault. |
 | Burst | `burst` | slug | `special.toml#range_.burst`. |
 | Cloud | `hexes.fog` (or `hexes.poison_cloud`) | ref | Places a hex effect; which one depends on the weapon (fog vs poison cloud) — resolve per-instance, not per-label. |
 | Critical | `critical` | slug | `special.toml#range_.critical`. |
 | Drag | `drag` | missing | No rule anywhere. |
-| Extra Damage | `extra_damage` | multi + missing | See assault. |
+| Extra Damage | `range_extra_damage` | slug | Written, versioned over `token` and `damage_type` (ADR 0027). Flat where the assault rule counts hits, which is why the two are separate rules. Two occurrences were never extra damage: one is `area` (ogre), one became the `break` stub (abomination). |
 | Focus Fire | `focus_fire` | missing | Modifies how the `aim` token is used ("instead of aim, roll 6 dice"); related to `tokens.toml#aim` but not itself a token — no shared rule. |
 | Fumble | `fumble` | slug | `special.toml#range_.fumble`. |
 | Improved Aim | `improved_aim` | missing | Modifies `tokens.toml#aim`'s bonus (+4 instead of +2, stacking); related but no shared rule ties them together today. |
@@ -176,39 +181,54 @@ Legend for the **Category** column:
 | Rule | 2026-08-19 (per #101) | Now |
 |---|---|---|
 | `assault.reroll` (#101 called it `reroll_assault`; current key is `reroll`) | unreachable | **Reachable** — "Ork Reroll" matches by `name`. |
-| `assault.fire` → `assault_fire` (#113) | unreachable | Still unreachable — no assault label named "Fire" exists. Per #113's resolution this is a genuinely distinct rule from `range_fire` (different variables/bounds), not a merge candidate — stays a separate dead id needing either a label or a TODO-marked removal. |
+| `assault.fire` → `assault_fire` (#113) | unreachable | **Deleted** (ADR 0027) — the kind it named is a version of Extra Damage, not a rule. It never had an instance. |
+| `assault.minor_acid` → `assault_minor_acid` (#113) | unreachable | **Deleted** (ADR 0027) — the kind it named is a version of Extra Damage, not a rule. It never had an instance. |
+| `assault.poison` → `assault_poison` (#113) | unreachable | **Deleted** (ADR 0027) — the kind it named is a version of Extra Damage, not a rule. It never had an instance; "Stench" grants Poison[6] inline and could route through `assault_extra_damage` instead. |
 | `assault.cunning_assault_defense` | unreachable | **Reachable** — "Cunning Assault Defense" matches once the spelling drift is reconciled. |
-| `assault.minor_acid` → `assault_minor_acid` (#113) | unreachable | Still unreachable. Per #113, distinct from `range_minor_acid`, not a merge candidate. |
-| `assault.gear_disruption` → `assault_gear_disruption` (#113) | unreachable | Still unreachable. Per #113, distinct from `range_gear_disruption`, not a merge candidate. |
-| `assault.poison` → `assault_poison` (#113) | unreachable | Still unreachable — but "Stench" (assault, ork/troll) grants `Poison[6]` inline instead of using this rule. Recommend Stench route through `assault_poison` rather than staying bespoke. |
+| `assault.gear_disruption` → `assault_gear_disruption` (#113) | unreachable | **Reachable** — the Gear Disruption clauses inside assault Extra Damage labels are instances of it (ADR 0027). Still distinct from `range_gear_disruption`: the assault form counts hits. |
 | `assault.pre_assault_retreat` | unreachable | **Reachable, but wrong slot** — "Pre-Assault Retreat" is a unit label; the rule's own comment already calls for moving it to `[unit]`. |
 | `unit.hide` | unreachable | Still unreachable — no unit label named "Hide" exists (the actual "Hidden" label points at `tokens.hidden` instead, a different rule entirely). `unit.hide`'s `terrain` variable looks orphaned; flag for a decision on whether it's dead or meant to converge with Hidden. |
 | `unit.insanity_field` | unreachable | Still unreachable by exact label — Horror's "Terror" label carries the insanity-field text in free prose instead (the exact case #101 flagged). Decision 9's atmospheric-name instance shape is the natural fix, but that's a design decision for a grilling ticket, not settled here. |
 | `unit.fear` | unreachable | **Reachable, confirmed wrong slot** — moves to `[assault]` per the owner's comment. |
+| `range_.fire` → `range_fire` (#113) | unreachable | **Deleted** (ADR 0027) — the kind it named is a version of Extra Damage, not a rule. It never had an instance. |
+| `range_.minor_acid` → `range_minor_acid` (#113) | unreachable | **Deleted** (ADR 0027) — the kind it named is a version of Extra Damage, not a rule. It never had an instance. |
+| `range_.poison` → `range_poison` (#113) | unreachable | **Deleted** (ADR 0027) — the kind it named is a version of Extra Damage, not a rule. It never had an instance. |
 | `range_.limited_ammo` | unreachable | **Reachable** — "Ammo" matches once the wording drift is reconciled. |
-| `range_.gear_disruption` → `range_gear_disruption` (#113) | unreachable | Still unreachable; distinct rule from `assault_gear_disruption` per #113 (see above). |
-| `range_.fire` → `range_fire` (#113) | unreachable | Still unreachable; distinct rule from `assault_fire` per #113 (see above). |
-| `range_.minor_acid` → `range_minor_acid` (#113) | unreachable | Still unreachable; distinct rule from `assault_minor_acid` per #113 (see above). |
-| `range_.poison` → `range_poison` (#113) | unreachable | Still unreachable; distinct rule from `assault_poison` per #113 (see above). |
+| `range_.gear_disruption` → `range_gear_disruption` (#113) | unreachable | **Reachable** — the Gear Disruption clauses inside range Extra Damage labels are instances of it (ADR 0027). |
 
-**4 of the 15 become reachable outright** (reroll, cunning_assault_defense, limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix). The 8 `assault_*`/`range_*` pairs stay unreachable and, per [#113's resolution](https://github.com/hssmalo/steampunkfantasy/issues/113) (settled after this census's data-gathering started — flat namespace, no multi-slot merge for these four: the assault forms count hits, the range forms are flat, different variables and bounds), are **not** multi-slot merge candidates as this census first guessed — each keeps its own renamed id and either gets a label or a TODO-marked removal. **2 stay genuinely orphaned** (`unit.hide`, `unit.insanity_field`) pending design decisions outside this ticket's scope.
+**6 of the 15 become reachable outright** (reroll, cunning_assault_defense,
+limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix; the two
+Gear Disruption rules — by reading the Extra Damage labels as instances). **6 are
+deleted** rather than made reachable: ADR 0027 supersedes #113's "four rule pairs"
+consequence, because the kinds an Extra Damage applies are a namespace, not
+Specials — every one of those six rules had zero instances and none was ever
+written by hand. #113's other half stands: the assault forms count hits and the
+range forms are flat, which is why Extra Damage is two rules and not one.
+**2 stay genuinely orphaned** (`unit.hide`, `unit.insanity_field`) pending design
+decisions outside this ticket's scope.
 
 ## Missing-rule-text count (decision 2 stub countdown)
 
-**45** distinct ids need a TODO stub, counting each suffix-collapsed family once —
+**47** distinct ids need a TODO stub, counting each suffix-collapsed family once —
 `officer` (Darkelf Officer/Officer/Officer 2), `enormous`, `heads`, `illusion`,
 `movement`, `pet`, `phoenix`, `regeneration`, `repairing`, `setup`, `side_weapon`,
 `spawn`, `stacking_limit`, `tow`, `transfer`, `vulnerability`, `fog` (model-slot
 sense), `escape_artist`, `not_yet_dead`, `angle`, `bonus`, `counter_attack`,
-`cunning_deflection`, `damage_on_deflect`, `extra_damage`, `fly_by`, `lands`,
-`overrun`, `penalty`, `retreat`, `size`, `stench`, `area`, `drag`, `focus_fire`,
+`cunning_deflection`, `damage_on_deflect`, `fly_by`, `lands`, `overrun`,
+`penalty`, `retreat`, `size`, `stench`, `weakest_armor`, `crew_damage`, `area`,
+`break`, `drag`, `focus_fire`,
 `improved_aim`, `indirect_fire`, `insanity`, `multiple_shots`, `multipurpose`,
 `order`, `range`, `recoil`, `sniper`, `type`.
 
 This is an **upper bound**: several of these are suspected duplicates of each
 other pending the judgement calls below (Multiple Shots/Burst, Cunning
-Deflection/Cunning Assault Defense, Improved Extra Damage/Extra Damage) — each
-confirmed duplicate removes one id from the count rather than adding a stub.
+Deflection/Cunning Assault Defense) — each confirmed duplicate removes one id
+from the count rather than adding a stub.
+
+The count went **up** by two even though Extra Damage became a written rule:
+`extra_damage` leaves the countdown, and `weakest_armor`, `crew_damage` and
+`break` join it. That is the countdown working — four labels were hiding under
+one id, and three of them have no rule text yet.
 
 ## Open judgement calls
 
@@ -217,13 +237,12 @@ Per the ticket's instruction, these are flagged rather than settled:
 1. **`enhanced_accuracy`'s to-hit value is fixed at `+1` in `to_hit.toml`, but race data needs +1, +3, and +5** (three "bad at long range + enhanced accuracy" compound instances differ only in this number). The rule needs a variable, not a constant.
 2. **"Great Shot: +2 to hit" text-matches `excellent_shot`'s value (+2), not `superb_shot`'s (+3)**, despite the superficial word "Great" suggesting the bigger bonus. Confirm which id it should map to before treating it as a clean spelling-only match.
 3. **Compound To Hit values need the instance-args shape from #112** to express "id A or id B, conditional" and "id A plus a bespoke clause" — flagging that the census surfaced real cases needing that shape, not asking to resolve the shape here.
-4. ~~Four rule pairs in `special.toml` (`fire`, `minor_acid`, `poison`, `gear_disruption`) look like multi-slot merge candidates~~ — **settled by [#113](https://github.com/hssmalo/steampunkfantasy/issues/113)** while this census was in progress: each pair is genuinely two different rules (different variables/bounds), renamed to `assault_*`/`range_*` rather than merged. No longer open; noted here only so the reasoning isn't lost.
+4. ~~Four rule pairs in `special.toml` (`fire`, `minor_acid`, `poison`, `gear_disruption`) look like multi-slot merge candidates~~ — **settled by [#113](https://github.com/hssmalo/steampunkfantasy/issues/113)**, then half-superseded by **ADR 0027**: fire, minor acid and poison are not rules at all but the kinds Extra Damage applies, and their six rules are deleted. Gear disruption stays a rule, and stays two rules, for #113's reason.
 5. **`unit.hide` looks orphaned.** No label named "Hide" exists; "Hidden" (a different label) already resolves cleanly to `tokens.hidden`. Is `unit.hide` dead, or does something still need to reference it?
 6. **`unit.insanity_field` stays unreachable by exact label** — Horror's "Terror" label carries insanity-field content in free prose instead. The natural fix is decision 9's atmospheric-name instance shape (an instance of `terror` with a local name/version), but that's a modeling decision for a grilling ticket, not this census.
 7. **Possible label duplicates, name closeness only — not confirmed:**
    - "Cunning Deflection" vs "Cunning Assault Defense" (assault) — same ability, two names, or genuinely distinct?
    - "Multiple Shots" (range) vs "Burst" (range) — both describe firing N times; duplicate or distinct?
-   - "Improved Extra Damage" vs "Extra Damage"/"Extra Damage 2" (assault) — third member of the suffix-collapse family, or its own ability?
 8. **Naming collisions with concepts this map is about to formalize** (not duplicates, just names that will be confusing once the referenced concept exists):
    - Assault "Angle" and "Size" both collide by name with `to_hit.toml`'s `[angle]`/`[size]` sections, which mean something unrelated (to-hit modifiers by firing angle / unit size category).
    - Range "Order" collides by name with the future `orders` ref namespace (decision 7) — it means "this weapon's firing-order restriction," not a unit order.

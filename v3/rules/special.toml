@@ -244,7 +244,7 @@ effect = """Healing only works on biological units and removing crippled crew fo
 - Remove crippled crew token. Cost 4.
 """
 see_also = ["token.poison", "token.bleed", "token.minor_acid", "token.acid", "token.fire", "token.crippled_crew"]
-todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. Decide whether a computed value deserves a type of its own."
+todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. The `formula` type now exists (ADR 0027); decide whether these instances should use it."
 
 [special.heal.variables]
 N = { type = ["int", "str"], min = 1, max = 10 }
@@ -280,7 +280,7 @@ effect = """Repear only works on mechanical and drone units. You have {N} points
 - Degrade one acid to minor acid. Cost 4.
 """
 see_also = ["token.minor_acid", "token.acid", "token.fire", "token.shaken", "token.disabled_repair"]
-todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. Decide whether a computed value deserves a type of its own."
+todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. The `formula` type now exists (ADR 0027); decide whether these instances should use it."
 
 [special.repair.variables]
 N = { type = ["int", "str"], min = 1, max = 10 }
