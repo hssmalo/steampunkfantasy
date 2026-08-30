@@ -84,6 +84,13 @@ class RenderOpts:
             help="Leave committed Image Assets out of the document.",
         ),
     ] = False
+    no_rules: Annotated[
+        bool,
+        cyclopts.Parameter(
+            negative="",
+            help="Leave the Rules Reference, and the links into it, out.",
+        ),
+    ] = False
 
 
 def safe_stem(name: str) -> str:
@@ -128,7 +135,10 @@ def render_army_rules(
 
     stem = safe_stem(army_name)
     reference = build_reference(
-        army, stem=stem, image_for=no_image if opts.no_images else committed_image
+        army,
+        stem=stem,
+        image_for=no_image if opts.no_images else committed_image,
+        rules=not opts.no_rules,
     )
     fmt = get_format(opts.format)
     out = render(ARMY_RULES, reference, fmt=fmt, name=stem, out=opts.out)
@@ -203,6 +213,7 @@ def render_army_pack(
         title=title,
         stem=stem,
         image_for=no_image if opts.no_images else committed_image,
+        rules=not opts.no_rules,
     )
     fmt = get_format(opts.format)
     out = render(ARMY_PACK, pack, fmt=fmt, name=stem, out=opts.out)

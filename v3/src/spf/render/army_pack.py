@@ -50,6 +50,7 @@ def build_pack(
     title: str,
     stem: str,
     image_for: ImageLookup = committed_image,
+    rules: bool = True,
 ) -> ArmyPack:
     """Build an `ArmyPack` from already-resolved Armies, in the given order.
 
@@ -63,11 +64,21 @@ def build_pack(
     entries: list[PackEntry] = []
     for label, army in armies:
         resolved_label = f"{label}: {army.nick}" if label is not None else army.nick
+        anchor = _anchor(resolved_label, taken)
         entries.append(
             PackEntry(
                 label=resolved_label,
-                anchor=_anchor(resolved_label, taken),
-                reference=build_reference(army, stem=stem, image_for=image_for),
+                anchor=anchor,
+                reference=build_reference(
+                    army,
+                    stem=stem,
+                    image_for=image_for,
+                    rules=rules,
+                    # The entry's own anchor is already unique in the Pack, so
+                    # prefixing with it keeps two Armies fielding one rule from
+                    # emitting the same id twice.
+                    anchor_prefix=f"{anchor}-",
+                ),
             )
         )
     return ArmyPack(title=title, stem=stem, entries=entries)

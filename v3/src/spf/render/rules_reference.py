@@ -84,6 +84,18 @@ class RuleEntry:
             self.effect or self.phases or self.remove or self.to_hit or self.to_be_hit
         )
 
+    @property
+    def fields(self) -> bool:
+        """Whether the entry has anything to list beneath its rule text."""
+        return bool(
+            self.phases or self.remove or self.to_hit or self.to_be_hit or self.see_also
+        )
+
+    @property
+    def text(self) -> str:
+        """The rule's general text, or the Stub marker when none is written."""
+        return self.effect or (PENDING if self.pending else "")
+
 
 @dataclass(frozen=True)
 class RulesReference:

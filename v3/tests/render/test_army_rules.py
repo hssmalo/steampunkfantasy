@@ -1,5 +1,6 @@
 """Tests for the Army Reference product: build_reference() and the CLI."""
 
+import re
 import shutil
 from pathlib import Path
 
@@ -149,7 +150,9 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_speed == "slow"
     assert unit_entry.shaken_movement == ["-", "-", "flee"]
     assert unit_entry.shaken_fire == "No weapons"
-    assert unit_entry.specials == [SpecialLine("Evasion", "[4+]", None)]
+    assert unit_entry.specials == [
+        SpecialLine("Evasion", "[4+]", "rule-special-evasion")
+    ]
     assert unit_entry.damage_tables == [
         ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
     ]
@@ -212,7 +215,9 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
     assert equip_entry.angle == [True, False, False, False]
     assert equip_entry.damage == "d6"
     assert equip_entry.ap == 2
-    assert equip_entry.specials == [SpecialLine("Sniper", "Choose the model", None)]
+    assert equip_entry.specials == [
+        SpecialLine("Sniper", "Choose the model", "rule-special-sniper")
+    ]
 
 
 def test_build_reference_rangeless_equipment_gets_no_sub_entry() -> None:
@@ -416,7 +421,9 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_strength_die == resolved.strength_die
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
-    assert model_entry.assault_specials == [SpecialLine("Ork Reroll", "[3]", None)]
+    assert model_entry.assault_specials == [
+        SpecialLine("Ork Reroll", "[3]", "rule-special-ork-reroll")
+    ]
 
 
 # --- Templates: two-column damage table (drives the real templates) --------
@@ -474,7 +481,11 @@ def test_render_army_rules_markdown_has_title_and_unit_sections(
     assert "## Goblin Infantry" in text
     assert "---" in text
     assert "### " in text  # a Model subsection
-    assert "Movement" not in text
+    # Orders are not part of an Army Reference; they live on the Order Cards.
+    # Checked over the Units alone: the Rules Reference names the Movement
+    # phases a token is resolved in, which is not an order.
+    units, _, _rules = text.partition("## Rules Reference")
+    assert "Movement" not in units
     assert "Fire Order" in text or "Take Cover" in text  # a unit special
     assert "| 0-5 | Kill 1 model |" in text  # a two-column damage-table row
 
@@ -883,3 +894,84 @@ def test_army_rules_output_matches_golden_file_with_granted_armor_and_notes(
 
     golden = (GOLDEN_DIR / "army_rules_dwarf.md").read_text(encoding="utf-8")
     assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
+
+
+# --- `--no-rules` reproduces the document as it was before the Rules Reference
+#
+# The opt-out's whole contract: with it, nothing about the Rules Reference —
+# neither the list nor a link on a Unit line — reaches the page. The goldens
+# below are the output as it stood before any of it existed, so a leak of any
+# kind fails here rather than in a published document.
+
+SHOWCASE_ARMIES = Path(__file__).parent.parent.parent / "armies" / "showcase"
+
+NO_RULES_GOLDEN_DIR = GOLDEN_DIR / "no_rules"
+
+
+@pytest.mark.parametrize(
+    "army_file", sorted(p.name for p in SHOWCASE_ARMIES.glob("*.json"))
+)
+@pytest.mark.usefixtures("pinned_version")
+def test_no_rules_reproduces_the_showcase_output(
+    tmp_path: Path, army_file: str
+) -> None:
+    stem = Path(army_file).stem
+    army = io._load_army_at(SHOWCASE_ARMIES / army_file, label=stem, validate=True)
+    reference = build_reference(army, stem=stem, image_for=no_image, rules=False)
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name=stem,
+        output_root=tmp_path,
+    )
+
+    golden = (NO_RULES_GOLDEN_DIR / f"{stem}.md").read_text(encoding="utf-8")
+    assert _trimmed(out.read_text(encoding="utf-8")) == _trimmed(golden)
+
+
+def _trimmed(text: str) -> list[str]:
+    """Split `text` into lines with trailing whitespace off each.
+
+    A committed golden passes through the trailing-whitespace pre-commit hook,
+    which strips the spaces a template emits after an empty field — so the
+    trailing space is a property of the fixture, not of the renderer.
+    """
+    return [line.rstrip() for line in text.rstrip("\n").splitlines()]
+
+
+# --- The Rules Reference in a standalone Army Reference (ADR 0029) ----------
+
+
+def test_the_rules_reference_prints_after_all_the_units(tmp_path: Path) -> None:
+    out = tmp_path / "demo.md"
+    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
+
+    text = out.read_text(encoding="utf-8")
+    assert text.count("## Rules Reference") == 1
+    # Every Unit heading comes before it: one list per Army, at the end.
+    assert text.index("## Rules Reference") > text.rindex("## Goblin Infantry")
+
+
+def test_a_unit_line_links_into_the_rules_reference(tmp_path: Path) -> None:
+    out = tmp_path / "demo.md"
+    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
+
+    text = out.read_text(encoding="utf-8")
+    linked = re.findall(r"\*\*\[[^]]+\]\(#(rule-[^)]+)\)\*\*", text)
+    assert linked
+    # A link with no anchor to land on is worse than no link at all.
+    for anchor in linked:
+        assert f'<a id="{anchor}"></a>' in text
+
+
+def test_cli_accepts_no_rules(tmp_path: Path) -> None:
+    out = tmp_path / "demo.md"
+    render_army_rules(
+        DEMO_ARMY, opts=RenderOpts(format="markdown", out=out, no_rules=True)
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "Rules Reference" not in text
+    assert "](#rule-" not in text

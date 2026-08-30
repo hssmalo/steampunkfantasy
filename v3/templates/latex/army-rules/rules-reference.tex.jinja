@@ -1,0 +1,53 @@
+{#
+  One Army's Rules Reference: the rule Records its Specials reach, flat and
+  alphabetical across every namespace (ADR 0029). Printed after all the Units,
+  once per Army — in an Army Pack that means inside each Army's entry, before
+  the `\clearpage`, so a player's own pages are complete on their own.
+
+  `reference` is the `ArmyReference` to render and `unit_heading` the
+  sectioning command a Unit sits at, the same two names `reference-body`
+  takes; the Rules Reference heads at that level, as a peer of the Units it
+  follows.
+
+  An entry's own fields are an `itemize` under it rather than a run-on
+  sentence beside it, matching the Markdown family: a rule's `effect` is
+  authored prose that may itself run to several lines.
+
+  `\phantomsection` before each `\label`: a bare `\label` records whatever
+  counter was last stepped, so every entry's link would land on the section
+  heading instead. It and the `\hyperref` a Unit line carries both come from
+  `hyperref`, which both mains load.
+#}
+\BLOCK{if reference.rules}
+\VAR{unit_heading}{\VAR{reference.rules.title | latex_escape}}
+\BLOCK{for entry in reference.rules.entries}
+
+
+\phantomsection\label{\VAR{entry.anchor}}%
+\BLOCK{if entry.alias_for}
+\noindent\textbf{\VAR{entry.name | latex_escape}} --- see \BLOCK{if entry.alias_for.anchor}\hyperref[\VAR{entry.alias_for.anchor}]{\VAR{entry.alias_for.heading | latex_escape}}\BLOCK{else}\VAR{entry.alias_for.heading | latex_escape}\BLOCK{endif}
+\BLOCK{else}
+\noindent\textbf{\VAR{entry.heading | latex_escape}}\BLOCK{if entry.text} --- \BLOCK{if entry.pending}\textit{\VAR{entry.text | latex_escape}}\BLOCK{else}\VAR{entry.text | latex_escape}\BLOCK{endif}\BLOCK{endif}
+\BLOCK{if entry.fields}
+\begin{itemize}
+\BLOCK{if entry.phases}
+\item \textit{Phases:} \VAR{entry.phases | join(', ') | latex_escape}
+\BLOCK{endif}
+\BLOCK{if entry.remove}
+\item \textit{Removed:} \VAR{entry.remove | latex_escape}
+\BLOCK{endif}
+\BLOCK{if entry.to_hit}
+\item \textit{To hit:} \VAR{entry.to_hit | latex_escape}
+\BLOCK{endif}
+\BLOCK{if entry.to_be_hit}
+\item \textit{To be hit:} \VAR{entry.to_be_hit | latex_escape}
+\BLOCK{endif}
+\BLOCK{if entry.see_also}
+\item \textit{See also:} \BLOCK{for link in entry.see_also}\BLOCK{if not loop.first}, \BLOCK{endif}\BLOCK{if link.anchor}\hyperref[\VAR{link.anchor}]{\VAR{link.heading | latex_escape}}\BLOCK{else}\VAR{link.heading | latex_escape}\BLOCK{endif}\BLOCK{endfor}
+
+\BLOCK{endif}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endif}
+\BLOCK{endfor}
+\BLOCK{endif}
