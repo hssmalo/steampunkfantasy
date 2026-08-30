@@ -1,7 +1,8 @@
-"""Tests for the rows `spf special list` prints.
+"""Tests for `spf special list` and `spf special show`.
 
-`special_rows` is a pure function over the Registry, so most of these build
-`SpecialRuleConfig` records by hand rather than coupling to `rules/special.toml`.
+`special_rows` and `special_record` are pure functions over the Registry, so
+most of these build `SpecialRuleConfig` records by hand rather than coupling to
+`rules/special.toml`.
 """
 
 import re
@@ -9,7 +10,7 @@ import re
 import pytest
 
 from spf.frontends.cli import app
-from spf.frontends.cli.special import special_rows
+from spf.frontends.cli.special import SpecialRecord, special_record, special_rows
 from spf.registry import Registry, load_registry
 from spf.schemas.rules import SpecialRuleConfig
 
@@ -198,3 +199,72 @@ def test_a_written_rule_carrying_a_todo_still_shows_its_effect() -> None:
 
     assert row.text == "Aim carefully."
     assert row.is_stub is False
+
+
+#
+# The record block `spf special show` prints above its Instances
+#
+def _record(key: str, registry: Registry) -> SpecialRecord:
+    return special_record(key, registry.specials[key], registry=registry)
+
+
+def test_a_written_records_effect_lands_in_the_record() -> None:
+    registry = _registry(aim=_rule(effect="Aim carefully."))
+
+    record = _record("aim", registry)
+
+    assert record.effect == "Aim carefully."
+    assert record.todo is None
+
+
+def test_a_records_todo_survives_whole() -> None:
+    # Unlike a list row, `show` has room for the whole note: the rescued design
+    # prose is the only thing a Stub has to say.
+    todo = "Rule text not yet written.\nThis wants an Order, and none exist."
+    registry = _registry(aim=_rule(todo=todo))
+
+    record = _record("aim", registry)
+
+    assert record.todo == todo
+    assert record.effect is None
+
+
+def test_a_written_record_carrying_a_todo_keeps_both() -> None:
+    # The schema deliberately admits both, and `show` is where the reader is
+    # already looking at the rule the open question is about.
+    registry = _registry(aim=_rule(effect="Aim carefully.", todo="Duplicate of fend?"))
+
+    record = _record("aim", registry)
+
+    assert record.effect == "Aim carefully."
+    assert record.todo == "Duplicate of fend?"
+
+
+def test_a_records_absent_fields_are_not_invented() -> None:
+    registry = _registry(aim=_rule(effect="Aim carefully."))
+
+    record = _record("aim", registry)
+
+    assert (record.flavor, record.example) == (None, None)
+    assert record.variables == []
+    assert record.places == []
+    assert record.see_also == []
+    assert record.versions == []
+
+
+def test_the_record_label_is_the_identifier_and_its_signature() -> None:
+    # Uninterpolated: there are no Args at record level, and the placeholder is
+    # what tells a reader the Special takes an argument at all.
+    registry = _registry(
+        ork_reroll=_rule(
+            name="Ork Reroll",
+            signature="[{N}]",
+            variables={"N": {"type": "int", "min": 1}},
+            effect="Reroll.",
+        )
+    )
+
+    record = _record("ork_reroll", registry)
+
+    assert record.label == "ork_reroll[{N}]"
+    assert record.name == "Ork Reroll"

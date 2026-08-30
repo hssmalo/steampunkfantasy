@@ -12,6 +12,7 @@ from spf import races
 from spf.console import stdout
 from spf.frontends.cli.suggest import resolve_or_raise
 from spf.registry import Registry, load_registry
+from spf.render.rulebook import constraint_text
 from spf.render.specials import special_row
 from spf.schemas.race import RaceConfig
 from spf.schemas.rules import Slot, SpecialRuleConfig
@@ -115,6 +116,77 @@ def list_specials(*, slot: Slot | None = None) -> None:
             highlight=False,
             soft_wrap=True,
         )
+
+
+@dataclass(frozen=True)
+class SpecialRecord:
+    """One Special as `show` prints it, above its Instances.
+
+    Terminal-shaped rather than Rulebook-shaped: the Rulebook's `RuleEntry`
+    assumes Markdown and is only built for written rules, while most records
+    here are Stubs and every field is printed as plain text.
+    """
+
+    marks: str
+    """The UMAR column."""
+
+    label: str
+    """Identifier and Signature, uninterpolated."""
+
+    name: str
+    """The Display Name."""
+
+    effect: str | None
+    flavor: str | None
+    example: str | None
+
+    variables: list[tuple[str, str]]
+    """(name, constraint phrase) pairs, in declaration order."""
+
+    places: list[str]
+    """Rendered Refs: what this rule causes."""
+
+    see_also: list[str]
+    """Rendered Refs: related reading."""
+
+    versions: list[tuple[str, str]]
+    """(rendered Ref, effect) pairs, one per version overlay."""
+
+    todo: str | None
+    """The whole note, newlines intact — `show` has room for all of it."""
+
+
+def _ref_label(ref: str, registry: Registry) -> str:
+    """Render a Ref as the name a reader knows plus the id they can type."""
+    return f"{registry.display_name(ref)} ({ref})"
+
+
+def special_record(
+    key: str, rule: SpecialRuleConfig, *, registry: Registry
+) -> SpecialRecord:
+    """Build the record block for one Special.
+
+    Pure, as `special_rows` is: the Registry comes from the caller, so the
+    Refs resolve (ADR 0024) without the builder reaching for a loader.
+    """
+    return SpecialRecord(
+        marks=_slot_marks(rule.slots),
+        label=f"{key}{rule.signature or ''}",
+        name=rule.name,
+        effect=rule.effect,
+        flavor=rule.flavor,
+        example=rule.example,
+        variables=[
+            (name, constraint_text(spec)) for name, spec in rule.variables.items()
+        ],
+        places=[_ref_label(ref, registry) for ref in rule.places],
+        see_also=[_ref_label(ref, registry) for ref in rule.see_also],
+        versions=[
+            (_ref_label(ref, registry), overlay.effect)
+            for ref, overlay in rule.versions.items()
+        ],
+        todo=rule.todo,
+    )
 
 
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:
