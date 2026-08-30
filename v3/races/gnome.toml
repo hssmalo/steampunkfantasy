@@ -1041,7 +1041,10 @@ damage = "d6 Psychic damage + d4 Crew damage"
 ap = 0
 
 [[equipment.green_gas_launcher.range.specials.area]]
-text = "Choose one hex (per model firing this weapon) within normal range: Area(5+)"
+preamble = "Choose one hex (per model firing this weapon) within normal range"
+
+[[equipment.green_gas_launcher.range.specials.area.cases]]
+args.N = 5
 
 [[equipment.green_gas_launcher.range.specials.range_extra_damage]]
 args.version = "token.poison"
