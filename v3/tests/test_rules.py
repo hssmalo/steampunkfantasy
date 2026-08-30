@@ -98,7 +98,7 @@ to_be_hit = "0"
 
 NAMESPACES = """\
 [namespaces]
-probe = { name = "Probes", file = "probe.toml", table = "probe" }
+probe = { name = "Probes", label = "probe", file = "probe.toml", table = "probe" }
 
 [damage_type.probe]
 name = "Probe"
