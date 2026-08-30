@@ -975,3 +975,21 @@ def test_cli_accepts_no_rules(tmp_path: Path) -> None:
     text = out.read_text(encoding="utf-8")
     assert "Rules Reference" not in text
     assert "](#rule-" not in text
+
+
+def test_an_army_with_no_specials_prints_no_empty_heading(tmp_path: Path) -> None:
+    # An empty list is worse than none: the heading would promise entries the
+    # document does not have.
+    reference = build_reference(_army(_unit()), stem="bare", image_for=no_image)
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="bare",
+        output_root=tmp_path,
+    )
+
+    assert reference.rules is not None
+    assert reference.rules.entries == []
+    assert "Rules Reference" not in out.read_text(encoding="utf-8")

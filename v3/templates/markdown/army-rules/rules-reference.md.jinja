@@ -16,7 +16,7 @@
   `<a id>` — the pattern `general-rules/main.md.jinja` and `army-pack/main`
   already use.
 #}
-{%- if reference.rules %}
+{%- if reference.rules and reference.rules.entries %}
 {{ hashes }} {{ reference.rules.title }}
 {% for entry in reference.rules.entries %}
 <a id="{{ entry.anchor }}"></a>
