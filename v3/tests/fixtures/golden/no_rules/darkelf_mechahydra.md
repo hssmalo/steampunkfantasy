@@ -128,7 +128,7 @@
 #### Shrapnel Spit
 
 - Range: 3, angle True/True/False/False, damage d4-2, AP 1
-- **Area**: [1+]. at point blank; [4+]. at long blank
+- **Area**: [1+]. at point blank; [4+]. at long range
 
 #### Poison Spit
 

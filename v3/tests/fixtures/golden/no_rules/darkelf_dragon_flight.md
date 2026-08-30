@@ -80,7 +80,7 @@
 #### Fire Breath
 
 - Range: 3, angle True/False/False/False, damage -, AP 0
-- **Area**: [4+]. at point blank; [5+]. at normal blank; [6+]. at long blank
+- **Area**: [4+]. at point blank; [5+]. at normal range; [6+]. at long range
 - **Range Extra Damage**: Poison[6]. No regular damage.; Fire
 - **Bonus**: Any unit within long range and in front arc gets a minor acid token
 
