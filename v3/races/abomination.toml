@@ -697,8 +697,18 @@ deflection_die = "6+"
 damage = "d6"
 ap = 2
 
-[[models.water_elemental.assault.specials.extra_damage]]
-text = "Gear Disruption[5+][1 for 2], Minor Acid[1 for 2], Poison[6][1 for 2]"
+[[models.water_elemental.assault.specials.assault_gear_disruption]]
+args.N = 5
+args.M = 2
+
+[[models.water_elemental.assault.specials.assault_extra_damage]]
+args.version = "token.minor_acid"
+args.M = 2
+
+[[models.water_elemental.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 2
 
 [models.robot_crab]
 name = "Robot Crab"
@@ -850,8 +860,10 @@ args.N = 3
 [[models.giant_frog_rider.assault.specials.bonus]]
 text = "+100% strength and deflections versus shaken units"
 
-[[models.giant_frog_rider.assault.specials.extra_damage]]
-text = "Poison[4][1 for 4]"
+[[models.giant_frog_rider.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 4
 
 [equipment]
 
@@ -869,8 +881,8 @@ ap = "N/A"
 [[equipment.confusion_stinger.range.specials.multiple_shots]]
 text = "Fires 3 shot per fire order."
 
-[[equipment.confusion_stinger.range.specials.extra_damage]]
-text = "Confusion"
+[[equipment.confusion_stinger.range.specials.range_extra_damage]]
+args.version = "token.confused"
 
 
 [equipment.greater_disruptors]
@@ -887,8 +899,8 @@ ap = 0
 [[equipment.greater_disruptors.range.specials.multiple_shots]]
 text = "Fires 4 shot per fire order."
 
-[[equipment.greater_disruptors.range.specials.extra_damage]]
-text = "Gear Disruption[5+]"
+[[equipment.greater_disruptors.range.specials.range_gear_disruption]]
+args.N = 5
 
 [[equipment.greater_disruptors.range.specials.los]]
 text = "Trace line of sight from either front or back part of the unit"
@@ -992,7 +1004,8 @@ strength.add = [1, 0, 0, 0]
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+" # TODO: use max and add "max" to data.py, line 1120ish
 
-[[equipment.tentacle_cracklespears.assault.specials.extra_damage]]
+[[equipment.tentacle_cracklespears.assault.specials.assault_extra_damage]]
+args.version = "damage_type.psychic"
 text = "If assault in a hex with fog, each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears."
 
 [equipment.tentacle_axes]
@@ -1122,8 +1135,8 @@ ap = "3"
 [[equipment.double_barreled_oversized_musket.range.specials.multiple_shots]]
 text = "Fire two shot per fire order"
 
-[[equipment.double_barreled_oversized_musket.range.specials.extra_damage]]
-text = "Gear disruption[6+]"
+[[equipment.double_barreled_oversized_musket.range.specials.range_gear_disruption]]
+args.N = 6
 
 [equipment.tentacle_dart]
 name = "Tentacle Dart"
@@ -1213,8 +1226,9 @@ angle = [true, true, false, false]
 damage = "N/A"
 ap = "N/A"
 
-[[equipment.frog_spit.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.frog_spit.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [[equipment.frog_spit.range.specials.ammo]]
 text = "Always treated as loaded"
@@ -1240,7 +1254,7 @@ text = "Fire twice per fire order"
 [[equipment.twin_frost_ray.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.twin_frost_ray.range.specials.extra_damage]]
+[[equipment.twin_frost_ray.range.specials.break]]
 text = "The target must break if possible (if it has a lower speed available). Reduce the speed one step"
 
 [equipment.heavy_water_jet]
@@ -1254,8 +1268,8 @@ angle = [true, false, false, false]
 damage = "d6 (+d8 Crew damage if penetrating all armor)"
 ap = 6
 
-[[equipment.heavy_water_jet.range.specials.extra_damage]]
-text = "Gear Disruption[5+]"
+[[equipment.heavy_water_jet.range.specials.range_gear_disruption]]
+args.N = 5
 
 
 [equipment.corrosive_water_jet]
@@ -1269,8 +1283,11 @@ angle = [true, false, false, false]
 damage = "N/A"
 ap = "N/A"
 
-[[equipment.corrosive_water_jet.range.specials.extra_damage]]
-text = "Gear Disruption[5+], Minor Acid"
+[[equipment.corrosive_water_jet.range.specials.range_gear_disruption]]
+args.N = 5
+
+[[equipment.corrosive_water_jet.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 
 [equipment.poison_water_jet]
@@ -1284,8 +1301,9 @@ angle = [true, false, false, false]
 damage = "N/A"
 ap = "N/A"
 
-[[equipment.poison_water_jet.range.specials.extra_damage]]
-text = "Poison[6]"
+[[equipment.poison_water_jet.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 
 

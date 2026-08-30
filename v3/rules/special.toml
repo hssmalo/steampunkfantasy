@@ -28,14 +28,6 @@ see_also = ["special.cunning_assault_defense"]
 [special.cunning_assault.variables]
 N = { type = "int", min = 1, max = 4 }
 
-#ToDo: Assault Fire
-[special.assault_fire]
-name = "Assault Fire"
-slots = ["assault"]
-effect = "All enemy units hit at least once in assault gets an fire token."
-places = ["token.fire"]
-see_also = ["special.range_fire"]
-
 [special.cunning_assault_defense]
 name = "Cunning Assault Defense"
 slots = ["assault"]
@@ -48,17 +40,6 @@ todo = "Named close enough to \"Cunning Deflection\" that the two may be one abi
 N = { type = "int" }
 M = { type = "int", min = 1, max = 6 }
 
-[special.assault_minor_acid]
-name = "Assault Minor Acid"
-slots = ["assault"]
-signature = "[1 for {N}]"
-effect = "Targets gets one minor token for each {N} hits."
-places = ["token.minor_acid"]
-see_also = ["special.range_minor_acid"]
-
-[special.assault_minor_acid.variables]
-N = { type = "int", min = 1, max = 4 }
-
 [special.assault_gear_disruption]
 name = "Assault Gear Disruption"
 slots = ["assault"]
@@ -69,18 +50,6 @@ see_also = ["special.range_gear_disruption"]
 
 [special.assault_gear_disruption.variables]
 N = { type = "int", min = 1, max = 6 }
-M = { type = "int", min = 1, max = 4 }
-
-[special.assault_poison]
-name = "Assault Poison"
-slots = ["assault"]
-signature = "[{N}][1 for {M}]"
-effect = "Targets gets one poison[{N}] token for each {M} hits."
-places = ["token.poison"]
-see_also = ["special.range_poison"]
-
-[special.assault_poison.variables]
-N = { type = "int", values = [4, 6, 8, 10, 12] }
 M = { type = "int", min = 1, max = 4 }
 
 [special.pre_assault_retreat]
@@ -102,19 +71,52 @@ From reference.toml:
 potential_references = ["special.unit.pre-assault_retreat"]"""
 see_also = ["special.pre_assault_retreat"]
 
-[special.extra_damage]
-name = "Extra Damage"
-slots = ["assault", "range"]
-todo = """Rule text not yet written, in either slot.
-
-The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
+[special.assault_extra_damage]
+name = "Assault Extra Damage"
+slots = ["assault"]
+signature = "{version}[1 for {M}]"
+effect = "The target gets one {version} if hit at least once. Where a ratio is given, it gets one per {M} hits instead."
+see_also = ["special.range_extra_damage", "special.assault_gear_disruption"]
+todo = """The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
 
 From reference.toml:
 #Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
-#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed
-potential_references = ["special.assault.fire", "special.assault.poison", "special.assault.minor_acid","token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized", "special.assault.gear_disruption"]
-#references are garanted, potentials are not
-potential_references = ["token.acid", "token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]"""
+#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed"""
+
+[special.assault_extra_damage.variables]
+version = { type = "ref", namespaces = ["token", "damage_type"] }
+M = { type = "int", min = 1, max = 4, optional = true }
+
+[special.range_extra_damage]
+name = "Range Extra Damage"
+slots = ["range"]
+signature = "{version}"
+effect = "The target gets one {version}."
+see_also = ["special.assault_extra_damage", "special.range_gear_disruption"]
+todo = """The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
+
+From reference.toml:
+#Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
+#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed"""
+
+[special.range_extra_damage.variables]
+version = { type = "ref", namespaces = ["token", "damage_type"] }
+
+[special.break]
+name = "Break"
+slots = ["range"]
+todo = """Rule text not yet written. The Race data says "the target must break if possible (if it has a lower speed available). Reduce the speed one step"."""
+
+[special.weakest_armor]
+name = "Weakest Armor"
+slots = ["assault"]
+todo = """Rule text not yet written. The Race data says "always attacks weakest point of armor" — decide whether that means the lowest armor value in any facing, or the facing actually assaulted."""
+
+[special.crew_damage]
+name = "Crew Damage"
+slots = ["assault"]
+todo = """Rule text not yet written. The Race data says "may replace regular damage with d8 Crew damage" — a substitution rather than extra damage, and one that ignores armor."""
+places = ["damage_type.crew"]
 
 [special.damage_on_deflect]
 name = "Damage on Deflect"
@@ -181,8 +183,8 @@ see_also = ["special.angle"]
 [special.stench]
 name = "Stench"
 slots = ["assault"]
-todo = "Rule text not yet written: the one occurrence grants Poison[6] and crew damage inline rather than through Assault Poison. Decide whether it should route through that rule instead."
-see_also = ["special.assault_poison"]
+todo = "Rule text not yet written: the one occurrence grants Poison[6] and crew damage inline rather than through Assault Extra Damage. Decide whether it should route through that rule instead."
+see_also = ["special.assault_extra_damage"]
 
 #
 # Unit
@@ -242,7 +244,7 @@ effect = """Healing only works on biological units and removing crippled crew fo
 - Remove crippled crew token. Cost 4.
 """
 see_also = ["token.poison", "token.bleed", "token.minor_acid", "token.acid", "token.fire", "token.crippled_crew"]
-todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. Decide whether a computed value deserves a type of its own."
+todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. The `formula` type now exists (ADR 0027); decide whether these instances should use it."
 
 [special.heal.variables]
 N = { type = ["int", "str"], min = 1, max = 10 }
@@ -278,7 +280,7 @@ effect = """Repear only works on mechanical and drone units. You have {N} points
 - Degrade one acid to minor acid. Cost 4.
 """
 see_also = ["token.minor_acid", "token.acid", "token.fire", "token.shaken", "token.disabled_repair"]
-todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. Decide whether a computed value deserves a type of its own."
+todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. The `formula` type now exists (ADR 0027); decide whether these instances should use it."
 
 [special.repair.variables]
 N = { type = ["int", "str"], min = 1, max = 10 }
@@ -591,31 +593,6 @@ see_also = ["special.assault_gear_disruption"]
 
 [special.range_gear_disruption.variables]
 N = { type = "int", min = 2, max = 6 }
-
-[special.range_fire]
-name = "Range Fire"
-slots = ["range"]
-effect = "Any unit hit at least once  is set on fire"
-places = ["token.fire"]
-see_also = ["special.assault_fire"]
-
-[special.range_minor_acid]
-name = "Range Minor Acid"
-slots = ["range"]
-effect = "Target gets a minor acid token"
-places = ["token.minor_acid"]
-see_also = ["special.assault_minor_acid"]
-
-[special.range_poison]
-name = "Range Poison"
-slots = ["range"]
-signature = "{N}"
-effect = "Target gets a poison[{N}] token"
-places = ["token.poison"]
-see_also = ["special.assault_poison"]
-
-[special.range_poison.variables]
-N = { type = "int", min = 4, max = 12 }
 
 [special.fumble]
 name = "Fumble"

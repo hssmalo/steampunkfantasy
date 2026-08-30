@@ -136,13 +136,13 @@ may supply, and what it **places** — the Token or Hex Effect it causes.
 _Avoid_: ability, trait, perk; label (a label was the old display-name key)
 
 **Identifier** (id):
-The snake_case key that names a rule inside its Registry — `assault_poison`,
-`good_shot`. The single vocabulary shared by rules data and race data, and the
+The snake_case key that names a rule inside its Registry —
+`assault_extra_damage`, `good_shot`. The single vocabulary shared by rules data and race data, and the
 lookup key, so a bad one fails the build rather than resolving to nothing.
 _Avoid_: label, key (bare), name (the Display Name is a different thing)
 
 **Display Name**:
-The human-readable name of a rule (`"Assault Poison"`), living in exactly one
+The human-readable name of a rule (`"Assault Extra Damage"`), living in exactly one
 place — the `name` field of its record. Never parameterized: parameters live in
 the **Signature**. Race data never spells it.
 
@@ -192,12 +192,15 @@ _Avoid_: link, pointer, cross-reference
 A rule declares **Variables** (a name, a type, and constraints); an **Instance**
 supplies **Args** for them under `args.*`. An Instance's legal Arg set is the
 union of its rule's Variables and those of every Ref target it resolves, so a
-Ref's parameters travel with it.
+Ref's parameters travel with it. A Variable marked `optional` may be left out;
+every other declared Variable must be supplied.
 
 **Signature**:
 The compact printed form of a rule, a template over its Variables —
 `"[{N}, {M}+]"`. A bare `{var}` on a Ref-valued Variable renders the *target's*
-Display Name. Replaces the old convention of encoding parameters inside a name.
+Display Name, followed by the target's own Signature. A bracketed group whose
+placeholders are all unfilled is dropped rather than printed. Replaces the old
+convention of encoding parameters inside a name.
 _Avoid_: short, format, pattern
 
 **Version**:
@@ -205,6 +208,11 @@ Rule-local prose keyed by a Ref value: a rule saying "when this Ref resolves to
 *that*, here is my text for it" — `resistance`'s per-damage-type wording. An
 overlay on the target, not a second kind of reference; a rule with no Version for
 a value inherits the target's own text.
+
+A Special is **versioned over** a Namespace when a Ref-valued Variable is what
+one Instance of it differs from the next by: `resistance` over damage types,
+`assault_extra_damage` over the kinds it applies (ADR-0027). Version prose is
+optional, and a versioned Special often carries none.
 
 **Stub**:
 A record whose rule text is not yet written, marked by the presence of a `todo`

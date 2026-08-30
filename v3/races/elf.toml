@@ -843,8 +843,10 @@ ap = 2
 [[models.elf_hydra.assault.specials.bonus]]
 text = "+3 assault strength  and +1 assault deflection per alive head"
 
-[[models.elf_hydra.assault.specials.extra_damage]]
-text = "Poison[6][1 for 2]"
+[[models.elf_hydra.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 6
+args.M = 2
 
 [[models.elf_hydra.assault.specials.fear]]
 args.N = 6
@@ -1178,7 +1180,7 @@ deflection_die = "3+"
 damage = "d6-1"
 ap = 3
 
-[[models.eagle_rider.assault.specials.extra_damage]]
+[[models.eagle_rider.assault.specials.weakest_armor]]
 text = "Always attacks weakest point of armor"
 
 [[models.eagle_rider.assault.specials.cunning_assault]]
@@ -1205,8 +1207,10 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[[models.pachycephalosaurus_rider.assault.specials.extra_damage]]
-text = "poison[4][1 for 2]"
+[[models.pachycephalosaurus_rider.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
 
 [[models.pachycephalosaurus_rider.assault.specials.cunning_assault]]
 args.N = 3
@@ -1270,8 +1274,10 @@ deflection_die = "5+"
 damage = "d6-2"
 ap = 2
 
-[[models.elite_pachycephalosaurus_rider.assault.specials.extra_damage]]
-text = "poison[4][1 for 2]"
+[[models.elite_pachycephalosaurus_rider.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
 
 [[models.elite_pachycephalosaurus_rider.assault.specials.cunning_assault]]
 args.N = 3
@@ -1613,8 +1619,12 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[[equipment.acid_breath.range.specials.extra_damage]]
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.acid"
 text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+
+[[equipment.acid_breath.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1627,8 +1637,9 @@ angle = [true, true, false, false]
 damage = "-"
 ap = "N/A"
 
-[[equipment.poison_spit.range.specials.extra_damage]]
-text = "Poison[6]."
+[[equipment.poison_spit.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
 text = "Fire one time per alive minor head"
@@ -1754,8 +1765,8 @@ text = "+1 range if you are flying"
 [[equipment.elf_flame_arrow.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.elf_flame_arrow.range.specials.extra_damage]]
-text = "set enemy on fire"
+[[equipment.elf_flame_arrow.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [equipment.elf_flame_arrow.orders_gained.fire]
 still = [['Fire', 'Fire']]
@@ -1790,8 +1801,8 @@ text = "+1 range if you are flying"
 [[equipment.elf_flame_arrow_free.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.elf_flame_arrow_free.range.specials.extra_damage]]
-text = "set enemy on fire"
+[[equipment.elf_flame_arrow_free.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [equipment.elf_bow_free]
 name = "Elf Bow"

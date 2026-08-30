@@ -884,8 +884,8 @@ ap = 0
 [[equipment.acid_splash.range.specials.no_damage]]
 args.damage_type = "damage_type.regular"
 
-[[equipment.acid_splash.range.specials.extra_damage]]
-text = "Minor Acid"
+[[equipment.acid_splash.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.tinkerer_gun]
 name = "Tinkerer Gun"
@@ -952,8 +952,9 @@ text = "Reserve weapon: may use this weapon instead of main gun when fire (res) 
 [[equipment.poison_dart.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.poison_dart.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.poison_dart.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [equipment.acid_balloon]
 name = "Acid Balloon"
@@ -972,8 +973,8 @@ text = "Reserve weapon: may use this weapon instead of main gun when fire (res) 
 [[equipment.acid_balloon.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.acid_balloon.range.specials.extra_damage]]
-text = "Minor Acid"
+[[equipment.acid_balloon.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [equipment.grinder]
 name = "Grinder"
@@ -1042,8 +1043,9 @@ ap = 0
 [[equipment.green_gas_launcher.range.specials.area]]
 text = "Choose one hex (per model firing this weapon) within normal range: Area(5+)"
 
-[[equipment.green_gas_launcher.range.specials.extra_damage]]
-text = "Poison[6]"
+[[equipment.green_gas_launcher.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 6
 
 [[equipment.green_gas_launcher.range.specials.multipurpose]]
 text = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
@@ -1067,8 +1069,9 @@ ap = 0
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.area]]
 text = "Choose one hex within range: Area(5+)"
 
-[[equipment.helicopter_mounted_green_gas_launcher.range.specials.extra_damage]]
-text = "Poison[4]"
+[[equipment.helicopter_mounted_green_gas_launcher.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 4
 
 [equipment.experimental_plasma_gun]
 race = "gnome"
@@ -1303,8 +1306,8 @@ text = "Every time this unit takes at least 1 point of regular damage after resi
 deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
-[[equipment.plasma_shield_generator.assault.specials.extra_damage]]
-text = "Fire"
+[[equipment.plasma_shield_generator.assault.specials.assault_extra_damage]]
+args.version = "token.fire"
 
 [equipment.quadbike_lance]
 race = "gnome"
@@ -1335,8 +1338,8 @@ text = "Every time this unit takes at least 1 point of regular damage after resi
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
 
-[[equipment.improved_plasma_shield_generator.assault.specials.extra_damage]]
-text = "Fire"
+[[equipment.improved_plasma_shield_generator.assault.specials.assault_extra_damage]]
+args.version = "token.fire"
 
 [equipment.splintbombgrenade_launcher]
 race = "gnome"
@@ -1365,8 +1368,8 @@ angle = [true, true, true, true]
 damage = "d6 + d6 Psychic"
 ap = 5
 
-[[equipment.experimental_guided_missile.range.specials.extra_damage]]
-text = "Minor Acid"
+[[equipment.experimental_guided_missile.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
 
 [[equipment.experimental_guided_missile.range.specials.indirect_fire]]
 text = "Do not need line of sight to target"

@@ -54,6 +54,25 @@ def test_a_refs_own_signature_travels_with_it() -> None:
     assert text == "Take Cover[Sneak][-2]"
 
 
+def test_a_versioned_rule_prints_the_versions_own_arguments() -> None:
+    # Extra Damage is one rule per slot versioned over the kinds it applies, so
+    # the poison strength prints inside the token's own signature.
+    _, text = _row(
+        "assault_extra_damage",
+        args={"version": "token.poison", "N": 6, "M": 2},
+    )
+
+    assert text == "Poison[6][1 for 2]"
+
+
+def test_an_absent_optional_argument_elides_its_group() -> None:
+    # One fire token however many hits landed: the ratio group is not written,
+    # so it is not printed either.
+    _, text = _row("assault_extra_damage", args={"version": "token.fire"})
+
+    assert text == "Fire"
+
+
 def test_free_prose_follows_the_signature() -> None:
     _, text = _row(
         "resistance",

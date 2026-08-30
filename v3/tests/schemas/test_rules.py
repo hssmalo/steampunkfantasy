@@ -72,16 +72,16 @@ def test_a_terrain_record_means_its_prose_not_its_numbers() -> None:
 def test_a_record_carries_typed_cross_references() -> None:
     special = r.SpecialRuleConfig.model_validate(
         {
-            "name": "Assault Poison",
+            "name": "Assault Extra Damage",
             "slots": ["assault"],
             "effect": "Targets get a poison token.",
             "places": ["token.poison"],
-            "see_also": ["special.range_poison"],
+            "see_also": ["special.range_extra_damage"],
         }
     )
 
     assert special.places == ["token.poison"]
-    assert special.see_also == ["special.range_poison"]
+    assert special.see_also == ["special.range_extra_damage"]
 
 
 @pytest.mark.parametrize("ref", ["Token.poison", "poison", "token.poison.strong", ""])
@@ -89,7 +89,7 @@ def test_a_reference_is_lowercase_and_two_segments(ref: str) -> None:
     with pytest.raises(ValidationError):
         r.SpecialRuleConfig.model_validate(
             {
-                "name": "Assault Poison",
+                "name": "Assault Extra Damage",
                 "slots": ["assault"],
                 "effect": "Targets get a poison token.",
                 "places": [ref],
@@ -149,6 +149,26 @@ def test_a_die_value_is_a_die() -> None:
     assert variable.validate_value("d6") == "d6"
     with pytest.raises(ValueError, match="not a die"):
         variable.validate_value("6")
+
+
+def test_a_formula_value_is_any_prose() -> None:
+    # A formula stands for a value the author cannot know: "X, the power of the
+    # poison gas". Nothing about it is checkable beyond its being written.
+    variable = r.FormulaVariableConfig(type="formula")
+
+    assert variable.validate_value("X") == "X"
+    with pytest.raises(ValueError, match="not a formula"):
+        variable.validate_value("")
+
+
+def test_a_union_value_may_be_a_formula_no_value_set_enumerates() -> None:
+    # The value set enumerates the numbers a poison token comes in; the whole
+    # point of a formula is that it is not one of them.
+    variable = r.UnionVariableConfig(type=["int", "formula"], values=[4, 6, 8])
+
+    assert variable.validate_value("X") == "X"
+    with pytest.raises(ValueError, match="not any of"):
+        variable.validate_value(5)
 
 
 def test_a_token_record_declares_its_phases_and_a_hex_record_does_not() -> None:

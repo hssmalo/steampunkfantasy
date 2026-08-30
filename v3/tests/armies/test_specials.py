@@ -282,15 +282,15 @@ def test_an_equipment_may_replace_a_special_the_unit_declares() -> None:
 
 
 def test_replace_does_not_cross_slots() -> None:
-    # `extra_damage` is legal in two slots, and they are separate chains: a
-    # model-slot replace would otherwise be replacing a different rule.
+    # Each slot is its own chain, so a model-slot replace of an id leaves the
+    # assault-slot instances of that same id alone.
     slot = model(
-        assault_specials={"extra_damage": [instance("assault")]},
-        specials={"extra_damage": [instance("model", replace=True)]},
+        assault_specials={"not_yet_dead": [instance("assault")]},
+        specials={"not_yet_dead": [instance("model", replace=True)]},
     )
 
-    assert texts(slot.assault().specials, "extra_damage") == ["assault"]
-    assert texts(slot.model_specials, "extra_damage") == ["model"]
+    assert texts(slot.assault().specials, "not_yet_dead") == ["assault"]
+    assert texts(slot.model_specials, "not_yet_dead") == ["model"]
 
 
 # ---------------------------------------------------------------------------

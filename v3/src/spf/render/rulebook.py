@@ -27,6 +27,7 @@ from spf.render.anchors import anchor as _anchor
 from spf.schemas.rulebook import RulebookConfig
 from spf.schemas.rules import (
     DieVariableConfig,
+    FormulaVariableConfig,
     HexRuleConfig,
     ModifierRuleConfig,
     RefVariableConfig,
@@ -35,6 +36,7 @@ from spf.schemas.rules import (
     StringVariableConfig,
     TerrainRuleConfig,
     TokenRuleConfig,
+    UnionVariableConfig,
     VariableConfig,
 )
 
@@ -149,14 +151,28 @@ def constraint_text(variable: VariableConfig) -> str:
     rulebook states it as English. Enumerated values win over bounds when both
     are given: the list is the stricter, and more useful, statement.
     """
+    described = _value_text(variable)
+    return f"{described}; optional" if variable.optional else described
+
+
+def _value_text(variable: VariableConfig) -> str:
+    """Describe the values `variable` accepts, ignoring whether it is required."""
     if isinstance(variable, RefVariableConfig):
         listed = ", ".join(variable.values or variable.namespaces)
         return f"any {listed}"
     if isinstance(variable, DieVariableConfig):
         return "die"
+    if isinstance(variable, FormulaVariableConfig):
+        return "formula"
     if variable.values:
         listed = ", ".join(str(value) for value in variable.values)
-        return f"one of {listed}"
+        enumerated = f"one of {listed}"
+        # A value set enumerates the union's scalar members; a formula is by
+        # definition not among them, so silence would read as forbidding it.
+        formula = (
+            isinstance(variable, UnionVariableConfig) and "formula" in variable.type
+        )
+        return f"{enumerated}, or a formula" if formula else enumerated
     if isinstance(variable, StringVariableConfig):
         return "text"
     return _bounds_text(variable.min, variable.max)
