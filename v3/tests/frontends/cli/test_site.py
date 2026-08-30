@@ -1,12 +1,23 @@
-"""Tests for the Landing Page HTML generator.
+"""Tests for the site build: the Landing Page generator and `render_site`.
 
-`render_landing_page` is a pure function over already-rendered pages, so these
-build `SitePage`s by hand rather than rendering anything for real.
+`render_landing_page` is a pure function over already-rendered pages, so those
+tests build `SitePage`s by hand rather than rendering anything for real. The
+`render_site` tests cover only what it refuses to build, which needs no render.
 """
 
 import re
+from pathlib import Path
 
-from spf.frontends.cli.site import SOURCE_URL, SitePage, render_landing_page
+import pytest
+
+from spf.config import config
+from spf.frontends.cli.site import (
+    SITE_INDEX_PATH,
+    SOURCE_URL,
+    SitePage,
+    render_landing_page,
+    render_site,
+)
 
 
 def _army_pages(group: str, label: str, stem: str) -> list[SitePage]:
@@ -138,6 +149,37 @@ def test_the_footer_links_the_repository() -> None:
     assert SOURCE_URL == "https://github.com/hssmalo/steampunkfantasy/tree/master/v3"
     assert f'href="{SOURCE_URL}"' in html
     assert "<footer>" in html
+
+
+@pytest.fixture
+def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Redirect config.paths.armies to a temporary directory."""
+    monkeypatch.setattr(config.paths, "armies", tmp_path)
+    return tmp_path
+
+
+def test_a_missing_site_index_fails_the_build(armies_dir: Path) -> None:  # noqa: ARG001
+    """Without the Site Index there is nothing authored to publish."""
+    with pytest.raises(SystemExit) as exit_info:
+        render_site()
+
+    assert exit_info.value.code == 1
+
+
+def test_a_pack_missing_from_disk_fails_the_whole_build(armies_dir: Path) -> None:
+    """A Pack the Site Index names but disk lacks fails the site, not its section.
+
+    Publishing the other packs would leave a hole no one on the page can see
+    (ADR 0023's whole-site failure policy).
+    """
+    (armies_dir / SITE_INDEX_PATH).write_text(
+        '[[packs]]\npack = "ghost"\nheading = "Ghost Armies"\n', encoding="utf-8"
+    )
+
+    with pytest.raises(SystemExit) as exit_info:
+        render_site()
+
+    assert exit_info.value.code == 1
 
 
 def test_escapes_untrusted_looking_content() -> None:

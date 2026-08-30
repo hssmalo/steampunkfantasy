@@ -16,6 +16,7 @@ from pathlib import Path
 import cyclopts
 
 from spf.armies import io
+from spf.armies.army import Army
 from spf.config import config
 from spf.console import stderr, stdout
 from spf.frontends.cli.render import (
@@ -36,10 +37,12 @@ from spf.render.images import committed_image
 from spf.render.products import Product
 from spf.render.rulebook import build_rulebook
 from spf.rules import get_rulebook, rulebook_index_path
+from spf.schemas.army_pack import ArmyPackConfig
+from spf.schemas.site import SiteConfig, SitePackConfig
 
-# The showcase pack is the site's one authored source of what to publish
-# (ADR 0018, ADR 0022) -- the site contains exactly its Armies, no others.
-SHOWCASE_PACK_PATH = "showcase/pack.toml"
+# The Site Index is the site's one authored source of what to publish: the
+# Army Packs it names, and no others (ADR 0018, ADR 0028).
+SITE_INDEX_PATH = "site.toml"
 
 SITE_FORMATS = ("pdf", "html")
 
@@ -183,12 +186,20 @@ def render_landing_page(pages: Sequence[SitePage]) -> str:
     )
 
 
+@dataclass(frozen=True)
+class _Listing:
+    """Where a rendered file appears on the Landing Page."""
+
+    label: str
+    group: str | None
+
+
 def _render_page(
     product: Product,
     source: object,
     *,
     name: str,
-    label: str,
+    listing: _Listing,
     output_root: Path,
 ) -> list[SitePage]:
     """Render `source` to every Site Format and return one `SitePage` each."""
@@ -199,28 +210,87 @@ def _render_page(
         pages.append(
             SitePage(
                 product=product.name,
-                label=label,
+                label=listing.label,
                 fmt=fmt_name,
                 relative_path=str(out.relative_to(output_root)),
+                group=listing.group,
             )
         )
     return pages
 
 
+@dataclass(frozen=True)
+class _LoadedPack:
+    """One Site Index entry, with the Army Pack Index and Armies it resolved to."""
+
+    entry: SitePackConfig
+    path: Path
+    index: ArmyPackConfig
+    armies: list[tuple[str | None, Army]]
+
+
+def _load_packs(site_index: SiteConfig) -> list[_LoadedPack]:
+    """Load every Army Pack the Site Index names, in Index order."""
+    packs = []
+    for entry in site_index.packs:
+        path = config.paths.armies / entry.pack / "pack.toml"
+        pack_index = io.get_army_pack(path)
+        armies = io.load_pack_armies(pack_index, base_dir=path.parent)
+        packs.append(
+            _LoadedPack(entry=entry, path=path, index=pack_index, armies=armies)
+        )
+    return packs
+
+
+def _render_pack(pack: _LoadedPack, *, output_root: Path) -> list[SitePage]:
+    """Render one pack: an Army Reference and Order Cards each, then the Pack."""
+    group = pack.entry.heading
+    pages: list[SitePage] = []
+    for entry, (label, army) in zip(pack.index.armies, pack.armies, strict=True):
+        # The pack directory is part of the stem: the same player fields an
+        # Army in more than one tournament, and their renders must not collide.
+        stem = safe_stem(f"{pack.entry.pack}/{entry.army}")
+        page_label = f"{label}: {army.nick}" if label is not None else army.nick
+        listing = _Listing(label=page_label, group=group)
+        reference = build_reference(army, stem=stem, image_for=committed_image)
+        pages += _render_page(
+            ARMY_RULES,
+            reference,
+            name=stem,
+            listing=listing,
+            output_root=output_root,
+        )
+        deck = build_deck(army, stem=stem, image_for=committed_image)
+        pages += _render_page(
+            CARDS, deck, name=stem, listing=listing, output_root=output_root
+        )
+
+    pack_stem = safe_stem(pack.path.resolve().parent.name) or ARMY_PACK_STEM
+    document = build_pack(
+        pack.armies, title=pack.index.title, stem=pack_stem, image_for=committed_image
+    )
+    return pages + _render_page(
+        ARMY_PACK,
+        document,
+        name=pack_stem,
+        listing=_Listing(label=pack.index.title, group=group),
+        output_root=output_root,
+    )
+
+
 def render_site() -> None:
     """Render every published Product/Format into `output/`, plus a Landing Page.
 
-    Builds the Rulebook, each showcase Army's Reference and Order Cards, and
-    the Army Pack named by `armies/showcase/pack.toml`. Fails the whole build
-    on any error rather than publishing a partial site -- a stale-but-complete
-    site degrades safely, a silently incomplete one does not (extends ADR
-    0022 from one Product to the whole site).
+    Builds the Rulebook, then every Army Pack the Site Index names: each Army's
+    Reference and Order Cards, and the Pack document itself. Fails the whole
+    build on any error rather than publishing a partial site -- a
+    stale-but-complete site degrades safely, a silently incomplete one does not
+    (extends ADR 0022 from one Product to the whole site).
     """
     output_root = config.paths.output
-    pack_path = config.paths.armies / SHOWCASE_PACK_PATH
     try:
-        pack_index = io.get_army_pack(pack_path)
-        armies = io.load_pack_armies(pack_index, base_dir=pack_path.parent)
+        site_index = io.get_site_index(config.paths.armies / SITE_INDEX_PATH)
+        packs = _load_packs(site_index)
         rulebook_path = rulebook_index_path(None)
         rulebook = build_rulebook(
             get_rulebook(rulebook_path), rules_dir=rulebook_path.parent
@@ -229,33 +299,17 @@ def render_site() -> None:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
+    # The Rulebook belongs to no pack, so it carries no group and renders above
+    # every section.
     pages = _render_page(
         GENERAL_RULES,
         rulebook,
         name=RULEBOOK_STEM,
-        label="Rulebook",
+        listing=_Listing(label="Rulebook", group=None),
         output_root=output_root,
     )
-
-    for entry, (label, army) in zip(pack_index.armies, armies, strict=True):
-        stem = safe_stem(f"showcase/{entry.army}")
-        page_label = f"{label}: {army.nick}" if label is not None else army.nick
-        reference = build_reference(army, stem=stem, image_for=committed_image)
-        pages += _render_page(
-            ARMY_RULES, reference, name=stem, label=page_label, output_root=output_root
-        )
-        deck = build_deck(army, stem=stem, image_for=committed_image)
-        pages += _render_page(
-            CARDS, deck, name=stem, label=page_label, output_root=output_root
-        )
-
-    pack_stem = safe_stem(pack_path.resolve().parent.name) or ARMY_PACK_STEM
-    pack = build_pack(
-        armies, title=pack_index.title, stem=pack_stem, image_for=committed_image
-    )
-    pages += _render_page(
-        ARMY_PACK, pack, name=pack_stem, label=pack_index.title, output_root=output_root
-    )
+    for pack in packs:
+        pages += _render_pack(pack, output_root=output_root)
 
     index_path = output_root / "index.html"
     index_path.write_text(render_landing_page(pages), encoding="utf-8")
