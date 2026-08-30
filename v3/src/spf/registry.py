@@ -16,7 +16,7 @@ from typing import cast
 from spf import rules
 from spf.config import config
 from spf.schemas import rules as r
-from spf.schemas.special import Specials
+from spf.schemas.special import SpecialInstance, Specials
 
 SPECIAL = "special"
 """The namespace a Special instance's id is looked up in."""
@@ -147,16 +147,56 @@ def check_instances(
             )
             continue
         for instance in instances:
-            where = f"{context}: '{identifier}'"
-            variables, collisions = _variables(
-                instance.args, rule=rule, registry=registry
+            errors += _check_instance(
+                instance,
+                rule=rule,
+                where=f"{context}: '{identifier}'",
+                registry=registry,
             )
-            errors += [f"{where}: {collision}" for collision in collisions]
-            errors += [
-                f"{where}: {problem}"
-                for problem in _check_args(instance.args, variables, registry=registry)
-            ]
     return errors
+
+
+def _check_instance(
+    instance: SpecialInstance,
+    *,
+    rule: r.SpecialRuleConfig,
+    where: str,
+    registry: Registry,
+) -> list[str]:
+    """Check one instance's args, once per set of values it supplies.
+
+    A case-shaped instance supplies one set per case, each merged over the
+    instance's own args, so a value constant across the cases is written once
+    (ADR 0029). A broken case names its 1-based position, because the cases of
+    one instance are otherwise indistinguishable in a message.
+    """
+    if not instance.cases:
+        return _check_one(instance.args, rule=rule, where=where, registry=registry)
+    return [
+        problem
+        for number, case in enumerate(instance.cases, start=1)
+        for problem in _check_one(
+            instance.args | case.args,
+            rule=rule,
+            where=f"{where}, case {number}",
+            registry=registry,
+        )
+    ]
+
+
+def _check_one(
+    args: dict[str, int | str],
+    *,
+    rule: r.SpecialRuleConfig,
+    where: str,
+    registry: Registry,
+) -> list[str]:
+    """Check one set of args against the variables the rule brings into scope."""
+    variables, collisions = _variables(args, rule=rule, registry=registry)
+    return [f"{where}: {problem}" for problem in collisions] + [
+        f"{where}: {problem}"
+        for problem in _check_args(args, variables, registry=registry)
+    ]
 
 
 def _variables(
