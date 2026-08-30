@@ -1,0 +1,198 @@
+{
+  "race": "gnome",
+  "nick": "Showcase Gnome Ballista Battery",
+  "units": [
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ballista_tractor_mark_i",
+      "models": [
+        {
+          "name": "ballista_tractor_mark_i",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ballista_tractor_mark_i",
+      "models": [
+        {
+          "name": "ballista_tractor_mark_i",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ballista_tractor_mark_i",
+      "models": [
+        {
+          "name": "ballista_tractor_mark_i",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

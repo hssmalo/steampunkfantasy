@@ -1,0 +1,240 @@
+{
+  "race": "ork",
+  "nick": "Showcase Ork Armored Fist",
+  "units": [
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "bioengineered_ork",
+      "models": [
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "bioengineered_ork",
+      "models": [
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "bioengineered_ork",
+      "models": [
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "bioengineered_ork",
+      "models": [
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "clockwork_power_spear",
+            "pyro"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ork_char_b1",
+      "models": [
+        {
+          "name": "ork_char_b1",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ork_char_b1",
+      "models": [
+        {
+          "name": "ork_char_b1",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

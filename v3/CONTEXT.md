@@ -18,6 +18,15 @@ _Avoid_: faction, army (a Race is the catalogue, not a player's force)
 A player's fielded force, built from a single Race.
 _Avoid_: team, roster, list
 
+**Showcase Army**:
+A ready-made Army that demonstrates a Race by spending the full budget — 96 in
+each of the four Cost dimensions — while using as few distinct combinations of
+Unit and Equipment as possible. It is the beginner's on-ramp: an Army a new
+player can pick up and learn the game with before designing one of their own.
+Where the rules treat the budget as a ceiling, a Showcase Army is built to meet
+it exactly.
+_Avoid_: sample army, starter army, demo army
+
 **Unit**:
 A group of Models fielded and activated together (e.g. Elf Infantry, four
 `elf_infantry` Models). The costed, ordered building block of an Army.

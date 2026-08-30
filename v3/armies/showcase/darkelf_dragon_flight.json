@@ -1,0 +1,189 @@
+{
+  "race": "darkelf",
+  "nick": "Showcase Dark Elf Dragon Flight",
+  "units": [
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboprosthetic_darkelf",
+      "models": [
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        },
+        {
+          "name": "roboprosthetic_darkelf",
+          "upgrades": [
+            "smg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mechanical_red_dragon",
+      "models": [
+        {
+          "name": "mechanical_red_dragon",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

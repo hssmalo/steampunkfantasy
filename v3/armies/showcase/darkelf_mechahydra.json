@@ -1,0 +1,156 @@
+{
+  "race": "darkelf",
+  "nick": "Showcase Dark Elf MechaHydra",
+  "units": [
+    {
+      "name": "scout",
+      "models": [
+        {
+          "name": "scout",
+          "upgrades": [
+            "mechanical_imp"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scout",
+      "models": [
+        {
+          "name": "scout",
+          "upgrades": [
+            "mechanical_imp"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scout",
+      "models": [
+        {
+          "name": "scout",
+          "upgrades": [
+            "mechanical_imp"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "darkelf_infantry",
+      "models": [
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "darkelf_infantry",
+      "models": [
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "darkelf_infantry",
+      "models": [
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        },
+        {
+          "name": "darkelf_infantry",
+          "upgrades": [
+            "mechanical_imp",
+            "hide"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mechahydra",
+      "models": [
+        {
+          "name": "mechahydra",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "mechahydra",
+      "models": [
+        {
+          "name": "mechahydra",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

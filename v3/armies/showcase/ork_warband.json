@@ -1,0 +1,270 @@
+{
+  "race": "ork",
+  "nick": "Showcase Ork Warband",
+  "units": [
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": [
+            "flame_covered_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "speedhead",
+      "models": [
+        {
+          "name": "speedhead",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "speedhead",
+      "models": [
+        {
+          "name": "speedhead",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "speedhead",
+      "models": [
+        {
+          "name": "speedhead",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "speedhead",
+      "models": [
+        {
+          "name": "speedhead",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

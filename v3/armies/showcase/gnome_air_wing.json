@@ -1,0 +1,226 @@
+{
+  "race": "gnome",
+  "nick": "Showcase Gnome Air Wing",
+  "units": [
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_motorcycle",
+      "models": [
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_motorcycle",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "acid_splash"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}
