@@ -1,0 +1,148 @@
+{
+  "race": "ogre",
+  "nick": "Showcase Ogre Hydra",
+  "units": [
+    {
+      "name": "ogre_hydra",
+      "models": [
+        {
+          "name": "ogre_hydra",
+          "upgrades": []
+        },
+        {
+          "name": "ogre_hydra_crew",
+          "upgrades": []
+        },
+        {
+          "name": "ogre_hydra_crew",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_robot",
+      "models": [
+        {
+          "name": "ogre_robot",
+          "upgrades": []
+        },
+        {
+          "name": "ogre_robot",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "main_engine",
+      "models": [
+        {
+          "name": "main_engine",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "main_engine",
+      "models": [
+        {
+          "name": "main_engine",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "main_engine",
+      "models": [
+        {
+          "name": "main_engine",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

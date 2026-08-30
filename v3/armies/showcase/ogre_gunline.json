@@ -1,0 +1,138 @@
+{
+  "race": "ogre",
+  "nick": "Showcase Ogre Gunline",
+  "units": [
+    {
+      "name": "ogre_assault_scout",
+      "models": [
+        {
+          "name": "ogre_scout",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_assault_scout",
+      "models": [
+        {
+          "name": "ogre_scout",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_assault_scout",
+      "models": [
+        {
+          "name": "ogre_scout",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_assault_scout",
+      "models": [
+        {
+          "name": "ogre_scout",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_assault_scout",
+      "models": [
+        {
+          "name": "ogre_scout",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_assault_scout",
+      "models": [
+        {
+          "name": "ogre_scout",
+          "upgrades": [
+            "fancy_arquebus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ogre_infantry",
+      "models": [
+        {
+          "name": "ogre_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "ogre_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "main_engine",
+      "models": [
+        {
+          "name": "main_engine",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "main_engine",
+      "models": [
+        {
+          "name": "main_engine",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "main_engine",
+      "models": [
+        {
+          "name": "main_engine",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

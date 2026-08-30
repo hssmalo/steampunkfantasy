@@ -4,10 +4,37 @@ title = "Steampunkfantasy Showcase Armies"
 army = "abomination"
 
 [[armies]]
+army = "darkelf_dragon_flight"
+
+[[armies]]
+army = "darkelf_spider_swarm"
+
+[[armies]]
+army = "darkelf_mechahydra"
+
+[[armies]]
 army = "dwarf"
 
 [[armies]]
 army = "elf"
 
 [[armies]]
+army = "gnome_ballista_battery"
+
+[[armies]]
+army = "gnome_air_wing"
+
+[[armies]]
 army = "goblin"
+
+[[armies]]
+army = "ogre_gunline"
+
+[[armies]]
+army = "ogre_hydra"
+
+[[armies]]
+army = "ork_warband"
+
+[[armies]]
+army = "ork_armored_fist"
