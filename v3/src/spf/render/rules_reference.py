@@ -124,6 +124,19 @@ class Seeds:
     """(the Instance's atmospheric name, the ref of the Record it occurs of)."""
 
 
+def seeds_from(slots: Iterable[Specials], *, registry: Registry) -> Seeds:
+    """Collect every ref the given Slots name, in printed order.
+
+    Slots rather than a carrier: an Army and a Race hold their instances in
+    different shapes, and everything past the walk is the same for both.
+    """
+    refs: dict[str, None] = {}
+    aliases: dict[tuple[str, str], None] = {}
+    for specials in slots:
+        _collect(specials, registry, refs=refs, aliases=aliases)
+    return Seeds(refs=list(refs), aliases=list(aliases))
+
+
 def seeds(army: Army, *, registry: Registry) -> Seeds:
     """Collect every ref an Army's Specials name, in printed order.
 
@@ -131,11 +144,7 @@ def seeds(army: Army, *, registry: Registry) -> Seeds:
     only removes entries identical to one already there, so the ref set is the
     same, and the raw walk cannot drift if the collapsing rules change.
     """
-    refs: dict[str, None] = {}
-    aliases: dict[tuple[str, str], None] = {}
-    for specials in _every_slot(army):
-        _collect(specials, registry, refs=refs, aliases=aliases)
-    return Seeds(refs=list(refs), aliases=list(aliases))
+    return seeds_from(_every_slot(army), registry=registry)
 
 
 def _every_slot(army: Army) -> Iterable[Specials]:

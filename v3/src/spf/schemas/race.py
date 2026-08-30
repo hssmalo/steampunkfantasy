@@ -1,5 +1,6 @@
 """Schema for SteamPunkFantasy armies."""
 
+from collections.abc import Iterator
 from typing import Self
 
 from pydantic import Field, model_validator
@@ -384,3 +385,22 @@ class RaceConfig(StrictModel):
                 )
                 raise ValueError(msg)
         return self
+
+
+def race_slots(race: RaceConfig) -> Iterator[Specials]:
+    """Yield every Slot a Race holds instances in, whatever record carries it.
+
+    The one walk over a Race's Specials (ADR 0024). It lists the Slots by
+    hand because the schema names them by hand, so widening the schema and
+    widening the walk are the same edit.
+    """
+    for unit in race.units.values():
+        yield unit.specials
+    for model in race.models.values():
+        yield from (model.unit_specials, model.specials, model.assault.specials)
+    for equipment in race.equipment.values():
+        yield from (equipment.unit_specials, equipment.model_specials)
+        if equipment.assault is not None:
+            yield equipment.assault.specials
+        if equipment.range is not None:
+            yield equipment.range.specials

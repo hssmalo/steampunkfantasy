@@ -448,5 +448,29 @@ def test_an_instances_atmospheric_name_is_collected_as_an_alias() -> None:
     ]
 
 
+# --- Seeding from any collection of Slots -----------------------------------
+
+
+def test_seeds_come_from_the_slots_alone() -> None:
+    """The seam takes Slots, so a Race seeds a Rules Reference as an Army does."""
+    slots: list[Specials] = [
+        {
+            "resistance": [
+                SpecialInstance(args={"version": "damage_type.poison", "N": 3})
+            ]
+        },
+        {"terror": [SpecialInstance(name="Insanity Field")]},
+    ]
+
+    seeded = rr.seeds_from(slots, registry=REGISTRY)
+
+    assert seeded.refs == [
+        "special.resistance",
+        "damage_type.poison",
+        "special.terror",
+    ]
+    assert seeded.aliases == [("Insanity Field", "special.terror")]
+
+
 if __name__ == "__main__":  # pragma: no cover
     pytest.main([__file__])
