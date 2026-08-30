@@ -1,7 +1,8 @@
 """Tests for presenting Special instances: signatures, headings, grouping."""
 
-from spf.registry import load_registry
+from spf.registry import Registry, load_registry
 from spf.render.specials import SpecialLine, special_lines, special_row
+from spf.schemas.rules import SpecialRuleConfig
 from spf.schemas.special import SpecialInstance
 
 REGISTRY = load_registry()
@@ -291,3 +292,84 @@ def test_an_identifier_the_lookup_does_not_know_leaves_the_anchor_unset() -> Non
     )
 
     assert line.anchor is None
+
+
+# --- variants: shared prose drawn from the rule's pool (ADR 0031) -----------
+
+VARIANTS = Registry(
+    records={
+        "special": {
+            "ammo": SpecialRuleConfig.model_validate(
+                {
+                    "name": "Ammo",
+                    "slots": ["range"],
+                    "signature": "[{N}]",
+                    "effect": "Carries {N} shots.",
+                    "variables": {"N": {"type": "int"}},
+                    "variants": {
+                        "always_loaded": {"text": "Always treated as loaded"},
+                        "at_point_blank": {"text": "at point blank"},
+                    },
+                }
+            )
+        }
+    }
+)
+"""A registry of one rule with a variant pool, so the corpus stays free."""
+
+
+def _variant_row(identifier: str, **kwargs: object) -> tuple[str, str]:
+    instance = SpecialInstance.model_validate(kwargs)
+    return special_row(identifier, instance, registry=VARIANTS)
+
+
+def test_a_variant_renders_as_the_instances_own_prose() -> None:
+    _, text = _variant_row("ammo", variant="always_loaded", args={"N": 2})
+
+    assert text == "[2]. Always treated as loaded"
+
+
+def test_a_variant_reads_identically_to_the_prose_written_inline() -> None:
+    named = _variant_row("ammo", variant="always_loaded", args={"N": 2})
+    longhand = _variant_row("ammo", text="Always treated as loaded", args={"N": 2})
+
+    assert named == longhand
+
+
+def test_a_variant_on_a_case_shaped_instance_renders_as_the_preamble() -> None:
+    _, text = _variant_row("ammo", variant="always_loaded", cases=[{"args": {"N": 2}}])
+
+    assert text == "Always treated as loaded: [2]"
+
+
+def test_a_variant_on_a_case_renders_as_that_cases_text() -> None:
+    _, text = _variant_row(
+        "ammo",
+        cases=[
+            {"variant": "at_point_blank", "args": {"N": 4}},
+            {"text": "at long range", "args": {"N": 1}},
+        ],
+    )
+
+    assert text == "[4] at point blank, [1] at long range"
+
+
+def test_a_named_and_a_longhand_instance_collapse_to_one_line() -> None:
+    # Resolution happens before the grouping key, so the two spell one line.
+    specials = {
+        "ammo": [
+            SpecialInstance(variant="always_loaded", args={"N": 2}),
+            SpecialInstance(text="Always treated as loaded", args={"N": 2}),
+        ]
+    }
+
+    (line,) = special_lines(specials, registry=VARIANTS)
+
+    assert line.text == "[2]. Always treated as loaded"
+
+
+def test_an_unresolvable_variant_renders_as_no_prose() -> None:
+    # The load-time gate is what reports it; rendering stays total.
+    _, text = _variant_row("ammo", variant="never_defined", args={"N": 2})
+
+    assert text == "[2]"
