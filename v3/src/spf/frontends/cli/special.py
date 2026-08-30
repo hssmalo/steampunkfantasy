@@ -155,6 +155,13 @@ class SpecialRecord:
     versions: list[tuple[str, str]]
     """(rendered Ref, effect) pairs, one per version overlay."""
 
+    variants: list[tuple[str, str]]
+    """(id, text) pairs, one per variant an instance may draw on (ADR 0031).
+
+    The id stands unrendered: a variant is named by a bare Identifier the rule
+    owns, so there is no namespace to resolve it against.
+    """
+
     todo: str | None
     """The whole note, newlines intact — `show` has room for all of it."""
 
@@ -187,6 +194,9 @@ def special_record(
         versions=[
             (_ref_label(ref, registry), overlay.effect)
             for ref, overlay in rule.versions.items()
+        ],
+        variants=[
+            (identifier, overlay.text) for identifier, overlay in rule.variants.items()
         ],
         todo=rule.todo,
     )
@@ -320,6 +330,8 @@ def _print_record(record: SpecialRecord) -> None:
             grid.add_row(label, Text("\n".join(refs)))
     if record.versions:
         grid.add_row("Versions", _versions_grid(record.versions))
+    if record.variants:
+        grid.add_row("Variants", _variants_grid(record.variants))
     if record.todo is not None:
         # Designer prose rather than rule text, so it reads as a different
         # register — as it does in `spf special list`.
@@ -339,6 +351,20 @@ def _versions_grid(versions: list[tuple[str, str]]) -> Table:
         grid.add_row(Text(ref))
         # Padded rather than prefixed, so the indent survives a wrap.
         grid.add_row(Padding(Text(effect.strip()), (0, 0, 0, 2)))
+    return grid
+
+
+def _variants_grid(variants: list[tuple[str, str]]) -> Table:
+    """Lay out the variant pool as an id column beside the prose it stands for.
+
+    Two columns rather than the version block's two levels: a variant is one
+    sentence, and the id is what a data author types, so the two read as a menu.
+    """
+    grid = Table.grid(padding=(0, 2))
+    grid.add_column(no_wrap=True)
+    grid.add_column()
+    for identifier, text in variants:
+        grid.add_row(Text(identifier), Text(text.strip()))
     return grid
 
 

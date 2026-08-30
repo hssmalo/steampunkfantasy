@@ -14,7 +14,12 @@ from cyclopts.exceptions import CycloptsError
 
 from spf import races
 from spf.frontends.cli import app
-from spf.frontends.cli.special import SpecialRecord, special_record, special_rows
+from spf.frontends.cli.special import (
+    SpecialRecord,
+    _print_record,
+    special_record,
+    special_rows,
+)
 from spf.registry import Registry, load_registry
 from spf.schemas.race import RaceConfig
 from spf.schemas.rules import SpecialRuleConfig
@@ -358,6 +363,45 @@ def test_versions_come_back_as_rendered_ref_and_effect_pairs() -> None:
     record = _record("resistance", registry)
 
     assert record.versions == [("Fire (damage_type.fire)", "Fire is reduced.")]
+
+
+def test_variants_come_back_as_id_and_text_pairs() -> None:
+    # A variant id is a bare name the rule owns, not a Ref, so it is printed as
+    # written rather than resolved against a namespace.
+    registry = _registry(
+        ammo=_rule(
+            effect="Carries shots.",
+            variants={"always_loaded": {"text": "Always treated as loaded"}},
+        )
+    )
+
+    record = _record("ammo", registry)
+
+    assert record.variants == [("always_loaded", "Always treated as loaded")]
+
+
+def test_a_record_without_variants_invents_none() -> None:
+    registry = _registry(aim=_rule(effect="Aim carefully."))
+
+    assert _record("aim", registry).variants == []
+
+
+def test_show_prints_the_variants_a_rule_defines(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    registry = _registry(
+        ammo=_rule(
+            effect="Carries shots.",
+            variants={"always_loaded": {"text": "Always treated as loaded"}},
+        )
+    )
+
+    _print_record(_record("ammo", registry))
+    out = capsys.readouterr().out
+
+    assert "Variants" in out
+    assert "always_loaded" in out
+    assert "Always treated as loaded" in out
 
 
 def test_the_records_marks_are_the_umar_column() -> None:
