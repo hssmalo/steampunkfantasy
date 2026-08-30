@@ -1,0 +1,115 @@
+{
+  "race": "ork",
+  "nick": "Ork: Send the Trolls",
+  "units": [
+    {
+      "name": "troll",
+      "models": [
+        {
+          "name": "troll",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ork_infantry",
+      "nick": "PowerSpear",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ork_infantry",
+      "nick": "GrenadeSling",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "battlewagon",
+      "models": [
+        {
+          "name": "battlewagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "hammerhead",
+      "nick": "Crushing HammerHead",
+      "models": [
+        {
+          "name": "hammerhead",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

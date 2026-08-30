@@ -1,0 +1,78 @@
+{
+  "race": "dwarf",
+  "nick": "Dwarfs: SteamPowerArmor with Balrog Assault",
+  "units": [
+    {
+      "name": "steampowerarmor",
+      "models": [
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tamed_balrog",
+      "models": [
+        {
+          "name": "tamed_balrog",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "zap",
+      "models": [
+        {
+          "name": "zap",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}
