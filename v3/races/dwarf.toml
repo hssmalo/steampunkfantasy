@@ -947,8 +947,8 @@ deflection_die = 'n.a.'
 damage = "d6"
 ap = 6
 
-[[models.tamed_balrog.assault.specials.extra_damage]]
-text = "Fire"
+[[models.tamed_balrog.assault.specials.assault_extra_damage]]
+args.version = "token.fire"
 
 [models.gunblasterwagon]
 name = "GunBlasterWagon"
@@ -1334,8 +1334,8 @@ angle = [true, true, false, false]
 damage = "N.A"
 ap = 0
 
-[[equipment.flaming_whip.range.specials.extra_damage]]
-text = "Fire"
+[[equipment.flaming_whip.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [equipment.fear_ray_free]
 name = "Fear Ray"
