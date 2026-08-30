@@ -153,7 +153,7 @@ Legend for the **Category** column:
 | Label | Chosen id | Category | Notes |
 |---|---|---|---|
 | Ammo | `limited_ammo` | drift | `special.toml#range_.limited_ammo`; "Ammo" is the informal short form. |
-| Area | `area` | missing | The `Area(N+)` mechanic appears repeatedly in `hexes.toml` effect prose but has no formal rule of its own — every hex effect re-describes it inline. Candidate for its own shared rule. One Extra Damage label turned out to be this rule (ADR 0027), so the stub now has an instance. |
+| Area | `area` | missing | The `Area(N+)` mechanic appears repeatedly in `hexes.toml` effect prose but has no formal rule of its own — every hex effect re-describes it inline. Candidate for its own shared rule. One Extra Damage label (ogre `ogre_artillery`) turned out to be this rule and became an instance of it (ADR 0027). |
 | Bonus | `bonus` | multi + missing | See assault. |
 | Burst | `burst` | slug | `special.toml#range_.burst`. |
 | Cloud | `hexes.fog` (or `hexes.poison_cloud`) | ref | Places a hex effect; which one depends on the weapon (fog vs poison cloud) — resolve per-instance, not per-label. |
