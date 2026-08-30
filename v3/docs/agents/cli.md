@@ -33,9 +33,14 @@ uv run spf special list
 uv run spf special list --slot range   # only Specials declaring `range`
 uv run spf special list | grep poison
 
-# Where one Special is actually used: its occurrences across every race
+# One Special in full: the rule itself, then its Instances across every race
 uv run spf special show ork_reroll
 ```
+
+`spf special show` is the read-one-rule half of the pair: a labeled block with
+the record's full text — effect, flavor, example, variables, places, see-also,
+version overlays and any open `todo` — and, under an `Instances` heading, every
+place a race actually uses it. A race holding no Instance of it is not listed.
 
 `spf rules specials` is a different command for a different reader: it validates
 the registry and dumps the raw records, and is the sibling of the six other

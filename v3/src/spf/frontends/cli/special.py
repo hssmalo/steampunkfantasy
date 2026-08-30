@@ -7,11 +7,15 @@ from typing import Annotated
 import cyclopts
 import pydantic
 from rich.markup import escape
+from rich.padding import Padding
+from rich.table import Table
+from rich.text import Text
 
 from spf import races
 from spf.console import stdout
 from spf.frontends.cli.suggest import resolve_or_raise
 from spf.registry import Registry, load_registry
+from spf.render.rulebook import constraint_text
 from spf.render.specials import special_row
 from spf.schemas.race import RaceConfig
 from spf.schemas.rules import Slot, SpecialRuleConfig
@@ -117,6 +121,77 @@ def list_specials(*, slot: Slot | None = None) -> None:
         )
 
 
+@dataclass(frozen=True)
+class SpecialRecord:
+    """One Special as `show` prints it, above its Instances.
+
+    Terminal-shaped rather than Rulebook-shaped: the Rulebook's `RuleEntry`
+    assumes Markdown and is only built for written rules, while most records
+    here are Stubs and every field is printed as plain text.
+    """
+
+    marks: str
+    """The UMAR column."""
+
+    label: str
+    """Identifier and Signature, uninterpolated."""
+
+    name: str
+    """The Display Name."""
+
+    effect: str | None
+    flavor: str | None
+    example: str | None
+
+    variables: list[tuple[str, str]]
+    """(name, constraint phrase) pairs, in declaration order."""
+
+    places: list[str]
+    """Rendered Refs: what this rule causes."""
+
+    see_also: list[str]
+    """Rendered Refs: related reading."""
+
+    versions: list[tuple[str, str]]
+    """(rendered Ref, effect) pairs, one per version overlay."""
+
+    todo: str | None
+    """The whole note, newlines intact — `show` has room for all of it."""
+
+
+def _ref_label(ref: str, registry: Registry) -> str:
+    """Render a Ref as the name a reader knows plus the id they can type."""
+    return f"{registry.display_name(ref)} ({ref})"
+
+
+def special_record(
+    key: str, rule: SpecialRuleConfig, *, registry: Registry
+) -> SpecialRecord:
+    """Build the record block for one Special.
+
+    Pure, as `special_rows` is: the Registry comes from the caller, so the
+    Refs resolve (ADR 0024) without the builder reaching for a loader.
+    """
+    return SpecialRecord(
+        marks=_slot_marks(rule.slots),
+        label=f"{key}{rule.signature or ''}",
+        name=rule.name,
+        effect=rule.effect,
+        flavor=rule.flavor,
+        example=rule.example,
+        variables=[
+            (name, constraint_text(spec)) for name, spec in rule.variables.items()
+        ],
+        places=[_ref_label(ref, registry) for ref in rule.places],
+        see_also=[_ref_label(ref, registry) for ref in rule.see_also],
+        versions=[
+            (_ref_label(ref, registry), overlay.effect)
+            for ref, overlay in rule.versions.items()
+        ],
+        todo=rule.todo,
+    )
+
+
 def _resolve_special_key(_type: type, tokens: Sequence[cyclopts.Token]) -> str:
     """Canonicalise a Special id, or reject it with suggestions.
 
@@ -203,8 +278,72 @@ def _matches(
     return matches
 
 
+_GUTTER = len("Variables")
+"""The label column's width: the longest label the record block prints."""
+
+
+def _print_record(record: SpecialRecord) -> None:
+    """Print the rule itself: a header line, then a labeled block."""
+    # Escaped before any markup is added, never after: a Signature is full of
+    # square brackets, and a Display Name is author prose, either of which Rich
+    # would otherwise read as tags.
+    stdout.print(
+        f"{record.marks} {escape(record.label)}  {escape(record.name)}",
+        highlight=False,
+    )
+    stdout.print()
+
+    # A grid rather than hand-laid columns: rule prose runs to several lines,
+    # and only a table wraps it under the label gutter and keeps its newlines.
+    grid = Table.grid(padding=(0, 2))
+    # A fixed gutter rather than one sized to the record: every Special's block
+    # then lines up, whichever fields it happens to carry.
+    grid.add_column(no_wrap=True, width=_GUTTER)
+    grid.add_column()
+    fields: list[tuple[str, str | None]] = [
+        ("Effect", record.effect),
+        ("Flavor", record.flavor),
+        ("Example", record.example),
+    ]
+    for label, value in fields:
+        if value is not None:
+            # `Text` rather than markup: rule prose is arbitrary author text,
+            # and brackets in it are not tags.
+            grid.add_row(label, Text(value.strip()))
+    if record.variables:
+        grid.add_row(
+            "Variables",
+            Text("\n".join(f"{name}: {phrase}" for name, phrase in record.variables)),
+        )
+    for label, refs in [("Places", record.places), ("See also", record.see_also)]:
+        if refs:
+            grid.add_row(label, Text("\n".join(refs)))
+    if record.versions:
+        grid.add_row("Versions", _versions_grid(record.versions))
+    if record.todo is not None:
+        # Designer prose rather than rule text, so it reads as a different
+        # register — as it does in `spf special list`.
+        grid.add_row("Todo", Text(record.todo.strip(), style="dim"))
+    stdout.print(grid)
+
+
+def _versions_grid(versions: list[tuple[str, str]]) -> Table:
+    """Lay out the version overlays as a two-level sub-block.
+
+    An overlay is a full alternative effect rather than a fragment, so each ref
+    gets a line of its own with its text indented beneath.
+    """
+    grid = Table.grid()
+    grid.add_column()
+    for ref, effect in versions:
+        grid.add_row(Text(ref))
+        # Padded rather than prefixed, so the indent survives a wrap.
+        grid.add_row(Padding(Text(effect.strip()), (0, 0, 0, 2)))
+    return grid
+
+
 def show_special(special_key: SpecialKey) -> None:
-    """Show all units, models, and equipment with a given special rule.
+    """Show one Special's rule, then every Instance of it across the Races.
 
     Uses UMAR prefixes for U=Unit, M=Model, A=Assault, R=Range specials. Which
     of the four a rule is looked for in comes from the `slots` it declares, so
@@ -212,21 +351,36 @@ def show_special(special_key: SpecialKey) -> None:
     """
     registry = load_registry()
     rule = registry.specials[special_key]
-    for race_name in races.list_races():
-        stdout.print(race_name)
+    _print_record(special_record(special_key, rule, registry=registry))
 
+    stdout.print()
+    stdout.print("Instances")
+    found = skipped = False
+    for race_name in races.list_races():
         try:
             race = races.get_race(race_name)
         except pydantic.ValidationError:
+            # Tolerant listing (ADR 0004) continues, but a silent skip is
+            # indistinguishable from a Race holding no Instance.
+            stdout.print(
+                f"[dim]{race_name}: skipped (does not validate)[/]", highlight=False
+            )
+            skipped = True
             continue
 
         matches = _matches(race, key=special_key, rule=rule, registry=registry)
         if not matches:
             continue
+        found = True
 
-        display_name = race.races[race_name].name
-        stdout.print(f"[bold]{display_name}[/]")
+        display_name = escape(race.races[race_name].name)
+        stdout.print(f"[bold]{display_name}[/] ({race_name})", highlight=False)
         for label, value in matches:
             # A signature is full of square brackets, which are Rich's own
             # markup: printed raw, `[range=1]` would vanish as a tag.
             stdout.print(f"  {label:<50} {escape(value)}", highlight=False)
+    if not found:
+        # "Unused" is only a claim about the Races that loaded: a skipped one
+        # may well hold the Instances this says there are none of.
+        where = " in the Races that validate" if skipped else ""
+        stdout.print(f"[dim](none{where})[/]", highlight=False)
