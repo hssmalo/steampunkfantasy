@@ -1042,8 +1042,17 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 [equipment.flame_covered_axe.assault]
 damage.replace = "d6+1 + d4 Crew damage"
 
-[[equipment.flame_covered_axe.assault.specials.extra_damage]]
-text = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+[[equipment.flame_covered_axe.assault.specials.assault_extra_damage]]
+args.version = "token.fire"
+
+[[equipment.flame_covered_axe.assault.specials.assault_extra_damage]]
+args.version = "token.minor_acid"
+args.M = 2
+
+[[equipment.flame_covered_axe.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
 
 [equipment.flame_covered_axe_free]
 name = "Flame-covered-axe"
@@ -1053,8 +1062,17 @@ requires = [["type:Infantry", "type:Cavalry"], ["type:Elite"], ["Hands:1"]]
 [equipment.flame_covered_axe_free.assault]
 damage.replace = "d6+1 + d4 Crew damage"
 
-[[equipment.flame_covered_axe_free.assault.specials.extra_damage]]
-text = "Fire, Minor Acid[1 for 2], Poison[4][1 for 2]"
+[[equipment.flame_covered_axe_free.assault.specials.assault_extra_damage]]
+args.version = "token.fire"
+
+[[equipment.flame_covered_axe_free.assault.specials.assault_extra_damage]]
+args.version = "token.minor_acid"
+args.M = 2
+
+[[equipment.flame_covered_axe_free.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
 
 [equipment.poison_spikes]
 name = "Poison Spikes"
@@ -1152,8 +1170,8 @@ args.N = 2
 [[equipment.pyro.range.specials.order]]
 text = "Used with Throw order"
 
-[[equipment.pyro.range.specials.extra_damage]]
-text = "Set on fire"
+[[equipment.pyro.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [[equipment.pyro.range.specials.ammo]]
 text = "Always treated as loaded"
@@ -1292,8 +1310,8 @@ ap = 0
 [[equipment.flamethrower.range.specials.area]]
 text = "Fire at all possible hexes possible simultaneously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc."
 
-[[equipment.flamethrower.range.specials.extra_damage]]
-text = "set on Fire"
+[[equipment.flamethrower.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [[equipment.flamethrower.range.specials.limited_ammo]]
 args.N = 3
@@ -1309,8 +1327,9 @@ angle = [true, true, true, true]
 damage = "d6 + (d8 Crew damage when penetrating all armor)"
 ap = 7
 
-[[equipment.rotating_pop_gun.range.specials.extra_damage]]
-text = "Poison[8]"
+[[equipment.rotating_pop_gun.range.specials.range_extra_damage]]
+args.version = "token.poison"
+args.N = 8
 
 [equipment.heavy_forward_gun]
 race = "ork"
@@ -1330,7 +1349,7 @@ cost.cp = 8
 upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
-[[equipment.tankscalper.assault.specials.extra_damage]]
+[[equipment.tankscalper.assault.specials.crew_damage]]
 text = "May replace regular damage with d8 Crew damage. Note: Crew damage ignore armor"
 
 [equipment.healing_syringe]
