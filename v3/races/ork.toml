@@ -105,7 +105,7 @@ name = "Champion"
 models = ["champion"]
 size = "medium"
 armor = [0, 0, 0, 0]
-cost.vpm = -16
+cost.vpm = 16
 description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor.
 '''
 
@@ -651,6 +651,7 @@ rows = [
 
 [[units.ork_char_b1.specials.fire_order]]
 text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for them separately"
+
 [models]
 
 [models.troll]

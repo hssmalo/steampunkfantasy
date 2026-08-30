@@ -28,15 +28,13 @@ army = (
     .duplicate_unit(("ork_infantry", 0))
 )
 
-# Add champion to one Elite infantry
+# Spawns should be added automatically, with the same weapons as the spawner
+# Add champion for each Elite infantry
 army = (
     army.add_unit("champion", race_config=cfg)
-    .upgrade_all_models(
-        ("champion", 0), equipment_name="clockwork_power_spear", race_config=cfg
-    )
-    .upgrade_all_models(
-        ("champion", 0), equipment_name="clockwork_wings", race_config=cfg
-    )
+    # Example code for weapons: .upgrade_all_models(("champion", 0), equipment_name="clockwork_power_spear", race_config=cfg)  # noqa: E501
+    #                           .upgrade_all_models(("champion", 0), equipment_name="clockwork_wings", race_config=cfg)  # noqa: E501
+    .duplicate_unit(("champion", 0))
 )
 
 

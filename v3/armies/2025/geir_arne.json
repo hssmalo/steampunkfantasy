@@ -91,10 +91,16 @@
       "models": [
         {
           "name": "champion",
-          "upgrades": [
-            "clockwork_power_spear",
-            "clockwork_wings"
-          ]
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "champion",
+      "models": [
+        {
+          "name": "champion",
+          "upgrades": []
         }
       ]
     },
