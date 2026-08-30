@@ -140,7 +140,7 @@ If poison did not kill a model, downgrade poison one step"""
 see_also = ["damage_type.poison", "special.resistance"]
 
 [tokens.poison.variables]
-N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
+N = { type = ["int", "formula"], values = [2, 4, 6, 8, 10, 12] }
 
 [tokens.bleed]
 name = "Bleed"

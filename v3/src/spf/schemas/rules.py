@@ -41,7 +41,7 @@ type Modifier = Literal["-2", "-1", "0", "+1", "+2", "+3", "-N", "+N"]
 """A to-hit modifier as authored — a signed string, not a number, because `-N`
 stands for a value the rule itself supplies."""
 
-type ScalarType = Literal["int", "str", "die"]
+type ScalarType = Literal["int", "str", "die", "formula"]
 
 
 class _VariableConfig(StrictModel):
@@ -114,6 +114,23 @@ class DieVariableConfig(_VariableConfig):
         return value
 
 
+class FormulaVariableConfig(_VariableConfig):
+    """A variable whose value is not known at authoring time: `X`, not `6`.
+
+    Its value is prose standing in for a number the game supplies -- "the power
+    of the poison gas" -- so there is nothing to check but that it was written.
+    """
+
+    type: Literal["formula"]
+
+    def validate_value(self, value: str) -> str:
+        """Validate the given value."""
+        if not isinstance(value, str) or not value:
+            msg = f"Value {value} is not a formula"
+            raise ValueError(msg)
+        return value
+
+
 class RefVariableConfig(_VariableConfig):
     """A variable whose value is a reference into one or more namespaces.
 
@@ -149,6 +166,10 @@ class UnionVariableConfig(_VariableConfig):
             return self._check_values(value)
         if isinstance(value, str) and "str" in self.type:
             return self._check_values(value)
+        if isinstance(value, str) and "formula" in self.type and value:
+            # A formula is the value the author could not know, so no value set
+            # can enumerate it: the subset constrains the union's other members.
+            return value
         msg = f"Value {value} is not {_or_list(self.type)}"
         raise ValueError(msg)
 
@@ -167,7 +188,11 @@ def _or_list(types: list[ScalarType]) -> str:
 
 
 type ScalarVariableConfig = (
-    IntVariableConfig | StringVariableConfig | DieVariableConfig | UnionVariableConfig
+    IntVariableConfig
+    | StringVariableConfig
+    | DieVariableConfig
+    | FormulaVariableConfig
+    | UnionVariableConfig
 )
 """A variable whose value is written out, rather than pointed at."""
 

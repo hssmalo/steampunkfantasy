@@ -27,6 +27,7 @@ from spf.render.anchors import anchor as _anchor
 from spf.schemas.rulebook import RulebookConfig
 from spf.schemas.rules import (
     DieVariableConfig,
+    FormulaVariableConfig,
     HexRuleConfig,
     ModifierRuleConfig,
     RefVariableConfig,
@@ -154,6 +155,8 @@ def constraint_text(variable: VariableConfig) -> str:
         return f"any {listed}"
     if isinstance(variable, DieVariableConfig):
         return "die"
+    if isinstance(variable, FormulaVariableConfig):
+        return "formula"
     if variable.values:
         listed = ", ".join(str(value) for value in variable.values)
         return f"one of {listed}"
