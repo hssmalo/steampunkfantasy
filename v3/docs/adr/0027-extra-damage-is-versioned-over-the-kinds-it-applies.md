@@ -70,9 +70,22 @@ Damage needed:
   dropped rather than printed literally, so a ratio-less Fire renders `Fire` and
   not `Fire[1 for {M}]`. This serves any unfilled variable, nested ones included.
 
+## Neither rule declares `places`
+
+The six deleted rules each declared what they placed — `token.fire`,
+`token.poison`, `token.minor_acid`. A versioned rule cannot: what it places *is*
+its `version` argument, which differs per instance. Spelling the kinds out on the
+rule would be the hand-maintained list `RefVariableConfig` already warns rots,
+and it would be wrong the day a new kind is used.
+
+The cost is real and named: the rulebook's "Places:" line is built from `places`,
+so it no longer says which Special causes a Poison token. Recovering that means
+reading the reference graph the other way — from the instances' `version` args —
+which is #73's work, not a list to maintain here.
+
 ## What the model still cannot say
 
-Two shapes in the corpus have no expression here and stay as prose on the
+Three shapes in the corpus have no expression here and stay as prose on the
 instance, deliberately rather than by oversight:
 
 - **Range-banded escalation.** `acid_breath` (elf, ogre, darkelf) and
@@ -80,5 +93,9 @@ instance, deliberately rather than by oversight:
   otherwise". A version ref names one kind and cannot name a band.
 - **"Choose one".** `goblin_bow_battery` offers a choice of three kinds for all
   shots. Three instances assert all three, so each carries the choice as text.
+- **A die of damage per hit.** `tentacle_cracklespears` does "an d6 Psychic
+  damage" on *each* hit. A version names a kind, not an amount, and Extra Damage
+  counts hits against a ratio rather than rolling per hit — so the instance
+  carries `damage_type.psychic` and keeps the die and the per-hit-ness in prose.
 
-Both are open questions for the game designer, not defects to work around.
+All three are open questions for the game designer, not defects to work around.

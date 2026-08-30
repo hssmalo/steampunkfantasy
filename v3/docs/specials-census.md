@@ -20,7 +20,8 @@ historical, this census as current.
 **Updated 2026-08-30** for the Extra Damage rework (ADR 0027): the assault and
 range Extra Damage rules are now versioned over the kinds they apply, the six
 kind-and-slot rules ADR 0024 anticipated are deleted, and four labels that never
-were Extra Damage became stubs of their own.
+were Extra Damage moved off it — three into stubs of their own, one onto the
+existing `area` rule.
 
 Legend for the **Category** column:
 `slug` straight slug · `drift` wording drift to reconcile · `slot!` wrong slot ·
@@ -196,7 +197,7 @@ Legend for the **Category** column:
 | `range_.limited_ammo` | unreachable | **Reachable** — "Ammo" matches once the wording drift is reconciled. |
 | `range_.gear_disruption` → `range_gear_disruption` (#113) | unreachable | **Reachable** — the Gear Disruption clauses inside range Extra Damage labels are instances of it (ADR 0027). |
 
-**6 of the 15 become reachable outright** (reroll, cunning_assault_defense,
+**7 of the 15 become reachable outright** (reroll, cunning_assault_defense,
 limited_ammo — by wording drift; pre_assault_retreat, fear — by slot fix; the two
 Gear Disruption rules — by reading the Extra Damage labels as instances). **6 are
 deleted** rather than made reachable: ADR 0027 supersedes #113's "four rule pairs"

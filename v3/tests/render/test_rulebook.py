@@ -38,7 +38,12 @@ from spf.render.rulebook import (
 )
 from spf.rules import get_rulebook
 from spf.schemas.rulebook import RulebookConfig, SectionConfig
-from spf.schemas.rules import IntVariableConfig, StringVariableConfig
+from spf.schemas.rules import (
+    FormulaVariableConfig,
+    IntVariableConfig,
+    StringVariableConfig,
+    UnionVariableConfig,
+)
 from tests.conftest import unwrapped
 
 ENGINE = config.render.latex.engine
@@ -204,10 +209,26 @@ def test_rules_context_loads_the_tokens_file_once(tmp_path: Path) -> None:
             "one of regular, psychic",
         ),
         (StringVariableConfig(type="str"), "text"),
+        (FormulaVariableConfig(type="formula"), "formula"),
+        # A union's value set enumerates its numeric member only, so a formula
+        # member has to be spelled out or the reader reads it as forbidden.
+        (
+            UnionVariableConfig(type=["int", "formula"], values=[4, 6]),
+            "one of 4, 6, or a formula",
+        ),
+        (UnionVariableConfig(type=["int", "die"], min=1, max=12), "integer, 1-12"),
+        (
+            IntVariableConfig(type="int", min=1, max=4, optional=True),
+            "integer, 1-4; optional",
+        ),
     ],
 )
 def test_constraint_text_describes_a_variable(
-    variable: IntVariableConfig | StringVariableConfig, expected: str
+    variable: IntVariableConfig
+    | StringVariableConfig
+    | FormulaVariableConfig
+    | UnionVariableConfig,
+    expected: str,
 ) -> None:
     assert constraint_text(variable) == expected
 

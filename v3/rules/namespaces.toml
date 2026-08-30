@@ -42,7 +42,7 @@ todo = "Rule text not yet written. Distinct from token.poison: this is the categ
 [damage_type.crew]
 name = "Crew"
 see_also = ["token.crippled_crew"]
-todo = "Rule text not yet written: crew damage has its own damage tables and ignores armor. Vocabulary the registry owns; no Special names it yet."
+todo = "Rule text not yet written: crew damage has its own damage tables and ignores armor. Named by special.crew_damage, which is itself unwritten."
 
 [damage_type.acid]
 name = "Acid"
