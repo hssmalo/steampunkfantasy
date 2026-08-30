@@ -23,8 +23,7 @@ def list_armies() -> None:
         army = io.load_army(army_name, tournament=tournament, validate=False)
 
         stdout.print(
-            f"- {army_id:<24} {army.race.title():<16} {army.nick:<32}",
-            highlight=False,
+            f"- {army_id:<40} {army.race.title():<16} {army.nick}", highlight=False
         )
 
 
