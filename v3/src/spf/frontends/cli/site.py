@@ -1,8 +1,8 @@
 """Build the published site: every Product/Format `render_site` writes.
 
-Plus a generated Site Index landing page.
+Plus a generated Landing Page.
 
-The Site Index is *not* a Product (`CONTEXT.md`): it is a build-time artifact
+The Landing Page is *not* a Product (`CONTEXT.md`): it is a build-time artifact
 over what actually got rendered, not a source-of-truth object bound to a
 template family. Keeping it here, rather than in `spf/render/`, keeps that
 package's contract "Products to Formats" exactly.
@@ -43,7 +43,7 @@ SHOWCASE_PACK_PATH = "showcase/pack.toml"
 
 SITE_FORMATS = ("pdf", "html")
 
-# Display order and heading for each Product's group in the Site Index.
+# Display order and heading for each Product's group on the Landing Page.
 _PRODUCT_TITLES: dict[str, str] = {
     "general-rules": "Rulebook",
     "army-rules": "Army Reference",
@@ -54,7 +54,7 @@ _PRODUCT_TITLES: dict[str, str] = {
 
 @dataclass(frozen=True)
 class SitePage:
-    """One rendered file `render_site` wrote, for the Site Index to link."""
+    """One rendered file `render_site` wrote, for the Landing Page to link."""
 
     product: str
     label: str
@@ -62,7 +62,7 @@ class SitePage:
     relative_path: str
 
 
-def render_site_index(pages: Sequence[SitePage]) -> str:
+def render_landing_page(pages: Sequence[SitePage]) -> str:
     """Render a minimal HTML landing page linking every page, grouped by Product."""
     groups: dict[str, list[SitePage]] = {name: [] for name in _PRODUCT_TITLES}
     for page in pages:
@@ -125,7 +125,7 @@ def _render_page(
 
 
 def render_site() -> None:
-    """Render every published Product/Format into `output/`, plus a Site Index.
+    """Render every published Product/Format into `output/`, plus a Landing Page.
 
     Builds the Rulebook, each showcase Army's Reference and Order Cards, and
     the Army Pack named by `armies/showcase/pack.toml`. Fails the whole build
@@ -175,7 +175,7 @@ def render_site() -> None:
     )
 
     index_path = output_root / "index.html"
-    index_path.write_text(render_site_index(pages), encoding="utf-8")
+    index_path.write_text(render_landing_page(pages), encoding="utf-8")
 
     for page in pages:
         stdout.print(f"Wrote {output_root / page.relative_path}")

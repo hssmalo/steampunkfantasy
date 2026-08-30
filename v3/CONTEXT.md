@@ -440,9 +440,9 @@ and the title it appears under. The title comes from the Index, never from the
 source, and the source's own headings nest beneath it.
 _Avoid_: chapter, part
 
-**Site Index**:
-The landing page of the deployed reference site, linking to every Rendering
-published there. Generated from what actually built, so it cannot advertise a
+**Landing Page**:
+The generated entry page of the deployed reference site, linking to every
+Rendering published there. Generated from what actually built, so it cannot advertise a
 link to something that failed to render. Distinct from a Product: it binds to
 no source-of-truth object and no template family, so it is not a Rendering
 either — it is a build-time artifact over the site's own contents.

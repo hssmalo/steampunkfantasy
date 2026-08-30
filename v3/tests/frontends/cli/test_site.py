@@ -1,10 +1,10 @@
-"""Tests for the Site Index HTML generator.
+"""Tests for the Landing Page HTML generator.
 
-`render_site_index` is a pure function over already-rendered pages, so these
+`render_landing_page` is a pure function over already-rendered pages, so these
 build `SitePage`s by hand rather than rendering anything for real.
 """
 
-from spf.frontends.cli.site import SitePage, render_site_index
+from spf.frontends.cli.site import SitePage, render_landing_page
 
 
 def test_links_every_page() -> None:
@@ -24,7 +24,7 @@ def test_links_every_page() -> None:
         ),
     ]
 
-    html = render_site_index(pages)
+    html = render_landing_page(pages)
 
     assert 'href="general-rules/rulebook.pdf"' in html
     assert 'href="army-rules/showcase-elf.html"' in html
@@ -39,7 +39,7 @@ def test_groups_by_product_in_a_fixed_order() -> None:
         ),
     ]
 
-    html = render_site_index(pages)
+    html = render_landing_page(pages)
 
     assert html.index("Rulebook") < html.index("Army Pack")
 
@@ -52,7 +52,7 @@ def test_a_product_with_no_pages_has_no_section() -> None:
         )
     ]
 
-    html = render_site_index(pages)
+    html = render_landing_page(pages)
 
     assert "Order Cards" not in html
 
@@ -68,7 +68,7 @@ def test_escapes_untrusted_looking_content() -> None:
         )
     ]
 
-    html = render_site_index(pages)
+    html = render_landing_page(pages)
 
     assert "<script>" not in html
     assert "&lt;script&gt;" in html
