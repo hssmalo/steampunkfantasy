@@ -44,7 +44,7 @@ def test_the_envelope_is_closed() -> None:
 
 
 # ---------------------------------------------------------------------------
-# The two shapes: prose-shaped and case-shaped (ADR 0029)
+# The two shapes: prose-shaped and case-shaped (ADR 0030)
 # ---------------------------------------------------------------------------
 
 

@@ -74,7 +74,7 @@ def special_row(
 def _cases(
     instance: SpecialInstance, rule: RuleRecord | None, registry: Registry
 ) -> str:
-    """Render a case-shaped instance: its preamble, then its cases (ADR 0029).
+    """Render a case-shaped instance: its preamble, then its cases (ADR 0030).
 
     Each case fills the signature with its own args over the instance's, so a
     value constant across the cases is written once. Cases that read alike are

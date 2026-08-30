@@ -4,7 +4,7 @@ A rule lives once, in a registry under `rules/`, which owns its identifier and
 its display name. A Race file writes *instances* of it, keyed by that
 identifier, and what an instance carries is a closed set of keys.
 
-An instance takes one of two shapes (ADR 0029): *prose-shaped*, a signature
+An instance takes one of two shapes (ADR 0030): *prose-shaped*, a signature
 followed by free `text`, or *case-shaped*, a `preamble` scoping the `cases`
 that each supply their own args.
 """
@@ -17,7 +17,7 @@ from spf.schemas import StrictModel
 
 
 class SpecialCase(StrictModel):
-    """One value-bearing line of a case-shaped instance (ADR 0029).
+    """One value-bearing line of a case-shaped instance (ADR 0030).
 
     Args and a scrap of prose saying when those values apply. It carries
     neither a name nor `replace`: an atmospheric name is per-instance, and
@@ -56,7 +56,7 @@ class SpecialInstance(StrictModel):
     """
 
     cases: list[SpecialCase] = Field(default_factory=list)
-    """The values this occurrence supplies, one line per condition (ADR 0029)."""
+    """The values this occurrence supplies, one line per condition (ADR 0030)."""
 
     replace: bool = False
     """Clear every instance of this id contributed earlier in the source chain.
@@ -77,7 +77,7 @@ class SpecialInstance(StrictModel):
 
     @model_validator(mode="after")
     def _one_shape_only(self) -> Self:
-        """Keep an instance prose-shaped or case-shaped, never both (ADR 0029)."""
+        """Keep an instance prose-shaped or case-shaped, never both (ADR 0030)."""
         if self.text is not None and self.cases:
             msg = (
                 "an instance carries either 'text' or 'cases': prose about the"

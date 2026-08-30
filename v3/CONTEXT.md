@@ -159,7 +159,7 @@ plus typed **Args**, and optionally free `text`, an **Atmospheric Name**, and
 `replace`. A holder may carry several Instances of the same Identifier — three
 `resistance` for three damage types — and they stay distinct. An Instance is
 either *prose-shaped* (`text`) or *case-shaped* (a **Preamble** over **Cases**),
-never both (ADR-0029).
+never both (ADR-0030).
 _Avoid_: entry, occurrence, usage
 
 **Preamble**:
