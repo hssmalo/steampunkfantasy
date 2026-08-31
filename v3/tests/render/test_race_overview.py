@@ -4,10 +4,16 @@ import re
 import shutil
 from pathlib import Path
 
+import cyclopts.exceptions
 import pytest
 
 from spf.config import config
-from spf.frontends.cli.render import RACE_OVERVIEW
+from spf.frontends.cli import app
+from spf.frontends.cli.render import (
+    RACE_OVERVIEW,
+    RenderOpts,
+    render_race_overview,
+)
 from spf.races import get_race
 from spf.render import render
 from spf.render.formats import get_format
@@ -1684,3 +1690,108 @@ def test_the_race_overview_compiles_to_a_pdf(tmp_path: Path) -> None:
     # reaches constructs the Army Reference never does — `longtable`, and the
     # `∞` an unlimited holder prints.
     assert out.read_bytes().startswith(b"%PDF")
+
+
+# --- `spf render race-overview`: the command --------------------------------
+
+
+def test_render_race_overview_markdown_writes_the_document(tmp_path: Path) -> None:
+    out = tmp_path / "goblin.md"
+
+    render_race_overview(RACE, opts=RenderOpts(format="markdown", out=out))
+
+    text = out.read_text(encoding="utf-8")
+    assert text.startswith("# Goblin")
+    assert "## Units" in text
+    assert "## Models" in text
+    assert "## Equipment" in text
+
+
+def test_render_race_overview_latex_writes_the_document(tmp_path: Path) -> None:
+    out = tmp_path / "goblin.tex"
+
+    render_race_overview(RACE, opts=RenderOpts(format="latex", out=out))
+
+    text = out.read_text(encoding="utf-8")
+    assert r"\documentclass" in text
+    assert r"\end{document}" in text
+
+
+def test_render_race_overview_html_is_a_document(tmp_path: Path) -> None:
+    out = tmp_path / "goblin.html"
+
+    render_race_overview(RACE, opts=RenderOpts(format="html", out=out))
+
+    assert "<h1" in out.read_text(encoding="utf-8")
+
+
+def test_render_race_overview_defaults_to_the_race_name_as_stem(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(config.paths, "output", tmp_path)
+
+    render_race_overview(RACE, opts=RenderOpts(format="markdown"))
+
+    assert (tmp_path / "race-overview" / f"{RACE}.md").exists()
+
+
+def test_render_race_overview_no_rules_leaves_the_rules_reference_out(
+    tmp_path: Path,
+) -> None:
+    out = tmp_path / "goblin.md"
+
+    render_race_overview(
+        RACE, opts=RenderOpts(format="markdown", out=out, no_rules=True)
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "Rules Reference" not in text
+    assert "](#rule-" not in text
+
+
+def test_render_race_overview_no_images_omits_committed_art(tmp_path: Path) -> None:
+    # Goblin has committed art, so the default render does embed images —
+    # `--no-images` is what removes them.
+    with_art = tmp_path / "with-art.md"
+    render_race_overview(RACE, opts=RenderOpts(format="markdown", out=with_art))
+    assert "![" in with_art.read_text(encoding="utf-8")
+
+    out = tmp_path / "no-art.md"
+    render_race_overview(
+        RACE, opts=RenderOpts(format="markdown", out=out, no_images=True)
+    )
+
+    assert "![" not in out.read_text(encoding="utf-8")
+
+
+def test_the_command_rejects_an_unknown_race_before_writing_anything(
+    tmp_path: Path,
+) -> None:
+    """An unknown race is named against the catalogue, not a stack trace.
+
+    The Race Name is a closed vocabulary, so the CLI rejects the value while
+    parsing it and the message lists every race the player could have meant.
+    """
+    out = tmp_path / "nothing.md"
+
+    with pytest.raises(cyclopts.exceptions.CoercionError) as excinfo:
+        app(
+            ["render", "race-overview", "notarace", "--format", "markdown"],
+            exit_on_error=False,
+            result_action="return_value",
+        )
+
+    assert RACE in str(excinfo.value)
+    assert not out.exists()
+
+
+def test_the_command_renders_through_the_cli(tmp_path: Path) -> None:
+    out = tmp_path / "goblin.md"
+
+    app(
+        ["render", "race-overview", RACE, "--format", "markdown", "--out", str(out)],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+
+    assert out.read_text(encoding="utf-8").startswith("# Goblin")
