@@ -7,7 +7,9 @@ from spf.render.race_overview import RaceLink, build_overview
 from spf.render.specials import SpecialLine
 from spf.schemas.race import (
     AssaultConfig,
+    EquipmentAssaultConfig,
     EquipmentConfig,
+    EquipmentRangeConfig,
     ModelConfig,
     OrdersConfig,
     RaceConfig,
@@ -104,8 +106,36 @@ def _unit_config(  # noqa: PLR0913  the fixture covers every field under test
     )
 
 
-def _equipment_config(*, name: str = "Club") -> EquipmentConfig:
-    return EquipmentConfig(race=RACE, name=name)  # pyright: ignore[reportArgumentType]
+def _equipment_config(  # noqa: PLR0913  the fixture covers every field under test
+    *,
+    name: str = "Club",
+    cost: Cost | None = None,
+    upgrade_all: bool | None = None,
+    requires: list[list[str]] | None = None,
+    assault: EquipmentAssaultConfig | None = None,
+    ranged: EquipmentRangeConfig | None = None,
+    unit_specials: Specials | None = None,
+    model_specials: Specials | None = None,
+    unit: UnitStatModifierConfig | None = None,
+    orders_gained: OrdersConfig | None = None,
+    description: str = "",
+    note: str = "",
+) -> EquipmentConfig:
+    return EquipmentConfig(
+        race=RACE,
+        name=name,  # pyright: ignore[reportArgumentType]
+        description=description,
+        cost=cost,
+        upgrade_all=upgrade_all,
+        requires=requires or [],  # pyright: ignore[reportArgumentType]
+        assault=assault,
+        range=ranged,
+        unit_specials=unit_specials or {},
+        model_specials=model_specials or {},
+        unit=unit,
+        note=note,
+        orders_gained=orders_gained,
+    )
 
 
 def _race_config(
@@ -614,5 +644,428 @@ def test_fielded_in_is_the_exact_inverse_of_every_unit_roster(race_name: str) ->
         (link.anchor, model.anchor)
         for model in overview.models
         for link in model.fielded_in
+    }
+    assert forward == inverse
+
+
+# --- Equipment entries ------------------------------------------------------
+
+
+def test_equipment_entry_carries_the_declared_catalogue_fields() -> None:
+    race = _race_config(
+        equipment={
+            "short_bow": _equipment_config(
+                name="Short Bow",
+                cost=Cost(ip=1, mp=2),
+                upgrade_all=False,
+                note="Two hands to draw.",
+                description="A short bow, art prompt and all.",
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.key == "short_bow"
+    assert equip.name == "Short Bow"
+    assert equip.anchor == "equipment-short-bow"
+    assert equip.cost == "1ip 2mp"
+    assert equip.cost_columns == ["1", "2", "", "", ""]
+    assert equip.note == "Two hands to draw."
+    # `description` doubles as the image-generation prompt, so no entry prints it.
+    assert not hasattr(equip, "description")
+    # An Equipment has no art of its own.
+    assert not hasattr(equip, "image")
+
+
+def test_equipment_has_no_image_of_its_own() -> None:
+    lookup = FakeLookup(ART)
+    race = _race_config(equipment={"club": _equipment_config(name="Club")})
+
+    build_overview(race, stem="goblin", image_for=lookup)
+
+    assert (RACE, "club") not in lookup.calls
+
+
+# --- Pricing (decision 4, ADR 0026) -----------------------------------------
+
+
+def test_a_unit_fixture_says_it_is_charged_once_for_the_whole_unit() -> None:
+    race = _race_config(
+        equipment={
+            "banner": _equipment_config(
+                name="Banner", cost=Cost(mp=5), upgrade_all=True
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.upgrade_all is True
+    assert equip.pricing == "Unit Fixture: charged once for the whole Unit"
+
+
+def test_other_upgrade_equipment_says_it_is_charged_per_model() -> None:
+    race = _race_config(
+        equipment={
+            "bow": _equipment_config(name="Bow", cost=Cost(mp=2), upgrade_all=False)
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.upgrade_all is False
+    assert equip.pricing == "Charged for each Model carrying it"
+
+
+def test_unpriced_default_equipment_states_no_pricing() -> None:
+    race = _race_config(equipment={"club": _equipment_config(name="Club")})
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    # Default Equipment is never bought, so there is no pricing rule to state.
+    assert equip.upgrade_all is None
+    assert equip.cost == ""
+    assert equip.pricing == ""
+
+
+# --- Requirements are a conjunction (decision 4) ----------------------------
+
+
+def test_every_requirement_line_has_to_hold() -> None:
+    race = _race_config(
+        equipment={
+            "great_axe": _equipment_config(
+                name="Great Axe", requires=[["Hands:2"], ["type:Orlf", "type:Dwalf"]]
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    # Both lines must hold: 2 Hands *and* one of the two Model types. Joining
+    # these with an "or" would let the catalogue promise a build the engine
+    # rejects.
+    assert equip.requires_all == ["2 Hands", "Model type Orlf or Dwalf"]
+
+
+def test_a_requirement_group_offers_a_choice_within_its_own_line() -> None:
+    race = _race_config(
+        equipment={
+            "sidearm": _equipment_config(
+                name="Sidearm", requires=[["Hands:1", "type:Officer"]]
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.requires_all == ["1 Hands or Model type Officer"]
+
+
+def test_equipment_with_no_requirements_lists_none() -> None:
+    race = _race_config(equipment={"club": _equipment_config()})
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.requires_all == []
+
+
+# --- Inverse links (decision 3) ---------------------------------------------
+
+
+def test_equipment_is_carried_by_every_model_permitting_it() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(models=["grunt"])},
+        models={
+            "grunt": _model_config(name="Grunt", equipment=["club"], cost=Cost(mp=9)),
+            "boss": _model_config(name="Boss", equipment=["club", "bow"]),
+        },
+        equipment={
+            "club": _equipment_config(name="Club"),
+            "bow": _equipment_config(name="Bow"),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    by_key = {equip.key: equip for equip in overview.equipment}
+    # The exact inverse of the forward link a Model entry carries, read in the
+    # order the Models section prints.
+    assert by_key["club"].carried_by == [
+        RaceLink("Grunt", "model-grunt"),
+        RaceLink("Boss", "model-boss"),
+    ]
+    assert by_key["bow"].carried_by == [RaceLink("Boss", "model-boss")]
+
+
+def test_a_model_with_two_slots_for_one_equipment_carries_it_once() -> None:
+    race = _race_config(
+        models={"grunt": _model_config(name="Grunt", equipment=["club", "club"])},
+        equipment={"club": _equipment_config(name="Club")},
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.carried_by == [RaceLink("Grunt", "model-grunt")]
+
+
+# --- Declared deltas (decision 1) -------------------------------------------
+
+
+def test_equipment_declares_its_assault_and_unit_deltas() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(armor=[8, 6, 5, 4], models=["grunt"])},
+        equipment={
+            "shield": _equipment_config(
+                name="Shield",
+                assault=EquipmentAssaultConfig(
+                    strength=Stacker(add=[1, 0, 0, 0]),
+                    damage=Stacker(replace="d12"),
+                ),
+                unit=UnitStatModifierConfig(armor=Stacker(add=[3, 2, 0, 0])),
+            )
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    (unit,) = overview.units
+    assert equip.assault_modifiers == ["Strength: +1/0/0/0", "Damage: set to d12"]
+    assert equip.unit_modifiers == ["Armor: +3/+2/0/0 to its Unit"]
+    # A delta has no value until the Equipment is carried into a fielded Unit,
+    # so nothing is stacked onto the Unit's own declaration.
+    assert unit.armor == [8, 6, 5, 4]
+
+
+def test_equipment_with_neither_assault_nor_unit_deltas_declares_none() -> None:
+    race = _race_config(equipment={"club": _equipment_config()})
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.assault_modifiers == []
+    assert equip.unit_modifiers == []
+
+
+# --- Orders stay unmerged (decision 7, ADR 0007) ----------------------------
+
+
+def test_orders_gained_land_on_the_equipment_rather_than_the_unit() -> None:
+    race = _race_config(
+        units={
+            "squad": _unit_config(
+                models=["grunt"],
+                orders=OrdersConfig(movement={"slow": [["F", "F"]]}),
+            )
+        },
+        models={"grunt": _model_config(equipment=["jetpack"])},
+        equipment={
+            "jetpack": _equipment_config(
+                name="Jetpack",
+                orders_gained=OrdersConfig(
+                    fire={"sneak": [["Fire", "-"]]},
+                    movement={"fast": [["F", "F", "F"]]},
+                ),
+            )
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    (unit,) = overview.units
+    assert equip.orders_gained_movement_rows == [("fast", ["F", "F", "F"])]
+    assert equip.orders_gained_fire_rows == [("sneak", ["Fire", "-"])]
+    # `orders_gained` is additive (ADR 0007), and only a fielded Unit has the
+    # fixed loadout a merged table would describe.
+    assert unit.movement_rows == [("slow", ["F", "F"])]
+    assert unit.fire_rows == []
+
+
+def test_equipment_granting_no_orders_has_no_rows() -> None:
+    race = _race_config(equipment={"club": _equipment_config()})
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.orders_gained_movement_rows == []
+    assert equip.orders_gained_fire_rows == []
+
+
+# --- The range profile ------------------------------------------------------
+
+
+def test_ranged_equipment_carries_its_whole_range_profile() -> None:
+    race = _race_config(
+        equipment={
+            "bow": _equipment_config(
+                name="Bow",
+                ranged=EquipmentRangeConfig(
+                    range=12,
+                    angle=[True, True, False, False],
+                    damage="d8",
+                    ap=2,
+                    specials={"burst": [SpecialInstance(args={"N": 3})]},
+                    note="Reload after firing.",
+                ),
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.range == 12
+    assert equip.range_angle == [True, True, False, False]
+    assert equip.range_damage == "d8"
+    assert equip.range_ap == 2
+    assert [line.name for line in equip.range_specials] == ["Burst"]
+    assert equip.range_note == "Reload after firing."
+
+
+def test_rangeless_equipment_has_no_range_profile() -> None:
+    race = _race_config(equipment={"club": _equipment_config()})
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    # `range is None` is the single test of whether an Equipment shoots.
+    assert equip.range is None
+    assert equip.range_angle == []
+    assert equip.range_damage is None
+    assert equip.range_ap is None
+    assert equip.range_specials == []
+    assert equip.range_note == ""
+
+
+def test_each_note_stays_with_the_profile_it_qualifies() -> None:
+    race = _race_config(
+        equipment={
+            "bow": _equipment_config(
+                name="Bow",
+                note="Goblin-made.",
+                assault=EquipmentAssaultConfig(
+                    damage=Stacker(replace="d4"), note="Clumsy in melee."
+                ),
+                ranged=EquipmentRangeConfig(
+                    range=12, angle=[True], damage="d8", ap=0, note="Reload."
+                ),
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert equip.note == "Goblin-made."
+    assert equip.assault_note == "Clumsy in melee."
+    assert equip.range_note == "Reload."
+
+
+# --- Specials slots ---------------------------------------------------------
+
+
+def test_equipment_keeps_its_four_specials_slots_apart() -> None:
+    race = _race_config(
+        equipment={
+            "bow": _equipment_config(
+                name="Bow",
+                unit_specials={"evasion": [SpecialInstance(args={"N": 4})]},
+                model_specials={"escape_artist": [SpecialInstance()]},
+                assault=EquipmentAssaultConfig(
+                    specials={"retreat": [SpecialInstance()]}
+                ),
+                ranged=EquipmentRangeConfig(
+                    range=12,
+                    angle=[True],
+                    damage="d8",
+                    ap=0,
+                    specials={"burst": [SpecialInstance(args={"N": 3})]},
+                ),
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (equip,) = overview.equipment
+    assert [line.name for line in equip.unit_specials] == ["Evasion"]
+    assert [line.name for line in equip.model_specials] == ["Escape Artist"]
+    assert [line.name for line in equip.assault_specials] == ["Retreat"]
+    assert [line.name for line in equip.range_specials] == ["Burst"]
+
+
+# --- Ordering (decision 9) --------------------------------------------------
+
+
+def test_equipment_orders_by_cost_with_toml_order_breaking_ties() -> None:
+    race = _race_config(
+        equipment={
+            "cheap": _equipment_config(
+                name="Cheap", cost=Cost(mp=1), upgrade_all=False
+            ),
+            "tied_first": _equipment_config(
+                name="Tied First", cost=Cost(mp=5), upgrade_all=False
+            ),
+            "tied_second": _equipment_config(
+                name="Tied Second", cost=Cost(mp=5), upgrade_all=False
+            ),
+            "unpriced": _equipment_config(name="Unpriced"),
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    assert [equip.name for equip in overview.equipment] == [
+        "Tied First",
+        "Tied Second",
+        "Cheap",
+        "Unpriced",
+    ]
+
+
+# --- Against the committed catalogue ----------------------------------------
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf"])
+def test_build_overview_covers_every_equipment_of_a_committed_race(
+    race_name: str,
+) -> None:
+    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+
+    overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
+
+    assert len(overview.equipment) == len(race.equipment)
+    anchors = [equip.anchor for equip in overview.equipment]
+    assert len(set(anchors)) == len(anchors)
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "ogre"])
+def test_carried_by_is_the_exact_inverse_of_every_model_loadout(
+    race_name: str,
+) -> None:
+    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+
+    overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
+
+    forward = {
+        (model.anchor, link.anchor)
+        for model in overview.models
+        for link in model.equipment
+    }
+    inverse = {
+        (link.anchor, equip.anchor)
+        for equip in overview.equipment
+        for link in equip.carried_by
     }
     assert forward == inverse

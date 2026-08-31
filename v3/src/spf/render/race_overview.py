@@ -25,7 +25,12 @@ from spf.registry import load_registry
 from spf.render.anchors import slug
 from spf.render.costs import cost_columns, cost_text
 from spf.render.damage import roll_text
-from spf.render.declarations import limit_rows, unit_modifier_lines
+from spf.render.declarations import (
+    assault_modifier_lines,
+    limit_rows,
+    requirement_lines,
+    unit_modifier_lines,
+)
 from spf.render.images import ImageLookup, committed_image
 from spf.render.orders import Rows, flat_rows
 from spf.render.specials import SpecialLine, special_lines
@@ -44,6 +49,11 @@ _MODEL_TYPE_ORDER: list[t.ModelType] = list(get_args(t.ModelType.__value__))
 
 type _AnchorFor = Callable[[str], str | None] | None
 """Resolves a Special Identifier to its Rules Reference entry, or nothing."""
+
+FIXTURE_PRICING = "Unit Fixture: charged once for the whole Unit"
+PER_MODEL_PRICING = "Charged for each Model carrying it"
+"""How an Upgrade Equipment is priced (ADR 0026). Default Equipment is never
+bought, so it states neither."""
 
 type _Record = UnitConfig | ModelConfig | EquipmentConfig
 """The record kinds a catalogue section is built from.
@@ -153,6 +163,58 @@ class ModelEntry:
 
 
 @dataclass(frozen=True)
+class EquipmentEntry:
+    """One catalogue Equipment: what it costs, who may carry it, and what it does.
+
+    An Equipment declares deltas rather than stats: its assault block is a set
+    of `Stacker`s over whatever Model carries it, so the entry prints the
+    change and resolves nothing.
+    """
+
+    key: str
+    name: str
+    anchor: str
+    cost: str
+    cost_columns: list[str]
+    upgrade_all: bool | None
+    pricing: str
+    """How the `cost` is charged (ADR 0026), empty for Default Equipment."""
+
+    requires_all: list[str]
+    """The requirements on whoever carries this, **every one of which holds**.
+
+    `requires` is a conjunction of disjunctions (`spf.armies.build`): the
+    choice is *within* a line, and the lines are joined by "and". A caller
+    joining these with an "or" would promise a build the engine rejects.
+    """
+
+    carried_by: list[RaceLink]
+    """The Models permitted to take this — the inverse of `ModelEntry.equipment`."""
+
+    range: int | None
+    """`None` unless the Equipment shoots; the one test of a range profile."""
+
+    range_angle: list[bool | str]
+    range_damage: t.Die | None
+    range_ap: t.ArmorPenetration | None
+    range_specials: list[SpecialLine]
+    range_note: str
+    assault_modifiers: list[str]
+    assault_specials: list[SpecialLine]
+    assault_note: str
+    unit_modifiers: list[str]
+    unit_specials: list[SpecialLine]
+    model_specials: list[SpecialLine]
+    orders_gained_movement_rows: Rows
+    orders_gained_fire_rows: Rows
+    """The orders this Equipment grants, kept on the Equipment: `orders_gained`
+    is additive (ADR 0007), and only a fielded Unit has the fixed loadout a
+    merged table would describe."""
+
+    note: str
+
+
+@dataclass(frozen=True)
 class RaceOverview:
     """A Race's whole catalogue: its title block, then its flat sections."""
 
@@ -166,6 +228,7 @@ class RaceOverview:
     race_image: Path | None
     units: list[UnitEntry]
     models: list[ModelEntry]
+    equipment: list[EquipmentEntry]
 
 
 @dataclass(frozen=True)
@@ -182,6 +245,7 @@ class _Catalogue:
     anchor_for: _AnchorFor
     fielded_in: dict[str, list[RaceLink]]
     replaced_by: dict[str, list[RaceLink]]
+    carried_by: dict[str, list[RaceLink]]
     """The inverse links, indexed once for the whole catalogue rather than
     re-derived per entry: each is a walk over every record of another section."""
 
@@ -260,6 +324,32 @@ def _replaced_by(
             link = RaceLink(name=model.name, anchor=anchor(MODEL, key))
             index.setdefault(model.replaces, []).append(link)
     return index
+
+
+def _carried_by(models: Sequence[tuple[str, ModelConfig]]) -> dict[str, list[RaceLink]]:
+    """Invert every Model's loadout: which Models may take a given Equipment.
+
+    Built from the ordered Models, so an Equipment's way back reads in the same
+    order as the section it points into.
+    """
+    index: dict[str, list[RaceLink]] = {}
+    for key, model in models:
+        link = RaceLink(name=model.name, anchor=anchor(MODEL, key))
+        for equipment_key in dict.fromkeys(model.equipment):
+            index.setdefault(equipment_key, []).append(link)
+    return index
+
+
+def _pricing(*, upgrade_all: bool | None) -> str:
+    """State how a priced Equipment is charged (ADR 0026).
+
+    `upgrade_all` is set if and only if a `cost` is, so an unset one is
+    Default Equipment: nothing is ever charged for it, and there is no rule to
+    print.
+    """
+    if upgrade_all is None:
+        return ""
+    return FIXTURE_PRICING if upgrade_all else PER_MODEL_PRICING
 
 
 def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEntry:
@@ -346,6 +436,60 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
     )
 
 
+def _equipment_entry(
+    key: str, equip: EquipmentConfig, *, catalogue: _Catalogue
+) -> EquipmentEntry:
+    """Shape one catalogue Equipment into its entry.
+
+    Each of the three `note` fields stays with the profile it qualifies. The
+    Army Reference has to scatter them — a rangeless Equipment gets no
+    sub-entry there — but here every Equipment has an entry of its own, so all
+    three print against the thing they are about.
+    """
+    anchor_for = catalogue.anchor_for
+    ranged = equip.range
+    assault = equip.assault
+    orders = equip.orders_gained
+    return EquipmentEntry(
+        key=key,
+        name=equip.name,
+        anchor=anchor(EQUIPMENT, key),
+        cost=cost_text(equip.cost),
+        cost_columns=cost_columns(equip.cost),
+        upgrade_all=equip.upgrade_all,
+        pricing=_pricing(upgrade_all=equip.upgrade_all),
+        requires_all=requirement_lines(equip.requires),
+        carried_by=catalogue.carried_by.get(key, []),
+        range=ranged.range if ranged is not None else None,
+        range_angle=list(ranged.angle) if ranged is not None else [],
+        range_damage=ranged.damage if ranged is not None else None,
+        range_ap=ranged.ap if ranged is not None else None,
+        range_specials=(
+            special_lines(ranged.specials, anchor_for=anchor_for)
+            if ranged is not None
+            else []
+        ),
+        range_note=ranged.note if ranged is not None else "",
+        # Deltas over whichever Model carries this, not results: an
+        # Equipment's assault block stacks onto stats it does not own.
+        assault_modifiers=assault_modifier_lines(assault),
+        assault_specials=(
+            special_lines(assault.specials, anchor_for=anchor_for)
+            if assault is not None
+            else []
+        ),
+        assault_note=assault.note if assault is not None else "",
+        unit_modifiers=unit_modifier_lines(equip.unit),
+        # The four Slots stay apart: what this grants a Unit, its carrier, its
+        # assault and its shooting are different claims.
+        unit_specials=special_lines(equip.unit_specials, anchor_for=anchor_for),
+        model_specials=special_lines(equip.model_specials, anchor_for=anchor_for),
+        orders_gained_movement_rows=flat_rows(orders.movement if orders else None),
+        orders_gained_fire_rows=flat_rows(orders.fire if orders else None),
+        note=equip.note,
+    )
+
+
 def build_overview(
     race_config: RaceConfig,
     *,
@@ -356,13 +500,14 @@ def build_overview(
 
     `image_for` resolves Image Assets; it defaults to the committed store and
     is swapped for `no_image` by `--no-images`. Only the Race and its Units are
-    Targets: there are no Model Assets, and `committed_image` keys on a bare
-    name, so asking about a Model would answer with the Unit's art whenever the
-    two share a key.
+    Targets: there are no Model or Equipment Assets, and `committed_image` keys
+    on a bare name, so asking about a Model would answer with the Unit's art
+    whenever the two share a key.
     """
     race, metadata = next(iter(race_config.races.items()))
     units = _in_cost_order(race_config.units)
     models = _in_cost_order(race_config.models)
+    equipment = _in_cost_order(race_config.equipment)
     catalogue = _Catalogue(
         race=race,
         config=race_config,
@@ -370,6 +515,7 @@ def build_overview(
         anchor_for=None,
         fielded_in=_fielded_in(units),
         replaced_by=_replaced_by(models),
+        carried_by=_carried_by(models),
     )
     return RaceOverview(
         stem=stem,
@@ -380,4 +526,8 @@ def build_overview(
         race_image=image_for(race, race),
         units=[_unit_entry(key, unit, catalogue=catalogue) for key, unit in units],
         models=[_model_entry(key, model, catalogue=catalogue) for key, model in models],
+        equipment=[
+            _equipment_entry(key, equip, catalogue=catalogue)
+            for key, equip in equipment
+        ],
     )
