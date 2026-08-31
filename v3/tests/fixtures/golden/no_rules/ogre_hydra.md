@@ -39,7 +39,7 @@
 - Assault: strength 6/6/6/6 (5+), deflection 6/2/2/2 (5+), damage d6, AP 2
 
 
-- **Bonus**: +3 assault strength  and +1 assault deflection per alive head
+- **Boost**: +3 assault strength  and +1 assault deflection per alive head
 - **Assault Extra Damage**: Poison[6][1 for 2]
 - **Fear**: [d6]
 

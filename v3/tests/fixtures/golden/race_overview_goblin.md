@@ -473,7 +473,6 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 - Shaken: slow [-, -, Flee] / Can't use weapons
 - Placed by: [tiny_snake](#spawn-tiny-snake)
 - **[Hidden](#rule-special-hidden)**: Start with a hidden token
-- **[Movement](#rule-special-movement)**: This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting.
 - **[Terror](#rule-special-terror)**: [range=1][d4]
 
 **Movement orders**
@@ -481,6 +480,8 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 | Speed | | | |
 | --- | --- | --- | --- |
 | slow | - | - | Chs |
+| slow | - | - | Reveal |
+| slow | Follow | Follow | Follow |
 
 **Fire orders**
 
@@ -586,7 +587,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 - Fielded in: [Tiny Snake](#unit-tiny-snake)
 - *In assault:*
     - **[Assault Extra Damage](#rule-special-assault-extra-damage)**: Poison[6][1 for 1]
-    - **[Bonus](#rule-special-bonus)**: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
+    - **[Boost](#rule-special-boost)**: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
 
 <a id="model-bipedal-mech"></a>
 
@@ -1111,7 +1112,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 - *See also:* [Limited Ammo (special)](#rule-special-limited-ammo)
 
 <a id="rule-special-area"></a>
-**Area (special)** — Roll a die per enemy model in the hex. For each die at N+, roll for damage and and add extra damage to the corresponding unit.
+**Area (special)** — Roll a die per enemy model in the hex. For each die at {N}+, roll for damage and and add extra damage to the corresponding unit.
 
 <a id="rule-special-assault-extra-damage"></a>
 **Assault Extra Damage (special)** — The target gets one {version} if hit at least once. Where a ratio is given, it gets one per {M} hits instead.
@@ -1125,7 +1126,12 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 - *To be hit:* 0
 
 <a id="rule-special-bonus"></a>
-**Bonus (special)** — *Rule text pending.*
+**Bonus (special)** — Bonus to range attacks
+
+- *See also:* Penalty (special)
+
+<a id="rule-special-boost"></a>
+**Boost (special)** — Boosts and modifies assault capabilities
 
 - *See also:* Penalty (special)
 

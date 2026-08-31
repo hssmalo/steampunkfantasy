@@ -472,7 +472,6 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 - Shaken: slow [-, -, Flee] / Can't use weapons
 - Placed by: [tiny_snake](#spawn-tiny-snake)
 - **Hidden**: Start with a hidden token
-- **Movement**: This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting.
 - **Terror**: [range=1][d4]
 
 **Movement orders**
@@ -480,6 +479,8 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 | Speed | | | |
 | --- | --- | --- | --- |
 | slow | - | - | Chs |
+| slow | - | - | Reveal |
+| slow | Follow | Follow | Follow |
 
 **Fire orders**
 
@@ -585,7 +586,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 - Fielded in: [Tiny Snake](#unit-tiny-snake)
 - *In assault:*
     - **Assault Extra Damage**: Poison[6][1 for 1]
-    - **Bonus**: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
+    - **Boost**: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
 
 <a id="model-bipedal-mech"></a>
 

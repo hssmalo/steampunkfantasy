@@ -233,7 +233,7 @@ def test_race_slots_yields_every_slot_a_race_holds() -> None:
                 "angle": [True, False, False, False],
                 "damage": "d6",
                 "ap": 0,
-                "specials": {"break": [{}]},
+                "specials": {"forced_break": [{}]},
             },
         },
     )
@@ -246,7 +246,7 @@ def test_race_slots_yields_every_slot_a_race_holds() -> None:
         ["trap"],
         ["fog"],
         ["weakest_armor"],
-        ["break"],
+        ["forced_break"],
     ]
 
 

@@ -68,7 +68,6 @@
 - Shaken: slow [random, -, -] / Normal
 
 - **[Resistance](#rule-special-resistance)**: Poison[3]
-- **[Movement](#rule-special-movement)**: random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutralize the effect of the weather
 - **Note**: Floats
 
 **Damage Table: Regular**
@@ -168,9 +167,6 @@
 - *Removed:* Remove one Fog in each hex in aftermath phase
 - *To hit:* -1
 - *To be hit:* -1
-
-<a id="rule-special-movement"></a>
-**Movement (special)** — *Rule text pending.*
 
 <a id="rule-special-multiple-shots"></a>
 **Multiple Shots (special)** — *Rule text pending.*
