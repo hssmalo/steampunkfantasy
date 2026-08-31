@@ -7,8 +7,10 @@ filter, and `spf.render.md_latex` — which `environments` imports, to register
 """
 
 # Characters that must be escaped to survive a pdflatex run. Order cells carry
-# `°` (rendered via `textcomp`'s `\textdegree`) alongside the usual TeX
-# specials; `+`, `[` and `]` are safe in text mode and pass through.
+# `°` (rendered via `textcomp`'s `\textdegree`) and an unlimited Equipment
+# holder carries `∞` (which has no text-mode glyph at all, so it goes through
+# math mode) alongside the usual TeX specials; `+`, `[` and `]` are safe in
+# text mode and pass through.
 _LATEX_SPECIAL = {
     "\\": r"\textbackslash{}",
     "&": r"\&",
@@ -21,6 +23,7 @@ _LATEX_SPECIAL = {
     "~": r"\textasciitilde{}",
     "^": r"\textasciicircum{}",
     "°": r"\textdegree{}",
+    "∞": r"$\infty$",
 }
 
 

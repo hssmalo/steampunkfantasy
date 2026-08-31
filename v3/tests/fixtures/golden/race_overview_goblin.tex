@@ -1,0 +1,1982 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+% A tiny version stamp in the footer of every page. `\maketitle` switches its
+% own page to the `plain` style, so `plain` is redefined to match — otherwise
+% the stamp is missing from exactly the page most people look at.
+\newcommand{\versionfoot}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%  the page number the table of contents points at
+  \fancyfoot[R]{\tiny v1999.12.0}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+\hypersetup{
+    colorlinks=true, % set true if you want colored links
+    linktoc=all,     % set to all if you want both sections and subsections linked
+    linkcolor=blue,  % choose some color if you want links to stand out
+}
+\pagestyle{fancy}
+\versionfoot
+\fancypagestyle{plain}{\versionfoot}
+
+\title{Goblin}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+Goblin are small humanoid creatures, about 1m in height. Sneaky infantry, viewed as somewhat primitive but has proven to have done some surprisingly well done engineering jobs
+
+% Each section's summary table is that section's own index, so the contents
+% list stops at the sections themselves.
+\setcounter{tocdepth}{1}
+\tableofcontents
+\newpage
+
+\section{Units}
+\label{section-units}
+
+\begin{longtable}{@{}p{0.28\textwidth}llrrrrr@{}}
+\textbf{Unit} & \textbf{Size} & \textbf{Models} & \textbf{ip} & \textbf{mp} & \textbf{xp} & \textbf{cp} & \textbf{vpm} \\
+\hline
+\endhead
+\hyperref[unit-heavy-carrier]{Heavy Carrier} & Large & 1 & 32 &  &  &  &  \\
+\hyperref[unit-bipedal-mech]{Bipedal Mech} & Large & 1 & 24 &  &  &  &  \\
+\hyperref[unit-mechanical-fire-bird]{Mechanical Fire Bird} & Medium & 1 & 24 &  &  &  &  \\
+\hyperref[unit-goblin-infantry-carrier]{Goblin Infantry Carrier} & Large & 1 & 16 &  &  &  &  \\
+\hyperref[unit-modified-truck]{Modified Truck} & Medium & 1 & 8 &  &  &  &  \\
+\hyperref[unit-goblin-infantry]{Goblin Infantry} & Small & 4 &  & 8 &  &  &  \\
+\hyperref[unit-giant-snake-cavalry]{Giant Snake Cavalry} & Large & 1 &  & 4 & 24 &  &  \\
+\hyperref[unit-tiny-snake]{Tiny Snake} & Tiny & 2 &  &  &  &  &  \\
+\end{longtable}
+
+\subsection{Heavy Carrier}
+\label{unit-heavy-carrier}
+
+\textit{The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapon system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.}
+
+\begin{itemize}
+\item Cost: 32ip (96 points)
+\item Size: Large
+\item Models: \hyperref[model-heavy-carrier]{Heavy Carrier}
+\item Type: Mechanical, Vehicle, Tracked
+\item Armor: 10/8/6/4
+\item Shaken: still [-, -, -] / Can't use weapons
+\item \textbf{\hyperref[rule-special-transport]{Transport}}: May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantry to join the assault
+\item \textbf{\hyperref[rule-special-forward-position]{Forward Position}}: [1]
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: Fire and load all weapons simultaneously, with identical ammo usage for all weapons
+
+\end{itemize}
+\noindent\textbf{Tip}: Slightly more armored compared to the Goblin Armored Carrier, much better armed and more flexible exit, but carries only one goblin infantry unit.
+
+These have dual use, one is to deliver Goblin infantry closer to the enemy, anothes is to lay devastating firepower onto the enemy.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+slow & L/R & (L/R) & - \\
+slow & F & (L/R) & (Deploy) \\
+slow & (L/R) & F & (Deploy) \\
+slow & B & - & - \\
+slow & A & F & - \\
+slow & B & - & - \\
+fast & F & F & F+(Deploy) \\
+fast & F & L/R & F+(Deploy) \\
+fast & L/R & F & F+(Deploy) \\
+fast & F & F+(Deploy) & L/R \\
+fast & F & B & - \\
+still & L/R & (L/R) & (L/R) \\
+still & - & - & - \\
+still & (L/R) & A & F \\
+still & rev & - & - \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+fast & - & Fire \\
+fast & - & Fire \\
+slow & Load & Load \\
+slow & Load & Fire \\
+still & Load & Load \\
+still & Load & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-3 & +1 to future damage \\
+4 & As 1-3 , shaken \\
+5-8 & As 4, d6 critical damage \\
+9 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Critical}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1 & 1d4 damage to all transported units \\
+2 & Forced Deploy (empty hexes only) \\
+3 & +1 to be hit, -1 to hit \\
+4 & Cannot rotate \\
+5 & Unit cannot move \\
+6 & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Crew}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+4-5 & Crippled Crew, if already shaken double initial Crew damage \\
+6-7 & As 4-5, shaken \\
+8-11 & As 6-7, +3 to future Crew damage \\
+12 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Bipedal Mech}
+\label{unit-bipedal-mech}
+
+\textit{These are the pride of goblin innovation, the first tank which walks on two legs. Or at least, that is what the goblin claim.}
+
+\begin{itemize}
+\item Cost: 24ip (72 points)
+\item Size: Large
+\item Models: \hyperref[model-bipedal-mech]{Bipedal Mech}
+\item Type: Bio Crew, Mechanical, Walking
+\item Armor: 8/8/8/6
+\item Shaken: still [-, -, -] / Can't use weapons
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: Fire and load all weapons simultaneously. Fire stinkbomb in addition to two light mortars
+\item \textbf{\hyperref[rule-special-forward-position]{Forward Position}}: [2]
+
+\end{itemize}
+\noindent\textbf{Tip}: Do not underestimate the stinkbombs, which are great versus infantry, tanks and vehicles. Versus biological units the stinkbombs poison the enemy, scare them, cover them in acid, and if you hit you get an area effect hopefully doing the same thing over again. Versus tanks with biological crew, the crew damage can be devastating too, especially versus tanks which are already shaken. It is useless versus drones and robots. Goblin do not know what aiming is, so fire load and repeat as often as possible.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+still & 360\textdegree{} & 360\textdegree{} & 360\textdegree{} \\
+still & 360\textdegree{} & A & 360\textdegree{} \\
+slow & 360\textdegree{} & F & 360\textdegree{} \\
+slow & 360\textdegree{} & F & B \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+still & Load & - \\
+still & Fire & - \\
+slow & Load & - \\
+slow & Fire & - \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-3 & +1 to future damage \\
+4 & As 1-3, shaken \\
+5-8 & As 4, d6 critical damage \\
+9 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Critical}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1 & Take d12 Crew damage (note, it is not shaken before the apply damage step) \\
+2 & Unit gets a minor acid token \\
+3 & +1 to be hit, -1 to hit \\
+4 & Cannot rotate \\
+5 & Unit cannot move \\
+6 & +1 to future damage and unit gets another shaken token \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Crew}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+4-5 & Crippled Crew, if already shaken double initial Crew damage \\
+6-7 & as 4-5, shaken \\
+8-11 & as 6-7, +3 to future Crew damage \\
+12 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Mechanical Fire Bird}
+\label{unit-mechanical-fire-bird}
+
+\textit{How the goblin manage to make this marvel of a rebuild mechanism is a mystery.}
+
+\begin{itemize}
+\item Cost: 24ip (72 points)
+\item Size: Medium
+\item Models: \hyperref[model-mechanical-fire-bird]{Mechanical Fire Bird}
+\item Type: Mechanical, Flying, Drone
+\item Armor: 5/4/4/3
+\item Shaken: fast\_fly [-, F, F] / Can't use weapons
+\item \textbf{\hyperref[rule-special-phoenix]{Phoenix}}: Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast\_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]
+\item \textbf{\hyperref[rule-special-immunity]{Immunity}}: [Fire]
+
+\end{itemize}
+\noindent\textbf{Tip}: Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set an enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it har to hit, some armor protects from regular muskets and rifles, while simulatiously requires a few shots to disensamble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+fast\_fly & L/R+F & F & F+L/R \\
+fast\_fly & F & F & F \\
+fast\_fly & F+L/R & F+L/R & F \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+fast & - & Load \\
+fast & - & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-3 & +1 to future damage \\
+4-5 & +2 to future damage \\
+6+ & As 4-5, temporarily destroyed \\
+\end{tabular}
+\begin{itemize}
+\item While temporarily destroyed, all regular damage do inner damage instead
+\item + to future damage does not apply to inner damage
+\item Note that it does not get the status temporarily destroyed before the apply damage step
+\end{itemize}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Inner}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-5 & add one minor acid token \\
+6+ & Remove reassemble token \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Goblin Infantry Carrier}
+\label{unit-goblin-infantry-carrier}
+
+\textit{Since Goblin infantry are smaller than the other races, you can pack more of them in the same vehicle. Once the goblin exit, they swarm the place with lots and lots of goblin infantry.}
+
+\begin{itemize}
+\item Cost: 16ip (48 points)
+\item Size: Large
+\item Models: \hyperref[model-goblin-infantry-carrier]{Goblin Infantry Carrier}
+\item Type: Mechanical, Vehicle, Tracked
+\item Armor: 10/6/5/4
+\item Shaken: still [-, -, -] / Can't use weapons
+\item \textbf{\hyperref[rule-special-transport]{Transport}}: May transport up to 3 Goblin infantry. Deploy order is Deploy(range=1). May not be deployed into assault.
+\item \textbf{\hyperref[rule-special-forward-position]{Forward Position}}: [1]
+
+\end{itemize}
+\noindent\textbf{Tip}: Mostly used to deliver lots of goblin infantry fast to the front, however the light mortar can do some serious damage to both infantry and vehicles if you are lucky. Well armored from the front, less so from the sides and rear.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+slow & L/R & (L/R) & - \\
+slow & F & L/R & - \\
+slow & B & - & - \\
+slow & A+F & F & F+Deploy \\
+slow & F & - & - \\
+slow & B & - & - \\
+fast & B & - & - \\
+still & L/R & (L/R) & (L/R) \\
+still & - & - & - \\
+still & (L/R) & A & F \\
+still & rev & - & - \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+slow & - & Load \\
+slow & - & Fire \\
+still & - & Load \\
+still & - & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-3 & +1 to future damage \\
+4 & As 1-3, shaken \\
+5-8 & As 4, d6 critical damage \\
+9 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Critical}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-2 & 1d4 damage to all transported units \\
+3 & Forced Deploy (all units, empty hexes only) \\
+4 & Cannot rotate \\
+5 & Unit cannot move \\
+6 & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Crew}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+4-5 & Crippled Crew, if already shaken double initial Crew damage \\
+6-7 & As 4-5, shaken \\
+8-11 & As 6-7, +3 to future Crew damage \\
+12 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Modified Truck}
+\label{unit-modified-truck}
+
+\begin{itemize}
+\item Cost: 8ip (24 points)
+\item Size: Medium
+\item Models: \hyperref[model-modified-truck]{Modified Truck}
+\item Type: Mechanical, Vehicle, Tracked
+\item Armor: 4/3/2/1
+\item Shaken: still [-, -, -] / Can't use weapons
+\item \textbf{\hyperref[rule-special-transport]{Transport}}: May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantry to join the assault
+\item \textbf{\hyperref[rule-special-forward-position]{Forward Position}}: [1]
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: Use both auto bow and goblin grenade on each fire order
+
+\end{itemize}
+\noindent\textbf{Tip}: These are cheap vehicles, with primarily role to help you place infantry closer to the enemy, which you should do as fast as possible. Having infantry inside one of these inside the truck on round 2 and you have done something wrong.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+slow & L/R & (L/R) & - \\
+slow & F & L/R & (Deploy) \\
+slow & L/R & F & (Deploy) \\
+slow & B & - & - \\
+slow & (A) & F & - \\
+slow & B & - & - \\
+fast & F+(L/R) & F & (Deploy) \\
+fast & F & F & F \\
+fast & L/R & F & F+(Deploy) \\
+fast & F & F+(Deploy) & L/R \\
+fast & F & B & - \\
+still & L/R & (L/R) & (L/R) \\
+still & - & - & - \\
+still & (L/R) & A & F \\
+still & rev & - & - \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+fast & Fire & Fire \\
+slow & Fire & Fire \\
+still & Fire & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-2 & +1 to future damage \\
+3 & As 1-2, shaken \\
+4-7 & As 3, d6 critical damage \\
+8 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Critical}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1 & 1d4 damage to all transported units \\
+2 & Forced Deploy (empty hexes only) \\
+3 & +1 to be hit, -1 to hit \\
+4 & Cannot rotate \\
+5-6 & Unit cannot move \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Crew}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+3-4 & Crippled Crew, if already shaken double initial Crew damage \\
+5-6 & As 4-5, shaken \\
+7-9 & As 6-7, +3 to future Crew damage \\
+10 & Unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Goblin Infantry}
+\label{unit-goblin-infantry}
+
+\textit{They are viewed as somewhat primitive by the standards of other races, and they are easily underestimated, until the Goblin infantry swarm you.}
+
+\begin{itemize}
+\item Cost: 8mp (8 points)
+\item Size: Small
+\item Models: \hyperref[model-goblin-infantry]{Goblin Infantry}
+\item Type: Bio, Infantry, Walking
+\item Shaken: slow [-, -, Flee] / Can't use weapons
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Take Cover[Sneak][-2]
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order.
+\item \textbf{\hyperref[rule-special-evasion]{Evasion}}: [4+]
+
+\end{itemize}
+\noindent\textbf{Tip}: These are cheap and durable infantry which you may use to swarm the enemy. And especially with some upgrades and support, goblin infantry can be deadly. Consider if you want to combine these units with some motorized transport. In game terms you do want to come close and personal to the enemy, but avoid assaults. Luckily they are hard to hit and can evade incoming bombs.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+sneak & 360\textdegree{} & 360\textdegree{} & 360\textdegree{} \\
+sneak & 360\textdegree{} & F & 360\textdegree{} \\
+slow & 360\textdegree{} & F & B \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+sneak & Fire & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+0-5 & Kill 1 model \\
+6-7 & Kill 1 model, Psychic damage[d6] \\
+8+ & Unit destroyed \\
+\end{tabular}
+\begin{itemize}
+\item If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token
+\end{itemize}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Psychic}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+4+ & shaken \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Giant Snake Cavalry}
+\label{unit-giant-snake-cavalry}
+
+\textit{A terrifying view for all enemies, which the goblin enjoys a lot since it is an unusual that any goblin in clear sight are scary.}
+
+\begin{itemize}
+\item Cost: 4mp 24xp (28 points)
+\item Size: Large
+\item Models: \hyperref[model-giant-snake-cavalry]{Giant Snake Cavalry}
+\item Type: Bio, Cavalry, Walking
+\item Shaken: slow [-, -, Flee] / Can't use weapons
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: You may fire two regular poison bow and use hallucinating poison spit once per fire order
+\item \textbf{\hyperref[rule-special-forward-position]{Forward Position}}: [1]
+\item \textbf{\hyperref[rule-special-terror]{Terror}}: [range=1][d6]
+\item \textbf{\hyperref[rule-special-hypnotizing-gaze]{Hypnotizing Gaze}}: [range=1]
+\item \textbf{\hyperref[rule-special-spawn]{Spawn}}: tiny\_snake: At start of battle, place a hidden tiny snake in the same hex as the Snake Cavalry
+
+\item Places: \hyperref[spawn-tiny-snake]{tiny\_snake}
+\end{itemize}
+\noindent\textbf{Tip}: Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
+
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+still & 360\textdegree{} & 360\textdegree{} & 360\textdegree{} \\
+still & 360\textdegree{} & A & F \\
+slow & 360\textdegree{} & F & 360\textdegree{} \\
+slow & 360\textdegree{} & B & - \\
+slow & 360\textdegree{} & Chs & - \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders}
+
+\begin{tabular}{lll}
+still & Fire & Fire \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+1-6 & Bleed[8] \\
+7-8 & +1 to future damage, Bleed[8] \\
+9+ & Unit destroyed \\
+\end{tabular}
+\begin{itemize}
+\item Bleeding does not cause more bleeding
+\end{itemize}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Psychic}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+6+ & shaken \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Tiny Snake}
+\label{unit-tiny-snake}
+
+\begin{itemize}
+\item Size: Tiny
+\item Models: \hyperref[model-tiny-snake]{Tiny Snake}
+\item Type: Bio, Walking, Monster
+\item Shaken: slow [-, -, Flee] / Can't use weapons
+\item Placed by: \hyperref[spawn-tiny-snake]{tiny\_snake}
+\item \textbf{\hyperref[rule-special-hidden]{Hidden}}: Start with a hidden token
+\item \textbf{\hyperref[rule-special-movement]{Movement}}: This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting.
+\item \textbf{\hyperref[rule-special-terror]{Terror}}: [range=1][d4]
+
+\end{itemize}
+\noindent\textbf{Movement orders}
+
+\begin{tabular}{llll}
+slow & - & - & Chs \\
+\end{tabular}
+\vspace{1ex}
+
+
+
+\noindent\textbf{Damage Table: Regular}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+0-3 & kill one model \\
+4+ & unit destroyed \\
+\end{tabular}
+\vspace{1ex}
+
+\noindent\textbf{Damage Table: Psychic}
+
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+2+ & shaken \\
+\end{tabular}
+\vspace{1ex}
+
+\newpage
+\section{Models}
+\label{section-models}
+
+\begin{longtable}{@{}p{0.24\textwidth}p{0.26\textwidth}p{0.26\textwidth}l@{}}
+\textbf{Model} & \textbf{Type} & \textbf{Equipment slots} & \textbf{Cost} \\
+\hline
+\endhead
+\hyperref[model-elite-goblin-infantry]{Elite Goblin Infantry} & Elite, Bio, Infantry, Walking & Hands 2, Grenades 2, Specialization 1 & 4xp \\
+\hyperref[model-goblin-infantry]{Goblin Infantry} & Bio, Infantry, Walking & Hands 2, Grenades 3, Specialization 1, Special Arrows 3 &  \\
+\hyperref[model-giant-snake-cavalry]{Giant Snake Cavalry} & Bio, Cavalry, Walking & Hands 2 &  \\
+\hyperref[model-tiny-snake]{Tiny Snake} & Bio, Walking, Monster & --- &  \\
+\hyperref[model-bipedal-mech]{Bipedal Mech} & Bio Crew, Mechanical, Walking & --- &  \\
+\hyperref[model-goblin-infantry-carrier]{Goblin Infantry Carrier} & Mechanical, Vehicle, Tracked & --- &  \\
+\hyperref[model-heavy-carrier]{Heavy Carrier} & Mechanical, Vehicle, Tracked & --- &  \\
+\hyperref[model-modified-truck]{Modified Truck} & Mechanical, Vehicle, Tracked & --- &  \\
+\hyperref[model-mechanical-fire-bird]{Mechanical Fire Bird} & Mechanical, Flying, Drone & --- &  \\
+\end{longtable}
+
+\subsection{Elite Goblin Infantry}
+\label{model-elite-goblin-infantry}
+
+\begin{itemize}
+\item Cost: 4xp (4 points)
+\item Assault: strength 2/1/1/1 (6+), deflection 4/0/0/0 (6+), damage d4-2, AP 2
+\item Type: Elite, Bio, Infantry, Walking
+\item Upgrades from: \hyperref[model-goblin-infantry]{Goblin Infantry}
+\item May carry: \hyperref[equipment-goblin-bow]{Goblin Bow}, \hyperref[equipment-goblin-grenade]{Goblin Grenade}
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-resistance]{Resistance}}: Psychic[1]. As long as at least one elite model is alive
+\item \textbf{\hyperref[rule-special-pre-assault-retreat]{Pre-Assault Retreat}}: [6+]. Improved by 1 per elite in unit
+
+\end{itemize}
+
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Thrown Weapons[2]
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-cunning-assault]{Cunning Assault}}: [1]
+
+\end{itemize}
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+Hands & 2 \\
+Grenades & 2 \\
+Specialization & 1 \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Goblin Infantry}
+\label{model-goblin-infantry}
+
+\begin{itemize}
+\item Assault: strength 1/1/1/1 (6+), deflection 0/0/0/0 (6+), damage d6-2, AP 2
+\item Type: Bio, Infantry, Walking
+\item Fielded in: \hyperref[unit-goblin-infantry]{Goblin Infantry}
+\item Upgraded by: \hyperref[model-elite-goblin-infantry]{Elite Goblin Infantry}
+\item May carry: \hyperref[equipment-goblin-bow]{Goblin Bow}, \hyperref[equipment-goblin-grenade]{Goblin Grenade}
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-pre-assault-retreat]{Pre-Assault Retreat}}: [6+]
+
+\end{itemize}
+
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-cunning-assault]{Cunning Assault}}: [1]
+
+\end{itemize}
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+Hands & 2 \\
+Grenades & 3 \\
+Specialization & 1 \\
+Special Arrows & 3 \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Giant Snake Cavalry}
+\label{model-giant-snake-cavalry}
+
+\begin{itemize}
+\item Assault: strength 24/18/12/6 (6+), deflection 0/0/0/0 (6+), damage d6-2, AP 2
+\item Type: Bio, Cavalry, Walking
+\item Fielded in: \hyperref[unit-giant-snake-cavalry]{Giant Snake Cavalry}
+\item May carry: \hyperref[equipment-poison-bow-free]{Poison Bow}, \hyperref[equipment-hallucinating-poison-spit]{Hallucinating Poison Spit}
+
+
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-assault-extra-damage]{Assault Extra Damage}}: Poison[8][1 for 2]
+
+\end{itemize}
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+Hands & 2 \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Tiny Snake}
+\label{model-tiny-snake}
+
+\begin{itemize}
+\item Assault: strength 4/1/1/1 (6+), deflection 0/0/0/0 (6+), damage d4-2, AP 0
+\item Type: Bio, Walking, Monster
+\item Fielded in: \hyperref[unit-tiny-snake]{Tiny Snake}
+
+
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-assault-extra-damage]{Assault Extra Damage}}: Poison[6][1 for 1]
+\item \textbf{\hyperref[rule-special-bonus]{Bonus}}: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
+
+\end{itemize}
+
+\end{itemize}
+\subsection{Bipedal Mech}
+\label{model-bipedal-mech}
+
+\begin{itemize}
+\item Assault: strength 12/12/12/1 (6+), deflection 12/12/12/1 (6+), damage d6, AP 3
+\item Type: Bio Crew, Mechanical, Walking
+\item Fielded in: \hyperref[unit-bipedal-mech]{Bipedal Mech}
+\item May carry: \hyperref[equipment-stinkbomb]{StinkBomb}, \hyperref[equipment-light-mortar]{Light Mortar}
+
+
+
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Goblin Infantry Carrier}
+\label{model-goblin-infantry-carrier}
+
+\begin{itemize}
+\item Assault: strength 12/1/1/1 (6+), deflection 12/0/0/0 (6+), damage d4-2, AP 2
+\item Type: Mechanical, Vehicle, Tracked
+\item Fielded in: \hyperref[unit-goblin-infantry-carrier]{Goblin Infantry Carrier}
+\item May carry: \hyperref[equipment-light-mortar]{Light Mortar}
+
+
+
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Heavy Carrier}
+\label{model-heavy-carrier}
+
+\begin{itemize}
+\item Assault: strength 16/8/1/1 (6+), deflection 16/0/0/0 (6+), damage d6-2, AP 2
+\item Type: Mechanical, Vehicle, Tracked
+\item Fielded in: \hyperref[unit-heavy-carrier]{Heavy Carrier}
+\item May carry: \hyperref[equipment-goblin-bow-battery]{Goblin Bow Battery}, \hyperref[equipment-heavy-crossbow]{Heavy Crossbow}
+
+
+
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Modified Truck}
+\label{model-modified-truck}
+
+\begin{itemize}
+\item Assault: strength 8/4/1/1 (6+), deflection 8/0/0/0 (6+), damage d6-2, AP 2
+\item Type: Mechanical, Vehicle, Tracked
+\item Fielded in: \hyperref[unit-modified-truck]{Modified Truck}
+\item May carry: \hyperref[equipment-goblin-auto-bow]{Goblin Auto Bow}, \hyperref[equipment-goblin-grenade-free]{Goblin Grenade}
+
+
+
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+\end{tabular}
+\vspace{1ex}
+\subsection{Mechanical Fire Bird}
+\label{model-mechanical-fire-bird}
+
+\begin{itemize}
+\item Assault: strength 6/4/1/1 (6+), deflection 16/0/0/0 (6+), damage d6-2, AP 1
+\item Type: Mechanical, Flying, Drone
+\item Fielded in: \hyperref[unit-mechanical-fire-bird]{Mechanical Fire Bird}
+\item May carry: \hyperref[equipment-ring-of-fire]{Ring of Fire}
+
+
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-assault-extra-damage]{Assault Extra Damage}}: Fire
+
+\end{itemize}
+
+\end{itemize}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+Independent & $\infty$ \\
+\end{tabular}
+\vspace{1ex}
+
+\newpage
+\section{Equipment}
+\label{section-equipment}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.46\textwidth}l@{}}
+\textbf{Equipment} & \textbf{Profile} & \textbf{Cost} \\
+\hline
+\endhead
+\hyperref[equipment-commando]{Commando} & Deflection: +4/0/0/0; Deflection die: set to 6+ & 32xp \\
+\hyperref[equipment-grenadier]{Grenadier} & --- & 8xp \\
+\hyperref[equipment-archer-specialization]{Archer Specialization} & --- & 8xp \\
+\hyperref[equipment-assault-archer]{Assault Archer} & --- & 8xp \\
+\hyperref[equipment-clockwork-wings]{Clockwork Wings} & Strength: +1/0/0/0 & 24cp \\
+\hyperref[equipment-seeker-assassin-arrows]{Seeker Assassin Arrows} & range 4, damage d4-2, AP 1 & 16cp \\
+\hyperref[equipment-poison-bow]{Poison Bow} & range 2, damage d4-2 + d4 Crew damage, AP 1 & 16cp \\
+\hyperref[equipment-acid-trap]{Acid Trap} & --- & 16cp \\
+\hyperref[equipment-seeker-arrows]{Seeker Arrows} & range 4, damage d4-2, AP 1 & 8cp \\
+\hyperref[equipment-gear-bow]{Gear Bow} & range 3, damage d4-2, AP 1 & 8cp \\
+\hyperref[equipment-ogre-rifle]{Ogre Rifle} & range 2, damage d8-2, AP 2 & 8cp \\
+\hyperref[equipment-poison-deflection-dagger]{Poison Deflection Dagger} & Deflection: +1/0/0/0; Deflection die: set to 6+ & 8cp \\
+\hyperref[equipment-combat-screw-driver]{Combat Screw Driver} & Deflection: +1/0/0/0; Deflection die: set to 6+ & 8cp \\
+\hyperref[equipment-acid-grenade]{Acid Grenade} & range 1, damage n.a., AP 0 & 8cp \\
+\hyperref[equipment-poison-grenade]{Poison Grenade} & range 1, damage d4 Crew damage, AP 0 & 8cp \\
+\hyperref[equipment-goblin-bow]{Goblin Bow} & range 2, damage d4-2, AP 1 &  \\
+\hyperref[equipment-seeker-assassin-arrows-free]{Seeker Assassin Arrows} & range 4, damage d4-2, AP 1 &  \\
+\hyperref[equipment-poison-bow-free]{Poison Bow} & range 2, damage d4-2 + d4 Crew damage, AP 1 &  \\
+\hyperref[equipment-hallucinating-poison-spit]{Hallucinating Poison Spit} & range 3, damage N/A, AP N/A &  \\
+\hyperref[equipment-goblin-grenade]{Goblin Grenade} & range 1, damage d6, AP 2 &  \\
+\hyperref[equipment-goblin-grenade-free]{Goblin Grenade} & range 1, damage d6, AP 2 &  \\
+\hyperref[equipment-goblin-auto-bow]{Goblin Auto Bow} & range 2, damage d4-2, AP 1 &  \\
+\hyperref[equipment-light-mortar]{Light Mortar} & range 3, damage d4 Crew damage, AP N/A &  \\
+\hyperref[equipment-goblin-bow-battery]{Goblin Bow Battery} & range 2, damage d4 -2, AP 2 &  \\
+\hyperref[equipment-heavy-crossbow]{Heavy Crossbow} & range 4, damage d6, AP 4 &  \\
+\hyperref[equipment-stinkbomb]{StinkBomb} & range 4, damage d6 Psychic damage + d6 Crew damage, AP N/A &  \\
+\hyperref[equipment-ring-of-fire]{Ring of Fire} & range 2, damage n.a, AP 0 &  \\
+\end{longtable}
+
+\subsection{Commando}
+\label{equipment-commando}
+
+\begin{itemize}
+\item Cost: 32xp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Specialization
+\item Model type Infantry
+\end{itemize}
+
+\item \textit{In assault:}
+\begin{itemize}
+\item Deflection: +4/0/0/0
+\item Deflection die: set to 6+
+\end{itemize}
+
+
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Take Cover[Still][-4]
+\item \textbf{\hyperref[rule-special-evasion]{Evasion}}: [2+]
+\item \textbf{\hyperref[rule-special-hidden]{Hidden}}: Start with a Hidden token.
+\item \textbf{\hyperref[rule-special-forward-position]{Forward Position}}: [2]
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: In any round you have reveal bonus, you may fire a bow three times (either a regular arrow or an special arrow each time) at one target or throw three grenades at one target
+
+\end{itemize}
+
+
+\end{itemize}
+\noindent\textbf{Movement orders granted}
+
+\begin{tabular}{llll}
+still & - & - & Reveal \\
+still & 360\textdegree{} & F & Reveal \\
+still & Hide[ruins, forest] & - & - \\
+\end{tabular}
+\vspace{1ex}
+
+
+\subsection{Grenadier}
+\label{equipment-grenadier}
+
+\begin{itemize}
+\item Cost: 8xp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Specialization
+\item Model type Infantry or Cavalry
+\end{itemize}
+
+
+
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: For each fire order: fire a bow once (either a regular or special arrow) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)
+
+\end{itemize}
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Thrown Weapons[1]
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Archer Specialization}
+\label{equipment-archer-specialization}
+
+\begin{itemize}
+\item Cost: 8xp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Specialization
+\item Model type Infantry or Cavalry
+\end{itemize}
+
+
+
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-fire-order]{Fire Order}}: For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon
+
+\end{itemize}
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Good Shot
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Assault Archer}
+\label{equipment-assault-archer}
+
+\begin{itemize}
+\item Cost: 8xp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 2 Hands
+\item Model type Archer
+\end{itemize}
+
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-retreat]{Retreat}}: Unit gains aim if you manage to pre-escape an assault
+
+\end{itemize}
+
+
+
+
+\end{itemize}
+
+\subsection{Clockwork Wings}
+\label{equipment-clockwork-wings}
+
+\begin{itemize}
+\item Cost: 24cp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item Model type Infantry
+\item 1 Independent
+\end{itemize}
+
+\item \textit{In assault:}
+\begin{itemize}
+\item Strength: +1/0/0/0
+\end{itemize}
+
+
+
+
+
+\end{itemize}
+\noindent\textbf{Movement orders granted}
+
+\begin{tabular}{llll}
+slow & A(fast, fly) & F & F \\
+fast\_fly & 360\textdegree{} & F & B(slow, land) \\
+fast\_fly & F & 360\textdegree{} & F \\
+fast\_fly & 360\textdegree{} & F & F \\
+fast\_fly & F & F & 360\textdegree{} \\
+\end{tabular}
+\vspace{1ex}
+
+
+\subsection{Seeker Assassin Arrows}
+\label{equipment-seeker-assassin-arrows}
+
+\begin{itemize}
+\item Cost: 16cp per Unit
+\item Range: 4, angle True/True/True/True, damage d4-2, AP 1
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Special Arrows
+\item Model type Infantry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-limited-ammo]{Limited Ammo}}: [1]
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[12]
+
+\end{itemize}
+
+
+
+
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Excellent Shot. Applies when firing a seeker arrow
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Poison Bow}
+\label{equipment-poison-bow}
+
+\begin{itemize}
+\item Cost: 16cp per Unit
+\item Range: 2, angle True/True/True/True, damage d4-2 + d4 Crew damage, AP 1
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 2 Hands
+\item Model type Infantry or Cavalry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[4]
+\item \textbf{\hyperref[rule-special-bonus]{Bonus}}: Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Acid Trap}
+\label{equipment-acid-trap}
+
+\begin{itemize}
+\item Cost: 16cp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Independent
+\item Model type Infantry
+\end{itemize}
+
+
+
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-trap]{Trap}}: With the Lay Trap fire order, Instead of firing any weapons: place a Goblin Acid Trap in an unoccupied neighboring hex.
+
+\end{itemize}
+
+
+\end{itemize}
+
+\noindent\textbf{Fire orders granted}
+
+\begin{tabular}{lll}
+still & Lay Trap & Lay Trap \\
+slow & Lay Trap & Lay Trap \\
+\end{tabular}
+\vspace{1ex}
+
+\subsection{Seeker Arrows}
+\label{equipment-seeker-arrows}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item Range: 4, angle True/True/True/True, damage d4-2, AP 1
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 2 Special Arrows
+\item Model type Infantry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-limited-ammo]{Limited Ammo}}: [2]
+
+\end{itemize}
+
+
+
+
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{Enhanced Arrow}}: Excellent Shot
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Gear Bow}
+\label{equipment-gear-bow}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item Range: 3, angle True/True/True/True, damage d4-2, AP 1
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 2 Hands
+\item Model type Infantry or Cavalry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-range-gear-disruption]{Range Gear Disruption}}: [6+]
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Ogre Rifle}
+\label{equipment-ogre-rifle}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item Range: 2, angle True/True/True/True, damage d8-2, AP 2
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 2 Hands
+\item Model type Infantry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-recoil]{Recoil}}: After firing this weapon, set speed to slow flying
+
+\end{itemize}
+
+\item \textbf{Note (range)}: Remember to track ammo.
+
+
+
+\item \textit{Grants its Unit:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-movement]{Movement}}: Unit is destroyed if trying to land in an impassable or overcrowded hex.
+
+\end{itemize}
+
+
+\end{itemize}
+\noindent\textbf{Movement orders granted}
+
+\begin{tabular}{llll}
+slow\_fly & rev & - & B[still] \\
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent\textbf{Fire orders granted}
+
+\begin{tabular}{lll}
+still & Load & - \\
+still & - & Load \\
+\end{tabular}
+\vspace{1ex}
+
+\subsection{Poison Deflection Dagger}
+\label{equipment-poison-deflection-dagger}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Independent
+\item Model type Infantry
+\end{itemize}
+
+\item \textit{In assault:}
+\begin{itemize}
+\item Deflection: +1/0/0/0
+\item Deflection die: set to 6+
+\end{itemize}
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-damage-on-deflect]{Damage on Deflect}}: Each deflected hit gives enemy poison[4] token
+
+\end{itemize}
+
+
+
+
+\end{itemize}
+
+\subsection{Combat Screw Driver}
+\label{equipment-combat-screw-driver}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Independent
+\item Model type Infantry
+\end{itemize}
+
+\item \textit{In assault:}
+\begin{itemize}
+\item Deflection: +1/0/0/0
+\item Deflection die: set to 6+
+\end{itemize}
+
+\item \textit{In assault:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-cunning-deflection]{Cunning Deflection}}: Each deflected hit counts as hits for cunning assault purposes.
+
+\end{itemize}
+
+
+
+
+\end{itemize}
+
+\subsection{Acid Grenade}
+\label{equipment-acid-grenade}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item Range: 1, angle True/True/True/True, damage n.a., AP 0
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Grenades
+\item Model type Infantry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-type]{Type}}: Thrown weapon
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Minor Acid. No regular damage.
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Poison Grenade}
+\label{equipment-poison-grenade}
+
+\begin{itemize}
+\item Cost: 8cp per Unit
+\item Range: 1, angle True/True/True/True, damage d4 Crew damage, AP 0
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Grenades
+\item Model type Infantry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-type]{Type}}: Thrown weapon
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[4]
+\item \textbf{\hyperref[rule-special-bonus]{Bonus}}: Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Goblin Bow}
+\label{equipment-goblin-bow}
+
+\begin{itemize}
+\item Range: 2, angle True/True/True/True, damage d4-2, AP 1
+\item Carried by: \hyperref[model-elite-goblin-infantry]{Elite Goblin Infantry}, \hyperref[model-goblin-infantry]{Goblin Infantry}
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 2 Hands
+\item Model type Infantry
+\end{itemize}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Seeker Assassin Arrows}
+\label{equipment-seeker-assassin-arrows-free}
+
+\begin{itemize}
+\item Range: 4, angle True/True/True/True, damage d4-2, AP 1
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-limited-ammo]{Limited Ammo}}: [1]
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[12]
+
+\end{itemize}
+
+
+
+
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Excellent Shot. Applies when firing a seeker arrow
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Poison Bow}
+\label{equipment-poison-bow-free}
+
+\begin{itemize}
+\item Range: 2, angle True/True/True/True, damage d4-2 + d4 Crew damage, AP 1
+\item Carried by: \hyperref[model-giant-snake-cavalry]{Giant Snake Cavalry}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[4]
+\item \textbf{\hyperref[rule-special-bonus]{Bonus}}: Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Hallucinating Poison Spit}
+\label{equipment-hallucinating-poison-spit}
+
+\begin{itemize}
+\item Range: 3, angle True/True/True/True, damage N/A, AP N/A
+\item Carried by: \hyperref[model-giant-snake-cavalry]{Giant Snake Cavalry}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[4]; Confused
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Goblin Grenade}
+\label{equipment-goblin-grenade}
+
+\begin{itemize}
+\item Range: 1, angle True/True/True/True, damage d6, AP 2
+\item Carried by: \hyperref[model-elite-goblin-infantry]{Elite Goblin Infantry}, \hyperref[model-goblin-infantry]{Goblin Infantry}
+\item \textit{Requires all of:}
+\begin{itemize}
+\item 1 Grenades
+\item Model type Infantry
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Goblin Grenade}
+\label{equipment-goblin-grenade-free}
+
+\begin{itemize}
+\item Range: 1, angle True/True/True/True, damage d6, AP 2
+\item Carried by: \hyperref[model-modified-truck]{Modified Truck}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Goblin Auto Bow}
+\label{equipment-goblin-auto-bow}
+
+\begin{itemize}
+\item Range: 2, angle True/True/True/False, damage d4-2, AP 1
+\item Carried by: \hyperref[model-modified-truck]{Modified Truck}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: Always treated as loaded
+\item \textbf{\hyperref[rule-special-multiple-shots]{Multiple Shots}}: Shoot three times per fire order
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Light Mortar}
+\label{equipment-light-mortar}
+
+\begin{itemize}
+\item Range: 3, angle True/True/True/True, damage d4 Crew damage, AP N/A
+\item Carried by: \hyperref[model-bipedal-mech]{Bipedal Mech}, \hyperref[model-goblin-infantry-carrier]{Goblin Infantry Carrier}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Poison[4]
+\item \textbf{\hyperref[rule-special-bonus]{Bonus}}: Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Goblin Bow Battery}
+\label{equipment-goblin-bow-battery}
+
+\begin{itemize}
+\item Range: 2, angle True/True/True/True, damage d4 -2, AP 2
+\item Carried by: \hyperref[model-heavy-carrier]{Heavy Carrier}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: May be loaded (one at a time) with up to 3 ammo
+\item \textbf{\hyperref[rule-special-multiple-shots]{Multiple Shots}}: Fire d12 shots in one fire order per ammo spent, all targeted the same unit.
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Minor Acid; Poison[6]
+\item \textbf{\hyperref[rule-special-range-gear-disruption]{Range Gear Disruption}}: [6+]
+
+\end{itemize}
+
+\item \textbf{Note (range)}: For each fire order, choose one of Minor Acid, Poison, or Gear Disruption as extra damage.
+
+
+
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{Imprecise Weapon}}: Bad Shot
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Heavy Crossbow}
+\label{equipment-heavy-crossbow}
+
+\begin{itemize}
+\item Range: 4, angle True/False/False/False, damage d6, AP 4
+\item Carried by: \hyperref[model-heavy-carrier]{Heavy Carrier}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-ammo]{Ammo}}: May be loaded (one at a time) with up to 3 ammo
+\item \textbf{\hyperref[rule-special-multiple-shots]{Multiple Shots}}: Fire once per ammo spend per fire order
+
+\end{itemize}
+
+
+
+
+
+\item \textit{Grants its Model:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-to-hit]{To Hit}}: Enhanced Accuracy
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{StinkBomb}
+\label{equipment-stinkbomb}
+
+\begin{itemize}
+\item Range: 4, angle True/True/True/False, damage d6 Psychic damage + d6 Crew damage, AP N/A
+\item Carried by: \hyperref[model-bipedal-mech]{Bipedal Mech}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Minor Acid; Poison[6]
+\item \textbf{\hyperref[rule-special-area]{Area}}: If you hit the enemy, Area[5+] with same damage as main hit (with extra damage)
+\item \textbf{\hyperref[rule-special-cloud]{Cloud}}: Place a Poison Cloud[6] in the hex of the targeted unit
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+\subsection{Ring of Fire}
+\label{equipment-ring-of-fire}
+
+\begin{itemize}
+\item Range: 2, angle True/True/True/True, damage n.a, AP 0
+\item Carried by: \hyperref[model-mechanical-fire-bird]{Mechanical Fire Bird}
+\item \textit{When shooting:}
+\begin{itemize}
+\item \textbf{\hyperref[rule-special-area]{Area}}: [6+] target at all enemies within exactly range 2
+\item \textbf{\hyperref[rule-special-range-extra-damage]{Range Extra Damage}}: Fire
+
+\end{itemize}
+
+
+
+
+
+
+\end{itemize}
+
+
+\newpage
+\section{Spawns}
+\label{section-spawns}
+
+\begin{longtable}{@{}p{0.20\textwidth}p{0.22\textwidth}p{0.28\textwidth}p{0.16\textwidth}@{}}
+\textbf{Spawn} & \textbf{Unit} & \textbf{Equipment} & \textbf{Copies the loadout} \\
+\hline
+\endhead
+\phantomsection\label{spawn-tiny-snake}tiny\_snake & \hyperref[unit-tiny-snake]{Tiny Snake} & --- & no \\
+\end{longtable}
+
+\newpage
+\phantomsection\label{section-rules}
+\section{Rules Reference}
+
+
+\phantomsection\label{rule-damage-type-acid}%
+\noindent\textbf{Acid (damage type)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-acid]{Acid (token)}, \hyperref[rule-token-minor-acid]{Minor Acid (token)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-acid}%
+\noindent\textbf{Acid (token)} --- Roll a d8 on the following damage table:
+\begin{enumerate}
+\item Downgrade from acid to minor acid.
+\item +1 to future damage
+\item As 2, and if unit has armor, it is reduced by 1 (all directions)
+\item As 3, and place a poison cloud [4] at hex, and all units in this hex gets a minor acid token.
+\item As 4, and in addition all units within range=2 gets a minor acid token
+\item As 5, and unit gains a terror token.
+\item As 6 and unit is set on fire.
+\item Roll three times on this table.,
+\end{enumerate}
+\begin{itemize}
+\item \textit{Phases:} Agony 0
+\item \textit{Removed:} Downgraded as part of effect
+\item \textit{See also:} \hyperref[rule-damage-type-acid]{Acid (damage type)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-aim}%
+\noindent\textbf{Aim (token)} --- Get +2 to hit an enemy. Only valid for units in line of sight of the hex where the aim was given. Last for only 1 round.
+\begin{itemize}
+\item \textit{Phases:} Gunnery 1, Gunnery 2
+\item \textit{Removed:} Either remove all aim tokens when you fire, or remove one each aftermath phase. Also remove all of them if you enter an assault (regardless of whether you win or not)
+\item \textit{To hit:} +2
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-special-ammo}%
+\noindent\textbf{Ammo (special)} --- Describes how a weapon is loaded and how its ammo is tracked.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-special-limited-ammo]{Limited Ammo (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-area}%
+\noindent\textbf{Area (special)} --- Roll a die per enemy model in the hex. For each die at N+, roll for damage and and add extra damage to the corresponding unit.
+
+
+\phantomsection\label{rule-special-assault-extra-damage}%
+\noindent\textbf{Assault Extra Damage (special)} --- The target gets one \{version\} if hit at least once. Where a ratio is given, it gets one per \{M\} hits instead.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-special-range-extra-damage]{Range Extra Damage (special)}, Assault Gear Disruption (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-ability-bad-shot}%
+\noindent\textbf{Bad Shot (ability)}\begin{itemize}
+\item \textit{To hit:} -1
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-special-bonus}%
+\noindent\textbf{Bonus (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} Penalty (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-cloud}%
+\noindent\textbf{Cloud (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-hex-fog]{Fog (hex)}, \hyperref[rule-hex-poison-cloud]{Poison Cloud (hex)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-confused}%
+\noindent\textbf{Confused (token)} --- Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit.
+\begin{itemize}
+\item \textit{Phases:} Gunnery 1, Movement 1, Movement 2, Movement 3, Gunnery 2
+\item \textit{Removed:} Remove one token each pre-assault step in each movement phase
+\item \textit{To hit:} -1
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-special-cunning-assault}%
+\noindent\textbf{Cunning Assault (special)} --- For each \{N\} assault successes assigned to one mechanical unit in assault, add +1 to all future damage tokens. If you manage to inflict two or more +1 to future damage this way, the enemy is shaken. Multiple hits from multiple models with same ability stack.
+\begin{itemize}
+\item \textit{See also:} Cunning Assault Defense (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-cunning-deflection}%
+\noindent\textbf{Cunning Deflection (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-special-cunning-assault]{Cunning Assault (special)}, Cunning Assault Defense (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-damage-on-deflect}%
+\noindent\textbf{Damage on Deflect (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-hex-drone-trap}%
+\noindent\textbf{Drone Trap (hex)} --- All units from the team which placed the trap are immune to the trapp. All other units are effectd. Area(5+): roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets a minor acid token.
+\begin{itemize}
+\item \textit{Removed:} Trap is removed only after triggered
+\item \textit{See also:} \hyperref[rule-special-trap]{Trap (special)}, \hyperref[rule-hex-goblin-acid-trap]{Goblin Acid Trap (hex)}
+\end{itemize}
+
+
+\phantomsection\label{rule-ability-enhanced-accuracy}%
+\noindent\textbf{Enhanced Accuracy (ability)}\begin{itemize}
+\item \textit{To hit:} +1
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-alias-enhanced-arrow}%
+\noindent\textbf{Enhanced Arrow} --- see \hyperref[rule-special-to-hit]{To Hit (special)}
+
+\phantomsection\label{rule-special-evasion}%
+\noindent\textbf{Evasion (special)} --- Roll a die per area of effect damage. Ignore the damage at \{N\}+
+
+
+\phantomsection\label{rule-ability-excellent-shot}%
+\noindent\textbf{Excellent Shot (ability)}\begin{itemize}
+\item \textit{To hit:} +2
+\item \textit{To be hit:} 0
+\item \textit{See also:} Superb Shot (ability)
+\end{itemize}
+
+
+\phantomsection\label{rule-damage-type-fire}%
+\noindent\textbf{Fire (damage type)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-fire]{Fire (token)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-fire}%
+\noindent\textbf{Fire (token)} --- Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise\_
+\begin{itemize}
+\item Ignore armor and regular damage resistance
+\item Apply bonus to damage based on the number +future damage tokens
+\item Apply damage to the regular damage table  (apply damage after you roll damage for all fire tokens)
+\end{itemize}
+\begin{itemize}
+\item \textit{Phases:} Agony 2
+\item \textit{Removed:} Only as part of effect
+\item \textit{See also:} \hyperref[rule-damage-type-fire]{Fire (damage type)}, \hyperref[rule-special-resistance]{Resistance (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-fire-order}%
+\noindent\textbf{Fire Order (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-hex-fog}%
+\noindent\textbf{Fog (hex)} --- Treat hex as if it blocks line of sight and gives to-hit penalties for units standing in fog. To Hit penalties stacks with other terrain features.
+\begin{itemize}
+\item \textit{Removed:} Remove one Fog in each hex in aftermath phase
+\item \textit{To hit:} -1
+\item \textit{To be hit:} -1
+\end{itemize}
+
+
+\phantomsection\label{rule-special-forward-position}%
+\noindent\textbf{Forward Position (special)} --- At setup this unit may setup upt to \{N\} hexes away from normal setup area.
+
+
+\phantomsection\label{rule-hex-goblin-acid-trap}%
+\noindent\textbf{Goblin Acid Trap (hex)} --- All flying or floating units are immune to the trapp. All other units, including the goblin, are effectd. Roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets an acid token.
+\begin{itemize}
+\item \textit{Removed:} Trap is removed only after triggered
+\item \textit{See also:} \hyperref[rule-special-trap]{Trap (special)}, \hyperref[rule-hex-drone-trap]{Drone Trap (hex)}
+\end{itemize}
+
+
+\phantomsection\label{rule-ability-good-shot}%
+\noindent\textbf{Good Shot (ability)}\begin{itemize}
+\item \textit{To hit:} +1
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-special-hidden}%
+\noindent\textbf{Hidden (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-hidden]{Hidden (token)}, Hide (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-token-hidden}%
+\noindent\textbf{Hidden (token)} --- While hidden you cannot be fired upon or be assaulted, nor can you fire or assault. You are also immune to Fear and Terror,
+
+While hidden replace the unit with a hidden token. If you have multiple hidden units you do not have to reveal which one is under which token (but you have to keep track your self). In the start of the game you do not have to show the enemy exactly what units you have hidden. (but you have to state how many victory points worth of units that are hidden),
+
+Reveal order: Place your unit within 2 hexes of the hidden token and gain reveal bonuses. In addition to revealing your self as a movement order, you may reveal your self any time you share an hex with an enemy. If so, make an assault and gain the stated reveal bonuses
+
+If you reveal your self you get reveal bonuses: +2 to hit of ranged weapons and plus 50 percent assault strength and deflection for the first assault you participate in this round.
+\begin{itemize}
+\item \textit{Removed:} You stay hidden until you reveal yourself, in aftermath phase if an enemy is within point blank range, or an enemy special action reveals your location. Cloaking devices stay hidden even if in clear terrain, while all others sources of hidden abilities are revealed if they are in slow or fast in clear terrain within line of sight to an enemy. You only get reveal bonuses if you willingly reveal your self, not if you are forced to.
+\item \textit{See also:} Hide (special), Fear (special), \hyperref[rule-special-terror]{Terror (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-hypnotized}%
+\noindent\textbf{Hypnotized (token)} --- Can only be given to bio units which are already shaken, and not insane. Any flee order is treatet as do nothing, stand still. In addition, Reduce assault strength 50\% rounded down.
+\begin{itemize}
+\item \textit{Phases:} Movement 1, Movement 2, Movement 3
+\item \textit{Removed:} When unit is not longer shaken
+\item \textit{See also:} \hyperref[rule-token-shaken]{Shaken (token)}, \hyperref[rule-token-insane]{Insane (token)}, \hyperref[rule-special-hypnotizing-gaze]{Hypnotizing Gaze (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-hypnotizing-gaze}%
+\noindent\textbf{Hypnotizing Gaze (special)} --- In agony 3, all units that are shaken within range of given unit, also becomes hyptnotized
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-shaken]{Shaken (token)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-immunity}%
+\noindent\textbf{Immunity (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-alias-imprecise-weapon}%
+\noindent\textbf{Imprecise Weapon} --- see \hyperref[rule-special-to-hit]{To Hit (special)}
+
+\phantomsection\label{rule-token-insane}%
+\noindent\textbf{Insane (token)} --- Can only be given to bio units which are already shaken. If also hypnotized, remove hyptnotized token and replace it with insane. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go
+\begin{itemize}
+\item \textit{Phases:} Movement 1, Movement 2, Movement 3
+\item \textit{Removed:} When unit is not longer shaken
+\item \textit{See also:} \hyperref[rule-token-shaken]{Shaken (token)}, \hyperref[rule-token-hypnotized]{Hypnotized (token)}, Insanity Field (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-limited-ammo}%
+\noindent\textbf{Limited Ammo (special)} --- This weapon may be fired a maximum of \{N\} times in a match. Starts the game with \{N\} ammo loaded
+
+
+\phantomsection\label{rule-token-minor-acid}%
+\noindent\textbf{Minor Acid (token)} --- Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid
+\begin{itemize}
+\item \textit{Phases:} Agony 1
+\item \textit{Removed:} Only as part of effect
+\item \textit{See also:} \hyperref[rule-token-acid]{Acid (token)}, \hyperref[rule-damage-type-acid]{Acid (damage type)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-movement}%
+\noindent\textbf{Movement (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-special-multiple-shots}%
+\noindent\textbf{Multiple Shots (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} Burst (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-phoenix}%
+\noindent\textbf{Phoenix (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-damage-type-poison}%
+\noindent\textbf{Poison (damage type)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-poison]{Poison (token)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-poison}%
+\noindent\textbf{Poison (token)} --- Roll a d\{N\}.
+\begin{itemize}
+\item Ignore armor and regular damage resistances
+\item Reduce damage by poison resistances of target
+\item Apply bonus to damage based on the number +future damage tokens
+\item Apply damage to the regular damage table.
+\item If poison killed a model, remove poison.
+\end{itemize}
+
+If poison did not kill a model, downgrade poison one step
+\begin{itemize}
+\item \textit{Phases:} Agony 3
+\item \textit{See also:} \hyperref[rule-damage-type-poison]{Poison (damage type)}, \hyperref[rule-special-resistance]{Resistance (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-hex-poison-cloud}%
+\noindent\textbf{Poison Cloud (hex)} --- Area(5+): roll a die per unit, at 5+, target unit gets a poison[N] or take dN in crew damage if it is a vehicle with a crew damage table.
+\begin{itemize}
+\item \textit{Removed:} Remove one Poison Cloud in each hex in aftermath phase
+\item \textit{See also:} \hyperref[rule-damage-type-poison]{Poison (damage type)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-pre-assault-retreat}%
+\noindent\textbf{Pre-Assault Retreat (special)} --- In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-special-retreat]{Retreat (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-damage-type-psychic}%
+\noindent\textbf{Psychic (damage type)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-special-range-extra-damage}%
+\noindent\textbf{Range Extra Damage (special)} --- The target gets one \{version\}.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-special-assault-extra-damage]{Assault Extra Damage (special)}, \hyperref[rule-special-range-gear-disruption]{Range Gear Disruption (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-range-gear-disruption}%
+\noindent\textbf{Range Gear Disruption (special)} --- Only applies when target is a drone. The drone gets one shaken token per roll of \{N\}+.
+\begin{itemize}
+\item \textit{See also:} Assault Gear Disruption (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-recoil}%
+\noindent\textbf{Recoil (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-special-resistance}%
+\noindent\textbf{Resistance (special)} --- Gives improved resilience versus \{version\} damage
+
+
+\phantomsection\label{rule-special-retreat}%
+\noindent\textbf{Retreat (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-special-pre-assault-retreat]{Pre-Assault Retreat (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-shaken}%
+\noindent\textbf{Shaken (token)} --- While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit
+\begin{itemize}
+\item \textit{Phases:} Gunnery 1, Movement 1, Movement 2, Movement 3, Gunnery 2
+\item \textit{Removed:} Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities
+\item \textit{See also:} Heal (special), Repair (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-speed-sneak}%
+\noindent\textbf{Sneak (speed)}\begin{itemize}
+\item \textit{To hit:} +1
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-special-spawn}%
+\noindent\textbf{Spawn (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-speed-still}%
+\noindent\textbf{Still (speed)}\begin{itemize}
+\item \textit{To hit:} +1
+\item \textit{To be hit:} +1
+\end{itemize}
+
+
+\phantomsection\label{rule-ability-take-cover}%
+\noindent\textbf{Take Cover (ability)} --- Applies when the unit is in the given speed
+\begin{itemize}
+\item \textit{To hit:} 0
+\item \textit{To be hit:} +N
+\end{itemize}
+
+
+\phantomsection\label{rule-special-terror}%
+\noindent\textbf{Terror (special)} --- In agony 0, roll a d\{M\} psychic damage on any enemy unit within range of this unit.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-terror]{Terror (token)}, \hyperref[rule-damage-type-psychic]{Psychic (damage type)}
+\end{itemize}
+
+
+\phantomsection\label{rule-token-terror}%
+\noindent\textbf{Terror (token)} --- Acts as if unit has Terror[6] (range=2) but effects only units of the same team
+\begin{itemize}
+\item \textit{Phases:} Agony 0
+\item \textit{See also:} \hyperref[rule-special-terror]{Terror (special)}
+\end{itemize}
+
+
+\phantomsection\label{rule-ability-thrown-weapons}%
+\noindent\textbf{Thrown Weapons (ability)} --- Applies to thrown weapons only
+\begin{itemize}
+\item \textit{To hit:} +N
+\item \textit{To be hit:} 0
+\end{itemize}
+
+
+\phantomsection\label{rule-special-to-hit}%
+\noindent\textbf{To Hit (special)} --- Shifts the to-hit and to-be-hit rolls by \{ability\}.
+\begin{itemize}
+\item \textit{See also:} \hyperref[rule-token-aim]{Aim (token)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-transport}%
+\noindent\textbf{Transport (special)} --- \textit{Rule text pending.}
+
+\phantomsection\label{rule-special-trap}%
+\noindent\textbf{Trap (special)} --- \textit{Rule text pending.}\begin{itemize}
+\item \textit{See also:} \hyperref[rule-hex-goblin-acid-trap]{Goblin Acid Trap (hex)}, \hyperref[rule-hex-drone-trap]{Drone Trap (hex)}
+\end{itemize}
+
+
+\phantomsection\label{rule-special-type}%
+\noindent\textbf{Type (special)} --- \textit{Rule text pending.}\end{document}

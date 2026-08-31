@@ -14,8 +14,7 @@ from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
 from spf.registry import SPECIAL, Registry
-from spf.schemas.race import RaceConfig
-from spf.schemas.special import Specials
+from spf.schemas.race import RaceConfig, race_slots
 
 
 @dataclass(frozen=True)
@@ -81,20 +80,6 @@ def unreachable(registry: Registry, used: set[str]) -> list[RuleEntry]:
     ]
 
 
-def _slots(race: RaceConfig) -> Iterator[Specials]:
-    """Every collection of instances a Race holds, whatever slot it fills."""
-    for unit in race.units.values():
-        yield unit.specials
-    for model in race.models.values():
-        yield from (model.unit_specials, model.specials, model.assault.specials)
-    for equipment in race.equipment.values():
-        yield from (equipment.unit_specials, equipment.model_specials)
-        if equipment.assault is not None:
-            yield equipment.assault.specials
-        if equipment.range is not None:
-            yield equipment.range.specials
-
-
 def used_special_ids(race_configs: Iterable[RaceConfig]) -> set[str]:
     """Collect the Special ids the given Races write at least one instance of."""
-    return {key for race in race_configs for slot in _slots(race) for key in slot}
+    return {key for race in race_configs for slot in race_slots(race) for key in slot}
