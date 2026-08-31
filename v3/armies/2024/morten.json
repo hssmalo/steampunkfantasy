@@ -12,8 +12,58 @@
       ]
     },
     {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "gnome_helicopter",
+          "upgrades": []
+        }
+      ]
+    },
+    {
       "name": "quad_bike",
       "nick": "Green Hell Riders",
+      "models": [
+        {
+          "name": "quadbike_tinkerer",
+          "upgrades": [
+            "green_gas_launcher"
+          ]
+        },
+        {
+          "name": "quad_bike",
+          "upgrades": []
+        },
+        {
+          "name": "quad_bike",
+          "upgrades": []
+        },
+        {
+          "name": "quad_bike",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "quad_bike",
       "models": [
         {
           "name": "quadbike_tinkerer",
@@ -61,6 +111,64 @@
           "name": "quad_bike",
           "upgrades": [
             "plasma_shield_generator"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "quad_bike",
+      "models": [
+        {
+          "name": "quadbike_tinkerer",
+          "upgrades": [
+            "plasma_shield_generator"
+          ]
+        },
+        {
+          "name": "quad_bike",
+          "upgrades": [
+            "plasma_shield_generator"
+          ]
+        },
+        {
+          "name": "quad_bike",
+          "upgrades": [
+            "plasma_shield_generator"
+          ]
+        },
+        {
+          "name": "quad_bike",
+          "upgrades": [
+            "plasma_shield_generator"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
           ]
         }
       ]

@@ -12,8 +12,46 @@
       ]
     },
     {
+      "name": "troll",
+      "models": [
+        {
+          "name": "troll",
+          "upgrades": []
+        }
+      ]
+    },
+    {
       "name": "ork_infantry",
       "nick": "PowerSpear",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "clockwork_power_spear"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ork_infantry",
       "models": [
         {
           "name": "ork_infantry",
@@ -72,6 +110,44 @@
       ]
     },
     {
+      "name": "ork_infantry",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "grenade_sling"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "battlewagon",
+      "models": [
+        {
+          "name": "battlewagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
       "name": "battlewagon",
       "models": [
         {
@@ -86,6 +162,69 @@
       "models": [
         {
           "name": "hammerhead",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
           "upgrades": []
         }
       ]
