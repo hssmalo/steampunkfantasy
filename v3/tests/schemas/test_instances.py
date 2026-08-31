@@ -116,10 +116,10 @@ def test_an_instance_may_draw_its_prose_from_a_variant() -> None:
 
 def test_a_case_may_draw_its_prose_from_a_variant() -> None:
     (case,) = SpecialInstance.model_validate(
-        {"cases": [{"variant": "at_point_blank", "args": {"N": 4}}]}
+        {"cases": [{"variant": "point_blank", "args": {"N": 4}}]}
     ).cases
 
-    assert case.variant == "at_point_blank"
+    assert case.variant == "point_blank"
 
 
 def test_a_variant_on_a_case_shaped_instance_is_its_preamble() -> None:
@@ -162,7 +162,7 @@ def test_a_variant_beside_a_preamble_is_rejected() -> None:
 def test_a_case_carrying_both_a_variant_and_text_is_rejected() -> None:
     with pytest.raises(ValidationError, match="spells the prose slot"):
         SpecialInstance.model_validate(
-            {"cases": [{"variant": "at_point_blank", "text": "at point blank"}]}
+            {"cases": [{"variant": "point_blank", "text": "at point blank"}]}
         )
 
 

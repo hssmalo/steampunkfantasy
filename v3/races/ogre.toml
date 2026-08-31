@@ -29,7 +29,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [[units.ogre_hydra.specials.regeneration]]
-variant = "one_per_head_plus_four"
+variant = "heal_per_head"
 
 [[units.ogre_hydra.specials.heads]]
 text = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
@@ -733,7 +733,7 @@ damage = "d6"
 ap = 2
 
 [[models.ogre_hydra.assault.specials.bonus]]
-variant = "per_alive_head"
+variant = "strength_per_head"
 
 [[models.ogre_hydra.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -837,7 +837,7 @@ damage = "d8"
 ap = 3
 
 [[models.main_engine.assault.specials.retreat]]
-variant = "a_stuck_wagon_disconnects"
+variant = "stuck_wagon_disconnects"
 
 [models.artillery_wagon]
 name = "Artillery Wagon"
@@ -858,7 +858,7 @@ damage = "d8"
 ap = 3
 
 [[models.artillery_wagon.assault.specials.retreat]]
-variant = "a_stuck_wagon_disconnects"
+variant = "stuck_wagon_disconnects"
 
 [models.broadside_wagon]
 name = "Broadside Wagon"
@@ -991,7 +991,7 @@ ap = 3
 text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 Psychic damage and +d6 Crew damage when aiming"
 
 [[equipment.ogre_sniper_rifle.range.specials.sniper]]
-variant = "choose_the_model_after_aim"
+variant = "choose_model_after_aim"
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -1204,7 +1204,7 @@ ap = "N/A"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.acid"
-variant = "choose_one_hex_acid"
+variant = "choose_hex_acid"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1225,4 +1225,4 @@ args.version = "token.poison"
 args.N = 6
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
-variant = "per_alive_minor_head"
+variant = "fire_per_minor_head"

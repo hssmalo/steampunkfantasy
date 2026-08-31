@@ -308,7 +308,7 @@ VARIANTS = Registry(
                     "variables": {"N": {"type": "int"}},
                     "variants": {
                         "always_loaded": {"text": "Always treated as loaded"},
-                        "at_point_blank": {"text": "at point blank"},
+                        "point_blank": {"text": "at point blank"},
                     },
                 }
             )
@@ -346,7 +346,7 @@ def test_a_variant_on_a_case_renders_as_that_cases_text() -> None:
     _, text = _variant_row(
         "ammo",
         cases=[
-            {"variant": "at_point_blank", "args": {"N": 4}},
+            {"variant": "point_blank", "args": {"N": 4}},
             {"text": "at long range", "args": {"N": 1}},
         ],
     )

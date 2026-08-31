@@ -5,7 +5,6 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 31.08.2026 | Darkelf      | Four Area range bands now read "normal range" and "long range" instead of "normal blank" and "long blank" | "Blank" is a range word only in "point blank"; Fire Breath's ladder used a real term for its first band and drifted for the other two |
 | 24.08.2026 | All          | Fear is now an assault Special and Pre-Assault Retreat a unit Special       | Both were written in the slot they are used in; models of one unit cannot retreat apart |
 | 24.08.2026 | Abomination, Darkelf, Dwarf | Protection is retired: armor grants add armor, endurance grants are the Endurance Special | One label meant two unrelated things, and neither of them was armor the game could add up |
 | 24.08.2026 | Darkelf, Gnome, Ogre | Three Specials that never stated a number now state one: Elusive gained -1, the Pet Panther's Terror gained range 1, poison-cloud immunity names strength 6 | Each rule needs the value its label left out; every one is marked on its rule for confirmation |

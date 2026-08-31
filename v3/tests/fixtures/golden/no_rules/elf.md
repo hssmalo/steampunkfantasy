@@ -105,7 +105,7 @@
 - Range: 1, angle True/True/True/True, damage d6, AP 5
 - **Area**: [4+]
 - **Range**: Target any hex within normal range
-- **Ammo**: Always loaded
+- **Ammo**: Always treated as loaded
 - **Order**: Used with Throw order
 
 

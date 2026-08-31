@@ -10,7 +10,7 @@ from spf.schemas.special import SpecialInstance, Specials
 
 POOL = {
     "ammo": {"always_loaded": "Always treated as loaded"},
-    "area": {"at_point_blank": "at point blank", "at_long_range": "at long range"},
+    "area": {"point_blank": "at point blank", "long_range": "at long range"},
 }
 """Each rule's variants, the way the registry holds them."""
 
@@ -71,7 +71,7 @@ def test_a_longhand_preamble_is_reported() -> None:
 
     (identifier, message) = next(iter(variants.check_specials(specials, POOL)))
 
-    assert (identifier, "at_long_range" in message) == ("area", True)
+    assert (identifier, "long_range" in message) == ("area", True)
 
 
 def test_a_longhand_case_text_is_reported() -> None:
@@ -79,7 +79,7 @@ def test_a_longhand_case_text_is_reported() -> None:
 
     (identifier, message) = next(iter(variants.check_specials(specials, POOL)))
 
-    assert (identifier, "at_point_blank" in message) == ("area", True)
+    assert (identifier, "point_blank" in message) == ("area", True)
 
 
 def test_a_rule_with_no_variants_reports_nothing() -> None:

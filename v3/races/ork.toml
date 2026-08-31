@@ -715,7 +715,7 @@ text = "ork_champion: after this model in the unit base is killed, this model is
 [[models.elite_ork_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-variant = "while_an_elite_is_alive"
+variant = "while_elite_alive"
 
 [models.elite_ork_infantry.assault]
 strength = [3, 2, 2, 2]
@@ -1175,7 +1175,7 @@ variant = "used_with_throw_order"
 args.version = "token.fire"
 
 [[equipment.pyro.range.specials.ammo]]
-variant = "always_treated_as_loaded"
+variant = "always_loaded"
 
 [equipment.pyro.orders_gained.fire]
 all = [["-", "Throw"]]
@@ -1227,7 +1227,7 @@ ap = 2
 variant = "one_instead_of_regular_weapons"
 
 [[equipment.harpoon_gun.range.specials.drag]]
-variant = "drags_the_target_one_hex"
+variant = "drag_target"
 
 [equipment.harpoon_gun_free]
 name = "Harpoon Gun"
@@ -1244,7 +1244,7 @@ ap = 2
 variant = "one_instead_of_regular_weapons"
 
 [[equipment.harpoon_gun_free.range.specials.drag]]
-variant = "drags_the_target_one_hex"
+variant = "drag_target"
 
 [equipment.grenade_sling]
 name = "Grenade Sling"

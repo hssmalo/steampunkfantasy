@@ -619,7 +619,7 @@ damage = "d6-2"
 ap = 2
 
 [[models.abomination_infantry.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 [[models.abomination_infantry.assault.specials.cunning_assault]]
 args.N = 2
@@ -643,7 +643,7 @@ damage = "d6"
 ap = 2
 
 [[models.hippopotamus_riders.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 
 
@@ -663,7 +663,7 @@ damage = "d6"
 ap = 2
 
 [[models.horror.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 
 [models.shriek_monstrosity]
@@ -727,7 +727,7 @@ damage = "d6"
 ap = 0
 
 [[models.robot_crab.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 [[models.robot_crab.assault.specials.cunning_assault]]
 args.N = 1
@@ -751,7 +751,7 @@ damage = "d6-2"
 ap = 2
 
 [[models.confusiator_tank.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 [[models.confusiator_tank.assault.specials.cunning_assault_defense]]
 args.N = 6
@@ -801,7 +801,7 @@ damage = "d6-2"
 ap = 2
 
 [[models.frost_88.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
@@ -827,7 +827,7 @@ damage = "d6-2"
 ap = 2
 
 [[models.elite_abomination_infantry.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 [[models.elite_abomination_infantry.assault.specials.cunning_assault]]
 args.N = 2
@@ -858,7 +858,7 @@ ap = 2
 args.N = 3
 
 [[models.giant_frog_rider.assault.specials.bonus]]
-variant = "versus_shaken"
+variant = "double_versus_shaken"
 
 [[models.giant_frog_rider.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -903,7 +903,7 @@ text = "Fires 4 shot per fire order."
 args.N = 5
 
 [[equipment.greater_disruptors.range.specials.los]]
-variant = "from_the_front_or_the_back"
+variant = "los_from_front_or_back"
 
 
 [equipment.side_weapons]
@@ -921,7 +921,7 @@ ap = 0
 text = "Fire once to the right and once to the left per fire order"
 
 [[equipment.side_weapons.range.specials.los]]
-variant = "from_the_front_or_the_back"
+variant = "los_from_front_or_back"
 
 
 [equipment.broadside]
@@ -1084,7 +1084,7 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.fog_grenade_mortar.range.specials.cloud]]
-variant = "fog_in_one_hex_per_model"
+variant = "fog_one_hex_per_model"
 
 [[equipment.fog_grenade_mortar.range.specials.ammo]]
 variant = "fog_instead_of_ammo"
@@ -1104,7 +1104,7 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.long_range_fog_grenade_mortar.range.specials.cloud]]
-variant = "fog_in_one_hex_per_model"
+variant = "fog_one_hex_per_model"
 
 [[equipment.long_range_fog_grenade_mortar.range.specials.ammo]]
 variant = "fog_instead_of_ammo"
@@ -1171,7 +1171,7 @@ preamble = "Target enemies in all hexes within front arc (not including the hexe
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 4
-variant = "at_point_blank"
+variant = "point_blank"
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 5
@@ -1201,7 +1201,7 @@ ap = "N/A"
 variant = "poison_cloud_in_fog"
 
 [[equipment.fog_poisonizer.range.specials.ammo]]
-variant = "always_treated_as_loaded"
+variant = "always_loaded"
 
 [[equipment.fog_poisonizer.range.specials.order]]
 text = "May be used in both gunnery phases"
@@ -1221,7 +1221,7 @@ ap = "N/A"
 variant = "poison_cloud_in_fog"
 
 [[equipment.greater_fog_poisonizer.range.specials.ammo]]
-variant = "always_treated_as_loaded"
+variant = "always_loaded"
 
 [[equipment.greater_fog_poisonizer.range.specials.order]]
 text = "May be used in both gunnery phases independent of other weapons"
@@ -1243,7 +1243,7 @@ args.version = "token.poison"
 args.N = 4
 
 [[equipment.frog_spit.range.specials.ammo]]
-variant = "always_treated_as_loaded"
+variant = "always_loaded"
 
 [[equipment.frog_spit.range.specials.order]]
 text = "Fire in both first and second gunnery phase independent of other weapons and orders"
@@ -1264,7 +1264,7 @@ ap = 0
 text = "Fire twice per fire order"
 
 [[equipment.twin_frost_ray.range.specials.ammo]]
-variant = "always_treated_as_loaded"
+variant = "always_loaded"
 
 [[equipment.twin_frost_ray.range.specials.break]]
 text = "The target must break if possible (if it has a lower speed available). Reduce the speed one step"

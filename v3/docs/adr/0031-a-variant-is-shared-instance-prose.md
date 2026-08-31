@@ -6,12 +6,12 @@ slot instead of spelling it out.
 
 ```toml
 # rules/special.toml
-[special.ammo.variants.always_treated_as_loaded]
+[special.ammo.variants.always_loaded]
 text = "Always treated as loaded"
 
 # races/elf.toml
 [[equipment.elf_bow.range.specials.ammo]]
-variant = "always_treated_as_loaded"
+variant = "always_loaded"
 ```
 
 The Race data carried 471 `text` lines over 341 distinct strings: 61 strings
@@ -25,7 +25,10 @@ have already stopped agreeing. `ammo` says the same thing two ways —
 
 > "Always treated as loaded" (29×) and "Always loaded" (3×)
 
-— and `resistance` says one thing four ways:
+Those two are now one variant, `always_loaded`, spelling the majority text: the
+minority was holding the better name. It is the only drift this change decided —
+the rest is a rules judgment, left to the maintainer. `resistance`, for
+instance, says one thing four ways:
 
 > "While at least one elite is alive" (4×), "As long as at least one elite model
 > is alive" (2×), "As long as 1 elite model is alive" (2×), and "While at least
