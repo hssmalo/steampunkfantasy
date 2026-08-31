@@ -103,6 +103,70 @@ def test_cases_without_a_preamble_are_legal() -> None:
 
 
 # ---------------------------------------------------------------------------
+# Drawing the prose slot from the rule's variants (ADR 0032)
+# ---------------------------------------------------------------------------
+
+
+def test_an_instance_may_draw_its_prose_from_a_variant() -> None:
+    instance = SpecialInstance.model_validate({"variant": "always_loaded"})
+
+    assert instance.variant == "always_loaded"
+    assert instance.text is None
+
+
+def test_a_case_may_draw_its_prose_from_a_variant() -> None:
+    (case,) = SpecialInstance.model_validate(
+        {"cases": [{"variant": "point_blank", "args": {"N": 4}}]}
+    ).cases
+
+    assert case.variant == "point_blank"
+
+
+def test_a_variant_on_a_case_shaped_instance_is_its_preamble() -> None:
+    # The shape decides the role: with cases, the prose slot is the preamble,
+    # so one `variant` field needs no second spelling.
+    instance = SpecialInstance.model_validate(
+        {"variant": "choose_one_hex", "cases": [{"args": {"N": 5}}]}
+    )
+
+    assert instance.variant == "choose_one_hex"
+    assert instance.preamble is None
+
+
+def test_a_variant_named_like_a_ref_is_rejected() -> None:
+    # A variant id is a bare Identifier the rule owns, so a two-segment name
+    # is a shape error rather than a lookup that happens to miss.
+    with pytest.raises(ValidationError):
+        SpecialInstance.model_validate({"variant": "special.always_loaded"})
+
+
+def test_a_variant_beside_text_is_rejected() -> None:
+    # A variant is a way of spelling `text`, not a layer under it.
+    with pytest.raises(ValidationError, match="spells the prose slot"):
+        SpecialInstance.model_validate(
+            {"variant": "always_loaded", "text": "Always treated as loaded"}
+        )
+
+
+def test_a_variant_beside_a_preamble_is_rejected() -> None:
+    with pytest.raises(ValidationError, match="spells the prose slot"):
+        SpecialInstance.model_validate(
+            {
+                "variant": "choose_one_hex",
+                "preamble": "Choose one hex",
+                "cases": [{"args": {"N": 5}}],
+            }
+        )
+
+
+def test_a_case_carrying_both_a_variant_and_text_is_rejected() -> None:
+    with pytest.raises(ValidationError, match="spells the prose slot"):
+        SpecialInstance.model_validate(
+            {"cases": [{"variant": "point_blank", "text": "at point blank"}]}
+        )
+
+
+# ---------------------------------------------------------------------------
 # The gate, as a Race file meets it
 # ---------------------------------------------------------------------------
 

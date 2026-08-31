@@ -711,7 +711,7 @@ args.ability = "ability.good_shot"
 [[models.elite_dwarf_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 2
-text = "As long as 1 elite model is alive"
+variant = "one_elite_alive"
 
 [models.elite_dwarf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -738,7 +738,7 @@ args.ability = "ability.good_shot"
 [[models.elite_dwarf_steampowerarmor.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "As long as 1 elite model is alive"
+variant = "one_elite_alive"
 
 [[models.elite_dwarf_steampowerarmor.unit_specials.endurance]]
 args.N = 1
@@ -1063,7 +1063,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.musket_with_springloaded_axe.range.specials.ammo]]
-text = "Gun automatically loaded after an assault"
+variant = "loaded_after_assault"
 
 [equipment.musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
@@ -1089,7 +1089,7 @@ ap = 2
 text = "Fire two shots (per model) for each shot"
 
 [[equipment.double_barreled_musket_with_springloaded_axe.range.specials.ammo]]
-text = "Gun automatically loaded after an assault"
+variant = "loaded_after_assault"
 
 [equipment.double_barreled_musket_with_springloaded_axe.assault]
 strength.add = [1, 1, 1, 1]
@@ -1303,30 +1303,30 @@ preamble = "If fired from a unit with 1-2 alive models"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 4
-text = "at point blank"
+variant = "point_blank"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 5
-text = "at range=2"
+variant = "at_range_2"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 6
-text = "at range=3 or 4"
+variant = "at_range_3_4"
 
 [[equipment.steamblower.range.specials.area]]
 preamble = "If fired from a unit with 3-4 alive models"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 2
-text = "at point blank"
+variant = "point_blank"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 4
-text = "at range=2"
+variant = "at_range_2"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 5
-text = "at range=3 or 4"
+variant = "at_range_3_4"
 
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
@@ -1343,7 +1343,7 @@ ap = 0
 text = "Place a poison cloud[4] within normal range"
 
 [[equipment.poison_gas_grenade.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.poison_gas_grenade.range.specials.order]]
 text = "Activated by throw order"

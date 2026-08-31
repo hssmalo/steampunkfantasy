@@ -24,6 +24,13 @@ One value type with one syntax, used identically as an argument, as an entry in
 namespace registry is the loader's job; the shape is checked here.
 """
 
+type Identifier = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9_]*$")]
+"""A bare, unqualified name a record owns: `always_loaded`, never `ammo.x`.
+
+The counterpart to a Ref — where a Ref addresses another registry, an
+Identifier names something inside the record that declares it.
+"""
+
 _DIE = re.compile(r"^d\d+$")
 
 
@@ -257,6 +264,18 @@ class SpecialRuleConfig(RuleRecord):
     the very ref an instance's version argument carries — so the overlay is
     found by lookup and a key pointing nowhere is caught rather than ignored. A
     version with no overlay inherits the target's own text."""
+
+    variants: dict[Identifier, str] = Field(default_factory=dict)
+    """Shared prose an instance of this rule may draw on, keyed by a bare id
+    the rule owns (ADR 0032).
+
+    A bare string, not a table: the prose is the whole of a variant, and args
+    and names stay per-occurrence, so the data spells one id per line.
+
+    The neighbor above is the one to keep it apart from: a version overlays
+    the *rule's* own `effect` and is keyed by the Ref an instance's version
+    argument carries, while a variant supplies *one occurrence's* prose and is
+    keyed by a name that means nothing outside this rule."""
 
 
 class VersionOverlay(StrictModel):

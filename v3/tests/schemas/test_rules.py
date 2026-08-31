@@ -304,3 +304,57 @@ def test_a_union_rejects_a_bool_for_its_int_member() -> None:
 
     with pytest.raises(ValueError, match="not an int or a die"):
         variable.validate_value(True)  # noqa: FBT003  the point of the test
+
+
+# --- Variants: shared instance prose, keyed by an id the rule owns ----------
+
+
+def test_a_variant_carries_the_prose_an_instance_draws_on() -> None:
+    special = r.SpecialRuleConfig.model_validate(
+        {
+            "name": "Ammo",
+            "slots": ["range"],
+            "effect": "Carries {N} shots.",
+            "variants": {"always_loaded": "Always treated as loaded"},
+        }
+    )
+
+    assert special.variants["always_loaded"] == "Always treated as loaded"
+
+
+def test_a_rule_defines_no_variants_by_default() -> None:
+    special = r.SpecialRuleConfig.model_validate(
+        {"name": "Ammo", "slots": ["range"], "effect": "Carries {N} shots."}
+    )
+
+    assert special.variants == {}
+
+
+def test_a_variant_carries_nothing_but_its_text() -> None:
+    # A Variant is one occurrence's prose, not a second place to put args:
+    # "at point blank" is written with `N = 4` here and `N = 2` there. The
+    # prose being the whole of it is why a variant is a bare string, so a
+    # table with somewhere to put args is not a variant at all.
+    with pytest.raises(ValidationError, match="string_type"):
+        r.SpecialRuleConfig.model_validate(
+            {
+                "name": "Ammo",
+                "slots": ["range"],
+                "effect": "Carries {N} shots.",
+                "variants": {"always_loaded": {"text": "Loaded", "args": {"N": 4}}},
+            }
+        )
+
+
+def test_a_variant_is_keyed_by_a_bare_identifier() -> None:
+    # Unlike a Version, whose key is a Ref: the pool belongs to the rule, so
+    # its keys name nothing outside it.
+    with pytest.raises(ValidationError):
+        r.SpecialRuleConfig.model_validate(
+            {
+                "name": "Ammo",
+                "slots": ["range"],
+                "effect": "Carries {N} shots.",
+                "variants": {"Always Loaded": "Always treated as loaded"},
+            }
+        )

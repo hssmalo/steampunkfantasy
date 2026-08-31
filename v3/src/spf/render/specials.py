@@ -16,7 +16,7 @@ from collections.abc import Callable
 from typing import NamedTuple
 
 from spf.registry import Registry, load_registry
-from spf.schemas.rules import RuleRecord
+from spf.schemas.rules import RuleRecord, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance, Specials
 
 _PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
@@ -68,11 +68,26 @@ def special_row(
     if instance.cases:
         return heading, _cases(instance, rule, registry)
     signature = _signature(rule, instance.args, registry)
-    return heading, _join(_PROSE_SEPARATOR, signature, instance.text)
+    prose = _prose(instance.text, instance.variant, rule)
+    return heading, _join(_PROSE_SEPARATOR, signature, prose)
+
+
+def _prose(
+    text: str | None, variant: str | None, rule: SpecialRuleConfig | None
+) -> str | None:
+    """Resolve the prose slot, spelled inline or drawn from the rule's variants.
+
+    Total by design (ADR 0032): an id resolving to nothing renders as no prose,
+    because the load-time gate is what reports it and rendering must stay
+    printable for a rule the registry does not hold at all.
+    """
+    if variant is None:
+        return text
+    return rule.variants.get(variant) if rule is not None else None
 
 
 def _cases(
-    instance: SpecialInstance, rule: RuleRecord | None, registry: Registry
+    instance: SpecialInstance, rule: SpecialRuleConfig | None, registry: Registry
 ) -> str:
     """Render a case-shaped instance: its preamble, then its cases (ADR 0030).
 
@@ -85,11 +100,12 @@ def _cases(
         _join(
             _VALUES_SEPARATOR,
             _signature(rule, instance.args | case.args, registry),
-            case.text,
+            _prose(case.text, case.variant, rule),
         )
         for case in instance.cases
     ]
-    return _join(_PREAMBLE_SEPARATOR, instance.preamble, _join(_CASE_SEPARATOR, *lines))
+    preamble = _prose(instance.preamble, instance.variant, rule)
+    return _join(_PREAMBLE_SEPARATOR, preamble, _join(_CASE_SEPARATOR, *lines))
 
 
 def _signature(

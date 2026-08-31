@@ -229,8 +229,19 @@ A Special is **versioned over** a Namespace when a Ref-valued Variable is what
 one Instance of it differs from the next by: `resistance` over damage types,
 `assault_extra_damage` over the kinds it applies (ADR-0027). Version prose is
 optional, and a versioned Special often carries none.
-_Avoid_: variant (a Version is keyed by a **Ref** into a Namespace, not by an id
-the rule owns itself)
+_Avoid_: **Variant** (a Version is keyed by a **Ref** into a Namespace and
+overlays the *rule's* own text, not by an id the rule owns itself)
+
+**Variant**:
+Shared **Instance** prose, defined once on a Special and named by an id the rule
+owns — `ammo`'s `always_loaded`. An Instance or **Case** draws one into the prose
+slot its shape allows: an Instance with **Cases** takes it as a **Preamble**, one
+without as its `text`, and a Case always as its `text`. The pool is one set of
+bare strings per rule; the same Variant may be a Preamble in one place and a text
+in another. Spelling the prose out longhand instead is untidy rather than wrong,
+so it is a lint finding, not a load error.
+_Avoid_: version (a **Version** is keyed by a **Ref** and overlays the *rule's*
+`effect`; a Variant is keyed by a bare id and supplies an *occurrence's* prose)
 
 **Stub**:
 A record whose rule text is not yet written, marked by the presence of a `todo`

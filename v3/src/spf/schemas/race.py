@@ -175,9 +175,21 @@ def spawns_placed(specials: Specials) -> Iterator[str]:
 
 
 def _validate_specials(spawns: set[str], specials: Specials, *, context: str) -> None:
-    """Check that every spawning instance names a spawn the catalogue holds."""
+    """Check that every spawning instance names a spawn the catalogue holds.
+
+    The spawn id is read off the instance's own prose, which is why a Variant
+    cannot supply it: the pool lives in the registry, and this runs with no
+    registry in hand (ADR 0032).
+    """
     for rule_name in SPAWNING_SPECIALS:
         for instance in specials.get(rule_name, []):
+            if instance.variant is not None:
+                msg = (
+                    f"Special rule '{rule_name}' in {context} names the spawn it"
+                    " places in its own 'text', so it cannot draw prose from a"
+                    f" variant. Got: variant '{instance.variant}'"
+                )
+                raise ValueError(msg)
             spawn_id = spawn_reference(instance)
             if spawn_id is None:
                 msg = (
@@ -404,20 +416,35 @@ class RaceConfig(StrictModel):
         return self
 
 
-def race_slots(race: RaceConfig) -> Iterator[Specials]:
-    """Yield every Slot a Race holds instances in, whatever record carries it.
+def special_slots(race: RaceConfig) -> Iterator[tuple[str, str, Specials]]:
+    """Every (section, holder, instances) triple a Race hangs Specials off.
 
     The one walk over a Race's Specials (ADR 0024). It lists the Slots by
     hand because the schema names them by hand, so widening the schema and
-    widening the walk are the same edit.
+    widening the walk are the same edit. Which Slots a holder has is the
+    holder's own shape: only Equipment carries a range profile, and only a
+    Model an assault one it always has.
+
+    It yields the holder alongside the Slot because a reader that reports on
+    what it finds -- the linter naming the site of a finding -- needs to say
+    where it was. `race_slots` is the same walk for callers that do not.
     """
-    for unit in race.units.values():
-        yield unit.specials
-    for model in race.models.values():
-        yield from (model.unit_specials, model.specials, model.assault.specials)
-    for equipment in race.equipment.values():
-        yield from (equipment.unit_specials, equipment.model_specials)
+    for key, unit in race.units.items():
+        yield "units", key, unit.specials
+    for key, model in race.models.items():
+        yield "models", key, model.unit_specials
+        yield "models", key, model.specials
+        yield "models", key, model.assault.specials
+    for key, equipment in race.equipment.items():
+        yield "equipment", key, equipment.unit_specials
+        yield "equipment", key, equipment.model_specials
         if equipment.assault is not None:
-            yield equipment.assault.specials
+            yield "equipment", key, equipment.assault.specials
         if equipment.range is not None:
-            yield equipment.range.specials
+            yield "equipment", key, equipment.range.specials
+
+
+def race_slots(race: RaceConfig) -> Iterator[Specials]:
+    """Yield every Slot a Race holds instances in, whatever record carries it."""
+    for _section, _holder, slot in special_slots(race):
+        yield slot

@@ -19,7 +19,9 @@ from spf.schemas.race import (
     RaceConfig,
     RaceMetadata,
     UnitConfig,
+    _validate_specials,
 )
+from spf.schemas.special import SpecialInstance
 
 
 def test_list_races_includes_known_races() -> None:
@@ -156,6 +158,17 @@ def test_spawn_rule_invalid_format() -> None:
         match="must follow the format '\\[spawn_id\\]: \\[placement_text\\]'",
     ):
         RaceConfig.model_validate(config_dict)
+
+
+def test_spawn_rule_rejects_a_variant() -> None:
+    # A spawning rule names its spawn in its own prose, and the variant pool
+    # lives in a registry this validator does not have. Checked here rather
+    # than through a whole Race: no spawning rule defines a variant today, so
+    # the registry gate would reject the id before this rule ever saw it.
+    specials = {"spawn": [SpecialInstance(variant="place_a_tiny_snake")]}
+
+    with pytest.raises(ValueError, match="cannot draw prose from a variant"):
+        _validate_specials({"tiny_snake"}, specials, context="equipment 'Mortar'")
 
 
 def test_spawn_rule_undefined_spawn_id() -> None:

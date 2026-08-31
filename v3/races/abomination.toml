@@ -431,7 +431,7 @@ args.N = 2
 args.feature = "damage_type.fire"
 
 [[units.water_elemental.specials.fire_order]]
-text = "Fire and load all weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [units.water_elemental.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
@@ -608,7 +608,7 @@ equipment = ["multipurpose_gun"]
 type = ["Bio", "Infantry", "Walking", "Amphibian"]
 
 [[models.abomination_infantry.specials.fog]]
-text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+variant = "double_penalties_in_fog"
 
 [models.abomination_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -737,7 +737,7 @@ equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Floating", "Bio Crew"]
 
 [[models.confusiator_tank.specials.fog]]
-text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+variant = "double_penalties_in_fog"
 
 [models.confusiator_tank.assault]
 strength = [12, 1, 1, 1]
@@ -782,7 +782,7 @@ equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Tracked", "Bio Crew"]
 
 [[models.frost_88.specials.fog]]
-text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+variant = "double_penalties_in_fog"
 
 [[models.frost_88.specials.to_hit]]
 args.ability = "ability.double_speed_modifiers"
@@ -839,7 +839,7 @@ equipment = [
 type = ["Bio", "Cavalry", "Walking", "Amphibian", "Frog"]
 
 [[models.giant_frog_rider.specials.fog]]
-text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+variant = "double_penalties_in_fog"
 
 [models.giant_frog_rider.assault]
 strength = [4, 1, 1, 1]
@@ -896,7 +896,7 @@ text = "Fires 4 shot per fire order."
 args.N = 5
 
 [[equipment.greater_disruptors.range.specials.los]]
-text = "Trace line of sight from either front or back part of the unit"
+variant = "los_from_front_or_back"
 
 
 [equipment.side_weapons]
@@ -914,7 +914,7 @@ ap = 0
 text = "Fire once to the right and once to the left per fire order"
 
 [[equipment.side_weapons.range.specials.los]]
-text = "Trace line of sight from either front or back part of the unit"
+variant = "los_from_front_or_back"
 
 
 [equipment.broadside]
@@ -1077,10 +1077,10 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.fog_grenade_mortar.range.specials.cloud]]
-text = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+variant = "fog_one_hex_per_model"
 
 [[equipment.fog_grenade_mortar.range.specials.ammo]]
-text = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+variant = "fog_instead_of_ammo"
 
 
 [equipment.long_range_fog_grenade_mortar]
@@ -1097,10 +1097,10 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.long_range_fog_grenade_mortar.range.specials.cloud]]
-text = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+variant = "fog_one_hex_per_model"
 
 [[equipment.long_range_fog_grenade_mortar.range.specials.ammo]]
-text = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+variant = "fog_instead_of_ammo"
 
 [equipment.multipurpose_mortar]
 name = "Multipurpose Mortar"
@@ -1164,7 +1164,7 @@ preamble = "Target enemies in all hexes within front arc (not including the hexe
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 4
-text = "at point blank"
+variant = "point_blank"
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 5
@@ -1191,10 +1191,10 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.fog_poisonizer.range.specials.cloud]]
-text = "Add poison cloud[4] to a hex with fog within normal range"
+variant = "poison_cloud_in_fog"
 
 [[equipment.fog_poisonizer.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.fog_poisonizer.range.specials.order]]
 text = "May be used in both gunnery phases"
@@ -1211,10 +1211,10 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.greater_fog_poisonizer.range.specials.cloud]]
-text = "Add poison cloud[4] to a hex with fog within normal range"
+variant = "poison_cloud_in_fog"
 
 [[equipment.greater_fog_poisonizer.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.greater_fog_poisonizer.range.specials.order]]
 text = "May be used in both gunnery phases independent of other weapons"
@@ -1236,7 +1236,7 @@ args.version = "token.poison"
 args.N = 4
 
 [[equipment.frog_spit.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.frog_spit.range.specials.order]]
 text = "Fire in both first and second gunnery phase independent of other weapons and orders"
@@ -1257,7 +1257,7 @@ ap = 0
 text = "Fire twice per fire order"
 
 [[equipment.twin_frost_ray.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.twin_frost_ray.range.specials.forced_break]]
 

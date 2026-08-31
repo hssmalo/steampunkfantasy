@@ -698,7 +698,7 @@ args.ability = "ability.good_shot"
 
 [[models.gnome_helicopter.specials.to_hit]]
 args.ability = "ability.excellent_shot"
-text = "Replaces the good shot bonus while the helicopter hovers still in the air"
+variant = "hover_replace_good_shot"
 
 [models.gnome_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -733,7 +733,7 @@ args.ability = "ability.good_shot"
 
 [[models.tinkerer_helicopter.specials.to_hit]]
 args.ability = "ability.excellent_shot"
-text = "Replaces the good shot bonus while the helicopter hovers still in the air"
+variant = "hover_replace_good_shot"
 
 [models.tinkerer_helicopter.assault]
 strength = [1, 0, 0, 0]
@@ -758,7 +758,7 @@ text = "Treat any gunnery phase without any other order as fire(res) order inste
 [[models.elite_gnome_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "As long as at least one elite model is alive"
+variant = "elite_alive"
 
 [models.elite_gnome_infantry.assault]
 strength = [1, 1, 1, 1]
@@ -913,7 +913,7 @@ ap = 1
 text = "Reserve weapon: may use this weapon instead of main gun when fire(res) orders is given, but you may only use one reserve weapon at any given time."
 
 [[equipment.light_smg.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [equipment.smg]
 name = "SMG"
@@ -927,13 +927,13 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.smg.range.specials.multipurpose]]
-text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+variant = "reserve_weapon"
 
 [[equipment.smg.range.specials.multiple_shots]]
 text = "Fire two shots per fire reserve order"
 
 [[equipment.smg.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [equipment.poison_dart]
 name = "Poison Dart"
@@ -947,10 +947,10 @@ damage = "-"
 ap = 0
 
 [[equipment.poison_dart.range.specials.multipurpose]]
-text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+variant = "reserve_weapon"
 
 [[equipment.poison_dart.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.poison_dart.range.specials.range_extra_damage]]
 args.version = "token.poison"
@@ -968,10 +968,10 @@ damage = "-"
 ap = 0
 
 [[equipment.acid_balloon.range.specials.multipurpose]]
-text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+variant = "reserve_weapon"
 
 [[equipment.acid_balloon.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [[equipment.acid_balloon.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1052,7 +1052,7 @@ args.N = 6
 text = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
 
 [[equipment.green_gas_launcher.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_loaded"
 
 [equipment.helicopter_mounted_green_gas_launcher]
 race = "gnome"
@@ -1091,7 +1091,7 @@ ap = 6
 text = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the wielder. If this damage causes at least one model to die, remove the model carrying the plasma gun first."
 
 [[equipment.experimental_plasma_gun.range.specials.critical]]
-text = "set the enemy on fire"
+variant = "fire_enemy"
 
 [equipment.helicopter_mounted_experimental_plasma_gun]
 race = "gnome"
@@ -1110,7 +1110,7 @@ ap = 6
 text = "If the natural to-hit die is a 1 or 2 (regardless whether you hit or not), the gun explodes causing 1d4 fire damage to the helicopter"
 
 [[equipment.helicopter_mounted_experimental_plasma_gun.range.specials.critical]]
-text = "set the enemy on fire"
+variant = "fire_enemy"
 
 [[equipment.helicopter_mounted_experimental_plasma_gun.model_specials.to_hit]]
 args.ability = "ability.difficulty_firing_forward"
@@ -1134,7 +1134,7 @@ args.N = 6
 #text = "If aim, instead use focus fire, roll 6 dice at same unit"
 
 [[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
-text = "When using aim: roll 6 dice at same unit."
+variant = "aim_6_dice"
 
 [[equipment.helicopter_gatling_gun.range.specials.area]]
 #preamble = "If not using aim, target all hexes within long range"
@@ -1158,7 +1158,7 @@ damage = "n.a"
 ap = 0
 
 [[equipment.acidic_napalm_bomb.range.specials.area]]
-text = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+variant = "hex_minor_acid"
 
 [[equipment.acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 2
@@ -1177,7 +1177,7 @@ damage = "n.a"
 ap = 0
 
 [[equipment.extra_acidic_napalm_bomb.range.specials.area]]
-text = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+variant = "hex_minor_acid"
 
 [[equipment.extra_acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 3
@@ -1277,7 +1277,7 @@ args.N = 1
 [[equipment.improved_medical_armor.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "(improve by 1 if unit has Psychic resistance from another source)"
+variant = "improved_by_another_source"
 
 [equipment.medical_armor]
 race = "gnome"
@@ -1297,7 +1297,7 @@ args.N = 2
 [[equipment.medical_armor.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "(improve by 1 if unit has Psychic resistance from another source)"
+variant = "improved_by_another_source"
 
 [equipment.plasma_shield_generator]
 race = "gnome"
@@ -1312,7 +1312,7 @@ args.N = "d4"
 text = "(roll d4 every time it is hit with some regular damage)"
 
 [[equipment.plasma_shield_generator.unit_specials.vulnerability]]
-text = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
+variant = "add_d4_fire"
 
 [equipment.plasma_shield_generator.assault]
 deflection.add = [1, 0, 0, 0]
@@ -1344,7 +1344,7 @@ args.N = "d8"
 text = "(roll d8 every time it is hit with some regular damage)"
 
 [[equipment.improved_plasma_shield_generator.unit_specials.vulnerability]]
-text = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
+variant = "add_d4_fire"
 
 [equipment.improved_plasma_shield_generator.assault]
 deflection.add = [2, 0, 0, 0]

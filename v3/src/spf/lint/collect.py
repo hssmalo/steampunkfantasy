@@ -11,10 +11,11 @@ from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import holders, names
+from spf.lint import holders, names, variants
+from spf.registry import load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
-from spf.schemas.race import RaceConfig
+from spf.schemas.race import RaceConfig, special_slots
 
 
 class Named(Protocol):
@@ -53,10 +54,30 @@ def lint_entries(
 
 
 def lint_race_config(
-    race: t.RaceName, race_config: RaceConfig, conventions: LintConfig
+    race: t.RaceName,
+    race_config: RaceConfig,
+    conventions: LintConfig,
+    *,
+    pools: Mapping[str, Mapping[str, str]],
 ) -> list[Finding]:
-    """Return every finding for an already-loaded, schema-valid Race."""
+    """Return every finding for an already-loaded, schema-valid Race.
+
+    `pools` is each rule's variants. Required rather than defaulted: a caller
+    that has no pools says so with `{}`, which is not the same claim as having
+    forgotten to pass them.
+    """
     findings: list[Finding] = []
+    for section, key, specials in special_slots(race_config):
+        findings += [
+            Finding(
+                race=race,
+                section=section,
+                key=key,
+                rule="variant-longhand",
+                message=f"'{identifier}': {message}",
+            )
+            for identifier, message in variants.check_specials(specials, pools)
+        ]
     if (message := names.check_capitalized(race_config.races[race].name)) is not None:
         findings.append(
             Finding(
@@ -91,4 +112,8 @@ def lint_race_config(
 
 def lint_race(race: t.RaceName) -> list[Finding]:
     """Load `race` and return its findings, using the configured conventions."""
-    return lint_race_config(race, races.get_race(race), config.lint)
+    pools = {
+        identifier: rule.variants
+        for identifier, rule in load_registry().specials.items()
+    }
+    return lint_race_config(race, races.get_race(race), config.lint, pools=pools)
