@@ -89,15 +89,46 @@ rather than reaching for `races.get_race(...)`. Name what you build with the
 `CONTEXT.md` vocabulary — Race, Unit, Model, Equipment, Holder, Special
 Instance.
 
+What they are:
+
+| Builder | Gives you |
+|---|---|
+| `synthetic_race(units=…, models=…, equipment=…, spawns=…)` | A `RaceConfig`: by default a costed and an uncosted Unit of one Model, which declares a Holder and carries a Default Equipment, with an Upgrade Equipment on the shelf |
+| `synthetic_unit()` / `synthetic_model(holders=…)` / `synthetic_equipment()` / `synthetic_assault()` | One record each, every unnamed field filled in |
+| `synthetic_registry(specials=…, records=…)` | A `Registry` over ids you invent |
+| `synthetic_special(slots=…)` | One Special rule |
+| `synthetic_army(race, units=…, nick=…)` | An unresolved `ArmyList` |
+| `write_race_toml(directory, race)` | A Race on disk, for a test that needs one there |
+
+Every builder takes the fields a Race file writes and validates them, so
+`synthetic_unit(name="Mob", cost=None)` is the whole of an uncosted Unit.
+
+Two fixtures wrap the common cases: `armies_dir` points `config.paths.armies`
+at `tmp_path`, and `install_registry` puts a Registry behind the load-time gate.
+
+### Inventing Special ids
+
+A Race's Special ids are resolved against `rules/` when it loads (ADR 0024), so
+a synthetic Race could otherwise only use ids the committed registry happens to
+declare — which is what used to force a test wanting a Special on every Holder
+to read a real Race. Install a Registry of your own instead:
+
+```python
+def test_something(install_registry: InstallRegistry) -> None:
+    install_registry(synthetic_registry(specials={"countdown": None}))
+    race = synthetic_race(units={"squad": synthetic_unit(specials={"countdown": [{"text": "Three rounds."}]})})
+```
+
+A `None` rule permits every Slot; pass `synthetic_special(slots=[...])` to
+narrow one. The gate is not disabled — an id the installed Registry does not
+declare is still rejected.
+
 Existing exemplars worth reading:
 
-- `tests/assets/test_image.py` — writes its own Race TOML to `tmp_path`, for
-  when a test needs a Race on disk rather than in memory.
+- `tests/test_display.py` — the smallest use of the builders.
 - `tests/armies/test_specials.py` — builds Instances, Equipment, Models and
   Units, and says in its docstring why it avoids real Race data.
 - `tests/lint/test_collect.py`
-- `tests/frontends/cli/test_army.py` — monkeypatches the armies directory to
-  `tmp_path`.
 
 ## How to check you got it right
 
