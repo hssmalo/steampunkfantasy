@@ -212,7 +212,7 @@
 \hline
 \endhead
 \BLOCK{for model in source.models}
-\hyperref[\VAR{model.anchor}]{\VAR{model.name | latex_escape}} & \VAR{(model.types | join(', ') | latex_escape) or '---'} & \BLOCK{for holder, capacity in model.equipment_limits}\BLOCK{if not loop.first}, \BLOCK{endif}\VAR{holder | latex_escape} \VAR{capacity | latex_escape}\BLOCK{else}---\BLOCK{endfor} & \VAR{model.cost | latex_escape} \\
+\hyperref[\VAR{model.anchor}]{\VAR{model.name | latex_escape}} & \VAR{(model.types | join(', ') | latex_escape) or '---'} & \BLOCK{for holder, capacity in model.notable_limits}\BLOCK{if not loop.first}, \BLOCK{endif}\VAR{holder | latex_escape} \VAR{capacity | latex_escape}\BLOCK{else}---\BLOCK{endfor} & \VAR{model.cost | latex_escape} \\
 \BLOCK{endfor}
 \end{longtable}
 

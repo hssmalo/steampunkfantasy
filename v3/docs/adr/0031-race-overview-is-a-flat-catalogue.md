@@ -95,7 +95,11 @@ which is how a data question gets noticed rather than buried.
 - **Each section opens with a summary table** linking into its own detail
   entries. The flat shape is what makes this possible — a section is a complete
   list of something — and it is what a reader scanning for a price or a slot
-  count actually uses.
+  count actually uses. A summary column carries what tells its records apart,
+  so it may print less than the detail entry does: the Models table drops the
+  uncapped Independent slot all but a handful of Models offer, and prices a
+  record in one cell where the Units table, which is where a list's budget
+  goes, keeps a column per currency.
 
 - **The Rules Reference is included and unchanged.** It is seeded from the
   Race's Slots rather than an Army's

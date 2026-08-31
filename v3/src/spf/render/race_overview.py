@@ -26,6 +26,7 @@ from spf.render.anchors import slug
 from spf.render.costs import cost_columns, cost_text
 from spf.render.damage import roll_text
 from spf.render.declarations import (
+    INFINITY,
     assault_modifier_lines,
     limit_rows,
     requirement_lines,
@@ -155,6 +156,14 @@ class ModelEntry:
     types: list[t.ModelType]
     equipment_limits: list[tuple[str, str]]
     """(Holder, capacity) per slot the Model offers, uncapped written `∞`."""
+
+    notable_limits: list[tuple[str, str]]
+    """`equipment_limits` without the slot nearly every Model offers.
+
+    A summary column compares Models against each other, and `UBIQUITOUS_SLOT`
+    distinguishes none of them: a reader learns more from the width it costs
+    than from the slot. The Model's own entry still lists it.
+    """
 
     equipment: list[RaceLink]
     fielded_in: list[RaceLink]
@@ -432,6 +441,19 @@ def _spawn_entry(key: str, spawn: SpawnConfig, *, catalogue: _Catalogue) -> Spaw
     )
 
 
+UBIQUITOUS_SLOT = ("Independent", INFINITY)
+"""The uncapped Independent slot all but a handful of Models offer."""
+
+
+def _notable_limits(limits: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Drop the slot a summary row learns nothing by printing.
+
+    Only the uncapped Independent slot goes: a *capped* one would say
+    something about the Model, which is exactly what a summary is for.
+    """
+    return [limit for limit in limits if limit != UBIQUITOUS_SLOT]
+
+
 def _pricing(cost: t.Cost | None, *, upgrade_all: bool | None) -> str:
     """Price an Equipment and say what it is charged per (ADR 0026).
 
@@ -495,6 +517,7 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
     assault = model.assault
     anchor_for = catalogue.anchor_for
     replaces = model.replaces
+    limits = limit_rows(model.equipment_limit)
     return ModelEntry(
         key=key,
         name=model.name,
@@ -502,7 +525,8 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
         cost=cost_text(model.cost),
         points=(model.cost or t.Cost()).to_points(),
         types=_ordered_types(model.type),
-        equipment_limits=limit_rows(model.equipment_limit),
+        equipment_limits=limits,
+        notable_limits=_notable_limits(limits),
         equipment=_links(EQUIPMENT, model.equipment, catalogue.config.equipment),
         fielded_in=catalogue.fielded_in.get(key, []),
         replaces=(

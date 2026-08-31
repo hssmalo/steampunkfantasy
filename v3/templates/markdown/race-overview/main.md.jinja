@@ -177,7 +177,7 @@
 | Model | Type | Equipment slots | Cost |
 | --- | --- | --- | --- |
 {%- for model in source.models %}
-| [{{ model.name }}](#{{ model.anchor }}) | {{ model.types | join(', ') or '—' }} | {% for holder, capacity in model.equipment_limits %}{% if not loop.first %}, {% endif %}{{ holder }} {{ capacity }}{% else %}—{% endfor %} | {{ model.cost }} |
+| [{{ model.name }}](#{{ model.anchor }}) | {{ model.types | join(', ') or '—' }} | {% for holder, capacity in model.notable_limits %}{% if not loop.first %}, {% endif %}{{ holder }} {{ capacity }}{% else %}—{% endfor %} | {{ model.cost }} |
 {%- endfor %}
 {% for model in source.models %}
 <a id="{{ model.anchor }}"></a>

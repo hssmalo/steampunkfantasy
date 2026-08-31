@@ -505,15 +505,15 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 | Model | Type | Equipment slots | Cost |
 | --- | --- | --- | --- |
-| [Elite Goblin Infantry](#model-elite-goblin-infantry) | Elite, Bio, Infantry, Walking | Independent ∞, Hands 2, Grenades 2, Specialization 1 | 4xp |
-| [Goblin Infantry](#model-goblin-infantry) | Bio, Infantry, Walking | Independent ∞, Hands 2, Grenades 3, Specialization 1, Special Arrows 3 |  |
-| [Giant Snake Cavalry](#model-giant-snake-cavalry) | Bio, Cavalry, Walking | Independent ∞, Hands 2 |  |
+| [Elite Goblin Infantry](#model-elite-goblin-infantry) | Elite, Bio, Infantry, Walking | Hands 2, Grenades 2, Specialization 1 | 4xp |
+| [Goblin Infantry](#model-goblin-infantry) | Bio, Infantry, Walking | Hands 2, Grenades 3, Specialization 1, Special Arrows 3 |  |
+| [Giant Snake Cavalry](#model-giant-snake-cavalry) | Bio, Cavalry, Walking | Hands 2 |  |
 | [Tiny Snake](#model-tiny-snake) | Bio, Walking, Monster | — |  |
-| [Bipedal Mech](#model-bipedal-mech) | Bio Crew, Mechanical, Walking | Independent ∞ |  |
-| [Goblin Infantry Carrier](#model-goblin-infantry-carrier) | Mechanical, Vehicle, Tracked | Independent ∞ |  |
-| [Heavy Carrier](#model-heavy-carrier) | Mechanical, Vehicle, Tracked | Independent ∞ |  |
-| [Modified Truck](#model-modified-truck) | Mechanical, Vehicle, Tracked | Independent ∞ |  |
-| [Mechanical Fire Bird](#model-mechanical-fire-bird) | Mechanical, Flying, Drone | Independent ∞ |  |
+| [Bipedal Mech](#model-bipedal-mech) | Bio Crew, Mechanical, Walking | — |  |
+| [Goblin Infantry Carrier](#model-goblin-infantry-carrier) | Mechanical, Vehicle, Tracked | — |  |
+| [Heavy Carrier](#model-heavy-carrier) | Mechanical, Vehicle, Tracked | — |  |
+| [Modified Truck](#model-modified-truck) | Mechanical, Vehicle, Tracked | — |  |
+| [Mechanical Fire Bird](#model-mechanical-fire-bird) | Mechanical, Flying, Drone | — |  |
 
 <a id="model-elite-goblin-infantry"></a>
 

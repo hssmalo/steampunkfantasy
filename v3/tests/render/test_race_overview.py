@@ -479,6 +479,31 @@ def test_model_equipment_limits_render_the_uncapped_holder_as_infinity() -> None
     assert model.equipment_limits == [("Hands", "2"), ("Grenades", "∞")]
 
 
+def test_a_summary_row_leaves_out_the_slot_nearly_every_model_offers() -> None:
+    race = _race_config(
+        models={"grunt": _model_config(equipment_limit=["Independent:∞", "Hands:2"])}
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    (model,) = overview.models
+    # The Model's own entry still lists it; only the summary column drops it.
+    assert model.equipment_limits == [("Independent", "∞"), ("Hands", "2")]
+    assert model.notable_limits == [("Hands", "2")]
+
+
+def test_a_capped_independent_slot_stays_in_the_summary_row() -> None:
+    race = _race_config(
+        models={"grunt": _model_config(equipment_limit=["Independent:2"])}
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    # A cap says something about this Model, which is what a summary is for.
+    (model,) = overview.models
+    assert model.notable_limits == [("Independent", "2")]
+
+
 def test_model_links_each_permitted_equipment_once() -> None:
     race = _race_config(
         models={"grunt": _model_config(equipment=["club", "bow", "club"])},
