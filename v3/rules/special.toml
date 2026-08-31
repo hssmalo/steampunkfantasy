@@ -62,6 +62,10 @@ see_also = ["special.retreat"]
 [special.pre_assault_retreat.variables]
 N = { type = "int", min = 2, max = 6 }
 
+[special.pre_assault_retreat.variants.while_a_superelite_is_alive]
+text = "As long as at least 1 superelite is alive"
+
+
 [special.retreat]
 name = "Retreat"
 slots = ["assault"]
@@ -70,6 +74,13 @@ todo = """Rule text not yet written. Distinct from Pre-Assault Retreat, or the s
 From reference.toml:
 potential_references = ["special.unit.pre-assault_retreat"]"""
 see_also = ["special.pre_assault_retreat"]
+
+[special.retreat.variants.a_stuck_wagon_disconnects]
+text = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+
+[special.retreat.variants.retreat_even_when_winning]
+text = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+
 
 [special.assault_extra_damage]
 name = "Assault Extra Damage"
@@ -101,6 +112,13 @@ From reference.toml:
 
 [special.range_extra_damage.variables]
 version = { type = "ref", namespaces = ["token", "damage_type"] }
+
+[special.range_extra_damage.variants.choose_one_hex_acid]
+text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+
+[special.range_extra_damage.variants.no_regular_damage]
+text = "No regular damage."
+
 
 [special.break]
 name = "Break"
@@ -147,10 +165,27 @@ slots = ["assault", "range"]
 todo = "Rule text not yet written, in either slot: every occurrence spells out its own bonus in prose."
 see_also = ["special.penalty"]
 
+[special.bonus.variants.crew_damage_on_acid]
+text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+
+[special.bonus.variants.per_alive_head]
+text = "+3 assault strength  and +1 assault deflection per alive head"
+
+[special.bonus.variants.per_enemy_model_forward]
+text = "+1 assault strength per enemy model in assault (forward direction only)"
+
+[special.bonus.variants.versus_shaken]
+text = "+100% strength and deflections versus shaken units"
+
+
 [special.counter_attack]
 name = "Counter Attack"
 slots = ["assault"]
 todo = "Rule text not yet written: every occurrence reads \"each deflection counts as both a hit and a deflection\"."
+
+[special.counter_attack.variants.deflection_counts_as_a_hit]
+text = "Each deflections counts as both a hit and a deflection"
+
 
 [special.cunning_deflection]
 name = "Cunning Deflection"
@@ -168,11 +203,19 @@ name = "Lands"
 slots = ["assault"]
 todo = "Rule text not yet written: a flying unit forced into a ground assault, and what its speed becomes."
 
+[special.lands.variants.assaults_ground_troops]
+text = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
+
+
 [special.penalty]
 name = "Penalty"
 slots = ["assault"]
 todo = "Rule text not yet written: presumed the opposite of Bonus, but every occurrence spells out its own penalty in prose."
 see_also = ["special.bonus"]
+
+[special.penalty.variants.while_crawling]
+text = "Reroll all success in assault while crawling"
+
 
 [special.size]
 name = "Size"
@@ -227,6 +270,22 @@ effect = "Any damage rolled by poison token effect reduced damage by {N}"
 [special.resistance.versions."damage_type.acid"]
 effect = "Any die rolled by acid or minor acid token is reduced by {N}."
 
+[special.resistance.variants.as_long_as_an_elite_model]
+text = "As long as at least one elite model is alive"
+
+[special.resistance.variants.as_long_as_one_elite_model]
+text = "As long as 1 elite model is alive"
+
+[special.resistance.variants.improved_by_another_source]
+text = "(improve by 1 if unit has Psychic resistance from another source)"
+
+[special.resistance.variants.while_a_superelite_is_alive]
+text = "While at least one superelite model is alive"
+
+[special.resistance.variants.while_an_elite_is_alive]
+text = "While at least one elite is alive"
+
+
 [special.heal]
 name = "Heal"
 slots = ["unit"]
@@ -266,6 +325,10 @@ From reference.toml:
 [special.immunity.variables]
 feature = { type = "ref", namespaces = ["token", "hex", "special", "damage_type"] }
 
+[special.immunity.variants.also_gear_disruption]
+text = "Also immune to Gear Disruption"
+
+
 [special.repair]
 name = "Repair"
 slots = ["unit"]
@@ -286,6 +349,10 @@ todo = "Some Race grants scale {N} with the number of alive models, which no sca
 N = { type = ["int", "str"], min = 1, max = 10 }
 unit = { type = "str", values = ["self", "any", "other"] }
 phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
+
+[special.repair.variants.medium_or_smaller_only]
+text = "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
+
 
 [special.hide]
 name = "Hide"
@@ -407,6 +474,19 @@ see_also = ["token.aim"]
 [special.to_hit.variables]
 ability = { type = "ref", namespaces = ["ability"] }
 
+[special.to_hit.variants.also_the_targets_penalty]
+text = "Applies to the target's penalty as well, and to flying as well as fast"
+
+[special.to_hit.variants.doubles_the_long_range_penalty]
+text = "Doubles the long-range penalty"
+
+[special.to_hit.variants.replaces_good_shot_while_hovering]
+text = "Replaces the good shot bonus while the helicopter hovers still in the air"
+
+[special.to_hit.variants.when_firing_a_seeker_arrow]
+text = "Applies when firing a seeker arrow"
+
+
 [special.activate]
 name = "Activate"
 slots = ["unit"]
@@ -428,11 +508,25 @@ name = "Fire Order"
 slots = ["unit"]
 todo = "Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace."
 
+[special.fire_order.variants.autoloader]
+text = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+
+[special.fire_order.variants.fire_and_load_simultaneously]
+text = "Fire and load all weapons simultaneously"
+
+[special.fire_order.variants.five_shots_one_at_a_time]
+text = "May be load up to 5 shots, fire them one at a time"
+
+
 [special.fog]
 name = "Fog"
 slots = ["unit", "model"]
 todo = "Rule text not yet written, in either slot: the unit occurrences are about fog as an obstacle, the model occurrences about doubled to-hit penalties in fog. Decide whether those are one rule."
 see_also = ["hex.fog"]
+
+[special.fog.variants.double_penalties_in_fog]
+text = "Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)"
+
 
 [special.heads]
 name = "Heads"
@@ -455,6 +549,10 @@ todo = "Rule text not yet written: a decoy unit that mimics a real one until it 
 name = "LoS"
 slots = ["unit", "range"]
 todo = "Rule text not yet written, in either slot: where a unit traces line of sight from, and what blocks it."
+
+[special.los.variants.from_the_front_or_the_back]
+text = "Trace line of sight from either front or back part of the unit"
+
 
 [special.movement]
 name = "Movement"
@@ -499,6 +597,10 @@ slots = ["unit"]
 todo = "Rule text not yet written. Every occurrence composes Heal in its own prose but no shared rule ties the two — decide whether Regeneration is a wrapper over Heal or bespoke."
 see_also = ["special.heal"]
 
+[special.regeneration.variants.one_per_head_plus_four]
+text = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
+
+
 [special.reload]
 name = "Reload"
 slots = ["unit"]
@@ -541,6 +643,10 @@ name = "Transport"
 slots = ["unit"]
 todo = "Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace."
 
+[special.transport.variants.four_tiny_drones]
+text = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+
+
 [special.vulnerability]
 name = "Vulnerability"
 slots = ["unit"]
@@ -550,6 +656,10 @@ see_also = ["special.resistance"]
 #
 # Model
 #
+
+[special.vulnerability.variants.d4_fire_on_regular_damage]
+text = "Every time this unit takes at least 1 point of regular damage after resistances, it also takes an additional d4 fire damage (apply fire resistance if any)"
+
 [special.escape_artist]
 name = "Escape Artist"
 slots = ["model"]
@@ -614,6 +724,10 @@ slots = ["range"]
 effect = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"
 see_also = ["special.fumble"]
 
+[special.critical.variants.set_the_enemy_on_fire]
+text = "set the enemy on fire"
+
+
 [special.improved_aim]
 name = "Improved Aim"
 slots = ["range"]
@@ -622,6 +736,10 @@ todo = """Rule text not yet written: it modifies the aim token's bonus, so it ma
 From reference.toml:
 #potential_references =["???.crew_damage""]"""
 see_also = ["token.aim"]
+
+[special.improved_aim.variants.plus_four_instead_of_two]
+text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
+
 
 [special.indirect_fire]
 name = "Indirect Fire"
@@ -633,6 +751,10 @@ From reference.toml:
 #Note to self: maybe write
 #potential_references =["special.range_.indirect_fire"]"""
 
+[special.indirect_fire.variants.any_friendly_line_of_sight]
+text = "May use line of sight of any friendly unit on the battle field."
+
+
 [special.cloud]
 name = "Cloud"
 slots = ["range"]
@@ -642,6 +764,16 @@ From reference.toml:
 #Note to self: make more consistent
 potential_references = ["hexes.fog", "hexes.poison_cloud"]"""
 see_also = ["hex.fog", "hex.poison_cloud"]
+
+[special.cloud.variants.fog_in_one_hex_per_model]
+text = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
+
+[special.cloud.variants.poison_cloud_and_surroundings]
+text = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+
+[special.cloud.variants.poison_cloud_in_fog]
+text = "Add poison cloud[4] to a hex with fog within normal range"
+
 
 [special.insanity]
 name = "Insanity"
@@ -659,6 +791,22 @@ slots = ["range"]
 effect = "Describes how a weapon is loaded and how its ammo is tracked."
 see_also = ["special.limited_ammo"]
 
+[special.ammo.variants.always_loaded]
+text = "Always loaded"
+
+[special.ammo.variants.always_treated_as_loaded]
+text = "Always treated as loaded"
+
+[special.ammo.variants.fog_instead_of_ammo]
+text = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
+
+[special.ammo.variants.loaded_after_assault]
+text = "Gun automatically loaded after an assault"
+
+[special.ammo.variants.three_ammo_one_at_a_time]
+text = "May be loaded (one at a time) with up to 3 ammo"
+
+
 
 [special.area]
 name = "Area"
@@ -669,6 +817,25 @@ effect = "Roll a die per enemy model in the hex. For each die at N+, roll for da
 [special.area.variables]
 N = { type = "int", min = 1, max = 6, optional = true}
 
+[special.area.variants.at_long_range]
+text = "at long range"
+
+[special.area.variants.at_normal_range]
+text = "at normal range"
+
+[special.area.variants.at_point_blank]
+text = "at point blank"
+
+[special.area.variants.at_range_2]
+text = "at range=2"
+
+[special.area.variants.at_range_3_or_4]
+text = "at range=3 or 4"
+
+[special.area.variants.choose_a_hex_minor_acid]
+text = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+
+
 
 
 [special.drag]
@@ -676,11 +843,19 @@ name = "Drag"
 slots = ["range"]
 todo = "Rule text not yet written: pulling a hit unit one hex towards the firer."
 
+[special.drag.variants.drags_the_target_one_hex]
+text = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+
+
 [special.focus_fire]
 name = "Focus Fire"
 slots = ["range"]
 todo = "Rule text not yet written: it spends the aim token differently, so it may belong on the token rather than here."
 see_also = ["token.aim"]
+
+[special.focus_fire.variants.six_dice_when_aiming]
+text = "When using aim: roll 6 dice at same unit."
+
 
 [special.multiple_shots]
 name = "Multiple Shots"
@@ -688,21 +863,46 @@ slots = ["range"]
 todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
 see_also = ["special.burst"]
 
+[special.multiple_shots.variants.fires_twice]
+text = "Fires two times each time it is fired"
+
+[special.multiple_shots.variants.per_alive_minor_head]
+text = "Fire one time per alive minor head"
+
+
 [special.multipurpose]
 name = "Multipurpose"
 slots = ["range"]
 todo = "Rule text not yet written: a weapon with more than one firing setting."
+
+[special.multipurpose.variants.reserve_weapon]
+text = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
+
 
 [special.order]
 name = "Order"
 slots = ["range"]
 todo = "Rule text not yet written: which firing order a weapon is used with. Named for the order it takes, so it will collide with an orders namespace when one exists."
 
+[special.order.variants.one_instead_of_regular_weapons]
+text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+
+[special.order.variants.used_with_throw_order]
+text = "Used with Throw order"
+
+
 [special.range]
 name = "Range"
 slots = ["range"]
 todo = "Rule text not yet written: how a weapon's range value is modified, or which hex it may target."
 see_also = ["distance.normal_range", "distance.long_range"]
+
+[special.range.variants.any_hex_within_normal_range]
+text = "Target any hex within normal range"
+
+[special.range.variants.flying]
+text = "+1 range if you are flying"
+
 
 [special.recoil]
 name = "Recoil"
@@ -714,7 +914,14 @@ name = "Sniper"
 slots = ["range"]
 todo = "Rule text not yet written: choosing which model a kill removes."
 
+[special.sniper.variants.choose_the_model_after_aim]
+text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+
+
 [special.type]
 name = "Type"
 slots = ["range"]
 todo = "Rule text not yet written: what kind of weapon this is, which today is free-text flavor."
+
+[special.type.variants.thrown_weapon]
+text = "Thrown weapon"

@@ -73,7 +73,7 @@ args.N = 2
 
 [[units.mechanical_red_dragon.specials.immunity]]
 args.feature = "damage_type.acid"
-text = "Also immune to Gear Disruption"
+variant = "also_gear_disruption"
 
 [units.mechanical_red_dragon.shaken]
 speed = "slow"
@@ -117,7 +117,7 @@ text = " Fire(acid): use acid and poison breath, while Fire(shrapnel) uses shrap
 
 [[units.mechanical_iron_dragon.specials.immunity]]
 args.feature = "damage_type.acid"
-text = "Also immune to Gear Disruption"
+variant = "also_gear_disruption"
 
 [units.mechanical_iron_dragon.shaken]
 speed = "slow"
@@ -939,7 +939,7 @@ damage = "d6"
 ap = 2
 
 [[models.mechahydra.assault.specials.bonus]]
-text = "+3 assault strength  and +1 assault deflection per alive head"
+variant = "per_alive_head"
 
 [[models.mechahydra.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -966,7 +966,7 @@ damage = "d6"
 ap = 7
 
 [[models.mechanical_red_dragon.assault.specials.lands]]
-text = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
+variant = "assaults_ground_troops"
 
 [models.mechanical_iron_dragon]
 name = "Mechanical Iron Dragon"
@@ -984,7 +984,7 @@ damage = "d6"
 ap = 7
 
 [[models.mechanical_iron_dragon.assault.specials.lands]]
-text = "Assault ground: automatically assaults ground troops if it shares a hex with an enemy ground unit. if so, consider the dragon to be in slow state and the rest of movement orders to be nothing"
+variant = "assaults_ground_troops"
 
 [models.queen_yy]
 name = "Queen YY"
@@ -1013,7 +1013,7 @@ args.M = 1
 args.N = 8
 
 [[models.queen_yy.assault.specials.retreat]]
-text = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+variant = "retreat_even_when_winning"
 
 [models.queen_xy]
 name = "Queen XY"
@@ -1039,7 +1039,7 @@ args.M = 1
 args.N = 8
 
 [[models.queen_xy.assault.specials.retreat]]
-text = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+variant = "retreat_even_when_winning"
 
 [models.elite_mechanical_cavalry]
 name = "Elite Mechanical Cavalry"
@@ -1146,7 +1146,7 @@ ap = 2
 args.N = 2
 
 [[models.darkelf_infantry.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [models.generic_multicultural_infantry]
 name = "Generic Multicultural Infantry"
@@ -1268,7 +1268,7 @@ ap = 0
 args.N = 3
 
 [[models.darkelf_officer.assault.specials.counter_attack]]
-text = "Each deflections counts as both a hit and a deflection"
+variant = "deflection_counts_as_a_hit"
 
 [models.elite_darkelf_infantry]
 name = "Elite Dark Elf Infantry"
@@ -1282,7 +1282,7 @@ cost.xp = 4
 [[models.elite_darkelf_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "While at least one elite is alive"
+variant = "while_an_elite_is_alive"
 
 [models.elite_darkelf_infantry.assault]
 strength = [2, 2, 1, 1]
@@ -1296,10 +1296,10 @@ ap = 2
 args.N = 2
 
 [[models.elite_darkelf_infantry.assault.specials.counter_attack]]
-text = "Each deflections counts as both a hit and a deflection"
+variant = "deflection_counts_as_a_hit"
 
 [[models.elite_darkelf_infantry.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [models.assassin]
 name = "Assassin"
@@ -1328,10 +1328,10 @@ args.N = 12
 args.M = 2
 
 [[models.assassin.assault.specials.counter_attack]]
-text = "Each deflections counts as both a hit and a deflection"
+variant = "deflection_counts_as_a_hit"
 
 [[models.assassin.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [models.roboprosthetic_assassin]
 name = "Roboprosthetic Assassin"
@@ -1360,10 +1360,10 @@ args.N = 12
 args.M = 2
 
 [[models.roboprosthetic_assassin.assault.specials.counter_attack]]
-text = "Each deflections counts as both a hit and a deflection"
+variant = "deflection_counts_as_a_hit"
 
 [[models.roboprosthetic_assassin.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [models.scout]
 name = "Scout"
@@ -1384,7 +1384,7 @@ ap = 2
 args.N = 1
 
 [[models.scout.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [models.roboprosthetic_darkelf]
 name = "Roboprosthetic Dark Elf"
@@ -1405,7 +1405,7 @@ ap = 2
 args.N = 2
 
 [[models.roboprosthetic_darkelf.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [models.elite_roboprosthetic_darkelf]
 name = "Elite Roboprosthetic Dark Elf"
@@ -1419,7 +1419,7 @@ cost.cp = 4
 [[models.elite_roboprosthetic_darkelf.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "While at least one elite is alive"
+variant = "while_an_elite_is_alive"
 
 [models.elite_roboprosthetic_darkelf.assault]
 strength = [2, 1, 1, 1]
@@ -1433,10 +1433,10 @@ ap = 2
 args.N = 2
 
 [[models.elite_roboprosthetic_darkelf.assault.specials.penalty]]
-text = "Reroll all success in assault while crawling"
+variant = "while_crawling"
 
 [[models.elite_roboprosthetic_darkelf.assault.specials.counter_attack]]
-text = "Each deflections counts as both a hit and a deflection"
+variant = "deflection_counts_as_a_hit"
 
 [equipment]
 
@@ -1521,7 +1521,7 @@ damage = "d6 + d6 Psychic damage"
 ap = 3
 
 [[equipment.tail_gatling_gun.range.specials.focus_fire]]
-text = "When using aim: roll 6 dice at same unit."
+variant = "six_dice_when_aiming"
 
 
 
@@ -1530,11 +1530,11 @@ preamble = "If not using aim, fire once at all enemy models in all hexes within 
 
 [[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 5
-text = "at normal range"
+variant = "at_normal_range"
 
 [[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 6
-text = "at long range"
+variant = "at_long_range"
 
 
 [[equipment.tail_gatling_gun.range.specials.range_extra_damage]]
@@ -1594,10 +1594,10 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.smg.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.smg.range.specials.multiple_shots]]
-text = "Fires two times each time it is fired"
+variant = "fires_twice"
 
 [equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
@@ -1614,7 +1614,7 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.smg_free.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.smg_free.range.specials.multiple_shots]]
 text = "Fires two times (per model) each time it is fired"
@@ -1693,7 +1693,7 @@ text = "at point blank range"
 
 [[equipment.nightmare_breath.range.specials.area]]
 args.N = 6
-text = "at long range"
+variant = "at_long_range"
 
 #Note: all hexes within long range and within front arc.
 
@@ -1701,13 +1701,13 @@ text = "at long range"
 [[equipment.nightmare_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 8
-text = "No regular damage."
+variant = "no_regular_damage"
 
 [[equipment.nightmare_breath.range.specials.range_extra_damage]]
 args.version = "token.fire"
 
 [[equipment.nightmare_breath.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [equipment.mortar_1a]
 name = "Mortar 1A"
@@ -1727,10 +1727,10 @@ ap = 2
 text = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 
 [[equipment.mortar_1a.range.specials.cloud]]
-text = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+variant = "poison_cloud_and_surroundings"
 
 [[equipment.mortar_1a.range.specials.indirect_fire]]
-text = "May use line of sight of any friendly unit on the battle field."
+variant = "any_friendly_line_of_sight"
 
 [equipment.mortar_1_1b]
 name = "Mortar 1.1B"
@@ -1750,10 +1750,10 @@ ap = 0
 text = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 
 [[equipment.mortar_1_1b.range.specials.cloud]]
-text = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
+variant = "poison_cloud_and_surroundings"
 
 [[equipment.mortar_1_1b.range.specials.indirect_fire]]
-text = "May use line of sight of any friendly unit on the battle field."
+variant = "any_friendly_line_of_sight"
 [equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
@@ -1868,20 +1868,20 @@ ap = 0
 
 [[equipment.fire_breath.range.specials.area]]
 args.N = 4
-text = "at point blank"
+variant = "at_point_blank"
 
 [[equipment.fire_breath.range.specials.area]]
 args.N = 5
-text = "at normal range"
+variant = "at_normal_range"
 
 [[equipment.fire_breath.range.specials.area]]
 args.N = 6
-text = "at long range"
+variant = "at_long_range"
 
 [[equipment.fire_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
-text = "No regular damage."
+variant = "no_regular_damage"
 
 [[equipment.fire_breath.range.specials.range_extra_damage]]
 args.version = "token.fire"
@@ -1921,11 +1921,11 @@ ap = 1
 [[equipment.shrapnel_spit.range.specials.area]]
 #preamble = "Single model large units counts as d4 models, while single model huge units counts as d8 models."
 args.N = 1
-text = "at point blank"
+variant = "at_point_blank"
 
 [[equipment.shrapnel_spit.range.specials.area]]
 args.N = 4
-text = "at long range"
+variant = "at_long_range"
 
 [equipment.laser_eyes]
 name = "Laser Eyes"
@@ -1958,14 +1958,14 @@ ap = 2
 [[equipment.shrapnel_breath.range.specials.area]]
 #preamble = "Single model large units counts as d4 models, while single model huge units counts as d8 models."
 args.N = 1
-text = "at point blank"
+variant = "at_point_blank"
 
 [[equipment.shrapnel_breath.range.specials.area]]
 args.N = 4
-text = "at normal range"
+variant = "at_normal_range"
 
 [[equipment.shrapnel_breath.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [equipment.gas_mask_assault_training]
 name = "Gas Mask Assault Training"
@@ -2095,7 +2095,7 @@ damage = "d8-2"
 ap = 1
 
 [[equipment.ogrin_bow.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [equipment.war_axe]
 name = "War Axe"
@@ -2127,7 +2127,7 @@ ap = 1
 text = "Always treated as loaded."
 
 [[equipment.experimental_acid_smg.range.specials.multiple_shots]]
-text = "Fires two times each time it is fired"
+variant = "fires_twice"
 
 [[equipment.experimental_acid_smg.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"

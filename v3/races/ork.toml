@@ -715,7 +715,7 @@ text = "ork_champion: after this model in the unit base is killed, this model is
 [[models.elite_ork_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "While at least one elite is alive"
+variant = "while_an_elite_is_alive"
 
 [models.elite_ork_infantry.assault]
 strength = [3, 2, 2, 2]
@@ -1169,13 +1169,13 @@ args.version = "damage_type.fire"
 args.N = 2
 
 [[equipment.pyro.range.specials.order]]
-text = "Used with Throw order"
+variant = "used_with_throw_order"
 
 [[equipment.pyro.range.specials.range_extra_damage]]
 args.version = "token.fire"
 
 [[equipment.pyro.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [equipment.pyro.orders_gained.fire]
 all = [["-", "Throw"]]
@@ -1194,7 +1194,7 @@ damage = "d6 +3 if penetrating armor"
 ap = 9
 
 [[equipment.hand_held_cannon.range.specials.order]]
-text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+variant = "one_instead_of_regular_weapons"
 
 [equipment.war_drum]
 name = "War Drum"
@@ -1224,10 +1224,10 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.harpoon_gun.range.specials.order]]
-text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+variant = "one_instead_of_regular_weapons"
 
 [[equipment.harpoon_gun.range.specials.drag]]
-text = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+variant = "drags_the_target_one_hex"
 
 [equipment.harpoon_gun_free]
 name = "Harpoon Gun"
@@ -1241,10 +1241,10 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.harpoon_gun_free.range.specials.order]]
-text = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
+variant = "one_instead_of_regular_weapons"
 
 [[equipment.harpoon_gun_free.range.specials.drag]]
-text = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+variant = "drags_the_target_one_hex"
 
 [equipment.grenade_sling]
 name = "Grenade Sling"

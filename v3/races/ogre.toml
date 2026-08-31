@@ -29,7 +29,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [[units.ogre_hydra.specials.regeneration]]
-text = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
+variant = "one_per_head_plus_four"
 
 [[units.ogre_hydra.specials.heads]]
 text = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
@@ -697,13 +697,13 @@ type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 description = "A regular Ogre assault scout which often carries tiny drones and which can also repair them. They have the knowledge to hit enemy drones in assaults where it hurts the most"
 
 [[models.ogre_scout_engineer.unit_specials.transport]]
-text = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+variant = "four_tiny_drones"
 
 [[models.ogre_scout_engineer.unit_specials.repair]]
 args.N = 2
 args.unit = "other"
 args.phase = "1st Healing"
-text = "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
+variant = "medium_or_smaller_only"
 
 [models.ogre_scout_engineer.assault]
 strength = [6, 2, 1, 1]
@@ -733,7 +733,7 @@ damage = "d6"
 ap = 2
 
 [[models.ogre_hydra.assault.specials.bonus]]
-text = "+3 assault strength  and +1 assault deflection per alive head"
+variant = "per_alive_head"
 
 [[models.ogre_hydra.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -837,7 +837,7 @@ damage = "d8"
 ap = 3
 
 [[models.main_engine.assault.specials.retreat]]
-text = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+variant = "a_stuck_wagon_disconnects"
 
 [models.artillery_wagon]
 name = "Artillery Wagon"
@@ -858,7 +858,7 @@ damage = "d8"
 ap = 3
 
 [[models.artillery_wagon.assault.specials.retreat]]
-text = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
+variant = "a_stuck_wagon_disconnects"
 
 [models.broadside_wagon]
 name = "Broadside Wagon"
@@ -953,13 +953,13 @@ equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 
 [[models.ogre_engineer.unit_specials.transport]]
-text = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+variant = "four_tiny_drones"
 
 [[models.ogre_engineer.unit_specials.repair]]
 args.N = 2
 args.unit = "other"
 args.phase = "1st Healing"
-text = "Note, that large units cannot enter same hex as other large units, so the repair ability is limited to repair of medium or smaller units"
+variant = "medium_or_smaller_only"
 
 [models.ogre_engineer.assault]
 strength = [3, 2, 1, 1]
@@ -991,7 +991,7 @@ ap = 3
 text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d8 Psychic damage and +d6 Crew damage when aiming"
 
 [[equipment.ogre_sniper_rifle.range.specials.sniper]]
-text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+variant = "choose_the_model_after_aim"
 
 [equipment.ogre_rifle]
 name = "Ogre Rifle"
@@ -1158,7 +1158,7 @@ race = "ogre"
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
 [[equipment.ogre_sword_free.assault.specials.bonus]]
-text = "+1 assault strength per enemy model in assault (forward direction only)"
+variant = "per_enemy_model_forward"
 
 [equipment.ogre_sword]
 name = "Ogre Sword"
@@ -1168,7 +1168,7 @@ upgrade_all = true
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
 [[equipment.ogre_sword.assault.specials.bonus]]
-text = "+1 assault strength per enemy model in assault (forward direction only)"
+variant = "per_enemy_model_forward"
 
 [equipment.fancy_ogre_sword]
 name = "Fancy Ogre Sword"
@@ -1204,7 +1204,7 @@ ap = "N/A"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.acid"
-text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+variant = "choose_one_hex_acid"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1225,4 +1225,4 @@ args.version = "token.poison"
 args.N = 6
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
-text = "Fire one time per alive minor head"
+variant = "per_alive_minor_head"

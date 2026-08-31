@@ -23,7 +23,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [[units.elf_hydra.specials.regeneration]]
-text = "Heal[N, self, 2nd Healing], where N is one per minor head plus 4 for the major head. (N is 10 when all minor heads are alive). Instead of Healing normal effect, you may use 4 points to heal a destroyed head"
+variant = "one_per_head_plus_four"
 
 [[units.elf_hydra.specials.heads]]
 text = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
@@ -575,7 +575,7 @@ args.version = "damage_type.acid"
 args.N = 1
 
 [[units.armored_unicorn_rider.specials.fire_order]]
-text = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+variant = "autoloader"
 
 [[units.armored_unicorn_rider.specials.officer]]
 text = "Grants Psychic resistance 1 to the other unit in this hex"
@@ -735,7 +735,7 @@ description = ''' An elegant elf wielding a bow riding a pegasus. A pegasus is a
 
 
 [[units.pegasus_rider.specials.fire_order]]
-text = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+variant = "autoloader"
 
 [[units.pegasus_rider.specials.resistance]]
 args.version = "damage_type.poison"
@@ -841,7 +841,7 @@ damage = "d6"
 ap = 2
 
 [[models.elf_hydra.assault.specials.bonus]]
-text = "+3 assault strength  and +1 assault deflection per alive head"
+variant = "per_alive_head"
 
 [[models.elf_hydra.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -963,11 +963,11 @@ args.ability = "ability.excellent_shot"
 [[models.superb_elf_archer.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 2
-text = "While at least one superelite model is alive"
+variant = "while_a_superelite_is_alive"
 
 [[models.superb_elf_archer.unit_specials.pre_assault_retreat]]
 args.N = 3
-text = "As long as at least 1 superelite is alive"
+variant = "while_a_superelite_is_alive"
 
 [models.superb_elf_archer.assault]
 strength = [1, 1, 1, 1]
@@ -1011,11 +1011,11 @@ args.ability = "ability.excellent_shot"
 [[models.superelite_elf_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 2
-text = "While at least one superelite model is alive"
+variant = "while_a_superelite_is_alive"
 
 [[models.superelite_elf_infantry.unit_specials.pre_assault_retreat]]
 args.N = 4
-text = "As long as at least 1 superelite is alive"
+variant = "while_a_superelite_is_alive"
 
 [models.superelite_elf_infantry.assault]
 strength = [3, 1, 1, 1]
@@ -1043,7 +1043,7 @@ args.ability = "ability.good_shot"
 [[models.elite_elf_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "While at least one superelite model is alive"
+variant = "while_a_superelite_is_alive"
 
 [[models.elite_elf_infantry.unit_specials.pre_assault_retreat]]
 args.N = 5
@@ -1260,7 +1260,7 @@ args.ability = "ability.good_shot"
 [[models.elite_pachycephalosaurus_rider.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "While at least one elite is alive"
+variant = "while_an_elite_is_alive"
 
 [[models.elite_pachycephalosaurus_rider.unit_specials.pre_assault_retreat]]
 args.N = 3
@@ -1299,7 +1299,7 @@ args.version = "damage_type.poison"
 args.N = 4
 
 [[units.sauropod_riders.specials.fire_order]]
-text = "Fire and load all weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [[units.sauropod_riders.specials.setup]]
 text = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
@@ -1541,7 +1541,7 @@ damage = "d6-1"
 ap = 5
 
 [[equipment.pentagun.unit_specials.fire_order]]
-text = "May be load up to 5 shots, fire them one at a time"
+variant = "five_shots_one_at_a_time"
 
 [equipment.teslaburstlaser]
 name = "TeslaBurstLaser"
@@ -1557,7 +1557,7 @@ damage = "d6-1"
 ap = 5
 
 [[equipment.teslaburstlaser.unit_specials.fire_order]]
-text = "May be load up to 5 shots, fire them one at a time"
+variant = "five_shots_one_at_a_time"
 [[equipment.teslaburstlaser.range.specials.critical]]
 text = "the enemy is shaken, in addition to it's normal effect."
 
@@ -1621,7 +1621,7 @@ ap = "N/A"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.acid"
-text = "Choose one hex within normal range. Automatically consider all units in the hex hit. Give all units in the hex acid if it is at point blank range, and minor acid otherwise."
+variant = "choose_one_hex_acid"
 
 [[equipment.acid_breath.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1642,7 +1642,7 @@ args.version = "token.poison"
 args.N = 6
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
-text = "Fire one time per alive minor head"
+variant = "per_alive_minor_head"
 
 [equipment.gatling_gun]
 name = "Gatling Gun"
@@ -1656,7 +1656,7 @@ damage = "d6-1"
 ap = "3"
 
 [[equipment.gatling_gun.range.specials.focus_fire]]
-text = "When using aim: roll 6 dice at same unit."
+variant = "six_dice_when_aiming"
 
 [[equipment.gatling_gun.range.specials.area]]
 text = "If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one chosen direction. Avoids firing at hexes with friendly units"
@@ -1750,20 +1750,20 @@ ap = "0"
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies to the target's penalty as well, and to flying as well as fast"
+variant = "also_the_targets_penalty"
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-text = "Doubles the long-range penalty"
+variant = "doubles_the_long_range_penalty"
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
 
 [[equipment.elf_flame_arrow.range.specials.range]]
-text = "+1 range if you are flying"
+variant = "flying"
 
 [[equipment.elf_flame_arrow.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.elf_flame_arrow.range.specials.range_extra_damage]]
 args.version = "token.fire"
@@ -1786,20 +1786,20 @@ ap = "0"
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies to the target's penalty as well, and to flying as well as fast"
+variant = "also_the_targets_penalty"
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-text = "Doubles the long-range penalty"
+variant = "doubles_the_long_range_penalty"
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
 
 [[equipment.elf_flame_arrow_free.range.specials.range]]
-text = "+1 range if you are flying"
+variant = "flying"
 
 [[equipment.elf_flame_arrow_free.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.elf_flame_arrow_free.range.specials.range_extra_damage]]
 args.version = "token.fire"
@@ -1816,18 +1816,18 @@ damage = "d6-2"
 ap = "0"
 
 [[equipment.elf_bow_free.range.specials.range]]
-text = "+1 range if you are flying"
+variant = "flying"
 
 [[equipment.elf_bow_free.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies to the target's penalty as well, and to flying as well as fast"
+variant = "also_the_targets_penalty"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-text = "Doubles the long-range penalty"
+variant = "doubles_the_long_range_penalty"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1869,11 +1869,11 @@ cost.cp = 8
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies to the target's penalty as well, and to flying as well as fast"
+variant = "also_the_targets_penalty"
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-text = "Doubles the long-range penalty"
+variant = "doubles_the_long_range_penalty"
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1886,7 +1886,7 @@ damage = "d6-2"
 ap = 0
 
 [[equipment.seeker_arrows.range.specials.range]]
-text = "+1 range if you are flying"
+variant = "flying"
 
 [[equipment.seeker_arrows.range.specials.limited_ammo]]
 args.N = 3
@@ -1901,11 +1901,11 @@ description = '''The pride of elven craftsmanship. A programmable arrow which al
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies to the target's penalty as well, and to flying as well as fast"
+variant = "also_the_targets_penalty"
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-text = "Doubles the long-range penalty"
+variant = "doubles_the_long_range_penalty"
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1946,7 +1946,7 @@ name = "Inaccurate"
 args.ability = "ability.bad_shot"
 
 [[equipment.bow_with_rocket_arrows.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.bow_with_rocket_arrows.range.specials.fumble]]
 text = "If fumble, take d6-4 in damage."
@@ -1992,10 +1992,10 @@ damage = "d6-2"
 ap = "3"
 
 [[equipment.sniper_rifle.range.specials.improved_aim]]
-text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
+variant = "plus_four_instead_of_two"
 
 [[equipment.sniper_rifle.range.specials.sniper]]
-text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+variant = "choose_the_model_after_aim"
 
 [equipment.sniper_rifle_free]
 name = "Sniper Rifle"
@@ -2009,10 +2009,10 @@ damage = "d6-2"
 ap = "3"
 
 [[equipment.sniper_rifle_free.range.specials.improved_aim]]
-text = "improved aim: +4 to hit instead of +2. Gain additional +2 regular damage, +d6 Psychic damage and +d4 Crew damage when aiming"
+variant = "plus_four_instead_of_two"
 
 [[equipment.sniper_rifle_free.range.specials.sniper]]
-text = "After eliminating one model with the use of aim, you get to choose which model to destroy"
+variant = "choose_the_model_after_aim"
 
 [equipment.grenade]
 name = "Grenade"
@@ -2028,10 +2028,10 @@ ap = "7"
 text = "[5+]"
 
 [[equipment.grenade.range.specials.range]]
-text = "Target any hex within normal range"
+variant = "any_hex_within_normal_range"
 
 [[equipment.grenade.range.specials.ammo]]
-text = "Always loaded"
+variant = "always_loaded"
 
 [equipment.hand_grenade]
 name = "Hand Grenade"
@@ -2050,13 +2050,13 @@ ap = "5"
 text = "[5+] if used by a unit with 1-2 alive models, [4+] if used by a unit with 3-4 models"
 
 [[equipment.hand_grenade.range.specials.range]]
-text = "Target any hex within normal range"
+variant = "any_hex_within_normal_range"
 
 [[equipment.hand_grenade.range.specials.ammo]]
-text = "Always loaded"
+variant = "always_loaded"
 
 [[equipment.hand_grenade.range.specials.order]]
-text = "Used with Throw order"
+variant = "used_with_throw_order"
 
 [equipment.hand_grenade.orders_gained.fire]
 still = [["-", "Throw"]]
@@ -2079,13 +2079,13 @@ ap = "5"
 text = "[4+]"
 
 [[equipment.crew_hand_grenade.range.specials.range]]
-text = "Target any hex within normal range"
+variant = "any_hex_within_normal_range"
 
 [[equipment.crew_hand_grenade.range.specials.ammo]]
-text = "Always loaded"
+variant = "always_loaded"
 
 [[equipment.crew_hand_grenade.range.specials.order]]
-text = "Used with Throw order"
+variant = "used_with_throw_order"
 
 [equipment.crew_hand_grenade.orders_gained.fire]
 still = [["-", "Throw"]]

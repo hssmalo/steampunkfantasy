@@ -714,7 +714,7 @@ args.N = 2
 [[models.elite_goblin_infantry.unit_specials.resistance]]
 args.version = "damage_type.psychic"
 args.N = 1
-text = "As long as at least one elite model is alive"
+variant = "as_long_as_an_elite_model"
 
 [[models.elite_goblin_infantry.unit_specials.pre_assault_retreat]]
 replace = true
@@ -746,7 +746,7 @@ damage = "d4-2"
 ap = 1
 
 [[equipment.goblin_bow.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [equipment.seeker_arrows]
 name = "Seeker Arrows"
@@ -777,7 +777,7 @@ upgrade_all = true
 
 [[equipment.seeker_assassin_arrows.model_specials.to_hit]]
 args.ability = "ability.excellent_shot"
-text = "Applies when firing a seeker arrow"
+variant = "when_firing_a_seeker_arrow"
 
 [equipment.seeker_assassin_arrows.range]
 range = 4
@@ -798,7 +798,7 @@ race = "goblin"
 
 [[equipment.seeker_assassin_arrows_free.model_specials.to_hit]]
 args.ability = "ability.excellent_shot"
-text = "Applies when firing a seeker arrow"
+variant = "when_firing_a_seeker_arrow"
 
 [equipment.seeker_assassin_arrows_free.range]
 range = 4
@@ -827,7 +827,7 @@ damage = "d4-2"
 ap = 1
 
 [[equipment.gear_bow.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.gear_bow.range.specials.range_gear_disruption]]
 args.N = 6
@@ -865,14 +865,14 @@ damage = "d4-2 + d4 Crew damage"
 ap = 1
 
 [[equipment.poison_bow.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.poison_bow.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 4
 
 [[equipment.poison_bow.range.specials.bonus]]
-text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+variant = "crew_damage_on_acid"
 
 [equipment.poison_bow_free]
 name = "Poison Bow"
@@ -885,14 +885,14 @@ damage = "d4-2 + d4 Crew damage"
 ap = 1
 
 [[equipment.poison_bow_free.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.poison_bow_free.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 4
 
 [[equipment.poison_bow_free.range.specials.bonus]]
-text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+variant = "crew_damage_on_acid"
 
 [equipment.hallucinating_poison_spit]
 name = "Hallucinating Poison Spit"
@@ -905,7 +905,7 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.hallucinating_poison_spit.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.poison"
@@ -991,7 +991,7 @@ damage = "d6"
 ap = 2
 
 [[equipment.goblin_grenade_free.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [equipment.goblin_auto_bow]
 name = "Goblin Auto Bow"
@@ -1005,7 +1005,7 @@ damage = "d4-2"
 ap = 1
 
 [[equipment.goblin_auto_bow.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.goblin_auto_bow.range.specials.multiple_shots]]
 text = "Shoot three times per fire order"
@@ -1086,14 +1086,14 @@ damage = "n.a."
 ap = 0
 
 [[equipment.acid_grenade.range.specials.type]]
-text = "Thrown weapon"
+variant = "thrown_weapon"
 
 [[equipment.acid_grenade.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.acid_grenade.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
-text = "No regular damage."
+variant = "no_regular_damage"
 
 [equipment.poison_grenade]
 name = "Poison Grenade"
@@ -1109,17 +1109,17 @@ damage = "d4 Crew damage"
 ap = 0
 
 [[equipment.poison_grenade.range.specials.type]]
-text = "Thrown weapon"
+variant = "thrown_weapon"
 
 [[equipment.poison_grenade.range.specials.ammo]]
-text = "Always treated as loaded"
+variant = "always_treated_as_loaded"
 
 [[equipment.poison_grenade.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 4
 
 [[equipment.poison_grenade.range.specials.bonus]]
-text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+variant = "crew_damage_on_acid"
 
 [equipment.acid_trap]
 name = "Acid Trap"
@@ -1150,7 +1150,7 @@ args.version = "token.poison"
 args.N = 4
 
 [[equipment.light_mortar.range.specials.bonus]]
-text = "Crew damage improved to d8 if target has at least 3 Minor acid or 1 acid token"
+variant = "crew_damage_on_acid"
 
 [equipment.goblin_bow_battery]
 name = "Goblin Bow Battery"
@@ -1165,7 +1165,7 @@ ap = 2
 note = "For each fire order, choose one of Minor Acid, Poison, or Gear Disruption as extra damage."
 
 [[equipment.goblin_bow_battery.range.specials.ammo]]
-text = "May be loaded (one at a time) with up to 3 ammo"
+variant = "three_ammo_one_at_a_time"
 
 [[equipment.goblin_bow_battery.range.specials.multiple_shots]]
 text = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
@@ -1196,7 +1196,7 @@ damage = "d6"
 ap = 4
 
 [[equipment.heavy_crossbow.range.specials.ammo]]
-text = "May be loaded (one at a time) with up to 3 ammo"
+variant = "three_ammo_one_at_a_time"
 
 [[equipment.heavy_crossbow.range.specials.multiple_shots]]
 text = "Fire once per ammo spend per fire order"
