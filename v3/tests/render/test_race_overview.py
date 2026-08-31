@@ -1,10 +1,12 @@
 """Tests for the Race Overview product: build_overview() and its Rendering."""
 
 import re
+import shutil
 from pathlib import Path
 
 import pytest
 
+from spf.config import config
 from spf.frontends.cli.render import RACE_OVERVIEW
 from spf.races import get_race
 from spf.render import render
@@ -32,6 +34,8 @@ from spf.schemas.type_aliases import Cost, ModelType
 from tests.render.conftest import ART, FakeLookup
 
 RACE = "goblin"
+
+ENGINE = config.render.latex.engine
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -1542,3 +1546,141 @@ def test_race_overview_no_rules_output_matches_golden_file(tmp_path: Path) -> No
         encoding="utf-8"
     )
     assert _trimmed(text) == _trimmed(golden)
+
+
+# --- The LaTeX Rendering ----------------------------------------------------
+#
+# The same document in the other family (ADR 0005): the same sections in the
+# same order, the same records, the same cross-links — only the link and table
+# syntax differs. These pin that, and that the result actually compiles.
+
+_LABEL = re.compile(r"\\label\{([^}]+)\}")
+_REF = re.compile(r"\\hyperref\[([^]]+)\]")
+
+
+def _latex(overview: RaceOverview, tmp_path: Path) -> str:
+    """Render `overview` through the LaTeX family and read it back."""
+    out = render(
+        RACE_OVERVIEW,
+        overview,
+        fmt=get_format("latex"),
+        name=overview.stem,
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
+def test_the_latex_document_labels_every_record_exactly_once(
+    tmp_path: Path, race_name: str
+) -> None:
+    overview = build_overview(
+        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        stem=race_name,
+        image_for=FakeLookup(None),
+    )
+
+    labels = _LABEL.findall(_latex(overview, tmp_path))
+
+    records = [
+        entry.anchor
+        for entries in (overview.units, overview.models, overview.equipment)
+        for entry in entries
+    ] + [spawn.anchor for spawn in overview.spawns]
+    # A duplicate `\label` is what makes pdflatex pick one target for every
+    # link to the other, so it fails here rather than silently in the PDF.
+    assert len(labels) == len(set(labels))
+    assert set(records) <= set(labels)
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
+def test_every_latex_cross_reference_lands_on_a_label_of_it(
+    tmp_path: Path, race_name: str
+) -> None:
+    overview = build_overview(
+        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        stem=race_name,
+        image_for=FakeLookup(None),
+    )
+
+    text = _latex(overview, tmp_path)
+    targets = set(_REF.findall(text))
+
+    assert targets
+    assert targets <= set(_LABEL.findall(text))
+
+
+def test_both_families_carry_the_same_records(tmp_path: Path) -> None:
+    overview = build_overview(get_race(RACE), stem=RACE, image_for=FakeLookup(None))
+
+    markdown_targets = _records(_LINK.findall(_markdown(overview, tmp_path)))
+    latex_targets = _records(_REF.findall(_latex(overview, tmp_path)))
+
+    # One document rendered two ways: a link present in one family and missing
+    # from the other means a reader of that family cannot reach the record.
+    # The `section-` anchors are left out — the contents list is hand-written
+    # in Markdown and `\tableofcontents` builds its own links in LaTeX, so only
+    # one family links to them by name.
+    assert markdown_targets == latex_targets
+
+
+def _records(anchors: list[str]) -> set[str]:
+    """Return the record anchors among `anchors`, dropping section headings."""
+    return {anchor for anchor in anchors if not anchor.startswith("section-")}
+
+
+def test_an_unlimited_holder_survives_the_latex_family(tmp_path: Path) -> None:
+    text = _latex(
+        build_overview(get_race(RACE), stem=RACE, image_for=FakeLookup(None)),
+        tmp_path,
+    )
+
+    # `∞` has no text-mode glyph, so an unescaped one is a fatal pdflatex error
+    # rather than a bad-looking page.
+    assert "∞" not in text
+    assert r"$\infty$" in text
+
+
+def test_no_rules_leaves_the_rules_reference_out_of_the_latex(
+    tmp_path: Path,
+) -> None:
+    overview = build_overview(
+        get_race(RACE), stem=RACE, image_for=FakeLookup(None), rules=False
+    )
+
+    text = _latex(overview, tmp_path)
+
+    assert "Rules Reference" not in text
+    assert r"\hyperref[rule-" not in text
+
+
+@pytest.mark.usefixtures("pinned_version")
+def test_race_overview_latex_output_matches_golden_file(tmp_path: Path) -> None:
+    overview = build_overview(
+        get_race(GOLDEN_RACE), stem=GOLDEN_RACE, image_for=no_image
+    )
+
+    text = _latex(overview, tmp_path)
+
+    golden = (GOLDEN_DIR / f"race_overview_{GOLDEN_RACE}.tex").read_text(
+        encoding="utf-8"
+    )
+    assert _trimmed(text) == _trimmed(golden)
+
+
+@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
+def test_the_race_overview_compiles_to_a_pdf(tmp_path: Path) -> None:
+    overview = build_overview(get_race(RACE), stem=RACE, image_for=no_image)
+
+    out = render(
+        RACE_OVERVIEW,
+        overview,
+        fmt=get_format("pdf"),
+        name=RACE,
+        output_root=tmp_path,
+    )
+
+    # A `.tex` golden that does not build is worth nothing, and the catalogue
+    # reaches constructs the Army Reference never does — `longtable`, and the
+    # `∞` an unlimited holder prints.
+    assert out.read_bytes().startswith(b"%PDF")
