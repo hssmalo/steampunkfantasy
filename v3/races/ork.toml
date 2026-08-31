@@ -88,6 +88,11 @@ args.N = 1
 [[units.troll.specials.fire_order]]
 text = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
 
+[[units.troll.specials.destroy_terrain]]
+args.terrain = 'Forest'
+args.terrain_replacement = 'Rough Terrain'
+
+
 [units.troll.orders.movement]
 slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
@@ -255,6 +260,10 @@ armor = [13, 8, 7, 7]
 description = '''A steampunk vehicle with a big battling ram infront, crashing into and destroying a house.
 '''
 
+[[units.hammerhead.specials.destroy_terrain]]
+args.terrain = 'Building'
+args.terrain_replacement = 'Ruins'
+
 
 [units.hammerhead.shaken]
 speed = "still"
@@ -311,9 +320,6 @@ still = [
 
 [[units.hammerhead.specials.fire_order]]
 text = "All 4 harpoon gun must fire at same sector"
-
-[[units.hammerhead.specials.movement]]
-text = "Destroy buildings: If entering a hex with a building, replace the building with a ruin and enter the hex. Carry out an assault if necessary"
 
 [units.battlewagon]
 race = "ork"
@@ -965,9 +971,6 @@ ap = 3
 [[equipment.troll_gatling_gun.range.specials.area]]
 text = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
 
-[[equipment.troll_gatling_gun.range.specials.bonus]]
-text = "Replace any forest at point blank range with a Rough terrain"
-
 [equipment.ork_musket]
 name = "Ork Musket"
 race = "ork"
@@ -1178,7 +1181,9 @@ args.version = "token.fire"
 text = "Always treated as loaded"
 
 [equipment.pyro.orders_gained.fire]
-all = [["-", "Throw"]]
+still = [["-", "Throw"]]
+slow = [["-", "Throw"]]
+fast = [["-", "Throw"]]
 
 [equipment.hand_held_cannon]
 name = "Hand Held Cannon"
@@ -1204,7 +1209,9 @@ upgrade_all = true
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
 [[equipment.war_drum.unit_specials.movement]]
-text = "At start of any round you may choose one type as for example infantry, cavalry or vehicle. All chase orders this turn targets primarily this type of unit. Move all unit one step closer to an enemy unit of that type"
+text = "At start of any round set target to either infantry, cavalry or vehicle. All Chs orders of all units are replaced with Chs[target]"
+
+#see_also orders.chs
 
 [[equipment.war_drum.unit_specials.terror]]
 args.N = 1

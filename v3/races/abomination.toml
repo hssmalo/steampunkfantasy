@@ -617,9 +617,7 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
-
-[[models.abomination_infantry.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
+note = "+100% strength and deflections versus shaken units"
 
 [[models.abomination_infantry.assault.specials.cunning_assault]]
 args.N = 2
@@ -641,9 +639,9 @@ deflection = [2, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
+note = "+100% strength and deflections versus shaken units"
 
-[[models.hippopotamus_riders.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
+
 
 
 
@@ -661,9 +659,9 @@ deflection = [2, 0, 0, 0]
 deflection_die = "4+"
 damage = "d6"
 ap = 2
+note = "+100% strength and deflections versus shaken units"
 
-[[models.horror.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
+
 
 
 [models.shriek_monstrosity]
@@ -725,9 +723,8 @@ deflection = [1, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 0
+note = "+100% strength and deflections versus shaken units"
 
-[[models.robot_crab.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
 
 [[models.robot_crab.assault.specials.cunning_assault]]
 args.N = 1
@@ -749,9 +746,8 @@ deflection = [6, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
+note = "+100% strength and deflections versus shaken units"
 
-[[models.confusiator_tank.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
 
 [[models.confusiator_tank.assault.specials.cunning_assault_defense]]
 args.N = 6
@@ -799,9 +795,9 @@ deflection = [8, 2, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
+note = "+100% strength and deflections versus shaken units"
 
-[[models.frost_88.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
+
 
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
@@ -825,9 +821,8 @@ deflection = [2, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6-2"
 ap = 2
+note = "+100% strength and deflections versus shaken units"
 
-[[models.elite_abomination_infantry.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
 
 [[models.elite_abomination_infantry.assault.specials.cunning_assault]]
 args.N = 2
@@ -853,12 +848,10 @@ deflection = [4, 0, 0, 0]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
+note = "+100% strength and deflections versus shaken units"
 
 [[models.giant_frog_rider.assault.specials.cunning_assault]]
 args.N = 3
-
-[[models.giant_frog_rider.assault.specials.bonus]]
-text = "+100% strength and deflections versus shaken units"
 
 [[models.giant_frog_rider.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -1254,8 +1247,8 @@ text = "Fire twice per fire order"
 [[equipment.twin_frost_ray.range.specials.ammo]]
 text = "Always treated as loaded"
 
-[[equipment.twin_frost_ray.range.specials.break]]
-text = "The target must break if possible (if it has a lower speed available). Reduce the speed one step"
+[[equipment.twin_frost_ray.range.specials.forced_break]]
+
 
 [equipment.heavy_water_jet]
 name = "Heavy Water Jet"
@@ -1312,5 +1305,5 @@ name = "Mechanical Melee Contraption"
 race = "abomination"
 requires = []
 
-[[equipment.mechanical_melee_contraption.assault.specials.bonus]]
-text = "Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+"
+[[equipment.mechanical_melee_contraption.assault.specials.boost]]
+text = "To use mechanical melee contraption, spend one ammo. If you do, increase both assault strength and deflection to 4+ instead of 6+"

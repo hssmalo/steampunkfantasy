@@ -102,10 +102,12 @@ From reference.toml:
 [special.range_extra_damage.variables]
 version = { type = "ref", namespaces = ["token", "damage_type"] }
 
-[special.break]
-name = "Break"
+[special.forced_break]
+name = "Forced Break"
+signature = "Forced Break"
 slots = ["range"]
-todo = """Rule text not yet written. The Race data says "the target must break if possible (if it has a lower speed available). Reduce the speed one step"."""
+effect = "If fired upon in 2nd gunnery phase, the target unit must break to a slower speed if one is available."
+
 
 [special.weakest_armor]
 name = "Weakest Armor"
@@ -143,9 +145,17 @@ see_also = ["special.size"]
 
 [special.bonus]
 name = "Bonus"
-slots = ["assault", "range"]
-todo = "Rule text not yet written, in either slot: every occurrence spells out its own bonus in prose."
+slots = ["range"]
+effect = "Bonus to range attacks"
 see_also = ["special.penalty"]
+
+
+[special.boost]
+name = "Boost"
+slots = ["assault"]
+effect = "Boosts and modifies assault capabilities"
+see_also = ["special.penalty"]
+
 
 [special.counter_attack]
 name = "Counter Attack"
@@ -664,7 +674,7 @@ see_also = ["special.limited_ammo"]
 name = "Area"
 slots = ["range"]
 signature = "[{N}+]"
-effect = "Roll a die per enemy model in the hex. For each die at N+, roll for damage and and add extra damage to the corresponding unit."
+effect = "Roll a die per enemy model in the hex. For each die at {N}+, roll for damage and and add extra damage to the corresponding unit."
 
 [special.area.variables]
 N = { type = "int", min = 1, max = 6, optional = true}
@@ -679,8 +689,12 @@ todo = "Rule text not yet written: pulling a hit unit one hex towards the firer.
 [special.focus_fire]
 name = "Focus Fire"
 slots = ["range"]
-todo = "Rule text not yet written: it spends the aim token differently, so it may belong on the token rather than here."
+signature = "[N]"
+effect = "If not using aim, fire {N} shots at the same target"
 see_also = ["token.aim"]
+
+[special.focus_fire.variables]
+N = { type = "int", min = 1, max = 12, optional = true}
 
 [special.multiple_shots]
 name = "Multiple Shots"
@@ -718,3 +732,14 @@ todo = "Rule text not yet written: choosing which model a kill removes."
 name = "Type"
 slots = ["range"]
 todo = "Rule text not yet written: what kind of weapon this is, which today is free-text flavor."
+
+
+[special.destroy_terrain]
+name = "Destroy Terrain"
+slots = ["unit"]
+signature = "Replace any {terrain} with {terrain_replacement} in any hex you are entering"
+effect = "Replace any {terrain1} with {terrain2} in any hex you are entering. Apply the change in destroy terrain part of movement phase."
+
+[special.destroy_terrain.variables]
+terrain = {type = "str", values = ['Forest', 'Ruins', 'Rough terrain', 'Building']}
+terrain_replacement = {type = "str", values = ['Forest', 'Ruins', 'Rough Terrain', 'Building']}

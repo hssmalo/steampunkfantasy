@@ -153,15 +153,12 @@ movement_order = ["-", "-", "Flee"]
 [[units.tiny_snake.specials.hidden]]
 text = "Start with a hidden token"
 
-[[units.tiny_snake.specials.movement]]
-text = "This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting."
-
 [[units.tiny_snake.specials.terror]]
 args.N = 1
 args.M = 4
 
 [units.tiny_snake.orders.movement]
-slow = [["-", "-",  "Chs"]]
+slow = [["-", "-",  "Chs"], ["-", "-",  "Reveal"], ["Follow", "Follow",  "Follow"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
@@ -617,7 +614,7 @@ args.version = "token.poison"
 args.N = 6
 args.M = 1
 
-[[models.tiny_snake.assault.specials.bonus]]
+[[models.tiny_snake.assault.specials.boost]]
 text = "If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection"
 
 [models.bipedal_mech]

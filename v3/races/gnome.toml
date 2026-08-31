@@ -854,8 +854,8 @@ angle = [true, false, false, false]
 damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
-[[equipment.enhanced_ballista.range.specials.bonus]]
-text = "Enhanced Accuracy: +1 to hit"
+[[equipment.enhanced_ballista.model_specials.to_hit]]
+args.ability = "ability.enhanced_accuracy"
 
 [equipment.array_of_heavy_muskets]
 name = "Array of Heavy Muskets"
@@ -1017,11 +1017,9 @@ angle = [true, true, true, true]
 damage = "d4-3 + d6 Psychic + d4 Crew damage"
 ap = 0
 
-[[equipment.frost_ray.range.specials.order]]
-text = "If you use the 'amplified fire' order, the target must break if possible (if it has a lower speed available). Reduce the speed one step"
+[[equipment.frost_ray.range.specials.forced_break]]
 
-[equipment.frost_ray.orders_gained.fire]
-still = [["-", "amplified fire"]]
+
 
 [equipment.green_gas_launcher]
 race = "gnome"
@@ -1129,10 +1127,21 @@ ap = 6
 text = "Fire once at all enemy units within range and within angle of fire"
 
 [[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
-text = "If aim, instead use focus fire, roll 6 dice at same unit"
+args.N = 6
+#text = "If aim, instead use focus fire, roll 6 dice at same unit"
 
-[[equipment.helicopter_gatling_gun.range.specials.bonus]]
-text = "Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers"
+[[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
+text = "When using aim: roll 6 dice at same unit."
+
+[[equipment.helicopter_gatling_gun.range.specials.area]]
+#preamble = "If not using aim, target all hexes within long range"
+args.N = 4
+text = "at point blank range"
+
+[[equipment.helicopter_gatling_gun.range.specials.area]]
+args.N = 6
+text = "at normal and long range"
+
 
 [equipment.acidic_napalm_bomb]
 race = "gnome"
