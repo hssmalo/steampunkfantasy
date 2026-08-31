@@ -1,8 +1,8 @@
 """Find prose written out longhand that a variant of the rule already spells.
 
 A soft finding rather than a load failure (ADR 0031): both spellings render the
-same line, so a corpus half-migrated is a tidiness question, not a correctness
-one. That is what lets the migration proceed a rule at a time.
+same line, so writing one out longhand is a tidiness question, not a
+correctness one.
 
 `check_longhand` is a predicate over two strings, in the shape `names.py`
 keeps. `check_specials` adds the walk over the prose slots an instance has, and

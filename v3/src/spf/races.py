@@ -1,5 +1,6 @@
 """Data access functions for SteamPunkFantasy races."""
 
+from collections.abc import Iterator
 from typing import cast
 
 import pydantic
@@ -8,6 +9,7 @@ from configaroo import Configuration
 from spf.config import config
 from spf.schemas import race as r
 from spf.schemas import type_aliases as t
+from spf.schemas.special import Specials
 
 
 def list_races(*, validate: bool = False) -> list[t.RaceName]:
@@ -61,3 +63,25 @@ def get_models(race: t.RaceName) -> dict[t.ModelName, r.ModelConfig]:
 def get_equipment(race: t.RaceName) -> dict[t.EquipmentName, r.EquipmentConfig]:
     """Get all equipment belonging to the given race."""
     return get_race(race).equipment
+
+
+def special_slots(race: r.RaceConfig) -> Iterator[tuple[str, str, Specials]]:
+    """Every (section, key, instances) triple a Race hangs Specials off.
+
+    Which slots a holder has is the holder's own shape: only Equipment carries
+    a range profile, and only a Model an assault one it always has. One walk
+    rather than one per consumer, so a new slot is added in a single place.
+    """
+    for key, unit in race.units.items():
+        yield "units", key, unit.specials
+    for key, model in race.models.items():
+        yield "models", key, model.unit_specials
+        yield "models", key, model.specials
+        yield "models", key, model.assault.specials
+    for key, equipment in race.equipment.items():
+        yield "equipment", key, equipment.unit_specials
+        yield "equipment", key, equipment.model_specials
+        if equipment.assault is not None:
+            yield "equipment", key, equipment.assault.specials
+        if equipment.range is not None:
+            yield "equipment", key, equipment.range.specials

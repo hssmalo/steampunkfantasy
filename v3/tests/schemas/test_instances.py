@@ -133,6 +133,13 @@ def test_a_variant_on_a_case_shaped_instance_is_its_preamble() -> None:
     assert instance.preamble is None
 
 
+def test_a_variant_named_like_a_ref_is_rejected() -> None:
+    # A variant id is a bare Identifier the rule owns, so a two-segment name
+    # is a shape error rather than a lookup that happens to miss.
+    with pytest.raises(ValidationError):
+        SpecialInstance.model_validate({"variant": "special.always_loaded"})
+
+
 def test_a_variant_beside_text_is_rejected() -> None:
     # A variant is a way of spelling `text`, not a layer under it.
     with pytest.raises(ValidationError, match="spells the prose slot"):

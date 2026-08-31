@@ -5,7 +5,7 @@ mapping of key to something with a `.name`, so it is exercised with plain
 stubs. `lint_race` is the thin layer that loads real config and Race data.
 """
 
-from collections.abc import Iterator, Mapping
+from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -16,7 +16,6 @@ from spf.registry import load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import RaceConfig
-from spf.schemas.special import Specials
 
 
 class Named(Protocol):
@@ -54,41 +53,21 @@ def lint_entries(
     ]
 
 
-def _special_slots(race_config: RaceConfig) -> Iterator[tuple[str, str, Specials]]:
-    """Every (section, key, instances) triple a Race hangs Specials off.
-
-    Which slots a holder has is the holder's own shape: only Equipment carries
-    a range profile, and only a Model an assault one it always has.
-    """
-    for key, unit in race_config.units.items():
-        yield "units", key, unit.specials
-    for key, model in race_config.models.items():
-        yield "models", key, model.unit_specials
-        yield "models", key, model.specials
-        yield "models", key, model.assault.specials
-    for key, equip in race_config.equipment.items():
-        yield "equipment", key, equip.unit_specials
-        yield "equipment", key, equip.model_specials
-        if equip.assault is not None:
-            yield "equipment", key, equip.assault.specials
-        if equip.range is not None:
-            yield "equipment", key, equip.range.specials
-
-
 def lint_race_config(
     race: t.RaceName,
     race_config: RaceConfig,
     conventions: LintConfig,
     *,
-    pools: Mapping[str, Mapping[str, str]] | None = None,
+    pools: Mapping[str, Mapping[str, str]],
 ) -> list[Finding]:
     """Return every finding for an already-loaded, schema-valid Race.
 
-    `pools` is each rule's variants; without it the variant rule has no pool to
-    compare against and reports nothing.
+    `pools` is each rule's variants. Required rather than defaulted: a caller
+    that has no pools says so with `{}`, which is not the same claim as having
+    forgotten to pass them.
     """
     findings: list[Finding] = []
-    for section, key, specials in _special_slots(race_config):
+    for section, key, specials in races.special_slots(race_config):
         findings += [
             Finding(
                 race=race,
@@ -97,7 +76,7 @@ def lint_race_config(
                 rule="variant-longhand",
                 message=f"'{identifier}': {message}",
             )
-            for identifier, message in variants.check_specials(specials, pools or {})
+            for identifier, message in variants.check_specials(specials, pools)
         ]
     if (message := names.check_capitalized(race_config.races[race].name)) is not None:
         findings.append(

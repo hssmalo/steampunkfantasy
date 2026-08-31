@@ -18,6 +18,7 @@ from typing import Self
 from pydantic import Field, model_validator
 
 from spf.schemas import StrictModel
+from spf.schemas.rules import Identifier
 
 _TWO_SPELLINGS = (
     "'variant' spells the prose slot rather than adding to it: write the"
@@ -37,7 +38,7 @@ class SpecialCase(StrictModel):
     text: str | None = None
     """When these values apply: "at point blank range"."""
 
-    variant: str | None = None
+    variant: Identifier | None = None
     """The rule's name for that prose, drawn from its variants (ADR 0031)."""
 
     args: dict[str, int | str] = Field(default_factory=dict)
@@ -75,7 +76,7 @@ class SpecialInstance(StrictModel):
     not using aim"), most are instructions ("Choose one hex").
     """
 
-    variant: str | None = None
+    variant: Identifier | None = None
     """The rule's name for this occurrence's prose, drawn from its variants.
 
     Which slot it fills is settled by the shape rather than by a second field

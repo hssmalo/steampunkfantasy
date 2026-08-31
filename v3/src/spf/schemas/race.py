@@ -156,9 +156,20 @@ def _validate_specials(spawns: set[str], specials: Specials, *, context: str) ->
     Which spawn a Spawn places is prose the rule has yet to formalize, so it is
     read off the front of the instance's own `text` — `'[spawn_id]: [placement
     text]'` — rather than out of an argument.
+
+    That makes the prose load-bearing here, which is why a Variant cannot
+    supply it: the pool lives in the registry, and this runs with no registry
+    in hand (ADR 0031).
     """
     for rule_name in SPAWNING_SPECIALS:
         for instance in specials.get(rule_name, []):
+            if instance.variant is not None:
+                msg = (
+                    f"Special rule '{rule_name}' in {context} names the spawn it"
+                    " places in its own 'text', so it cannot draw prose from a"
+                    f" variant. Got: variant '{instance.variant}'"
+                )
+                raise ValueError(msg)
             text = instance.text or ""
             if ":" not in text:
                 msg = (
