@@ -4,75 +4,26 @@ import pytest
 from rich.console import Console
 
 import spf.armies.io
-from spf.armies import ArmyList
 from spf.armies.io import print_army
-from spf.schemas import type_aliases as t
-from spf.schemas.race import (
-    AssaultConfig,
-    ModelConfig,
-    OrdersConfig,
-    RaceConfig,
-    RaceMetadata,
-    ShakenConfig,
-    UnitConfig,
-)
-
-_ASSAULT = AssaultConfig(
-    strength=[1, 0, 0, 0],
-    strength_die="4+",
-    deflection=[1, 0, 0, 0],
-    deflection_die="4+",
-    damage="d4",
-    ap=0,
-)
+from spf.schemas.race import RaceConfig
+from tests.conftest import synthetic_army, synthetic_race
 
 
 @pytest.fixture
 def simple_race() -> RaceConfig:
-    """Minimal RaceConfig for display tests."""
-    return RaceConfig(
-        races={"goblin": RaceMetadata(name="Goblin")},
-        units={
-            "squad": UnitConfig(
-                race="goblin",
-                name="Squad",
-                models=["soldier"],
-                size="small",
-                cost=t.Cost(mp=3),
-                shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-                orders=OrdersConfig(),
-                armor=None,
-                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
-            )
-        },
-        models={
-            "soldier": ModelConfig(
-                race="goblin",
-                name="Soldier",
-                equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
-                equipment=[],
-                type=["Infantry"],
-                assault=_ASSAULT,
-                cost=None,
-            ),
-        },
-        equipment={},
-    )
+    """Return the default synthetic Race; printing an Army asks nothing more."""
+    return synthetic_race()
 
 
 def test_print_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = (
-        ArmyList(race="goblin", nick="Test Army", units=[])
-        .add_unit("squad", race_config=simple_race)
-        .resolve(simple_race)
-    )
+    army = synthetic_army(simple_race).resolve(simple_race)
     console = Console(record=True)
     console.print("")
     print_army(army)
 
 
 def test_print_army_empty_army_does_not_raise(simple_race: RaceConfig) -> None:
-    army = ArmyList(race="goblin", nick="Test Army", units=[]).resolve(simple_race)
+    army = synthetic_army(simple_race, units=[]).resolve(simple_race)
     print_army(army)
 
 
@@ -82,11 +33,7 @@ def test_print_army_unit_line_includes_points(
     capture = Console(record=True)
     monkeypatch.setattr(spf.armies.io, "stdout", capture)
 
-    army = (
-        ArmyList(race="goblin", nick="Test Army", units=[])
-        .add_unit("squad", race_config=simple_race)
-        .resolve(simple_race)
-    )
+    army = synthetic_army(simple_race).resolve(simple_race)
     print_army(army)
 
     output = capture.export_text()
@@ -101,11 +48,7 @@ def test_print_army_model_line_shows_display_name_not_toml_key(
     capture = Console(record=True)
     monkeypatch.setattr(spf.armies.io, "stdout", capture)
 
-    army = (
-        ArmyList(race="goblin", nick="Test Army", units=[])
-        .add_unit("squad", race_config=simple_race)
-        .resolve(simple_race)
-    )
+    army = synthetic_army(simple_race).resolve(simple_race)
     print_army(army)
 
     output = capture.export_text()
@@ -120,7 +63,7 @@ def test_print_army_shows_unit_and_model_nicks(
     monkeypatch.setattr(spf.armies.io, "stdout", capture)
 
     army = (
-        ArmyList(race="goblin", nick="Test Army", units=[])
+        synthetic_army(simple_race, units=[])
         .add_unit("squad", nick="Da Lads", race_config=simple_race)
         .nick_model(("squad", 0), model_key=("soldier", 0), nick="Grubnak")
         .resolve(simple_race)
