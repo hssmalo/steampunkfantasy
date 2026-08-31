@@ -1,0 +1,114 @@
+# Testing
+
+What the test suite is for, and what belongs somewhere else. Read this before
+adding a test. The reasoning behind it is in
+[ADR-0033](../adr/0033-tests-exercise-spf-not-the-game-rules.md).
+
+## The rule
+
+> **No test may fail because a TOML file under `races/`, `armies/`, or `rules/`
+> was updated.**
+
+The tests exercise `spf`. The linters own the data. Writing game rules is the
+activity this project exists to support, and a suite that goes red when someone
+rebalances a Unit is taxing it.
+
+Corollaries:
+
+- A test failing because a TOML file was **deleted or renamed** is fine. Those
+  are structural changes, and a test noticing one is doing its job.
+- An **invalid** TOML edit must be caught by a linter, never by a test. If you
+  find an invalid edit that only a test catches, the fix is a new lint rule in
+  `spf race lint` / `spf rules lint` — not a test that pins the valid value.
+- Reading real data is not itself forbidden. Deriving an expected value from
+  real data at runtime is fine: `tests/frontends/cli/test_race.py` compares CLI
+  output against a live `races.get_race("goblin")` call, and stays green through
+  any goblin edit. **Hardcoding** a value that came out of a TOML file is not.
+
+## Never assert on the content of a production template
+
+Tests may verify that the **templating mechanism** works: that a file was
+written, to the right path, with the right Product and Format selected, and that
+bad input raises.
+
+Tests must **never** assert on what a template under `templates/latex/**` or
+`templates/markdown/**` produces. No `\usepackage{...}` checks, no
+table-of-contents assertions, no section or heading structure, no table
+environments, no column specs, no header or footer markers. A template is
+presentation; it is meant to be edited freely, and a test that pins its output
+makes every layout tweak a test-fixing exercise.
+
+To test rendering behavior, render through the toy templates in
+`tests/fixtures/templates/latex/_test/` and
+`tests/fixtures/templates/markdown/_test/`. They hold no game content and no
+formatting worth pinning, so editing a production template cannot break them.
+`tests/render/test_render.py` is the worked example.
+
+When the behavior you want is one tier down — what the renderer *decided*, not
+how it was typeset — assert on the view model instead of on rendered text.
+
+## No committed expected-output files
+
+There are no golden files in the repository, and none should be added.
+
+A golden is a refactoring tool, not a fixture. It is worth exactly one thing:
+proving a change altered no output. So it is generated on demand for the
+duration of a refactor and deleted afterwards.
+
+```console
+just golden-snapshot   # Render every product into the gitignored goldens/
+just golden-diff       # Re-render and diff against that snapshot
+```
+
+**Snapshotting is step one of any output-affecting refactor.** Take the snapshot
+before touching anything, `just golden-diff` as you go, and delete `goldens/`
+when the work lands. `goldens/` is gitignored; nothing in it is ever committed.
+
+The distinction is easy to over-read, so state it plainly:
+
+- **Banned:** committed *expected output* — a file a test byte-compares against.
+- **Fine:** committed *input fixtures* — the toy templates above, hand-built
+  JSON or TOML a test feeds in.
+
+An input fixture must not depend on real data. A fixture army referencing real
+dwarf keys and loading with `validate=True` looks synthetic and is not: a rename
+in `races/dwarf.toml` breaks it. Build such fixtures from the synthetic builders
+below.
+
+## Real-data smoke checks live in `just validate`
+
+"Does the committed corpus still load and render" is a `just validate` question.
+Do not add pytest tests that sweep every Race or every Army. They pin nothing,
+they grow linearly with the game, and they re-run on every inner loop.
+
+## Prefer synthetic fixtures
+
+`tests/conftest.py` provides shared builders for synthetic Races, Registries and
+Armies. Use them rather than hand-rolling another minimal `RaceConfig`, and
+rather than reaching for `races.get_race(...)`. Name what you build with the
+`CONTEXT.md` vocabulary — Race, Unit, Model, Equipment, Holder, Special
+Instance.
+
+Existing exemplars worth reading:
+
+- `tests/assets/test_image.py` — writes its own Race TOML to `tmp_path`, for
+  when a test needs a Race on disk rather than in memory.
+- `tests/armies/test_specials.py` — builds Instances, Equipment, Models and
+  Units, and says in its docstring why it avoids real Race data.
+- `tests/lint/test_collect.py`
+- `tests/frontends/cli/test_army.py` — monkeypatches the armies directory to
+  `tmp_path`.
+
+## How to check you got it right
+
+```console
+just test-friction   # Mutate lint-clean TOML values; report tests that break
+```
+
+Run it when you add or change a test that touches real data. It edits one value
+at a time in the committed corpus, skips anything the linters reject, runs the
+suite, and reports every test that a legitimate rules edit would have broken.
+Findings are bugs in the tests, not in the data.
+
+It is deliberately **not** part of `just check`: it roughly doubles suite
+runtime, and the property it guards only changes when someone writes a test.
