@@ -195,9 +195,7 @@ def special_record(
             (_ref_label(ref, registry), overlay.effect)
             for ref, overlay in rule.versions.items()
         ],
-        variants=[
-            (identifier, overlay.text) for identifier, overlay in rule.variants.items()
-        ],
+        variants=list(rule.variants.items()),
         todo=rule.todo,
     )
 

@@ -371,7 +371,7 @@ def test_variants_come_back_as_id_and_text_pairs() -> None:
     registry = _registry(
         ammo=_rule(
             effect="Carries shots.",
-            variants={"always_loaded": {"text": "Always treated as loaded"}},
+            variants={"always_loaded": "Always treated as loaded"},
         )
     )
 
@@ -392,7 +392,7 @@ def test_show_prints_the_variants_a_rule_defines(
     registry = _registry(
         ammo=_rule(
             effect="Carries shots.",
-            variants={"always_loaded": {"text": "Always treated as loaded"}},
+            variants={"always_loaded": "Always treated as loaded"},
         )
     )
 

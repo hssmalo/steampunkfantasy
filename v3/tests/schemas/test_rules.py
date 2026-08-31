@@ -315,11 +315,11 @@ def test_a_variant_carries_the_prose_an_instance_draws_on() -> None:
             "name": "Ammo",
             "slots": ["range"],
             "effect": "Carries {N} shots.",
-            "variants": {"always_loaded": {"text": "Always treated as loaded"}},
+            "variants": {"always_loaded": "Always treated as loaded"},
         }
     )
 
-    assert special.variants["always_loaded"].text == "Always treated as loaded"
+    assert special.variants["always_loaded"] == "Always treated as loaded"
 
 
 def test_a_rule_defines_no_variants_by_default() -> None:
@@ -332,8 +332,10 @@ def test_a_rule_defines_no_variants_by_default() -> None:
 
 def test_a_variant_carries_nothing_but_its_text() -> None:
     # A Variant is one occurrence's prose, not a second place to put args:
-    # "at point blank" is written with `N = 4` here and `N = 2` there.
-    with pytest.raises(ValidationError, match="extra_forbidden"):
+    # "at point blank" is written with `N = 4` here and `N = 2` there. The
+    # prose being the whole of it is why a variant is a bare string, so a
+    # table with somewhere to put args is not a variant at all.
+    with pytest.raises(ValidationError, match="string_type"):
         r.SpecialRuleConfig.model_validate(
             {
                 "name": "Ammo",
@@ -353,6 +355,6 @@ def test_a_variant_is_keyed_by_a_bare_identifier() -> None:
                 "name": "Ammo",
                 "slots": ["range"],
                 "effect": "Carries {N} shots.",
-                "variants": {"Always Loaded": {"text": "Always treated as loaded"}},
+                "variants": {"Always Loaded": "Always treated as loaded"},
             }
         )

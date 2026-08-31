@@ -36,10 +36,8 @@ def _registry() -> reg.Registry:
                             "N": {"type": ["int", "die"], "min": 1, "max": 12},
                         },
                         "variants": {
-                            "while_an_elite_lives": {
-                                "text": "While at least one elite is alive"
-                            },
-                            "versus_shaken": {"text": "Versus Shaken models"},
+                            "while_an_elite_lives": "While at least one elite is alive",
+                            "versus_shaken": "Versus Shaken models",
                         },
                     }
                 ),

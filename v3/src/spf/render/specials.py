@@ -83,8 +83,7 @@ def _prose(
     """
     if variant is None:
         return text
-    overlay = rule.variants.get(variant) if rule is not None else None
-    return overlay.text if overlay is not None else None
+    return rule.variants.get(variant) if rule is not None else None
 
 
 def _cases(

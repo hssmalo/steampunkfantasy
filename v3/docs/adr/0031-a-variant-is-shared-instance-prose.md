@@ -6,8 +6,8 @@ slot instead of spelling it out.
 
 ```toml
 # rules/special.toml
-[special.ammo.variants.always_loaded]
-text = "Always treated as loaded"
+[special.ammo.variants]
+always_loaded = "Always treated as loaded"
 
 # races/elf.toml
 [[equipment.elf_bow.range.specials.ammo]]
@@ -103,6 +103,14 @@ add a third layer to a merge order that is already rule → instance → case.
 `name` is excluded for its own reason: an atmospheric name is deliberately
 per-Instance, and a shared one would be a different feature wearing this one's
 clothes.
+
+This is why a Variant is a bare string rather than a table with a `text` key.
+The pool is one `[special.<rule>.variants]` table and one line per id, which
+puts the decision in the shape of the data instead of only in this document:
+there is nowhere to write the args that a later reader would be tempted to add.
+The cost is that giving a Variant a second field one day is a data migration
+rather than an addition — deliberately, since that day is the day it stops
+being a Variant.
 
 ## Why the pool lives only in the registry
 

@@ -307,8 +307,8 @@ VARIANTS = Registry(
                     "effect": "Carries {N} shots.",
                     "variables": {"N": {"type": "int"}},
                     "variants": {
-                        "always_loaded": {"text": "Always treated as loaded"},
-                        "point_blank": {"text": "at point blank"},
+                        "always_loaded": "Always treated as loaded",
+                        "point_blank": "at point blank",
                     },
                 }
             )

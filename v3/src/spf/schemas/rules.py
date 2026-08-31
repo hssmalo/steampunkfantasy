@@ -265,9 +265,12 @@ class SpecialRuleConfig(RuleRecord):
     found by lookup and a key pointing nowhere is caught rather than ignored. A
     version with no overlay inherits the target's own text."""
 
-    variants: dict[Identifier, "VariantOverlay"] = Field(default_factory=dict)
+    variants: dict[Identifier, str] = Field(default_factory=dict)
     """Shared prose an instance of this rule may draw on, keyed by a bare id
     the rule owns (ADR 0031).
+
+    A bare string, not a table: the prose is the whole of a variant, and args
+    and names stay per-occurrence, so the data spells one id per line.
 
     The neighbor above is the one to keep it apart from: a version overlays
     the *rule's* own `effect` and is keyed by the Ref an instance's version
@@ -277,17 +280,6 @@ class SpecialRuleConfig(RuleRecord):
 
 class VersionOverlay(StrictModel):
     effect: str
-
-
-class VariantOverlay(StrictModel):
-    """One shared string, spelled once for every occurrence that draws on it.
-
-    `text` alone: which prose slot it fills is decided by the shape of the
-    instance drawing on it (ADR 0031), and args stay per-occurrence because
-    the same sentence is written with different numbers in different places.
-    """
-
-    text: str
 
 
 class SpecialRulesConfig(StrictModel):

@@ -113,7 +113,7 @@ def lint_race_config(
 def lint_race(race: t.RaceName) -> list[Finding]:
     """Load `race` and return its findings, using the configured conventions."""
     pools = {
-        identifier: {name: overlay.text for name, overlay in rule.variants.items()}
+        identifier: rule.variants
         for identifier, rule in load_registry().specials.items()
     }
     return lint_race_config(race, races.get_race(race), config.lint, pools=pools)
