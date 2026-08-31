@@ -33,6 +33,7 @@ from spf.render.declarations import (
 )
 from spf.render.images import ImageLookup, committed_image
 from spf.render.orders import Rows, flat_rows
+from spf.render.rules_reference import RulesReference, build_for_race
 from spf.render.specials import SpecialLine, special_lines
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (
@@ -270,6 +271,8 @@ class RaceOverview:
     models: list[ModelEntry]
     equipment: list[EquipmentEntry]
     spawns: list[SpawnEntry]
+    rules: RulesReference | None = None
+    """The Rules Reference printed after the sections; `None` under `--no-rules`."""
 
 
 @dataclass(frozen=True)
@@ -600,6 +603,7 @@ def build_overview(
     *,
     stem: str,
     image_for: ImageLookup = committed_image,
+    rules: bool = True,
 ) -> RaceOverview:
     """Build a `RaceOverview` from a Race's unresolved catalogue.
 
@@ -608,7 +612,13 @@ def build_overview(
     Targets: there are no Model or Equipment Assets, and `committed_image` keys
     on a bare name, so asking about a Model would answer with the Unit's art
     whenever the two share a key.
+
+    The Rules Reference is built first, so every Special line takes its anchor
+    from the very entry it links to and the two cannot disagree. Its anchors
+    need no prefix: a Race Overview covers one Race, and the `rule-` namespace
+    is disjoint from the section prefixes every record anchor carries.
     """
+    reference = build_for_race(race_config, registry=load_registry()) if rules else None
     race, metadata = next(iter(race_config.races.items()))
     units = _in_cost_order(race_config.units)
     models = _in_cost_order(race_config.models)
@@ -617,7 +627,7 @@ def build_overview(
         race=race,
         config=race_config,
         image_for=image_for,
-        anchor_for=None,
+        anchor_for=reference.anchor_for if reference is not None else None,
         fielded_in=_fielded_in(units),
         replaced_by=_replaced_by(models),
         carried_by=_carried_by(models),
@@ -642,4 +652,5 @@ def build_overview(
             _spawn_entry(key, spawn, catalogue=catalogue)
             for key, spawn in race_config.spawns.items()
         ],
+        rules=reference,
     )

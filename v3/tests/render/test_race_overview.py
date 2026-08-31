@@ -3,7 +3,7 @@
 import pytest
 
 from spf.races import get_race
-from spf.render.race_overview import RaceLink, build_overview
+from spf.render.race_overview import RaceLink, RaceOverview, build_overview
 from spf.render.specials import SpecialLine, special_lines
 from spf.schemas.race import (
     AssaultConfig,
@@ -203,7 +203,11 @@ def test_unit_entry_carries_the_declared_catalogue_fields() -> None:
         }
     )
 
-    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+    # Without a Rules Reference a Special line is its heading and text alone,
+    # which is what this inventory of the declared fields is about.
+    overview = build_overview(
+        race, stem="goblin", image_for=FakeLookup(None), rules=False
+    )
 
     (unit,) = overview.units
     assert unit.key == "squad"
@@ -1162,7 +1166,10 @@ def test_the_spawn_link_leaves_the_interpolated_prose_untouched() -> None:
 
     # The link travels beside the line; the spawn id stays in the prose that
     # names it, exactly as `special_lines` rendered it.
-    assert cavalry.specials == special_lines(specials)
+    assert overview.rules is not None
+    assert cavalry.specials == special_lines(
+        specials, anchor_for=overview.rules.anchor_for
+    )
     assert "tiny_snake: place it somewhere" in cavalry.specials[0].text
 
 
@@ -1253,3 +1260,108 @@ def test_every_spawn_of_a_committed_race_is_reachable(race_name: str) -> None:
         for link in entry.spawn_links
     }
     assert linked == {spawn.anchor for spawn in overview.spawns}
+
+
+# --- The Rules Reference (decision 6) ---------------------------------------
+
+
+def _every_special_line(overview: RaceOverview) -> list[SpecialLine]:
+    """Every Special line the four sections print, whatever Slot it came from."""
+    lines: list[SpecialLine] = []
+    for unit in overview.units:
+        lines += unit.specials
+    for model in overview.models:
+        lines += [*model.unit_specials, *model.specials, *model.assault_specials]
+    for equip in overview.equipment:
+        lines += [
+            *equip.unit_specials,
+            *equip.model_specials,
+            *equip.assault_specials,
+            *equip.range_specials,
+        ]
+    return lines
+
+
+def test_a_special_line_links_into_the_rules_reference() -> None:
+    race = _race_config(
+        units={
+            "squad": _unit_config(
+                specials={"evasion": [SpecialInstance(args={"N": 4})]}
+            )
+        }
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    assert overview.rules is not None
+    (line,) = overview.units[0].specials
+    # The line takes its anchor from the very entry it points at, so the two
+    # cannot disagree.
+    assert line.anchor == overview.rules.anchor_for("evasion")
+    assert line.anchor is not None
+
+
+def test_no_rules_leaves_out_the_reference_and_every_link_into_it() -> None:
+    race = _race_config(
+        units={
+            "squad": _unit_config(
+                specials={"evasion": [SpecialInstance(args={"N": 4})]}
+            )
+        }
+    )
+
+    overview = build_overview(
+        race, stem="goblin", image_for=FakeLookup(None), rules=False
+    )
+
+    assert overview.rules is None
+    assert [line.anchor for line in _every_special_line(overview)] == [None]
+
+
+def test_a_record_keyed_like_a_rule_still_anchors_under_its_section() -> None:
+    race = _race_config(units={"rule_terror": _unit_config(name="Rule Terror")})
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    assert overview.units[0].anchor == "unit-rule-terror"
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
+def test_every_special_a_section_prints_reaches_the_rules_reference(
+    race_name: str,
+) -> None:
+    overview = build_overview(
+        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        stem=race_name,
+        image_for=FakeLookup(None),
+    )
+
+    assert overview.rules is not None
+    entries = set(overview.rules.anchors.values())
+    lines = _every_special_line(overview)
+    assert lines
+    # A Special printed on a record the walk never seeded would render a link
+    # into nothing.
+    assert {line.anchor for line in lines} <= entries
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
+def test_a_record_anchor_never_collides_with_a_rule_anchor(race_name: str) -> None:
+    overview = build_overview(
+        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        stem=race_name,
+        image_for=FakeLookup(None),
+    )
+
+    assert overview.rules is not None
+    records = [
+        entry.anchor
+        for entries in (overview.units, overview.models, overview.equipment)
+        for entry in entries
+    ] + [spawn.anchor for spawn in overview.spawns]
+    rules = [entry.anchor for entry in overview.rules.entries]
+
+    # One document, one id space: the section prefix makes every record anchor
+    # unique, and none of them can read as a rule's.
+    assert len(set(records)) == len(records)
+    assert set(records).isdisjoint(rules)

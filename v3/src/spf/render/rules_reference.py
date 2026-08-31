@@ -1,9 +1,11 @@
-"""Rules Reference view-model: the rule Records an Army's Specials reach.
+"""Rules Reference view-model: the rule Records a document's Specials reach.
 
 A *presentation* transposition (ADR 0007) over the rule registries (ADR 0024),
-pure over a `Registry` and a resolved Army: no disk access, no templates.
+pure over a `Registry` and whatever holds the Specials: no disk access, no
+templates. An Army reaches the rules of the loadout it chose and a Race
+catalogue the rules of everything it could field, so both seed the same walk.
 
-An Army's Specials are the seeds. From there the walk follows `places`
+The Specials are the seeds. From there the walk follows `places`
 unbounded, because a rule's mechanical consequence is part of the rule, and
 `see_also` exactly one hop, promoting only the targets a player has to resolve
 on the table (ADR 0029).
@@ -20,6 +22,7 @@ from spf.armies.army import Army
 from spf.registry import SPECIAL, Registry
 from spf.render.anchors import anchor as _anchor
 from spf.render.anchors import slug
+from spf.schemas.race import RaceConfig, race_slots
 from spf.schemas.special import Specials
 
 TITLE = "Rules Reference"
@@ -188,6 +191,20 @@ def _collect(
 def build(army: Army, *, registry: Registry, prefix: str = "") -> RulesReference:
     """Resolve a whole Army's Rules Reference, anchors prefixed with `prefix`."""
     return resolve(seeds(army, registry=registry), registry, prefix=prefix)
+
+
+def build_for_race(
+    race_config: RaceConfig, *, registry: Registry, prefix: str = ""
+) -> RulesReference:
+    """Resolve a whole Race catalogue's Rules Reference.
+
+    An Army reaches the rules of the loadout it chose; a Race reaches the
+    rules of everything it could field. Past the walk the two are the same
+    resolution, so they share one.
+    """
+    return resolve(
+        seeds_from(race_slots(race_config), registry=registry), registry, prefix=prefix
+    )
 
 
 def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesReference:
