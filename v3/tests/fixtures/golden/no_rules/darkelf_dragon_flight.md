@@ -81,8 +81,8 @@
 
 - Range: 3, angle True/False/False/False, damage -, AP 0
 - **Area**: [4+]. at point blank; [5+]. at normal blank; [6+]. at long blank
-- **Range Extra Damage**: Poison[6]. No regular damage.; Fire
-- **Bonus**: Any unit within long range and in front arc gets a minor acid token
+- **Range Extra Damage**: Poison[6]; Fire; Minor Acid
+- **No Damage**: [Regular]
 
 
 ---

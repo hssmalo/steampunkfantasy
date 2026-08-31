@@ -551,7 +551,6 @@ still & Fire & Fire \\
 \item Shaken: slow [-, -, Flee] / Can't use weapons
 \item Placed by: \hyperref[spawn-tiny-snake]{tiny\_snake}
 \item \textbf{\hyperref[rule-special-hidden]{Hidden}}: Start with a hidden token
-\item \textbf{\hyperref[rule-special-movement]{Movement}}: This unit stays hidden and has the same movement orders as the snake cavlry it start sharing the hex with. If the snake cavlry dies before reavling the tiny snake, it does not move. Once any enemy in any movement phase ends within range 2 of the tiny snakes, reveal them in that hex with you gaining reveal bonuses when assaulting.
 \item \textbf{\hyperref[rule-special-terror]{Terror}}: [range=1][d4]
 
 \end{itemize}
@@ -559,6 +558,8 @@ still & Fire & Fire \\
 
 \begin{tabular}{llll}
 slow & - & - & Chs \\
+slow & - & - & Reveal \\
+slow & Follow & Follow & Follow \\
 \end{tabular}
 \vspace{1ex}
 
@@ -708,7 +709,7 @@ Hands & 2 \\
 \item \textit{In assault:}
 \begin{itemize}
 \item \textbf{\hyperref[rule-special-assault-extra-damage]{Assault Extra Damage}}: Poison[6][1 for 1]
-\item \textbf{\hyperref[rule-special-bonus]{Bonus}}: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
+\item \textbf{\hyperref[rule-special-boost]{Boost}}: If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection
 
 \end{itemize}
 
@@ -1625,7 +1626,7 @@ still & - & Load \\
 
 
 \phantomsection\label{rule-special-area}%
-\noindent\textbf{Area (special)} --- Roll a die per enemy model in the hex. For each die at N+, roll for damage and and add extra damage to the corresponding unit.
+\noindent\textbf{Area (special)} --- Roll a die per enemy model in the hex. For each die at \{N\}+, roll for damage and and add extra damage to the corresponding unit.
 
 
 \phantomsection\label{rule-special-assault-extra-damage}%
@@ -1643,7 +1644,15 @@ still & - & Load \\
 
 
 \phantomsection\label{rule-special-bonus}%
-\noindent\textbf{Bonus (special)} --- \textit{Rule text pending.}\begin{itemize}
+\noindent\textbf{Bonus (special)} --- Bonus to range attacks
+\begin{itemize}
+\item \textit{See also:} Penalty (special)
+\end{itemize}
+
+
+\phantomsection\label{rule-special-boost}%
+\noindent\textbf{Boost (special)} --- Boosts and modifies assault capabilities
+\begin{itemize}
 \item \textit{See also:} Penalty (special)
 \end{itemize}
 
