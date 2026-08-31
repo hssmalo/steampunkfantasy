@@ -1,8 +1,15 @@
-"""Tests for the Race Overview product: build_overview()."""
+"""Tests for the Race Overview product: build_overview() and its Rendering."""
+
+import re
+from pathlib import Path
 
 import pytest
 
+from spf.frontends.cli.render import RACE_OVERVIEW
 from spf.races import get_race
+from spf.render import render
+from spf.render.formats import get_format
+from spf.render.images import no_image
 from spf.render.race_overview import RaceLink, RaceOverview, build_overview
 from spf.render.specials import SpecialLine, special_lines
 from spf.schemas.race import (
@@ -1365,3 +1372,173 @@ def test_a_record_anchor_never_collides_with_a_rule_anchor(race_name: str) -> No
     # unique, and none of them can read as a rule's.
     assert len(set(records)) == len(records)
     assert set(records).isdisjoint(rules)
+
+
+# --- The Markdown Rendering -------------------------------------------------
+#
+# The template stays dumb (ADR 0005); these pin the contract it has to keep —
+# one entry per record, every cross-link landing, and no view-model value
+# reaching the page in a shape the family cannot read.
+
+_ANCHOR = re.compile(r'<a id="([^"]+)"></a>')
+_LINK = re.compile(r"\]\(#([^)]+)\)")
+
+
+def _markdown(overview: RaceOverview, tmp_path: Path) -> str:
+    """Render `overview` through the Markdown family and read it back."""
+    out = render(
+        RACE_OVERVIEW,
+        overview,
+        fmt=get_format("markdown"),
+        name=overview.stem,
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
+def test_the_document_addresses_every_record_exactly_once(
+    tmp_path: Path, race_name: str
+) -> None:
+    overview = build_overview(
+        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        stem=race_name,
+        image_for=FakeLookup(None),
+    )
+
+    anchors = _ANCHOR.findall(_markdown(overview, tmp_path))
+
+    records = [
+        entry.anchor
+        for entries in (overview.units, overview.models, overview.equipment)
+        for entry in entries
+    ] + [spawn.anchor for spawn in overview.spawns]
+    # A flat catalogue prints every record exactly once (ADR 0031), so a
+    # repeated anchor would send half its inbound links to the wrong copy.
+    assert len(anchors) == len(set(anchors))
+    assert set(records) <= set(anchors)
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
+def test_every_link_in_the_document_lands_on_an_anchor_of_it(
+    tmp_path: Path, race_name: str
+) -> None:
+    overview = build_overview(
+        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        stem=race_name,
+        image_for=FakeLookup(None),
+    )
+
+    text = _markdown(overview, tmp_path)
+    targets = set(_LINK.findall(text))
+
+    assert targets
+    assert targets <= set(_ANCHOR.findall(text))
+
+
+def test_the_document_carries_no_rich_markup(tmp_path: Path) -> None:
+    overview = build_overview(
+        _race_config(
+            equipment={"knife": _equipment_config(cost=Cost(mp=2), upgrade_all=False)}
+        ),
+        stem="goblin",
+        image_for=FakeLookup(None),
+    )
+
+    # `Cost.__str__` emits Rich markup, which would land literally on the page.
+    assert "[gray30]" not in _markdown(overview, tmp_path)
+
+
+def test_the_requirements_of_an_equipment_all_have_to_hold(tmp_path: Path) -> None:
+    equipment = {
+        "shield": _equipment_config(
+            name="Shield",
+            cost=Cost(mp=1),
+            upgrade_all=False,
+            requires=[["Hands:1"], ["type:Infantry", "type:Cavalry"]],
+        )
+    }
+
+    text = _markdown(
+        build_overview(
+            _race_config(equipment=equipment), stem="goblin", image_for=FakeLookup(None)
+        ),
+        tmp_path,
+    )
+
+    # `requires` is a conjunction of disjunctions: joining the lines with an
+    # "or" would promise a build `spf.armies.build` rejects.
+    assert "1 Hands" in text
+    assert "Model type Infantry or Cavalry" in text
+    assert "1 Hands or Model type" not in text
+    assert "1 Hands, or Model type" not in text
+
+
+def test_the_document_leaves_every_picture_out_when_there_is_no_art(
+    tmp_path: Path,
+) -> None:
+    overview = build_overview(
+        get_race("goblin"), stem="goblin", image_for=FakeLookup(None)
+    )
+
+    assert "![" not in _markdown(overview, tmp_path)
+
+
+def test_no_rules_leaves_the_rules_reference_and_its_links_out(
+    tmp_path: Path,
+) -> None:
+    overview = build_overview(
+        get_race("goblin"), stem="goblin", image_for=FakeLookup(None), rules=False
+    )
+
+    text = _markdown(overview, tmp_path)
+
+    assert "Rules Reference" not in text
+    assert "](#rule-" not in text
+
+
+# --- The goblin goldens -----------------------------------------------------
+#
+# Goblin is the smallest catalogue — 8 Units, 9 Models, 27 Equipment, 1 Spawn —
+# so the whole document stays reviewable as a fixture.
+
+GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
+
+GOLDEN_RACE = "goblin"
+
+
+def _trimmed(text: str) -> list[str]:
+    """Split `text` into lines with trailing whitespace off each.
+
+    A committed golden passes through the trailing-whitespace pre-commit hook,
+    which strips the spaces a summary table's empty cost cells end a row with.
+    """
+    return [line.rstrip() for line in text.rstrip("\n").splitlines()]
+
+
+@pytest.mark.usefixtures("pinned_version")
+def test_race_overview_output_matches_golden_file(tmp_path: Path) -> None:
+    overview = build_overview(
+        get_race(GOLDEN_RACE), stem=GOLDEN_RACE, image_for=no_image
+    )
+
+    text = _markdown(overview, tmp_path)
+
+    golden = (GOLDEN_DIR / f"race_overview_{GOLDEN_RACE}.md").read_text(
+        encoding="utf-8"
+    )
+    assert _trimmed(text) == _trimmed(golden)
+
+
+@pytest.mark.usefixtures("pinned_version")
+def test_race_overview_no_rules_output_matches_golden_file(tmp_path: Path) -> None:
+    overview = build_overview(
+        get_race(GOLDEN_RACE), stem=GOLDEN_RACE, image_for=no_image, rules=False
+    )
+
+    text = _markdown(overview, tmp_path)
+
+    golden = (GOLDEN_DIR / "no_rules" / f"race_overview_{GOLDEN_RACE}.md").read_text(
+        encoding="utf-8"
+    )
+    assert _trimmed(text) == _trimmed(golden)

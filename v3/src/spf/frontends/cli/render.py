@@ -52,6 +52,10 @@ GENERAL_RULES = register_product(Product(name="general-rules"))
 # `<family>/army-pack/main.<ext>.jinja`.
 ARMY_PACK = register_product(Product(name="army-pack"))
 
+# The Race Overview Product: templates live at
+# `<family>/race-overview/main.<ext>.jinja`.
+RACE_OVERVIEW = register_product(Product(name="race-overview"))
+
 
 def _validate_format(_type: type, value: str) -> None:
     """Reject a `--format` value not registered in the Format registry."""
