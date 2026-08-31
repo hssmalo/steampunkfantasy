@@ -503,17 +503,17 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ## Models
 
-| Model | Type | Equipment slots | ip | mp | xp | cp | vpm |
-| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| [Elite Goblin Infantry](#model-elite-goblin-infantry) | Elite, Bio, Infantry, Walking | Independent ∞, Hands 2, Grenades 2, Specialization 1 |  |  | 4 |  |  |
-| [Goblin Infantry](#model-goblin-infantry) | Bio, Infantry, Walking | Independent ∞, Hands 2, Grenades 3, Specialization 1, Special Arrows 3 |  |  |  |  |  |
-| [Giant Snake Cavalry](#model-giant-snake-cavalry) | Bio, Cavalry, Walking | Independent ∞, Hands 2 |  |  |  |  |  |
-| [Tiny Snake](#model-tiny-snake) | Bio, Walking, Monster | — |  |  |  |  |  |
-| [Bipedal Mech](#model-bipedal-mech) | Bio Crew, Mechanical, Walking | Independent ∞ |  |  |  |  |  |
-| [Goblin Infantry Carrier](#model-goblin-infantry-carrier) | Mechanical, Vehicle, Tracked | Independent ∞ |  |  |  |  |  |
-| [Heavy Carrier](#model-heavy-carrier) | Mechanical, Vehicle, Tracked | Independent ∞ |  |  |  |  |  |
-| [Modified Truck](#model-modified-truck) | Mechanical, Vehicle, Tracked | Independent ∞ |  |  |  |  |  |
-| [Mechanical Fire Bird](#model-mechanical-fire-bird) | Mechanical, Flying, Drone | Independent ∞ |  |  |  |  |  |
+| Model | Type | Equipment slots | Cost |
+| --- | --- | --- | --- |
+| [Elite Goblin Infantry](#model-elite-goblin-infantry) | Elite, Bio, Infantry, Walking | Independent ∞, Hands 2, Grenades 2, Specialization 1 | 4xp |
+| [Goblin Infantry](#model-goblin-infantry) | Bio, Infantry, Walking | Independent ∞, Hands 2, Grenades 3, Specialization 1, Special Arrows 3 |  |
+| [Giant Snake Cavalry](#model-giant-snake-cavalry) | Bio, Cavalry, Walking | Independent ∞, Hands 2 |  |
+| [Tiny Snake](#model-tiny-snake) | Bio, Walking, Monster | — |  |
+| [Bipedal Mech](#model-bipedal-mech) | Bio Crew, Mechanical, Walking | Independent ∞ |  |
+| [Goblin Infantry Carrier](#model-goblin-infantry-carrier) | Mechanical, Vehicle, Tracked | Independent ∞ |  |
+| [Heavy Carrier](#model-heavy-carrier) | Mechanical, Vehicle, Tracked | Independent ∞ |  |
+| [Modified Truck](#model-modified-truck) | Mechanical, Vehicle, Tracked | Independent ∞ |  |
+| [Mechanical Fire Bird](#model-mechanical-fire-bird) | Mechanical, Flying, Drone | Independent ∞ |  |
 
 <a id="model-elite-goblin-infantry"></a>
 
@@ -658,41 +658,41 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ## Equipment
 
-| Equipment | Profile | ip | mp | xp | cp | vpm |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| [Commando](#equipment-commando) | Deflection: +4/0/0/0; Deflection die: set to 6+ |  |  | 32 |  |  |
-| [Grenadier](#equipment-grenadier) | — |  |  | 8 |  |  |
-| [Archer Specialization](#equipment-archer-specialization) | — |  |  | 8 |  |  |
-| [Assault Archer](#equipment-assault-archer) | — |  |  | 8 |  |  |
-| [Clockwork Wings](#equipment-clockwork-wings) | Strength: +1/0/0/0 |  |  |  | 24 |  |
-| [Seeker Assassin Arrows](#equipment-seeker-assassin-arrows) | range 4, damage d4-2, AP 1 |  |  |  | 16 |  |
-| [Poison Bow](#equipment-poison-bow) | range 2, damage d4-2 + d4 Crew damage, AP 1 |  |  |  | 16 |  |
-| [Acid Trap](#equipment-acid-trap) | — |  |  |  | 16 |  |
-| [Seeker Arrows](#equipment-seeker-arrows) | range 4, damage d4-2, AP 1 |  |  |  | 8 |  |
-| [Gear Bow](#equipment-gear-bow) | range 3, damage d4-2, AP 1 |  |  |  | 8 |  |
-| [Ogre Rifle](#equipment-ogre-rifle) | range 2, damage d8-2, AP 2 |  |  |  | 8 |  |
-| [Poison Deflection Dagger](#equipment-poison-deflection-dagger) | Deflection: +1/0/0/0; Deflection die: set to 6+ |  |  |  | 8 |  |
-| [Combat Screw Driver](#equipment-combat-screw-driver) | Deflection: +1/0/0/0; Deflection die: set to 6+ |  |  |  | 8 |  |
-| [Acid Grenade](#equipment-acid-grenade) | range 1, damage n.a., AP 0 |  |  |  | 8 |  |
-| [Poison Grenade](#equipment-poison-grenade) | range 1, damage d4 Crew damage, AP 0 |  |  |  | 8 |  |
-| [Goblin Bow](#equipment-goblin-bow) | range 2, damage d4-2, AP 1 |  |  |  |  |  |
-| [Seeker Assassin Arrows](#equipment-seeker-assassin-arrows-free) | range 4, damage d4-2, AP 1 |  |  |  |  |  |
-| [Poison Bow](#equipment-poison-bow-free) | range 2, damage d4-2 + d4 Crew damage, AP 1 |  |  |  |  |  |
-| [Hallucinating Poison Spit](#equipment-hallucinating-poison-spit) | range 3, damage N/A, AP N/A |  |  |  |  |  |
-| [Goblin Grenade](#equipment-goblin-grenade) | range 1, damage d6, AP 2 |  |  |  |  |  |
-| [Goblin Grenade](#equipment-goblin-grenade-free) | range 1, damage d6, AP 2 |  |  |  |  |  |
-| [Goblin Auto Bow](#equipment-goblin-auto-bow) | range 2, damage d4-2, AP 1 |  |  |  |  |  |
-| [Light Mortar](#equipment-light-mortar) | range 3, damage d4 Crew damage, AP N/A |  |  |  |  |  |
-| [Goblin Bow Battery](#equipment-goblin-bow-battery) | range 2, damage d4 -2, AP 2 |  |  |  |  |  |
-| [Heavy Crossbow](#equipment-heavy-crossbow) | range 4, damage d6, AP 4 |  |  |  |  |  |
-| [StinkBomb](#equipment-stinkbomb) | range 4, damage d6 Psychic damage + d6 Crew damage, AP N/A |  |  |  |  |  |
-| [Ring of Fire](#equipment-ring-of-fire) | range 2, damage n.a, AP 0 |  |  |  |  |  |
+| Equipment | Profile | Cost |
+| --- | --- | --- |
+| [Commando](#equipment-commando) | Deflection: +4/0/0/0; Deflection die: set to 6+ | 32xp |
+| [Grenadier](#equipment-grenadier) | — | 8xp |
+| [Archer Specialization](#equipment-archer-specialization) | — | 8xp |
+| [Assault Archer](#equipment-assault-archer) | — | 8xp |
+| [Clockwork Wings](#equipment-clockwork-wings) | Strength: +1/0/0/0 | 24cp |
+| [Seeker Assassin Arrows](#equipment-seeker-assassin-arrows) | range 4, damage d4-2, AP 1 | 16cp |
+| [Poison Bow](#equipment-poison-bow) | range 2, damage d4-2 + d4 Crew damage, AP 1 | 16cp |
+| [Acid Trap](#equipment-acid-trap) | — | 16cp |
+| [Seeker Arrows](#equipment-seeker-arrows) | range 4, damage d4-2, AP 1 | 8cp |
+| [Gear Bow](#equipment-gear-bow) | range 3, damage d4-2, AP 1 | 8cp |
+| [Ogre Rifle](#equipment-ogre-rifle) | range 2, damage d8-2, AP 2 | 8cp |
+| [Poison Deflection Dagger](#equipment-poison-deflection-dagger) | Deflection: +1/0/0/0; Deflection die: set to 6+ | 8cp |
+| [Combat Screw Driver](#equipment-combat-screw-driver) | Deflection: +1/0/0/0; Deflection die: set to 6+ | 8cp |
+| [Acid Grenade](#equipment-acid-grenade) | range 1, damage n.a., AP 0 | 8cp |
+| [Poison Grenade](#equipment-poison-grenade) | range 1, damage d4 Crew damage, AP 0 | 8cp |
+| [Goblin Bow](#equipment-goblin-bow) | range 2, damage d4-2, AP 1 |  |
+| [Seeker Assassin Arrows](#equipment-seeker-assassin-arrows-free) | range 4, damage d4-2, AP 1 |  |
+| [Poison Bow](#equipment-poison-bow-free) | range 2, damage d4-2 + d4 Crew damage, AP 1 |  |
+| [Hallucinating Poison Spit](#equipment-hallucinating-poison-spit) | range 3, damage N/A, AP N/A |  |
+| [Goblin Grenade](#equipment-goblin-grenade) | range 1, damage d6, AP 2 |  |
+| [Goblin Grenade](#equipment-goblin-grenade-free) | range 1, damage d6, AP 2 |  |
+| [Goblin Auto Bow](#equipment-goblin-auto-bow) | range 2, damage d4-2, AP 1 |  |
+| [Light Mortar](#equipment-light-mortar) | range 3, damage d4 Crew damage, AP N/A |  |
+| [Goblin Bow Battery](#equipment-goblin-bow-battery) | range 2, damage d4 -2, AP 2 |  |
+| [Heavy Crossbow](#equipment-heavy-crossbow) | range 4, damage d6, AP 4 |  |
+| [StinkBomb](#equipment-stinkbomb) | range 4, damage d6 Psychic damage + d6 Crew damage, AP N/A |  |
+| [Ring of Fire](#equipment-ring-of-fire) | range 2, damage n.a, AP 0 |  |
 
 <a id="equipment-commando"></a>
 
 ### Commando
 
-- Cost: 32xp — Unit Fixture: charged once for the whole Unit
+- Cost: 32xp per Unit
 - *Requires all of:*
     - 1 Specialization
     - Model type Infantry
@@ -718,7 +718,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Grenadier
 
-- Cost: 8xp — Unit Fixture: charged once for the whole Unit
+- Cost: 8xp per Unit
 - *Requires all of:*
     - 1 Specialization
     - Model type Infantry or Cavalry
@@ -731,7 +731,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Archer Specialization
 
-- Cost: 8xp — Unit Fixture: charged once for the whole Unit
+- Cost: 8xp per Unit
 - *Requires all of:*
     - 1 Specialization
     - Model type Infantry or Cavalry
@@ -744,7 +744,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Assault Archer
 
-- Cost: 8xp — Unit Fixture: charged once for the whole Unit
+- Cost: 8xp per Unit
 - *Requires all of:*
     - 2 Hands
     - Model type Archer
@@ -755,7 +755,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Clockwork Wings
 
-- Cost: 24cp — Unit Fixture: charged once for the whole Unit
+- Cost: 24cp per Unit
 - *Requires all of:*
     - Model type Infantry
     - 1 Independent
@@ -776,7 +776,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Seeker Assassin Arrows
 
-- Cost: 16cp — Unit Fixture: charged once for the whole Unit
+- Cost: 16cp per Unit
 - Range: 4, angle True/True/True/True, damage d4-2, AP 1
 - *Requires all of:*
     - 1 Special Arrows
@@ -791,7 +791,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Poison Bow
 
-- Cost: 16cp — Unit Fixture: charged once for the whole Unit
+- Cost: 16cp per Unit
 - Range: 2, angle True/True/True/True, damage d4-2 + d4 Crew damage, AP 1
 - *Requires all of:*
     - 2 Hands
@@ -805,7 +805,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Acid Trap
 
-- Cost: 16cp — Unit Fixture: charged once for the whole Unit
+- Cost: 16cp per Unit
 - *Requires all of:*
     - 1 Independent
     - Model type Infantry
@@ -823,7 +823,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Seeker Arrows
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - Range: 4, angle True/True/True/True, damage d4-2, AP 1
 - *Requires all of:*
     - 2 Special Arrows
@@ -837,7 +837,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Gear Bow
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - Range: 3, angle True/True/True/True, damage d4-2, AP 1
 - *Requires all of:*
     - 2 Hands
@@ -850,7 +850,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Ogre Rifle
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - Range: 2, angle True/True/True/True, damage d8-2, AP 2
 - *Requires all of:*
     - 2 Hands
@@ -878,7 +878,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Poison Deflection Dagger
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - *Requires all of:*
     - 1 Independent
     - Model type Infantry
@@ -892,7 +892,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Combat Screw Driver
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - *Requires all of:*
     - 1 Independent
     - Model type Infantry
@@ -906,7 +906,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Acid Grenade
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - Range: 1, angle True/True/True/True, damage n.a., AP 0
 - *Requires all of:*
     - 1 Grenades
@@ -920,7 +920,7 @@ These have dual use, one is to deliver Goblin infantry closer to the enemy, anot
 
 ### Poison Grenade
 
-- Cost: 8cp — Unit Fixture: charged once for the whole Unit
+- Cost: 8cp per Unit
 - Range: 1, angle True/True/True/True, damage d4 Crew damage, AP 0
 - *Requires all of:*
     - 1 Grenades

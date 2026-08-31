@@ -438,7 +438,6 @@ def test_model_entry_carries_the_declared_catalogue_fields() -> None:
     assert model.name == "Goblin Boss"
     assert model.anchor == "model-boss"
     assert model.cost == "1ip 2mp"
-    assert model.cost_columns == ["1", "2", "", "", ""]
     assert model.points == 5
     # Printed in the canonical Type order, as a Unit's Type line is.
     assert model.types == ["Infantry", "Officer"]
@@ -695,7 +694,6 @@ def test_equipment_entry_carries_the_declared_catalogue_fields() -> None:
     assert equip.name == "Short Bow"
     assert equip.anchor == "equipment-short-bow"
     assert equip.cost == "1ip 2mp"
-    assert equip.cost_columns == ["1", "2", "", "", ""]
     assert equip.note == "Two hands to draw."
     # `description` doubles as the image-generation prompt, so no entry prints it.
     assert not hasattr(equip, "description")
@@ -715,7 +713,7 @@ def test_equipment_has_no_image_of_its_own() -> None:
 # --- Pricing (decision 4, ADR 0026) -----------------------------------------
 
 
-def test_a_unit_fixture_says_it_is_charged_once_for_the_whole_unit() -> None:
+def test_a_unit_fixture_prices_itself_per_unit() -> None:
     race = _race_config(
         equipment={
             "banner": _equipment_config(
@@ -728,10 +726,10 @@ def test_a_unit_fixture_says_it_is_charged_once_for_the_whole_unit() -> None:
 
     (equip,) = overview.equipment
     assert equip.upgrade_all is True
-    assert equip.pricing == "Unit Fixture: charged once for the whole Unit"
+    assert equip.pricing == "5mp per Unit"
 
 
-def test_other_upgrade_equipment_says_it_is_charged_per_model() -> None:
+def test_other_upgrade_equipment_prices_itself_per_model() -> None:
     race = _race_config(
         equipment={
             "bow": _equipment_config(name="Bow", cost=Cost(mp=2), upgrade_all=False)
@@ -742,7 +740,7 @@ def test_other_upgrade_equipment_says_it_is_charged_per_model() -> None:
 
     (equip,) = overview.equipment
     assert equip.upgrade_all is False
-    assert equip.pricing == "Charged for each Model carrying it"
+    assert equip.pricing == "2mp per Model"
 
 
 def test_unpriced_default_equipment_states_no_pricing() -> None:

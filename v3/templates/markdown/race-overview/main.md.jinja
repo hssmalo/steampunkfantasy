@@ -174,10 +174,10 @@
 
 ## Models
 
-| Model | Type | Equipment slots | ip | mp | xp | cp | vpm |
-| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Model | Type | Equipment slots | Cost |
+| --- | --- | --- | --- |
 {%- for model in source.models %}
-| [{{ model.name }}](#{{ model.anchor }}) | {{ model.types | join(', ') or '—' }} | {% for holder, capacity in model.equipment_limits %}{% if not loop.first %}, {% endif %}{{ holder }} {{ capacity }}{% else %}—{% endfor %} |{{ cost_cells(model.cost_columns) }}
+| [{{ model.name }}](#{{ model.anchor }}) | {{ model.types | join(', ') or '—' }} | {% for holder, capacity in model.equipment_limits %}{% if not loop.first %}, {% endif %}{{ holder }} {{ capacity }}{% else %}—{% endfor %} | {{ model.cost }} |
 {%- endfor %}
 {% for model in source.models %}
 <a id="{{ model.anchor }}"></a>
@@ -228,17 +228,17 @@
 
 ## Equipment
 
-| Equipment | Profile | ip | mp | xp | cp | vpm |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Equipment | Profile | Cost |
+| --- | --- | --- |
 {%- for equip in source.equipment %}
-| [{{ equip.name }}](#{{ equip.anchor }}) | {% if equip.range is not none %}range {{ equip.range }}, damage {{ equip.range_damage }}, AP {{ equip.range_ap }}{% elif equip.assault_modifiers %}{{ equip.assault_modifiers | join('; ') }}{% else %}—{% endif %} |{{ cost_cells(equip.cost_columns) }}
+| [{{ equip.name }}](#{{ equip.anchor }}) | {% if equip.range is not none %}range {{ equip.range }}, damage {{ equip.range_damage }}, AP {{ equip.range_ap }}{% elif equip.assault_modifiers %}{{ equip.assault_modifiers | join('; ') }}{% else %}—{% endif %} | {{ equip.cost }} |
 {%- endfor %}
 {% for equip in source.equipment %}
 <a id="{{ equip.anchor }}"></a>
 
 ### {{ equip.name }}
 {% if equip.cost %}
-- Cost: {{ equip.cost }}{% if equip.pricing %} — {{ equip.pricing }}{% endif %}
+- Cost: {{ equip.pricing or equip.cost }}
 {%- endif %}
 {%- if equip.range is not none %}
 - Range: {{ equip.range }}, angle {{ equip.range_angle | join('/') }}, damage {{ equip.range_damage }}, AP {{ equip.range_ap }}

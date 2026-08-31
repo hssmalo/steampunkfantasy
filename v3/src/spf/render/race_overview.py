@@ -59,10 +59,10 @@ _MODEL_TYPE_ORDER: list[t.ModelType] = list(get_args(t.ModelType.__value__))
 type _AnchorFor = Callable[[str], str | None] | None
 """Resolves a Special Identifier to its Rules Reference entry, or nothing."""
 
-FIXTURE_PRICING = "Unit Fixture: charged once for the whole Unit"
-PER_MODEL_PRICING = "Charged for each Model carrying it"
-"""How an Upgrade Equipment is priced (ADR 0026). Default Equipment is never
-bought, so it states neither."""
+FIXTURE_PRICING = "per Unit"
+PER_MODEL_PRICING = "per Model"
+"""What an Upgrade Equipment's cost is charged per (ADR 0026): a fixture once
+for the whole Unit, anything else for each Model carrying it."""
 
 type _Record = UnitConfig | ModelConfig | EquipmentConfig
 """The record kinds a catalogue section is built from.
@@ -151,7 +151,6 @@ class ModelEntry:
     name: str
     anchor: str
     cost: str
-    cost_columns: list[str]
     points: int
     types: list[t.ModelType]
     equipment_limits: list[tuple[str, str]]
@@ -197,10 +196,10 @@ class EquipmentEntry:
     name: str
     anchor: str
     cost: str
-    cost_columns: list[str]
     upgrade_all: bool | None
     pricing: str
-    """How the `cost` is charged (ADR 0026), empty for Default Equipment."""
+    """The `cost` with how it is charged (ADR 0026), empty for Default
+    Equipment, which is never bought."""
 
     requires_all: list[str]
     """The requirements on whoever carries this, **every one of which holds**.
@@ -433,16 +432,17 @@ def _spawn_entry(key: str, spawn: SpawnConfig, *, catalogue: _Catalogue) -> Spaw
     )
 
 
-def _pricing(*, upgrade_all: bool | None) -> str:
-    """State how a priced Equipment is charged (ADR 0026).
+def _pricing(cost: t.Cost | None, *, upgrade_all: bool | None) -> str:
+    """Price an Equipment and say what it is charged per (ADR 0026).
 
     `upgrade_all` is set if and only if a `cost` is, so an unset one is
-    Default Equipment: nothing is ever charged for it, and there is no rule to
-    print.
+    Default Equipment: nothing is ever charged for it, and there is no price
+    to print.
     """
     if upgrade_all is None:
         return ""
-    return FIXTURE_PRICING if upgrade_all else PER_MODEL_PRICING
+    per = FIXTURE_PRICING if upgrade_all else PER_MODEL_PRICING
+    return f"{cost_text(cost)} {per}"
 
 
 def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEntry:
@@ -500,7 +500,6 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
         name=model.name,
         anchor=anchor(MODEL, key),
         cost=cost_text(model.cost),
-        cost_columns=cost_columns(model.cost),
         points=(model.cost or t.Cost()).to_points(),
         types=_ordered_types(model.type),
         equipment_limits=limit_rows(model.equipment_limit),
@@ -554,9 +553,8 @@ def _equipment_entry(
         name=equip.name,
         anchor=anchor(EQUIPMENT, key),
         cost=cost_text(equip.cost),
-        cost_columns=cost_columns(equip.cost),
         upgrade_all=equip.upgrade_all,
-        pricing=_pricing(upgrade_all=equip.upgrade_all),
+        pricing=_pricing(equip.cost, upgrade_all=equip.upgrade_all),
         requires_all=requirement_lines(equip.requires),
         carried_by=catalogue.carried_by.get(key, []),
         range=ranged.range if ranged is not None else None,

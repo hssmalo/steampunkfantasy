@@ -207,12 +207,12 @@
 \section{Models}
 \label{section-models}
 
-\begin{longtable}{@{}p{0.20\textwidth}p{0.22\textwidth}p{0.22\textwidth}rrrrr@{}}
-\textbf{Model} & \textbf{Type} & \textbf{Equipment slots} & \textbf{ip} & \textbf{mp} & \textbf{xp} & \textbf{cp} & \textbf{vpm} \\
+\begin{longtable}{@{}p{0.24\textwidth}p{0.26\textwidth}p{0.26\textwidth}l@{}}
+\textbf{Model} & \textbf{Type} & \textbf{Equipment slots} & \textbf{Cost} \\
 \hline
 \endhead
 \BLOCK{for model in source.models}
-\hyperref[\VAR{model.anchor}]{\VAR{model.name | latex_escape}} & \VAR{(model.types | join(', ') | latex_escape) or '---'} & \BLOCK{for holder, capacity in model.equipment_limits}\BLOCK{if not loop.first}, \BLOCK{endif}\VAR{holder | latex_escape} \VAR{capacity | latex_escape}\BLOCK{else}---\BLOCK{endfor}\VAR{cost_cells(model.cost_columns)} \\
+\hyperref[\VAR{model.anchor}]{\VAR{model.name | latex_escape}} & \VAR{(model.types | join(', ') | latex_escape) or '---'} & \BLOCK{for holder, capacity in model.equipment_limits}\BLOCK{if not loop.first}, \BLOCK{endif}\VAR{holder | latex_escape} \VAR{capacity | latex_escape}\BLOCK{else}---\BLOCK{endfor} & \VAR{model.cost | latex_escape} \\
 \BLOCK{endfor}
 \end{longtable}
 
@@ -271,12 +271,12 @@
 \section{Equipment}
 \label{section-equipment}
 
-\begin{longtable}{@{}p{0.24\textwidth}p{0.40\textwidth}rrrrr@{}}
-\textbf{Equipment} & \textbf{Profile} & \textbf{ip} & \textbf{mp} & \textbf{xp} & \textbf{cp} & \textbf{vpm} \\
+\begin{longtable}{@{}p{0.28\textwidth}p{0.46\textwidth}l@{}}
+\textbf{Equipment} & \textbf{Profile} & \textbf{Cost} \\
 \hline
 \endhead
 \BLOCK{for equip in source.equipment}
-\hyperref[\VAR{equip.anchor}]{\VAR{equip.name | latex_escape}} & \BLOCK{if equip.range is not none}range \VAR{equip.range}, damage \VAR{equip.range_damage | latex_escape}, AP \VAR{equip.range_ap}\BLOCK{elif equip.assault_modifiers}\VAR{equip.assault_modifiers | join('; ') | latex_escape}\BLOCK{else}---\BLOCK{endif}\VAR{cost_cells(equip.cost_columns)} \\
+\hyperref[\VAR{equip.anchor}]{\VAR{equip.name | latex_escape}} & \BLOCK{if equip.range is not none}range \VAR{equip.range}, damage \VAR{equip.range_damage | latex_escape}, AP \VAR{equip.range_ap}\BLOCK{elif equip.assault_modifiers}\VAR{equip.assault_modifiers | join('; ') | latex_escape}\BLOCK{else}---\BLOCK{endif} & \VAR{equip.cost | latex_escape} \\
 \BLOCK{endfor}
 \end{longtable}
 
@@ -286,7 +286,7 @@
 
 \begin{itemize}
 \BLOCK{if equip.cost}
-\item Cost: \VAR{equip.cost | latex_escape}\BLOCK{if equip.pricing} --- \VAR{equip.pricing | latex_escape}\BLOCK{endif}
+\item Cost: \VAR{(equip.pricing or equip.cost) | latex_escape}
 \BLOCK{endif}
 \BLOCK{if equip.range is not none}
 \item Range: \VAR{equip.range}, angle \VAR{equip.range_angle | join('/') | latex_escape}, damage \VAR{equip.range_damage | latex_escape}, AP \VAR{equip.range_ap}
