@@ -49,6 +49,8 @@ import tomli_w  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
 
 from spf import registry as reg  # noqa: E402
+from spf.armies import ArmyList  # noqa: E402
+from spf.config import config  # noqa: E402
 from spf.schemas import rules as r  # noqa: E402
 from spf.schemas import type_aliases as t  # noqa: E402
 from spf.schemas.race import (  # noqa: E402
@@ -184,6 +186,31 @@ def synthetic_race(
         },
         spawns=spawns if spawns is not None else {},
     )
+
+
+def synthetic_army(
+    race: RaceConfig, *, units: list[str] | None = None, nick: str = "Test Army"
+) -> ArmyList:
+    """Field an Army of the named Units, drawn from the given Race.
+
+    Unresolved, the way a player's Army is while it is being built: call
+    `.resolve(race)` for the Army the renderings read.
+    """
+    army = ArmyList(race=next(iter(race.races)), nick=nick, units=[])
+    for name in units if units is not None else ["squad"]:
+        army = army.add_unit(name, race_config=race)
+    return army
+
+
+@pytest.fixture
+def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Point `config.paths.armies` at a directory of this test's own.
+
+    The committed Armies are a subject in their own right; a test about
+    saving, listing or loading is not about them.
+    """
+    monkeypatch.setattr(config.paths, "armies", tmp_path)
+    return tmp_path
 
 
 def write_race_toml(directory: Path, race: RaceConfig) -> Path:

@@ -11,10 +11,12 @@ import pytest
 from pydantic import ValidationError
 
 from spf.armies import unit
+from spf.armies.io import save_army
 from spf.config import config
 from spf.races import get_race
 from tests.conftest import (
     InstallRegistry,
+    synthetic_army,
     synthetic_assault,
     synthetic_equipment,
     synthetic_model,
@@ -164,3 +166,30 @@ def test_the_installed_registry_answers_a_module_that_imported_the_loader(
     installed = install_registry()
 
     assert unit.load_registry() is installed
+
+
+# ---------------------------------------------------------------------------
+# Armies
+# ---------------------------------------------------------------------------
+
+
+def test_synthetic_army_fields_the_units_it_names() -> None:
+    army = synthetic_army(synthetic_race(), units=["squad", "mob"], nick="Da Boyz")
+
+    assert [army_unit.name for army_unit in army.units] == ["squad", "mob"]
+    assert army.race == "goblin"
+    assert army.nick == "Da Boyz"
+
+
+def test_synthetic_army_resolves_against_the_race_it_was_built_from() -> None:
+    race = synthetic_race()
+
+    resolved = synthetic_army(race).resolve(race)
+
+    assert [unit.name for unit in resolved.units] == ["squad"]
+
+
+def test_armies_dir_is_where_a_saved_army_lands(armies_dir: Path) -> None:
+    save_army(synthetic_army(synthetic_race()), army_name="warband")
+
+    assert (armies_dir / "warband.json").exists()
