@@ -310,13 +310,23 @@ def failing_tests() -> list[str]:
         check=False,
         cwd=V3,
     )
-    return sorted(
-        {
-            line.split(" ", 1)[0]
-            for line in result.stdout.splitlines()
-            if line.startswith(("FAILED", "ERROR"))
-        }
-    )
+    return parse_failures(result.stdout)
+
+
+def parse_failures(output: str) -> list[str]:
+    """Read the test ids out of a pytest short summary.
+
+    A summary line is `'FAILED <node id> - <reason>'`. The `.py` is what tells
+    one from a traceback line that happens to open with the same word.
+    """
+    ids: set[str] = set()
+    for line in output.splitlines():
+        if not line.startswith(("FAILED", "ERROR")):
+            continue
+        fields = line.split()
+        if len(fields) > 1 and ".py" in fields[1]:
+            ids.add(fields[1])
+    return sorted(ids)
 
 
 @dataclass(frozen=True)

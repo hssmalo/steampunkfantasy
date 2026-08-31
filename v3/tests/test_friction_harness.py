@@ -229,3 +229,31 @@ def test_sample_keeps_everything_when_asked_for_the_full_sweep() -> None:
     targets = _targets(5, "description", "a")
 
     assert friction.sample_targets(targets, per_field=None, seed=0) == targets
+
+
+#
+# Reading a pytest run
+#
+
+PYTEST_OUTPUT = """\
+.....F...E...
+=================================== FAILURES ===================================
+FAILED is a word that also opens this traceback line
+=========================== short test summary info ============================
+FAILED tests/render/test_army.py::test_rules - AssertionError: assert 'a' in 'b'
+FAILED tests/render/test_army.py::test_rules - AssertionError: assert 'a' in 'b'
+ERROR tests/lint/test_latex.py::test_manifest
+1 failed, 1 error, 11 passed in 3.14s
+"""
+
+
+def test_failures_are_read_as_test_ids() -> None:
+    """The id, not the `FAILED` marker in front of it, and each one once."""
+    assert friction.parse_failures(PYTEST_OUTPUT) == [
+        "tests/lint/test_latex.py::test_manifest",
+        "tests/render/test_army.py::test_rules",
+    ]
+
+
+def test_a_clean_run_reports_nothing() -> None:
+    assert friction.parse_failures("....\n12 passed in 1.00s\n") == []

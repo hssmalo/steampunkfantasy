@@ -141,5 +141,10 @@ at a time in the committed corpus, skips anything the linters reject, runs the
 suite, and reports every test that a legitimate rules edit would have broken.
 Findings are bugs in the tests, not in the data.
 
+Because every mutation costs a full pytest run, the default sweep samples one
+value per allowlisted field name, spread across files. `--per-field N` widens
+it, `--full` mutates everything, and `--list` prints the chosen values without
+running anything.
+
 It is deliberately **not** part of `just check`: it roughly doubles suite
 runtime, and the property it guards only changes when someone writes a test.

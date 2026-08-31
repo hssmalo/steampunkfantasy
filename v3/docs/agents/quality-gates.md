@@ -18,7 +18,12 @@ just test       # Run the test suite quietly (accepts extra pytest args, e.g. `j
 just fix        # Auto-fix lint issues, then reformat
 just validate   # Validate the TOML files and the ComfyUI profiles via the spf CLI
 just lint-races # Lint race data for name and key consistency (spf race lint)
+
+just test-friction  # Mutate lint-clean TOML values; report the tests that break
 ```
+
+`just test-friction` is on-demand and deliberately outside `just check` — see
+[`testing.md`](testing.md).
 
 ## Tests depend only on tracked files
 
