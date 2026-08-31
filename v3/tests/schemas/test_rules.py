@@ -189,6 +189,7 @@ def test_a_namespace_names_where_its_registry_lives() -> None:
             "namespaces": {
                 "hex": {
                     "name": "Hexes",
+                    "label": "hex",
                     "file": "hexes.toml",
                     "table": "hexes",
                     "group": "terrain",
@@ -201,6 +202,23 @@ def test_a_namespace_names_where_its_registry_lives() -> None:
     hexes = namespaces.namespaces["hex"]
     assert (hexes.file, hexes.table, hexes.group) == ("hexes.toml", "hexes", "terrain")
     assert namespaces.damage_type["acid"].name == "Acid"
+
+
+def test_a_namespace_labels_one_of_its_records_for_a_kind_qualifier() -> None:
+    # The plural `name` heads a whole registry; the singular `label` qualifies
+    # one record of it, as `Fog (hex)`.
+    hexes = r.NamespaceConfig.model_validate(
+        {"name": "Hex Effects", "label": "hex", "file": "hexes.toml", "table": "hexes"}
+    )
+
+    assert (hexes.name, hexes.label) == ("Hex Effects", "hex")
+
+
+def test_a_namespace_without_a_label_is_rejected() -> None:
+    with pytest.raises(ValidationError):
+        r.NamespaceConfig.model_validate(
+            {"name": "Hex Effects", "file": "hexes.toml", "table": "hexes"}
+        )
 
 
 def test_a_union_value_may_be_either_member_type() -> None:

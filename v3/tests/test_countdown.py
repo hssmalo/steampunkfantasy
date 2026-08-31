@@ -24,7 +24,7 @@ REGISTRY = Registry(
     records={"special": {"fear": WRITTEN, "hide": STUB, "heal": QUESTIONED}},
     namespaces={
         "special": r.NamespaceConfig(
-            name="Specials", file="special.toml", table="special"
+            name="Specials", label="special", file="special.toml", table="special"
         )
     },
 )

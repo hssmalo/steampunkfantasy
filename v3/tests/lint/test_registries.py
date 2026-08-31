@@ -13,8 +13,12 @@ from spf.schemas.config import LintConfig
 CONVENTIONS = LintConfig(function_words=["of", "with", "in"])
 
 NAMESPACES = {
-    "special": r.NamespaceConfig(name="Specials", file="special.toml", table="special"),
-    "token": r.NamespaceConfig(name="Tokens", file="tokens.toml", table="tokens"),
+    "special": r.NamespaceConfig(
+        name="Specials", label="special", file="special.toml", table="special"
+    ),
+    "token": r.NamespaceConfig(
+        name="Tokens", label="token", file="tokens.toml", table="tokens"
+    ),
 }
 
 

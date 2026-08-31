@@ -157,8 +157,24 @@ _Avoid_: alias, nickname (Nick is an Army/Unit/Model name), flavor name
 One occurrence of a Special on a Unit, Model, or Equipment: an **Identifier**
 plus typed **Args**, and optionally free `text`, an **Atmospheric Name**, and
 `replace`. A holder may carry several Instances of the same Identifier — three
-`resistance` for three damage types — and they stay distinct.
+`resistance` for three damage types — and they stay distinct. An Instance is
+either *prose-shaped* (`text`) or *case-shaped* (a **Preamble** over **Cases**),
+never both (ADR-0030).
 _Avoid_: entry, occurrence, usage
+
+**Preamble**:
+Prose an **Instance** prints *before* its **Cases**, scoping all of them — a
+condition ("If not using aim") or an instruction ("fire once at all enemy models
+within range"). Only meaningful with Cases: prose that scopes several Instances,
+or that holds regardless of the rule, belongs in the carrier's `note`.
+_Avoid_: condition (only some are conditional), prefix, lead
+
+**Case**:
+One value-bearing line of an **Instance**: **Args**, merged over the Instance's
+own, plus a scrap of prose saying when those values apply ("[5+] at point blank
+range"). Cases are hand-written in one array, so two that read alike are both
+printed — unlike Instances, which are deduplicated.
+_Avoid_: variant, band, entry
 
 **Slot**:
 Where a Special sits on the thing that carries it: `unit`, `model`, `assault`,
@@ -213,6 +229,8 @@ A Special is **versioned over** a Namespace when a Ref-valued Variable is what
 one Instance of it differs from the next by: `resistance` over damage types,
 `assault_extra_damage` over the kinds it applies (ADR-0027). Version prose is
 optional, and a versioned Special often carries none.
+_Avoid_: variant (a Version is keyed by a **Ref** into a Namespace, not by an id
+the rule owns itself)
 
 **Stub**:
 A record whose rule text is not yet written, marked by the presence of a `todo`
@@ -385,10 +403,28 @@ _Avoid_: deck (a deck is the whole Army's cards), stack, pile
 **Army Reference**:
 A Rendering of the exact rules pertaining to one Army, built from a resolved
 Army. A nested Unit → Model → Equipment view of the fielded force: stats,
-specials (the short override text — full rule text belongs to the Rulebook),
-and damage tables. Orders are *not* part of it; those live on the Order Cards.
-Identically-configured Units (and identical Models within a Unit) appear once.
+specials (the short override text on the Unit line, and the full rule text for
+the rules it reaches in its **Rules Reference**), and damage tables. Orders are
+*not* part of it; those live on the Order Cards. Identically-configured Units
+(and identical Models within a Unit) appear once.
 _Avoid_: army sheet, roster printout
+
+**Rules Reference**:
+The flat, alphabetical list of rule Records an Army's Specials reach, printed
+after the Units in an Army Reference and in each Army's entry in an Army Pack.
+One entry per Record, showing the rule's general text; the Unit lines link into
+it. Omitted with `--no-rules`.
+_Avoid_: appendix, glossary, rules index
+
+**Kind Qualifier**:
+The parenthetical namespace label after a Rules Reference heading — `Fog (hex)`
+— carried by every entry, not only colliding ones.
+_Avoid_: namespace tag, suffix
+
+**Alias Entry**:
+A Rules Reference entry for an Instance's atmospheric name, pointing at the
+Record it is an occurrence of: *Insanity Field — see Terror (special)*.
+_Avoid_: alias, nickname stub, redirect
 
 **Army Pack**:
 A Rendering binding the Army References of several Armies into one document —

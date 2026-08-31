@@ -580,3 +580,80 @@ def test_render_army_pack_pdf_compiles(tmp_path: Path) -> None:
     render_army_pack(index=index, opts=RenderOpts(format="pdf", out=out))
 
     assert out.stat().st_size > 0
+
+
+# --- The Rules Reference sits inside each Army's entry (ADR 0029) -----------
+
+
+def _two_army_pack(*, rules: bool = True) -> ArmyPack:
+    return build_pack(
+        [("Geir Arne", io.load_army(DEMO_ARMY)), ("Morten", io.load_army(DEMO_ARMY))],
+        title="Test Pack",
+        stem="pack",
+        image_for=no_image,
+        rules=rules,
+    )
+
+
+def test_each_army_in_a_pack_gets_its_own_rules_reference() -> None:
+    # Nothing is shared or deduplicated across Armies: a player's own pages
+    # have to be complete on their own.
+    pack = _two_army_pack()
+
+    assert all(entry.reference.rules is not None for entry in pack.entries)
+
+
+def test_two_armies_fielding_one_rule_do_not_share_an_anchor() -> None:
+    # A Pack is one document with one id space, so an unprefixed anchor would
+    # emit the same id twice and land every link in the first Army.
+    pack = _two_army_pack()
+
+    first, second = (entry.reference.rules for entry in pack.entries)
+    assert first is not None
+    assert second is not None
+    assert set(first.anchors.values()).isdisjoint(second.anchors.values())
+
+
+def test_no_rules_leaves_the_pack_without_one() -> None:
+    pack = _two_army_pack(rules=False)
+
+    assert all(entry.reference.rules is None for entry in pack.entries)
+
+
+def test_army_pack_markdown_prints_a_rules_reference_per_army(tmp_path: Path) -> None:
+    pack = _two_army_pack()
+
+    out = render(
+        ARMY_PACK, pack, fmt=get_format("markdown"), name="pack", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert text.count("### Rules Reference") == 2
+    # Every emitted anchor is unique, which is what keeps the links honest.
+    ids = re.findall(r'<a id="([^"]+)"></a>', text)
+    assert len(ids) == len(set(ids))
+
+
+def test_army_pack_markdown_omits_the_rules_reference_with_no_rules(
+    tmp_path: Path,
+) -> None:
+    pack = _two_army_pack(rules=False)
+
+    out = render(
+        ARMY_PACK, pack, fmt=get_format("markdown"), name="pack", output_root=tmp_path
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "Rules Reference" not in text
+    assert "](#rule-" not in text
+
+
+def test_cli_accepts_no_rules(tmp_path: Path) -> None:
+    index = _write_pack_dir(tmp_path)
+    out = tmp_path / "pack.md"
+
+    render_army_pack(
+        index=index, opts=RenderOpts(format="markdown", out=out, no_rules=True)
+    )
+
+    assert "Rules Reference" not in out.read_text(encoding="utf-8")

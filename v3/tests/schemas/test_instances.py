@@ -44,6 +44,65 @@ def test_the_envelope_is_closed() -> None:
 
 
 # ---------------------------------------------------------------------------
+# The two shapes: prose-shaped and case-shaped (ADR 0030)
+# ---------------------------------------------------------------------------
+
+
+def test_an_instance_is_prose_shaped_by_default() -> None:
+    instance = SpecialInstance.model_validate({"text": "Only against Beasts."})
+
+    assert instance.preamble is None
+    assert instance.cases == []
+
+
+def test_a_case_shaped_instance_carries_a_preamble_and_cases() -> None:
+    instance = SpecialInstance.model_validate(
+        {
+            "preamble": "If not using aim",
+            "cases": [
+                {"args": {"N": 5}, "text": "at point blank range"},
+                {"args": {"N": 6}, "text": "at normal and long range"},
+            ],
+        }
+    )
+
+    assert instance.preamble == "If not using aim"
+    assert [case.args["N"] for case in instance.cases] == [5, 6]
+    assert instance.cases[0].text == "at point blank range"
+
+
+def test_a_case_needs_neither_text_nor_args() -> None:
+    (case,) = SpecialInstance.model_validate({"cases": [{}]}).cases
+
+    assert case.text is None
+    assert case.args == {}
+
+
+def test_the_case_envelope_is_closed() -> None:
+    with pytest.raises(ValidationError, match="extra_forbidden"):
+        SpecialInstance.model_validate({"cases": [{"N": 6}]})
+
+
+def test_prose_and_cases_are_mutually_exclusive() -> None:
+    with pytest.raises(ValidationError, match="either 'text' or 'cases'"):
+        SpecialInstance.model_validate(
+            {"text": "at point blank range", "cases": [{"args": {"N": 5}}]}
+        )
+
+
+def test_a_preamble_without_cases_is_rejected() -> None:
+    # The message teaches the three homes prose has: cases, 'text', 'note'.
+    with pytest.raises(ValidationError, match="'preamble' scopes cases"):
+        SpecialInstance.model_validate({"preamble": "If not using aim"})
+
+
+def test_cases_without_a_preamble_are_legal() -> None:
+    instance = SpecialInstance.model_validate({"cases": [{"args": {"N": 5}}]})
+
+    assert instance.preamble is None
+
+
+# ---------------------------------------------------------------------------
 # The gate, as a Race file meets it
 # ---------------------------------------------------------------------------
 

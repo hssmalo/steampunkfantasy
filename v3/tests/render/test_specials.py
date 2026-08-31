@@ -1,7 +1,7 @@
 """Tests for presenting Special instances: signatures, headings, grouping."""
 
 from spf.registry import load_registry
-from spf.render.specials import special_lines, special_row
+from spf.render.specials import SpecialLine, special_lines, special_row
 from spf.schemas.special import SpecialInstance
 
 REGISTRY = load_registry()
@@ -89,6 +89,125 @@ def test_a_rule_with_neither_signature_nor_prose_has_no_text() -> None:
     assert text == ""
 
 
+# --- a case-shaped instance -------------------------------------------------
+
+
+def test_a_preamble_precedes_the_cases_it_scopes() -> None:
+    _, text = _row(
+        "area",
+        preamble=(
+            "If not using aim, fire once at all enemy models within range"
+            " and within front arc"
+        ),
+        cases=[
+            {"args": {"N": 5}, "text": "at point blank range"},
+            {"args": {"N": 6}, "text": "at normal and long range"},
+        ],
+    )
+
+    assert text == (
+        "If not using aim, fire once at all enemy models within range and"
+        " within front arc: [5+] at point blank range, [6+] at normal and"
+        " long range"
+    )
+
+
+def test_cases_without_a_preamble_stand_on_their_own() -> None:
+    _, text = _row(
+        "area",
+        cases=[
+            {"args": {"N": 4}, "text": "at point blank"},
+            {"args": {"N": 5}, "text": "at range=2"},
+        ],
+    )
+
+    assert text == "[4+] at point blank, [5+] at range=2"
+
+
+def test_a_case_may_carry_values_without_prose() -> None:
+    _, text = _row(
+        "area",
+        preamble="Choose one hex (per model firing this weapon) within normal range",
+        cases=[{"args": {"N": 5}}],
+    )
+
+    assert text == (
+        "Choose one hex (per model firing this weapon) within normal range: [5+]"
+    )
+
+
+def test_a_case_may_carry_prose_without_values() -> None:
+    # An absent optional argument elides its group, leaving the prose alone.
+    _, text = _row("area", cases=[{"text": "at any range"}])
+
+    assert text == "at any range"
+
+
+def test_a_case_inherits_the_instances_arguments() -> None:
+    # The ref is constant across the cases, so it is written once.
+    _, text = _row(
+        "resistance",
+        args={"version": "damage_type.poison"},
+        cases=[{"args": {"N": 12}, "text": "on foot"}, {"args": {"N": 6}}],
+    )
+
+    assert text == "Poison[12] on foot, Poison[6]"
+
+
+def test_two_case_shaped_instances_read_as_two_condition_groups() -> None:
+    specials = {
+        "area": [
+            SpecialInstance.model_validate(
+                {
+                    "preamble": "If fired from a unit with 1-2 alive models",
+                    "cases": [
+                        {"args": {"N": 4}, "text": "at point blank"},
+                        {"args": {"N": 5}, "text": "at range=2"},
+                        {"args": {"N": 6}, "text": "at range=3 or 4"},
+                    ],
+                }
+            ),
+            SpecialInstance.model_validate(
+                {
+                    "preamble": "If fired from a unit with 3-4 alive models",
+                    "cases": [
+                        {"args": {"N": 2}, "text": "at point blank"},
+                        {"args": {"N": 4}, "text": "at range=2"},
+                        {"args": {"N": 5}, "text": "at range=3 or 4"},
+                    ],
+                }
+            ),
+        ]
+    }
+
+    assert special_lines(specials, registry=REGISTRY) == [
+        SpecialLine(
+            "Area",
+            "If fired from a unit with 1-2 alive models: [4+] at point blank,"
+            " [5+] at range=2, [6+] at range=3 or 4;"
+            " If fired from a unit with 3-4 alive models: [2+] at point blank,"
+            " [4+] at range=2, [5+] at range=3 or 4",
+            None,
+        )
+    ]
+
+
+def test_a_prose_shaped_instance_is_unchanged_by_the_case_shape() -> None:
+    # The instances left prose-shaped render exactly as they always have: the
+    # signature alone, with no separator and no empty case list showing.
+    _, text = _row("area", args={"N": 5})
+
+    assert text == "[5+]"
+
+
+def test_two_cases_that_read_alike_are_both_printed() -> None:
+    # Instance dedup exists because the source chain delivers repeats nobody
+    # wrote; cases are hand-written in one array, so a repeat is visible.
+    _, text = _row("area", cases=[{"args": {"N": 5}}, {"args": {"N": 5}}])
+
+    assert text == "[5+], [5+]"
+
+
 # --- grouping ---------------------------------------------------------------
 
 
@@ -101,7 +220,7 @@ def test_instances_of_one_id_group_under_one_heading() -> None:
     }
 
     assert special_lines(specials, registry=REGISTRY) == [
-        ("Resistance", "Poison[12]; Fire[3]")
+        SpecialLine("Resistance", "Poison[12]; Fire[3]", None)
     ]
 
 
@@ -110,7 +229,9 @@ def test_instances_that_read_alike_are_printed_once() -> None:
     instance = SpecialInstance(args={"version": "damage_type.psychic", "N": 1})
     specials = {"resistance": [instance, instance, instance]}
 
-    assert special_lines(specials, registry=REGISTRY) == [("Resistance", "Psychic[1]")]
+    assert special_lines(specials, registry=REGISTRY) == [
+        SpecialLine("Resistance", "Psychic[1]", None)
+    ]
 
 
 def test_atmospheric_names_keep_their_own_headings() -> None:
@@ -124,8 +245,8 @@ def test_atmospheric_names_keep_their_own_headings() -> None:
     }
 
     assert special_lines(specials, registry=REGISTRY) == [
-        ("Keen Eye", "Good Shot"),
-        ("To Hit", "Bad Shot"),
+        SpecialLine("Keen Eye", "Good Shot", None),
+        SpecialLine("To Hit", "Bad Shot", None),
     ]
 
 
@@ -135,7 +256,38 @@ def test_grouping_keeps_the_order_the_ids_were_contributed_in() -> None:
         "sniper": [SpecialInstance(text="Choose the model")],
     }
 
-    assert [heading for heading, _ in special_lines(specials, registry=REGISTRY)] == [
+    assert [line.name for line in special_lines(specials, registry=REGISTRY)] == [
         "Evasion",
         "Sniper",
     ]
+
+
+# --- anchors ----------------------------------------------------------------
+
+
+def test_a_line_carries_no_anchor_without_a_lookup() -> None:
+    specials = {"evasion": [SpecialInstance(args={"N": 4})]}
+
+    assert special_lines(specials, registry=REGISTRY)[0].anchor is None
+
+
+def test_a_lookup_is_asked_about_the_identifier_not_the_heading() -> None:
+    # An atmospheric name is what the reader sees; the Identifier is what
+    # addresses the rule, so only it can find the rule's entry.
+    specials = {"evasion": [SpecialInstance(name="Nimble", args={"N": 4})]}
+
+    (line,) = special_lines(
+        specials, registry=REGISTRY, anchor_for={"evasion": "rule-special-evasion"}.get
+    )
+
+    assert (line.name, line.anchor) == ("Nimble", "rule-special-evasion")
+
+
+def test_an_identifier_the_lookup_does_not_know_leaves_the_anchor_unset() -> None:
+    specials = {"evasion": [SpecialInstance(args={"N": 4})]}
+
+    (line,) = special_lines(
+        specials, registry=REGISTRY, anchor_for=lambda _identifier: None
+    )
+
+    assert line.anchor is None

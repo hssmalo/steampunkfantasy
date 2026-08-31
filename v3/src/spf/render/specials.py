@@ -12,6 +12,8 @@ own occurrence.
 """
 
 import re
+from collections.abc import Callable
+from typing import NamedTuple
 
 from spf.registry import Registry, load_registry
 from spf.schemas.rules import RuleRecord
@@ -29,6 +31,33 @@ _PROSE_SEPARATOR = ". "
 _INSTANCE_SEPARATOR = "; "
 """Between the texts of several instances sharing one heading."""
 
+_PREAMBLE_SEPARATOR = ": "
+"""Between a preamble and the cases it scopes."""
+
+_VALUES_SEPARATOR = " "
+"""Between a case's own values and the prose saying when they apply."""
+
+_CASE_SEPARATOR = ", "
+"""Between two cases of one instance.
+
+Lighter than the separator between instances, so the condition groups of a
+rule carrying several case-shaped instances stay visibly apart.
+"""
+
+
+class SpecialLine(NamedTuple):
+    """One line a reader is shown, and where its rule is written out.
+
+    The anchor travels beside the name rather than as a finished link: the
+    Markdown and LaTeX families need different link syntax from the same
+    value, and a display name alone cannot address a rule.
+    """
+
+    name: str
+    text: str
+    anchor: str | None
+    """Where this rule's Rules Reference entry sits, when there is one."""
+
 
 def special_row(
     identifier: str, instance: SpecialInstance, *, registry: Registry
@@ -36,15 +65,52 @@ def special_row(
     """Render one instance as the (heading, text) pair a reader is shown."""
     rule = registry.specials.get(identifier)
     heading = instance.name or (rule.name if rule is not None else identifier)
-    signature = "" if rule is None else _interpolate(rule, instance.args, registry)
-    parts = [part for part in (signature, instance.text) if part]
-    return heading, _PROSE_SEPARATOR.join(parts)
+    if instance.cases:
+        return heading, _cases(instance, rule, registry)
+    signature = _signature(rule, instance.args, registry)
+    return heading, _join(_PROSE_SEPARATOR, signature, instance.text)
+
+
+def _cases(
+    instance: SpecialInstance, rule: RuleRecord | None, registry: Registry
+) -> str:
+    """Render a case-shaped instance: its preamble, then its cases (ADR 0030).
+
+    Each case fills the signature with its own args over the instance's, so a
+    value constant across the cases is written once. Cases that read alike are
+    both printed: they are hand-written in one array, where a repeat is a typo
+    the reader should see.
+    """
+    lines = [
+        _join(
+            _VALUES_SEPARATOR,
+            _signature(rule, instance.args | case.args, registry),
+            case.text,
+        )
+        for case in instance.cases
+    ]
+    return _join(_PREAMBLE_SEPARATOR, instance.preamble, _join(_CASE_SEPARATOR, *lines))
+
+
+def _signature(
+    rule: RuleRecord | None, args: dict[str, int | str], registry: Registry
+) -> str:
+    """Fill in the rule's signature, or nothing at all for an unknown id."""
+    return "" if rule is None else _interpolate(rule, args, registry)
+
+
+def _join(separator: str, *parts: str | None) -> str:
+    """Join the parts that are there, so an absent one leaves no separator."""
+    return separator.join(part for part in parts if part)
 
 
 def special_lines(
-    specials: Specials, *, registry: Registry | None = None
-) -> list[tuple[str, str]]:
-    """Render one slot's instances as (heading, text) lines, grouped by heading.
+    specials: Specials,
+    *,
+    registry: Registry | None = None,
+    anchor_for: Callable[[str], str | None] | None = None,
+) -> list[SpecialLine]:
+    """Render one slot's instances as lines, grouped by heading.
 
     N instances of an id become one line, in the order the ids were
     contributed. An atmospheric name is part of the grouping key rather than a
@@ -54,6 +120,10 @@ def special_lines(
     Instances that read exactly alike are printed once. Three Models of a Unit
     each granting the same Resistance say one thing between them, and the
     reader learns nothing from the second and third copy.
+
+    `anchor_for` resolves an Identifier to its Rules Reference entry. Without
+    one every line's `anchor` is `None`, which is what the console printing
+    and a `--no-rules` document want.
     """
     registry = registry if registry is not None else load_registry()
     grouped: dict[tuple[str, str], dict[str, None]] = {}
@@ -62,8 +132,12 @@ def special_lines(
             heading, text = special_row(identifier, instance, registry=registry)
             grouped.setdefault((identifier, heading), {})[text] = None
     return [
-        (heading, _INSTANCE_SEPARATOR.join(text for text in texts if text))
-        for (_, heading), texts in grouped.items()
+        SpecialLine(
+            name=heading,
+            text=_INSTANCE_SEPARATOR.join(text for text in texts if text),
+            anchor=anchor_for(identifier) if anchor_for is not None else None,
+        )
+        for (identifier, heading), texts in grouped.items()
     ]
 
 

@@ -1524,6 +1524,7 @@ ap = 2
 #preamble = "One hex within normal range"
 args.N = 5
 
+
 [equipment.pentagun]
 name = "PentaGun"
 race = "elf"

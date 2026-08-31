@@ -1160,7 +1160,19 @@ damage = "d6 -1 Psychic damage"
 ap = "N/A"
 
 [[equipment.shriek.range.specials.area]]
-text = "Target enemies in all hexes within front arc (not including the hexes on the edge of firing angle) and long range. At point blank Area[4+], within normal range Area[5+] and all other hexes Area[6+]"
+preamble = "Target enemies in all hexes within front arc (not including the hexes on the edge of firing angle) and long range"
+
+[[equipment.shriek.range.specials.area.cases]]
+args.N = 4
+text = "at point blank"
+
+[[equipment.shriek.range.specials.area.cases]]
+args.N = 5
+text = "within normal range"
+
+[[equipment.shriek.range.specials.area.cases]]
+args.N = 6
+text = "at all other hexes"
 
 [[equipment.shriek.range.specials.ammo]]
 text = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo"

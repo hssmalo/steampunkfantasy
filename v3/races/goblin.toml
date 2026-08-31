@@ -828,6 +828,7 @@ text = "Always treated as loaded"
 
 [[equipment.gear_bow.range.specials.range_gear_disruption]]
 args.N = 6
+
 [equipment.clockwork_wings]
 name = "Clockwork Wings"
 race = "goblin"
@@ -1158,6 +1159,7 @@ range = 2
 angle = [true, true, true, true]
 damage = "d4 -2"
 ap = 2
+note = "For each fire order, choose one of Minor Acid, Poison, or Gear Disruption as extra damage."
 
 [[equipment.goblin_bow_battery.range.specials.ammo]]
 text = "May be loaded (one at a time) with up to 3 ammo"
@@ -1167,16 +1169,13 @@ text = "Fire d12 shots in one fire order per ammo spent, all targeted the same u
 
 [[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
-text = "Choose one of these, for all shots."
 
 [[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
-text = "Choose one of these, for all shots."
 
 [[equipment.goblin_bow_battery.range.specials.range_gear_disruption]]
 args.N = 6
-text = "Choose one of these, for all shots."
 
 [[equipment.goblin_bow_battery.model_specials.to_hit]]
 name = "Imprecise Weapon"

@@ -5,7 +5,6 @@
 #
 # `speed` and `size` own vocabularies the rest of the data spells: a Unit's
 # `size`, a Unit's `shaken.speed`, and the Speed keys of every orders table.
-
 #
 # Speed
 #
@@ -164,7 +163,7 @@ to_be_hit = "0"
 name = "Bad at Long Range"
 to_hit = "-2"
 to_be_hit = "0"
-effect = "To-hit penalty at long range only"
+effect = "Extra to-hit penalty at long range only"
 see_also = ["distance.long_range"]
 
 [ability.steady]

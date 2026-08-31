@@ -302,6 +302,88 @@ def test_a_variable_a_ref_target_does_not_lend_is_still_unknown() -> None:
 
 
 # ---------------------------------------------------------------------------
+# 4b. A case-shaped instance validates once per case, over merged args
+# ---------------------------------------------------------------------------
+
+
+def test_every_case_of_an_instance_is_checked() -> None:
+    errors = check({"endurance": [{"cases": [{"args": {"N": 1}}, {"args": {"N": 2}}]}]})
+
+    assert len(errors) == 2
+    assert all("missing argument 'model_class'" in error for error in errors)
+
+
+def test_a_broken_case_names_its_position() -> None:
+    (error,) = check(
+        {
+            "endurance": [
+                {
+                    "args": {"model_class": "Infantry"},
+                    "cases": [{"args": {"N": 1}}, {}],
+                }
+            ]
+        }
+    )
+
+    assert "case 2" in error
+    assert "missing argument 'N'" in error
+
+
+def test_an_instance_level_arg_satisfies_every_case() -> None:
+    errors = check(
+        {
+            "endurance": [
+                {
+                    "args": {"model_class": "Infantry"},
+                    "cases": [{"args": {"N": 1}}, {"args": {"N": 2}}],
+                }
+            ]
+        }
+    )
+
+    assert errors == []
+
+
+def test_a_case_may_override_an_instance_level_arg() -> None:
+    errors = check(
+        {
+            "endurance": [
+                {
+                    "args": {"N": 1, "model_class": "Infantry"},
+                    "cases": [{"args": {"N": 2}}],
+                }
+            ]
+        }
+    )
+
+    assert errors == []
+
+
+def test_an_unknown_arg_in_a_case_is_rejected() -> None:
+    (error,) = check({"fear": [{"cases": [{"args": {"N": 6}}]}]}, slot="assault")
+
+    assert "case 1" in error
+    assert "N" in error
+
+
+def test_a_ref_named_on_the_instance_lends_its_variables_to_every_case() -> None:
+    # The ref is written once on the instance; the variables it lends are in
+    # scope for every case.
+    errors = check(
+        {
+            "resistance": [
+                {
+                    "args": {"version": "damage_type.poison"},
+                    "cases": [{"args": {"N": 1}}, {"args": {"N": 2}}],
+                }
+            ]
+        }
+    )
+
+    assert errors == []
+
+
+# ---------------------------------------------------------------------------
 # 5. A rule variable colliding with a ref target's is an error
 # ---------------------------------------------------------------------------
 
@@ -380,7 +462,8 @@ def test_a_namespace_naming_a_file_nothing_reads_is_rejected(tmp_path: Path) -> 
     rules_dir = _copied_rules(tmp_path)
     (rules_dir / "namespaces.toml").write_text(
         "[namespaces]\n"
-        'order = { name = "Orders", file = "cards.toml", table = "order" }\n'
+        'order = { name = "Orders", label = "order", file = "cards.toml",'
+        ' table = "order" }\n'
         "\n[damage_type.regular]\n"
         'name = "Regular"\ntodo = "Rule text not yet written."\n'
     )
@@ -395,8 +478,8 @@ def test_a_namespace_grouped_under_nothing_is_rejected(tmp_path: Path) -> None:
     rules_dir = _copied_rules(tmp_path)
     (rules_dir / "namespaces.toml").write_text(
         "[namespaces]\n"
-        'hex = { name = "Hexes", file = "hexes.toml", table = "hexes",'
-        ' group = "terrain" }\n'
+        'hex = { name = "Hexes", label = "hex", file = "hexes.toml",'
+        ' table = "hexes", group = "terrain" }\n'
         "\n[damage_type.regular]\n"
         'name = "Regular"\ntodo = "Rule text not yet written."\n'
     )

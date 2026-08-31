@@ -19,7 +19,7 @@ from spf.armies.model import Model
 from spf.config import config
 from spf.console import stdout
 from spf.races import get_race
-from spf.render.specials import special_lines
+from spf.render.specials import SpecialLine, special_lines
 from spf.schemas.army_pack import ArmyPackConfig
 from spf.schemas.race import EquipmentConfig, RaceConfig
 from spf.schemas.site import SiteConfig
@@ -161,12 +161,15 @@ def _print_note(note: str, *, indent: int) -> None:
         stdout.print(f"{' ' * indent}- [dim]Note:[/] {escape(note)}", highlight=False)
 
 
-def _print_specials(lines: list[tuple[str, str]], *, indent: int) -> None:
-    """Print one slot's rendered Special lines under a `Specials:` heading."""
+def _print_specials(lines: list[SpecialLine], *, indent: int) -> None:
+    """Print one slot's rendered Special lines under a `Specials:` heading.
+
+    The console has nothing to link to, so a line's anchor is ignored here.
+    """
     if not lines:
         return
     stdout.print(f"{' ' * indent}- [dim]Specials:[/]", highlight=False)
-    for heading, special in lines:
+    for heading, special, _anchor in lines:
         # A signature is full of square brackets, which are Rich's own markup:
         # printed raw, `[range=1]` would vanish as a tag.
         stdout.print(

@@ -37,27 +37,25 @@
           "name": "gnome_tinkerer",
           "upgrades": [
             "assault_bot_mortar",
-            "green_gas_launcher",
-            "mechanical_owl",
-            "experimental_death_ray",
-            "experimental_death_ray"
+            "green_gas_launcher"
           ]
-        },
-        {
-          "name": "gnome_tinkerer",
-          "upgrades": [
-            "mechanical_owl"
-          ]
-        },
-        {
-          "name": "gnome_tinkerer",
-          "upgrades": []
         },
         {
           "name": "gnome_infantry",
           "upgrades": [
-            "assault_bot_mortar",
-            "mechanical_owl"
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "assault_bot_mortar"
           ]
         }
       ]
@@ -157,20 +155,29 @@
       "nick": "Death Ray with Owl",
       "models": [
         {
-          "name": "gnome_infantry",
-          "upgrades": []
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "mechanical_owl",
+            "experimental_death_ray"
+          ]
         },
         {
           "name": "gnome_infantry",
-          "upgrades": []
+          "upgrades": [
+            "mechanical_owl"
+          ]
         },
         {
           "name": "gnome_infantry",
-          "upgrades": []
+          "upgrades": [
+            "mechanical_owl"
+          ]
         },
         {
           "name": "gnome_infantry",
-          "upgrades": []
+          "upgrades": [
+            "mechanical_owl"
+          ]
         }
       ]
     },
@@ -179,8 +186,10 @@
       "nick": "Death Ray Tinkerer",
       "models": [
         {
-          "name": "gnome_infantry",
-          "upgrades": []
+          "name": "gnome_tinkerer",
+          "upgrades": [
+            "experimental_death_ray"
+          ]
         },
         {
           "name": "gnome_infantry",

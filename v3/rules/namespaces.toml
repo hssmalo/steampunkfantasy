@@ -4,19 +4,20 @@
 # and a table rename out of the Race files.
 #
 # Declaration order is display-group order for the to-hit table. A namespace
-# may declare `group` to render under another's heading.
+# may declare `group` to render under another's heading. `name` heads the whole
+# registry; the singular `label` qualifies one record of it, as `Fog (hex)`.
 
 [namespaces]
-special = { name = "Specials", file = "special.toml", table = "special" }
-speed = { name = "Speeds", file = "modifiers.toml", table = "speed" }
-terrain = { name = "Terrain", file = "terrain.toml", table = "terrain" }
-hex = { name = "Hex Effects", file = "hexes.toml", table = "hexes", group = "terrain" }
-distance = { name = "Distance", file = "modifiers.toml", table = "distance" }
-angle = { name = "Angle", file = "modifiers.toml", table = "angle" }
-size = { name = "Size", file = "modifiers.toml", table = "size" }
-ability = { name = "Abilities", file = "modifiers.toml", table = "ability" }
-token = { name = "Tokens", file = "tokens.toml", table = "tokens" }
-damage_type = { name = "Damage Types", file = "namespaces.toml", table = "damage_type" }
+special = { name = "Specials", label = "special", file = "special.toml", table = "special" }
+speed = { name = "Speeds", label = "speed", file = "modifiers.toml", table = "speed" }
+terrain = { name = "Terrain", label = "terrain", file = "terrain.toml", table = "terrain" }
+hex = { name = "Hex Effects", label = "hex", file = "hexes.toml", table = "hexes", group = "terrain" }
+distance = { name = "Distance", label = "distance", file = "modifiers.toml", table = "distance" }
+angle = { name = "Angle", label = "angle", file = "modifiers.toml", table = "angle" }
+size = { name = "Size", label = "size", file = "modifiers.toml", table = "size" }
+ability = { name = "Abilities", label = "ability", file = "modifiers.toml", table = "ability" }
+token = { name = "Tokens", label = "token", file = "tokens.toml", table = "tokens" }
+damage_type = { name = "Damage Types", label = "damage type", file = "namespaces.toml", table = "damage_type" }
 
 # The damage-type registry: the categories of harm a Resistance or an Immunity
 # is against. It lives here because it is small and has no file of its own.
