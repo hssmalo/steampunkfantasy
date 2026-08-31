@@ -35,6 +35,11 @@ spell-fix:
 test *args:
     uv run pytest -q {{args}}
 
+# Deliberately not part of `just check`: see docs/agents/testing.md.
+# Mutate lint-clean game-data values and report the tests that break.
+test-friction *args:
+    uv run python scripts/test_friction.py {{args}}
+
 # Auto-fix lint issues then reformat.
 fix:
     uv run ruff check --fix -q
