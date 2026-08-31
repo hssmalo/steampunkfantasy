@@ -2,7 +2,6 @@
 
 [races.elf]
 name = "Elf"
-
 description = '''Elf are elegant and approximately 2m in height'''
 
 [units]

@@ -587,16 +587,10 @@ rows = [
 	"7-8: as below, shaken",
 	"9+: unit destroyed",
 ]
-notes = [
-	"bleeding does not cause more bleeding",
-]
+notes = ["bleeding does not cause more bleeding"]
 
 [units.hippopotamus_riders.damage_tables.Psychic]
-rows = [
-	"6+: shaken",
-]
-
-
+rows = ["6+: shaken"]
 
 [models]
 
@@ -641,10 +635,6 @@ damage = "d6"
 ap = 2
 note = "+100% strength and deflections versus shaken units"
 
-
-
-
-
 [models.horror]
 name = "Horror"
 race = "abomination"
@@ -661,9 +651,6 @@ damage = "d6"
 ap = 2
 note = "+100% strength and deflections versus shaken units"
 
-
-
-
 [models.shriek_monstrosity]
 name = "Shriek Monstrosity"
 race = "abomination"
@@ -678,7 +665,6 @@ deflection = [12, 12, 12, 12]
 deflection_die = "6+"
 damage = "d6"
 ap = 2
-
 
 [models.water_elemental]
 name = "Water Elemental"
@@ -715,7 +701,6 @@ equipment_limit = []
 equipment = []
 type = ["Drone", "Walking"]
 
-
 [models.robot_crab.assault]
 strength = [1, 1, 1, 1]
 strength_die = "6+"
@@ -724,7 +709,6 @@ deflection_die = "6+"
 damage = "d6"
 ap = 0
 note = "+100% strength and deflections versus shaken units"
-
 
 [[models.robot_crab.assault.specials.cunning_assault]]
 args.N = 1
@@ -748,7 +732,6 @@ damage = "d6-2"
 ap = 2
 note = "+100% strength and deflections versus shaken units"
 
-
 [[models.confusiator_tank.assault.specials.cunning_assault_defense]]
 args.N = 6
 args.M = 6
@@ -756,7 +739,13 @@ args.M = 6
 [models.flagship]
 name = "Flagship"
 race = "abomination"
-equipment = ["broadside", "side_weapons", "greater_insanity_blast", "greater_disruptors", "greater_fog_poisonizer"]
+equipment = [
+	"broadside",
+	"side_weapons",
+	"greater_insanity_blast",
+	"greater_disruptors",
+	"greater_fog_poisonizer"
+]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Mechanical", "Floating", "Flying", "Bio Crew"]
 
@@ -787,7 +776,6 @@ variant = "double_penalties_in_fog"
 [[models.frost_88.specials.to_hit]]
 args.ability = "ability.double_speed_modifiers"
 
-
 [models.frost_88.assault]
 strength = [10, 1, 1, 1]
 strength_die = "6+"
@@ -796,8 +784,6 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 note = "+100% strength and deflections versus shaken units"
-
-
 
 [models.elite_abomination_infantry]
 name = "Elite Abomination Infantry"
@@ -822,7 +808,6 @@ deflection_die = "6+"
 damage = "d6-2"
 ap = 2
 note = "+100% strength and deflections versus shaken units"
-
 
 [[models.elite_abomination_infantry.assault.specials.cunning_assault]]
 args.N = 2
@@ -870,13 +855,11 @@ angle = [true, true, false, false]
 damage = "d6 Psychic + d4 Crew damage"
 ap = "N/A"
 
-
 [[equipment.confusion_stinger.range.specials.multiple_shots]]
 text = "Fires 3 shot per fire order."
 
 [[equipment.confusion_stinger.range.specials.range_extra_damage]]
 args.version = "token.confused"
-
 
 [equipment.greater_disruptors]
 name = "Greater Disruptors"
@@ -898,7 +881,6 @@ args.N = 5
 [[equipment.greater_disruptors.range.specials.los]]
 variant = "los_from_front_or_back"
 
-
 [equipment.side_weapons]
 name = "Side Weapons"
 race = "abomination"
@@ -916,7 +898,6 @@ text = "Fire once to the right and once to the left per fire order"
 [[equipment.side_weapons.range.specials.los]]
 variant = "los_from_front_or_back"
 
-
 [equipment.broadside]
 name = "Broadside"
 race = "abomination"
@@ -931,7 +912,6 @@ ap = 4
 [[equipment.broadside.range.specials.multiple_shots]]
 text = "Fire 4 shot to 4 different units in 4 different hexes. Two of the hexes must be neighboring hexes within firing angle to the right, and the other two must be neighboring hexes within firing angle to the left"
 
-
 [equipment.greater_insanity_blast]
 name = "Insanity Blast"
 race = "abomination"
@@ -943,14 +923,11 @@ angle = [true, false, false, false]
 damage = "d10 Psychic"
 ap = "N/A"
 
-
 [[equipment.greater_insanity_blast.range.specials.insanity]]
 text = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)"
 
 [[equipment.greater_insanity_blast.range.specials.los]]
 text = "Trace line of sight from front of the unit"
-
-
 
 [equipment.insanity_contraption]
 name = "Insanity Contraption"
@@ -968,7 +945,6 @@ text = "Only effects bio units which are already shaken. If you inflict damage w
 
 [[equipment.insanity_contraption.range.specials.ammo]]
 text = "Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
-
 
 [equipment.multipurpose_gun]
 name = "Multipurpose Gun"
@@ -1024,7 +1000,6 @@ armor.add = [3, 2, 0, 0]
 [equipment.tentacle_shield.assault]
 deflection.add = [2, 0, 0, 0]
 deflection_die.replace = "5+"
-
 
 [equipment.water_shield]
 name = "Water Shield"
@@ -1199,7 +1174,6 @@ variant = "always_loaded"
 [[equipment.fog_poisonizer.range.specials.order]]
 text = "May be used in both gunnery phases"
 
-
 [equipment.greater_fog_poisonizer]
 name = "Greater Fog Poisonizer"
 race = "abomination"
@@ -1218,7 +1192,6 @@ variant = "always_loaded"
 
 [[equipment.greater_fog_poisonizer.range.specials.order]]
 text = "May be used in both gunnery phases independent of other weapons"
-
 
 [equipment.frog_spit]
 name = "Frog Spit"
@@ -1241,7 +1214,6 @@ variant = "always_loaded"
 [[equipment.frog_spit.range.specials.order]]
 text = "Fire in both first and second gunnery phase independent of other weapons and orders"
 
-
 [equipment.twin_frost_ray]
 name = "Twin Frost Ray"
 race = "abomination"
@@ -1261,7 +1233,6 @@ variant = "always_loaded"
 
 [[equipment.twin_frost_ray.range.specials.forced_break]]
 
-
 [equipment.heavy_water_jet]
 name = "Heavy Water Jet"
 race = "abomination"
@@ -1275,7 +1246,6 @@ ap = 6
 
 [[equipment.heavy_water_jet.range.specials.range_gear_disruption]]
 args.N = 5
-
 
 [equipment.corrosive_water_jet]
 name = "Corrosive Water Jet"
@@ -1294,7 +1264,6 @@ args.N = 5
 [[equipment.corrosive_water_jet.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
 
-
 [equipment.poison_water_jet]
 name = "Poison Water Jet"
 race = "abomination"
@@ -1309,8 +1278,6 @@ ap = "N/A"
 [[equipment.poison_water_jet.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
-
-
 
 [equipment.mechanical_melee_contraption]
 name = "Mechanical Melee Contraption"

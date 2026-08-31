@@ -911,14 +911,10 @@ still = [
 slow = [["Spot", "Spot"]]
 
 [units.scout.damage_tables.Regular]
-rows = [
-	"0+: unit killed",
-]
+rows = ["0+: unit killed"]
 
 [units.scout.damage_tables.Psychic]
-rows = [
-	"3+: Unit shaken",
-]
+rows = ["3+: Unit shaken"]
 
 #
 # Models
@@ -942,7 +938,6 @@ ap = 2
 
 [[models.mechahydra.assault.specials.boost]]
 variant = "strength_per_head"
-
 
 [[models.mechahydra.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -1154,7 +1149,7 @@ variant = "reroll_assault_crawling"
 [models.generic_multicultural_infantry]
 name = "Generic Multicultural Infantry"
 race = "darkelf"
-equipment_limit = []
+equipment_limit = ["Independent:∞"]
 equipment = ["collar"]
 type = ["Bio", "Infantry", "Walking"]
 
@@ -1526,8 +1521,6 @@ ap = 3
 [[equipment.tail_gatling_gun.range.specials.focus_fire]]
 variant = "aim_6_dice"
 
-
-
 [[equipment.tail_gatling_gun.range.specials.area]]
 preamble = "If not using aim, fire once at all enemy models in all hexes within normal and long range"
 
@@ -1538,7 +1531,6 @@ variant = "normal_range"
 [[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 6
 variant = "long_range"
-
 
 [[equipment.tail_gatling_gun.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1699,8 +1691,6 @@ text = "at point blank range"
 args.N = 6
 variant = "normal_range"
 
-
-
 [[equipment.nightmare_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 8
@@ -1757,6 +1747,7 @@ variant = "poison_cloud_and_surroundings"
 
 [[equipment.mortar_1_1b.range.specials.indirect_fire]]
 variant = "use_friendly_los"
+
 [equipment.poison_claws]
 name = "Poison Claws"
 race = "darkelf"
@@ -1839,7 +1830,6 @@ text = "within long range"
 [[equipment.acid_breath.range.specials.no_damage]]
 args.damage_type = "damage_type.regular"
 
-
 [equipment.poison_breath]
 name = "Poison Breath"
 race = "darkelf"
@@ -1858,12 +1848,6 @@ args.N = 5
 [[equipment.poison_breath.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
-
-
-
-
-
-
 
 [equipment.fire_breath]
 name = "Fire Breath"
@@ -1901,7 +1885,6 @@ args.version = "token.minor_acid"
 
 [[equipment.fire_breath.range.specials.no_damage]]
 args.damage_type = "damage_type.regular"
-
 
 [equipment.poison_spit]
 name = "Poison Spit"
@@ -1986,10 +1969,7 @@ name = "Gas Mask Assault Training"
 race = "darkelf"
 cost.xp = 4
 upgrade_all = true
-requires = [
-    ["Independent:1"],
-    ["type:Roboprosthetic", "type:Infantry"]
-]
+requires = [["Independent:1"], ["type:Roboprosthetic", "type:Infantry"]]
 
 [[equipment.gas_mask_assault_training.unit_specials.immunity]]
 args.feature = "hex.poison_cloud"

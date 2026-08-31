@@ -13,7 +13,6 @@ models = ["ogre_hydra", "ogre_hydra_crew", "ogre_hydra_crew"]
 size = "huge"
 cost.mp = 16
 cost.xp = 96
-
 description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with two ogres riding on the hydra. The hydra is the only animal large enough to carry two ogres as cavalry. Major head has an acid breath, minor heads spits poison, while the two Ogre riding on it has a Ogre rifle each. '''
 
 

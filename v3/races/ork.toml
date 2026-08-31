@@ -1212,7 +1212,6 @@ requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 text = "At start of any round set target to either infantry, cavalry or vehicle. All Chs orders of all units are replaced with Chs[target]"
 
 #see_also orders.chs
-
 [[equipment.war_drum.unit_specials.terror]]
 args.N = 1
 args.M = 6

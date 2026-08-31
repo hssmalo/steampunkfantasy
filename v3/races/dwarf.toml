@@ -4,7 +4,6 @@
 name = "Dwarf"
 description = "Dwarfs are sturdy, though and robust and about 1.6m in height."
 
-
 [units]
 
 [units.dwarf_infantry]
@@ -20,7 +19,6 @@ size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 16
 description = "Dwarf infantry wielding a musket"
-
 
 [units.dwarf_infantry.shaken]
 speed = "slow"
@@ -55,15 +53,13 @@ still = [
 
 [units.dwarf_infantry.damage_tables.Regular]
 rows = [
-	"1-5: Kill 1 model",
-	"6-9: Kill 1 model, roll d6 Psychic damage",
-	"10+: Unit killed",
+    "1-5: Kill 1 model",
+    "6-9: Kill 1 model, roll d6 Psychic damage",
+    "10+: Unit killed",
 ]
 
 [units.dwarf_infantry.damage_tables.Psychic]
-rows = [
-	"4+: Unit shaken",
-]
+rows = ["4+: Unit shaken"]
 
 [units.dwarf_brother_in_arms]
 race = "dwarf"
@@ -611,7 +607,6 @@ cost.xp = 96
 description = '''A burning balrog with a flaming whip.
 '''
 
-
 [units.tamed_balrog.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
@@ -644,16 +639,14 @@ slow = [["Fire", "-"], ["-", "Fire"]]
 
 [units.tamed_balrog.damage_tables.Regular]
 rows = [
-	"1-9: +1 on future damage",
-	"10-11: +2 on future damage",
-	"12: +3 on future damage, assault -3, Loses Terror, shaken",
-	"13+: Unit Destroyed",
+    "1-9: +1 on future damage",
+    "10-11: +2 on future damage",
+    "12: +3 on future damage, assault -3, Loses Terror, shaken",
+    "13+: Unit Destroyed",
 ]
 
 [units.tamed_balrog.damage_tables.Psychic]
-rows = [
-	"9+: Unit shaken",
-]
+rows = ["9+: Unit shaken"]
 
 #
 # Models
@@ -723,6 +716,7 @@ ap = 2
 
 [[models.elite_dwarf_infantry.assault.specials.cunning_assault]]
 args.N = 2
+
 [models.elite_dwarf_steampowerarmor]
 name = "Elite Dwarf SteamPowerArmor"
 race = "dwarf"
@@ -1122,8 +1116,6 @@ requires = [["Independent:1"], ["type:Vehicle"]]
 text = "Tank Riders: Any infantry in slow which shares a hex with this unit, may use the follow order instead of their own. If so, place the infantry order marker on the movement card of the tank instead"
 
 #see_also=orders.follow
-
-
 [equipment.springloaded_vehicle_assault_weapons]
 name = "Springloaded Vehicle Assault Weapons"
 race = "dwarf"
