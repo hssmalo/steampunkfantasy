@@ -1,5 +1,6 @@
 """Schema for SteamPunkFantasy armies."""
 
+from collections.abc import Iterator
 from typing import Self
 
 from pydantic import Field, model_validator
@@ -7,7 +8,7 @@ from pydantic import Field, model_validator
 from spf import registry
 from spf.schemas import StrictModel
 from spf.schemas import type_aliases as t
-from spf.schemas.special import Specials
+from spf.schemas.special import SpecialInstance, Specials
 
 
 class RaceMetadata(StrictModel):
@@ -150,23 +151,40 @@ SPAWNING_SPECIALS = ("spawn", "not_yet_dead")
 """The Special ids whose prose names the spawn it places."""
 
 
-def _validate_specials(spawns: set[str], specials: Specials, *, context: str) -> None:
-    """Check that every spawning instance names a spawn the catalogue holds.
+def spawn_reference(instance: SpecialInstance) -> str | None:
+    """Return the spawn a spawning instance places, or `None` when it names none.
 
     Which spawn a Spawn places is prose the rule has yet to formalize, so it is
     read off the front of the instance's own `text` — `'[spawn_id]: [placement
-    text]'` — rather than out of an argument.
+    text]'` — rather than out of an argument. One reader, so a Rendering that
+    follows the reference and the validation that guards it cannot disagree
+    about where the id ends.
     """
+    text = instance.text or ""
+    if ":" not in text:
+        return None
+    return text.split(":", 1)[0].strip()
+
+
+def spawns_placed(specials: Specials) -> Iterator[str]:
+    """Every spawn the spawning instances of one Slot name, in printed order."""
     for rule_name in SPAWNING_SPECIALS:
         for instance in specials.get(rule_name, []):
-            text = instance.text or ""
-            if ":" not in text:
+            if (spawn_id := spawn_reference(instance)) is not None:
+                yield spawn_id
+
+
+def _validate_specials(spawns: set[str], specials: Specials, *, context: str) -> None:
+    """Check that every spawning instance names a spawn the catalogue holds."""
+    for rule_name in SPAWNING_SPECIALS:
+        for instance in specials.get(rule_name, []):
+            spawn_id = spawn_reference(instance)
+            if spawn_id is None:
                 msg = (
                     f"Special rule '{rule_name}' in {context} must follow the format "
-                    f"'[spawn_id]: [placement_text]'. Got: '{text}'"
+                    f"'[spawn_id]: [placement_text]'. Got: '{instance.text or ''}'"
                 )
                 raise ValueError(msg)
-            spawn_id = text.split(":", 1)[0].strip()
             if spawn_id not in spawns:
                 msg = (
                     f"Special rule '{rule_name}' in {context} references undefined "
@@ -384,3 +402,22 @@ class RaceConfig(StrictModel):
                 )
                 raise ValueError(msg)
         return self
+
+
+def race_slots(race: RaceConfig) -> Iterator[Specials]:
+    """Yield every Slot a Race holds instances in, whatever record carries it.
+
+    The one walk over a Race's Specials (ADR 0024). It lists the Slots by
+    hand because the schema names them by hand, so widening the schema and
+    widening the walk are the same edit.
+    """
+    for unit in race.units.values():
+        yield unit.specials
+    for model in race.models.values():
+        yield from (model.unit_specials, model.specials, model.assault.specials)
+    for equipment in race.equipment.values():
+        yield from (equipment.unit_specials, equipment.model_specials)
+        if equipment.assault is not None:
+            yield equipment.assault.specials
+        if equipment.range is not None:
+            yield equipment.range.specials

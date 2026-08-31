@@ -1,0 +1,305 @@
+{#
+  The Race Overview, Markdown family. One Race's whole catalogue as four flat,
+  cross-linked sections — Units, Models, Equipment, Spawns — followed by the
+  Rules Reference (ADR 0031). A fielded Army has one chosen path through Unit,
+  Model and Equipment, which is why the Army Reference nests them; a Race is an
+  N:M web, so every record prints exactly once here and the links carry the
+  structure instead.
+
+  Each section opens with a summary table whose first cell links into the
+  record's own entry below it. The gist columns are mechanical — a size, a slot
+  table, a range profile — never prose.
+
+  Every block below emits a leading newline and none emits a trailing one, so a
+  block that renders to nothing leaves no blank line behind. That is the same
+  `{%- if -%}` idiom the Army Reference body is written in.
+
+  The explicit `<a id>` is required, not decorative: `md_to_html` generates no
+  heading ids, so without it every cross-link breaks in the derived HTML. Raw
+  HTML passes through CommonMark untouched and is harmless in a plain `.md`.
+
+  Section headings anchor under `section-`, a fifth namespace disjoint both from
+  the four a record carries and from the Rules Reference's `rule-`.
+#}
+{%- macro links(items) -%}
+{% for link in items %}{% if not loop.first %}, {% endif %}[{{ link.name }}](#{{ link.anchor }}){% endfor %}
+{%- endmacro -%}
+
+{#- A rule's name, linked when the Rules Reference holds its entry. -#}
+{%- macro rule(line) -%}
+{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}
+{%- endmacro -%}
+
+{%- macro bullets(lines) -%}
+{% for line in lines %}
+- **{{ rule(line) }}**{% if line.text %}: {{ line.text }}{% endif %}
+{%- endfor %}
+{%- endmacro -%}
+
+{#- One Slot's Specials, under the label naming what the Slot grants. Slots
+    stay apart: what a record grants its Unit and what it is itself are
+    different claims. -#}
+{%- macro slot_specials(label, lines) -%}
+{% if lines %}
+- *{{ label }}:*
+{%- for line in lines %}
+    - **{{ rule(line) }}**{% if line.text %}: {{ line.text }}{% endif %}
+{%- endfor %}
+{%- endif %}
+{%- endmacro -%}
+
+{#- Declared deltas: a Stacker is printed as the change it declares, never
+    resolved, because it has no value until a Unit is fielded under it. -#}
+{%- macro deltas(label, modifiers) -%}
+{% if modifiers %}
+- *{{ label }}:*
+{%- for modifier in modifiers %}
+    - {{ modifier }}
+{%- endfor %}
+{%- endif %}
+{%- endmacro -%}
+
+{%- macro order_table(title, rows) -%}
+{%- set ncols = (rows | map('last') | map('length') | list | max) if rows else 1 %}
+
+**{{ title }}**
+
+| Speed |{{ ' |' * ncols }}
+|{{ ' --- |' * (ncols + 1) }}
+{%- for speed, cells in rows %}
+| {{ speed }} |{% for cell in cells %} {{ cell }} |{% endfor %}{{ ' |' * (ncols - cells | length) }}
+{%- endfor %}
+{%- endmacro -%}
+
+{#- The cost cells of a summary row, one column per currency. -#}
+{%- macro cost_cells(columns) -%}
+{% for cell in columns %} {{ cell }} |{% endfor %}
+{%- endmacro -%}
+# {{ source.title }}
+
+*v{{ spf_version }}*
+{%- if source.description %}
+
+{{ source.description | trim }}
+{%- endif %}
+{%- if source.race_image %}
+
+![{{ source.race }}]({{ source.race_image | relative_to(output_dir) }})
+{%- endif %}
+
+## Contents
+
+- [Units](#section-units)
+- [Models](#section-models)
+- [Equipment](#section-equipment)
+{%- if source.spawns %}
+- [Spawns](#section-spawns)
+{%- endif %}
+{%- if source.rules and source.rules.entries %}
+- [{{ source.rules.title }}](#section-rules)
+{%- endif %}
+
+<a id="section-units"></a>
+
+## Units
+
+| Unit | Size | Models | ip | mp | xp | cp | vpm |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+{%- for unit in source.units %}
+| [{{ unit.name }}](#{{ unit.anchor }}) | {{ unit.size }} | {{ unit.model_count }} |{{ cost_cells(unit.cost_columns) }}
+{%- endfor %}
+{% for unit in source.units %}
+<a id="{{ unit.anchor }}"></a>
+
+### {{ unit.name }}
+{%- if unit.lore %}
+
+*{{ unit.lore | trim }}*
+{%- endif %}
+{%- if unit.image %}
+
+![{{ unit.name }}]({{ unit.image | relative_to(output_dir) }})
+{%- endif %}
+{#- The one undashed `if` of an entry: the newline its own line contributes is
+    what opens the blank line under the heading, whether or not the field
+    below is there to print. #}
+{% if unit.cost %}
+- Cost: {{ unit.cost }} ({{ unit.points }} points)
+{%- endif %}
+- Size: {{ unit.size }}
+- Models: {{ links(unit.models) }}
+{%- if unit.types %}
+- Type: {{ unit.types | join(', ') }}
+{%- endif %}
+{%- if unit.armor %}
+- Armor: {{ unit.armor | join('/') }}
+{%- endif %}
+- Shaken: {{ unit.shaken_speed }} [{{ unit.shaken_movement | join(', ') }}] / {{ unit.shaken_fire }}
+{%- if unit.spawned_by %}
+- Placed by: {{ links(unit.spawned_by) }}
+{%- endif %}
+{{- bullets(unit.specials) }}
+{%- if unit.spawn_links %}
+- Places: {{ links(unit.spawn_links) }}
+{%- endif %}
+{%- if unit.note %}
+- **Note**: {{ unit.note | trim }}
+{%- endif %}
+{#- The tip is army-building advice and may run to several paragraphs, so it
+    is a block of its own rather than a bullet a second paragraph would break
+    out of. -#}
+{%- if unit.tip %}
+
+**Tip**: {{ unit.tip | trim }}
+{%- endif %}
+{{- order_table("Movement orders", unit.movement_rows) }}
+{{- order_table("Fire orders", unit.fire_rows) }}
+{%- for name, rows, notes in unit.damage_tables %}
+
+**Damage Table: {{ name }}**
+
+| Roll | Effect |
+| ---- | ------ |
+{%- for roll, effect in rows %}
+| {{ roll }} | {{ effect }} |
+{%- endfor %}
+{%- if notes %}
+{% for note in notes %}
+- {{ note }}
+{%- endfor %}
+{%- endif %}
+{%- endfor %}
+{% endfor %}
+<a id="section-models"></a>
+
+## Models
+
+| Model | Type | Equipment slots | Cost |
+| --- | --- | --- | --- |
+{%- for model in source.models %}
+| [{{ model.name }}](#{{ model.anchor }}) | {{ model.types | join(', ') or '—' }} | {% for holder, capacity in model.notable_limits %}{% if not loop.first %}, {% endif %}{{ holder }} {{ capacity }}{% else %}—{% endfor %} | {{ model.cost }} |
+{%- endfor %}
+{% for model in source.models %}
+<a id="{{ model.anchor }}"></a>
+
+### {{ model.name }}
+{% if model.cost %}
+- Cost: {{ model.cost }} ({{ model.points }} points)
+{%- endif %}
+- Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
+{%- if model.types %}
+- Type: {{ model.types | join(', ') }}
+{%- endif %}
+{%- if model.fielded_in %}
+- Fielded in: {{ links(model.fielded_in) }}
+{%- endif %}
+{%- if model.replaces %}
+- Upgrades from: [{{ model.replaces.name }}](#{{ model.replaces.anchor }})
+{%- endif %}
+{%- if model.replaced_by %}
+- Upgraded by: {{ links(model.replaced_by) }}
+{%- endif %}
+{%- if model.equipment %}
+- May carry: {{ links(model.equipment) }}
+{%- endif %}
+{{- deltas("Grants its Unit", model.unit_modifiers) }}
+{{- slot_specials("Grants its Unit", model.unit_specials) }}
+{{- bullets(model.specials) }}
+{{- slot_specials("In assault", model.assault_specials) }}
+{%- if model.spawn_links %}
+- Places: {{ links(model.spawn_links) }}
+{%- endif %}
+{%- if model.assault_note %}
+- **Note (assault)**: {{ model.assault_note | trim }}
+{%- endif %}
+{%- if model.note %}
+- **Note**: {{ model.note | trim }}
+{%- endif %}
+{%- if model.equipment_limits %}
+
+| Holder | Slots |
+| --- | ---: |
+{%- for holder, capacity in model.equipment_limits %}
+| {{ holder }} | {{ capacity }} |
+{%- endfor %}
+{%- endif %}
+{% endfor %}
+<a id="section-equipment"></a>
+
+## Equipment
+
+| Equipment | Profile | Cost |
+| --- | --- | --- |
+{%- for equip in source.equipment %}
+| [{{ equip.name }}](#{{ equip.anchor }}) | {% if equip.range is not none %}range {{ equip.range }}, damage {{ equip.range_damage }}, AP {{ equip.range_ap }}{% elif equip.assault_modifiers %}{{ equip.assault_modifiers | join('; ') }}{% else %}—{% endif %} | {{ equip.cost }} |
+{%- endfor %}
+{% for equip in source.equipment %}
+<a id="{{ equip.anchor }}"></a>
+
+### {{ equip.name }}
+{% if equip.cost %}
+- Cost: {{ equip.pricing or equip.cost }}
+{%- endif %}
+{%- if equip.range is not none %}
+- Range: {{ equip.range }}, angle {{ equip.range_angle | join('/') }}, damage {{ equip.range_damage }}, AP {{ equip.range_ap }}
+{%- endif %}
+{%- if equip.carried_by %}
+- Carried by: {{ links(equip.carried_by) }}
+{%- endif %}
+{#- Every line has to hold: `requires` is a conjunction of disjunctions, so
+    the choice lives inside a line and never between two of them. Joining
+    these with an "or" would promise a build the Army tier rejects. -#}
+{%- if equip.requires_all %}
+- *Requires all of:*
+{%- for requirement in equip.requires_all %}
+    - {{ requirement }}
+{%- endfor %}
+{%- endif %}
+{{- slot_specials("When shooting", equip.range_specials) }}
+{%- if equip.range_note %}
+- **Note (range)**: {{ equip.range_note | trim }}
+{%- endif %}
+{{- deltas("In assault", equip.assault_modifiers) }}
+{{- slot_specials("In assault", equip.assault_specials) }}
+{%- if equip.assault_note %}
+- **Note (assault)**: {{ equip.assault_note | trim }}
+{%- endif %}
+{{- deltas("Grants its Unit", equip.unit_modifiers) }}
+{{- slot_specials("Grants its Unit", equip.unit_specials) }}
+{{- slot_specials("Grants its Model", equip.model_specials) }}
+{%- if equip.spawn_links %}
+- Places: {{ links(equip.spawn_links) }}
+{%- endif %}
+{%- if equip.note %}
+- **Note**: {{ equip.note | trim }}
+{%- endif %}
+{#- Orders an Equipment grants stay on the Equipment: `orders_gained` is
+    additive (ADR 0007), and only a fielded Unit has the fixed loadout a
+    merged table would describe. -#}
+{%- if equip.orders_gained_movement_rows %}
+{{- order_table("Movement orders granted", equip.orders_gained_movement_rows) }}
+{%- endif %}
+{%- if equip.orders_gained_fire_rows %}
+{{- order_table("Fire orders granted", equip.orders_gained_fire_rows) }}
+{%- endif %}
+{% endfor %}
+{%- if source.spawns %}
+<a id="section-spawns"></a>
+
+## Spawns
+{#- A Spawn declares three things, so its row *is* its entry: a summary table
+    above a detail block would print the same three values twice. #}
+
+| Spawn | Unit | Equipment | Copies the loadout |
+| --- | --- | --- | --- |
+{%- for spawn in source.spawns %}
+| <a id="{{ spawn.anchor }}"></a>{{ spawn.key }} | [{{ spawn.unit.name }}](#{{ spawn.unit.anchor }}) | {{ links(spawn.equipment) or '—' }} | {{ 'yes' if spawn.copy_equipment else 'no' }} |
+{%- endfor %}
+{%- endif %}
+{%- if source.rules and source.rules.entries %}
+
+<a id="section-rules"></a>
+{% set reference = source %}
+{%- set hashes = "##" -%}
+{%- include "army-rules/rules-reference.md.jinja" %}
+{%- endif %}

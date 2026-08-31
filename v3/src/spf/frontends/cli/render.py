@@ -11,6 +11,7 @@ from typing import Annotated
 
 import cyclopts
 
+from spf import races
 from spf.armies import io
 from spf.config import config
 from spf.console import stderr, stdout
@@ -22,8 +23,10 @@ from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
 from spf.render.images import committed_image, no_image
 from spf.render.products import register_product
+from spf.render.race_overview import build_overview
 from spf.render.rulebook import build_rulebook
 from spf.rules import get_rulebook, rulebook_index_path
+from spf.schemas import type_aliases as t
 
 ARMY_PACK_TITLE = "Army Pack"
 
@@ -51,6 +54,10 @@ GENERAL_RULES = register_product(Product(name="general-rules"))
 # The Army Pack Product: templates live at
 # `<family>/army-pack/main.<ext>.jinja`.
 ARMY_PACK = register_product(Product(name="army-pack"))
+
+# The Race Overview Product: templates live at
+# `<family>/race-overview/main.<ext>.jinja`.
+RACE_OVERVIEW = register_product(Product(name="race-overview"))
 
 
 def _validate_format(_type: type, value: str) -> None:
@@ -220,6 +227,32 @@ def render_army_pack(
     stdout.print(f"Wrote {out}")
 
 
+def render_race_overview(
+    race_name: t.RaceName,
+    *,
+    opts: Annotated[RenderOpts | None, cyclopts.Parameter(name="*")] = None,
+) -> None:
+    """Render a race's whole catalogue to a Race Overview document."""
+    opts = opts or RenderOpts()
+    try:
+        race_config = races.get_race(race_name)
+    except (FileNotFoundError, ValueError) as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+
+    # The Race Name is the stem: it is the name of the TOML file the catalogue
+    # was read from, so it needs no slugifying.
+    overview = build_overview(
+        race_config,
+        stem=race_name,
+        image_for=no_image if opts.no_images else committed_image,
+        rules=not opts.no_rules,
+    )
+    fmt = get_format(opts.format)
+    out = render(RACE_OVERVIEW, overview, fmt=fmt, name=race_name, out=opts.out)
+    stdout.print(f"Wrote {out}")
+
+
 def lint_latex(*, tlmgr: bool = False) -> None:
     """Check that every LaTeX package a template uses is in the manifest.
 
@@ -256,4 +289,5 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(render_army_rules, name="army-rules")
     app.command(render_general_rules, name="general-rules")
     app.command(render_army_pack, name="army-pack")
+    app.command(render_race_overview, name="race-overview")
     app.command(lint_latex, name="lint")

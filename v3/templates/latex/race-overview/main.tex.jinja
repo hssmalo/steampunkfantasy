@@ -1,0 +1,359 @@
+{#
+  The Race Overview, LaTeX family. One Race's whole catalogue as four flat,
+  cross-linked sections — Units, Models, Equipment, Spawns — followed by the
+  Rules Reference (ADR 0031). A fielded Army has one chosen path through Unit,
+  Model and Equipment, which is why the Army Reference nests them; a Race is an
+  N:M web, so every record prints exactly once here and the links carry the
+  structure instead.
+
+  The Markdown twin at `markdown/race-overview/main.md.jinja` renders the same
+  document: the same sections in the same order, the same records, and the same
+  cross-links. Only the link and table syntax is this family's own (ADR 0005).
+
+  Each section opens with a summary table whose first cell links into the
+  record's own entry below it. A catalogue's table runs past one page, so those
+  are `longtable`s with a repeating header rather than `tabular`s.
+
+  A record's entry is a sectioning command, so a plain `\label` after it
+  records that very counter. `\phantomsection` is needed only where there is no
+  sectioning command for the label to sit on — a Spawn's table row — and inside
+  the Rules Reference partial, whose entries are bold text.
+
+  Designer-authored Markdown prose (`lore`, `tip`, the notes) goes through
+  `md_to_latex`; short own-strings — a size label, a holder, a Type — take
+  `latex_escape` (ADR 0005's addendum).
+-#}
+\BLOCK{macro links(items)}\BLOCK{for link in items}\BLOCK{if not loop.first}, \BLOCK{endif}\hyperref[\VAR{link.anchor}]{\VAR{link.name | latex_escape}}\BLOCK{endfor}\BLOCK{endmacro}
+{#- A rule's name, linked when the Rules Reference holds its entry. -#}
+\BLOCK{macro rule(line)}\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}\BLOCK{endmacro}
+{#- One Special per `\item`, for a list the caller has already opened. -#}
+\BLOCK{macro special_items(lines)}
+\BLOCK{for line in lines}
+\item \textbf{\VAR{rule(line)}}\VAR{': ' ~ (line.text | latex_escape) if line.text else ''}
+\BLOCK{endfor}
+\BLOCK{endmacro}
+{#- One Slot's Specials, under the label naming what the Slot grants. Slots
+    stay apart: what a record grants its Unit and what it is itself are
+    different claims. -#}
+\BLOCK{macro slot_specials(label, lines)}
+\BLOCK{if lines}
+\item \textit{\VAR{label | latex_escape}:}
+\begin{itemize}
+\VAR{special_items(lines)}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endmacro}
+{#- Declared deltas: a Stacker is printed as the change it declares, never
+    resolved, because it has no value until a Unit is fielded under it. -#}
+\BLOCK{macro deltas(label, modifiers)}
+\BLOCK{if modifiers}
+\item \textit{\VAR{label | latex_escape}:}
+\begin{itemize}
+\BLOCK{for modifier in modifiers}
+\item \VAR{modifier | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endmacro}
+{#- The cost cells of a summary row, one column per currency. -#}
+\BLOCK{macro cost_cells(columns)}\BLOCK{for cell in columns} & \VAR{cell}\BLOCK{endfor}\BLOCK{endmacro}
+{#- One order-type as a flat table, a row per option. The widest row fixes the
+    column count, so a shorter one is padded rather than shifting the table. -#}
+\BLOCK{macro order_table(title, rows)}
+\BLOCK{if rows}
+\BLOCK{set ncols = (rows | map('last') | map('length') | list | max)}
+
+\noindent\textbf{\VAR{title | latex_escape}}
+
+\begin{tabular}{l\VAR{'l' * ncols}}
+\BLOCK{for speed, cells in rows}
+\VAR{speed | latex_escape}\BLOCK{for cell in cells} & \VAR{cell | latex_escape}\BLOCK{endfor}\BLOCK{for _ in range(ncols - cells | length)} & \BLOCK{endfor} \\
+\BLOCK{endfor}
+\end{tabular}
+\vspace{1ex}
+\BLOCK{endif}
+\BLOCK{endmacro}
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+% A tiny version stamp in the footer of every page. `\maketitle` switches its
+% own page to the `plain` style, so `plain` is redefined to match — otherwise
+% the stamp is missing from exactly the page most people look at.
+\newcommand{\versionfoot}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%  the page number the table of contents points at
+  \fancyfoot[R]{\tiny v\VAR{spf_version}}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+\hypersetup{
+    colorlinks=true, % set true if you want colored links
+    linktoc=all,     % set to all if you want both sections and subsections linked
+    linkcolor=blue,  % choose some color if you want links to stand out
+}
+\pagestyle{fancy}
+\versionfoot
+\fancypagestyle{plain}{\versionfoot}
+
+\title{\VAR{source.title | latex_escape}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\BLOCK{if source.description}
+
+\VAR{source.description | md_to_latex | trim}
+\BLOCK{endif}
+\BLOCK{if source.race_image}
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{\VAR{source.race_image | posix_path}}
+\end{center}
+\BLOCK{endif}
+
+% Each section's summary table is that section's own index, so the contents
+% list stops at the sections themselves.
+\setcounter{tocdepth}{1}
+\tableofcontents
+\newpage
+
+\section{Units}
+\label{section-units}
+
+\begin{longtable}{@{}p{0.28\textwidth}llrrrrr@{}}
+\textbf{Unit} & \textbf{Size} & \textbf{Models} & \textbf{ip} & \textbf{mp} & \textbf{xp} & \textbf{cp} & \textbf{vpm} \\
+\hline
+\endhead
+\BLOCK{for unit in source.units}
+\hyperref[\VAR{unit.anchor}]{\VAR{unit.name | latex_escape}} & \VAR{unit.size | latex_escape} & \VAR{unit.model_count}\VAR{cost_cells(unit.cost_columns)} \\
+\BLOCK{endfor}
+\end{longtable}
+
+\BLOCK{for unit in source.units}
+\subsection{\VAR{unit.name | latex_escape}}
+\label{\VAR{unit.anchor}}
+\BLOCK{if unit.lore}
+
+\textit{\VAR{unit.lore | md_to_latex | trim}}
+\BLOCK{endif}
+\BLOCK{if unit.image}
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{\VAR{unit.image | posix_path}}
+\end{center}
+\BLOCK{endif}
+
+\begin{itemize}
+\BLOCK{if unit.cost}
+\item Cost: \VAR{unit.cost | latex_escape} (\VAR{unit.points} points)
+\BLOCK{endif}
+\item Size: \VAR{unit.size | latex_escape}
+\item Models: \VAR{links(unit.models)}
+\BLOCK{if unit.types}
+\item Type: \VAR{unit.types | join(', ') | latex_escape}
+\BLOCK{endif}
+\BLOCK{if unit.armor}
+\item Armor: \VAR{unit.armor | join('/')}
+\BLOCK{endif}
+\item Shaken: \VAR{unit.shaken_speed | latex_escape} [\VAR{unit.shaken_movement | join(', ') | latex_escape}] / \VAR{unit.shaken_fire | latex_escape}
+\BLOCK{if unit.spawned_by}
+\item Placed by: \VAR{links(unit.spawned_by)}
+\BLOCK{endif}
+\VAR{special_items(unit.specials)}
+\BLOCK{if unit.spawn_links}
+\item Places: \VAR{links(unit.spawn_links)}
+\BLOCK{endif}
+\BLOCK{if unit.note}
+\item \textbf{Note}: \VAR{unit.note | md_to_latex | trim}
+\BLOCK{endif}
+\end{itemize}
+{#- The tip is army-building advice and may run to several paragraphs, so it is
+    a block of its own rather than an item a second paragraph would break out
+    of. -#}
+\BLOCK{if unit.tip}
+
+\noindent\textbf{Tip}: \VAR{unit.tip | md_to_latex | trim}
+\BLOCK{endif}
+\VAR{order_table("Movement orders", unit.movement_rows)}
+\VAR{order_table("Fire orders", unit.fire_rows)}
+\BLOCK{for name, rows, notes in unit.damage_tables}
+
+\noindent\textbf{Damage Table: \VAR{name | latex_escape}}
+
+{# An effect runs to a sentence or three, so its column wraps: an `l` column
+   sets the longest one as a single line and pushes it off the page. #}
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+\BLOCK{for roll, effect in rows}
+\VAR{roll | latex_escape} & \VAR{effect | latex_escape} \\
+\BLOCK{endfor}
+\end{tabular}
+\BLOCK{if notes}
+\begin{itemize}
+\BLOCK{for note in notes}
+\item \VAR{note | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\vspace{1ex}
+\BLOCK{endfor}
+\BLOCK{endfor}
+
+\newpage
+\section{Models}
+\label{section-models}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.35\textwidth}p{0.2\textwidth}l@{}}
+\textbf{Model} & \textbf{Type} & \textbf{Equipment slots} & \textbf{Cost} \\
+\hline
+\endhead
+\BLOCK{for model in source.models}
+\hyperref[\VAR{model.anchor}]{\VAR{model.name | latex_escape}} & \VAR{(model.types | join(', ') | latex_escape) or '---'} & \BLOCK{for holder, capacity in model.notable_limits}\BLOCK{if not loop.first}, \BLOCK{endif}\VAR{holder | latex_escape} \VAR{capacity | latex_escape}\BLOCK{else}---\BLOCK{endfor} & \VAR{model.cost | latex_escape} \\
+\BLOCK{endfor}
+\end{longtable}
+
+\BLOCK{for model in source.models}
+\subsection{\VAR{model.name | latex_escape}}
+\label{\VAR{model.anchor}}
+
+\begin{itemize}
+\BLOCK{if model.cost}
+\item Cost: \VAR{model.cost | latex_escape} (\VAR{model.points} points)
+\BLOCK{endif}
+\item Assault: strength \VAR{model.assault_strength | join('/')} (\VAR{model.assault_strength_die | latex_escape}), deflection \VAR{model.assault_deflection | join('/')} (\VAR{model.assault_deflection_die | latex_escape}), damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
+\BLOCK{if model.types}
+\item Type: \VAR{model.types | join(', ') | latex_escape}
+\BLOCK{endif}
+\BLOCK{if model.fielded_in}
+\item Fielded in: \VAR{links(model.fielded_in)}
+\BLOCK{endif}
+\BLOCK{if model.replaces}
+\item Upgrades from: \hyperref[\VAR{model.replaces.anchor}]{\VAR{model.replaces.name | latex_escape}}
+\BLOCK{endif}
+\BLOCK{if model.replaced_by}
+\item Upgraded by: \VAR{links(model.replaced_by)}
+\BLOCK{endif}
+\BLOCK{if model.equipment}
+\item May carry: \VAR{links(model.equipment)}
+\BLOCK{endif}
+\VAR{deltas("Grants its Unit", model.unit_modifiers)}
+\VAR{slot_specials("Grants its Unit", model.unit_specials)}
+\VAR{special_items(model.specials)}
+\VAR{slot_specials("In assault", model.assault_specials)}
+\BLOCK{if model.spawn_links}
+\item Places: \VAR{links(model.spawn_links)}
+\BLOCK{endif}
+\BLOCK{if model.assault_note}
+\item \textbf{Note (assault)}: \VAR{model.assault_note | md_to_latex | trim}
+\BLOCK{endif}
+\BLOCK{if model.note}
+\item \textbf{Note}: \VAR{model.note | md_to_latex | trim}
+\BLOCK{endif}
+\end{itemize}
+\BLOCK{if model.equipment_limits}
+
+\begin{tabular}{lr}
+\textbf{Holder} & \textbf{Slots} \\
+\hline
+\BLOCK{for holder, capacity in model.equipment_limits}
+\VAR{holder | latex_escape} & \VAR{capacity | latex_escape} \\
+\BLOCK{endfor}
+\end{tabular}
+\vspace{1ex}
+\BLOCK{endif}
+\BLOCK{endfor}
+
+\newpage
+\section{Equipment}
+\label{section-equipment}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.46\textwidth}l@{}}
+\textbf{Equipment} & \textbf{Profile} & \textbf{Cost} \\
+\hline
+\endhead
+\BLOCK{for equip in source.equipment}
+\hyperref[\VAR{equip.anchor}]{\VAR{equip.name | latex_escape}} & \BLOCK{if equip.range is not none}range \VAR{equip.range}, damage \VAR{equip.range_damage | latex_escape}, AP \VAR{equip.range_ap}\BLOCK{elif equip.assault_modifiers}\VAR{equip.assault_modifiers | join('; ') | latex_escape}\BLOCK{else}---\BLOCK{endif} & \VAR{equip.cost | latex_escape} \\
+\BLOCK{endfor}
+\end{longtable}
+
+\BLOCK{for equip in source.equipment}
+\subsection{\VAR{equip.name | latex_escape}}
+\label{\VAR{equip.anchor}}
+
+\begin{itemize}
+\BLOCK{if equip.cost}
+\item Cost: \VAR{(equip.pricing or equip.cost) | latex_escape}
+\BLOCK{endif}
+\BLOCK{if equip.range is not none}
+\item Range: \VAR{equip.range}, angle \VAR{equip.range_angle | join('/') | latex_escape}, damage \VAR{equip.range_damage | latex_escape}, AP \VAR{equip.range_ap}
+\BLOCK{endif}
+\BLOCK{if equip.carried_by}
+\item Carried by: \VAR{links(equip.carried_by)}
+\BLOCK{endif}
+{#- Every line has to hold: `requires` is a conjunction of disjunctions, so the
+    choice lives inside a line and never between two of them. Joining these
+    with an "or" would promise a build the Army tier rejects. -#}
+\BLOCK{if equip.requires_all}
+\item \textit{Requires all of:}
+\begin{itemize}
+\BLOCK{for requirement in equip.requires_all}
+\item \VAR{requirement | latex_escape}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\VAR{slot_specials("When shooting", equip.range_specials)}
+\BLOCK{if equip.range_note}
+\item \textbf{Note (range)}: \VAR{equip.range_note | md_to_latex | trim}
+\BLOCK{endif}
+\VAR{deltas("In assault", equip.assault_modifiers)}
+\VAR{slot_specials("In assault", equip.assault_specials)}
+\BLOCK{if equip.assault_note}
+\item \textbf{Note (assault)}: \VAR{equip.assault_note | md_to_latex | trim}
+\BLOCK{endif}
+\VAR{deltas("Grants its Unit", equip.unit_modifiers)}
+\VAR{slot_specials("Grants its Unit", equip.unit_specials)}
+\VAR{slot_specials("Grants its Model", equip.model_specials)}
+\BLOCK{if equip.spawn_links}
+\item Places: \VAR{links(equip.spawn_links)}
+\BLOCK{endif}
+\BLOCK{if equip.note}
+\item \textbf{Note}: \VAR{equip.note | md_to_latex | trim}
+\BLOCK{endif}
+\end{itemize}
+{#- Orders an Equipment grants stay on the Equipment: `orders_gained` is
+    additive (ADR 0007), and only a fielded Unit has the fixed loadout a merged
+    table would describe. -#}
+\VAR{order_table("Movement orders granted", equip.orders_gained_movement_rows)}
+\VAR{order_table("Fire orders granted", equip.orders_gained_fire_rows)}
+\BLOCK{endfor}
+\BLOCK{if source.spawns}
+
+\newpage
+\section{Spawns}
+\label{section-spawns}
+{# A Spawn declares three things, so its row *is* its entry: a summary table
+   above a detail block would print the same three values twice. A row is no
+   sectioning command, so its label needs a `\phantomsection` to sit on. #}
+
+\begin{longtable}{@{}p{0.20\textwidth}p{0.22\textwidth}p{0.28\textwidth}p{0.16\textwidth}@{}}
+\textbf{Spawn} & \textbf{Unit} & \textbf{Equipment} & \textbf{Copies the loadout} \\
+\hline
+\endhead
+\BLOCK{for spawn in source.spawns}
+\phantomsection\label{\VAR{spawn.anchor}}\VAR{spawn.key | latex_escape} & \hyperref[\VAR{spawn.unit.anchor}]{\VAR{spawn.unit.name | latex_escape}} & \VAR{links(spawn.equipment) or '---'} & \VAR{'yes' if spawn.copy_equipment else 'no'} \\
+\BLOCK{endfor}
+\end{longtable}
+\BLOCK{endif}
+\BLOCK{if source.rules and source.rules.entries}
+
+\newpage
+\phantomsection\label{section-rules}
+\BLOCK{set reference = source}
+\BLOCK{set unit_heading = "\\section"}
+\BLOCK{include "army-rules/rules-reference.tex.jinja"}
+\BLOCK{endif}
+\end{document}

@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from spf.schemas.race import RaceConfig
+from spf.schemas.race import RaceConfig, race_slots
 from spf.schemas.special import SpecialInstance
 
 
@@ -203,6 +203,51 @@ def test_an_equipment_grants_into_the_slot_it_names() -> None:
 def test_the_error_names_the_holder() -> None:
     with pytest.raises(ValidationError, match="equipment 'Sword'"):
         race(equipment={"unit_specials": {"nonesuch": [{}]}})
+
+
+# ---------------------------------------------------------------------------
+# The walk over a Race's Slots
+# ---------------------------------------------------------------------------
+
+
+def test_race_slots_yields_every_slot_a_race_holds() -> None:
+    """A distinct id per Slot, so a Slot dropped from the walk fails here.
+
+    Every surface asking what rules a Race reaches -- the countdowns, a Rules
+    Reference built off a `RaceConfig` -- walks through here, so a missing
+    Slot would silently shrink all of them at once.
+    """
+    loaded = race(
+        unit={"specials": {"officer": [{}]}},
+        model={
+            "unit_specials": {"chase": [{}]},
+            "specials": {"escape_artist": [{}]},
+            "assault": _ASSAULT | {"specials": {"retreat": [{}]}},
+        },
+        equipment={
+            "unit_specials": {"trap": [{}]},
+            "model_specials": {"fog": [{}]},
+            "assault": {"specials": {"weakest_armor": [{}]}},
+            "range": {
+                "range": 12,
+                "angle": [True, False, False, False],
+                "damage": "d6",
+                "ap": 0,
+                "specials": {"forced_break": [{}]},
+            },
+        },
+    )
+
+    assert [list(slot) for slot in race_slots(loaded)] == [
+        ["officer"],
+        ["chase"],
+        ["escape_artist"],
+        ["retreat"],
+        ["trap"],
+        ["fog"],
+        ["weakest_armor"],
+        ["forced_break"],
+    ]
 
 
 def test_a_model_declares_instances_in_two_slots() -> None:
