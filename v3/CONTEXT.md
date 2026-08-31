@@ -247,6 +247,10 @@ _Note_: `replace` is also an **Instance** key, where it means "ignore what came
 before" over a *set* of Instances rather than over a *value*. The gloss is the
 same; the vocabularies are deliberately separate, and `add` and `extend` never
 appear on an Instance.
+_Note_: a Stat Modifier has a **value** only once it is fielded, since what it
+modifies belongs to the Unit or Model fielding it. A catalogue view such as the
+**Race Overview** therefore prints the declared delta itself — `+3/+2/0/0` —
+and resolves nothing (ADR-0031).
 
 **Source Chain**:
 The fixed order in which Specials and Stat Modifiers reach a Unit or Model: Unit
@@ -455,8 +459,16 @@ under its Nick alone.
 _Avoid_: nick (that is the Army's own name), player (a Label need not be one)
 
 **Race Overview**:
-A Rendering covering all Units, Models, and Equipment of one Race. Built from a
-Race's `RaceConfig` (unresolved, for now).
+A Rendering of one Race's whole catalogue, answering what a player can field,
+what it can carry, and what it costs. Built from the Race's raw `RaceConfig`,
+which is **unresolved by design**: nothing in a catalogue is fielded, so a
+**Stat Modifier** prints as the delta it was declared as rather than a value
+(ADR-0031, and the Race Overview addendum to ADR-0005). Four flat, cross-linked
+sections — Units, Models, Equipment, Spawns — followed by a Rules Reference;
+every record appears exactly once, rather than nested under each path that
+reaches it.
+_Avoid_: race reference (the nesting it implies is the shape this Product
+rejects), race card
 
 **Rulebook**:
 A Rendering of the general, army-agnostic rules. Built from a **Rulebook
