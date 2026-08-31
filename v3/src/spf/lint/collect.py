@@ -15,7 +15,7 @@ from spf.lint import holders, names, variants
 from spf.registry import load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
-from spf.schemas.race import RaceConfig
+from spf.schemas.race import RaceConfig, special_slots
 
 
 class Named(Protocol):
@@ -67,7 +67,7 @@ def lint_race_config(
     forgotten to pass them.
     """
     findings: list[Finding] = []
-    for section, key, specials in races.special_slots(race_config):
+    for section, key, specials in special_slots(race_config):
         findings += [
             Finding(
                 race=race,

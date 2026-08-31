@@ -33,9 +33,11 @@ the prose layout, so one source cannot serve both well.
 
 - Terminal/Rich output stays **out** of this subsystem — it serves authoring and
   inspection, not gameplay reference, and is not a file Rendering.
-- Race Overview passes an *unresolved* `RaceConfig`, so its specials are the
-  short override strings, not full rule text. A future `Race.resolve()` is the
-  seam to inline them; deferred.
+- Race Overview passes an *unresolved* `RaceConfig`, and that is its permanent
+  shape rather than a step short of one. Its Specials print as fully
+  interpolated text all the same. See the addendum below, which replaces this
+  bullet's original claim that a future `Race.resolve()` was needed to inline
+  them.
 - Multi-Unit and multi-Army aggregation into one Rendering is a future concern;
   the placeholder is concatenating PDFs at the end.
 - The Markdown Jinja environment runs with `autoescape=False`, **not** HTML
@@ -72,3 +74,35 @@ images, no link targets, and raw LaTeX in a Markdown source is escaped rather
 than passed through. If it ever grows to where a Markdown source can express a
 whole authored layout, that is the boundary being crossed, and this decision
 should be revisited rather than stretched.
+
+## Addendum: Race Overview resolves its own Specials
+
+The Consequences bullet above once said something this ADR no longer holds:
+that a Race Overview's specials could only be "the short override strings, not
+full rule text", and that a future `Race.resolve()` was the seam to inline
+them. Both halves are void. `Race.resolve()` is **retired, not deferred** — it
+is not needed, and it should not be built.
+
+What changed is underneath the Rendering. When this ADR was written, a Special
+was free text living on the record that carried it, so the only way to reach
+the full rule was to walk the **Source Chain** — and only a resolved `Army`
+walks that. [ADR-0024](0024-specials-are-identified-instances-over-a-registry.md)
+replaced that free text with identified **Instances** over a rule registry.
+A rule's text now lives in the registry, and an Instance carries the Args that
+fill its **Signature**. Interpolating one needs the Instance and the registry,
+and nothing else: `spf.render.specials.special_lines()` is pure over any
+`Specials` dict. The same call serves the Army Reference, the console, and the
+Race Overview, and all three print the same words.
+
+So the resolver the bullet reached for would buy nothing. Worse, it would
+invent facts. Resolution is what turns declarations into values by fielding
+them, and a catalogue has fielded nothing: a Model's `+3/+2/0/0` armor grant
+has no value until a specific Unit is fielded under it, and a resolved
+catalogue would have to pick one. The Race Overview therefore prints the
+declaration itself — see
+[ADR-0031](0031-race-overview-is-a-flat-catalogue.md), which makes this the
+shape of the whole document rather than a detail of its Specials.
+
+The general lesson is worth keeping: an "unresolved" source is not
+automatically a source missing something. Ask what the resolver would supply,
+and whether the record can honestly supply it alone.

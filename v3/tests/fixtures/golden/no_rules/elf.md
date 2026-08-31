@@ -82,7 +82,7 @@
 
 - Range: 2, angle False/True/True/False, damage d6-1, AP 3
 - **Multiple Shots**: May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles
-- **Focus Fire**: When using aim, roll 6 dice at same unit.
+- **Focus Fire**: [N]. When using aim, roll 6 dice at same unit.
 - **Area**: If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units.
 
 

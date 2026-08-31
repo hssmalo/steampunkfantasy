@@ -182,9 +182,6 @@ description = '''This is an illusionary elegant elf wielding a ww1 rifle. The el
 [[units.illusion.specials.illusion]]
 text = "When fired at, you may pretend to look at normal infantry damage table unless the damage is 4 or above, for which the illusion is given away and is removed from play. Further, if the illusion is matched with one real infantry base, it may mimic the orders of that infantry, and may follow it wherever the infantry goes. The illusion have the exact same modifiers and abilities with regard to being hit as the infantry it is mimicking. Thus, the illusion has Take Cover[still][-2], Take Cover[still][-3], and camouflage[forest][-1] as appropriate. Thus the enemy do not know which are illusions and which are real. However if, for any reason, the enemy gets information which gives the illusion away, the illusion is not removed from play, but must be identified by an illusion marker. For example if the illusion was fired at by something which does Psychic damage, it would require you to tell the enemy that this unit does not have a Psychic damage table, which would give the illusion away."
 
-[[units.illusion.specials.movement]]
-text = "If the illusion is not in a hex with a friendly infantry, it has only chase order available"
-
 [[units.illusion.specials.forward_position]]
 args.N = 2
 
@@ -193,7 +190,7 @@ speed = 'slow'
 movement_order = ["-", "-", "flee"]
 
 [units.illusion.orders.movement]
-slow = [["-", "-", "Chs"]]
+slow = [["-", "-", "Chs"],["Follow", "Follow", "Follow"]]
 
 [units.illusion.damage_tables.Regular]
 rows = [
@@ -840,7 +837,7 @@ deflection_die = "5+"
 damage = "d6"
 ap = 2
 
-[[models.elf_hydra.assault.specials.bonus]]
+[[models.elf_hydra.assault.specials.boost]]
 variant = "strength_per_head"
 
 [[models.elf_hydra.assault.specials.assault_extra_damage]]
@@ -1524,10 +1521,9 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.light_mortar.range.specials.area]]
+#preamble = "One hex within normal range"
 args.N = 5
 
-[[equipment.light_mortar.range.specials.range]]
-text = "A Hex within normal range"
 
 [equipment.pentagun]
 name = "PentaGun"
@@ -1659,7 +1655,13 @@ ap = "3"
 variant = "aim_6_dice"
 
 [[equipment.gatling_gun.range.specials.area]]
-text = "If not using aim, area[4+] at point blank range and area[6+] at all units within normal and long range within one chosen direction. Avoids firing at hexes with friendly units"
+#preamble = "If not using aim, target all hexes within long range"
+args.N = 4
+text = "at point blank range"
+
+[[equipment.gatling_gun.range.specials.area]]
+args.N = 6
+text = "at normal and long range"
 
 [equipment.shriek_smg_free]
 name = "Shriek SMG"

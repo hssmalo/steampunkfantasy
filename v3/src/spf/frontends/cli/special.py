@@ -156,7 +156,7 @@ class SpecialRecord:
     """(rendered Ref, effect) pairs, one per version overlay."""
 
     variants: list[tuple[str, str]]
-    """(id, text) pairs, one per variant an instance may draw on (ADR 0031).
+    """(id, text) pairs, one per variant an instance may draw on (ADR 0032).
 
     The id stands unrendered: a variant is named by a bare Identifier the rule
     owns, so there is no namespace to resolve it against.

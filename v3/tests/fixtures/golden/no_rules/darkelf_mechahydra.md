@@ -121,14 +121,14 @@
 - Assault: strength 6/6/6/6 (5+), deflection 6/2/2/2 (5+), damage d6, AP 2
 
 
-- **Bonus**: +3 assault strength  and +1 assault deflection per alive head
+- **Boost**: +3 assault strength  and +1 assault deflection per alive head
 - **Assault Extra Damage**: Poison[6][1 for 2]
 - **Cunning Assault Defense**: [3, 5+]
 
 #### Shrapnel Spit
 
 - Range: 3, angle True/True/False/False, damage d4-2, AP 1
-- **Area**: [1+]. at point blank; [4+]. at long range
+- **Area**: [1+]. at point blank; [4+]. at normal range
 
 #### Poison Spit
 

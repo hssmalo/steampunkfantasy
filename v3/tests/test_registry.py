@@ -408,7 +408,7 @@ def test_a_variable_colliding_with_a_ref_targets_variable_is_rejected() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Every named variant is one the rule defines (ADR 0031)
+# Every named variant is one the rule defines (ADR 0032)
 # ---------------------------------------------------------------------------
 
 

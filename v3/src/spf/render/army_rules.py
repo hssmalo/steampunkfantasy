@@ -19,6 +19,7 @@ from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.registry import load_registry
 from spf.render import rules_reference
+from spf.render.damage import roll_text
 from spf.render.images import ImageLookup, committed_image
 from spf.render.rules_reference import RulesReference
 from spf.render.specials import SpecialLine, special_lines
@@ -26,17 +27,6 @@ from spf.schemas import type_aliases as t
 from spf.schemas.race import EquipmentConfig
 
 type _Specials = list[SpecialLine]
-
-
-def _roll_text(roll: t.DamageRoll) -> str:
-    """Render a damage roll as its table-column string (`9` / `1-2` / `6+`)."""
-    match roll:
-        case t.ExactRoll(value=value):
-            return str(value)
-        case t.RangeRoll(low=low, high=high):
-            return f"{low}-{high}"
-        case t.AtLeastRoll(value=value):
-            return f"{value}+"
 
 
 def _count_summary[T](items: Sequence[T], name_of: Callable[[T], str]) -> list[str]:
@@ -208,7 +198,7 @@ def _unit_entry(
         damage_tables=[
             (
                 name,
-                [(_roll_text(row.roll), row.effect) for row in table.rows],
+                [(roll_text(row.roll), row.effect) for row in table.rows],
                 list(table.notes),
             )
             for name, table in unit.config.damage_tables.items()

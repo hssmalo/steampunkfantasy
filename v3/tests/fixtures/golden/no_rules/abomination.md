@@ -37,8 +37,8 @@
 
 - **Fog**: Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)
 
-- **Bonus**: +100% strength and deflections versus shaken units
 - **Cunning Assault**: [2]
+- **Note**: +100% strength and deflections versus shaken units
 
 #### Multipurpose Gun
 
@@ -89,8 +89,9 @@
 - **Fog**: Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)
 
 - **Cunning Assault**: [3]
-- **Bonus**: +100% strength and deflections versus shaken units; Improves assault if ammo is spend. You may spend one ammo in an assault, to increase the success of both assault strength and deflection to 4+ instead of 6+
 - **Assault Extra Damage**: Poison[4][1 for 4]; Psychic. If assault in a hex with fog, each hit by this model does an d6 Psychic damage in addition to the regular damage. This ability does not stack with more spears.
+- **Boost**: To use mechanical melee contraption, spend one ammo. If you do, increase both assault strength and deflection to 4+ instead of 6+
+- **Note**: +100% strength and deflections versus shaken units
 
 #### Frog Spit
 
@@ -154,8 +155,8 @@
 
 - **Fog**: Double to-hit penalties in fog and ignore to-hit penalty for enemies in fog. (however does not ignore line of sight through fog hexes)
 
-- **Bonus**: +100% strength and deflections versus shaken units
 - **Cunning Assault Defense**: [6, 6+]
+- **Note**: +100% strength and deflections versus shaken units
 
 #### Confusion Stinger
 
@@ -207,7 +208,7 @@
 - Assault: strength 6/4/4/2 (4+), deflection 2/0/0/0 (4+), damage d6, AP 2
 
 
-- **Bonus**: +100% strength and deflections versus shaken units
+- **Note**: +100% strength and deflections versus shaken units
 
 
 ---

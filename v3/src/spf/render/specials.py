@@ -77,7 +77,7 @@ def _prose(
 ) -> str | None:
     """Resolve the prose slot, spelled inline or drawn from the rule's variants.
 
-    Total by design (ADR 0031): an id resolving to nothing renders as no prose,
+    Total by design (ADR 0032): an id resolving to nothing renders as no prose,
     because the load-time gate is what reports it and rendering must stay
     printable for a rule the registry does not hold at all.
     """

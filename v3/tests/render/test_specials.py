@@ -294,7 +294,7 @@ def test_an_identifier_the_lookup_does_not_know_leaves_the_anchor_unset() -> Non
     assert line.anchor is None
 
 
-# --- variants: shared prose drawn from the rule's pool (ADR 0031) -----------
+# --- variants: shared prose drawn from the rule's pool (ADR 0032) -----------
 
 VARIANTS = Registry(
     records={

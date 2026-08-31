@@ -218,9 +218,6 @@ fire_order = "Normal"
 args.version = "damage_type.poison"
 args.N = 3
 
-[[units.mini_zeppelin.specials.movement]]
-text = "random movement: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutralize the effect of the weather"
-
 [units.mini_zeppelin.orders.movement]
 fast = [["random", "L/R+F", "F"], ["random", "F", "F"], ["random", "F", "B"]]
 slow = [["360°", "F", "360°"], ["360°", "360°", "360°"], ["360°", "A", "F"]]
@@ -350,30 +347,27 @@ movement_order = ["-", "-", "-"]
 args.version = "damage_type.fire"
 args.N = 2
 
-[[units.gunblasterwagon.specials.movement]]
-text = "Perfect Breaking: After 3rd movement step, it may apply an B or B+B in addition to it's normal action. This may be applied regardless of what the movement order at step 3 is."
-
 [units.gunblasterwagon.orders.movement]
 fast = [
-    ["F", "L/R", "-"],
-    ["F", "B", "-"],
-    ["F", "F", "(L/R)"],
-    ["F", "F", "F+(L/R)"],
+    ["F", "L/R", "(BB)"],
+    ["F", "B", "(BB)"],
+    ["F", "F", "(L/R)+(BB)"],
+    ["F", "F", "F+(L/R)+(BB)"],
 ]
 slow = [
-    ["L/R", "(L/R)", "-"],
-    ["A", "F", "-"],
-    ["B", "-", "-"],
-    ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["L/R", "(L/R)", "(BB)"],
+    ["A", "F", "(BB)"],
+    ["B", "-", "(BB)"],
+    ["F", "-", "(BB)"],
+    ["B", "rev", "(BB)"],
 ]
 still = [
-    ["L/R", "(L/R)", "(L/R)"],
-    ["-", "-", "-"],
-    ["L/R", "A", "F"],
-    ["A", "F", "-"],
-    ["rev", "-", "-"],
-    ["A+A+(L/R)", "F", "F"],
+    ["L/R", "(L/R)", "(L/R)+(BB)"],
+    ["-", "-", "(BB)"],
+    ["L/R", "A", "F+(BB)"],
+    ["A", "F", "(BB)"],
+    ["rev", "-", "(B)+(B)"],
+    ["A+A+(L/R)", "F", "F+(B)+(B)"],
 ]
 
 [units.gunblasterwagon.orders.fire]
@@ -1125,7 +1119,10 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Vehicle"]]
 
 [[equipment.infantry_platform.unit_specials.movement]]
-text = "Tank Riders: While an infantry is in slow, and sharing a hex with this vehicle, you may use the movement order of the vehicle instead of your infantry movement when placing orders. Speed of infantry is set to slow after movement"
+text = "Tank Riders: Any infantry in slow which shares a hex with this unit, may use the follow order instead of their own. If so, place the infantry order marker on the movement card of the tank instead"
+
+#see_also=orders.follow
+
 
 [equipment.springloaded_vehicle_assault_weapons]
 name = "Springloaded Vehicle Assault Weapons"

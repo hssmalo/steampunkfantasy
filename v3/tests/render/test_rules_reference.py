@@ -12,6 +12,8 @@ from spf.schemas.race import (
     AssaultConfig,
     ModelConfig,
     OrdersConfig,
+    RaceConfig,
+    RaceMetadata,
     ShakenConfig,
     UnitConfig,
 )
@@ -446,6 +448,77 @@ def test_an_instances_atmospheric_name_is_collected_as_an_alias() -> None:
     assert rr.seeds(army, registry=REGISTRY).aliases == [
         ("Insanity Field", "special.terror")
     ]
+
+
+# --- Seeding from any collection of Slots -----------------------------------
+
+
+def test_seeds_come_from_the_slots_alone() -> None:
+    """The seam takes Slots, so a Race seeds a Rules Reference as an Army does."""
+    slots: list[Specials] = [
+        {
+            "resistance": [
+                SpecialInstance(args={"version": "damage_type.poison", "N": 3})
+            ]
+        },
+        {"terror": [SpecialInstance(name="Insanity Field")]},
+    ]
+
+    seeded = rr.seeds_from(slots, registry=REGISTRY)
+
+    assert seeded.refs == [
+        "special.resistance",
+        "damage_type.poison",
+        "special.terror",
+    ]
+    assert seeded.aliases == [("Insanity Field", "special.terror")]
+
+
+# --- A Race's Rules Reference -----------------------------------------------
+
+
+def _race(unit_specials: Specials) -> RaceConfig:
+    """Build a one-Unit, one-Model Race whose Unit carries `unit_specials`."""
+    return RaceConfig(
+        races={"goblin": RaceMetadata(name="Goblin")},
+        units={
+            "squad": UnitConfig(
+                race="goblin",
+                name="Squad",  # pyright: ignore[reportArgumentType]
+                models=["grunt"],
+                size="small",
+                shaken=ShakenConfig(
+                    speed="slow", movement_order=["-", "-", "Flee"], fire_order="None"
+                ),
+                orders=OrdersConfig(),
+                specials=unit_specials,
+                damage_tables={},
+            )
+        },
+        models={
+            "grunt": ModelConfig(
+                race="goblin",
+                name="Grunt",  # pyright: ignore[reportArgumentType]
+                equipment_limit=[],  # pyright: ignore[reportArgumentType]
+                equipment=[],
+                type=["Infantry"],
+                assault=_ASSAULT,
+                cost=None,
+            )
+        },
+        equipment={},
+    )
+
+
+def test_a_race_resolves_its_own_rules_reference() -> None:
+    reference = rr.build_for_race(
+        _race({"terror": [SpecialInstance(args={"N": 1, "M": 4})]}), registry=REGISTRY
+    )
+
+    assert reference.anchor_for("terror") == "rule-special-terror"
+    # The graph is closed over from a Race's Slots exactly as from an Army's:
+    # Terror's `see_also` promotes the token a player has to resolve (ADR 0029).
+    assert "token.terror" in reference.anchors
 
 
 if __name__ == "__main__":  # pragma: no cover

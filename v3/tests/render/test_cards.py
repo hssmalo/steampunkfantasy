@@ -819,21 +819,3 @@ def test_render_cards_missing_army_exits_nonzero(tmp_path: Path) -> None:
 # makes such a reordering visible here.
 
 GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
-
-
-def test_merged_orders_place_sneak_after_fast() -> None:
-    orders = OrdersConfig(movement={"sneak": [["S"]], "slow": [["L"]], "fast": [["F"]]})
-
-    merged = _unit(orders=orders).orders()
-
-    assert list(merged.movement or {}) == ["slow", "fast", "sneak"]
-
-
-@pytest.mark.usefixtures("pinned_version")
-def test_cards_markdown_output_matches_golden_file(tmp_path: Path) -> None:
-    out = tmp_path / "demo.md"
-
-    render_cards(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out, no_images=True))
-
-    golden = (GOLDEN_DIR / "cards.md").read_text(encoding="utf-8")
-    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")

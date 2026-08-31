@@ -267,7 +267,7 @@ class SpecialRuleConfig(RuleRecord):
 
     variants: dict[Identifier, str] = Field(default_factory=dict)
     """Shared prose an instance of this rule may draw on, keyed by a bare id
-    the rule owns (ADR 0031).
+    the rule owns (ADR 0032).
 
     A bare string, not a table: the prose is the whole of a variant, and args
     and names stay per-occurrence, so the data spells one id per line.

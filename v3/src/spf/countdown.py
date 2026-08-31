@@ -13,9 +13,8 @@ that are already written.
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
-from spf import races
 from spf.registry import SPECIAL, Registry
-from spf.schemas.race import RaceConfig
+from spf.schemas.race import RaceConfig, race_slots
 
 
 @dataclass(frozen=True)
@@ -83,9 +82,4 @@ def unreachable(registry: Registry, used: set[str]) -> list[RuleEntry]:
 
 def used_special_ids(race_configs: Iterable[RaceConfig]) -> set[str]:
     """Collect the Special ids the given Races write at least one instance of."""
-    return {
-        key
-        for race in race_configs
-        for _section, _holder, slot in races.special_slots(race)
-        for key in slot
-    }
+    return {key for race in race_configs for slot in race_slots(race) for key in slot}

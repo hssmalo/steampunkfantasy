@@ -1,6 +1,6 @@
 """Find prose written out longhand that a variant of the rule already spells.
 
-A soft finding rather than a load failure (ADR 0031): both spellings render the
+A soft finding rather than a load failure (ADR 0032): both spellings render the
 same line, so writing one out longhand is a tidiness question, not a
 correctness one.
 
@@ -29,7 +29,7 @@ def check_longhand(prose: str | None, variants: Mapping[str, str]) -> str | None
 
 
 def _prose_slots(instance: SpecialInstance) -> Iterator[str | None]:
-    """Every slot of one instance a variant could have filled (ADR 0031)."""
+    """Every slot of one instance a variant could have filled (ADR 0032)."""
     yield instance.text
     yield instance.preamble
     for case in instance.cases:

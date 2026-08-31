@@ -8,9 +8,13 @@
 #
 # Speed
 #
-[speed.all]
-name = "All"
-todo = "Not a speed a unit can be in: the wildcard key an orders table uses for a row that applies at every speed. Decide whether it belongs in this registry at all."
+#Note: reference to all in speed is outdated. They should be removed. I think I removed all of them.
+
+#Who uses setup_speed??? I did not find any. If so, remove.
+#[speed.setup_speed]
+#name = "Setup Speed"
+#to_hit = "+1"
+#to_be_hit = "+1"
 
 [speed.rest]
 name = "Rest"
@@ -22,47 +26,43 @@ name = "Still"
 to_hit = "+1"
 to_be_hit = "+1"
 
+[speed.still_fly]
+name = "Still Fly"
+see_also = ["speed.still", "speed.flying"]
+todo = "For to_hit purposes, slow_flying =still+flying. No need to included in to_hit table. But slow_fly is a speed, and would be nice as an entry for future use"
+
+
 [speed.crawl]
 name = "Crawl"
 to_hit = "+1"
 to_be_hit = "+1"
+
+[speed.sneak]
+name = "Sneak"
+to_hit = "+1"
+to_be_hit = "0"
 
 [speed.slow]
 name = "Slow"
 to_hit = "0"
 to_be_hit = "0"
 
+
+[speed.slow_fly]
+name = "Slow Fly"
+see_also = ["speed.slow", "speed.flying"]
+todo = "For to_hit purposes, slow_flying =slow+flying. No need to included in to_hit table. But slow_fly is a speed, and would be nice as an entry for future use"
+
 [speed.fast]
 name = "Fast"
 to_hit = "-1"
 to_be_hit = "-1"
 
-# Sneak sits after Fast because this order is the one every orders table is
-# rendered in, and a Unit's Sneak rows read below its ground speeds.
-[speed.sneak]
-name = "Sneak"
-to_hit = "+1"
-to_be_hit = "0"
-
-[speed.still_fly]
-name = "Still Fly"
-see_also = ["speed.still", "speed.flying"]
-todo = "Rule text not yet written: the flying speeds carry no numbers of their own because flying stacks with the ground speed. State whether that composition is what the sheet means."
-
-[speed.slow_fly]
-name = "Slow Fly"
-see_also = ["speed.slow", "speed.flying"]
-todo = "Rule text not yet written: see speed.still_fly."
-
 [speed.fast_fly]
 name = "Fast Fly"
 see_also = ["speed.fast", "speed.flying"]
-todo = "Rule text not yet written: see speed.still_fly."
+todo = "For to_hit purposes, fast_flying =fast+flying. No need to included in to_hit table. But slow_fly is a speed, and would be nice as an entry for future use"
 
-[speed.setup_speed]
-name = "Setup Speed"
-to_hit = "+1"
-to_be_hit = "+1"
 
 [speed.flying]
 name = "Flying"

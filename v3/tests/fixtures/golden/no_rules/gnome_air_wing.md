@@ -138,8 +138,8 @@
 
 - Range: 3, angle True/False/False/False, damage d6-1, AP 6
 - **Multiple Shots**: Fire once at all enemy units within range and within angle of fire
-- **Focus Fire**: If aim, instead use focus fire, roll 6 dice at same unit
-- **Bonus**: Bullet storm: If not using aim, a natural 6 on to-hit die is considered a hit regardless of to-hit modifiers
+- **Focus Fire**: [N]; [N]. When using aim: roll 6 dice at same unit.
+- **Area**: [4+]. at point blank range; [6+]. at normal and long range
 
 
 ---

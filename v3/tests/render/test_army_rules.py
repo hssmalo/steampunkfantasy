@@ -13,7 +13,7 @@ from spf.armies.unit import Unit
 from spf.config import config
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
 from spf.render import render
-from spf.render.army_rules import _roll_text, build_reference
+from spf.render.army_rules import build_reference
 from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.specials import SpecialLine
@@ -32,7 +32,7 @@ from spf.schemas.race import (
     EquipmentRangeConfig as RangeConfig,
 )
 from spf.schemas.special import SpecialInstance, Specials
-from spf.schemas.type_aliases import AtLeastRoll, ExactRoll, ModelType, RangeRoll
+from spf.schemas.type_aliases import ModelType
 from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
@@ -114,15 +114,6 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
     return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
-
-
-# --- _roll_text: DamageRoll -> display string -------------------------------
-
-
-def test_roll_text_renders_each_roll_variant() -> None:
-    assert _roll_text(ExactRoll(value=9)) == "9"
-    assert _roll_text(RangeRoll(low=1, high=2)) == "1-2"
-    assert _roll_text(AtLeastRoll(value=6)) == "6+"
 
 
 # --- build_reference: basic Unit/Model shape --------------------------------

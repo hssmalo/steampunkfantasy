@@ -9,13 +9,16 @@ Movement Orders:
 - F = forward
 - L/R = rotate one click left or right
 - B = brake, change to one speed slower.
+- BB = Break twice, if optional, you may break once or twice as desired.
 - B[X] = as brake, but set speed to a special case, described by a X.
 - A = Accelerate, change to one speed faster
 - A[X] = As accelerate, but set speed to a special case, described by a X.
 - Rev=reverse
 - - = no action
 - Chs: Chase, move towards nearest enemy, taking current orders into account. Thus the unit moves one step closer to where the enemy is going to be this turn. Where a unit chases is  determined after all decisions and special movement have been planned. However, ignore any enemy units which cannot be reached even if it stood still. Thus a land unit without having a flying speed available, ignore flying units when determining where it chases. Chase may specify special targets (such as specific type of enemy). If so, move one hex closer to closet specified target instead of one hex closer to the closet enemy. If there are multiple hexes which are equally distance to target hex, you choose which to enter.
-- Follow: Duplicate the movement order of the other unit it is sharing a hex with.
+- Chs[target]: As Chs, but move towards nearest enemy of type target instead.
+
+- Follow: Duplicate the movement order of the other unit it is sharing a hex with. If it does not share a hex with a friendly unit, treat this order as -.
 - 360$^0$: rotate in any direction you want.
 - Flee: Move in any hex you like as long as you move further away from the enemy. If no such hex is available, move to a hex which is not closer to the enemy
 If still no such hex is available, let your enemy move your unit to any hex he/she likes
@@ -24,6 +27,8 @@ If still no such hex is available, let your enemy move your unit to any hex he/s
 - Road: Move along the road. Facing is always along the road.
 - Deploy: Place a transported unit within the specified range of the unit. Place the transported units facing away from this unit if range>0, else put it in same facing as this unit. Any unit having deploy orders should specify the range and if the unit can be deployed into an assault or not. If it cannot enter an assault as part of deploy, the target hex of the deployment must be an empty hex. Otherwise, enter an assault if hex is occupied.
 - Aim: get aim tokens in movement phase.
+- Random: scatters one hex in a random direction first movement phase, but keep the unit orientation. If it enters an hex with an enemy unit, enter an assault (as if assaulting from enemy from front). In slow mode the unit uses its engines to neutralize the effect of the weather"
+
 
 
 Gunnery orders\

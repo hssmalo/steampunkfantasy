@@ -187,7 +187,7 @@ def _check_instance(
 def _check_variant(
     variant: str | None, *, rule: r.SpecialRuleConfig, where: str
 ) -> list[str]:
-    """Check that a named variant is one the rule defines (ADR 0031).
+    """Check that a named variant is one the rule defines (ADR 0032).
 
     The pool is the rule's own, so the id is a lookup key like any other and a
     miss is a load failure rather than prose the reader silently loses.

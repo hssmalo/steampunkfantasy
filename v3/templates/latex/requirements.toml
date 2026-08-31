@@ -29,6 +29,10 @@ name = "graphicx"
 tlmgr = "graphics" # graphicx.sty ships in the "graphics" TL package
 
 [[package]]
+name = "longtable"
+tlmgr = "tools" # longtable.sty ships in the "tools" TL package
+
+[[package]]
 name = "parskip"
 
 [[package]]

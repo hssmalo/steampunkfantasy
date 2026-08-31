@@ -732,7 +732,7 @@ deflection_die = "5+"
 damage = "d6"
 ap = 2
 
-[[models.ogre_hydra.assault.specials.bonus]]
+[[models.ogre_hydra.assault.specials.boost]]
 variant = "strength_per_head"
 
 [[models.ogre_hydra.assault.specials.assault_extra_damage]]
@@ -1157,7 +1157,7 @@ name = "Ogre Sword"
 race = "ogre"
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
-[[equipment.ogre_sword_free.assault.specials.bonus]]
+[[equipment.ogre_sword_free.assault.specials.boost]]
 variant = "per_enemy_model_forward"
 
 [equipment.ogre_sword]
@@ -1167,7 +1167,7 @@ cost.cp = 8
 upgrade_all = true
 requires = [["Reserve Melee:1"], ["type:Infantry"]]
 
-[[equipment.ogre_sword.assault.specials.bonus]]
+[[equipment.ogre_sword.assault.specials.boost]]
 variant = "per_enemy_model_forward"
 
 [equipment.fancy_ogre_sword]
@@ -1177,7 +1177,7 @@ cost.cp = 12
 upgrade_all = false
 requires = [["Reserve Melee:1"], ["type:Scout"], ["type:Elite"]]
 
-[[equipment.fancy_ogre_sword.assault.specials.bonus]]
+[[equipment.fancy_ogre_sword.assault.specials.boost]]
 text = "+1 assault strength and deflection per enemy model in assault (forward direction only)"
 
 [equipment.fancy_warhammer]

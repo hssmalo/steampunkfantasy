@@ -9,7 +9,7 @@ followed by free `text`, or *case-shaped*, a `preamble` scoping the `cases`
 that each supply their own args.
 
 Whichever prose slot the shape allows may be spelled inline or drawn from the
-rule's pool of variants by name (ADR 0031). The two are alternative spellings
+rule's pool of variants by name (ADR 0032). The two are alternative spellings
 of one slot, never two layers of it.
 """
 
@@ -24,7 +24,7 @@ _TWO_SPELLINGS = (
     "'variant' spells the prose slot rather than adding to it: write the"
     " sentence inline, or name a variant of the rule, never both"
 )
-"""Why a variant and inline prose cannot share one occurrence (ADR 0031)."""
+"""Why a variant and inline prose cannot share one occurrence (ADR 0032)."""
 
 
 class SpecialCase(StrictModel):
@@ -39,14 +39,14 @@ class SpecialCase(StrictModel):
     """When these values apply: "at point blank range"."""
 
     variant: Identifier | None = None
-    """The rule's name for that prose, drawn from its variants (ADR 0031)."""
+    """The rule's name for that prose, drawn from its variants (ADR 0032)."""
 
     args: dict[str, int | str] = Field(default_factory=dict)
     """Values for the rule's variables, merged over the instance's own."""
 
     @model_validator(mode="after")
     def _one_spelling_only(self) -> Self:
-        """Keep the prose slot spelled one way, inline or by name (ADR 0031)."""
+        """Keep the prose slot spelled one way, inline or by name (ADR 0032)."""
         if self.variant is not None and self.text is not None:
             raise ValueError(_TWO_SPELLINGS)
         return self
@@ -80,7 +80,7 @@ class SpecialInstance(StrictModel):
     """The rule's name for this occurrence's prose, drawn from its variants.
 
     Which slot it fills is settled by the shape rather than by a second field
-    name: with cases it is the `preamble`, without them the `text` (ADR 0031).
+    name: with cases it is the `preamble`, without them the `text` (ADR 0032).
     """
 
     cases: list[SpecialCase] = Field(default_factory=list)

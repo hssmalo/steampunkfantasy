@@ -1,5 +1,6 @@
 """Schema for SteamPunkFantasy armies."""
 
+from collections.abc import Iterator
 from typing import Self
 
 from pydantic import Field, model_validator
@@ -7,7 +8,7 @@ from pydantic import Field, model_validator
 from spf import registry
 from spf.schemas import StrictModel
 from spf.schemas import type_aliases as t
-from spf.schemas.special import Specials
+from spf.schemas.special import SpecialInstance, Specials
 
 
 class RaceMetadata(StrictModel):
@@ -150,16 +151,35 @@ SPAWNING_SPECIALS = ("spawn", "not_yet_dead")
 """The Special ids whose prose names the spawn it places."""
 
 
-def _validate_specials(spawns: set[str], specials: Specials, *, context: str) -> None:
-    """Check that every spawning instance names a spawn the catalogue holds.
+def spawn_reference(instance: SpecialInstance) -> str | None:
+    """Return the spawn a spawning instance places, or `None` when it names none.
 
     Which spawn a Spawn places is prose the rule has yet to formalize, so it is
     read off the front of the instance's own `text` — `'[spawn_id]: [placement
-    text]'` — rather than out of an argument.
+    text]'` — rather than out of an argument. One reader, so a Rendering that
+    follows the reference and the validation that guards it cannot disagree
+    about where the id ends.
+    """
+    text = instance.text or ""
+    if ":" not in text:
+        return None
+    return text.split(":", 1)[0].strip()
 
-    That makes the prose load-bearing here, which is why a Variant cannot
-    supply it: the pool lives in the registry, and this runs with no registry
-    in hand (ADR 0031).
+
+def spawns_placed(specials: Specials) -> Iterator[str]:
+    """Every spawn the spawning instances of one Slot name, in printed order."""
+    for rule_name in SPAWNING_SPECIALS:
+        for instance in specials.get(rule_name, []):
+            if (spawn_id := spawn_reference(instance)) is not None:
+                yield spawn_id
+
+
+def _validate_specials(spawns: set[str], specials: Specials, *, context: str) -> None:
+    """Check that every spawning instance names a spawn the catalogue holds.
+
+    The spawn id is read off the instance's own prose, which is why a Variant
+    cannot supply it: the pool lives in the registry, and this runs with no
+    registry in hand (ADR 0032).
     """
     for rule_name in SPAWNING_SPECIALS:
         for instance in specials.get(rule_name, []):
@@ -170,14 +190,13 @@ def _validate_specials(spawns: set[str], specials: Specials, *, context: str) ->
                     f" variant. Got: variant '{instance.variant}'"
                 )
                 raise ValueError(msg)
-            text = instance.text or ""
-            if ":" not in text:
+            spawn_id = spawn_reference(instance)
+            if spawn_id is None:
                 msg = (
                     f"Special rule '{rule_name}' in {context} must follow the format "
-                    f"'[spawn_id]: [placement_text]'. Got: '{text}'"
+                    f"'[spawn_id]: [placement_text]'. Got: '{instance.text or ''}'"
                 )
                 raise ValueError(msg)
-            spawn_id = text.split(":", 1)[0].strip()
             if spawn_id not in spawns:
                 msg = (
                     f"Special rule '{rule_name}' in {context} references undefined "
@@ -395,3 +414,37 @@ class RaceConfig(StrictModel):
                 )
                 raise ValueError(msg)
         return self
+
+
+def special_slots(race: RaceConfig) -> Iterator[tuple[str, str, Specials]]:
+    """Every (section, holder, instances) triple a Race hangs Specials off.
+
+    The one walk over a Race's Specials (ADR 0024). It lists the Slots by
+    hand because the schema names them by hand, so widening the schema and
+    widening the walk are the same edit. Which Slots a holder has is the
+    holder's own shape: only Equipment carries a range profile, and only a
+    Model an assault one it always has.
+
+    It yields the holder alongside the Slot because a reader that reports on
+    what it finds -- the linter naming the site of a finding -- needs to say
+    where it was. `race_slots` is the same walk for callers that do not.
+    """
+    for key, unit in race.units.items():
+        yield "units", key, unit.specials
+    for key, model in race.models.items():
+        yield "models", key, model.unit_specials
+        yield "models", key, model.specials
+        yield "models", key, model.assault.specials
+    for key, equipment in race.equipment.items():
+        yield "equipment", key, equipment.unit_specials
+        yield "equipment", key, equipment.model_specials
+        if equipment.assault is not None:
+            yield "equipment", key, equipment.assault.specials
+        if equipment.range is not None:
+            yield "equipment", key, equipment.range.specials
+
+
+def race_slots(race: RaceConfig) -> Iterator[Specials]:
+    """Yield every Slot a Race holds instances in, whatever record carries it."""
+    for _section, _holder, slot in special_slots(race):
+        yield slot
