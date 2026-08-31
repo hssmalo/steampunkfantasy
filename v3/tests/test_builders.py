@@ -8,13 +8,19 @@ survive a trip through a TOML file.
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
+from spf.armies import unit
 from spf.config import config
 from spf.races import get_race
 from tests.conftest import (
+    InstallRegistry,
+    synthetic_assault,
     synthetic_equipment,
     synthetic_model,
     synthetic_race,
+    synthetic_registry,
+    synthetic_special,
     synthetic_unit,
     write_race_toml,
 )
@@ -70,3 +76,91 @@ def test_written_race_toml_loads_back_as_the_race_it_was_written_from(
 
     assert path.name == "goblin.toml"
     assert get_race("goblin") == race
+
+
+# ---------------------------------------------------------------------------
+# The registry seam
+# ---------------------------------------------------------------------------
+
+_COUNTDOWN = {"countdown": [{"text": "Three rounds."}]}
+"""A Special Instance of an id no committed registry holds."""
+
+
+def test_the_gate_accepts_a_special_id_the_installed_registry_declares(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry(synthetic_registry(specials={"countdown": None}))
+
+    race = synthetic_race(units={"squad": synthetic_unit(specials=_COUNTDOWN)})
+
+    assert list(race.units["squad"].specials) == ["countdown"]
+
+
+def test_the_gate_still_rejects_a_special_id_the_registry_lacks(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry()
+
+    with pytest.raises(ValidationError, match="'countdown' is not a Special id"):
+        synthetic_race(units={"squad": synthetic_unit(specials=_COUNTDOWN)})
+
+
+def test_an_invented_special_id_reaches_every_holder_and_slot(
+    install_registry: InstallRegistry,
+) -> None:
+    # The reason the seam exists: with the registry fixed, no synthetic Race
+    # could carry a Special on every Holder, and such tests had to read a
+    # committed Race instead.
+    install_registry(synthetic_registry(specials={"countdown": None}))
+
+    race = synthetic_race(
+        units={"squad": synthetic_unit(specials=_COUNTDOWN)},
+        models={
+            "soldier": synthetic_model(
+                unit_specials=_COUNTDOWN,
+                specials=_COUNTDOWN,
+                assault=synthetic_assault(specials=_COUNTDOWN),
+            )
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                unit_specials=_COUNTDOWN,
+                model_specials=_COUNTDOWN,
+                assault={"specials": _COUNTDOWN},
+                range={
+                    "range": 12,
+                    "angle": [True, False, False, False],
+                    "damage": "d6",
+                    "ap": 0,
+                    "specials": _COUNTDOWN,
+                },
+            )
+        },
+    )
+
+    assert list(race.equipment["knife"].range.specials) == ["countdown"]  # pyright: ignore[reportOptionalMemberAccess]
+
+
+def test_a_narrowed_special_is_refused_the_slots_it_does_not_declare(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry(
+        synthetic_registry(specials={"countdown": synthetic_special(slots=["model"])})
+    )
+
+    with pytest.raises(ValidationError, match="is not a unit Special"):
+        synthetic_race(units={"squad": synthetic_unit(specials=_COUNTDOWN)})
+
+
+def test_the_installed_registry_answers_a_module_that_imported_the_loader(
+    install_registry: InstallRegistry,
+) -> None:
+    # `spf.armies.unit` reads its Speeds through its own reference to
+    # `load_registry`, bound when the module was imported rather than looked
+    # up per call.
+    installed = install_registry()
+
+    assert unit.load_registry() is installed

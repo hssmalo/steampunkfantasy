@@ -38,14 +38,21 @@ os.environ["COLUMNS"] = "100"
 # scrubbing above: `spf.config` folds the `SPF_` namespace into its
 # Configuration at import time, and `spf.console` reads the color and width
 # settings once, when its Consoles are constructed.
+import sys  # noqa: E402
+from collections.abc import Callable, Mapping  # noqa: E402
 from pathlib import Path  # noqa: E402
+from types import ModuleType  # noqa: E402
 from typing import cast  # noqa: E402
 
+import pytest  # noqa: E402
 import tomli_w  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
 
+from spf import registry as reg  # noqa: E402
+from spf.schemas import rules as r  # noqa: E402
 from spf.schemas import type_aliases as t  # noqa: E402
 from spf.schemas.race import (  # noqa: E402
+    AssaultConfig,
     EquipmentConfig,
     ModelConfig,
     RaceConfig,
@@ -102,6 +109,21 @@ def synthetic_unit(**fields: object) -> UnitConfig:
     )
 
 
+def synthetic_assault(**fields: object) -> AssaultConfig:
+    """Build a Model's assault stats, the block every Model has to carry."""
+    return AssaultConfig.model_validate(
+        {
+            "strength": [1, 0, 0, 0],
+            "strength_die": "4+",
+            "deflection": [1, 0, 0, 0],
+            "deflection_die": "4+",
+            "damage": "d4",
+            "ap": 0,
+        }
+        | fields
+    )
+
+
 def synthetic_model(
     *, holders: list[str] | None = None, **fields: object
 ) -> ModelConfig:
@@ -113,14 +135,7 @@ def synthetic_model(
             "equipment_limit": holders if holders is not None else ["Hands:2"],
             "equipment": ["knife"],
             "type": ["Infantry"],
-            "assault": {
-                "strength": [1, 0, 0, 0],
-                "strength_die": "4+",
-                "deflection": [1, 0, 0, 0],
-                "deflection_die": "4+",
-                "damage": "d4",
-                "ap": 0,
-            },
+            "assault": synthetic_assault(),
         }
         | fields
     )
@@ -219,3 +234,118 @@ def _roll(roll: t.DamageRoll) -> str:
             return f"{roll.value}+"
         case t.ExactRoll():
             return str(roll.value)
+
+
+# ---------------------------------------------------------------------------
+# Synthetic Registries, and the seam that installs one
+# ---------------------------------------------------------------------------
+#
+# A Race's Special ids, Sizes and Speeds are resolved against the registries
+# when it loads (ADR 0024), so a synthetic Race is only as free as the registry
+# it is checked against. Installing one is what lets a test invent the ids it
+# needs instead of borrowing a committed Race that happens to use them.
+
+
+def synthetic_special(**fields: object) -> r.SpecialRuleConfig:
+    """Build a Special rule, permitting every Slot unless `slots` narrows it."""
+    return r.SpecialRuleConfig.model_validate(
+        {
+            "name": "Special",
+            "slots": ["unit", "model", "assault", "range"],
+            "effect": "Does something.",
+        }
+        | fields
+    )
+
+
+def synthetic_registry(
+    *,
+    specials: Mapping[str, r.SpecialRuleConfig | None] | None = None,
+    records: Mapping[str, dict[str, r.RuleRecord]] | None = None,
+) -> reg.Registry:
+    """Build a Registry over invented ids, shaped like the committed ones.
+
+    `specials` maps a Special id to the rule it stands for; `None` takes a rule
+    permitting every Slot, named after the id — which is the whole point, since
+    a test declaring `{"countdown": None}` may then write Instances of
+    `countdown` anywhere in a Race. `records` adds or replaces a whole
+    namespace, for the Sizes and Speeds a Unit names.
+    """
+    declared = {"fear": None} if specials is None else specials
+    return reg.Registry(
+        namespaces=_NAMESPACES,
+        records={
+            reg.SPECIAL: {
+                identifier: rule
+                if rule is not None
+                else synthetic_special(name=identifier.replace("_", " ").title())
+                for identifier, rule in declared.items()
+            },
+            "size": {"small": _modifier("Small", to_be_hit="-1")},
+            "speed": {
+                "slow": _modifier("Slow", to_be_hit="-1"),
+                "fast": _modifier("Fast", to_be_hit="+1"),
+            },
+            "ability": {"good_shot": _modifier("Good Shot", to_hit="+1")},
+            "terrain": {
+                "forest": r.TerrainRuleConfig(name="Forest", effect="Blocks sight.")
+            },
+            "damage_type": {
+                "poison": r.DamageTypeRuleConfig(name="Poison", effect="Poison damage.")
+            },
+            **(records or {}),
+        },
+    )
+
+
+def _modifier(name: str, **fields: object) -> r.ModifierRuleConfig:
+    """Build a record whose meaning is its to-hit numbers."""
+    return r.ModifierRuleConfig.model_validate({"name": name} | fields)
+
+
+_NAMESPACES = {
+    name: r.NamespaceConfig(
+        name=name.title(), label=name, file=f"{name}.toml", table=name
+    )
+    for name in ("special", "size", "speed", "ability", "terrain", "damage_type")
+}
+"""Where a synthetic Registry says its namespaces live. The files are never
+read — a namespace is an abstract name, not a path (ADR 0024)."""
+
+
+type InstallRegistry = Callable[..., reg.Registry]
+"""The `install_registry` fixture: an optional Registry in, the installed one out."""
+
+
+@pytest.fixture
+def install_registry(monkeypatch: pytest.MonkeyPatch) -> InstallRegistry:
+    """Answer every registry lookup from a synthetic Registry, for one test.
+
+    Call it with the Registry to install, or with nothing for the default one.
+    """
+
+    def install(registry: reg.Registry | None = None) -> reg.Registry:
+        installed = registry if registry is not None else synthetic_registry()
+        for module in _registry_readers():
+            monkeypatch.setattr(module, "load_registry", lambda *_, **__: installed)
+        return installed
+
+    return install
+
+
+def _registry_readers() -> list[ModuleType]:
+    """Every imported module that has to be told about an installed Registry.
+
+    A module importing `load_registry` by name bound the function at import
+    time, so patching `spf.registry` alone would leave it reading `rules/`.
+    """
+    return [
+        reg,
+        *(
+            module
+            for name, module in list(sys.modules.items())
+            if name.startswith("spf.")
+            and module is not None
+            and getattr(module, "load_registry", None) is reg.load_registry
+        ),
+    ]
