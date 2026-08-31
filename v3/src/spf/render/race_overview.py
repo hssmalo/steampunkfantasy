@@ -35,7 +35,15 @@ from spf.render.images import ImageLookup, committed_image
 from spf.render.orders import Rows, flat_rows
 from spf.render.specials import SpecialLine, special_lines
 from spf.schemas import type_aliases as t
-from spf.schemas.race import EquipmentConfig, ModelConfig, RaceConfig, UnitConfig
+from spf.schemas.race import (
+    EquipmentConfig,
+    ModelConfig,
+    RaceConfig,
+    SpawnConfig,
+    UnitConfig,
+    spawns_placed,
+)
+from spf.schemas.special import Specials
 
 UNIT = "unit"
 MODEL = "model"
@@ -110,6 +118,16 @@ class UnitEntry:
     models: list[RaceLink]
     model_count: int
     specials: list[SpecialLine]
+    spawn_links: list[RaceLink]
+    """The Spawns this Unit's own Specials place, printed beside those lines."""
+
+    spawned_by: list[RaceLink]
+    """The Spawns that place this Unit — the inverse of `SpawnEntry.unit`.
+
+    Without it a Unit reachable only through a Spawn would say nothing about
+    how it enters play.
+    """
+
     shaken_speed: str
     shaken_movement: list[str]
     shaken_fire: str
@@ -152,6 +170,9 @@ class ModelEntry:
     unit_specials: list[SpecialLine]
     specials: list[SpecialLine]
     assault_specials: list[SpecialLine]
+    spawn_links: list[RaceLink]
+    """The Spawns this Model's own Specials place, printed beside those lines."""
+
     assault_strength: list[int]
     assault_strength_die: t.DieResult
     assault_deflection: list[int]
@@ -205,6 +226,9 @@ class EquipmentEntry:
     unit_modifiers: list[str]
     unit_specials: list[SpecialLine]
     model_specials: list[SpecialLine]
+    spawn_links: list[RaceLink]
+    """The Spawns this Equipment's own Specials place, printed beside those lines."""
+
     orders_gained_movement_rows: Rows
     orders_gained_fire_rows: Rows
     """The orders this Equipment grants, kept on the Equipment: `orders_gained`
@@ -212,6 +236,22 @@ class EquipmentEntry:
     merged table would describe."""
 
     note: str
+
+
+@dataclass(frozen=True)
+class SpawnEntry:
+    """One catalogue Spawn: the Unit it places, and what that Unit arrives with.
+
+    A Spawn has no name and no price of its own — it is addressed by its key,
+    which is also what the Specials placing it write in their prose.
+    """
+
+    key: str
+    anchor: str
+    unit: RaceLink
+    equipment: list[RaceLink]
+    copy_equipment: bool
+    """Whether the placed Unit arrives with the loadout of whatever spawned it."""
 
 
 @dataclass(frozen=True)
@@ -229,6 +269,7 @@ class RaceOverview:
     units: list[UnitEntry]
     models: list[ModelEntry]
     equipment: list[EquipmentEntry]
+    spawns: list[SpawnEntry]
 
 
 @dataclass(frozen=True)
@@ -246,6 +287,7 @@ class _Catalogue:
     fielded_in: dict[str, list[RaceLink]]
     replaced_by: dict[str, list[RaceLink]]
     carried_by: dict[str, list[RaceLink]]
+    spawned_by: dict[str, list[RaceLink]]
     """The inverse links, indexed once for the whole catalogue rather than
     re-derived per entry: each is a walk over every record of another section."""
 
@@ -340,6 +382,54 @@ def _carried_by(models: Sequence[tuple[str, ModelConfig]]) -> dict[str, list[Rac
     return index
 
 
+def _spawned_by(spawns: Mapping[str, SpawnConfig]) -> dict[str, list[RaceLink]]:
+    """Invert every Spawn's Unit: which Spawns place a given Unit."""
+    index: dict[str, list[RaceLink]] = {}
+    for key, spawn in spawns.items():
+        index.setdefault(spawn.unit, []).append(
+            RaceLink(name=key, anchor=anchor(SPAWN, key))
+        )
+    return index
+
+
+def _spawn_links(
+    slots: Iterable[Specials], spawns: Mapping[str, SpawnConfig]
+) -> list[RaceLink]:
+    """Link each distinct Spawn a record's own Specials place, once.
+
+    The link travels beside the lines rather than inside them: a spawning
+    instance names its Spawn in the prose the reader is already shown
+    (`spf.schemas.race.spawn_reference`), and rewriting that prose to carry a
+    link would make the Rendering depend on the shape of designer-authored
+    text.
+
+    A Spawn named by two of a record's Slots is one destination, so it is
+    linked once. The Spawn is named by its key, which is the word the prose
+    itself uses, so a reader can match the two.
+    """
+    placed = [
+        spawn_id
+        for slot in slots
+        for spawn_id in spawns_placed(slot)
+        if spawn_id in spawns
+    ]
+    return [
+        RaceLink(name=key, anchor=anchor(SPAWN, key)) for key in dict.fromkeys(placed)
+    ]
+
+
+def _spawn_entry(key: str, spawn: SpawnConfig, *, catalogue: _Catalogue) -> SpawnEntry:
+    """Shape one catalogue Spawn into its entry."""
+    config = catalogue.config
+    return SpawnEntry(
+        key=key,
+        anchor=anchor(SPAWN, key),
+        unit=_links(UNIT, [spawn.unit], config.units)[0],
+        equipment=_links(EQUIPMENT, spawn.equipment, config.equipment),
+        copy_equipment=spawn.copy_equipment,
+    )
+
+
 def _pricing(*, upgrade_all: bool | None) -> str:
     """State how a priced Equipment is charged (ADR 0026).
 
@@ -375,6 +465,8 @@ def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEnt
         models=_links(MODEL, unit.models, models),
         model_count=len(unit.models),
         specials=special_lines(unit.specials, anchor_for=catalogue.anchor_for),
+        spawn_links=_spawn_links([unit.specials], catalogue.config.spawns),
+        spawned_by=catalogue.spawned_by.get(key, []),
         shaken_speed=unit.shaken.speed,
         shaken_movement=list(unit.shaken.movement_order),
         shaken_fire=unit.shaken.fire_order,
@@ -425,6 +517,10 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
         unit_specials=special_lines(model.unit_specials, anchor_for=anchor_for),
         specials=special_lines(model.specials, anchor_for=anchor_for),
         assault_specials=special_lines(assault.specials, anchor_for=anchor_for),
+        spawn_links=_spawn_links(
+            [model.unit_specials, model.specials, assault.specials],
+            catalogue.config.spawns,
+        ),
         assault_strength=list(assault.strength),
         assault_strength_die=assault.strength_die,
         assault_deflection=list(assault.deflection),
@@ -484,6 +580,15 @@ def _equipment_entry(
         # assault and its shooting are different claims.
         unit_specials=special_lines(equip.unit_specials, anchor_for=anchor_for),
         model_specials=special_lines(equip.model_specials, anchor_for=anchor_for),
+        spawn_links=_spawn_links(
+            [
+                equip.unit_specials,
+                equip.model_specials,
+                *([assault.specials] if assault is not None else []),
+                *([ranged.specials] if ranged is not None else []),
+            ],
+            catalogue.config.spawns,
+        ),
         orders_gained_movement_rows=flat_rows(orders.movement if orders else None),
         orders_gained_fire_rows=flat_rows(orders.fire if orders else None),
         note=equip.note,
@@ -516,6 +621,7 @@ def build_overview(
         fielded_in=_fielded_in(units),
         replaced_by=_replaced_by(models),
         carried_by=_carried_by(models),
+        spawned_by=_spawned_by(race_config.spawns),
     )
     return RaceOverview(
         stem=stem,
@@ -529,5 +635,11 @@ def build_overview(
         equipment=[
             _equipment_entry(key, equip, catalogue=catalogue)
             for key, equip in equipment
+        ],
+        # Spawns carry no `Cost`, so the order they were authored in is the
+        # only order there is.
+        spawns=[
+            _spawn_entry(key, spawn, catalogue=catalogue)
+            for key, spawn in race_config.spawns.items()
         ],
     )

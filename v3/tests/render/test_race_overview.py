@@ -4,7 +4,7 @@ import pytest
 
 from spf.races import get_race
 from spf.render.race_overview import RaceLink, build_overview
-from spf.render.specials import SpecialLine
+from spf.render.specials import SpecialLine, special_lines
 from spf.schemas.race import (
     AssaultConfig,
     EquipmentAssaultConfig,
@@ -15,6 +15,7 @@ from spf.schemas.race import (
     RaceConfig,
     RaceMetadata,
     ShakenConfig,
+    SpawnConfig,
     Stacker,
     UnitConfig,
     UnitStatModifierConfig,
@@ -143,6 +144,7 @@ def _race_config(
     units: dict[str, UnitConfig] | None = None,
     models: dict[str, ModelConfig] | None = None,
     equipment: dict[str, EquipmentConfig] | None = None,
+    spawns: dict[str, SpawnConfig] | None = None,
     description: str = "A race",
 ) -> RaceConfig:
     return RaceConfig(
@@ -150,6 +152,7 @@ def _race_config(
         units=units or {"squad": _unit_config()},
         models=models or {"grunt": _model_config()},
         equipment=equipment or {},
+        spawns=spawns or {},
     )
 
 
@@ -1069,3 +1072,184 @@ def test_carried_by_is_the_exact_inverse_of_every_model_loadout(
         for link in equip.carried_by
     }
     assert forward == inverse
+
+
+# --- Spawn entries ----------------------------------------------------------
+
+
+def test_spawns_keep_their_toml_declaration_order() -> None:
+    race = _race_config(
+        units={
+            "squad": _unit_config(),
+            "snake": _unit_config(name="Snake"),
+            "rat": _unit_config(name="Rat"),
+        },
+        spawns={
+            "tiny_snake": SpawnConfig(unit="snake"),  # pyright: ignore[reportArgumentType]
+            "mechanical_rat": SpawnConfig(unit="rat"),  # pyright: ignore[reportArgumentType]
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+
+    assert [spawn.key for spawn in overview.spawns] == ["tiny_snake", "mechanical_rat"]
+
+
+def test_a_spawn_links_to_the_unit_and_equipment_it_places() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(), "snake": _unit_config(name="Snake")},
+        equipment={"fang": _equipment_config(name="Fang")},
+        spawns={
+            "tiny_snake": SpawnConfig(
+                unit="snake",  # pyright: ignore[reportArgumentType]
+                equipment=["fang"],  # pyright: ignore[reportArgumentType]
+                copy_equipment=True,
+            )
+        },
+    )
+
+    (spawn,) = build_overview(race, stem="goblin", image_for=FakeLookup(None)).spawns
+
+    assert spawn.anchor == "spawn-tiny-snake"
+    assert spawn.unit == RaceLink(name="Snake", anchor="unit-snake")
+    assert spawn.equipment == [RaceLink(name="Fang", anchor="equipment-fang")]
+    assert spawn.copy_equipment is True
+
+
+def test_a_race_with_no_spawns_has_an_empty_section() -> None:
+    overview = build_overview(_race_config(), stem="goblin", image_for=FakeLookup(None))
+
+    assert overview.spawns == []
+
+
+# --- Spawn links beside the Specials that place them ------------------------
+
+
+def _spawning(spawn_id: str, *, rule: str = "spawn") -> Specials:
+    """One spawning instance, its spawn read off the front of its own prose."""
+    return {rule: [SpecialInstance(text=f"{spawn_id}: place it somewhere")]}
+
+
+def test_a_unit_links_to_the_spawn_its_specials_place() -> None:
+    race = _race_config(
+        units={
+            "cavalry": _unit_config(name="Cavalry", specials=_spawning("tiny_snake")),
+            "snake": _unit_config(name="Snake"),
+        },
+        spawns={"tiny_snake": SpawnConfig(unit="snake")},  # pyright: ignore[reportArgumentType]
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+    cavalry = next(unit for unit in overview.units if unit.key == "cavalry")
+
+    assert cavalry.spawn_links == [
+        RaceLink(name="tiny_snake", anchor="spawn-tiny-snake")
+    ]
+
+
+def test_the_spawn_link_leaves_the_interpolated_prose_untouched() -> None:
+    specials = _spawning("tiny_snake")
+    race = _race_config(
+        units={
+            "cavalry": _unit_config(name="Cavalry", specials=specials),
+            "snake": _unit_config(name="Snake"),
+        },
+        spawns={"tiny_snake": SpawnConfig(unit="snake")},  # pyright: ignore[reportArgumentType]
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+    cavalry = next(unit for unit in overview.units if unit.key == "cavalry")
+
+    # The link travels beside the line; the spawn id stays in the prose that
+    # names it, exactly as `special_lines` rendered it.
+    assert cavalry.specials == special_lines(specials)
+    assert "tiny_snake: place it somewhere" in cavalry.specials[0].text
+
+
+def test_a_model_links_to_the_spawns_of_either_of_its_slots() -> None:
+    race = _race_config(
+        units={
+            "squad": _unit_config(models=["tinkerer"]),
+            "rat": _unit_config(name="Rat", models=["tinkerer"]),
+        },
+        models={
+            "tinkerer": _model_config(
+                name="Tinkerer",
+                unit_specials=_spawning("mechanical_rat"),
+                specials=_spawning("mechanical_rat", rule="not_yet_dead"),
+            )
+        },
+        spawns={"mechanical_rat": SpawnConfig(unit="rat")},  # pyright: ignore[reportArgumentType]
+    )
+
+    (model,) = build_overview(race, stem="gnome", image_for=FakeLookup(None)).models
+
+    # Both slots name the same spawn, and one link is what the reader needs.
+    assert model.spawn_links == [
+        RaceLink(name="mechanical_rat", anchor="spawn-mechanical-rat")
+    ]
+
+
+def test_equipment_links_to_the_spawn_its_range_special_places() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(), "bots": _unit_config(name="Bots")},
+        equipment={
+            "mortar": _equipment_config(
+                name="Mortar",
+                ranged=EquipmentRangeConfig(
+                    range=4,
+                    angle=[True, True, True, True],
+                    damage="d6",
+                    ap=1,
+                    specials=_spawning("assault_bots"),
+                ),
+            )
+        },
+        spawns={"assault_bots": SpawnConfig(unit="bots")},  # pyright: ignore[reportArgumentType]
+    )
+
+    (equip,) = build_overview(race, stem="gnome", image_for=FakeLookup(None)).equipment
+
+    assert equip.spawn_links == [
+        RaceLink(name="assault_bots", anchor="spawn-assault-bots")
+    ]
+
+
+def test_a_record_placing_no_spawn_links_to_none() -> None:
+    overview = build_overview(_race_config(), stem="goblin", image_for=FakeLookup(None))
+
+    assert overview.units[0].spawn_links == []
+    assert overview.models[0].spawn_links == []
+
+
+def test_a_spawned_unit_says_which_spawn_places_it() -> None:
+    race = _race_config(
+        units={"squad": _unit_config(), "snake": _unit_config(name="Snake")},
+        spawns={"tiny_snake": SpawnConfig(unit="snake")},  # pyright: ignore[reportArgumentType]
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
+    snake = next(unit for unit in overview.units if unit.key == "snake")
+
+    assert snake.spawned_by == [RaceLink(name="tiny_snake", anchor="spawn-tiny-snake")]
+    assert overview.units[0].spawned_by == []
+
+
+# --- Against the committed catalogue ----------------------------------------
+
+
+@pytest.mark.parametrize("race_name", ["goblin", "ork", "gnome", "darkelf"])
+def test_every_spawn_of_a_committed_race_is_reachable(race_name: str) -> None:
+    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
+
+    assert [spawn.key for spawn in overview.spawns] == list(race.spawns)
+    # Every Spawn the catalogue declares is placed by some record's Specials,
+    # so no spawn entry is an island the document never points at.
+    linked = {
+        link.anchor
+        for entries in (overview.units, overview.models, overview.equipment)
+        for entry in entries
+        for link in entry.spawn_links
+    }
+    assert linked == {spawn.anchor for spawn in overview.spawns}
