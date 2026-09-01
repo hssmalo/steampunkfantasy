@@ -40,6 +40,14 @@ test *args:
 test-friction *args:
     uv run python scripts/test_friction.py {{args}}
 
+# Snapshot every rendered document into the gitignored goldens/.
+golden-snapshot:
+    uv run python scripts/goldens.py snapshot
+
+# Re-render every document and diff it against the last snapshot.
+golden-diff:
+    uv run python scripts/goldens.py diff
+
 # Auto-fix lint issues then reformat.
 fix:
     uv run ruff check --fix -q

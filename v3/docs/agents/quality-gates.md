@@ -20,10 +20,13 @@ just validate   # Validate the TOML files and the ComfyUI profiles via the spf C
 just lint-races # Lint race data for name and key consistency (spf race lint)
 
 just test-friction  # Mutate lint-clean TOML values; report the tests that break
+
+just golden-snapshot  # Render every document into the gitignored goldens/
+just golden-diff      # Re-render and diff against that snapshot
 ```
 
-`just test-friction` is on-demand and deliberately outside `just check` — see
-[`testing.md`](testing.md).
+`just test-friction` and the two golden recipes are on-demand and deliberately
+outside `just check` — see [`testing.md`](testing.md).
 
 ## Tests depend only on tracked files
 

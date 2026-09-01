@@ -64,6 +64,12 @@ just golden-diff       # Re-render and diff against that snapshot
 before touching anything, `just golden-diff` as you go, and delete `goldens/`
 when the work lands. `goldens/` is gitignored; nothing in it is ever committed.
 
+Both recipes drive `spf render` over the whole committed corpus — every Race
+Overview, Army Reference, Order Card deck and Army Pack, plus the Rulebook —
+in Markdown and LaTeX. The binary Formats derive from those two, and a PDF
+stamps a build time that would differ on every run. `golden-diff` prints a
+unified diff per file that moved and exits non-zero if any did.
+
 The distinction is easy to over-read, so state it plainly:
 
 - **Banned:** committed *expected output* — a file a test byte-compares against.
