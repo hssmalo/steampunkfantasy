@@ -1,5 +1,7 @@
 """Tests for spf.data module."""
 
+from pathlib import Path
+
 import pytest
 from configaroo import Configuration
 from pydantic import ValidationError
@@ -11,6 +13,8 @@ from spf.races import (
     get_models,
     get_race,
     get_units,
+    list_races,
+    race_load_error,
 )
 from spf.schemas.race import (
     RaceConfig,
@@ -18,6 +22,7 @@ from spf.schemas.race import (
     _validate_specials,
 )
 from spf.schemas.special import SpecialInstance
+from tests.conftest import InstallRegistry, synthetic_race, write_race_toml
 
 
 def test_get_race_returns_race_config() -> None:
@@ -68,6 +73,52 @@ def test_get_army_reexported() -> None:
     # get_race is re-exported from races.py via data.py
     army = get_race("ogre")
     assert army.races["ogre"].name == "Ogre"
+
+
+# ---------------------------------------------------------------------------
+# race_load_error
+# ---------------------------------------------------------------------------
+
+
+def test_race_load_error_is_none_for_a_race_that_loads(
+    races_dir: Path, install_registry: InstallRegistry
+) -> None:
+    """A Race with nothing wrong with it reports nothing."""
+    install_registry()
+    write_race_toml(races_dir, synthetic_race())
+
+    assert race_load_error("goblin") is None
+
+
+def test_race_load_error_returns_the_validation_error(races_dir: Path) -> None:
+    """A Race that will not load hands back why, rather than a bare False."""
+    (races_dir / "ork.toml").write_text("[races.ork]\nname = 123\n")
+
+    error = race_load_error("ork")
+
+    assert isinstance(error, ValidationError)
+
+
+def test_race_load_error_carries_every_pydantic_error(races_dir: Path) -> None:
+    """The whole error survives, so a caller can report one line per problem."""
+    (races_dir / "ork.toml").write_text("[races.ork]\nname = 123\nversion = 456\n")
+
+    error = race_load_error("ork")
+
+    assert error is not None
+    assert len(error.errors()) > 1
+
+
+def test_list_races_validate_drops_a_race_that_will_not_load(
+    races_dir: Path, install_registry: InstallRegistry
+) -> None:
+    """`validate=True` still filters, now by asking `race_load_error`."""
+    install_registry()
+    write_race_toml(races_dir, synthetic_race())
+    (races_dir / "ork.toml").write_text("[races.ork]\nname = 123\n")
+
+    assert list_races() == ["goblin", "ork"]
+    assert list_races(validate=True) == ["goblin"]
 
 
 def _goblin_raw() -> dict:

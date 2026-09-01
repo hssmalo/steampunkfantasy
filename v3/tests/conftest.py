@@ -222,6 +222,19 @@ def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     return tmp_path
 
 
+@pytest.fixture
+def races_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Point `config.paths.races` at a directory of this test's own.
+
+    The sibling of `armies_dir`, for a test that writes Races to disk with
+    `write_race_toml` and reads them back through `spf.races`.
+    """
+    races = tmp_path / "races"
+    races.mkdir()
+    monkeypatch.setattr(config.paths, "races", races)
+    return races
+
+
 def write_race_toml(directory: Path, race: RaceConfig) -> Path:
     """Write a Race out as the TOML file `spf.races` reads, and return its path.
 
