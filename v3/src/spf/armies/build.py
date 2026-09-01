@@ -533,17 +533,54 @@ def available_equipment(
     ]
 
 
+@dataclass(frozen=True)
+class ArmyViolation:
+    """One thing an Army asks its Race for that the Race does not offer.
+
+    Referential legality against the catalogue, never game balance — an Army's
+    Points are the designer's business (ADR 0035). Carries the location and the
+    prose separately so `spf lint armies` can put them in its own columns while
+    `str()` still reads as the sentence `spf army show` prints.
+    """
+
+    location: str
+    """Dotted path into the Army's JSON, e.g. `units.0.models.2`."""
+
+    context: str
+    """The holder the message is about, e.g. `Unit 'squad', model 'archer'`."""
+
+    message: str
+
+    def __str__(self) -> str:
+        """Render the violation as one prose sentence."""
+        return f"{self.context}: {self.message}"
+
+
 def validate_army(army: ArmyList, *, race_config: RaceConfig) -> list[str]:
     """Return all rule violations in the army. Empty list means the army is valid."""
-    errors: list[str] = []
-    for unit in army.units:
+    return [
+        str(violation) for violation in army_violations(army, race_config=race_config)
+    ]
+
+
+def army_violations(army: ArmyList, *, race_config: RaceConfig) -> list[ArmyViolation]:
+    """Return every referential violation in `army`, located within its JSON."""
+    errors: list[ArmyViolation] = []
+    for unit_index, unit in enumerate(army.units):
         for i, team_model in enumerate(unit.models):
+            location = f"units.{unit_index}.models.{i}"
             default_model_name = unit.config.models[i]
             # Validate model replacement
             if default_model_name not in {team_model.name, team_model.config.replaces}:
                 errors.append(
-                    f"Unit '{unit.name}': model '{team_model.name}' cannot replace "
-                    f"'{default_model_name}' (not in its replaces list)"
+                    ArmyViolation(
+                        location=location,
+                        context=f"Unit '{unit.name}'",
+                        message=(
+                            f"model '{team_model.name}' cannot replace "
+                            f"'{default_model_name}' (not in its replaces list)"
+                        ),
+                    )
                 )
             # Validate equipment upgrades sequentially: check each upgrade against
             # a partial model containing only the *prior* upgrades. This mirrors the
@@ -551,11 +588,17 @@ def validate_army(army: ArmyList, *, race_config: RaceConfig) -> list[str]:
             # against its own slot requirement.
             for j, equip_key in enumerate(team_model.upgrades):
                 equip = race_config.equipment[equip_key]
+                context = f"Unit '{unit.name}', model '{team_model.name}'"
                 if equip.cost is None:
                     errors.append(
-                        f"Unit '{unit.name}', model '{team_model.name}': "
-                        f"equipment '{equip_key}' has no cost"
-                        " and cannot be used as upgrade"
+                        ArmyViolation(
+                            location=location,
+                            context=context,
+                            message=(
+                                f"equipment '{equip_key}' has no cost"
+                                " and cannot be used as upgrade"
+                            ),
+                        )
                     )
                 else:
                     partial_model = ArmyModel(
@@ -576,7 +619,13 @@ def validate_army(army: ArmyList, *, race_config: RaceConfig) -> list[str]:
                             for g in failed
                         )
                         errors.append(
-                            f"Unit '{unit.name}', model '{team_model.name}': "
-                            f"equipment '{equip_key}' requires not satisfied: {detail}"
+                            ArmyViolation(
+                                location=location,
+                                context=context,
+                                message=(
+                                    f"equipment '{equip_key}'"
+                                    f" requires not satisfied: {detail}"
+                                ),
+                            )
                         )
     return errors

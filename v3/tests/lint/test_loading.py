@@ -191,6 +191,37 @@ def test_probe_armies_reports_an_army_of_an_unknown_race(
     assert finding.rule == "load"
 
 
+def test_build_findings_are_silent_for_a_legal_army(
+    armies_dir: Path, races_dir: Path, install_registry: InstallRegistry
+) -> None:
+    """An Army that asks its Race for nothing it lacks has no Build finding."""
+    install_registry()
+    race = synthetic_race()
+    write_race_toml(races_dir, race)
+    _write_army(armies_dir, "clean", _army_data(race))
+
+    assert loading.build_findings(loading.probe_armies().loaded) == []
+
+
+def test_build_findings_report_an_illegal_upgrade(
+    armies_dir: Path, races_dir: Path, install_registry: InstallRegistry
+) -> None:
+    """An Upgrade with no Cost loads fine and is still an illegal build."""
+    install_registry()
+    race = synthetic_race()
+    write_race_toml(races_dir, race)
+    data = _army_data(race)
+    data["units"][0]["models"][0]["upgrades"] = ["knife"]
+    _write_army(armies_dir, "illegal", data)
+
+    [finding] = loading.build_findings(loading.probe_armies().loaded)
+
+    assert finding.file == "armies/illegal.json"
+    assert finding.location == "units.0.models.0"
+    assert finding.rule == "build"
+    assert "knife" in finding.message
+
+
 # ---------------------------------------------------------------------------
 # Rules
 # ---------------------------------------------------------------------------

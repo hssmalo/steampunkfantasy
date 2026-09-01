@@ -1,4 +1,4 @@
-"""Load each corpus, and report as a Load finding whatever will not load.
+"""Load each corpus, and report what will not load or will not build.
 
 `spf lint <corpus>` owns both gates over its corpus (ADR 0035): these probes
 are the first one. A probe never raises — a corpus that cannot be read is the
@@ -8,7 +8,7 @@ pass that follows runs over exactly the files that yielded no Load finding.
 
 import json
 import tomllib
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from functools import partial
 from pathlib import Path
@@ -17,7 +17,7 @@ import pydantic
 
 from spf import races, registry, rules
 from spf.armies import io
-from spf.armies.build import ArmyList
+from spf.armies.build import ArmyList, army_violations
 from spf.assets.profiles import check as check_profile
 from spf.config import config
 from spf.lint import latex
@@ -28,7 +28,10 @@ from spf.schemas.config import COMFYUI_ENV_NAMES
 from spf.schemas.race import RaceConfig
 
 LOAD = "load"
-"""The rule column of every finding a probe reports."""
+"""The rule column of a finding about a file that will not load."""
+
+BUILD = "build"
+"""The rule column of a finding about an Army its Race will not field."""
 
 LATEX_MANIFEST = "templates/latex/requirements.toml"
 """Where the LaTeX package manifest lives, repo-relative."""
@@ -191,6 +194,24 @@ def probe_armies(*, broken_races: frozenset[str] = frozenset()) -> ArmyProbe:
         else:
             loaded.append(LoadedArmy(file=file, army=army, race_config=race_config))
     return ArmyProbe(findings=findings, loaded=loaded)
+
+
+def build_findings(loaded: Iterable[LoadedArmy]) -> list[LintFinding]:
+    """Report every Army that loads but that its Race will not field.
+
+    A third kind of finding, between Load and Style: the file read fine, and
+    the Army is illegal rather than untidy (ADR 0035).
+    """
+    return [
+        LintFinding(
+            file=army.file,
+            location=violation.location,
+            rule=BUILD,
+            message=violation.message,
+        )
+        for army in loaded
+        for violation in army_violations(army.army, race_config=army.race_config)
+    ]
 
 
 # ---------------------------------------------------------------------------
