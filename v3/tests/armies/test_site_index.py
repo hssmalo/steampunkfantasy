@@ -78,8 +78,8 @@ def test_get_site_index_parses_a_toml_file(tmp_path: Path) -> None:
 
 RACES_INDEX = """\
 [[packs]]
-pack = "showcase"
-heading = "Showcase Armies"
+pack = "dummy"
+heading = "Dummy Pack"
 
 [races]
 heading = "Races"
@@ -90,7 +90,7 @@ publish = ["elf", "dwarf"]
 def test_index_keeps_published_races_in_authored_order() -> None:
     """The list is editorial: the Landing Page rows follow it, unsorted."""
     index = SiteConfig(
-        packs=[SitePackConfig(pack="showcase", heading="Showcase Armies")],
+        packs=[SitePackConfig(pack="dummy", heading="Dummy Pack")],
         races=SiteRacesConfig(heading="Races", publish=["elf", "dwarf"]),
     )
 
@@ -101,7 +101,7 @@ def test_index_keeps_published_races_in_authored_order() -> None:
 
 def test_index_without_a_races_block_publishes_no_races() -> None:
     """A site that never opted in is not a broken one."""
-    index = SiteConfig(packs=[SitePackConfig(pack="showcase", heading="Showcase")])
+    index = SiteConfig(packs=[SitePackConfig(pack="dummy", heading="Dummy Pack")])
 
     assert index.races is None
 

@@ -78,25 +78,25 @@ def test_pack_section_is_one_row_per_army_and_the_pack_below() -> None:
     pack_pages = [
         SitePage(
             product="army-pack",
-            label="Steampunkfantasy Tournament 2025",
+            label="Dummy Pack Document",
             fmt="pdf",
-            relative_path="army-pack/2025.pdf",
+            relative_path="army-pack/2026-dummy.pdf",
         )
     ]
     section = pack_section(
-        "2025 Armies",
+        "Dummy Pack A",
         [
-            *_army_pages("Geir Arne: Sabeltann", "2025-geir-arne"),
-            *_army_pages("Morten: Gnomes", "2025-morten"),
+            *_army_pages("Dummy Army One", "2026-dummy-one"),
+            *_army_pages("Dummy Army Two", "2026-dummy-two"),
         ],
         pack_pages,
     )
 
-    assert section.heading == "2025 Armies"
+    assert section.heading == "Dummy Pack A"
     assert section.columns == ("Army", "Army Reference", "Order Cards")
     assert [row.label for row in section.rows] == [
-        "Geir Arne: Sabeltann",
-        "Morten: Gnomes",
+        "Dummy Army One",
+        "Dummy Army Two",
     ]
     assert [len(row.cells) for row in section.rows] == [2, 2]
     assert [line.label for line in section.lines] == ["Army Pack"]
@@ -105,7 +105,7 @@ def test_pack_section_is_one_row_per_army_and_the_pack_below() -> None:
 def test_a_pack_that_rendered_no_pack_document_has_no_trailing_line() -> None:
     """The page links what rendered; it never fabricates a link that did not."""
     section = pack_section(
-        "2025 Armies", _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"), []
+        "Dummy Pack A", _army_pages("Dummy Army One", "2026-dummy-one"), []
     )
 
     assert section.lines == ()
@@ -114,12 +114,16 @@ def test_a_pack_that_rendered_no_pack_document_has_no_trailing_line() -> None:
 def test_race_section_is_one_race_overview_column() -> None:
     """Rows are Races, and the one Product column is the Race Overview."""
     section = race_section(
-        "Races", [*_race_pages("Elves", "elf"), *_race_pages("Dwarves", "dwarf")]
+        "Races",
+        [
+            *_race_pages("Dummy Race One", "dummyone"),
+            *_race_pages("Dummy Race Two", "dummytwo"),
+        ],
     )
 
     assert section.heading == "Races"
     assert section.columns == ("Race", "Race Overview")
-    assert [row.label for row in section.rows] == ["Elves", "Dwarves"]
+    assert [row.label for row in section.rows] == ["Dummy Race One", "Dummy Race Two"]
     assert [len(row.cells) for row in section.rows] == [1, 1]
 
 
@@ -129,13 +133,13 @@ def test_links_every_page() -> None:
         [
             RULEBOOK_SECTION,
             pack_section(
-                "Showcase Armies",
+                "Dummy Pack C",
                 [
                     SitePage(
                         product="army-rules",
-                        label="showcase-elf",
+                        label="2026-dummy-one",
                         fmt="html",
-                        relative_path="army-rules/showcase-elf.html",
+                        relative_path="army-rules/2026-dummy-one.html",
                     )
                 ],
                 [],
@@ -144,7 +148,7 @@ def test_links_every_page() -> None:
     )
 
     assert 'href="general-rules/rulebook.pdf"' in html
-    assert 'href="army-rules/showcase-elf.html"' in html
+    assert 'href="army-rules/2026-dummy-one.html"' in html
 
 
 def test_a_loose_section_renders_above_every_heading() -> None:
@@ -153,7 +157,7 @@ def test_a_loose_section_renders_above_every_heading() -> None:
         [
             RULEBOOK_SECTION,
             pack_section(
-                "Showcase Armies", _army_pages("Showcase Elf", "showcase-elf"), []
+                "Dummy Pack C", _army_pages("Dummy Army One", "2026-dummy-one"), []
             ),
         ]
     )
@@ -165,22 +169,22 @@ def test_sections_render_in_the_order_given() -> None:
     """Sections follow Site Index order — neither alphabetical nor chronological."""
     html = render_landing_page(
         [
-            race_section("Races", _race_pages("Elves", "elf")),
+            race_section("Races", _race_pages("Dummy Race One", "dummyone")),
             pack_section(
-                "Showcase Armies", _army_pages("Showcase Elf", "showcase-elf"), []
+                "Dummy Pack C", _army_pages("Dummy Army One", "2026-dummy-one"), []
             ),
             pack_section(
-                "2025 Armies", _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"), []
+                "Dummy Pack A", _army_pages("Dummy Army One", "2026-dummy-one"), []
             ),
             pack_section(
-                "2024 Armies", _army_pages("Morten: Gnomes", "2024-morten"), []
+                "Dummy Pack B", _army_pages("Dummy Army Two", "2026-dummy-two"), []
             ),
         ]
     )
 
-    assert html.index("Races") < html.index("Showcase Armies")
-    assert html.index("Showcase Armies") < html.index("2025 Armies")
-    assert html.index("2025 Armies") < html.index("2024 Armies")
+    assert html.index("Races") < html.index("Dummy Pack C")
+    assert html.index("Dummy Pack C") < html.index("Dummy Pack A")
+    assert html.index("Dummy Pack A") < html.index("Dummy Pack B")
 
 
 def test_an_army_is_one_row_with_a_cell_per_product() -> None:
@@ -188,33 +192,35 @@ def test_an_army_is_one_row_with_a_cell_per_product() -> None:
     html = render_landing_page(
         [
             pack_section(
-                "2025 Armies", _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"), []
+                "Dummy Pack A", _army_pages("Dummy Army One", "2026-dummy-one"), []
             )
         ]
     )
 
     rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
-    army_rows = [row for row in rows if "Geir Arne: Sabeltann" in row]
+    army_rows = [row for row in rows if "Dummy Army One" in row]
     assert len(army_rows) == 1
     cells = re.findall(r"<td>(.*?)</td>", army_rows[0], flags=re.DOTALL)
     assert len(cells) == 3
-    assert 'href="army-rules/2025-geir-arne.pdf"' in cells[1]
-    assert 'href="army-rules/2025-geir-arne.html"' in cells[1]
-    assert 'href="cards/2025-geir-arne.pdf"' in cells[2]
-    assert 'href="cards/2025-geir-arne.html"' in cells[2]
+    assert 'href="army-rules/2026-dummy-one.pdf"' in cells[1]
+    assert 'href="army-rules/2026-dummy-one.html"' in cells[1]
+    assert 'href="cards/2026-dummy-one.pdf"' in cells[2]
+    assert 'href="cards/2026-dummy-one.html"' in cells[2]
 
 
 def test_a_race_is_one_row_with_both_formats_in_one_cell() -> None:
     """A Race is a `<tr>`: its name, then both Formats of its Race Overview."""
-    html = render_landing_page([race_section("Races", _race_pages("Elves", "elf"))])
+    html = render_landing_page(
+        [race_section("Races", _race_pages("Dummy Race One", "dummyone"))]
+    )
 
     rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
-    race_rows = [row for row in rows if "Elves" in row]
+    race_rows = [row for row in rows if "Dummy Race One" in row]
     assert len(race_rows) == 1
     cells = re.findall(r"<td>(.*?)</td>", race_rows[0], flags=re.DOTALL)
     assert len(cells) == 2
-    assert 'href="race-overview/elf.pdf"' in cells[1]
-    assert 'href="race-overview/elf.html"' in cells[1]
+    assert 'href="race-overview/dummyone.pdf"' in cells[1]
+    assert 'href="race-overview/dummyone.html"' in cells[1]
 
 
 def test_a_section_with_no_rows_still_renders_its_table() -> None:
@@ -231,24 +237,24 @@ def test_the_army_pack_renders_below_its_table_not_as_a_row() -> None:
     html = render_landing_page(
         [
             pack_section(
-                "2025 Armies",
-                _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"),
+                "Dummy Pack A",
+                _army_pages("Dummy Army One", "2026-dummy-one"),
                 [
                     SitePage(
                         product="army-pack",
-                        label="Steampunkfantasy Tournament 2025",
+                        label="Dummy Pack Document",
                         fmt="pdf",
-                        relative_path="army-pack/2025.pdf",
+                        relative_path="army-pack/2026-dummy.pdf",
                     )
                 ],
             )
         ]
     )
 
-    assert "army-pack/2025.pdf" not in html[: html.index("</table>")]
-    assert "army-pack/2025.pdf" in html[html.index("</table>") :]
+    assert "army-pack/2026-dummy.pdf" not in html[: html.index("</table>")]
+    assert "army-pack/2026-dummy.pdf" in html[html.index("</table>") :]
     rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
-    assert not any("army-pack/2025.pdf" in row for row in rows)
+    assert not any("army-pack/2026-dummy.pdf" in row for row in rows)
 
 
 def test_a_missing_product_leaves_an_empty_cell() -> None:
@@ -256,13 +262,13 @@ def test_a_missing_product_leaves_an_empty_cell() -> None:
     html = render_landing_page(
         [
             pack_section(
-                "Showcase Armies",
+                "Dummy Pack C",
                 [
                     SitePage(
                         product="army-rules",
-                        label="Showcase Elf",
+                        label="Dummy Army One",
                         fmt="pdf",
-                        relative_path="army-rules/showcase-elf.pdf",
+                        relative_path="army-rules/2026-dummy-one.pdf",
                     )
                 ],
                 [],
@@ -270,7 +276,7 @@ def test_a_missing_product_leaves_an_empty_cell() -> None:
         ]
     )
 
-    assert "cards/showcase-elf" not in html
+    assert "cards/2026-dummy-one" not in html
     assert "<td></td>" in html
 
 
