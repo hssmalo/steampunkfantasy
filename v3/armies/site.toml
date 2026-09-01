@@ -9,3 +9,16 @@ heading = "2025 Armies"
 [[packs]]
 pack = "2024"
 heading = "2024 Armies"
+
+[races]
+heading = "Races"
+publish = [
+    "abomination",
+    "darkelf",
+    "dwarf",
+    "elf",
+    "gnome",
+    "goblin",
+    "ogre",
+    "ork",
+]
