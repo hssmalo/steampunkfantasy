@@ -1,9 +1,51 @@
 """The Targets a Kind covers for a Race, resolved from the Race TOML alone."""
 
 import operator
+from pathlib import Path
+
+import pytest
 
 from spf.assets import Kind, targets
+from spf.config import config
+from spf.schemas.race import RaceConfig, RaceMetadata
 from tests.assets.conftest import FakeService
+from tests.conftest import (
+    synthetic_model,
+    synthetic_race,
+    synthetic_unit,
+    write_race_toml,
+)
+
+_DESCRIPTION = "A cunning raider, clad in brass plate."
+"""The Race's own Brief text, the one a race-level Kind is generated from."""
+
+
+def _race() -> RaceConfig:
+    """Build a Race whose Units and Models are declared out of alphabetical order.
+
+    Coverage follows the order the TOML declares, so a Race whose keys sort
+    differently is what makes that assertion mean anything.
+    """
+    race = synthetic_race(
+        units={
+            "infantry": synthetic_unit(name="Infantry", models=["grunt"]),
+            "troll": synthetic_unit(name="Troll", models=["brute"]),
+            "champion": synthetic_unit(name="Champion", models=["grunt"]),
+        },
+        models={
+            "grunt": synthetic_model(name="Grunt"),
+            "brute": synthetic_model(name="Brute"),
+        },
+    )
+    described = RaceMetadata(name="Goblin", description=_DESCRIPTION)
+    return race.model_copy(update={"races": {"goblin": described}})
+
+
+@pytest.fixture(autouse=True)
+def _race_on_disk(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Resolve every Target in this module against a Race the test wrote."""
+    write_race_toml(tmp_path, _race())
+    monkeypatch.setattr(config.paths, "races", tmp_path)
 
 
 def test_race_level_kind_covers_the_race_itself() -> None:
@@ -16,32 +58,24 @@ def test_race_level_kind_covers_the_race_itself() -> None:
         brief=operator.attrgetter("description"),
     )
 
-    found = targets(kind, "ork")
+    found = targets(kind, "goblin")
 
-    assert [target.name for target in found] == ["ork"]
+    assert [target.name for target in found] == ["goblin"]
     assert found[0].level == "race"
-    assert found[0].human_name == "Ork"
+    assert found[0].human_name == "Goblin"
 
 
 def test_unit_level_kind_covers_the_race_then_its_units(test_kind: Kind) -> None:
-    # `test_kind` declares {"race", "unit"}, matching the image Kind. Ork's unit
-    # keys, in `races/ork.toml` declaration order — coverage follows the TOML,
-    # not cost order as `race things` does.
-    found = targets(test_kind, "ork")
+    # `test_kind` declares {"race", "unit"}, matching the image Kind. Coverage
+    # follows the Race's declaration order, not cost order as `race things`
+    # does, and not the alphabetical order these keys would sort into.
+    found = targets(test_kind, "goblin")
 
     assert [target.name for target in found] == [
-        "ork",
-        "ork_infantry",
+        "goblin",
+        "infantry",
         "troll",
         "champion",
-        "warg_rider",
-        "speedhead",
-        "hammerhead",
-        "battlewagon",
-        "grunt",
-        "ork_werewarg",
-        "bioengineered_ork",
-        "ork_char_b1",
     ]
     assert {target.level for target in found[1:]} == {"unit"}
 
@@ -57,13 +91,9 @@ def test_model_level_kind_covers_the_races_models() -> None:
         brief=operator.attrgetter("description"),
     )
 
-    found = targets(kind, "ork")
+    found = targets(kind, "goblin")
 
-    assert [target.name for target in found][:3] == [
-        "troll",
-        "grunt",
-        "elite_ork_infantry",
-    ]
+    assert [target.name for target in found] == ["grunt", "brute"]
     assert {target.level for target in found} == {"model"}
 
 
@@ -79,9 +109,9 @@ def test_kind_declares_which_text_its_targets_are_briefed_from() -> None:
         brief=lambda entry: entry.name.upper(),
     )
 
-    found = targets(kind, "ork")
+    found = targets(kind, "goblin")
 
-    assert found[0].brief == "ORK"
+    assert found[0].brief == "GOBLIN"
 
 
 def test_brief_is_whitespace_normalized() -> None:
@@ -97,7 +127,7 @@ def test_brief_is_whitespace_normalized() -> None:
         brief=lambda _entry: "  A brutal raider,\n  clad in   brass plate.\n",
     )
 
-    found = targets(kind, "ork")
+    found = targets(kind, "goblin")
 
     assert found[0].brief == "A brutal raider, clad in brass plate."
 
@@ -114,7 +144,6 @@ def test_a_kind_can_compose_its_brief_from_several_fields() -> None:
         brief=lambda entry: f"{entry.name}: {entry.description}",
     )
 
-    found = targets(kind, "ork")
+    found = targets(kind, "goblin")
 
-    assert found[0].brief.startswith("Ork: ")
-    assert len(found[0].brief) > len("Ork: ")
+    assert found[0].brief == f"Goblin: {_DESCRIPTION}"

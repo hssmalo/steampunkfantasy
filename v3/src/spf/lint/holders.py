@@ -1,4 +1,4 @@
-"""Check that a Model's Default Equipment fits the Holders the Model declares.
+"""Check what Equipment claims against the Holders a Model declares.
 
 Kept apart from `rules.py`, which is deliberately pure string predicates over a
 `(key, name)` pair and reads no schema at all. This rule needs the model config
@@ -45,3 +45,22 @@ def check_default_equipment_fits(
         if count > capacity.get(holder, 0)
     ]
     return "; ".join(over) if over else None
+
+
+def check_requires_one_holder(equipment: EquipmentConfig) -> str | None:
+    """Name any `requires` group offering a choice between two Holders.
+
+    `holders.claims` sums every requirement in every group, which is only
+    unambiguous while no group is a choice *between* Holders: a "Hands:1 or
+    Tentacles:1" group would be counted as claiming one of each. No such group
+    exists in the data, and this is what keeps it that way — the day one is
+    wanted, `claims` needs a real answer for OR rather than a wider sum.
+    """
+    mixed = [
+        " or ".join(sorted(named))
+        for group in equipment.requires
+        if len(named := {req.key for req in group if req.key != "type"}) > 1
+    ]
+    if not mixed:
+        return None
+    return "; ".join(f"requires offers a choice of Holders: {group}" for group in mixed)

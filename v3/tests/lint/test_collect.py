@@ -179,6 +179,48 @@ def test_type_requirements_never_over_commit_a_holder() -> None:
     assert holders.check_default_equipment_fits(model, catalogue) is None
 
 
+def test_a_requires_group_naming_one_holder_is_silent() -> None:
+    """One Holder per group is the shape `claims` can sum unambiguously."""
+    rig = _equipment("Rig", requires=[["Hands:1"], ["Grenades:2"]])
+
+    assert holders.check_requires_one_holder(rig) is None
+
+
+def test_a_type_alternative_is_not_a_second_holder() -> None:
+    """`type:` says who may take the equipment, not where it sits."""
+    bow = _equipment("Bow", requires=[["Hands:2"], ["type:Infantry", "type:Cavalry"]])
+
+    assert holders.check_requires_one_holder(bow) is None
+
+
+def test_a_group_offering_two_holders_is_reported() -> None:
+    """A choice between Holders is what `claims` would count as claiming both."""
+    blade = _equipment("Blade", requires=[["Hands:1", "Tentacles:1"]])
+
+    message = holders.check_requires_one_holder(blade)
+
+    assert message == "requires offers a choice of Holders: Hands or Tentacles"
+
+
+def test_a_holder_choice_surfaces_as_a_finding() -> None:
+    """The rule reaches `lint_race_config` and locates the equipment it fired on."""
+    race_config = RaceConfig(
+        races={"ogre": RaceMetadata(name="Ogre")},
+        units={},
+        models={},
+        equipment={
+            "ogre_blade": _equipment("Ogre Blade", requires=[["Hands:1", "Shared:1"]])
+        },
+    )
+
+    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS, pools={})
+
+    (finding,) = [f for f in findings if f.rule == "or-group-one-holder"]
+    assert finding.section == "equipment"
+    assert finding.key == "ogre_blade"
+    assert "Hands or Shared" in finding.message
+
+
 def test_over_committed_defaults_surface_as_a_finding() -> None:
     """The rule reaches `lint_race_config` and locates the model it fired on."""
     race_config = RaceConfig(

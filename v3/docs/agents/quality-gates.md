@@ -16,9 +16,17 @@ just spell      # Spell-check with typos
 just spell-fix  # Fix spelling errors with typos
 just test       # Run the test suite quietly (accepts extra pytest args, e.g. `just test -k foo`)
 just fix        # Auto-fix lint issues, then reformat
-just validate   # Validate the TOML files and the ComfyUI profiles via the spf CLI
+just validate   # Load every Race, Army and rule registry, plus the ComfyUI profiles, via the spf CLI
 just lint-races # Lint race data for name and key consistency (spf race lint)
+
+just test-friction  # Mutate lint-clean TOML values; report the tests that break
+
+just golden-snapshot  # Render every document into the gitignored goldens/
+just golden-diff      # Re-render and diff against that snapshot
 ```
+
+`just test-friction` and the two golden recipes are on-demand and deliberately
+outside `just check` — see [`testing.md`](testing.md).
 
 ## Tests depend only on tracked files
 

@@ -100,6 +100,18 @@ def lint_race_config(
                     message=message,
                 )
             )
+    for equipment_key, equipment in race_config.equipment.items():
+        message = holders.check_requires_one_holder(equipment)
+        if message is not None:
+            findings.append(
+                Finding(
+                    race=race,
+                    section="equipment",
+                    key=equipment_key,
+                    rule="or-group-one-holder",
+                    message=message,
+                )
+            )
     sections: dict[str, Mapping[str, Named]] = {
         "units": race_config.units,
         "models": race_config.models,
