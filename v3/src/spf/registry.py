@@ -23,7 +23,7 @@ SPECIAL = "special"
 
 _REF = re.compile(r"^([a-z][a-z0-9_]*)\.([a-z][a-z0-9_]*)$")
 
-_LOADERS = {
+LOADERS = {
     "special.toml": rules.get_specials,
     "tokens.toml": rules.get_tokens,
     "hexes.toml": rules.get_hexes,
@@ -31,6 +31,10 @@ _LOADERS = {
     "modifiers.toml": rules.get_modifiers,
     "namespaces.toml": rules.get_namespaces,
 }
+"""Every rules file, and the loader that reads it.
+
+Public because `spf lint rules` reads one file at a time, so that a schema
+failure names the file it was authored in rather than the whole registry."""
 
 
 @dataclass(frozen=True)
@@ -85,7 +89,7 @@ def _load_registry(rules_dir: Path) -> Registry:
     """Read and cache the registries under one rules directory."""
     namespaces = rules.get_namespaces(rules_dir / "namespaces.toml").namespaces
     wanted = {namespace.file for namespace in namespaces.values()}
-    if unreadable := wanted - set(_LOADERS):
+    if unreadable := wanted - set(LOADERS):
         files = ", ".join(sorted(unreadable))
         msg = f"No loader for the rules file(s) a namespace declares: {files}"
         raise ValueError(msg)
@@ -94,7 +98,7 @@ def _load_registry(rules_dir: Path) -> Registry:
         msg = f"A namespace renders under an undeclared group: {groups}"
         raise ValueError(msg)
     loaded = {
-        file_name: _LOADERS[file_name](rules_dir / file_name) for file_name in wanted
+        file_name: LOADERS[file_name](rules_dir / file_name) for file_name in wanted
     }
     registry = Registry(
         namespaces=namespaces,
