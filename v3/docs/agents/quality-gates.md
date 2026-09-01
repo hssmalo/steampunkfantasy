@@ -16,7 +16,7 @@ just spell      # Spell-check with typos
 just spell-fix  # Fix spelling errors with typos
 just test       # Run the test suite quietly (accepts extra pytest args, e.g. `just test -k foo`)
 just fix        # Auto-fix lint issues, then reformat
-just validate   # Validate the TOML files and the ComfyUI profiles via the spf CLI
+just validate   # Load every Race, Army and rule registry, plus the ComfyUI profiles, via the spf CLI
 just lint-races # Lint race data for name and key consistency (spf race lint)
 
 just test-friction  # Mutate lint-clean TOML values; report the tests that break

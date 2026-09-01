@@ -87,6 +87,10 @@ below.
 Do not add pytest tests that sweep every Race or every Army. They pin nothing,
 they grow linearly with the game, and they re-run on every inner loop.
 
+The recipe is file-driven: it loads every `races/*.toml` and every
+`armies/**/*.json` on disk, so a new Race or Army is covered the moment it is
+committed, with no list to keep in step.
+
 ## Prefer synthetic fixtures
 
 `tests/conftest.py` provides shared builders for synthetic Races, Registries and
