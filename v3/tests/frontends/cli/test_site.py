@@ -1,7 +1,8 @@
 """Tests for the site build: the Landing Page generator and `render_site`.
 
-`render_landing_page` is a pure function over already-rendered pages, so those
-tests build `SitePage`s by hand rather than rendering anything for real. The
+The Landing Page is a pure function over already-built sections, and the
+section builders are pure functions over already-rendered pages, so these tests
+build `SitePage`s by hand rather than rendering anything for real. The
 `render_site` tests cover only what it refuses to build, which needs no render.
 """
 
@@ -15,12 +16,17 @@ from spf.frontends.cli.site import (
     SITE_INDEX_PATH,
     SOURCE_URL,
     SitePage,
+    SiteRow,
+    SiteSection,
+    loose_section,
+    pack_section,
+    race_section,
     render_landing_page,
     render_site,
 )
 
 
-def _army_pages(group: str, label: str, stem: str) -> list[SitePage]:
+def _army_pages(label: str, stem: str) -> list[SitePage]:
     """Both Products in both Formats for one Army, as `render_site` writes them."""
     return [
         SitePage(
@@ -28,9 +34,21 @@ def _army_pages(group: str, label: str, stem: str) -> list[SitePage]:
             label=label,
             fmt=fmt,
             relative_path=f"{product}/{stem}.{fmt}",
-            group=group,
         )
         for product in ("army-rules", "cards")
+        for fmt in ("pdf", "html")
+    ]
+
+
+def _race_pages(label: str, stem: str) -> list[SitePage]:
+    """Both Formats of one Race Overview."""
+    return [
+        SitePage(
+            product="race-overview",
+            label=label,
+            fmt=fmt,
+            relative_path=f"race-overview/{stem}.{fmt}",
+        )
         for fmt in ("pdf", "html")
     ]
 
@@ -40,57 +58,140 @@ RULEBOOK = SitePage(
     label="Rulebook",
     fmt="pdf",
     relative_path="general-rules/rulebook.pdf",
-    group=None,
 )
+RULEBOOK_SECTION = loose_section("general-rules", [RULEBOOK])
+
+
+def test_loose_section_is_one_labeled_line_and_no_table() -> None:
+    """A Product outside every table has no heading and no columns to fill."""
+    section = loose_section("general-rules", [RULEBOOK])
+
+    assert section.heading is None
+    assert section.columns == ()
+    assert section.rows == ()
+    assert [line.label for line in section.lines] == ["Rulebook"]
+    assert section.lines[0].pages == (RULEBOOK,)
+
+
+def test_pack_section_is_one_row_per_army_and_the_pack_below() -> None:
+    """The Pack's own document is a trailing line, never one of its Armies."""
+    pack_pages = [
+        SitePage(
+            product="army-pack",
+            label="Steampunkfantasy Tournament 2025",
+            fmt="pdf",
+            relative_path="army-pack/2025.pdf",
+        )
+    ]
+    section = pack_section(
+        "2025 Armies",
+        [
+            *_army_pages("Geir Arne: Sabeltann", "2025-geir-arne"),
+            *_army_pages("Morten: Gnomes", "2025-morten"),
+        ],
+        pack_pages,
+    )
+
+    assert section.heading == "2025 Armies"
+    assert section.columns == ("Army", "Army Reference", "Order Cards")
+    assert [row.label for row in section.rows] == [
+        "Geir Arne: Sabeltann",
+        "Morten: Gnomes",
+    ]
+    assert [len(row.cells) for row in section.rows] == [2, 2]
+    assert [line.label for line in section.lines] == ["Army Pack"]
+
+
+def test_a_pack_that_rendered_no_pack_document_has_no_trailing_line() -> None:
+    """The page links what rendered; it never fabricates a link that did not."""
+    section = pack_section(
+        "2025 Armies", _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"), []
+    )
+
+    assert section.lines == ()
+
+
+def test_race_section_is_one_race_overview_column() -> None:
+    """Rows are Races, and the one Product column is the Race Overview."""
+    section = race_section(
+        "Races", [*_race_pages("Elves", "elf"), *_race_pages("Dwarves", "dwarf")]
+    )
+
+    assert section.heading == "Races"
+    assert section.columns == ("Race", "Race Overview")
+    assert [row.label for row in section.rows] == ["Elves", "Dwarves"]
+    assert [len(row.cells) for row in section.rows] == [1, 1]
 
 
 def test_links_every_page() -> None:
     """Each page's relative path appears as a link target."""
-    pages = [
-        RULEBOOK,
-        SitePage(
-            product="army-rules",
-            label="showcase-elf",
-            fmt="html",
-            relative_path="army-rules/showcase-elf.html",
-            group="Showcase Armies",
-        ),
-    ]
-
-    html = render_landing_page(pages)
+    html = render_landing_page(
+        [
+            RULEBOOK_SECTION,
+            pack_section(
+                "Showcase Armies",
+                [
+                    SitePage(
+                        product="army-rules",
+                        label="showcase-elf",
+                        fmt="html",
+                        relative_path="army-rules/showcase-elf.html",
+                    )
+                ],
+                [],
+            ),
+        ]
+    )
 
     assert 'href="general-rules/rulebook.pdf"' in html
     assert 'href="army-rules/showcase-elf.html"' in html
 
 
-def test_ungrouped_pages_render_above_every_section() -> None:
+def test_a_loose_section_renders_above_every_heading() -> None:
     """The Rulebook belongs to no pack, so it sits above the first heading."""
-    pages = [*_army_pages("Showcase Armies", "Showcase Elf", "showcase-elf"), RULEBOOK]
-
-    html = render_landing_page(pages)
+    html = render_landing_page(
+        [
+            RULEBOOK_SECTION,
+            pack_section(
+                "Showcase Armies", _army_pages("Showcase Elf", "showcase-elf"), []
+            ),
+        ]
+    )
 
     assert html.index("general-rules/rulebook.pdf") < html.index("<h2>")
 
 
-def test_groups_render_in_first_appearance_order() -> None:
+def test_sections_render_in_the_order_given() -> None:
     """Sections follow Site Index order — neither alphabetical nor chronological."""
-    pages = [
-        *_army_pages("Showcase Armies", "Showcase Elf", "showcase-elf"),
-        *_army_pages("2025 Armies", "Geir Arne: Sabeltann", "2025-geir-arne"),
-        *_army_pages("2024 Armies", "Morten: Gnomes", "2024-morten"),
-    ]
+    html = render_landing_page(
+        [
+            race_section("Races", _race_pages("Elves", "elf")),
+            pack_section(
+                "Showcase Armies", _army_pages("Showcase Elf", "showcase-elf"), []
+            ),
+            pack_section(
+                "2025 Armies", _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"), []
+            ),
+            pack_section(
+                "2024 Armies", _army_pages("Morten: Gnomes", "2024-morten"), []
+            ),
+        ]
+    )
 
-    html = render_landing_page(pages)
-
+    assert html.index("Races") < html.index("Showcase Armies")
     assert html.index("Showcase Armies") < html.index("2025 Armies")
     assert html.index("2025 Armies") < html.index("2024 Armies")
 
 
 def test_an_army_is_one_row_with_a_cell_per_product() -> None:
     """Each Army is a `<tr>`: its name, its Army Reference, its Order Cards."""
-    pages = _army_pages("2025 Armies", "Geir Arne: Sabeltann", "2025-geir-arne")
-
-    html = render_landing_page(pages)
+    html = render_landing_page(
+        [
+            pack_section(
+                "2025 Armies", _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"), []
+            )
+        ]
+    )
 
     rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
     army_rows = [row for row in rows if "Geir Arne: Sabeltann" in row]
@@ -103,20 +204,46 @@ def test_an_army_is_one_row_with_a_cell_per_product() -> None:
     assert 'href="cards/2025-geir-arne.html"' in cells[2]
 
 
+def test_a_race_is_one_row_with_both_formats_in_one_cell() -> None:
+    """A Race is a `<tr>`: its name, then both Formats of its Race Overview."""
+    html = render_landing_page([race_section("Races", _race_pages("Elves", "elf"))])
+
+    rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
+    race_rows = [row for row in rows if "Elves" in row]
+    assert len(race_rows) == 1
+    cells = re.findall(r"<td>(.*?)</td>", race_rows[0], flags=re.DOTALL)
+    assert len(cells) == 2
+    assert 'href="race-overview/elf.pdf"' in cells[1]
+    assert 'href="race-overview/elf.html"' in cells[1]
+
+
+def test_a_section_with_no_rows_still_renders_its_table() -> None:
+    """An opted-in section with nothing in it says so, visibly."""
+    html = render_landing_page([race_section("Races", [])])
+
+    assert "<h2>Races</h2>" in html
+    rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
+    assert rows == ["<th>Race</th><th>Race Overview</th>"]
+
+
 def test_the_army_pack_renders_below_its_table_not_as_a_row() -> None:
     """A Pack's own document is a link under its table, not one of its Armies."""
-    pages = [
-        *_army_pages("2025 Armies", "Geir Arne: Sabeltann", "2025-geir-arne"),
-        SitePage(
-            product="army-pack",
-            label="Steampunkfantasy Tournament 2025",
-            fmt="pdf",
-            relative_path="army-pack/2025.pdf",
-            group="2025 Armies",
-        ),
-    ]
-
-    html = render_landing_page(pages)
+    html = render_landing_page(
+        [
+            pack_section(
+                "2025 Armies",
+                _army_pages("Geir Arne: Sabeltann", "2025-geir-arne"),
+                [
+                    SitePage(
+                        product="army-pack",
+                        label="Steampunkfantasy Tournament 2025",
+                        fmt="pdf",
+                        relative_path="army-pack/2025.pdf",
+                    )
+                ],
+            )
+        ]
+    )
 
     assert "army-pack/2025.pdf" not in html[: html.index("</table>")]
     assert "army-pack/2025.pdf" in html[html.index("</table>") :]
@@ -126,17 +253,22 @@ def test_the_army_pack_renders_below_its_table_not_as_a_row() -> None:
 
 def test_a_missing_product_leaves_an_empty_cell() -> None:
     """The page links what rendered; it never fabricates a link that did not."""
-    pages = [
-        SitePage(
-            product="army-rules",
-            label="Showcase Elf",
-            fmt="pdf",
-            relative_path="army-rules/showcase-elf.pdf",
-            group="Showcase Armies",
-        )
-    ]
-
-    html = render_landing_page(pages)
+    html = render_landing_page(
+        [
+            pack_section(
+                "Showcase Armies",
+                [
+                    SitePage(
+                        product="army-rules",
+                        label="Showcase Elf",
+                        fmt="pdf",
+                        relative_path="army-rules/showcase-elf.pdf",
+                    )
+                ],
+                [],
+            )
+        ]
+    )
 
     assert "cards/showcase-elf" not in html
     assert "<td></td>" in html
@@ -144,10 +276,30 @@ def test_a_missing_product_leaves_an_empty_cell() -> None:
 
 def test_the_footer_links_the_repository() -> None:
     """A reader on the site can find the sources it was generated from."""
-    html = render_landing_page([RULEBOOK])
+    html = render_landing_page([RULEBOOK_SECTION])
 
     assert f'href="{SOURCE_URL}"' in html
     assert "<footer>" in html
+
+
+def test_escapes_untrusted_looking_content() -> None:
+    """Labels, headings, and paths are HTML-escaped before being embedded."""
+    html = render_landing_page(
+        [
+            SiteSection(
+                heading="<em>",
+                columns=("<b>",),
+                rows=(SiteRow(label="<script>", cells=()),),
+                lines=(),
+            )
+        ]
+    )
+
+    assert "<script>" not in html
+    assert "&lt;script&gt;" in html
+    assert "<em>" not in html
+    assert "&lt;em&gt;" in html
+    assert "&lt;b&gt;" in html
 
 
 @pytest.fixture
@@ -179,23 +331,3 @@ def test_a_pack_missing_from_disk_fails_the_whole_build(armies_dir: Path) -> Non
         render_site()
 
     assert exit_info.value.code == 1
-
-
-def test_escapes_untrusted_looking_content() -> None:
-    """Labels, headings, and paths are HTML-escaped before being embedded."""
-    pages = [
-        SitePage(
-            product="army-rules",
-            label="<script>",
-            fmt="pdf",
-            relative_path="army-rules/x.pdf",
-            group="<em>",
-        )
-    ]
-
-    html = render_landing_page(pages)
-
-    assert "<script>" not in html
-    assert "&lt;script&gt;" in html
-    assert "<em>" not in html
-    assert "&lt;em&gt;" in html

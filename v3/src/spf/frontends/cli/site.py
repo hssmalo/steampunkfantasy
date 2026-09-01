@@ -25,6 +25,7 @@ from spf.frontends.cli.render import (
     ARMY_RULES,
     CARDS,
     GENERAL_RULES,
+    RACE_OVERVIEW,
     RULEBOOK_STEM,
     safe_stem,
 )
@@ -56,6 +57,7 @@ _PRODUCT_TITLES: dict[str, str] = {
     "army-rules": "Army Reference",
     "cards": "Order Cards",
     "army-pack": "Army Pack",
+    "race-overview": "Race Overview",
 }
 
 # The Products a pack's table has one column of, in column order.
@@ -98,9 +100,40 @@ class SitePage:
     label: str
     fmt: str
     relative_path: str
-    group: str | None = None
-    """The heading of the Army Pack section this page belongs under; `None` for
-    a page that stands outside every pack, as the Rulebook does."""
+
+
+@dataclass(frozen=True)
+class SiteRow:
+    """One row of a section's table: a labeled thing and its Products."""
+
+    label: str
+    cells: tuple[tuple[SitePage, ...], ...]
+    """One cell of pages per column after the label column."""
+
+
+@dataclass(frozen=True)
+class SiteLine:
+    """A labeled line of links standing outside a table."""
+
+    label: str
+    pages: tuple[SitePage, ...]
+
+
+@dataclass(frozen=True)
+class SiteSection:
+    """One Landing Page section: an optional heading, a table, trailing lines.
+
+    Deliberately generic. The Landing Page knows nothing about Army Packs or
+    Races; the builders below hold that knowledge, so a further kind of section
+    is a further builder rather than an edit to the renderer (ADR 0035).
+    """
+
+    heading: str | None
+    columns: tuple[str, ...]
+    """The full header row, the label column first; empty renders no table."""
+
+    rows: tuple[SiteRow, ...]
+    lines: tuple[SiteLine, ...]
 
 
 def _format_links(pages: Sequence[SitePage]) -> str:
@@ -116,65 +149,96 @@ def _product_title(product: str) -> str:
     return _PRODUCT_TITLES.get(product, product)
 
 
-def _product_line(product: str, pages: Sequence[SitePage]) -> str:
-    """Render a Product that stands outside a table as a labeled line."""
-    return f"<p>{escape(_product_title(product))}: {_format_links(pages)}</p>"
+def loose_section(product: str, pages: Sequence[SitePage]) -> SiteSection:
+    """Build the section for a Product that stands outside every table."""
+    return SiteSection(
+        heading=None,
+        columns=(),
+        rows=(),
+        lines=(SiteLine(label=_product_title(product), pages=tuple(pages)),),
+    )
 
 
-def _render_section(heading: str, pages: Sequence[SitePage]) -> str:
-    """Render one pack: a table of its Armies, then its Army Pack below."""
+def pack_section(
+    heading: str, army_pages: Sequence[SitePage], pack_pages: Sequence[SitePage]
+) -> SiteSection:
+    """Build one Army Pack's section: a row per Army, the Pack document below."""
     armies: dict[str, dict[str, list[SitePage]]] = {}
-    pack_pages: list[SitePage] = []
-    for page in pages:
-        if page.product == ARMY_PACK.name:
-            pack_pages.append(page)
-        else:
-            armies.setdefault(page.label, {}).setdefault(page.product, []).append(page)
+    for page in army_pages:
+        armies.setdefault(page.label, {}).setdefault(page.product, []).append(page)
 
-    headers = "".join(
-        f"<th>{escape(_product_title(product))}</th>" for product in _ARMY_PRODUCTS
-    )
-    rows = [f"<tr><th>Army</th>{headers}</tr>"]
-    for label, by_product in armies.items():
-        # An Army the site did not fully render gets an empty cell: the page
-        # cannot advertise a link to something that failed to render.
-        cells = "".join(
-            f"<td>{_format_links(by_product.get(product, []))}</td>"
-            for product in _ARMY_PRODUCTS
+    rows = tuple(
+        SiteRow(
+            label=label,
+            # An Army the site did not fully render gets an empty cell: the
+            # page cannot advertise a link to something that failed to render.
+            cells=tuple(
+                tuple(by_product.get(product, [])) for product in _ARMY_PRODUCTS
+            ),
         )
-        rows.append(f"<tr><td>{escape(label)}</td>{cells}</tr>")
-
-    table = "<table>\n" + "\n".join(rows) + "\n</table>"
-    below = [_product_line(ARMY_PACK.name, pack_pages)] if pack_pages else []
-    return "\n".join([f"<h2>{escape(heading)}</h2>", table, *below])
-
-
-def render_landing_page(pages: Sequence[SitePage]) -> str:
-    """Render a minimal HTML landing page linking every page, grouped by pack.
-
-    One section per Army Pack, in the order the pages arrive — which is Site
-    Index order. Pages belonging to no pack render above the first section.
-    """
-    ungrouped: dict[str, list[SitePage]] = {}
-    groups: dict[str, list[SitePage]] = {}
-    for page in pages:
-        if page.group is None:
-            ungrouped.setdefault(page.product, []).append(page)
-        else:
-            groups.setdefault(page.group, []).append(page)
-
-    body = "\n".join(
-        [
-            *(
-                _product_line(product, product_pages)
-                for product, product_pages in ungrouped.items()
-            ),
-            *(
-                _render_section(heading, group_pages)
-                for heading, group_pages in groups.items()
-            ),
-        ]
+        for label, by_product in armies.items()
     )
+    lines = (
+        (SiteLine(label=_product_title(ARMY_PACK.name), pages=tuple(pack_pages)),)
+        if pack_pages
+        else ()
+    )
+    return SiteSection(
+        heading=heading,
+        columns=("Army", *(_product_title(p) for p in _ARMY_PRODUCTS)),
+        rows=rows,
+        lines=lines,
+    )
+
+
+def race_section(heading: str, pages: Sequence[SitePage]) -> SiteSection:
+    """Build the Races section: one Race Overview column, one row per Race."""
+    by_race: dict[str, list[SitePage]] = {}
+    for page in pages:
+        by_race.setdefault(page.label, []).append(page)
+
+    return SiteSection(
+        heading=heading,
+        columns=("Race", _product_title(RACE_OVERVIEW.name)),
+        rows=tuple(
+            SiteRow(label=label, cells=(tuple(race_pages),))
+            for label, race_pages in by_race.items()
+        ),
+        lines=(),
+    )
+
+
+def _render_table(section: SiteSection) -> str:
+    """Render a section's table, header row and all, even with no rows."""
+    headers = "".join(f"<th>{escape(column)}</th>" for column in section.columns)
+    rows = [f"<tr>{headers}</tr>"]
+    for row in section.rows:
+        cells = "".join(f"<td>{_format_links(cell)}</td>" for cell in row.cells)
+        rows.append(f"<tr><td>{escape(row.label)}</td>{cells}</tr>")
+    return "<table>\n" + "\n".join(rows) + "\n</table>"
+
+
+def _render_section(section: SiteSection) -> str:
+    """Render one section: its heading, its table, then its trailing lines."""
+    parts = []
+    if section.heading is not None:
+        parts.append(f"<h2>{escape(section.heading)}</h2>")
+    if section.columns:
+        parts.append(_render_table(section))
+    parts += [
+        f"<p>{escape(line.label)}: {_format_links(line.pages)}</p>"
+        for line in section.lines
+    ]
+    return "\n".join(parts)
+
+
+def render_landing_page(sections: Sequence[SiteSection]) -> str:
+    """Render a minimal HTML landing page from already-built sections.
+
+    Sections render in the order given — which is the order `render_site` chose
+    — and this function neither re-sorts them nor asks what they contain.
+    """
+    body = "\n".join(_render_section(section) for section in sections)
     return (
         "<!doctype html>\n"
         '<html lang="en">\n<head>\n<meta charset="utf-8">\n'
@@ -187,12 +251,12 @@ def render_landing_page(pages: Sequence[SitePage]) -> str:
     )
 
 
-@dataclass(frozen=True)
-class _Listing:
-    """Where a rendered file appears on the Landing Page."""
-
-    label: str
-    group: str | None
+def _section_pages(section: SiteSection) -> list[SitePage]:
+    """List every page a section links, in the order it links them."""
+    return [
+        *(page for row in section.rows for cell in row.cells for page in cell),
+        *(page for line in section.lines for page in line.pages),
+    ]
 
 
 def _render_page(
@@ -200,7 +264,7 @@ def _render_page(
     source: object,
     *,
     name: str,
-    listing: _Listing,
+    label: str,
     output_root: Path,
 ) -> list[SitePage]:
     """Render `source` to every Site Format and return one `SitePage` each."""
@@ -211,10 +275,9 @@ def _render_page(
         pages.append(
             SitePage(
                 product=product.name,
-                label=listing.label,
+                label=label,
                 fmt=fmt_name,
                 relative_path=str(out.relative_to(output_root)),
-                group=listing.group,
             )
         )
     return pages
@@ -240,40 +303,39 @@ def _load_packs(site_index: SiteConfig) -> list[_LoadedPack]:
     return packs
 
 
-def _render_pack(pack: _LoadedPack, *, output_root: Path) -> list[SitePage]:
+def _render_pack(pack: _LoadedPack, *, output_root: Path) -> SiteSection:
     """Render one pack: an Army Reference and Order Cards each, then the Pack."""
-    group = pack.entry.heading
-    pages: list[SitePage] = []
+    army_pages: list[SitePage] = []
     for entry, (label, army) in zip(pack.index.armies, pack.armies, strict=True):
         # The pack directory is part of the stem: the same player fields an
         # Army in more than one tournament, and their renders must not collide.
         stem = safe_stem(f"{pack.entry.pack}/{entry.army}")
         page_label = f"{label}: {army.nick}" if label is not None else army.nick
-        listing = _Listing(label=page_label, group=group)
         reference = build_reference(army, stem=stem, image_for=committed_image)
-        pages += _render_page(
+        army_pages += _render_page(
             ARMY_RULES,
             reference,
             name=stem,
-            listing=listing,
+            label=page_label,
             output_root=output_root,
         )
         deck = build_deck(army, stem=stem, image_for=committed_image)
-        pages += _render_page(
-            CARDS, deck, name=stem, listing=listing, output_root=output_root
+        army_pages += _render_page(
+            CARDS, deck, name=stem, label=page_label, output_root=output_root
         )
 
     pack_stem = safe_stem(pack.entry.pack) or ARMY_PACK_STEM
     document = build_pack(
         pack.armies, title=pack.index.title, stem=pack_stem, image_for=committed_image
     )
-    return pages + _render_page(
+    pack_pages = _render_page(
         ARMY_PACK,
         document,
         name=pack_stem,
-        listing=_Listing(label=pack.index.title, group=group),
+        label=pack.index.title,
         output_root=output_root,
     )
+    return pack_section(pack.entry.heading, army_pages, pack_pages)
 
 
 def render_site() -> None:
@@ -297,20 +359,20 @@ def render_site() -> None:
         stderr.print(f"[red]Error:[/] {err}")
         raise SystemExit(1) from None
 
-    pages = _render_page(
+    rulebook_pages = _render_page(
         GENERAL_RULES,
         rulebook,
         name=RULEBOOK_STEM,
-        listing=_Listing(label="Rulebook", group=None),
+        label=_product_title(GENERAL_RULES.name),
         output_root=output_root,
     )
-    for pack in packs:
-        pages += _render_pack(pack, output_root=output_root)
+    sections = [loose_section(GENERAL_RULES.name, rulebook_pages)]
+    sections += [_render_pack(pack, output_root=output_root) for pack in packs]
 
     index_path = output_root / "index.html"
-    index_path.write_text(render_landing_page(pages), encoding="utf-8")
+    index_path.write_text(render_landing_page(sections), encoding="utf-8")
 
-    for page in pages:
+    for page in [page for section in sections for page in _section_pages(section)]:
         stdout.print(f"Wrote {output_root / page.relative_path}")
     stdout.print(f"Wrote {index_path}")
 

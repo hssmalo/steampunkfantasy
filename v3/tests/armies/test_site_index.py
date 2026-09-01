@@ -124,7 +124,7 @@ def test_races_rejects_an_unknown_key() -> None:
 def test_races_rejects_a_name_that_is_not_a_race() -> None:
     """A typo is a schema error naming the races there are, not a silent miss."""
     with pytest.raises(ValidationError, match="publish"):
-        SiteRacesConfig(heading="Races", publish=["elfs"])  # pyright: ignore[reportArgumentType]
+        SiteRacesConfig(heading="Races", publish=["dark-elf"])  # pyright: ignore[reportArgumentType]
 
 
 def test_races_requires_a_heading() -> None:
