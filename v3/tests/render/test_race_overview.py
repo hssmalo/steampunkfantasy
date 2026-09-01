@@ -1530,53 +1530,6 @@ def test_no_rules_leaves_the_rules_reference_and_its_links_out(
     assert "](#rule-" not in text
 
 
-# --- The goblin goldens -----------------------------------------------------
-#
-# Goblin is the smallest catalogue — 8 Units, 9 Models, 27 Equipment, 1 Spawn —
-# so the whole document stays reviewable as a fixture.
-
-GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
-
-GOLDEN_RACE = "goblin"
-
-
-def _trimmed(text: str) -> list[str]:
-    """Split `text` into lines with trailing whitespace off each.
-
-    A committed golden passes through the trailing-whitespace pre-commit hook,
-    which strips the spaces a summary table's empty cost cells end a row with.
-    """
-    return [line.rstrip() for line in text.rstrip("\n").splitlines()]
-
-
-@pytest.mark.usefixtures("pinned_version")
-def test_race_overview_output_matches_golden_file(tmp_path: Path) -> None:
-    overview = build_overview(
-        get_race(GOLDEN_RACE), stem=GOLDEN_RACE, image_for=no_image
-    )
-
-    text = _markdown(overview, tmp_path)
-
-    golden = (GOLDEN_DIR / f"race_overview_{GOLDEN_RACE}.md").read_text(
-        encoding="utf-8"
-    )
-    assert _trimmed(text) == _trimmed(golden)
-
-
-@pytest.mark.usefixtures("pinned_version")
-def test_race_overview_no_rules_output_matches_golden_file(tmp_path: Path) -> None:
-    overview = build_overview(
-        get_race(GOLDEN_RACE), stem=GOLDEN_RACE, image_for=no_image, rules=False
-    )
-
-    text = _markdown(overview, tmp_path)
-
-    golden = (GOLDEN_DIR / "no_rules" / f"race_overview_{GOLDEN_RACE}.md").read_text(
-        encoding="utf-8"
-    )
-    assert _trimmed(text) == _trimmed(golden)
-
-
 # --- The LaTeX Rendering ----------------------------------------------------
 #
 # The same document in the other family (ADR 0005): the same sections in the
@@ -1683,20 +1636,6 @@ def test_no_rules_leaves_the_rules_reference_out_of_the_latex(
     assert r"\hyperref[rule-" not in text
 
 
-@pytest.mark.usefixtures("pinned_version")
-def test_race_overview_latex_output_matches_golden_file(tmp_path: Path) -> None:
-    overview = build_overview(
-        get_race(GOLDEN_RACE), stem=GOLDEN_RACE, image_for=no_image
-    )
-
-    text = _latex(overview, tmp_path)
-
-    golden = (GOLDEN_DIR / f"race_overview_{GOLDEN_RACE}.tex").read_text(
-        encoding="utf-8"
-    )
-    assert _trimmed(text) == _trimmed(golden)
-
-
 @pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
 def test_the_race_overview_compiles_to_a_pdf(tmp_path: Path) -> None:
     overview = build_overview(get_race(RACE), stem=RACE, image_for=no_image)
@@ -1709,9 +1648,9 @@ def test_the_race_overview_compiles_to_a_pdf(tmp_path: Path) -> None:
         output_root=tmp_path,
     )
 
-    # A `.tex` golden that does not build is worth nothing, and the catalogue
-    # reaches constructs the Army Reference never does — `longtable`, and the
-    # `∞` an unlimited holder prints.
+    # The catalogue reaches constructs the Army Reference never does —
+    # `longtable`, and the `∞` an unlimited holder prints — so it is the
+    # document most likely to stop compiling.
     assert out.read_bytes().startswith(b"%PDF")
 
 

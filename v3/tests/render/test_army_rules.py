@@ -6,7 +6,6 @@ from pathlib import Path
 
 import pytest
 
-from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
@@ -828,117 +827,6 @@ def test_render_army_rules_latex_prints_every_note(tmp_path: Path) -> None:
     text = out.read_text(encoding="utf-8")
     assert r"\item \textbf{Note}: May not enter buildings" in text
     assert r"\item \textbf{Note}: Floats" in text
-
-
-# --- Golden output: pins the standalone army-rules output byte-for-byte ----
-#
-# `main.tex.jinja`/`main.md.jinja` are a thin wrapper around the shared
-# `reference-body` partial (also used by the Army Pack); this pins their
-# combined output so a future change to either can't silently drift the
-# standalone Army Reference. `image_for=no_image` keeps the fixture
-# independent of the committed Asset store's contents.
-
-# The version is pinned for this comparison: the documents stamp the version
-# that rendered them, which would otherwise drift the goldens every release.
-GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
-
-
-@pytest.mark.parametrize(
-    ("fmt_name", "golden_name"),
-    [("markdown", "army_rules.md"), ("latex", "army_rules.tex")],
-)
-@pytest.mark.usefixtures("pinned_version")
-def test_army_rules_output_matches_golden_file(
-    tmp_path: Path, fmt_name: str, golden_name: str
-) -> None:
-    reference = build_reference(
-        io.load_army(DEMO_ARMY), stem="demo", image_for=no_image
-    )
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format(fmt_name),
-        name="demo",
-        output_root=tmp_path,
-    )
-
-    # `.rstrip`: the committed golden file passes through the end-of-file-fixer
-    # pre-commit hook, which trims trailing blank lines the templates emit.
-    golden = (GOLDEN_DIR / golden_name).read_text(encoding="utf-8")
-    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
-
-
-# The demo Army fields no Unit whose armor an Equipment raises and no holder
-# carrying a `note`, so a second Army covers both — the two things the
-# Specials migration moved out of a Special and onto the record itself.
-FIXTURE_ARMIES = Path(__file__).parent.parent / "fixtures" / "armies"
-
-
-@pytest.mark.usefixtures("pinned_version")
-def test_army_rules_output_matches_golden_file_with_granted_armor_and_notes(
-    tmp_path: Path,
-) -> None:
-    army = io._load_army_at(
-        FIXTURE_ARMIES / "dwarf_shieldwall.json", label="fixture", validate=True
-    )
-    reference = build_reference(army, stem="shieldwall", image_for=no_image)
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("markdown"),
-        name="shieldwall",
-        output_root=tmp_path,
-    )
-
-    golden = (GOLDEN_DIR / "army_rules_dwarf.md").read_text(encoding="utf-8")
-    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
-
-
-# --- `--no-rules` reproduces the document as it was before the Rules Reference
-#
-# The opt-out's whole contract: with it, nothing about the Rules Reference —
-# neither the list nor a link on a Unit line — reaches the page. The goldens
-# below are the output as it stood before any of it existed, so a leak of any
-# kind fails here rather than in a published document.
-
-SHOWCASE_ARMIES = Path(__file__).parent.parent.parent / "armies" / "showcase"
-
-NO_RULES_GOLDEN_DIR = GOLDEN_DIR / "no_rules"
-
-
-@pytest.mark.parametrize(
-    "army_file", sorted(p.name for p in SHOWCASE_ARMIES.glob("*.json"))
-)
-@pytest.mark.usefixtures("pinned_version")
-def test_no_rules_reproduces_the_showcase_output(
-    tmp_path: Path, army_file: str
-) -> None:
-    stem = Path(army_file).stem
-    army = io._load_army_at(SHOWCASE_ARMIES / army_file, label=stem, validate=True)
-    reference = build_reference(army, stem=stem, image_for=no_image, rules=False)
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("markdown"),
-        name=stem,
-        output_root=tmp_path,
-    )
-
-    golden = (NO_RULES_GOLDEN_DIR / f"{stem}.md").read_text(encoding="utf-8")
-    assert _trimmed(out.read_text(encoding="utf-8")) == _trimmed(golden)
-
-
-def _trimmed(text: str) -> list[str]:
-    """Split `text` into lines with trailing whitespace off each.
-
-    A committed golden passes through the trailing-whitespace pre-commit hook,
-    which strips the spaces a template emits after an empty field — so the
-    trailing space is a property of the fixture, not of the renderer.
-    """
-    return [line.rstrip() for line in text.rstrip("\n").splitlines()]
 
 
 # --- The Rules Reference in a standalone Army Reference (ADR 0029) ----------

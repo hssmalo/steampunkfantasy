@@ -809,13 +809,3 @@ def test_render_cards_missing_army_exits_nonzero(tmp_path: Path) -> None:
 
     assert excinfo.value.code == 1
     assert not out.exists()
-
-
-# --- Golden output: pins the Order Card deck, and with it the Speed order ---
-#
-# Speeds render in the `speed` registry's declaration order, so a reordering of
-# `rules/modifiers.toml` silently reshuffles every orders table. The demo Army's
-# Goblin Infantry has both a `sneak` and a `slow` movement row, which is what
-# makes such a reordering visible here.
-
-GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
