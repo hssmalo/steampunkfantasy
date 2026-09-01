@@ -216,10 +216,14 @@ def armies_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Point `config.paths.armies` at a directory of this test's own.
 
     The committed Armies are a subject in their own right; a test about
-    saving, listing or loading is not about them.
+    saving, listing or loading is not about them. A directory of its own
+    rather than `tmp_path` itself, so that a test pointing another corpus at
+    `tmp_path` does not leave its files where `armies.rglob` finds them.
     """
-    monkeypatch.setattr(config.paths, "armies", tmp_path)
-    return tmp_path
+    armies = tmp_path / "armies"
+    armies.mkdir()
+    monkeypatch.setattr(config.paths, "armies", armies)
+    return armies
 
 
 @pytest.fixture
