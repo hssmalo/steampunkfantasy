@@ -13,9 +13,8 @@ import cyclopts
 
 from spf import races
 from spf.armies import io
-from spf.config import config
 from spf.console import stderr, stdout
-from spf.lint import latex
+from spf.lint import latex, loading
 from spf.render import Product, render
 from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
@@ -260,8 +259,7 @@ def render_tlmgr() -> None:
     reports what the manifest declares rather than checking it against
     anything.
     """
-    manifest_path = config.paths.templates / "latex" / "requirements.toml"
-    for name in latex.tlmgr_packages(manifest_path):
+    for name in latex.tlmgr_packages(loading.latex_manifest_path()):
         stdout.print(name, highlight=False, soft_wrap=True)
 
 

@@ -7,7 +7,6 @@ pass that follows runs over exactly the files that yielded no Load finding.
 """
 
 import json
-import tomllib
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from functools import partial
@@ -15,7 +14,8 @@ from pathlib import Path
 
 import pydantic
 
-from spf import races, registry, rules
+from spf import races, rules
+from spf import registry as registry_module
 from spf.armies import io
 from spf.armies.build import ArmyList, army_violations
 from spf.assets.profiles import check as check_profile
@@ -23,6 +23,7 @@ from spf.config import config
 from spf.lint import latex
 from spf.lint.findings import LintFinding
 from spf.render.rulebook import build_rulebook
+from spf.schemas import rules as r
 from spf.schemas import type_aliases as t
 from spf.schemas.config import COMFYUI_ENV_NAMES
 from spf.schemas.race import RaceConfig
@@ -39,10 +40,11 @@ LATEX_MANIFEST = "templates/latex/requirements.toml"
 SITE_INDEX = "armies/site.toml"
 """Where the Site Index lives, repo-relative (ADR 0028)."""
 
-# What a corpus cannot be read past. `tomllib` and `json` raise their own for a
-# file that will not parse; a manifest naming a file that is not there, or a
-# key that is not, raises the rest.
-_UNREADABLE = (OSError, ValueError, KeyError, tomllib.TOMLDecodeError)
+# What a corpus cannot be read past. `tomllib.TOMLDecodeError` and
+# `json.JSONDecodeError` are both `ValueError`s, and so is the message
+# `get_race` raises for a Race that is not there; `KeyError` is a manifest
+# missing a key another file names.
+_UNREADABLE = (OSError, ValueError, KeyError)
 
 
 def _finding(file: str, message: str, *, location: str = "") -> LintFinding:
@@ -117,28 +119,71 @@ def probe_races() -> RaceProbe:
 # ---------------------------------------------------------------------------
 
 
-def probe_rules() -> list[LintFinding]:
+NAMESPACES = "namespaces.toml"
+"""The registry that says which registries exist and where their records live."""
+
+
+@dataclass(frozen=True)
+class RulesProbe:
+    """The rule registries that loaded, and why the rest did not.
+
+    `registry` is what the style pass walks. It holds every namespace whose
+    file read cleanly and no others, so a broken `hexes.toml` costs the corpus
+    its hex records and nothing else. `None` means not even the namespace
+    registry read, and there is no way to know what the corpus contains.
+    """
+
+    findings: list[LintFinding]
+    registry: registry_module.Registry | None
+
+
+def probe_rules() -> RulesProbe:
     """Load every rule registry and the Rulebook Index.
 
-    Each registry file is read on its own first, so a schema failure names the
-    file it was authored in; only then is the whole registry assembled, which
-    is what checks the declarations spanning files.
+    Each registry file is read on its own, so a schema failure names the file
+    it was authored in; only when all of them read is the whole registry
+    assembled, which is what checks the declarations spanning files.
     """
-    findings = [
-        finding
-        for file_name, load in registry.LOADERS.items()
-        if (path := config.paths.rules / file_name).is_file()
-        for finding in _findings_from(f"rules/{file_name}", partial(load, path))
-    ]
+    findings: list[LintFinding] = []
+    loaded: dict[str, object] = {}
+    for file_name, load in registry_module.LOADERS.items():
+        path = config.paths.rules / file_name
+        if not path.is_file():
+            continue
+        if file_findings := _findings_from(f"rules/{file_name}", partial(load, path)):
+            findings += file_findings
+        else:
+            loaded[file_name] = load(path)
+
     if findings:
-        return findings
+        return RulesProbe(findings=findings, registry=_partial_registry(loaded))
 
     # A cross-file failure is authored in the namespace registry: it is the
     # file that says which registries exist and where their records live.
-    return [
-        *_findings_from("rules/namespaces.toml", registry.load_registry),
-        *_findings_from(f"rules/{rules.RULEBOOK_INDEX}", _build_rulebook),
-    ]
+    findings += _findings_from(f"rules/{NAMESPACES}", registry_module.load_registry)
+    findings += _findings_from(f"rules/{rules.RULEBOOK_INDEX}", _build_rulebook)
+    if findings:
+        return RulesProbe(findings=findings, registry=_partial_registry(loaded))
+    return RulesProbe(findings=[], registry=registry_module.load_registry())
+
+
+def _partial_registry(loaded: dict[str, object]) -> registry_module.Registry | None:
+    """Assemble a Registry over only the rules files that read cleanly."""
+    namespaces_config = loaded.get(NAMESPACES)
+    if not isinstance(namespaces_config, r.NamespacesConfig):
+        return None
+    namespaces = {
+        name: namespace
+        for name, namespace in namespaces_config.namespaces.items()
+        if namespace.file in loaded
+    }
+    return registry_module.Registry(
+        namespaces=namespaces,
+        records={
+            name: getattr(loaded[namespace.file], namespace.table)
+            for name, namespace in namespaces.items()
+        },
+    )
 
 
 def _build_rulebook() -> object:
@@ -219,9 +264,14 @@ def build_findings(loaded: Iterable[LoadedArmy]) -> list[LintFinding]:
 # ---------------------------------------------------------------------------
 
 
+def latex_templates_dir() -> Path:
+    """Locate the LaTeX template family, which the manifest is a manifest for."""
+    return config.paths.templates / "latex"
+
+
 def latex_manifest_path() -> Path:
     """Locate the LaTeX manifest, beside the templates it is a manifest for."""
-    return config.paths.templates / "latex" / "requirements.toml"
+    return latex_templates_dir() / "requirements.toml"
 
 
 def probe_render() -> list[LintFinding]:
@@ -288,7 +338,7 @@ def probe_assets() -> list[LintFinding]:
         for env in COMFYUI_ENV_NAMES
     ]
     return [
-        _finding(f"workflows/{status.env}", status.detail, location=status.profile)
+        _finding(f"workflows/{status.env}/{status.profile}.json", status.detail)
         for status in statuses
         if status.state == "broken"
     ]

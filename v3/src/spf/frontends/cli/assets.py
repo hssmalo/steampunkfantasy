@@ -647,7 +647,7 @@ def profiles() -> None:
     is reported and skipped rather than failed: `workflows/local/` is per-machine
     and gitignored, so a fresh clone legitimately has only the committed ones.
     Exits non-zero when a Profile that *should* resolve does not, which is a
-    configuration error — this is what `just validate` runs it for.
+    configuration error — this is what `spf lint assets` checks for.
     """
     comfyui = config.assets.image.comfyui
     broken: list[str] = []

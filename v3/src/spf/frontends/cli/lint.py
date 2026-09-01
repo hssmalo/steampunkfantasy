@@ -10,7 +10,7 @@ the build fails.
 
 import cyclopts
 
-from spf import lint, registry
+from spf import lint
 from spf.config import config
 from spf.lint import latex, loading
 from spf.lint.findings import LintFinding
@@ -64,18 +64,26 @@ def races_findings(probe: loading.RaceProbe | None = None) -> list[LintFinding]:
 
 
 def rules_findings() -> list[LintFinding]:
-    """Return every finding over the rule registries and the Rulebook Index."""
-    findings = loading.probe_rules()
-    if findings:
-        return findings
+    """Return every finding over the rule registries and the Rulebook Index.
+
+    The style pass walks whatever the probe could assemble, which holds the
+    namespaces whose files read and no others -- so a broken `hexes.toml`
+    costs the corpus its hex records without silencing the rest.
+    """
+    probe = loading.probe_rules()
+    if probe.registry is None:
+        return probe.findings
     return [
-        LintFinding(
-            file=f"rules/{finding.file}",
-            location=f"{finding.namespace}.{finding.key}",
-            rule=finding.rule,
-            message=finding.message,
-        )
-        for finding in lint.lint_registry(registry.load_registry(), config.lint)
+        *probe.findings,
+        *(
+            LintFinding(
+                file=f"rules/{finding.file}",
+                location=f"{finding.namespace}.{finding.key}",
+                rule=finding.rule,
+                message=finding.message,
+            )
+            for finding in lint.lint_registry(probe.registry, config.lint)
+        ),
     ]
 
 
@@ -98,7 +106,6 @@ def render_findings() -> list[LintFinding]:
     findings = loading.probe_render()
     if any(finding.file == loading.LATEX_MANIFEST for finding in findings):
         return findings
-    templates_dir = config.paths.templates / "latex"
     return [
         *findings,
         *(
@@ -109,7 +116,7 @@ def render_findings() -> list[LintFinding]:
                 message=name,
             )
             for name in latex.unlisted_packages(
-                templates_dir, loading.latex_manifest_path()
+                loading.latex_templates_dir(), loading.latex_manifest_path()
             )
         ),
     ]

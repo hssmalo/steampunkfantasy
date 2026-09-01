@@ -38,11 +38,12 @@ os.environ["COLUMNS"] = "100"
 # scrubbing above: `spf.config` folds the `SPF_` namespace into its
 # Configuration at import time, and `spf.console` reads the color and width
 # settings once, when its Consoles are constructed.
+import json  # noqa: E402
 import sys  # noqa: E402
 from collections.abc import Callable, Mapping  # noqa: E402
 from pathlib import Path  # noqa: E402
 from types import ModuleType  # noqa: E402
-from typing import cast  # noqa: E402
+from typing import Any, cast  # noqa: E402
 
 import pytest  # noqa: E402
 import tomlkit  # noqa: E402
@@ -237,6 +238,41 @@ def races_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     races.mkdir()
     monkeypatch.setattr(config.paths, "races", races)
     return races
+
+
+BROKEN_RACE_TOML = "[races.ork]\nname = 123\n"
+"""A Race file that will not load, for a test about what happens when one does
+not. Borrows a real Race name, as every synthetic Race does."""
+
+
+def army_json(race: RaceConfig, /, **fields: object) -> dict[str, Any]:
+    """Build the JSON an Army file holds, for an Army of `race`.
+
+    The serialized form of `synthetic_army`, for a test that needs an Army on
+    disk rather than in memory; `fields` overrides what it writes.
+    """
+    army = synthetic_army(race)
+    return {
+        "race": army.race,
+        "nick": army.nick,
+        "units": [
+            {
+                "name": unit.name,
+                "models": [
+                    {"name": model.name, "upgrades": list(model.upgrades)}
+                    for model in unit.models
+                ],
+            }
+            for unit in army.units
+        ],
+    } | fields
+
+
+def write_army_json(directory: Path, name: str, data: object) -> Path:
+    """Write an Army out as the JSON `spf.armies.io` reads, and return its path."""
+    path = directory / f"{name}.json"
+    path.write_text(json.dumps(data, indent=2))
+    return path
 
 
 def write_race_toml(directory: Path, race: RaceConfig) -> Path:

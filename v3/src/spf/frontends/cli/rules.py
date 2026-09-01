@@ -54,7 +54,7 @@ def list_rulebook() -> None:
     """Validate the Rulebook Index and list its sections.
 
     Resolving the Index is what validates it: every Kind is looked up and every
-    source located. That is why this sits in `just validate` — a broken Index
+    source located. That is why `spf lint rules` resolves it too — a broken Index
     should fail `just check`, not the next person's `spf render general-rules`.
     """
     try:

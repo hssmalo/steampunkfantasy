@@ -5,25 +5,22 @@ commands over the committed data: an invalid TOML edit must be caught by the
 linter, never by a test (`docs/agents/testing.md`).
 """
 
-import json
 from pathlib import Path
-from typing import Any
 
 import pytest
 from cyclopts.exceptions import UnknownOptionError
 
 from spf.config import config
 from spf.frontends.cli import app
-from spf.schemas.race import RaceConfig
 from tests.conftest import (
+    BROKEN_RACE_TOML,
     InstallRegistry,
-    synthetic_army,
+    army_json,
     synthetic_equipment,
     synthetic_race,
+    write_army_json,
     write_race_toml,
 )
-
-_BROKEN_RACE = "[races.ork]\nname = 123\n"
 
 
 def _lint(*args: str) -> None:
@@ -38,30 +35,6 @@ def _findings(capsys: pytest.CaptureFixture[str]) -> list[list[str]]:
         for line in capsys.readouterr().out.splitlines()
         if line.strip()
     ]
-
-
-def _army_data(race: RaceConfig) -> dict[str, Any]:
-    """Build the JSON an Army file holds, for a `synthetic_race` Race."""
-    army = synthetic_army(race)
-    return {
-        "race": army.race,
-        "nick": army.nick,
-        "units": [
-            {
-                "name": unit.name,
-                "models": [
-                    {"name": model.name, "upgrades": list(model.upgrades)}
-                    for model in unit.models
-                ],
-            }
-            for unit in army.units
-        ],
-    }
-
-
-def _write_army(directory: Path, name: str, data: object) -> None:
-    """Write an Army JSON file the linter will find."""
-    (directory / f"{name}.json").write_text(json.dumps(data, indent=2))
 
 
 # ---------------------------------------------------------------------------
@@ -88,7 +61,7 @@ def test_lint_races_exits_one_when_anything_is_wrong(
 ) -> None:
     """Lint speaks, the build fails: there is exactly one severity."""
     install_registry()
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     with pytest.raises(SystemExit) as exit_info:
         _lint("races")
@@ -108,7 +81,7 @@ def test_lint_races_reports_a_load_failure(
 ) -> None:
     """A schema failure is a finding of this command's, not another's."""
     install_registry()
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     with pytest.raises(SystemExit):
         _lint("races")
@@ -149,7 +122,7 @@ def test_lint_races_reports_no_style_for_a_race_that_will_not_load(
 ) -> None:
     """A file that fails the load gate yields no other kind of finding."""
     install_registry()
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     with pytest.raises(SystemExit):
         _lint("races")
@@ -172,9 +145,9 @@ def test_lint_armies_reports_an_illegal_build(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    data = _army_data(race)
+    data = army_json(race)
     data["units"][0]["models"][0]["upgrades"] = ["knife"]
-    _write_army(armies_dir, "illegal", data)
+    write_army_json(armies_dir, "illegal", data)
 
     with pytest.raises(SystemExit):
         _lint("armies")
@@ -194,8 +167,8 @@ def test_lint_armies_suppresses_the_armies_of_a_broken_race(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    _write_army(armies_dir, "orkish", _army_data(race) | {"race": "ork"})
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    write_army_json(armies_dir, "orkish", army_json(race, race="ork"))
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     _lint("armies")
 
@@ -209,8 +182,8 @@ def test_lint_all_reports_a_broken_race_exactly_once(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     """One process, one report: the Race fails, its Armies stay quiet."""
-    _write_army(armies_dir, "orkish", _army_data(synthetic_race()) | {"race": "ork"})
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    write_army_json(armies_dir, "orkish", army_json(synthetic_race(), race="ork"))
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     with pytest.raises(SystemExit):
         _lint("all")
@@ -232,9 +205,9 @@ def test_lint_all_collects_across_corpora_rather_than_stopping(
 ) -> None:
     """Collect-all, never fail-fast: a broken Race does not hide a broken Army."""
     (races_dir / "elf.toml").write_text("[races.elf]\nname = 123\n")
-    data = _army_data(synthetic_race())
+    data = army_json(synthetic_race())
     data["units"][0]["models"][0]["upgrades"] = ["knife"]
-    _write_army(armies_dir, "illegal", data)
+    write_army_json(armies_dir, "illegal", data)
 
     with pytest.raises(SystemExit):
         _lint("all")
@@ -297,7 +270,7 @@ def clean_corpus(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    _write_army(armies_dir, "clean", _army_data(race))
+    write_army_json(armies_dir, "clean", army_json(race))
 
     rules = tmp_path / "rules"
     rules.mkdir()

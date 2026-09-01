@@ -5,32 +5,21 @@ Every corpus is a synthetic one under `tmp_path`: these probes are about what
 (`docs/agents/testing.md`).
 """
 
-import json
 from pathlib import Path
-from typing import Any
 
 import pytest
 import tomlkit
 
 from spf.config import config
 from spf.lint import loading
-from spf.schemas.race import RaceConfig
 from tests.conftest import (
+    BROKEN_RACE_TOML,
     InstallRegistry,
-    synthetic_army,
+    army_json,
     synthetic_race,
+    write_army_json,
     write_race_toml,
 )
-
-_BROKEN_RACE = "[races.ork]\nname = 123\n"
-
-
-def _write_army(directory: Path, name: str, army: object) -> Path:
-    """Write an Army JSON file the probe will find."""
-    path = directory / f"{name}.json"
-    path.write_text(json.dumps(army, indent=2))
-    return path
-
 
 # ---------------------------------------------------------------------------
 # Races
@@ -74,7 +63,7 @@ def test_probe_races_locates_the_failing_field(
 ) -> None:
     """A finding's location is the dotted path pydantic reports."""
     install_registry()
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     locations = {finding.location for finding in loading.probe_races().findings}
 
@@ -87,7 +76,7 @@ def test_probe_races_leaves_a_broken_race_out_of_loaded(
     """A Race that failed is named as broken, not as loaded."""
     install_registry()
     write_race_toml(races_dir, synthetic_race())
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     probe = loading.probe_races()
 
@@ -121,7 +110,7 @@ def test_probe_armies_is_silent_when_every_army_loads(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    _write_army(armies_dir, "clean", _army_data(race))
+    write_army_json(armies_dir, "clean", army_json(race))
 
     probe = loading.probe_armies()
 
@@ -136,9 +125,9 @@ def test_probe_armies_reports_an_unknown_unit_name(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    data = _army_data(race)
+    data = army_json(race)
     data["units"][0]["name"] = "nonesuch"
-    _write_army(armies_dir, "broken", data)
+    write_army_json(armies_dir, "broken", data)
 
     probe = loading.probe_armies()
 
@@ -168,8 +157,8 @@ def test_probe_armies_suppresses_armies_of_a_broken_race(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    _write_army(armies_dir, "orkish", _army_data(race) | {"race": "ork"})
-    (races_dir / "ork.toml").write_text(_BROKEN_RACE)
+    write_army_json(armies_dir, "orkish", army_json(race, race="ork"))
+    (races_dir / "ork.toml").write_text(BROKEN_RACE_TOML)
 
     probe = loading.probe_armies(broken_races=frozenset({"ork"}))
 
@@ -183,7 +172,7 @@ def test_probe_armies_reports_an_army_of_an_unknown_race(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    _write_army(armies_dir, "orkish", _army_data(race) | {"race": "ork"})
+    write_army_json(armies_dir, "orkish", army_json(race, race="ork"))
 
     [finding] = loading.probe_armies().findings
 
@@ -198,7 +187,7 @@ def test_build_findings_are_silent_for_a_legal_army(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    _write_army(armies_dir, "clean", _army_data(race))
+    write_army_json(armies_dir, "clean", army_json(race))
 
     assert loading.build_findings(loading.probe_armies().loaded) == []
 
@@ -210,9 +199,9 @@ def test_build_findings_report_an_illegal_upgrade(
     install_registry()
     race = synthetic_race()
     write_race_toml(races_dir, race)
-    data = _army_data(race)
+    data = army_json(race)
     data["units"][0]["models"][0]["upgrades"] = ["knife"]
-    _write_army(armies_dir, "illegal", data)
+    write_army_json(armies_dir, "illegal", data)
 
     [finding] = loading.build_findings(loading.probe_armies().loaded)
 
@@ -230,7 +219,10 @@ def test_build_findings_report_an_illegal_upgrade(
 @pytest.mark.usefixtures("rules_dir")
 def test_probe_rules_is_silent_on_a_registry_that_loads() -> None:
     """A corpus whose namespaces, records and Index all resolve says nothing."""
-    assert loading.probe_rules() == []
+    probe = loading.probe_rules()
+
+    assert probe.findings == []
+    assert probe.registry is not None
 
 
 def test_probe_rules_locates_a_schema_failure_at_its_own_file(
@@ -241,7 +233,7 @@ def test_probe_rules_locates_a_schema_failure_at_its_own_file(
         _NAMESPACES + "\n[damage_type.fire]\nname = 5\n"
     )
 
-    findings = loading.probe_rules()
+    findings = loading.probe_rules().findings
 
     assert [finding.file for finding in findings] == ["rules/namespaces.toml"]
     assert findings[0].rule == "load"
@@ -256,7 +248,7 @@ def test_probe_rules_reports_a_namespace_with_no_loader(rules_dir: Path) -> None
         '[damage_type.fire]\nname = "Fire"\ntodo = "Unwritten."\n'
     )
 
-    findings = loading.probe_rules()
+    findings = loading.probe_rules().findings
 
     assert [finding.file for finding in findings] == ["rules/namespaces.toml"]
 
@@ -271,10 +263,35 @@ def test_probe_rules_reports_a_rulebook_source_that_is_missing(
         'kind = "markdown"\nsource = "nonesuch.md"\ntitle = "Gone"\n'
     )
 
-    findings = loading.probe_rules()
+    findings = loading.probe_rules().findings
 
     assert [finding.file for finding in findings] == ["rules/rulebook.toml"]
     assert findings[0].rule == "load"
+
+
+def test_probe_rules_keeps_the_namespaces_whose_files_read(rules_dir: Path) -> None:
+    """One broken registry file costs the corpus its records and no others."""
+    (rules_dir / "terrain.toml").write_text("[terrain.forest]\nname = 5\n")
+    (rules_dir / "namespaces.toml").write_text(
+        _NAMESPACES + 'terrain = { name = "Terrain", label = "terrain",'
+        ' file = "terrain.toml", table = "terrain" }\n'
+        '\n[damage_type.fire]\nname = "Fire"\ntodo = "Unwritten."\n'
+    )
+
+    probe = loading.probe_rules()
+
+    assert [finding.file for finding in probe.findings] == ["rules/terrain.toml"]
+    assert probe.registry is not None
+    assert set(probe.registry.records) == {"damage_type"}
+
+
+def test_probe_rules_has_no_registry_when_the_namespaces_will_not_read(
+    rules_dir: Path,
+) -> None:
+    """Without the namespace registry there is no knowing what the corpus holds."""
+    (rules_dir / "namespaces.toml").write_text("[namespaces]\nbroken = 5\n")
+
+    assert loading.probe_rules().registry is None
 
 
 # ---------------------------------------------------------------------------
@@ -383,25 +400,6 @@ def _corrupt(path: Path, *keys: tuple[str, ...]) -> None:
             table = table[part]  # pyright: ignore[reportIndexIssue, reportArgumentType]
         table[key[-1]] = 123  # pyright: ignore[reportIndexIssue, reportArgumentType]
     path.write_text(tomlkit.dumps(data))
-
-
-def _army_data(race: RaceConfig) -> dict[str, Any]:
-    """Build the JSON an Army file holds, for a `synthetic_race` Race."""
-    army = synthetic_army(race)
-    return {
-        "race": army.race,
-        "nick": army.nick,
-        "units": [
-            {
-                "name": unit.name,
-                "models": [
-                    {"name": model.name, "upgrades": list(model.upgrades)}
-                    for model in unit.models
-                ],
-            }
-            for unit in army.units
-        ],
-    }
 
 
 @pytest.fixture
