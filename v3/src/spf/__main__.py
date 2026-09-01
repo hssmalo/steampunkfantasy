@@ -6,3 +6,7 @@ from spf.frontends.cli import app
 def main() -> None:
     """Start the SteamPunkFantasy CLI app."""
     return app()
+
+
+if __name__ == "__main__":
+    main()
