@@ -15,6 +15,7 @@ from pathlib import Path
 
 import cyclopts
 
+from spf import races
 from spf.armies import io
 from spf.armies.army import Army
 from spf.config import config
@@ -36,13 +37,16 @@ from spf.render.cards import build_deck
 from spf.render.formats import get_format
 from spf.render.images import committed_image
 from spf.render.products import Product
+from spf.render.race_overview import build_overview
 from spf.render.rulebook import build_rulebook
 from spf.rules import get_rulebook, rulebook_index_path
+from spf.schemas import type_aliases as t
 from spf.schemas.army_pack import ArmyPackConfig
+from spf.schemas.race import RaceConfig
 from spf.schemas.site import SiteConfig, SitePackConfig
 
 # The Site Index is the site's one authored source of what to publish: the
-# Army Packs it names, and no others (ADR 0018, ADR 0028).
+# Army Packs and Races it names, and no others (ADR 0018, ADR 0028, ADR 0035).
 SITE_INDEX_PATH = "site.toml"
 
 SITE_FORMATS = ("pdf", "html")
@@ -303,6 +307,39 @@ def _load_packs(site_index: SiteConfig) -> list[_LoadedPack]:
     return packs
 
 
+def _load_races(site_index: SiteConfig) -> list[tuple[t.RaceName, RaceConfig]]:
+    """Load every Race the Site Index names, in Index order.
+
+    Up front, with the packs: a Race the index names but disk lacks must fail
+    the build before anything renders, not midway through.
+    """
+    if site_index.races is None:
+        return []
+    return [(race, races.get_race(race)) for race in site_index.races.publish]
+
+
+def _render_races(
+    heading: str,
+    loaded: Sequence[tuple[t.RaceName, RaceConfig]],
+    *,
+    output_root: Path,
+) -> SiteSection:
+    """Render a Race Overview per named Race and build the Races section."""
+    pages: list[SitePage] = []
+    for race, race_config in loaded:
+        # The Race Name is the stem: it is the name of the TOML file the
+        # catalogue was read from, so it needs no slugifying.
+        overview = build_overview(race_config, stem=race, image_for=committed_image)
+        pages += _render_page(
+            RACE_OVERVIEW,
+            overview,
+            name=race,
+            label=race_config.races[race].name,
+            output_root=output_root,
+        )
+    return race_section(heading, pages)
+
+
 def _render_pack(pack: _LoadedPack, *, output_root: Path) -> SiteSection:
     """Render one pack: an Army Reference and Order Cards each, then the Pack."""
     army_pages: list[SitePage] = []
@@ -341,8 +378,9 @@ def _render_pack(pack: _LoadedPack, *, output_root: Path) -> SiteSection:
 def render_site() -> None:
     """Render every published Product/Format into `output/`, plus a Landing Page.
 
-    Builds the Rulebook, then every Army Pack the Site Index names: each Army's
-    Reference and Order Cards, and the Pack document itself. Fails the whole
+    Builds the Rulebook, then a Race Overview per Race the Site Index names,
+    then every Army Pack it names: each Army's Reference and Order Cards, and
+    the Pack document itself. Fails the whole
     build on any error rather than publishing a partial site -- a
     stale-but-complete site degrades safely, a silently incomplete one does not
     (extends ADR 0022 from one Product to the whole site).
@@ -351,6 +389,7 @@ def render_site() -> None:
     try:
         site_index = io.get_site_index(config.paths.armies / SITE_INDEX_PATH)
         packs = _load_packs(site_index)
+        loaded_races = _load_races(site_index)
         rulebook_path = rulebook_index_path(None)
         rulebook = build_rulebook(
             get_rulebook(rulebook_path), rules_dir=rulebook_path.parent
@@ -366,7 +405,14 @@ def render_site() -> None:
         label=_product_title(GENERAL_RULES.name),
         output_root=output_root,
     )
+    # Rules, then what a player can field, then what players did field.
     sections = [loose_section(GENERAL_RULES.name, rulebook_pages)]
+    if site_index.races is not None:
+        sections.append(
+            _render_races(
+                site_index.races.heading, loaded_races, output_root=output_root
+            )
+        )
     sections += [_render_pack(pack, output_root=output_root) for pack in packs]
 
     index_path = output_root / "index.html"
