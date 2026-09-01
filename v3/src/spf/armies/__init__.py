@@ -10,6 +10,7 @@ Build-time tier — for constructing armies in code:
 from spf.armies.army import Army
 from spf.armies.build import (
     ArmyList,
+    army_violations,
     available_equipment,
     available_models,
     validate_army,
@@ -22,6 +23,7 @@ __all__ = [
     "ArmyList",
     "Model",
     "Unit",
+    "army_violations",
     "available_equipment",
     "available_models",
     "validate_army",

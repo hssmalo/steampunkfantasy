@@ -28,7 +28,7 @@ V3 = Path(__file__).resolve().parent.parent
 CORPUS_GLOBS = ("races/*.toml", "rules/*.toml", "armies/*.toml", "armies/*/*.toml")
 
 STRING_MARKER = " Zz"
-"""Appended to prose. Title-cased so `spf race lint` keeps accepting names."""
+"""Appended to prose. Title-cased so `spf lint races` keeps accepting names."""
 
 PROSE_FIELDS = frozenset(
     {
@@ -267,7 +267,7 @@ def validate() -> str | None:
 def validate_corpus() -> int:
     """Load and lint every committed TOML, the way `just check` does.
 
-    Mirrors `just validate lint-races lint-rules` in one process: the schemas
+    Mirrors `just lint-data` in one process: the schemas
     are the hard gate, the linters the soft one (ADR 0016).
     """
     from spf import lint, races, registry, rules  # noqa: PLC0415

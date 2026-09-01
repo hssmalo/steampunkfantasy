@@ -1,7 +1,7 @@
 default: check
 
 # Run all quality gates in order, stopping on the first failure.
-check: fmt-check lint spell validate lint-races lint-rules lint-latex test typecheck
+check: fmt-check lint spell lint-data test typecheck
 
 # Cut a release: bump the CalVer version, re-lock, commit, tag, and push.
 release *args:
@@ -53,36 +53,9 @@ fix:
     uv run ruff check --fix -q
     uv run ruff format -q
 
-# Load every committed Race, Army and rule registry; the real-data smoke check.
-validate:
-    uv run spf race show abomination > /dev/null
-    uv run spf race show darkelf > /dev/null
-    uv run spf race show dwarf > /dev/null
-    uv run spf race show elf > /dev/null
-    uv run spf race show gnome > /dev/null
-    uv run spf race show goblin > /dev/null
-    uv run spf race show ogre > /dev/null
-    uv run spf race show ork > /dev/null
-    uv run spf rules hexes > /dev/null
-    uv run spf rules specials > /dev/null
-    uv run spf rules tokens > /dev/null
-    uv run spf rules terrain > /dev/null
-    uv run spf rules modifiers > /dev/null
-    uv run spf rules namespaces > /dev/null
-    uv run spf rules rulebook > /dev/null
-    uv run spf assets profiles > /dev/null
-
-# Lint race data for name and key consistency.
-lint-races:
-    uv run spf race lint
-
-# Lint the rule registries for name and key consistency.
-lint-rules:
-    uv run spf rules lint
-
-# Check that every LaTeX package used by a template is in the manifest.
-lint-latex:
-    uv run spf render lint
+# Lint every corpus: load failures, illegal Army builds, and style findings.
+lint-data:
+    uv run spf lint all
 
 # Build every published Product/Format into output/, plus the Landing Page.
 render-site:

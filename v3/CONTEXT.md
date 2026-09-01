@@ -339,27 +339,42 @@ It records the *reasoning*, not the mechanical edit (git already records that).
 _Avoid_: history, release notes, git log (git records the edit; the Changelog
 records the intent)
 
-**Hard gate**:
-A check that runs when game data is *loaded* — a schema failure, raised by
-pydantic and surfaced by `just validate` and by any command that reads the data.
-Where a violation means the resolver cannot produce correct output, the check
-belongs here. Best of all is a rule that makes the defect **unrepresentable**
-rather than merely detected: a closed model, an explicit field list.
-_Avoid_: validation (too broad), error (names the outcome, not the gate)
+**Load finding**:
+A file under `races/`, `rules/`, `armies/` or `templates/` that cannot be read —
+a schema failure raised by pydantic, or a missing file a manifest names. Where a
+violation means the resolver cannot produce correct output, the check belongs
+here. Best of all is a rule that makes the defect **unrepresentable** rather than
+merely detected: a closed model, an explicit field list. Reported by `spf lint
+<corpus>`, which produces no other kind of finding for a file that fails this
+one. `load` is literally the word the terminal prints.
+_Avoid_: validation (too broad), hard gate, error (names the outcome, not the
+finding)
 
-**Soft gate**:
-A lint check over a corpus that loads fine but is untidy — key/name agreement,
-naming conventions. Run by `spf race lint` / `spf rules lint` and their `just`
-recipes. There is exactly one severity: **lint speaks ⇒ the build fails.** There
-is deliberately no warning tier, because output from a green build goes unread.
-_Avoid_: warning, advisory
+**Build finding**:
+An Army that loads but asks its Race for something the Race does not offer — a
+Model replacing one that does not list it, an Upgrade with no Cost, an Equipment
+whose `requires` cannot be satisfied. Referential legality against the
+catalogue, never game balance: an Army's Points are the designer's business, not
+the linter's. `build` is literally the word the terminal prints.
+_Avoid_: rules violation (these are not game rules), invalid army
+
+**Style finding**:
+A file that loads fine but is untidy — key/name agreement, naming conventions.
+Produced only for files that yielded no Load finding.
+_Avoid_: warning, advisory, soft gate
+
+**Lint**:
+The single check over the committed corpus, `spf lint all`, run by `just check`.
+There is exactly one severity: **lint speaks ⇒ the build fails.** There is
+deliberately no warning tier, because output from a green build goes unread.
+_Avoid_: validation, gate
 
 **Countdown**:
 A number that should go down but gates nothing — unwritten rule text (**Stubs**),
 and rules no Instance reaches. Reported by `spf rules todos`, which sits outside
 `just check` and is run deliberately. A Countdown is the right shape wherever
 gating would demand a hand-maintained allowlist of the acceptable cases.
-_Avoid_: warning (that would imply a tier the Soft gate does not have), backlog
+_Avoid_: warning (that would imply a tier a Lint finding does not have), backlog
 
 ### Rendering (generated reference artifacts)
 

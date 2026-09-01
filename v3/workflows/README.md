@@ -50,7 +50,7 @@ cloud
 
 Because Profiles are discovered rather than declared, this is the only way to
 see what is actually available. It exits non-zero when a *configured* Profile
-does not resolve, which is why `just validate` runs it; an Environment with no
+does not resolve, which is why `spf lint assets` runs it; an Environment with no
 directory is reported and skipped, so a fresh clone passes.
 
 ## Adding a Profile

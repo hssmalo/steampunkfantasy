@@ -13,9 +13,8 @@ import cyclopts
 
 from spf import races
 from spf.armies import io
-from spf.config import config
 from spf.console import stderr, stdout
-from spf.lint import latex
+from spf.lint import latex, loading
 from spf.render import Product, render
 from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
@@ -253,34 +252,15 @@ def render_race_overview(
     stdout.print(f"Wrote {out}")
 
 
-def lint_latex(*, tlmgr: bool = False) -> None:
-    """Check that every LaTeX package a template uses is in the manifest.
+def render_tlmgr() -> None:
+    """Print the TeX Live packages the LaTeX manifest asks tlmgr to install.
 
-    A *lint over authored data*, mirroring `spf race lint`: the manifest and
-    the templates are both authored, so a missing entry is a soft gate rather
-    than a schema failure.
-
-    `--tlmgr` instead prints the manifest's deduplicated TeX Live package
-    list, one per line, for `docs.yml`'s `tlmgr install` step — skipping the
-    lint check entirely.
+    One name per line, for `docs.yml`'s `tlmgr install` step. Not a lint: it
+    reports what the manifest declares rather than checking it against
+    anything.
     """
-    templates_dir = config.paths.templates / "latex"
-    manifest_path = templates_dir / "requirements.toml"
-    if tlmgr:
-        for name in latex.tlmgr_packages(manifest_path):
-            stdout.print(name, highlight=False, soft_wrap=True)
-        return
-    missing = latex.unlisted_packages(templates_dir, manifest_path)
-    for name in missing:
-        # Soft-wrapped so a finding is always exactly one line, as `race
-        # lint`'s findings are.
-        stdout.print(
-            f"templates/latex/requirements.toml  missing-package  {name}",
-            highlight=False,
-            soft_wrap=True,
-        )
-    if missing:
-        raise SystemExit(1)
+    for name in latex.tlmgr_packages(loading.latex_manifest_path()):
+        stdout.print(name, highlight=False, soft_wrap=True)
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -290,4 +270,4 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(render_general_rules, name="general-rules")
     app.command(render_army_pack, name="army-pack")
     app.command(render_race_overview, name="race-overview")
-    app.command(lint_latex, name="lint")
+    app.command(render_tlmgr, name="tlmgr")
