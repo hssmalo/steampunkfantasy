@@ -23,6 +23,7 @@ from spf.schemas.race import (
     EquipmentConfig,
     ModelConfig,
     OrdersConfig,
+    RaceConfig,
     ShakenConfig,
     Stacker,
     UnitConfig,
@@ -33,6 +34,14 @@ from spf.schemas.race import (
 )
 from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import ModelType
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_army,
+    synthetic_equipment,
+    synthetic_race,
+    synthetic_registry,
+    synthetic_unit,
+)
 from tests.render.conftest import ART, FakeLookup
 
 ENGINE = config.render.latex.engine
@@ -984,3 +993,79 @@ def test_an_army_with_no_specials_prints_no_empty_heading(tmp_path: Path) -> Non
     assert reference.rules is not None
     assert reference.rules.entries == []
     assert "Rules Reference" not in out.read_text(encoding="utf-8")
+
+
+# --- Two behaviors the committed corpus has no example of ------------------
+#
+# The demo Army carries no Equipment that raises its Unit's armor and no
+# Equipment carrying a `note`, and the `--no-rules` contract is a property of
+# every document rather than of any one Army. Both are built here instead
+# (ADR 0033).
+
+_COUNTDOWN = {"countdown": [{"text": "Three rounds."}]}
+"""A Special Instance of an id only the installed Registry declares."""
+
+
+def _synthetic_markdown(
+    race: RaceConfig, tmp_path: Path, *, stem: str, rules: bool = True
+) -> str:
+    """Render a one-Unit Army of `race` as an Army Reference, and read it back."""
+    army = synthetic_army(race).resolve(race)
+    reference = build_reference(army, stem=stem, image_for=no_image, rules=rules)
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name=stem,
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+def test_no_rules_keeps_the_rules_reference_and_its_links_off_the_page(
+    tmp_path: Path, install_registry: InstallRegistry
+) -> None:
+    # The opt-out's whole contract: with it, neither the list nor a link on a
+    # Unit line reaches the page -- and without it, both do.
+    install_registry(synthetic_registry(specials={"countdown": None}))
+    race = synthetic_race(units={"squad": synthetic_unit(specials=_COUNTDOWN)})
+
+    with_rules = _synthetic_markdown(race, tmp_path, stem="rules")
+    without_rules = _synthetic_markdown(race, tmp_path, stem="no-rules", rules=False)
+
+    assert "## Rules Reference" in with_rules
+    assert "](#rule-special-countdown)" in with_rules
+    assert "Rules Reference" not in without_rules
+    assert "](#rule-" not in without_rules
+
+
+def test_an_equipment_upgrade_raises_its_units_armor_and_prints_its_note() -> None:
+    shieldwall = synthetic_equipment(
+        name="Wheeled ShieldWall",
+        unit={"armor": {"add": [5, 0, 0, 0]}},
+        note="Rolls with the Unit.",
+    )
+    race = synthetic_race(
+        equipment={
+            "knife": synthetic_equipment(name="Knife", cost=None, upgrade_all=None),
+            "shieldwall": shieldwall,
+        }
+    )
+    army_list = synthetic_army(race).upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="shieldwall",
+        race_config=race,
+    )
+
+    reference = build_reference(
+        army_list.resolve(race), stem="shieldwall", image_for=no_image
+    )
+
+    (unit_entry,) = reference.units
+    # The Unit declares no armor of its own: every arc here is the grant.
+    assert unit_entry.armor == [5, 0, 0, 0]
+    (model_entry,) = unit_entry.models
+    assert model_entry.equipment_notes == [
+        ("Wheeled ShieldWall", "Rolls with the Unit.")
+    ]
