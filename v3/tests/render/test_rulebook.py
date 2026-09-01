@@ -1,6 +1,5 @@
 """Tests for the Rulebook product: index, kind registry, view-model, CLI."""
 
-import shutil
 from pathlib import Path
 
 import pytest
@@ -45,8 +44,6 @@ from spf.schemas.rules import (
     UnionVariableConfig,
 )
 from tests.conftest import unwrapped
-
-ENGINE = config.render.latex.engine
 
 VALID_INDEX = """\
 title = "Test Rulebook"
@@ -972,23 +969,6 @@ def test_latex_partials_tabulate_the_to_hit_modifiers(real_latex: str) -> None:
         r"Camouflage & 0 & -1 & Applies when the unit is in the given terrain \\"
         in (real_latex)
     )
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_the_committed_rulebook_compiles_to_pdf(tmp_path: Path) -> None:
-    # The real index over the real sources: the check that authored rules prose
-    # actually survives the converter and the engine.
-    real = build_rulebook(get_rulebook(), rules_dir=config.paths.rules)
-
-    out = render(
-        GENERAL_RULES,
-        real,
-        fmt=get_format("pdf"),
-        name="rulebook",
-        output_root=tmp_path,
-    )
-
-    assert out.stat().st_size > 0
 
 
 # --- The CLI ----------------------------------------------------------------

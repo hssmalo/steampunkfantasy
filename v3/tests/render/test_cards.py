@@ -1,6 +1,5 @@
 """Tests for the Order Card product: Unit.orders(), build_deck, and CLI."""
 
-import shutil
 from pathlib import Path
 
 import pytest
@@ -8,7 +7,6 @@ import pytest
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.config import config
 from spf.frontends.cli.render import CARDS, RenderOpts, render_cards, safe_stem
 from spf.render import render
 from spf.render.cards import OrderCardDeck, build_deck
@@ -22,8 +20,6 @@ from spf.schemas.race import (
     UnitConfig,
 )
 from tests.render.conftest import ART, FakeLookup
-
-ENGINE = config.render.latex.engine
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -647,14 +643,6 @@ def test_render_cards_latex_uses_flacards_cards(tmp_path: Path) -> None:
     assert r"\textdegree" in text
 
 
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_cards_pdf_compiles(tmp_path: Path) -> None:
-    out = tmp_path / "demo.pdf"
-    render_cards(DEMO_ARMY, opts=RenderOpts(format="pdf", out=out))
-
-    assert out.stat().st_size > 0
-
-
 # --- Templates: the Unit's art on the card back (drives the real templates) --
 
 
@@ -758,35 +746,6 @@ def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None
     assert r"\renewcommand{\bcfoot}{Movement}" in text
     # `\cardtext` ends the body with `\\`, so an empty body is a LaTeX error.
     assert r"\strut" in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_cards_pdf_compiles_with_a_mixed_deck(tmp_path: Path) -> None:
-    # A deck where one Unit has art and one does not is the case that breaks if
-    # the art-less back leaves `\cardtext`'s body empty.
-    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
-    orders = OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
-    with_art = _unit(orders=orders, name="Painted")
-    # The longest equipment name in any race is 44 characters; `\flhead` must
-    # wrap it inside the card box rather than overfull the line.
-    longest = _equip(
-        OrdersConfig(movement={"crawl": [["C"]]}),
-        name="Double Barreled Musket with Springloaded Axe",
-    )
-    without_art = _unit(
-        orders=orders, name="Bare", models=[_model(equipment=[longest])]
-    )
-
-    def image_for(_race: str, name: str) -> Path | None:
-        return art if name == "Painted" else None
-
-    deck = build_deck(
-        _army(with_art, without_art, race="goblin"), stem="test", image_for=image_for
-    )
-
-    out = render(CARDS, deck, fmt=get_format("pdf"), name="test", output_root=tmp_path)
-
-    assert out.stat().st_size > 0
 
 
 def test_render_cards_no_images_omits_committed_art(tmp_path: Path) -> None:

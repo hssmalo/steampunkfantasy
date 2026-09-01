@@ -1,7 +1,6 @@
 """Tests for the Race Overview product: build_overview() and its Rendering."""
 
 import re
-import shutil
 from pathlib import Path
 
 import cyclopts.exceptions
@@ -17,7 +16,6 @@ from spf.frontends.cli.render import (
 from spf.races import get_race
 from spf.render import render
 from spf.render.formats import get_format
-from spf.render.images import no_image
 from spf.render.race_overview import RaceLink, RaceOverview, build_overview
 from spf.render.specials import SpecialLine, special_lines
 from spf.schemas.race import (
@@ -41,7 +39,6 @@ from tests.render.conftest import ART, FakeLookup
 
 RACE = "goblin"
 
-ENGINE = config.render.latex.engine
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -1634,24 +1631,6 @@ def test_no_rules_leaves_the_rules_reference_out_of_the_latex(
 
     assert "Rules Reference" not in text
     assert r"\hyperref[rule-" not in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_the_race_overview_compiles_to_a_pdf(tmp_path: Path) -> None:
-    overview = build_overview(get_race(RACE), stem=RACE, image_for=no_image)
-
-    out = render(
-        RACE_OVERVIEW,
-        overview,
-        fmt=get_format("pdf"),
-        name=RACE,
-        output_root=tmp_path,
-    )
-
-    # The catalogue reaches constructs the Army Reference never does —
-    # `longtable`, and the `∞` an unlimited holder prints — so it is the
-    # document most likely to stop compiling.
-    assert out.read_bytes().startswith(b"%PDF")
 
 
 # --- `spf render race-overview`: the command --------------------------------

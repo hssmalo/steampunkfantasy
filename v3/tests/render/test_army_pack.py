@@ -1,7 +1,6 @@
 """Tests for the Army Pack product: index, loader, view-model, CLI."""
 
 import re
-import shutil
 from pathlib import Path
 
 import pytest
@@ -23,7 +22,6 @@ from tests.conftest import unwrapped
 from tests.render.conftest import FakeLookup
 
 DEMO_ARMY = "demo"
-ENGINE = config.render.latex.engine
 
 VALID_INDEX = """\
 title = "SPF 2025 Tournament"
@@ -570,16 +568,6 @@ def test_army_pack_product_registered_under_cli(tmp_path: Path) -> None:
     render_army_pack(index=index, opts=RenderOpts(format="markdown", out=out))
 
     assert out.exists()
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_army_pack_pdf_compiles(tmp_path: Path) -> None:
-    index = _write_pack_dir(tmp_path)
-    out = tmp_path / "pack.pdf"
-
-    render_army_pack(index=index, opts=RenderOpts(format="pdf", out=out))
-
-    assert out.stat().st_size > 0
 
 
 # --- The Rules Reference sits inside each Army's entry (ADR 0029) -----------

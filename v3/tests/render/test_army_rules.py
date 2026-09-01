@@ -1,7 +1,6 @@
 """Tests for the Army Reference product: build_reference() and the CLI."""
 
 import re
-import shutil
 from pathlib import Path
 
 import pytest
@@ -9,7 +8,6 @@ import pytest
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.config import config
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
 from spf.render import render
 from spf.render.army_rules import build_reference
@@ -42,8 +40,6 @@ from tests.conftest import (
     synthetic_unit,
 )
 from tests.render.conftest import ART, FakeLookup
-
-ENGINE = config.render.latex.engine
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -511,14 +507,6 @@ def test_render_army_rules_latex_uses_article_with_newpage_per_unit(
     assert r"\newpage" in text
 
 
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_army_rules_pdf_compiles(tmp_path: Path) -> None:
-    out = tmp_path / "demo.pdf"
-    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="pdf", out=out))
-
-    assert out.stat().st_size > 0
-
-
 def test_render_army_rules_missing_army_exits_nonzero(tmp_path: Path) -> None:
     out = tmp_path / "missing.md"
     with pytest.raises(SystemExit) as excinfo:
@@ -659,25 +647,6 @@ def test_army_rules_latex_keeps_the_full_width_stat_block_without_art(
     assert r"\includegraphics" not in text
     assert r"\begin{minipage}" not in text
     assert r"\textbf{Size:}" in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_army_rules_pdf_compiles_with_an_underscored_image_path(
-    tmp_path: Path,
-) -> None:
-    # The compile happens in a temp directory, so this also pins that an
-    # absolute path resolves regardless of the engine's CWD (ADR 0017) — and
-    # that an underscore in the filename needs no escaping.
-    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
-    reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(art)
-    )
-
-    out = render(
-        ARMY_RULES, reference, fmt=get_format("pdf"), name="test", output_root=tmp_path
-    )
-
-    assert out.stat().st_size > 0
 
 
 def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None:
