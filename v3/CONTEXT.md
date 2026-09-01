@@ -510,17 +510,19 @@ whether or not the Index renders what it points at.
 _Avoid_: type, format (Format is the output syntax)
 
 **Site Index**:
-The authored TOML file naming, in order, the Army Packs the deployed site
-publishes and the heading each one appears under (`armies/site.toml`). The
-third member of the authored-index family, with the Rulebook Index and the
+The authored TOML file naming, in order, the Army Packs and the Races the
+deployed site publishes, and the heading each appears under (`armies/site.toml`).
+The third member of the authored-index family, with the Rulebook Index and the
 Army Pack Index: publishing is an editorial statement about what the site
-contains, not a listing of whatever pack directories happen to exist
-(ADR 0018, ADR 0028).
+contains, not a listing of whatever pack directories or race files happen to
+exist (ADR 0018, ADR 0028, ADR 0035).
 _Avoid_: manifest, roster file, site map
 
 **Landing Page**:
 The generated entry page of the deployed reference site, linking to every
-Rendering published there — one section per Army Pack, in Site Index order.
+Rendering published there. Its sections are of two kinds — a table of the
+published Races, then a table per Army Pack — in Site Index order, with the
+Rulebook standing outside both (ADR 0035).
 Generated from what actually built, so it cannot advertise a link to something
 that failed to render. Distinct from a Product: it binds to no source-of-truth
 object and no template family, so it is not a Rendering either — it is a
