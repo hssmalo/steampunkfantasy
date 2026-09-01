@@ -1,5 +1,8 @@
 # Specials are identified instances over a registry of rules
 
+> The command names in this ADR are superseded by ADR 0035; its two-stage
+> principle is not.
+
 A Special is written in a Race file as an **instance**: an occurrence of a rule,
 keyed by the rule's **identifier**, carrying typed arguments and optional local
 prose. The rule itself lives once, in a **registry** in `rules/`, which owns the

@@ -56,7 +56,7 @@ def test_print_findings_writes_one_line_each(
 def test_print_findings_soft_wraps_without_highlighting(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Findings are grepped, so Rich must neither fold nor colour them."""
+    """Findings are grepped, so Rich must neither fold nor color them."""
     calls: list[dict[str, object]] = []
     monkeypatch.setattr(
         findings.stdout, "print", lambda *_, **kwargs: calls.append(kwargs)

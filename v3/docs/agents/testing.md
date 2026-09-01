@@ -19,7 +19,7 @@ Corollaries:
   are structural changes, and a test noticing one is doing its job.
 - An **invalid** TOML edit must be caught by a linter, never by a test. If you
   find an invalid edit that only a test catches, the fix is a new lint rule in
-  `spf race lint` / `spf rules lint` — not a test that pins the valid value.
+  `spf lint` — not a test that pins the valid value.
 - Reading real data is not itself forbidden. Deriving an expected value from
   real data at runtime is fine: `tests/frontends/cli/test_race.py` compares CLI
   output against a live `races.get_race("goblin")` call, and stays green through
@@ -87,13 +87,15 @@ dwarf keys and loading with `validate=True` looks synthetic and is not: a rename
 in `races/dwarf.toml` breaks it. Build such fixtures from the synthetic builders
 below.
 
-## Real-data smoke checks live in `just validate`
+## Real-data smoke checks live in `just lint-data`
 
-"Does the committed corpus still load and render" is a `just validate` question.
-Do not add pytest tests that sweep every Race or every Army. They pin nothing,
-they grow linearly with the game, and they re-run on every inner loop.
+"Does the committed corpus still load" is a `just lint-data` question. Do not
+add pytest tests that sweep every Race or every Army — and in particular, do not
+add one asserting that `spf lint all` exits 0. They pin nothing, they grow
+linearly with the game, they re-run on every inner loop, and they go red on a
+data edit, which is precisely the shape this page forbids.
 
-The recipe is file-driven: it loads every `races/*.toml` and every
+The recipe is file-driven: `spf lint all` loads every `races/*.toml` and every
 `armies/**/*.json` on disk, so a new Race or Army is covered the moment it is
 committed, with no list to keep in step.
 

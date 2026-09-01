@@ -6,7 +6,7 @@ recipes over the underlying commands:
 
 ```console
 just            # Run all quality gates (same as `just check`)
-just check      # fmt-check, lint, validate, lint-races, spell, test, typecheck — stops on first failure
+just check      # fmt-check, lint, spell, lint-data, test, typecheck — stops on first failure
 
 just fmt        # Auto-format with ruff
 just fmt-check  # Check formatting without writing changes
@@ -16,8 +16,7 @@ just spell      # Spell-check with typos
 just spell-fix  # Fix spelling errors with typos
 just test       # Run the test suite quietly (accepts extra pytest args, e.g. `just test -k foo`)
 just fix        # Auto-fix lint issues, then reformat
-just validate   # Load every Race, Army and rule registry, plus the ComfyUI profiles, via the spf CLI
-just lint-races # Lint race data for name and key consistency (spf race lint)
+just lint-data  # Lint every corpus: load failures, illegal Army builds, style findings (spf lint all)
 
 just test-friction  # Mutate lint-clean TOML values; report the tests that break
 
@@ -42,8 +41,8 @@ shell exports a different default. Point such a test at `tmp_path` instead
 (see `_install_workflows` in `tests/assets/test_image.py`).
 
 Whether the committed config and the committed data actually agree is a
-separate question, and it belongs in `just validate` — where `spf assets
-profiles` checks it — not in the test suite.
+separate question, and it belongs in `just lint-data` — where `spf lint assets`
+checks it — not in the test suite.
 
 ## Releases
 

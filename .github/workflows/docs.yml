@@ -32,7 +32,7 @@ jobs:
       # handful of packages the templates actually use. Bootstrapping a
       # minimal TeX Live via install-tl and adding exactly those packages
       # with tlmgr keeps the runner (and the cache) small; v3/templates/
-      # latex/requirements.toml is the manifest `just lint-latex` keeps
+      # latex/requirements.toml is the manifest `just lint-data` keeps
       # honest, so this step never installs more than the templates need.
       - name: Cache TeX Live
         id: cache-texlive
@@ -58,7 +58,7 @@ jobs:
           ./install-tl --profile=texlive.profile
 
       # requirements.toml maps each LaTeX package to its TL package name
-      # where they differ; `spf render lint --tlmgr` resolves and dedupes
+      # where they differ; `spf render tlmgr` resolves and dedupes
       # that mapping, so this step never needs its own translation logic.
       - name: Install the manifest's LaTeX packages
         working-directory: v3
@@ -66,7 +66,7 @@ jobs:
           echo "${{ github.workspace }}/.texlive/bin/x86_64-linux" >> "$GITHUB_PATH"
           export PATH="${{ github.workspace }}/.texlive/bin/x86_64-linux:$PATH"
           tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet
-          packages=$(uv run spf render lint --tlmgr)
+          packages=$(uv run spf render tlmgr)
           tlmgr install $packages
 
       - name: Build the site
