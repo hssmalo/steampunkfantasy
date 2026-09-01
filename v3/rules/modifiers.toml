@@ -221,10 +221,10 @@ todo = "The bonus is fixed at +1 here, but the Race data grants +1, +3 and +5. T
 
 [ability.thrown_weapons]
 name = "Thrown Weapons"
-signature = "[{N}]"
+signature = " +{N}"
 to_hit = "+N"
 to_be_hit = "0"
-effect = "Applies to thrown weapons only"
+effect = "Applies to thrown weapons only. Two of the same effect stack"
 
 [ability.thrown_weapons.variables]
 N = { type = "int", min = 1, max = 3 }

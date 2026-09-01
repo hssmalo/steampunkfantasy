@@ -1019,6 +1019,7 @@ args.ability = "ability.thrown_weapons"
 args.N = 1
 
 [[equipment.grenadier.unit_specials.fire_order]]
+replace = true
 text = "For each fire order: fire a bow once (either a regular or special arrow) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
 
 [equipment.commando]
