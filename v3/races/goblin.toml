@@ -1044,6 +1044,7 @@ text = "Start with a Hidden token."
 args.N = 2
 
 [[equipment.commando.unit_specials.fire_order]]
+replace = true
 text = "In any round you have reveal bonus, you may fire a bow three times (either a regular arrow or an special arrow each time) at one target or throw three grenades at one target"
 
 [equipment.commando.orders_gained.movement]
@@ -1065,6 +1066,7 @@ upgrade_all = true
 requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [[equipment.archer_specialization.unit_specials.fire_order]]
+replace = true
 text = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon"
 
 [[equipment.archer_specialization.model_specials.to_hit]]

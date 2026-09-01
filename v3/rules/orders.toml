@@ -1,0 +1,122 @@
+[orders.general.xory]
+effect = "Do either X or Y"
+signature = "X/Y"
+name = "X or Y"
+
+[orders.general.optional]
+effect = "Order X is optional"
+signature = "(X)"
+
+[orders.general.xandy]
+effect = "Do X and Y in either the same movement step or same gunnery phase.  In case of assault, all assaults happens during X before you do Y. Apply any damage before you do Y. If you are shaken during X, the order is interrupted and Y is not carried out. In addition, you may not enter any contested hexes during Y, and you do nothing instead."
+signature = "X+Y"
+
+
+
+
+
+[orders.movement.forward]
+name = "Forward"
+signature = "F"
+effect = "Move one hex forward in the direction  you are facing. If moving into a contested hex, conduct an assault"
+
+
+[orders.movement.turn_left_right]
+name = "Turn left or Right."
+signature = "L/R"
+effect = "Turn one step left or one step right"
+
+
+[orders.movement.break]
+name = "Break"
+signature = "B"
+optional_signature= "B[speed]"
+effect = "Reduce Speed one step. If nothing is written, fast is decreased to slow and slow to fast. In the cases where a speed is given you break to the given speed instead of the default."
+
+#[orders.movement.break.variables]
+#the different speeds.
+
+[orders.movement.breakbreak]
+name = "Break Break"
+signature = "BB"
+effect = "Break twice, if optional, you may break once or twice as desired."
+
+
+[orders.movement.accelerate]
+name = "Accelerate"
+signature = "A"
+#A[speed]
+effect = "Increase speed one step. Default is to increase from still to slow to fast. If a speed is given as input, accelerate to given speed instead."
+
+
+[orders.movement.reverse]
+name = "Reverse"
+signature = "Rev"
+effect = "Move one hex backward. If moving into a contested hex, conduct an assault"
+#see_also[assault_rules] (which is a nightmare to write)
+
+
+[orders.movement.chase]
+name = "Chase"
+signature = "Chs"
+#or "Chs[target]"
+effect = '''Turn and move one hex closer to the nearest target, taking current orders into account. Thus the unit moves such that it is one step closer to where the target is going to be after this movement phase, taking any decisions during game play into account. If there are more than one hex which all are closer to the nearest target, the player chooses which one to go to.
+
+However, ignore any target unit which cannot be reached. For example a land unit which cannot fly ignores all flying targets when determining where it chases.
+
+Default targets are all of the enemy units. However units and special rules may specify which type the target is. If so, the first priority is always to move towards the specified target(s). If there are no enemy units of the specified target, revert to the default which is all
+
+If moving into a contested hex, conduct an assault
+'''
+
+
+[orders.movement.Follow]
+name = "Follow"
+signature = "Follow"
+effect = "Duplicate the movement order of the unit it is sharing a hex with. If it does not share a hex with a friendly unit, treat this order as -."
+
+
+
+[orders.movement.Flee]
+name = "Flee"
+signature = "Flee"
+effect = "Turn and Move one hex further away from the enemy. If there a more than one hex which are further away from an enemy, the player chooses which one to move into. If no such hex is available, move to a hex which is not closer to the enemy. If still no such hex is available, let your enemy move your unit to any hex he/she likes"
+
+
+
+[orders.movement.Help]
+name = "Help"
+signature = "Help"
+#signature = Help[target]
+effect = '''Move toward friendly unit which may be healed or repaired. If no such unit exist, move towards the nearest friendly unit of the type specified by in the special rules of the unit. If no such unit exist, move towards nearest friendly unit. If no friendly units area alive, treat it as Flee instead. During Help orders you may swap the position with any friendly nearby biological unit. If you dont need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving'''
+
+see_also = ["special.heal". "spesial.repair"]
+
+
+[orders.movement.Drift]
+name = "Drift"
+signature = "D"
+effect = '''Move one hex either you right/left front side or your right/left back side. If the hex contested, do not conduct an assault but treat this as do nothing instead.'''
+
+[orders.movement.deploy]
+name = "Drift"
+signature = "D"
+effect = '''All units with a deploy order should have a transport special which describes the details of how deployment work. It should note a range for the deployment order and a statement whether a unit may be deployed into an assault or not.
+
+During an deployment order, place  all transported units in a hex within the specified range. If deployed 1 or more hexes away, the deployed unit faces away from the transporting unit. If it is deployed in the same hex as the transporting unit, the deployed unt face the same direction as this transporting unit.
+
+Any unit having deploy orders should specify the range and if the unit can be deployed into an assault or not. If it cannot enter an assault as part of deploy, the target hex of the deployment must be an hex without enemy units. '''
+
+
+
+[orders.movement.aim]
+name = "Aim"
+signature = "Aim"
+effect = "Do not move, but gain one aim token"
+
+see_also = ["modifiers.aim"]
+
+[orders.movement.random]
+Name = "Random"
+signature = "Random"
+effect = " Unit rotates. in a random direction and moves one step forward. If the hex is a contested hex, enter assault"
