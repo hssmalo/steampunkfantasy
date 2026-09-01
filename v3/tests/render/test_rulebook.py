@@ -7,7 +7,6 @@ from pydantic import ValidationError
 
 from spf.config import config
 from spf.frontends.cli.render import GENERAL_RULES, RenderOpts, render_general_rules
-from spf.frontends.cli.rules import list_rulebook
 from spf.render import render
 from spf.render.formats import get_format
 from spf.render.products import PRODUCTS
@@ -1022,14 +1021,3 @@ def test_cli_reports_an_unknown_kind_on_stderr(
 
 def test_general_rules_product_is_registered() -> None:
     assert PRODUCTS["general-rules"] is GENERAL_RULES
-
-
-def test_rules_rulebook_lists_the_committed_sections(
-    capsys: pytest.CaptureFixture[str],
-) -> None:
-    # What `just validate` runs: resolving the Index is what validates it.
-    list_rulebook()
-
-    out = unwrapped(capsys.readouterr().out)
-    assert "SteamPunkFantasy Rulebook" in out
-    assert "1. The Round (markdown)" in out

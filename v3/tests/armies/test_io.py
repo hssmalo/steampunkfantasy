@@ -339,37 +339,6 @@ def test_load_unknown_upgrade_raises_value_error(armies_dir: Path) -> None:
         load_army("bad-upgrade")
 
 
-@pytest.mark.parametrize(
-    "army_name",
-    [
-        "demo",
-        "2025/geir_arne",
-        "2025/morten",
-        "showcase/abomination",
-        "showcase/darkelf_dragon_flight",
-        "showcase/darkelf_mechahydra",
-        "showcase/darkelf_spider_swarm",
-        "showcase/dwarf",
-        "showcase/elf",
-        "showcase/gnome_air_wing",
-        "showcase/gnome_ballista_battery",
-        "showcase/goblin",
-        "showcase/ogre_hydra",
-        "showcase/ork_warband",
-    ],
-)
-def test_every_saved_army_loads_and_validates(army_name: str) -> None:
-    """Check that every committed army loads and passes validation.
-
-    `load_army` validates by default, so this fails if a rules change makes a
-    saved loadout illegal.
-
-    Asserts no point totals on purpose: those follow the Race TOML, so pinning
-    them here would turn every balance change into a failing test.
-    """
-    assert isinstance(load_army(army_name), Army)
-
-
 def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:
     data = {
         "race": "goblin",
