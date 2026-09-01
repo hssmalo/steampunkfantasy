@@ -144,7 +144,8 @@ Existing exemplars worth reading:
 - `tests/test_display.py` — the smallest use of the builders.
 - `tests/armies/test_specials.py` — builds Instances, Equipment, Models and
   Units, and says in its docstring why it avoids real Race data.
-- `tests/lint/test_collect.py`
+- `tests/test_countdown.py` — installs its own Registry so a synthetic Race
+  can carry a Special on every Holder.
 
 ## How to check you got it right
 

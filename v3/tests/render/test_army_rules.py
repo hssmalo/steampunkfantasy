@@ -34,6 +34,7 @@ from spf.schemas.race import (
 from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import ModelType
 from tests.conftest import (
+    COUNTDOWN,
     InstallRegistry,
     synthetic_army,
     synthetic_equipment,
@@ -693,15 +694,8 @@ def test_an_army_with_no_specials_prints_no_empty_heading(tmp_path: Path) -> Non
     assert "Rules Reference" not in out.read_text(encoding="utf-8")
 
 
-# --- Two behaviors the committed corpus has no example of ------------------
-#
-# The demo Army carries no Equipment that raises its Unit's armor and no
-# Equipment carrying a `note`, and the `--no-rules` contract is a property of
-# every document rather than of any one Army. Both are built here instead
-# (ADR 0033).
-
-_COUNTDOWN = {"countdown": [{"text": "Three rounds."}]}
-"""A Special Instance of an id only the installed Registry declares."""
+# Armor granted by Equipment, a Holder `note`, and the `--no-rules` contract are
+# properties of every Army, so they are built here rather than borrowed (ADR 0033).
 
 
 def _synthetic_markdown(
@@ -724,7 +718,7 @@ def test_the_rules_reference_prints_once_after_all_the_units(
     tmp_path: Path, install_registry: InstallRegistry
 ) -> None:
     install_registry(synthetic_registry(specials={"countdown": None}))
-    race = synthetic_race(units={"squad": synthetic_unit(specials=_COUNTDOWN)})
+    race = synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
 
     text = _synthetic_markdown(race, tmp_path, stem="once")
 
@@ -739,7 +733,7 @@ def test_no_rules_keeps_the_rules_reference_and_its_links_off_the_page(
     # The opt-out's whole contract: with it, neither the list nor a link on a
     # Unit line reaches the page -- and without it, both do.
     install_registry(synthetic_registry(specials={"countdown": None}))
-    race = synthetic_race(units={"squad": synthetic_unit(specials=_COUNTDOWN)})
+    race = synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
 
     with_rules = _synthetic_markdown(race, tmp_path, stem="rules")
     without_rules = _synthetic_markdown(race, tmp_path, stem="no-rules", rules=False)

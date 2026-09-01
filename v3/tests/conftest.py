@@ -282,6 +282,10 @@ def _roll(roll: t.DamageRoll) -> str:
 # needs instead of borrowing a committed Race that happens to use them.
 
 
+COUNTDOWN = {"countdown": [{"text": "Three rounds."}]}
+"""A Special Instance of an id only an installed Registry declares."""
+
+
 def synthetic_special(**fields: object) -> r.SpecialRuleConfig:
     """Build a Special rule, permitting every Slot unless `slots` narrows it."""
     return r.SpecialRuleConfig.model_validate(
