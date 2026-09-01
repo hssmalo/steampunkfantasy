@@ -20,8 +20,8 @@ def claims(equipment: EquipmentConfig) -> dict[t.EquipmentHolder, int]:
 
     `type:` requirements constrain *who* may take the equipment, not *where* it
     sits, so they are skipped. Every other requirement is counted, in every
-    OR-group: across all eight races no OR-group mixes two different holders,
-    so summing them all is unambiguous.
+    OR-group: no OR-group mixes two different holders, so summing them all is
+    unambiguous. The `or-group-one-holder` lint rule is what keeps that true.
     """
     result: dict[t.EquipmentHolder, int] = {}
     for group in equipment.requires:
