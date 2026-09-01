@@ -18,7 +18,6 @@ from spf.armies.build import (
 )
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.races import get_race
 from spf.schemas import type_aliases as t
 from spf.schemas.race import (
     AssaultConfig,
@@ -118,14 +117,56 @@ def one_unit_army(simple_race: RaceConfig) -> ArmyList:
 
 
 @pytest.fixture
-def goblin_race() -> RaceConfig:
-    return get_race("goblin")
+def squad_of_two(simple_race: RaceConfig) -> RaceConfig:
+    """`simple_race` with a Unit of two Models, for the whole-Unit upgrades.
+
+    One Model cannot tell "every Model was upgraded" from "the first one was".
+    """
+    squad = simple_race.units["squad"].model_copy(
+        update={"models": ["soldier", "soldier"]}
+    )
+    return simple_race.model_copy(update={"units": {"squad": squad}})
 
 
 @pytest.fixture
-def goblin_army(goblin_race: RaceConfig) -> ArmyList:
-    return ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
-        "goblin_infantry", race_config=goblin_race
+def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
+    """`simple_race` with an uncapped Holder, and an Equipment that claims it."""
+    soldier = ModelConfig(
+        race="goblin",
+        name="Soldier",
+        equipment_limit=["Hands:2", "Independent:∞"],  # pyright: ignore[reportArgumentType]
+        equipment=[],
+        type=["Infantry"],
+        assault=_ASSAULT,
+        cost=None,
+    )
+    wings = EquipmentConfig(
+        race="goblin",
+        name="Wings",
+        cost=t.Cost(cp=24),
+        upgrade_all=True,
+        requires=[["Independent:1"]],  # pyright: ignore[reportArgumentType]
+    )
+    return simple_race.model_copy(
+        update={
+            "models": simple_race.models | {"soldier": soldier},
+            "equipment": simple_race.equipment | {"wings": wings},
+        }
+    )
+
+
+@pytest.fixture
+def race_with_two_handed(simple_race: RaceConfig) -> RaceConfig:
+    """`simple_race` with an Equipment claiming every Hands slot the Model has."""
+    bow = EquipmentConfig(
+        race="goblin",
+        name="Bow",
+        cost=t.Cost(cp=8),
+        upgrade_all=True,
+        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+    )
+    return simple_race.model_copy(
+        update={"equipment": simple_race.equipment | {"bow": bow}}
     )
 
 
@@ -877,18 +918,18 @@ def test_upgrade_model_unknown_key_raises(
 
 
 def test_upgrade_full_unit_replaces_all_models(
-    goblin_race: RaceConfig,
+    squad_of_two: RaceConfig,
 ) -> None:
     army = ArmyList(race="goblin", nick="Test", units=[]).add_unit(
-        "goblin_infantry", race_config=goblin_race
+        "squad", race_config=squad_of_two
     )
-    assert len(army.units[0].models) == 4
+    assert len(army.units[0].models) == 2
     army = army.upgrade_full_unit(
-        ("goblin_infantry", 0),
-        upgrade_model_name="elite_goblin_infantry",
-        race_config=goblin_race,
+        ("squad", 0),
+        upgrade_model_name="elite_soldier",
+        race_config=squad_of_two,
     )
-    assert all(m.name == "elite_goblin_infantry" for m in army.units[0].models)
+    assert all(m.name == "elite_soldier" for m in army.units[0].models)
 
 
 def test_upgrade_full_unit_does_not_mutate_original(
@@ -930,18 +971,17 @@ def test_upgrade_full_unit_unknown_unit_key_raises(
 
 
 def test_upgrade_all_models_adds_to_all(
-    goblin_race: RaceConfig,
+    squad_of_two: RaceConfig,
 ) -> None:
     army = ArmyList(race="goblin", nick="Test", units=[]).add_unit(
-        "goblin_infantry", race_config=goblin_race
+        "squad", race_config=squad_of_two
     )
-    # Use equipment that doesn't consume limited slots
+
     army = army.upgrade_all_models(
-        ("goblin_infantry", 0),
-        equipment_name="poison_deflection_dagger",
-        race_config=goblin_race,
+        ("squad", 0), equipment_name="sword", race_config=squad_of_two
     )
-    assert all("poison_deflection_dagger" in m.upgrades for m in army.units[0].models)
+
+    assert all("sword" in model.upgrades for model in army.units[0].models)
 
 
 def test_upgrade_all_models_does_not_mutate_original(
@@ -1293,36 +1333,47 @@ def test_available_equipment_includes_valid(
     assert "sword" in result
 
 
-def test_available_equipment_goblin_infantry_clockwork_wings(
-    goblin_army: ArmyList, *, goblin_race: RaceConfig
+def test_available_equipment_offers_an_uncapped_holder(
+    race_with_uncapped_holder: RaceConfig,
 ) -> None:
-    result = available_equipment(
-        goblin_army,
-        unit_key=("goblin_infantry", 0),
-        model_key=("goblin_infantry", 0),
-        race_config=goblin_race,
+    # An uncapped Holder cannot run out, so what claims it is always offered.
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "squad", race_config=race_with_uncapped_holder
     )
-    assert "clockwork_wings" in result
+
+    result = available_equipment(
+        army,
+        unit_key=("squad", 0),
+        model_key=("soldier", 0),
+        race_config=race_with_uncapped_holder,
+    )
+
+    assert "wings" in result
 
 
 def test_available_equipment_excludes_truly_insufficient_slots(
-    goblin_army: ArmyList, *, goblin_race: RaceConfig
+    race_with_two_handed: RaceConfig,
 ) -> None:
     # After consuming all Hands slots with one upgrade, a second Hands:2 upgrade
     # should no longer be available.
-    army_with_upgrade = goblin_army.upgrade_model(
-        ("goblin_infantry", 0),
-        model_key=("goblin_infantry", 0),
-        equipment_name="gear_bow",
-        race_config=goblin_race,
+    army = ArmyList(race="goblin", nick="Test Army", units=[]).add_unit(
+        "squad", race_config=race_with_two_handed
     )
+    army_with_upgrade = army.upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="bow",
+        race_config=race_with_two_handed,
+    )
+
     result = available_equipment(
         army_with_upgrade,
-        unit_key=("goblin_infantry", 0),
-        model_key=("goblin_infantry", 0),
-        race_config=goblin_race,
+        unit_key=("squad", 0),
+        model_key=("soldier", 0),
+        race_config=race_with_two_handed,
     )
-    assert "gear_bow" not in result
+
+    assert "bow" not in result
 
 
 def test_available_equipment_defaults_do_not_consume_slots(

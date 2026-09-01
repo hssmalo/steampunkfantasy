@@ -5,14 +5,24 @@ so they get registries built by hand. They are tested apart because keeping
 them apart is the point: a stub and an open question about a finished rule are
 different things to the designer working the list.
 
-`used_special_ids` walks a Race instead, and a Race cannot be built by hand
-with invented ids -- the hard gate rejects them -- so it is exercised against
-real Race data.
+`used_special_ids` walks a Race instead. It gets one built here too: a
+Registry installed behind the load-time gate is what lets a Race carry
+invented ids, one per Holder, so the walk is checked against a Race that
+holds nothing else.
 """
 
-from spf import countdown, races
+from spf import countdown
 from spf.registry import Registry
 from spf.schemas import rules as r
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_assault,
+    synthetic_equipment,
+    synthetic_model,
+    synthetic_race,
+    synthetic_registry,
+    synthetic_unit,
+)
 
 WRITTEN = r.SpecialRuleConfig(name="Fear", slots=["assault"], effect="Enemies flee")
 STUB = r.SpecialRuleConfig(name="Hide", slots=["unit"], todo="Rule text not written")
@@ -75,21 +85,61 @@ def test_unreachable_is_silent_when_every_id_is_used() -> None:
     assert countdown.unreachable(REGISTRY, used={"fear", "hide", "heal"}) == []
 
 
-def test_used_special_ids_reaches_every_kind_of_holder() -> None:
+_HOLDERS = (
+    "on_unit",
+    "on_model_as_unit",
+    "on_model",
+    "on_model_assault",
+    "on_equipment_as_unit",
+    "on_equipment_as_model",
+    "on_equipment_assault",
+    "on_equipment_range",
+)
+"""One invented Special id per Holder a Race can write an Instance on."""
+
+
+def _instance(key: str) -> dict[str, list[dict[str, str]]]:
+    """One Instance of `key`, as a Holder's Specials table writes it."""
+    return {key: [{"text": "Once per round."}]}
+
+
+def test_used_special_ids_reaches_every_kind_of_holder(
+    install_registry: InstallRegistry,
+) -> None:
     """An id counts as used wherever in a Race it is written.
 
-    One id per holder kind, so a holder dropped from the walk fails this
-    rather than quietly enlarging the unreachable list.
+    One id per Holder, so a Holder dropped from the walk fails this rather
+    than quietly enlarging the unreachable list.
     """
-    used = countdown.used_special_ids([races.get_race("ork")])
+    install_registry(synthetic_registry(specials=dict.fromkeys(_HOLDERS)))
+    unit, model_unit, model, model_assault, *equipment = _HOLDERS
+    equip_unit, equip_model, equip_assault, equip_range = equipment
+    race = synthetic_race(
+        units={"squad": synthetic_unit(specials=_instance(unit))},
+        models={
+            "soldier": synthetic_model(
+                unit_specials=_instance(model_unit),
+                specials=_instance(model),
+                assault=synthetic_assault(specials=_instance(model_assault)),
+            )
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                unit_specials=_instance(equip_unit),
+                model_specials=_instance(equip_model),
+                assault={"specials": _instance(equip_assault)},
+                range={
+                    "range": 12,
+                    "angle": [True, False, False, False],
+                    "damage": "d6",
+                    "ap": 0,
+                    "specials": _instance(equip_range),
+                },
+            )
+        },
+    )
 
-    assert {
-        "forward_position",  # Unit
-        "pre_assault_retreat",  # Model, unit slot
-        "not_yet_dead",  # Model
-        "stench",  # Model, assault slot
-        "terror",  # Equipment, unit slot
-        "to_hit",  # Equipment, model slot
-        "damage_on_deflect",  # Equipment, assault slot
-        "limited_ammo",  # Equipment, range slot
-    } <= used
+    assert countdown.used_special_ids([race]) == set(_HOLDERS)

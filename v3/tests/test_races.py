@@ -11,29 +11,13 @@ from spf.races import (
     get_models,
     get_race,
     get_units,
-    list_races,
 )
 from spf.schemas.race import (
-    EquipmentConfig,
-    ModelConfig,
     RaceConfig,
     RaceMetadata,
-    UnitConfig,
     _validate_specials,
 )
 from spf.schemas.special import SpecialInstance
-
-
-def test_list_races_includes_known_races() -> None:
-    races = list_races()
-    assert "ogre" in races
-    assert "goblin" in races
-    assert "abomination" in races
-
-
-def test_list_races_returns_strings() -> None:
-    races = list_races()
-    assert all(isinstance(name, str) for name in races)
 
 
 def test_get_race_returns_race_config() -> None:
@@ -56,26 +40,10 @@ def test_get_race_invalid_raises_value_error() -> None:
         get_metadata("invalid_army")  # pyright: ignore[reportArgumentType]
 
 
-def test_get_units_returns_dict_of_unit_configs() -> None:
-    units = get_units("ogre")
-    assert isinstance(units, dict)
-    assert all(isinstance(v, UnitConfig) for v in units.values())
-
-
 def test_get_units_filters_by_race() -> None:
     # All returned units must belong to the requested army
     units = get_units("ogre")
     assert all(unit.race == "ogre" for unit in units.values())
-
-
-def test_get_units_not_empty() -> None:
-    assert len(get_units("ogre")) > 0
-
-
-def test_get_models_returns_dict_of_model_configs() -> None:
-    models = get_models("ogre")
-    assert isinstance(models, dict)
-    assert all(isinstance(v, ModelConfig) for v in models.values())
 
 
 def test_get_models_filters_by_race() -> None:
@@ -85,12 +53,6 @@ def test_get_models_filters_by_race() -> None:
 
 def test_get_models_not_empty() -> None:
     assert len(get_models("ogre")) > 0
-
-
-def test_get_equipment_returns_dict_of_equipment_configs() -> None:
-    equipment = get_equipment("ogre")
-    assert isinstance(equipment, dict)
-    assert all(isinstance(v, EquipmentConfig) for v in equipment.values())
 
 
 def test_get_equipment_filters_by_race() -> None:
@@ -183,22 +145,4 @@ def test_spawn_rule_undefined_spawn_id() -> None:
         ValidationError,
         match="references undefined spawn ID 'unknown_spawn'",
     ):
-        RaceConfig.model_validate(config_dict)
-
-
-@pytest.mark.parametrize("race_name", list_races())
-def test_the_gate_reaches_every_race_file(race_name: str) -> None:
-    """Pin that every committed Race is loaded through the Special gate.
-
-    Every file's own instances resolve, so what this adds is the wiring: an
-    unresolvable instance put into any of the eight fails its load rather than
-    passing unread.
-    """
-    config_dict = Configuration.from_file(
-        spf_config.paths.races / f"{race_name}.toml"
-    ).to_dict()
-    unit = next(iter(config_dict["units"].values()))
-    unit["specials"] = {"no_such_rule": [{}]}
-
-    with pytest.raises(ValidationError, match="is not a Special id"):
         RaceConfig.model_validate(config_dict)

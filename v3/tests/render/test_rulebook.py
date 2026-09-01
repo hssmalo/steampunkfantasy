@@ -1,14 +1,11 @@
 """Tests for the Rulebook product: index, kind registry, view-model, CLI."""
 
-import shutil
 from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
 
-from spf.config import config
 from spf.frontends.cli.render import GENERAL_RULES, RenderOpts, render_general_rules
-from spf.frontends.cli.rules import list_rulebook
 from spf.render import render
 from spf.render.formats import get_format
 from spf.render.products import PRODUCTS
@@ -45,8 +42,6 @@ from spf.schemas.rules import (
     UnionVariableConfig,
 )
 from tests.conftest import unwrapped
-
-ENGINE = config.render.latex.engine
 
 VALID_INDEX = """\
 title = "Test Rulebook"
@@ -511,17 +506,6 @@ def test_specials_kind_rejects_an_unresolvable_token(tmp_path: Path) -> None:
     assert "known tokens:" in message
 
 
-def test_specials_kind_parses_the_committed_file() -> None:
-    # The real data: strict resolution means every committed `token =` has to
-    # name a Token that actually exists.
-    body = parse_specials(
-        config.paths.rules / "special.toml", RulesContext(config.paths.rules)
-    )
-
-    tokens = {rule.token for group in body.groups for rule in group.rules if rule.token}
-    assert tokens == {"Hidden", "Hypnotized", "Insane", "Shaken"}
-
-
 # --- The to_hit kind's parser -----------------------------------------------
 
 MODIFIER_NAMESPACES_SOURCE = """\
@@ -665,18 +649,6 @@ def test_to_hit_kind_renders_fog_among_the_terrains(tmp_path: Path) -> None:
     ).groups
 
     assert [row.name for row in terrain.rows] == ["Forest", "Fog"]
-
-
-def test_to_hit_kind_parses_the_committed_file() -> None:
-    body = parse_to_hit(
-        config.paths.rules / "modifiers.toml", RulesContext(config.paths.rules)
-    )
-
-    titles = [group.title for group in body.groups]
-    # Order is `namespaces.toml`'s declaration order and each title is the
-    # namespace's own display name — neither is hand-listed here.
-    assert titles[0] == "Speeds"
-    assert "Abilities" in titles
 
 
 # --- build_rulebook ---------------------------------------------------------
@@ -829,28 +801,11 @@ def test_render_markdown_links_the_contents_to_an_anchor(
 
     text = out.read_text(encoding="utf-8")
     assert out == tmp_path / "general-rules" / "rulebook.md"
-    assert "# Test Rulebook" in text
-    assert "- [The Round](#the-round)" in text
-    # `md_to_html` emits no heading ids, so the anchor has to be explicit.
-    assert '<a id="the-round"></a>' in text
-    assert "## The Round" in text
-
-
-def test_render_markdown_shifts_source_headings_below_the_section(
-    tmp_path: Path, rulebook: Rulebook
-) -> None:
-    out = render(
-        GENERAL_RULES,
-        rulebook,
-        fmt=get_format("markdown"),
-        name="rulebook",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert "### A Subheading" in text
-    assert "\n## A Subheading" not in text
-    assert "Dropped by the parser" not in text
+    for section in rulebook.sections:
+        # A contents entry with no anchor to land on is worse than none, and
+        # `md_to_html` emits no heading ids, so the anchor has to be explicit.
+        assert f"[{section.title}](#{section.anchor})" in text
+        assert f'<a id="{section.anchor}"></a>' in text
 
 
 def test_render_html_resolves_the_contents_link(
@@ -865,130 +820,11 @@ def test_render_html_resolves_the_contents_link(
     )
 
     html = out.read_text(encoding="utf-8")
-    assert 'href="#the-round"' in html
-    assert 'id="the-round"' in html
-
-
-def test_render_latex_has_furniture_and_converted_body(
-    tmp_path: Path, rulebook: Rulebook
-) -> None:
-    out = render(
-        GENERAL_RULES,
-        rulebook,
-        fmt=get_format("latex"),
-        name="rulebook",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\title{Test Rulebook}" in text
-    assert r"\tableofcontents" in text
-    assert r"\section{The Round}" in text
-    assert r"\subsection{A Subheading}" in text
-    assert r"\textbf{bold}" in text
-    assert r"\begin{itemize}" in text
-    assert "Dropped by the parser" not in text
-
-
-# --- The structured Kinds' partials, over the real rules files --------------
-
-
-@pytest.fixture
-def real_rulebook() -> Rulebook:
-    """Build the committed Index over the committed sources."""
-    return build_rulebook(get_rulebook(), rules_dir=config.paths.rules)
-
-
-@pytest.fixture
-def real_markdown(tmp_path: Path, real_rulebook: Rulebook) -> str:
-    out = render(
-        GENERAL_RULES,
-        real_rulebook,
-        fmt=get_format("markdown"),
-        name="rulebook",
-        output_root=tmp_path,
-    )
-    return out.read_text(encoding="utf-8")
-
-
-@pytest.fixture
-def real_latex(tmp_path: Path, real_rulebook: Rulebook) -> str:
-    out = render(
-        GENERAL_RULES,
-        real_rulebook,
-        fmt=get_format("latex"),
-        name="rulebook",
-        output_root=tmp_path,
-    )
-    return out.read_text(encoding="utf-8")
-
-
-def test_markdown_partials_nest_specials_below_their_group(real_markdown: str) -> None:
-    assert "### Assault\n" in real_markdown
-    assert "### Unit\n" in real_markdown
-    assert "### Range\n" in real_markdown
-    assert "#### Cunning Assault [{N}]" in real_markdown
-    # Tokens have no groups, so a token rule keeps the shallower level.
-    assert "### Minor Acid\n" in real_markdown
-
-
-def test_markdown_partials_keep_a_prose_bullet_list_a_list(real_markdown: str) -> None:
-    # `unit.heal`'s explanation is Markdown; its bullets must stay bullets.
-    assert "\n- Extinguish one fire. Cost 3." in real_markdown
-
-
-def test_latex_partials_nest_specials_below_their_group(real_latex: str) -> None:
-    assert r"\section{Special Rules}" in real_latex
-    assert r"\subsection{Assault}" in real_latex
-    assert r"\subsubsection{Cunning Assault [\{N\}]}" in real_latex
-    # Tokens have no groups, so a token rule is a subsection, not a deeper one.
-    assert r"\subsection{Minor Acid}" in real_latex
-
-
-def test_latex_partials_render_the_structured_details(real_latex: str) -> None:
-    assert r"\textbf{Places:} Shaken" in real_latex
-    assert r"\textbf{M:} integer, 1-4" in real_latex
-    assert r"\textbf{Phases:} Agony 1" in real_latex
-    assert r"\textbf{Example:} If you hit" in real_latex
-    assert r"\textbf{Versions}" in real_latex
-    assert r"\textbf{psychic:}" in real_latex
-
-
-def test_latex_partials_convert_a_prose_bullet_list(real_latex: str) -> None:
-    assert r"\item Extinguish one fire. Cost 3." in real_latex
-
-
-def test_markdown_partials_tabulate_the_to_hit_modifiers(real_markdown: str) -> None:
-    assert "### Speeds\n" in real_markdown
-    assert "| Flying | -1 | -1 | Stacks with still, slow, and fast |" in real_markdown
-    # A group with no notes spends no column on them.
-    assert "| On Edge | -1 | 0 |\n" in real_markdown
-
-
-def test_latex_partials_tabulate_the_to_hit_modifiers(real_latex: str) -> None:
-    assert r"\section{To-Hit Modifiers}" in real_latex
-    # `md_to_latex` has no table rule, so the rows are built by the partial.
-    assert (
-        r"Camouflage & 0 & -1 & Applies when the unit is in the given terrain \\"
-        in (real_latex)
-    )
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_the_committed_rulebook_compiles_to_pdf(tmp_path: Path) -> None:
-    # The real index over the real sources: the check that authored rules prose
-    # actually survives the converter and the engine.
-    real = build_rulebook(get_rulebook(), rules_dir=config.paths.rules)
-
-    out = render(
-        GENERAL_RULES,
-        real,
-        fmt=get_format("pdf"),
-        name="rulebook",
-        output_root=tmp_path,
-    )
-
-    assert out.stat().st_size > 0
+    # The explicit anchor has to survive the Markdown-to-HTML derivation for
+    # the contents list to work in a browser.
+    for section in rulebook.sections:
+        assert f'href="#{section.anchor}"' in html
+        assert f'id="{section.anchor}"' in html
 
 
 # --- The CLI ----------------------------------------------------------------
@@ -999,7 +835,7 @@ def test_cli_writes_the_rulebook(tmp_path: Path) -> None:
 
     render_general_rules(opts=RenderOpts(format="markdown", out=out))
 
-    assert "SteamPunkFantasy Rulebook" in out.read_text(encoding="utf-8")
+    assert get_rulebook().title in out.read_text(encoding="utf-8")
 
 
 def test_cli_honors_an_alternate_index(tmp_path: Path) -> None:
@@ -1010,7 +846,7 @@ def test_cli_honors_an_alternate_index(tmp_path: Path) -> None:
 
     render_general_rules(index=index, opts=RenderOpts(format="markdown", out=out))
 
-    assert "# Test Rulebook" in out.read_text(encoding="utf-8")
+    assert "Test Rulebook" in out.read_text(encoding="utf-8")
 
 
 def test_cli_reports_a_missing_index_on_stderr(
@@ -1042,14 +878,3 @@ def test_cli_reports_an_unknown_kind_on_stderr(
 
 def test_general_rules_product_is_registered() -> None:
     assert PRODUCTS["general-rules"] is GENERAL_RULES
-
-
-def test_rules_rulebook_lists_the_committed_sections(
-    capsys: pytest.CaptureFixture[str],
-) -> None:
-    # What `just validate` runs: resolving the Index is what validates it.
-    list_rulebook()
-
-    out = unwrapped(capsys.readouterr().out)
-    assert "SteamPunkFantasy Rulebook" in out
-    assert "1. The Round (markdown)" in out

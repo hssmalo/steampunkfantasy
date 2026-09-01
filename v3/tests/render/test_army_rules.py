@@ -1,7 +1,7 @@
 """Tests for the Army Reference product: build_reference() and the CLI."""
 
 import re
-import shutil
+from dataclasses import fields
 from pathlib import Path
 
 import pytest
@@ -10,10 +10,9 @@ from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.config import config
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
-from spf.render import render
-from spf.render.army_rules import build_reference
+from spf.render import render, rules_reference
+from spf.render.army_rules import UnitEntry, build_reference
 from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.specials import SpecialLine
@@ -23,6 +22,7 @@ from spf.schemas.race import (
     EquipmentConfig,
     ModelConfig,
     OrdersConfig,
+    RaceConfig,
     ShakenConfig,
     Stacker,
     UnitConfig,
@@ -33,9 +33,16 @@ from spf.schemas.race import (
 )
 from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import ModelType
+from tests.conftest import (
+    COUNTDOWN,
+    InstallRegistry,
+    synthetic_army,
+    synthetic_equipment,
+    synthetic_race,
+    synthetic_registry,
+    synthetic_unit,
+)
 from tests.render.conftest import ART, FakeLookup
-
-ENGINE = config.render.latex.engine
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -417,42 +424,10 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     ]
 
 
-# --- Templates: two-column damage table (drives the real templates) --------
-
-
-def test_army_rules_markdown_renders_two_column_damage_table(tmp_path: Path) -> None:
-    reference = build_reference(_army(_unit()), stem="test")
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("markdown"),
-        name="test",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    # Rows must be contiguous with the header separator: a blank line here would
-    # end the Markdown table and leave the rows as loose text.
-    assert "| Roll | Effect |\n| ---- | ------ |\n| 1 | Fine |\n| 2 | Dead |\n" in text
-    assert "- Stay calm" in text
-
-
-def test_army_rules_latex_renders_two_column_damage_table(tmp_path: Path) -> None:
-    reference = build_reference(_army(_unit()), stem="test")
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("latex"),
-        name="test",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\begin{tabular}{ll}" in text
-    assert r"1 & Fine \\" in text
-    assert r"\item Stay calm" in text
+def test_the_reference_has_no_place_for_orders() -> None:
+    # Orders are printed on the Order Cards, not in an Army Reference, so the
+    # view model has nowhere to put them.
+    assert "orders" not in {field.name for field in fields(UnitEntry)}
 
 
 # --- CLI: render army-rules end-to-end (drives the real templates) ---------
@@ -460,55 +435,20 @@ def test_army_rules_latex_renders_two_column_damage_table(tmp_path: Path) -> Non
 DEMO_ARMY = "demo"
 
 
-def test_render_army_rules_markdown_has_title_and_unit_sections(
+def test_render_army_rules_markdown_names_the_army_and_its_units(
     tmp_path: Path,
 ) -> None:
+    # Expectations are read off the Army being rendered, so an edit to the
+    # committed corpus moves both sides together (ADR 0033).
+    army = io.load_army(DEMO_ARMY)
     out = tmp_path / "demo.md"
     render_army_rules(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
 
     text = out.read_text(encoding="utf-8")
-    assert "Iron Claws" in text
-    assert "goblin" in text
-    assert "## Goblin Infantry" in text
-    assert "---" in text
-    assert "### " in text  # a Model subsection
-    # Orders are not part of an Army Reference; they live on the Order Cards.
-    # Checked over the Units alone: the Rules Reference names the Movement
-    # phases a token is resolved in, which is not an order.
-    units, _, _rules = text.partition("## Rules Reference")
-    assert "Movement" not in units
-    assert "Fire Order" in text or "Take Cover" in text  # a unit special
-    assert "| 0-5 | Kill 1 model |" in text  # a two-column damage-table row
-
-
-def test_render_army_rules_html_is_a_document(tmp_path: Path) -> None:
-    out = tmp_path / "demo.html"
-    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="html", out=out))
-
-    text = out.read_text(encoding="utf-8")
-    assert "<!DOCTYPE html>" in text
-    assert "Iron Claws" in text
-
-
-def test_render_army_rules_latex_uses_article_with_newpage_per_unit(
-    tmp_path: Path,
-) -> None:
-    out = tmp_path / "demo.tex"
-    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="latex", out=out))
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\documentclass" in text
-    assert "{article}" in text
-    assert r"\section{" in text
-    assert r"\newpage" in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_army_rules_pdf_compiles(tmp_path: Path) -> None:
-    out = tmp_path / "demo.pdf"
-    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="pdf", out=out))
-
-    assert out.stat().st_size > 0
+    assert army.nick in text
+    assert army.race in text
+    for unit in army.units:
+        assert unit.display_name in text
 
 
 def test_render_army_rules_missing_army_exits_nonzero(tmp_path: Path) -> None:
@@ -605,71 +545,6 @@ def test_army_rules_markdown_emits_no_image_markup_without_art(
     )
 
     assert "![" not in out.read_text(encoding="utf-8")
-
-
-def test_army_rules_latex_puts_the_unit_image_beside_the_stat_block(
-    tmp_path: Path,
-) -> None:
-    reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(ART)
-    )
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("latex"),
-        name="test",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\usepackage{graphicx}" in text
-    # Absolute here: the engine compiles in a temporary directory, so a
-    # document-relative path would not resolve.
-    # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
-    # break `\includegraphics`.
-    assert rf"\includegraphics[width=\linewidth]{{{ART}}}" in text
-    assert r"\begin{minipage}" in text
-
-
-def test_army_rules_latex_keeps_the_full_width_stat_block_without_art(
-    tmp_path: Path,
-) -> None:
-    reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(None)
-    )
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("latex"),
-        name="test",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\includegraphics" not in text
-    assert r"\begin{minipage}" not in text
-    assert r"\textbf{Size:}" in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_army_rules_pdf_compiles_with_an_underscored_image_path(
-    tmp_path: Path,
-) -> None:
-    # The compile happens in a temp directory, so this also pins that an
-    # absolute path resolves regardless of the engine's CWD (ADR 0017) — and
-    # that an underscore in the filename needs no escaping.
-    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
-    reference = build_reference(
-        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(art)
-    )
-
-    out = render(
-        ARMY_RULES, reference, fmt=get_format("pdf"), name="test", output_root=tmp_path
-    )
-
-    assert out.stat().st_size > 0
 
 
 def test_render_army_rules_no_images_omits_committed_art(tmp_path: Path) -> None:
@@ -775,174 +650,7 @@ def test_equipment_entry_carries_the_range_note() -> None:
     assert equipment_entry.note == "Remember to track ammo."
 
 
-def test_render_army_rules_markdown_prints_every_note(tmp_path: Path) -> None:
-    rifle = _equip(
-        name="Ogre Rifle",
-        range_config=RangeConfig(
-            range=4,
-            angle=[True, False, False, False],
-            damage="d6",
-            ap=1,
-            note="Remember to track ammo.",
-        ),
-    )
-    control = _equip(name="Remote Control", note="Grants no immunity")
-    unit = _unit(
-        note="May not enter buildings",
-        models=[_model(note="Floats", equipment=[rifle, control])],
-    )
-    reference = build_reference(_army(unit), stem="test", image_for=no_image)
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("markdown"),
-        name="t",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert "- **Note**: May not enter buildings" in text
-    assert "- **Note**: Floats" in text
-    assert "- **Note**: Remember to track ammo." in text
-    assert "- **Note (Remote Control)**: Grants no immunity" in text
-
-
-def test_render_army_rules_latex_prints_every_note(tmp_path: Path) -> None:
-    unit = _unit(note="May not enter buildings", models=[_model(note="Floats")])
-    reference = build_reference(_army(unit), stem="test", image_for=no_image)
-
-    out = render(
-        ARMY_RULES, reference, fmt=get_format("latex"), name="t", output_root=tmp_path
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\item \textbf{Note}: May not enter buildings" in text
-    assert r"\item \textbf{Note}: Floats" in text
-
-
-# --- Golden output: pins the standalone army-rules output byte-for-byte ----
-#
-# `main.tex.jinja`/`main.md.jinja` are a thin wrapper around the shared
-# `reference-body` partial (also used by the Army Pack); this pins their
-# combined output so a future change to either can't silently drift the
-# standalone Army Reference. `image_for=no_image` keeps the fixture
-# independent of the committed Asset store's contents.
-
-# The version is pinned for this comparison: the documents stamp the version
-# that rendered them, which would otherwise drift the goldens every release.
-GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"
-
-
-@pytest.mark.parametrize(
-    ("fmt_name", "golden_name"),
-    [("markdown", "army_rules.md"), ("latex", "army_rules.tex")],
-)
-@pytest.mark.usefixtures("pinned_version")
-def test_army_rules_output_matches_golden_file(
-    tmp_path: Path, fmt_name: str, golden_name: str
-) -> None:
-    reference = build_reference(
-        io.load_army(DEMO_ARMY), stem="demo", image_for=no_image
-    )
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format(fmt_name),
-        name="demo",
-        output_root=tmp_path,
-    )
-
-    # `.rstrip`: the committed golden file passes through the end-of-file-fixer
-    # pre-commit hook, which trims trailing blank lines the templates emit.
-    golden = (GOLDEN_DIR / golden_name).read_text(encoding="utf-8")
-    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
-
-
-# The demo Army fields no Unit whose armor an Equipment raises and no holder
-# carrying a `note`, so a second Army covers both — the two things the
-# Specials migration moved out of a Special and onto the record itself.
-FIXTURE_ARMIES = Path(__file__).parent.parent / "fixtures" / "armies"
-
-
-@pytest.mark.usefixtures("pinned_version")
-def test_army_rules_output_matches_golden_file_with_granted_armor_and_notes(
-    tmp_path: Path,
-) -> None:
-    army = io._load_army_at(
-        FIXTURE_ARMIES / "dwarf_shieldwall.json", label="fixture", validate=True
-    )
-    reference = build_reference(army, stem="shieldwall", image_for=no_image)
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("markdown"),
-        name="shieldwall",
-        output_root=tmp_path,
-    )
-
-    golden = (GOLDEN_DIR / "army_rules_dwarf.md").read_text(encoding="utf-8")
-    assert out.read_text(encoding="utf-8").rstrip("\n") == golden.rstrip("\n")
-
-
-# --- `--no-rules` reproduces the document as it was before the Rules Reference
-#
-# The opt-out's whole contract: with it, nothing about the Rules Reference —
-# neither the list nor a link on a Unit line — reaches the page. The goldens
-# below are the output as it stood before any of it existed, so a leak of any
-# kind fails here rather than in a published document.
-
-SHOWCASE_ARMIES = Path(__file__).parent.parent.parent / "armies" / "showcase"
-
-NO_RULES_GOLDEN_DIR = GOLDEN_DIR / "no_rules"
-
-
-@pytest.mark.parametrize(
-    "army_file", sorted(p.name for p in SHOWCASE_ARMIES.glob("*.json"))
-)
-@pytest.mark.usefixtures("pinned_version")
-def test_no_rules_reproduces_the_showcase_output(
-    tmp_path: Path, army_file: str
-) -> None:
-    stem = Path(army_file).stem
-    army = io._load_army_at(SHOWCASE_ARMIES / army_file, label=stem, validate=True)
-    reference = build_reference(army, stem=stem, image_for=no_image, rules=False)
-
-    out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("markdown"),
-        name=stem,
-        output_root=tmp_path,
-    )
-
-    golden = (NO_RULES_GOLDEN_DIR / f"{stem}.md").read_text(encoding="utf-8")
-    assert _trimmed(out.read_text(encoding="utf-8")) == _trimmed(golden)
-
-
-def _trimmed(text: str) -> list[str]:
-    """Split `text` into lines with trailing whitespace off each.
-
-    A committed golden passes through the trailing-whitespace pre-commit hook,
-    which strips the spaces a template emits after an empty field — so the
-    trailing space is a property of the fixture, not of the renderer.
-    """
-    return [line.rstrip() for line in text.rstrip("\n").splitlines()]
-
-
 # --- The Rules Reference in a standalone Army Reference (ADR 0029) ----------
-
-
-def test_the_rules_reference_prints_after_all_the_units(tmp_path: Path) -> None:
-    out = tmp_path / "demo.md"
-    render_army_rules(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
-
-    text = out.read_text(encoding="utf-8")
-    assert text.count("## Rules Reference") == 1
-    # Every Unit heading comes before it: one list per Army, at the end.
-    assert text.index("## Rules Reference") > text.rindex("## Goblin Infantry")
 
 
 def test_a_unit_line_links_into_the_rules_reference(tmp_path: Path) -> None:
@@ -984,3 +692,85 @@ def test_an_army_with_no_specials_prints_no_empty_heading(tmp_path: Path) -> Non
     assert reference.rules is not None
     assert reference.rules.entries == []
     assert "Rules Reference" not in out.read_text(encoding="utf-8")
+
+
+# Armor granted by Equipment, a Holder `note`, and the `--no-rules` contract are
+# properties of every Army, so they are built here rather than borrowed (ADR 0033).
+
+
+def _synthetic_markdown(
+    race: RaceConfig, tmp_path: Path, *, stem: str, rules: bool = True
+) -> str:
+    """Render a one-Unit Army of `race` as an Army Reference, and read it back."""
+    army = synthetic_army(race).resolve(race)
+    reference = build_reference(army, stem=stem, image_for=no_image, rules=rules)
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name=stem,
+        output_root=tmp_path,
+    )
+    return out.read_text(encoding="utf-8")
+
+
+def test_the_rules_reference_prints_once_after_all_the_units(
+    tmp_path: Path, install_registry: InstallRegistry
+) -> None:
+    install_registry(synthetic_registry(specials={"countdown": None}))
+    race = synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
+
+    text = _synthetic_markdown(race, tmp_path, stem="once")
+
+    assert text.count(rules_reference.TITLE) == 1
+    # One list per Army, and it comes after every Unit it serves (ADR 0029).
+    assert text.index(rules_reference.TITLE) > text.rindex("Squad")
+
+
+def test_no_rules_keeps_the_rules_reference_and_its_links_off_the_page(
+    tmp_path: Path, install_registry: InstallRegistry
+) -> None:
+    # The opt-out's whole contract: with it, neither the list nor a link on a
+    # Unit line reaches the page -- and without it, both do.
+    install_registry(synthetic_registry(specials={"countdown": None}))
+    race = synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
+
+    with_rules = _synthetic_markdown(race, tmp_path, stem="rules")
+    without_rules = _synthetic_markdown(race, tmp_path, stem="no-rules", rules=False)
+
+    assert rules_reference.TITLE in with_rules
+    assert "](#rule-special-countdown)" in with_rules
+    assert "Rules Reference" not in without_rules
+    assert "](#rule-" not in without_rules
+
+
+def test_an_equipment_upgrade_raises_its_units_armor_and_prints_its_note() -> None:
+    shieldwall = synthetic_equipment(
+        name="Wheeled ShieldWall",
+        unit={"armor": {"add": [5, 0, 0, 0]}},
+        note="Rolls with the Unit.",
+    )
+    race = synthetic_race(
+        equipment={
+            "knife": synthetic_equipment(name="Knife", cost=None, upgrade_all=None),
+            "shieldwall": shieldwall,
+        }
+    )
+    army_list = synthetic_army(race).upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="shieldwall",
+        race_config=race,
+    )
+
+    reference = build_reference(
+        army_list.resolve(race), stem="shieldwall", image_for=no_image
+    )
+
+    (unit_entry,) = reference.units
+    # The Unit declares no armor of its own: every arc here is the grant.
+    assert unit_entry.armor == [5, 0, 0, 0]
+    (model_entry,) = unit_entry.models
+    assert model_entry.equipment_notes == [
+        ("Wheeled ShieldWall", "Rolls with the Unit.")
+    ]

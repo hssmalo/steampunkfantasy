@@ -14,6 +14,9 @@ validates/displays them.
 - **[`docs/agents/quality-gates.md`](docs/agents/quality-gates.md)** — the `just`
   recipes for formatting, linting, type-checking, spell-checking, and tests. Run
   `just check` before committing.
+- **[`docs/agents/testing.md`](docs/agents/testing.md)** — what the tests are
+  for: no test may break on a rules-data edit, no assertions on production
+  template content, synthetic fixtures, and on-demand goldens.
 
 ## Agent skills
 

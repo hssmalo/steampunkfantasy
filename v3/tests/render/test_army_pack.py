@@ -1,7 +1,6 @@
 """Tests for the Army Pack product: index, loader, view-model, CLI."""
 
 import re
-import shutil
 from pathlib import Path
 
 import pytest
@@ -11,8 +10,8 @@ from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.build import ArmyList
 from spf.config import config
-from spf.frontends.cli.render import ARMY_PACK, ARMY_RULES, RenderOpts, render_army_pack
-from spf.render import render
+from spf.frontends.cli.render import ARMY_PACK, RenderOpts, render_army_pack
+from spf.render import render, rules_reference
 from spf.render.army_pack import ArmyPack, PackEntry, build_pack
 from spf.render.army_rules import build_reference
 from spf.render.formats import get_format
@@ -23,7 +22,6 @@ from tests.conftest import unwrapped
 from tests.render.conftest import FakeLookup
 
 DEMO_ARMY = "demo"
-ENGINE = config.render.latex.engine
 
 VALID_INDEX = """\
 title = "SPF 2025 Tournament"
@@ -230,6 +228,18 @@ def test_build_pack_keeps_two_armies_of_the_same_race_both_in_full() -> None:
     assert [entry.label for entry in pack.entries] == ["Player A", "Player B"]
 
 
+def test_build_pack_gives_two_identically_named_armies_distinct_anchors() -> None:
+    # A Pack is one document with one id space (ADR 0022): it aggregates its
+    # Armies rather than concatenating them, so no two entries can collide.
+    armies = [(None, _army(nick="Twin")), (None, _army(nick="Twin"))]
+
+    pack = build_pack(armies, title="Test", stem="pack")
+
+    first, second = pack.entries
+    assert first.label == second.label
+    assert first.anchor != second.anchor
+
+
 def test_build_pack_entry_reference_matches_standalone_build_reference() -> None:
     army = _army(nick="Standalone")
 
@@ -269,71 +279,7 @@ def test_army_pack_product_is_registered() -> None:
     assert PRODUCTS["army-pack"] is ARMY_PACK
 
 
-def test_army_pack_latex_has_one_section_per_army_and_a_toc(tmp_path: Path) -> None:
-    pack = build_pack(
-        [("Geir Arne", io.load_army(DEMO_ARMY)), ("Morten", io.load_army(DEMO_ARMY))],
-        title="Test Pack",
-        stem="pack",
-        image_for=no_image,
-    )
-
-    out = render(
-        ARMY_PACK, pack, fmt=get_format("latex"), name="pack", output_root=tmp_path
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert text.count(r"\section{Geir Arne: The Iron Claws}") == 1
-    assert text.count(r"\section{Morten: The Iron Claws}") == 1
-    assert r"\tableofcontents" in text
-    assert r"\clearpage" in text
-
-
-def test_army_pack_latex_unit_markup_matches_standalone_army_rules(
-    tmp_path: Path,
-) -> None:
-    # The strongest available check that the Pack and the standalone Army
-    # Reference share one body template: the Pack's rendering of a Unit is
-    # byte-identical to the Army Reference's, once the heading command is
-    # normalized for the deeper nesting level.
-    army = io.load_army(DEMO_ARMY)
-    pack = build_pack(
-        [(None, army)], title="Test Pack", stem="pack", image_for=no_image
-    )
-    reference = build_reference(army, stem="demo", image_for=no_image)
-
-    pack_out = render(
-        ARMY_PACK, pack, fmt=get_format("latex"), name="pack", output_root=tmp_path
-    )
-    reference_out = render(
-        ARMY_RULES,
-        reference,
-        fmt=get_format("latex"),
-        name="demo",
-        output_root=tmp_path,
-    )
-
-    pack_text = pack_out.read_text(encoding="utf-8")
-    reference_text = reference_out.read_text(encoding="utf-8")
-    # Normalize the Pack's one-level-deeper sectioning back to the standalone
-    # commands before comparing the unit/model/equipment markup itself. A
-    # single regex pass (longest command first) avoids `\subsection` and
-    # `\subsubsection` clobbering each other under sequential `str.replace`.
-    shift_back = {
-        r"\subsubsection": r"\subsection",
-        r"\subsection": r"\section",
-        r"\paragraph": r"\subsubsection",
-    }
-    normalized = re.sub(
-        r"\\subsubsection|\\subsection|\\paragraph",
-        lambda m: shift_back[m.group()],
-        pack_text,
-    )
-    for line in reference_text.splitlines():
-        if line.startswith((r"\section{", r"\subsection{", r"\subsubsection{")):
-            assert line in normalized
-
-
-def test_army_pack_markdown_has_one_heading_per_army_and_toc_anchors(
+def test_army_pack_markdown_links_every_entry_to_a_landing_anchor(
     tmp_path: Path,
 ) -> None:
     pack = build_pack(
@@ -348,26 +294,11 @@ def test_army_pack_markdown_has_one_heading_per_army_and_toc_anchors(
     )
 
     text = out.read_text(encoding="utf-8")
-    assert "## Geir Arne: The Iron Claws" in text
-    assert "## Morten: The Iron Claws" in text
-    assert '<a id="geir-arne-the-iron-claws"></a>' in text
-    assert '<a id="morten-the-iron-claws"></a>' in text
-    assert "[Geir Arne: The Iron Claws](#geir-arne-the-iron-claws)" in text
-    assert "[Morten: The Iron Claws](#morten-the-iron-claws)" in text
-    # Units render one level below the per-army `##` heading.
-    assert "### " in text
-
-
-def test_army_pack_html_is_a_document(tmp_path: Path) -> None:
-    pack = _demo_pack(a="Geir Arne")
-
-    out = render(
-        ARMY_PACK, pack, fmt=get_format("html"), name="pack", output_root=tmp_path
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert "<!DOCTYPE html>" in text
-    assert "Geir Arne" in text
+    # Two Armies of one Race, so the labels only differ by their Index label:
+    # a link with no anchor to land on would send both to the same pages.
+    for entry in pack.entries:
+        assert f"[{entry.label}](#{entry.anchor})" in text
+        assert f'<a id="{entry.anchor}"></a>' in text
 
 
 # --- Images: ADR 0017 relative paths, at the Army Pack's own output depth --
@@ -451,9 +382,11 @@ def test_cli_index_mode_writes_the_pack(tmp_path: Path) -> None:
     render_army_pack(index=index, opts=RenderOpts(format="markdown", out=out))
 
     text = out.read_text(encoding="utf-8")
-    assert "# SPF 2025 Tournament" in text
-    assert "## Geir Arne: Geir Arne's Army" in text
-    assert "## Morten's Army" in text
+    assert "SPF 2025 Tournament" in text
+    # The Index's label combined with the Army's Nick, and the bare Nick where
+    # the Index gives no label.
+    assert "Geir Arne: Geir Arne's Army" in text
+    assert "Morten's Army" in text
 
 
 def test_cli_ad_hoc_mode_uses_army_nicks_and_default_title(tmp_path: Path) -> None:
@@ -462,8 +395,9 @@ def test_cli_ad_hoc_mode_uses_army_nicks_and_default_title(tmp_path: Path) -> No
     render_army_pack(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
 
     text = out.read_text(encoding="utf-8")
-    assert "# Army Pack" in text
-    assert "## The Iron Claws" in text  # demo Army's Nick: ad-hoc mode gives no Label
+    assert "Army Pack" in text
+    # Ad-hoc mode gives no Label, so an entry is titled by its Army's Nick.
+    assert io.load_army(DEMO_ARMY).nick in text
 
 
 def test_cli_stem_defaults_to_the_index_parent_directory_name(
@@ -572,16 +506,6 @@ def test_army_pack_product_registered_under_cli(tmp_path: Path) -> None:
     assert out.exists()
 
 
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_army_pack_pdf_compiles(tmp_path: Path) -> None:
-    index = _write_pack_dir(tmp_path)
-    out = tmp_path / "pack.pdf"
-
-    render_army_pack(index=index, opts=RenderOpts(format="pdf", out=out))
-
-    assert out.stat().st_size > 0
-
-
 # --- The Rules Reference sits inside each Army's entry (ADR 0029) -----------
 
 
@@ -628,7 +552,7 @@ def test_army_pack_markdown_prints_a_rules_reference_per_army(tmp_path: Path) ->
     )
 
     text = out.read_text(encoding="utf-8")
-    assert text.count("### Rules Reference") == 2
+    assert text.count(rules_reference.TITLE) == 2
     # Every emitted anchor is unique, which is what keeps the links honest.
     ids = re.findall(r'<a id="([^"]+)"></a>', text)
     assert len(ids) == len(set(ids))

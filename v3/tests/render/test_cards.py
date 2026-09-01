@@ -1,14 +1,13 @@
 """Tests for the Order Card product: Unit.orders(), build_deck, and CLI."""
 
-import shutil
 from pathlib import Path
 
 import pytest
 
+from spf.armies import io
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.config import config
 from spf.frontends.cli.render import CARDS, RenderOpts, render_cards, safe_stem
 from spf.render import render
 from spf.render.cards import OrderCardDeck, build_deck
@@ -22,8 +21,6 @@ from spf.schemas.race import (
     UnitConfig,
 )
 from tests.render.conftest import ART, FakeLookup
-
-ENGINE = config.render.latex.engine
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -557,6 +554,28 @@ def test_build_deck_carries_shaken_to_units_not_cards() -> None:
 # --- build_deck: Image Assets on the view-model -----------------------------
 
 
+def test_build_deck_cards_name_the_unit_and_the_kind_with_or_without_art() -> None:
+    # Name and kind identify a card whether or not the Unit has art, so
+    # neither depends on the image lookup finding one.
+    unit = _unit(
+        orders=OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]}),
+        name="Squad",
+    )
+
+    with_art = build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(ART)
+    )
+    without_art = build_deck(
+        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(None)
+    )
+
+    for deck in (with_art, without_art):
+        assert [(c.unit_name, c.kind) for c in deck.cards] == [
+            ("Squad", "Movement"),
+            ("Squad", "Fire"),
+        ]
+
+
 def test_build_deck_populates_images_from_the_injected_lookup() -> None:
     image = Path("/assets/goblin/images/art.png")
     unit = _unit(
@@ -618,41 +637,17 @@ def testsafe_stem_collapses_runs_and_strips_ends() -> None:
 DEMO_ARMY = "demo"
 
 
-def test_render_cards_markdown_has_tables_and_shaken(tmp_path: Path) -> None:
+def test_render_cards_markdown_names_every_unit_of_the_army(tmp_path: Path) -> None:
+    # Expectations are read off the Army being rendered, so an edit to the
+    # committed corpus moves both sides together (ADR 0033).
+    army = io.load_army(DEMO_ARMY)
     out = tmp_path / "demo.md"
+
     render_cards(DEMO_ARMY, opts=RenderOpts(format="markdown", out=out))
 
     text = out.read_text(encoding="utf-8")
-    assert "## Goblin Infantry" in text
-    assert "### Movement" in text
-    assert "### Fire" in text
-    assert "| shaken: " in text
-
-
-def test_render_cards_html_is_a_table(tmp_path: Path) -> None:
-    out = tmp_path / "demo.html"
-    render_cards(DEMO_ARMY, opts=RenderOpts(format="html", out=out))
-
-    assert "<table>" in out.read_text(encoding="utf-8")
-
-
-def test_render_cards_latex_uses_flacards_cards(tmp_path: Path) -> None:
-    out = tmp_path / "demo.tex"
-    render_cards(DEMO_ARMY, opts=RenderOpts(format="latex", out=out))
-
-    text = out.read_text(encoding="utf-8")
-    assert "flacards" in text
-    assert r"\card" in text
-    # Real order glyphs are LaTeX-escaped, not raw.
-    assert r"\textdegree" in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_cards_pdf_compiles(tmp_path: Path) -> None:
-    out = tmp_path / "demo.pdf"
-    render_cards(DEMO_ARMY, opts=RenderOpts(format="pdf", out=out))
-
-    assert out.stat().st_size > 0
+    for unit in army.units:
+        assert unit.display_name in text
 
 
 # --- Templates: the Unit's art on the card back (drives the real templates) --
@@ -696,99 +691,6 @@ def test_cards_markdown_emits_no_image_markup_without_art(tmp_path: Path) -> Non
     assert "![" not in out.read_text(encoding="utf-8")
 
 
-def test_cards_latex_puts_name_art_and_kind_on_the_back(tmp_path: Path) -> None:
-    out = render(
-        CARDS,
-        _art_deck(ART),
-        fmt=get_format("latex"),
-        name="test",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\usepackage{graphicx}" in text
-    assert r"\renewcommand{\bchead}{Squad}" in text
-    # A base card names the kind alone — there is no Equipment behind it.
-    assert r"\renewcommand{\bcfoot}{Movement}" in text
-    assert r"\renewcommand{\bcfoot}{Fire}" in text
-    # The path is emitted raw: `latex_escape` would turn `_` into `\_` and
-    # break `\includegraphics`.
-    assert rf"\includegraphics[width=\cardartwidth]{{{ART.as_posix()}}}" in text
-
-
-def test_cards_latex_names_the_equipment_under_the_kind_on_its_fronts(
-    tmp_path: Path,
-) -> None:
-    hide = _equip(OrdersConfig(movement={"crawl": [["C"]]}), name="Hide & Seek")
-    unit = _unit(
-        orders=OrdersConfig(movement={"still": [["A"]]}),
-        models=[_model(equipment=[hide])],
-    )
-    deck = build_deck(
-        _army(unit, race="goblin"), stem="test", image_for=FakeLookup(None)
-    )
-
-    out = render(
-        CARDS, deck, fmt=get_format("latex"), name="test", output_root=tmp_path
-    )
-
-    text = out.read_text(encoding="utf-8")
-    # The name is LaTeX-escaped, and `\flhead` wraps it within the card box.
-    assert r"\renewcommand{\flhead}{Movement\\Hide \& Seek}" in text
-    # The base card of the same Unit still names the kind alone, and the back
-    # of an equipment card carries no equipment name at all.
-    assert r"\renewcommand{\flhead}{Movement}" in text
-    assert r"\renewcommand{\bcfoot}{Movement}" in text
-    assert not any("Hide" in line for line in text.splitlines() if "bcfoot" in line)
-
-
-def test_cards_latex_back_falls_back_to_text_without_art(tmp_path: Path) -> None:
-    out = render(
-        CARDS,
-        _art_deck(None),
-        fmt=get_format("latex"),
-        name="test",
-        output_root=tmp_path,
-    )
-
-    text = out.read_text(encoding="utf-8")
-    assert r"\includegraphics" not in text
-    # The name and kind still identify the back of an art-less card.
-    assert r"\renewcommand{\bchead}{Squad}" in text
-    assert r"\renewcommand{\bcfoot}{Movement}" in text
-    # `\cardtext` ends the body with `\\`, so an empty body is a LaTeX error.
-    assert r"\strut" in text
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_cards_pdf_compiles_with_a_mixed_deck(tmp_path: Path) -> None:
-    # A deck where one Unit has art and one does not is the case that breaks if
-    # the art-less back leaves `\cardtext`'s body empty.
-    art = Path(__file__).parent.parent / "fixtures" / "tiny_art.png"
-    orders = OrdersConfig(movement={"still": [["A"]]}, fire={"still": [["F"]]})
-    with_art = _unit(orders=orders, name="Painted")
-    # The longest equipment name in any race is 44 characters; `\flhead` must
-    # wrap it inside the card box rather than overfull the line.
-    longest = _equip(
-        OrdersConfig(movement={"crawl": [["C"]]}),
-        name="Double Barreled Musket with Springloaded Axe",
-    )
-    without_art = _unit(
-        orders=orders, name="Bare", models=[_model(equipment=[longest])]
-    )
-
-    def image_for(_race: str, name: str) -> Path | None:
-        return art if name == "Painted" else None
-
-    deck = build_deck(
-        _army(with_art, without_art, race="goblin"), stem="test", image_for=image_for
-    )
-
-    out = render(CARDS, deck, fmt=get_format("pdf"), name="test", output_root=tmp_path)
-
-    assert out.stat().st_size > 0
-
-
 def test_render_cards_no_images_omits_committed_art(tmp_path: Path) -> None:
     # The demo army's race has committed Unit art, so the default render does
     # embed images — `--no-images` is what removes them.
@@ -809,13 +711,3 @@ def test_render_cards_missing_army_exits_nonzero(tmp_path: Path) -> None:
 
     assert excinfo.value.code == 1
     assert not out.exists()
-
-
-# --- Golden output: pins the Order Card deck, and with it the Speed order ---
-#
-# Speeds render in the `speed` registry's declaration order, so a reordering of
-# `rules/modifiers.toml` silently reshuffles every orders table. The demo Army's
-# Goblin Infantry has both a `sneak` and a `slow` movement row, which is what
-# makes such a reordering visible here.
-
-GOLDEN_DIR = Path(__file__).parent.parent / "fixtures" / "golden"

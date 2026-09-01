@@ -1,0 +1,198 @@
+"""Tests for the synthetic builders the rest of the suite is written against.
+
+The builders stand in for the committed corpus (ADR 0033), so what they hand a
+test has to behave the way loaded Race data does: pass the load-time gate, and
+survive a trip through a TOML file.
+"""
+
+from pathlib import Path
+
+import pytest
+from pydantic import ValidationError
+
+from spf.armies import unit
+from spf.armies.io import save_army
+from spf.config import config
+from spf.races import get_race
+from tests.conftest import (
+    COUNTDOWN,
+    InstallRegistry,
+    synthetic_army,
+    synthetic_assault,
+    synthetic_equipment,
+    synthetic_model,
+    synthetic_race,
+    synthetic_registry,
+    synthetic_special,
+    synthetic_unit,
+    write_race_toml,
+)
+
+
+def test_default_race_has_a_costed_and_an_uncosted_unit() -> None:
+    units = synthetic_race().units
+
+    assert [unit.cost is None for unit in units.values()] == [False, True]
+
+
+def test_a_race_can_borrow_a_second_races_name() -> None:
+    # A test about two Races needs two names, and a Race name is a closed set.
+    race = synthetic_race(race="ork")
+
+    assert race.races["ork"].name == "Ork"
+    assert [unit.race for unit in race.units.values()] == ["ork", "ork"]
+
+
+def test_default_race_model_declares_a_holder() -> None:
+    model = synthetic_race().models["soldier"]
+
+    assert [holder.holder for holder in model.equipment_limit] == ["Hands"]
+
+
+def test_default_race_has_one_default_and_one_upgrade_equipment() -> None:
+    race = synthetic_race()
+
+    defaults = race.models["soldier"].equipment
+    upgrades = [key for key, item in race.equipment.items() if item.cost is not None]
+    assert defaults == ["knife"]
+    assert upgrades == ["sword"]
+
+
+def test_shaped_race_keeps_only_what_it_was_given() -> None:
+    race = synthetic_race(
+        units={"mob": synthetic_unit(name="Mob", models=["brute"])},
+        models={"brute": synthetic_model(name="Brute", equipment=[])},
+        equipment={},
+    )
+
+    assert list(race.units) == ["mob"]
+    assert list(race.models) == ["brute"]
+    assert race.equipment == {}
+
+
+def test_equipment_defaults_to_an_upgrade_and_can_be_made_a_default() -> None:
+    upgrade = synthetic_equipment()
+    default = synthetic_equipment(name="Knife", cost=None, upgrade_all=None)
+
+    assert upgrade.cost is not None
+    assert default.cost is None
+
+
+def test_written_race_toml_loads_back_as_the_race_it_was_written_from(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    race = synthetic_race()
+    path = write_race_toml(tmp_path, race)
+    monkeypatch.setattr(config.paths, "races", tmp_path)
+
+    assert path.name == "goblin.toml"
+    assert get_race("goblin") == race
+
+
+# ---------------------------------------------------------------------------
+# The registry seam
+# ---------------------------------------------------------------------------
+
+
+def test_the_gate_accepts_a_special_id_the_installed_registry_declares(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry(synthetic_registry(specials={"countdown": None}))
+
+    race = synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
+
+    assert list(race.units["squad"].specials) == ["countdown"]
+
+
+def test_the_gate_still_rejects_a_special_id_the_registry_lacks(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry()
+
+    with pytest.raises(ValidationError, match="'countdown' is not a Special id"):
+        synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
+
+
+def test_an_invented_special_id_reaches_every_holder_and_slot(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry(synthetic_registry(specials={"countdown": None}))
+
+    race = synthetic_race(
+        units={"squad": synthetic_unit(specials=COUNTDOWN)},
+        models={
+            "soldier": synthetic_model(
+                unit_specials=COUNTDOWN,
+                specials=COUNTDOWN,
+                assault=synthetic_assault(specials=COUNTDOWN),
+            )
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                unit_specials=COUNTDOWN,
+                model_specials=COUNTDOWN,
+                assault={"specials": COUNTDOWN},
+                range={
+                    "range": 12,
+                    "angle": [True, False, False, False],
+                    "damage": "d6",
+                    "ap": 0,
+                    "specials": COUNTDOWN,
+                },
+            )
+        },
+    )
+
+    assert list(race.equipment["knife"].range.specials) == ["countdown"]  # pyright: ignore[reportOptionalMemberAccess]
+
+
+def test_a_narrowed_special_is_refused_the_slots_it_does_not_declare(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry(
+        synthetic_registry(specials={"countdown": synthetic_special(slots=["model"])})
+    )
+
+    with pytest.raises(ValidationError, match="is not a unit Special"):
+        synthetic_race(units={"squad": synthetic_unit(specials=COUNTDOWN)})
+
+
+def test_the_installed_registry_answers_a_module_that_imported_the_loader(
+    install_registry: InstallRegistry,
+) -> None:
+    # `spf.armies.unit` reads its Speeds through its own reference to
+    # `load_registry`, bound when the module was imported rather than looked
+    # up per call.
+    installed = install_registry()
+
+    assert unit.load_registry() is installed
+
+
+# ---------------------------------------------------------------------------
+# Armies
+# ---------------------------------------------------------------------------
+
+
+def test_synthetic_army_fields_the_units_it_names() -> None:
+    army = synthetic_army(synthetic_race(), units=["squad", "mob"], nick="Da Boyz")
+
+    assert [army_unit.name for army_unit in army.units] == ["squad", "mob"]
+    assert army.race == "goblin"
+    assert army.nick == "Da Boyz"
+
+
+def test_synthetic_army_resolves_against_the_race_it_was_built_from() -> None:
+    race = synthetic_race()
+
+    resolved = synthetic_army(race).resolve(race)
+
+    assert [unit.name for unit in resolved.units] == ["squad"]
+
+
+def test_armies_dir_is_where_a_saved_army_lands(armies_dir: Path) -> None:
+    save_army(synthetic_army(synthetic_race()), army_name="warband")
+
+    assert (armies_dir / "warband.json").exists()

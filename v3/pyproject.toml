@@ -34,6 +34,7 @@ dev = [
     "pyright>=1.1.408",
     "pytest>=9.0.3",
     "ruff>=0.15.9",
+    "tomlkit>=0.13.2",
     "typos>=1.45.0",
 ]
 
@@ -44,6 +45,10 @@ dev = [
 # `integration` tests hit live external services; skip them in the default run
 # (and in `just check`/CI). Opt in with `pytest -m integration`.
 addopts = "-m 'not integration'"
+# `scripts/` holds developer tools, not tests; `test_friction.py` lives there
+# and would otherwise be collected by its name alone.
+testpaths = ["tests"]
+pythonpath = ["scripts"]
 markers = ["integration: hits a live external provider; skipped by default"]
 
 #
@@ -62,6 +67,12 @@ ignore = [
 
 ]
 
+[tool.ruff.lint.isort]
+# Both live in scripts/, which is on pytest's pythonpath but is not an import
+# root, so classify them explicitly: otherwise a gitignored goldens/ directory
+# left by a snapshot flips `goldens` from third- to first-party.
+known-first-party = ["goldens", "test_friction"]
+
 [tool.ruff.lint.per-file-ignores]
 # D101: Missing docstring in public class (OK for base models)
 # D103: Missing docstring in public function (OK for tests)
@@ -76,6 +87,10 @@ ignore = [
 "tests/test_*.py" = ["D103", "PLR2004", "S101", "SLF001", "UP018"]
 "tests/**/conftest.py" = ["ARG002"]
 "armies/*/*.py" = ["INP001", "N999"]
+"scripts/*.py" = ["INP001"]
+
+[tool.pyright]
+extraPaths = ["scripts"]
 
 #
 # Garuff - Geir Arne's opinionated lints

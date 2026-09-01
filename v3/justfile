@@ -35,12 +35,25 @@ spell-fix:
 test *args:
     uv run pytest -q {{args}}
 
+# Deliberately not part of `just check`: see docs/agents/testing.md.
+# Mutate lint-clean game-data values and report the tests that break.
+test-friction *args:
+    uv run python scripts/test_friction.py {{args}}
+
+# Snapshot every rendered document into the gitignored goldens/.
+golden-snapshot:
+    uv run python scripts/goldens.py snapshot
+
+# Re-render every document and diff it against the last snapshot.
+golden-diff:
+    uv run python scripts/goldens.py diff
+
 # Auto-fix lint issues then reformat.
 fix:
     uv run ruff check --fix -q
     uv run ruff format -q
 
-# Validate all toml files
+# Load every committed Race, Army and rule registry; the real-data smoke check.
 validate:
     uv run spf race show abomination > /dev/null
     uv run spf race show darkelf > /dev/null
@@ -48,8 +61,8 @@ validate:
     uv run spf race show elf > /dev/null
     uv run spf race show gnome > /dev/null
     uv run spf race show goblin > /dev/null
-    uv run spf race show ork > /dev/null
     uv run spf race show ogre > /dev/null
+    uv run spf race show ork > /dev/null
     uv run spf rules hexes > /dev/null
     uv run spf rules specials > /dev/null
     uv run spf rules tokens > /dev/null

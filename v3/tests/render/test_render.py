@@ -1,7 +1,6 @@
 """Tests for the spf.render foundation."""
 
 import shutil
-import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path, PureWindowsPath
 
@@ -210,34 +209,6 @@ def test_render_missing_template_fails_lazily(tmp_path: Path) -> None:
 
 
 # --- 7.6 PDF end-to-end (gated) --------------------------------------------
-
-
-@pytest.mark.skipif(shutil.which(ENGINE) is None, reason=f"{ENGINE} not installed")
-def test_render_pdf_end_to_end(
-    tmp_path: Path, product: Product, *, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    captured: list[Path] = []
-    real_tempdir = tempfile.TemporaryDirectory
-
-    def tracking_tempdir() -> tempfile.TemporaryDirectory[str]:
-        temp = real_tempdir()
-        captured.append(Path(temp.name))
-        return temp
-
-    monkeypatch.setattr(tempfile, "TemporaryDirectory", tracking_tempdir)
-
-    out = render(
-        product,
-        FakeSource(),
-        fmt=get_format("pdf"),
-        name="sample",
-        templates_root=FIXTURES,
-        output_root=tmp_path,
-    )
-    assert out == tmp_path / "_test" / "sample.pdf"
-    assert out.stat().st_size > 0
-    assert captured
-    assert not captured[0].exists()
 
 
 # --- Registries -------------------------------------------------------------

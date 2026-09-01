@@ -14,8 +14,18 @@ from spf.assets.comfyui import ComfyUIError
 from spf.assets.kinds import KINDS
 from spf.config import config
 from spf.frontends.cli import app
+from spf.schemas import type_aliases as t
 from tests.assets.conftest import FakeRefiner, fake_kind, register_kind
 from tests.conftest import unwrapped
+
+
+def _heading(race: t.RaceName) -> str:
+    """Read the heading a Race prints under off the Race itself.
+
+    The listing is checked against the committed corpus, so its expectations
+    are derived from it rather than spelled out here (ADR 0033).
+    """
+    return races.get_metadata(race).name
 
 
 @pytest.fixture
@@ -238,7 +248,7 @@ def test_list_command_reports_coverage_for_one_race(
     )
 
     out = capsys.readouterr().out
-    assert "Ork" in out  # the race heading always prints
+    assert _heading("ork") in out  # the race heading always prints
     grunt_line = next(line for line in out.splitlines() if "grunt" in line)
     assert "2 candidates" in grunt_line
     # Covered and uncovered read as a symmetric pair of glyphs, not a glyph
@@ -293,8 +303,8 @@ def test_list_command_without_a_race_covers_every_validating_race(
 
     out = capsys.readouterr().out
     # Full detail for every race, not a summary (D12).
-    assert "Ork" in out
-    assert "Goblin" in out
+    assert _heading("ork") in out
+    assert _heading("goblin") in out
     assert "grunt" in out
 
 
@@ -348,7 +358,7 @@ def test_list_command_defaults_to_every_registered_kind(
     # An omitted --kind must not be run through the kind validator.
     app(["assets", "list", "ork"], exit_on_error=False, result_action="return_value")
 
-    assert "Ork" in capsys.readouterr().out
+    assert _heading("ork") in capsys.readouterr().out
 
 
 @pytest.fixture

@@ -1,14 +1,13 @@
 """Tests for holder arithmetic: what equipment claims, and which defaults survive.
 
-These mostly build small `EquipmentConfig`/`ModelConfig` values rather than
-loading a Race: the arithmetic only reads `requires` and `equipment_limit`, so a
-real Race would add noise without adding coverage. The one exception reads every
-race, because it pins an assumption about the shipped data itself.
+These build small `EquipmentConfig`/`ModelConfig` values rather than loading a
+Race: the arithmetic only reads `requires` and `equipment_limit`, so a real
+Race would add noise without adding coverage. The assumption the arithmetic
+makes about the shipped data — that no OR-group offers a choice between two
+Holders — is the `or-group-one-holder` lint rule, not a test here.
 """
 
 from spf.armies import holders
-from spf.races import get_race
-from spf.schemas import type_aliases as t
 from spf.schemas.race import AssaultConfig, EquipmentConfig, ModelConfig
 
 _ASSAULT = AssaultConfig(
@@ -62,26 +61,6 @@ def test_claims_ignores_type_requirements() -> None:
     mortar = equipment("Mortar", requires=[["Tentacles:2"], ["type:Infantry"]])
 
     assert holders.claims(mortar) == {"Tentacles": 2}
-
-
-def test_no_or_group_in_the_real_data_mixes_two_holders() -> None:
-    """Pin the data assumption that lets `claims` sum every item in every group.
-
-    `claims` sums both sides of an OR-group. That is only unambiguous while no
-    group offers a choice *between* holders -- a `Hands:1 or Tentacles:1` group
-    would be counted as claiming both. No such group exists in any race today.
-    If this test ever fails, `claims` needs a real answer for OR, not a wider
-    sum.
-    """
-    mixed = [
-        (race, key, group)
-        for race in t.RaceName.__value__.__args__
-        for key, equip in get_race(race).equipment.items()
-        for group in equip.requires
-        if len({req.key for req in group if req.key != "type"}) > 1
-    ]
-
-    assert mixed == []
 
 
 def test_claims_sums_repeated_holders() -> None:

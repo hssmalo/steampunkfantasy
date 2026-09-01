@@ -1,18 +1,21 @@
 """Tests for `spf special list` and `spf special show`.
 
-`special_rows` and `special_record` are pure functions over the Registry, so
-most of these build `SpecialRuleConfig` records by hand rather than coupling to
-`rules/special.toml`.
+Both commands read the Registry, and `show` walks the Races on top of it, so
+these install a Registry and a Race of their own rather than coupling to
+`rules/special.toml` and `races/` (ADR 0033). `special_rows` and
+`special_record` are pure functions over a Registry, and take one directly.
 """
 
 import re
 from collections.abc import Callable
+from pathlib import Path
 
 import pydantic
 import pytest
 from cyclopts.exceptions import CycloptsError
 
 from spf import races
+from spf.config import config
 from spf.frontends.cli import app
 from spf.frontends.cli.special import (
     SpecialRecord,
@@ -20,16 +23,62 @@ from spf.frontends.cli.special import (
     special_record,
     special_rows,
 )
-from spf.registry import Registry, load_registry
-from spf.schemas.race import RaceConfig
+from spf.registry import Registry
+from spf.schemas.race import EquipmentConfig, RaceConfig
 from spf.schemas.rules import SpecialRuleConfig
+from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import RaceName
-from tests.conftest import unwrapped
-
-REGISTRY = load_registry()
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_assault,
+    synthetic_equipment,
+    synthetic_model,
+    synthetic_race,
+    synthetic_registry,
+    synthetic_special,
+    unwrapped,
+    write_race_toml,
+)
 
 _ROW = re.compile(r"^(?P<marks>[UMAR ]{4}) (?P<label>\S+)")
 """A printed row: the UMAR column, then the Identifier and its Signature."""
+
+type InstallRaces = Callable[..., None]
+"""The `install_races` fixture: the Races to put on disk in, nothing out."""
+
+
+@pytest.fixture
+def install_races(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> InstallRaces:
+    """Answer `spf.races` from Races this test wrote, rather than from `races/`.
+
+    `show` walks every Race there is, so the corpus on disk is one of its
+    inputs; a test about which Races it names supplies its own.
+    """
+
+    def install(*written: RaceConfig) -> None:
+        for race in written:
+            write_race_toml(tmp_path, race)
+        monkeypatch.setattr(config.paths, "races", tmp_path)
+
+    return install
+
+
+def _break_race(name: RaceName, *, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Make the named Race fail to validate, the way a broken file would."""
+    broken = pydantic.ValidationError.from_exception_data("RaceConfig", [])
+    real_get_race = races.get_race
+
+    def get_race(race_name: RaceName) -> RaceConfig:
+        if race_name == name:
+            raise broken
+        return real_get_race(race_name)
+
+    monkeypatch.setattr(races, "get_race", get_race)
+
+
+def _assault_rule() -> SpecialRuleConfig:
+    """Build a Special that only an Assault slot may hold."""
+    return synthetic_special(slots=["assault"])
 
 
 def _list(*args: str) -> None:
@@ -168,50 +217,90 @@ def test_a_multi_line_effect_is_collapsed_onto_one_line() -> None:
 
 
 def test_every_registered_special_is_exactly_one_printed_line(
-    capsys: pytest.CaptureFixture[str],
+    capsys: pytest.CaptureFixture[str], install_registry: InstallRegistry
 ) -> None:
+    # Including the record whose effect runs to several lines: the list is one
+    # greppable line per Special, whatever the prose does.
+    registry = install_registry(
+        synthetic_registry(
+            specials={
+                "aim": synthetic_special(effect="Aim carefully."),
+                "heal": synthetic_special(effect="Spend points:\n\n- Cure.\n"),
+                "zeal": synthetic_special(effect="Zealous."),
+            }
+        )
+    )
+
     _list()
     lines = [line for line in capsys.readouterr().out.splitlines() if line.strip()]
 
-    assert len(lines) == len(REGISTRY.specials)
+    assert len(lines) == len(registry.specials)
 
 
-def test_every_registered_special_gets_a_row_with_text() -> None:
-    rows = special_rows(REGISTRY)
+def test_every_record_gets_a_row_with_text() -> None:
+    registry = _registry(
+        aim=_rule(effect="Aim carefully."), fend=_rule(todo="Not written yet.")
+    )
 
-    assert len(rows) == len(REGISTRY.specials)
+    rows = special_rows(registry)
+
+    assert len(rows) == len(registry.specials)
     assert all(row.text for row in rows)
 
 
 def test_the_printed_list_marks_a_stub_as_a_todo(
-    capsys: pytest.CaptureFixture[str],
+    capsys: pytest.CaptureFixture[str], install_registry: InstallRegistry
 ) -> None:
+    install_registry(
+        synthetic_registry(
+            specials={"aim": synthetic_special(effect=None, todo="Not written yet.")}
+        )
+    )
+
     _list()
 
-    assert "todo: " in capsys.readouterr().out
+    assert "todo: Not written yet." in capsys.readouterr().out
 
 
 def test_the_printed_list_keeps_a_signatures_brackets(
-    capsys: pytest.CaptureFixture[str],
+    capsys: pytest.CaptureFixture[str], install_registry: InstallRegistry
 ) -> None:
     # A Signature is full of square brackets, which are Rich's own markup:
     # printed raw, `[{N}]` would vanish as a tag.
+    install_registry(
+        synthetic_registry(
+            specials={
+                "reroll": synthetic_special(
+                    signature="[{N}]", variables={"N": {"type": "int", "min": 1}}
+                )
+            }
+        )
+    )
+
     _list()
 
-    assert "ork_reroll[{N}]" in capsys.readouterr().out
+    assert "reroll[{N}]" in capsys.readouterr().out
 
 
 def test_the_printed_list_narrows_to_one_slot(
-    capsys: pytest.CaptureFixture[str],
+    capsys: pytest.CaptureFixture[str], install_registry: InstallRegistry
 ) -> None:
+    install_registry(
+        synthetic_registry(
+            specials={
+                "snipe": synthetic_special(slots=["range"]),
+                "hack": synthetic_special(slots=["assault"]),
+            }
+        )
+    )
+
     _list("--slot", "range")
     # A row is the UMAR column, then the label: read the label back off it
     # rather than counting columns.
     rows = (_ROW.match(line) for line in capsys.readouterr().out.splitlines())
     labels = {row["label"] for row in rows if row is not None}
 
-    assert "sniper" in labels
-    assert not any(label.startswith("assault_") for label in labels), (
+    assert labels == {"snipe"}, (
         "an assault-only Special has no place under --slot range"
     )
 
@@ -419,94 +508,222 @@ def show(key: str) -> None:
     app(["special", "show", key], exit_on_error=False, result_action="return_value")
 
 
+def _assault_race(specials: Specials, *, race: RaceName = "goblin") -> RaceConfig:
+    """Build a Race whose one Model carries the given Assault Instances."""
+    return synthetic_race(
+        race=race,
+        models={
+            "soldier": synthetic_model(
+                race=race, assault=synthetic_assault(specials=specials)
+            )
+        },
+    )
+
+
+def _ranged(name: str, specials: Specials) -> EquipmentConfig:
+    """Build an Equipment with a range profile, carrying Range Instances."""
+    return synthetic_equipment(
+        name=name,
+        range={
+            "range": 12,
+            "angle": [True, False, False, False],
+            "damage": "d6",
+            "ap": 0,
+            "specials": specials,
+        },
+    )
+
+
+def _shelf(*equipment: EquipmentConfig) -> dict[str, EquipmentConfig]:
+    """Stock a Race's shelf: the Default the Model carries, then the Upgrades."""
+    default = synthetic_equipment(name="Knife", cost=None, upgrade_all=None)
+    return {"knife": default} | {item.name.lower(): item for item in equipment}
+
+
 def test_show_accepts_a_key_in_the_wrong_case(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # The key is canonicalised, so the shouted spelling finds the same rows the
     # canonical one does rather than being rejected.
-    show("ORK_REROLL")
+    install_registry(synthetic_registry(specials={"reroll": _assault_rule()}))
+    install_races(_assault_race({"reroll": [SpecialInstance()]}))
+
+    show("REROLL")
     canonical = capsys.readouterr().out
-    show("ork_reroll")
-    assert "A  Model:     Grunt" in canonical
+    show("reroll")
+
+    assert "A  Model:     Soldier" in canonical
     assert capsys.readouterr().out == canonical
 
 
-def test_show_reports_range_specials(capsys: pytest.CaptureFixture[str]) -> None:
-    show("sniper")
-    out = capsys.readouterr().out
-    assert "R Equipment: Sniper Rifle" in out
+def test_show_reports_range_specials(
+    capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
+) -> None:
+    install_registry(
+        synthetic_registry(specials={"snipe": synthetic_special(slots=["range"])})
+    )
+    install_races(
+        synthetic_race(
+            equipment=_shelf(_ranged("Rifle", {"snipe": [SpecialInstance()]}))
+        )
+    )
+
+    show("snipe")
+
+    assert "R Equipment: Rifle" in capsys.readouterr().out
 
 
 def test_show_reports_every_instance_a_holder_carries(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # A slot holds N Instances of an id, so a holder with two Resistances is
     # two rows rather than the one a label dict could hold.
-    show("resistance")
+    install_registry(
+        synthetic_registry(specials={"resist": synthetic_special(slots=["model"])})
+    )
+    install_races(
+        synthetic_race(
+            equipment=_shelf(
+                synthetic_equipment(
+                    name="Coat",
+                    model_specials={
+                        "resist": [
+                            SpecialInstance(text="Against fire."),
+                            SpecialInstance(text="Against acid."),
+                        ]
+                    },
+                )
+            )
+        )
+    )
+
+    show("resist")
     rows = [
         line
         for line in capsys.readouterr().out.splitlines()
-        if "Equipment: Trench Coat of Resistance" in line
+        if "Equipment: Coat" in line
     ]
+
     assert len(rows) == 2
 
 
 def test_show_names_an_instance_that_renamed_itself(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # An atmospheric name is what the reader could not have guessed from the id.
+    install_registry(synthetic_registry(specials={"to_hit": _assault_rule()}))
+    install_races(
+        _assault_race(
+            {"to_hit": [SpecialInstance(name="Excellent Shot", text="Ignores cover.")]}
+        )
+    )
+
     show("to_hit")
-    assert "Enhanced Arrow: Excellent Shot" in capsys.readouterr().out
+
+    assert "Excellent Shot: Ignores cover." in capsys.readouterr().out
 
 
-def test_show_suggests_a_near_miss() -> None:
-    with pytest.raises(CycloptsError, match=r'Did you mean "ork_reroll"\?'):
-        show("ork_rerol")
+def test_show_suggests_a_near_miss(install_registry: InstallRegistry) -> None:
+    install_registry(synthetic_registry(specials={"reroll": None}))
+
+    with pytest.raises(CycloptsError, match=r'Did you mean "reroll"\?'):
+        show("rerol")
 
 
-def test_show_points_at_the_listing_command_for_nonsense() -> None:
+def test_show_points_at_the_listing_command_for_nonsense(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry(synthetic_registry(specials={"reroll": None}))
+
     with pytest.raises(CycloptsError, match=r"spf rules specials"):
         show("zzz")
 
 
 def test_show_prints_the_display_name_and_the_rule_text(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # Short fragments, not whole paragraphs: this output wraps to the console
     # width, so a long phrase can straddle a break.
-    show("cunning_assault")
+    install_registry(
+        synthetic_registry(
+            specials={
+                "cunning": synthetic_special(
+                    name="Cunning Assault",
+                    effect="Halve the assault successes assigned to this Unit.",
+                )
+            }
+        )
+    )
+    install_races(synthetic_race())
+
+    show("cunning")
     out = unwrapped(capsys.readouterr().out)
 
     assert "Cunning Assault" in out
-    assert REGISTRY.specials["cunning_assault"].effect is not None
     assert "assault successes assigned" in out
 
 
 def test_show_keeps_a_signatures_brackets(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # A Signature is full of square brackets, which are Rich's own markup:
     # printed raw, `[{N}]` would vanish as a tag.
-    show("ork_reroll")
+    install_registry(
+        synthetic_registry(
+            specials={
+                "reroll": synthetic_special(
+                    signature="[{N}]", variables={"N": {"type": "int", "min": 1}}
+                )
+            }
+        )
+    )
+    install_races(synthetic_race())
 
-    assert "ork_reroll[{N}]" in capsys.readouterr().out
+    show("reroll")
+
+    assert "reroll[{N}]" in capsys.readouterr().out
 
 
 def test_show_heads_the_instances_with_their_own_word(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
-    lines = _lines(show, "ork_reroll", capsys=capsys)
+    install_registry(synthetic_registry(specials={"reroll": _assault_rule()}))
+    install_races(_assault_race({"reroll": [SpecialInstance()]}))
+
+    lines = _lines(show, "reroll", capsys=capsys)
 
     assert "Instances" in lines
-    assert lines.index("Instances") < lines.index("Ork (ork)")
+    assert lines.index("Instances") < lines.index("Goblin (goblin)")
 
 
 def test_show_skips_a_race_holding_no_instance(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # A Race with nothing to contribute is silent: the heading is what says
     # "this Race holds one".
-    show("ork_reroll")
+    install_registry(synthetic_registry(specials={"reroll": _assault_rule()}))
+    install_races(
+        _assault_race({"reroll": [SpecialInstance()]}, race="ork"),
+        synthetic_race(race="goblin"),
+    )
+
+    show("reroll")
     out = capsys.readouterr().out
 
     assert "(ork)" in out
@@ -515,10 +732,15 @@ def test_show_skips_a_race_holding_no_instance(
 
 def test_show_says_so_when_no_race_uses_a_special(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # Silence under a heading is indistinguishable from a bug, and
     # "defined but unused" is real information about this Registry.
-    lines = _lines(show, "insanity_field", capsys=capsys)
+    install_registry(synthetic_registry(specials={"unused": None}))
+    install_races(synthetic_race())
+
+    lines = _lines(show, "unused", capsys=capsys)
 
     assert lines[lines.index("Instances") + 1] == "(none)"
 
@@ -526,42 +748,48 @@ def test_show_says_so_when_no_race_uses_a_special(
 def test_show_states_that_it_skipped_a_race_that_does_not_validate(
     capsys: pytest.CaptureFixture[str],
     monkeypatch: pytest.MonkeyPatch,
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # Tolerant listing (ADR 0004) keeps going, but a skipped Race reads as a
     # Race with no Instances unless the skip is stated.
-    broken = pydantic.ValidationError.from_exception_data("RaceConfig", [])
-    real_get_race = races.get_race
+    install_registry(synthetic_registry(specials={"reroll": _assault_rule()}))
+    install_races(_assault_race({"reroll": [SpecialInstance()]}))
+    _break_race("goblin", monkeypatch=monkeypatch)
 
-    def get_race(race_name: RaceName) -> RaceConfig:
-        if race_name == "goblin":
-            raise broken
-        return real_get_race(race_name)
-
-    monkeypatch.setattr(races, "get_race", get_race)
-    show("ork_reroll")
+    show("reroll")
 
     assert "goblin: skipped (does not validate)" in capsys.readouterr().out
 
 
 def test_show_heads_a_race_with_its_display_name_and_slug(
     capsys: pytest.CaptureFixture[str],
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # The name the reader knows, plus the id they can type into the next
     # command — one line, as a Ref is printed.
-    lines = _lines(show, "ork_reroll", capsys=capsys)
+    install_registry(synthetic_registry(specials={"reroll": _assault_rule()}))
+    install_races(_assault_race({"reroll": [SpecialInstance()]}))
 
-    assert "Ork (ork)" in lines
-    assert "ork" not in lines
+    lines = _lines(show, "reroll", capsys=capsys)
+
+    assert "Goblin (goblin)" in lines
+    assert "goblin" not in lines
 
 
 def test_show_survives_a_display_name_that_looks_like_markup(
     capsys: pytest.CaptureFixture[str],
-    monkeypatch: pytest.MonkeyPatch,
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # A Display Name is author prose, and Rich reads a closing tag in it as an
     # error rather than as text.
-    registry = _registry(aim=_rule(name="Aim [/] Fire", effect="Aim."))
-    monkeypatch.setattr("spf.frontends.cli.special.load_registry", lambda: registry)
+    install_registry(
+        synthetic_registry(specials={"aim": synthetic_special(name="Aim [/] Fire")})
+    )
+    install_races(synthetic_race())
+
     show("aim")
 
     assert "Aim [/] Fire" in capsys.readouterr().out
@@ -570,18 +798,15 @@ def test_show_survives_a_display_name_that_looks_like_markup(
 def test_show_qualifies_none_when_a_race_was_skipped(
     capsys: pytest.CaptureFixture[str],
     monkeypatch: pytest.MonkeyPatch,
+    install_registry: InstallRegistry,
+    install_races: InstallRaces,
 ) -> None:
     # "Unused" is only a claim about the Races that loaded; a skipped one may
     # hold the very Instances this line says there are none of.
-    broken = pydantic.ValidationError.from_exception_data("RaceConfig", [])
-    real_get_race = races.get_race
+    install_registry(synthetic_registry(specials={"unused": None}))
+    install_races(synthetic_race())
+    _break_race("goblin", monkeypatch=monkeypatch)
 
-    def get_race(race_name: RaceName) -> RaceConfig:
-        if race_name == "goblin":
-            raise broken
-        return real_get_race(race_name)
-
-    monkeypatch.setattr(races, "get_race", get_race)
-    lines = _lines(show, "insanity_field", capsys=capsys)
+    lines = _lines(show, "unused", capsys=capsys)
 
     assert lines[-1] == "(none in the Races that validate)"

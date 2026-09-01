@@ -2,6 +2,10 @@
 # Session scratch (uncommitted working notes)
 .scratch/
 
+# On-demand refactoring baseline (docs/agents/testing.md)
+goldens/
+.goldens-*/
+
 # Rendered output
 output/
 *.pdf
