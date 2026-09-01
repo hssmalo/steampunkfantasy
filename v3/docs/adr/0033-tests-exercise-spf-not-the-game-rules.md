@@ -1,14 +1,15 @@
 # Tests exercise `spf`, not the game rules
 
-The suite is 1306 tests and runs in 38 seconds. Speed was never the problem.
+When this decision was taken the suite was 1306 tests running in 38 seconds —
+fast enough that nobody was waiting on it. The trouble was not how long the
+tests took but what they were *about*.
 
-The problem is what the tests are *about*. Rebalancing a Unit's cost, renaming a
-Model, rewording a Special's prose, adding an Equipment — the ordinary work of
-writing a wargame — turned tests red. Not because anything broke, but because a
-test had written the old value down. The suite had quietly become a second copy
-of the game data, and the second copy has to be edited every time the first one
-is. A test suite that taxes the activity the project exists to support is
-working against it.
+Rebalancing a Unit's cost, renaming a Model, rewording a Special's prose, adding
+an Equipment — the ordinary work of writing a wargame — turned tests red. Not
+because anything broke, but because a test had written the old value down. The
+suite had quietly become a second copy of the game data, and the second copy has
+to be edited every time the first one is. A test suite that taxes the activity
+the project exists to support is working against it.
 
 ## Decision
 
@@ -80,7 +81,9 @@ that needed them lands. Same tool, with the lifetime it should always have had.
 
 ## Consequences
 
-- Roughly 120 tests are removed or converted to synthetic data.
+- The suite goes from 1306 tests to 1249. The gap understates the work: most of
+  the tests that pinned data were rewritten against synthetic fixtures rather
+  than deleted.
 - 18 golden files and 7602 lines of expected output are deleted.
 - LaTeX compilation is no longer verified by `just check`. It is still exercised
   by `just render-site`, which builds every Product to PDF.

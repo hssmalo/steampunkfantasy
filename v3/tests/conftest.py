@@ -45,7 +45,7 @@ from types import ModuleType  # noqa: E402
 from typing import cast  # noqa: E402
 
 import pytest  # noqa: E402
-import tomli_w  # noqa: E402
+import tomlkit  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
 
 from spf import registry as reg  # noqa: E402
@@ -229,7 +229,7 @@ def write_race_toml(directory: Path, race: RaceConfig) -> Path:
     `config.paths.races` at the directory to load it back.
     """
     path = directory / f"{next(iter(race.races))}.toml"
-    path.write_text(tomli_w.dumps(cast("dict[str, object]", _toml_ready(race))))
+    path.write_text(tomlkit.dumps(cast("dict[str, object]", _toml_ready(race))))
     return path
 
 
