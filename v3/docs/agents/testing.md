@@ -47,6 +47,12 @@ formatting worth pinning, so editing a production template cannot break them.
 When the behavior you want is one tier down — what the renderer *decided*, not
 how it was typeset — assert on the view model instead of on rendered text.
 
+The consequence is deliberate and worth stating plainly: **`just render-site`
+is the only thing that exercises the real templates.** Nothing in `just check`
+will notice a template that stopped compiling or started laying a page out
+wrongly. Run `just render-site` and look at the output before a release, and
+after any edit under `templates/`.
+
 ## No committed expected-output files
 
 There are no golden files in the repository, and none should be added.
