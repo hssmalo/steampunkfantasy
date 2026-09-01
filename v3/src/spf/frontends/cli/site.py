@@ -127,9 +127,8 @@ class SiteLine:
 class SiteSection:
     """One Landing Page section: an optional heading, a table, trailing lines.
 
-    Deliberately generic. The Landing Page knows nothing about Army Packs or
-    Races; the builders below hold that knowledge, so a further kind of section
-    is a further builder rather than an edit to the renderer (ADR 0035).
+    Deliberately generic: the builders below, not the renderer, know what an
+    Army Pack or a Race looks like (ADR 0035).
     """
 
     heading: str | None
@@ -163,25 +162,29 @@ def loose_section(product: str, pages: Sequence[SitePage]) -> SiteSection:
     )
 
 
+def _rows_by_label(
+    pages: Sequence[SitePage], products: Sequence[str]
+) -> tuple[SiteRow, ...]:
+    """Group pages into one row per label, a cell per Product, in page order."""
+    by_label: dict[str, dict[str, list[SitePage]]] = {}
+    for page in pages:
+        by_label.setdefault(page.label, {}).setdefault(page.product, []).append(page)
+
+    return tuple(
+        SiteRow(
+            label=label,
+            # A row the site did not fully render gets an empty cell: the page
+            # cannot advertise a link to something that failed to render.
+            cells=tuple(tuple(by_product.get(product, [])) for product in products),
+        )
+        for label, by_product in by_label.items()
+    )
+
+
 def pack_section(
     heading: str, army_pages: Sequence[SitePage], pack_pages: Sequence[SitePage]
 ) -> SiteSection:
     """Build one Army Pack's section: a row per Army, the Pack document below."""
-    armies: dict[str, dict[str, list[SitePage]]] = {}
-    for page in army_pages:
-        armies.setdefault(page.label, {}).setdefault(page.product, []).append(page)
-
-    rows = tuple(
-        SiteRow(
-            label=label,
-            # An Army the site did not fully render gets an empty cell: the
-            # page cannot advertise a link to something that failed to render.
-            cells=tuple(
-                tuple(by_product.get(product, [])) for product in _ARMY_PRODUCTS
-            ),
-        )
-        for label, by_product in armies.items()
-    )
     lines = (
         (SiteLine(label=_product_title(ARMY_PACK.name), pages=tuple(pack_pages)),)
         if pack_pages
@@ -190,24 +193,17 @@ def pack_section(
     return SiteSection(
         heading=heading,
         columns=("Army", *(_product_title(p) for p in _ARMY_PRODUCTS)),
-        rows=rows,
+        rows=_rows_by_label(army_pages, _ARMY_PRODUCTS),
         lines=lines,
     )
 
 
 def race_section(heading: str, pages: Sequence[SitePage]) -> SiteSection:
     """Build the Races section: one Race Overview column, one row per Race."""
-    by_race: dict[str, list[SitePage]] = {}
-    for page in pages:
-        by_race.setdefault(page.label, []).append(page)
-
     return SiteSection(
         heading=heading,
         columns=("Race", _product_title(RACE_OVERVIEW.name)),
-        rows=tuple(
-            SiteRow(label=label, cells=(tuple(race_pages),))
-            for label, race_pages in by_race.items()
-        ),
+        rows=_rows_by_label(pages, (RACE_OVERVIEW.name,)),
         lines=(),
     )
 
@@ -307,7 +303,16 @@ def _load_packs(site_index: SiteConfig) -> list[_LoadedPack]:
     return packs
 
 
-def _load_races(site_index: SiteConfig) -> list[tuple[t.RaceName, RaceConfig]]:
+@dataclass(frozen=True)
+class _LoadedRace:
+    """One published Race, with the catalogue and display name it resolved to."""
+
+    name: t.RaceName
+    label: str
+    config: RaceConfig
+
+
+def _load_races(site_index: SiteConfig) -> list[_LoadedRace]:
     """Load every Race the Site Index names, in Index order.
 
     Up front, with the packs: a Race the index names but disk lacks must fail
@@ -315,26 +320,33 @@ def _load_races(site_index: SiteConfig) -> list[tuple[t.RaceName, RaceConfig]]:
     """
     if site_index.races is None:
         return []
-    return [(race, races.get_race(race)) for race in site_index.races.publish]
+    loaded = []
+    for race in site_index.races.publish:
+        race_config = races.get_race(race)
+        loaded.append(
+            _LoadedRace(
+                name=race, label=race_config.races[race].name, config=race_config
+            )
+        )
+    return loaded
 
 
 def _render_races(
-    heading: str,
-    loaded: Sequence[tuple[t.RaceName, RaceConfig]],
-    *,
-    output_root: Path,
+    heading: str, loaded: Sequence[_LoadedRace], *, output_root: Path
 ) -> SiteSection:
     """Render a Race Overview per named Race and build the Races section."""
     pages: list[SitePage] = []
-    for race, race_config in loaded:
+    for race in loaded:
         # The Race Name is the stem: it is the name of the TOML file the
         # catalogue was read from, so it needs no slugifying.
-        overview = build_overview(race_config, stem=race, image_for=committed_image)
+        overview = build_overview(
+            race.config, stem=race.name, image_for=committed_image
+        )
         pages += _render_page(
             RACE_OVERVIEW,
             overview,
-            name=race,
-            label=race_config.races[race].name,
+            name=race.name,
+            label=race.label,
             output_root=output_root,
         )
     return race_section(heading, pages)
@@ -380,10 +392,10 @@ def render_site() -> None:
 
     Builds the Rulebook, then a Race Overview per Race the Site Index names,
     then every Army Pack it names: each Army's Reference and Order Cards, and
-    the Pack document itself. Fails the whole
-    build on any error rather than publishing a partial site -- a
-    stale-but-complete site degrades safely, a silently incomplete one does not
-    (extends ADR 0022 from one Product to the whole site).
+    the Pack document itself. Fails the whole build on any error rather than
+    publishing a partial site -- a stale-but-complete site degrades safely, a
+    silently incomplete one does not (extends ADR 0022 from one Product to the
+    whole site).
     """
     output_root = config.paths.output
     try:
