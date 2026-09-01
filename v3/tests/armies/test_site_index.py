@@ -10,25 +10,26 @@ from spf.schemas.site import SiteConfig, SitePackConfig, SiteRacesConfig
 
 VALID_INDEX = """\
 [[packs]]
-pack = "showcase"
-heading = "Showcase Armies"
+pack = "dummy-b"
+heading = "Dummy Pack B"
 
 [[packs]]
-pack = "2025"
-heading = "2025 Armies"
+pack = "dummy-a"
+heading = "Dummy Pack A"
 """
 
 
 def test_index_lists_its_packs_in_order() -> None:
+    """The list is authored order, which nothing sorts on the way through."""
     index = SiteConfig(
         packs=[
-            SitePackConfig(pack="showcase", heading="Showcase Armies"),
-            SitePackConfig(pack="2025", heading="2025 Armies"),
+            SitePackConfig(pack="dummy-b", heading="Dummy Pack B"),
+            SitePackConfig(pack="dummy-a", heading="Dummy Pack A"),
         ]
     )
 
-    assert [entry.pack for entry in index.packs] == ["showcase", "2025"]
-    assert index.packs[0].heading == "Showcase Armies"
+    assert [entry.pack for entry in index.packs] == ["dummy-b", "dummy-a"]
+    assert index.packs[0].heading == "Dummy Pack B"
 
 
 def test_index_requires_packs() -> None:
@@ -44,7 +45,7 @@ def test_index_rejects_an_empty_pack_list() -> None:
 def test_index_rejects_an_unknown_key() -> None:
     with pytest.raises(ValidationError, match="extra"):
         SiteConfig(  # pyright: ignore[reportCallIssue]
-            packs=[SitePackConfig(pack="showcase", heading="Showcase Armies")],
+            packs=[SitePackConfig(pack="dummy-a", heading="Dummy Pack A")],
             title="nope",  # pyright: ignore[reportCallIssue]
         )
 
@@ -52,15 +53,15 @@ def test_index_rejects_an_unknown_key() -> None:
 def test_index_rejects_an_unknown_key_on_an_entry() -> None:
     with pytest.raises(ValidationError, match="extra"):
         SitePackConfig(  # pyright: ignore[reportCallIssue]
-            pack="showcase",
-            heading="Showcase Armies",
+            pack="dummy-a",
+            heading="Dummy Pack A",
             title="nope",  # pyright: ignore[reportCallIssue]
         )
 
 
 def test_entry_requires_a_heading() -> None:
     with pytest.raises(ValidationError, match="heading"):
-        SitePackConfig(pack="showcase")  # pyright: ignore[reportCallIssue]
+        SitePackConfig(pack="dummy-a")  # pyright: ignore[reportCallIssue]
 
 
 def test_get_site_index_parses_a_toml_file(tmp_path: Path) -> None:
@@ -69,11 +70,8 @@ def test_get_site_index_parses_a_toml_file(tmp_path: Path) -> None:
 
     index = io.get_site_index(path)
 
-    assert [entry.pack for entry in index.packs] == ["showcase", "2025"]
-    assert [entry.heading for entry in index.packs] == [
-        "Showcase Armies",
-        "2025 Armies",
-    ]
+    assert [entry.pack for entry in index.packs] == ["dummy-b", "dummy-a"]
+    assert [entry.heading for entry in index.packs] == ["Dummy Pack B", "Dummy Pack A"]
 
 
 RACES_INDEX = """\
