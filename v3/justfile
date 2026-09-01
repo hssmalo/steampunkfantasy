@@ -53,16 +53,17 @@ fix:
     uv run ruff check --fix -q
     uv run ruff format -q
 
-# Validate all toml files
+# Load every committed Race, Army and rule registry; the real-data smoke check.
 validate:
-    uv run spf race show abomination > /dev/null
-    uv run spf race show darkelf > /dev/null
-    uv run spf race show dwarf > /dev/null
-    uv run spf race show elf > /dev/null
-    uv run spf race show gnome > /dev/null
-    uv run spf race show goblin > /dev/null
-    uv run spf race show ork > /dev/null
-    uv run spf race show ogre > /dev/null
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for race_file in races/*.toml; do
+        race_name="$(basename "${race_file}" .toml)"
+        uv run spf race show "${race_name}" > /dev/null
+    done
+    find armies -name '*.json' -printf '%P\n' | sort | while read -r army_file; do
+        uv run spf army show "${army_file%.json}" > /dev/null
+    done
     uv run spf rules hexes > /dev/null
     uv run spf rules specials > /dev/null
     uv run spf rules tokens > /dev/null
