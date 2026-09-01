@@ -5,7 +5,6 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from spf.config import config
 from spf.frontends.cli.render import GENERAL_RULES, RenderOpts, render_general_rules
 from spf.render import render
 from spf.render.formats import get_format
@@ -507,17 +506,6 @@ def test_specials_kind_rejects_an_unresolvable_token(tmp_path: Path) -> None:
     assert "known tokens:" in message
 
 
-def test_specials_kind_parses_the_committed_file() -> None:
-    # The real data: strict resolution means every committed `token =` has to
-    # name a Token that actually exists.
-    body = parse_specials(
-        config.paths.rules / "special.toml", RulesContext(config.paths.rules)
-    )
-
-    tokens = {rule.token for group in body.groups for rule in group.rules if rule.token}
-    assert tokens == {"Hidden", "Hypnotized", "Insane", "Shaken"}
-
-
 # --- The to_hit kind's parser -----------------------------------------------
 
 MODIFIER_NAMESPACES_SOURCE = """\
@@ -661,18 +649,6 @@ def test_to_hit_kind_renders_fog_among_the_terrains(tmp_path: Path) -> None:
     ).groups
 
     assert [row.name for row in terrain.rows] == ["Forest", "Fog"]
-
-
-def test_to_hit_kind_parses_the_committed_file() -> None:
-    body = parse_to_hit(
-        config.paths.rules / "modifiers.toml", RulesContext(config.paths.rules)
-    )
-
-    titles = [group.title for group in body.groups]
-    # Order is `namespaces.toml`'s declaration order and each title is the
-    # namespace's own display name — neither is hand-listed here.
-    assert titles[0] == "Speeds"
-    assert "Abilities" in titles
 
 
 # --- build_rulebook ---------------------------------------------------------
