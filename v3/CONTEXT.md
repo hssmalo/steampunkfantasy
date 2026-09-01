@@ -19,12 +19,13 @@ A player's fielded force, built from a single Race.
 _Avoid_: team, roster, list
 
 **Showcase Army**:
-A ready-made Army that demonstrates a Race by spending the full budget — 96 in
-each of the four Cost dimensions — while using as few distinct combinations of
-Unit and Equipment as possible. It is the beginner's on-ramp: an Army a new
-player can pick up and learn the game with before designing one of their own.
-Where the rules treat the budget as a ceiling, a Showcase Army is built to meet
-it exactly.
+A ready-made Army that demonstrates a Race, built for simplicity and
+beginner-friendliness: it uses as few distinct combinations of Unit and
+Equipment as it can while still showing what the Race is about. It is the
+beginner's on-ramp — an Army a new player can pick up and learn the game with
+before designing one of their own. It spends within the budget like any other
+Army but is under no obligation to exhaust it; buying the last few points may
+not be worth the complexity it adds.
 _Avoid_: sample army, starter army, demo army
 
 **Unit**:

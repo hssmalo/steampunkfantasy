@@ -2,7 +2,6 @@
 
 import json
 from pathlib import Path
-from typing import Any
 
 import pytest
 
@@ -369,42 +368,6 @@ def test_every_saved_army_loads_and_validates(army_name: str) -> None:
     them here would turn every balance change into a failing test.
     """
     assert isinstance(load_army(army_name), Army)
-
-
-# Showcase Armies known to miss the budget, with what they are short. Each is a
-# defect to fix in the Army, not an exemption: the marks are strict, so closing
-# one flips this test red until its entry is removed.
-_UNDERSPENT_SHOWCASE = {"showcase/elf": "16mp short of the 96mp budget"}
-
-
-def _showcase_army_names() -> list[Any]:
-    """Every committed Showcase Army, discovered rather than listed."""
-    showcase = config.paths.armies / "showcase"
-    names = sorted(f"showcase/{path.stem}" for path in showcase.glob("*.json"))
-    return [
-        pytest.param(
-            name,
-            marks=pytest.mark.xfail(reason=reason, strict=True)
-            if (reason := _UNDERSPENT_SHOWCASE.get(name))
-            else (),
-        )
-        for name in names
-    ]
-
-
-@pytest.mark.parametrize("army_name", _showcase_army_names())
-def test_showcase_army_spends_the_full_budget(army_name: str) -> None:
-    """Check that every Showcase Army spends all 96 points in all four dimensions.
-
-    Unlike a player's Army, a Showcase Army exists to demonstrate a Race at the
-    full budget, so an unspent point is a defect rather than a choice. That makes
-    the totals worth pinning here even though
-    `test_every_saved_army_loads_and_validates` deliberately pins none: when a
-    balance change moves a Cost, the Showcase Army genuinely needs rebuilding,
-    and this is what says so.
-    """
-    cost = load_army(army_name).cost()
-    assert (cost.ip, cost.mp, cost.xp, cost.cp) == (96, 96, 96, 96)
 
 
 def test_load_multiple_invalid_entries_reported_together(armies_dir: Path) -> None:
