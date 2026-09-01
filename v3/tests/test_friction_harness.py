@@ -8,8 +8,9 @@ from pathlib import Path
 from typing import Any, cast
 
 import pytest
-import test_friction as friction
 import tomlkit
+
+import test_friction as friction
 
 RACE_TOML = """\
 [races]

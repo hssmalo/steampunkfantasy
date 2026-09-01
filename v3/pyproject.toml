@@ -67,6 +67,12 @@ ignore = [
 
 ]
 
+[tool.ruff.lint.isort]
+# Both live in scripts/, which is on pytest's pythonpath but is not an import
+# root, so classify them explicitly: otherwise a gitignored goldens/ directory
+# left by a snapshot flips `goldens` from third- to first-party.
+known-first-party = ["goldens", "test_friction"]
+
 [tool.ruff.lint.per-file-ignores]
 # D101: Missing docstring in public class (OK for base models)
 # D103: Missing docstring in public function (OK for tests)
