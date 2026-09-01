@@ -34,6 +34,14 @@ def test_default_race_has_a_costed_and_an_uncosted_unit() -> None:
     assert [unit.cost is None for unit in units.values()] == [False, True]
 
 
+def test_a_race_can_borrow_a_second_races_name() -> None:
+    # A test about two Races needs two names, and a Race name is a closed set.
+    race = synthetic_race(race="ork")
+
+    assert race.races["ork"].name == "Ork"
+    assert [unit.race for unit in race.units.values()] == ["ork", "ork"]
+
+
 def test_default_race_model_declares_a_holder() -> None:
     model = synthetic_race().models["soldier"]
 

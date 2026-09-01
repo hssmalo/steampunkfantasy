@@ -159,6 +159,7 @@ def synthetic_equipment(**fields: object) -> EquipmentConfig:
 
 def synthetic_race(
     *,
+    race: t.RaceName = _RACE,
     units: dict[str, UnitConfig] | None = None,
     models: dict[str, ModelConfig] | None = None,
     equipment: dict[str, EquipmentConfig] | None = None,
@@ -168,21 +169,29 @@ def synthetic_race(
 
     The Model declares one Holder and carries one Default Equipment; one
     Upgrade Equipment is on the shelf for it.
+
+    `race` is which of the closed set of names this one borrows, for a test
+    that needs a second Race to tell one apart from another; its Display Name
+    follows, and the records passed in keep the name they were built with.
     """
     return RaceConfig(
-        races={_RACE: RaceMetadata(name="Goblin")},
+        races={race: RaceMetadata(name=race.title())},
         units=units
         if units is not None
         else {
-            "squad": synthetic_unit(),
-            "mob": synthetic_unit(name="Mob", cost=None),
+            "squad": synthetic_unit(race=race),
+            "mob": synthetic_unit(race=race, name="Mob", cost=None),
         },
-        models=models if models is not None else {"soldier": synthetic_model()},
+        models=models
+        if models is not None
+        else {"soldier": synthetic_model(race=race)},
         equipment=equipment
         if equipment is not None
         else {
-            "knife": synthetic_equipment(name="Knife", cost=None, upgrade_all=None),
-            "sword": synthetic_equipment(),
+            "knife": synthetic_equipment(
+                race=race, name="Knife", cost=None, upgrade_all=None
+            ),
+            "sword": synthetic_equipment(race=race),
         },
         spawns=spawns if spawns is not None else {},
     )

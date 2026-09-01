@@ -109,7 +109,7 @@ What they are:
 
 | Builder | Gives you |
 |---|---|
-| `synthetic_race(units=…, models=…, equipment=…, spawns=…)` | A `RaceConfig`: by default a costed and an uncosted Unit of one Model, which declares a Holder and carries a Default Equipment, with an Upgrade Equipment on the shelf |
+| `synthetic_race(race=…, units=…, models=…, equipment=…, spawns=…)` | A `RaceConfig`: by default a costed and an uncosted Unit of one Model, which declares a Holder and carries a Default Equipment, with an Upgrade Equipment on the shelf |
 | `synthetic_unit()` / `synthetic_model(holders=…)` / `synthetic_equipment()` / `synthetic_assault()` | One record each, every unnamed field filled in |
 | `synthetic_registry(specials=…, records=…)` | A `Registry` over ids you invent |
 | `synthetic_special(slots=…)` | One Special rule |
