@@ -498,11 +498,12 @@ def test_a_case_shaped_instances_own_variant_is_checked_too() -> None:
 
 
 def test_the_committed_registries_load() -> None:
+    # That every declared namespace was loaded, not which records it holds:
+    # naming one here would make adding or renaming a rule a test edit.
     registry = reg.load_registry()
 
     assert set(registry.namespaces) == set(registry.records)
-    assert "resistance" in registry.records["special"]
-    assert registry.records["damage_type"]["acid"].name == "Acid"
+    assert all(registry.records[namespace] for namespace in registry.namespaces)
 
 
 def test_a_record_is_resolved_by_its_qualified_ref() -> None:
