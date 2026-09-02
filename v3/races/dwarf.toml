@@ -484,7 +484,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.zap.specials.fire_order]]
-text = "Fire and load all weapons at the same time"
+variant = "fire_and_load_simultaneously"
 
 [[units.zap.specials.resistance]]
 args.version = "damage_type.fire"

@@ -341,7 +341,7 @@ movement_order = ["-", "-", "-"]
 text = "May transport up to 2 infantry. Treat any movement in movement phase 3 order as including an optional +Deploy(range=1) order. May deploy directly in assault. If Battlewagon enters an assault, you may optionally deploy 1 infantry to join the assault."
 
 [[units.battlewagon.specials.fire_order]]
-text = "Fire all weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [units.battlewagon.damage_tables.Regular]
 rows = [

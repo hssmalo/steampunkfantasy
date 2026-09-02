@@ -269,7 +269,7 @@ description = '''An armored steampunk tractor firing a big ballista. On the back
 
 
 [[units.ballista_tractor_mark_i.specials.fire_order]]
-text = "Fires and loads both weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [units.ballista_tractor_mark_i.shaken]
 speed = "still"

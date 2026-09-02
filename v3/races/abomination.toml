@@ -94,7 +94,7 @@ args.M = 8
 text = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
 
 [[units.flagship.specials.fire_order]]
-text = "Fire and loads all weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [[units.flagship.specials.repair]]
 args.N = 3
