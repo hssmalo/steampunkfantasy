@@ -1843,7 +1843,7 @@ upgrade_all = true
 [equipment.assault_archer.assault]
 
 [[equipment.assault_archer.assault.specials.retreat]]
-text = "Unit gains aim if you manage to pre-assault escape"
+variant = "aim_after_pre_assault_retreat"
 
 [equipment.illusion_weapon]
 name = "Illusion Weapon"

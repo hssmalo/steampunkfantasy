@@ -1253,4 +1253,4 @@ upgrade_all = true
 [equipment.assault_archer.assault]
 
 [[equipment.assault_archer.assault.specials.retreat]]
-text = "Unit gains aim if you manage to pre-escape an assault"
+variant = "aim_after_pre_assault_retreat"

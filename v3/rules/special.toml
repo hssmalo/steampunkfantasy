@@ -78,6 +78,7 @@ see_also = ["special.pre_assault_retreat"]
 [special.retreat.variants]
 stuck_wagon_disconnects = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 retreat_when_winning = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+aim_after_pre_assault_retreat = "Unit gains aim if you manage to use Pre-Assault Retreat successfully"
 
 
 [special.assault_extra_damage]
