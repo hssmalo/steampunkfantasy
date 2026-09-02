@@ -1,6 +1,6 @@
 """The `spf lint` commands: one per corpus, plus `all`.
 
-Each command owns both gates over its corpus (ADR 0035). It loads the corpus
+Each command owns both gates over its corpus (ADR 0036). It loads the corpus
 itself, reports a failure to load as a Load finding, and reports Style findings
 only for the files that loaded — so a defect is reported once, at its cause,
 and never twice. Findings are collected across the whole corpus and printed

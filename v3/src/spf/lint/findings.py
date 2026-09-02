@@ -1,7 +1,7 @@
 """The one finding type every corpus reports, and the one way it is printed.
 
 A Load finding, a Build finding and a Style finding differ only in their `rule`
-column (ADR 0035), so one shape carries all three and one renderer prints them.
+column (ADR 0036), so one shape carries all three and one renderer prints them.
 """
 
 from collections.abc import Iterable

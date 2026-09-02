@@ -2,7 +2,7 @@
 
 One command per corpus owns both gates: it loads the corpus and reports a Load
 finding for anything that will not load, then reports Style findings only for
-the files that did (ADR 0035). Build findings sit between them — an Army that
+the files that did (ADR 0036). Build findings sit between them — an Army that
 loads but asks its Race for something the Race does not offer. The linter flags
 -- it never fixes.
 """
