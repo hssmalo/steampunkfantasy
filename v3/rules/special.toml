@@ -519,6 +519,9 @@ name = "Heads"
 slots = ["unit"]
 todo = "Rule text not yet written: the hydras track functional heads, and their spits, regeneration and assault all scale with the count."
 
+[special.heads.variants]
+six_minor_heads = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+
 [special.hidden]
 name = "Hidden"
 slots = ["unit"]

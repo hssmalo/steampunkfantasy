@@ -31,7 +31,7 @@ movement_order = ["-", "-", "flee"]
 variant = "heal_per_head"
 
 [[units.ogre_hydra.specials.heads]]
-text = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+variant = "six_minor_heads"
 
 [[units.ogre_hydra.specials.fire_order]]
 text = "Breath weapon and poison spit always treated as loaded and used with Fire(H) orders. Crew weapons are used with Load(crew) and Fire(crew) orders"

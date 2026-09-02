@@ -25,7 +25,7 @@ movement_order = ["-", "-", "flee"]
 variant = "heal_per_head"
 
 [[units.elf_hydra.specials.heads]]
-text = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+variant = "six_minor_heads"
 
 [[units.elf_hydra.specials.fire_order]]
 text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
