@@ -1926,7 +1926,7 @@ args.N = 1
 text = "Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
 
 [[equipment.elven_seeker_arrows.range.specials.sniper]]
-text = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
+variant = "choose_model_after_aim"
 
 [equipment.bow_with_rocket_arrows]
 name = "Bow with Rocket Arrows"
