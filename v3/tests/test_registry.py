@@ -87,6 +87,18 @@ def _registry() -> reg.Registry:
                         },
                     }
                 ),
+                "fire_order": r.SpecialRuleConfig.model_validate(
+                    {
+                        "name": "Fire Order",
+                        "slots": ["unit"],
+                        "effect": "Fires {N} shots.",
+                        "variables": {"N": {"type": "int", "optional": True}},
+                        "variants": {
+                            "load_n_shots": "May load up to {N} shots",
+                            "fire_together": "Fire every weapon at once",
+                        },
+                    }
+                ),
             },
             "ability": {
                 "good_shot": r.ModifierRuleConfig.model_validate(
@@ -490,6 +502,93 @@ def test_a_case_shaped_instances_own_variant_is_checked_too() -> None:
     )
 
     assert any("no variant 'no_such_preamble'" in error for error in errors)
+
+
+# ---------------------------------------------------------------------------
+# Every placeholder the instance's prose writes is filled (ADR 0037)
+# ---------------------------------------------------------------------------
+
+
+def test_a_filled_placeholder_resolves() -> None:
+    errors = check({"fire_order": [{"variant": "load_n_shots", "args": {"N": 5}}]})
+
+    assert errors == []
+
+
+def test_a_variant_naming_an_argument_the_instance_omits_is_rejected() -> None:
+    errors = check({"fire_order": [{"variant": "load_n_shots"}]})
+
+    # `optional` is a claim about the variable, not about the prose naming it.
+    assert errors == [
+        "unit 'Squad': 'fire_order': variant 'load_n_shots' names {N},"
+        " and the instance gives no N"
+    ]
+
+
+def test_inline_prose_naming_an_argument_the_instance_omits_is_rejected() -> None:
+    # Checking only variants would make `text` the way around the gate.
+    errors = check({"fire_order": [{"text": "May load up to {N} shots"}]})
+
+    assert errors == [
+        "unit 'Squad': 'fire_order': prose names {N}, and the instance gives no N"
+    ]
+
+
+def test_a_variant_naming_no_placeholder_needs_no_argument() -> None:
+    errors = check({"fire_order": [{"variant": "fire_together"}]})
+
+    assert errors == []
+
+
+def test_a_case_may_supply_what_the_instance_omits() -> None:
+    errors = check(
+        {
+            "fire_order": [
+                {"cases": [{"variant": "load_n_shots", "args": {"N": 5}}]},
+            ]
+        }
+    )
+
+    assert errors == []
+
+
+def test_a_cases_prose_naming_an_unsupplied_argument_names_its_position() -> None:
+    errors = check(
+        {
+            "fire_order": [
+                {
+                    "cases": [
+                        {"variant": "load_n_shots", "args": {"N": 5}},
+                        {"variant": "load_n_shots"},
+                    ]
+                }
+            ]
+        }
+    )
+
+    assert errors == [
+        "unit 'Squad': 'fire_order', case 2: variant 'load_n_shots' names {N},"
+        " and the instance gives no N"
+    ]
+
+
+def test_a_preamble_does_not_see_the_args_its_cases_supply() -> None:
+    # The author's instinct is that the value is right there in the file below.
+    errors = check(
+        {
+            "fire_order": [
+                {
+                    "variant": "load_n_shots",
+                    "cases": [{"args": {"N": 5}}, {"args": {"N": 2}}],
+                }
+            ]
+        }
+    )
+
+    assert errors == [
+        "unit 'Squad': 'fire_order': a preamble scopes every case, so it sees"
+        " only the instance's args; N is given by cases 1 and 2"
+    ]
 
 
 # ---------------------------------------------------------------------------

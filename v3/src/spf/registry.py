@@ -15,6 +15,7 @@ from typing import cast
 
 from spf import rules
 from spf.config import config
+from spf.prose import PLACEHOLDER
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance, Specials
 
@@ -176,12 +177,26 @@ def _check_instance(
     """
     errors = _check_variant(instance.variant, rule=rule, where=where)
     if not instance.cases:
-        return errors + _check_args_in_scope(
-            instance.args, rule=rule, where=where, registry=registry
+        return (
+            errors
+            + _check_prose(
+                instance.text, instance.variant, instance.args, rule=rule, where=where
+            )
+            + _check_args_in_scope(
+                instance.args, rule=rule, where=where, registry=registry
+            )
         )
+    errors += _check_preamble(instance, rule=rule, where=where)
     for number, case in enumerate(instance.cases, start=1):
         scoped = f"{where}, case {number}"
         errors += _check_variant(case.variant, rule=rule, where=scoped)
+        errors += _check_prose(
+            case.text,
+            case.variant,
+            instance.args | case.args,
+            rule=rule,
+            where=scoped,
+        )
         errors += _check_args_in_scope(
             instance.args | case.args, rule=rule, where=scoped, registry=registry
         )
@@ -200,6 +215,95 @@ def _check_variant(
         return []
     defined = ", ".join(sorted(rule.variants)) or "none"
     return [f"{where}: no variant '{variant}'; the rule defines {defined}"]
+
+
+def _resolve_prose(
+    text: str | None, variant: str | None, *, rule: r.SpecialRuleConfig
+) -> str | None:
+    """Resolve the prose a slot carries, spelled inline or named (ADR 0032)."""
+    return text if variant is None else rule.variants.get(variant)
+
+
+def _unfilled(prose: str | None, args: dict[str, int | str]) -> list[str]:
+    """List the placeholders the prose writes that no arg fills (ADR 0037).
+
+    `{version.id}` names the same variable as `{version}`, so the raw-id suffix
+    is dropped: the regex already separates it.
+    """
+    if prose is None:
+        return []
+    names = dict.fromkeys(name for name, _ in PLACEHOLDER.findall(prose))
+    return [name for name in names if args.get(name) is None]
+
+
+def _check_prose(
+    text: str | None,
+    variant: str | None,
+    args: dict[str, int | str],
+    *,
+    rule: r.SpecialRuleConfig,
+    where: str,
+) -> list[str]:
+    """Check the prose slot names no placeholder its args leave open (ADR 0037).
+
+    Prose has no grammar for an absent value the way a signature's groups do,
+    so an unfilled one is a sentence the reader cannot use.
+    """
+    unfilled = _unfilled(_resolve_prose(text, variant, rule=rule), args)
+    if not unfilled:
+        return []
+    return [f"{where}: {_unfilled_message(variant, unfilled)}"]
+
+
+def _unfilled_message(variant: str | None, unfilled: list[str]) -> str:
+    """Say which prose left which placeholders open, and what the args lack."""
+    spelling = "prose" if variant is None else f"variant '{variant}'"
+    written = ", ".join(f"{{{name}}}" for name in unfilled)
+    return (
+        f"{spelling} names {written}, and the instance gives no {', '.join(unfilled)}"
+    )
+
+
+def _check_preamble(
+    instance: SpecialInstance, *, rule: r.SpecialRuleConfig, where: str
+) -> list[str]:
+    """Check the preamble, which scopes every case and so sees none of their args.
+
+    Reported apart from the other slots because the author's instinct will be
+    that the value is right there in the cases below (ADR 0037).
+    """
+    prose = _resolve_prose(instance.preamble, instance.variant, rule=rule)
+    unfilled = _unfilled(prose, instance.args)
+    supplied = {
+        name: [
+            number
+            for number, case in enumerate(instance.cases, start=1)
+            if case.args.get(name) is not None
+        ]
+        for name in unfilled
+    }
+    scoped = {name: cases for name, cases in supplied.items() if cases}
+    absent = [name for name, cases in supplied.items() if not cases]
+    errors = []
+    if scoped:
+        given = "; ".join(
+            f"{name} is given by {_cases(cases)}" for name, cases in scoped.items()
+        )
+        errors.append(
+            f"{where}: a preamble scopes every case, so it sees only the"
+            f" instance's args; {given}"
+        )
+    if absent:
+        errors.append(f"{where}: {_unfilled_message(instance.variant, absent)}")
+    return errors
+
+
+def _cases(numbers: list[int]) -> str:
+    """Name the cases by their 1-based position: "case 1", "cases 1 and 2"."""
+    written = [str(number) for number in numbers]
+    if len(written) == 1:
+        return f"case {written[0]}"
+    return f"cases {', '.join(written[:-1])} and {written[-1]}"
 
 
 def _check_args_in_scope(

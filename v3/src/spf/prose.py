@@ -7,9 +7,12 @@ over one grammar, so it lives here rather than inside any one of them.
 """
 
 import re
+from typing import TYPE_CHECKING
 
-from spf.registry import Registry
 from spf.schemas.rules import RuleRecord
+
+if TYPE_CHECKING:
+    from spf.registry import Registry
 
 PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
 """A variable slot: `{N}`, or `{version.id}` for the raw ref."""
@@ -21,7 +24,7 @@ _GROUP = re.compile(r"\[[^][]*\]")
 def fill(
     template: str,
     args: dict[str, int | str],
-    registry: Registry,
+    registry: "Registry",
     seen: frozenset[str] = frozenset(),
 ) -> str:
     """Fill every placeholder in `template` in with `args`.
@@ -53,7 +56,7 @@ def fill(
 def interpolate(
     rule: RuleRecord,
     args: dict[str, int | str],
-    registry: Registry,
+    registry: "Registry",
     seen: frozenset[str] = frozenset(),
 ) -> str:
     """Fill `rule`'s signature in with `args`.
