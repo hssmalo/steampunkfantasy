@@ -18,29 +18,21 @@ _GROUP = re.compile(r"\[[^][]*\]")
 """One bracketed group of a signature: `[{N}+]`, `[1 for {M}]`."""
 
 
-def interpolate(
-    rule: RuleRecord,
+def fill(
+    template: str,
     args: dict[str, int | str],
     registry: Registry,
     seen: frozenset[str] = frozenset(),
 ) -> str:
-    """Fill `rule`'s signature in with `args`.
+    """Fill every placeholder in `template` in with `args`.
 
     A bare `{var}` on a ref-valued argument renders the target's name, and the
     target's own signature after it: a ref's arguments travel with the ref, so
     the numbers an instance carries for the target print where the *target*
     declares them. `{var.id}` asks for the raw id instead.
     """
-    if not rule.signature:
-        return ""
 
-    def keep(match: re.Match[str]) -> str:
-        """Drop a group no argument fills, so an optional one reads as absent."""
-        names = [name for name, _ in PLACEHOLDER.findall(match.group(0))]
-        unfilled = all(args.get(name) is None for name in names)
-        return "" if names and unfilled else match.group(0)
-
-    def fill(match: re.Match[str]) -> str:
+    def substitute(match: re.Match[str]) -> str:
         name, raw_id = match.group(1), match.group(2)
         value = args.get(name)
         if value is None:
@@ -55,4 +47,31 @@ def interpolate(
         nested = interpolate(target, args, registry, seen | {str(value)})
         return f"{target.name}{nested}"
 
-    return PLACEHOLDER.sub(fill, _GROUP.sub(keep, rule.signature))
+    return PLACEHOLDER.sub(substitute, template)
+
+
+def interpolate(
+    rule: RuleRecord,
+    args: dict[str, int | str],
+    registry: Registry,
+    seen: frozenset[str] = frozenset(),
+) -> str:
+    """Fill `rule`'s signature in with `args`.
+
+    Only a signature has groups to elide: square brackets in prose are square
+    brackets, so the elision stays here rather than in `fill` (ADR 0037).
+    """
+    if not rule.signature:
+        return ""
+    return fill(_elide(rule.signature, args), args, registry, seen)
+
+
+def _elide(signature: str, args: dict[str, int | str]) -> str:
+    """Drop each group no argument fills, so an optional one reads as absent."""
+
+    def keep(match: re.Match[str]) -> str:
+        names = [name for name, _ in PLACEHOLDER.findall(match.group(0))]
+        unfilled = all(args.get(name) is None for name in names)
+        return "" if names and unfilled else match.group(0)
+
+    return _GROUP.sub(keep, signature)

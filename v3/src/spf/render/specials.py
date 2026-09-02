@@ -1,4 +1,4 @@
-"""Presenting Special instances: signature interpolation and grouping (ADR 0024).
+"""Presenting Special instances: interpolation and grouping (ADR 0024).
 
 The data layer keeps N instances of an id and never joins two of them, because
 joining their prose is a presentation decision. This is where that decision is
@@ -14,7 +14,7 @@ own occurrence.
 from collections.abc import Callable
 from typing import NamedTuple
 
-from spf.prose import interpolate
+from spf.prose import fill, interpolate
 from spf.registry import Registry, load_registry
 from spf.schemas.rules import RuleRecord, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance, Specials
@@ -62,21 +62,36 @@ def special_row(
     if instance.cases:
         return heading, _cases(instance, rule, registry)
     signature = _signature(rule, instance.args, registry)
-    prose = _prose(instance.text, instance.variant, rule)
+    prose = _prose(
+        instance.text,
+        instance.variant,
+        rule=rule,
+        args=instance.args,
+        registry=registry,
+    )
     return heading, _join(_PROSE_SEPARATOR, signature, prose)
 
 
 def _prose(
-    text: str | None, variant: str | None, rule: SpecialRuleConfig | None
+    text: str | None,
+    variant: str | None,
+    *,
+    rule: SpecialRuleConfig | None,
+    args: dict[str, int | str],
+    registry: Registry,
 ) -> str | None:
-    """Resolve the prose slot, spelled inline or drawn from the rule's variants.
+    """Resolve the prose slot and fill its placeholders from `args` (ADR 0037).
 
     Total by design (ADR 0032): an id resolving to nothing renders as no prose,
     because the load-time gate is what reports it and rendering must stay
     printable for a rule the registry does not hold at all.
     """
-    if variant is None:
-        return text
+    resolved = text if variant is None else _variant(variant, rule)
+    return None if resolved is None else fill(resolved, args, registry)
+
+
+def _variant(variant: str, rule: SpecialRuleConfig | None) -> str | None:
+    """Look up the prose a named variant spells, or nothing without one."""
     return rule.variants.get(variant) if rule is not None else None
 
 
@@ -85,20 +100,33 @@ def _cases(
 ) -> str:
     """Render a case-shaped instance: its preamble, then its cases (ADR 0030).
 
-    Each case fills the signature with its own args over the instance's, so a
-    value constant across the cases is written once. Cases that read alike are
-    both printed: they are hand-written in one array, where a repeat is a typo
-    the reader should see.
+    Each case fills the signature and its own prose with its own args over the
+    instance's, so a value constant across the cases is written once. A
+    preamble scopes every case, so it sees only the instance's own (ADR 0037).
+    Cases that read alike are both printed: they are hand-written in one array,
+    where a repeat is a typo the reader should see.
     """
     lines = [
         _join(
             _VALUES_SEPARATOR,
             _signature(rule, instance.args | case.args, registry),
-            _prose(case.text, case.variant, rule),
+            _prose(
+                case.text,
+                case.variant,
+                rule=rule,
+                args=instance.args | case.args,
+                registry=registry,
+            ),
         )
         for case in instance.cases
     ]
-    preamble = _prose(instance.preamble, instance.variant, rule)
+    preamble = _prose(
+        instance.preamble,
+        instance.variant,
+        rule=rule,
+        args=instance.args,
+        registry=registry,
+    )
     return _join(_PREAMBLE_SEPARATOR, preamble, _join(_CASE_SEPARATOR, *lines))
 
 
