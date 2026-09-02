@@ -1143,7 +1143,7 @@ variant = "point_blank"
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 5
-text = "within normal range"
+variant = "normal_range"
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 6
