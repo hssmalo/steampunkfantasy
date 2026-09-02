@@ -1576,7 +1576,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:AT Gun"]]
 
 [[equipment.hide.unit_specials.hidden]]
-text = "Start with a hidden token."
+variant = "start_with_token"
 
 [[equipment.hide.unit_specials.forward_position]]
 args.N = 1

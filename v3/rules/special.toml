@@ -526,6 +526,9 @@ places = ["token.hidden"]
 todo = "Rule text not yet written: every occurrence grants a hidden token at setup. The token carries the rule; decide whether this is Hide under another name."
 see_also = ["token.hidden", "special.hide"]
 
+[special.hidden.variants]
+start_with_token = "Start with a hidden token"
+
 [special.illusion]
 name = "Illusion"
 slots = ["unit"]

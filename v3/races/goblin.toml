@@ -151,7 +151,7 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [[units.tiny_snake.specials.hidden]]
-text = "Start with a hidden token"
+variant = "start_with_token"
 
 [[units.tiny_snake.specials.terror]]
 args.N = 1
@@ -1038,7 +1038,7 @@ args.N = -4
 args.N = 2
 
 [[equipment.commando.unit_specials.hidden]]
-text = "Start with a Hidden token."
+variant = "start_with_token"
 
 [[equipment.commando.unit_specials.forward_position]]
 args.N = 2

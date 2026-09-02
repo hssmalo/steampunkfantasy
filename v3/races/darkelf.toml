@@ -2010,7 +2010,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
 
 [[equipment.hide.unit_specials.hidden]]
-text = "Unit starts with a Hidden token"
+variant = "start_with_token"
 
 [[equipment.hide.unit_specials.forward_position]]
 args.N = 1
@@ -2032,7 +2032,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Mechanical"]]
 
 [[equipment.cloaking_device.unit_specials.hidden]]
-text = "Start with a Hidden token"
+variant = "start_with_token"
 
 [[equipment.cloaking_device.unit_specials.forward_position]]
 args.N = 1
@@ -2047,7 +2047,7 @@ race = "darkelf"
 requires = []
 
 [[equipment.hide_free.unit_specials.hidden]]
-text = "Start with Hidden token"
+variant = "start_with_token"
 
 [[equipment.hide_free.unit_specials.forward_position]]
 args.N = 1
