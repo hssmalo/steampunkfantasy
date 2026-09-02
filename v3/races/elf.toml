@@ -1506,7 +1506,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.thunderroar.range.specials.multiple_shots]]
-text = "May fire once to the right and once to the left each time you fire"
+variant = "left_and_right"
 
 [equipment.light_mortar]
 name = "Light Mortar"

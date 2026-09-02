@@ -893,7 +893,7 @@ damage = "d8 crew damage"
 ap = 0
 
 [[equipment.side_weapons.range.specials.multiple_shots]]
-text = "Fire once to the right and once to the left per fire order"
+variant = "left_and_right"
 
 [[equipment.side_weapons.range.specials.los]]
 variant = "los_from_front_or_back"

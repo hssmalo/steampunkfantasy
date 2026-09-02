@@ -844,6 +844,7 @@ see_also = ["special.burst"]
 [special.multiple_shots.variants]
 fires_twice = "Fires two times each time it is fired"
 fire_per_minor_head = "Fire one time per alive minor head"
+left_and_right = "Fire once to the right and once to the left per fire order"
 
 
 [special.multipurpose]
