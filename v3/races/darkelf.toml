@@ -2118,7 +2118,7 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.experimental_acid_smg.range.specials.ammo]]
-text = "Always treated as loaded."
+variant = "always_loaded"
 
 [[equipment.experimental_acid_smg.range.specials.multiple_shots]]
 variant = "fires_twice"
