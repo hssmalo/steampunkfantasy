@@ -314,7 +314,7 @@ movement_order = ["-", "-", "-"]
 text = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 
 [[units.drone_swarm.specials.repairing]]
-text = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+variant = "revive_drone"
 
 [[units.drone_swarm.specials.evasion]]
 args.N = 3
@@ -376,7 +376,7 @@ args.phase = "2nd Healing"
 text = "N is the number of alive repair drone models"
 
 [[units.repair_drone.specials.repairing]]
-text = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
+variant = "revive_drone"
 
 [[units.repair_drone.specials.evasion]]
 args.N = 3
@@ -411,7 +411,7 @@ args.phase = "2nd Healing"
 text = "N is the number of alive medic drone models"
 
 [[units.medic_drone.specials.repairing]]
-text = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
+variant = "revive_drone"
 
 [[units.medic_drone.specials.evasion]]
 args.N = 3

@@ -455,6 +455,9 @@ slots = ["unit"]
 todo = "Rule text not yet written. Distinct from Repair: the Race text extends what repairing this unit can do, and needs a name that says so."
 see_also = ["special.repair"]
 
+[special.repairing.variants]
+revive_drone = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone model at the cost of 2 repair points"
+
 [special.to_hit]
 name = "To Hit"
 slots = ["unit", "model"]
