@@ -17,19 +17,23 @@ def list_races(*, validate: bool = False) -> list[t.RaceName]:
         for path in sorted(config.paths.races.glob("*.toml"))
         if (
             (race := cast("t.RaceName", path.stem))
-            and (not validate or _race_validates(race))
+            and (not validate or race_load_error(race) is None)
         )
     ]
 
 
-def _race_validates(race_name: t.RaceName) -> bool:
-    """Check if the TOML definition of a race validates."""
+def race_load_error(race_name: t.RaceName) -> pydantic.ValidationError | None:
+    """Return why a Race will not load, or None when it loads.
+
+    The whole error rather than a message: `spf lint races` reports one Load
+    finding per pydantic error, which a flattened string cannot carry.
+    """
     try:
         get_race(race_name)
-    except pydantic.ValidationError:
-        return False
+    except pydantic.ValidationError as err:
+        return err
     else:
-        return True
+        return None
 
 
 def get_race(race: t.RaceName) -> r.RaceConfig:

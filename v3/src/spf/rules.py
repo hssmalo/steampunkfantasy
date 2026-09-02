@@ -1,5 +1,6 @@
 """Data access functions for SteamPunkFantasy rules."""
 
+import re
 from pathlib import Path
 
 from configaroo import Configuration
@@ -10,9 +11,21 @@ from spf.schemas.rulebook import RulebookConfig
 
 RULEBOOK_INDEX = "rulebook.toml"
 
+# Placeholder substitution compiles one regex per key in the file being read, so
+# a registry with more keys than Python caches compiled patterns (512) recompiles
+# every one of them on every value. See ADR-0034.
+_REGEX_CACHE_SIZE = 8192
+
+
+def _widen_regex_cache() -> None:
+    """Give `re` room to cache one pattern per key of the largest registry."""
+    if getattr(re, "_MAXCACHE", _REGEX_CACHE_SIZE) < _REGEX_CACHE_SIZE:
+        re._MAXCACHE = _REGEX_CACHE_SIZE  # noqa: SLF001  # pyright: ignore[reportAttributeAccessIssue]
+
 
 def _read(path: Path) -> Configuration:
     """Read one rules file."""
+    _widen_regex_cache()
     return Configuration.from_file(path).add_envs({}, prefix="SPF_").parse_dynamic()
 
 

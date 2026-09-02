@@ -77,7 +77,7 @@ def _value_at(text: str, keys: tuple[str | int, ...]) -> object:
 
 
 def test_mutate_string_appends_a_title_case_marker() -> None:
-    """The marker must survive `spf race lint`'s title-case rule."""
+    """The marker must survive `spf lint races`' title-case rule."""
     assert friction.mutate_value("Sturdy.") == "Sturdy. Zz"
 
 

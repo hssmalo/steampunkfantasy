@@ -69,7 +69,7 @@ def _load_army_at(path: Path, *, label: str, validate: bool) -> Army:
         raise FileNotFoundError(msg)
     data: dict[str, Any] = json.loads(path.read_text())
     cfg = get_race(data["race"])
-    army_list = _build_army_list(data, cfg=cfg)
+    army_list = build_army_list(data, cfg=cfg)
     if validate:
         errors = validate_army(army_list, race_config=cfg)
         if errors:
@@ -230,7 +230,7 @@ def print_army_rules(army: Army) -> None:
     stdout.print(f"\n[dim]Total cost:[/]  {army.cost()}", highlight=False)
 
 
-def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
+def army_data_errors(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
     """Collect name-resolution errors from raw JSON data before construction."""
     errors: list[str] = []
     for unit_idx, unit_data in enumerate(data["units"]):
@@ -262,9 +262,9 @@ def _validate_army_data(data: dict[str, Any], *, cfg: RaceConfig) -> list[str]:
     return errors
 
 
-def _build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
+def build_army_list(data: dict[str, Any], *, cfg: RaceConfig) -> ArmyList:
     """Reconstruct an ArmyList from deserialized JSON data and a live RaceConfig."""
-    errors = _validate_army_data(data, cfg=cfg)
+    errors = army_data_errors(data, cfg=cfg)
     if errors:
         msg = "Army JSON contains invalid entries:\n" + "\n".join(errors)
         raise ValueError(msg)

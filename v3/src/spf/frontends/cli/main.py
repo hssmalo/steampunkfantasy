@@ -29,6 +29,10 @@ assets_app = app.command(
 cli.assets.add_commands(assets_app)
 special_app = app.command(cyclopts.App(name="special", help="Work with special rules."))
 cli.special.add_commands(special_app)
+lint_app = app.command(
+    cyclopts.App(name="lint", help="Lint the committed corpus, one corpus at a time.")
+)
+cli.lint.add_commands(lint_app)
 
 
 @app.command
