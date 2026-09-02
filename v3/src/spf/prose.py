@@ -7,6 +7,7 @@ over one grammar, so it lives here rather than inside any one of them.
 """
 
 import re
+from collections.abc import Mapping
 from typing import TYPE_CHECKING
 
 from spf.schemas.rules import RuleRecord
@@ -19,6 +20,17 @@ PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
 
 _GROUP = re.compile(r"\[[^][]*\]")
 """One bracketed group of a signature: `[{N}+]`, `[1 for {M}]`."""
+
+
+def resolve(
+    text: str | None, variant: str | None, variants: Mapping[str, str]
+) -> str | None:
+    """Resolve a prose slot, spelled inline or named from the pool (ADR 0032).
+
+    Total by design: a name the pool does not hold resolves to no prose, so
+    both the load-time gate and rendering can ask before it is reported.
+    """
+    return text if variant is None else variants.get(variant)
 
 
 def fill(

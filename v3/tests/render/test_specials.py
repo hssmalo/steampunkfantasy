@@ -399,7 +399,18 @@ PROSE = Registry(
                         "of_kind": "Loaded with {version}",
                     },
                 }
-            )
+            ),
+            "loaded": SpecialRuleConfig.model_validate(
+                {
+                    "name": "Loaded",
+                    "slots": ["unit"],
+                    "signature": "{version}",
+                    "effect": "Loaded with {version}.",
+                    "variables": {
+                        "version": {"type": "ref", "namespaces": ["damage_type"]}
+                    },
+                }
+            ),
         },
         "damage_type": {
             "poison": DamageTypeRuleConfig.model_validate(
@@ -456,14 +467,14 @@ def test_a_cases_prose_fills_from_its_own_args_over_the_instances() -> None:
 
 
 def test_a_ref_valued_argument_in_prose_renders_as_it_does_in_a_signature() -> None:
-    # The same fill as a signature: the target's name and its own signature.
-    _, text = _prose_row(
-        "fire_order",
-        text="Loaded with {version}",
-        args={"version": "damage_type.poison", "N": 2, "M": 3},
-    )
+    # The same fill either side of the separator, compared rather than spelled
+    # out: `loaded` writes `{version}` as its signature, `fire_order` in prose.
+    args = {"version": "damage_type.poison", "M": 3}
+    _, in_signature = _prose_row("loaded", args=args)
+    _, in_prose = _prose_row("fire_order", text="Loaded with {version}", args=args)
 
-    assert text == "[2]. Loaded with Poison[3]"
+    assert in_signature == "Poison[3]"
+    assert in_prose == f"Loaded with {in_signature}"
 
 
 def test_the_raw_id_form_renders_the_bare_identifier() -> None:

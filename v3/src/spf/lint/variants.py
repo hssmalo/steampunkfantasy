@@ -65,6 +65,8 @@ def check_specials(
             continue
         for instance in instances:
             for prose, args in _prose_slots(instance):
+                if prose is None:
+                    continue
                 filled = {
                     name: fill(text, args, registry) for name, text in variants.items()
                 }

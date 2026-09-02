@@ -15,7 +15,7 @@ from typing import cast
 
 from spf import rules
 from spf.config import config
-from spf.prose import PLACEHOLDER
+from spf.prose import PLACEHOLDER, resolve
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance, Specials
 
@@ -180,7 +180,10 @@ def _check_instance(
         return (
             errors
             + _check_prose(
-                instance.text, instance.variant, instance.args, rule=rule, where=where
+                resolve(instance.text, instance.variant, rule.variants),
+                instance.variant,
+                instance.args,
+                where=where,
             )
             + _check_args_in_scope(
                 instance.args, rule=rule, where=where, registry=registry
@@ -188,17 +191,17 @@ def _check_instance(
         )
     errors += _check_preamble(instance, rule=rule, where=where)
     for number, case in enumerate(instance.cases, start=1):
-        scoped = f"{where}, case {number}"
-        errors += _check_variant(case.variant, rule=rule, where=scoped)
+        located = f"{where}, case {number}"
+        errors += _check_variant(case.variant, rule=rule, where=located)
         errors += _check_prose(
-            case.text,
+            resolve(case.text, case.variant, rule.variants),
             case.variant,
             instance.args | case.args,
-            rule=rule,
-            where=scoped,
+            where=located,
+            scoped=True,
         )
         errors += _check_args_in_scope(
-            instance.args | case.args, rule=rule, where=scoped, registry=registry
+            instance.args | case.args, rule=rule, where=located, registry=registry
         )
     return errors
 
@@ -217,13 +220,6 @@ def _check_variant(
     return [f"{where}: no variant '{variant}'; the rule defines {defined}"]
 
 
-def _resolve_prose(
-    text: str | None, variant: str | None, *, rule: r.SpecialRuleConfig
-) -> str | None:
-    """Resolve the prose a slot carries, spelled inline or named (ADR 0032)."""
-    return text if variant is None else rule.variants.get(variant)
-
-
 def _unfilled(prose: str | None, args: dict[str, int | str]) -> list[str]:
     """List the placeholders the prose writes that no arg fills (ADR 0037).
 
@@ -237,31 +233,41 @@ def _unfilled(prose: str | None, args: dict[str, int | str]) -> list[str]:
 
 
 def _check_prose(
-    text: str | None,
+    prose: str | None,
     variant: str | None,
     args: dict[str, int | str],
     *,
-    rule: r.SpecialRuleConfig,
     where: str,
+    scoped: bool = False,
 ) -> list[str]:
     """Check the prose slot names no placeholder its args leave open (ADR 0037).
 
     Prose has no grammar for an absent value the way a signature's groups do,
-    so an unfilled one is a sentence the reader cannot use.
+    so an unfilled one is a sentence the reader cannot use. It takes the
+    resolved prose rather than the slot, so a caller says once which spelling
+    it drew from.
     """
-    unfilled = _unfilled(_resolve_prose(text, variant, rule=rule), args)
+    unfilled = _unfilled(prose, args)
     if not unfilled:
         return []
-    return [f"{where}: {_unfilled_message(variant, unfilled)}"]
+    return [f"{where}: {_unfilled_message(variant, unfilled, scoped=scoped)}"]
 
 
-def _unfilled_message(variant: str | None, unfilled: list[str]) -> str:
-    """Say which prose left which placeholders open, and what the args lack."""
+def _unfilled_message(variant: str | None, unfilled: list[str], *, scoped: bool) -> str:
+    """Say which prose left the placeholders open, and what fills none of them.
+
+    A case's args merge over the instance's, so what a case leaves open is not
+    the instance's omission to report.
+    """
     spelling = "prose" if variant is None else f"variant '{variant}'"
     written = ", ".join(f"{{{name}}}" for name in unfilled)
-    return (
-        f"{spelling} names {written}, and the instance gives no {', '.join(unfilled)}"
+    names = ", ".join(unfilled)
+    lacking = (
+        f"no argument in scope gives {names}"
+        if scoped
+        else f"the instance gives no {names}"
     )
+    return f"{spelling} names {written}, and {lacking}"
 
 
 def _check_preamble(
@@ -272,8 +278,8 @@ def _check_preamble(
     Reported apart from the other slots because the author's instinct will be
     that the value is right there in the cases below (ADR 0037).
     """
-    prose = _resolve_prose(instance.preamble, instance.variant, rule=rule)
-    unfilled = _unfilled(prose, instance.args)
+    preamble = resolve(instance.preamble, instance.variant, rule.variants)
+    unfilled = _unfilled(preamble, instance.args)
     supplied = {
         name: [
             number
@@ -294,7 +300,9 @@ def _check_preamble(
             f" instance's args; {given}"
         )
     if absent:
-        errors.append(f"{where}: {_unfilled_message(instance.variant, absent)}")
+        errors.append(
+            f"{where}: {_unfilled_message(instance.variant, absent, scoped=False)}"
+        )
     return errors
 
 

@@ -566,9 +566,10 @@ def test_a_cases_prose_naming_an_unsupplied_argument_names_its_position() -> Non
         }
     )
 
+    # A case's args merge over the instance's, so neither one is at fault alone.
     assert errors == [
         "unit 'Squad': 'fire_order', case 2: variant 'load_n_shots' names {N},"
-        " and the instance gives no N"
+        " and no argument in scope gives N"
     ]
 
 

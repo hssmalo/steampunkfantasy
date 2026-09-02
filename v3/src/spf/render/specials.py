@@ -14,7 +14,7 @@ own occurrence.
 from collections.abc import Callable
 from typing import NamedTuple
 
-from spf.prose import fill, interpolate
+from spf.prose import fill, interpolate, resolve
 from spf.registry import Registry, load_registry
 from spf.schemas.rules import RuleRecord, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance, Specials
@@ -86,13 +86,9 @@ def _prose(
     because the load-time gate is what reports it and rendering must stay
     printable for a rule the registry does not hold at all.
     """
-    resolved = text if variant is None else _variant(variant, rule)
+    variants = rule.variants if rule is not None else {}
+    resolved = resolve(text, variant, variants)
     return None if resolved is None else fill(resolved, args, registry)
-
-
-def _variant(variant: str, rule: SpecialRuleConfig | None) -> str | None:
-    """Look up the prose a named variant spells, or nothing without one."""
-    return rule.variants.get(variant) if rule is not None else None
 
 
 def _cases(
