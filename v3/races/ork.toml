@@ -1270,7 +1270,7 @@ note = "It is a 1 handed weapon but may not be combined with another sling"
 text = "If fired from a unit with 3-4 models: Area[4+], if fired from a unit with 1-2 models: Area[5+]"
 
 [[equipment.grenade_sling.range.specials.range]]
-text = "Target one hex within normal range"
+variant = "target_hex_normal_range"
 
 [[equipment.grenade_sling.range.specials.bonus]]
 text = "If combined with the pyro, the pyro gains standard range of 3 instead of 1."
