@@ -538,7 +538,7 @@ class ArmyViolation:
     """One thing an Army asks its Race for that the Race does not offer.
 
     Referential legality against the catalogue, never game balance — an Army's
-    Points are the designer's business (ADR 0035). Carries the location and the
+    Points are the designer's business (ADR 0036). Carries the location and the
     prose separately so `spf lint armies` can put them in its own columns while
     `str()` still reads as the sentence `spf army show` prints.
     """

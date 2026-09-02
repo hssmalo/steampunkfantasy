@@ -1,6 +1,6 @@
 # Schema validation is a hard gate; style linting is a soft one
 
-> The command names in this ADR are superseded by ADR 0035; its two-stage
+> The command names in this ADR are superseded by ADR 0036; its two-stage
 > principle is not.
 
 `spf race lint` only ever runs against Races that already pass schema

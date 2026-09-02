@@ -1,6 +1,6 @@
 """Load each corpus, and report what will not load or will not build.
 
-`spf lint <corpus>` owns both gates over its corpus (ADR 0035): these probes
+`spf lint <corpus>` owns both gates over its corpus (ADR 0036): these probes
 are the first one. A probe never raises — a corpus that cannot be read is the
 answer, not an interruption — and it hands back what *did* load, so the style
 pass that follows runs over exactly the files that yielded no Load finding.
@@ -245,7 +245,7 @@ def build_findings(loaded: Iterable[LoadedArmy]) -> list[LintFinding]:
     """Report every Army that loads but that its Race will not field.
 
     A third kind of finding, between Load and Style: the file read fine, and
-    the Army is illegal rather than untidy (ADR 0035).
+    the Army is illegal rather than untidy (ADR 0036).
     """
     return [
         LintFinding(
@@ -278,7 +278,7 @@ def probe_render() -> list[LintFinding]:
     """Read the render inputs: the LaTeX manifest, the Site Index, the Packs.
 
     `pack.toml` and `site.toml` live under `armies/` but are render inputs, not
-    Army data (ADR 0028, ADR 0035), so they are checked here.
+    Army data (ADR 0028, ADR 0036), so they are checked here.
     """
     return [
         *_findings_from(
