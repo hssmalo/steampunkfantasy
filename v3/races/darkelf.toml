@@ -1051,7 +1051,6 @@ args.ability = "ability.good_shot"
 
 [[models.elite_mechanical_cavalry.specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies while shooting"
 
 [models.elite_mechanical_cavalry.assault]
 strength = [4, 2, 1, 1]
