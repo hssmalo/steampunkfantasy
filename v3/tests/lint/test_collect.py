@@ -9,6 +9,7 @@ linter looks at.
 from dataclasses import dataclass
 
 from spf.lint import collect, holders
+from spf.registry import Registry
 from spf.schemas.config import LintConfig
 from spf.schemas.race import (
     AssaultConfig,
@@ -18,6 +19,9 @@ from spf.schemas.race import (
     RaceMetadata,
 )
 from spf.schemas.special import SpecialInstance
+
+REGISTRY = Registry(records={})
+"""Only a ref-valued arg reaches the registry, and no instance here has one."""
 
 CONVENTIONS = LintConfig(
     aliases={"darkelf": "dark_elf"},
@@ -213,7 +217,9 @@ def test_a_holder_choice_surfaces_as_a_finding() -> None:
         },
     )
 
-    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS, pools={})
+    findings = collect.lint_race_config(
+        "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
+    )
 
     (finding,) = [f for f in findings if f.rule == "or-group-one-holder"]
     assert finding.section == "equipment"
@@ -236,7 +242,9 @@ def test_over_committed_defaults_surface_as_a_finding() -> None:
         },
     )
 
-    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS, pools={})
+    findings = collect.lint_race_config(
+        "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
+    )
 
     (finding,) = [f for f in findings if f.rule == "default-equipment-limit"]
     assert finding.section == "models"
@@ -267,7 +275,9 @@ def test_longhand_prose_surfaces_as_a_finding() -> None:
     """The variant rule reaches `lint_race_config` and locates its holder."""
     race_config = _race_carrying({"text": "Ignores the weather"})
 
-    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS, pools=_POOLS)
+    findings = collect.lint_race_config(
+        "ogre", race_config, CONVENTIONS, pools=_POOLS, registry=REGISTRY
+    )
 
     (finding,) = [f for f in findings if f.rule == "variant-longhand"]
     assert finding.section == "equipment"
@@ -278,6 +288,8 @@ def test_longhand_prose_surfaces_as_a_finding() -> None:
 def test_a_race_the_pools_say_nothing_about_is_clean() -> None:
     race_config = _race_carrying({"text": "Ignores the weather"})
 
-    findings = collect.lint_race_config("ogre", race_config, CONVENTIONS, pools={})
+    findings = collect.lint_race_config(
+        "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
+    )
 
     assert [f for f in findings if f.rule == "variant-longhand"] == []

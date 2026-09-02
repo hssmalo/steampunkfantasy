@@ -1536,7 +1536,8 @@ damage = "d6-1"
 ap = 5
 
 [[equipment.pentagun.unit_specials.fire_order]]
-variant = "load_5_shots"
+variant = "load_n_shots"
+args.N = 5
 
 [equipment.teslaburstlaser]
 name = "TeslaBurstLaser"
@@ -1552,7 +1553,8 @@ damage = "d6-1"
 ap = 5
 
 [[equipment.teslaburstlaser.unit_specials.fire_order]]
-variant = "load_5_shots"
+variant = "load_n_shots"
+args.N = 5
 [[equipment.teslaburstlaser.range.specials.critical]]
 text = "the enemy is shaken, in addition to it's normal effect."
 

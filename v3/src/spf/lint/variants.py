@@ -11,6 +11,8 @@ still reads no disk: the pools come from the caller.
 
 from collections.abc import Iterator, Mapping
 
+from spf.prose import fill
+from spf.registry import Registry
 from spf.schemas.special import SpecialInstance, Specials
 
 
@@ -28,27 +30,45 @@ def check_longhand(prose: str | None, variants: Mapping[str, str]) -> str | None
     return None
 
 
-def _prose_slots(instance: SpecialInstance) -> Iterator[str | None]:
-    """Every slot of one instance a variant could have filled (ADR 0032)."""
-    yield instance.text
-    yield instance.preamble
+def _prose_slots(
+    instance: SpecialInstance,
+) -> Iterator[tuple[str | None, dict[str, int | str]]]:
+    """Every slot a variant could have filled, with the args in scope for it.
+
+    A case sees its own args over the instance's; the preamble scoping them
+    sees only the instance's (ADR 0037).
+    """
+    yield instance.text, instance.args
+    yield instance.preamble, instance.args
     for case in instance.cases:
-        yield case.text
+        yield case.text, instance.args | case.args
 
 
 def check_specials(
-    specials: Specials, pools: Mapping[str, Mapping[str, str]]
+    specials: Specials,
+    pools: Mapping[str, Mapping[str, str]],
+    *,
+    registry: Registry,
 ) -> Iterator[tuple[str, str]]:
     """Yield `(identifier, message)` for every prose slot written longhand.
 
     `pools` maps a rule's identifier to its variants: a rule the mapping does
     not name has no pool to draw on, so nothing it writes is longhand.
+
+    Each pool is filled with the args in scope before it is compared, so an
+    instance that typed the number out matches the variant that computes it
+    (ADR 0037). The registry is what renders a ref-valued arg.
     """
     for identifier, instances in specials.items():
         variants = pools.get(identifier, {})
         if not variants:
             continue
         for instance in instances:
-            for prose in _prose_slots(instance):
-                if (message := check_longhand(prose, variants)) is not None:
+            for prose, args in _prose_slots(instance):
+                if prose is None:
+                    continue
+                filled = {
+                    name: fill(text, args, registry) for name, text in variants.items()
+                }
+                if (message := check_longhand(prose, filled)) is not None:
                     yield identifier, message
