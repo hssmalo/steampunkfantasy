@@ -577,7 +577,7 @@ variant = "autoloader"
 text = "Grants Psychic resistance 1 to the other unit in this hex"
 
 [[units.armored_unicorn_rider.specials.officer]]
-text = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+variant = "remove_shaken_in_hex"
 
 [[units.armored_unicorn_rider.specials.heal]]
 args.N = 3

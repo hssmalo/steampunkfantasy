@@ -1249,7 +1249,7 @@ type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 text = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
 
 [[models.darkelf_officer.unit_specials.officer]]
-text = "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+variant = "remove_shaken_in_hex"
 
 [[models.darkelf_officer.specials.escape_artist]]
 text = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes"
