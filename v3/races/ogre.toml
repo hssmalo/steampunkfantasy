@@ -527,7 +527,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.broadside_wagon.specials.tow]]
-text = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+variant = "must_be_towed"
 
 [units.broadside_wagon.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
@@ -576,7 +576,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.artillery_wagon.specials.tow]]
-text = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+variant = "must_be_towed"
 
 [[units.artillery_wagon.specials.fire_order]]
 text = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading"

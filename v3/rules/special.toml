@@ -632,6 +632,9 @@ name = "Tow"
 slots = ["unit"]
 todo = "Rule text not yet written: the two flavors — towing and being towed — share one label today, so decide whether they are one rule."
 
+[special.tow.variants]
+must_be_towed = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+
 [special.transfer]
 name = "Transfer"
 slots = ["unit"]
