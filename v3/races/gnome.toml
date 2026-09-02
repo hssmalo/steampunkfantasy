@@ -1397,7 +1397,7 @@ damage = "d6-2"
 ap = 3
 
 [[equipment.helicopter_mounted_experimental_nail_gun.range.specials.multiple_shots]]
-text = "Fire d12 shots each time it is fired at the same unit"
+variant = "d12_shots_same_unit"
 
 [[equipment.helicopter_mounted_experimental_nail_gun.range.specials.fumble]]
 text = "If fumble add one +1 future damage token to self"
@@ -1416,7 +1416,7 @@ damage = "d6-2"
 ap = 3
 
 [[equipment.experimental_nail_gun.range.specials.multiple_shots]]
-text = "Fire d12 shots each time and all at the same unit"
+variant = "d12_shots_same_unit"
 
 [[equipment.experimental_nail_gun.range.specials.fumble]]
 text = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed"
