@@ -1656,7 +1656,7 @@ variant = "aim_6_dice"
 [[equipment.gatling_gun.range.specials.area]]
 #preamble = "If not using aim, target all hexes within long range"
 args.N = 4
-text = "at point blank range"
+variant = "point_blank"
 
 [[equipment.gatling_gun.range.specials.area]]
 args.N = 6

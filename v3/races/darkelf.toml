@@ -1685,7 +1685,7 @@ ap = 0
 [[equipment.nightmare_breath.range.specials.area]]
 #preamble ='All hexes within normal range and within arc"
 args.N = 4
-text = "at point blank range"
+variant = "point_blank"
 
 [[equipment.nightmare_breath.range.specials.area]]
 args.N = 6
