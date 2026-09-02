@@ -1902,7 +1902,7 @@ args.version = "token.poison"
 args.N = 8
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
-text = "Fire one time per functional minor head"
+variant = "fire_per_minor_head"
 
 [equipment.shrapnel_spit]
 name = "Shrapnel Spit"
