@@ -43,6 +43,9 @@ GOLDENS = V3 / "goldens"
 
 FORMATS = ("markdown", "latex")
 
+FORMAT_LABELS = {"markdown": "Markdown", "latex": "LaTeX"}
+"""How each Format is spelled in a report a human reads."""
+
 WORK_PREFIX = ".goldens-"
 """Names the throwaway tree `diff` renders into; gitignored alongside them."""
 
@@ -62,6 +65,23 @@ DIFF_CONTEXT = 0
 None: the hunk header gives the line number and a rendered line names its own
 Special, so context only spends the budget the changed lines want.
 """
+
+
+@dataclass
+class Tally:
+    """What one report accumulated as it walked the two rendered trees.
+
+    Counts only what the run had something to say about: files whose diff was
+    printed, and those it declined to print.
+    """
+
+    files: int = 0
+    hunks: int = 0
+    changed: int = 0
+    elided: int = 0
+    """Files that moved in a Format whose diffs were not asked for."""
+    withheld: int = 0
+    """Files that moved after the run's line budget was spent."""
 
 
 @dataclass(frozen=True)
@@ -157,8 +177,12 @@ def snapshot() -> int:
     return 0
 
 
-def diff() -> int:
-    """Re-render and report every file that differs from the snapshot."""
+def diff(shown: tuple[str, ...] = (FORMATS[0],)) -> int:
+    """Re-render and report every file that differs from the snapshot.
+
+    Every Format is always compared, so the verdict is honest; `shown` only
+    selects whose diffs are worth reading.
+    """
     if not GOLDENS.is_dir():
         _say(f"No snapshot at {GOLDENS}: run `just golden-snapshot` first")
         return 1
@@ -170,7 +194,7 @@ def diff() -> int:
     try:
         current = Path(work)
         rendered = render_all(current)
-        differing = _report(GOLDENS, current)
+        differing = _report(GOLDENS, current, shown=shown)
     finally:
         shutil.rmtree(work, ignore_errors=True)
 
@@ -181,11 +205,19 @@ def diff() -> int:
     return 0
 
 
-def _report(baseline: Path, current: Path) -> int:
-    """Print what moved between two rendered trees, and count the files."""
+def _report(
+    baseline: Path, current: Path, shown: tuple[str, ...] = (FORMATS[0],)
+) -> int:
+    """Print what moved between two rendered trees, and count the files.
+
+    Only the `shown` Formats have their diffs printed; the rest are counted and
+    named. A document that vanished or appeared is structural news, so it is
+    reported whatever its Format.
+    """
+    extensions = {get_format(name).extension for name in shown}
+    tally = Tally()
     differing = 0
     spent = 0
-    withheld = 0
     for relative in sorted(_paths(baseline) | _paths(current)):
         before = baseline / relative
         after = current / relative
@@ -196,16 +228,43 @@ def _report(baseline: Path, current: Path) -> int:
             _say(f"+++ {relative}: newly rendered")
             spent += 1
         elif before.read_bytes() != after.read_bytes():
-            if spent >= MAX_RUN_DIFF_LINES:
-                withheld += 1
+            if relative.suffix.lstrip(".") not in extensions:
+                tally.elided += 1
+            elif spent >= MAX_RUN_DIFF_LINES:
+                tally.withheld += 1
             else:
-                spent += _print_diff(relative, before, after)
+                lines = _diff_lines(relative, before, after)
+                tally.files += 1
+                tally.hunks += sum(1 for line in lines if line.startswith("@@"))
+                tally.changed += sum(1 for line in lines[2:] if line[:1] in "+-")
+                spent += _print_diff(lines)
         else:
             continue
         differing += 1
-    if withheld:
-        _say(f"... {withheld} further files differ, not shown")
+    if differing:
+        _print_summary(tally, shown)
     return differing
+
+
+def _print_summary(tally: "Tally", shown: tuple[str, ...]) -> None:
+    """Print the counts line that fronts a diff pasted into an issue."""
+    # Naming the Format only reads right when there is one of them to name.
+    label = f"{FORMAT_LABELS[shown[0]]} " if len(shown) == 1 else ""
+    summary = (
+        f"\n**{_count(tally.files, f'{label}file')}, {_count(tally.hunks, 'hunk')}, "
+        f"{_count(tally.changed, 'changed line')}**"
+    )
+    if tally.elided:
+        others = ", ".join(FORMAT_LABELS[name] for name in FORMATS if name not in shown)
+        summary += f" ({_count(tally.elided, f'{others} file')} elided)"
+    _say(summary)
+    if tally.withheld:
+        _say(f"... {tally.withheld} further files differ, not shown")
+
+
+def _count(number: int, noun: str) -> str:
+    """Say how many of `noun` there are, pluralising the noun to match."""
+    return f"{number} {noun}" if number == 1 else f"{number} {noun}s"
 
 
 def _paths(root: Path) -> set[Path]:
@@ -213,12 +272,11 @@ def _paths(root: Path) -> set[Path]:
     return {path.relative_to(root) for path in root.rglob("*") if path.is_file()}
 
 
-def _print_diff(relative: Path, before: Path, after: Path) -> int:
-    """Print a unified diff of one file, truncated to stay readable.
+def _print_diff(lines: list[str]) -> int:
+    """Print one file's diff, truncated to stay readable.
 
     Returns the lines printed, so the caller can spend down the run budget.
     """
-    lines = _diff_lines(relative, before, after)
     shown = lines[:MAX_DIFF_LINES]
     _say("\n".join(shown))
     if len(lines) > MAX_DIFF_LINES:
@@ -255,8 +313,17 @@ def main(argv: list[str] | None = None) -> int:
         choices=("snapshot", "diff"),
         help="snapshot: render into goldens/. diff: re-render and compare.",
     )
+    parser.add_argument(
+        "--format",
+        choices=(*FORMATS, "all"),
+        default=FORMATS[0],
+        help="Whose diffs to print. Every Format is compared either way.",
+    )
     args = parser.parse_args(argv)
-    return snapshot() if args.command == "snapshot" else diff()
+    if args.command == "snapshot":
+        return snapshot()
+    shown = FORMATS if args.format == "all" else (args.format,)
+    return diff(shown)
 
 
 if __name__ == "__main__":
