@@ -13,6 +13,7 @@ import pytest
 from pydantic import ValidationError
 
 from spf import registry as reg
+from spf import rules
 from spf.config import config
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance
@@ -684,8 +685,14 @@ def test_an_incomplete_rules_file_fails_to_load(tmp_path: Path) -> None:
         '[special.fear]\nname = "Fear"\nslots = ["assault"]\n'
     )
 
-    with pytest.raises(ValidationError, match="has neither"):
+    # Assembling the whole registry reports a schema failure as a `ValueError`
+    # naming the file: reading one file on its own is what keeps pydantic's
+    # own error, and `spf lint rules` is the caller that does that.
+    with pytest.raises(ValueError, match=r"rules/special\.toml: .*has neither"):
         reg.load_registry(rules_dir)
+
+    with pytest.raises(ValidationError, match="has neither"):
+        rules.get_specials(rules_dir / "special.toml")
 
 
 def test_a_version_overlay_pointing_nowhere_fails_to_load(tmp_path: Path) -> None:

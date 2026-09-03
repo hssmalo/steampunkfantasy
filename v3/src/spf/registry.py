@@ -124,17 +124,33 @@ def _read[T](loader: Callable[[Path], T], path: Path) -> T:
     failure against the *Race* file. This is the last frame that still knows
     which rules file was being read, so it is where the name is attached.
 
-    A `ValidationError` is passed through untouched: it already names the model
-    it failed to build, and flattening it to a `ValueError` would cost `spf
-    lint rules` the per-field findings it reports one line each.
+    A schema failure is named the same way, and keeps the field it failed at:
+    that field is a path into the rules file, so an unnamed one reads as
+    though the Race were the file carrying the stray key. Nothing is lost by
+    flattening it here, because `spf lint rules` reads each file on its own
+    rather than through this.
     """
     try:
         return loader(path)
-    except pydantic.ValidationError:
-        raise
+    except pydantic.ValidationError as err:
+        msg = f"rules/{path.name}: {_flatten(err)}"
+        raise ValueError(msg) from err
     except (OSError, ValueError) as err:
         msg = f"rules/{path.name}: {err}"
         raise ValueError(msg) from err
+
+
+def _flatten(error: pydantic.ValidationError) -> str:
+    """Render a pydantic error as `field: message`, one clause per error.
+
+    `str()` on the error runs to a paragraph per field, which a Load finding
+    is one line of a table for.
+    """
+    clauses: list[str] = []
+    for detail in error.errors():
+        field = ".".join(str(part) for part in detail["loc"])
+        clauses.append(f"{field}: {detail['msg']}" if field else str(detail["msg"]))
+    return "; ".join(clauses)
 
 
 def _check_version_keys(registry: Registry) -> None:

@@ -127,6 +127,47 @@ def test_probe_races_names_the_rules_file_a_race_could_not_read(
     assert "Unclosed array" in finding.message
 
 
+def test_probe_races_names_the_rules_file_that_fails_its_schema(
+    races_dir: Path, rules_dir: Path
+) -> None:
+    """A rules file failing its schema names itself too, field and all.
+
+    A pydantic error carries the field it failed at but not the file, and the
+    field is a path into the *rules* file -- so an unnamed one reads as though
+    the Race were the file with the stray key.
+    """
+    (races_dir / "goblin.toml").write_text(MINIMAL_RACE_TOML)
+    (rules_dir / "namespaces.toml").write_text(
+        _NAMESPACES + '\n[damage_type.fire]\nname = "Fire"\nbogus_field = "nonsense"\n'
+    )
+
+    [finding] = loading.probe_races().findings
+
+    assert finding.file == "races/goblin.toml"
+    assert "rules/namespaces.toml" in finding.message
+    assert "damage_type.fire.bogus_field" in finding.message
+    assert "Extra inputs are not permitted" in finding.message
+
+
+def test_probe_rules_keeps_its_per_field_finding_on_a_schema_failure(
+    rules_dir: Path,
+) -> None:
+    """The rules corpus reports the field itself, which naming must not cost.
+
+    `probe_rules` reads each file on its own, so it never goes through the
+    read that attaches a file name -- and keeps the located, one-line-per-error
+    findings that a flattened message could not carry.
+    """
+    (rules_dir / "namespaces.toml").write_text(
+        _NAMESPACES + '\n[damage_type.fire]\nname = "Fire"\nbogus_field = "nonsense"\n'
+    )
+
+    findings = loading.probe_rules().findings
+
+    assert {finding.file for finding in findings} == {"rules/namespaces.toml"}
+    assert "damage_type.fire.bogus_field" in {finding.location for finding in findings}
+
+
 # ---------------------------------------------------------------------------
 # Armies
 # ---------------------------------------------------------------------------
