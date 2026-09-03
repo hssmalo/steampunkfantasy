@@ -462,7 +462,7 @@ description = '''An medium sized bear with one elf riding the bear. The elf is w
 
 
 [[units.bear_rider.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 3
 
 [units.bear_rider.shaken]
@@ -507,7 +507,7 @@ description = '''A huge  dire polar bear with one two elf riding the bear. The f
 
 
 [[units.dire_polar_bear_riders.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 3
 
 [[units.dire_polar_bear_riders.specials.fire_order]]
@@ -559,15 +559,15 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [[units.armored_unicorn_rider.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 12
 
 [[units.armored_unicorn_rider.specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 3
 
 [[units.armored_unicorn_rider.specials.resistance]]
-args.version = "damage_type.acid"
+args.version = "resistance_type.acid"
 args.N = 1
 
 [[units.armored_unicorn_rider.specials.fire_order]]
@@ -645,7 +645,7 @@ description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephal
 
 
 [[units.pachycephalosaurus_riders.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 2
 
 [[units.pachycephalosaurus_riders.specials.fire_order]]
@@ -734,7 +734,7 @@ description = ''' An elegant elf wielding a bow riding a pegasus. A pegasus is a
 variant = "autoloader"
 
 [[units.pegasus_rider.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 2
 
 [units.pegasus_rider.shaken]
@@ -957,7 +957,7 @@ name = "Great Shot"
 args.ability = "ability.excellent_shot"
 
 [[models.superb_elf_archer.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 2
 variant = "while_superelite_alive"
 
@@ -1005,7 +1005,7 @@ name = "Great Shot"
 args.ability = "ability.excellent_shot"
 
 [[models.superelite_elf_infantry.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 2
 variant = "while_superelite_alive"
 
@@ -1037,7 +1037,7 @@ type = ["Bio", "Infantry", "Walking", "Elite"]
 args.ability = "ability.good_shot"
 
 [[models.elite_elf_infantry.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "while_superelite_alive"
 
@@ -1254,7 +1254,7 @@ cost.xp = 4
 args.ability = "ability.good_shot"
 
 [[models.elite_pachycephalosaurus_rider.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "while_elite_alive"
 
@@ -1291,7 +1291,7 @@ description = '''A souropod dinosour with elves riding on its back and head. The
 
 
 [[units.sauropod_riders.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 4
 
 [[units.sauropod_riders.specials.fire_order]]
@@ -1344,7 +1344,7 @@ description = '''Oliphant is a big elephant with a plotform on top where there a
 
 
 [[units.armored_oliphant_riders.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 2
 
 [[units.armored_oliphant_riders.specials.fire_order]]
@@ -1409,7 +1409,7 @@ description = '''An elegant elf riding a giant eagle. The elf is wielding an ant
 
 
 [[units.eagle_rider.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 2
 
 [units.eagle_rider.shaken]

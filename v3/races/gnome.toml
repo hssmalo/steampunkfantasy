@@ -749,7 +749,7 @@ cost.xp = 4
 text = "Treat any gunnery phase without any other order as fire(res) order instead (for this model only.)"
 
 [[models.elite_gnome_infantry.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "elite_alive"
 
@@ -1251,19 +1251,19 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.improved_medical_armor.unit_specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 6
 
 [[equipment.improved_medical_armor.unit_specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 6
 
 [[equipment.improved_medical_armor.unit_specials.resistance]]
-args.version = "damage_type.acid"
+args.version = "resistance_type.acid"
 args.N = 1
 
 [[equipment.improved_medical_armor.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "improved_by_another_source"
 
@@ -1275,15 +1275,15 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.medical_armor.unit_specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 2
 
 [[equipment.medical_armor.unit_specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 2
 
 [[equipment.medical_armor.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "improved_by_another_source"
 
@@ -1295,7 +1295,7 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.plasma_shield_generator.unit_specials.resistance]]
-args.version = "damage_type.regular"
+args.version = "resistance_type.regular"
 args.N = "d4"
 text = "(roll d4 every time it is hit with some regular damage)"
 
@@ -1327,7 +1327,7 @@ upgrade_all = true
 requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.improved_plasma_shield_generator.unit_specials.resistance]]
-args.version = "damage_type.regular"
+args.version = "resistance_type.regular"
 args.N = "d8"
 text = "(roll d8 every time it is hit with some regular damage)"
 

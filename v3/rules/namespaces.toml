@@ -18,34 +18,61 @@ size = { name = "Size", label = "size", file = "modifiers.toml", table = "size" 
 ability = { name = "Abilities", label = "ability", file = "modifiers.toml", table = "ability" }
 token = { name = "Tokens", label = "token", file = "tokens.toml", table = "tokens" }
 damage_type = { name = "Damage Types", label = "damage type", file = "namespaces.toml", table = "damage_type" }
+resistance_type = { name = "Resistance Types", label = "resistance type", file = "namespaces.toml", table = "resistance_type" }
+
 
 # The damage-type registry: the categories of harm a Resistance or an Immunity
 # is against. It lives here because it is small and has no file of its own.
 
 [damage_type.regular]
 name = "Regular"
-todo = "Rule text not yet written: what counts as regular damage, and how the regular damage table is read."
+effect = "Any unnamed damage is regular damage."
 
 [damage_type.psychic]
 name = "Psychic"
-todo = "Rule text not yet written: what psychic damage is, and which units it can affect."
+effect = "Roll damage versus psychic damage table of target. If target has no psychic damage table, the target is immune to psychic damage."
+
 
 [damage_type.fire]
 name = "Fire"
 see_also = ["token.fire"]
-todo = "Rule text not yet written. Distinct from token.fire: this is the category of harm, that is the marker on the table."
+effect = "The result of fire token is considered fire damage."
 
 [damage_type.poison]
 name = "Poison"
 see_also = ["token.poison"]
-todo = "Rule text not yet written. Distinct from token.poison: this is the category of harm, that is the marker on the table."
-
-[damage_type.crew]
-name = "Crew"
-see_also = ["token.crippled_crew"]
-todo = "Rule text not yet written: crew damage has its own damage tables and ignores armor. Named by special.crew_damage, which is itself unwritten."
+effect = "The result of poison token is considered poison damage."
 
 [damage_type.acid]
 name = "Acid"
 see_also = ["token.acid", "token.minor_acid"]
-todo = "Rule text not yet written. Distinct from token.acid: this is the category of harm, that is the marker on the table."
+effect = "The result of (minor) acid token is considered acid damage."
+
+[damage_type.crew]
+name = "Crew"
+see_also = ["token.crippled_crew"]
+effect = "Ignore armor, roll damage versus crew damage table of target. If target has no crew damage table, the target is immune to crew damage."
+
+
+[resistance_type.regular]
+name = "Regular"
+effect = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
+
+[resistance_type.psychic]
+name = "Psychic"
+effect = "Any damage explicitly named psychic damage is reduced damage by {N}"
+
+[resistance_type.fire]
+name = "Fire"
+effect = "Any damage rolled by fire token is effect is reduced damage by {N}. It is also reduced with respect to stop burning by {N}"
+see_also = ["token.fire"]
+
+[resistance_type.poison]
+name = "Poison"
+effect = "Any damage rolled by poison token effect reduced damage by {N}"
+see_also = ["token.poison"]
+
+[resistance_type.acid]
+name = "Acid"
+effect = "Any die rolled by acid or minor acid token is reduced by {N}."
+see_also = ["token.acid", "token.minor_acid"]

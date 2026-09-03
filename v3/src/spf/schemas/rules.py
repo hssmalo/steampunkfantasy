@@ -383,9 +383,14 @@ class NamespaceConfig(StrictModel):
 
 
 class DamageTypeRuleConfig(RuleRecord):
-    """A category of harm — what a Resistance or an Immunity is against."""
+    """A category of harm."""
+
+
+class ResistanceTypeRuleConfig(RuleRecord):
+    """A category of Resistances."""
 
 
 class NamespacesConfig(StrictModel):
     namespaces: dict[str, NamespaceConfig]
     damage_type: dict[str, DamageTypeRuleConfig]
+    resistance_type: dict[str, ResistanceTypeRuleConfig]

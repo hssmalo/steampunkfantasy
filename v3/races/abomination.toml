@@ -318,14 +318,14 @@ text = "If horror is either standing in a hex with fog or entering a hex with fo
 text = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
 
 [[units.horror.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 12
 
 [[units.horror.specials.immunity]]
-args.feature = "damage_type.acid"
+args.feature = "token.acid"
 
 [[units.horror.specials.immunity]]
-args.feature = "damage_type.fire"
+args.feature = "token.fire"
 
 [[units.horror.specials.forward_position]]
 args.N = 3
@@ -367,7 +367,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [[units.shriek_monstrosity.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 3
 
 
@@ -420,15 +420,15 @@ args.unit = "self"
 args.phase = "2nd Healing"
 
 [[units.water_elemental.specials.resistance]]
-args.version = "damage_type.acid"
+args.version = "resistance_type.acid"
 args.N = 2
 
 [[units.water_elemental.specials.resistance]]
-args.version = "damage_type.regular"
+args.version = "resistance_type.regular"
 args.N = 2
 
 [[units.water_elemental.specials.immunity]]
-args.feature = "damage_type.fire"
+args.feature = "token.fire"
 
 [[units.water_elemental.specials.fire_order]]
 variant = "fire_and_load_simultaneously"
@@ -505,7 +505,7 @@ speed = "slow"
 movement_order = ["-", "-", "flee"]
 
 [[units.giant_frog_riders.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 4
 
 [[units.giant_frog_riders.specials.terror]]
@@ -558,7 +558,7 @@ movement_order = ["-", "Chs", "Chs"]
 fire_order = "Normal"
 
 [[units.hippopotamus_riders.specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 3
 
 [[units.hippopotamus_riders.specials.fire_order]]
@@ -1012,19 +1012,19 @@ description = """Abominations excel in water manipulation. A thin layer of water
 Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
 
 [[equipment.water_shield.unit_specials.resistance]]
-args.version = "damage_type.acid"
+args.version = "resistance_type.acid"
 args.N = 1
 
 [[equipment.water_shield.unit_specials.resistance]]
-args.version = "damage_type.poison"
+args.version = "resistance_type.poison"
 args.N = 1
 
 [[equipment.water_shield.unit_specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 1
 
 [[equipment.water_shield.unit_specials.resistance]]
-args.version = "damage_type.regular"
+args.version = "resistance_type.regular"
 args.N = 1
 text = "Armor assist: if this unit have armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
 

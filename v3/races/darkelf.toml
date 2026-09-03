@@ -36,7 +36,7 @@ text = "1 major head, 6 minor head. Keep track of number of functional minor hea
 args.N = 1
 
 [[units.mechahydra.specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 1
 
 [units.mechahydra.orders.fire]
@@ -68,11 +68,11 @@ description = '''A robotic red dragon breathing fire
 
 
 [[units.mechanical_red_dragon.specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 2
 
 [[units.mechanical_red_dragon.specials.immunity]]
-args.feature = "damage_type.acid"
+args.feature = "token.acid"
 variant = "immune_to_gear_disruption"
 
 [units.mechanical_red_dragon.shaken]
@@ -108,7 +108,7 @@ description = '''Robotic iron dragon breathing acid.
 
 
 [[units.mechanical_iron_dragon.specials.resistance]]
-args.version = "damage_type.fire"
+args.version = "resistance_type.fire"
 args.N = 2
 
 
@@ -116,7 +116,7 @@ args.N = 2
 text = " Fire(acid): use acid and poison breath, while Fire(shrapnel) uses shrapnel breath instead"
 
 [[units.mechanical_iron_dragon.specials.immunity]]
-args.feature = "damage_type.acid"
+args.feature = "token.acid"
 variant = "immune_to_gear_disruption"
 
 [units.mechanical_iron_dragon.shaken]
@@ -164,7 +164,7 @@ description = '''Large steampunk tank with a fixed turret firing straight forwar
 text = "You fire 2 independent heavy rifles in addition to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the release as an firing option, you may place the poison cloud[12] during pre assault step in any movement phase, including contested hexes for assaults"
 
 [[units.queen_yy.specials.resistance]]
-args.version = "damage_type.acid"
+args.version = "resistance_type.acid"
 args.N = 2
 
 [units.queen_yy.shaken]
@@ -1278,7 +1278,7 @@ replaces = "darkelf_infantry"
 cost.xp = 4
 
 [[models.elite_darkelf_infantry.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "while_elite_alive"
 
@@ -1415,7 +1415,7 @@ replaces = "roboprosthetic_darkelf"
 cost.cp = 4
 
 [[models.elite_roboprosthetic_darkelf.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "while_elite_alive"
 

@@ -521,7 +521,7 @@ movement_order = ["-", "F", "F"]
 text = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
 
 [[units.mechanical_fire_bird.specials.immunity]]
-args.feature = "damage_type.fire"
+args.feature = "token.fire"
 
 [units.mechanical_fire_bird.orders.movement]
 fast_fly = [["L/R+F", "F", "F+L/R"], ["F", "F", "F"], ["F+L/R", "F+L/R", "F"]]
@@ -709,7 +709,7 @@ args.ability = "ability.thrown_weapons"
 args.N = 2
 
 [[models.elite_goblin_infantry.unit_specials.resistance]]
-args.version = "damage_type.psychic"
+args.version = "resistance_type.psychic"
 args.N = 1
 variant = "elite_alive"
 
