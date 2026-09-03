@@ -78,6 +78,7 @@ see_also = ["special.pre_assault_retreat"]
 [special.retreat.variants]
 stuck_wagon_disconnects = "If after all assault any wagon cannot enter the hex it should, the wagon is disconnected from this unit and cannot move. If a wagon which cannot move is forced to retreat, the unit is destroyed instead"
 retreat_when_winning = "May also choose to retreat even if winning the assault. The enemy occupies the hex, whether it wants to or not..."
+aim_after_pre_assault_retreat = "Unit gains aim if you manage to use Pre-Assault Retreat successfully"
 
 
 [special.assault_extra_damage]
@@ -246,6 +247,7 @@ name = "Resistance"
 slots = ["unit"]
 signature = "{version}[{N}]"
 effect = "Gives improved resilience versus {version} damage"
+todo = "Reserved by the designer in #165: C33, gnome's \"(roll d4 every time it is hit with some regular damage)\" against the same with d8. Whether the sentence is needed at all is the open question, ahead of any merge or parameterization."
 
 ###Note, may see if I need more.
 ###Note, modified acid rule to align with the others...
@@ -421,6 +423,10 @@ From reference.toml:
 potential_references = ["special.resistance"]
 #potential_references = ["special.remove_shaken"]"""
 
+[special.officer.variants]
+remove_shaken_in_hex = "remove one shaken token on any biological unit in the same hex in 2nd healing phase"
+
+
 [special.trap]
 name = "Trap"
 slots = ["unit"]
@@ -439,12 +445,18 @@ slots = ["unit"]
 todo = "Rule text not yet written. Distinct from Repair: the Race text extends what repairing this unit can do, and needs a name that says so."
 see_also = ["special.repair"]
 
+[special.repairing.variants]
+revive_drone = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone model at the cost of 2 repair points"
+revive_drone_swarm = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+
+
 [special.to_hit]
 name = "To Hit"
 slots = ["unit", "model"]
 # The brackets belong to the ability's own signature, which travels with the ref.
 signature = "{ability}"
 effect = "Shifts the to-hit and to-be-hit rolls by {ability}."
+todo = "Reserved by the designer in #165: C39, elf's \"Grants +3 to hit rather than +1\" against the same sentence with +5. The two differ only by a number, so this wants a Variable and args rather than a variant."
 see_also = ["token.aim"]
 
 [special.to_hit.variables]
@@ -476,7 +488,9 @@ see_also = ["size.enormous"]
 [special.fire_order]
 name = "Fire Order"
 slots = ["unit"]
-todo = "Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace."
+todo = """Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace.
+
+#165 C12 found ogre's "May load up to 2 shots, and fire them one at a time" saying what the load_5_shots variant says. That variant's text still carries a literal {N} placeholder, so pointing at it today would print the placeholder; merge once prose interpolation lands (#171). The wording is not settled either."""
 
 [special.fire_order.variables]
 N = { type = "int", min = 2, max = 10, optional = true }
@@ -503,12 +517,20 @@ name = "Heads"
 slots = ["unit"]
 todo = "Rule text not yet written: the hydras track functional heads, and their spits, regeneration and assault all scale with the count."
 
+[special.heads.variants]
+six_minor_heads = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+
+
 [special.hidden]
 name = "Hidden"
 slots = ["unit"]
 places = ["token.hidden"]
 todo = "Rule text not yet written: every occurrence grants a hidden token at setup. The token carries the rule; decide whether this is Hide under another name."
 see_also = ["token.hidden", "special.hide"]
+
+[special.hidden.variants]
+start_with_token = "Start with a hidden token"
+
 
 [special.illusion]
 name = "Illusion"
@@ -603,6 +625,10 @@ name = "Tow"
 slots = ["unit"]
 todo = "Rule text not yet written: the two flavors — towing and being towed — share one label today, so decide whether they are one rule."
 
+[special.tow.variants]
+must_be_towed = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+
+
 [special.transfer]
 name = "Transfer"
 slots = ["unit"]
@@ -611,7 +637,9 @@ todo = "Rule text not yet written: moving models between two units sharing a hex
 [special.transport]
 name = "Transport"
 slots = ["unit"]
-todo = "Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace."
+todo = """Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace.
+
+Reserved by the designer in #165: C23 (ogre carrying 4 tiny drone units against 6) and C41 (goblin transporting 1 Goblin infantry against 2). Both differ by a count and by the transporting unit's own name, so they want a Variable rather than a variant."""
 
 [special.transport.variants]
 four_tiny_drones = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
@@ -770,6 +798,7 @@ name = "Area"
 slots = ["range"]
 signature = "[{N}+]"
 effect = "Roll a die per enemy model in the hex. For each die at {N}+, roll for damage and and add extra damage to the corresponding unit."
+todo = """Reserved by the designer in #165, which found four clusters of drifted Area prose and left them to his own review of how Area states its ranges: C10 (dwarf's "at range=2" against "at range=3 or 4"), C19 (gnome's acid against minor acid), C34 (dwarf's "1-2 alive models" against "3-4"), and C35 (elf's two spellings of what the non-aim area covers). C10 and C34 differ only by a number and want a Variable rather than a variant."""
 
 [special.area.variables]
 N = { type = "int", min = 1, max = 6, optional = true}
@@ -810,12 +839,16 @@ aim_6_dice = "When using aim: roll 6 dice at same unit."
 [special.multiple_shots]
 name = "Multiple Shots"
 slots = ["range"]
-todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
+todo = """Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them.
+
+Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." A shot-count Variable may suit these better than a variant."""
 see_also = ["special.burst"]
 
 [special.multiple_shots.variants]
 fires_twice = "Fires two times each time it is fired"
 fire_per_minor_head = "Fire one time per alive minor head"
+left_and_right = "Fire once to the right and once to the left per fire order"
+d12_shots_same_unit = "Fire d12 shots each time and all at the same unit"
 
 
 [special.multipurpose]

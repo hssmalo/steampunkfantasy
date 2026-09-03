@@ -269,7 +269,7 @@ description = '''An armored steampunk tractor firing a big ballista. On the back
 
 
 [[units.ballista_tractor_mark_i.specials.fire_order]]
-text = "Fires and loads both weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [units.ballista_tractor_mark_i.shaken]
 speed = "still"
@@ -904,7 +904,7 @@ damage = "d4-2"
 ap = 1
 
 [[equipment.light_smg.range.specials.multipurpose]]
-text = "Reserve weapon: may use this weapon instead of main gun when fire(res) orders is given, but you may only use one reserve weapon at any given time."
+variant = "reserve_weapon"
 
 [[equipment.light_smg.range.specials.ammo]]
 variant = "always_loaded"
@@ -982,7 +982,7 @@ damage = "d8-2"
 ap = 2
 
 [[equipment.grinder.range.specials.multipurpose]]
-text = "Reserve weapon: may use this weapon instead of main gun fire (res) orders is given, but you may only use one reserve weapon at any given time."
+variant = "reserve_weapon"
 
 [[equipment.grinder.range.specials.ammo]]
 text = "Only treated as loaded if your main gun is loaded, and uses that ammo (for all models in the unit) if this weapon is used"
@@ -1041,7 +1041,7 @@ args.version = "token.poison"
 args.N = 6
 
 [[equipment.green_gas_launcher.range.specials.multipurpose]]
-text = "Reserve weapon: may use this weapon instead of main gun if fire (res) orders is given, but you may only use one reserve weapon at any given time."
+variant = "reserve_weapon"
 
 [[equipment.green_gas_launcher.range.specials.ammo]]
 variant = "always_loaded"
@@ -1131,7 +1131,7 @@ variant = "aim_6_dice"
 [[equipment.helicopter_gatling_gun.range.specials.area]]
 #preamble = "If not using aim, target all hexes within long range"
 args.N = 4
-text = "at point blank range"
+variant = "point_blank"
 
 [[equipment.helicopter_gatling_gun.range.specials.area]]
 args.N = 6
@@ -1398,7 +1398,7 @@ damage = "d6-2"
 ap = 3
 
 [[equipment.helicopter_mounted_experimental_nail_gun.range.specials.multiple_shots]]
-text = "Fire d12 shots each time it is fired at the same unit"
+variant = "d12_shots_same_unit"
 
 [[equipment.helicopter_mounted_experimental_nail_gun.range.specials.fumble]]
 text = "If fumble add one +1 future damage token to self"
@@ -1417,7 +1417,7 @@ damage = "d6-2"
 ap = 3
 
 [[equipment.experimental_nail_gun.range.specials.multiple_shots]]
-text = "Fire d12 shots each time and all at the same unit"
+variant = "d12_shots_same_unit"
 
 [[equipment.experimental_nail_gun.range.specials.fumble]]
 text = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed"

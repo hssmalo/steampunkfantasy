@@ -94,7 +94,7 @@ args.M = 8
 text = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
 
 [[units.flagship.specials.fire_order]]
-text = "Fire and loads all weapons simultaneously"
+variant = "fire_and_load_simultaneously"
 
 [[units.flagship.specials.repair]]
 args.N = 3
@@ -893,7 +893,7 @@ damage = "d8 crew damage"
 ap = 0
 
 [[equipment.side_weapons.range.specials.multiple_shots]]
-text = "Fire once to the right and once to the left per fire order"
+variant = "left_and_right"
 
 [[equipment.side_weapons.range.specials.los]]
 variant = "los_from_front_or_back"
@@ -1143,7 +1143,7 @@ variant = "point_blank"
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 5
-text = "within normal range"
+variant = "normal_range"
 
 [[equipment.shriek.range.specials.area.cases]]
 args.N = 6

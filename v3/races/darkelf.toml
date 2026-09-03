@@ -1051,7 +1051,6 @@ args.ability = "ability.good_shot"
 
 [[models.elite_mechanical_cavalry.specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-text = "Applies while shooting"
 
 [models.elite_mechanical_cavalry.assault]
 strength = [4, 2, 1, 1]
@@ -1249,7 +1248,7 @@ type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 text = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
 
 [[models.darkelf_officer.unit_specials.officer]]
-text = "Officer: remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+variant = "remove_shaken_in_hex"
 
 [[models.darkelf_officer.specials.escape_artist]]
 text = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes"
@@ -1685,7 +1684,7 @@ ap = 0
 [[equipment.nightmare_breath.range.specials.area]]
 #preamble ='All hexes within normal range and within arc"
 args.N = 4
-text = "at point blank range"
+variant = "point_blank"
 
 [[equipment.nightmare_breath.range.specials.area]]
 args.N = 6
@@ -1902,7 +1901,7 @@ args.version = "token.poison"
 args.N = 8
 
 [[equipment.poison_spit.range.specials.multiple_shots]]
-text = "Fire one time per functional minor head"
+variant = "fire_per_minor_head"
 
 [equipment.shrapnel_spit]
 name = "Shrapnel Spit"
@@ -2010,7 +2009,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:Infantry"]]
 
 [[equipment.hide.unit_specials.hidden]]
-text = "Unit starts with a Hidden token"
+variant = "start_with_token"
 
 [[equipment.hide.unit_specials.forward_position]]
 args.N = 1
@@ -2032,7 +2031,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Mechanical"]]
 
 [[equipment.cloaking_device.unit_specials.hidden]]
-text = "Start with a Hidden token"
+variant = "start_with_token"
 
 [[equipment.cloaking_device.unit_specials.forward_position]]
 args.N = 1
@@ -2047,7 +2046,7 @@ race = "darkelf"
 requires = []
 
 [[equipment.hide_free.unit_specials.hidden]]
-text = "Start with Hidden token"
+variant = "start_with_token"
 
 [[equipment.hide_free.unit_specials.forward_position]]
 args.N = 1
@@ -2118,7 +2117,7 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.experimental_acid_smg.range.specials.ammo]]
-text = "Always treated as loaded."
+variant = "always_loaded"
 
 [[equipment.experimental_acid_smg.range.specials.multiple_shots]]
 variant = "fires_twice"
