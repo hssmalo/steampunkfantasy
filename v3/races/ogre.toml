@@ -766,7 +766,8 @@ type = ["Bio", "Infantry", "Walking", "Elite", "Scout"]
 description = "A regular Ogre assault scout which often carries tiny drones and which can also repair them. They have the knowledge to hit enemy drones in assaults where it hurts the most"
 
 [[models.ogre_scout_engineer.unit_specials.transport]]
-variant = "four_tiny_drones"
+args.N = 4
+variant = "tiny_drones"
 
 [[models.ogre_scout_engineer.unit_specials.repair]]
 args.N = 2
@@ -1022,7 +1023,8 @@ equipment = ["ogre_rifle"]
 type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 
 [[models.ogre_engineer.unit_specials.transport]]
-variant = "four_tiny_drones"
+args.N = 4
+variant = "tiny_drones"
 
 [[models.ogre_engineer.unit_specials.repair]]
 args.N = 2

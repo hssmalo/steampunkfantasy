@@ -647,8 +647,12 @@ todo = """Rule text not yet written: carrying units, and the deploy order that u
 
 Reserved by the designer in #165: C23 (ogre carrying 4 tiny drone units against 6) and C41 (goblin transporting 1 Goblin infantry against 2). Both differ by a count and by the transporting unit's own name, so they want a Variable rather than a variant."""
 
+[special.transport.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
+
 [special.transport.variants]
-four_tiny_drones = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+tiny_drones = "May carry {N} tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
 
 
 [special.vulnerability]
