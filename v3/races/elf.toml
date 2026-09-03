@@ -1569,7 +1569,8 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.smg_free.range.specials.multiple_shots]]
-text = "Fire two shot per fire order (per smg in the unit)"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.twin_guns]
 name = "Twin Guns"
@@ -1583,7 +1584,8 @@ damage = "d6"
 ap = 4
 
 [[equipment.twin_guns.range.specials.multiple_shots]]
-text = "x2 shots per fire order"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.twin_guns.range.specials.bonus]]
 text = "Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range"

@@ -1592,7 +1592,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.smg.range.specials.multiple_shots]]
-variant = "fires_twice"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
@@ -1612,7 +1613,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.smg_free.range.specials.multiple_shots]]
-text = "Fires two times (per model) each time it is fired"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.crossbow]
 name = "Crossbow"
@@ -2125,7 +2127,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.experimental_acid_smg.range.specials.multiple_shots]]
-variant = "fires_twice"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.experimental_acid_smg.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"

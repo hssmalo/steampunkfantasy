@@ -5,6 +5,7 @@ captures *why* a rule was changed.
 
 | Date | Description | Why |
 | ---------- | ------------------------------ | ------------------------------ |
+| 04.09.2026 | Multiple Shots states a shot count per fire order, and the "per model" qualifiers are dropped | The qualifiers were misleading: the shots belong to the fire order, not to each model in the unit |
 | 03.09.2026 | Focus Fire is the aim option, not the alternative to it, and its number is the dice rolled when aiming | Every weapon carrying it already described its non-aiming fire on another rule, so the rule contradicted its own call sites |
 | 24.08.2026 | Added horrifying poison token| To fun not to add |
 | 24.08.2026 | The unnamed -1/+1 critical token is now Critical Damage (`token.critical_damage`) | Its name was a description of its own numbers; a player needs something to call it |

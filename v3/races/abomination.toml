@@ -856,7 +856,8 @@ damage = "d6 Psychic + d4 Crew damage"
 ap = "N/A"
 
 [[equipment.confusion_stinger.range.specials.multiple_shots]]
-text = "Fires 3 shot per fire order."
+args.N = 3
+variant = "fire_n_times"
 
 [[equipment.confusion_stinger.range.specials.range_extra_damage]]
 args.version = "token.confused"
@@ -873,7 +874,8 @@ damage = "d4-2"
 ap = 0
 
 [[equipment.greater_disruptors.range.specials.multiple_shots]]
-text = "Fires 4 shot per fire order."
+args.N = 4
+variant = "fire_n_times"
 
 [[equipment.greater_disruptors.range.specials.range_gear_disruption]]
 args.N = 5
@@ -1101,7 +1103,8 @@ damage = "d8"
 ap = "3"
 
 [[equipment.double_barreled_oversized_musket.range.specials.multiple_shots]]
-text = "Fire two shot per fire order"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.double_barreled_oversized_musket.range.specials.range_gear_disruption]]
 args.N = 6
@@ -1228,7 +1231,8 @@ damage = "d4-2+d6 Psychic damage + d4 Crew damage"
 ap = 0
 
 [[equipment.twin_frost_ray.range.specials.multiple_shots]]
-text = "Fire twice per fire order"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.twin_frost_ray.range.specials.ammo]]
 variant = "always_loaded"

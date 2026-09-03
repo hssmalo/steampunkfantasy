@@ -1043,7 +1043,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.goblin_auto_bow.range.specials.multiple_shots]]
-text = "Shoot three times per fire order"
+args.N = 3
+variant = "fire_n_times"
 
 [equipment.grenadier]
 name = "Grenadier"

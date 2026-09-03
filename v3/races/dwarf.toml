@@ -1080,7 +1080,8 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.double_barreled_musket_with_springloaded_axe.range.specials.multiple_shots]]
-text = "Fire two shots (per model) for each shot"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.double_barreled_musket_with_springloaded_axe.range.specials.ammo]]
 variant = "loaded_after_assault"
@@ -1168,7 +1169,8 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.axethrower_machine.range.specials.multiple_shots]]
-text = "Fire x2 per fire order per model"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.axethrower_machine.model_specials.to_hit]]
 args.ability = "ability.even_range"
@@ -1515,7 +1517,8 @@ damage = "d6-1"
 ap = 3
 
 [[equipment.double_barreled_long_range_heavy_musket.range.specials.multiple_shots]]
-text = "Fire two shots per fire order per model"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.multibarreled_heavy_musket]
 name = "Multibarreled Heavy Musket"
@@ -1531,7 +1534,8 @@ damage = "d6-1"
 ap = 3
 
 [[equipment.multibarreled_heavy_musket.range.specials.multiple_shots]]
-text = "Fire three shots per model"
+args.N = 3
+variant = "fire_n_times"
 
 [equipment.rocket_jackhammer]
 name = "Rocket Jackhammer"
