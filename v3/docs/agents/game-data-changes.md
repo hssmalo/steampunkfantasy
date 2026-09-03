@@ -27,7 +27,7 @@ Take a **Golden** before touching anything, then work one change at a time:
 just golden-snapshot          # Before you edit: the before-image
 # ... make one change ...
 just golden-diff              # What did that print?
-just check && just lint-data  # The gates that do apply
+just check                    # The gates that do apply (or just lint-data to be more pointed)
 git commit
 just golden-accept            # Re-baseline, so the next diff shows only the next change
 ```
