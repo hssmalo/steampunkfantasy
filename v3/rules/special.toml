@@ -248,7 +248,7 @@ name = "Resistance"
 slots = ["unit"]
 signature = "{version}[{N}]"
 effect = "Gives improved resilience versus {version} damage"
-todo = "Reserved by the designer in #165: C33, gnome's \"(roll d4 every time it is hit with some regular damage)\" against the same with d8. He will decide whether the sentence is needed at all before it is merged or parameterised."
+todo = "Reserved by the designer in #165: C33, gnome's \"(roll d4 every time it is hit with some regular damage)\" against the same with d8. Whether the sentence is needed at all is the open question, ahead of any merge or parameterization."
 
 ###Note, may see if I need more.
 ###Note, modified acid rule to align with the others...
@@ -442,6 +442,7 @@ potential_references = ["special.resistance"]
 [special.officer.variants]
 remove_shaken_in_hex = "remove one shaken token on any biological unit in the same hex in 2nd healing phase"
 
+
 [special.trap]
 name = "Trap"
 slots = ["unit"]
@@ -463,14 +464,15 @@ see_also = ["special.repair"]
 [special.repairing.variants]
 revive_drone = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone model at the cost of 2 repair points"
 
+
 [special.to_hit]
 name = "To Hit"
 slots = ["unit", "model"]
 # The brackets belong to the ability's own signature, which travels with the ref.
 signature = "{ability}"
 effect = "Shifts the to-hit and to-be-hit rolls by {ability}."
-see_also = ["token.aim"]
 todo = "Reserved by the designer in #165: C39, elf's \"Grants +3 to hit rather than +1\" against the same sentence with +5. The two differ only by a number, so this wants a Variable and args rather than a variant."
+see_also = ["token.aim"]
 
 [special.to_hit.variables]
 ability = { type = "ref", namespaces = ["ability"] }
@@ -503,7 +505,7 @@ name = "Fire Order"
 slots = ["unit"]
 todo = """Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace.
 
-#165 C12 found ogre's "May load up to 2 shots, and fire them one at a time" saying what the load_5_shots variant says. That variant's text still carries a literal {N} placeholder, so pointing at it today would print the placeholder; merge once prose interpolation lands (#171). The designer is not settled on the wording either."""
+#165 C12 found ogre's "May load up to 2 shots, and fire them one at a time" saying what the load_5_shots variant says. That variant's text still carries a literal {N} placeholder, so pointing at it today would print the placeholder; merge once prose interpolation lands (#171). The wording is not settled either."""
 
 [special.fire_order.variables]
 N = { type = "int", min = 2, max = 10, optional = true }
@@ -533,6 +535,7 @@ todo = "Rule text not yet written: the hydras track functional heads, and their 
 [special.heads.variants]
 six_minor_heads = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
 
+
 [special.hidden]
 name = "Hidden"
 slots = ["unit"]
@@ -542,6 +545,7 @@ see_also = ["token.hidden", "special.hide"]
 
 [special.hidden.variants]
 start_with_token = "Start with a hidden token"
+
 
 [special.illusion]
 name = "Illusion"
@@ -638,6 +642,7 @@ todo = "Rule text not yet written: the two flavors â€” towing and being towed â€
 
 [special.tow.variants]
 must_be_towed = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+
 
 [special.transfer]
 name = "Transfer"
@@ -851,7 +856,7 @@ name = "Multiple Shots"
 slots = ["range"]
 todo = """Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them.
 
-Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." He is considering a shot-count Variable instead of a variant."""
+Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." A shot-count Variable may suit these better than a variant."""
 see_also = ["special.burst"]
 
 [special.multiple_shots.variants]
