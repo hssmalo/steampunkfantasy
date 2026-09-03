@@ -79,6 +79,34 @@ So goldens are now **generated on demand** into a gitignored `goldens/`, by
 `just golden-snapshot` and `just golden-diff`, and deleted when the refactor
 that needed them lands. Same tool, with the lifetime it should always have had.
 
+## Amendment: a golden also witnesses a change
+
+The paragraphs above describe a golden as proving that a change altered *no*
+output, which is the use that prompted this decision. It is not the only one.
+
+Issue #165 reworded Specials prose across the corpus. Nothing in `just check`
+speaks for that work — by this very ADR, no test may pin the prose, and the
+linters prove a file loads rather than that it reads correctly. The golden diff
+was the only review it got, and it earned its place twice over: it caught
+several merges that had quietly dropped a clause, a label, or a scoping
+condition, which is invisible in a TOML edit and obvious in a rendered line.
+
+So a **Golden** is a before-image read two ways. A refactor expects the diff to
+be empty. A data edit expects it to hold exactly the prose that was meant to
+move. Same mechanism, inverted success condition.
+
+That second use keeps a snapshot alive across a multi-week issue rather than a
+single refactor — which reads like the failure mode above, and is not. What
+went wrong with the 18 committed goldens was that they were *committed*, *hand
+maintained*, and *asserted against*. A snapshot that is gitignored, regenerated
+from the corpus in nine seconds, and read by a human is none of those. It is
+also stamped now with the commit it was taken against, so a baseline that has
+drifted says so instead of quietly answering the wrong question.
+
+The ban stands exactly as written: nothing in `goldens/` is ever committed, and
+no test byte-compares against it. `docs/agents/game-data-changes.md` is the
+operational form of this amendment.
+
 ## Consequences
 
 - The suite goes from 1306 tests to 1249. The gap understates the work: most of

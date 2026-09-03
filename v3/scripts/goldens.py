@@ -283,7 +283,7 @@ def _print_summary(tally: "Tally", shown: tuple[str, ...]) -> None:
 
 
 def _count(number: int, noun: str) -> str:
-    """Say how many of `noun` there are, pluralising the noun to match."""
+    """Say how many of `noun` there are, pluralizing the noun to match."""
     return f"{number} {noun}" if number == 1 else f"{number} {noun}s"
 
 
