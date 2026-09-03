@@ -463,6 +463,7 @@ see_also = ["special.repair"]
 
 [special.repairing.variants]
 revive_drone = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone model at the cost of 2 repair points"
+revive_drone_swarm = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
 
 
 [special.to_hit]

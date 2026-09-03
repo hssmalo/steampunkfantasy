@@ -314,7 +314,7 @@ movement_order = ["-", "-", "-"]
 text = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 
 [[units.drone_swarm.specials.repairing]]
-variant = "revive_drone"
+variant = "revive_drone_swarm"
 
 [[units.drone_swarm.specials.evasion]]
 args.N = 3
