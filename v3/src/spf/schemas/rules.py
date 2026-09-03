@@ -392,5 +392,12 @@ class ResistanceTypeRuleConfig(RuleRecord):
 
 class NamespacesConfig(StrictModel):
     namespaces: dict[str, NamespaceConfig]
-    damage_type: dict[str, DamageTypeRuleConfig]
-    resistance_type: dict[str, ResistanceTypeRuleConfig]
+
+    # The registries that live in this file rather than in one of their own.
+    # Each defaults to empty so that declaring a namespace is what puts a table
+    # in play: a corpus naming only some of them still reads, and adding the
+    # next small registry here is not an edit to every namespaces.toml fixture.
+    # A declared namespace whose table stayed empty is caught on load, where
+    # every other empty registry is.
+    damage_type: dict[str, DamageTypeRuleConfig] = Field(default_factory=dict)
+    resistance_type: dict[str, ResistanceTypeRuleConfig] = Field(default_factory=dict)

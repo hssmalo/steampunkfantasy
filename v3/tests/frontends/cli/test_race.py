@@ -1,11 +1,13 @@
 """Tests for the lists `spf race units|models|equipment|things` print.
 
-These drive the real CLI against a tracked Race rather than a hand-built
-`RaceConfig`: the subject is the printed row, and `races/goblin.toml` already
-carries both a costed Unit and one with no Cost at all.
+These drive the real CLI rather than a hand-built `RaceConfig`: the subject is
+the printed row. Most read a tracked Race and derive what they expect from the
+same load the CLI made, so any goblin edit stays green; the one that needs a
+Unit of a particular shape writes a synthetic Race out instead.
 """
 
 import re
+from pathlib import Path
 
 import cyclopts
 import pytest
@@ -16,9 +18,14 @@ from spf.console import stdout
 from spf.frontends.cli import app
 from spf.frontends.cli.race import _NO_COST
 from spf.schemas.type_aliases import Cost
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_race,
+    write_race_toml,
+)
 
 RACE = "goblin"
-"""A tracked Race holding both costed and cost-less Units."""
+"""A tracked Race, read back through the same loader the CLI uses."""
 
 _ROW = re.compile(r"^- (?P<name>\S.*?)\s\s+(?P<cost>\S.*?)\s*$")
 """A printed row: the name, then the cost column two or more spaces later."""
@@ -132,12 +139,22 @@ def test_a_row_shows_its_own_cost_not_the_next_ones(
 
 def test_a_unit_without_a_cost_shows_the_placeholder(
     capsys: pytest.CaptureFixture[str],
+    races_dir: Path,
+    install_registry: InstallRegistry,
 ) -> None:
-    race = races.get_race(RACE)
-    free = [unit.name for unit in race.units.values() if unit.cost is None]
-    assert free, f"{RACE} is only useful here while some Unit has no Cost"
+    """A synthetic Race, not a tracked one.
 
-    _race("units", RACE)
+    Whether any shipped Unit is free is a pricing decision, so this is the one
+    row shape the tracked corpus cannot be asked to keep holding.
+    """
+    install_registry()
+    built = synthetic_race()
+    write_race_toml(races_dir, built)
+    name_of = next(iter(built.races))
+    free = [unit.name for unit in built.units.values() if unit.cost is None]
+    assert free, "synthetic_race is only useful here while some Unit has no Cost"
+
+    _race("units", name_of)
     rows = _rows(capsys.readouterr().out)
 
     for name in free:

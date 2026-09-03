@@ -30,9 +30,16 @@ def add_commands(app: cyclopts.App) -> None:
 
 
 def _report(findings: list[LintFinding]) -> None:
-    """Print every finding, then fail if there was one."""
-    lint.print_findings(findings)
-    if findings:
+    """Print every finding once, then fail if there was one.
+
+    Two corpora can reach the same defect -- a rules file that will not read is
+    the rules corpus's finding, and is also what blocks every Race -- and a
+    defect is reported once (ADR 0016). Identical findings are dropped rather
+    than printed twice, in the order they were first reported.
+    """
+    unique = list(dict.fromkeys(findings))
+    lint.print_findings(unique)
+    if unique:
         raise SystemExit(1)
 
 
