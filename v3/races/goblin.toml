@@ -143,7 +143,7 @@ race = "goblin"
 name = "Tiny Snake"
 models = ["tiny_snake", "tiny_snake"]
 size = "tiny"
-cost.vpm = 1
+cost.vpm = 2
 
 description = "Two tiny snakes hiding in the grass, ready to bite anyone that comes too close"
 
@@ -153,6 +153,8 @@ movement_order = ["-", "-", "Flee"]
 
 [[units.tiny_snake.specials.hidden]]
 variant = "start_with_token"
+
+[[units.tiny_snake.specials.no_surving_vp]]
 
 [[units.tiny_snake.specials.terror]]
 args.N = 1
@@ -736,7 +738,7 @@ args.N = 1
 [models.snake_tamer]
 name = "Snake Tamer"
 race = "goblin"
-cost.xp = 4
+cost.xp = 8
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2", "Specialization:1"]
 equipment = ["goblin_bow", "goblin_grenade"]
 type = ["Bio", "Infantry", "Walking"]

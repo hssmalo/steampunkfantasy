@@ -15,6 +15,12 @@ effect = "Each natural 6 rolled in assault count as 2 hits. Further, any natural
 [special.ork_reroll.variables]
 N = { type = "int" }
 
+[special.no_surving_vp]
+
+name = "No Surving Vp"
+slots = ["unit"]
+effect = "You get no victory point for surviving."
+
 [special.cunning_assault]
 name = "Cunning Assault"
 slots = ["assault"]

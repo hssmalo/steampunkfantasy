@@ -290,6 +290,60 @@ rows = [
 	"6+: shaken",
 ]
 
+[units.cyclops]
+race = "ogre"
+name = "Cyclops"
+armor = [8,7,6,5]
+description = '''Armored Huge cyclops carrying a plasma gun and throwing a boulder sized bomb.
+'''
+
+models = ["cyclops"]
+size = "huge"
+cost.cp = 48
+cost.xp = 96
+
+[units.cyclops.shaken]
+speed = "slow"
+movement_order = ["-", "-", "Flee"]
+
+[units.cyclops.orders.fire]
+still = [
+	["Fire", "Throw"],
+	["Throw", "Fire"],
+	["Load", "Throw"],
+	["Throw", "Load"],
+	["Aim", "-"],
+	["-", "Aim"],
+]
+
+slow  = [["Fire", "Throw"], ["Throw", "Fire"]]
+
+
+[units.cyclops.orders.movement]
+still = [["360°", "360°", "360°"], ["A+360°", "F", "360°"]]
+slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
+
+
+[units.cyclops.damage_tables.Regular]
+rows = [
+	"2-3: Bleed[4]",
+	"4-8: As below, +1 to future damage",
+	"9+: unit destroyed",
+]
+
+[units.cyclops.damage_tables.Psychic]
+rows = [
+	"6+: shaken",
+]
+
+[[units.cyclops.specials.terror]]
+args.N = 2
+args.M = 6
+text = "While Cyclops still has an unused Boulder Bomb"
+
+[[units.cyclops.specials.fire_order]]
+text = "Fire, load and aim orders are for the cyclops plasma gun, while throw order is for the boulder bomb"
+
 [units.drone_swarm]
 race = "ogre"
 name = "Drone Swarm"
@@ -685,6 +739,22 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
+
+[models.cyclops]
+name = "Cyclops"
+race = "ogre"
+equipment_limit = ["Independent:∞", "Hands:2", "Reserve Melee:1"]
+equipment = ["cyclops_plasma_gun", "boulder_bomb"]
+type = ["Bio", "Infantry", "Walking", "Elite"]
+
+[models.cyclops.assault]
+strength = [6, 4, 1, 1]
+strength_die = "5+"
+deflection = [3, 0, 0, 0]
+deflection_die = "5+"
+damage = "d12"
+ap = 4
+
 [models.ogre_scout_engineer]
 name = "Ogre Scout Engineer"
 race = "ogre"
@@ -1002,6 +1072,45 @@ range = 4
 angle = [true, true, true, true]
 damage = "d8-2"
 ap = 2
+
+
+[equipment.cyclops_plasma_gun]
+name = "Cyclops Plasma Gun"
+race = "ogre"
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipment.cyclops_plasma_gun.range]
+range = 5
+angle = [true, true, true, true]
+damage = "d12+d12 Psychic Damage + d12 Crew Damage"
+ap = 3
+
+[[equipment.cyclops_plasma_gun.range.specials.range_extra_damage]]
+args.version = "token.fire"
+
+
+[equipment.boulder_bomb]
+name = "Boulder Bomb"
+race = "ogre"
+requires = [["Independent:1"], ["type:Infantry"]]
+
+[[equipment.boulder_bomb.range.specials.type]]
+variant = "thrown_weapon"
+
+[equipment.boulder_bomb.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d12"
+ap = 8
+
+[[equipment.boulder_bomb.range.specials.range]]
+text = "Target one hex within normal range: Wide Blast Radius[2]: target all hexes within range 2 of target hex."
+
+[[equipment.boulder_bomb.range.specials.area]]
+text = "[5+]"
+
+[[equipment.boulder_bomb.range.specials.limited_ammo]]
+args.N = 1
 
 [equipment.ogre_cannon]
 name = "Ogre Cannon"

@@ -130,11 +130,15 @@ size = "small"
 armor = [0, 0, 0, 0]
 description = '''These are small robots design for assault. One of the arm is replaced with a blade. In the other it wields an axe
 '''
+cost.vpm = 2
+
 
 
 [units.assault_bots.shaken]
 speed = "slow"
 movement_order = ["-", "-", "flee"]
+
+[[units.assault_bots.specials.no_surving_vp]]
 
 [units.assault_bots.orders.movement]
 slow = [["-", "-", "Chs"]]
@@ -153,7 +157,9 @@ size = "tiny"
 armor = [0, 0, 0, 0]
 description = '''Tiny robotic rat.
 '''
+cost.vpm = 1
 
+[[units.mechanical_rat.specials.no_surving_vp]]
 
 [units.mechanical_rat.shaken]
 speed = "still"

@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | To cool not to implement. Armored, durable, big boulder size bomb. Will review power |
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
 | 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychcic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
 | 19.08.2026 | Gonome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
