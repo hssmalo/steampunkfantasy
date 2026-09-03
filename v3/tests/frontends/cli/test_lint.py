@@ -254,32 +254,102 @@ def test_lint_render_takes_no_arguments() -> None:
 
 
 # ---------------------------------------------------------------------------
+# A rules file that will not read
+# ---------------------------------------------------------------------------
+
+
+def test_lint_all_reports_an_unreadable_rules_file_exactly_once(
+    registry_reading_corpus: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The file with the typo is the whole report, not one line per Race.
+
+    Every Race resolves its refs through the registry, so a rules file that
+    will not parse fails all of them -- but a Race that was never the problem
+    is not worth a line, and naming it first buries the file that is.
+    """
+    (registry_reading_corpus / "namespaces.toml").write_text(
+        '[namespaces]\nsee_also = ["token.acid", "token.minor_acid"\n'
+    )
+
+    with pytest.raises(SystemExit):
+        _lint("all")
+
+    [finding] = _findings(capsys)
+    assert finding[0] == "rules/namespaces.toml"
+    assert finding[-1].startswith("Unclosed array")
+
+
+def test_lint_all_reports_a_rules_schema_failure_exactly_once(
+    registry_reading_corpus: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A schema failure keeps the located finding the rules corpus reports."""
+    (registry_reading_corpus / "namespaces.toml").write_text(
+        NAMESPACES_TOML + 'bogus_field = "nonsense"\n' + RESISTANCE_TYPES
+    )
+
+    with pytest.raises(SystemExit):
+        _lint("all")
+
+    assert _findings(capsys) == [
+        [
+            "rules/namespaces.toml",
+            "damage_type.fire.bogus_field",
+            "load",
+            "Extra inputs are not permitted",
+        ]
+    ]
+
+
+def test_lint_races_names_the_rules_file_rather_than_going_silent(
+    registry_reading_corpus: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Suppressing the per-Race copies must not make the corpus look clean.
+
+    `spf lint races` cannot load a Race while the registry is unreadable, so
+    it reports what stopped it -- at the rules file, where the fix is.
+    """
+    (registry_reading_corpus / "namespaces.toml").write_text(
+        '[namespaces]\nsee_also = ["token.acid", "token.minor_acid"\n'
+    )
+
+    with pytest.raises(SystemExit) as exit_info:
+        _lint("races")
+
+    assert exit_info.value.code == 1
+    assert {finding[0] for finding in _findings(capsys)} == {"rules/namespaces.toml"}
+
+
+# ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
-def clean_corpus(
-    tmp_path: Path,
-    races_dir: Path,
-    armies_dir: Path,
-    install_registry: InstallRegistry,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    """Point every corpus at a synthetic one that lints clean."""
-    install_registry()
-    race = synthetic_race()
-    write_race_toml(races_dir, race)
-    write_army_json(armies_dir, "clean", army_json(race))
+NAMESPACES_TOML = (
+    "[namespaces]\n"
+    'damage_type = { name = "Damage Types", label = "damage type",'
+    ' file = "namespaces.toml", table = "damage_type" }\n'
+    '\n[damage_type.fire]\nname = "Fire"\ntodo = "Unwritten."\n'
+)
+"""The smallest namespace registry that reads: one namespace, whose records
+live beside it."""
 
+RESISTANCE_TYPES = "\n[resistance_type]\n"
+"""The other record table the namespace registry has to carry, empty. Only a
+test that needs `namespaces.toml` to satisfy its schema outright appends it."""
+
+EMPTY_RACE_TOML = '[races.goblin]\nname = "Goblin"\n\n[units]\n[models]\n[equipment]\n'
+"""A Race with an empty catalogue, for a test that loads it through the real
+registries: the rules directory beside it declares one namespace, which no
+catalogue entry could satisfy."""
+
+
+def _write_corpus_around_races(
+    tmp_path: Path, armies_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Set up every corpus but the Races: rules, templates, Packs, workflows."""
     rules = tmp_path / "rules"
     rules.mkdir()
-    (rules / "namespaces.toml").write_text(
-        "[namespaces]\n"
-        'damage_type = { name = "Damage Types", label = "damage type",'
-        ' file = "namespaces.toml", table = "damage_type" }\n'
-        '\n[damage_type.fire]\nname = "Fire"\ntodo = "Unwritten."\n'
-    )
+    (rules / "namespaces.toml").write_text(NAMESPACES_TOML)
     (rules / "rulebook.toml").write_text('title = "Rulebook"\nsections = []\n')
     monkeypatch.setattr(config.paths, "rules", rules)
 
@@ -300,3 +370,38 @@ def clean_corpus(
         (workflows / env).mkdir(parents=True)
         (workflows / env / f"{comfyui.selected(env).profile}.json").write_text("{}")
     monkeypatch.setattr(config.paths, "workflows", workflows)
+
+
+@pytest.fixture
+def clean_corpus(
+    tmp_path: Path,
+    races_dir: Path,
+    armies_dir: Path,
+    install_registry: InstallRegistry,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Point every corpus at a synthetic one that lints clean."""
+    install_registry()
+    race = synthetic_race()
+    write_race_toml(races_dir, race)
+    write_army_json(armies_dir, "clean", army_json(race))
+    _write_corpus_around_races(tmp_path, armies_dir, monkeypatch)
+
+
+@pytest.fixture
+def registry_reading_corpus(
+    tmp_path: Path,
+    races_dir: Path,
+    armies_dir: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> Path:
+    """Set up a clean corpus whose Races load through the real registries.
+
+    The sibling of `clean_corpus`, for a test about what an unreadable *rules
+    file* does to a Race load: that question cannot be asked of a corpus whose
+    registry lookups are answered from an installed Registry. Returns the rules
+    directory, which holds the file the test is going to break.
+    """
+    (races_dir / "goblin.toml").write_text(EMPTY_RACE_TOML)
+    _write_corpus_around_races(tmp_path, armies_dir, monkeypatch)
+    return config.paths.rules

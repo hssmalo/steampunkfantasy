@@ -8,10 +8,13 @@ untidy corpus is left to lint.
 """
 
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import cache
 from pathlib import Path
 from typing import cast
+
+import pydantic
 
 from spf import rules
 from spf.config import config
@@ -88,7 +91,7 @@ def load_registry(rules_dir: Path | None = None) -> Registry:
 @cache
 def _load_registry(rules_dir: Path) -> Registry:
     """Read and cache the registries under one rules directory."""
-    namespaces = rules.get_namespaces(rules_dir / "namespaces.toml").namespaces
+    namespaces = _read(rules.get_namespaces, rules_dir / "namespaces.toml").namespaces
     wanted = {namespace.file for namespace in namespaces.values()}
     if unreadable := wanted - set(LOADERS):
         files = ", ".join(sorted(unreadable))
@@ -99,7 +102,8 @@ def _load_registry(rules_dir: Path) -> Registry:
         msg = f"A namespace renders under an undeclared group: {groups}"
         raise ValueError(msg)
     loaded = {
-        file_name: LOADERS[file_name](rules_dir / file_name) for file_name in wanted
+        file_name: _read(LOADERS[file_name], rules_dir / file_name)
+        for file_name in wanted
     }
     registry = Registry(
         namespaces=namespaces,
@@ -110,6 +114,59 @@ def _load_registry(rules_dir: Path) -> Registry:
     )
     _check_version_keys(registry)
     return registry
+
+
+class RulesFileError(ValueError):
+    """One rules file would not read, and which one it was.
+
+    A `ValueError` because that is what every caller already treats an
+    unreadable corpus as, and because pydantic turns one raised inside a
+    validator into an error against the model it was building. The file is
+    kept as a field as well as in the message, so a caller that reports rather
+    than prints -- `spf lint` -- can file the finding at its cause.
+    """
+
+    def __init__(self, file: str, detail: str) -> None:
+        """Record which file would not read, and what it would not read with."""
+        super().__init__(f"{file}: {detail}")
+        self.file = file
+        self.detail = detail
+
+
+def _read[T](loader: Callable[[Path], T], path: Path) -> T:
+    """Read one rules file, naming it in whatever the read fails with.
+
+    A Race resolves its refs through the whole registry, so a rules file that
+    will not read fails every Race load with it -- and pydantic reports that
+    failure against the *Race* file. This is the last frame that still knows
+    which rules file was being read, so it is where the name is attached.
+
+    A schema failure is named the same way, and keeps the field it failed at:
+    that field is a path into the rules file, so an unnamed one reads as
+    though the Race were the file carrying the stray key. Nothing is lost by
+    flattening it here, because `spf lint rules` reads each file on its own
+    rather than through this.
+    """
+    file = f"rules/{path.name}"
+    try:
+        return loader(path)
+    except pydantic.ValidationError as err:
+        raise RulesFileError(file, _flatten(err)) from err
+    except (OSError, ValueError) as err:
+        raise RulesFileError(file, str(err)) from err
+
+
+def _flatten(error: pydantic.ValidationError) -> str:
+    """Render a pydantic error as `field: message`, one clause per error.
+
+    `str()` on the error runs to a paragraph per field, which a Load finding
+    is one line of a table for.
+    """
+    clauses: list[str] = []
+    for detail in error.errors():
+        field = ".".join(str(part) for part in detail["loc"])
+        clauses.append(f"{field}: {detail['msg']}" if field else str(detail["msg"]))
+    return "; ".join(clauses)
 
 
 def _check_version_keys(registry: Registry) -> None:

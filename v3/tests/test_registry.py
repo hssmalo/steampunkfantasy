@@ -13,6 +13,7 @@ import pytest
 from pydantic import ValidationError
 
 from spf import registry as reg
+from spf import rules
 from spf.config import config
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance
@@ -684,8 +685,14 @@ def test_an_incomplete_rules_file_fails_to_load(tmp_path: Path) -> None:
         '[special.fear]\nname = "Fear"\nslots = ["assault"]\n'
     )
 
-    with pytest.raises(ValidationError, match="has neither"):
+    # Assembling the whole registry reports a schema failure as a `ValueError`
+    # naming the file: reading one file on its own is what keeps pydantic's
+    # own error, and `spf lint rules` is the caller that does that.
+    with pytest.raises(ValueError, match=r"rules/special\.toml: .*has neither"):
         reg.load_registry(rules_dir)
+
+    with pytest.raises(ValidationError, match="has neither"):
+        rules.get_specials(rules_dir / "special.toml")
 
 
 def test_a_version_overlay_pointing_nowhere_fails_to_load(tmp_path: Path) -> None:
@@ -700,4 +707,27 @@ def test_a_version_overlay_pointing_nowhere_fails_to_load(tmp_path: Path) -> Non
     )
 
     with pytest.raises(ValueError, match=r"damage_type\.nonesuch"):
+        reg.load_registry(rules_dir)
+
+
+def test_an_unparsable_rules_file_names_itself(tmp_path: Path) -> None:
+    # A Race resolves its refs through the registry, so this failure surfaces
+    # against the *Race* file; without the name here nothing says which rules
+    # file was the one with the typo.
+    rules_dir = _copied_rules(tmp_path)
+    (rules_dir / "namespaces.toml").write_text(
+        '[namespaces]\nsee_also = ["token.acid", "token.minor_acid"\n'
+    )
+
+    with pytest.raises(ValueError, match=r"rules/namespaces\.toml: Unclosed array"):
+        reg.load_registry(rules_dir)
+
+
+def test_an_unparsable_record_file_names_itself(tmp_path: Path) -> None:
+    # Every rules file the namespace registry names is read the same way, so
+    # the one that failed is named whichever it is.
+    rules_dir = _copied_rules(tmp_path)
+    (rules_dir / "special.toml").write_text('[special.fear]\nname = "Fear\n')
+
+    with pytest.raises(ValueError, match=r"rules/special\.toml: "):
         reg.load_registry(rules_dir)

@@ -98,6 +98,82 @@ def test_probe_races_reports_unreadable_toml_as_a_file_level_finding(
     assert finding.rule == "load"
 
 
+MINIMAL_RACE_TOML = (
+    '[races.goblin]\nname = "Goblin"\n\n[units]\n[models]\n[equipment]\n'
+)
+"""A Race with nothing in it, for a test about what the *rules* corpus does to
+a Race load. Empty catalogues still run the registry gate, which is the point."""
+
+
+def test_probe_races_blames_the_rules_file_rather_than_every_race(
+    races_dir: Path, rules_dir: Path
+) -> None:
+    """An unparsable rules file is reported at itself, once, not per Race.
+
+    A Race resolves its refs through the whole registry, so the read fails
+    every Race with it. The finding belongs to the rules corpus: a copy per
+    Race would name a Race file with nothing wrong with it (ADR 0016).
+    """
+    (races_dir / "goblin.toml").write_text(MINIMAL_RACE_TOML)
+    (rules_dir / "namespaces.toml").write_text(
+        '[namespaces]\nsee_also = ["token.acid", "token.minor_acid"\n'
+    )
+
+    [finding] = loading.probe_races().findings
+
+    assert finding.file == "rules/namespaces.toml"
+    assert "Unclosed array" in finding.message
+
+
+def test_probe_races_blames_the_rules_file_that_fails_its_schema(
+    races_dir: Path, rules_dir: Path
+) -> None:
+    """A schema failure is the rules corpus's finding too, located at its field."""
+    (races_dir / "goblin.toml").write_text(MINIMAL_RACE_TOML)
+    (rules_dir / "namespaces.toml").write_text(
+        _NAMESPACES + '\n[damage_type.fire]\nname = "Fire"\nbogus_field = "nonsense"\n'
+    )
+
+    findings = loading.probe_races().findings
+
+    assert {finding.file for finding in findings} == {"rules/namespaces.toml"}
+    assert "damage_type.fire.bogus_field" in {finding.location for finding in findings}
+
+
+def test_probe_races_counts_every_race_broken_when_the_rules_will_not_read(
+    races_dir: Path, rules_dir: Path
+) -> None:
+    """No Race loaded, so an Army of one stays quiet rather than failing twice."""
+    (races_dir / "goblin.toml").write_text(MINIMAL_RACE_TOML)
+    (rules_dir / "namespaces.toml").write_text(
+        '[namespaces]\nsee_also = ["token.acid", "token.minor_acid"\n'
+    )
+
+    probe = loading.probe_races()
+
+    assert probe.loaded == []
+    assert probe.broken == frozenset({"goblin"})
+
+
+def test_probe_rules_keeps_its_per_field_finding_on_a_schema_failure(
+    rules_dir: Path,
+) -> None:
+    """The rules corpus reports the field itself, which naming must not cost.
+
+    `probe_rules` reads each file on its own, so it never goes through the
+    read that attaches a file name -- and keeps the located, one-line-per-error
+    findings that a flattened message could not carry.
+    """
+    (rules_dir / "namespaces.toml").write_text(
+        _NAMESPACES + '\n[damage_type.fire]\nname = "Fire"\nbogus_field = "nonsense"\n'
+    )
+
+    findings = loading.probe_rules().findings
+
+    assert {finding.file for finding in findings} == {"rules/namespaces.toml"}
+    assert "damage_type.fire.bogus_field" in {finding.location for finding in findings}
+
+
 # ---------------------------------------------------------------------------
 # Armies
 # ---------------------------------------------------------------------------
