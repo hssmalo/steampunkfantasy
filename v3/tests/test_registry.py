@@ -17,6 +17,7 @@ from spf import rules
 from spf.config import config
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance
+from tests.conftest import committed_args
 
 
 def _registry() -> reg.Registry:
@@ -619,15 +620,12 @@ def test_the_gate_runs_against_the_committed_registries() -> None:
     # 7. Record completeness is wired in by construction: loading the registry
     # validates every record, so a rules file that fails phase 1's
     # exactly-one-of check fails a Race load too.
+    registry = reg.load_registry()
     errors = reg.check_instances(
-        {
-            "resistance": [
-                SpecialInstance(args={"version": "damage_type.acid", "N": 12})
-            ]
-        },
+        {"resistance": [SpecialInstance(args=committed_args(registry, "resistance"))]},
         slot="unit",
         context="unit 'Armored Unicorn Rider'",
-        registry=reg.load_registry(),
+        registry=registry,
     )
 
     assert errors == []

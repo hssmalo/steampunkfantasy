@@ -3,8 +3,10 @@
 import pytest
 from pydantic import ValidationError
 
+from spf.registry import load_registry
 from spf.schemas.race import RaceConfig, race_slots
 from spf.schemas.special import SpecialInstance
+from tests.conftest import committed_args
 
 
 def test_an_instance_may_be_empty() -> None:
@@ -219,16 +221,15 @@ def race(
 
 
 def test_a_unit_carries_instances_of_real_rules() -> None:
-    loaded = race(
-        unit={
-            "specials": {
-                "resistance": [{"args": {"version": "damage_type.poison", "N": 6}}]
-            }
-        }
-    )
+    # The arguments are read out of `rules/` rather than written here: this
+    # test is about an Instance surviving the load, not about what the
+    # Resistance rule currently takes.
+    args = committed_args(load_registry(), "resistance")
+
+    loaded = race(unit={"specials": {"resistance": [{"args": args}]}})
 
     (instance,) = loaded.units["squad"].specials["resistance"]
-    assert instance.args["N"] == 6
+    assert instance.args == args
 
 
 def test_an_unknown_special_id_fails_the_race() -> None:
