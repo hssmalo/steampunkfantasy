@@ -345,6 +345,42 @@ def test_probe_rules_reports_a_rulebook_source_that_is_missing(
     assert findings[0].rule == "load"
 
 
+def test_probe_rules_reports_an_unowned_rules_file_that_will_not_parse(
+    rules_dir: Path,
+) -> None:
+    """A rules file no registry declares still has to be TOML.
+
+    The registry only reads the files a namespace names, so a file being
+    drafted -- an order registry, a retreat table -- is otherwise unread, and
+    a syntax error in one can sit there indefinitely.
+    """
+    (rules_dir / "orders.toml").write_text('see_also = ["a". "b"]\n')
+
+    findings = loading.probe_rules().findings
+
+    assert [finding.file for finding in findings] == ["rules/orders.toml"]
+    assert findings[0].rule == "load"
+
+
+def test_probe_rules_says_nothing_about_an_unowned_file_that_parses(
+    rules_dir: Path,
+) -> None:
+    """Parsing is all an unowned file owes: it is not held to a schema."""
+    (rules_dir / "orders.toml").write_text('anything = { at = "all" }\n')
+
+    assert loading.probe_rules().findings == []
+
+
+def test_probe_rules_reports_a_broken_registry_file_once(rules_dir: Path) -> None:
+    """A file a namespace *does* declare is not also reported as unparsed."""
+    (rules_dir / "terrain.toml").write_text("[terrain.forest\n")
+
+    findings = loading.probe_rules().findings
+
+    assert len(findings) == 1
+    assert findings[0].file == "rules/terrain.toml"
+
+
 def test_probe_rules_keeps_the_namespaces_whose_files_read(rules_dir: Path) -> None:
     """One broken registry file costs the corpus its records and no others."""
     (rules_dir / "terrain.toml").write_text("[terrain.forest]\nname = 5\n")
