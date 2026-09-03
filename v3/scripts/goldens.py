@@ -1,9 +1,14 @@
 """Render every document on demand, and diff a re-render against that snapshot.
 
-A golden is a refactoring tool, not a fixture (`docs/agents/testing.md`,
-ADR 0033): it is worth exactly one thing, proving a change altered no output.
-So none are committed. `snapshot` writes the current working tree's output into
-the gitignored `goldens/`, and `diff` re-renders and reports what moved.
+A Golden is a before-image of the rendered corpus, never a fixture
+(`docs/agents/game-data-changes.md`, ADR 0033), so none are committed.
+`snapshot` writes the current working tree's output into the gitignored
+`goldens/`, `diff` re-renders and reports what moved, and `accept` retakes the
+snapshot once a change has been reviewed.
+
+It is read two ways. A refactor expects the diff to be empty. A game-data edit
+expects it to hold exactly the prose that was meant to change, which is the
+only place that change can be reviewed.
 
 Every Product goes through the same entry points `spf render` does, in the two
 text Formats — Markdown and LaTeX. The binary Formats derive from those, and a
@@ -385,8 +390,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
-        choices=("snapshot", "diff"),
-        help="snapshot: render into goldens/. diff: re-render and compare.",
+        choices=("snapshot", "diff", "accept"),
+        help=(
+            "snapshot: render into goldens/. diff: re-render and compare. "
+            "accept: retake the snapshot over a reviewed change."
+        ),
     )
     parser.add_argument(
         "--format",
@@ -395,7 +403,9 @@ def main(argv: list[str] | None = None) -> int:
         help="Whose diffs to print. Every Format is compared either way.",
     )
     args = parser.parse_args(argv)
-    if args.command == "snapshot":
+    # `accept` is `snapshot` under the name that reads right mid-issue, where
+    # "start over" is not what the reviewer of a landed cluster means.
+    if args.command in ("snapshot", "accept"):
         return snapshot()
     shown = FORMATS if args.format == "all" else (args.format,)
     return diff(shown)

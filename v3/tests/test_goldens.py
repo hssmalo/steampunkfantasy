@@ -234,3 +234,32 @@ def test_a_snapshot_with_no_stamp_warns() -> None:
 
     assert len(warnings) == 1
     assert "no baseline stamp" in warnings[0]
+
+
+def test_a_written_stamp_reads_back(tmp_path: Path) -> None:
+    goldens._write_baseline(tmp_path)
+
+    stamp = goldens._read_baseline(tmp_path)
+
+    assert stamp is not None
+    assert set(stamp) == {"commit", "dirty"}
+
+
+def test_an_unreadable_stamp_is_no_stamp(tmp_path: Path) -> None:
+    (tmp_path / goldens.BASELINE).write_text("not json", encoding="utf-8")
+
+    assert goldens._read_baseline(tmp_path) is None
+
+
+def test_accept_retakes_the_snapshot(monkeypatch: pytest.MonkeyPatch) -> None:
+    # `accept` is `snapshot` under the name an agent mid-issue will reach for.
+    taken = []
+
+    def _snapshot() -> int:
+        taken.append("taken")
+        return 0
+
+    monkeypatch.setattr(goldens, "snapshot", _snapshot)
+
+    assert goldens.main(["accept"]) == 0
+    assert taken == ["taken"]
