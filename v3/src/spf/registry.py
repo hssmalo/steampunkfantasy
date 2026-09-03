@@ -8,10 +8,13 @@ untidy corpus is left to lint.
 """
 
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import cache
 from pathlib import Path
 from typing import cast
+
+import pydantic
 
 from spf import rules
 from spf.config import config
@@ -88,7 +91,7 @@ def load_registry(rules_dir: Path | None = None) -> Registry:
 @cache
 def _load_registry(rules_dir: Path) -> Registry:
     """Read and cache the registries under one rules directory."""
-    namespaces = rules.get_namespaces(rules_dir / "namespaces.toml").namespaces
+    namespaces = _read(rules.get_namespaces, rules_dir / "namespaces.toml").namespaces
     wanted = {namespace.file for namespace in namespaces.values()}
     if unreadable := wanted - set(LOADERS):
         files = ", ".join(sorted(unreadable))
@@ -99,7 +102,8 @@ def _load_registry(rules_dir: Path) -> Registry:
         msg = f"A namespace renders under an undeclared group: {groups}"
         raise ValueError(msg)
     loaded = {
-        file_name: LOADERS[file_name](rules_dir / file_name) for file_name in wanted
+        file_name: _read(LOADERS[file_name], rules_dir / file_name)
+        for file_name in wanted
     }
     registry = Registry(
         namespaces=namespaces,
@@ -110,6 +114,27 @@ def _load_registry(rules_dir: Path) -> Registry:
     )
     _check_version_keys(registry)
     return registry
+
+
+def _read[T](loader: Callable[[Path], T], path: Path) -> T:
+    """Read one rules file, naming it in whatever the read fails with.
+
+    A Race resolves its refs through the whole registry, so a rules file that
+    will not read fails every Race load with it -- and pydantic reports that
+    failure against the *Race* file. This is the last frame that still knows
+    which rules file was being read, so it is where the name is attached.
+
+    A `ValidationError` is passed through untouched: it already names the model
+    it failed to build, and flattening it to a `ValueError` would cost `spf
+    lint rules` the per-field findings it reports one line each.
+    """
+    try:
+        return loader(path)
+    except pydantic.ValidationError:
+        raise
+    except (OSError, ValueError) as err:
+        msg = f"rules/{path.name}: {err}"
+        raise ValueError(msg) from err
 
 
 def _check_version_keys(registry: Registry) -> None:

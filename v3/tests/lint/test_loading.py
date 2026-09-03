@@ -98,6 +98,35 @@ def test_probe_races_reports_unreadable_toml_as_a_file_level_finding(
     assert finding.rule == "load"
 
 
+MINIMAL_RACE_TOML = (
+    '[races.goblin]\nname = "Goblin"\n\n[units]\n[models]\n[equipment]\n'
+)
+"""A Race with nothing in it, for a test about what the *rules* corpus does to
+a Race load. Empty catalogues still run the registry gate, which is the point."""
+
+
+def test_probe_races_names_the_rules_file_a_race_could_not_read(
+    races_dir: Path, rules_dir: Path
+) -> None:
+    """A rules file that will not parse fails every Race, and says which it is.
+
+    A Race resolves its refs through the whole registry, so an unparsable
+    rules file surfaces as a Load finding against the Race file. The finding
+    would otherwise read `Value error, Unclosed array` and point at a Race
+    nothing is wrong with.
+    """
+    (races_dir / "goblin.toml").write_text(MINIMAL_RACE_TOML)
+    (rules_dir / "namespaces.toml").write_text(
+        '[namespaces]\nsee_also = ["token.acid", "token.minor_acid"\n'
+    )
+
+    [finding] = loading.probe_races().findings
+
+    assert finding.file == "races/goblin.toml"
+    assert "rules/namespaces.toml" in finding.message
+    assert "Unclosed array" in finding.message
+
+
 # ---------------------------------------------------------------------------
 # Armies
 # ---------------------------------------------------------------------------
