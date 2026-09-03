@@ -56,8 +56,8 @@ slow  = [["360°", "F", "B"]]
 
 [units.goblin_infantry.damage_tables.Regular]
 rows = [
-	"0-5: Kill 1 model",
-	"6-7: Kill 1 model, Psychic damage[d6]",
+	"0-4: Kill 1 model",
+	"5-7: Kill 1 model, Psychic damage[d6]",
 	"8+: Unit destroyed",
 ]
 notes = [
@@ -111,8 +111,8 @@ args.M = 6
 [[units.giant_snake_cavalry.specials.hypnotizing_gaze]]
 args.N = 1
 
-[[units.giant_snake_cavalry.specials.spawn]]
-text = "tiny_snake: At start of battle, place a hidden tiny snake in the same hex as the Snake Cavalry"
+#[[units.giant_snake_cavalry.specials.spawn]]
+#text = "tiny_snake: At start of battle, place a hidden tiny snake in the same hex as the Snake Cavalry"
 
 [units.giant_snake_cavalry.orders.fire]
 still = [["Fire", "Fire"]]
@@ -143,6 +143,7 @@ race = "goblin"
 name = "Tiny Snake"
 models = ["tiny_snake", "tiny_snake"]
 size = "tiny"
+cost.vpm = 1
 
 description = "Two tiny snakes hiding in the grass, ready to bite anyone that comes too close"
 
@@ -151,11 +152,12 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [[units.tiny_snake.specials.hidden]]
-text = "Start with a hidden token"
+text = "Start with a hidden token. "
 
 [[units.tiny_snake.specials.terror]]
 args.N = 1
 args.M = 4
+text = "Do not have terror while hidden"
 
 [units.tiny_snake.orders.movement]
 slow = [["-", "-",  "Chs"], ["-", "-",  "Reveal"], ["Follow", "Follow",  "Follow"]]
@@ -729,6 +731,37 @@ ap = 2
 [[models.elite_goblin_infantry.assault.specials.cunning_assault]]
 args.N = 1
 
+
+
+[models.snake_tamer]
+name = "Snake Tamer"
+race = "goblin"
+cost.xp = 4
+equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2", "Specialization:1"]
+equipment = ["goblin_bow", "goblin_grenade"]
+type = ["Bio", "Infantry", "Walking"]
+replaces = "goblin_infantry"
+
+[models.snake_tamer.assault]
+strength = [4, 1, 1, 1]
+strength_die = "6+"
+deflection = [2, 0, 0, 0]
+deflection_die = "6+"
+damage = "d4-2"
+ap = 2
+
+[[models.snake_tamer.assault.specials.assault_extra_damage]]
+args.version = "token.poison"
+args.N = 4
+args.M = 2
+
+[[models.snake_tamer.unit_specials.spawn]]
+text = "tiny_snake: Once per game in any shooting phase place 3 tiny_snake units in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+
+
+[[models.snake_tamer.assault.specials.cunning_assault]]
+args.N = 1
+
 [equipment]
 
 [equipment.goblin_bow]
@@ -907,6 +940,9 @@ variant = "always_loaded"
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 4
+
+[[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
+args.version = "token.horrifying_poison"
 
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.confused"

@@ -5,9 +5,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 24.08.2026 | All          | Fear is now an assault Special and Pre-Assault Retreat a unit Special       | Both were written in the slot they are used in; models of one unit cannot retreat apart |
-| 24.08.2026 | Abomination, Darkelf, Dwarf | Protection is retired: armor grants add armor, endurance grants are the Endurance Special | One label meant two unrelated things, and neither of them was armor the game could add up |
-| 24.08.2026 | Darkelf, Gnome, Ogre | Three Specials that never stated a number now state one: Elusive gained -1, the Pet Panther's Terror gained range 1, poison-cloud immunity names strength 6 | Each rule needs the value its label left out; every one is marked on its rule for confirmation |
+| 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
+| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychcic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
 | 19.08.2026 | Gonome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
 | 19.08.2026 | Goblin       | Reworked snake cavalry                                                      | To make it cooler and more unique                                                    |
 | 19.08.2026 | Darkelf      | Removed Poison Gas Grenade                                                  | Did not seem necessary. Still has access to poison fog grenade                       |

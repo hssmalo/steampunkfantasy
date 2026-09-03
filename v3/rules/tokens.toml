@@ -128,7 +128,9 @@ see_also = ["special.terror"]
 name = "Poison"
 signature = "[{N}]"
 phases = ["Agony 3"]
+remove = "Downgraded as part of effect"
 effect = """Roll a d{N}.
+
 
 - Ignore armor and regular damage resistances
 - Reduce damage by poison resistances of target
@@ -136,11 +138,20 @@ effect = """Roll a d{N}.
 - Apply damage to the regular damage table.
 - If poison killed a model, remove poison.
 
-If poison did not kill a model, downgrade poison one step"""
+If poison did not kill a model, downgrade poison one step (removing poison[4]). """
 see_also = ["special.resistance"]
 
 [tokens.poison.variables]
-N = { type = ["int", "formula"], values = [2, 4, 6, 8, 10, 12] }
+N = { type = ["int", "formula"], values = [4, 6, 8, 10, 12] }
+
+[tokens.horrifying_poison]
+name = "Horrifying Poison"
+phases = ["Agony 3"]
+remove = "Removed when unit poison is removed"
+see_also = ['token.poison']
+effect = """Apply any damage of a poison token to psychic damage table as well as regular damage table.
+"""
+
 
 [tokens.bleed]
 name = "Bleed"
@@ -158,7 +169,7 @@ Otherwise:
 see_also = ["special.heal"]
 
 [tokens.bleed.variables]
-N = { type = "int", values = [2, 4, 6, 8, 10, 12] }
+N = { type = "int", values = [4, 6, 8, 10, 12] }
 
 [tokens.confused]
 name = "Confused"
