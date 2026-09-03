@@ -248,6 +248,7 @@ name = "Resistance"
 slots = ["unit"]
 signature = "{version}[{N}]"
 effect = "Gives improved resilience versus {version} damage"
+todo = "Reserved by the designer in #165: C33, gnome's \"(roll d4 every time it is hit with some regular damage)\" against the same with d8. He will decide whether the sentence is needed at all before it is merged or parameterised."
 
 ###Note, may see if I need more.
 ###Note, modified acid rule to align with the others...
@@ -469,6 +470,7 @@ slots = ["unit", "model"]
 signature = "{ability}"
 effect = "Shifts the to-hit and to-be-hit rolls by {ability}."
 see_also = ["token.aim"]
+todo = "Reserved by the designer in #165: C39, elf's \"Grants +3 to hit rather than +1\" against the same sentence with +5. The two differ only by a number, so this wants a Variable and args rather than a variant."
 
 [special.to_hit.variables]
 ability = { type = "ref", namespaces = ["ability"] }
@@ -499,7 +501,9 @@ see_also = ["size.enormous"]
 [special.fire_order]
 name = "Fire Order"
 slots = ["unit"]
-todo = "Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace."
+todo = """Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace.
+
+#165 C12 found ogre's "May load up to 2 shots, and fire them one at a time" saying what the load_5_shots variant says. That variant's text still carries a literal {N} placeholder, so pointing at it today would print the placeholder; merge once prose interpolation lands (#171). The designer is not settled on the wording either."""
 
 [special.fire_order.variables]
 N = { type = "int", min = 2, max = 10, optional = true }
@@ -643,7 +647,9 @@ todo = "Rule text not yet written: moving models between two units sharing a hex
 [special.transport]
 name = "Transport"
 slots = ["unit"]
-todo = "Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace."
+todo = """Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace.
+
+Reserved by the designer in #165: C23 (ogre carrying 4 tiny drone units against 6) and C41 (goblin transporting 1 Goblin infantry against 2). Both differ by a count and by the transporting unit's own name, so they want a Variable rather than a variant."""
 
 [special.transport.variants]
 four_tiny_drones = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
@@ -802,6 +808,7 @@ name = "Area"
 slots = ["range"]
 signature = "[{N}+]"
 effect = "Roll a die per enemy model in the hex. For each die at {N}+, roll for damage and and add extra damage to the corresponding unit."
+todo = """Reserved by the designer in #165, which found four clusters of drifted Area prose and left them to his own review of how Area states its ranges: C10 (dwarf's "at range=2" against "at range=3 or 4"), C19 (gnome's acid against minor acid), C34 (dwarf's "1-2 alive models" against "3-4"), and C35 (elf's two spellings of what the non-aim area covers). C10 and C34 differ only by a number and want a Variable rather than a variant."""
 
 [special.area.variables]
 N = { type = "int", min = 1, max = 6, optional = true}
@@ -842,7 +849,9 @@ aim_6_dice = "When using aim: roll 6 dice at same unit."
 [special.multiple_shots]
 name = "Multiple Shots"
 slots = ["range"]
-todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
+todo = """Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them.
+
+Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." He is considering a shot-count Variable instead of a variant."""
 see_also = ["special.burst"]
 
 [special.multiple_shots.variants]
