@@ -769,10 +769,14 @@ From reference.toml:
 potential_references = ["hexes.fog", "hexes.poison_cloud"]"""
 see_also = ["hex.fog", "hex.poison_cloud"]
 
+[special.cloud.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+M = { type = "int", min = 1, max = 12, optional = true }
+
 [special.cloud.variants]
 fog_one_hex_per_model = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
-poison_cloud_and_surroundings = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
-poison_cloud_in_fog = "Add poison cloud[4] to a hex with fog within normal range"
+poison_cloud_and_surroundings = "Poison Cloud[{N}] at target hex, and Poison Cloud[{M}]  at all hexes surrounding that initial hex"
+poison_cloud_in_fog = "Add poison cloud[{N}] to a hex with fog within normal range"
 
 
 [special.insanity]

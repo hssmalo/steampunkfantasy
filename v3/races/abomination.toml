@@ -1166,6 +1166,7 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.fog_poisonizer.range.specials.cloud]]
+args.N = 4
 variant = "poison_cloud_in_fog"
 
 [[equipment.fog_poisonizer.range.specials.ammo]]
@@ -1185,6 +1186,7 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.greater_fog_poisonizer.range.specials.cloud]]
+args.N = 4
 variant = "poison_cloud_in_fog"
 
 [[equipment.greater_fog_poisonizer.range.specials.ammo]]
