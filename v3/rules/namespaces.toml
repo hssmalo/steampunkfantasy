@@ -56,11 +56,11 @@ effect = "Ignore armor, roll damage versus crew damage table of target. If targe
 
 [resistance_type.regular]
 name = "Regular"
-effect = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other type. "
+effect = "Any damage rolled on regular damage table of unspecified type is reduced by {N}. This does not include damage from any other types."
 
 [resistance_type.psychic]
 name = "Psychic"
-effect = "Any damage explicitly named psychic damage is reduced damage by {N}"
+effect = "Any damage explicitly named psychic damage is reduced by {N}"
 
 [resistance_type.fire]
 name = "Fire"
@@ -69,7 +69,7 @@ see_also = ["token.fire"]
 
 [resistance_type.poison]
 name = "Poison"
-effect = "Any damage rolled by poison token effect reduced damage by {N}"
+effect = "Any damage rolled by poison token effect reduced by {N}"
 see_also = ["token.poison"]
 
 [resistance_type.acid]
