@@ -849,6 +849,7 @@ ap = 8
 
 [[equipment.enhanced_ballista.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [equipment.array_of_heavy_muskets]
 name = "Array of Heavy Muskets"
@@ -995,7 +996,7 @@ requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.mechanical_owl.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
-text = "Applies to every weapon the model carries"
+args.N= 1
 
 [equipment.frost_ray]
 race = "gnome"

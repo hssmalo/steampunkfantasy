@@ -1446,6 +1446,7 @@ note = "ps! It is not recommended combining this with other ranged weapons as a 
 
 [[equipment.assault_musket.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [[equipment.assault_musket.range.specials.ammo]]
 text = "May load up to 4 ammo. If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' setting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1"

@@ -1759,6 +1759,7 @@ variant = "doubles_long_range_penalty"
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [[equipment.elf_flame_arrow.range.specials.range]]
 variant = "extra_range_flying"
@@ -1795,6 +1796,7 @@ variant = "doubles_long_range_penalty"
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [[equipment.elf_flame_arrow_free.range.specials.range]]
 variant = "extra_range_flying"
@@ -1832,6 +1834,7 @@ variant = "doubles_long_range_penalty"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = +1
 
 [equipment.assault_archer]
 name = "Assault Archer"
@@ -1878,7 +1881,7 @@ variant = "doubles_long_range_penalty"
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
-text = "Grants +3 to hit rather than +1"
+args.N = 3
 
 [equipment.seeker_arrows.range]
 range = 4
@@ -1910,7 +1913,7 @@ variant = "doubles_long_range_penalty"
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
-text = "Grants +5 to hit rather than +1"
+args.N = 5
 
 [equipment.elven_seeker_arrows.range]
 range = 10
@@ -1978,6 +1981,7 @@ ap = "2"
 
 [[equipment.enhanced_rifle.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [equipment.sniper_rifle]
 name = "Sniper Rifle"

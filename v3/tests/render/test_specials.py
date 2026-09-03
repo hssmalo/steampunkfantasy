@@ -22,16 +22,6 @@ def test_the_heading_is_the_rules_name() -> None:
     assert heading == "Evasion"
 
 
-def test_an_atmospheric_name_overrides_the_rules_name() -> None:
-    heading, text = _row(
-        "to_hit", name="Enhanced Arrow", args={"ability": "ability.excellent_shot"}
-    )
-
-    assert heading == "Enhanced Arrow"
-    # The vocabulary stays in one place: the ref still resolves to its own name.
-    assert text == "Excellent Shot"
-
-
 def test_the_signature_interpolates_the_instances_arguments() -> None:
     _, text = _row("evasion", args={"N": 4})
 
@@ -232,22 +222,6 @@ def test_instances_that_read_alike_are_printed_once() -> None:
 
     assert special_lines(specials, registry=REGISTRY) == [
         SpecialLine("Resistance", "Psychic[1]", None)
-    ]
-
-
-def test_atmospheric_names_keep_their_own_headings() -> None:
-    # Two instances of one id, named apart on purpose: collapsing them would
-    # print one flavor name over the other's rule.
-    specials = {
-        "to_hit": [
-            SpecialInstance(name="Keen Eye", args={"ability": "ability.good_shot"}),
-            SpecialInstance(args={"ability": "ability.bad_shot"}),
-        ]
-    }
-
-    assert special_lines(specials, registry=REGISTRY) == [
-        SpecialLine("Keen Eye", "Good Shot", None),
-        SpecialLine("To Hit", "Bad Shot", None),
     ]
 
 

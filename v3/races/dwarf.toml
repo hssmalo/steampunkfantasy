@@ -1237,6 +1237,7 @@ requires = [["type:Steampowerarmor"], ["Independent:1"]]
 
 [[equipment.stabilizer.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [equipment.stabilizer.orders_gained.fire]
 slow = [["-", "aim"], ["aim", "-"]]

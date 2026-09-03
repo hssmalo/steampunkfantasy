@@ -650,7 +650,7 @@ ap = 2
 [models.heavy_carrier]
 name = "Heavy Carrier"
 race = "goblin"
-equipment = ["goblin_bow_battery", "heavy_crossbow"]
+equipment = ["goblin_bow_battery", "heavy_crossbows"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
@@ -753,8 +753,8 @@ cost.cp = 8
 upgrade_all = true
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
-name = "Enhanced Arrow"
-args.ability = "ability.excellent_shot"
+args.ability = "ability.enhanced_accuracy"
+args.N = 3
 
 [equipment.seeker_arrows.range]
 range = 4
@@ -1181,28 +1181,31 @@ args.N = 6
 args.N = 6
 
 [[equipment.goblin_bow_battery.model_specials.to_hit]]
-name = "Imprecise Weapon"
+name = "To Hit"
 args.ability = "ability.bad_shot"
+text = "Goblin Bow Battery"
 
-[equipment.heavy_crossbow]
-name = "Heavy Crossbow"
+[equipment.heavy_crossbows]
+name = "Heavy Crossbows"
 race = "goblin"
 requires = []
 
-[equipment.heavy_crossbow.range]
+[equipment.heavy_crossbows.range]
 range = 4
 angle = [true, false, false, false]
 damage = "d6"
 ap = 4
 
-[[equipment.heavy_crossbow.range.specials.ammo]]
+[[equipment.heavy_crossbows.range.specials.ammo]]
 variant = "load_3_ammo"
 
-[[equipment.heavy_crossbow.range.specials.multiple_shots]]
+[[equipment.heavy_crossbows.range.specials.multiple_shots]]
 text = "Fire once per ammo spend per fire order"
 
-[[equipment.heavy_crossbow.model_specials.to_hit]]
+[[equipment.heavy_crossbows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+text = "Heavy Crossbow"
+args.N = 1
 
 [equipment.stinkbomb]
 name = "StinkBomb"

@@ -101,7 +101,6 @@ name = "Range Extra Damage"
 slots = ["range"]
 signature = "{version}"
 effect = "The target gets one {version}."
-see_also = ["special.assault_extra_damage", "special.range_gear_disruption"]
 todo = """The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
 
 From reference.toml:

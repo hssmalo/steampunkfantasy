@@ -1063,6 +1063,7 @@ ap = 2
 
 [[equipment.enhanced_fancy_ogre_rifle.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [equipment.ogre_broadside]
 name = "Ogre Broadside"
@@ -1130,6 +1131,7 @@ args.version = "token.minor_acid"
 
 [[equipment.fancy_gear_pistol.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
+args.N = 1
 
 [[equipment.fancy_gear_pistol.unit_specials.fire_order]]
 text = "May load up to 2 shots, and fire them one at a time"

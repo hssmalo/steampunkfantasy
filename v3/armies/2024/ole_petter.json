@@ -36,6 +36,105 @@
       ]
     },
     {
+      "name": "steampowerarmor",
+      "models": [
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "steampowerarmor",
+      "models": [
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "steampowerarmor",
+      "models": [
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        },
+        {
+          "name": "steampowerarmor",
+          "upgrades": [
+            "vest_of_life_support",
+            "multibarreled_heavy_musket"
+          ]
+        }
+      ]
+    },
+    {
       "name": "tamed_balrog",
       "models": [
         {
@@ -49,6 +148,36 @@
       "models": [
         {
           "name": "zap",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "zap",
+      "models": [
+        {
+          "name": "zap",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "dwarf_infantry",
+      "models": [
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "dwarf_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "dwarf_infantry",
           "upgrades": []
         }
       ]
