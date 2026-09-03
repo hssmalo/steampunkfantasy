@@ -442,3 +442,37 @@ def _registry_readers() -> list[ModuleType]:
             and getattr(module, "load_registry", None) is reg.load_registry
         ),
     ]
+
+
+def committed_args(registry: reg.Registry, special: str) -> dict[str, int | str]:
+    """Build arguments the committed rules accept for one Special.
+
+    For the handful of tests that deliberately run against `rules/` rather
+    than a Registry of their own. Every value is derived from the rule's own
+    variables, never written down here: which namespace an argument points
+    into, which records that namespace holds and what a number is bounded by
+    are all rules data, and pinning one would make re-aiming an argument in
+    `rules/special.toml` a test edit.
+    """
+    return {
+        name: _a_value(variable, registry=registry)
+        for name, variable in registry.specials[special].variables.items()
+    }
+
+
+def _a_value(variable: r.VariableConfig, *, registry: reg.Registry) -> int | str:
+    """Name one value a variable accepts, whatever shape the variable is."""
+    if isinstance(variable, r.RefVariableConfig):
+        if variable.values:
+            return variable.values[0]
+        namespace = variable.namespaces[0]
+        return f"{namespace}.{next(iter(registry.records[namespace]))}"
+    # A scalar is asked rather than told: the candidates cover every scalar
+    # type, and the variable itself says which of them it is willing to take.
+    for candidate in (getattr(variable, "min", None) or 1, "d6", "X"):
+        try:
+            return variable.validate_value(candidate)  # pyright: ignore[reportArgumentType]
+        except ValueError:
+            continue
+    msg = f"No candidate value fits {variable!r}"
+    raise AssertionError(msg)
