@@ -1252,12 +1252,12 @@ requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 [[equipment.trench_coat_of_resistance.unit_specials.resistance]]
 args.version = "resistance_type.poison"
 args.N = 1
-text = "Improves the unit's own poison resistance by 1"
+variant = "improves_own"
 
 [[equipment.trench_coat_of_resistance.unit_specials.resistance]]
 args.version = "resistance_type.fire"
 args.N = 1
-text = "Improves the unit's own fire resistance by 1"
+variant = "improves_own"
 
 [[equipment.trench_coat_of_resistance.unit_specials.immunity]]
 args.feature = "token.minor_acid"

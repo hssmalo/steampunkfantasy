@@ -268,6 +268,7 @@ one_elite_alive = "As long as 1 elite model is alive"
 improved_by_another_source = "(improve by 1 if unit has Psychic resistance from another source)"
 while_superelite_alive = "While at least one superelite model is alive"
 while_elite_alive = "While at least one elite is alive"
+improves_own = "Improves the unit's own {version} resistance by {N}"
 
 
 [special.heal]
