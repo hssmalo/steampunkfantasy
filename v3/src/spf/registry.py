@@ -116,6 +116,23 @@ def _load_registry(rules_dir: Path) -> Registry:
     return registry
 
 
+class RulesFileError(ValueError):
+    """One rules file would not read, and which one it was.
+
+    A `ValueError` because that is what every caller already treats an
+    unreadable corpus as, and because pydantic turns one raised inside a
+    validator into an error against the model it was building. The file is
+    kept as a field as well as in the message, so a caller that reports rather
+    than prints -- `spf lint` -- can file the finding at its cause.
+    """
+
+    def __init__(self, file: str, detail: str) -> None:
+        """Record which file would not read, and what it would not read with."""
+        super().__init__(f"{file}: {detail}")
+        self.file = file
+        self.detail = detail
+
+
 def _read[T](loader: Callable[[Path], T], path: Path) -> T:
     """Read one rules file, naming it in whatever the read fails with.
 
@@ -130,14 +147,13 @@ def _read[T](loader: Callable[[Path], T], path: Path) -> T:
     flattening it here, because `spf lint rules` reads each file on its own
     rather than through this.
     """
+    file = f"rules/{path.name}"
     try:
         return loader(path)
     except pydantic.ValidationError as err:
-        msg = f"rules/{path.name}: {_flatten(err)}"
-        raise ValueError(msg) from err
+        raise RulesFileError(file, _flatten(err)) from err
     except (OSError, ValueError) as err:
-        msg = f"rules/{path.name}: {err}"
-        raise ValueError(msg) from err
+        raise RulesFileError(file, str(err)) from err
 
 
 def _flatten(error: pydantic.ValidationError) -> str:

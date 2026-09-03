@@ -94,7 +94,15 @@ class RaceProbe:
 
 
 def probe_races() -> RaceProbe:
-    """Load every `races/*.toml`, reporting one finding per schema error."""
+    """Load every `races/*.toml`, reporting one finding per schema error.
+
+    A rules corpus that will not read stops every Race before any of them is
+    opened, and is reported there rather than here (ADR 0016).
+    """
+    if (blocked := _rules_blocking_every_race()) is not None:
+        return RaceProbe(
+            findings=blocked, loaded=[], broken=frozenset(races.list_races())
+        )
     findings: list[LintFinding] = []
     loaded: list[t.RaceName] = []
     broken: set[str] = set()
@@ -112,6 +120,36 @@ def probe_races() -> RaceProbe:
             findings += _pydantic_findings(file, error)
             broken.add(race)
     return RaceProbe(findings=findings, loaded=loaded, broken=frozenset(broken))
+
+
+def _rules_blocking_every_race() -> list[LintFinding] | None:
+    """Report the rules corpus when it is what stops every Race loading.
+
+    A Race resolves its refs through the whole registry (ADR 0024), so a rules
+    file that will not read fails every Race with it. Reporting it once, at the
+    file it was authored in, is the rule (ADR 0016): a copy per Race names a
+    file with nothing wrong with it, and buries the one that has.
+
+    The rules probe is what does the reporting, so the finding is the same
+    object the rules corpus will report -- located at its field, and dropped as
+    a duplicate when both corpora are linted in one run.
+    """
+    try:
+        registry_module.load_registry()
+    except _UNREADABLE as err:
+        return probe_rules().findings or [_finding(_blamed(err), str(err))]
+    return None
+
+
+def _blamed(err: Exception) -> str:
+    """Name the rules file behind a failure the rules probe did not report.
+
+    Only reachable when the registry raises something reading its files one at
+    a time does not, which the namespace registry is the author of.
+    """
+    if isinstance(err, registry_module.RulesFileError):
+        return err.file
+    return f"rules/{NAMESPACES}"
 
 
 # ---------------------------------------------------------------------------
