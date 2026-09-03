@@ -25,7 +25,7 @@ movement_order = ["-", "-", "flee"]
 variant = "heal_per_head"
 
 [[units.elf_hydra.specials.heads]]
-text = "1 major head, 6 minor head. Keep track of number of alive heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+variant = "six_minor_heads"
 
 [[units.elf_hydra.specials.fire_order]]
 text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
@@ -577,7 +577,7 @@ variant = "autoloader"
 text = "Grants Psychic resistance 1 to the other unit in this hex"
 
 [[units.armored_unicorn_rider.specials.officer]]
-text = "remove one shaken token on any biological unit in the same hex in 2nd healing  phase"
+variant = "remove_shaken_in_hex"
 
 [[units.armored_unicorn_rider.specials.heal]]
 args.N = 3
@@ -1506,7 +1506,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.thunderroar.range.specials.multiple_shots]]
-text = "May fire once to the right and once to the left each time you fire"
+variant = "left_and_right"
 
 [equipment.light_mortar]
 name = "Light Mortar"
@@ -1658,7 +1658,7 @@ variant = "aim_6_dice"
 [[equipment.gatling_gun.range.specials.area]]
 #preamble = "If not using aim, target all hexes within long range"
 args.N = 4
-text = "at point blank range"
+variant = "point_blank"
 
 [[equipment.gatling_gun.range.specials.area]]
 args.N = 6
@@ -1694,7 +1694,7 @@ ap = "3"
 text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
 
 [[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
-text = "When using aim, roll 6 dice at same unit."
+variant = "aim_6_dice"
 
 [[equipment.oliphant_gatling_guns.range.specials.area]]
 text = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."
@@ -1848,7 +1848,7 @@ upgrade_all = true
 [equipment.assault_archer.assault]
 
 [[equipment.assault_archer.assault.specials.retreat]]
-text = "Unit gains aim if you manage to pre-assault escape"
+variant = "aim_after_pre_assault_retreat"
 
 [equipment.illusion_weapon]
 name = "Illusion Weapon"
@@ -1931,7 +1931,7 @@ args.N = 1
 text = "Add 1 limited ammo token per model carrying this weapon, and remove 1 per model firing the special arrow"
 
 [[equipment.elven_seeker_arrows.range.specials.sniper]]
-text = "After eliminating one model with an elven seeker arrow, you get to choose which model to destroy"
+variant = "choose_model_after_aim"
 
 [equipment.bow_with_rocket_arrows]
 name = "Bow with Rocket Arrows"

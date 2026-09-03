@@ -484,7 +484,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.zap.specials.fire_order]]
-text = "Fire and load all weapons at the same time"
+variant = "fire_and_load_simultaneously"
 
 [[units.zap.specials.resistance]]
 args.version = "resistance_type.fire"
@@ -1577,7 +1577,7 @@ upgrade_all = true
 requires = [["Training:1"], ["type:AT Gun"]]
 
 [[equipment.hide.unit_specials.hidden]]
-text = "Start with a hidden token."
+variant = "start_with_token"
 
 [[equipment.hide.unit_specials.forward_position]]
 args.N = 1

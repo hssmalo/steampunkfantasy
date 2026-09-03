@@ -31,7 +31,7 @@ movement_order = ["-", "-", "flee"]
 variant = "heal_per_head"
 
 [[units.ogre_hydra.specials.heads]]
-text = "1 major head, 6 minor head. Keep track of number of alive minor heads at any time, Poison spits, regeneration and assault is dependent on the number of alive heads."
+variant = "six_minor_heads"
 
 [[units.ogre_hydra.specials.fire_order]]
 text = "Breath weapon and poison spit always treated as loaded and used with Fire(H) orders. Crew weapons are used with Load(crew) and Fire(crew) orders"
@@ -314,7 +314,7 @@ movement_order = ["-", "-", "-"]
 text = "Once speed is rest (in the apply damage step of 1st gunnery phase), considered this unit destroyed without enemy gaining victory points for it. Place a Drone Trap at the hex."
 
 [[units.drone_swarm.specials.repairing]]
-text = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive one drone swarm model, increase the speed of the unit one step, reload 2 ammo, all for the cost of 2 repair points"
+variant = "revive_drone_swarm"
 
 [[units.drone_swarm.specials.evasion]]
 args.N = 3
@@ -376,7 +376,7 @@ args.phase = "2nd Healing"
 text = "N is the number of alive repair drone models"
 
 [[units.repair_drone.specials.repairing]]
-text = "If this unit shares a hex with another unit with repair ability, it may in addition to the repair normal effect, revive repair drone model at the cost of 2 repair points"
+variant = "revive_drone"
 
 [[units.repair_drone.specials.evasion]]
 args.N = 3
@@ -411,7 +411,7 @@ args.phase = "2nd Healing"
 text = "N is the number of alive medic drone models"
 
 [[units.medic_drone.specials.repairing]]
-text = "If this unit shares a hex with a unit with repair ability, it may in addition to the repair normal effect, revive medic drone model at the cost of 2 repair points"
+variant = "revive_drone"
 
 [[units.medic_drone.specials.evasion]]
 args.N = 3
@@ -527,7 +527,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.broadside_wagon.specials.tow]]
-text = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if connected, otherwise it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+variant = "must_be_towed"
 
 [units.broadside_wagon.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
@@ -576,7 +576,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.artillery_wagon.specials.tow]]
-text = "Must be towed by an main engine, or an other wagon which is connected to a main engine to move. If so, this unit is considered to be connected with a main engine. It has the same speed as the main engine if towed if connected, else it is still. A Towed wagon always faces the unit which tows it, and when the unit leaves its hex, the towed wagon enters the hex the other unit exited. Conduct assault if necessary."
+variant = "must_be_towed"
 
 [[units.artillery_wagon.specials.fire_order]]
 text = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading"
@@ -875,7 +875,7 @@ damage = "d8"
 ap = 3
 
 [[models.broadside_wagon.assault.specials.retreat]]
-text = "If after all assault any wagon cannot enter the hex it should, wagon is disconnected from this unit and cannot move. If a unit which cannot move is forced to retreat, the unit is destroyed instead"
+variant = "stuck_wagon_disconnects"
 
 [models.elite_ogre_infantry]
 name = "Elite Ogre Infantry"
