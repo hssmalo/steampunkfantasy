@@ -46,8 +46,22 @@ FORMATS = ("markdown", "latex")
 WORK_PREFIX = ".goldens-"
 """Names the throwaway tree `diff` renders into; gitignored alongside them."""
 
-MAX_DIFF_LINES = 60
+MAX_DIFF_LINES = 25
 """Lines of any one file's diff to print before saying how many were left."""
+
+MAX_RUN_DIFF_LINES = 100
+"""Diff lines to print across a whole run before naming the files left out.
+
+A per-file cap alone still lets a template edit, which moves every document,
+print the entire corpus.
+"""
+
+DIFF_CONTEXT = 0
+"""Unchanged lines to keep around each hunk.
+
+None: the hunk header gives the line number and a rendered line names its own
+Special, so context only spends the budget the changed lines want.
+"""
 
 
 @dataclass(frozen=True)
@@ -170,18 +184,27 @@ def diff() -> int:
 def _report(baseline: Path, current: Path) -> int:
     """Print what moved between two rendered trees, and count the files."""
     differing = 0
+    spent = 0
+    withheld = 0
     for relative in sorted(_paths(baseline) | _paths(current)):
         before = baseline / relative
         after = current / relative
         if not after.exists():
             _say(f"--- {relative}: no longer rendered")
+            spent += 1
         elif not before.exists():
             _say(f"+++ {relative}: newly rendered")
+            spent += 1
         elif before.read_bytes() != after.read_bytes():
-            _print_diff(relative, before, after)
+            if spent >= MAX_RUN_DIFF_LINES:
+                withheld += 1
+            else:
+                spent += _print_diff(relative, before, after)
         else:
             continue
         differing += 1
+    if withheld:
+        _say(f"... {withheld} further files differ, not shown")
     return differing
 
 
@@ -190,21 +213,32 @@ def _paths(root: Path) -> set[Path]:
     return {path.relative_to(root) for path in root.rglob("*") if path.is_file()}
 
 
-def _print_diff(relative: Path, before: Path, after: Path) -> None:
-    """Print a unified diff of one file, truncated to stay readable."""
-    lines = list(
+def _print_diff(relative: Path, before: Path, after: Path) -> int:
+    """Print a unified diff of one file, truncated to stay readable.
+
+    Returns the lines printed, so the caller can spend down the run budget.
+    """
+    lines = _diff_lines(relative, before, after)
+    shown = lines[:MAX_DIFF_LINES]
+    _say("\n".join(shown))
+    if len(lines) > MAX_DIFF_LINES:
+        _say(f"... {len(lines) - MAX_DIFF_LINES} more diff lines")
+    _say("")
+    return len(shown)
+
+
+def _diff_lines(relative: Path, before: Path, after: Path) -> list[str]:
+    """Diff one file, dropping the unchanged context lines around each hunk."""
+    return list(
         difflib.unified_diff(
             before.read_text(encoding="utf-8").splitlines(),
             after.read_text(encoding="utf-8").splitlines(),
             fromfile=f"snapshot/{relative}",
             tofile=f"current/{relative}",
+            n=DIFF_CONTEXT,
             lineterm="",
         )
     )
-    _say("\n".join(lines[:MAX_DIFF_LINES]))
-    if len(lines) > MAX_DIFF_LINES:
-        _say(f"... {len(lines) - MAX_DIFF_LINES} more diff lines")
-    _say("")
 
 
 def _say(message: str) -> None:

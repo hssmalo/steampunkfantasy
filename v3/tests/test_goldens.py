@@ -59,6 +59,42 @@ def test_a_long_diff_is_truncated(
     assert len(printed.splitlines()) < lines
 
 
+def test_a_diff_carries_no_context_lines(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # The hunk header locates the change; the surrounding prose only spends the
+    # line budget that the changed lines want.
+    before = "Kept above\nFire two shots per fire order\nKept below\n"
+    after = "Kept above\nFires 2 shots per fire order\nKept below\n"
+    baseline = _tree(tmp_path / "before", {"race-overview/demo.md": before})
+    current = _tree(tmp_path / "after", {"race-overview/demo.md": after})
+
+    goldens._report(baseline, current)
+
+    printed = capsys.readouterr().out
+    assert "-Fire two shots per fire order" in printed
+    assert "+Fires 2 shots per fire order" in printed
+    assert "Kept above" not in printed
+    assert "Kept below" not in printed
+
+
+def test_the_run_budget_bounds_a_broad_change(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # A template edit moves every document at once; a per-file cap alone would
+    # still let the run print the whole corpus.
+    files = {f"race-overview/demo{index}.md": "old\n" * 20 for index in range(40)}
+    moved = {name: content.replace("old", "new") for name, content in files.items()}
+    baseline = _tree(tmp_path / "before", files)
+    current = _tree(tmp_path / "after", moved)
+
+    assert goldens._report(baseline, current) == len(files)
+
+    printed = capsys.readouterr().out
+    assert "further files differ" in printed
+    assert len(printed.splitlines()) < goldens.MAX_RUN_DIFF_LINES * 2
+
+
 def test_a_document_that_stopped_rendering_is_reported(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
