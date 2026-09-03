@@ -1,9 +1,14 @@
 """Render every document on demand, and diff a re-render against that snapshot.
 
-A golden is a refactoring tool, not a fixture (`docs/agents/testing.md`,
-ADR 0033): it is worth exactly one thing, proving a change altered no output.
-So none are committed. `snapshot` writes the current working tree's output into
-the gitignored `goldens/`, and `diff` re-renders and reports what moved.
+A Golden is a before-image of the rendered corpus, never a fixture
+(`docs/agents/game-data-changes.md`, ADR 0033), so none are committed.
+`snapshot` writes the current working tree's output into the gitignored
+`goldens/`, `diff` re-renders and reports what moved, and `accept` retakes the
+snapshot once a change has been reviewed.
+
+It is read two ways. A refactor expects the diff to be empty. A game-data edit
+expects it to hold exactly the prose that was meant to change, which is the
+only place that change can be reviewed.
 
 Every Product goes through the same entry points `spf render` does, in the two
 text Formats — Markdown and LaTeX. The binary Formats derive from those, and a
@@ -14,7 +19,9 @@ import argparse
 import contextlib
 import difflib
 import io
+import json
 import shutil
+import subprocess
 import sys
 import tempfile
 from collections.abc import Callable, Iterator
@@ -43,11 +50,52 @@ GOLDENS = V3 / "goldens"
 
 FORMATS = ("markdown", "latex")
 
+FORMAT_LABELS = {"markdown": "Markdown", "latex": "LaTeX"}
+"""How each Format is spelled in a report a human reads."""
+
 WORK_PREFIX = ".goldens-"
 """Names the throwaway tree `diff` renders into; gitignored alongside them."""
 
-MAX_DIFF_LINES = 60
+BASELINE = ".baseline"
+"""Names the stamp inside `goldens/` saying what the snapshot was taken against.
+
+It lives in the snapshot so that discarding one discards both, and is skipped
+when the two trees are compared.
+"""
+
+MAX_DIFF_LINES = 25
 """Lines of any one file's diff to print before saying how many were left."""
+
+MAX_RUN_DIFF_LINES = 100
+"""Diff lines to print across a whole run before naming the files left out.
+
+A per-file cap alone still lets a template edit, which moves every document,
+print the entire corpus.
+"""
+
+DIFF_CONTEXT = 0
+"""Unchanged lines to keep around each hunk.
+
+None: the hunk header gives the line number and a rendered line names its own
+Special, so context only spends the budget the changed lines want.
+"""
+
+
+@dataclass
+class Tally:
+    """What one report accumulated as it walked the two rendered trees.
+
+    Counts only what the run had something to say about: files whose diff was
+    printed, and those it declined to print.
+    """
+
+    files: int = 0
+    hunks: int = 0
+    changed: int = 0
+    elided: int = 0
+    """Files that moved in a Format whose diffs were not asked for."""
+    withheld: int = 0
+    """Files that moved after the run's line budget was spent."""
 
 
 @dataclass(frozen=True)
@@ -139,15 +187,25 @@ def snapshot() -> int:
     if GOLDENS.exists():
         shutil.rmtree(GOLDENS)
     written = render_all(GOLDENS)
+    _write_baseline(GOLDENS)
     _say(f"Snapshotted {written} files into {GOLDENS.relative_to(V3)}/")
     return 0
 
 
-def diff() -> int:
-    """Re-render and report every file that differs from the snapshot."""
+def diff(shown: tuple[str, ...] = (FORMATS[0],)) -> int:
+    """Re-render and report every file that differs from the snapshot.
+
+    Every Format is always compared, so the verdict is honest; `shown` only
+    selects whose diffs are worth reading.
+    """
     if not GOLDENS.is_dir():
         _say(f"No snapshot at {GOLDENS}: run `just golden-snapshot` first")
         return 1
+
+    for warning in _baseline_warnings(
+        _read_baseline(GOLDENS), _git("rev-parse", "HEAD")
+    ):
+        _say(f"! {warning}")
 
     # Beside `goldens/`, not in the system temp directory: a document links its
     # Images by a path relative to where it was written, so a re-render only
@@ -156,7 +214,7 @@ def diff() -> int:
     try:
         current = Path(work)
         rendered = render_all(current)
-        differing = _report(GOLDENS, current)
+        differing = _report(GOLDENS, current, shown=shown)
     finally:
         shutil.rmtree(work, ignore_errors=True)
 
@@ -167,44 +225,158 @@ def diff() -> int:
     return 0
 
 
-def _report(baseline: Path, current: Path) -> int:
-    """Print what moved between two rendered trees, and count the files."""
+def _report(
+    baseline: Path, current: Path, shown: tuple[str, ...] = (FORMATS[0],)
+) -> int:
+    """Print what moved between two rendered trees, and count the files.
+
+    Only the `shown` Formats have their diffs printed; the rest are counted and
+    named. A document that vanished or appeared is structural news, so it is
+    reported whatever its Format.
+    """
+    extensions = {get_format(name).extension for name in shown}
+    tally = Tally()
     differing = 0
+    spent = 0
     for relative in sorted(_paths(baseline) | _paths(current)):
         before = baseline / relative
         after = current / relative
         if not after.exists():
             _say(f"--- {relative}: no longer rendered")
+            spent += 1
         elif not before.exists():
             _say(f"+++ {relative}: newly rendered")
+            spent += 1
         elif before.read_bytes() != after.read_bytes():
-            _print_diff(relative, before, after)
+            if relative.suffix.lstrip(".") not in extensions:
+                tally.elided += 1
+            elif spent >= MAX_RUN_DIFF_LINES:
+                tally.withheld += 1
+            else:
+                lines = _diff_lines(relative, before, after)
+                tally.files += 1
+                tally.hunks += sum(1 for line in lines if line.startswith("@@"))
+                tally.changed += sum(1 for line in lines[2:] if line[:1] in "+-")
+                spent += _print_diff(lines)
         else:
             continue
         differing += 1
+    if differing:
+        _print_summary(tally, shown)
     return differing
 
 
+def _print_summary(tally: "Tally", shown: tuple[str, ...]) -> None:
+    """Print the counts line that fronts a diff pasted into an issue."""
+    # Naming the Format only reads right when there is one of them to name.
+    label = f"{FORMAT_LABELS[shown[0]]} " if len(shown) == 1 else ""
+    summary = (
+        f"\n**{_count(tally.files, f'{label}file')}, {_count(tally.hunks, 'hunk')}, "
+        f"{_count(tally.changed, 'changed line')}**"
+    )
+    if tally.elided:
+        others = ", ".join(FORMAT_LABELS[name] for name in FORMATS if name not in shown)
+        summary += f" ({_count(tally.elided, f'{others} file')} elided)"
+    _say(summary)
+    if tally.withheld:
+        _say(f"... {tally.withheld} further files differ, not shown")
+
+
+def _count(number: int, noun: str) -> str:
+    """Say how many of `noun` there are, pluralizing the noun to match."""
+    return f"{number} {noun}" if number == 1 else f"{number} {noun}s"
+
+
 def _paths(root: Path) -> set[Path]:
-    """Every file under `root`, relative to it."""
-    return {path.relative_to(root) for path in root.rglob("*") if path.is_file()}
+    """Every rendered document under `root`, relative to it."""
+    return {
+        path.relative_to(root)
+        for path in root.rglob("*")
+        if path.is_file() and path.name != BASELINE
+    }
 
 
-def _print_diff(relative: Path, before: Path, after: Path) -> None:
-    """Print a unified diff of one file, truncated to stay readable."""
-    lines = list(
+def _git(*args: str) -> str | None:
+    """Ask git something, or return None where git cannot answer."""
+    git = shutil.which("git")
+    if git is None:
+        return None
+    try:
+        done = subprocess.run(  # noqa: S603
+            [git, "-C", str(V3), *args],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return done.stdout.strip()
+
+
+def _write_baseline(root: Path) -> None:
+    """Record which commit, and how clean a tree, this snapshot was taken from."""
+    stamp = {
+        "commit": _git("rev-parse", "HEAD"),
+        "dirty": bool(_git("status", "--porcelain")),
+    }
+    (root / BASELINE).write_text(json.dumps(stamp), encoding="utf-8")
+
+
+def _read_baseline(root: Path) -> dict[str, object] | None:
+    """Read a snapshot's stamp, or None where it has none to read."""
+    path = root / BASELINE
+    if not path.is_file():
+        return None
+    try:
+        return cast("dict[str, object]", json.loads(path.read_text(encoding="utf-8")))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def _baseline_warnings(stamp: dict[str, object] | None, head: str | None) -> list[str]:
+    """Say what makes a snapshot's baseline hard to trust, if anything does.
+
+    Never a refusal: the ordinary loop — snapshot, review, commit, diff again —
+    moves HEAD on purpose, so a stale baseline is news rather than an error.
+    """
+    if stamp is None:
+        return ["Snapshot carries no baseline stamp: take it again to place it"]
+    warnings = []
+    if stamp.get("dirty"):
+        warnings.append(
+            "Snapshot was taken over uncommitted changes: its baseline is in no commit"
+        )
+    commit = stamp.get("commit")
+    if isinstance(commit, str) and isinstance(head, str) and commit != head:
+        warnings.append(f"Snapshot was taken at {commit[:7]}; HEAD is now {head[:7]}")
+    return warnings
+
+
+def _print_diff(lines: list[str]) -> int:
+    """Print one file's diff, truncated to stay readable.
+
+    Returns the lines printed, so the caller can spend down the run budget.
+    """
+    shown = lines[:MAX_DIFF_LINES]
+    _say("\n".join(shown))
+    if len(lines) > MAX_DIFF_LINES:
+        _say(f"... {len(lines) - MAX_DIFF_LINES} more diff lines")
+    _say("")
+    return len(shown)
+
+
+def _diff_lines(relative: Path, before: Path, after: Path) -> list[str]:
+    """Diff one file, dropping the unchanged context lines around each hunk."""
+    return list(
         difflib.unified_diff(
             before.read_text(encoding="utf-8").splitlines(),
             after.read_text(encoding="utf-8").splitlines(),
             fromfile=f"snapshot/{relative}",
             tofile=f"current/{relative}",
+            n=DIFF_CONTEXT,
             lineterm="",
         )
     )
-    _say("\n".join(lines[:MAX_DIFF_LINES]))
-    if len(lines) > MAX_DIFF_LINES:
-        _say(f"... {len(lines) - MAX_DIFF_LINES} more diff lines")
-    _say("")
 
 
 def _say(message: str) -> None:
@@ -218,11 +390,25 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
-        choices=("snapshot", "diff"),
-        help="snapshot: render into goldens/. diff: re-render and compare.",
+        choices=("snapshot", "diff", "accept"),
+        help=(
+            "snapshot: render into goldens/. diff: re-render and compare. "
+            "accept: retake the snapshot over a reviewed change."
+        ),
+    )
+    parser.add_argument(
+        "--format",
+        choices=(*FORMATS, "all"),
+        default=FORMATS[0],
+        help="Whose diffs to print. Every Format is compared either way.",
     )
     args = parser.parse_args(argv)
-    return snapshot() if args.command == "snapshot" else diff()
+    # `accept` is `snapshot` under the name that reads right mid-issue, where
+    # "start over" is not what the reviewer of a landed cluster means.
+    if args.command in ("snapshot", "accept"):
+        return snapshot()
+    shown = FORMATS if args.format == "all" else (args.format,)
+    return diff(shown)
 
 
 if __name__ == "__main__":

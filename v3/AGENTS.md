@@ -14,6 +14,10 @@ validates/displays them.
 - **[`docs/agents/quality-gates.md`](docs/agents/quality-gates.md)** — the `just`
   recipes for formatting, linting, type-checking, spell-checking, and tests. Run
   `just check` before committing.
+- **[`docs/agents/game-data-changes.md`](docs/agents/game-data-changes.md)** —
+  editing anything that changes printed output (`races/`, `armies/`, `rules/`,
+  `templates/`): take a Golden, read the diff, one judgment per commit, and
+  when an edit earns a Changelog line.
 - **[`docs/agents/testing.md`](docs/agents/testing.md)** — what the tests are
   for: no test may break on a rules-data edit, no assertions on production
   template content, synthetic fixtures, and on-demand goldens.

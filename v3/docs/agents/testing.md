@@ -57,24 +57,16 @@ after any edit under `templates/`.
 
 There are no golden files in the repository, and none should be added.
 
-A golden is a refactoring tool, not a fixture. It is worth exactly one thing:
-proving a change altered no output. So it is generated on demand for the
-duration of a refactor and deleted afterwards.
+A **Golden** is a before-image of the rendered corpus, not a fixture. It is
+generated on demand into the gitignored `goldens/`, and nothing in it is ever
+committed. Kept in the repository instead, it becomes a fixture pinning every
+byte of a document, and goes red whenever the game rules or a template
+legitimately move — which is the rule at the top of this page, violated.
 
-```console
-just golden-snapshot   # Render every product into the gitignored goldens/
-just golden-diff       # Re-render and diff against that snapshot
-```
-
-**Snapshotting is step one of any output-affecting refactor.** Take the snapshot
-before touching anything, `just golden-diff` as you go, and delete `goldens/`
-when the work lands. `goldens/` is gitignored; nothing in it is ever committed.
-
-Both recipes drive `spf render` over the whole committed corpus — every Race
-Overview, Army Reference, Order Card deck and Army Pack, plus the Rulebook —
-in Markdown and LaTeX. The binary Formats derive from those two, and a PDF
-stamps a build time that would differ on every run. `golden-diff` prints a
-unified diff per file that moved and exits non-zero if any did.
+**Taking one is step one of any output-affecting change**, whether that is a
+refactor that must not move output or a data edit whose printed effect is the
+thing under review. The recipes, the loop and how to read the diff are in
+[`game-data-changes.md`](game-data-changes.md); this page owns only the ban.
 
 The distinction is easy to over-read, so state it plainly:
 

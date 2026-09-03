@@ -44,9 +44,13 @@ test-friction *args:
 golden-snapshot:
     uv run python scripts/goldens.py snapshot
 
-# Re-render every document and diff it against the last snapshot.
-golden-diff:
-    uv run python scripts/goldens.py diff
+# Retake the snapshot over a change whose diff has been reviewed.
+golden-accept:
+    uv run python scripts/goldens.py accept
+
+# Re-render and diff against the last snapshot. --format latex|all to widen it.
+golden-diff *args:
+    uv run python scripts/goldens.py diff {{args}}
 
 # Auto-fix lint issues then reformat.
 fix:

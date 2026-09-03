@@ -376,6 +376,16 @@ and rules no Instance reaches. Reported by `spf rules todos`, which sits outside
 gating would demand a hand-maintained allowlist of the acceptable cases.
 _Avoid_: warning (that would imply a tier a Lint finding does not have), backlog
 
+**Golden**:
+A before-image of the whole rendered corpus, taken so that a change's effect on
+printed output can be read. Generated on demand into a gitignored `goldens/`
+and never committed. It is read two ways: a refactor expects the diff to be
+empty, while a game-data edit expects it to hold exactly the prose that was
+meant to move. The second is the only review a prose edit gets, because no test
+speaks for one.
+_Avoid_: golden test, snapshot test, expected output (a Golden is a before-image
+to compare against, never a fixture an assertion pins)
+
 ### Rendering (generated reference artifacts)
 
 **Rendering**:
