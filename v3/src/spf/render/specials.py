@@ -1,4 +1,4 @@
-"""Presenting Special instances: signature interpolation and grouping (ADR 0024).
+"""Presenting Special instances: interpolation and grouping (ADR 0024).
 
 The data layer keeps N instances of an id and never joins two of them, because
 joining their prose is a presentation decision. This is where that decision is
@@ -11,19 +11,13 @@ instance's arguments, followed by whatever prose the instance adds about its
 own occurrence.
 """
 
-import re
 from collections.abc import Callable
 from typing import NamedTuple
 
+from spf.prose import fill, interpolate, resolve
 from spf.registry import Registry, load_registry
 from spf.schemas.rules import RuleRecord, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance, Specials
-
-_PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
-"""A signature's variable slot: `{N}`, or `{version.id}` for the raw ref."""
-
-_GROUP = re.compile(r"\[[^][]*\]")
-"""One bracketed group of a signature: `[{N}+]`, `[1 for {M}]`."""
 
 _PROSE_SEPARATOR = ". "
 """Between a signature and the instance's own prose about its occurrence."""
@@ -68,22 +62,33 @@ def special_row(
     if instance.cases:
         return heading, _cases(instance, rule, registry)
     signature = _signature(rule, instance.args, registry)
-    prose = _prose(instance.text, instance.variant, rule)
+    prose = _prose(
+        instance.text,
+        instance.variant,
+        rule=rule,
+        args=instance.args,
+        registry=registry,
+    )
     return heading, _join(_PROSE_SEPARATOR, signature, prose)
 
 
 def _prose(
-    text: str | None, variant: str | None, rule: SpecialRuleConfig | None
+    text: str | None,
+    variant: str | None,
+    *,
+    rule: SpecialRuleConfig | None,
+    args: dict[str, int | str],
+    registry: Registry,
 ) -> str | None:
-    """Resolve the prose slot, spelled inline or drawn from the rule's variants.
+    """Resolve the prose slot and fill its placeholders from `args` (ADR 0037).
 
     Total by design (ADR 0032): an id resolving to nothing renders as no prose,
     because the load-time gate is what reports it and rendering must stay
     printable for a rule the registry does not hold at all.
     """
-    if variant is None:
-        return text
-    return rule.variants.get(variant) if rule is not None else None
+    variants = rule.variants if rule is not None else {}
+    resolved = resolve(text, variant, variants)
+    return None if resolved is None else fill(resolved, args, registry)
 
 
 def _cases(
@@ -91,20 +96,33 @@ def _cases(
 ) -> str:
     """Render a case-shaped instance: its preamble, then its cases (ADR 0030).
 
-    Each case fills the signature with its own args over the instance's, so a
-    value constant across the cases is written once. Cases that read alike are
-    both printed: they are hand-written in one array, where a repeat is a typo
-    the reader should see.
+    Each case fills the signature and its own prose with its own args over the
+    instance's, so a value constant across the cases is written once. A
+    preamble scopes every case, so it sees only the instance's own (ADR 0037).
+    Cases that read alike are both printed: they are hand-written in one array,
+    where a repeat is a typo the reader should see.
     """
     lines = [
         _join(
             _VALUES_SEPARATOR,
             _signature(rule, instance.args | case.args, registry),
-            _prose(case.text, case.variant, rule),
+            _prose(
+                case.text,
+                case.variant,
+                rule=rule,
+                args=instance.args | case.args,
+                registry=registry,
+            ),
         )
         for case in instance.cases
     ]
-    preamble = _prose(instance.preamble, instance.variant, rule)
+    preamble = _prose(
+        instance.preamble,
+        instance.variant,
+        rule=rule,
+        args=instance.args,
+        registry=registry,
+    )
     return _join(_PREAMBLE_SEPARATOR, preamble, _join(_CASE_SEPARATOR, *lines))
 
 
@@ -112,7 +130,7 @@ def _signature(
     rule: RuleRecord | None, args: dict[str, int | str], registry: Registry
 ) -> str:
     """Fill in the rule's signature, or nothing at all for an unknown id."""
-    return "" if rule is None else _interpolate(rule, args, registry)
+    return "" if rule is None else interpolate(rule, args, registry)
 
 
 def _join(separator: str, *parts: str | None) -> str:
@@ -155,43 +173,3 @@ def special_lines(
         )
         for (identifier, heading), texts in grouped.items()
     ]
-
-
-def _interpolate(
-    rule: RuleRecord,
-    args: dict[str, int | str],
-    registry: Registry,
-    seen: frozenset[str] = frozenset(),
-) -> str:
-    """Fill `rule`'s signature in with `args`.
-
-    A bare `{var}` on a ref-valued argument renders the target's name, and the
-    target's own signature after it: a ref's arguments travel with the ref, so
-    the numbers an instance carries for the target print where the *target*
-    declares them. `{var.id}` asks for the raw id instead.
-    """
-    if not rule.signature:
-        return ""
-
-    def keep(match: re.Match[str]) -> str:
-        """Drop a group no argument fills, so an optional one reads as absent."""
-        names = [name for name, _ in _PLACEHOLDER.findall(match.group(0))]
-        unfilled = all(args.get(name) is None for name in names)
-        return "" if names and unfilled else match.group(0)
-
-    def fill(match: re.Match[str]) -> str:
-        name, raw_id = match.group(1), match.group(2)
-        value = args.get(name)
-        if value is None:
-            return match.group(0)  # an argument the instance never gave
-        target = registry.record(value) if isinstance(value, str) else None
-        if target is None:
-            return str(value)
-        if raw_id:
-            return str(value).split(".", 1)[1]
-        if value in seen:  # a ref cycle renders as a name, not forever
-            return target.name
-        nested = _interpolate(target, args, registry, seen | {str(value)})
-        return f"{target.name}{nested}"
-
-    return _PLACEHOLDER.sub(fill, _GROUP.sub(keep, rule.signature))

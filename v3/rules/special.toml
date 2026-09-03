@@ -500,7 +500,7 @@ N = { type = "int", min = 2, max = 10, optional = true }
 [special.fire_order.variants]
 autoloader = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
 fire_and_load_simultaneously = "Fire and load all weapons simultaneously"
-load_5_shots = "May be load up to {N} shots, fire them one at a time"
+load_n_shots = "May be load up to {N} shots, fire them one at a time"
 
 
 [special.fog]

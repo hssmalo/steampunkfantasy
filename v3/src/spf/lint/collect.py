@@ -12,7 +12,7 @@ from typing import Protocol
 from spf import races
 from spf.config import config
 from spf.lint import holders, names, variants
-from spf.registry import load_registry
+from spf.registry import Registry, load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import RaceConfig, special_slots
@@ -59,12 +59,14 @@ def lint_race_config(
     conventions: LintConfig,
     *,
     pools: Mapping[str, Mapping[str, str]],
+    registry: Registry,
 ) -> list[Finding]:
     """Return every finding for an already-loaded, schema-valid Race.
 
     `pools` is each rule's variants. Required rather than defaulted: a caller
     that has no pools says so with `{}`, which is not the same claim as having
-    forgotten to pass them.
+    forgotten to pass them. The registry travels beside them because a pool is
+    filled with an instance's args before it is compared (ADR 0037).
     """
     findings: list[Finding] = []
     for section, key, specials in special_slots(race_config):
@@ -76,7 +78,9 @@ def lint_race_config(
                 rule="variant-longhand",
                 message=f"'{identifier}': {message}",
             )
-            for identifier, message in variants.check_specials(specials, pools)
+            for identifier, message in variants.check_specials(
+                specials, pools, registry=registry
+            )
         ]
     if (message := names.check_capitalized(race_config.races[race].name)) is not None:
         findings.append(
@@ -124,8 +128,10 @@ def lint_race_config(
 
 def lint_race(race: t.RaceName) -> list[Finding]:
     """Load `race` and return its findings, using the configured conventions."""
+    registry = load_registry()
     pools = {
-        identifier: rule.variants
-        for identifier, rule in load_registry().specials.items()
+        identifier: rule.variants for identifier, rule in registry.specials.items()
     }
-    return lint_race_config(race, races.get_race(race), config.lint, pools=pools)
+    return lint_race_config(
+        race, races.get_race(race), config.lint, pools=pools, registry=registry
+    )

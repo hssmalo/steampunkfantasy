@@ -2,7 +2,7 @@
 
 from spf.registry import Registry, load_registry
 from spf.render.specials import SpecialLine, special_lines, special_row
-from spf.schemas.rules import SpecialRuleConfig
+from spf.schemas.rules import DamageTypeRuleConfig, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance
 
 REGISTRY = load_registry()
@@ -347,3 +347,122 @@ def test_an_unresolvable_variant_renders_as_no_prose() -> None:
     _, text = _variant_row("ammo", variant="never_defined", args={"N": 2})
 
     assert text == "[2]"
+
+
+# --- prose interpolates the instance's arguments (ADR 0037) -----------------
+
+PROSE = Registry(
+    records={
+        "special": {
+            "fire_order": SpecialRuleConfig.model_validate(
+                {
+                    "name": "Fire Order",
+                    "slots": ["unit"],
+                    "signature": "[{N}]",
+                    "effect": "Fires {N} shots.",
+                    "variables": {
+                        "N": {"type": "int", "optional": True},
+                        "version": {
+                            "type": "ref",
+                            "namespaces": ["damage_type"],
+                            "optional": True,
+                        },
+                    },
+                    "variants": {
+                        "load_n_shots": "May load up to {N} shots",
+                        "of_kind": "Loaded with {version}",
+                    },
+                }
+            ),
+            "loaded": SpecialRuleConfig.model_validate(
+                {
+                    "name": "Loaded",
+                    "slots": ["unit"],
+                    "signature": "{version}",
+                    "effect": "Loaded with {version}.",
+                    "variables": {
+                        "version": {"type": "ref", "namespaces": ["damage_type"]}
+                    },
+                }
+            ),
+        },
+        "damage_type": {
+            "poison": DamageTypeRuleConfig.model_validate(
+                {
+                    "name": "Poison",
+                    "effect": "Poison damage.",
+                    "signature": "[{M}]",
+                    "variables": {"M": {"type": "int", "optional": True}},
+                }
+            )
+        },
+    }
+)
+"""A rule whose variants name placeholders, and a ref target with a signature."""
+
+
+def _prose_row(identifier: str, **kwargs: object) -> tuple[str, str]:
+    instance = SpecialInstance.model_validate(kwargs)
+    return special_row(identifier, instance, registry=PROSE)
+
+
+def test_a_placeholder_in_a_variant_is_filled_from_the_instances_args() -> None:
+    _, text = _prose_row("fire_order", variant="load_n_shots", args={"N": 5})
+
+    assert text == "[5]. May load up to 5 shots"
+
+
+def test_prose_written_inline_fills_identically_to_the_variant() -> None:
+    named = _prose_row("fire_order", variant="load_n_shots", args={"N": 5})
+    longhand = _prose_row("fire_order", text="May load up to {N} shots", args={"N": 5})
+
+    assert named == longhand
+
+
+def test_a_preamble_fills_from_the_instances_args() -> None:
+    _, text = _prose_row(
+        "fire_order",
+        variant="load_n_shots",
+        args={"N": 5},
+        cases=[{"args": {"N": 2}}],
+    )
+
+    assert text == "May load up to 5 shots: [2]"
+
+
+def test_a_cases_prose_fills_from_its_own_args_over_the_instances() -> None:
+    _, text = _prose_row(
+        "fire_order",
+        args={"N": 5},
+        cases=[{"text": "up to {N} at close range", "args": {"N": 2}}],
+    )
+
+    assert text == "[2] up to 2 at close range"
+
+
+def test_a_ref_valued_argument_in_prose_renders_as_it_does_in_a_signature() -> None:
+    # The same fill either side of the separator, compared rather than spelled
+    # out: `loaded` writes `{version}` as its signature, `fire_order` in prose.
+    args = {"version": "damage_type.poison", "M": 3}
+    _, in_signature = _prose_row("loaded", args=args)
+    _, in_prose = _prose_row("fire_order", text="Loaded with {version}", args=args)
+
+    assert in_signature == "Poison[3]"
+    assert in_prose == f"Loaded with {in_signature}"
+
+
+def test_the_raw_id_form_renders_the_bare_identifier() -> None:
+    _, text = _prose_row(
+        "fire_order",
+        text="Keyed by {version.id}",
+        args={"version": "damage_type.poison"},
+    )
+
+    assert text == "Keyed by poison"
+
+
+def test_prose_of_an_unknown_rule_still_renders() -> None:
+    # Rendering stays total for an id the registry does not hold (ADR 0032).
+    _, text = _prose_row("never_declared", text="Up to {N} shots", args={"N": 5})
+
+    assert text == "Up to 5 shots"

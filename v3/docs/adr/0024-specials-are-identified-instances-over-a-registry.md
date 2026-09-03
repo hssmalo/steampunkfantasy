@@ -1,6 +1,6 @@
 # Specials are identified instances over a registry of rules
 
-> The command names in this ADR are superseded by ADR 0035; its two-stage
+> The command names in this ADR are superseded by ADR 0036; its two-stage
 > principle is not.
 
 A Special is written in a Race file as an **instance**: an occurrence of a rule,
