@@ -1203,7 +1203,8 @@ ap = 2
 note = "For each fire order, choose one of Minor Acid, Poison, or Gear Disruption as extra damage."
 
 [[equipment.goblin_bow_battery.range.specials.ammo]]
-variant = "load_3_ammo"
+args.N = 3
+variant = "load_n_ammo"
 
 [[equipment.goblin_bow_battery.range.specials.multiple_shots]]
 text = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
@@ -1235,7 +1236,8 @@ damage = "d6"
 ap = 4
 
 [[equipment.heavy_crossbows.range.specials.ammo]]
-variant = "load_3_ammo"
+args.N = 3
+variant = "load_n_ammo"
 
 [[equipment.heavy_crossbows.range.specials.multiple_shots]]
 text = "Fire once per ammo spend per fire order"

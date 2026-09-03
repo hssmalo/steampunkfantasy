@@ -791,11 +791,14 @@ slots = ["range"]
 effect = "Describes how a weapon is loaded and how its ammo is tracked."
 see_also = ["special.limited_ammo"]
 
+[special.ammo.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
 [special.ammo.variants]
 always_loaded = "Always treated as loaded"
 fog_instead_of_ammo = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 loaded_after_assault = "Gun automatically loaded after an assault"
-load_3_ammo = "May be loaded (one at a time) with up to 3 ammo"
+load_n_ammo = "May be loaded (one at a time) with up to {N} ammo"
 
 
 
