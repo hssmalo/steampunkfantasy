@@ -14,7 +14,9 @@ import argparse
 import contextlib
 import difflib
 import io
+import json
 import shutil
+import subprocess
 import sys
 import tempfile
 from collections.abc import Callable, Iterator
@@ -48,6 +50,13 @@ FORMAT_LABELS = {"markdown": "Markdown", "latex": "LaTeX"}
 
 WORK_PREFIX = ".goldens-"
 """Names the throwaway tree `diff` renders into; gitignored alongside them."""
+
+BASELINE = ".baseline"
+"""Names the stamp inside `goldens/` saying what the snapshot was taken against.
+
+It lives in the snapshot so that discarding one discards both, and is skipped
+when the two trees are compared.
+"""
 
 MAX_DIFF_LINES = 25
 """Lines of any one file's diff to print before saying how many were left."""
@@ -173,6 +182,7 @@ def snapshot() -> int:
     if GOLDENS.exists():
         shutil.rmtree(GOLDENS)
     written = render_all(GOLDENS)
+    _write_baseline(GOLDENS)
     _say(f"Snapshotted {written} files into {GOLDENS.relative_to(V3)}/")
     return 0
 
@@ -186,6 +196,11 @@ def diff(shown: tuple[str, ...] = (FORMATS[0],)) -> int:
     if not GOLDENS.is_dir():
         _say(f"No snapshot at {GOLDENS}: run `just golden-snapshot` first")
         return 1
+
+    for warning in _baseline_warnings(
+        _read_baseline(GOLDENS), _git("rev-parse", "HEAD")
+    ):
+        _say(f"! {warning}")
 
     # Beside `goldens/`, not in the system temp directory: a document links its
     # Images by a path relative to where it was written, so a re-render only
@@ -268,8 +283,68 @@ def _count(number: int, noun: str) -> str:
 
 
 def _paths(root: Path) -> set[Path]:
-    """Every file under `root`, relative to it."""
-    return {path.relative_to(root) for path in root.rglob("*") if path.is_file()}
+    """Every rendered document under `root`, relative to it."""
+    return {
+        path.relative_to(root)
+        for path in root.rglob("*")
+        if path.is_file() and path.name != BASELINE
+    }
+
+
+def _git(*args: str) -> str | None:
+    """Ask git something, or return None where git cannot answer."""
+    git = shutil.which("git")
+    if git is None:
+        return None
+    try:
+        done = subprocess.run(  # noqa: S603
+            [git, "-C", str(V3), *args],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return done.stdout.strip()
+
+
+def _write_baseline(root: Path) -> None:
+    """Record which commit, and how clean a tree, this snapshot was taken from."""
+    stamp = {
+        "commit": _git("rev-parse", "HEAD"),
+        "dirty": bool(_git("status", "--porcelain")),
+    }
+    (root / BASELINE).write_text(json.dumps(stamp), encoding="utf-8")
+
+
+def _read_baseline(root: Path) -> dict[str, object] | None:
+    """Read a snapshot's stamp, or None where it has none to read."""
+    path = root / BASELINE
+    if not path.is_file():
+        return None
+    try:
+        return cast("dict[str, object]", json.loads(path.read_text(encoding="utf-8")))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def _baseline_warnings(stamp: dict[str, object] | None, head: str | None) -> list[str]:
+    """Say what makes a snapshot's baseline hard to trust, if anything does.
+
+    Never a refusal: the ordinary loop — snapshot, review, commit, diff again —
+    moves HEAD on purpose, so a stale baseline is news rather than an error.
+    """
+    if stamp is None:
+        return ["Snapshot carries no baseline stamp: take it again to place it"]
+    warnings = []
+    if stamp.get("dirty"):
+        warnings.append(
+            "Snapshot was taken over uncommitted changes: its baseline is in no commit"
+        )
+    commit = stamp.get("commit")
+    if isinstance(commit, str) and isinstance(head, str) and commit != head:
+        warnings.append(f"Snapshot was taken at {commit[:7]}; HEAD is now {head[:7]}")
+    return warnings
 
 
 def _print_diff(lines: list[str]) -> int:

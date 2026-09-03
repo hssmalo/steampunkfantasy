@@ -190,3 +190,47 @@ def test_a_newly_rendered_document_is_reported(
 
     assert goldens._report(baseline, current) == 1
     assert "newly rendered" in capsys.readouterr().out
+
+
+def test_the_baseline_stamp_is_not_compared_as_a_document(tmp_path: Path) -> None:
+    # The stamp lives in the snapshot so that discarding one discards both.
+    baseline = _tree(tmp_path / "before", {"cards/demo.md": "# Cards\n"})
+    current = _tree(tmp_path / "after", {"cards/demo.md": "# Cards\n"})
+    (baseline / goldens.BASELINE).write_text('{"commit": "abc"}', encoding="utf-8")
+
+    assert goldens._report(baseline, current) == 0
+
+
+def test_a_matching_stamp_says_nothing() -> None:
+    stamp = {"commit": "a" * 40, "dirty": False}
+
+    assert goldens._baseline_warnings(stamp, "a" * 40) == []
+
+
+def test_a_snapshot_taken_at_another_commit_warns() -> None:
+    # Committing a reviewed cluster moves HEAD by design, so this is a warning
+    # and never a refusal.
+    stamp = {"commit": "a" * 40, "dirty": False}
+
+    warnings = goldens._baseline_warnings(stamp, "b" * 40)
+
+    assert len(warnings) == 1
+    assert "aaaaaaa" in warnings[0]
+    assert "bbbbbbb" in warnings[0]
+
+
+def test_a_snapshot_taken_over_uncommitted_changes_warns() -> None:
+    # Its baseline is a tree that exists in no commit.
+    stamp = {"commit": "a" * 40, "dirty": True}
+
+    warnings = goldens._baseline_warnings(stamp, "a" * 40)
+
+    assert len(warnings) == 1
+    assert "uncommitted" in warnings[0]
+
+
+def test_a_snapshot_with_no_stamp_warns() -> None:
+    warnings = goldens._baseline_warnings(None, "a" * 40)
+
+    assert len(warnings) == 1
+    assert "no baseline stamp" in warnings[0]
