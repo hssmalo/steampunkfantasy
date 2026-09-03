@@ -1653,7 +1653,8 @@ damage = "d6-1"
 ap = "3"
 
 [[equipment.gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.gatling_gun.range.specials.area]]
 #preamble = "If not using aim, target all hexes within long range"
@@ -1694,7 +1695,8 @@ ap = "3"
 text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
 
 [[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.oliphant_gatling_guns.range.specials.area]]
 text = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."

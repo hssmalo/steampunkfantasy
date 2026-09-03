@@ -832,15 +832,15 @@ drag_target = "If one unit of size large or smaller is hit by this weapon but no
 [special.focus_fire]
 name = "Focus Fire"
 slots = ["range"]
-signature = "[N]"
-effect = "If not using aim, fire {N} shots at the same target"
+signature = "[{N}]"
+effect = "When using aim, roll {N} dice at the same target"
 see_also = ["token.aim"]
 
 [special.focus_fire.variables]
-N = { type = "int", min = 1, max = 12, optional = true}
+N = { type = "int", min = 1, max = 12}
 
 [special.focus_fire.variants]
-aim_6_dice = "When using aim: roll 6 dice at same unit."
+aim_n_dice = "When using aim: roll {N} dice at same unit."
 
 [special.multiple_shots]
 name = "Multiple Shots"

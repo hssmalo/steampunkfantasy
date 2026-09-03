@@ -1518,7 +1518,8 @@ damage = "d6 + d6 Psychic damage"
 ap = 3
 
 [[equipment.tail_gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.tail_gatling_gun.range.specials.area]]
 preamble = "If not using aim, fire once at all enemy models in all hexes within normal and long range"

@@ -1132,7 +1132,8 @@ args.N = 6
 
 #text = "If aim, instead use focus fire, roll 6 dice at same unit"
 [[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.helicopter_gatling_gun.range.specials.area]]
 #preamble = "If not using aim, target all hexes within long range"
