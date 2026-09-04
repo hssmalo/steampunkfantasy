@@ -1518,7 +1518,8 @@ damage = "d6 + d6 Psychic damage"
 ap = 3
 
 [[equipment.tail_gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.tail_gatling_gun.range.specials.area]]
 preamble = "If not using aim, fire once at all enemy models in all hexes within normal and long range"
@@ -1591,7 +1592,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.smg.range.specials.multiple_shots]]
-variant = "fires_twice"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.smg.orders_gained.fire]
 still = [["Fire", "Fire"]]
@@ -1611,7 +1613,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.smg_free.range.specials.multiple_shots]]
-text = "Fires two times (per model) each time it is fired"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.crossbow]
 name = "Crossbow"
@@ -1719,6 +1722,8 @@ ap = 2
 text = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 
 [[equipment.mortar_1a.range.specials.cloud]]
+args.N = 8
+args.M = 6
 variant = "poison_cloud_and_surroundings"
 
 [[equipment.mortar_1a.range.specials.indirect_fire]]
@@ -1742,6 +1747,8 @@ ap = 0
 text = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 
 [[equipment.mortar_1_1b.range.specials.cloud]]
+args.N = 8
+args.M = 6
 variant = "poison_cloud_and_surroundings"
 
 [[equipment.mortar_1_1b.range.specials.indirect_fire]]
@@ -2120,7 +2127,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.experimental_acid_smg.range.specials.multiple_shots]]
-variant = "fires_twice"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.experimental_acid_smg.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"

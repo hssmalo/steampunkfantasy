@@ -268,6 +268,7 @@ one_elite_alive = "As long as 1 elite model is alive"
 improved_by_another_source = "(improve by 1 if unit has Psychic resistance from another source)"
 while_superelite_alive = "While at least one superelite model is alive"
 while_elite_alive = "While at least one elite is alive"
+improves_own = "Improves the unit's own {version} resistance by {N}"
 
 
 [special.heal]
@@ -647,8 +648,12 @@ todo = """Rule text not yet written: carrying units, and the deploy order that u
 
 Reserved by the designer in #165: C23 (ogre carrying 4 tiny drone units against 6) and C41 (goblin transporting 1 Goblin infantry against 2). Both differ by a count and by the transporting unit's own name, so they want a Variable rather than a variant."""
 
+[special.transport.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
+
 [special.transport.variants]
-four_tiny_drones = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+tiny_drones = "May carry {N} tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
 
 
 [special.vulnerability]
@@ -769,10 +774,14 @@ From reference.toml:
 potential_references = ["hexes.fog", "hexes.poison_cloud"]"""
 see_also = ["hex.fog", "hex.poison_cloud"]
 
+[special.cloud.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+M = { type = "int", min = 1, max = 12, optional = true }
+
 [special.cloud.variants]
 fog_one_hex_per_model = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
-poison_cloud_and_surroundings = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
-poison_cloud_in_fog = "Add poison cloud[4] to a hex with fog within normal range"
+poison_cloud_and_surroundings = "Poison Cloud[{N}] at target hex, and Poison Cloud[{M}]  at all hexes surrounding that initial hex"
+poison_cloud_in_fog = "Add poison cloud[{N}] to a hex with fog within normal range"
 
 
 [special.insanity]
@@ -791,11 +800,14 @@ slots = ["range"]
 effect = "Describes how a weapon is loaded and how its ammo is tracked."
 see_also = ["special.limited_ammo"]
 
+[special.ammo.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
 [special.ammo.variants]
 always_loaded = "Always treated as loaded"
 fog_instead_of_ammo = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 loaded_after_assault = "Gun automatically loaded after an assault"
-load_3_ammo = "May be loaded (one at a time) with up to 3 ammo"
+load_n_ammo = "May be loaded (one at a time) with up to {N} ammo"
 
 
 
@@ -832,26 +844,28 @@ drag_target = "If one unit of size large or smaller is hit by this weapon but no
 [special.focus_fire]
 name = "Focus Fire"
 slots = ["range"]
-signature = "[N]"
-effect = "If not using aim, fire {N} shots at the same target"
+signature = "[{N}]"
+effect = "When using aim, roll {N} dice at the same target"
 see_also = ["token.aim"]
 
 [special.focus_fire.variables]
-N = { type = "int", min = 1, max = 12, optional = true}
+N = { type = "int", min = 1, max = 12}
 
 [special.focus_fire.variants]
-aim_6_dice = "When using aim: roll 6 dice at same unit."
+aim_n_dice = "When using aim: roll {N} dice at same unit."
 
 [special.multiple_shots]
 name = "Multiple Shots"
 slots = ["range"]
-todo = """Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them.
-
-Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." A shot-count Variable may suit these better than a variant."""
+todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
 see_also = ["special.burst"]
 
+[special.multiple_shots.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
 [special.multiple_shots.variants]
-fires_twice = "Fires two times each time it is fired"
+fire_n_times = "Fire {N} times per fire order."
+fire_n_times_same_target = "Fire {N} times at the same target."
 fire_per_minor_head = "Fire one time per alive minor head"
 left_and_right = "Fire once to the right and once to the left per fire order"
 d12_shots_same_unit = "Fire d12 shots each time and all at the same unit"

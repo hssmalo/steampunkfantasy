@@ -1569,7 +1569,8 @@ damage = "d6-3"
 ap = 1
 
 [[equipment.smg_free.range.specials.multiple_shots]]
-text = "Fire two shot per fire order (per smg in the unit)"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.twin_guns]
 name = "Twin Guns"
@@ -1583,7 +1584,8 @@ damage = "d6"
 ap = 4
 
 [[equipment.twin_guns.range.specials.multiple_shots]]
-text = "x2 shots per fire order"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.twin_guns.range.specials.bonus]]
 text = "Double AP (+2 instead of +1) and Damage (+2 instead of +1) bonuses at point blank range"
@@ -1600,7 +1602,8 @@ damage = "d6 -2"
 ap = 2
 
 [[equipment.twin_rifle.range.specials.multiple_shots]]
-text = "Fires two times at same unit per shot."
+args.N = 2
+variant = "fire_n_times_same_target"
 
 [[equipment.twin_rifle.unit_specials.side_weapon]]
 text = "Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"
@@ -1653,7 +1656,8 @@ damage = "d6-1"
 ap = "3"
 
 [[equipment.gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.gatling_gun.range.specials.area]]
 preamble = "If not using aim, target all hexes within long range"
@@ -1696,7 +1700,8 @@ ap = "3"
 text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles."
 
 [[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
+variant = "aim_n_dice"
 
 [[equipment.oliphant_gatling_guns.range.specials.area]]
 text = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."
