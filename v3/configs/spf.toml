@@ -47,3 +47,36 @@ optional_key_prefixes = ["greater_"]
 optional_key_suffixes = ["_free"]
 # Words that must stay lowercase anywhere but the start of a name.
 function_words = ["at", "in", "of", "on", "the", "with"]
+# Every order an Order Card may name, spelled as the card prints it. A cell
+# combines these with '+', and may wrap one in parentheses to make it optional.
+order_names = [
+    "360°",
+    "A",
+    "Activate",
+    "Aim",
+    "As unit it came from",
+    "B",
+    "BB",
+    "Breath",
+    "Chs",
+    "D",
+    "Deploy",
+    "F",
+    "Fire",
+    "Fire Burst",
+    "Flee",
+    "Follow",
+    "Help",
+    "Hide",
+    "L/R",
+    "Lay Trap",
+    "Load",
+    "Load Unstable",
+    "Random",
+    "Release",
+    "Rev",
+    "Reveal",
+    "Road",
+    "Spot",
+    "Throw",
+]

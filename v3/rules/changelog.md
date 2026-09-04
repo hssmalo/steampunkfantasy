@@ -5,7 +5,7 @@ captures *why* a rule was changed.
 
 | Date | Description | Why |
 | ---------- | ------------------------------ | ------------------------------ |
-| 24.08.2026 | Added horrifying poison token| To fun not to add |
+| 24.08.2026 | Added horrifying poison token| Too fun not to add |
 | 24.08.2026 | The unnamed -1/+1 critical token is now Critical Damage (`token.critical_damage`) | Its name was a description of its own numbers; a player needs something to call it |
 | 24.08.2026 | `special.reroll` is now `special.ork_reroll`, `token.plus_minus_one` is now `token.critical_damage`, and the distance bands are `normal_range` and `long_range` | Each id now spells the name the rule already prints |
 | 24.08.2026 | The Angle modifier prints as On Edge rather than On-Edge of Firing-Angle | Its group heading already says Angle |
@@ -21,5 +21,5 @@ captures *why* a rule was changed.
 | 28.07.2026 | Added no command and no repair | Abomination flagship need them |
 | 27.07.2026 | Renamed weapons to range       | To fit with army.pdf setup     |
 | 27.07.2026 | Tweaked gear disruption        | Unnecessarily complicated      |
-| 27.07.2026 | Added assault gear disruption  | For complettness               |
-| 27.07.2026 | Added assault fire             | For complettness               |
+| 27.07.2026 | Added assault gear disruption  | For completeness               |
+| 27.07.2026 | Added assault fire             | For completeness               |

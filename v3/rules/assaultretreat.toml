@@ -8,23 +8,23 @@ If a model has both flying and another type of movement on land, using the flyin
 #All below should correspond to a available type. All models should have a type corresponding to one of the below. If not, its a bug which should be fixed.
 [retreat.Walking]
 description = "Retreat one hex backward, either facing or facing away from the contested hex."
-blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
+blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassable hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 speed = "Set speed to slow, rest of movement orders treated as 360⁰"
 
 [retreat.Tracked]
 description = "Retreat one hex forward, keeping same orientation as before the assault"
 speed = "Set to still. Rest of movement orders treated as -"
-blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
+blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassable hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 
 [retreat.Wheeled]
 description = "Retreat one hex forward, keeping same orientation as before the assault"
 speed = "Set to still. Rest of movement orders treated as -"
-blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
+blocked = "If the hex you are trying to move into is blocked by either your own units, is an impassable hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 
 [retreat.Floating]
 description = "Retreat one hex forward, keeping same orientation as before the assault"
 speed = "Set to still. Rest of movement orders treated as -"
-blocked = "If the hex you are trying to move into is blocked by either overcroweded, impassble hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
+blocked = "If the hex you are trying to move into is blocked by either overcrowded, impassable hex or an enemy, move to one of the nearest possible hexes. If there are no available hexes to move to, unit is destroyed"
 
 [retreat.Flying]
 description = "Retreat one hex forward, keeping same orientation as before the assault"
