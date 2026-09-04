@@ -128,7 +128,7 @@ armor = [7, 6, 6, 5]
 cost.mp = 16
 cost.cp = 8
 cost.ip = 8
-description = '''A dwarf in steampunk powerarmor wielding a multibarrled heavy musket.
+description = '''A dwarf in steampunk powerarmor wielding a multibarreled heavy musket.
 '''
 
 
@@ -331,7 +331,7 @@ models = ["gunblasterwagon"]
 size = "large"
 armor = [8, 10, 10, 7]
 cost.ip = 24
-description = '''An heavy tank with braodside weapons firing to the sides
+description = '''An heavy tank with broadside weapons firing to the sides
 '''
 
 
@@ -475,7 +475,7 @@ models = ["zap"]
 size = "large"
 armor = [10, 8, 8, 7]
 cost.ip = 32
-description = '''A steampunk tank with futureistick weapon with two barrels firing forward. It also has weapons firing all round the tank.
+description = '''A steampunk tank with futuristic weapon with two barrels firing forward. It also has weapons firing all round the tank.
 '''
 
 

@@ -182,7 +182,7 @@ armor = [4, 3, 0, 0]
 cost.mp = 8
 cost.xp = 16
 cost.cp = 16
-description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycle there is a mortar weapon.
+description = '''Gnome with a mohawk on a steampunk motorcycle. On the motor cycle there is a mortar weapon.
 '''
 
 
@@ -454,7 +454,7 @@ size = "large"
 armor = [0, 0, 0, 0]
 cost.ip = 24
 cost.xp = 8
-description = '''A steampunk helicopter with lots of gadgedts and firing a gatling gun. The gnome driving the helicopter have a mohawk.
+description = '''A steampunk helicopter with lots of gadgets and firing a gatling gun. The gnome driving the helicopter have a mohawk.
 '''
 
 [[units.gnome_helicopter.specials.fire_order]]

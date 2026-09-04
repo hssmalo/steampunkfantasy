@@ -489,7 +489,7 @@ models = [
 size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 24
-description = '''An elegant but sinister elf with lots of steampunk gadgdets wielding a ww1 style rifle
+description = '''An elegant but sinister elf with lots of steampunk gadgets wielding a ww1 style rifle
 '''
 
 
@@ -568,7 +568,7 @@ size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
-description = '''An elf dominatrix with a whip in the center. All slaves wear collars and are of different races, a dwarf (1.6m in height), a gnome (1.5m in height), an ogre (4m in height) a goblin (1m in height), abomination (lovecraft inspired humanoid creatures with tentancles. 1.8m in height) and an ork (about 2m in height).
+description = '''An elf dominatrix with a whip in the center. All slaves wear collars and are of different races, a dwarf (1.6m in height), a gnome (1.5m in height), an ogre (4m in height) a goblin (1m in height), abomination (lovecraft inspired humanoid creatures with tentacles. 1.8m in height) and an ork (about 2m in height).
 '''
 
 
@@ -739,7 +739,7 @@ size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
-description = '''An elegant but sinister elf assassin wielding a poison dager.
+description = '''An elegant but sinister elf assassin wielding a poison dagger.
 '''
 
 
@@ -801,7 +801,7 @@ size = "medium"
 armor = [3, 3, 3, 3]
 cost.mp = 8
 cost.cp = 24
-description = '''An elegant but sinister elf assassin wielding a poison dager. The assassin has some robotic limbs.
+description = '''An elegant but sinister elf assassin wielding a poison dagger. The assassin has some robotic limbs.
 '''
 
 [[units.roboprosthetic_assassin.specials.to_hit]]

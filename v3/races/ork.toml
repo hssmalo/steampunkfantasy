@@ -14,7 +14,7 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "medium"
 cost.mp = 16
-description = "Bloodthirsty ork in leather rags wielding a napleonic style musket with a bajonet"
+description = "Bloodthirsty ork in leather rags wielding a napoleonic style musket with a bayonet"
 
 [units.ork_infantry.shaken]
 speed = "slow"
@@ -111,7 +111,7 @@ models = ["champion"]
 size = "medium"
 armor = [0, 0, 0, 0]
 cost.vpm = 16
-description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor.
+description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its wearing rugs, no armor.
 '''
 
 
@@ -256,7 +256,7 @@ models = ["hammerhead"]
 size = "large"
 cost.ip = 32
 armor = [13, 8, 7, 7]
-description = '''A steampunk vehicle with a big battling ram infront, crashing into and destroying a house.
+description = '''A steampunk vehicle with a big battling ram in front, crashing into and destroying a house.
 '''
 
 [[units.hammerhead.specials.destroy_terrain]]
@@ -392,7 +392,7 @@ models = ["grunt", "grunt", "grunt", "grunt"]
 size = "medium"
 cost.mp = 8
 armor = [0, 0, 0, 0]
-description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brazz amulet and almost no clothes.
+description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brass amulet and almost no clothes.
 '''
 
 
@@ -430,7 +430,7 @@ size = "medium"
 cost.mp = 8
 cost.xp = 48
 armor = [0, 0, 0, 0]
-description = '''An ork werewarg is amix between a warg and and ork, wielding a musket with bajonett.
+description = '''An ork werewarg is a mix between a warg and and ork, wielding a musket with bayonet.
 '''
 
 

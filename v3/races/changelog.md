@@ -7,20 +7,20 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | To cool not to implement. Armored, durable, big boulder size bomb. Will review power |
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
-| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychcic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
-| 19.08.2026 | Gonome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
+| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
+| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
 | 19.08.2026 | Goblin       | Reworked snake cavalry                                                      | To make it cooler and more unique                                                    |
 | 19.08.2026 | Darkelf      | Removed Poison Gas Grenade                                                  | Did not seem necessary. Still has access to poison fog grenade                       |
 | 11.08.2026 | Gnome        | Frostray, reduced range and damage by one.                                  | Seemed overpowered, needed a debuff and range 3 makes it more difficult to use       |
 | 11.08.2026 | Gnome        | Tweaked Tinkerer Helicopter                                                 | Balance, and  movement rule did not fit anymore after remake of damage tables        |
-| 05.08.2026 | Abomination, Gnome | Replaced remaining references to smoke with fog                       | Fog makes more thematicly sense, especially after abomination                        |
+| 05.08.2026 | Abomination, Gnome | Replaced remaining references to smoke with fog                       | Fog makes more thematically sense, especially after abomination                        |
 | 05.08.2026 | All          | Replaced Chase with Chs on all order cards                                  | To save space                                                                        |
-| 28.07.2026 | Ork          | Negative vpm to elite infantry, positive to champion                        | Moved victorypoints for elite in an infantry to killing the champion instead         |
+| 28.07.2026 | Ork          | Negative vpm to elite infantry, positive to champion                        | Moved victory points for elite in an infantry to killing the champion instead         |
 | 27.07.2026 | All          | Introduced optional order () in a lot of units, mostly tanks                | Reduced the number of order cards and makes it easier to find a specific card        |
 | 27.07.2026 | Goblin       | Heavy Carrier can now fire on both still and slow                           | It needs to be able to shoot while still for the bow battery to work                 |
-| 27.07.2026 | Dwarf        | Transport Zeppelin got a lot less flexibale turn radius                     | It felt wrong for the transport zeppelin to have an unlimited turn radius.           |
+| 27.07.2026 | Dwarf        | Transport Zeppelin got a lot less flexible turn radius                     | It felt wrong for the transport zeppelin to have an unlimited turn radius.           |
 | 23.07.2026 | Abomination  | Reworked Flagship to feel like a flying sailing airship                     | I did not enjoy the old mothership, so I remade it. May still need to be balanced    |
-| 23.07.2026 | Goblin       | Seeker arrow requires 2 special arrow and has limited arrow[2] instead of 3 | You can now have both assassin arrows andr regular seeker arrows available           |
+| 23.07.2026 | Goblin       | Seeker arrow requires 2 special arrow and has limited arrow[2] instead of 3 | You can now have both assassin arrows and regular seeker arrows available           |
 | 23.07.2026 | Goblin       | Assassin arrow requires 1 special arrow                                     | No real impact on game, but fits better                                              |
 | 21.07.2026 | Gnome        | Made assault bots small                                                     | No ingame effect                                                                     |
 | 17.07.2026 | Abomination  | Mothership renamed flagship, fog manipulator became fog poisonizer          | Did not fit the image I wanted any more                                              |

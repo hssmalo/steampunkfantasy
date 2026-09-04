@@ -91,7 +91,7 @@ see_also = ["token.acid", "damage_type.acid"]
 name = "Fire"
 phases = ["Agony 2"]
 remove = "Only as part of effect"
-effect = '''Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
+effect = '''Role a d6 and subtracted unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
 
 
 - Ignore armor and regular damage resistance
@@ -183,7 +183,7 @@ to_be_hit = "0"
 name = "Insane"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hyptnotized token and replace it with insane. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go."
+effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hypnotized token and replace it with insane. Any flee order is treated at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go."
 see_also = ["token.shaken", "token.hypnotized", "special.insanity_field"]
 
 
@@ -191,7 +191,7 @@ see_also = ["token.shaken", "token.hypnotized", "special.insanity_field"]
 name = "Hypnotized"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken, and not insane. Any flee order is treatet as do nothing, stand still. In addition, Reduce assault strength 50% rounded down."
+effect = "Can only be given to bio units which are already shaken, and not insane. Any flee order is treated as do nothing, stand still. In addition, Reduce assault strength 50% rounded down."
 see_also = ["token.shaken", "token.insane", "special.hypnotizing_gaze"]
 
 [tokens.hidden]

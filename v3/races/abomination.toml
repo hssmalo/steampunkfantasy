@@ -79,7 +79,7 @@ models = ["flagship"]
 size = "enormous"
 armor = [10, 9, 8, 8]
 cost.ip = 96
-description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insantiy weapons and a greater disruptor weapons and lots of gadgets.
+description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insanity weapons and a greater disruptor weapons and lots of gadgets.
 '''
 
 [[units.flagship.specials.enormous]]
@@ -142,7 +142,7 @@ notes = ["Unit is destroyed if it has all of the following:no command, disabled 
 [units.flagship.damage_tables.Critical]
 rows = [
 	"1: d6 psychic damage to all friendly units within range 2. No command",
-	"2: If flying, deacellerates to float",
+	"2: If flying, decelerates to float",
 	"2: If floating, do d8 damage (ignore armor). Disable Repair",
 	"3: Cannot accelerate",
 	"4: Cannot turn",
@@ -496,7 +496,7 @@ models = ["giant_frog_rider", "giant_frog_rider"]
 size = "medium"
 cost.mp = 8
 cost.xp = 16
-description = '''An abomination (humandoid creature with 4 tentacles, inspired by lovecraft) is riding a giant frog. The frog spits poison. The abomination is small compared to the frog. The abomiantion is wielding a steampowered melee weapon. There is a fluid tube connected to the melee weapon.
+description = '''An abomination (humanoid creature with 4 tentacles, inspired by lovecraft) is riding a giant frog. The frog spits poison. The abomination is small compared to the frog. The abomination is wielding a steampowered melee weapon. There is a fluid tube connected to the melee weapon.
 '''
 
 
@@ -549,7 +549,7 @@ size = "large"
 cost.mp = 8
 cost.xp = 32
 armor = [6, 5, 4, 2]
-description = '''Abomination (scary humanoid creature with 2 arms and 4 tentacles. Inspired by Lovecraft) are riding a hippopotamus. Along the hippotpotamus is an oversized napoleon musket pointing forward. Behind the sadle there is a mortar firing upwards.
+description = '''Abomination (scary humanoid creature with 2 arms and 4 tentacles. Inspired by Lovecraft) are riding a hippopotamus. Along the hippopotamus is an oversized napoleon musket pointing forward. Behind the saddle there is a mortar firing upwards.
 '''
 
 [units.hippopotamus_riders.shaken]
@@ -924,7 +924,7 @@ damage = "d10 Psychic"
 ap = "N/A"
 
 [[equipment.greater_insanity_blast.range.specials.insanity]]
-text = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)."
+text = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normal effects of psychic damage. (ps! unit does not need to be already shaken to be effected)."
 
 [[equipment.greater_insanity_blast.range.specials.los]]
 text = "Trace line of sight from front of the unit"
