@@ -113,7 +113,7 @@ args.N = 2
 
 
 [[units.mechanical_iron_dragon.specials.fire_order]]
-text = " Fire(acid): use acid and poison breath, while Fire(shrapnel) uses shrapnel breath instead"
+text = "Fire(acid): use acid and poison breath, while Fire(shrapnel) uses shrapnel breath instead."
 
 [[units.mechanical_iron_dragon.specials.immunity]]
 args.feature = "token.acid"
@@ -161,7 +161,7 @@ description = '''Large steampunk tank with a fixed turret firing straight forwar
 
 
 [[units.queen_yy.specials.fire_order]]
-text = "You fire 2 independent heavy rifles in addition to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the release as an firing option, you may place the poison cloud[12] during pre assault step in any movement phase, including contested hexes for assaults"
+text = "You fire 2 independent heavy rifles in addition to acid cannon each fire order. Dual ammo: all weapons may be loaded with up to 2 shots, and fire them one at a time. If you use the release as an firing option, you may place the poison cloud[12] during pre assault step in any movement phase, including contested hexes for assaults."
 
 [[units.queen_yy.specials.resistance]]
 args.version = "resistance_type.acid"
@@ -305,7 +305,7 @@ armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.cp = 16
 cost.xp = 48
-description = '''An sinister elf riding an robotic horse. The horse breaths fire
+description = '''An sinister elf riding an robotic horse. The horse breaths fire.
 '''
 
 
@@ -568,7 +568,7 @@ size = "medium"
 armor = [0, 0, 0, 0]
 cost.mp = 8
 cost.xp = 24
-description = '''An elf dominatrix with a whip in the center. All slaves wear collars and are of different races, a dwarf (1.6m in height), a gnome (1.5m in height), an ogre (4m in height) a goblin (1m in height), abomination (lovecraft inspired humanoid creatures with tentancles. 1.8m in height) and an ork (about 2m in height)
+description = '''An elf dominatrix with a whip in the center. All slaves wear collars and are of different races, a dwarf (1.6m in height), a gnome (1.5m in height), an ogre (4m in height) a goblin (1m in height), abomination (lovecraft inspired humanoid creatures with tentancles. 1.8m in height) and an ork (about 2m in height).
 '''
 
 
@@ -580,7 +580,7 @@ name = "Darkelf Officer"
 text = "If there are no Darkelf Officers on the battlefield, all multicultural infantry and multicultural trainee units which have more generic multicultural infantry models compared to other models rebel and switch sides. If so, you gain victory points for killing this unit, and enemy get victory points for it surviving."
 
 [[units.multicultural_infantry.specials.spawn]]
-text = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit"
+text = "multicultural_trainee: At start of battle, place two Multicultural Trainee units directly in front of this unit."
 
 [[units.multicultural_infantry.specials.forward_position]]
 args.N = 2
@@ -801,7 +801,7 @@ size = "medium"
 armor = [3, 3, 3, 3]
 cost.mp = 8
 cost.cp = 24
-description = '''An elegant but sinister elf assassin wielding a poison dager. The assassin has some robotic limbs
+description = '''An elegant but sinister elf assassin wielding a poison dager. The assassin has some robotic limbs.
 '''
 
 [[units.roboprosthetic_assassin.specials.to_hit]]
@@ -1206,7 +1206,7 @@ equipment = []
 type = ["Bio", "Orlf", "Infantry", "Walking"]
 replaces = "generic_multicultural_infantry"
 cost.mp = 4
-description = "HalfOrk and HalfElf. More loyal to the Darkelf compared to regular multicultural infantry"
+description = "HalfOrk and HalfElf. More loyal to the Darkelf compared to regular multicultural infantry."
 
 [models.orlf.assault]
 strength = [2, 0, 0, 0]
@@ -1245,13 +1245,13 @@ equipment = ["tesla_whip", "remote_control", "officer_mask"]
 type = ["Bio", "Infantry", "Walking", "Elite", "Officer"]
 
 [[models.darkelf_officer.unit_specials.officer_order]]
-text = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any  multicultural trainee unit within range 3."
+text = "Forced Movement: Twice per game, the darkelf officer may use force movement and replace any 360° movement order with either F or chase. This may be used on any infantry in this hex, and any multicultural trainee unit within range 3."
 
 [[models.darkelf_officer.unit_specials.officer]]
 variant = "remove_shaken_in_hex"
 
 [[models.darkelf_officer.specials.escape_artist]]
-text = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes"
+text = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes."
 
 [models.darkelf_officer.assault]
 strength = [3, 2, 1, 1]
@@ -1485,7 +1485,7 @@ requires = []
 note = "Neither this unit or the trainee units are immune to poison clouds"
 
 [[equipment.remote_control.unit_specials.activate]]
-text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round, Once activated, the ability is permanent"
+text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round. Once activated, the ability is permanent."
 
 [equipment.officer_mask]
 name = "Officer Mask"
@@ -1801,7 +1801,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.integrated_pistol.range.specials.ammo]]
-text = "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon"
+text = "Treated as loaded when main gun is loaded. May fire this weapon in addition to your normal weapon."
 
 [equipment.acid_breath]
 name = "Acid Breath"

@@ -248,7 +248,7 @@ movement_order = ["-", "F", "F"]
 comment = "May not deploy units while shaken"
 
 [[units.transport_zeppelin.specials.transport]]
-text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall"
+text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall."
 
 [units.transport_zeppelin.orders.movement]
 fast_fly = [
@@ -552,7 +552,7 @@ cost.ip = 96
 cost.xp = 48
 description = '''A huge zeppelin firing its main gun toward the ground.
 '''
-note = "Withering Ray: May replace forest with rough terrain in the hex it is standing"
+note = "Withering Ray: May replace forest with rough terrain in the hex it is standing."
 
 [units.zeppelin.shaken]
 speed = "slow_fly"
@@ -1113,7 +1113,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Vehicle"]]
 
 [[equipment.infantry_platform.unit_specials.movement]]
-text = "Tank Riders: Any infantry in slow which shares a hex with this unit, may use the follow order instead of their own. If so, place the infantry order marker on the movement card of the tank instead"
+text = "Tank Riders: Any infantry in slow which shares a hex with this unit, may use the follow order instead of their own. If so, place the infantry order marker on the movement card of the tank instead."
 
 #see_also=orders.follow
 [equipment.springloaded_vehicle_assault_weapons]
@@ -1144,7 +1144,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "4+"
 
 [[equipment.wheeled_shieldwall.assault.specials.penalty]]
-text = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault"
+text = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault."
 
 [equipment.elite_crew]
 name = "Elite Crew"
@@ -1211,7 +1211,7 @@ damage = "d6+1"
 ap = 7
 
 [[equipment.big_blaster.range.specials.ammo]]
-text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
+text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to."
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"

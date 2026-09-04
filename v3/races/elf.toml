@@ -28,7 +28,7 @@ variant = "heal_per_head"
 variant = "six_minor_heads"
 
 [[units.elf_hydra.specials.fire_order]]
-text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
+text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded."
 
 [[units.elf_hydra.specials.forward_position]]
 args.N = 1
@@ -174,7 +174,7 @@ name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "medium"
 cost.cp = 8
-description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
+description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent.
 '''
 
 
@@ -378,7 +378,7 @@ models = ["tattoo_ink"]
 size = "medium"
 cost.ip = 16
 armor = [8, 6, 6, 6]
-description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret. '''
+description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret.'''
 
 
 [[units.tattoo_ink.specials.fire_order]]
@@ -502,7 +502,7 @@ cost.mp = 8
 cost.xp = 32
 cost.cp = 24
 armor = [8, 6, 6, 6]
-description = '''A huge  dire polar bear with one two elf riding the bear. The first elf is wielding a gatling gun, the other a bow which fires fire burning arrows.
+description = '''A huge dire polar bear with one two elf riding the bear. The first elf is wielding a gatling gun, the other a bow which fires fire burning arrows.
 '''
 
 
@@ -511,7 +511,7 @@ args.version = "resistance_type.poison"
 args.N = 3
 
 [[units.dire_polar_bear_riders.specials.fire_order]]
-text = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded"
+text = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded."
 
 [units.dire_polar_bear_riders.shaken]
 speed = "slow"
@@ -550,7 +550,7 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 8
 armor = [6, 6, 6, 5]
-description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the sadle,
+description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the sadle.
 '''
 
 
@@ -641,7 +641,7 @@ cost.mp = 16
 cost.xp = 24
 cost.cp = 24
 armor = [3, 3, 0, 0]
-description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus'''
+description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus.'''
 
 
 [[units.pachycephalosaurus_riders.specials.resistance]]
@@ -727,7 +727,7 @@ models = ["pegasus_rider", "pegasus_rider"]
 size = "medium"
 cost.mp = 16
 cost.xp = 24
-description = ''' An elegant elf wielding a bow riding a pegasus. A pegasus is a horse with wings. An smg is placed on the sadle of the pegasus.'''
+description = '''An elegant elf wielding a bow riding a pegasus. A pegasus is a horse with wings. An smg is placed on the sadle of the pegasus.'''
 
 
 [[units.pegasus_rider.specials.fire_order]]
@@ -1183,7 +1183,7 @@ text = "Always attacks weakest point of armor"
 args.N = 3
 
 [[models.eagle_rider.assault.specials.fly_by]]
-text = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault"
+text = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault."
 
 [[models.eagle_rider.unit_specials.pre_assault_retreat]]
 args.N = 3
@@ -1239,7 +1239,7 @@ args.N = 3
 [[models.pegasus_rider.unit_specials.pre_assault_retreat]]
 replace = true
 args.N = 5
-text = "Throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
+text = "Throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault."
 
 [models.elite_pachycephalosaurus_rider]
 name = "Elite Pachycephalosaurus Rider"
@@ -1287,7 +1287,7 @@ cost.mp = 8
 cost.xp = 48
 cost.cp = 48
 armor = [4, 3, 3, 3]
-description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. Souropod is a plant eating dinosour with long necks and walking on 4 legs. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour it is towing a big napoleonic steampunk cannon. The cannon points backwards'''
+description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. Souropod is a plant eating dinosour with long necks and walking on 4 legs. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour it is towing a big napoleonic steampunk cannon. The cannon points backwards.'''
 
 
 [[units.sauropod_riders.specials.resistance]]
@@ -1298,7 +1298,7 @@ args.N = 4
 variant = "fire_and_load_simultaneously"
 
 [[units.sauropod_riders.specials.setup]]
-text = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
+text = "Starts battle with one aim token. (note that it is lost if you don't fire first round)."
 
 [units.sauropod_riders.shaken]
 speed = "slow"
@@ -1321,7 +1321,7 @@ rows = [
 	"20: Unit killed",
 ]
 notes = [
-	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
 	"bleeding does not cause more bleeding",
 ]
 
@@ -1339,7 +1339,7 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 24
 armor = [8, 6, 4, 3]
-description = '''Oliphant is a big elephant with a plotform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant are armed with bows and grenades
+description = '''Oliphant is a big elephant with a plotform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant are armed with bows and grenades.
 '''
 
 
@@ -1348,12 +1348,12 @@ args.version = "resistance_type.poison"
 args.N = 2
 
 [[units.armored_oliphant_riders.specials.fire_order]]
-text = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
+text = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded."
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
 movement_order = ["-", "-", "Chs"]
-comment = "Chases closest unit, friend or foe. Assaults friendly units"
+comment = "Chases closest unit, friend or foe. Assaults friendly units."
 
 [units.armored_oliphant_riders.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
@@ -1481,7 +1481,7 @@ damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
 [[equipment.main_tank_gun.unit_specials.fire_order]]
-text = "Double barreled: May load up to 2 ammo, and fire them one at a time"
+text = "Double barreled: May load up to 2 ammo, and fire them one at a time."
 
 [equipment.towed_main_gun]
 name = "Towed Main Gun"
@@ -1691,7 +1691,7 @@ damage = "d6-1"
 ap = "3"
 
 [[equipment.oliphant_gatling_guns.range.specials.multiple_shots]]
-text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
+text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles."
 
 [[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
 variant = "aim_6_dice"
@@ -1736,7 +1736,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
 [[equipment.teslacoil_lance.assault.specials.overrun]]
-text = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
+text = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.elf_flame_arrow]
 name = "Elf Flame Arrow"
@@ -1939,7 +1939,7 @@ race = "elf"
 requires = [["Hands:2"], ["type:Archer", "type:Cavalry"]]
 cost.cp = 8
 upgrade_all = true
-description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc"
+description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc."
 
 [equipment.bow_with_rocket_arrows.range]
 range = 4

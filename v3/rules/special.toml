@@ -38,7 +38,7 @@ N = { type = "int", min = 1, max = 4 }
 name = "Cunning Assault Defense"
 slots = ["assault"]
 signature = "[{N}, {M}+]"
-effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
+effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability."
 see_also = ["special.cunning_assault", "special.cunning_deflection"]
 todo = "Named close enough to \"Cunning Deflection\" that the two may be one ability under two names. The Race data has both; decide whether to merge them."
 
@@ -375,7 +375,7 @@ N = { type = "int", min = 1, max = 3 }
 name = "Insanity Field"
 slots = ["unit"]
 signature = "[range={N}][d{M}]"
-effect = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token"
+effect = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token."
 places = ["token.insane"]
 see_also = ["token.shaken", "damage_type.psychic"]
 todo = "Reachable by no exact label: Horror's \"Terror\" carries this rule in its prose. The atmospheric name is the natural home for it, so decide whether Terror should become an instance of this rule."
@@ -388,7 +388,7 @@ M = { type = "int", values = [4, 6, 8, 10, 12] }
 name = "Fear"
 slots = ["assault"]
 signature = "[d{N}]"
-effect = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection"
+effect = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection."
 see_also = ["token.shaken", "damage_type.psychic"]
 
 [special.fear.variables]
@@ -692,7 +692,7 @@ N = { type = "int", min = 2, max = 10 }
 name = "Limited Ammo"
 slots = ["range"]
 signature = "[{N}]"
-effect = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
+effect = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded."
 
 [special.limited_ammo.variables]
 N = { type = "int", min = 1, max = 10 }
@@ -711,7 +711,7 @@ N = { type = "int", min = 2, max = 6 }
 [special.fumble]
 name = "Fumble"
 slots = ["range"]
-effect = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
+effect = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble."
 see_also = ["special.critical"]
 
 # From reference.toml, on Fumble:
@@ -725,7 +725,7 @@ see_also = ["special.critical"]
 [special.critical]
 name = "Critical"
 slots = ["range"]
-effect = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"
+effect = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit."
 see_also = ["special.fumble"]
 
 [special.critical.variants]
