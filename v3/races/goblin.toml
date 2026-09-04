@@ -154,7 +154,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.tiny_snake.specials.hidden]]
 variant = "start_with_token"
 
-[[units.tiny_snake.specials.no_surving_vp]]
+[[units.tiny_snake.specials.no_surviving_vp]]
 
 [[units.tiny_snake.specials.terror]]
 args.N = 1

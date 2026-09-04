@@ -138,7 +138,7 @@ cost.vpm = 2
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
-[[units.assault_bots.specials.no_surving_vp]]
+[[units.assault_bots.specials.no_surviving_vp]]
 
 [units.assault_bots.orders.movement]
 slow = [["-", "-", "Chs"]]
@@ -159,7 +159,7 @@ description = '''Tiny robotic rat.
 '''
 cost.vpm = 1
 
-[[units.mechanical_rat.specials.no_surving_vp]]
+[[units.mechanical_rat.specials.no_surviving_vp]]
 
 [units.mechanical_rat.shaken]
 speed = "still"

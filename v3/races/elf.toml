@@ -1339,7 +1339,7 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 24
 armor = [8, 6, 4, 3]
-description = '''Oliphant is a big elephant with a platform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant are armed with bows and grenades.
+description = '''Oliphant is a big elephant with a platform on top where there are several elves. On each side of the elephant there is a gatling gun. The elves on the elephant are armed with bows and grenades.
 '''
 
 
