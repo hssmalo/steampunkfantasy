@@ -36,14 +36,14 @@ to_be_hit = "-1"
 
 [hexes.drone_trap]
 name = "Drone Trap"
-effect = "All units from the team which placed the trap are immune to the trapp. All other units are effectd. Area(5+): roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets a minor acid token."
+effect = "All units from the team which placed the trap are immune to the trap. All other units are affected. Area(5+): roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets a minor acid token."
 remove = "Trap is removed only after triggered"
 places = ["token.minor_acid"]
 see_also = ["special.trap", "hex.goblin_acid_trap"]
 
 [hexes.goblin_acid_trap]
 name = "Goblin Acid Trap"
-effect = "All flying or floating units are immune to the trapp. All other units, including the goblin, are effectd. Roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets an acid token."
+effect = "All flying or floating units are immune to the trap. All other units, including the goblin, are affected. Roll a die per unit, at 5+, the target unit triggers the trap and the unit which triggered the trap gets an acid token."
 remove = "Trap is removed only after triggered"
 places = ["token.acid"]
 see_also = ["special.trap", "hex.drone_trap"]

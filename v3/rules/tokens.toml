@@ -14,7 +14,7 @@ Follow the instructions for each token.
 [tokens.shaken]
 name = "Shaken"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
-effect = "While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit"
+effect = "While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit."
 remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
 see_also = ["special.heal", "special.repair"]
 
@@ -30,7 +30,7 @@ to_be_hit = "0"
 [tokens.crippled_crew]
 name = "Crippled Crew"
 phases = []
-effect = "Get -1 to hit and -1 on all assault dice. In addition, if unit is also shaken, psychic damage now causes crew damage instead"
+effect = "Get -1 to hit and -1 on all assault dice. In addition, if unit is also shaken, psychic damage now causes crew damage instead."
 remove = "Only by healing ability"
 to_hit = "-1"
 to_be_hit = "0"
@@ -38,7 +38,7 @@ see_also = ["special.heal", "token.shaken", "damage_type.psychic"]
 
 [tokens.critical_damage]
 name = "Critical Damage"
-effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects"
+effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects."
 remove = "Only by repair ability: repair Critical."
 to_hit = "-1"
 to_be_hit = "+1"
@@ -84,19 +84,19 @@ see_also = ["special.repair"]
 name = "Minor Acid"
 phases = ["Agony 1"]
 remove = "Only as part of effect"
-effect = "Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid"
+effect = "Roll a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid."
 see_also = ["token.acid", "damage_type.acid"]
 
 [tokens.fire]
 name = "Fire"
 phases = ["Agony 2"]
 remove = "Only as part of effect"
-effect = '''Role a d6 and suptracked unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
+effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise:
 
 
 - Ignore armor and regular damage resistance
 - Apply bonus to damage based on the number +future damage tokens
-- Apply damage to the regular damage table  (apply damage after you roll damage for all fire tokens)
+- Apply damage to the regular damage table (apply damage after you roll damage for all fire tokens).
 '''
 see_also = ["damage_type.fire", "special.resistance"]
 
@@ -113,7 +113,7 @@ effect = """Roll a d8 on the following damage table:
 5. As 4, and in addition all units within range=2 gets a minor acid token
 6. As 5, and unit gains a terror token.
 7. As 6 and unit is set on fire.
-8. Roll three times on this table.,
+8. Roll three times on this table.
 """
 places = ["token.minor_acid", "token.terror", "token.fire", "hex.poison_cloud"]
 see_also = ["damage_type.acid"]
@@ -138,7 +138,7 @@ effect = """Roll a d{N}.
 - Apply damage to the regular damage table.
 - If poison killed a model, remove poison.
 
-If poison did not kill a model, downgrade poison one step (removing poison[4]). """
+If poison did not kill a model, downgrade poison one step (removing poison[4])."""
 see_also = ["special.resistance"]
 
 [tokens.poison.variables]
@@ -175,7 +175,7 @@ N = { type = "int", values = [4, 6, 8, 10, 12] }
 name = "Confused"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 remove = "Remove one token each pre-assault step in each movement phase"
-effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
+effect = "Only affects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
 to_hit = "-1"
 to_be_hit = "0"
 
@@ -183,7 +183,7 @@ to_be_hit = "0"
 name = "Insane"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hyptnotized token and replace it with insane. Any flee order is treatet at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go"
+effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hypnotized token and replace it with insane. Any flee order is treated at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go."
 see_also = ["token.shaken", "token.hypnotized", "special.insanity_field"]
 
 
@@ -191,7 +191,7 @@ see_also = ["token.shaken", "token.hypnotized", "special.insanity_field"]
 name = "Hypnotized"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken, and not insane. Any flee order is treatet as do nothing, stand still. In addition, Reduce assault strength 50% rounded down. "
+effect = "Can only be given to bio units which are already shaken, and not insane. Any flee order is treated as do nothing, stand still. In addition, Reduce assault strength 50% rounded down."
 see_also = ["token.shaken", "token.insane", "special.hypnotizing_gaze"]
 
 [tokens.hidden]

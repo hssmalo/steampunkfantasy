@@ -44,6 +44,12 @@ def print_findings(findings: Iterable[LintFinding]) -> None:
     Soft-wrapped so a finding is always exactly one line: these are meant to be
     grepped, and Rich would otherwise fold the long ones at the terminal width,
     splitting a key away from its rule.
+
+    Markup is off because a finding quotes the data, and the data has square
+    brackets in it -- an order cell `A[f, fly]` would otherwise print as `A`,
+    with Rich having read the argument list as a style tag.
     """
     for finding in findings:
-        stdout.print(format_finding(finding), highlight=False, soft_wrap=True)
+        stdout.print(
+            format_finding(finding), highlight=False, markup=False, soft_wrap=True
+        )

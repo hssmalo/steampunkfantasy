@@ -15,9 +15,9 @@ effect = "Each natural 6 rolled in assault count as 2 hits. Further, any natural
 [special.ork_reroll.variables]
 N = { type = "int" }
 
-[special.no_surving_vp]
+[special.no_surviving_vp]
 
-name = "No Surving Vp"
+name = "No Surviving VP"
 slots = ["unit"]
 effect = "You get no victory point for surviving."
 
@@ -38,7 +38,7 @@ N = { type = "int", min = 1, max = 4 }
 name = "Cunning Assault Defense"
 slots = ["assault"]
 signature = "[{N}, {M}+]"
-effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not schaken. This effect stack with multiple models having the same ability"
+effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not shaken. This effect stack with multiple models having the same ability."
 see_also = ["special.cunning_assault", "special.cunning_deflection"]
 todo = "Named close enough to \"Cunning Deflection\" that the two may be one ability under two names. The Race data has both; decide whether to merge them."
 
@@ -62,7 +62,7 @@ M = { type = "int", min = 1, max = 4 }
 name = "Pre-Assault Retreat"
 slots = ["unit"]
 signature = "[{N}+]"
-effect = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular reatreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
+effect = "In pre-assault phase you may roll a die. At N+ you may retreat before the assaults starts. Treat this as a regular retreat but give or take no assault damage. This ability may only be used if the hex retreating into neither becomes overcrowded, is an illegal hex or contain enemies."
 see_also = ["special.retreat"]
 
 [special.pre_assault_retreat.variables]
@@ -242,7 +242,7 @@ see_also = ["special.assault_extra_damage"]
 name = "Forward Position"
 slots = ["unit"]
 signature = "[{N}]"
-effect = "At setup this unit may setup upt to {N} hexes away from normal setup area."
+effect = "At setup this unit may setup up to {N} hexes away from normal setup area."
 
 [special.forward_position.variables]
 N = { type = "int", min = 1, max = 3 }
@@ -298,7 +298,7 @@ phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
 name = "Immunity"
 slots = ["unit"]
 signature = "[{feature}]"
-flavor = "Unit is completely immmune to given feature"
+flavor = "Unit is completely immune to given feature"
 todo = """Rule text not yet written: what "completely immune" does to each kind of feature it can name.
 
 An immunity holds at every value of its feature, but a feature whose own rule takes variables lends them to the instance, which then has to name one. Poison-cloud immunity therefore names a strength it does not mean, and immunity to Gear Disruption is carried as text because no value of its thresholds is the one meant.
@@ -317,13 +317,13 @@ immune_to_gear_disruption = "Also immune to Gear Disruption"
 name = "Repair"
 slots = ["unit"]
 signature = "[{N}, {unit}, {phase}]"
-effect = """Repear only works on mechanical and drone units. You have {N} points to spend on the following actions:
+effect = """Repair only works on mechanical and drone units. You have {N} points to spend on the following actions:
 
 - Remove one +1 to future damage token. Cost 1.
 - Neutralize one minor acid. Cost 1
 - Remove 1 shaken token to any unit which is not bio. Cost 1
 - Extinguish one fire. Cost 3.
-- Remove 1 crittical damage effect. Cost 3.
+- Remove 1 critical damage effect. Cost 3.
 - Degrade one acid to minor acid. Cost 4.
 """
 see_also = ["token.minor_acid", "token.acid", "token.fire", "token.shaken", "token.disabled_repair"]
@@ -364,7 +364,7 @@ M = { type = "int", values = [4, 6, 8, 10, 12] }
 name = "Hypnotizing Gaze"
 slots = ["unit"]
 signature = "[range={N}]"
-effect = "In agony 3, all units that are shaken within range of given unit, also becomes hyptnotized"
+effect = "In agony 3, all units that are shaken within range of given unit, also becomes hypnotized"
 places = ["token.hypnotized"]
 see_also = ["token.shaken"]
 
@@ -375,7 +375,7 @@ N = { type = "int", min = 1, max = 3 }
 name = "Insanity Field"
 slots = ["unit"]
 signature = "[range={N}][d{M}]"
-effect = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token"
+effect = "Only affects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token."
 places = ["token.insane"]
 see_also = ["token.shaken", "damage_type.psychic"]
 todo = "Reachable by no exact label: Horror's \"Terror\" carries this rule in its prose. The atmospheric name is the natural home for it, so decide whether Terror should become an instance of this rule."
@@ -388,7 +388,7 @@ M = { type = "int", values = [4, 6, 8, 10, 12] }
 name = "Fear"
 slots = ["assault"]
 signature = "[d{N}]"
-effect = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection"
+effect = "In pre-assault phase, roll a d{N} psychic damage. If enemy becomes shaken (or already is), you get +100% to assault deflection."
 see_also = ["token.shaken", "damage_type.psychic"]
 
 [special.fear.variables]
@@ -503,7 +503,7 @@ N = { type = "int", min = 2, max = 10, optional = true }
 
 
 [special.fire_order.variants]
-autoloader = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+autoloader = "Autoloader: any time a unit does not fire its shriek SMG in any gunnery phase, load the gun with 1 ammo."
 fire_and_load_simultaneously = "Fire and load all weapons simultaneously"
 load_n_shots = "May be load up to {N} shots, fire them one at a time"
 
@@ -692,7 +692,7 @@ N = { type = "int", min = 2, max = 10 }
 name = "Limited Ammo"
 slots = ["range"]
 signature = "[{N}]"
-effect = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded"
+effect = "This weapon may be fired a maximum of {N} times in a match. Starts the game with {N} ammo loaded."
 
 [special.limited_ammo.variables]
 N = { type = "int", min = 1, max = 10 }
@@ -711,7 +711,7 @@ N = { type = "int", min = 2, max = 6 }
 [special.fumble]
 name = "Fumble"
 slots = ["range"]
-effect = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble"
+effect = "If you roll natural 1 for to hit, you fumble. Then, follow the rest of the special ability for the fumble."
 see_also = ["special.critical"]
 
 # From reference.toml, on Fumble:
@@ -725,7 +725,7 @@ see_also = ["special.critical"]
 [special.critical]
 name = "Critical"
 slots = ["range"]
-effect = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit"
+effect = "If you are within normal range, roll a natural 6 for to hit and hit the enemy, you score a critical hit. Then apply special ability for the critical hit."
 see_also = ["special.fumble"]
 
 [special.critical.variants]

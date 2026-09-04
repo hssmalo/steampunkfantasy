@@ -2,7 +2,7 @@
 
 [races.gnome]
 name = "Gnome"
-description = "Gnome with a mohawk and lots of gadgets. Gnomes are about 1.5m in height"
+description = "Gnome with a mohawk and lots of gadgets. Gnomes are about 1.5m in height."
 
 [spawns.mechanical_rat]
 unit = "mechanical_rat"
@@ -34,7 +34,7 @@ args.N = -2
 
 [units.gnome_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.gnome_infantry.orders.movement]
 slow = [
@@ -85,7 +85,7 @@ note = "May not enter buildings"
 
 [units.quad_bike.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.quad_bike.orders.movement]
 fast = [
@@ -128,7 +128,7 @@ name = "Assault Bots"
 models = ["assault_bot", "assault_bot", "assault_bot", "assault_bot"]
 size = "small"
 armor = [0, 0, 0, 0]
-description = '''These are small robots design for assault. One of the arm is replaced with a blade. In the other it wields an axe
+description = '''These are small robots design for assault. One of the arm is replaced with a blade. In the other it wields an axe.
 '''
 cost.vpm = 2
 
@@ -136,9 +136,9 @@ cost.vpm = 2
 
 [units.assault_bots.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
-[[units.assault_bots.specials.no_surving_vp]]
+[[units.assault_bots.specials.no_surviving_vp]]
 
 [units.assault_bots.orders.movement]
 slow = [["-", "-", "Chs"]]
@@ -159,7 +159,7 @@ description = '''Tiny robotic rat.
 '''
 cost.vpm = 1
 
-[[units.mechanical_rat.specials.no_surving_vp]]
+[[units.mechanical_rat.specials.no_surviving_vp]]
 
 [units.mechanical_rat.shaken]
 speed = "still"
@@ -182,7 +182,7 @@ armor = [4, 3, 0, 0]
 cost.mp = 8
 cost.xp = 16
 cost.cp = 16
-description = '''Gnome with a mohawk on a steampunk motorcyle. On the motor cycle there is a mortar weapon.
+description = '''Gnome with a mohawk on a steampunk motorcycle. On the motor cycle there is a mortar weapon.
 '''
 
 
@@ -197,7 +197,7 @@ args.N = 4
 
 [units.gnome_motorcycle.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.gnome_motorcycle.orders.movement]
 fast = [
@@ -286,13 +286,13 @@ slow = [
     ["L/R", "(L/R)", "-"],
     ["F", "(L/R)", "-"],
     ["(L/R)", "(F)", "B"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["(L/R)", "A", "F"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ballista_tractor_mark_i.orders.fire]
@@ -345,13 +345,13 @@ slow = [
     ["L/R", "(L/R)", "-"],
     ["F", "(L/R)", "-"],
     ["(L/R)", "(F)", "B"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["(L/R)", "A", "F"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ballista_tractor_mark_ii.orders.fire]
@@ -407,13 +407,13 @@ slow = [
     ["L/R", "(L/R)", "-"],
     ["F", "(L/R)", "-"],
     ["(L/R)", "(F)", "B"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["(L/R)", "A", "F"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ballista_tractor_mark_iii.orders.fire]
@@ -454,11 +454,11 @@ size = "large"
 armor = [0, 0, 0, 0]
 cost.ip = 24
 cost.xp = 8
-description = '''A steampunk helicopter with lots of gadgedts and firing a gatling gun. The gnome driving the helicopter have a mohawk.
+description = '''A steampunk helicopter with lots of gadgets and firing a gatling gun. The gnome driving the helicopter have a mohawk.
 '''
 
 [[units.gnome_helicopter.specials.fire_order]]
-text = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously"
+text = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously."
 
 [units.gnome_helicopter.shaken]
 speed = "still"
@@ -752,7 +752,7 @@ replaces = "gnome_infantry"
 cost.xp = 4
 
 [[models.elite_gnome_infantry.unit_specials.fire_order]]
-text = "Treat any gunnery phase without any other order as fire(res) order instead (for this model only.)"
+text = "Treat any gunnery phase without any other order as fire(res) order instead (for this model only.)."
 
 [[models.elite_gnome_infantry.unit_specials.resistance]]
 args.version = "resistance_type.psychic"
@@ -1066,7 +1066,7 @@ damage = "d6 Psychic damage + d4 Crew damage"
 ap = 0
 
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.area]]
-text = "Choose one hex within range: Area(5+)"
+text = "Choose one hex within range: Area(5+)."
 
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.range_extra_damage]]
 args.version = "token.poison"
@@ -1193,7 +1193,7 @@ damage = "n.a"
 ap = 0
 
 [[equipment.major_acidic_napalm_bomb.range.specials.area]]
-text = "Choose a hex within normal range: Area(4+): acid and any unit hit at least one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)"
+text = "Choose a hex within normal range: Area(4+): acid and any unit hit at least one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)."
 
 [[equipment.major_acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 2
@@ -1359,7 +1359,7 @@ damage = "d6"
 ap = 2
 
 [[equipment.splintbombgrenade_launcher.range.specials.area]]
-text = "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)"
+text = "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)."
 
 [equipment.experimental_guided_missile]
 race = "gnome"
@@ -1381,7 +1381,7 @@ args.version = "token.minor_acid"
 text = "Do not need line of sight to target"
 
 [[equipment.experimental_guided_missile.range.specials.range]]
-text = "Increase range with d4+d12 (max 16 min 2). Roll each time you fire. If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)"
+text = "Increase range with d4+d12 (max 16 min 2). Roll each time you fire. If you try to hit something longer than normal range, the missile hit the closest friendly unit instead (ie the range to the target is longer than d4+d12 you rolled)."
 
 [[equipment.experimental_guided_missile.range.specials.fumble]]
 text = "If Fumble, you are covered in minor acid"
@@ -1426,7 +1426,7 @@ ap = 3
 variant = "d12_shots_same_unit"
 
 [[equipment.experimental_nail_gun.range.specials.fumble]]
-text = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed"
+text = "If fumble add +1 to future damage to self. In addition, if you roll only a 1 for the number of shots you fire, the gun is destroyed."
 
 [equipment.experimental_death_ray]
 race = "gnome"
@@ -1442,7 +1442,7 @@ damage = "d6-6"
 ap = 2
 
 [[equipment.experimental_death_ray.range.specials.improved_aim]]
-text = "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token"
+text = "Wait for it: Multiple Aim Bonuses stack (+2 to to hit for each turn spent aiming). Add +4 to damage for each aim token."
 
 [[equipment.experimental_death_ray.range.specials.order]]
 text = "May keep aiming even while having aim already"

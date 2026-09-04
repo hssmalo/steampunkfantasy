@@ -7,11 +7,11 @@
     - Trigger hex Effects
     - Move according to movement orders. Identify conflicts
     - Destroy Terrain
-    - Pre Assault Retreat
+    - Pre-assault retreat
     - Pre-assault abilities
     - Assault
     - Apply damage
-    - Post Assault retreat
+    - Post-assault retreat
     - Remove Confusion
 
 
@@ -19,11 +19,11 @@
      - Trigger hex Effects
      - Move according to movement orders. Identify conflicts
      - Destroy Terrain
-     - Pre Assault Retreat
+     - Pre-assault retreat
      - Pre-assault abilities
      - Assault
      - Apply damage
-     - Post Assault retreat
+     - Post-assault retreat
      - Remove Confusion
 
 
@@ -31,16 +31,16 @@
      - Trigger hex Effects
      - Move according to movement orders. Identify conflicts
      - Destroy Terrain
-     - Pre Assault Retreat
+     - Pre-assault retreat
      - Pre-assault abilities
      - Assault
      - Apply damage
-     - Post Assault retreat
+     - Post-assault retreat
      - Remove Confusion
 
 
 
-- **Gunnery 1**
+- **Gunnery 2**
     - Fire weapons according to orders
     - Apply Damage
 

@@ -2,7 +2,7 @@
 
 [races.goblin]
 name = "Goblin"
-description = "Goblin are small humanoid creatures, about 1m in height. Sneaky infantry, viewed as somewhat primitive but has proven to have done some surprisingly well done engineering jobs"
+description = "Goblin are small humanoid creatures, about 1m in height. Sneaky infantry, viewed as somewhat primitive but has proven to have done some surprisingly well done engineering jobs."
 
 [spawns.tiny_snake]
 unit = "tiny_snake"
@@ -154,7 +154,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.tiny_snake.specials.hidden]]
 variant = "start_with_token"
 
-[[units.tiny_snake.specials.no_surving_vp]]
+[[units.tiny_snake.specials.no_surviving_vp]]
 
 [[units.tiny_snake.specials.terror]]
 args.N = 1
@@ -222,7 +222,7 @@ still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["(L/R)", "A", "F"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.goblin_infantry_carrier.orders.fire]
@@ -277,7 +277,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.bipedal_mech.specials.fire_order]]
-text = "Fire and load all weapons simultaneously. Fire stinkbomb in addition to two light mortars"
+text = "Fire and load all weapons simultaneously. Fire stinkbomb in addition to two light mortars."
 
 [[units.bipedal_mech.specials.forward_position]]
 args.N = 2
@@ -327,7 +327,7 @@ size = "large"
 armor = [10, 8, 6, 4]
 cost.ip = 32
 
-description = '''A Heavy Armored Carrier, armed with a battery of bows in the back and three giant heavy crossbows aiming forward. '''
+description = '''A Heavy Armored Carrier, armed with a battery of bows in the back and three giant heavy crossbows aiming forward.'''
 
 lore = '''
 The two weapons system attached uses two different philosophies. The bow battery is an inaccurate weapon system but fires lots and lots of arrows with nasty side effect and are best used versus units which are easy to hit. The heavy crossbow only fires up too three arrows each time and a far more precise weapon with surprisingly large punch. In a hurry the goblin may fire weapons before all of them are loaded.
@@ -336,7 +336,7 @@ The two weapons system attached uses two different philosophies. The bow battery
 tip = '''
 Slightly more armored compared to the Goblin Armored Carrier, much better armed and more flexible exit, but carries only one goblin infantry unit.
 
-These have dual use, one is to deliver Goblin infantry closer to the enemy, anothes is to lay devastating firepower onto the enemy.
+These have dual use, one is to deliver Goblin infantry closer to the enemy, another is to lay devastating firepower onto the enemy.
 '''
 
 
@@ -346,7 +346,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.heavy_carrier.specials.transport]]
-text = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantry to join the assault"
+text = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantry to join the assault."
 
 [[units.heavy_carrier.specials.forward_position]]
 args.N = 1
@@ -374,7 +374,7 @@ still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["(L/R)", "A", "F"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.heavy_carrier.orders.fire]
@@ -436,7 +436,7 @@ movement_order = ["-", "-", "-"]
 
 
 [[units.modified_truck.specials.transport]]
-text = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantry to join the assault"
+text = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantry to join the assault."
 
 [[units.modified_truck.specials.forward_position]]
 args.N = 1
@@ -464,7 +464,7 @@ still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["(L/R)", "A", "F"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.modified_truck.orders.fire]
@@ -514,7 +514,7 @@ lore = '''
 How the goblin manage to make this marvel of a rebuild mechanism is a mystery.
 '''
 
-tip = '''Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set an enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it har to hit, some armor protects from regular muskets and rifles, while simulatiously requires a few shots to disensamble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy.
+tip = '''Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set an enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it hard to hit, some armor protects from regular muskets and rifles, while simultaneously requires a few shots to disassemble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy.
 '''
 
 [units.mechanical_fire_bird.shaken]
@@ -522,7 +522,7 @@ speed = "fast_fly"
 movement_order = ["-", "F", "F"]
 
 [[units.mechanical_fire_bird.specials.phoenix]]
-text = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]"
+text = "Starts the game with one reassemble token. If temporarily destroyed in 2nd healing phase, you can use one reassemble token to become alive again. Set speed to fast_fly. If so, half (rounded down) all +1 to future damage token this unit has. If it does not have a reassemble token and is not temporarily destroyed at start of 2nd healing phase, gain one reassemble token. If, it is temporarily destroyed and has no reassemble tokens in 2nd healing phase, this unit is permanently destroyed. While temporarily destroyed, count the model as laying still with movement [-,-,-]."
 
 [[units.mechanical_fire_bird.specials.immunity]]
 args.feature = "token.fire"
@@ -619,7 +619,7 @@ args.N = 6
 args.M = 1
 
 [[models.tiny_snake.assault.specials.boost]]
-text = "If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection"
+text = "If you have reveal bonuses in assault, in addition to regular reveal bonuses, the enemy may not use assault deflection to remove hits from this unit. In addition each assault hit counts as 2 assault deflection."
 
 [models.bipedal_mech]
 name = "Bipedal Mech"
@@ -970,7 +970,7 @@ text = "Unit is destroyed if trying to land in an impassable or overcrowded hex.
 text = "After firing this weapon, set speed to slow flying"
 
 [equipment.ogre_rifle.orders_gained.movement]
-slow_fly = [["rev", "-", "B[still]"]]
+slow_fly = [["Rev", "-", "B[still]"]]
 
 [equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]
@@ -1058,7 +1058,7 @@ args.N = 1
 
 [[equipment.grenadier.unit_specials.fire_order]]
 replace = true
-text = "For each fire order: fire a bow once (either a regular or special arrow) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)"
+text = "For each fire order: fire a bow once (either a regular or special arrow) and in addition each regular infantry may use one thrown weapon while elite infantry may use 2 thrown weapons (or the same twice)."
 
 [equipment.commando]
 name = "Commando"
@@ -1105,7 +1105,7 @@ requires = [["Specialization:1"], ["type:Infantry", "type:Cavalry"]]
 
 [[equipment.archer_specialization.unit_specials.fire_order]]
 replace = true
-text = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon"
+text = "For each fire order: either fire a bow twice (either a regular arrow or a special arrow each time) or use one thrown weapon."
 
 [[equipment.archer_specialization.model_specials.to_hit]]
 args.ability = "ability.good_shot"
