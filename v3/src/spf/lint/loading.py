@@ -7,6 +7,7 @@ pass that follows runs over exactly the files that yielded no Load finding.
 """
 
 import json
+import tomllib
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from functools import partial
@@ -182,7 +183,7 @@ def probe_rules() -> RulesProbe:
     it was authored in; only when all of them read is the whole registry
     assembled, which is what checks the declarations spanning files.
     """
-    findings: list[LintFinding] = []
+    findings: list[LintFinding] = _unparsed_rules_findings()
     loaded: dict[str, object] = {}
     for file_name, load in registry_module.LOADERS.items():
         path = config.paths.rules / file_name
@@ -203,6 +204,32 @@ def probe_rules() -> RulesProbe:
     if findings:
         return RulesProbe(findings=findings, registry=_partial_registry(loaded))
     return RulesProbe(findings=[], registry=registry_module.load_registry())
+
+
+def _unparsed_rules_findings() -> list[LintFinding]:
+    """Report every rules file no loader owns that is not TOML.
+
+    The registry opens only the files a namespace declares, so a file being
+    drafted -- an order registry, a retreat table -- is never read, and a
+    syntax error in one can sit there indefinitely. Parsing is the whole of
+    what such a file owes: it is not held to a schema it has not earned yet.
+
+    Owned files are skipped rather than checked twice. Loading one is the
+    stronger gate, and a defect is reported once, at its cause (ADR 0016).
+    """
+    owned = set(registry_module.LOADERS) | {rules.RULEBOOK_INDEX}
+    return [
+        finding
+        for path in sorted(config.paths.rules.glob("*.toml"))
+        if path.name not in owned
+        for finding in _findings_from(f"rules/{path.name}", partial(_parse_toml, path))
+    ]
+
+
+def _parse_toml(path: Path) -> object:
+    """Read a TOML file for its syntax alone."""
+    with path.open("rb") as file:
+        return tomllib.load(file)
 
 
 def _partial_registry(loaded: dict[str, object]) -> registry_module.Registry | None:

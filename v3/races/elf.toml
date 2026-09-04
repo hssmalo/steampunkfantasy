@@ -19,7 +19,7 @@ description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, wi
 
 [units.elf_hydra.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_hydra.specials.regeneration]]
 variant = "heal_per_head"
@@ -28,7 +28,7 @@ variant = "heal_per_head"
 variant = "six_minor_heads"
 
 [[units.elf_hydra.specials.fire_order]]
-text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded"
+text = "Crew fire elf bows each gunnery phase independent of fire orders. Breath weapon and poison spit always treated as loaded."
 
 [[units.elf_hydra.specials.forward_position]]
 args.N = 1
@@ -39,7 +39,7 @@ slow = [["Fire", "-"], ["-", "Fire"]]
 
 [units.elf_hydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.elf_hydra.damage_tables.Regular]
 rows = [
@@ -69,7 +69,7 @@ description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
 
 [units.elf_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -90,10 +90,10 @@ still = [
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_infantry.damage_tables.Regular]
 rows = [
@@ -123,7 +123,7 @@ description = '''An elegant elf wielding an steampunk bow. The bow has some cloc
 
 [units.elf_archer.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_archer.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -148,10 +148,10 @@ fast = [["Fire", "Fire"]]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_archer.damage_tables.Regular]
 rows = [
@@ -174,7 +174,7 @@ name = "Illusion"
 models = ["illusion", "illusion", "illusion", "illusion"]
 size = "medium"
 cost.cp = 8
-description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent
+description = '''This is an illusionary elegant elf wielding a ww1 rifle. The elf illusion is slightly transparent.
 '''
 
 
@@ -186,7 +186,7 @@ args.N = 2
 
 [units.illusion.shaken]
 speed = 'slow'
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.illusion.orders.movement]
 slow = [["-", "-", "Chs"],["Follow", "Follow", "Follow"]]
@@ -212,7 +212,7 @@ description = '''An elegant elf scout hiding in the forest and observing the bat
 
 [units.elf_scout.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -227,17 +227,17 @@ still = [
 	["Fire", "-"],
 	["Load", "-"],
 	["Aim", "-"],
-	["spot", "spot"],
+	["Spot", "Spot"],
 ]
 
 [units.elf_scout.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_scout.damage_tables.Regular]
 rows = [
@@ -256,13 +256,13 @@ models = ["elite_elf_scout"]
 size = "medium"
 cost.mp = 8
 cost.xp = 8
-description = '''An elite elegant elf scout hiding in the forest and observing the battlefield. The scout uses camoufage paint. On the scouts back is an ww1 style rifle.
+description = '''An elite elegant elf scout hiding in the forest and observing the battlefield. The scout uses camouflage paint. On the scouts back is an ww1 style rifle.
 '''
 
 
 [units.elite_elf_scout.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elite_elf_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -281,17 +281,17 @@ still = [
 	["Fire", "-"],
 	["Load", "-"],
 	["Aim", "-"],
-	["spot", "spot"],
+	["Spot", "Spot"],
 ]
 
 [units.elite_elf_scout.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elite_elf_scout.damage_tables.Regular]
 rows = [
@@ -335,14 +335,14 @@ slow = [
 	["A", "F", "-"],
 	["B", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.e34.damage_tables.Regular]
@@ -378,7 +378,7 @@ models = ["tattoo_ink"]
 size = "medium"
 cost.ip = 16
 armor = [8, 6, 6, 6]
-description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret. '''
+description = '''An elegant steampunk armored vehicle with an rapid fire gun on a turret.'''
 
 
 [[units.tattoo_ink.specials.fire_order]]
@@ -405,21 +405,21 @@ fast = [
 	["F", "L/R", "-"],
 	["F", "B", "-"],
 	["L/R", "F", "-"],
-	["road", "road", "road"],
+	["Road", "Road", "Road"],
 ]
 slow = [
 	["L/R", "(L/R)", "-"],
 	["A", "F", "-"],
 	["B", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.tattoo_ink.damage_tables.Critical]
@@ -467,7 +467,7 @@ args.N = 3
 
 [units.bear_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.bear_rider.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -502,7 +502,7 @@ cost.mp = 8
 cost.xp = 32
 cost.cp = 24
 armor = [8, 6, 6, 6]
-description = '''A huge  dire polar bear with one two elf riding the bear. The first elf is wielding a gatling gun, the other a bow which fires fire burning arrows.
+description = '''A huge dire polar bear with one two elf riding the bear. The first elf is wielding a gatling gun, the other a bow which fires fire burning arrows.
 '''
 
 
@@ -511,11 +511,11 @@ args.version = "resistance_type.poison"
 args.N = 3
 
 [[units.dire_polar_bear_riders.specials.fire_order]]
-text = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded"
+text = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded."
 
 [units.dire_polar_bear_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.dire_polar_bear_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -550,13 +550,13 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 8
 armor = [6, 6, 6, 5]
-description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the sadle,
+description = '''An elegant armored elf riding on an armored unicorn. The elf is wielding a smg, and it has lots of healing equipment on the saddle.
 '''
 
 
 [units.armored_unicorn_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.armored_unicorn_rider.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -641,7 +641,7 @@ cost.mp = 16
 cost.xp = 24
 cost.cp = 24
 armor = [3, 3, 0, 0]
-description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus'''
+description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus.'''
 
 
 [[units.pachycephalosaurus_riders.specials.resistance]]
@@ -653,7 +653,7 @@ text = "Fire SMG in both gunnery phases regardless of orders. Fire orders are fo
 
 [units.pachycephalosaurus_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.pachycephalosaurus_riders.orders.fire]
 still = [["Fire", "Load"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
@@ -688,7 +688,7 @@ rows = [
 	"4+: shaken",
 ]
 
-# Elk removed. Elf had to many cavalry and elk did not find it's correct place.
+# Elk removed. Elf had to many cavalry and elk did not find its correct place.
 #[units.elk_cavalery]
 #race = "elf"
 #name = "Elk Cavalery"
@@ -727,7 +727,7 @@ models = ["pegasus_rider", "pegasus_rider"]
 size = "medium"
 cost.mp = 16
 cost.xp = 24
-description = ''' An elegant elf wielding a bow riding a pegasus. A pegasus is a horse with wings. An smg is placed on the sadle of the pegasus.'''
+description = '''An elegant elf wielding a bow riding a pegasus. A pegasus is a horse with wings. An smg is placed on the saddle of the pegasus.'''
 
 
 [[units.pegasus_rider.specials.fire_order]]
@@ -739,23 +739,23 @@ args.N = 2
 
 [units.pegasus_rider.shaken]
 speed = "slow_fly"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.pegasus_rider.orders.fire]
 still = [
 	["Fire(bow)", "Fire(bow)"],
-	["Fire Burst(5)", "Fire (bow)"],
-	["Fire (bow)", "Fire Burst(5)"],
+	["Fire Burst(5)", "Fire(bow)"],
+	["Fire(bow)", "Fire Burst(5)"],
 ]
 slow = [
 	["Fire(bow)", "Fire(bow)"],
-	["Fire Burst(5)", "Fire (bow)"],
-	["Fire (bow)", "Fire Burst(5)"],
+	["Fire Burst(5)", "Fire(bow)"],
+	["Fire(bow)", "Fire Burst(5)"],
 ]
 fast = [
 	["Fire(bow)", "Fire(bow)"],
-	["Fire Burst(5)", "Fire (bow)"],
-	["Fire (bow)", "Fire Burst(5)"],
+	["Fire Burst(5)", "Fire(bow)"],
+	["Fire(bow)", "Fire Burst(5)"],
 ]
 
 [units.pegasus_rider.orders.movement]
@@ -764,19 +764,19 @@ slow = [
 	["360°", "F", "360°"],
 	["360°", "B", "360°"],
 	["360°", "A[fly]", "F"],
-	["360°", "A[f,fly]", "F"],
+	["360°", "A[f, fly]", "F"],
 	["360°", "A", "F"],
 ]
 slow_fly = [
 	["F", "(L/R)", "-"],
 	["F", "B[still]", "-"],
-	["F", "A[f,fly]", "F"],
+	["F", "A[f, fly]", "F"],
 	["(L/R)", "(L/R)", "F"],
 ]
 fast = [
 	["360°", "F", "F"],
 	["360°", "F", "B"],
-	["360°", "A[f,fly],F", "F"],
+	["360°", "A[f, fly]+F", "F"],
 	["360°", "F", "B"],
 ]
 fast_fly = [
@@ -1183,7 +1183,7 @@ text = "Always attacks weakest point of armor"
 args.N = 3
 
 [[models.eagle_rider.assault.specials.fly_by]]
-text = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault"
+text = "If in the air, it may choose to assault a ground enemy. If so, it flies up after assault."
 
 [[models.eagle_rider.unit_specials.pre_assault_retreat]]
 args.N = 3
@@ -1239,7 +1239,7 @@ args.N = 3
 [[models.pegasus_rider.unit_specials.pre_assault_retreat]]
 replace = true
 args.N = 5
-text = "Throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault"
+text = "Throw fire (from lance). Roll a die, at 5+ set one enemy unit on fire, and if successful, you retreat from the assault."
 
 [models.elite_pachycephalosaurus_rider]
 name = "Elite Pachycephalosaurus Rider"
@@ -1287,7 +1287,7 @@ cost.mp = 8
 cost.xp = 48
 cost.cp = 48
 armor = [4, 3, 3, 3]
-description = '''A souropod dinosour with elves riding on its back and head. The elves are tiny compared to the souropod dinosour. Souropod is a plant eating dinosour with long necks and walking on 4 legs. On the dinosours head is an elf sniper aiming towards you. On the back of the dinosour is a huge mortar. Behind the dinosour it is towing a big napoleonic steampunk cannon. The cannon points backwards'''
+description = '''A sauropod dinosaur with elves riding on its back and head. The elves are tiny compared to the sauropod dinosaur. Sauropod is a plant eating dinosaur with long necks and walking on 4 legs. On the dinosaurs head is an elf sniper aiming towards you. On the back of the dinosaur is a huge mortar. Behind the dinosaur it is towing a big napoleonic steampunk cannon. The cannon points backwards.'''
 
 
 [[units.sauropod_riders.specials.resistance]]
@@ -1298,11 +1298,11 @@ args.N = 4
 variant = "fire_and_load_simultaneously"
 
 [[units.sauropod_riders.specials.setup]]
-text = "Starts battle with one aim token. (note that it is lost if you don't fire first round)"
+text = "Starts battle with one aim token. (note that it is lost if you don't fire first round)."
 
 [units.sauropod_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.sauropod_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -1321,7 +1321,7 @@ rows = [
 	"20: Unit killed",
 ]
 notes = [
-	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
 	"bleeding does not cause more bleeding",
 ]
 
@@ -1339,7 +1339,7 @@ cost.mp = 8
 cost.xp = 24
 cost.cp = 24
 armor = [8, 6, 4, 3]
-description = '''Oliphant is a big elephant with a plotform on top where there are several elves. On the each side of the elephant there is a gatling gun. The elves on th elephant are armed with bows and grenades
+description = '''Oliphant is a big elephant with a platform on top where there are several elves. On each side of the elephant there is a gatling gun. The elves on the elephant are armed with bows and grenades.
 '''
 
 
@@ -1348,12 +1348,12 @@ args.version = "resistance_type.poison"
 args.N = 2
 
 [[units.armored_oliphant_riders.specials.fire_order]]
-text = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded"
+text = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded."
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
 movement_order = ["-", "-", "Chs"]
-comment = "Chases closest unit, friend or foe. Assaults friendly units"
+comment = "Chases closest unit, friend or foe. Assaults friendly units."
 
 [units.armored_oliphant_riders.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
@@ -1362,22 +1362,22 @@ fast = [["F", "F", "-"], ["F", "L/R", "F"], ["B", "360°", "F"]]
 
 [units.armored_oliphant_riders.orders.fire]
 still = [
-	["fire", "fire"],
-	["fire", "aim(g)"],
-	["fire", "load(g)"],
-	["fire", "fire(g)"]
+	["Fire", "Fire"],
+	["Fire", "Aim(g)"],
+	["Fire", "Load(g)"],
+	["Fire", "Fire(g)"]
 ]
 slow = [
-	["fire", "fire"],
-	["fire", "aim(g)"],
-	["fire", "load(g)"],
-	["fire", "fire(g)"]
+	["Fire", "Fire"],
+	["Fire", "Aim(g)"],
+	["Fire", "Load(g)"],
+	["Fire", "Fire(g)"]
 ]
 fast = [
-	["fire", "fire"],
-	["fire", "aim(g)"],
-	["fire", "load(g)"],
-	["fire", "fire(g)"]
+	["Fire", "Fire"],
+	["Fire", "Aim(g)"],
+	["Fire", "Load(g)"],
+	["Fire", "Fire(g)"]
 ]
 
 [units.armored_oliphant_riders.damage_tables.Regular]
@@ -1414,16 +1414,16 @@ args.N = 2
 
 [units.eagle_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.eagle_rider.orders.fire]
 fast_fly = [["-", "Fire"], ["-", "Load"], ["-", "Throw"]]
 slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 
 [units.eagle_rider.orders.movement]
-fast_fly = [["360°,F", "360°,F,360°", "F,360°"], ["360°,F ", "F", "B"]]
+fast_fly = [["360°+F", "360°+F+360°", "F+360°"], ["360°+F", "F", "B"]]
 slow = [
-	[" 360° ", " F ", " 360°"],
+	["360°", "F", "360°"],
 	["360°", "360°", "360°"],
 	["360°", "A", "F"]
 ]
@@ -1481,7 +1481,7 @@ damage = "d6 (+3 if penetrating all armor)"
 ap = 8
 
 [[equipment.main_tank_gun.unit_specials.fire_order]]
-text = "Double barreled: May load up to 2 ammo, and fire them one at a time"
+text = "Double barreled: May load up to 2 ammo, and fire them one at a time."
 
 [equipment.towed_main_gun]
 name = "Towed Main Gun"
@@ -1556,7 +1556,7 @@ ap = 5
 variant = "load_n_shots"
 args.N = 5
 [[equipment.teslaburstlaser.range.specials.critical]]
-text = "the enemy is shaken, in addition to it's normal effect."
+text = "the enemy is shaken, in addition to its normal effect."
 
 [equipment.smg_free]
 name = "SMG"
@@ -1695,7 +1695,7 @@ damage = "d6-1"
 ap = "3"
 
 [[equipment.oliphant_gatling_guns.range.specials.multiple_shots]]
-text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles"
+text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles."
 
 [[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
 args.N = 6
@@ -1741,7 +1741,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "5+"
 
 [[equipment.teslacoil_lance.assault.specials.overrun]]
-text = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken"
+text = "If you win the assault, roll a die per surviving enemy model in the unit. At 6+ the enemy unit is shaken."
 
 [equipment.elf_flame_arrow]
 name = "Elf Flame Arrow"
@@ -1944,7 +1944,7 @@ race = "elf"
 requires = [["Hands:2"], ["type:Archer", "type:Cavalry"]]
 cost.cp = 8
 upgrade_all = true
-description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc"
+description = "Many Elf hate this weapon as it is not elegant or accurate as elf bows should be. But most appreciate that it causes more havoc."
 
 [equipment.bow_with_rocket_arrows.range]
 range = 4

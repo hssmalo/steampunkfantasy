@@ -237,7 +237,7 @@ name = "Thrown Weapons"
 signature = " +{N}"
 to_hit = "+N"
 to_be_hit = "0"
-effect = "Applies to thrown weapons only. Two of the same effect stack"
+effect = "Applies to thrown weapons only. Two of the same effect stack."
 
 [ability.thrown_weapons.variables]
 N = { type = "int", min = 1, max = 3 }

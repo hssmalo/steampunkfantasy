@@ -90,7 +90,7 @@ signature = "Help"
 #signature = Help[target]
 effect = '''Move toward friendly unit which may be healed or repaired. If no such unit exist, move towards the nearest friendly unit of the type specified by in the special rules of the unit. If no such unit exist, move towards nearest friendly unit. If no friendly units area alive, treat it as Flee instead. During Help orders you may swap the position with any friendly nearby biological unit. If you dont need to move in order to end up in a hex with an wounded unit at end of any movement phase, you may execute an heal[1, any, movement X] instead of moving'''
 
-see_also = ["special.heal". "spesial.repair"]
+see_also = ["special.heal", "special.repair"]
 
 
 [orders.movement.Drift]

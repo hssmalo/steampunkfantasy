@@ -2,7 +2,7 @@
 
 [races.ork]
 name = "Ork"
-description = "A band of bloodthirsty orks that clearly love chaos. About 2m in height"
+description = "A band of bloodthirsty orks that clearly love chaos. About 2m in height."
 
 [spawns.ork_champion]
 unit = "champion"
@@ -14,11 +14,11 @@ name = "Ork Infantry"
 models = ["ork_infantry", "ork_infantry", "ork_infantry", "ork_infantry"]
 size = "medium"
 cost.mp = 16
-description = "Bloodthirsty ork in leather rags wielding a napleonic style musket with a bajonet"
+description = "Bloodthirsty ork in leather rags wielding a napoleonic style musket with a bayonet"
 
 [units.ork_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.ork_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -69,13 +69,13 @@ lore = "At the end of the game, the troll runs out of ammo"
 
 [units.troll.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.troll.specials.forward_position]]
 args.N = 1
 
 [[units.troll.specials.regeneration]]
-text = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token"
+text = "[3]: Heal[3, self, 1st Healing]. While unconscious, you gain improved regeneration which gives Heal[3, self, 2nd Healing] in addition to the normal regeneration. The Troll does no action while unconscious, but regains conscious in end phase: remove unconscious in Healing 2 phase, May have a maximum of 1 unconscious token."
 
 [[units.troll.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -86,7 +86,7 @@ args.version = "resistance_type.acid"
 args.N = 1
 
 [[units.troll.specials.fire_order]]
-text = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious"
+text = "Always fire: The troll Always fires its Troll Gatling Gun in forward arc at friendly or enemy units, both in the first and second fire phase. Only exception is if it is unconscious."
 
 [[units.troll.specials.destroy_terrain]]
 args.terrain = 'Forest'
@@ -111,16 +111,16 @@ models = ["champion"]
 size = "medium"
 armor = [0, 0, 0, 0]
 cost.vpm = 16
-description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its weaing rugs, no armor.
+description = '''An ork warhero with clockwork wings on its back. The ork is wielding a burning axe and a clockwork shield. Its wearing rugs, no armor.
 '''
 
 
 [units.champion.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.champion.specials.spawn]]
-text = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit"
+text = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit."
 
 [units.champion.damage_tables.Regular]
 rows = [
@@ -145,14 +145,13 @@ models = ["warg_rider", "warg_rider"]
 size = "medium"
 cost.mp = 8
 cost.xp = 16
-description = '''An ork riding a warg (warg is a huge angry wolf with big teeth). The ork is wielding a spear
-
+description = '''An ork riding a warg (warg is a huge angry wolf with big teeth). The ork is wielding a spear.
 '''
 
 
 [units.warg_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.warg_rider.specials.fire_order]]
 text = "only available if given ranged weapons"
@@ -209,7 +208,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.speedhead.specials.fire_order]]
-text = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so"
+text = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so."
 
 [units.speedhead.orders.movement]
 slow = [["L/R", "F", "L/R"], ["F", "-", "-"], ["A", "F", "F"]]
@@ -257,7 +256,7 @@ models = ["hammerhead"]
 size = "large"
 cost.ip = 32
 armor = [13, 8, 7, 7]
-description = '''A steampunk vehicle with a big battling ram infront, crashing into and destroying a house.
+description = '''A steampunk vehicle with a big battling ram in front, crashing into and destroying a house.
 '''
 
 [[units.hammerhead.specials.destroy_terrain]]
@@ -306,7 +305,7 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "-", "-"],
@@ -315,7 +314,7 @@ still = [
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [[units.hammerhead.specials.fire_order]]
@@ -329,7 +328,6 @@ size = "large"
 cost.ip = 32
 armor = [8, 7, 7, 6]
 description = '''A steampunk armored carrier with a gun pointing directly ahead, , a gun that fires spears on top, and a mortar at the back of the vehicle.
-
 '''
 
 
@@ -382,7 +380,7 @@ fast = [["F", "F", "F"], ["F", "F", "-"], ["F", "B", "360°"]]
 slow = [
     ["A+F", "F", "F"],
     ["360°", "F", "360°"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
     ["B", "-", "-"]
 ]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
@@ -394,14 +392,14 @@ models = ["grunt", "grunt", "grunt", "grunt"]
 size = "medium"
 cost.mp = 8
 armor = [0, 0, 0, 0]
-description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brazz amulet and almost no clothes.
+description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brass amulet and almost no clothes.
 '''
 
 
 
 [units.grunt.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.grunt.specials.forward_position]]
 args.N = 2
@@ -432,13 +430,13 @@ size = "medium"
 cost.mp = 8
 cost.xp = 48
 armor = [0, 0, 0, 0]
-description = '''An ork werewarg is amix between a warg and and ork, wielding a musket with bajonett.
+description = '''An ork werewarg is a mix between a warg and and ork, wielding a musket with bayonet.
 '''
 
 
 [units.ork_werewarg.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.ork_werewarg.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -481,7 +479,7 @@ rows = [
 	"10: Unit Permanently Destroyed, stops regenerating",
 ]
 notes = [
-	"When all models are temporarily killed: replace kill 1 model with +1 on future damage and keep all remaining bleeding",
+	"When all models are temporarily killed: replace kill 1 model with +1 on future damage and keep all remaining bleeding.",
 	"If one model is temporarily killed by bleed or poison, remove that instance",
 ]
 
@@ -510,7 +508,7 @@ description = '''An bloodthirsty ork in finer clothes with 4 arms and wielding 4
 
 [units.bioengineered_ork.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.bioengineered_ork.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -571,7 +569,7 @@ models = ["ork_char_b1"]
 size = "large"
 cost.ip = 48
 armor = [12, 10, 8, 7]
-description = '''An orkish steampunk version of the french world war II tank Char  B1
+description = '''An orkish steampunk version of the french world war II tank Char B1
 '''
 
 [units.ork_char_b1.shaken]
@@ -618,7 +616,7 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "-", "-"],
@@ -627,7 +625,7 @@ still = [
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ork_char_b1.damage_tables.Regular]
@@ -656,7 +654,7 @@ rows = [
 ]
 
 [[units.ork_char_b1.specials.fire_order]]
-text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for them separately"
+text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for them separately."
 
 [models]
 
@@ -682,7 +680,7 @@ ap = 2
 args.N = 8
 
 [[models.troll.assault.specials.stench]]
-text = "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 Crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and Crew damage only to units with a Crew damage table"
+text = "Any unit entering assault with a troll gains one Poison[6] counter and takes d8 Crew damage, regardless of the outcome of the assault. Note that poison only applies to biological units and Crew damage only to units with a Crew damage table."
 
 [models.grunt]
 name = "Grunt"
@@ -716,7 +714,7 @@ replaces = "ork_infantry"
 type = ["Elite", "Infantry", "Walking"]
 
 [[models.elite_ork_infantry.specials.not_yet_dead]]
-text = "ork_champion: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit this model is attached to. Champion does not retain any of the abilities from the unit, and has a separate unit and model entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit"
+text = "ork_champion: after this model in the unit base is killed, this model is not yet dead after all. This model becomes a new unit and becomes an Champion with the same equipment as this model and orders available as the unit this model is attached to. Champion does not retain any of the abilities from the unit, and has a separate unit and model entry. See Champion. In the case this model is not the last model to be eliminated, it may be the case that you get an extra unit base in the hex. If this causes overcrowding (more than 2 units in a hex), the champion may spawn in one of the neighboring hex which is furthest from an enemy unit."
 
 [[models.elite_ork_infantry.unit_specials.resistance]]
 args.version = "resistance_type.psychic"
@@ -969,7 +967,7 @@ damage = "d10"
 ap = 3
 
 [[equipment.troll_gatling_gun.range.specials.area]]
-text = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot"
+text = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot."
 
 [equipment.ork_musket]
 name = "Ork Musket"
@@ -1142,7 +1140,7 @@ damage = "d6-1"
 ap = 2
 
 [[equipment.ork_pistol.range.specials.ammo]]
-text = "May load up  up to 2 ammo and fire them one at a time"
+text = "May load up up to 2 ammo and fire them one at a time"
 
 [equipment.ork_pistol.orders_gained.fire]
 still = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "-"], ["-", "Fire"]]
@@ -1209,7 +1207,7 @@ upgrade_all = true
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
 [[equipment.war_drum.unit_specials.movement]]
-text = "At start of any round set target to either infantry, cavalry or vehicle. All Chs orders of all units are replaced with Chs[target]"
+text = "At start of any round set target to either infantry, cavalry or vehicle. All Chs orders of all units are replaced with Chs[target]."
 
 #see_also orders.chs
 [[equipment.war_drum.unit_specials.terror]]
@@ -1267,7 +1265,7 @@ ap = 6
 note = "It is a 1 handed weapon but may not be combined with another sling"
 
 [[equipment.grenade_sling.range.specials.area]]
-text = "If fired from a unit with 3-4 models: Area[4+], if fired from a unit with 1-2 models: Area[5+]"
+text = "If fired from a unit with 3-4 models: Area[4+], if fired from a unit with 1-2 models: Area[5+]."
 
 [[equipment.grenade_sling.range.specials.range]]
 variant = "target_hex_normal_range"
@@ -1357,7 +1355,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Hands:1"]]
 
 [[equipment.tankscalper.assault.specials.crew_damage]]
-text = "May replace regular damage with d8 Crew damage. Note: Crew damage ignore armor"
+text = "May replace regular damage with d8 Crew damage. Note: Crew damage ignore armor."
 
 [equipment.healing_syringe]
 race = "ork"
@@ -1386,7 +1384,7 @@ damage = "d6"
 ap = 6
 
 [[equipment.hand_catapult.range.specials.area]]
-text = "If fired from a unit with 3-4 models within normal range: Area[4+], if fired from a unit with 1-2 models at normal range: Area[5+], if fired from a unit with 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area[6+]"
+text = "If fired from a unit with 3-4 models within normal range: Area[4+], if fired from a unit with 1-2 models at normal range: Area[5+], if fired from a unit with 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area[6+]."
 
 [[equipment.hand_catapult.range.specials.range]]
 text = "Choose one hex within normal range or one hex within long range."
@@ -1425,7 +1423,7 @@ damage = "d6"
 ap = 3
 
 [[equipment.grenade_launcher.range.specials.range]]
-text = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex"
+text = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex."
 
 [[equipment.grenade_launcher.range.specials.area]]
 text = "[2+]"
@@ -1442,14 +1440,14 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2"
 ap = 2
-note = "ps! It is not recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon separately"
+note = "ps! It is not recommended combining this with other ranged weapons as a ork pistol. However if you do, track ammo and loading actions etc. for the other gun and this weapon separately."
 
 [[equipment.assault_musket.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
 args.N = 1
 
 [[equipment.assault_musket.range.specials.ammo]]
-text = "May load up to 4 ammo. If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' setting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1"
+text = "May load up to 4 ammo. If you have 4 ammo stored, you may spend all 4 ammo to use the 'heavy shot' setting when firing a shot. If you do gain range: 4, AP:3 and damage:d6-1."
 
 [equipment.assault_musket.orders_gained.fire]
 still = [["Load(2)", "-"], ["-", "Load(2)"], ["Fire", "Fire"]]

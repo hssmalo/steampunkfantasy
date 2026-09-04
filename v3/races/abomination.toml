@@ -2,7 +2,7 @@
 
 [races.abomination]
 name = "Abomination"
-description = '''Humanoid creatures with 4 to 8 tentacles. About 1.8m in height
+description = '''Humanoid creatures with 4 to 8 tentacles. About 1.8m in height.
 '''
 
 
@@ -30,14 +30,14 @@ slow = [
 	["B", "-", "-"],
 	["A", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 fast = [["F", "F", "-"], ["F", "B", "-"]]
 
@@ -79,14 +79,14 @@ models = ["flagship"]
 size = "enormous"
 armor = [10, 9, 8, 8]
 cost.ip = 96
-description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insantiy weapons and a greater disruptor weapons and lots of gadgets.
+description = '''Huge flagship floating above the ground armed with a greater fog poisonizer weapons, greater insanity weapons and a greater disruptor weapons and lots of gadgets.
 '''
 
 [[units.flagship.specials.enormous]]
 text = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
 
 [[units.flagship.specials.fog]]
-text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token. If it has an into the fog token, and at least one part of the unit is not inside a fog, replace the into the fog with an out of the fog token. Out of the fog token is removed in aftermath phase"
+text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token. If it has an into the fog token, and at least one part of the unit is not inside a fog, replace the into the fog with an out of the fog token. Out of the fog token is removed in aftermath phase."
 
 [[units.flagship.specials.terror]]
 args.N = 1
@@ -135,14 +135,14 @@ rows = [
 	"9+: As 5-8, plus minus one"
 ]
 
-notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, shaken and it is on fire. If so, do d8 psychic damage to all friendly units within range 8","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is shaken as normal"]
+notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, shaken and it is on fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is shaken as normal."]
 
 
 
 [units.flagship.damage_tables.Critical]
 rows = [
 	"1: d6 psychic damage to all friendly units within range 2. No command",
-	"2: If flying, deacellerates to float",
+	"2: If flying, decelerates to float",
 	"2: If floating, do d8 damage (ignore armor). Disable Repair",
 	"3: Cannot accelerate",
 	"4: Cannot turn",
@@ -175,7 +175,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.frost_88.specials.fire_order]]
-text = "Fire(wj) fires the water jet, while Fire(fr) fires frost ray. Track ammo only for main gun, while frost ray is always loaded"
+text = "Fire(wj) fires the water jet, while Fire(fr) fires frost ray. Track ammo only for main gun, while frost ray is always loaded."
 
 [units.frost_88.orders.movement]
 slow = [
@@ -184,14 +184,14 @@ slow = [
 	["B", "-", "-"],
 	["A", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 fast = [["F", "F", "-"], ["F", "B", "-"]]
 
@@ -243,13 +243,13 @@ models = [
 size = "medium"
 cost.mp = 32
 
-description = '''An abomination is an humanoid creature with 4 tentacles and two arms. They are about 1.8m height. They are wielding a futuristic horror weapon. The tentacles are about 0.8m in length. Abomination are amphibious. Inspired by Lovecraft
+description = '''An abomination is an humanoid creature with 4 tentacles and two arms. They are about 1.8m height. They are wielding a futuristic horror weapon. The tentacles are about 0.8m in length. Abomination are amphibious. Inspired by Lovecraft.
 '''
 
 
 [units.abomination_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.abomination_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -273,7 +273,7 @@ still = [
 
 [units.abomination_infantry.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.abomination_infantry.damage_tables.Regular]
 rows = [
@@ -297,7 +297,7 @@ models = ["horror"]
 size = "huge"
 cost.xp = 32
 armor = [6, 4, 2, 1]
-description = '''A huge scary unfamiliar monster  with a cloud of poison and disease around it. A monster inspired by lovecraft
+description = '''A huge scary unfamiliar monster with a cloud of poison and disease around it. A monster inspired by lovecraft.
 '''
 note = "loses terror, poison cloud when standing in water"
 
@@ -309,10 +309,10 @@ movement_order = ["-", "-", "-"]
 [[units.horror.specials.terror]]
 args.N = 1
 args.M = 12
-text = "While in fog (in agony phases): Terror[12](Range=1), Insanity Filed[range=1][d6]"
+text = "While in fog (in agony phases): Terror[12](Range=1), Insanity Field[range=1][d6]."
 
 [[units.horror.specials.fog]]
-text = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
+text = "If horror is either standing in a hex with fog or entering a hex with fog, treat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
 
 [[units.horror.specials.poison_cloud]]
 text = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
@@ -333,7 +333,7 @@ args.N = 3
 
 [units.horror.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.horror.damage_tables.Regular]
 rows = [
@@ -343,7 +343,7 @@ rows = [
 	"9+: Unit destroyed",
 ]
 notes = [
-	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12]",
+	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
 	"bleeding does not cause more bleeding",
 ]
 
@@ -364,7 +364,7 @@ description = '''A flying monster bird scaring the enemy with a deadly scream.
 
 [units.shriek_monstrosity.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.shriek_monstrosity.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -407,7 +407,7 @@ description = '''A water elemental is a robot that looks like a water elemental,
 cost.cp = 24
 cost.xp = 16
 
-lore = "For those that do not know better, this unit looks like living water elementals. However, no such things exist, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The truth is revealed while the unit is shaken, when the waterflow surrounding the models stops"
+lore = "For those that do not know better, this unit looks like living water elementals. However, no such things exist, and there is nothing natural by this unit. Abomination uses their skill in water manipulation to create a drone that is surrounded by water. The truth is revealed while the unit is shaken, when the waterflow surrounding the models stops."
 
 [units.water_elemental.shaken]
 speed = "still"
@@ -478,7 +478,7 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.robot_crab.specials.chase]]
-text = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead"
+text = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead."
 
 [units.robot_crab.orders.movement]
 fast = [["Chs", "Chs", "Chs"]]
@@ -496,13 +496,13 @@ models = ["giant_frog_rider", "giant_frog_rider"]
 size = "medium"
 cost.mp = 8
 cost.xp = 16
-description = '''An abomination (humandoid creature with 4 tentacles, inspired by lovecraft) is riding a giant frog. The frog spits poison. The abomination is small compared to the frog. The abomiantion is wielding a steampowered melee weapon. There is a fluid tube connected to the melee weapon.
+description = '''An abomination (humanoid creature with 4 tentacles, inspired by lovecraft) is riding a giant frog. The frog spits poison. The abomination is small compared to the frog. The abomination is wielding a steampowered melee weapon. There is a fluid tube connected to the melee weapon.
 '''
 
 
 [units.giant_frog_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.giant_frog_riders.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -549,7 +549,7 @@ size = "large"
 cost.mp = 8
 cost.xp = 32
 armor = [6, 5, 4, 2]
-description = '''Abomination (scary humanoid creature with 2 arms and 4 tentacles. Inspired by Lovecraft) are riding a hippopotamus. Along the hippotpotamus is an oversized napoleon musket pointing forward. Behind the sadle there is a mortar firing upwards.
+description = '''Abomination (scary humanoid creature with 2 arms and 4 tentacles. Inspired by Lovecraft) are riding a hippopotamus. Along the hippopotamus is an oversized napoleon musket pointing forward. Behind the saddle there is a mortar firing upwards.
 '''
 
 [units.hippopotamus_riders.shaken]
@@ -562,7 +562,7 @@ args.version = "resistance_type.poison"
 args.N = 3
 
 [[units.hippopotamus_riders.specials.fire_order]]
-text = "Fire(mm) fires multipurpose mortar, while Fire(om) fire oversized muskets.  Both weapons must be fired if loaded, and each weapon uses 1 ammo."
+text = "Fire(mm) fires multipurpose mortar, while Fire(om) fire oversized muskets. Both weapons must be fired if loaded, and each weapon uses 1 ammo."
 
 [units.hippopotamus_riders.orders.fire]
 still = [["Load", "Load"], ["Fire(mm)", "Fire(om)"], ["Fire(om)", "Fire(mm)"]]
@@ -761,7 +761,7 @@ damage = "d6-2"
 ap = 2
 
 [[models.flagship.assault.specials.size]]
-text = "Automatically considered winning without assault taking place versus large or smaller units. Ie the enemy retreat but neither you or them suffer any additional damage from assault"
+text = "Automatically considered winning without assault taking place versus large or smaller units. Ie the enemy retreat but neither you or them suffer any additional damage from assault."
 
 [models.frost_88]
 name = "Frost 88"
@@ -798,7 +798,7 @@ replaces = "abomination_infantry"
 args.ability = "ability.good_shot"
 
 [[models.elite_abomination_infantry.unit_specials.vulnerability]]
-text = "All enemies within range 2 gets Psychic vulnerability of 1: Increase Psychic damage they take by 1. This ability does not stack"
+text = "All enemies within range 2 gets Psychic vulnerability of 1: Increase Psychic damage they take by 1. This ability does not stack."
 
 [models.elite_abomination_infantry.assault]
 strength = [2, 1, 1, 1]
@@ -912,7 +912,7 @@ damage = "d6-1"
 ap = 4
 
 [[equipment.broadside.range.specials.multiple_shots]]
-text = "Fire 4 shot to 4 different units in 4 different hexes. Two of the hexes must be neighboring hexes within firing angle to the right, and the other two must be neighboring hexes within firing angle to the left"
+text = "Fire 4 shot to 4 different units in 4 different hexes. Two of the hexes must be neighboring hexes within firing angle to the right, and the other two must be neighboring hexes within firing angle to the left."
 
 [equipment.greater_insanity_blast]
 name = "Insanity Blast"
@@ -926,7 +926,7 @@ damage = "d10 Psychic"
 ap = "N/A"
 
 [[equipment.greater_insanity_blast.range.specials.insanity]]
-text = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normel effects of psychic damage. (ps! unit does not need to be already shaken to be effected)"
+text = "Only affects bio units. Any unit affected by the greater insanity blast gets an insane token in addition to the normal effects of psychic damage. (ps! unit does not need to be already shaken to be affected)."
 
 [[equipment.greater_insanity_blast.range.specials.los]]
 text = "Trace line of sight from front of the unit"
@@ -943,7 +943,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.insanity_contraption.range.specials.insanity]]
-text = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
+text = "Only affects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
 
 [[equipment.insanity_contraption.range.specials.ammo]]
 text = "Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
@@ -960,7 +960,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.multipurpose_gun.range.specials.multipurpose]]
-text = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insane token, in addition to the normal effects of the Psychic damage table"
+text = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insane token, in addition to the normal effects of the Psychic damage table."
 
 [equipment.tentacle_cracklespears]
 name = "Tentacle CrackleSpears"
@@ -1011,7 +1011,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry"]]
 description = """Abominations excel in water manipulation. A thin layer of water is used to protect from poison fire and acid, while a water jet surrounding the unit helps protect from regular bullets.
 
-Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration"""
+Most useful in combination with tentacle shield, which makes them very robust versus anything which does not have enough armor penetration."""
 
 [[equipment.water_shield.unit_specials.resistance]]
 args.version = "resistance_type.acid"
@@ -1028,7 +1028,7 @@ args.N = 1
 [[equipment.water_shield.unit_specials.resistance]]
 args.version = "resistance_type.regular"
 args.N = 1
-text = "Armor assist: if this unit have armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)"
+text = "Armor assist: if this unit have armor, you may modify all armor penetration die rolls (by shots penetrating this units armor) by one. (thus enemy need 6 per die to penetrate armor)."
 
 [equipment.frog_cavalry_armor]
 name = "Frog Cavalry Armor"
@@ -1153,7 +1153,7 @@ args.N = 6
 text = "at all other hexes"
 
 [[equipment.shriek.range.specials.ammo]]
-text = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo"
+text = "If it has ammo, you must use it. If you have no valid target, the ammo is still wasted. You may choose to start without ammo."
 
 [equipment.fog_poisonizer]
 name = "Fog Poisonizer"

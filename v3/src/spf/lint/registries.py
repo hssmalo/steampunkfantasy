@@ -9,7 +9,7 @@ is what raises (ADR 0016).
 
 from dataclasses import dataclass
 
-from spf.lint import names
+from spf.lint import names, prose
 from spf.registry import Registry
 from spf.schemas.config import LintConfig
 
@@ -43,4 +43,25 @@ def lint_registry(registry: Registry, conventions: LintConfig) -> list[RegistryF
         for namespace, records in registry.records.items()
         for key, record in records.items()
         for rule, message in names.check_name(key, record.name, conventions)
+    ] + lint_registry_prose(registry)
+
+
+def lint_registry_prose(registry: Registry) -> list[RegistryFinding]:
+    """Apply the prose rules to every sentence field a record declares.
+
+    A record's `effect` is the rule as the player reads it -- the most-read
+    prose in the corpus -- so it is held to what the Race data is held to.
+    """
+    return [
+        RegistryFinding(
+            file=registry.namespaces[namespace].file,
+            namespace=namespace,
+            key=f"{key}.{location}" if location else key,
+            rule=rule,
+            message=message,
+        )
+        for namespace, records in registry.records.items()
+        for key, record in records.items()
+        for location, value in prose.walk_prose(record.model_dump())
+        for rule, message in prose.check_prose(value)
     ]

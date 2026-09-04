@@ -22,7 +22,7 @@ description = "Dwarf infantry wielding a musket"
 
 [units.dwarf_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.dwarf_infantry.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -73,7 +73,7 @@ description = '''Two Twin Dwarfs in heavy armor fighting side by side wielding a
 
 [units.dwarf_brother_in_arms.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.dwarf_brother_in_arms.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -128,13 +128,13 @@ armor = [7, 6, 6, 5]
 cost.mp = 16
 cost.cp = 8
 cost.ip = 8
-description = '''A dwarf in steampunk powerarmor wielding a multibarrled heavy musket.
+description = '''A dwarf in steampunk powerarmor wielding a multibarreled heavy musket.
 '''
 
 
 [units.steampowerarmor.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.steampowerarmor.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -207,7 +207,7 @@ note = "Floats"
 
 [units.mini_zeppelin.shaken]
 speed = "slow"
-movement_order = ["random", "-", "-"]
+movement_order = ["Random", "-", "-"]
 fire_order = "Normal"
 
 [[units.mini_zeppelin.specials.resistance]]
@@ -215,7 +215,7 @@ args.version = "resistance_type.poison"
 args.N = 3
 
 [units.mini_zeppelin.orders.movement]
-fast = [["random", "L/R+F", "F"], ["random", "F", "F"], ["random", "F", "B"]]
+fast = [["Random", "L/R+F", "F"], ["Random", "F", "F"], ["Random", "F", "B"]]
 slow = [["360°", "F", "360°"], ["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.mini_zeppelin.orders.fire]
@@ -248,14 +248,14 @@ movement_order = ["-", "F", "F"]
 comment = "May not deploy units while shaken"
 
 [[units.transport_zeppelin.specials.transport]]
-text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall"
+text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall."
 
 [units.transport_zeppelin.orders.movement]
 fast_fly = [
-    ["(L/R)", "F", "F+Depoloy"],
-    ["F", "F+Depoloy", "(L/R)"],
+    ["(L/R)", "F", "F+Deploy"],
+    ["F", "F+Deploy", "(L/R)"],
     ["F", "(L/R)", "F+(Deploy)"],
-    ["F+Depoloy", "F", "(L/R)"],
+    ["F+Deploy", "F", "(L/R)"],
     ["(L/R)", "F", "F"],
     ["F", "F", "(L/R)"],
     ["F", "(L/R)", "F"],
@@ -301,7 +301,7 @@ args.version = "resistance_type.fire"
 args.N = 1
 
 [units.dwarf_at_gun.orders.movement]
-slow = [["-", "360°", "B[Rest]"], ["-", "F", "B[Rest]"]]
+slow = [["-", "360°", "B[rest]"], ["-", "F", "B[rest]"]]
 still = [["-", "-", "A[slow]"], ["-", "-", "-"]]
 rest = [["-", "-", "A[slow]"], ["-", "-", "A[still]"]]
 
@@ -331,7 +331,7 @@ models = ["gunblasterwagon"]
 size = "large"
 armor = [8, 10, 10, 7]
 cost.ip = 24
-description = '''An heavy tank with braodside weapons firing to the sides
+description = '''An heavy tank with broadside weapons firing to the sides
 '''
 
 
@@ -355,14 +355,14 @@ slow = [
     ["A", "F", "(BB)"],
     ["B", "-", "(BB)"],
     ["F", "-", "(BB)"],
-    ["B", "rev", "(BB)"],
+    ["B", "Rev", "(BB)"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)+(BB)"],
     ["-", "-", "(BB)"],
     ["L/R", "A", "F+(BB)"],
     ["A", "F", "(BB)"],
-    ["rev", "-", "(B)+(B)"],
+    ["Rev", "-", "(B)+(B)"],
     ["A+A+(L/R)", "F", "F+(B)+(B)"],
 ]
 
@@ -429,14 +429,14 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
     ["Aim", "-", "-"],
 ]
 
@@ -475,7 +475,7 @@ models = ["zap"]
 size = "large"
 armor = [10, 8, 8, 7]
 cost.ip = 32
-description = '''A steampunk tank with futureistick weapon with two barrels firing forward. It also has weapons firing all round the tank.
+description = '''A steampunk tank with futuristic weapon with two barrels firing forward. It also has weapons firing all round the tank.
 '''
 
 
@@ -502,14 +502,14 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.zap.orders.fire]
@@ -552,7 +552,7 @@ cost.ip = 96
 cost.xp = 48
 description = '''A huge zeppelin firing its main gun toward the ground.
 '''
-note = "Withering Ray: May replace forest with rough terrain in the hex it is standing"
+note = "Withering Ray: May replace forest with rough terrain in the hex it is standing."
 
 [units.zeppelin.shaken]
 speed = "slow_fly"
@@ -609,7 +609,7 @@ description = '''A burning balrog with a flaming whip.
 
 [units.tamed_balrog.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 fire_order = "May not use whip"
 
 [[units.tamed_balrog.specials.resistance]]
@@ -1064,7 +1064,7 @@ strength.add = [1, 1, 1, 1]
 damage.replace = "d6-2 + d6 Psychic damage"
 
 [equipment.musket_with_springloaded_axe.orders_gained.fire]
-slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
+slow = [["-", "Load"], ["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [equipment.double_barreled_musket_with_springloaded_axe]
 name = "Double Barreled Musket with Springloaded Axe"
@@ -1114,7 +1114,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Vehicle"]]
 
 [[equipment.infantry_platform.unit_specials.movement]]
-text = "Tank Riders: Any infantry in slow which shares a hex with this unit, may use the follow order instead of their own. If so, place the infantry order marker on the movement card of the tank instead"
+text = "Tank Riders: Any infantry in slow which shares a hex with this unit, may use the follow order instead of their own. If so, place the infantry order marker on the movement card of the tank instead."
 
 #see_also=orders.follow
 [equipment.springloaded_vehicle_assault_weapons]
@@ -1145,7 +1145,7 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "4+"
 
 [[equipment.wheeled_shieldwall.assault.specials.penalty]]
-text = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault"
+text = "-1 in assault strength if speed is not still. Don't get any armor bonus in assault."
 
 [equipment.elite_crew]
 name = "Elite Crew"
@@ -1213,7 +1213,7 @@ damage = "d6+1"
 ap = 7
 
 [[equipment.big_blaster.range.specials.ammo]]
-text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to"
+text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to."
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
@@ -1242,7 +1242,7 @@ args.ability = "ability.enhanced_accuracy"
 args.N = 1
 
 [equipment.stabilizer.orders_gained.fire]
-slow = [["-", "aim"], ["aim", "-"]]
+slow = [["-", "Aim"], ["Aim", "-"]]
 
 [equipment.trench_coat_of_resistance]
 name = "Trench Coat of Resistance"
