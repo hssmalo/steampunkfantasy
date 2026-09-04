@@ -745,7 +745,7 @@ name = "Cyclops"
 race = "ogre"
 equipment_limit = ["Independent:∞", "Hands:2", "Reserve Melee:1"]
 equipment = ["cyclops_plasma_gun", "boulder_bomb"]
-type = ["Bio", "Infantry", "Walking", "Elite"]
+type = ["Bio", "Cyclops", "Walking", "Elite"]
 
 [models.cyclops.assault]
 strength = [6, 4, 1, 1]
