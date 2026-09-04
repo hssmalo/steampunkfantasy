@@ -1572,7 +1572,7 @@ upgrade_all = true
 requires = [["Independent:1"], ["type:Infantry", "type:Cavalry"]]
 
 [[equipment.mechanical_imp.unit_specials.reload]]
-text = "Mechanical robotic imps helps all models in unit to reload it's weapons. Treat any weapons as always loaded."
+text = "Mechanical robotic imps helps all models in unit to reload their weapons. Treat any weapons as always loaded."
 
 [equipment.smg]
 name = "SMG"

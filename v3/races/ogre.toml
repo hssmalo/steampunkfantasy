@@ -572,7 +572,7 @@ description = '''Broadside wagon is pulled by the main engine, and is specialize
 tip = '''
 It need to be connected with a main engine to move (either directly or indirectly). It is well protected from the sides and back, but is extremely poorly armored from the front.
 
-Try to place the broadside wagon with enemies on all sides such that you can use all the firepower it offers. If you loose an assault you will most probably be disconnected from the main engine. So avoid assault at all costs.
+Try to place the broadside wagon with enemies on all sides such that you can use all the firepower it offers. If you lose an assault you will most probably be disconnected from the main engine. So avoid assault at all costs.
 '''
 
 
@@ -622,7 +622,7 @@ description = '''Artillery wagons need to be towed and are armed with a huge art
 tip = '''
 It need to be connected with a main engine to move and be in command (either directly or indirectly). It is well protected from the sides and back, but it is extremely poorly armored from the front.
 
-Indirect fire, long range, to hit bonus from scouts and huge damage is a good combination and target should be enemy tanks or other expensive units. If you loose an assault, you are probably disconnected from main engine, and makes you stranded, so avoid assaults at all cost.
+Indirect fire, long range, to hit bonus from scouts and huge damage is a good combination and target should be enemy tanks or other expensive units. If you lose an assault, you are probably disconnected from main engine, and makes you stranded, so avoid assaults at all cost.
 '''
 
 [units.artillery_wagon.shaken]

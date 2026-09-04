@@ -514,7 +514,7 @@ lore = '''
 How the goblin manage to make this marvel of a rebuild mechanism is a mystery.
 '''
 
-tip = '''Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set an enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it har to hit, some armor protects from regular muskets and rifles, while simultaneously requires a few shots to disassemble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy.
+tip = '''Try to maneuver to have as many units/models as possible within range 2 and set them on fire with you ring of fire weapon. Sooner or later you will set an enemy on fire, which if the enemy have no means of remove it, is normally devastating. It is fairly well protected, both with fast flying which makes it hard to hit, some armor protects from regular muskets and rifles, while simultaneously requires a few shots to disassemble. If you get to use your reassemble token, watch the frustration in your enemy. But do not imagine it is impossible to destroy.
 '''
 
 [units.mechanical_fire_bird.shaken]

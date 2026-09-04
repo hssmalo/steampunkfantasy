@@ -64,7 +64,7 @@ effect = "Any damage explicitly named psychic damage is reduced by {N}"
 
 [resistance_type.fire]
 name = "Fire"
-effect = "Any damage rolled by fire token is effect is reduced damage by {N}. It is also reduced with respect to stop burning by {N}."
+effect = "Any damage rolled by a fire token is reduced by {N}. It is also reduced with respect to stop burning by {N}."
 see_also = ["token.fire"]
 
 [resistance_type.poison]

@@ -5,10 +5,10 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | To cool not to implement. Armored, durable, big boulder size bomb. Will review power |
-| 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
+| 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | Too cool not to implement. Armored, durable, big boulder size bomb. Will review power |
+| 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because too fun not to add                                         |
 | 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
-| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
+| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.           | Was too easy to exploit, and the rules were not elegant anyway                             |
 | 19.08.2026 | Goblin       | Reworked snake cavalry                                                      | To make it cooler and more unique                                                    |
 | 19.08.2026 | Darkelf      | Removed Poison Gas Grenade                                                  | Did not seem necessary. Still has access to poison fog grenade                       |
 | 11.08.2026 | Gnome        | Frostray, reduced range and damage by one.                                  | Seemed overpowered, needed a debuff and range 3 makes it more difficult to use       |

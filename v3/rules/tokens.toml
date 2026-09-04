@@ -84,14 +84,14 @@ see_also = ["special.repair"]
 name = "Minor Acid"
 phases = ["Agony 1"]
 remove = "Only as part of effect"
-effect = "Role a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid."
+effect = "Roll a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid."
 see_also = ["token.acid", "damage_type.acid"]
 
 [tokens.fire]
 name = "Fire"
 phases = ["Agony 2"]
 remove = "Only as part of effect"
-effect = '''Role a d6 and subtracted unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise_
+effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise:
 
 
 - Ignore armor and regular damage resistance
@@ -175,7 +175,7 @@ N = { type = "int", values = [4, 6, 8, 10, 12] }
 name = "Confused"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 remove = "Remove one token each pre-assault step in each movement phase"
-effect = "Only effects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
+effect = "Only affects biological units or units with biological crew. While confused, any movement order is replaced by a random move. Roll a d6, on 1-2, rotate unit left, on 3-4 rotate unit right, on 5-6: -. In addition, while confused you get -1 to hit."
 to_hit = "-1"
 to_be_hit = "0"
 

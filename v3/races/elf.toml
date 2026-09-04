@@ -688,7 +688,7 @@ rows = [
 	"4+: shaken",
 ]
 
-# Elk removed. Elf had to many cavalry and elk did not find it's correct place.
+# Elk removed. Elf had to many cavalry and elk did not find its correct place.
 #[units.elk_cavalery]
 #race = "elf"
 #name = "Elk Cavalery"
@@ -1556,7 +1556,7 @@ ap = 5
 variant = "load_n_shots"
 args.N = 5
 [[equipment.teslaburstlaser.range.specials.critical]]
-text = "the enemy is shaken, in addition to it's normal effect."
+text = "the enemy is shaken, in addition to its normal effect."
 
 [equipment.smg_free]
 name = "SMG"

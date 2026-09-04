@@ -375,7 +375,7 @@ N = { type = "int", min = 1, max = 3 }
 name = "Insanity Field"
 slots = ["unit"]
 signature = "[range={N}][d{M}]"
-effect = "Only effects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token."
+effect = "Only affects bio units which are already shaken. In agony 1, roll a d{M} psychic damage on any enemy shaken unit within range of this unit. If you inflict extra damage, unit also gain one insane token."
 places = ["token.insane"]
 see_also = ["token.shaken", "damage_type.psychic"]
 todo = "Reachable by no exact label: Horror's \"Terror\" carries this rule in its prose. The atmospheric name is the natural home for it, so decide whether Terror should become an instance of this rule."
@@ -503,7 +503,7 @@ N = { type = "int", min = 2, max = 10, optional = true }
 
 
 [special.fire_order.variants]
-autoloader = "Autoloader: any time unit does not fire it's shriek SMG in any gunnery phase, load the gun with 1 ammo."
+autoloader = "Autoloader: any time a unit does not fire its shriek SMG in any gunnery phase, load the gun with 1 ammo."
 fire_and_load_simultaneously = "Fire and load all weapons simultaneously"
 load_n_shots = "May be load up to {N} shots, fire them one at a time"
 

@@ -309,10 +309,10 @@ movement_order = ["-", "-", "-"]
 [[units.horror.specials.terror]]
 args.N = 1
 args.M = 12
-text = "While in fog (in agony phases): Terror[12](Range=1), Insanity Filed[range=1][d6]."
+text = "While in fog (in agony phases): Terror[12](Range=1), Insanity Field[range=1][d6]."
 
 [[units.horror.specials.fog]]
-text = "If horror is either standing in a hex with fog or entering a hex with fog, threat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
+text = "If horror is either standing in a hex with fog or entering a hex with fog, treat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
 
 [[units.horror.specials.poison_cloud]]
 text = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
@@ -924,7 +924,7 @@ damage = "d10 Psychic"
 ap = "N/A"
 
 [[equipment.greater_insanity_blast.range.specials.insanity]]
-text = "Only effects bio units. Any unit effected by the greater insanity blast gets an insane token in addition to the normal effects of psychic damage. (ps! unit does not need to be already shaken to be effected)."
+text = "Only affects bio units. Any unit affected by the greater insanity blast gets an insane token in addition to the normal effects of psychic damage. (ps! unit does not need to be already shaken to be affected)."
 
 [[equipment.greater_insanity_blast.range.specials.los]]
 text = "Trace line of sight from front of the unit"
@@ -941,7 +941,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.insanity_contraption.range.specials.insanity]]
-text = "Only effects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
+text = "Only affects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
 
 [[equipment.insanity_contraption.range.specials.ammo]]
 text = "Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
