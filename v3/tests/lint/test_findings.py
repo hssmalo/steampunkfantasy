@@ -64,7 +64,7 @@ def test_print_findings_soft_wraps_without_highlighting(
     findings.print_findings(
         [LintFinding(file="a.toml", location="", rule="load", message="boom")]
     )
-    assert calls == [{"highlight": False, "soft_wrap": True}]
+    assert calls == [{"highlight": False, "markup": False, "soft_wrap": True}]
 
 
 def test_print_findings_of_nothing_prints_nothing(
@@ -73,3 +73,14 @@ def test_print_findings_of_nothing_prints_nothing(
     """A clean corpus is silent."""
     findings.print_findings([])
     assert capsys.readouterr().out == ""
+
+
+def test_print_findings_does_not_read_a_message_as_markup(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """An order cell holds square brackets, and Rich would swallow them."""
+    finding = LintFinding(file="f", location="l", rule="r", message="A[f, fly]")
+
+    findings.print_findings([finding])
+
+    assert "A[f, fly]" in capsys.readouterr().out

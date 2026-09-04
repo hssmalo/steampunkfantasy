@@ -122,6 +122,13 @@ class LintConfig(StrictModel):
     function_words: list[str] = Field(default_factory=list)
     """Words that must stay lowercase anywhere but the start of a name."""
 
+    order_names: list[str] = Field(default_factory=list)
+    """Every order an Order Card may name, spelled as the card prints it.
+
+    Authored here rather than read from `rules/orders.toml`, which is still
+    being drafted: a linter reading it would hold a draft to a schema.
+    """
+
 
 class SteamPunkFantasyConfig(StrictModel):
     paths: PathsConfig

@@ -18,7 +18,7 @@ description = "Bloodthirsty ork in leather rags wielding a napleonic style muske
 
 [units.ork_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.ork_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -69,7 +69,7 @@ lore = "At the end of the game, the troll runs out of ammo"
 
 [units.troll.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.troll.specials.forward_position]]
 args.N = 1
@@ -117,7 +117,7 @@ description = '''An ork warhero with clockwork wings on its back. The ork is wie
 
 [units.champion.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.champion.specials.spawn]]
 text = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit."
@@ -151,7 +151,7 @@ description = '''An ork riding a warg (warg is a huge angry wolf with big teeth)
 
 [units.warg_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.warg_rider.specials.fire_order]]
 text = "only available if given ranged weapons"
@@ -305,7 +305,7 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "-", "-"],
@@ -314,7 +314,7 @@ still = [
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [[units.hammerhead.specials.fire_order]]
@@ -380,7 +380,7 @@ fast = [["F", "F", "F"], ["F", "F", "-"], ["F", "B", "360°"]]
 slow = [
     ["A+F", "F", "F"],
     ["360°", "F", "360°"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
     ["B", "-", "-"]
 ]
 still = [["360°", "A", "F"], ["360°", "-", "-"]]
@@ -399,7 +399,7 @@ description = '''Bloodthirsty ork wielding a melee weapon. Wearing a brazz amule
 
 [units.grunt.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.grunt.specials.forward_position]]
 args.N = 2
@@ -436,7 +436,7 @@ description = '''An ork werewarg is amix between a warg and and ork, wielding a 
 
 [units.ork_werewarg.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.ork_werewarg.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -508,7 +508,7 @@ description = '''An bloodthirsty ork in finer clothes with 4 arms and wielding 4
 
 [units.bioengineered_ork.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.bioengineered_ork.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -616,7 +616,7 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "-", "-"],
@@ -625,7 +625,7 @@ still = [
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ork_char_b1.damage_tables.Regular]

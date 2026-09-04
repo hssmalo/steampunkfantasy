@@ -222,7 +222,7 @@ still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["(L/R)", "A", "F"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.goblin_infantry_carrier.orders.fire]
@@ -374,7 +374,7 @@ still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["(L/R)", "A", "F"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.heavy_carrier.orders.fire]
@@ -464,7 +464,7 @@ still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["(L/R)", "A", "F"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.modified_truck.orders.fire]
@@ -970,7 +970,7 @@ text = "Unit is destroyed if trying to land in an impassable or overcrowded hex.
 text = "After firing this weapon, set speed to slow flying"
 
 [equipment.ogre_rifle.orders_gained.movement]
-slow_fly = [["rev", "-", "B[still]"]]
+slow_fly = [["Rev", "-", "B[still]"]]
 
 [equipment.ogre_rifle.orders_gained.fire]
 still = [["Load", "-"], ["-", "Load"]]

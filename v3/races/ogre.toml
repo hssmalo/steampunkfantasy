@@ -25,7 +25,7 @@ tip = '''Low range and slow is a bad combination, but if you manage to come with
 
 [units.ogre_hydra.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.ogre_hydra.specials.regeneration]]
 variant = "heal_per_head"
@@ -40,12 +40,12 @@ text = "Breath weapon and poison spit always treated as loaded and used with Fir
 args.N = 1
 
 [units.ogre_hydra.orders.fire]
-still = [["Fire(H)", "Load(crew)"], ["Load(crew)", "Fire(H)"], ["Fire(H)", "Fire(crew)"], ["Fire(crew)", "Fire(H)"]]
-slow =  [["Fire(H)", "Load(crew)"], ["Load(crew)", "Fire(H)"], ["Fire(H)", "Fire(crew)"], ["Fire(crew)", "Fire(H)"]]
+still = [["Fire(h)", "Load(crew)"], ["Load(crew)", "Fire(h)"], ["Fire(h)", "Fire(crew)"], ["Fire(crew)", "Fire(h)"]]
+slow =  [["Fire(h)", "Load(crew)"], ["Load(crew)", "Fire(h)"], ["Fire(h)", "Fire(crew)"], ["Fire(crew)", "Fire(h)"]]
 
 [units.ogre_hydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.ogre_hydra.damage_tables.Regular]
 rows = [
@@ -403,7 +403,7 @@ fast = [
 rest = [["-", "-", "-"]]
 still = [["360°", "360°", "B[rest]"]]
 slow = [["360°", "F", "B"]]
-fast = [["Chs", "Chs", "Chs + B"]]
+fast = [["Chs", "Chs", "Chs+B"]]
 
 [units.drone_swarm.damage_tables.Regular]
 rows = [

@@ -104,7 +104,7 @@ def synthetic_unit(**fields: object) -> UnitConfig:
             "models": ["soldier"],
             "size": "small",
             "cost": {"mp": 3},
-            "shaken": {"speed": "slow", "movement_order": ["-", "-", "flee"]},
+            "shaken": {"speed": "slow", "movement_order": ["-", "-", "Flee"]},
             "orders": {},
             "damage_tables": {"Regular": {"rows": ["1: Fine", "2: Dead"]}},
         }

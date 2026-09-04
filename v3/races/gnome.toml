@@ -34,7 +34,7 @@ args.N = -2
 
 [units.gnome_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.gnome_infantry.orders.movement]
 slow = [
@@ -85,7 +85,7 @@ note = "May not enter buildings"
 
 [units.quad_bike.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.quad_bike.orders.movement]
 fast = [
@@ -136,7 +136,7 @@ cost.vpm = 2
 
 [units.assault_bots.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.assault_bots.specials.no_surving_vp]]
 
@@ -197,7 +197,7 @@ args.N = 4
 
 [units.gnome_motorcycle.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.gnome_motorcycle.orders.movement]
 fast = [
@@ -286,13 +286,13 @@ slow = [
     ["L/R", "(L/R)", "-"],
     ["F", "(L/R)", "-"],
     ["(L/R)", "(F)", "B"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["(L/R)", "A", "F"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ballista_tractor_mark_i.orders.fire]
@@ -345,13 +345,13 @@ slow = [
     ["L/R", "(L/R)", "-"],
     ["F", "(L/R)", "-"],
     ["(L/R)", "(F)", "B"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["(L/R)", "A", "F"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ballista_tractor_mark_ii.orders.fire]
@@ -407,13 +407,13 @@ slow = [
     ["L/R", "(L/R)", "-"],
     ["F", "(L/R)", "-"],
     ["(L/R)", "(F)", "B"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["(L/R)", "A", "F"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.ballista_tractor_mark_iii.orders.fire]

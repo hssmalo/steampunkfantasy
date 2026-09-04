@@ -11,7 +11,7 @@ from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import holders, names, prose, variants
+from spf.lint import holders, names, orders, prose, variants
 from spf.registry import Registry, load_registry
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
@@ -124,7 +124,26 @@ def lint_race_config(
     for section, entries in sections.items():
         findings.extend(lint_entries(race, section, entries, conventions))
     findings += lint_prose(race, race_config)
+    findings += lint_order_cells(race, race_config, conventions)
     return findings
+
+
+def lint_order_cells(
+    race: t.RaceName, race_config: RaceConfig, conventions: LintConfig
+) -> list[Finding]:
+    """Apply the order rules to every cell of every Order Card the Race prints."""
+    vocabulary = frozenset(conventions.order_names)
+    return [
+        Finding(
+            race=race,
+            section=location.split(".", 1)[0],
+            key=location.split(".", 1)[-1],
+            rule=rule,
+            message=message,
+        )
+        for location, cell in orders.walk_cells(race_config.model_dump())
+        for rule, message in orders.check_cell(cell, vocabulary)
+    ]
 
 
 def lint_prose(race: t.RaceName, race_config: RaceConfig) -> list[Finding]:

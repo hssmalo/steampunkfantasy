@@ -30,14 +30,14 @@ slow = [
 	["B", "-", "-"],
 	["A", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 fast = [["F", "F", "-"], ["F", "B", "-"]]
 
@@ -184,14 +184,14 @@ slow = [
 	["B", "-", "-"],
 	["A", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 fast = [["F", "F", "-"], ["F", "B", "-"]]
 
@@ -249,7 +249,7 @@ description = '''An abomination is an humanoid creature with 4 tentacles and two
 
 [units.abomination_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.abomination_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -273,7 +273,7 @@ still = [
 
 [units.abomination_infantry.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.abomination_infantry.damage_tables.Regular]
 rows = [
@@ -333,7 +333,7 @@ args.N = 3
 
 [units.horror.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.horror.damage_tables.Regular]
 rows = [
@@ -364,7 +364,7 @@ description = '''A flying monster bird scaring the enemy with a deadly scream.
 
 [units.shriek_monstrosity.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.shriek_monstrosity.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -502,7 +502,7 @@ description = '''An abomination (humandoid creature with 4 tentacles, inspired b
 
 [units.giant_frog_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.giant_frog_riders.specials.resistance]]
 args.version = "resistance_type.poison"

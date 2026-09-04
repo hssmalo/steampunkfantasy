@@ -19,7 +19,7 @@ description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, wi
 
 [units.elf_hydra.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_hydra.specials.regeneration]]
 variant = "heal_per_head"
@@ -39,7 +39,7 @@ slow = [["Fire", "-"], ["-", "Fire"]]
 
 [units.elf_hydra.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
-still = [["360°", "360°", "360°"], ["360°", "A ", "F"]]
+still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.elf_hydra.damage_tables.Regular]
 rows = [
@@ -69,7 +69,7 @@ description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
 
 [units.elf_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -90,10 +90,10 @@ still = [
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_infantry.damage_tables.Regular]
 rows = [
@@ -123,7 +123,7 @@ description = '''An elegant elf wielding an steampunk bow. The bow has some cloc
 
 [units.elf_archer.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_archer.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -148,10 +148,10 @@ fast = [["Fire", "Fire"]]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_archer.damage_tables.Regular]
 rows = [
@@ -186,7 +186,7 @@ args.N = 2
 
 [units.illusion.shaken]
 speed = 'slow'
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.illusion.orders.movement]
 slow = [["-", "-", "Chs"],["Follow", "Follow", "Follow"]]
@@ -212,7 +212,7 @@ description = '''An elegant elf scout hiding in the forest and observing the bat
 
 [units.elf_scout.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elf_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -227,17 +227,17 @@ still = [
 	["Fire", "-"],
 	["Load", "-"],
 	["Aim", "-"],
-	["spot", "spot"],
+	["Spot", "Spot"],
 ]
 
 [units.elf_scout.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_scout.damage_tables.Regular]
 rows = [
@@ -262,7 +262,7 @@ description = '''An elite elegant elf scout hiding in the forest and observing t
 
 [units.elite_elf_scout.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.elite_elf_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -281,17 +281,17 @@ still = [
 	["Fire", "-"],
 	["Load", "-"],
 	["Aim", "-"],
-	["spot", "spot"],
+	["Spot", "Spot"],
 ]
 
 [units.elite_elf_scout.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"], ["360°+A", "F", "F"]]
 still = [
 	["360°", "360°", "360°"],
-	["360°", "A ", "F"],
-	["360°+A+A ", "F ", "F"]
+	["360°", "A", "F"],
+	["360°+A+A", "F", "F"]
 ]
-fast = [["360°", "F", "B"], [" 360°", " F", "B+B"]]
+fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elite_elf_scout.damage_tables.Regular]
 rows = [
@@ -335,14 +335,14 @@ slow = [
 	["A", "F", "-"],
 	["B", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.e34.damage_tables.Regular]
@@ -405,21 +405,21 @@ fast = [
 	["F", "L/R", "-"],
 	["F", "B", "-"],
 	["L/R", "F", "-"],
-	["road", "road", "road"],
+	["Road", "Road", "Road"],
 ]
 slow = [
 	["L/R", "(L/R)", "-"],
 	["A", "F", "-"],
 	["B", "-", "-"],
 	["F", "-", "-"],
-	["B", "rev", "-"],
+	["B", "Rev", "-"],
 ]
 still = [
 	["L/R", "(L/R)", "(L/R)"],
 	["-", "-", "-"],
 	["L/R", "A", "F"],
 	["A", "F", "-"],
-	["rev", "-", "-"],
+	["Rev", "-", "-"],
 ]
 
 [units.tattoo_ink.damage_tables.Critical]
@@ -467,7 +467,7 @@ args.N = 3
 
 [units.bear_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.bear_rider.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -515,7 +515,7 @@ text = "Flame arrow fires every gunnery phase independent of gatling gun. Always
 
 [units.dire_polar_bear_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.dire_polar_bear_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -556,7 +556,7 @@ description = '''An elegant armored elf riding on an armored unicorn. The elf is
 
 [units.armored_unicorn_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.armored_unicorn_rider.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -653,7 +653,7 @@ text = "Fire SMG in both gunnery phases regardless of orders. Fire orders are fo
 
 [units.pachycephalosaurus_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.pachycephalosaurus_riders.orders.fire]
 still = [["Fire", "Load"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
@@ -739,23 +739,23 @@ args.N = 2
 
 [units.pegasus_rider.shaken]
 speed = "slow_fly"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.pegasus_rider.orders.fire]
 still = [
 	["Fire(bow)", "Fire(bow)"],
-	["Fire Burst(5)", "Fire (bow)"],
-	["Fire (bow)", "Fire Burst(5)"],
+	["Fire Burst(5)", "Fire(bow)"],
+	["Fire(bow)", "Fire Burst(5)"],
 ]
 slow = [
 	["Fire(bow)", "Fire(bow)"],
-	["Fire Burst(5)", "Fire (bow)"],
-	["Fire (bow)", "Fire Burst(5)"],
+	["Fire Burst(5)", "Fire(bow)"],
+	["Fire(bow)", "Fire Burst(5)"],
 ]
 fast = [
 	["Fire(bow)", "Fire(bow)"],
-	["Fire Burst(5)", "Fire (bow)"],
-	["Fire (bow)", "Fire Burst(5)"],
+	["Fire Burst(5)", "Fire(bow)"],
+	["Fire(bow)", "Fire Burst(5)"],
 ]
 
 [units.pegasus_rider.orders.movement]
@@ -764,19 +764,19 @@ slow = [
 	["360°", "F", "360°"],
 	["360°", "B", "360°"],
 	["360°", "A[fly]", "F"],
-	["360°", "A[f,fly]", "F"],
+	["360°", "A[f, fly]", "F"],
 	["360°", "A", "F"],
 ]
 slow_fly = [
 	["F", "(L/R)", "-"],
 	["F", "B[still]", "-"],
-	["F", "A[f,fly]", "F"],
+	["F", "A[f, fly]", "F"],
 	["(L/R)", "(L/R)", "F"],
 ]
 fast = [
 	["360°", "F", "F"],
 	["360°", "F", "B"],
-	["360°", "A[f,fly],F", "F"],
+	["360°", "A[f, fly]+F", "F"],
 	["360°", "F", "B"],
 ]
 fast_fly = [
@@ -1302,7 +1302,7 @@ text = "Starts battle with one aim token. (note that it is lost if you don't fir
 
 [units.sauropod_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.sauropod_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -1362,22 +1362,22 @@ fast = [["F", "F", "-"], ["F", "L/R", "F"], ["B", "360°", "F"]]
 
 [units.armored_oliphant_riders.orders.fire]
 still = [
-	["fire", "fire"],
-	["fire", "aim(g)"],
-	["fire", "load(g)"],
-	["fire", "fire(g)"]
+	["Fire", "Fire"],
+	["Fire", "Aim(g)"],
+	["Fire", "Load(g)"],
+	["Fire", "Fire(g)"]
 ]
 slow = [
-	["fire", "fire"],
-	["fire", "aim(g)"],
-	["fire", "load(g)"],
-	["fire", "fire(g)"]
+	["Fire", "Fire"],
+	["Fire", "Aim(g)"],
+	["Fire", "Load(g)"],
+	["Fire", "Fire(g)"]
 ]
 fast = [
-	["fire", "fire"],
-	["fire", "aim(g)"],
-	["fire", "load(g)"],
-	["fire", "fire(g)"]
+	["Fire", "Fire"],
+	["Fire", "Aim(g)"],
+	["Fire", "Load(g)"],
+	["Fire", "Fire(g)"]
 ]
 
 [units.armored_oliphant_riders.damage_tables.Regular]
@@ -1414,16 +1414,16 @@ args.N = 2
 
 [units.eagle_rider.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [units.eagle_rider.orders.fire]
 fast_fly = [["-", "Fire"], ["-", "Load"], ["-", "Throw"]]
 slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 
 [units.eagle_rider.orders.movement]
-fast_fly = [["360°,F", "360°,F,360°", "F,360°"], ["360°,F ", "F", "B"]]
+fast_fly = [["360°+F", "360°+F+360°", "F+360°"], ["360°+F", "F", "B"]]
 slow = [
-	[" 360° ", " F ", " 360°"],
+	["360°", "F", "360°"],
 	["360°", "360°", "360°"],
 	["360°", "A", "F"]
 ]

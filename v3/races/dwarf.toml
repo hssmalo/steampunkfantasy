@@ -22,7 +22,7 @@ description = "Dwarf infantry wielding a musket"
 
 [units.dwarf_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.dwarf_infantry.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -73,7 +73,7 @@ description = '''Two Twin Dwarfs in heavy armor fighting side by side wielding a
 
 [units.dwarf_brother_in_arms.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.dwarf_brother_in_arms.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -134,7 +134,7 @@ description = '''A dwarf in steampunk powerarmor wielding a multibarrled heavy m
 
 [units.steampowerarmor.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 
 [[units.steampowerarmor.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -207,7 +207,7 @@ note = "Floats"
 
 [units.mini_zeppelin.shaken]
 speed = "slow"
-movement_order = ["random", "-", "-"]
+movement_order = ["Random", "-", "-"]
 fire_order = "Normal"
 
 [[units.mini_zeppelin.specials.resistance]]
@@ -215,7 +215,7 @@ args.version = "resistance_type.poison"
 args.N = 3
 
 [units.mini_zeppelin.orders.movement]
-fast = [["random", "L/R+F", "F"], ["random", "F", "F"], ["random", "F", "B"]]
+fast = [["Random", "L/R+F", "F"], ["Random", "F", "F"], ["Random", "F", "B"]]
 slow = [["360°", "F", "360°"], ["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.mini_zeppelin.orders.fire]
@@ -252,10 +252,10 @@ text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deplo
 
 [units.transport_zeppelin.orders.movement]
 fast_fly = [
-    ["(L/R)", "F", "F+Depoloy"],
-    ["F", "F+Depoloy", "(L/R)"],
+    ["(L/R)", "F", "F+Deploy"],
+    ["F", "F+Deploy", "(L/R)"],
     ["F", "(L/R)", "F+(Deploy)"],
-    ["F+Depoloy", "F", "(L/R)"],
+    ["F+Deploy", "F", "(L/R)"],
     ["(L/R)", "F", "F"],
     ["F", "F", "(L/R)"],
     ["F", "(L/R)", "F"],
@@ -301,7 +301,7 @@ args.version = "resistance_type.fire"
 args.N = 1
 
 [units.dwarf_at_gun.orders.movement]
-slow = [["-", "360°", "B[Rest]"], ["-", "F", "B[Rest]"]]
+slow = [["-", "360°", "B[rest]"], ["-", "F", "B[rest]"]]
 still = [["-", "-", "A[slow]"], ["-", "-", "-"]]
 rest = [["-", "-", "A[slow]"], ["-", "-", "A[still]"]]
 
@@ -355,14 +355,14 @@ slow = [
     ["A", "F", "(BB)"],
     ["B", "-", "(BB)"],
     ["F", "-", "(BB)"],
-    ["B", "rev", "(BB)"],
+    ["B", "Rev", "(BB)"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)+(BB)"],
     ["-", "-", "(BB)"],
     ["L/R", "A", "F+(BB)"],
     ["A", "F", "(BB)"],
-    ["rev", "-", "(B)+(B)"],
+    ["Rev", "-", "(B)+(B)"],
     ["A+A+(L/R)", "F", "F+(B)+(B)"],
 ]
 
@@ -429,14 +429,14 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
     ["Aim", "-", "-"],
 ]
 
@@ -502,14 +502,14 @@ slow = [
     ["A", "F", "-"],
     ["B", "-", "-"],
     ["F", "-", "-"],
-    ["B", "rev", "-"],
+    ["B", "Rev", "-"],
 ]
 still = [
     ["L/R", "(L/R)", "(L/R)"],
     ["-", "-", "-"],
     ["L/R", "A", "F"],
     ["A", "F", "-"],
-    ["rev", "-", "-"],
+    ["Rev", "-", "-"],
 ]
 
 [units.zap.orders.fire]
@@ -609,7 +609,7 @@ description = '''A burning balrog with a flaming whip.
 
 [units.tamed_balrog.shaken]
 speed = "slow"
-movement_order = ["-", "-", "flee"]
+movement_order = ["-", "-", "Flee"]
 fire_order = "May not use whip"
 
 [[units.tamed_balrog.specials.resistance]]
@@ -1064,7 +1064,7 @@ strength.add = [1, 1, 1, 1]
 damage.replace = "d6-2 + d6 Psychic damage"
 
 [equipment.musket_with_springloaded_axe.orders_gained.fire]
-slow = [["-", "load"], ["load", "-"], ["fire", "-"], ["-", "fire"]]
+slow = [["-", "Load"], ["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [equipment.double_barreled_musket_with_springloaded_axe]
 name = "Double Barreled Musket with Springloaded Axe"
@@ -1240,7 +1240,7 @@ args.ability = "ability.enhanced_accuracy"
 args.N = 1
 
 [equipment.stabilizer.orders_gained.fire]
-slow = [["-", "aim"], ["aim", "-"]]
+slow = [["-", "Aim"], ["Aim", "-"]]
 
 [equipment.trench_coat_of_resistance]
 name = "Trench Coat of Resistance"
