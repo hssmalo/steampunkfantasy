@@ -857,9 +857,7 @@ aim_n_dice = "When using aim: roll {N} dice at same unit."
 [special.multiple_shots]
 name = "Multiple Shots"
 slots = ["range"]
-todo = """Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them.
-
-Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." A shot-count Variable may suit these better than a variant."""
+todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
 see_also = ["special.burst"]
 
 [special.multiple_shots.variables]
@@ -867,6 +865,7 @@ N = { type = "int", min = 1, max = 12, optional = true }
 
 [special.multiple_shots.variants]
 fire_n_times = "Fire {N} times per fire order."
+fire_n_times_same_target = "Fire {N} times at the same target."
 fire_per_minor_head = "Fire one time per alive minor head"
 left_and_right = "Fire once to the right and once to the left per fire order"
 d12_shots_same_unit = "Fire d12 shots each time and all at the same unit"

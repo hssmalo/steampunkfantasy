@@ -1380,7 +1380,8 @@ damage = "d6 Psychic damage"
 ap = 0
 
 [[equipment.twin_fear_ray_free.range.specials.multiple_shots]]
-text = "Fire two times at same target"
+args.N = 2
+variant = "fire_n_times_same_target"
 
 [equipment.fear_ray]
 name = "Fear Ray"

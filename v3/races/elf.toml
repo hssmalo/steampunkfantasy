@@ -1602,7 +1602,8 @@ damage = "d6 -2"
 ap = 2
 
 [[equipment.twin_rifle.range.specials.multiple_shots]]
-text = "Fires two times at same unit per shot."
+args.N = 2
+variant = "fire_n_times_same_target"
 
 [[equipment.twin_rifle.unit_specials.side_weapon]]
 text = "Twin Rifle fires in the same direction as the Main Tank Gun, and is always treated as loaded as long as the Main Tank gun is loaded"
