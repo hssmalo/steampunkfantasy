@@ -89,7 +89,7 @@ A terrifying view for all enemies, which the goblin enjoys a lot since it is an 
 '''
 
 tip = '''
-Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
+Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. Poison bow and poison spit makes these best versus bio units. The hallucinating poison is this unit most effective weapon, which you may find surprisingly nice. Do not underestimate how good confusion is to make enemies useless for å limited time. However, limited speed and limited range of weapons
 '''
 
 
@@ -741,7 +741,7 @@ race = "goblin"
 cost.xp = 8
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2", "Specialization:1"]
 equipment = ["goblin_bow", "goblin_grenade"]
-type = ["Bio", "Infantry", "Walking"]
+type = ["Bio", "Infantry", "Walking", "Snake Tamer"]
 replaces = "goblin_infantry"
 
 [models.snake_tamer.assault]
@@ -941,7 +941,7 @@ variant = "always_loaded"
 
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.poison"
-args.N = 4
+args.N = 6
 
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.horrifying_poison"
@@ -1209,9 +1209,12 @@ variant = "load_3_ammo"
 text = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
 
 [[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
+preamble = "Choose one of"
+
+[[equipment.goblin_bow_battery.range.specials.range_extra_damage.cases]]
 args.version = "token.minor_acid"
 
-[[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
+[[equipment.goblin_bow_battery.range.specials.range_extra_damage.cases]]
 args.version = "token.poison"
 args.N = 6
 
@@ -1255,9 +1258,6 @@ range = 4
 angle = [true, true, true, false]
 damage = "d6 Psychic damage + d6 Crew damage"
 ap = "N/A"
-
-[[equipment.stinkbomb.range.specials.range_extra_damage]]
-args.version = "token.minor_acid"
 
 [[equipment.stinkbomb.range.specials.range_extra_damage]]
 args.version = "token.poison"

@@ -5,6 +5,9 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 04.09.2026 | Goblin       | Snake Cavalry Hallucinating Poison became Poison[6]                         | Snake Cavalry is slow with limited range, so the poison spit needed more power       |
+| 04.09.2026 | Goblin       | Removed minor acid from stinkbomb                                           | Minor acid did not fit the theme of the weapon, and the weapon is good enough        |
+| 04.09.2026 | Ogre,Goblin  | Snake Tamer and Cyclops own unit types                                      | To make room for specialized weapons in the future                                   |
 | 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | To cool not to implement. Armored, durable, big boulder size bomb. Will review power |
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
 | 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychcic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |

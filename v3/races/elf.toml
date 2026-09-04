@@ -1520,7 +1520,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.light_mortar.range.specials.area]]
-#preamble = "One hex within normal range"
+text = "One hex within normal range"
 args.N = 5
 
 
@@ -1656,11 +1656,13 @@ ap = "3"
 variant = "aim_6_dice"
 
 [[equipment.gatling_gun.range.specials.area]]
-#preamble = "If not using aim, target all hexes within long range"
+preamble = "If not using aim, target all hexes within long range"
+
+[[equipment.gatling_gun.range.specials.area.cases]]
 args.N = 4
 variant = "point_blank"
 
-[[equipment.gatling_gun.range.specials.area]]
+[[equipment.gatling_gun.range.specials.area.cases]]
 args.N = 6
 text = "at normal and long range"
 
