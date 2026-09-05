@@ -1066,7 +1066,8 @@ damage = "d6 Psychic damage + d4 Crew damage"
 ap = 0
 
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.area]]
-text = "Choose one hex within range: Area(5+)."
+text = "Target one hex within normal range"
+args.N = 5
 
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.range_extra_damage]]
 args.version = "token.poison"
@@ -1124,22 +1125,19 @@ angle = [true, false, false, false]
 damage = "d6-1"
 ap = 6
 
-[[equipment.helicopter_gatling_gun.range.specials.multiple_shots]]
-text = "Fire once at all enemy units within range and within angle of fire"
 
 [[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
 args.N = 6
 
-#text = "If aim, instead use focus fire, roll 6 dice at same unit"
-[[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
 
 [[equipment.helicopter_gatling_gun.range.specials.area]]
-#preamble = "If not using aim, target all hexes within long range"
+preamble = "If not using aim, target all hexes within long range and arc of fire"
+
+[[equipment.helicopter_gatling_gun.range.specials.area.cases]]
 args.N = 4
 variant = "point_blank"
 
-[[equipment.helicopter_gatling_gun.range.specials.area]]
+[[equipment.helicopter_gatling_gun.range.specials.area.cases]]
 args.N = 6
 text = "at normal and long range"
 
@@ -1155,7 +1153,15 @@ damage = "n.a"
 ap = 0
 
 [[equipment.acidic_napalm_bomb.range.specials.area]]
-variant = "hex_minor_acid"
+args.N = 4
+text = "Target one hex within normal range."
+
+[[equipment.acidic_napalm_bomb.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+
+[[equipment.acidic_napalm_bomb.range.specials.range_extra_damage]]
+args.version = "token.fire"
+
 
 [[equipment.acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 2
@@ -1174,7 +1180,14 @@ damage = "n.a"
 ap = 0
 
 [[equipment.extra_acidic_napalm_bomb.range.specials.area]]
-variant = "hex_minor_acid"
+args.N = 4
+text = "Target one hex within normal range."
+
+[[equipment.extra_acidic_napalm_bomb.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+
+[[equipment.extra_acidic_napalm_bomb.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [[equipment.extra_acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 3
@@ -1193,7 +1206,14 @@ damage = "n.a"
 ap = 0
 
 [[equipment.major_acidic_napalm_bomb.range.specials.area]]
-text = "Choose a hex within normal range: Area(4+): acid and any unit hit at least one is set on fire (note, you inflict one acid per hit on the unit, but maximum one fire)."
+args.N = 4
+text = "Target one hex within normal range."
+
+[[equipment.major_acidic_napalm_bomb.range.specials.range_extra_damage]]
+args.version = "token.acid"
+
+[[equipment.major_acidic_napalm_bomb.range.specials.range_extra_damage]]
+args.version = "token.fire"
 
 [[equipment.major_acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 2
@@ -1359,7 +1379,19 @@ damage = "d6"
 ap = 2
 
 [[equipment.splintbombgrenade_launcher.range.specials.area]]
-text = "Choose one hex within range. If fired from 3 models it has Area(4+), if fired from 2 models it has Area(5+), if fired by 1 model it has Area(6+)."
+preamble = "Target one hex within normal range"
+
+[[equipment.splintbombgrenade_launcher.range.specials.area.cases]]
+text = "If fired from 3 models"
+args.N = 4
+
+[[equipment.splintbombgrenade_launcher.range.specials.area.cases]]
+text = "If fired from 2 models"
+args.N = 5
+
+[[equipment.splintbombgrenade_launcher.range.specials.area.cases]]
+text = "If fired from 1 models"
+args.N = 6
 
 [equipment.experimental_guided_missile]
 race = "gnome"

@@ -1520,7 +1520,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.light_mortar.range.specials.area]]
-text = "One hex within normal range"
+text = "Target one hex within normal range"
 args.N = 5
 
 
@@ -1653,10 +1653,10 @@ damage = "d6-1"
 ap = "3"
 
 [[equipment.gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
 
 [[equipment.gatling_gun.range.specials.area]]
-preamble = "If not using aim, target all hexes within long range"
+preamble = "If not using aim, target all hexes within long range and within one arc of fire"
 
 [[equipment.gatling_gun.range.specials.area.cases]]
 args.N = 4
@@ -1687,19 +1687,27 @@ requires = []
 description = "Represent one gatling gun firing to the left and one firing to the right."
 
 [equipment.oliphant_gatling_guns.range]
-range = 2
+range = 4
 angle = [false, true, true, false]
 damage = "d6-1"
 ap = "3"
 
 [[equipment.oliphant_gatling_guns.range.specials.multiple_shots]]
-text = "May fire at both sides with each fire order. Fire once at each enemy model within long range and within allowed angles."
+text = "May fire at both sides with each fire order."
 
 [[equipment.oliphant_gatling_guns.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
 
 [[equipment.oliphant_gatling_guns.range.specials.area]]
-text = "If not using aim, area[4+] at point blank range and area[6+] at all hexes within normal and long range and within all allowed angles, but avoids hexes with friendly units."
+preamble = "If not using aim, target all hexes within normal range and arc of fire"
+
+[[equipment.oliphant_gatling_guns.range.specials.area.cases]]
+args.N = 4
+variant = "point_blank"
+
+[[equipment.oliphant_gatling_guns.range.specials.area.cases]]
+args.N = 6
+variant = "normal_range"
 
 [equipment.at_rifle_free]
 name = "AT Rifle"
@@ -2034,10 +2042,8 @@ damage = "d6"
 ap = "7"
 
 [[equipment.grenade.range.specials.area]]
-text = "[5+]"
-
-[[equipment.grenade.range.specials.range]]
-variant = "target_hex_normal_range"
+text = "Target one hex within normal range"
+args.N = 5
 
 [[equipment.grenade.range.specials.ammo]]
 variant = "always_loaded"
@@ -2056,10 +2062,15 @@ damage = "d6"
 ap = "5"
 
 [[equipment.hand_grenade.range.specials.area]]
-text = "[5+] if used by a unit with 1-2 alive models, [4+] if used by a unit with 3-4 models"
+preamble = "Target one hex within normal range"
 
-[[equipment.hand_grenade.range.specials.range]]
-variant = "target_hex_normal_range"
+[[equipment.hand_grenade.range.specials.area.cases]]
+args.N = 5
+text = "if used by 1-2 alive models"
+
+[[equipment.hand_grenade.range.specials.area.cases]]
+args.N = 4
+text = "if used by 3-4 alive models"
 
 [[equipment.hand_grenade.range.specials.ammo]]
 variant = "always_loaded"
@@ -2112,11 +2123,11 @@ angle = [true, true, false, false]
 damage = "d6"
 ap = "5"
 
-[[equipment.heavy_mortar.range.specials.range]]
-text = "Target one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of target hex."
 
 [[equipment.heavy_mortar.range.specials.area]]
-text = "[4+]"
+text = "Chose one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of chosen hex."
+args.N = 4
+
 
 [equipment.deflection_field]
 name = "Deflection Field"

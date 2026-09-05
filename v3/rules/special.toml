@@ -813,9 +813,9 @@ N = { type = "int", min = 1, max = 6, optional = true}
 long_range = "at long range"
 normal_range = "at normal range"
 point_blank = "at point blank"
-at_range_2 = "at range=2"
-at_range_3_4 = "at range=3 or 4"
-hex_minor_acid = "Choose a hex within normal range: Area(4+): minor acid and any unit hit at least one is set on fire (note, you inflict one minor acid per hit on the unit, but maximum one fire)"
+#at_range_2 = "at range=2"
+#at_range_3_4 = "at range=3 or 4"
+
 
 
 

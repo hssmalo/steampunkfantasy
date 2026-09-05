@@ -967,7 +967,8 @@ damage = "d10"
 ap = 3
 
 [[equipment.troll_gatling_gun.range.specials.area]]
-text = "[6+] all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot."
+text = "Target all hexes within normal and long range. Targets both friends and foe. Long range reduces ap and damage as a regular range shot."
+args.N = 6
 
 [equipment.ork_musket]
 name = "Ork Musket"
@@ -1265,10 +1266,15 @@ ap = 6
 note = "It is a 1 handed weapon but may not be combined with another sling"
 
 [[equipment.grenade_sling.range.specials.area]]
-text = "If fired from a unit with 3-4 models: Area[4+], if fired from a unit with 1-2 models: Area[5+]."
+preamble = "Target hex within normal range"
 
-[[equipment.grenade_sling.range.specials.range]]
-variant = "target_hex_normal_range"
+[[equipment.grenade_sling.range.specials.area.cases]]
+args.N = 4
+text = "If fired from a unit with 3-4 models"
+
+[[equipment.grenade_sling.range.specials.area.cases]]
+args.N = 5
+text = "If fired from a unit with 1-2 models"
 
 [[equipment.grenade_sling.range.specials.bonus]]
 text = "If combined with the pyro, the pyro gains standard range of 3 instead of 1."
@@ -1307,13 +1313,22 @@ name = "Flamethrower"
 requires = []
 
 [equipment.flamethrower.range]
-range = 1
+range = 2
 angle = [true, false, false, false]
 damage = "N.A"
 ap = 0
 
 [[equipment.flamethrower.range.specials.area]]
-text = "Fire at all possible hexes possible simultaneously: Area(3+) at point blank range, Area(4+) in the hex at long range directly ahead, and Area(5+) for the two hexes which is on long range and on edge of firing arc."
+preamble = "Target all hexes within normal range and arc of fire"
+
+[[equipment.flamethrower.range.specials.area.cases]]
+args.N = 3
+variant = "point_blank"
+
+[[equipment.flamethrower.range.specials.area.cases]]
+args.N = 5
+variant = "normal_range"
+
 
 [[equipment.flamethrower.range.specials.range_extra_damage]]
 args.version = "token.fire"
@@ -1383,11 +1398,46 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 6
 
-[[equipment.hand_catapult.range.specials.area]]
-text = "If fired from a unit with 3-4 models within normal range: Area[4+], if fired from a unit with 1-2 models at normal range: Area[5+], if fired from a unit with 3-4 models within long range: Area(5+), if fired from a unit with 1-2 models within long range: Area[6+]."
 
-[[equipment.hand_catapult.range.specials.range]]
-text = "Choose one hex within normal range or one hex within long range."
+[[equipment.hand_catapult.range.specials.area]]
+preamble = "If fired from a unit with 1-2 alive models:"
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 4
+variant = "point_blank"
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 5
+variant = "normal_range"
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 6
+variant = "long_range"
+
+[[equipment.hand_catapult.range.specials.area]]
+preamble = "Target one hex within long range. If fired from a unit with 3-4 alive models:"
+
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 4
+variant = "normal_range"
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 5
+variant = "long_range"
+
+
+[[equipment.hand_catapult.range.specials.area]]
+preamble = "If fired from a unit with 1-2 alive models"
+
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 5
+variant = "normal_range"
+
+[[equipment.hand_catapult.range.specials.area.cases]]
+args.N = 6
+variant = "long_range"
 
 [equipment.big_gun]
 race = "ork"
@@ -1422,11 +1472,9 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 3
 
-[[equipment.grenade_launcher.range.specials.range]]
-text = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex."
-
 [[equipment.grenade_launcher.range.specials.area]]
-text = "[2+]"
+text = "Choose a hex within normal range, roll a die. At 5+ target the chosen hex, otherwise target a random adjacent hex."
+args.N = 2
 
 [equipment.assault_musket]
 race = "ork"

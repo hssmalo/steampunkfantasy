@@ -1103,11 +1103,9 @@ angle = [true, true, true, true]
 damage = "d12"
 ap = 8
 
-[[equipment.boulder_bomb.range.specials.range]]
-text = "Target one hex within normal range: Wide Blast Radius[2]: target all hexes within range 2 of target hex."
-
 [[equipment.boulder_bomb.range.specials.area]]
-text = "[5+]"
+text = "Chose one hex within normal range: Wide Blast Radius[2]: target all hexes within range 2 of chosen hex."
+args.N = 5
 
 [[equipment.boulder_bomb.range.specials.limited_ammo]]
 args.N = 1
@@ -1135,7 +1133,8 @@ damage = "d8 (+3 if penetrating all armor)"
 ap = 6
 
 [[equipment.ogre_artillery.range.specials.area]]
-text = "If you hit enemy, in addition to regular damage, Area[5+], AP=4, damage=d8 in the target hex"
+args.N = 5
+text = "If you hit enemy, in addition to regular damage do area effect with, AP=4, damage=d8"
 
 [[equipment.ogre_artillery.range.specials.indirect_fire]]
 text = "May use line of sight of any scout instead of its own."

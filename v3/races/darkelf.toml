@@ -1518,10 +1518,10 @@ damage = "d6 + d6 Psychic damage"
 ap = 3
 
 [[equipment.tail_gatling_gun.range.specials.focus_fire]]
-variant = "aim_6_dice"
+args.N = 6
 
 [[equipment.tail_gatling_gun.range.specials.area]]
-preamble = "If not using aim, fire once at all enemy models in all hexes within normal and long range"
+preamble = "If not using aim, target all hexes within long range"
 
 [[equipment.tail_gatling_gun.range.specials.area.cases]]
 args.N = 5
@@ -1681,12 +1681,15 @@ angle = [true, false, false, false]
 damage = "d8 Crew damage"
 ap = 0
 
+
 [[equipment.nightmare_breath.range.specials.area]]
-#preamble ='All hexes within normal range and within arc"
+preamble ="Targe all hexes within normal range and within front arc"
+
+[[equipment.nightmare_breath.range.specials.area.cases]]
 args.N = 4
 variant = "point_blank"
 
-[[equipment.nightmare_breath.range.specials.area]]
+[[equipment.nightmare_breath.range.specials.area.cases]]
 args.N = 6
 variant = "normal_range"
 
@@ -1814,17 +1817,25 @@ angle = [true, false, false, false]
 damage = "-"
 ap = 0
 
+
 [[equipment.acid_breath.range.specials.area]]
-#preamble = "All hexes within long range and arc of fire"
+preamble = "Target all hexes within long range and arc of fire"
+
+[[equipment.acid_breath.range.specials.area.cases]]
 args.N = 1
 
-[[equipment.acid_breath.range.specials.range_extra_damage]]
-args.version = "token.acid"
-text = "Within normal range"
 
+#ToDo: use preamble
 [[equipment.acid_breath.range.specials.range_extra_damage]]
+preamble = "Acid within normal range and minor acid within long range"
+
+[[equipment.acid_breath.range.specials.range_extra_damage.cases]]
+args.version = "token.acid"
+
+[[equipment.acid_breath.range.specials.range_extra_damage.cases]]
 args.version = "token.minor_acid"
-text = "within long range"
+
+
 
 [[equipment.acid_breath.range.specials.no_damage]]
 args.damage_type = "damage_type.regular"
@@ -1841,7 +1852,7 @@ damage = "-"
 ap = 0
 
 [[equipment.poison_breath.range.specials.area]]
-#preamble = "All hexes within normal range"
+text = "All hexes within normal range"
 args.N = 5
 
 [[equipment.poison_breath.range.specials.range_extra_damage]]
@@ -1860,15 +1871,18 @@ damage = "-"
 ap = 0
 
 [[equipment.fire_breath.range.specials.area]]
-#preamble = "All hexes within long range"
+preamble = "All hexes within long range"
+
+
+[[equipment.fire_breath.range.specials.area.cases]]
 args.N = 4
 variant = "point_blank"
 
-[[equipment.fire_breath.range.specials.area]]
+[[equipment.fire_breath.range.specials.area.cases]]
 args.N = 5
 variant = "normal_range"
 
-[[equipment.fire_breath.range.specials.area]]
+[[equipment.fire_breath.range.specials.area.cases]]
 args.N = 6
 variant = "long_range"
 
@@ -1915,11 +1929,13 @@ damage = "d4-2"
 ap = 1
 
 [[equipment.shrapnel_spit.range.specials.area]]
-#preamble = "Choose one hex within normal range. Single model large units counts as d4 models, while single model huge units counts as d8 models."
+preamble = "Choose one hex within normal range. Single model large units counts as d4 models, while single model huge units counts as d8 models."
+
+[[equipment.shrapnel_spit.range.specials.area.cases]]
 args.N = 1
 variant = "point_blank"
 
-[[equipment.shrapnel_spit.range.specials.area]]
+[[equipment.shrapnel_spit.range.specials.area.cases]]
 args.N = 4
 variant = "normal_range"
 
@@ -1952,11 +1968,13 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.shrapnel_breath.range.specials.area]]
-#preamble = "All hexes within normal range. Single model large units counts as d4 models, while single model huge units counts as d8 models."
+preamble = "All hexes within normal range. Single model large units counts as d4 models, while single model huge units counts as d8 models."
+
+[[equipment.shrapnel_breath.range.specials.area.cases]]
 args.N = 1
 variant = "point_blank"
 
-[[equipment.shrapnel_breath.range.specials.area]]
+[[equipment.shrapnel_breath.range.specials.area.cases]]
 args.N = 4
 variant = "normal_range"
 

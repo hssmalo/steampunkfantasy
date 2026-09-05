@@ -89,7 +89,8 @@ A terrifying view for all enemies, which the goblin enjoys a lot since it is an 
 '''
 
 tip = '''
-Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. Poison bow and poison spit makes these best versus bio units. The hallucinating poison is this unit most effective weapon, which you may find surprisingly nice. Do not underestimate how good confusion is to make enemies useless for å limited time. However, limited speed and limited range of weapons
+Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. Poison bow and poison spit makes these best versus bio units.
+It can use all of the weapons every gunnery phase, but has no to-hit benefits. Thus it is best to target units which are easy to hi. The hallucinating poison is this unit most effective weapon, which you may find surprisingly nice. Do not underestimate how good confusion is to make enemies useless for å limited time. The greatest weakness of this unit is limited range and low speed.
 '''
 
 
@@ -1264,7 +1265,8 @@ args.version = "token.poison"
 args.N = 6
 
 [[equipment.stinkbomb.range.specials.area]]
-text = "If you hit the enemy, Area[5+] with same damage as main hit (with extra damage)"
+args.N = 5
+text = "If you hit the enemy, apply area effect with same damage as main hit (with extra damage)"
 
 [[equipment.stinkbomb.range.specials.cloud]]
 text = "Place a Poison Cloud[6] in the hex of the targeted unit"
@@ -1281,7 +1283,8 @@ damage = "n.a"
 ap = 0
 
 [[equipment.ring_of_fire.range.specials.area]]
-text = "[6+] target at all enemies within exactly range 2"
+args.N = 6
+text = "Target at all enemies within exactly range 2"
 
 [[equipment.ring_of_fire.range.specials.range_extra_damage]]
 args.version = "token.fire"

@@ -1289,10 +1289,10 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2+d4 Crew damage"
 ap = 2
-note = "Choose one hex which all models in this unit fire at"
+
 
 [[equipment.steamblower.range.specials.area]]
-preamble = "If fired from a unit with 1-2 alive models"
+preamble = "Target one hex within long range. If fired from a unit with 1-2 alive models."
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 4
@@ -1300,11 +1300,11 @@ variant = "point_blank"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 5
-variant = "at_range_2"
+variant = "normal_range"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 6
-variant = "at_range_3_4"
+variant = "long_range"
 
 [[equipment.steamblower.range.specials.area]]
 preamble = "If fired from a unit with 3-4 alive models"
@@ -1315,11 +1315,11 @@ variant = "point_blank"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 4
-variant = "at_range_2"
+variant = "normal_range"
 
 [[equipment.steamblower.range.specials.area.cases]]
 args.N = 5
-variant = "at_range_3_4"
+variant = "long_range"
 
 [equipment.poison_gas_grenade]
 name = "Poison Gas Grenade"
@@ -1427,7 +1427,9 @@ damage = "d6 +1 +(+3 if penetrating all armor)"
 ap = 9
 
 [[equipment.tank_gun.range.specials.ammo]]
-text = "Load unstable: If it hits the target, it in addition to normal damage it gets gets Area(5+) effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
+text = "Load unstable: If it hits the target, it in addition to normal damage it gets gets Area[5+] effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
+
+
 
 [equipment.array_of_enhanced_heavy_muskets]
 name = "Array of Enhanced Heavy Muskets"
