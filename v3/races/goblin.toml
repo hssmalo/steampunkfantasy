@@ -1210,12 +1210,9 @@ variant = "load_3_ammo"
 text = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
 
 [[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
-preamble = "Choose one of"
-
-[[equipment.goblin_bow_battery.range.specials.range_extra_damage.cases]]
 args.version = "token.minor_acid"
 
-[[equipment.goblin_bow_battery.range.specials.range_extra_damage.cases]]
+[[equipment.goblin_bow_battery.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
 

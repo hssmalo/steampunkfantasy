@@ -1520,7 +1520,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.light_mortar.range.specials.area]]
-text = "Target one hex within normal range"
+variant = "one_hex_normal"
 args.N = 5
 
 
@@ -2042,7 +2042,7 @@ damage = "d6"
 ap = "7"
 
 [[equipment.grenade.range.specials.area]]
-text = "Target one hex within normal range"
+variant = "one_hex_normal"
 args.N = 5
 
 [[equipment.grenade.range.specials.ammo]]
@@ -2062,7 +2062,8 @@ damage = "d6"
 ap = "5"
 
 [[equipment.hand_grenade.range.specials.area]]
-preamble = "Target one hex within normal range"
+variant = "one_hex_normal"
+#preamble = "Target one hex within normal range"
 
 [[equipment.hand_grenade.range.specials.area.cases]]
 args.N = 5
@@ -2096,10 +2097,8 @@ damage = "d6"
 ap = "5"
 
 [[equipment.crew_hand_grenade.range.specials.area]]
-text = "[4+]"
-
-[[equipment.crew_hand_grenade.range.specials.range]]
-variant = "target_hex_normal_range"
+variant = "one_hex_normal"
+args.N = 4
 
 [[equipment.crew_hand_grenade.range.specials.ammo]]
 variant = "always_loaded"

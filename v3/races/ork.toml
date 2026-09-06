@@ -1319,7 +1319,8 @@ damage = "N.A"
 ap = 0
 
 [[equipment.flamethrower.range.specials.area]]
-preamble = "Target all hexes within normal range and arc of fire"
+variant = "all_hexes_arc_normal"
+#preamble = "Target all hexes within normal range and arc of fire"
 
 [[equipment.flamethrower.range.specials.area.cases]]
 args.N = 3

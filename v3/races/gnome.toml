@@ -1066,7 +1066,7 @@ damage = "d6 Psychic damage + d4 Crew damage"
 ap = 0
 
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.area]]
-text = "Target one hex within normal range"
+variant = "one_hex_normal"
 args.N = 5
 
 [[equipment.helicopter_mounted_green_gas_launcher.range.specials.range_extra_damage]]
@@ -1153,8 +1153,8 @@ damage = "n.a"
 ap = 0
 
 [[equipment.acidic_napalm_bomb.range.specials.area]]
+variant = "one_hex_normal"
 args.N = 4
-text = "Target one hex within normal range."
 
 [[equipment.acidic_napalm_bomb.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
@@ -1379,7 +1379,8 @@ damage = "d6"
 ap = 2
 
 [[equipment.splintbombgrenade_launcher.range.specials.area]]
-preamble = "Target one hex within normal range"
+variant = "one_hex_normal"
+#preamble = "Target one hex within normal range"
 
 [[equipment.splintbombgrenade_launcher.range.specials.area.cases]]
 text = "If fired from 3 models"

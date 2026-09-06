@@ -1819,9 +1819,7 @@ ap = 0
 
 
 [[equipment.acid_breath.range.specials.area]]
-preamble = "Target all hexes within long range and arc of fire"
-
-[[equipment.acid_breath.range.specials.area.cases]]
+variant = "all_hexes_arc_long"
 args.N = 1
 
 
@@ -1852,7 +1850,7 @@ damage = "-"
 ap = 0
 
 [[equipment.poison_breath.range.specials.area]]
-text = "All hexes within normal range"
+variant = "all_hexes_arc_normal"
 args.N = 5
 
 [[equipment.poison_breath.range.specials.range_extra_damage]]
@@ -1871,7 +1869,7 @@ damage = "-"
 ap = 0
 
 [[equipment.fire_breath.range.specials.area]]
-preamble = "All hexes within long range"
+preamble = "Target hexes within long range and arc of fire"
 
 
 [[equipment.fire_breath.range.specials.area.cases]]
@@ -1968,7 +1966,7 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.shrapnel_breath.range.specials.area]]
-preamble = "All hexes within normal range. Single model large units counts as d4 models, while single model huge units counts as d8 models."
+preamble = "Target all hexes within normal range and arc of fire. Single model large units counts as d4 models, while single model huge units counts as d8 models."
 
 [[equipment.shrapnel_breath.range.specials.area.cases]]
 args.N = 1
