@@ -446,7 +446,8 @@ def render_site() -> None:
     for page in [page for section in sections for page in _section_pages(section)]:
         stdout.print(f"Wrote {output_root / page.relative_path}")
     stdout.print(f"Wrote {index_path}")
-    stdout.print(f"Published {len(published)} image assets under {output_root / 'art'}")
+    art_root = output_root / config.site.art
+    stdout.print(f"Published {len(published)} image assets under {art_root}")
 
 
 def add_commands(app: cyclopts.App) -> None:
