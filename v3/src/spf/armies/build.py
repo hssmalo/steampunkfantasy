@@ -71,8 +71,48 @@ class ArmyUnit:
         equipment_name: str,
         race_config: RaceConfig,
     ) -> Self:
-        """Return a new ArmyUnit with an equipment upgrade applied to one model."""
+        """Return a new ArmyUnit with an equipment upgrade applied to one model.
+
+        Raises ValueError for a Unit Fixture: a Fixture is bought for the whole
+        Unit, and the rules put no price on a fraction of one (ADR 0026).
+        """
         model_idx, model = _resolve_model(self, model_key=model_key)
+        if race_config.equipment[equipment_name].upgrade_all:
+            msg = (
+                f"Equipment '{equipment_name}' is a Unit Fixture and is bought"
+                " for the whole unit; use upgrade_all_models() to buy one"
+            )
+            raise ValueError(msg)
+        return self._equip(model_idx, model, equipment_name, race_config=race_config)
+
+    def upgrade_all_models(
+        self, *, equipment_name: str, race_config: RaceConfig
+    ) -> Self:
+        """Return a new ArmyUnit with one purchase of `equipment_name` on every model.
+
+        This is how a Unit Fixture is bought: one purchase, one copy on each
+        Model. Per-model equipment may be bought this way too — it is then
+        simply charged once per model.
+        """
+        result = self
+        for model_idx in range(len(self.models)):
+            result = result._equip(
+                model_idx,
+                result.models[model_idx],
+                equipment_name,
+                race_config=race_config,
+            )
+        return result
+
+    def _equip(
+        self,
+        model_idx: int,
+        model: ArmyModel,
+        equipment_name: str,
+        *,
+        race_config: RaceConfig,
+    ) -> Self:
+        """Return a new ArmyUnit with `equipment_name` added to one resolved slot."""
         new_model = model.upgrade(equipment_name, race_config=race_config)
         new_models = [
             *self.models[:model_idx],
@@ -223,23 +263,17 @@ class ArmyList:
         equipment_name: t.EquipmentName,
         race_config: RaceConfig,
     ) -> Self:
-        """Add the same equipment upgrade to all models in a unit."""
-        _, unit = _resolve_unit(self, unit_key=unit_key)
-        result = self
-        for i in range(len(unit.models)):
-            _, updated_unit = _resolve_unit(result, unit_key=unit_key)
-            model_name = updated_unit.models[i].name
-            # Find which occurrence of this model is at position i
-            occurrence = sum(
-                1 for j in range(i) if updated_unit.models[j].name == model_name
-            )
-            result = result.upgrade_model(
-                unit_key,
-                model_key=(model_name, occurrence),
-                equipment_name=equipment_name,
-                race_config=race_config,
-            )
-        return result
+        """Add the same equipment upgrade to all models in a unit.
+
+        One call is one purchase, so calling it twice buys a Unit Fixture twice
+        (ADR 0026).
+        """
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_unit = unit.upgrade_all_models(
+            equipment_name=equipment_name, race_config=race_config
+        )
+        new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
+        return replace(self, units=new_units)
 
     def nick_unit(self, unit_key: tuple[t.UnitName, int], *, nick: str | None) -> Self:
         """Return a new ArmyList with the identified unit's Nick set.
