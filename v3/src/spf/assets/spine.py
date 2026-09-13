@@ -15,10 +15,16 @@ that same rule applied twice, so Lineage needs no store of its own.
 import re
 import shutil
 from collections.abc import Callable
-from pathlib import Path
+from pathlib import Path, PurePath
 
 from spf.assets.kinds import Kind, Refiner, Service
 from spf.config import config
+
+SMALL = "small"
+"""The downscaled Rendition the Site prefers to publish (see `asset_for`)."""
+
+RENDITIONS = frozenset({SMALL})
+"""Every Rendition suffix, so the Asset store can tell one from an Asset."""
 
 LINEAGE_PATTERN = re.compile(r"^[1-9][0-9]*(\.[1-9][0-9]*)*$")
 INDEX_PATTERN = re.compile(r"^[1-9][0-9]*$")
@@ -81,15 +87,54 @@ def asset_for(
     *,
     name: str,
     assets_root: Path = config.paths.assets,
+    rendition: str | None = None,
 ) -> Path | None:
     """Return the committed Asset for `name`, or `None` when there is none.
 
     The read-only counterpart to `promote`: the one place that answers "is
     there art for this Target?", shared by the Survey and by the Renderings
     that embed Assets.
+
+    A **Rendition** is a derived spelling of the same Asset — `<name>.<rendition>`
+    — holding other bytes for the same art. Naming one prefers it when it is
+    committed and falls back to the Asset itself when it is not, so a Rendition
+    nobody has generated is never a miss (ADR 0040).
     """
+    if rendition is not None:
+        derived = _asset_path(assets_root, kind, race=race, name=f"{name}.{rendition}")
+        if derived.is_file():
+            return derived
     path = _asset_path(assets_root, kind, race=race, name=name)
     return path if path.is_file() else None
+
+
+def committed_assets(
+    kind: Kind, *, assets_root: Path = config.paths.assets
+) -> list[tuple[str, str]]:
+    """List `(race, name)` for every committed Asset of `kind`, sorted by path.
+
+    Reads the store rather than the Race catalogue, so what it answers is
+    "what art exists", not "what art was asked for". Renditions are other
+    bytes for an Asset already listed, so they are skipped.
+    """
+    subdir = f"{kind.subdir}/" if kind.subdir is not None else ""
+    found = []
+    for path in sorted(assets_root.glob(f"*/{subdir}*.{kind.extension}")):
+        race, name = locate(kind, path)
+        if name.rsplit(".", 1)[-1] in RENDITIONS:
+            continue
+        found.append((race, name))
+    return found
+
+
+def locate(kind: Kind, path: PurePath) -> tuple[str, str]:
+    """Return the `(race, name)` an Asset path addresses under `kind`'s layout.
+
+    The inverse of `_asset_path`, for a caller holding a path and needing to
+    say which Target it belongs to.
+    """
+    directory = path.parent.parent if kind.subdir is not None else path.parent
+    return directory.name, path.stem
 
 
 def _next_index(directory: Path, kind: Kind, *, name: str) -> int:
