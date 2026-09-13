@@ -129,6 +129,48 @@ def squad_of_two(simple_race: RaceConfig) -> RaceConfig:
 
 
 @pytest.fixture
+def squad_of_four(simple_race: RaceConfig) -> RaceConfig:
+    """`simple_race` with a Unit of four Models, for ragged Fixture loadouts."""
+    squad = simple_race.units["squad"].model_copy(update={"models": ["soldier"] * 4})
+    return simple_race.model_copy(update={"units": {"squad": squad}})
+
+
+def _ragged_army_unit(race: RaceConfig, *, copies: list[int]) -> ArmyUnit:
+    """Assemble a Unit whose Models carry uneven copies of the `sword` Fixture.
+
+    Built directly rather than through the builder, which refuses to sell half
+    a Fixture: a ragged Unit is something `io.load_army()` tolerates on disk
+    (ADR 0036), not something a player can buy.
+    """
+    return ArmyUnit(
+        name="squad",
+        config=race.units["squad"],
+        models=[
+            ArmyModel(
+                name="soldier",
+                config=race.models["soldier"],
+                upgrades=["sword"] * count,
+            )
+            for count in copies
+        ],
+    )
+
+
+def _race_with_per_model_gear(race: RaceConfig) -> RaceConfig:
+    """`race` with a costed `per_model_gear` Upgrade that is not a Fixture."""
+    per_model_gear = EquipmentConfig(
+        race="goblin",
+        name="Per Model Gear",
+        cost=t.Cost(cp=1),
+        upgrade_all=False,
+        requires=[],
+    )
+    return race.model_copy(
+        update={"equipment": {**race.equipment, "per_model_gear": per_model_gear}}
+    )
+
+
+@pytest.fixture
 def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
     """`simple_race` with an uncapped Holder, and an Equipment that claims it."""
     soldier = ModelConfig(
@@ -1993,37 +2035,83 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
     assert resolved.units[0].cost() == t.Cost(cp=2)
 
 
-def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
-    unit_cfg = UnitConfig(
-        race="goblin",
-        name="Two Squad",
-        models=["soldier", "soldier"],
-        size="small",
-        cost=None,
-        shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
-        orders=OrdersConfig(),
-        armor=None,
-        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
-    )
-    race = RaceConfig(
-        races=simple_race.races,
-        units={"two_squad": unit_cfg},
-        models=simple_race.models,
-        equipment=simple_race.equipment,
-    )
+def test_unit_cost_upgrade_all_true_flat(squad_of_two: RaceConfig) -> None:
+    """One purchase of a Fixture is charged once, however many Models carry it."""
     army = (
         ArmyList(race="goblin", nick="T", units=[])
-        .add_unit("two_squad", race_config=race)
+        .add_unit("squad", race_config=squad_of_two)
+        .upgrade_all_models(
+            ("squad", 0), equipment_name="sword", race_config=squad_of_two
+        )
+    )
+
+    resolved = army.resolve(squad_of_two)
+
+    assert resolved.units[0].cost() == t.Cost(mp=3, cp=2)
+
+
+def test_unit_cost_charges_each_fixture_purchase(squad_of_two: RaceConfig) -> None:
+    """Two purchases of a Fixture cost twice its Cost, not once."""
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=squad_of_two
+    )
+    for _ in range(2):
+        army = army.upgrade_all_models(
+            ("squad", 0), equipment_name="sword", race_config=squad_of_two
+        )
+
+    resolved = army.resolve(squad_of_two)
+
+    assert resolved.units[0].cost() == t.Cost(mp=3, cp=4)
+
+
+def test_unit_cost_ragged_fixture_charges_the_purchase_count(
+    squad_of_four: RaceConfig,
+) -> None:
+    """A ragged Unit is charged by the most-equipped Model, not the first one.
+
+    Model promotion resets a slot's upgrades, so the Unit can lose copies of a
+    Fixture it paid for; the purchase count is what survives on any one Model.
+    """
+    unit = _ragged_army_unit(squad_of_four, copies=[1, 2, 2, 2])
+    army = ArmyList(race="goblin", nick="T", units=[unit])
+
+    resolved = army.resolve(squad_of_four)
+
+    assert resolved.units[0].cost() == t.Cost(mp=3, cp=4)
+
+
+def test_unit_fixture_purchases_counts_the_most_equipped_model(
+    squad_of_four: RaceConfig,
+) -> None:
+    """The helper both tiers read answers with the `max` across Models."""
+    unit = _ragged_army_unit(squad_of_four, copies=[1, 0, 2, 2])
+    army = ArmyList(race="goblin", nick="T", units=[unit])
+
+    resolved = army.resolve(squad_of_four)
+
+    assert resolved.units[0].fixture_purchases == {"Sword": 2}
+
+
+def test_unit_fixture_purchases_ignores_per_model_equipment(
+    simple_race: RaceConfig,
+) -> None:
+    """Only a Fixture has a purchase count; per-Model kit is priced per Model."""
+    race = _race_with_per_model_gear(simple_race)
+    army = (
+        ArmyList(race="goblin", nick="T", units=[])
+        .add_unit("squad", race_config=race)
         .upgrade_model(
-            ("two_squad", 0),
+            ("squad", 0),
             model_key=("soldier", 0),
-            equipment_name="sword",
+            equipment_name="per_model_gear",
             race_config=race,
         )
     )
+
     resolved = army.resolve(race)
-    # sword upgrade_all=True, cost=cp=2 → flat, regardless of 2 models
-    assert resolved.units[0].cost() == t.Cost(cp=2)
+
+    assert resolved.units[0].fixture_purchases == {}
 
 
 # ---------------------------------------------------------------------------
