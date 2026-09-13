@@ -31,10 +31,10 @@ dev = [
     "bumpver>=2026.1132",
     "ipython>=9.12.0",
     "prek>=0.3.8",
-    "pyright>=1.1.408",
     "pytest>=9.0.3",
     "ruff>=0.15.9",
     "tomlkit>=0.13.2",
+    "ty>=0.0.80",
     "typos>=1.45.0",
 ]
 
@@ -89,8 +89,8 @@ known-first-party = ["goldens", "test_friction"]
 "armies/*/*.py" = ["INP001", "N999"]
 "scripts/*.py" = ["INP001"]
 
-[tool.pyright]
-extraPaths = ["scripts"]
+[tool.ty.environment]
+extra-paths = ["scripts"]
 
 #
 # Garuff - Geir Arne's opinionated lints
