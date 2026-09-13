@@ -49,9 +49,13 @@ own. No cache-busting scheme, and no URL that encodes a version.
 where the Site lives**, so moving to a custom domain is a config change rather
 than a re-render.
 
-Site HTML gets **root-relative** `/art/…` — it is served from the origin and
-never needs to name it. An API handing a client a URL does need it, and gets it
-from `absolute_art_url`.
+Site HTML gets a URL **rooted at the origin**, `/<base path>/art/…`, built from
+the same config value. The base path is not decoration: this is a *project*
+Pages site, served under `https://hssmalo.github.io/steampunkfantasy/`, so a
+URL rooted at the bare origin climbs out of the site exactly as a
+document-relative one climbs out of the artifact — the bug this ADR exists to
+fix, relocated one level up. An API handing a client the whole URL gets it from
+`absolute_art_url`, which puts the origin back in front of the same path.
 
 ## The spelling is bound per render, not per template family
 

@@ -532,6 +532,7 @@ def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None
 
 def test_army_rules_markdown_embeds_site_urls_when_site_spelled(
     tmp_path: Path,
+    site_base_url: str,  # noqa: ARG001
 ) -> None:
     # The Site publishes the art it references, so its HTML names a URL under
     # the site root rather than a path out of the deployed artifact (ADR 0040).
@@ -550,8 +551,8 @@ def test_army_rules_markdown_embeds_site_urls_when_site_spelled(
     )
 
     text = out.read_text(encoding="utf-8")
-    assert "![goblin](/art/goblin/art.png)" in text
-    assert "![Squad](/art/goblin/art.png)" in text
+    assert "![goblin](/site/art/goblin/art.png)" in text
+    assert "![Squad](/site/art/goblin/art.png)" in text
 
 
 def test_army_rules_markdown_emits_no_image_markup_without_art(

@@ -9,6 +9,7 @@ in the store, and may improve without the URL moving (ADR 0040).
 
 import shutil
 from pathlib import Path, PurePath
+from urllib.parse import urlsplit
 
 from spf.assets.image import IMAGE
 from spf.assets.spine import SMALL, asset_for, committed_assets, locate
@@ -16,8 +17,15 @@ from spf.config import config
 
 
 def art_url(race: str, name: str) -> str:
-    """Return the Site URL that publishes `name`'s art, root-relative."""
-    return f"/{config.site.art}/{race}/{name}.{IMAGE.extension}"
+    """Return the Site URL that publishes `name`'s art, rooted at the origin.
+
+    It carries the path the Site is served under, which a project Pages site
+    has (`https://<user>.github.io/<repo>/`): a URL rooted at the bare origin
+    would climb out of the Site exactly as a document-relative one climbs out
+    of the deployed artifact.
+    """
+    served_under = urlsplit(config.site.base_url).path.rstrip("/")
+    return f"{served_under}/{config.site.art}/{race}/{name}.{IMAGE.extension}"
 
 
 def absolute_art_url(race: str, name: str) -> str:
@@ -27,7 +35,8 @@ def absolute_art_url(race: str, name: str) -> str:
     client a URL does, and the origin is configured in one place so a custom
     domain stays a config change.
     """
-    return f"{config.site.base_url.rstrip('/')}{art_url(race, name)}"
+    origin = urlsplit(config.site.base_url)
+    return f"{origin.scheme}://{origin.netloc}{art_url(race, name)}"
 
 
 def art_src(asset: PurePath) -> str:

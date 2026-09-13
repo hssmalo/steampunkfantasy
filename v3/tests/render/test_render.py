@@ -298,7 +298,9 @@ def test_image_src_defaults_to_a_path_relative_to_the_written_document(
 
 
 def test_render_binds_the_image_spelling_it_is_given(
-    tmp_path: Path, product: Product
+    tmp_path: Path,
+    product: Product,
+    site_base_url: str,  # noqa: ARG001
 ) -> None:
     # The same template serves a local render and a Site render; which spelling
     # it emits is the destination's business, bound per render (ADR 0040).
@@ -314,4 +316,4 @@ def test_render_binds_the_image_spelling_it_is_given(
         image_src=art_src,
     )
 
-    assert "![art](/art/goblin/grunt.png)" in out.read_text(encoding="utf-8")
+    assert "![art](/site/art/goblin/grunt.png)" in out.read_text(encoding="utf-8")

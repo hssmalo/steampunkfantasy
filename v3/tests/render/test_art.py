@@ -2,37 +2,51 @@
 
 from pathlib import Path, PureWindowsPath
 
+import pytest
+
 from spf.config import config
 from spf.render.art import absolute_art_url, art_src, art_url, publish_art
 
 # --- The URL: one stable spelling per Image Asset ----------------------------
 
 
-def test_art_url_is_rooted_at_the_art_namespace() -> None:
+def test_art_url_is_rooted_at_the_art_namespace(site_base_url: str) -> None:  # noqa: ARG001
     # Deliberately not a mirror of `assets/<race>/images/<name>.png`: the bytes
     # behind the URL are selected from the store, not served from it (ADR 0040).
+    assert art_url("goblin", "grunt") == "/site/art/goblin/grunt.png"
+
+
+def test_art_url_carries_the_path_the_site_is_served_under(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # A project Pages site lives under a subpath, so a URL rooted at the origin
+    # would climb out of it exactly as a relative one climbs out of `output/`.
+    monkeypatch.setattr(config.site, "base_url", "https://example.test")
+
     assert art_url("goblin", "grunt") == "/art/goblin/grunt.png"
 
 
-def test_art_src_spells_a_committed_asset_as_its_url() -> None:
+def test_art_src_spells_a_committed_asset_as_its_url(site_base_url: str) -> None:  # noqa: ARG001
     asset = Path("/repo/assets/goblin/images/grunt.png")
 
-    assert art_src(asset) == "/art/goblin/grunt.png"
+    assert art_src(asset) == "/site/art/goblin/grunt.png"
 
 
-def test_art_src_emits_forward_slashes_for_a_windows_path() -> None:
+def test_art_src_emits_forward_slashes_for_a_windows_path(site_base_url: str) -> None:  # noqa: ARG001
     # A backslash escapes punctuation in CommonMark, so a native-Windows path
     # would render as `....%5Cgrunt.png` and the image 404s.
     asset = PureWindowsPath(r"C:\repo\assets\goblin\images\grunt.png")
 
-    assert art_src(asset) == "/art/goblin/grunt.png"
+    assert art_src(asset) == "/site/art/goblin/grunt.png"
 
 
-def test_absolute_art_url_prefixes_the_configured_base() -> None:
+def test_absolute_art_url_names_the_origin_and_the_url_below_it(
+    site_base_url: str,  # noqa: ARG001
+) -> None:
     # The origin lives in exactly one place, so a custom domain is a config
     # change rather than a re-render.
     assert absolute_art_url("goblin", "grunt") == (
-        f"{config.site.base_url}/art/goblin/grunt.png"
+        "https://example.test/site/art/goblin/grunt.png"
     )
 
 

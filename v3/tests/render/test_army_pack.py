@@ -327,6 +327,7 @@ def test_army_pack_markdown_image_paths_are_relative_to_its_own_output_dir(
 
 def test_army_pack_markdown_image_paths_are_site_urls_when_site_spelled(
     tmp_path: Path,
+    site_base_url: str,  # noqa: ARG001
 ) -> None:
     art = tmp_path / "assets" / "goblin" / "images" / "art.png"
     army = io.load_army(DEMO_ARMY)
@@ -346,7 +347,7 @@ def test_army_pack_markdown_image_paths_are_site_urls_when_site_spelled(
         image_src=art_src,
     )
 
-    assert "](/art/goblin/art.png)" in out.read_text(encoding="utf-8")
+    assert "](/site/art/goblin/art.png)" in out.read_text(encoding="utf-8")
 
 
 def test_army_pack_no_images_omits_committed_art(tmp_path: Path) -> None:
