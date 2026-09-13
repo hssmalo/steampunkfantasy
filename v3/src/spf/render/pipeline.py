@@ -57,7 +57,7 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     # Bound per render rather than per family: which spelling an Asset takes is
     # the destination's business, and one template serves both destinations.
     spelling = (
-        image_src if image_src is not None else partial(_relative_src, out.parent)
+        image_src if image_src is not None else partial(relative_to, start=out.parent)
     )
     environments["markdown"].filters["image_src"] = spelling
     template_ext = FAMILY_TEMPLATE_EXT[fmt.family]
@@ -73,8 +73,3 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     else:
         out.write_text(content, encoding="utf-8")
     return out
-
-
-def _relative_src(output_dir: Path, asset: PurePath) -> str:
-    """Spell `asset` relative to the directory the document is written to."""
-    return relative_to(asset, output_dir)
