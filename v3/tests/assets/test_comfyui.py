@@ -16,7 +16,7 @@ from email.message import Message
 from email.parser import BytesParser
 from io import BytesIO
 from pathlib import Path
-from typing import Any, Self
+from typing import Any, Self, cast
 
 import pytest
 
@@ -131,7 +131,10 @@ def _service(
         "api_key_env": "",
         "timeout_s": 5,
     }
-    return comfyui.ComfyUIService(**{**opts, **kw})
+    # The merge widens to the join of both value types; the constructor's own
+    # signature is what keeps the overrides honest.
+    overrides = cast("dict[str, Any]", kw)
+    return comfyui.ComfyUIService(**{**opts, **overrides})
 
 
 def _patched_seeds(scripted: _ScriptedComfy) -> list[int]:
