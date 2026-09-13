@@ -10,6 +10,12 @@ candidates = "{project_path}/candidates"
 assets = "{project_path}/assets"
 workflows = "{project_path}/workflows"
 
+[site]
+# Where the built site is served from. The HTML never needs it -- it is served
+# from this origin -- but an API handing a client an art URL does.
+base_url = "https://hssmalo.github.io/steampunkfantasy"
+art = "art"
+
 [render.latex]
 engine = "pdflatex"
 
