@@ -85,6 +85,22 @@ charged a single time however many of the Unit's Models carry it. Every other
 Upgrade is priced per Model: each Model carrying one adds its Cost again.
 _Avoid_: shared equipment, unit-wide upgrade, group upgrade
 
+**Budget**:
+A cap on each of the four Cost dimensions independently — so much `mp`, `cp`,
+`xp` and `ip` — that an Army is built to spend. It is never a single number:
+Points are a total, not a Budget. A Budget is a target a player builds toward,
+not a rule an Army obeys; validity stays referential (ADR 0036), so an Army
+that exceeds today's Budget is still a valid Army. This is what keeps historical
+Armies fieldable as records even when Costs have since risen.
+_Avoid_: points limit, cap, allowance
+
+**Game Format**:
+A named kind of game, each naming one Budget — the standard format is
+96 `mp` / 96 `cp` / 96 `xp` / 96 `ip`. A Game Format is chosen when building an
+Army and is never recorded in the Army, which stays a statement of what the
+force is rather than of what it was built against.
+_Avoid_: game mode, scenario, ruleset, bracket
+
 ### Combat and the round
 
 **Round**:
