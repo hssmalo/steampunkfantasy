@@ -35,8 +35,8 @@ def _army(unit_specials: Specials) -> Army:
         name="Soldier",
         config=ModelConfig(
             race="elf",
-            name="Soldier",  # pyright: ignore[reportArgumentType]
-            equipment_limit=[],  # pyright: ignore[reportArgumentType]
+            name="Soldier",
+            equipment_limit=[],
             equipment=[],
             type=["Infantry"],
             assault=_ASSAULT,
@@ -49,9 +49,9 @@ def _army(unit_specials: Specials) -> Army:
         name="Squad",
         config=UnitConfig(
             race="elf",
-            name="Squad",  # pyright: ignore[reportArgumentType]
-            models=["Soldier"],  # pyright: ignore[reportArgumentType]
-            size="Small",  # pyright: ignore[reportArgumentType]
+            name="Squad",
+            models=["Soldier"],
+            size="Small",
             shaken=ShakenConfig(
                 speed="slow", movement_order=["-", "-", "flee"], fire_order="None"
             ),
@@ -61,7 +61,7 @@ def _army(unit_specials: Specials) -> Army:
         ),
         models=[model],
     )
-    return Army(race="elf", nick="Test", units=[unit])  # pyright: ignore[reportArgumentType]
+    return Army(race="elf", nick="Test", units=[unit])
 
 
 def _namespaces() -> dict[str, r.NamespaceConfig]:
@@ -484,7 +484,7 @@ def _race(unit_specials: Specials) -> RaceConfig:
         units={
             "squad": UnitConfig(
                 race="goblin",
-                name="Squad",  # pyright: ignore[reportArgumentType]
+                name="Squad",
                 models=["grunt"],
                 size="small",
                 shaken=ShakenConfig(
@@ -498,8 +498,8 @@ def _race(unit_specials: Specials) -> RaceConfig:
         models={
             "grunt": ModelConfig(
                 race="goblin",
-                name="Grunt",  # pyright: ignore[reportArgumentType]
-                equipment_limit=[],  # pyright: ignore[reportArgumentType]
+                name="Grunt",
+                equipment_limit=[],
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,

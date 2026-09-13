@@ -139,7 +139,7 @@ def check(
             key: [SpecialInstance.model_validate(one) for one in instances]
             for key, instances in specials.items()
         },
-        slot=slot,  # pyright: ignore[reportArgumentType]
+        slot=slot,  # ty: ignore[invalid-argument-type]
         context="unit 'Squad'",
         registry=_registry(),
     )

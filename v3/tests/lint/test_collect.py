@@ -111,8 +111,8 @@ def _equipment(name: str, *, requires: list[list[str]]) -> EquipmentConfig:
     """Build an equipment entry carrying only a name and its holder claims."""
     return EquipmentConfig(
         race="ogre",
-        name=name,  # pyright: ignore[reportArgumentType]
-        requires=requires,  # pyright: ignore[reportArgumentType]
+        name=name,
+        requires=requires,  # ty: ignore[invalid-argument-type]
     )
 
 
@@ -120,8 +120,8 @@ def _model(*, limits: list[str], defaults: list[str]) -> ModelConfig:
     """Build a model config carrying only its holder limits and default keys."""
     return ModelConfig(
         race="ogre",
-        name="Scout Engineer",  # pyright: ignore[reportArgumentType]
-        equipment_limit=limits,  # pyright: ignore[reportArgumentType]
+        name="Scout Engineer",
+        equipment_limit=limits,  # ty: ignore[invalid-argument-type]
         equipment=defaults,
         type=["Infantry"],
         assault=_ASSAULT,
@@ -265,7 +265,7 @@ def _race_carrying(instance: dict[str, object]) -> RaceConfig:
         models={},
         equipment={
             "ogre_sword_free": equipment.model_copy(
-                update={"unit_specials": {"fog": [SpecialInstance(**instance)]}}  # pyright: ignore[reportArgumentType]
+                update={"unit_specials": {"fog": [SpecialInstance(**instance)]}}  # ty: ignore[invalid-argument-type]
             )
         },
     )

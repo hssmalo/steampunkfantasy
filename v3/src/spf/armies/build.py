@@ -444,7 +444,7 @@ def _satisfies_requirement(
 ) -> bool:
     if req.key == "type":
         return req.value in model.config.type
-    available = remaining_slots.get(req.key, 0)  # type: ignore[arg-type]
+    available = remaining_slots.get(req.key, 0)
     return isinstance(req.value, int) and available >= req.value
 
 
@@ -490,7 +490,7 @@ def _format_failed_group(
         if req.key == "type":
             parts.append(f"type:{req.value}")
         else:
-            available = remaining_slots.get(req.key, 0)  # type: ignore[arg-type]
+            available = remaining_slots.get(req.key, 0)
             parts.append(f"{req.key}:{req.value} (have {available})")
     return "needs " + " or ".join(parts)
 

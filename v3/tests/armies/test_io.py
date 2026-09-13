@@ -50,14 +50,14 @@ def simple_race() -> RaceConfig:
                 shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
             )
         },
         models={
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
+                equipment_limit=["Hands:2"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -70,7 +70,7 @@ def simple_race() -> RaceConfig:
                 name="Sword",
                 cost=t.Cost(cp=2),
                 upgrade_all=True,
-                requires=[["Hands:1"], ["type:Infantry"]],  # pyright: ignore[reportArgumentType]
+                requires=[["Hands:1"], ["type:Infantry"]],  # ty: ignore[invalid-argument-type]
             ),
         },
     )

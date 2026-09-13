@@ -509,8 +509,8 @@ def _corrupt(path: Path, *keys: tuple[str, ...]) -> None:
     for key in keys:
         table = data
         for part in key[:-1]:
-            table = table[part]  # pyright: ignore[reportIndexIssue, reportArgumentType]
-        table[key[-1]] = 123  # pyright: ignore[reportIndexIssue, reportArgumentType]
+            table = table[part]
+        table[key[-1]] = 123
     path.write_text(tomlkit.dumps(data))
 
 

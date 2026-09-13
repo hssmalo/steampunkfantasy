@@ -20,7 +20,7 @@ _REGEX_CACHE_SIZE = 8192
 def _widen_regex_cache() -> None:
     """Give `re` room to cache one pattern per key of the largest registry."""
     if getattr(re, "_MAXCACHE", _REGEX_CACHE_SIZE) < _REGEX_CACHE_SIZE:
-        re._MAXCACHE = _REGEX_CACHE_SIZE  # noqa: SLF001  # pyright: ignore[reportAttributeAccessIssue]
+        re._MAXCACHE = _REGEX_CACHE_SIZE  # noqa: SLF001  # ty: ignore[unresolved-attribute]
 
 
 def _read(path: Path) -> Configuration:
