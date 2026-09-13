@@ -75,22 +75,26 @@ class Unit:
     def armor(self) -> t.Angles[int] | None:
         """Armor after every Model's and Equipment's modifier, in chain order.
 
-        Multiplicity follows the purchase (ADR 0024). A Model-declared modifier
-        applies once per Model slot declaring it; an Equipment's applies once
-        for the Unit when `upgrade_all` (a fixture bought once) and once per
-        Model carrying it otherwise. Only `add` multiplies — four Models each
-        replacing armor with `[6,6,6,6]` can only produce `[6,6,6,6]`.
+        Multiplicity follows the purchase (ADR 0026). A Model-declared modifier
+        applies once per Model slot declaring it; a Unit Fixture's applies once
+        per purchase, and every other Equipment's once per Model carrying it.
+        Only `add` multiplies — four Models each replacing armor with
+        `[6,6,6,6]` can only produce `[6,6,6,6]`.
         """
         armor = None if self.config.armor is None else list(self.config.armor)
-        bought: set[str] = set()
+        purchases = self.fixture_purchases
+        applied: set[str] = set()
         for model in self.models:
             armor = _stack_armor(armor, model.config.unit, source=model.config.name)
             for equip in model.equipment:
                 if equip.upgrade_all:
-                    if equip.name in bought:
+                    if equip.name in applied:
                         continue
-                    bought.add(equip.name)
-                armor = _stack_armor(armor, equip.unit, source=equip.name)
+                    applied.add(equip.name)
+                    for _ in range(purchases.get(equip.name, 1)):
+                        armor = _stack_armor(armor, equip.unit, source=equip.name)
+                else:
+                    armor = _stack_armor(armor, equip.unit, source=equip.name)
         return armor
 
     @property

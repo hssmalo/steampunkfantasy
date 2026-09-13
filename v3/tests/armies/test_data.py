@@ -30,6 +30,7 @@ from spf.schemas.race import (
     ShakenConfig,
     Stacker,
     UnitConfig,
+    UnitStatModifierConfig,
 )
 from spf.schemas.special import SpecialInstance
 
@@ -2273,3 +2274,80 @@ def test_common_types_of_a_unit_with_no_models_is_empty(
     simple_race: RaceConfig,
 ) -> None:
     assert _typed_unit(race=simple_race).common_types == []
+
+
+# ---------------------------------------------------------------------------
+# Unit.armor and Fixture purchase count
+# ---------------------------------------------------------------------------
+
+
+def _race_with_shieldwall(race: RaceConfig, stacker: Stacker[list[int]]) -> RaceConfig:
+    """`race` with a `shieldwall` Fixture that modifies the Unit's armor."""
+    shieldwall = EquipmentConfig(
+        race="goblin",
+        name="ShieldWall",
+        cost=t.Cost(cp=8),
+        upgrade_all=True,
+        requires=[],
+        unit=UnitStatModifierConfig(armor=stacker),
+    )
+    return race.model_copy(
+        update={"equipment": {**race.equipment, "shieldwall": shieldwall}}
+    )
+
+
+def _armored_squad(race: RaceConfig, armor: list[int]) -> RaceConfig:
+    """`race` with the squad given armor of its own to stack onto."""
+    squad = race.units["squad"].model_copy(update={"armor": armor})
+    return race.model_copy(update={"units": {**race.units, "squad": squad}})
+
+
+def test_unit_armor_applies_one_fixture_purchase_once(
+    squad_of_four: RaceConfig,
+) -> None:
+    """One purchase grants its modifier once, however many Models carry a copy."""
+    race = _race_with_shieldwall(
+        _armored_squad(squad_of_four, [3, 2, 1, 0]), Stacker(add=[5, 0, 0, 0])
+    )
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+    army = army.upgrade_all_models(
+        ("squad", 0), equipment_name="shieldwall", race_config=race
+    )
+
+    assert army.resolve(race).units[0].armor == [8, 2, 1, 0]
+
+
+def test_unit_armor_applies_a_fixture_once_per_purchase(
+    squad_of_four: RaceConfig,
+) -> None:
+    """Two purchases grant twice: a Fixture's multiplicity is its purchase count."""
+    race = _race_with_shieldwall(
+        _armored_squad(squad_of_four, [3, 2, 1, 0]), Stacker(add=[5, 0, 0, 0])
+    )
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+    for _ in range(2):
+        army = army.upgrade_all_models(
+            ("squad", 0), equipment_name="shieldwall", race_config=race
+        )
+
+    assert army.resolve(race).units[0].armor == [13, 2, 1, 0]
+
+
+def test_unit_armor_replace_never_multiplies(squad_of_four: RaceConfig) -> None:
+    """Only `add` multiplies: two purchases of a `replace` land on one value."""
+    race = _race_with_shieldwall(
+        _armored_squad(squad_of_four, [3, 2, 1, 0]), Stacker(replace=[6, 6, 6, 6])
+    )
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+    for _ in range(2):
+        army = army.upgrade_all_models(
+            ("squad", 0), equipment_name="shieldwall", race_config=race
+        )
+
+    assert army.resolve(race).units[0].armor == [6, 6, 6, 6]
