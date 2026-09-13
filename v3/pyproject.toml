@@ -55,7 +55,7 @@ markers = ["integration: hits a live external provider; skipped by default"]
 # Ruff - lints
 #
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 exclude = [".git", ".venv"]
 
 [tool.ruff.lint]
