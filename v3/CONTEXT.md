@@ -587,6 +587,13 @@ mirroring the Asset layout and addressed by Lineage. Promoting exactly one
 Candidate commits it as the Asset; the rest are discarded.
 _Avoid_: draft, option, variant, sample
 
+**Rendition**:
+A derived spelling of a committed Asset holding other bytes for the same art,
+committed beside it as `<name>.<rendition>` — a downscaled copy, say. The Site
+publishes the Rendition where one exists and the Asset itself where none does,
+at the same URL either way (ADR 0040).
+_Avoid_: variant (a Variant is shared Instance prose, ADR 0032), version, size
+
 **Lore** (asset):
 A Markdown Asset holding the full story, history, and atmosphere of a Race,
 generated from its TOML. Grows beyond what a TOML `description` field can hold;
@@ -597,8 +604,9 @@ short prose field, the seed — not the Lore)
 **Image** (asset):
 A 2D image Asset depicting a Race or Unit, generated from its `description`.
 Stored under `assets/<race>/images/`. Embedded by the Army Reference Rendering
-and on the back of the Order Cards, both of which reference the committed file
-where it lies rather than copying it (ADR 0017).
+and on the back of the Order Cards. LaTeX references the committed file where
+it lies (ADR 0017); the Site publishes a copy at `/art/<race>/<name>.png`,
+because the store sits outside the deployed artifact (ADR 0040).
 
 **Model** (asset):
 A 3D-mesh Asset (for on-demand printing) depicting a Unit or Model, stored
