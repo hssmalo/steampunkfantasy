@@ -69,7 +69,7 @@ def simple_race() -> RaceConfig:
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2", "Grenades:1"],
+                equipment_limit=["Hands:2", "Grenades:1"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -78,7 +78,7 @@ def simple_race() -> RaceConfig:
             "elite_soldier": ModelConfig(
                 race="goblin",
                 name="Elite Soldier",
-                equipment_limit=["Hands:2"],
+                equipment_limit=["Hands:2"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry", "Elite"],
                 assault=_ASSAULT,
@@ -92,7 +92,7 @@ def simple_race() -> RaceConfig:
                 name="Sword",
                 cost=t.Cost(cp=2),
                 upgrade_all=True,
-                requires=[["Hands:1"], ["type:Infantry"]],
+                requires=[["Hands:1"], ["type:Infantry"]],  # ty: ignore[invalid-argument-type]
             ),
             "shield": EquipmentConfig(
                 race="goblin",
@@ -134,7 +134,7 @@ def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
     soldier = ModelConfig(
         race="goblin",
         name="Soldier",
-        equipment_limit=["Hands:2", "Independent:∞"],
+        equipment_limit=["Hands:2", "Independent:∞"],  # ty: ignore[invalid-argument-type]
         equipment=[],
         type=["Infantry"],
         assault=_ASSAULT,
@@ -145,7 +145,7 @@ def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
         name="Wings",
         cost=t.Cost(cp=24),
         upgrade_all=True,
-        requires=[["Independent:1"]],
+        requires=[["Independent:1"]],  # ty: ignore[invalid-argument-type]
     )
     return simple_race.model_copy(
         update={
@@ -163,7 +163,7 @@ def race_with_two_handed(simple_race: RaceConfig) -> RaceConfig:
         name="Bow",
         cost=t.Cost(cp=8),
         upgrade_all=True,
-        requires=[["Hands:2"]],
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
     return simple_race.model_copy(
         update={"equipment": simple_race.equipment | {"bow": bow}}
@@ -177,7 +177,7 @@ def race_with_defaults(simple_race: RaceConfig) -> RaceConfig:
         race="goblin",
         name="Default Sword",
         cost=None,
-        requires=[["Hands:2"]],
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
     soldier_with_default = simple_race.models["soldier"].model_copy(
         update={"equipment": ["default_sword"]}
@@ -203,7 +203,7 @@ def test_army_model_default_upgrades(simple_race: RaceConfig) -> None:
 def test_army_model_is_frozen(simple_race: RaceConfig) -> None:
     model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=[])
     with pytest.raises((AttributeError, TypeError)):
-        model.upgrades = ("sword",)
+        model.upgrades = ("sword",)  # ty: ignore[invalid-assignment]
 
 
 def test_army_unit_default_models_match_config(one_unit_army: ArmyList) -> None:
@@ -213,7 +213,7 @@ def test_army_unit_default_models_match_config(one_unit_army: ArmyList) -> None:
 
 def test_army_list_is_frozen(empty_army: ArmyList) -> None:
     with pytest.raises((AttributeError, TypeError)):
-        empty_army.units = ()
+        empty_army.units = ()  # ty: ignore[invalid-assignment]
 
 
 def test_army_list_allows_duplicate_units(simple_race: RaceConfig) -> None:
@@ -635,7 +635,7 @@ def test_validate_army_requires_error_includes_type_detail(
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite", "type:Cavalry"]],
+        requires=[["type:Elite", "type:Cavalry"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -664,7 +664,7 @@ def test_validate_army_requires_error_includes_slot_detail(
         name="Greedy Sword",
         cost=t.Cost(cp=4),
         upgrade_all=True,
-        requires=[["Hands:3"]],
+        requires=[["Hands:3"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -696,7 +696,7 @@ def test_validate_army_requires_error_includes_all_failing_groups(
         requires=[
             ["type:Cavalry"],
             ["Hands:10"],
-        ],
+        ],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -880,7 +880,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite"]],
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1011,7 +1011,7 @@ def test_upgrade_all_models_unsatisfied_requires_raises(
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite"]],
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1474,7 +1474,7 @@ def test_validate_army_detects_unsatisfied_equipment_requires(
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite"]],
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1523,7 +1523,7 @@ def test_validate_army_upgrade_not_counted_against_itself(
         name="Two-Hand Sword",
         cost=t.Cost(cp=4),
         upgrade_all=True,
-        requires=[["Hands:2"]],
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1650,7 +1650,7 @@ def test_model_equipment_evicts_a_default_the_upgrade_crowds_out(
     two_handed = EquipmentConfig(
         race="goblin",
         name="Great Sword",
-        requires=[["Hands:2"]],
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
 
     model = _soldier_with_sword(_race_with_default(simple_race, two_handed))
@@ -1665,7 +1665,7 @@ def test_model_equipment_keeps_a_default_in_an_untouched_holder(
     grenade = EquipmentConfig(
         race="goblin",
         name="Grenade",
-        requires=[["Grenades:1"]],
+        requires=[["Grenades:1"]],  # ty: ignore[invalid-argument-type]
     )
 
     model = _soldier_with_sword(_race_with_default(simple_race, grenade))

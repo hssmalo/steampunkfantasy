@@ -25,7 +25,7 @@ def equipment(name: str, *, requires: list[list[str]] | None = None) -> Equipmen
     return EquipmentConfig(
         race="goblin",
         name=name,
-        requires=requires or [],
+        requires=requires or [],  # ty: ignore[invalid-argument-type]
     )
 
 
@@ -34,7 +34,7 @@ def model(*, limits: list[str], equipment_keys: list[str] | None = None) -> Mode
     return ModelConfig(
         race="goblin",
         name="Soldier",
-        equipment_limit=limits,
+        equipment_limit=limits,  # ty: ignore[invalid-argument-type]
         equipment=equipment_keys or [],
         type=["Infantry"],
         assault=_ASSAULT,

@@ -112,7 +112,7 @@ def _equipment(name: str, *, requires: list[list[str]]) -> EquipmentConfig:
     return EquipmentConfig(
         race="ogre",
         name=name,
-        requires=requires,
+        requires=requires,  # ty: ignore[invalid-argument-type]
     )
 
 
@@ -121,7 +121,7 @@ def _model(*, limits: list[str], defaults: list[str]) -> ModelConfig:
     return ModelConfig(
         race="ogre",
         name="Scout Engineer",
-        equipment_limit=limits,
+        equipment_limit=limits,  # ty: ignore[invalid-argument-type]
         equipment=defaults,
         type=["Infantry"],
         assault=_ASSAULT,
@@ -265,7 +265,7 @@ def _race_carrying(instance: dict[str, object]) -> RaceConfig:
         models={},
         equipment={
             "ogre_sword_free": equipment.model_copy(
-                update={"unit_specials": {"fog": [SpecialInstance(**instance)]}}
+                update={"unit_specials": {"fog": [SpecialInstance(**instance)]}}  # ty: ignore[invalid-argument-type]
             )
         },
     )

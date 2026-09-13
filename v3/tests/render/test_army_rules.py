@@ -120,7 +120,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
-    return Army(race=race, nick=nick, units=list(units))
+    return Army(race=race, nick=nick, units=list(units))  # ty: ignore[invalid-argument-type]
 
 
 # --- build_reference: basic Unit/Model shape --------------------------------

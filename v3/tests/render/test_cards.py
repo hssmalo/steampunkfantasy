@@ -284,7 +284,7 @@ def test_orders_groups_a_repeated_equipment_name_with_its_first_appearance() -> 
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
-    return Army(race=race, nick=nick, units=list(units))
+    return Army(race=race, nick=nick, units=list(units))  # ty: ignore[invalid-argument-type]
 
 
 def test_build_deck_flat_rows_one_entry_per_option() -> None:

@@ -471,7 +471,7 @@ def _a_value(variable: r.VariableConfig, *, registry: reg.Registry) -> int | str
     # type, and the variable itself says which of them it is willing to take.
     for candidate in (getattr(variable, "min", None) or 1, "d6", "X"):
         try:
-            return variable.validate_value(candidate)
+            return variable.validate_value(candidate)  # ty: ignore[invalid-argument-type]
         except ValueError:
             continue
     msg = f"No candidate value fits {variable!r}"

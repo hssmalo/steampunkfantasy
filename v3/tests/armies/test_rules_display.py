@@ -55,7 +55,7 @@ def simple_race() -> RaceConfig:
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2"],
+                equipment_limit=["Hands:2"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -155,7 +155,7 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2"],
+                equipment_limit=["Hands:2"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,

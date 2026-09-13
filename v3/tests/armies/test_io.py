@@ -57,7 +57,7 @@ def simple_race() -> RaceConfig:
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2"],
+                equipment_limit=["Hands:2"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -70,7 +70,7 @@ def simple_race() -> RaceConfig:
                 name="Sword",
                 cost=t.Cost(cp=2),
                 upgrade_all=True,
-                requires=[["Hands:1"], ["type:Infantry"]],
+                requires=[["Hands:1"], ["type:Infantry"]],  # ty: ignore[invalid-argument-type]
             ),
         },
     )

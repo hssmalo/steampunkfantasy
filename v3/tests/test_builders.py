@@ -146,7 +146,7 @@ def test_an_invented_special_id_reaches_every_holder_and_slot(
         },
     )
 
-    assert list(race.equipment["knife"].range.specials) == ["countdown"]
+    assert list(race.equipment["knife"].range.specials) == ["countdown"]  # ty: ignore[unresolved-attribute]
 
 
 def test_a_narrowed_special_is_refused_the_slots_it_does_not_declare(

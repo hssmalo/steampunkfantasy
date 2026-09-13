@@ -44,7 +44,7 @@ def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 def _save(name: str, *, race: str = "goblin", nick: str = "Test") -> None:
     io.save_army(
-        ArmyList(race=race, nick=nick, units=[]),
+        ArmyList(race=race, nick=nick, units=[]),  # ty: ignore[invalid-argument-type]
         army_name=name,
     )
 
@@ -69,7 +69,7 @@ def test_index_parses_a_valid_document() -> None:
 
 def test_index_requires_a_document_title() -> None:
     with pytest.raises(ValidationError, match="title"):
-        ArmyPackConfig(armies=[])
+        ArmyPackConfig(armies=[])  # ty: ignore[missing-argument]
 
 
 def test_index_rejects_an_unknown_key() -> None:
@@ -77,13 +77,13 @@ def test_index_rejects_an_unknown_key() -> None:
         ArmyPackConfig(
             title="Test",
             armies=[],
-            unexpected="nope",
+            unexpected="nope",  # ty: ignore[unknown-argument]
         )
 
 
 def test_index_rejects_an_unknown_key_on_an_entry() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        PackArmyConfig(army="geir_arne", nick="nope")
+        PackArmyConfig(army="geir_arne", nick="nope")  # ty: ignore[unknown-argument]
 
 
 def test_get_army_pack_parses_a_toml_file(tmp_path: Path) -> None:
@@ -188,7 +188,7 @@ def test_load_pack_armies_invalid_entry_propagates_underlying_reason(
 
 
 def _army(*, nick: str = "Test", race: str = "goblin") -> Army:
-    return Army(race=race, nick=nick, units=[])
+    return Army(race=race, nick=nick, units=[])  # ty: ignore[invalid-argument-type]
 
 
 def test_build_pack_preserves_entry_order() -> None:

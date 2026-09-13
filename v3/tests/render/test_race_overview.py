@@ -70,7 +70,7 @@ def _model_config(  # noqa: PLR0913  the fixture covers every field under test
         race=RACE,
         name=name,
         description=description,
-        equipment_limit=equipment_limit or [],
+        equipment_limit=equipment_limit or [],  # ty: ignore[invalid-argument-type]
         equipment=equipment or [],
         type=types or ["Infantry"],
         assault=_ASSAULT.model_copy(
@@ -142,7 +142,7 @@ def _equipment_config(  # noqa: PLR0913  the fixture covers every field under te
         description=description,
         cost=cost,
         upgrade_all=upgrade_all,
-        requires=requires or [],
+        requires=requires or [],  # ty: ignore[invalid-argument-type]
         assault=assault,
         range=ranged,
         unit_specials=unit_specials or {},
@@ -398,7 +398,7 @@ def test_a_key_shared_across_sections_gets_one_anchor_per_section() -> None:
 
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf"])
 def test_build_overview_covers_every_unit_of_a_committed_race(race_name: str) -> None:
-    race = get_race(race_name)
+    race = get_race(race_name)  # ty: ignore[invalid-argument-type]
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -667,7 +667,7 @@ def test_models_order_by_cost_with_toml_order_breaking_ties() -> None:
 
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf"])
 def test_build_overview_covers_every_model_of_a_committed_race(race_name: str) -> None:
-    race = get_race(race_name)
+    race = get_race(race_name)  # ty: ignore[invalid-argument-type]
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -678,7 +678,7 @@ def test_build_overview_covers_every_model_of_a_committed_race(race_name: str) -
 
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf", "ogre"])
 def test_fielded_in_is_the_exact_inverse_of_every_unit_roster(race_name: str) -> None:
-    race = get_race(race_name)
+    race = get_race(race_name)  # ty: ignore[invalid-argument-type]
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -1085,7 +1085,7 @@ def test_equipment_orders_by_cost_with_toml_order_breaking_ties() -> None:
 def test_build_overview_covers_every_equipment_of_a_committed_race(
     race_name: str,
 ) -> None:
-    race = get_race(race_name)
+    race = get_race(race_name)  # ty: ignore[invalid-argument-type]
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -1098,7 +1098,7 @@ def test_build_overview_covers_every_equipment_of_a_committed_race(
 def test_carried_by_is_the_exact_inverse_of_every_model_loadout(
     race_name: str,
 ) -> None:
-    race = get_race(race_name)
+    race = get_race(race_name)  # ty: ignore[invalid-argument-type]
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -1284,7 +1284,7 @@ def test_a_spawned_unit_says_which_spawn_places_it() -> None:
 
 @pytest.mark.parametrize("race_name", ["goblin", "ork", "gnome", "darkelf"])
 def test_every_spawn_of_a_committed_race_is_reachable(race_name: str) -> None:
-    race = get_race(race_name)
+    race = get_race(race_name)  # ty: ignore[invalid-argument-type]
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
     assert [spawn.key for spawn in overview.spawns] == list(race.spawns)
@@ -1368,7 +1368,7 @@ def test_every_special_a_section_prints_reaches_the_rules_reference(
     race_name: str,
 ) -> None:
     overview = build_overview(
-        get_race(race_name),
+        get_race(race_name),  # ty: ignore[invalid-argument-type]
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1385,7 +1385,7 @@ def test_every_special_a_section_prints_reaches_the_rules_reference(
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
 def test_a_record_anchor_never_collides_with_a_rule_anchor(race_name: str) -> None:
     overview = build_overview(
-        get_race(race_name),
+        get_race(race_name),  # ty: ignore[invalid-argument-type]
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1431,7 +1431,7 @@ def test_the_document_addresses_every_record_exactly_once(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),
+        get_race(race_name),  # ty: ignore[invalid-argument-type]
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1454,7 +1454,7 @@ def test_every_link_in_the_document_lands_on_an_anchor_of_it(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),
+        get_race(race_name),  # ty: ignore[invalid-argument-type]
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1554,7 +1554,7 @@ def test_the_latex_document_labels_every_record_exactly_once(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),
+        get_race(race_name),  # ty: ignore[invalid-argument-type]
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1577,7 +1577,7 @@ def test_every_latex_cross_reference_lands_on_a_label_of_it(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),
+        get_race(race_name),  # ty: ignore[invalid-argument-type]
         stem=race_name,
         image_for=FakeLookup(None),
     )
