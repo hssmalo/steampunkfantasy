@@ -87,11 +87,13 @@ class Unit:
         for model in self.models:
             armor = _stack_armor(armor, model.config.unit, source=model.config.name)
             for equip in model.equipment:
+                # Only a costed Upgrade may set `upgrade_all`, so a Fixture is
+                # always one of the Model's upgrades and always counted.
                 if equip.upgrade_all:
                     if equip.name in applied:
                         continue
                     applied.add(equip.name)
-                    for _ in range(purchases.get(equip.name, 1)):
+                    for _ in range(purchases[equip.name]):
                         armor = _stack_armor(armor, equip.unit, source=equip.name)
                 else:
                     armor = _stack_armor(armor, equip.unit, source=equip.name)
