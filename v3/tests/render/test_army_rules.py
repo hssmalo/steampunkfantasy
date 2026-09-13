@@ -13,6 +13,7 @@ from spf.armies.unit import Unit
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
 from spf.render import render, rules_reference
 from spf.render.army_rules import UnitEntry, build_reference
+from spf.render.art import art_src
 from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.specials import SpecialLine
@@ -527,6 +528,30 @@ def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None
     text = out.read_text(encoding="utf-8")
     assert "![goblin](../assets/art.png)" in text
     assert "![Squad](../assets/art.png)" in text
+
+
+def test_army_rules_markdown_embeds_site_urls_when_site_spelled(
+    tmp_path: Path,
+) -> None:
+    # The Site publishes the art it references, so its HTML names a URL under
+    # the site root rather than a path out of the deployed artifact (ADR 0040).
+    art = tmp_path / "assets" / "goblin" / "images" / "art.png"
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(art)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+        image_src=art_src,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "![goblin](/art/goblin/art.png)" in text
+    assert "![Squad](/art/goblin/art.png)" in text
 
 
 def test_army_rules_markdown_emits_no_image_markup_without_art(

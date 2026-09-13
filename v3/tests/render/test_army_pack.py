@@ -14,6 +14,7 @@ from spf.frontends.cli.render import ARMY_PACK, RenderOpts, render_army_pack
 from spf.render import render, rules_reference
 from spf.render.army_pack import ArmyPack, PackEntry, build_pack
 from spf.render.army_rules import build_reference
+from spf.render.art import art_src
 from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.products import PRODUCTS
@@ -322,6 +323,30 @@ def test_army_pack_markdown_image_paths_are_relative_to_its_own_output_dir(
 
     text = out.read_text(encoding="utf-8")
     assert "](../assets/art.png)" in text
+
+
+def test_army_pack_markdown_image_paths_are_site_urls_when_site_spelled(
+    tmp_path: Path,
+) -> None:
+    art = tmp_path / "assets" / "goblin" / "images" / "art.png"
+    army = io.load_army(DEMO_ARMY)
+    pack = build_pack(
+        [("Geir Arne", army)],
+        title="Test Pack",
+        stem="pack",
+        image_for=FakeLookup(art),
+    )
+
+    out = render(
+        ARMY_PACK,
+        pack,
+        fmt=get_format("markdown"),
+        name="pack",
+        output_root=tmp_path,
+        image_src=art_src,
+    )
+
+    assert "](/art/goblin/art.png)" in out.read_text(encoding="utf-8")
 
 
 def test_army_pack_no_images_omits_committed_art(tmp_path: Path) -> None:
