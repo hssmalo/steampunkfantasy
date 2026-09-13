@@ -16,7 +16,7 @@ from email.message import Message
 from email.parser import BytesParser
 from io import BytesIO
 from pathlib import Path
-from typing import Any, Self, cast
+from typing import Any, Self
 
 import pytest
 
@@ -119,22 +119,26 @@ def _http_error(code: int, body: bytes = b"boom") -> urllib.error.HTTPError:
     return urllib.error.HTTPError("http://x", code, "err", Message(), BytesIO(body))
 
 
-def _service(
-    scripted: _ScriptedComfy, monkeypatch: pytest.MonkeyPatch, **kw: object
+def _service(  # noqa: PLR0913  mirrors the config the service is built from
+    scripted: _ScriptedComfy,
+    monkeypatch: pytest.MonkeyPatch,
+    *,
+    base_url: str = "http://server",
+    workflow_path: Path = _MINI,
+    refine_workflow_path: Path = _MINI_REFINE,
+    negative_path: Path = _NEGATIVE,
+    api_key_env: str = "",
+    timeout_s: int = 5,
 ) -> comfyui.ComfyUIService:
     monkeypatch.setattr(comfyui, "_request", scripted)
-    opts: dict[str, Any] = {
-        "base_url": "http://server",
-        "workflow_path": _MINI,
-        "refine_workflow_path": _MINI_REFINE,
-        "negative_path": _NEGATIVE,
-        "api_key_env": "",
-        "timeout_s": 5,
-    }
-    # The merge widens to the join of both value types; the constructor's own
-    # signature is what keeps the overrides honest.
-    overrides = cast("dict[str, Any]", kw)
-    return comfyui.ComfyUIService(**{**opts, **overrides})
+    return comfyui.ComfyUIService(
+        base_url=base_url,
+        workflow_path=workflow_path,
+        refine_workflow_path=refine_workflow_path,
+        negative_path=negative_path,
+        api_key_env=api_key_env,
+        timeout_s=timeout_s,
+    )
 
 
 def _patched_seeds(scripted: _ScriptedComfy) -> list[int]:

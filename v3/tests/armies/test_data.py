@@ -1939,6 +1939,36 @@ def test_model_assault_add_on_na_ap_raises(simple_race: RaceConfig) -> None:
         resolved.units[0].models[0].assault()
 
 
+def test_model_assault_add_of_na_ap_raises(simple_race: RaceConfig) -> None:
+    equip = EquipmentConfig(
+        race="goblin",
+        name="AP Boost",
+        cost=t.Cost(cp=2),
+        upgrade_all=True,
+        requires=[],
+        assault=EquipmentAssaultConfig(ap=Stacker(add="N/A")),
+    )
+    race = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "ap_boost": equip},
+    )
+    army = (
+        ArmyList(race="goblin", nick="T", units=[])
+        .add_unit("squad", race_config=race)
+        .upgrade_model(
+            ("squad", 0),
+            model_key=("soldier", 0),
+            equipment_name="ap_boost",
+            race_config=race,
+        )
+    )
+    resolved = army.resolve(race)
+    with pytest.raises(ValueError, match=r"cannot 'add' ap='N/A'"):
+        resolved.units[0].models[0].assault()
+
+
 # ---------------------------------------------------------------------------
 # Unit.cost() upgrade_all logic
 # ---------------------------------------------------------------------------

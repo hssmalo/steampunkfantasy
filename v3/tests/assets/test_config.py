@@ -30,9 +30,9 @@ def test_image_prompt_paths_resolve() -> None:
 
 def test_image_asset_requires_both_prompt_paths() -> None:
     with pytest.raises(ValidationError, match="negative_prompt"):
-        ImageAssetConfig(
+        ImageAssetConfig(  # ty: ignore[missing-argument]  the omission is the point
             count=3, prompt=Path("image.txt"), comfyui=config.assets.image.comfyui
-        )  # ty: ignore[missing-argument]  the omission is the point
+        )
 
 
 def _env(**kw: str) -> ComfyUIEnvConfig:
