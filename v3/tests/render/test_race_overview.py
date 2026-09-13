@@ -68,16 +68,16 @@ def _model_config(  # noqa: PLR0913  the fixture covers every field under test
 ) -> ModelConfig:
     return ModelConfig(
         race=RACE,
-        name=name,  # pyright: ignore[reportArgumentType]
+        name=name,
         description=description,
-        equipment_limit=equipment_limit or [],  # pyright: ignore[reportArgumentType]
+        equipment_limit=equipment_limit or [],
         equipment=equipment or [],
         type=types or ["Infantry"],
         assault=_ASSAULT.model_copy(
             update={"specials": assault_specials or {}, "note": assault_note}
         ),
         cost=cost,
-        replaces=replaces,  # pyright: ignore[reportArgumentType]
+        replaces=replaces,
         unit_specials=unit_specials or {},
         specials=specials or {},
         unit=unit,
@@ -101,7 +101,7 @@ def _unit_config(  # noqa: PLR0913  the fixture covers every field under test
 ) -> UnitConfig:
     return UnitConfig(
         race=RACE,
-        name=name,  # pyright: ignore[reportArgumentType]
+        name=name,
         description=description,
         tip=tip,
         lore=lore,
@@ -115,7 +115,7 @@ def _unit_config(  # noqa: PLR0913  the fixture covers every field under test
         note=note,
         orders=orders or OrdersConfig(),
         armor=armor,
-        damage_tables={  # pyright: ignore[reportArgumentType]
+        damage_tables={
             "Regular": {"rows": ["1: Fine", "2-3: Hurt", "4+: Dead"], "notes": ["Calm"]}
         },
     )
@@ -138,11 +138,11 @@ def _equipment_config(  # noqa: PLR0913  the fixture covers every field under te
 ) -> EquipmentConfig:
     return EquipmentConfig(
         race=RACE,
-        name=name,  # pyright: ignore[reportArgumentType]
+        name=name,
         description=description,
         cost=cost,
         upgrade_all=upgrade_all,
-        requires=requires or [],  # pyright: ignore[reportArgumentType]
+        requires=requires or [],
         assault=assault,
         range=ranged,
         unit_specials=unit_specials or {},
@@ -398,7 +398,7 @@ def test_a_key_shared_across_sections_gets_one_anchor_per_section() -> None:
 
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf"])
 def test_build_overview_covers_every_unit_of_a_committed_race(race_name: str) -> None:
-    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    race = get_race(race_name)
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -667,7 +667,7 @@ def test_models_order_by_cost_with_toml_order_breaking_ties() -> None:
 
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf"])
 def test_build_overview_covers_every_model_of_a_committed_race(race_name: str) -> None:
-    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    race = get_race(race_name)
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -678,7 +678,7 @@ def test_build_overview_covers_every_model_of_a_committed_race(race_name: str) -
 
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf", "ogre"])
 def test_fielded_in_is_the_exact_inverse_of_every_unit_roster(race_name: str) -> None:
-    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    race = get_race(race_name)
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -1085,7 +1085,7 @@ def test_equipment_orders_by_cost_with_toml_order_breaking_ties() -> None:
 def test_build_overview_covers_every_equipment_of_a_committed_race(
     race_name: str,
 ) -> None:
-    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    race = get_race(race_name)
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -1098,7 +1098,7 @@ def test_build_overview_covers_every_equipment_of_a_committed_race(
 def test_carried_by_is_the_exact_inverse_of_every_model_loadout(
     race_name: str,
 ) -> None:
-    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    race = get_race(race_name)
 
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
@@ -1126,8 +1126,8 @@ def test_spawns_keep_their_toml_declaration_order() -> None:
             "rat": _unit_config(name="Rat"),
         },
         spawns={
-            "tiny_snake": SpawnConfig(unit="snake"),  # pyright: ignore[reportArgumentType]
-            "mechanical_rat": SpawnConfig(unit="rat"),  # pyright: ignore[reportArgumentType]
+            "tiny_snake": SpawnConfig(unit="snake"),
+            "mechanical_rat": SpawnConfig(unit="rat"),
         },
     )
 
@@ -1142,8 +1142,8 @@ def test_a_spawn_links_to_the_unit_and_equipment_it_places() -> None:
         equipment={"fang": _equipment_config(name="Fang")},
         spawns={
             "tiny_snake": SpawnConfig(
-                unit="snake",  # pyright: ignore[reportArgumentType]
-                equipment=["fang"],  # pyright: ignore[reportArgumentType]
+                unit="snake",
+                equipment=["fang"],
                 copy_equipment=True,
             )
         },
@@ -1177,7 +1177,7 @@ def test_a_unit_links_to_the_spawn_its_specials_place() -> None:
             "cavalry": _unit_config(name="Cavalry", specials=_spawning("tiny_snake")),
             "snake": _unit_config(name="Snake"),
         },
-        spawns={"tiny_snake": SpawnConfig(unit="snake")},  # pyright: ignore[reportArgumentType]
+        spawns={"tiny_snake": SpawnConfig(unit="snake")},
     )
 
     overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
@@ -1195,7 +1195,7 @@ def test_the_spawn_link_leaves_the_interpolated_prose_untouched() -> None:
             "cavalry": _unit_config(name="Cavalry", specials=specials),
             "snake": _unit_config(name="Snake"),
         },
-        spawns={"tiny_snake": SpawnConfig(unit="snake")},  # pyright: ignore[reportArgumentType]
+        spawns={"tiny_snake": SpawnConfig(unit="snake")},
     )
 
     overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
@@ -1223,7 +1223,7 @@ def test_a_model_links_to_the_spawns_of_either_of_its_slots() -> None:
                 specials=_spawning("mechanical_rat", rule="not_yet_dead"),
             )
         },
-        spawns={"mechanical_rat": SpawnConfig(unit="rat")},  # pyright: ignore[reportArgumentType]
+        spawns={"mechanical_rat": SpawnConfig(unit="rat")},
     )
 
     (model,) = build_overview(race, stem="gnome", image_for=FakeLookup(None)).models
@@ -1249,7 +1249,7 @@ def test_equipment_links_to_the_spawn_its_range_special_places() -> None:
                 ),
             )
         },
-        spawns={"assault_bots": SpawnConfig(unit="bots")},  # pyright: ignore[reportArgumentType]
+        spawns={"assault_bots": SpawnConfig(unit="bots")},
     )
 
     (equip,) = build_overview(race, stem="gnome", image_for=FakeLookup(None)).equipment
@@ -1269,7 +1269,7 @@ def test_a_record_placing_no_spawn_links_to_none() -> None:
 def test_a_spawned_unit_says_which_spawn_places_it() -> None:
     race = _race_config(
         units={"squad": _unit_config(), "snake": _unit_config(name="Snake")},
-        spawns={"tiny_snake": SpawnConfig(unit="snake")},  # pyright: ignore[reportArgumentType]
+        spawns={"tiny_snake": SpawnConfig(unit="snake")},
     )
 
     overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
@@ -1284,7 +1284,7 @@ def test_a_spawned_unit_says_which_spawn_places_it() -> None:
 
 @pytest.mark.parametrize("race_name", ["goblin", "ork", "gnome", "darkelf"])
 def test_every_spawn_of_a_committed_race_is_reachable(race_name: str) -> None:
-    race = get_race(race_name)  # pyright: ignore[reportArgumentType]
+    race = get_race(race_name)
     overview = build_overview(race, stem=race_name, image_for=FakeLookup(None))
 
     assert [spawn.key for spawn in overview.spawns] == list(race.spawns)
@@ -1368,7 +1368,7 @@ def test_every_special_a_section_prints_reaches_the_rules_reference(
     race_name: str,
 ) -> None:
     overview = build_overview(
-        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        get_race(race_name),
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1385,7 +1385,7 @@ def test_every_special_a_section_prints_reaches_the_rules_reference(
 @pytest.mark.parametrize("race_name", ["goblin", "dwarf", "gnome"])
 def test_a_record_anchor_never_collides_with_a_rule_anchor(race_name: str) -> None:
     overview = build_overview(
-        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        get_race(race_name),
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1431,7 +1431,7 @@ def test_the_document_addresses_every_record_exactly_once(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        get_race(race_name),
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1454,7 +1454,7 @@ def test_every_link_in_the_document_lands_on_an_anchor_of_it(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        get_race(race_name),
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1554,7 +1554,7 @@ def test_the_latex_document_labels_every_record_exactly_once(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        get_race(race_name),
         stem=race_name,
         image_for=FakeLookup(None),
     )
@@ -1577,7 +1577,7 @@ def test_every_latex_cross_reference_lands_on_a_label_of_it(
     tmp_path: Path, race_name: str
 ) -> None:
     overview = build_overview(
-        get_race(race_name),  # pyright: ignore[reportArgumentType]
+        get_race(race_name),
         stem=race_name,
         image_for=FakeLookup(None),
     )

@@ -48,14 +48,14 @@ def simple_race() -> RaceConfig:
                 specials={"terror": [SpecialInstance(args={"N": 1, "M": 6})]},
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
             )
         },
         models={
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
+                equipment_limit=["Hands:2"],
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -74,7 +74,7 @@ def simple_race() -> RaceConfig:
                 requires=[],
                 range=EquipmentRangeConfig(
                     range=30,
-                    angle=[True, False, False, False],  # pyright: ignore[reportArgumentType]
+                    angle=[True, False, False, False],
                     damage="d4",
                     ap=0,
                 ),
@@ -148,14 +148,14 @@ def test_unit_with_no_specials_omits_specials_line(capture: Console) -> None:
                 shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
             )
         },
         models={
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
+                equipment_limit=["Hands:2"],
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -320,7 +320,7 @@ def test_total_cost_shown(simple_race: RaceConfig, *, capture: Console) -> None:
 def test_rules_army_missing_file_exits_nonzero(
     tmp_path: pytest.TempPathFactory, *, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setattr(config.paths, "armies", tmp_path)  # type: ignore[arg-type]
+    monkeypatch.setattr(config.paths, "armies", tmp_path)
     with pytest.raises(SystemExit) as exc_info:
         rules_army("no-such-army")
     assert exc_info.value.code != 0

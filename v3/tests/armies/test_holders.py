@@ -24,8 +24,8 @@ def equipment(name: str, *, requires: list[list[str]] | None = None) -> Equipmen
     """Build an equipment entry carrying only a name and its holder claims."""
     return EquipmentConfig(
         race="goblin",
-        name=name,  # pyright: ignore[reportArgumentType]
-        requires=requires or [],  # pyright: ignore[reportArgumentType]
+        name=name,
+        requires=requires or [],
     )
 
 
@@ -33,8 +33,8 @@ def model(*, limits: list[str], equipment_keys: list[str] | None = None) -> Mode
     """Build a model config carrying only its holder limits and default keys."""
     return ModelConfig(
         race="goblin",
-        name="Soldier",  # pyright: ignore[reportArgumentType]
-        equipment_limit=limits,  # pyright: ignore[reportArgumentType]
+        name="Soldier",
+        equipment_limit=limits,
         equipment=equipment_keys or [],
         type=["Infantry"],
         assault=_ASSAULT,

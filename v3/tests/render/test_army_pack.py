@@ -44,7 +44,7 @@ def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 def _save(name: str, *, race: str = "goblin", nick: str = "Test") -> None:
     io.save_army(
-        ArmyList(race=race, nick=nick, units=[]),  # pyright: ignore[reportArgumentType]
+        ArmyList(race=race, nick=nick, units=[]),
         army_name=name,
     )
 
@@ -69,21 +69,21 @@ def test_index_parses_a_valid_document() -> None:
 
 def test_index_requires_a_document_title() -> None:
     with pytest.raises(ValidationError, match="title"):
-        ArmyPackConfig(armies=[])  # pyright: ignore[reportCallIssue]
+        ArmyPackConfig(armies=[])
 
 
 def test_index_rejects_an_unknown_key() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        ArmyPackConfig(  # pyright: ignore[reportCallIssue]
+        ArmyPackConfig(
             title="Test",
             armies=[],
-            unexpected="nope",  # pyright: ignore[reportCallIssue]
+            unexpected="nope",
         )
 
 
 def test_index_rejects_an_unknown_key_on_an_entry() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        PackArmyConfig(army="geir_arne", nick="nope")  # pyright: ignore[reportCallIssue]
+        PackArmyConfig(army="geir_arne", nick="nope")
 
 
 def test_get_army_pack_parses_a_toml_file(tmp_path: Path) -> None:
@@ -188,7 +188,7 @@ def test_load_pack_armies_invalid_entry_propagates_underlying_reason(
 
 
 def _army(*, nick: str = "Test", race: str = "goblin") -> Army:
-    return Army(race=race, nick=nick, units=[])  # pyright: ignore[reportArgumentType]
+    return Army(race=race, nick=nick, units=[])
 
 
 def test_build_pack_preserves_entry_order() -> None:

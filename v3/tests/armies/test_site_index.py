@@ -34,7 +34,7 @@ def test_index_lists_its_packs_in_order() -> None:
 
 def test_index_requires_packs() -> None:
     with pytest.raises(ValidationError, match="packs"):
-        SiteConfig()  # pyright: ignore[reportCallIssue]
+        SiteConfig()
 
 
 def test_index_rejects_an_empty_pack_list() -> None:
@@ -44,24 +44,24 @@ def test_index_rejects_an_empty_pack_list() -> None:
 
 def test_index_rejects_an_unknown_key() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        SiteConfig(  # pyright: ignore[reportCallIssue]
+        SiteConfig(
             packs=[SitePackConfig(pack="dummy-a", heading="Dummy Pack A")],
-            title="nope",  # pyright: ignore[reportCallIssue]
+            title="nope",
         )
 
 
 def test_index_rejects_an_unknown_key_on_an_entry() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        SitePackConfig(  # pyright: ignore[reportCallIssue]
+        SitePackConfig(
             pack="dummy-a",
             heading="Dummy Pack A",
-            title="nope",  # pyright: ignore[reportCallIssue]
+            title="nope",
         )
 
 
 def test_entry_requires_a_heading() -> None:
     with pytest.raises(ValidationError, match="heading"):
-        SitePackConfig(pack="dummy-a")  # pyright: ignore[reportCallIssue]
+        SitePackConfig(pack="dummy-a")
 
 
 def test_get_site_index_parses_a_toml_file(tmp_path: Path) -> None:
@@ -113,21 +113,21 @@ def test_index_accepts_an_empty_publish_list() -> None:
 
 def test_races_rejects_an_unknown_key() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        SiteRacesConfig(  # pyright: ignore[reportCallIssue]
+        SiteRacesConfig(
             heading="Races",
-            races=["elf"],  # pyright: ignore[reportCallIssue]
+            races=["elf"],
         )
 
 
 def test_races_rejects_a_name_that_is_not_a_race() -> None:
     """A typo is a schema error naming the races there are, not a silent miss."""
     with pytest.raises(ValidationError, match="publish"):
-        SiteRacesConfig(heading="Races", publish=["dark-elf"])  # pyright: ignore[reportArgumentType]
+        SiteRacesConfig(heading="Races", publish=["dark-elf"])
 
 
 def test_races_requires_a_heading() -> None:
     with pytest.raises(ValidationError, match="heading"):
-        SiteRacesConfig(publish=["elf"])  # pyright: ignore[reportCallIssue]
+        SiteRacesConfig(publish=["elf"])
 
 
 def test_get_site_index_parses_a_races_block(tmp_path: Path) -> None:

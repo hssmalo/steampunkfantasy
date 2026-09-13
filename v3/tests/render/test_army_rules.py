@@ -66,8 +66,8 @@ def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under 
 ) -> Model:
     config = ModelConfig(
         race="elf",
-        name=name,  # pyright: ignore[reportArgumentType]
-        equipment_limit=[],  # pyright: ignore[reportArgumentType]
+        name=name,
+        equipment_limit=[],
         equipment=[],
         type=types or ["Infantry"],
         assault=assault,
@@ -98,9 +98,9 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
     resolved_models = models or [_model()]
     config = UnitConfig(
         race="elf",
-        name=name,  # pyright: ignore[reportArgumentType]
+        name=name,
         models=[m.name for m in resolved_models],
-        size=size,  # pyright: ignore[reportArgumentType]
+        size=size,
         shaken=shaken
         or ShakenConfig(
             speed="slow", movement_order=["-", "-", "flee"], fire_order="No weapons"
@@ -109,7 +109,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
         armor=armor,
         specials=unit_specials or {},
         note=note,
-        damage_tables={  # pyright: ignore[reportArgumentType]
+        damage_tables={
             "Regular": {
                 "rows": ["1: Fine", "2: Dead"],
                 "notes": ["Stay calm"],
@@ -120,7 +120,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
-    return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
+    return Army(race=race, nick=nick, units=list(units))
 
 
 # --- build_reference: basic Unit/Model shape --------------------------------
@@ -167,7 +167,7 @@ def _equip(
     note: str = "",
 ) -> EquipmentConfig:
     return EquipmentConfig(
-        race="elf",  # pyright: ignore[reportArgumentType]
+        race="elf",
         name=name,
         requires=[],
         range=range_config,

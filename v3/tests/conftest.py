@@ -471,7 +471,7 @@ def _a_value(variable: r.VariableConfig, *, registry: reg.Registry) -> int | str
     # type, and the variable itself says which of them it is willing to take.
     for candidate in (getattr(variable, "min", None) or 1, "d6", "X"):
         try:
-            return variable.validate_value(candidate)  # pyright: ignore[reportArgumentType]
+            return variable.validate_value(candidate)
         except ValueError:
             continue
     msg = f"No candidate value fits {variable!r}"
