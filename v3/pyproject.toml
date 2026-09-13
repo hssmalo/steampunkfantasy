@@ -11,7 +11,7 @@ authors = [
     { name = "Hans Sverre Smalø", email = "hanssverre@gmail.com" },
     { name = "Geir Arne Hjelle", email = "geirarne@gmail.com" },
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "codetiming>=1.4.0",
     "configaroo>=0.6.1",
