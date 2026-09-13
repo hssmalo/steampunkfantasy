@@ -207,12 +207,14 @@ def _apply_ap(
     if stacker.replace is not None:
         return stacker.replace
     if stacker.add is not None:
-        if current == "N/A":
+        # `isinstance` rather than `== "N/A"`: only the former narrows away the
+        # Literal["N/A"] arm of ArmorPenetration on both operands.
+        if isinstance(current, str) or isinstance(stacker.add, str):
             msg = (
                 f"Equipment '{equip_name}': cannot use 'add' on"
                 " ap='N/A'; use 'replace' to set a numeric value"
             )
             raise ValueError(msg)
-        return current + stacker.add  # type: ignore[operator]
+        return current + stacker.add
     msg = f"Equipment '{equip_name}': empty Stacker on field 'ap'"
     raise ValueError(msg)
