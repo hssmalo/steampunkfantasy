@@ -7,10 +7,12 @@ per-product or per-format branching — behavior comes entirely from the Format 
 Product records.
 """
 
-from pathlib import Path
+from collections.abc import Callable
+from functools import partial
+from pathlib import Path, PurePath
 
 from spf.config import config
-from spf.render.environments import make_environments
+from spf.render.environments import make_environments, relative_to
 from spf.render.formats import FAMILY_TEMPLATE_EXT, Format
 from spf.render.products import Product
 
@@ -31,6 +33,7 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     out: Path | None = None,
     templates_root: Path | None = None,
     output_root: Path | None = None,
+    image_src: Callable[[PurePath], str] | None = None,
 ) -> Path:
     """Render one `source` to one file and return the written path.
 
@@ -51,6 +54,12 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
         out = root / product.name / f"{name}.{fmt.extension}"
 
     environments = make_environments(templates_root)
+    # Bound per render rather than per family: which spelling an Asset takes is
+    # the destination's business, and one template serves both destinations.
+    spelling = (
+        image_src if image_src is not None else partial(_relative_src, out.parent)
+    )
+    environments["markdown"].filters["image_src"] = spelling
     template_ext = FAMILY_TEMPLATE_EXT[fmt.family]
     template = environments[fmt.family].get_template(
         f"{product.name}/main.{template_ext}.jinja"
@@ -64,3 +73,8 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     else:
         out.write_text(content, encoding="utf-8")
     return out
+
+
+def _relative_src(output_dir: Path, asset: PurePath) -> str:
+    """Spell `asset` relative to the directory the document is written to."""
+    return relative_to(asset, output_dir)
