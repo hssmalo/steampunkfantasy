@@ -80,9 +80,11 @@ than its raw Cost implies.
 _Avoid_: point adjustment, handicap, bonus points
 
 **Unit Fixture**:
-An Upgrade Equipment that a player buys once for a whole Unit, and that is
-charged a single time however many of the Unit's Models carry it. Every other
-Upgrade is priced per Model: each Model carrying one adds its Cost again.
+An Upgrade Equipment that a player buys for a whole Unit rather than for one
+Model: a single purchase equips every Model with one copy and is charged a
+single time. A Fixture may be bought more than once, and N purchases cost N
+times its Cost and apply their effects N times. Every other Upgrade is priced
+per Model: each Model carrying one adds its Cost again.
 _Avoid_: shared equipment, unit-wide upgrade, group upgrade
 
 **Budget**:

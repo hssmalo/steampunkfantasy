@@ -22,21 +22,30 @@ Model is the only thing Equipment attaches to. Charging it once per Unit prices
 what the player actually bought, and keeping the distinction in the catalogue
 rather than in the pricing code means a new Unit-wide item is a data change.
 
-## The Fixture dedup is across Models, not within one
+## A Fixture's multiplicity is its purchase count
 
-`Unit.cost()` deduplicates a Fixture by Equipment name as it walks the Unit's
-Models, but it folds each Model's newly-seen names into the running set only
-*after* that Model's Equipment loop. Two copies of the same Fixture on a
-*single* Model are therefore charged twice, while one copy on each of four
-Models is charged once.
+A Unit Fixture is not a yes/no. It is bought *for the whole Unit* — one purchase
+equips every Model with one copy, and each copy claims a Holder on the Model
+carrying it — and **it may be bought more than once**. N purchases cost N × Cost
+and apply their effects N times.
 
-This is a consequence of the loop's shape rather than a decision, and it
-disagrees with `Unit.armor`, which dedupes the same Fixtures against a set it
-updates immediately. Nothing stops a player reaching it: `ArmyModel.upgrade()`
-appends unconditionally, so the same Equipment can be bought twice on one Model
-whenever its Holders have room. The rule this ADR records is the per-Unit one;
-where the code charges twice, the code is wrong and not the record of a
-deliberate choice.
+`Unit.fixture_purchases` is the one place that answers how many purchases a Unit
+holds, and `Unit.cost()` and `Unit.armor` both read it. They are not the last
+two traversals that will need the answer, and the rule drifting apart across
+hand-written walks of the same Models is how the rule broke once already:
+`cost()` charged the copies found on the first carrying Model, while `armor`
+collapsed every copy to a single application.
+
+The count is the **maximum** number of copies on any single Model, not the count
+on the first one. Promoting a Model resets its `upgrades` to `[]`, so a Unit can
+go ragged without anyone buying or selling anything, and what the Unit paid for
+is what survives on the Models that were not promoted.
+
+A ragged Unit is refused by the builder and tolerated at load.
+`ArmyUnit.upgrade_model()` raises for a Fixture, because a frontend that could
+sell half a Fixture would be selling something the rules have no price for;
+`io.load_army()` accepts a ragged Army that already exists on disk, because
+validity is referential (ADR 0036) and historical Armies stay loadable.
 
 ## `upgrade_all` is required wherever a `cost` is
 
