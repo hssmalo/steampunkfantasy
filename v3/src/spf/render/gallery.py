@@ -78,9 +78,7 @@ def build_gallery(
     """Build a `Gallery` from a Race's catalogue and a Survey of its art.
 
     Only the Asset half of each `Coverage` is read: how many Candidates are
-    waiting is authoring progress, and no business of a published page. A
-    Target the Survey knows and the catalogue does not sorts last rather than
-    vanishing, so nothing goes missing silently.
+    waiting is authoring progress, and no business of a published page.
     """
     race, metadata = next(iter(race_config.races.items()))
     positions = _positions(race_config)
