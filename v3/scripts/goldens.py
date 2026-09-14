@@ -36,6 +36,7 @@ from spf.frontends.cli.render import (
     render_army_pack,
     render_army_rules,
     render_cards,
+    render_gallery,
     render_general_rules,
     render_race_overview,
     safe_stem,
@@ -111,8 +112,9 @@ class Document:
 def documents() -> Iterator[Document]:
     """Every document the committed corpus renders to, in a stable order.
 
-    The Rulebook, one Race Overview per Race file, an Army Reference and an
-    Order Card deck per Army, and one Army Pack per authored Pack Index.
+    The Rulebook, a Race Overview and a Gallery per Race file, an Army
+    Reference and an Order Card deck per Army, and one Army Pack per authored
+    Pack Index.
     """
     yield Document(
         "general-rules",
@@ -130,6 +132,11 @@ def documents() -> Iterator[Document]:
                 cast("t.RaceName", race),
                 opts=opts,
             ),
+        )
+        yield Document(
+            "gallery",
+            race,
+            lambda opts, race=race: render_gallery(cast("t.RaceName", race), opts=opts),
         )
     for name in _army_names():
         stem = safe_stem(name)
