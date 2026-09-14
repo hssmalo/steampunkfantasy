@@ -7,19 +7,17 @@ per-product or per-format branching — behavior comes entirely from the Format 
 Product records.
 """
 
-from pathlib import Path
+from collections.abc import Callable
+from functools import partial
+from pathlib import Path, PurePath
 
 from spf.config import config
-from spf.render.environments import make_environments
+from spf.render.environments import make_environments, relative_to
 from spf.render.formats import FAMILY_TEMPLATE_EXT, Format
 from spf.render.products import Product
 
 # The fixed variable name the source object is bound to inside every template.
 SOURCE_VAR = "source"
-
-# The directory the rendered file lands in, bound alongside it so a template can
-# reference a neighboring file relatively (see `relative_to` in `environments`).
-OUTPUT_DIR_VAR = "output_dir"
 
 
 def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foundation spec
@@ -31,12 +29,12 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     out: Path | None = None,
     templates_root: Path | None = None,
     output_root: Path | None = None,
+    image_src: Callable[[PurePath], str] | None = None,
 ) -> Path:
     """Render one `source` to one file and return the written path.
 
     The template `<product>/main.<ext>.jinja` from the Format's family is
-    rendered with `source` bound to `SOURCE_VAR` and the output directory to
-    `OUTPUT_DIR_VAR`. A missing template for the requested
+    rendered with `source` bound to `SOURCE_VAR`. A missing template for the requested
     `(product, family)` pair surfaces as Jinja's
     `TemplateNotFound` here, at render time only. The Format's post-step, when
     present, produces the final content; otherwise the rendered text is written
@@ -44,18 +42,24 @@ def render(  # noqa: PLR0913  the seam's parameters are fixed by the render-foun
     `output_root/<product>/<name>.<ext>`. Parent directories are created and any
     existing file is overwritten silently.
     """
-    # Resolved before the template runs: a template that references a
-    # neighboring file needs to know where its own output lands.
+    # Resolved before the template runs: the default image spelling is relative
+    # to where this document lands.
     if out is None:
         root = output_root if output_root is not None else config.paths.output
         out = root / product.name / f"{name}.{fmt.extension}"
 
     environments = make_environments(templates_root)
+    # Bound per render rather than per family: which spelling an Asset takes is
+    # the destination's business, and one template serves both destinations.
+    spelling = (
+        image_src if image_src is not None else partial(relative_to, start=out.parent)
+    )
+    environments["markdown"].filters["image_src"] = spelling
     template_ext = FAMILY_TEMPLATE_EXT[fmt.family]
     template = environments[fmt.family].get_template(
         f"{product.name}/main.{template_ext}.jinja"
     )
-    rendered = template.render({SOURCE_VAR: source, OUTPUT_DIR_VAR: out.parent})
+    rendered = template.render({SOURCE_VAR: source})
     content = fmt.post_step(rendered) if fmt.post_step is not None else rendered
 
     out.parent.mkdir(parents=True, exist_ok=True)

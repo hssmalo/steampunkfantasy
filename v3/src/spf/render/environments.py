@@ -35,7 +35,9 @@ def posix_path(value: PurePath | str) -> str:
 def relative_to(value: PurePath, start: PurePath) -> str:
     """Return `value` as a path relative to the directory `start`.
 
-    Markdown documents reference art relatively rather than absolutely, because
+    The spelling a local Markdown rendering gives an Image Asset, bound into
+    the render as the `image_src` filter (see `spf.render.pipeline`). It is
+    relative rather than absolute because
     a root-absolute path resolves against the *authority* of a `file://` URL:
     opened across a UNC boundary — `file://wsl.localhost/<distro>/…` — it drops
     the share name and the image 404s (ADR 0017). LaTeX keeps absolute paths,
@@ -76,7 +78,6 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
         autoescape=False,  # noqa: S701  templates emit Markdown/LaTeX, not HTML (ADR 0005)
         keep_trailing_newline=True,
     )
-    markdown.filters["relative_to"] = relative_to
     # The Markdown family needs no conversion — its data is already Markdown —
     # only the source's headings pushed below the one it renders under.
     markdown.filters["shift_headings"] = shift_headings

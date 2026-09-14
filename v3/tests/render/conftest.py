@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from spf.config import config
 from spf.render import environments
 
 ART = Path("/assets/goblin/images/art.png")
@@ -33,3 +34,14 @@ def pinned_version(monkeypatch: pytest.MonkeyPatch) -> str:
     """Pin the version the templates stamp, decoupling output from the release."""
     monkeypatch.setattr(environments, "spf_version", lambda: PINNED_VERSION)
     return PINNED_VERSION
+
+
+SITE_BASE_URL = "https://example.test/site/"
+"""A Site served under a subpath, the shape a project Pages site has."""
+
+
+@pytest.fixture
+def site_base_url(monkeypatch: pytest.MonkeyPatch) -> str:
+    """Pin where the Site is served, decoupling art URLs from the real origin."""
+    monkeypatch.setattr(config.site, "base_url", SITE_BASE_URL)
+    return SITE_BASE_URL

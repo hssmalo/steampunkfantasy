@@ -22,7 +22,9 @@ from spf.assets.profiles import (
     resolve_refine,
 )
 from spf.assets.spine import (
+    SMALL,
     asset_for,
+    committed_assets,
     generate,
     promote,
     refine,
@@ -33,6 +35,7 @@ from spf.assets.survey import Coverage, Survey, survey
 from spf.assets.targets import Target, targets
 
 __all__ = [
+    "SMALL",
     "Coverage",
     "Kind",
     "Refiner",
@@ -42,6 +45,7 @@ __all__ = [
     "TargetLevel",
     "asset_for",
     "available",
+    "committed_assets",
     "generate",
     "get_kind",
     "promote",

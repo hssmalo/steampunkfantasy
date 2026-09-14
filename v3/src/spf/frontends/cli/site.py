@@ -33,6 +33,7 @@ from spf.frontends.cli.render import (
 from spf.render import render
 from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
+from spf.render.art import art_src, publish_art
 from spf.render.cards import build_deck
 from spf.render.formats import get_format
 from spf.render.images import committed_image
@@ -271,7 +272,16 @@ def _render_page(
     pages = []
     for fmt_name in SITE_FORMATS:
         fmt = get_format(fmt_name)
-        out = render(product, source, fmt=fmt, name=name, output_root=output_root)
+        # Site HTML points at the art the Site publishes, not at the committed
+        # file: the store lies outside the deployed artifact (ADR 0040).
+        out = render(
+            product,
+            source,
+            fmt=fmt,
+            name=name,
+            output_root=output_root,
+            image_src=art_src,
+        )
         pages.append(
             SitePage(
                 product=product.name,
@@ -429,10 +439,15 @@ def render_site() -> None:
 
     index_path = output_root / "index.html"
     index_path.write_text(render_landing_page(sections), encoding="utf-8")
+    # The only bytes the site build copies into `output/` rather than renders
+    # there, and the reason the deployed artifact resolves its images (ADR 0040).
+    published = publish_art(output_root)
 
     for page in [page for section in sections for page in _section_pages(section)]:
         stdout.print(f"Wrote {output_root / page.relative_path}")
     stdout.print(f"Wrote {index_path}")
+    art_root = output_root / config.site.art
+    stdout.print(f"Published {len(published)} image assets under {art_root}")
 
 
 def add_commands(app: cyclopts.App) -> None:

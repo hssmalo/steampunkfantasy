@@ -101,6 +101,18 @@ class AssetsConfig(StrictModel):
     model: AssetKindConfig = AssetKindConfig(count=2)
 
 
+class SiteSettings(StrictModel):
+    """Where the published Site lives, and the namespace it publishes art in.
+
+    The origin is configured rather than hardcoded so that moving the Site to a
+    custom domain is a config change and not a re-render (ADR 0040).
+    """
+
+    base_url: str
+    art: str = "art"
+    """The single path segment the Site publishes Image Assets under."""
+
+
 class LintConfig(StrictModel):
     """Naming conventions the Race-data linter treats as legitimate.
 
@@ -134,4 +146,5 @@ class SteamPunkFantasyConfig(StrictModel):
     paths: PathsConfig
     render: RenderConfig = RenderConfig()
     assets: AssetsConfig
+    site: SiteSettings
     lint: LintConfig = LintConfig()

@@ -13,7 +13,7 @@
 {%- for unit in reference.units %}
 {{ hashes }} {{ unit.name }}{% if unit.count > 1 %} ({{ unit.count }}×){% endif %}
 {% if unit.image %}
-![{{ unit.name }}]({{ unit.image | relative_to(output_dir) }})
+![{{ unit.name }}]({{ unit.image | image_src }})
 {% endif %}
 - Size: {{ unit.size }}
 - Models: {{ unit.model_summary | join(', ') }}
