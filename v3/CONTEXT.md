@@ -411,9 +411,10 @@ serves authoring and inspection, not gameplay reference.
 _Avoid_: export, document, output
 
 **Product**:
-One of the five kinds of gameplay reference we generate: **Order Card**, **Army
-Reference**, **Army Pack**, **Race Overview**, **Rulebook**. Each Product binds
-to one source-of-truth object and is rendered through a template family.
+One of the six kinds of gameplay reference we generate: **Order Card**, **Army
+Reference**, **Army Pack**, **Race Overview**, **Gallery**, **Rulebook**. Each
+Product binds to one source-of-truth object and is rendered through a template
+family.
 
 **Format**:
 An output syntax a Product renders to: `markdown`, `html`, `latex`, `pdf`.
@@ -522,6 +523,16 @@ every record appears exactly once, rather than nested under each path that
 reaches it.
 _Avoid_: race reference (the nesting it implies is the shape this Product
 rejects), race card
+
+**Gallery**:
+A Rendering of one Race's **Image Assets** — art and names, no rules. One entry
+per **Target** that has an Asset, in the order the **Race Overview** lists the
+same records, with each caption linking to that record's Race Overview anchor
+so the rules are one link away. Driven by the Race's Targets rather than by the
+Asset store's directory listing, so a file matching no Target never appears
+here; reporting those is the **Survey**'s job.
+_Avoid_: album, art page, showcase (a **Showcase Army** is a different thing
+entirely)
 
 **Rulebook**:
 A Rendering of the general, army-agnostic rules. Built from a **Rulebook

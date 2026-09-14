@@ -41,14 +41,15 @@ def _army_pages(label: str, stem: str) -> list[SitePage]:
 
 
 def _race_pages(label: str, stem: str) -> list[SitePage]:
-    """Both Formats of one Race Overview."""
+    """Both Products in both Formats for one Race, as `render_site` writes them."""
     return [
         SitePage(
-            product="race-overview",
+            product=product,
             label=label,
             fmt=fmt,
-            relative_path=f"race-overview/{stem}.{fmt}",
+            relative_path=f"{product}/{stem}.{fmt}",
         )
+        for product in ("race-overview", "gallery")
         for fmt in ("pdf", "html")
     ]
 
@@ -111,8 +112,8 @@ def test_a_pack_that_rendered_no_pack_document_has_no_trailing_line() -> None:
     assert section.lines == ()
 
 
-def test_race_section_is_one_race_overview_column() -> None:
-    """Rows are Races, and the one Product column is the Race Overview."""
+def test_race_section_is_a_column_per_race_product() -> None:
+    """Rows are Races; the Product columns are the Race Overview and the Gallery."""
     section = race_section(
         "Races",
         [
@@ -122,9 +123,9 @@ def test_race_section_is_one_race_overview_column() -> None:
     )
 
     assert section.heading == "Races"
-    assert section.columns == ("Race", "Race Overview")
+    assert section.columns == ("Race", "Race Overview", "Gallery")
     assert [row.label for row in section.rows] == ["Dummy Race One", "Dummy Race Two"]
-    assert [len(row.cells) for row in section.rows] == [1, 1]
+    assert [len(row.cells) for row in section.rows] == [2, 2]
 
 
 def test_links_every_page() -> None:
@@ -209,7 +210,7 @@ def test_an_army_is_one_row_with_a_cell_per_product() -> None:
 
 
 def test_a_race_is_one_row_with_both_formats_in_one_cell() -> None:
-    """A Race is a `<tr>`: its name, then both Formats of its Race Overview."""
+    """A Race is a `<tr>`: its name, then both Formats of each of its Products."""
     html = render_landing_page(
         [race_section("Races", _race_pages("Dummy Race One", "dummyone"))]
     )
@@ -218,9 +219,11 @@ def test_a_race_is_one_row_with_both_formats_in_one_cell() -> None:
     race_rows = [row for row in rows if "Dummy Race One" in row]
     assert len(race_rows) == 1
     cells = re.findall(r"<td>(.*?)</td>", race_rows[0], flags=re.DOTALL)
-    assert len(cells) == 2
+    assert len(cells) == 3
     assert 'href="race-overview/dummyone.pdf"' in cells[1]
     assert 'href="race-overview/dummyone.html"' in cells[1]
+    assert 'href="gallery/dummyone.pdf"' in cells[2]
+    assert 'href="gallery/dummyone.html"' in cells[2]
 
 
 def test_a_section_with_no_rows_still_renders_its_table() -> None:
@@ -229,7 +232,7 @@ def test_a_section_with_no_rows_still_renders_its_table() -> None:
 
     assert "<h2>Races</h2>" in html
     rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
-    assert rows == ["<th>Race</th><th>Race Overview</th>"]
+    assert rows == ["<th>Race</th><th>Race Overview</th><th>Gallery</th>"]
 
 
 def test_the_army_pack_renders_below_its_table_not_as_a_row() -> None:
@@ -277,6 +280,28 @@ def test_a_missing_product_leaves_an_empty_cell() -> None:
     )
 
     assert "cards/2026-dummy-one" not in html
+    assert "<td></td>" in html
+
+
+def test_a_race_that_rendered_no_gallery_leaves_an_empty_cell() -> None:
+    """The page links what rendered; it never fabricates a link that did not."""
+    html = render_landing_page(
+        [
+            race_section(
+                "Races",
+                [
+                    SitePage(
+                        product="race-overview",
+                        label="Dummy Race One",
+                        fmt="pdf",
+                        relative_path="race-overview/dummyone.pdf",
+                    )
+                ],
+            )
+        ]
+    )
+
+    assert "gallery/dummyone" not in html
     assert "<td></td>" in html
 
 
