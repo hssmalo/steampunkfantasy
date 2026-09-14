@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 04.09.2026 | Dwarf        | Brother in Arms armor now only gives endurance tokens.                      | To easier let it be stackable with wheeled shield wall. Ant it is fun                |
 | 04.09.2026 | Goblin       | Snake Tamer spawn lots more tiny snake. Tiny snake only has follow, 1 model | To make the snake tamer feel more like a snake tamer                                 |
 | 04.09.2026 | Goblin       | Snake Cavalry Hallucinating Poison became Poison[6]                         | Snake Cavalry is slow with limited range, so the poison spit needed more power       |
 | 04.09.2026 | Goblin       | Removed minor acid from stinkbomb                                           | Minor acid did not fit the theme of the weapon, and the weapon is good enough        |

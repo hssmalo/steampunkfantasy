@@ -1212,8 +1212,8 @@ angle = [true, true, true, true]
 damage = "d6+1"
 ap = 7
 
-[[equipment.big_blaster.range.specials.ammo]]
-text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to."
+[[equipment.big_blaster.range.specials.shared]]
+
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
@@ -1272,12 +1272,12 @@ upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
 [[equipment.brother_in_arms_armor.unit_specials.endurance]]
-args.N = 2
+args.N = 3
 args.model_class = "elite model"
 text = "In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]"
 
-[equipment.brother_in_arms_armor.unit]
-armor.add = [4, 3, 3, 3]
+
+
 
 [equipment.steamblower]
 name = "Steamblower"

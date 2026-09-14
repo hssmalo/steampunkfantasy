@@ -1265,7 +1265,6 @@ ap = 0
 args.N = 3
 
 [[models.darkelf_officer.assault.specials.counter_attack]]
-variant = "deflection_also_hit"
 
 [models.elite_darkelf_infantry]
 name = "Elite Dark Elf Infantry"
@@ -1293,7 +1292,6 @@ ap = 2
 args.N = 2
 
 [[models.elite_darkelf_infantry.assault.specials.counter_attack]]
-variant = "deflection_also_hit"
 
 [[models.elite_darkelf_infantry.assault.specials.penalty]]
 variant = "reroll_assault_crawling"
@@ -1325,7 +1323,6 @@ args.N = 12
 args.M = 2
 
 [[models.assassin.assault.specials.counter_attack]]
-variant = "deflection_also_hit"
 
 [[models.assassin.assault.specials.penalty]]
 variant = "reroll_assault_crawling"
@@ -1357,7 +1354,6 @@ args.N = 12
 args.M = 2
 
 [[models.roboprosthetic_assassin.assault.specials.counter_attack]]
-variant = "deflection_also_hit"
 
 [[models.roboprosthetic_assassin.assault.specials.penalty]]
 variant = "reroll_assault_crawling"
@@ -1433,7 +1429,7 @@ args.N = 2
 variant = "reroll_assault_crawling"
 
 [[models.elite_roboprosthetic_darkelf.assault.specials.counter_attack]]
-variant = "deflection_also_hit"
+
 
 [equipment]
 
@@ -1485,7 +1481,7 @@ requires = []
 note = "Neither this unit or the trainee units are immune to poison clouds"
 
 [[equipment.remote_control.unit_specials.activate]]
-text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. Whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round. Once activated, the ability is permanent."
+text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. After activated, whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round. Once activated, the ability is permanent."
 
 [equipment.officer_mask]
 name = "Officer Mask"
@@ -1723,6 +1719,8 @@ ap = 2
 [[equipment.mortar_1a.range.specials.range]]
 text = "Choose a hex within normal range and roll a die, at 5+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
 
+[[equipment.mortar_1a.range.specials.shared]]
+
 [[equipment.mortar_1a.range.specials.cloud]]
 args.N = 8
 args.M = 6
@@ -1747,6 +1745,8 @@ ap = 0
 
 [[equipment.mortar_1_1b.range.specials.range]]
 text = "Choose a hex within normal range and roll a die, at 3+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex."
+
+[[equipment.mortar_1_1b.range.specials.shared]]
 
 [[equipment.mortar_1_1b.range.specials.cloud]]
 args.N = 8

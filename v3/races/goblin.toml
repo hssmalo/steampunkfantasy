@@ -991,7 +991,8 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [[equipment.poison_deflection_dagger.assault.specials.damage_on_deflect]]
-text = "Each deflected hit gives enemy poison[4] token"
+args.N = 4
+
 
 [equipment.combat_screw_driver]
 name = "Combat Screw Driver"
@@ -1005,7 +1006,6 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [[equipment.combat_screw_driver.assault.specials.cunning_deflection]]
-text = "Each deflected hit counts as hits for cunning assault purposes."
 
 [equipment.goblin_grenade]
 name = "Goblin Grenade"
