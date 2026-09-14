@@ -7,3 +7,6 @@
 {% for key, value in source.rows -%}
 | {{ key }} | {{ value }} |
 {% endfor -%}
+{% if source.image %}
+![art]({{ source.image | image_src }})
+{% endif -%}

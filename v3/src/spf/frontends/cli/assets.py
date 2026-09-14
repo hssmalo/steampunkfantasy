@@ -560,7 +560,7 @@ def image(  # noqa: PLR0913  CLI surface, parameters are fixed
         _generate_image(kind, race, target, opts, svc, env_name, profile_name)
 
 
-def _generate_image(  # noqa: PLR0913  internal seam, parameters are fixed
+def _generate_image(  # noqa: PLR0913, PLR0917  internal seam, parameters are fixed
     kind: AssetKind,
     race: t.RaceName,
     target: Target,

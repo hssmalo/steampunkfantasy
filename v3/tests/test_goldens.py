@@ -204,7 +204,7 @@ def test_the_baseline_stamp_is_not_compared_as_a_document(tmp_path: Path) -> Non
 def test_a_matching_stamp_says_nothing() -> None:
     stamp = {"commit": "a" * 40, "dirty": False}
 
-    assert goldens._baseline_warnings(stamp, "a" * 40) == []
+    assert goldens._baseline_warnings(stamp, "a" * 40) == []  # ty: ignore[invalid-argument-type]
 
 
 def test_a_snapshot_taken_at_another_commit_warns() -> None:
@@ -212,7 +212,7 @@ def test_a_snapshot_taken_at_another_commit_warns() -> None:
     # and never a refusal.
     stamp = {"commit": "a" * 40, "dirty": False}
 
-    warnings = goldens._baseline_warnings(stamp, "b" * 40)
+    warnings = goldens._baseline_warnings(stamp, "b" * 40)  # ty: ignore[invalid-argument-type]
 
     assert len(warnings) == 1
     assert "aaaaaaa" in warnings[0]
@@ -223,7 +223,7 @@ def test_a_snapshot_taken_over_uncommitted_changes_warns() -> None:
     # Its baseline is a tree that exists in no commit.
     stamp = {"commit": "a" * 40, "dirty": True}
 
-    warnings = goldens._baseline_warnings(stamp, "a" * 40)
+    warnings = goldens._baseline_warnings(stamp, "a" * 40)  # ty: ignore[invalid-argument-type]
 
     assert len(warnings) == 1
     assert "uncommitted" in warnings[0]

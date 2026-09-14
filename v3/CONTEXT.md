@@ -85,6 +85,22 @@ charged a single time however many of the Unit's Models carry it. Every other
 Upgrade is priced per Model: each Model carrying one adds its Cost again.
 _Avoid_: shared equipment, unit-wide upgrade, group upgrade
 
+**Budget**:
+A cap on each of the four Cost dimensions independently — so much `mp`, `cp`,
+`xp` and `ip` — that an Army is built to spend. It is never a single number:
+Points are a total, not a Budget. A Budget is a target a player builds toward,
+not a rule an Army obeys; validity stays referential (ADR 0036), so an Army
+that exceeds today's Budget is still a valid Army. This is what keeps historical
+Armies fieldable as records even when Costs have since risen.
+_Avoid_: points limit, cap, allowance
+
+**Game Format**:
+A named kind of game, each naming one Budget — the standard format is
+96 `mp` / 96 `cp` / 96 `xp` / 96 `ip`. A Game Format is chosen when building an
+Army and is never recorded in the Army, which stays a statement of what the
+force is rather than of what it was built against.
+_Avoid_: game mode, scenario, ruleset, bracket
+
 ### Combat and the round
 
 **Round**:
@@ -395,9 +411,10 @@ serves authoring and inspection, not gameplay reference.
 _Avoid_: export, document, output
 
 **Product**:
-One of the five kinds of gameplay reference we generate: **Order Card**, **Army
-Reference**, **Army Pack**, **Race Overview**, **Rulebook**. Each Product binds
-to one source-of-truth object and is rendered through a template family.
+One of the six kinds of gameplay reference we generate: **Order Card**, **Army
+Reference**, **Army Pack**, **Race Overview**, **Gallery**, **Rulebook**. Each
+Product binds to one source-of-truth object and is rendered through a template
+family.
 
 **Format**:
 An output syntax a Product renders to: `markdown`, `html`, `latex`, `pdf`.
@@ -507,6 +524,16 @@ reaches it.
 _Avoid_: race reference (the nesting it implies is the shape this Product
 rejects), race card
 
+**Gallery**:
+A Rendering of one Race's **Image Assets** — art and names, no rules. One entry
+per **Target** that has an Asset, in the order the **Race Overview** lists the
+same records, with each caption linking to that record's Race Overview anchor
+so the rules are one link away. Driven by the Race's Targets rather than by the
+Asset store's directory listing, so a file matching no Target never appears
+here; reporting those is the **Survey**'s job.
+_Avoid_: album, art page, showcase (a **Showcase Army** is a different thing
+entirely)
+
 **Rulebook**:
 A Rendering of the general, army-agnostic rules. Built from a **Rulebook
 Index** — an ordered, authored list of Sections — not from whatever happens to
@@ -571,6 +598,13 @@ mirroring the Asset layout and addressed by Lineage. Promoting exactly one
 Candidate commits it as the Asset; the rest are discarded.
 _Avoid_: draft, option, variant, sample
 
+**Rendition**:
+A derived spelling of a committed Asset holding other bytes for the same art,
+committed beside it as `<name>.<rendition>` — a downscaled copy, say. The Site
+publishes the Rendition where one exists and the Asset itself where none does,
+at the same URL either way (ADR 0040).
+_Avoid_: variant (a Variant is shared Instance prose, ADR 0032), version, size
+
 **Lore** (asset):
 A Markdown Asset holding the full story, history, and atmosphere of a Race,
 generated from its TOML. Grows beyond what a TOML `description` field can hold;
@@ -581,8 +615,9 @@ short prose field, the seed — not the Lore)
 **Image** (asset):
 A 2D image Asset depicting a Race or Unit, generated from its `description`.
 Stored under `assets/<race>/images/`. Embedded by the Army Reference Rendering
-and on the back of the Order Cards, both of which reference the committed file
-where it lies rather than copying it (ADR 0017).
+and on the back of the Order Cards. LaTeX references the committed file where
+it lies (ADR 0017); the Site publishes a copy at `/art/<race>/<name>.png`,
+because the store sits outside the deployed artifact (ADR 0040).
 
 **Model** (asset):
 A 3D-mesh Asset (for on-demand printing) depicting a Unit or Model, stored

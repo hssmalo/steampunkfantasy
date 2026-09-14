@@ -84,7 +84,7 @@
 {%- endif %}
 {%- if source.race_image %}
 
-![{{ source.race }}]({{ source.race_image | relative_to(output_dir) }})
+![{{ source.race }}]({{ source.race_image | image_src }})
 {%- endif %}
 
 ## Contents
@@ -118,7 +118,7 @@
 {%- endif %}
 {%- if unit.image %}
 
-![{{ unit.name }}]({{ unit.image | relative_to(output_dir) }})
+![{{ unit.name }}]({{ unit.image | image_src }})
 {%- endif %}
 {#- The one undashed `if` of an entry: the newline its own line contributes is
     what opens the blank line under the heading, whether or not the field

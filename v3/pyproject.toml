@@ -11,10 +11,10 @@ authors = [
     { name = "Hans Sverre Smalø", email = "hanssverre@gmail.com" },
     { name = "Geir Arne Hjelle", email = "geirarne@gmail.com" },
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "codetiming>=1.4.0",
-    "configaroo>=0.6.1",
+    "configaroo>=0.7.1",
     "cyclopts>=4.10.1",
     "jinja2>=3.1.6",
     "markdown-it-py>=4.2.0",
@@ -31,10 +31,10 @@ dev = [
     "bumpver>=2026.1132",
     "ipython>=9.12.0",
     "prek>=0.3.8",
-    "pyright>=1.1.408",
     "pytest>=9.0.3",
     "ruff>=0.15.9",
     "tomlkit>=0.13.2",
+    "ty>=0.0.80",
     "typos>=1.45.0",
 ]
 
@@ -55,13 +55,14 @@ markers = ["integration: hits a live external provider; skipped by default"]
 # Ruff - lints
 #
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 exclude = [".git", ".venv"]
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
     "COM812", # Trailing comma missing (handled by formatter)
+    "CPY001", # Copyright notice in every file
     "D203", # Force blank line before class docstring (incompatible with D211)
     "D213", # Start docstring on second line (incompatible with D212)
 
@@ -89,8 +90,8 @@ known-first-party = ["goldens", "test_friction"]
 "armies/*/*.py" = ["INP001", "N999"]
 "scripts/*.py" = ["INP001"]
 
-[tool.pyright]
-extraPaths = ["scripts"]
+[tool.ty.environment]
+extra-paths = ["scripts"]
 
 #
 # Garuff - Geir Arne's opinionated lints

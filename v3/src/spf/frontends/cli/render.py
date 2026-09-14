@@ -20,7 +20,8 @@ from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
 from spf.render.cards import build_deck
 from spf.render.formats import FORMATS, get_format
-from spf.render.images import committed_image, no_image
+from spf.render.gallery import build_gallery
+from spf.render.images import committed_image, committed_survey, no_image, no_survey
 from spf.render.products import register_product
 from spf.render.race_overview import build_overview
 from spf.render.rulebook import build_rulebook
@@ -57,6 +58,9 @@ ARMY_PACK = register_product(Product(name="army-pack"))
 # The Race Overview Product: templates live at
 # `<family>/race-overview/main.<ext>.jinja`.
 RACE_OVERVIEW = register_product(Product(name="race-overview"))
+
+# The Gallery Product: templates live at `<family>/gallery/main.<ext>.jinja`.
+GALLERY = register_product(Product(name="gallery"))
 
 
 def _validate_format(_type: type, value: str) -> None:
@@ -252,6 +256,29 @@ def render_race_overview(
     stdout.print(f"Wrote {out}")
 
 
+def render_gallery(
+    race_name: t.RaceName,
+    *,
+    opts: Annotated[RenderOpts | None, cyclopts.Parameter(name="*")] = None,
+) -> None:
+    """Render a race's Image Assets to a Gallery document."""
+    opts = opts or RenderOpts()
+    try:
+        race_config = races.get_race(race_name)
+    except (FileNotFoundError, ValueError) as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+
+    gallery = build_gallery(
+        race_config,
+        stem=race_name,
+        survey_for=no_survey if opts.no_images else committed_survey,
+    )
+    fmt = get_format(opts.format)
+    out = render(GALLERY, gallery, fmt=fmt, name=race_name, out=opts.out)
+    stdout.print(f"Wrote {out}")
+
+
 def render_tlmgr() -> None:
     """Print the TeX Live packages the LaTeX manifest asks tlmgr to install.
 
@@ -270,4 +297,5 @@ def add_commands(app: cyclopts.App) -> None:
     app.command(render_general_rules, name="general-rules")
     app.command(render_army_pack, name="army-pack")
     app.command(render_race_overview, name="race-overview")
+    app.command(render_gallery, name="gallery")
     app.command(render_tlmgr, name="tlmgr")

@@ -1,6 +1,6 @@
 # Quality Gates
 
-The project uses uv and Python 3.13+. Quality gates (Pytest, Ruff, Pyright, and
+The project uses uv and Python 3.13+. Quality gates (Pytest, Ruff, ty, and
 Typos) are run through [`just`](https://github.com/casey/just). Prefer the `just`
 recipes over the underlying commands:
 
@@ -11,7 +11,7 @@ just check      # fmt-check, lint, spell, lint-data, test, typecheck — stops o
 just fmt        # Auto-format with ruff
 just fmt-check  # Check formatting without writing changes
 just lint       # Lint with ruff
-just typecheck  # Type-check src/ and tests/ with pyright
+just typecheck  # Type-check the whole tree with ty
 just spell      # Spell-check with typos
 just spell-fix  # Fix spelling errors with typos
 just test       # Run the test suite quietly (accepts extra pytest args, e.g. `just test -k foo`)
@@ -65,5 +65,5 @@ Be aware that `--dry` only prints the file diffs: it exercises neither the
 commit/tag/push nor the `uv lock` pre-commit hook.
 
 **Run `just check` before committing.** The underlying tools (`uv run pytest`,
-`uv run ruff`, `uv run pyright`, `uv run typos`) can still be invoked directly
+`uv run ruff`, `uv run ty check`, `uv run typos`) can still be invoked directly
 when needed.

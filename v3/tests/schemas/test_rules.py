@@ -279,7 +279,7 @@ def test_an_unbounded_int_still_rejects_a_string() -> None:
 
     assert variable.validate_value(7) == 7
     with pytest.raises(ValueError, match="not an int"):
-        variable.validate_value("not a number")  # pyright: ignore[reportArgumentType]
+        variable.validate_value("not a number")  # ty: ignore[invalid-argument-type]
 
 
 def test_an_int_rejects_a_bool() -> None:
@@ -296,7 +296,7 @@ def test_an_unbounded_string_still_rejects_an_int() -> None:
 
     assert variable.validate_value("elite model") == "elite model"
     with pytest.raises(ValueError, match="not a str"):
-        variable.validate_value(7)  # pyright: ignore[reportArgumentType]
+        variable.validate_value(7)  # ty: ignore[invalid-argument-type]
 
 
 def test_a_union_rejects_a_bool_for_its_int_member() -> None:

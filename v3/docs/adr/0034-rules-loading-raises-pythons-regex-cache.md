@@ -1,5 +1,10 @@
 # Rules loading raises Python's regex cache
 
+> **Retired.** `configaroo` 0.7.1 ships the upstream fix this ADR was waiting
+> for, and the stopgap — `_widen_regex_cache()` in `spf/rules.py` — is deleted.
+> Nothing supersedes the decision: the problem it worked around is gone, and the
+> ADR is kept for the mechanism. See *Resolution* at the end.
+
 `spf race show ork` took 16.8 seconds. It had taken a couple. Nothing in `spf`
 had changed: the commit that did it was *"tiny tweaks to specials to make
 showcase goblin look better"*, which added four keys to `rules/special.toml`.
@@ -104,3 +109,30 @@ config load.
   slowness.
 - **This is a stopgap.** It is deleted when `configaroo` ships the fix, along
   with the comment in `spf/rules.py` that points here.
+
+## Resolution
+
+`configaroo` 0.7.1 ships the fix named under *Why not the alternatives*: one
+static pattern, compiled once at import, with the field name looked up in the
+replacers.
+
+```python
+_DYNAMIC_FIELD = re.compile(r"\{(?P<field>[^{}!:]+)(?P<conv>![ars])?(?P<fmt>:[^}]*)?\}")
+```
+
+`_widen_regex_cache()` is deleted and `re._MAXCACHE` is left at its default 512.
+Measured on the upgrade, with `rules/special.toml` at 522 flat keys — past the
+cliff that provoked this ADR, and no longer meaningful:
+
+| | `re.findall` calls | load all registries | `spf race show ork` |
+| --- | --- | --- | --- |
+| before, unpatched | 203,502 | — | 16.8 s |
+| with the stopgap | 203,502 | ~1 s | 2.4 s |
+| `configaroo` 0.7.1 | 0 | 0.08 s | 0.66 s |
+
+This also closes *What this does not fix*. The quadratic scan is not merely
+cached, it is gone — every string is matched once against one pattern instead of
+once per key in the file, so there are no `re.findall` calls left to count.
+Registry loading is no longer a cost worth designing around; where ADR 0036 and
+`lint_all()` cite this ADR for "about a second per process", the reason to share
+the load probe is now correctness, not cost.

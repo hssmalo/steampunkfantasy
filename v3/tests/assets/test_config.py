@@ -30,7 +30,7 @@ def test_image_prompt_paths_resolve() -> None:
 
 def test_image_asset_requires_both_prompt_paths() -> None:
     with pytest.raises(ValidationError, match="negative_prompt"):
-        ImageAssetConfig(  # pyright: ignore[reportCallIssue]  the omission is the point
+        ImageAssetConfig(  # ty: ignore[missing-argument]  the omission is the point
             count=3, prompt=Path("image.txt"), comfyui=config.assets.image.comfyui
         )
 
@@ -45,7 +45,7 @@ def _env(**kw: str) -> ComfyUIEnvConfig:
 
 def test_comfyui_env_requires_a_profile() -> None:
     with pytest.raises(ValidationError, match="profile"):
-        ComfyUIEnvConfig(base_url="http://x")  # pyright: ignore[reportCallIssue]  the omission is the point
+        ComfyUIEnvConfig(base_url="http://x")  # ty: ignore[missing-argument]  the omission is the point
 
 
 def test_comfyui_env_carries_profile() -> None:

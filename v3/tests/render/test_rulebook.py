@@ -71,19 +71,19 @@ def test_index_parses_a_valid_document() -> None:
 
 def test_index_requires_a_document_title() -> None:
     with pytest.raises(ValidationError, match="title"):
-        RulebookConfig(sections=[])  # pyright: ignore[reportCallIssue]
+        RulebookConfig(sections=[])  # ty: ignore[missing-argument]
 
 
 def test_section_requires_a_title() -> None:
     # H1s are dropped from a source (decision 6), so the index is the only
     # place a section heading can come from.
     with pytest.raises(ValidationError, match="title"):
-        SectionConfig(kind="markdown", source="round.md")  # pyright: ignore[reportCallIssue]
+        SectionConfig(kind="markdown", source="round.md")  # ty: ignore[missing-argument]
 
 
 def test_index_rejects_an_unknown_key() -> None:
     with pytest.raises(ValidationError, match="chapters"):
-        RulebookConfig(title="Test", sections=[], chapters=[])  # pyright: ignore[reportCallIssue]
+        RulebookConfig(title="Test", sections=[], chapters=[])  # ty: ignore[unknown-argument]
 
 
 # --- get_rulebook -----------------------------------------------------------

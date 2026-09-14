@@ -25,6 +25,7 @@ from spf.frontends.cli.render import (
     ARMY_PACK_STEM,
     ARMY_RULES,
     CARDS,
+    GALLERY,
     GENERAL_RULES,
     RACE_OVERVIEW,
     RULEBOOK_STEM,
@@ -33,9 +34,11 @@ from spf.frontends.cli.render import (
 from spf.render import render
 from spf.render.army_pack import build_pack
 from spf.render.army_rules import build_reference
+from spf.render.art import art_src, publish_art
 from spf.render.cards import build_deck
 from spf.render.formats import get_format
-from spf.render.images import committed_image
+from spf.render.gallery import build_gallery
+from spf.render.images import committed_image, committed_survey
 from spf.render.products import Product
 from spf.render.race_overview import build_overview
 from spf.render.rulebook import build_rulebook
@@ -62,10 +65,14 @@ _PRODUCT_TITLES: dict[str, str] = {
     "cards": "Order Cards",
     "army-pack": "Army Pack",
     "race-overview": "Race Overview",
+    "gallery": "Gallery",
 }
 
 # The Products a pack's table has one column of, in column order.
 _ARMY_PRODUCTS = (ARMY_RULES.name, CARDS.name)
+
+# The Products a Race's row has one column of, in column order.
+_RACE_PRODUCTS = (RACE_OVERVIEW.name, GALLERY.name)
 
 _STYLE = """\
 body {
@@ -199,11 +206,11 @@ def pack_section(
 
 
 def race_section(heading: str, pages: Sequence[SitePage]) -> SiteSection:
-    """Build the Races section: one Race Overview column, one row per Race."""
+    """Build the Races section: a column per Race Product, one row per Race."""
     return SiteSection(
         heading=heading,
-        columns=("Race", _product_title(RACE_OVERVIEW.name)),
-        rows=_rows_by_label(pages, (RACE_OVERVIEW.name,)),
+        columns=("Race", *(_product_title(p) for p in _RACE_PRODUCTS)),
+        rows=_rows_by_label(pages, _RACE_PRODUCTS),
         lines=(),
     )
 
@@ -271,7 +278,16 @@ def _render_page(
     pages = []
     for fmt_name in SITE_FORMATS:
         fmt = get_format(fmt_name)
-        out = render(product, source, fmt=fmt, name=name, output_root=output_root)
+        # Site HTML points at the art the Site publishes, not at the committed
+        # file: the store lies outside the deployed artifact (ADR 0040).
+        out = render(
+            product,
+            source,
+            fmt=fmt,
+            name=name,
+            output_root=output_root,
+            image_src=art_src,
+        )
         pages.append(
             SitePage(
                 product=product.name,
@@ -334,7 +350,7 @@ def _load_races(site_index: SiteConfig) -> list[_LoadedRace]:
 def _render_races(
     heading: str, loaded: Sequence[_LoadedRace], *, output_root: Path
 ) -> SiteSection:
-    """Render a Race Overview per named Race and build the Races section."""
+    """Render each named Race's Products and build the Races section."""
     pages: list[SitePage] = []
     for race in loaded:
         # The Race Name is the stem: it is the name of the TOML file the
@@ -345,6 +361,16 @@ def _render_races(
         pages += _render_page(
             RACE_OVERVIEW,
             overview,
+            name=race.name,
+            label=race.label,
+            output_root=output_root,
+        )
+        gallery = build_gallery(
+            race.config, stem=race.name, survey_for=committed_survey
+        )
+        pages += _render_page(
+            GALLERY,
+            gallery,
             name=race.name,
             label=race.label,
             output_root=output_root,
@@ -429,10 +455,15 @@ def render_site() -> None:
 
     index_path = output_root / "index.html"
     index_path.write_text(render_landing_page(sections), encoding="utf-8")
+    # The only bytes the site build copies into `output/` rather than renders
+    # there, and the reason the deployed artifact resolves its images (ADR 0040).
+    published = publish_art(output_root)
 
     for page in [page for section in sections for page in _section_pages(section)]:
         stdout.print(f"Wrote {output_root / page.relative_path}")
     stdout.print(f"Wrote {index_path}")
+    art_root = output_root / config.site.art
+    stdout.print(f"Published {len(published)} image assets under {art_root}")
 
 
 def add_commands(app: cyclopts.App) -> None:

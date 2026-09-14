@@ -62,14 +62,14 @@ def simple_race() -> RaceConfig:
                 shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
                 orders=OrdersConfig(),
                 armor=None,
-                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+                damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
             )
         },
         models={
             "soldier": ModelConfig(
                 race="goblin",
                 name="Soldier",
-                equipment_limit=["Hands:2", "Grenades:1"],  # pyright: ignore[reportArgumentType]
+                equipment_limit=["Hands:2", "Grenades:1"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry"],
                 assault=_ASSAULT,
@@ -78,7 +78,7 @@ def simple_race() -> RaceConfig:
             "elite_soldier": ModelConfig(
                 race="goblin",
                 name="Elite Soldier",
-                equipment_limit=["Hands:2"],  # pyright: ignore[reportArgumentType]
+                equipment_limit=["Hands:2"],  # ty: ignore[invalid-argument-type]
                 equipment=[],
                 type=["Infantry", "Elite"],
                 assault=_ASSAULT,
@@ -92,7 +92,7 @@ def simple_race() -> RaceConfig:
                 name="Sword",
                 cost=t.Cost(cp=2),
                 upgrade_all=True,
-                requires=[["Hands:1"], ["type:Infantry"]],  # pyright: ignore[reportArgumentType]
+                requires=[["Hands:1"], ["type:Infantry"]],  # ty: ignore[invalid-argument-type]
             ),
             "shield": EquipmentConfig(
                 race="goblin",
@@ -134,7 +134,7 @@ def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
     soldier = ModelConfig(
         race="goblin",
         name="Soldier",
-        equipment_limit=["Hands:2", "Independent:∞"],  # pyright: ignore[reportArgumentType]
+        equipment_limit=["Hands:2", "Independent:∞"],  # ty: ignore[invalid-argument-type]
         equipment=[],
         type=["Infantry"],
         assault=_ASSAULT,
@@ -145,7 +145,7 @@ def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
         name="Wings",
         cost=t.Cost(cp=24),
         upgrade_all=True,
-        requires=[["Independent:1"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Independent:1"]],  # ty: ignore[invalid-argument-type]
     )
     return simple_race.model_copy(
         update={
@@ -163,7 +163,7 @@ def race_with_two_handed(simple_race: RaceConfig) -> RaceConfig:
         name="Bow",
         cost=t.Cost(cp=8),
         upgrade_all=True,
-        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
     return simple_race.model_copy(
         update={"equipment": simple_race.equipment | {"bow": bow}}
@@ -177,7 +177,7 @@ def race_with_defaults(simple_race: RaceConfig) -> RaceConfig:
         race="goblin",
         name="Default Sword",
         cost=None,
-        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
     soldier_with_default = simple_race.models["soldier"].model_copy(
         update={"equipment": ["default_sword"]}
@@ -203,7 +203,7 @@ def test_army_model_default_upgrades(simple_race: RaceConfig) -> None:
 def test_army_model_is_frozen(simple_race: RaceConfig) -> None:
     model = ArmyModel(name="soldier", config=simple_race.models["soldier"], upgrades=[])
     with pytest.raises((AttributeError, TypeError)):
-        model.upgrades = ("sword",)  # pyright: ignore[reportAttributeAccessIssue]
+        model.upgrades = ("sword",)  # ty: ignore[invalid-assignment]
 
 
 def test_army_unit_default_models_match_config(one_unit_army: ArmyList) -> None:
@@ -213,7 +213,7 @@ def test_army_unit_default_models_match_config(one_unit_army: ArmyList) -> None:
 
 def test_army_list_is_frozen(empty_army: ArmyList) -> None:
     with pytest.raises((AttributeError, TypeError)):
-        empty_army.units = ()  # pyright: ignore[reportAttributeAccessIssue]
+        empty_army.units = ()  # ty: ignore[invalid-assignment]
 
 
 def test_army_list_allows_duplicate_units(simple_race: RaceConfig) -> None:
@@ -635,7 +635,7 @@ def test_validate_army_requires_error_includes_type_detail(
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite", "type:Cavalry"]],  # pyright: ignore[reportArgumentType]
+        requires=[["type:Elite", "type:Cavalry"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -664,7 +664,7 @@ def test_validate_army_requires_error_includes_slot_detail(
         name="Greedy Sword",
         cost=t.Cost(cp=4),
         upgrade_all=True,
-        requires=[["Hands:3"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Hands:3"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -696,7 +696,7 @@ def test_validate_army_requires_error_includes_all_failing_groups(
         requires=[
             ["type:Cavalry"],
             ["Hands:10"],
-        ],  # pyright: ignore[reportArgumentType]
+        ],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -880,7 +880,7 @@ def test_upgrade_model_unsatisfied_requires_raises(simple_race: RaceConfig) -> N
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1011,7 +1011,7 @@ def test_upgrade_all_models_unsatisfied_requires_raises(
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1418,7 +1418,7 @@ def test_validate_army_detects_invalid_model_replacement(
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
     )
     illegal_unit = ArmyUnit(
         name="squad",
@@ -1447,7 +1447,7 @@ def test_validate_army_detects_multiple_violations(simple_race: RaceConfig) -> N
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
     )
     illegal_unit = ArmyUnit(
         name="double_squad",
@@ -1474,7 +1474,7 @@ def test_validate_army_detects_unsatisfied_equipment_requires(
         name="Elite Sword",
         cost=t.Cost(cp=3),
         upgrade_all=True,
-        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1523,7 +1523,7 @@ def test_validate_army_upgrade_not_counted_against_itself(
         name="Two-Hand Sword",
         cost=t.Cost(cp=4),
         upgrade_all=True,
-        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -1650,7 +1650,7 @@ def test_model_equipment_evicts_a_default_the_upgrade_crowds_out(
     two_handed = EquipmentConfig(
         race="goblin",
         name="Great Sword",
-        requires=[["Hands:2"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Hands:2"]],  # ty: ignore[invalid-argument-type]
     )
 
     model = _soldier_with_sword(_race_with_default(simple_race, two_handed))
@@ -1665,7 +1665,7 @@ def test_model_equipment_keeps_a_default_in_an_untouched_holder(
     grenade = EquipmentConfig(
         race="goblin",
         name="Grenade",
-        requires=[["Grenades:1"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Grenades:1"]],  # ty: ignore[invalid-argument-type]
     )
 
     model = _soldier_with_sword(_race_with_default(simple_race, grenade))
@@ -1939,6 +1939,36 @@ def test_model_assault_add_on_na_ap_raises(simple_race: RaceConfig) -> None:
         resolved.units[0].models[0].assault()
 
 
+def test_model_assault_add_of_na_ap_raises(simple_race: RaceConfig) -> None:
+    equip = EquipmentConfig(
+        race="goblin",
+        name="AP Boost",
+        cost=t.Cost(cp=2),
+        upgrade_all=True,
+        requires=[],
+        assault=EquipmentAssaultConfig(ap=Stacker(add="N/A")),
+    )
+    race = RaceConfig(
+        races=simple_race.races,
+        units=simple_race.units,
+        models=simple_race.models,
+        equipment={**simple_race.equipment, "ap_boost": equip},
+    )
+    army = (
+        ArmyList(race="goblin", nick="T", units=[])
+        .add_unit("squad", race_config=race)
+        .upgrade_model(
+            ("squad", 0),
+            model_key=("soldier", 0),
+            equipment_name="ap_boost",
+            race_config=race,
+        )
+    )
+    resolved = army.resolve(race)
+    with pytest.raises(ValueError, match=r"cannot 'add' ap='N/A'"):
+        resolved.units[0].models[0].assault()
+
+
 # ---------------------------------------------------------------------------
 # Unit.cost() upgrade_all logic
 # ---------------------------------------------------------------------------
@@ -1964,7 +1994,7 @@ def test_unit_cost_upgrade_all_false_multiplies_by_unit_size(
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -2003,7 +2033,7 @@ def test_unit_cost_upgrade_all_true_flat(simple_race: RaceConfig) -> None:
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=OrdersConfig(),
         armor=None,
-        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
     )
     race = RaceConfig(
         races=simple_race.races,
@@ -2124,8 +2154,8 @@ def _typed_model(*types: t.ModelType, name: str = "Trooper") -> Model:
         name=name.lower().replace(" ", "_"),
         config=ModelConfig(
             race="goblin",
-            name=name,  # pyright: ignore[reportArgumentType]
-            equipment_limit=[],  # pyright: ignore[reportArgumentType]
+            name=name,
+            equipment_limit=[],
             equipment=[],
             type=list(types),
             assault=_ASSAULT,
