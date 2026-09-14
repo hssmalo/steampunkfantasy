@@ -126,7 +126,11 @@ to read a real Race. Install a Registry of your own instead:
 ```python
 def test_something(install_registry: InstallRegistry) -> None:
     install_registry(synthetic_registry(specials={"countdown": None}))
-    race = synthetic_race(units={"squad": synthetic_unit(specials={"countdown": [{"text": "Three rounds."}]})})
+    race = synthetic_race(
+        units={
+            "squad": synthetic_unit(specials={"countdown": [{"text": "Three rounds."}]})
+        }
+    )
 ```
 
 A `None` rule permits every Slot; pass `synthetic_special(slots=[...])` to

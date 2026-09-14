@@ -36,7 +36,7 @@ def _model(*, equipment: list[EquipmentConfig] | None = None) -> Model:
     config = ModelConfig(
         race="elf",
         name="Soldier",
-        equipment_limit=[],  # pyright: ignore[reportArgumentType]
+        equipment_limit=[],
         equipment=[],
         type=["Infantry"],
         assault=_ASSAULT,
@@ -61,19 +61,19 @@ def _unit(  # noqa: PLR0913  test fixture covers every Unit field under test
 ) -> Unit:
     config = UnitConfig(
         race="elf",
-        name=name,  # pyright: ignore[reportArgumentType]
+        name=name,
         models=["Soldier"],
         size=size,
         shaken=shaken or ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
         orders=orders,
-        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},  # pyright: ignore[reportArgumentType]
+        damage_tables={"Regular": {"rows": ["1: Fine", "2: Dead"]}},
     )
     return Unit(name=name, config=config, models=models or [_model()], nick=nick)
 
 
 def _equip(orders_gained: OrdersConfig, *, name: str = "SMG") -> EquipmentConfig:
     return EquipmentConfig(
-        race="elf",  # pyright: ignore[reportArgumentType]
+        race="elf",
         name=name,
         requires=[],
         orders_gained=orders_gained,
@@ -284,7 +284,7 @@ def test_orders_groups_a_repeated_equipment_name_with_its_first_appearance() -> 
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
-    return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
+    return Army(race=race, nick=nick, units=list(units))  # ty: ignore[invalid-argument-type]
 
 
 def test_build_deck_flat_rows_one_entry_per_option() -> None:

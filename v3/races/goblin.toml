@@ -89,7 +89,8 @@ A terrifying view for all enemies, which the goblin enjoys a lot since it is an 
 '''
 
 tip = '''
-Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. However their low speed, combined with low range limits the usefulness. The large number of tiny snakes are the real power of this unit.
+Decent endurance, decent in assault with an devastating poison if they hit, and not to expensive. Poison bow and poison spit makes these best versus bio units.
+It can use all of the weapons every gunnery phase, but has no to-hit benefits. Thus it is best to target units which are easy to hi. The hallucinating poison is this unit most effective weapon, which you may find surprisingly nice. Do not underestimate how good confusion is to make enemies useless for å limited time. The greatest weakness of this unit is limited range and low speed.
 '''
 
 
@@ -141,15 +142,18 @@ rows = [
 [units.tiny_snake]
 race = "goblin"
 name = "Tiny Snake"
-models = ["tiny_snake", "tiny_snake"]
+models = ["tiny_snake"]
 size = "tiny"
 cost.vpm = 2
 
-description = "Two tiny snakes hiding in the grass, ready to bite anyone that comes too close"
+description = "A tiny snakes hiding in the grass, ready to bite anyone that comes too close"
 
 [units.tiny_snake.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+
+[[units.tiny_snake.specials.movement]]
+text = "If this unit is still hidden and any enemy in any movement phase is within range 2 of this unit, it revealse it self and assault the enemy in that hex. If there are multiple hexes with enemies in, you choose which one to assault. Also note, this unit only has follow as possible movement order. If this unit does not share any hex with any friendly unit, or does reveal itself, it stays still."
 
 [[units.tiny_snake.specials.hidden]]
 variant = "start_with_token"
@@ -162,7 +166,7 @@ args.M = 4
 text = "Do not have terror while hidden"
 
 [units.tiny_snake.orders.movement]
-slow = [["-", "-",  "Chs"], ["-", "-",  "Reveal"], ["Follow", "Follow",  "Follow"]]
+slow = [["Follow", "Follow",  "Follow"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
@@ -741,7 +745,7 @@ race = "goblin"
 cost.xp = 8
 equipment_limit = ["Independent:∞", "Hands:2", "Grenades:2", "Specialization:1"]
 equipment = ["goblin_bow", "goblin_grenade"]
-type = ["Bio", "Infantry", "Walking"]
+type = ["Bio", "Infantry", "Walking", "Snake Tamer"]
 replaces = "goblin_infantry"
 
 [models.snake_tamer.assault]
@@ -758,7 +762,7 @@ args.N = 4
 args.M = 2
 
 [[models.snake_tamer.unit_specials.spawn]]
-text = "tiny_snake: Once per game in any shooting phase place 3 tiny_snake units in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+text = "tiny_snake:If there are no friendly units sharing the hex with you in gunnery phase 1, place a (hidden) tiny snake in your hex. In addition, if there are less than 2 tiny snakes within range 2, place one tiny snake in an empty hex adjent to you."
 
 
 [[models.snake_tamer.assault.specials.cunning_assault]]
@@ -941,7 +945,7 @@ variant = "always_loaded"
 
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.poison"
-args.N = 4
+args.N = 6
 
 [[equipment.hallucinating_poison_spit.range.specials.range_extra_damage]]
 args.version = "token.horrifying_poison"
@@ -1260,14 +1264,12 @@ damage = "d6 Psychic damage + d6 Crew damage"
 ap = "N/A"
 
 [[equipment.stinkbomb.range.specials.range_extra_damage]]
-args.version = "token.minor_acid"
-
-[[equipment.stinkbomb.range.specials.range_extra_damage]]
 args.version = "token.poison"
 args.N = 6
 
 [[equipment.stinkbomb.range.specials.area]]
-text = "If you hit the enemy, Area[5+] with same damage as main hit (with extra damage)"
+args.N = 5
+text = "If you hit the enemy, apply area effect with same damage as main hit (with extra damage)"
 
 [[equipment.stinkbomb.range.specials.cloud]]
 text = "Place a Poison Cloud[6] in the hex of the targeted unit"
@@ -1284,7 +1286,8 @@ damage = "n.a"
 ap = 0
 
 [[equipment.ring_of_fire.range.specials.area]]
-text = "[6+] target at all enemies within exactly range 2"
+args.N = 6
+text = "Target at all enemies within exactly range 2"
 
 [[equipment.ring_of_fire.range.specials.range_extra_damage]]
 args.version = "token.fire"

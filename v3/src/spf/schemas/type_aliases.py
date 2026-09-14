@@ -137,6 +137,8 @@ type ModelType = Literal[
     "Monster",
     "Archer",
     "Tinkerer",
+    "Snake Tamer",
+    "Cyclops",
     "Brother in Arms",
     "Roboprosthetic",
     "Amphibian",

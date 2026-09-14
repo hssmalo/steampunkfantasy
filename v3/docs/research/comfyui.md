@@ -70,7 +70,9 @@ This is the load-bearing fact for our design. From `server.py`:
 api_routes = web.RouteTableDef()
 for route in self.routes:
     if isinstance(route, web.RouteDef):
-        api_routes.route(route.method, "/api" + route.path)(route.handler, **route.kwargs)
+        api_routes.route(route.method, "/api" + route.path)(
+            route.handler, **route.kwargs
+        )
 self.app.add_routes(api_routes)
 self.app.add_routes(self.routes)
 ```
@@ -209,7 +211,7 @@ The one thing core does give us: the API export includes a **`_meta` block with
 the node's `title`**. The server ignores it, but *we* can use it client-side:
 
 ```python
-def node_id(graph, title):           # resolve by title, fail loudly
+def node_id(graph, title):  # resolve by title, fail loudly
     ids = [k for k, v in graph.items() if v.get("_meta", {}).get("title") == title]
     if len(ids) != 1:
         raise ValueError(f"expected exactly one node titled {title!r}, found {ids}")
@@ -519,9 +521,10 @@ build in on purpose.
 import json
 from urllib import request
 
+
 def queue_prompt(prompt):
     p = {"prompt": prompt}
-    data = json.dumps(p).encode('utf-8')
+    data = json.dumps(p).encode("utf-8")
     req = request.Request("http://127.0.0.1:8188/prompt", data=data)
     request.urlopen(req)
 ```

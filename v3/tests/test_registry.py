@@ -139,7 +139,7 @@ def check(
             key: [SpecialInstance.model_validate(one) for one in instances]
             for key, instances in specials.items()
         },
-        slot=slot,  # pyright: ignore[reportArgumentType]
+        slot=slot,  # ty: ignore[invalid-argument-type]
         context="unit 'Squad'",
         registry=_registry(),
     )
@@ -455,8 +455,10 @@ def test_an_unknown_variant_is_rejected() -> None:
 
     # The pool is the rule's own, so naming it is what makes the typo findable.
     assert errors == [
-        "unit 'Squad': 'resistance': no variant 'while_an_elite_lved';"
-        " the rule defines versus_shaken, while_an_elite_lives"
+        (
+            "unit 'Squad': 'resistance': no variant 'while_an_elite_lved';"
+            " the rule defines versus_shaken, while_an_elite_lives"
+        )
     ]
 
 
@@ -484,8 +486,10 @@ def test_an_unknown_variant_on_a_case_names_its_position() -> None:
     )
 
     assert errors == [
-        "unit 'Squad': 'resistance', case 2: no variant 'versus_shakn';"
-        " the rule defines versus_shaken, while_an_elite_lives"
+        (
+            "unit 'Squad': 'resistance', case 2: no variant 'versus_shakn';"
+            " the rule defines versus_shaken, while_an_elite_lives"
+        )
     ]
 
 
@@ -522,8 +526,10 @@ def test_a_variant_naming_an_argument_the_instance_omits_is_rejected() -> None:
 
     # `optional` is a claim about the variable, not about the prose naming it.
     assert errors == [
-        "unit 'Squad': 'fire_order': variant 'load_n_shots' names {N},"
-        " and the instance gives no N"
+        (
+            "unit 'Squad': 'fire_order': variant 'load_n_shots' names {N},"
+            " and the instance gives no N"
+        )
     ]
 
 
@@ -570,8 +576,10 @@ def test_a_cases_prose_naming_an_unsupplied_argument_names_its_position() -> Non
 
     # A case's args merge over the instance's, so neither one is at fault alone.
     assert errors == [
-        "unit 'Squad': 'fire_order', case 2: variant 'load_n_shots' names {N},"
-        " and no argument in scope gives N"
+        (
+            "unit 'Squad': 'fire_order', case 2: variant 'load_n_shots' names {N},"
+            " and no argument in scope gives N"
+        )
     ]
 
 
@@ -589,8 +597,10 @@ def test_a_preamble_does_not_see_the_args_its_cases_supply() -> None:
     )
 
     assert errors == [
-        "unit 'Squad': 'fire_order': a preamble scopes every case, so it sees"
-        " only the instance's args; N is given by cases 1 and 2"
+        (
+            "unit 'Squad': 'fire_order': a preamble scopes every case, so it sees"
+            " only the instance's args; N is given by cases 1 and 2"
+        )
     ]
 
 

@@ -1,0 +1,27 @@
+{#
+  The Gallery, Markdown family. One Race's Image Assets, art and names only —
+  the rules stay in the Race Overview, one link away at the anchor that page
+  already gives every record (ADR 0031).
+
+  The LaTeX twin at `latex/gallery/main.tex.jinja` shows the same entries in
+  the same order, and carries no links: a printed sheet cannot be clicked.
+
+  Captions link across to the Race Overview's `.html`, the Format this family
+  publishes to. A Race Target depicts no record, so its caption is plain text.
+
+  Layout lives here and not in the view-model, which says only *which* Asset
+  an entry shows (ADR 0017); `image_src` spells it for wherever this document
+  lands.
+#}
+# {{ source.title }} — Gallery
+
+*v{{ spf_version }}*
+{% for entry in source.entries %}
+![{{ entry.name }}]({{ entry.image | image_src }})
+
+{% if entry.anchor -%}
+**[{{ entry.name }}](../race-overview/{{ source.race }}.html#{{ entry.anchor }})**
+{%- else -%}
+**{{ entry.name }}**
+{%- endif %}
+{% endfor %}

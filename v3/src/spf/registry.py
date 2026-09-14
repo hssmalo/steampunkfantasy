@@ -469,7 +469,7 @@ def _check_ref(
 def _check_scalar(value: int | str, variable: r.ScalarVariableConfig) -> str | None:
     """Check a scalar arg against the type, bounds and value set it declares."""
     try:
-        variable.validate_value(value)  # pyright: ignore[reportArgumentType]
+        variable.validate_value(value)  # ty: ignore[invalid-argument-type]
     except ValueError as err:
         return str(err)
     return None

@@ -99,6 +99,11 @@ and needs no design decision to add later — deferred, not rejected.
   preview builds for now (GitHub's PR-comment file attachment is browser-only,
   and the realistic CI-side alternative is an artifact-zip download, not a
   preview — not worth the YAML for what it buys).
+- **The artifact is no longer only rendered documents: ADR 0040** has the
+  site build copy the committed Image Assets into `output/art/` as well, so
+  that published HTML can reference art that lives inside the artifact. A
+  missing downscaled Rendition is a fallback there, not a failure, and does not
+  trip the whole-site policy above.
 - The published URL (`https://hssmalo.github.io/steampunkfantasy/`) is
   treated as stable once live: it gets pasted into chat and printed on paper,
   same as the render paths it mirrors exactly (`output/army-rules/showcase-elf.pdf`

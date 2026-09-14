@@ -204,7 +204,7 @@ def unit(
     """Build a resolved Unit over the given Model slots."""
     config = UnitConfig(
         race="goblin",
-        name="Squad",  # pyright: ignore[reportArgumentType]
+        name="Squad",
         models=["soldier"] * len(models),
         size="small",
         shaken=ShakenConfig(speed="slow", movement_order=["-", "-", "flee"]),
