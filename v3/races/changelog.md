@@ -5,13 +5,14 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 04.09.2026 | Goblin       | Snake Tamer spawn lots more tiny snake. Tiny snake only has follow, 1 model | To make the snake tamer feel more like a snake tamer                                 |
 | 04.09.2026 | Goblin       | Snake Cavalry Hallucinating Poison became Poison[6]                         | Snake Cavalry is slow with limited range, so the poison spit needed more power       |
 | 04.09.2026 | Goblin       | Removed minor acid from stinkbomb                                           | Minor acid did not fit the theme of the weapon, and the weapon is good enough        |
 | 04.09.2026 | Ogre,Goblin  | Snake Tamer and Cyclops own unit types                                      | To make room for specialized weapons in the future                                   |
 | 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | To cool not to implement. Armored, durable, big boulder size bomb. Will review power |
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
-| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
-| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                             |
+| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf             |
+| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                              |
 | 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | Too cool not to implement. Armored, durable, big boulder size bomb. Will review power|
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because too fun not to add                                        |
 | 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                   | Goblin infantry seemed overpowered and this is a significant and fun nerf            |

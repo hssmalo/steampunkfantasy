@@ -294,7 +294,11 @@ rows = [
 race = "ogre"
 name = "Cyclops"
 armor = [8,7,6,5]
-description = '''Armored Huge cyclops carrying a plasma gun and throwing a boulder sized bomb.
+description = '''A gigantic humanoid titan with a single large eye in the center of its face. The creature has only ONE eye — one enormous, clearly visible eye positioned centrally above the nose and mouth, with no second eye and no other eyes. Massive, muscular humanoid proportions, towering over the battlefield, imposing and monstrous.
+
+Details: Heavily armored one-eyed titan wearing ornate battered fantasy-steampunk armor, with massive mechanical plates, rivets, cables, pistons, pipes, and glowing energy components. The titan is carrying a large futuristic plasma gun in one hand while simultaneously throwing a huge boulder-sized grenade with the other hand. The grenade is visibly ticking, with a mechanical timer, glowing indicator, exposed gears and wires. Dynamic throwing pose, powerful sense of motion, debris and sparks flying around him.
+
+Important: Exactly ONE eye, located in the center of the face. No second eye. No extra eyes. Clearly humanoid face with one enormous central eye.
 '''
 
 models = ["cyclops"]
