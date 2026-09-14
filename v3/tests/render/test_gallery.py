@@ -5,19 +5,17 @@ rather than reading the committed Asset store: what is on disk is `survey`'s
 subject, not this Product's.
 """
 
-import re
 from pathlib import Path
 
-from spf.assets.image import IMAGE
 from spf.assets.kinds import TargetLevel
 from spf.assets.survey import Coverage, Survey
-from spf.assets.targets import Target, targets
-from spf.frontends.cli.render import GALLERY, RACE_OVERVIEW
-from spf.races import get_race
+from spf.assets.targets import Target
+from spf.frontends.cli.render import GALLERY
 from spf.render import render
 from spf.render.formats import get_format
 from spf.render.gallery import Gallery, build_gallery
-from spf.render.race_overview import build_overview, in_cost_order
+from spf.render.race_overview import RaceOverview, build_overview, in_cost_order
+from spf.schemas.race import RaceConfig
 from spf.schemas.type_aliases import Cost
 from tests.conftest import synthetic_race, synthetic_unit
 
@@ -147,87 +145,72 @@ def test_the_race_is_asked_about_by_name() -> None:
     assert asked == [RACE]
 
 
-# --- The Renderings ---------------------------------------------------------
+# --- Anchors and the Rendering ----------------------------------------------
 #
-# The templates stay dumb (ADR 0005); these pin the contract they have to keep
-# — one picture per entry, and every caption landing on an anchor the Race
-# Overview really emits — without asserting on a line of their prose.
-
-_IMAGE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
-_CROSS_LINK = re.compile(r"\]\((?:\.\./)?race-overview/[^)#]+#([^)]+)\)")
-_OVERVIEW_ANCHOR = re.compile(r'<a id="([^"]+)"></a>')
-_INCLUDE = re.compile(r"\\includegraphics\[[^\]]*\]\{([^}]+)\}")
+# The cross-link contract is a view-model property, so it is asserted there
+# (ADR 0033): a caption may only carry an anchor the Race Overview really
+# addresses a record by. What the templates make of it is theirs to change.
 
 
-def _full_gallery(race_name: str) -> Gallery:
-    """Build a committed Race's Gallery, with art for every Target it declares."""
-    race_config = get_race(race_name)  # ty: ignore[invalid-argument-type]
+def _both_products(race_config: RaceConfig) -> tuple[Gallery, RaceOverview]:
+    """Build the two Products one Race publishes, sharing one Asset story."""
     found = Survey(
         rows=[
-            Coverage(target=target, asset=_art(target.name))
-            for target in targets(IMAGE, race_name)  # ty: ignore[invalid-argument-type]
+            Coverage(target=_target(key, human_name=unit.name), asset=_art(key))
+            for key, unit in race_config.units.items()
         ],
         orphans=[],
     )
-    return build_gallery(race_config, stem=race_name, survey_for=lambda _: found)
-
-
-def _rendered(gallery: Gallery, fmt: str, tmp_path: Path) -> str:
-    """Render `gallery` through one Format and read the document back."""
-    out = render(
-        GALLERY, gallery, fmt=get_format(fmt), name=gallery.stem, output_root=tmp_path
-    )
-    return out.read_text(encoding="utf-8")
-
-
-def test_the_markdown_document_shows_every_entry(tmp_path: Path) -> None:
-    """A Gallery that skipped a picture would be hiding art the Race has."""
-    gallery = _full_gallery(RACE)
-
-    images = _IMAGE.findall(_rendered(gallery, "markdown", tmp_path))
-
-    assert len(images) == len(gallery.entries)
-
-
-def test_every_caption_lands_on_a_race_overview_anchor(tmp_path: Path) -> None:
-    """The rules are one link away only if the link has something to land on."""
-    gallery = _full_gallery(RACE)
+    gallery = build_gallery(race_config, stem=RACE, survey_for=lambda _: found)
     overview = build_overview(
-        get_race(RACE),
-        stem=RACE,
-        image_for=lambda _race, _name: None,
+        race_config, stem=RACE, image_for=lambda _race, _name: None, rules=False
     )
-    out = render(
-        RACE_OVERVIEW,
-        overview,
-        fmt=get_format("markdown"),
-        name=RACE,
-        output_root=tmp_path,
-    )
+    return gallery, overview
 
-    linked = _CROSS_LINK.findall(_rendered(gallery, "markdown", tmp_path))
+
+def test_every_caption_anchor_addresses_a_race_overview_record() -> None:
+    """The rules are one link away only if the link has something to land on."""
+    gallery, overview = _both_products(synthetic_race(race=RACE))
+
+    linked = {entry.anchor for entry in gallery.entries if entry.anchor is not None}
 
     assert linked
-    anchors = _OVERVIEW_ANCHOR.findall(out.read_text(encoding="utf-8"))
-    assert set(linked) <= set(anchors)
+    addressed = {entry.anchor for entry in overview.units} | {
+        entry.anchor for entry in overview.models
+    }
+    assert linked <= addressed
 
 
-def test_the_latex_document_embeds_every_entry(tmp_path: Path) -> None:
-    """Both families show the same art; only the spelling is the family's own."""
-    gallery = _full_gallery(RACE)
+def test_the_gallery_renders_to_its_own_product_directory(tmp_path: Path) -> None:
+    """The mechanism, not the layout: the right Product, Format and path."""
+    gallery, _ = _both_products(synthetic_race(race=RACE))
 
-    latex = _rendered(gallery, "latex", tmp_path)
+    for fmt, extension in (("markdown", "md"), ("latex", "tex")):
+        out = render(
+            GALLERY,
+            gallery,
+            fmt=get_format(fmt),
+            name=gallery.stem,
+            output_root=tmp_path,
+        )
 
-    assert len(_INCLUDE.findall(latex)) == len(gallery.entries)
-    # A printed sheet cannot be clicked, so the captions carry no links.
-    assert "hyperref" not in latex
+        assert out == tmp_path / "gallery" / f"{RACE}.{extension}"
+        assert out.read_text(encoding="utf-8")
 
 
-def test_an_empty_gallery_still_renders(tmp_path: Path) -> None:
-    """An artless Race yields a page with nothing on it, not a failed build."""
+def test_an_artless_race_renders_rather_than_raising(tmp_path: Path) -> None:
+    """An empty Gallery is a page with nothing on it, not a failed build."""
     gallery = build_gallery(
         synthetic_race(race=RACE), stem=RACE, survey_for=lambda _: _survey()
     )
 
-    assert _rendered(gallery, "markdown", tmp_path)
-    assert _rendered(gallery, "latex", tmp_path)
+    for fmt in ("markdown", "latex"):
+        out = render(
+            GALLERY,
+            gallery,
+            fmt=get_format(fmt),
+            name=gallery.stem,
+            output_root=tmp_path,
+        )
+
+        assert out.is_file()
