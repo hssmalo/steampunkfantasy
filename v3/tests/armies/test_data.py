@@ -143,7 +143,7 @@ def _race_with_banner(race: RaceConfig) -> RaceConfig:
         name="Banner",
         cost=t.Cost(cp=2),
         upgrade_all=True,
-        requires=[["Hands:1"]],  # pyright: ignore[reportArgumentType]
+        requires=[["Hands:1"]],  # ty: ignore[invalid-argument-type]
     )
     return race.model_copy(update={"equipment": {**race.equipment, "banner": banner}})
 
@@ -2000,7 +2000,7 @@ def test_model_assault_add_of_na_ap_raises(simple_race: RaceConfig) -> None:
         race="goblin",
         name="AP Boost",
         cost=t.Cost(cp=2),
-        upgrade_all=True,
+        upgrade_all=False,
         requires=[],
         assault=EquipmentAssaultConfig(ap=Stacker(add="N/A")),
     )
@@ -2435,7 +2435,7 @@ def _race_with_elite_banner(race: RaceConfig) -> RaceConfig:
         name="Elite Banner",
         cost=t.Cost(cp=2),
         upgrade_all=True,
-        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
+        requires=[["type:Elite"]],  # ty: ignore[invalid-argument-type]
     )
     return race.model_copy(
         update={"equipment": {**race.equipment, "elite_banner": elite_banner}}
