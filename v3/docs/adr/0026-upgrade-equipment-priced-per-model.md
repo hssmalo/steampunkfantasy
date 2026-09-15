@@ -25,9 +25,16 @@ rather than in the pricing code means a new Unit-wide item is a data change.
 ## A Fixture's multiplicity is its purchase count
 
 A Unit Fixture is not a yes/no. It is bought *for the whole Unit* — one purchase
-equips every Model with one copy, and each copy claims a Holder on the Model
-carrying it — and **it may be bought more than once**. N purchases cost N × Cost
-and apply their effects N times.
+equips every Model that can carry it with one copy, and each copy claims a
+Holder on the Model carrying it — and **it may be bought more than once**. N
+purchases cost N × Cost and apply their effects N times.
+
+"Every Model that can carry it" is the Equipment's own `requires`, not every
+Model in the Unit. A Fixture requiring `type:Tinkerer` reaches only the Model
+promoted to Tinkerer; the rest of the Unit is passed over, and the Unit is still
+charged the one purchase. `ArmyUnit.upgrade_all_models()` skips the Models that
+cannot take it and refuses only when *no* Model can, because a purchase nobody
+can carry is a purchase of nothing.
 
 `Unit.fixture_purchases` is the one place that answers how many purchases a Unit
 holds, and `Unit.cost()` and `Unit.armor` both read it. They are not the last
@@ -37,11 +44,15 @@ hand-written walks of the same Models is how the rule broke once already:
 collapsed every copy to a single application.
 
 The count is the **maximum** number of copies on any single Model, not the count
-on the first one. Promoting a Model resets its `upgrades` to `[]`, so a Unit can
-go ragged without anyone buying or selling anything, and what the Unit paid for
-is what survives on the Models that were not promoted.
+on the first one. A Fixture need not reach every Model, so the first Model may
+be one it never reached. Promotion compounds this: it resets the promoted
+Model's `upgrades` to `[]`, so a Unit can go uneven without anyone buying or
+selling anything, and what the Unit paid for is what survives on the Models that
+were not promoted.
 
-A ragged Unit is refused by the builder and tolerated at load.
+A Unit uneven because some Models *cannot* carry the Fixture is not ragged; it
+is fully equipped. A ragged Unit — one where a Model that could have carried a
+purchase did not get one — is refused by the builder and tolerated at load.
 `ArmyUnit.upgrade_model()` raises for a Fixture, because a frontend that could
 sell half a Fixture would be selling something the rules have no price for;
 `io.load_army()` accepts a ragged Army that already exists on disk, because
