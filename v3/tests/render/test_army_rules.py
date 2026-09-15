@@ -13,6 +13,7 @@ from spf.armies.unit import Unit
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
 from spf.render import render, rules_reference
 from spf.render.army_rules import UnitEntry, build_reference
+from spf.render.art import art_src
 from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.specials import SpecialLine
@@ -66,8 +67,8 @@ def _model(  # noqa: PLR0913  test fixture covers every ModelConfig field under 
 ) -> Model:
     config = ModelConfig(
         race="elf",
-        name=name,  # pyright: ignore[reportArgumentType]
-        equipment_limit=[],  # pyright: ignore[reportArgumentType]
+        name=name,
+        equipment_limit=[],
         equipment=[],
         type=types or ["Infantry"],
         assault=assault,
@@ -98,9 +99,9 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
     resolved_models = models or [_model()]
     config = UnitConfig(
         race="elf",
-        name=name,  # pyright: ignore[reportArgumentType]
+        name=name,
         models=[m.name for m in resolved_models],
-        size=size,  # pyright: ignore[reportArgumentType]
+        size=size,
         shaken=shaken
         or ShakenConfig(
             speed="slow", movement_order=["-", "-", "flee"], fire_order="No weapons"
@@ -109,7 +110,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
         armor=armor,
         specials=unit_specials or {},
         note=note,
-        damage_tables={  # pyright: ignore[reportArgumentType]
+        damage_tables={
             "Regular": {
                 "rows": ["1: Fine", "2: Dead"],
                 "notes": ["Stay calm"],
@@ -120,7 +121,7 @@ def _unit(  # noqa: PLR0913  test fixture covers every UnitConfig field under te
 
 
 def _army(*units: Unit, nick: str = "Test", race: str = "elf") -> Army:
-    return Army(race=race, nick=nick, units=list(units))  # pyright: ignore[reportArgumentType]
+    return Army(race=race, nick=nick, units=list(units))  # ty: ignore[invalid-argument-type]
 
 
 # --- build_reference: basic Unit/Model shape --------------------------------
@@ -167,7 +168,7 @@ def _equip(
     note: str = "",
 ) -> EquipmentConfig:
     return EquipmentConfig(
-        race="elf",  # pyright: ignore[reportArgumentType]
+        race="elf",
         name=name,
         requires=[],
         range=range_config,
@@ -527,6 +528,31 @@ def test_army_rules_markdown_embeds_race_and_unit_images(tmp_path: Path) -> None
     text = out.read_text(encoding="utf-8")
     assert "![goblin](../assets/art.png)" in text
     assert "![Squad](../assets/art.png)" in text
+
+
+def test_army_rules_markdown_embeds_site_urls_when_site_spelled(
+    tmp_path: Path,
+    site_base_url: str,  # noqa: ARG001
+) -> None:
+    # The Site publishes the art it references, so its HTML names a URL under
+    # the site root rather than a path out of the deployed artifact (ADR 0040).
+    art = tmp_path / "assets" / "goblin" / "images" / "art.png"
+    reference = build_reference(
+        _army(_unit(), race="goblin"), stem="test", image_for=FakeLookup(art)
+    )
+
+    out = render(
+        ARMY_RULES,
+        reference,
+        fmt=get_format("markdown"),
+        name="test",
+        output_root=tmp_path,
+        image_src=art_src,
+    )
+
+    text = out.read_text(encoding="utf-8")
+    assert "![goblin](/site/art/goblin/art.png)" in text
+    assert "![Squad](/site/art/goblin/art.png)" in text
 
 
 def test_army_rules_markdown_emits_no_image_markup_without_art(

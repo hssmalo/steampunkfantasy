@@ -18,7 +18,7 @@
 ## {{ unit.name }}
 
 {% if unit.image -%}
-![{{ unit.name }}]({{ unit.image | relative_to(output_dir) }})
+![{{ unit.name }}]({{ unit.image | image_src }})
 
 {% endif -%}
 {{ order_table("Movement", unit.movement_rows, unit.shaken_movement) }}

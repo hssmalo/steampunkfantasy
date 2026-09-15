@@ -210,10 +210,5 @@ see_also = ["special.hide", "special.fear", "special.terror"]
 [tokens.endurance]
 name = "Endurance"
 phases = []
-see_also = ["special.endurance"]
-todo = """Rule text not yet written: what an endurance token is and what it may be spent on. The only description in the repo was reference.toml's, rescued below, plus the Race prose that grants them.
-
-From reference.toml:
-#Note: many of these adds armor. Instead we could have an add armor feature in equipment which modifies the armor of a unit. All of these are replace
-[UnitSpecial.protection]
-references = ["token.endurance"]"""
+see_also = ["special.endurance", "token.bleed"]
+effect = "When one model is killed, spend one endurance token to give the unit Bleed[4] instead. If a model is killed by Bleed, you may spend another endurance token to continue bleed[4] instead. However, note that + to future damage which normally is halved when a model is killed is not halved if you use endurance token to save it."

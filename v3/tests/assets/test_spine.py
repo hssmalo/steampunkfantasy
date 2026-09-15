@@ -5,7 +5,15 @@ from pathlib import Path
 
 import pytest
 
-from spf.assets import Kind, asset_for, generate, promote, refine, stage_promoted
+from spf.assets import (
+    Kind,
+    asset_for,
+    committed_assets,
+    generate,
+    promote,
+    refine,
+    stage_promoted,
+)
 from tests.assets.conftest import FakeRefiner, FakeService
 
 
@@ -644,3 +652,68 @@ def test_asset_for_returns_none_when_nothing_is_committed(
     tmp_path: Path, test_kind: Kind
 ) -> None:
     assert asset_for(test_kind, "orks", name="grunt", assets_root=tmp_path) is None
+
+
+# --- asset_for: preferring a Rendition ---------------------------------------
+
+
+def test_asset_for_prefers_a_rendition_when_one_is_committed(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    directory = tmp_path / "orks" / "_test"
+    directory.mkdir(parents=True)
+    (directory / "grunt.txt").write_bytes(b"full size")
+    (directory / "grunt.small.txt").write_bytes(b"downscaled")
+
+    found = asset_for(
+        test_kind, "orks", name="grunt", assets_root=tmp_path, rendition="small"
+    )
+
+    assert found == directory / "grunt.small.txt"
+
+
+def test_asset_for_falls_back_to_the_asset_when_the_rendition_is_missing(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    # A Rendition that was never generated is a fallback, never a miss: the
+    # Site publishes the best bytes available at a URL that does not move.
+    directory = tmp_path / "orks" / "_test"
+    directory.mkdir(parents=True)
+    (directory / "grunt.txt").write_bytes(b"full size")
+
+    found = asset_for(
+        test_kind, "orks", name="grunt", assets_root=tmp_path, rendition="small"
+    )
+
+    assert found == directory / "grunt.txt"
+
+
+# --- committed_assets: every Asset of a Kind on disk -------------------------
+
+
+def test_committed_assets_lists_every_race_and_name(
+    tmp_path: Path, test_kind: Kind
+) -> None:
+    for race, name in [("orks", "grunt"), ("orks", "boss"), ("elf", "scout")]:
+        directory = tmp_path / race / "_test"
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / f"{name}.txt").write_bytes(b"committed")
+
+    assert list(committed_assets(test_kind, assets_root=tmp_path)) == [
+        ("elf", "scout"),
+        ("orks", "boss"),
+        ("orks", "grunt"),
+    ]
+
+
+def test_committed_assets_skips_renditions(tmp_path: Path, test_kind: Kind) -> None:
+    # A Rendition is other bytes for an Asset already listed, not an Asset of
+    # its own -- listing it would invent a second URL for the same art.
+    directory = tmp_path / "orks" / "_test"
+    directory.mkdir(parents=True)
+    (directory / "grunt.txt").write_bytes(b"full size")
+    (directory / "grunt.small.txt").write_bytes(b"downscaled")
+
+    assert list(committed_assets(test_kind, assets_root=tmp_path)) == [
+        ("orks", "grunt")
+    ]

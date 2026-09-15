@@ -14,6 +14,7 @@ from spf.frontends.cli.render import ARMY_PACK, RenderOpts, render_army_pack
 from spf.render import render, rules_reference
 from spf.render.army_pack import ArmyPack, PackEntry, build_pack
 from spf.render.army_rules import build_reference
+from spf.render.art import art_src
 from spf.render.formats import get_format
 from spf.render.images import no_image
 from spf.render.products import PRODUCTS
@@ -44,7 +45,7 @@ def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 def _save(name: str, *, race: str = "goblin", nick: str = "Test") -> None:
     io.save_army(
-        ArmyList(race=race, nick=nick, units=[]),  # pyright: ignore[reportArgumentType]
+        ArmyList(race=race, nick=nick, units=[]),  # ty: ignore[invalid-argument-type]
         army_name=name,
     )
 
@@ -69,21 +70,21 @@ def test_index_parses_a_valid_document() -> None:
 
 def test_index_requires_a_document_title() -> None:
     with pytest.raises(ValidationError, match="title"):
-        ArmyPackConfig(armies=[])  # pyright: ignore[reportCallIssue]
+        ArmyPackConfig(armies=[])  # ty: ignore[missing-argument]
 
 
 def test_index_rejects_an_unknown_key() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        ArmyPackConfig(  # pyright: ignore[reportCallIssue]
+        ArmyPackConfig(
             title="Test",
             armies=[],
-            unexpected="nope",  # pyright: ignore[reportCallIssue]
+            unexpected="nope",  # ty: ignore[unknown-argument]
         )
 
 
 def test_index_rejects_an_unknown_key_on_an_entry() -> None:
     with pytest.raises(ValidationError, match="extra"):
-        PackArmyConfig(army="geir_arne", nick="nope")  # pyright: ignore[reportCallIssue]
+        PackArmyConfig(army="geir_arne", nick="nope")  # ty: ignore[unknown-argument]
 
 
 def test_get_army_pack_parses_a_toml_file(tmp_path: Path) -> None:
@@ -188,7 +189,7 @@ def test_load_pack_armies_invalid_entry_propagates_underlying_reason(
 
 
 def _army(*, nick: str = "Test", race: str = "goblin") -> Army:
-    return Army(race=race, nick=nick, units=[])  # pyright: ignore[reportArgumentType]
+    return Army(race=race, nick=nick, units=[])  # ty: ignore[invalid-argument-type]
 
 
 def test_build_pack_preserves_entry_order() -> None:
@@ -322,6 +323,31 @@ def test_army_pack_markdown_image_paths_are_relative_to_its_own_output_dir(
 
     text = out.read_text(encoding="utf-8")
     assert "](../assets/art.png)" in text
+
+
+def test_army_pack_markdown_image_paths_are_site_urls_when_site_spelled(
+    tmp_path: Path,
+    site_base_url: str,  # noqa: ARG001
+) -> None:
+    art = tmp_path / "assets" / "goblin" / "images" / "art.png"
+    army = io.load_army(DEMO_ARMY)
+    pack = build_pack(
+        [("Geir Arne", army)],
+        title="Test Pack",
+        stem="pack",
+        image_for=FakeLookup(art),
+    )
+
+    out = render(
+        ARMY_PACK,
+        pack,
+        fmt=get_format("markdown"),
+        name="pack",
+        output_root=tmp_path,
+        image_src=art_src,
+    )
+
+    assert "](/site/art/goblin/art.png)" in out.read_text(encoding="utf-8")
 
 
 def test_army_pack_no_images_omits_committed_art(tmp_path: Path) -> None:

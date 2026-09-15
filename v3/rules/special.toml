@@ -39,8 +39,7 @@ name = "Cunning Assault Defense"
 slots = ["assault"]
 signature = "[{N}, {M}+]"
 effect = "Roll {N} dice, for each die at {M}+, the unit gets one less +1 to future damage due to cunning assault. If the number +1 to future damage caused by cunning assault is reduced to 1 or less, the unit is not shaken. This effect stack with multiple models having the same ability."
-see_also = ["special.cunning_assault", "special.cunning_deflection"]
-todo = "Named close enough to \"Cunning Deflection\" that the two may be one ability under two names. The Race data has both; decide whether to merge them."
+see_also = ["special.cunning_assault"]
 
 [special.cunning_assault_defense.variables]
 N = { type = "int" }
@@ -137,16 +136,20 @@ todo = """Rule text not yet written. The Race data says "always attacks weakest 
 [special.crew_damage]
 name = "Crew Damage"
 slots = ["assault"]
-todo = """Rule text not yet written. The Race data says "may replace regular damage with d8 Crew damage" — a substitution rather than extra damage, and one that ignores armor."""
+effect = "See damage type crew"
 places = ["damage_type.crew"]
 
 [special.damage_on_deflect]
 name = "Damage on Deflect"
 slots = ["assault"]
-todo = """Rule text not yet written.
+signature = "Poison[{N}"
+effect = "Place a Poison[{N}] on any enemy which you deflected an attack from"
 
-From reference.toml:
-potential_references = ["token.minor_acid", "token.poison", "token.fire", "token.confused", "token.insane", "token.hypnotized"]"""
+
+[special.damage_on_deflect.variables]
+N = { type = "int" }
+
+
 
 [special.overrun]
 name = "Overrun"
@@ -157,11 +160,14 @@ From reference.toml:
 #Only one use, maybe more in future
 potential_references = ["token.shaken"]"""
 
-[special.angle]
-name = "Angle"
+[special.non_front_ap]
+name = "Non-front AP"
 slots = ["assault"]
-todo = "Rule text not yet written: armor penetration depends on the arc an assault comes from. Unrelated to the angle modifier registry despite the name — decide whether one of the two should be renamed."
-see_also = ["special.size"]
+effect = "AP {N} from non-front arcs"
+
+[special.non_front_ap.variables]
+N = { type = "int" }
+
 
 [special.bonus]
 name = "Bonus"
@@ -187,16 +193,12 @@ per_enemy_model_forward = "+1 assault strength per enemy model in assault (forwa
 [special.counter_attack]
 name = "Counter Attack"
 slots = ["assault"]
-todo = "Rule text not yet written: every occurrence reads \"each deflection counts as both a hit and a deflection\"."
-
-[special.counter_attack.variants]
-deflection_also_hit = "Each deflections counts as both a hit and a deflection"
-
+effect = "Each deflection counts as both an assault hit and deflection"
 
 [special.cunning_deflection]
 name = "Cunning Deflection"
 slots = ["assault"]
-todo = "Rule text not yet written. Named close enough to Cunning Assault Defense that the two may be one ability under two names; decide whether to merge them."
+effect = "Each deflected hit counts as hits for cunning assault purposes."
 see_also = ["special.cunning_assault", "special.cunning_assault_defense"]
 
 [special.fly_by]
@@ -268,6 +270,7 @@ one_elite_alive = "As long as 1 elite model is alive"
 improved_by_another_source = "(improve by 1 if unit has Psychic resistance from another source)"
 while_superelite_alive = "While at least one superelite model is alive"
 while_elite_alive = "While at least one elite is alive"
+improves_own = "Improves the unit's own {version} resistance by {N}"
 
 
 [special.heal]
@@ -408,12 +411,9 @@ name = "Endurance"
 slots = ["unit"]
 signature = "[{N}, {model_class}]"
 places = ["token.endurance"]
-todo = """Rule text not yet written: how many endurance tokens a unit gets, and what it may spend them on. The Race data grants them per model and per elite model, and dwarf's Protection 2 spends one in healing phase 1 to replace a bleeding with poison[6].
+effect = "At start of game, this unit get {N} endurance tokens per {model_class}."
 
-From reference.toml:
-#Note: many of these adds armor. Instead we could have an add armor feature in equipment which modifies the armor of a unit. All of these are replace
-[UnitSpecial.protection]
-references = ["token.endurance"]"""
+see_also = ["token.endurance"]
 
 [special.endurance.variables]
 N = { type = "int" }
@@ -478,12 +478,14 @@ when_firing_seeker_arrow = "Applies when firing a seeker arrow"
 [special.activate]
 name = "Activate"
 slots = ["unit"]
-todo = "Rule text not yet written: this wants to point at an Order, and no orders namespace exists yet."
+effect = "After activate fire order is given, a feature described by the unit/equipment is turned on"
 
 [special.chase]
 name = "Chase"
 slots = ["unit"]
-todo = "Rule text not yet written: every occurrence bends the ordinary chase order, which is an Order rather than a Special. Wants an orders namespace."
+effect = "Modifies the chase order"
+see_also = ['orders.chase']
+
 
 [special.enormous]
 name = "Enormous"
@@ -494,9 +496,8 @@ see_also = ["size.enormous"]
 [special.fire_order]
 name = "Fire Order"
 slots = ["unit"]
-todo = """Rule text not yet written: the most-used label in the Race data, and every occurrence describes how one unit's weapons fire. Wants an orders namespace.
+effect = "Describes the different fire orders, and which weapons are connected with which order"
 
-#165 C12 found ogre's "May load up to 2 shots, and fire them one at a time" saying what the load_5_shots variant says. That variant's text still carries a literal {N} placeholder, so pointing at it today would print the placeholder; merge once prose interpolation lands (#171). The wording is not settled either."""
 
 [special.fire_order.variables]
 N = { type = "int", min = 2, max = 10, optional = true }
@@ -505,7 +506,7 @@ N = { type = "int", min = 2, max = 10, optional = true }
 [special.fire_order.variants]
 autoloader = "Autoloader: any time a unit does not fire its shriek SMG in any gunnery phase, load the gun with 1 ammo."
 fire_and_load_simultaneously = "Fire and load all weapons simultaneously"
-load_n_shots = "May be load up to {N} shots, fire them one at a time"
+load_n_shots = "May be loaded with up to {N} shots, fire them one at a time"
 
 
 [special.fog]
@@ -582,12 +583,17 @@ name = "Phoenix"
 slots = ["unit"]
 todo = "Rule text not yet written: a unit that reassembles itself after being temporarily destroyed."
 
+
+#this should only refer to hex.poison_cloud...
 [special.poison_cloud]
 name = "Poison Cloud"
 slots = ["unit"]
 places = ["hex.poison_cloud"]
-todo = "Rule text not yet written: which hexes a unit fills with poison cloud is per unit today."
 see_also = ["hex.poison_cloud"]
+effect = "See Poison Cloud."
+
+
+
 
 [special.regeneration]
 name = "Regeneration"
@@ -647,8 +653,12 @@ todo = """Rule text not yet written: carrying units, and the deploy order that u
 
 Reserved by the designer in #165: C23 (ogre carrying 4 tiny drone units against 6) and C41 (goblin transporting 1 Goblin infantry against 2). Both differ by a count and by the transporting unit's own name, so they want a Variable rather than a variant."""
 
+[special.transport.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
+
 [special.transport.variants]
-four_tiny_drones = "May carry 4 tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+tiny_drones = "May carry {N} tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
 
 
 [special.vulnerability]
@@ -758,21 +768,26 @@ From reference.toml:
 [special.indirect_fire.variants]
 use_friendly_los = "May use line of sight of any friendly unit on the battle field."
 
+[special.shared]
+name = "Shared"
+slots = ["range"]
+effect = "All models in this unit fire this weapon once instead of firing its regular weapons."
+
 
 [special.cloud]
 name = "Cloud"
 slots = ["range"]
-todo = """Rule text not yet written: which hex effect a Cloud weapon places is per weapon today.
-
-From reference.toml:
-#Note to self: make more consistent
-potential_references = ["hexes.fog", "hexes.poison_cloud"]"""
+effect = "See fog and/or poison_cloud."
 see_also = ["hex.fog", "hex.poison_cloud"]
 
+[special.cloud.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+M = { type = "int", min = 1, max = 12, optional = true }
+
 [special.cloud.variants]
-fog_one_hex_per_model = "Place fog in a hex within normal range. Note: choose one hex per model firing this weapon. Uses Ammo as normal."
-poison_cloud_and_surroundings = "Poison Cloud[8] at target hex, and Poison Cloud[6]  at all hexes surrounding that initial hex"
-poison_cloud_in_fog = "Add poison cloud[4] to a hex with fog within normal range"
+fog_one_hex_per_model = "Place fog in a target hex within normal range. Note: for each unit, choose a different target hex for each model."
+poison_cloud_and_surroundings = "Poison Cloud[{N}] at target hex, and Poison Cloud[{M}]  at all hexes surrounding that initial hex"
+poison_cloud_in_fog = "Add Poison Cloud[{N}] to a target hex with fog within normal range"
 
 
 [special.insanity]
@@ -791,11 +806,14 @@ slots = ["range"]
 effect = "Describes how a weapon is loaded and how its ammo is tracked."
 see_also = ["special.limited_ammo"]
 
+[special.ammo.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
 [special.ammo.variants]
 always_loaded = "Always treated as loaded"
 fog_instead_of_ammo = "May start the game without ammo, but instead place fog in 4 different hexes within range 3 of this unit at start of game (part of setup)"
 loaded_after_assault = "Gun automatically loaded after an assault"
-load_3_ammo = "May be loaded (one at a time) with up to 3 ammo"
+load_n_ammo = "May be loaded (one at a time) with up to {N} ammo"
 
 
 
@@ -828,35 +846,37 @@ one_hex_normal = "Target one hex within normal range"
 [special.drag]
 name = "Drag"
 slots = ["range"]
-todo = "Rule text not yet written: pulling a hit unit one hex towards the firer."
 
-[special.drag.variants]
-drag_target = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+effect = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
+
+
 
 
 [special.focus_fire]
 name = "Focus Fire"
 slots = ["range"]
-signature = "[N]"
-effect = "If not using aim, fire {N} shots at the same target"
+signature = "[{N}]"
+effect = "When using aim, roll {N} dice at the same target"
 see_also = ["token.aim"]
 
 [special.focus_fire.variables]
-N = { type = "int", min = 1, max = 12, optional = true}
+N = { type = "int", min = 1, max = 12}
 
 [special.focus_fire.variants]
-aim_6_dice = "When using aim: roll 6 dice at same unit."
+aim_n_dice = "When using aim: roll {N} dice at same unit."
 
 [special.multiple_shots]
 name = "Multiple Shots"
 slots = ["range"]
-todo = """Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them.
-
-Reserved by the designer in #165: C30, dwarf's "Fire two times at same target" against elf's "Fires two times at same unit per shot." A shot-count Variable may suit these better than a variant."""
+todo = "Rule text not yet written. Close enough to Burst's \"fired N times\" that the two may be one rule; decide whether to merge them."
 see_also = ["special.burst"]
 
+[special.multiple_shots.variables]
+N = { type = "int", min = 1, max = 12, optional = true }
+
 [special.multiple_shots.variants]
-fires_twice = "Fires two times each time it is fired"
+fire_n_times = "Fire {N} times per fire order."
+fire_n_times_same_target = "Fire {N} times at the same target."
 fire_per_minor_head = "Fire one time per alive minor head"
 left_and_right = "Fire once to the right and once to the left per fire order"
 d12_shots_same_unit = "Fire d12 shots each time and all at the same unit"

@@ -19,9 +19,9 @@ fmt-check:
 lint:
     uv run ruff check -q
 
-# Type-check src/ and tests/ with pyright.
+# Type-check the whole tree with ty.
 typecheck:
-    uv run pyright
+    uv run ty check
 
 # Spell-check the codebase with typos.
 spell:

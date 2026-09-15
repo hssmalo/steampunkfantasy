@@ -10,6 +10,7 @@ from jinja2 import TemplateNotFound
 from spf.config import config
 from spf.frontends.cli.render import DEFAULT_FORMAT, RenderOpts
 from spf.render import Product, render
+from spf.render.art import art_src
 from spf.render.derivations import RenderError, latex_to_pdf, md_to_html
 from spf.render.environments import make_environments, posix_path, relative_to
 from spf.render.formats import FORMATS, get_format
@@ -29,6 +30,7 @@ class FakeSource:
     rows: list[tuple[str, str]] = field(
         default_factory=lambda: [("Speed", "fast"), ("Size", "Small")]
     )
+    image: Path | None = None
 
 
 # --- 7.1 Environments -------------------------------------------------------
@@ -271,3 +273,47 @@ def test_markdown_template_can_reference_the_version() -> None:
 def test_latex_template_can_reference_the_version() -> None:
     envs = make_environments(templates_root=FIXTURES)
     assert envs["latex"].from_string(r"\VAR{spf_version}").render() == spf_version()
+
+
+# --- image_src: the destination decides how an Asset is spelled -------------
+
+
+def test_image_src_defaults_to_a_path_relative_to_the_written_document(
+    tmp_path: Path, product: Product
+) -> None:
+    asset = tmp_path / "assets" / "goblin" / "images" / "grunt.png"
+
+    out = render(
+        product,
+        FakeSource(image=asset),
+        fmt=get_format("markdown"),
+        name="doc",
+        output_root=tmp_path,
+        templates_root=FIXTURES,
+    )
+
+    assert "![art](../assets/goblin/images/grunt.png)" in out.read_text(
+        encoding="utf-8"
+    )
+
+
+def test_render_binds_the_image_spelling_it_is_given(
+    tmp_path: Path,
+    product: Product,
+    site_base_url: str,  # noqa: ARG001
+) -> None:
+    # The same template serves a local render and a Site render; which spelling
+    # it emits is the destination's business, bound per render (ADR 0040).
+    asset = tmp_path / "assets" / "goblin" / "images" / "grunt.png"
+
+    out = render(
+        product,
+        FakeSource(image=asset),
+        fmt=get_format("markdown"),
+        name="doc",
+        output_root=tmp_path,
+        templates_root=FIXTURES,
+        image_src=art_src,
+    )
+
+    assert "![art](/site/art/goblin/grunt.png)" in out.read_text(encoding="utf-8")

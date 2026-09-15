@@ -142,15 +142,18 @@ rows = [
 [units.tiny_snake]
 race = "goblin"
 name = "Tiny Snake"
-models = ["tiny_snake", "tiny_snake"]
+models = ["tiny_snake"]
 size = "tiny"
 cost.vpm = 2
 
-description = "Two tiny snakes hiding in the grass, ready to bite anyone that comes too close"
+description = "A tiny snakes hiding in the grass, ready to bite anyone that comes too close"
 
 [units.tiny_snake.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+
+[[units.tiny_snake.specials.movement]]
+text = "If this unit is still hidden and any enemy in any movement phase is within range 2 of this unit, it revealse it self and assault the enemy in that hex. If there are multiple hexes with enemies in, you choose which one to assault. Also note, this unit only has follow as possible movement order. If this unit does not share any hex with any friendly unit, or does reveal itself, it stays still."
 
 [[units.tiny_snake.specials.hidden]]
 variant = "start_with_token"
@@ -163,7 +166,7 @@ args.M = 4
 text = "Do not have terror while hidden"
 
 [units.tiny_snake.orders.movement]
-slow = [["-", "-",  "Chs"], ["-", "-",  "Reveal"], ["Follow", "Follow",  "Follow"]]
+slow = [["Follow", "Follow",  "Follow"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
@@ -759,7 +762,7 @@ args.N = 4
 args.M = 2
 
 [[models.snake_tamer.unit_specials.spawn]]
-text = "tiny_snake: Once per game in any shooting phase place 3 tiny_snake units in any of the adjacent hexes which is not overcrowded. May not be put directly into close combat."
+text = "tiny_snake:If there are no friendly units sharing the hex with you in gunnery phase 1, place a (hidden) tiny snake in your hex. In addition, if there are less than 2 tiny snakes within range 2, place one tiny snake in an empty hex adjent to you."
 
 
 [[models.snake_tamer.assault.specials.cunning_assault]]
@@ -988,7 +991,8 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [[equipment.poison_deflection_dagger.assault.specials.damage_on_deflect]]
-text = "Each deflected hit gives enemy poison[4] token"
+args.N = 4
+
 
 [equipment.combat_screw_driver]
 name = "Combat Screw Driver"
@@ -1002,7 +1006,6 @@ deflection.add = [1, 0, 0, 0]
 deflection_die.replace = "6+"
 
 [[equipment.combat_screw_driver.assault.specials.cunning_deflection]]
-text = "Each deflected hit counts as hits for cunning assault purposes."
 
 [equipment.goblin_grenade]
 name = "Goblin Grenade"
@@ -1044,7 +1047,8 @@ ap = 1
 variant = "always_loaded"
 
 [[equipment.goblin_auto_bow.range.specials.multiple_shots]]
-text = "Shoot three times per fire order"
+args.N = 3
+variant = "fire_n_times"
 
 [equipment.grenadier]
 name = "Grenadier"
@@ -1204,7 +1208,8 @@ ap = 2
 note = "For each fire order, choose one of Minor Acid, Poison, or Gear Disruption as extra damage."
 
 [[equipment.goblin_bow_battery.range.specials.ammo]]
-variant = "load_3_ammo"
+args.N = 3
+variant = "load_n_ammo"
 
 [[equipment.goblin_bow_battery.range.specials.multiple_shots]]
 text = "Fire d12 shots in one fire order per ammo spent, all targeted the same unit."
@@ -1236,7 +1241,8 @@ damage = "d6"
 ap = 4
 
 [[equipment.heavy_crossbows.range.specials.ammo]]
-variant = "load_3_ammo"
+args.N = 3
+variant = "load_n_ammo"
 
 [[equipment.heavy_crossbows.range.specials.multiple_shots]]
 text = "Fire once per ammo spend per fire order"

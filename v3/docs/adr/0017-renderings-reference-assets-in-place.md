@@ -94,3 +94,23 @@ carrying the Unit's art on the card back, `ImageLookup`, `committed_image` and
 so that no Product has to import another to ask what art is committed. They are
 now injected into `build_deck` exactly as into `build_reference`, and
 `--no-images` passes `no_image` to both.
+
+## Addendum: the Site is a destination, and it copies
+
+"Never copying" holds for every rendering that stays on this machine. It could
+not hold for the deployed site: `assets/` sits outside the uploaded artifact,
+so a rendering that references the committed file in place publishes an `src`
+that climbs out of the site root and 404s.
+
+**ADR 0040 carves out a Site-shaped exception.** The site build copies every
+committed Image Asset to `output/art/<race>/<name>.png` and site-rendered HTML
+references it there, root-relative. The decision above is otherwise unchanged:
+a local Markdown render still spells the committed file relatively, LaTeX still
+names the absolute path, and the view-model still carries a `Path` saying only
+*which* Asset it means.
+
+What is new is a second axis. This ADR varies the spelling by template
+**family**; ADR 0040 varies it by **destination** as well, by binding an
+`image_src` filter per render rather than per family. The UNC-boundary
+reasoning for a relative `src` still stands, and is exactly the cost ADR 0040
+accepts: site HTML no longer opens over `file://`.

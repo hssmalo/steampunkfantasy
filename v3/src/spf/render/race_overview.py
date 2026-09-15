@@ -303,7 +303,7 @@ class _Catalogue:
     re-derived per entry: each is a walk over every record of another section."""
 
 
-def _in_cost_order[T: _Record](records: dict[str, T]) -> list[tuple[str, T]]:
+def in_cost_order[T: _Record](records: dict[str, T]) -> list[tuple[str, T]]:
     """Order records by `Cost.sort_idx`, TOML declaration order breaking ties.
 
     What `spf race things` lists, and a conscious choice: the sort groups
@@ -642,9 +642,9 @@ def build_overview(
     """
     reference = build_for_race(race_config, registry=load_registry()) if rules else None
     race, metadata = next(iter(race_config.races.items()))
-    units = _in_cost_order(race_config.units)
-    models = _in_cost_order(race_config.models)
-    equipment = _in_cost_order(race_config.equipment)
+    units = in_cost_order(race_config.units)
+    models = in_cost_order(race_config.models)
+    equipment = in_cost_order(race_config.equipment)
     catalogue = _Catalogue(
         race=race,
         config=race_config,

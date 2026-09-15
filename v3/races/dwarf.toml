@@ -1080,7 +1080,8 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.double_barreled_musket_with_springloaded_axe.range.specials.multiple_shots]]
-text = "Fire two shots (per model) for each shot"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.double_barreled_musket_with_springloaded_axe.range.specials.ammo]]
 variant = "loaded_after_assault"
@@ -1168,7 +1169,8 @@ damage = "d6-2"
 ap = 2
 
 [[equipment.axethrower_machine.range.specials.multiple_shots]]
-text = "Fire x2 per fire order per model"
+args.N = 2
+variant = "fire_n_times"
 
 [[equipment.axethrower_machine.model_specials.to_hit]]
 args.ability = "ability.even_range"
@@ -1210,8 +1212,8 @@ angle = [true, true, true, true]
 damage = "d6+1"
 ap = 7
 
-[[equipment.big_blaster.range.specials.ammo]]
-text = "Require at least 2 alive models in unit to be used. Fire this weapon instead of normal weapons, not in addition to."
+[[equipment.big_blaster.range.specials.shared]]
+
 
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
@@ -1252,12 +1254,12 @@ requires = [["type:Infantry", "type:Steampowerarmor"], ["Independent:1"]]
 [[equipment.trench_coat_of_resistance.unit_specials.resistance]]
 args.version = "resistance_type.poison"
 args.N = 1
-text = "Improves the unit's own poison resistance by 1"
+variant = "improves_own"
 
 [[equipment.trench_coat_of_resistance.unit_specials.resistance]]
 args.version = "resistance_type.fire"
 args.N = 1
-text = "Improves the unit's own fire resistance by 1"
+variant = "improves_own"
 
 [[equipment.trench_coat_of_resistance.unit_specials.immunity]]
 args.feature = "token.minor_acid"
@@ -1270,12 +1272,12 @@ upgrade_all = true
 requires = [["type:Brother in Arms"], ["Independent:1"]]
 
 [[equipment.brother_in_arms_armor.unit_specials.endurance]]
-args.N = 2
+args.N = 3
 args.model_class = "elite model"
 text = "In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]"
 
-[equipment.brother_in_arms_armor.unit]
-armor.add = [4, 3, 3, 3]
+
+
 
 [equipment.steamblower]
 name = "Steamblower"
@@ -1378,7 +1380,8 @@ damage = "d6 Psychic damage"
 ap = 0
 
 [[equipment.twin_fear_ray_free.range.specials.multiple_shots]]
-text = "Fire two times at same target"
+args.N = 2
+variant = "fire_n_times_same_target"
 
 [equipment.fear_ray]
 name = "Fear Ray"
@@ -1517,7 +1520,8 @@ damage = "d6-1"
 ap = 3
 
 [[equipment.double_barreled_long_range_heavy_musket.range.specials.multiple_shots]]
-text = "Fire two shots per fire order per model"
+args.N = 2
+variant = "fire_n_times"
 
 [equipment.multibarreled_heavy_musket]
 name = "Multibarreled Heavy Musket"
@@ -1533,7 +1537,8 @@ damage = "d6-1"
 ap = 3
 
 [[equipment.multibarreled_heavy_musket.range.specials.multiple_shots]]
-text = "Fire three shots per model"
+args.N = 3
+variant = "fire_n_times"
 
 [equipment.rocket_jackhammer]
 name = "Rocket Jackhammer"

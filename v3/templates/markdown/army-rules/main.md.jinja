@@ -2,7 +2,7 @@
 
 *v{{ spf_version }}*
 {% if source.race_image %}
-![{{ source.race }}]({{ source.race_image | relative_to(output_dir) }})
+![{{ source.race }}]({{ source.race_image | image_src }})
 {% endif %}
 {%- set reference = source -%}
 {%- set hashes = "##" -%}

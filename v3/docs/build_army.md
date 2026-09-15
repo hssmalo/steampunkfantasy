@@ -51,8 +51,8 @@ replacement model's `replaces` field must match the name of the model being repl
 ```python
 # Replace the first goblin_infantry model in unit 0 with elite_goblin_infantry
 army = army.upgrade_unit(
-    ("goblin_infantry", 0),   # unit key
-    ("goblin_infantry", 0),   # model key within that unit
+    ("goblin_infantry", 0),  # unit key
+    ("goblin_infantry", 0),  # model key within that unit
     "elite_goblin_infantry",
     cfg,
 )
@@ -140,7 +140,7 @@ from spf.armies import available_equipment
 
 options = available_equipment(army, ("goblin_infantry", 0), ("goblin_infantry", 0), cfg)
 for equipment in options:
-    print(equipment) # e.g. "clockwork_wings", "poison_dagger", ...
+    print(equipment)  # e.g. "clockwork_wings", "poison_dagger", ...
 ```
 
 Returns equipment that has a point cost and whose requirements are satisfied by the
@@ -180,15 +180,15 @@ After resolving, `cfg` is no longer needed. To display the army:
 ```python
 from spf.armies import io
 
-io.print_army(resolved)       # full army view
-io.print_army_rules(resolved) # rules-reference view
+io.print_army(resolved)  # full army view
+io.print_army_rules(resolved)  # rules-reference view
 ```
 
 To save and reload:
 
 ```python
-io.save_army(army, "showcase/goblin")        # saves ArmyList to JSON
-resolved = io.load_army("showcase/goblin")   # loads and resolves in one step
+io.save_army(army, "showcase/goblin")  # saves ArmyList to JSON
+resolved = io.load_army("showcase/goblin")  # loads and resolves in one step
 ```
 
 ## Calculating Cost
@@ -197,8 +197,8 @@ Resolved armies, units, and models all expose a `cost()` method returning a `Cos
 
 ```python
 total = resolved.cost()
-print(total)             # formatted string, e.g. "2mp 4cp"
-print(total.to_points()) # integer point value
+print(total)  # formatted string, e.g. "2mp 4cp"
+print(total.to_points())  # integer point value
 
 for unit in resolved.units:
     print(unit.name, unit.cost())
