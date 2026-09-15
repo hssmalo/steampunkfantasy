@@ -13,7 +13,7 @@ army = army.add_unit("troll", race_config=cfg).duplicate_unit(("troll", 0))
 # x1 Ork Infantry with Clockwork Power Spear
 army = (
     army.add_unit("ork_infantry", race_config=cfg, nick="PowerSpear")
-    .upgrade_all_models(
+    .equip_unit(
         ("ork_infantry", 0), equipment_name="clockwork_power_spear", race_config=cfg
     )
     .duplicate_unit(("ork_infantry", 0))
@@ -22,9 +22,7 @@ army = (
 # x1 Ork Infantry with Grenade Sling
 army = (
     army.add_unit("ork_infantry", race_config=cfg, nick="GrenadeSling")
-    .upgrade_all_models(
-        ("ork_infantry", 2), equipment_name="grenade_sling", race_config=cfg
-    )
+    .equip_unit(("ork_infantry", 2), equipment_name="grenade_sling", race_config=cfg)
     .duplicate_unit(("ork_infantry", 2))
 )
 

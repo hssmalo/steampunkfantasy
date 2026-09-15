@@ -10,9 +10,7 @@ army = ArmyList("darkelf", "Showcase Dark Elf Dragon Flight", [])
 # 6x Roboprosthetic Dark Elf with SMG
 army = (
     army.add_unit("roboprosthetic_darkelf", race_config=cfg)
-    .upgrade_all_models(
-        ("roboprosthetic_darkelf", 0), equipment_name="smg", race_config=cfg
-    )
+    .equip_unit(("roboprosthetic_darkelf", 0), equipment_name="smg", race_config=cfg)
     .duplicate_unit(("roboprosthetic_darkelf", 0))
     .duplicate_unit(("roboprosthetic_darkelf", 0))
     .duplicate_unit(("roboprosthetic_darkelf", 0))

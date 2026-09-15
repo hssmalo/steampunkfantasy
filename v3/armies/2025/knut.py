@@ -24,7 +24,7 @@ army = (
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("gnome_infantry", 0), equipment_name="assault_bot_mortar", race_config=cfg
     )
     .upgrade_model(
@@ -47,13 +47,10 @@ army = (
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
-    .upgrade_all_models(
-        ("gnome_infantry", 4), equipment_name="mechanical_owl", race_config=cfg
-    )
-    .upgrade_model(
+    .equip_unit(("gnome_infantry", 4), equipment_name="mechanical_owl", race_config=cfg)
+    .equip_unit(
         ("gnome_infantry", 4),
         equipment_name="experimental_death_ray",
-        model_key=("gnome_tinkerer", 0),
         race_config=cfg,
     )
 )
@@ -67,10 +64,9 @@ army = (
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
-    .upgrade_model(
+    .equip_unit(
         ("gnome_infantry", 5),
         equipment_name="experimental_death_ray",
-        model_key=("gnome_tinkerer", 0),
         race_config=cfg,
     )
 )

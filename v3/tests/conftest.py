@@ -151,7 +151,7 @@ def synthetic_equipment(**fields: object) -> EquipmentConfig:
             "race": _RACE,
             "name": "Sword",
             "cost": {"cp": 2},
-            "upgrade_all": True,
+            "upgrade_all": False,
             "requires": [["Hands:1"]],
         }
         | fields

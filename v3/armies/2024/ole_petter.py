@@ -11,12 +11,12 @@ army = ArmyList("dwarf", "Ole Petter's SteamPowerArmor with Balrog Assault", [])
 army = (
     (
         army.add_unit("steampowerarmor", race_config=cfg)
-        .upgrade_all_models(
+        .equip_unit(
             ("steampowerarmor", 0),
             equipment_name="vest_of_life_support",
             race_config=cfg,
         )
-        .upgrade_all_models(
+        .equip_unit(
             ("steampowerarmor", 0),
             equipment_name="multibarreled_heavy_musket",
             race_config=cfg,

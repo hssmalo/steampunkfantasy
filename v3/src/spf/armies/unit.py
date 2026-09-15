@@ -1,5 +1,6 @@
 """Resolved Unit data structure with self-contained effective properties."""
 
+from collections import Counter
 from dataclasses import dataclass, field
 from typing import get_args
 
@@ -7,7 +8,12 @@ from spf.armies.model import Model
 from spf.armies.specials import merge_specials
 from spf.registry import load_registry
 from spf.schemas import type_aliases as t
-from spf.schemas.race import OrdersConfig, UnitConfig, UnitStatModifierConfig
+from spf.schemas.race import (
+    EquipmentConfig,
+    OrdersConfig,
+    UnitConfig,
+    UnitStatModifierConfig,
+)
 from spf.schemas.special import Specials
 
 
@@ -69,23 +75,50 @@ class Unit:
     def armor(self) -> t.Angles[int] | None:
         """Armor after every Model's and Equipment's modifier, in chain order.
 
-        Multiplicity follows the purchase (ADR 0024). A Model-declared modifier
-        applies once per Model slot declaring it; an Equipment's applies once
-        for the Unit when `upgrade_all` (a fixture bought once) and once per
-        Model carrying it otherwise. Only `add` multiplies — four Models each
-        replacing armor with `[6,6,6,6]` can only produce `[6,6,6,6]`.
+        Multiplicity follows the purchase (ADR 0026). A Model-declared modifier
+        applies once per Model slot declaring it; a Unit Fixture's applies once
+        per purchase, and every other Equipment's once per Model carrying it.
+        Only `add` multiplies — four Models each replacing armor with
+        `[6,6,6,6]` can only produce `[6,6,6,6]`.
         """
         armor = None if self.config.armor is None else list(self.config.armor)
-        bought: set[str] = set()
+        purchases = self.fixture_purchases
+        applied: set[str] = set()
         for model in self.models:
             armor = _stack_armor(armor, model.config.unit, source=model.config.name)
             for equip in model.equipment:
+                # Only a costed Upgrade may set `upgrade_all`, so a Fixture is
+                # always one of the Model's upgrades and always counted.
                 if equip.upgrade_all:
-                    if equip.name in bought:
+                    if equip.name in applied:
                         continue
-                    bought.add(equip.name)
-                armor = _stack_armor(armor, equip.unit, source=equip.name)
+                    applied.add(equip.name)
+                    for _ in range(purchases[equip.name]):
+                        armor = _stack_armor(armor, equip.unit, source=equip.name)
+                else:
+                    armor = _stack_armor(armor, equip.unit, source=equip.name)
         return armor
+
+    @property
+    def fixture_purchases(self) -> dict[str, int]:
+        """How many times each Unit Fixture on this Unit was bought, by name.
+
+        One purchase equips every Model that can carry the Fixture with one
+        copy, so the purchase count is the largest number of copies any single
+        Model carries (ADR 0026). It is the `max` and not the first Model's
+        tally because a Fixture need not reach every Model: one requiring
+        `type:Tinkerer` reaches only the promoted Model, and promoting a Model
+        clears its upgrades, which can leave a Unit uneven with nothing bought
+        or sold.
+        """
+        purchases: dict[str, int] = {}
+        for model in self.models:
+            carried = Counter(
+                equip.name for equip in model.upgrade_equipment if equip.upgrade_all
+            )
+            for name, copies in carried.items():
+                purchases[name] = max(purchases.get(name, 0), copies)
+        return purchases
 
     @property
     def common_types(self) -> list[t.ModelType]:
@@ -103,32 +136,28 @@ class Unit:
     def cost(self) -> t.Cost:
         """Full unit cost: base + upgrade model costs + equipment costs.
 
-        For upgrade_all=False equipment, cost is added once for each model
-        in the unit (per-model pricing charged at unit granularity).
-
-        For upgrade_all=True equipment, cost is added to the unit once
-        independently of how many units are upgraded.
+        Per-Model Upgrade Equipment (`upgrade_all = False`) is charged once for
+        every Model carrying it. A Unit Fixture is charged once per purchase,
+        however many Models each purchase equipped (ADR 0026).
         """
         cost = self.config.cost or t.Cost()
 
-        unique = []
+        fixtures: dict[str, EquipmentConfig] = {}
         for i, model in enumerate(self.models):
             # Model is an upgrade when its name differs from the default slot
             if model.name != self.config.models[i] and model.config.cost:
                 cost = cost + model.config.cost
 
-            tmp = []
             for equip in model.upgrade_equipment:
-                if equip.cost is None:
-                    continue
-                if not equip.upgrade_all:
+                if equip.upgrade_all:
+                    fixtures.setdefault(equip.name, equip)
+                elif equip.cost is not None:
                     cost = cost + equip.cost
-                elif equip.name in unique:
-                    continue
-                else:
-                    tmp.append(equip.name)
-                    cost = cost + equip.cost
-            unique = unique + tmp
+
+        purchases = self.fixture_purchases
+        for name, equip in fixtures.items():
+            if equip.cost is not None:
+                cost = cost + equip.cost * purchases[name]
         return cost
 
     def orders_by_source(self) -> list[SourcedOrders]:
