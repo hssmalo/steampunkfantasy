@@ -88,7 +88,7 @@ army = army.upgrade_model(
 ### Upgrading all models at once
 
 ```python
-army = army.upgrade_all_models(("goblin_infantry", 0), "gear_bow", cfg)
+army = army.equip_unit(("goblin_infantry", 0), "gear_bow", cfg)
 ```
 
 Both methods raise `ValueError` if the equipment has no cost or its requirements are not
@@ -104,7 +104,7 @@ far. Chain it to create multiple identical copies:
 army = (
     army.add_unit("goblin_infantry", cfg)
     .upgrade_full_unit(("goblin_infantry", 0), "elite_goblin_infantry", cfg)
-    .upgrade_all_models(("goblin_infantry", 0), "gear_bow", cfg)
+    .equip_unit(("goblin_infantry", 0), "gear_bow", cfg)
     .duplicate_unit(("goblin_infantry", 0))
     .duplicate_unit(("goblin_infantry", 0))
     .duplicate_unit(("goblin_infantry", 0))

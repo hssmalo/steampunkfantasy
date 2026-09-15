@@ -783,7 +783,7 @@ def test_an_equipment_upgrade_raises_its_units_armor_and_prints_its_note() -> No
             "shieldwall": shieldwall,
         }
     )
-    army_list = synthetic_army(race).upgrade_all_models(
+    army_list = synthetic_army(race).equip_unit(
         ("squad", 0), equipment_name="shieldwall", race_config=race
     )
 

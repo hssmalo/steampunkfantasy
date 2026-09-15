@@ -16,7 +16,7 @@ army = (
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("gnome_infantry", 0), equipment_name="assault_bot_mortar", race_config=cfg
     )
     .duplicate_unit(("gnome_infantry", 0))

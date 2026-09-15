@@ -32,7 +32,7 @@ purchases cost N × Cost and apply their effects N times.
 "Every Model that can carry it" is the Equipment's own `requires`, not every
 Model in the Unit. A Fixture requiring `type:Tinkerer` reaches only the Model
 promoted to Tinkerer; the rest of the Unit is passed over, and the Unit is still
-charged the one purchase. `ArmyUnit.upgrade_all_models()` skips the Models that
+charged the one purchase. `ArmyUnit.equip_unit()` skips the Models that
 cannot take it and refuses only when *no* Model can, because a purchase nobody
 can carry is a purchase of nothing.
 
@@ -52,11 +52,19 @@ were not promoted.
 
 A Unit uneven because some Models *cannot* carry the Fixture is not ragged; it
 is fully equipped. A ragged Unit — one where a Model that could have carried a
-purchase did not get one — is refused by the builder and tolerated at load.
-`ArmyUnit.upgrade_model()` raises for a Fixture, because a frontend that could
-sell half a Fixture would be selling something the rules have no price for;
-`io.load_army()` accepts a ragged Army that already exists on disk, because
-validity is referential (ADR 0036) and historical Armies stay loadable.
+purchase did not get one — is unbuyable at the builder and tolerated at load.
+The builder offers no way to express it: `ArmyUnit.upgrade_model()` asked for a
+Fixture delegates to `equip_unit()` rather than equipping the one Model, since
+half a Fixture is something the rules put no price on and the whole purchase is
+the only thing the request can legally mean. `io.load_army()` accepts a ragged
+Army that already exists on disk, because validity is referential (ADR 0036) and
+historical Armies stay loadable.
+
+The two doors are also the two menus a frontend draws.
+`available_equipment()` answers what one Model may be bought and excludes
+Fixtures; `available_fixtures()` answers what the Unit may be bought and is the
+only place they appear. Offering a Fixture in a Model's menu would put a
+Unit-priced choice where the player is choosing for one Model.
 
 ## `upgrade_all` is required wherever a `cost` is
 

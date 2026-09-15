@@ -24,10 +24,8 @@ army = army.add_unit("nightmare_mechanical_cavalry", race_config=cfg).duplicate_
 # 2x Roboprostetic Darkelf
 army = (
     army.add_unit("roboprosthetic_darkelf", race_config=cfg)
-    .upgrade_all_models(
-        ("roboprosthetic_darkelf", 0), equipment_name="smg", race_config=cfg
-    )
-    .upgrade_all_models(
+    .equip_unit(("roboprosthetic_darkelf", 0), equipment_name="smg", race_config=cfg)
+    .equip_unit(
         ("roboprosthetic_darkelf", 0),
         equipment_name="integrated_pistol",
         race_config=cfg,
@@ -39,8 +37,8 @@ army = (
 # 2x Darkelf Infantry with smg and poison grenades
 army = (
     army.add_unit("darkelf_infantry", race_config=cfg)
-    .upgrade_all_models(("darkelf_infantry", 0), equipment_name="smg", race_config=cfg)
-    .upgrade_all_models(
+    .equip_unit(("darkelf_infantry", 0), equipment_name="smg", race_config=cfg)
+    .equip_unit(
         ("darkelf_infantry", 0), equipment_name="poison_fog_grenade", race_config=cfg
     )
     .duplicate_unit(("darkelf_infantry", 0))

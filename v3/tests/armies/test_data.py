@@ -5,6 +5,7 @@ import pytest
 from spf.armies import (
     ArmyList,
     available_equipment,
+    available_fixtures,
     available_models,
     validate_army,
 )
@@ -199,7 +200,7 @@ def race_with_uncapped_holder(simple_race: RaceConfig) -> RaceConfig:
         race="goblin",
         name="Wings",
         cost=t.Cost(cp=24),
-        upgrade_all=True,
+        upgrade_all=False,
         requires=[["Independent:1"]],  # ty: ignore[invalid-argument-type]
     )
     return simple_race.model_copy(
@@ -1022,44 +1023,44 @@ def test_upgrade_full_unit_unknown_unit_key_raises(
 
 
 # ---------------------------------------------------------------------------
-# upgrade_all_models
+# equip_unit
 # ---------------------------------------------------------------------------
 
 
-def test_upgrade_all_models_adds_to_all(
+def test_equip_unit_adds_to_all(
     squad_of_two: RaceConfig,
 ) -> None:
     army = ArmyList(race="goblin", nick="Test", units=[]).add_unit(
         "squad", race_config=squad_of_two
     )
 
-    army = army.upgrade_all_models(
+    army = army.equip_unit(
         ("squad", 0), equipment_name="sword", race_config=squad_of_two
     )
 
     assert all("sword" in model.upgrades for model in army.units[0].models)
 
 
-def test_upgrade_all_models_does_not_mutate_original(
+def test_equip_unit_does_not_mutate_original(
     one_unit_army: ArmyList, *, simple_race: RaceConfig
 ) -> None:
     original = one_unit_army
-    one_unit_army.upgrade_all_models(
+    one_unit_army.equip_unit(
         ("squad", 0), equipment_name="sword", race_config=simple_race
     )
     assert original.units[0].models[0].upgrades == []
 
 
-def test_upgrade_all_models_no_cost_raises(
+def test_equip_unit_no_cost_raises(
     one_unit_army: ArmyList, *, simple_race: RaceConfig
 ) -> None:
     with pytest.raises(ValueError, match="no cost"):
-        one_unit_army.upgrade_all_models(
+        one_unit_army.equip_unit(
             ("squad", 0), equipment_name="shield", race_config=simple_race
         )
 
 
-def test_upgrade_all_models_unsatisfied_requires_raises(
+def test_equip_unit_unsatisfied_requires_raises(
     simple_race: RaceConfig,
 ) -> None:
     elite_only_equip = EquipmentConfig(
@@ -1079,16 +1080,14 @@ def test_upgrade_all_models_unsatisfied_requires_raises(
         "squad", race_config=race
     )
     with pytest.raises(ValueError, match="requires not satisfied"):
-        army.upgrade_all_models(
-            ("squad", 0), equipment_name="elite_sword", race_config=race
-        )
+        army.equip_unit(("squad", 0), equipment_name="elite_sword", race_config=race)
 
 
-def test_upgrade_all_models_unknown_unit_key_raises(
+def test_equip_unit_unknown_unit_key_raises(
     one_unit_army: ArmyList, *, simple_race: RaceConfig
 ) -> None:
     with pytest.raises(KeyError):
-        one_unit_army.upgrade_all_models(
+        one_unit_army.equip_unit(
             ("nonexistent", 0), equipment_name="sword", race_config=simple_race
         )
 
@@ -1286,10 +1285,10 @@ def test_upgrade_full_unit_preserves_nicks(
     assert army.units[0].models[0].nick == "Grubnak"
 
 
-def test_upgrade_all_models_preserves_nicks(
+def test_equip_unit_preserves_nicks(
     nicked_army: ArmyList, *, simple_race: RaceConfig
 ) -> None:
-    army = nicked_army.upgrade_all_models(
+    army = nicked_army.equip_unit(
         ("squad", 0), equipment_name="sword", race_config=simple_race
     )
     assert army.units[0].nick == "Da Lads"
@@ -2085,7 +2084,7 @@ def test_unit_cost_upgrade_all_true_flat(squad_of_two: RaceConfig) -> None:
     army = (
         ArmyList(race="goblin", nick="T", units=[])
         .add_unit("squad", race_config=race)
-        .upgrade_all_models(("squad", 0), equipment_name="banner", race_config=race)
+        .equip_unit(("squad", 0), equipment_name="banner", race_config=race)
     )
 
     resolved = army.resolve(race)
@@ -2100,9 +2099,7 @@ def test_unit_cost_charges_each_fixture_purchase(squad_of_two: RaceConfig) -> No
         "squad", race_config=race
     )
     for _ in range(2):
-        army = army.upgrade_all_models(
-            ("squad", 0), equipment_name="banner", race_config=race
-        )
+        army = army.equip_unit(("squad", 0), equipment_name="banner", race_config=race)
 
     resolved = army.resolve(race)
 
@@ -2357,9 +2354,7 @@ def test_unit_armor_applies_one_fixture_purchase_once(
     army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
         "squad", race_config=race
     )
-    army = army.upgrade_all_models(
-        ("squad", 0), equipment_name="shieldwall", race_config=race
-    )
+    army = army.equip_unit(("squad", 0), equipment_name="shieldwall", race_config=race)
 
     assert army.resolve(race).units[0].armor == [8, 2, 1, 0]
 
@@ -2375,7 +2370,7 @@ def test_unit_armor_applies_a_fixture_once_per_purchase(
         "squad", race_config=race
     )
     for _ in range(2):
-        army = army.upgrade_all_models(
+        army = army.equip_unit(
             ("squad", 0), equipment_name="shieldwall", race_config=race
         )
 
@@ -2391,39 +2386,59 @@ def test_unit_armor_replace_never_multiplies(squad_of_four: RaceConfig) -> None:
         "squad", race_config=race
     )
     for _ in range(2):
-        army = army.upgrade_all_models(
+        army = army.equip_unit(
             ("squad", 0), equipment_name="shieldwall", race_config=race
         )
 
     assert army.resolve(race).units[0].armor == [6, 6, 6, 6]
 
 
-def test_upgrade_model_refuses_a_unit_fixture(simple_race: RaceConfig) -> None:
-    """A Fixture is bought for the whole Unit; half of one has no price."""
-    race = _race_with_banner(simple_race)
-    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
-        "squad", race_config=race
-    )
-
-    with pytest.raises(ValueError, match="upgrade_all_models"):
-        army.upgrade_model(
-            ("squad", 0),
-            model_key=("soldier", 0),
-            equipment_name="banner",
-            race_config=race,
-        )
-
-
-def test_upgrade_all_models_still_buys_a_fixture(squad_of_two: RaceConfig) -> None:
-    """The refusal names a way through, and that way works."""
+def test_upgrade_model_of_a_fixture_buys_the_whole_unit_purchase(
+    squad_of_two: RaceConfig,
+) -> None:
+    """A Fixture has no price for half of one, so asking for it buys the whole."""
     race = _race_with_banner(squad_of_two)
     army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
         "squad", race_config=race
     )
 
-    army = army.upgrade_all_models(
-        ("squad", 0), equipment_name="banner", race_config=race
+    army = army.upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="banner",
+        race_config=race,
     )
+
+    assert [m.upgrades for m in army.units[0].models] == [["banner"], ["banner"]]
+    assert army.resolve(race).units[0].cost() == t.Cost(mp=3, cp=2)
+
+
+def test_upgrade_model_of_a_fixture_still_checks_the_model_key(
+    squad_of_two: RaceConfig,
+) -> None:
+    """Buying for the Unit is no reason to stop hearing an unknown Model slot."""
+    race = _race_with_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    with pytest.raises(KeyError, match="nonesuch"):
+        army.upgrade_model(
+            ("squad", 0),
+            model_key=("nonesuch", 0),
+            equipment_name="banner",
+            race_config=race,
+        )
+
+
+def test_equip_unit_buys_a_fixture(squad_of_two: RaceConfig) -> None:
+    """The explicit whole-Unit door buys one purchase."""
+    race = _race_with_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    army = army.equip_unit(("squad", 0), equipment_name="banner", race_config=race)
 
     assert [m.upgrades for m in army.units[0].models] == [["banner"], ["banner"]]
 
@@ -2442,7 +2457,7 @@ def _race_with_elite_banner(race: RaceConfig) -> RaceConfig:
     )
 
 
-def test_upgrade_all_models_equips_only_the_models_that_can_carry_it(
+def test_equip_unit_equips_only_the_models_that_can_carry_it(
     squad_of_two: RaceConfig,
 ) -> None:
     """A Fixture goes on every Model that can hold it, and passes the rest over."""
@@ -2457,14 +2472,14 @@ def test_upgrade_all_models_equips_only_the_models_that_can_carry_it(
         race_config=race,
     )
 
-    army = army.upgrade_all_models(
+    army = army.equip_unit(
         ("squad", 0), equipment_name="elite_banner", race_config=race
     )
 
     assert [m.upgrades for m in army.units[0].models] == [["elite_banner"], []]
 
 
-def test_upgrade_all_models_charges_one_purchase_for_a_single_carrier(
+def test_equip_unit_charges_one_purchase_for_a_single_carrier(
     squad_of_two: RaceConfig,
 ) -> None:
     """One purchase is one Cost even when only one Model could take it."""
@@ -2478,15 +2493,13 @@ def test_upgrade_all_models_charges_one_purchase_for_a_single_carrier(
             upgrade_model_name="elite_soldier",
             race_config=race,
         )
-        .upgrade_all_models(
-            ("squad", 0), equipment_name="elite_banner", race_config=race
-        )
+        .equip_unit(("squad", 0), equipment_name="elite_banner", race_config=race)
     )
 
     assert army.resolve(race).units[0].cost() == t.Cost(mp=3, cp=2, xp=1)
 
 
-def test_upgrade_all_models_refuses_when_no_model_can_carry_it(
+def test_equip_unit_refuses_when_no_model_can_carry_it(
     squad_of_two: RaceConfig,
 ) -> None:
     """Passing over every Model would sell nothing; say why instead."""
@@ -2496,6 +2509,67 @@ def test_upgrade_all_models_refuses_when_no_model_can_carry_it(
     )
 
     with pytest.raises(ValueError, match="type:Elite"):
-        army.upgrade_all_models(
-            ("squad", 0), equipment_name="elite_banner", race_config=race
-        )
+        army.equip_unit(("squad", 0), equipment_name="elite_banner", race_config=race)
+
+
+def test_available_equipment_excludes_a_unit_fixture(squad_of_two: RaceConfig) -> None:
+    """The per-Model menu offers what a Model is bought, not what a Unit is."""
+    race = _race_with_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    result = available_equipment(
+        army, unit_key=("squad", 0), model_key=("soldier", 0), race_config=race
+    )
+
+    assert "sword" in result
+    assert "banner" not in result
+
+
+def test_available_fixtures_offers_what_the_unit_can_buy(
+    squad_of_two: RaceConfig,
+) -> None:
+    """The Unit menu is the mirror: Fixtures only."""
+    race = _race_with_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    result = available_fixtures(army, unit_key=("squad", 0), race_config=race)
+
+    assert result == ["banner"]
+
+
+def test_available_fixtures_offers_one_a_single_model_can_carry(
+    squad_of_two: RaceConfig,
+) -> None:
+    """One Model able to hold it is enough: the Unit can buy the purchase."""
+    race = _race_with_elite_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+    army = army.upgrade_unit(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        upgrade_model_name="elite_soldier",
+        race_config=race,
+    )
+
+    result = available_fixtures(army, unit_key=("squad", 0), race_config=race)
+
+    assert result == ["elite_banner"]
+
+
+def test_available_fixtures_excludes_one_no_model_can_carry(
+    squad_of_two: RaceConfig,
+) -> None:
+    """A purchase no Model could hold is not on offer."""
+    race = _race_with_elite_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    result = available_fixtures(army, unit_key=("squad", 0), race_config=race)
+
+    assert result == []
