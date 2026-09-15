@@ -18,6 +18,17 @@ effect = "While shaken set unit speed to the specified speed, and how a unit beh
 remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
 see_also = ["special.heal", "special.repair"]
 
+[tokens.into_the_fog]
+name = "Into the Fog"
+phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
+effect = "During movement, if any part of the unit is not in fog, replace the into the fog with an Out of the Fog token."
+remove = "Part of effect"
+
+[tokens.out_of_the_fog]
+name = "Out of the Fog"
+phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
+effect = "Unit gains the described benefits of having an out of the fog token."
+remove = "Remove in aftermath phase, or if unit gains an into the fog token."
 
 [tokens.aim]
 name = "Aim"

@@ -32,14 +32,14 @@ tip = '''These are cheap and durable infantry which you may use to swarm the ene
 
 
 [units.goblin_infantry.shaken]
-speed = "slow"
+speed = "sneak"
 movement_order = ["-", "-", "Flee"]
 
 #sneak: +1 to hit, 0 to be hit
 [[units.goblin_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.sneak"
-args.N = -2
+args.N = 2
 
 [[units.goblin_infantry.specials.fire_order]]
 text = "You may either fire a regular arrow, a special arrow (arrow with limited ammo) or use one thrown weapon with each fire order."
@@ -51,8 +51,7 @@ args.N = 4
 sneak = [["Fire", "Fire"]]
 
 [units.goblin_infantry.orders.movement]
-sneak = [["360°", "360°", "360°"], ["360°", "F", "360°"]]
-slow  = [["360°", "F", "B"]]
+sneak = [["360°", "F", "360°"]]
 
 [units.goblin_infantry.damage_tables.Regular]
 rows = [
@@ -1074,8 +1073,8 @@ requires = [["Specialization:1"], ["type:Infantry"]]
 
 [[equipment.commando.unit_specials.to_hit]]
 args.ability = "ability.take_cover"
-args.speed = "speed.still"
-args.N = -4
+args.speed = "speed.sneak"
+args.N = 4
 
 [[equipment.commando.unit_specials.evasion]]
 args.N = 2

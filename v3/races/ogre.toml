@@ -92,7 +92,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.ogre_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -1
+args.N = 1
 
 [units.ogre_infantry.orders.fire]
 still = [
@@ -146,7 +146,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.ogre_robot.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [units.ogre_robot.orders.fire]
 still = [
@@ -252,7 +252,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.ogre_assault_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [units.ogre_assault_scout.orders.fire]
 still = [
@@ -921,7 +921,7 @@ equipment = ["ogre_artillery"]
 type = ["Mechanical", "Towed", "Drone"]
 
 [[models.artillery_wagon.specials.to_hit]]
-args.ability = "ability.need_command"
+args.ability = "ability.out_of_command"
 
 [models.artillery_wagon.assault]
 strength = [6, 6, 6, 3]

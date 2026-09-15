@@ -254,8 +254,7 @@ N = { type = "int", min = 1, max = 3 }
 name = "Resistance"
 slots = ["unit"]
 signature = "{version}[{N}]"
-effect = "Gives improved resilience versus {version} damage"
-todo = "Reserved by the designer in #165: C33, gnome's \"(roll d4 every time it is hit with some regular damage)\" against the same with d8. Whether the sentence is needed at all is the open question, ahead of any merge or parameterization."
+effect = "Gives improved resilience versus specified type of damage"
 
 ###Note, may see if I need more.
 ###Note, modified acid rule to align with the others...
@@ -301,13 +300,9 @@ phase = { type = "str", values = ["1st Healing", "2nd Healing"] }
 name = "Immunity"
 slots = ["unit"]
 signature = "[{feature}]"
-flavor = "Unit is completely immune to given feature"
-todo = """Rule text not yet written: what "completely immune" does to each kind of feature it can name.
-
-An immunity holds at every value of its feature, but a feature whose own rule takes variables lends them to the instance, which then has to name one. Poison-cloud immunity therefore names a strength it does not mean, and immunity to Gear Disruption is carried as text because no value of its thresholds is the one meant.
-
-From reference.toml:
-#Til Geir Arne: hmmm. Values burde her være en av de egenskapene som ligger her inne... eller fritekst og satse på at Hss gjør ting riktig???"""
+effect = "Unit is completely immune to given feature"
+todo = """Allow immunity to Poison Clouds independent of strength
+"""
 
 [special.immunity.variables]
 feature = { type = "ref", namespaces = ["token", "hex", "special", "damage_type"] }
@@ -427,7 +422,7 @@ todo = """Rule text not yet written. One missing rule family with Darkelf Office
 From reference.toml:
 #Geir Arne: spesielt, psychic resistance
 potential_references = ["special.resistance"]
-#potential_references = ["special.remove_shaken"]"""
+"""
 
 [special.officer.variants]
 remove_shaken_in_hex = "remove one shaken token on any biological unit in the same hex in 2nd healing phase"
@@ -461,15 +456,15 @@ name = "To Hit"
 slots = ["unit", "model"]
 # The brackets belong to the ability's own signature, which travels with the ref.
 signature = "{ability}"
-effect = "Shifts the to-hit and to-be-hit rolls by {ability}."
-todo = "Reserved by the designer in #165: C39, elf's \"Grants +3 to hit rather than +1\" against the same sentence with +5. The two differ only by a number, so this wants a Variable and args rather than a variant."
+effect = "Shifts the to-hit and to-be-hit rolls"
+
 see_also = ["token.aim"]
 
 [special.to_hit.variables]
 ability = { type = "ref", namespaces = ["ability"] }
 
 [special.to_hit.variants]
-also_target_penalty = "Applies to the target's penalty as well, and to flying as well as fast"
+also_target_penalty = "Applies to both this unit and the target."
 doubles_long_range_penalty = "Doubles the long-range penalty"
 hover_replace_good_shot = "Replaces the good shot bonus while the helicopter hovers still in the air"
 when_firing_seeker_arrow = "Applies when firing a seeker arrow"
@@ -582,17 +577,6 @@ todo = "Rule text not yet written: an animal unit following the orders of an inf
 name = "Phoenix"
 slots = ["unit"]
 todo = "Rule text not yet written: a unit that reassembles itself after being temporarily destroyed."
-
-
-#this should only refer to hex.poison_cloud...
-[special.poison_cloud]
-name = "Poison Cloud"
-slots = ["unit"]
-places = ["hex.poison_cloud"]
-see_also = ["hex.poison_cloud"]
-effect = "See Poison Cloud."
-
-
 
 
 [special.regeneration]
@@ -776,18 +760,20 @@ effect = "All models in this unit fire this weapon once instead of firing its re
 
 [special.cloud]
 name = "Cloud"
-slots = ["range"]
+slots = ["range", "unit"]
 effect = "See fog and/or poison_cloud."
 see_also = ["hex.fog", "hex.poison_cloud"]
 
 [special.cloud.variables]
 N = { type = "int", min = 1, max = 12, optional = true }
 M = { type = "int", min = 1, max = 12, optional = true }
+P = { type = "int", min = 2, max = 6, optional = true }
+
 
 [special.cloud.variants]
-fog_one_hex_per_model = "Place fog in a target hex within normal range. Note: for each unit, choose a different target hex for each model."
-poison_cloud_and_surroundings = "Poison Cloud[{N}] at target hex, and Poison Cloud[{M}]  at all hexes surrounding that initial hex"
-poison_cloud_in_fog = "Add Poison Cloud[{N}] to a target hex with fog within normal range"
+fog_one_hex_per_model = "Place fog in a target hex within normal range. Note: for unit, choose a different target hex for each model with this weapon."
+poison_cloud_and_surroundings = "Choose a hex within normal range and roll a die: at {P}+ the target hex is the hex you choose. Otherwise, move the target hex the result of the die, a number of hexes in a random direction from chosen hex. Place a Poison Cloud[{N}] at target hex, and Poison Cloud[{M}] at all hexes surrounding that initial hex"
+poison_cloud_in_fog = "Place Poison Cloud[{N}] to a target hex with fog within normal range"
 
 
 [special.insanity]

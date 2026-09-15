@@ -35,7 +35,7 @@ args.N = 1
 [[units.dwarf_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [units.dwarf_infantry.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "360°", "F"]]
@@ -86,7 +86,7 @@ args.N = 2
 [[units.dwarf_brother_in_arms.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -1
+args.N = 1
 
 [units.dwarf_brother_in_arms.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "B", "360°"], ["360°", "A", "F"]]
@@ -485,6 +485,10 @@ movement_order = ["-", "-", "-"]
 
 [[units.zap.specials.fire_order]]
 variant = "fire_and_load_simultaneously"
+
+[[units.zap.specials.fire_order]]
+text = "The unit loses its aim when it moves away from the hex it aimed from"
+
 
 [[units.zap.specials.resistance]]
 args.version = "resistance_type.fire"
@@ -978,9 +982,6 @@ equipment_limit = ["Independent:1", "Independent:∞"]
 equipment = ["array_of_heavy_muskets", "zap", "twin_fear_ray_free"]
 type = ["Mechanical", "Bio Crew", "Tracked", "Vehicle"]
 
-[[models.zap.specials.to_hit]]
-args.ability = "ability.aim_lost_when_moving"
-
 [models.zap.assault]
 strength = [4, 3, 3, 2]
 strength_die = "4+"
@@ -1175,6 +1176,9 @@ variant = "fire_n_times"
 [[equipment.axethrower_machine.model_specials.to_hit]]
 args.ability = "ability.even_range"
 
+[[equipment.axethrower_machine.model_specials.to_hit]]
+args.ability = "ability.odd_range"
+
 [equipment.jet_pack]
 name = "Jet Pack"
 race = "dwarf"
@@ -1335,7 +1339,7 @@ damage = "N.A"
 ap = 0
 
 [[equipment.poison_gas_grenade.range.specials.cloud]]
-text = "Place a poison cloud[4] within normal range"
+text = "Place a Poison Cloud[4] within normal range"
 
 [[equipment.poison_gas_grenade.range.specials.ammo]]
 variant = "always_loaded"

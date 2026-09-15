@@ -5,6 +5,7 @@ captures *why* a rule was changed.
 
 | Date | Description | Why |
 | ---------- | ------------------------------ | ------------------------------ |
+| 15.09.2026 | Lots of minor tweaks, added into the fog and out of fog tokens | Improve consistency of rules. |
 | 04.09.2026 | Multiple Shots states a shot count per fire order, and the "per model" qualifiers are dropped | The qualifiers were misleading: the shots belong to the fire order, not to each model in the unit |
 | 03.09.2026 | Focus Fire is the aim option, not the alternative to it, and its number is the dice rolled when aiming | Every weapon carrying it already described its non-aiming fire on another rule, so the rule contradicted its own call sites |
 | 24.08.2026 | Added horrifying poison token| Too fun not to add |

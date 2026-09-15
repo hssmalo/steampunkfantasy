@@ -23,7 +23,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.ork_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [units.ork_infantry.orders.fire]
 still = [
@@ -441,7 +441,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.ork_werewarg.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [[units.ork_werewarg.specials.regeneration]]
 text = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
@@ -513,7 +513,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.bioengineered_ork.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [[units.bioengineered_ork.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -1096,6 +1096,8 @@ requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.clockwork_monocular.model_specials.to_hit]]
 args.ability = "ability.ranged_reroll"
+
+
 text = "Reroll 2 dice in ranged combat per natural 6 rolled for to-hit (regardless of whether that was a hit or not). Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
 
 [equipment.clockwork_spear]
@@ -1162,8 +1164,8 @@ damage = "N.A"
 ap = 0
 
 [[equipment.pyro.model_specials.to_hit]]
-name = "Expert Throw"
-args.ability = "ability.excellent_shot"
+args.ability = "ability.thrown_weapons"
+args.N = 2
 text = "Applies while throwing a pyro grenade"
 
 [[equipment.pyro.unit_specials.resistance]]

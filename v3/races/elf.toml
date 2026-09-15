@@ -74,7 +74,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.elf_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [units.elf_infantry.orders.fire]
 still = [
@@ -128,7 +128,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.elf_archer.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [[units.elf_archer.specials.forward_position]]
 args.N = 2
@@ -217,7 +217,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.elf_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -3
+args.N = 3
 
 [units.elf_scout.orders.fire]
 still = [
@@ -267,7 +267,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.elite_elf_scout.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -3
+args.N = 3
 
 [[units.elite_elf_scout.specials.to_hit]]
 args.ability = "ability.camouflage"
@@ -953,7 +953,6 @@ replaces = "elf_archer"
 cost.xp = 6
 
 [[models.superb_elf_archer.specials.to_hit]]
-name = "Great Shot"
 args.ability = "ability.excellent_shot"
 
 [[models.superb_elf_archer.unit_specials.resistance]]
@@ -1001,7 +1000,6 @@ replaces = "elf_infantry"
 type = ["Bio", "Infantry", "Walking", "Elite", "SuperElite"]
 
 [[models.superelite_elf_infantry.specials.to_hit]]
-name = "Great Shot"
 args.ability = "ability.excellent_shot"
 
 [[models.superelite_elf_infantry.unit_specials.resistance]]
@@ -1766,11 +1764,13 @@ ap = "0"
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-variant = "also_target_penalty"
+
+[[equipment.elf_flame_arrow.model_specials.to_hit]]
+args.ability = "ability.ignore_fly_penalty"
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-variant = "doubles_long_range_penalty"
+
 
 [[equipment.elf_flame_arrow.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1803,11 +1803,13 @@ ap = "0"
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-variant = "also_target_penalty"
+
+[[equipment.elf_flame_arrow_free.model_specials.to_hit]]
+args.ability = "ability.ignore_fly_penalty"
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-variant = "doubles_long_range_penalty"
+
 
 [[equipment.elf_flame_arrow_free.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1841,11 +1843,12 @@ variant = "always_loaded"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-variant = "also_target_penalty"
+
+[[equipment.elf_bow_free.model_specials.to_hit]]
+args.ability = "ability.ignore_fly_penalty"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-variant = "doubles_long_range_penalty"
 
 [[equipment.elf_bow_free.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1888,11 +1891,13 @@ cost.cp = 8
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-variant = "also_target_penalty"
+
+[[equipment.seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.ignore_fly_penalty"
+
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-variant = "doubles_long_range_penalty"
 
 [[equipment.seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1920,11 +1925,12 @@ description = '''The pride of elven craftsmanship. A programmable arrow which al
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.ignore_fast_penalty"
-variant = "also_target_penalty"
+
+[[equipment.elven_seeker_arrows.model_specials.to_hit]]
+args.ability = "ability.ignore_fly_penalty"
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.bad_at_long_range"
-variant = "doubles_long_range_penalty"
 
 [[equipment.elven_seeker_arrows.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
@@ -1936,7 +1942,7 @@ angle = [true, true, true, true]
 damage = "d6-2"
 ap = 0
 
-[[equipment.elven_seeker_arrows.range.specials.range]]
+[[equipment.elven_seeker_arrows.range.specials.los]]
 text = "Elven Seeker Arrow do not need line of sight (but cannot target hidden units)"
 
 [[equipment.elven_seeker_arrows.range.specials.limited_ammo]]

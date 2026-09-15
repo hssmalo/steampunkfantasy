@@ -30,7 +30,7 @@ description = '''A Gnome infantry with a mohawk and wielding a ww1 style rifle. 
 [[units.gnome_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [units.gnome_infantry.shaken]
 speed = "slow"
@@ -1323,7 +1323,6 @@ requires = [["type:Infantry"], ["Independent:1"]]
 [[equipment.plasma_shield_generator.unit_specials.resistance]]
 args.version = "resistance_type.regular"
 args.N = "d4"
-text = "(roll d4 every time it is hit with some regular damage)"
 
 [[equipment.plasma_shield_generator.unit_specials.vulnerability]]
 variant = "add_d4_fire"

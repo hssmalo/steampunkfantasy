@@ -39,7 +39,7 @@ def test_a_refs_own_signature_travels_with_it() -> None:
     # numbers the instance carries for it are printed where it declares them.
     _, text = _row(
         "to_hit",
-        args={"ability": "ability.take_cover", "speed": "speed.sneak", "N": -2},
+        args={"ability": "ability.take_cover", "speed": "speed.sneak", "N": 2},
     )
 
     assert text == "Take Cover[Sneak][-2]"

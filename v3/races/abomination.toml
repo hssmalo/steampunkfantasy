@@ -86,7 +86,7 @@ description = '''Huge flagship floating above the ground armed with a greater fo
 text = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
 
 [[units.flagship.specials.fog]]
-text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token. If it has an into the fog token, and at least one part of the unit is not inside a fog, replace the into the fog with an out of the fog token. Out of the fog token is removed in aftermath phase."
+text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token."
 
 [[units.flagship.specials.terror]]
 args.N = 1
@@ -254,7 +254,7 @@ movement_order = ["-", "-", "Flee"]
 [[units.abomination_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
 args.speed = "speed.still"
-args.N = -2
+args.N = 2
 
 [[units.abomination_infantry.specials.terror]]
 args.N = 1
@@ -314,8 +314,8 @@ text = "While in fog (in agony phases): Terror[12](Range=1), Insanity Field[rang
 [[units.horror.specials.fog]]
 text = "If horror is either standing in a hex with fog or entering a hex with fog, treat the hex as impassable for enemy chase purposes, forcing them to move into another hex without assault taking place."
 
-[[units.horror.specials.poison_cloud]]
-text = "Treat any hex within range 2 of Horror as being a poison cloud[4]"
+[[units.horror.specials.cloud]]
+text = "Treat any hex within range 2 of Horror as being a Poison Cloud[4]"
 
 [[units.horror.specials.resistance]]
 args.version = "resistance_type.poison"
