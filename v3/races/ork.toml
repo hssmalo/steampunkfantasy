@@ -845,8 +845,8 @@ deflection = [12, 2, 2, 2]
 [[models.hammerhead.assault.specials.ork_reroll]]
 args.N = 6
 
-[[models.hammerhead.assault.specials.angle]]
-text = "ap 2 (from non-front arcs)"
+[[models.hammerhead.assault.specials.non_front_ap]]
+args.N = 2
 
 [models.battlewagon]
 name = "Battlewagon"
@@ -1085,7 +1085,7 @@ upgrade_all = true
 requires = [["type:Infantry", "type:Grunt"], ["Independent:1"]]
 
 [[equipment.poison_spikes.assault.specials.damage_on_deflect]]
-text = "Place a poison[4] token on any enemy which you deflected an attack from"
+args.N = 4
 
 [equipment.clockwork_monocular]
 name = "Clockwork Monocular"
@@ -1232,7 +1232,6 @@ ap = 2
 variant = "one_instead_of_regular_weapons"
 
 [[equipment.harpoon_gun.range.specials.drag]]
-variant = "drag_target"
 
 [equipment.harpoon_gun_free]
 name = "Harpoon Gun"
@@ -1249,7 +1248,6 @@ ap = 2
 variant = "one_instead_of_regular_weapons"
 
 [[equipment.harpoon_gun_free.range.specials.drag]]
-variant = "drag_target"
 
 [equipment.grenade_sling]
 name = "Grenade Sling"
