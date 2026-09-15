@@ -71,8 +71,61 @@ class ArmyUnit:
         equipment_name: str,
         race_config: RaceConfig,
     ) -> Self:
-        """Return a new ArmyUnit with an equipment upgrade applied to one model."""
+        """Return a new ArmyUnit with an equipment upgrade applied to one model.
+
+        A Unit Fixture has no price for a fraction of one (ADR 0026), so asking
+        for one on a single Model buys the Unit's whole purchase rather than
+        refusing: there is only one thing the request can legally mean.
+        """
         model_idx, model = _resolve_model(self, model_key=model_key)
+        if race_config.equipment[equipment_name].upgrade_all:
+            return self.equip_unit(
+                equipment_name=equipment_name, race_config=race_config
+            )
+        return self._equip(model_idx, model, equipment_name, race_config=race_config)
+
+    def equip_unit(self, *, equipment_name: str, race_config: RaceConfig) -> Self:
+        """Return a new ArmyUnit with one purchase of `equipment_name` on every model.
+
+        This is how a Unit Fixture is bought: one purchase, one copy on every
+        Model that can carry it. A Model whose `requires` the Equipment does not
+        satisfy — the wrong Type, or no Holder left — is passed over rather than
+        refused, so a Fixture only a promoted Tinkerer can hold is still a
+        single purchase for the whole Unit (ADR 0026). Per-model equipment may
+        be bought this way too — it is then simply charged once per model.
+
+        Raises ValueError when no Model in the Unit can carry it.
+        """
+        equip = race_config.equipment[equipment_name]
+        result = self
+        carriers = 0
+        for model_idx in range(len(self.models)):
+            model = result.models[model_idx]
+            if not _satisfies_requires(
+                equip.requires, model=model, race_config=race_config
+            ):
+                continue
+            result = result._equip(
+                model_idx, model, equipment_name, race_config=race_config
+            )
+            carriers += 1
+        if not carriers:
+            # Nothing was sold. Put the first Model through the door it failed
+            # at, so the refusal names the requirement it did not meet.
+            return self._equip(
+                0, self.models[0], equipment_name, race_config=race_config
+            )
+        return result
+
+    def _equip(
+        self,
+        model_idx: int,
+        model: ArmyModel,
+        equipment_name: str,
+        *,
+        race_config: RaceConfig,
+    ) -> Self:
+        """Return a new ArmyUnit with `equipment_name` added to one resolved slot."""
         new_model = model.upgrade(equipment_name, race_config=race_config)
         new_models = [
             *self.models[:model_idx],
@@ -216,30 +269,24 @@ class ArmyList:
             )
         return result
 
-    def upgrade_all_models(
+    def equip_unit(
         self,
         unit_key: tuple[t.UnitName, int],
         *,
         equipment_name: t.EquipmentName,
         race_config: RaceConfig,
     ) -> Self:
-        """Add the same equipment upgrade to all models in a unit."""
-        _, unit = _resolve_unit(self, unit_key=unit_key)
-        result = self
-        for i in range(len(unit.models)):
-            _, updated_unit = _resolve_unit(result, unit_key=unit_key)
-            model_name = updated_unit.models[i].name
-            # Find which occurrence of this model is at position i
-            occurrence = sum(
-                1 for j in range(i) if updated_unit.models[j].name == model_name
-            )
-            result = result.upgrade_model(
-                unit_key,
-                model_key=(model_name, occurrence),
-                equipment_name=equipment_name,
-                race_config=race_config,
-            )
-        return result
+        """Add the same equipment upgrade to all models in a unit.
+
+        One call is one purchase, so calling it twice buys a Unit Fixture twice
+        (ADR 0026).
+        """
+        unit_idx, unit = _resolve_unit(self, unit_key=unit_key)
+        new_unit = unit.equip_unit(
+            equipment_name=equipment_name, race_config=race_config
+        )
+        new_units = [*self.units[:unit_idx], new_unit, *self.units[unit_idx + 1 :]]
+        return replace(self, units=new_units)
 
     def nick_unit(self, unit_key: tuple[t.UnitName, int], *, nick: str | None) -> Self:
         """Return a new ArmyList with the identified unit's Nick set.
@@ -521,7 +568,10 @@ def available_equipment(
 ) -> list[t.EquipmentName]:
     """Return equipment upgrades valid for the given model.
 
-    Valid means: has a cost and satisfies the model's requires constraints.
+    Valid means: has a cost, is not a Unit Fixture, and satisfies the model's
+    requires constraints. A Fixture is bought for the Unit rather than for a
+    Model (ADR 0026), so it belongs on `available_fixtures()`'s menu instead —
+    offering it here would price one Model's choice against the Unit's.
     """
     _, unit = _resolve_unit(army, unit_key=unit_key)
     _, model = _resolve_model(unit, model_key=model_key)
@@ -529,7 +579,33 @@ def available_equipment(
         equipment_name
         for equipment_name, cfg in race_config.equipment.items()
         if cfg.cost is not None
+        and not cfg.upgrade_all
         and _satisfies_requires(cfg.requires, model=model, race_config=race_config)
+    ]
+
+
+def available_fixtures(
+    army: ArmyList,
+    *,
+    unit_key: tuple[t.UnitName, int],
+    race_config: RaceConfig,
+) -> list[t.EquipmentName]:
+    """Return the Unit Fixtures the given unit may buy.
+
+    One Model able to carry it is enough, because that is what a purchase
+    needs to reach — a Fixture requiring `type:Tinkerer` is on offer to a Unit
+    with a Tinkerer in it, however few of its Models that is.
+    """
+    _, unit = _resolve_unit(army, unit_key=unit_key)
+    return [
+        equipment_name
+        for equipment_name, cfg in race_config.equipment.items()
+        if cfg.cost is not None
+        and cfg.upgrade_all
+        and any(
+            _satisfies_requires(cfg.requires, model=model, race_config=race_config)
+            for model in unit.models
+        )
     ]
 
 

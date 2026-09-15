@@ -42,7 +42,7 @@ army = (
         upgrade_model_name="quadbike_tinkerer",
         race_config=cfg,
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("quad_bike", 2),
         equipment_name="plasma_shield_generator",
         race_config=cfg,
@@ -54,7 +54,7 @@ army = (
 # x1 Gnome Infantry with Assault Bot Mortar
 army = (
     army.add_unit("gnome_infantry", race_config=cfg)
-    .upgrade_all_models(
+    .equip_unit(
         ("gnome_infantry", 0), equipment_name="assault_bot_mortar", race_config=cfg
     )
     .duplicate_unit(("gnome_infantry", 0))

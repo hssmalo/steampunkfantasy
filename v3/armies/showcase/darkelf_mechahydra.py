@@ -10,7 +10,7 @@ army = ArmyList("darkelf", "Showcase Dark Elf MechaHydra", [])
 # 3x Scout with Mechanical Imp
 army = (
     army.add_unit("scout", race_config=cfg)
-    .upgrade_all_models(("scout", 0), equipment_name="mechanical_imp", race_config=cfg)
+    .equip_unit(("scout", 0), equipment_name="mechanical_imp", race_config=cfg)
     .duplicate_unit(("scout", 0))
     .duplicate_unit(("scout", 0))
 )
@@ -18,10 +18,10 @@ army = (
 # 3x Dark Elf Infantry with Mechanical Imp and Hide
 army = (
     army.add_unit("darkelf_infantry", race_config=cfg)
-    .upgrade_all_models(
+    .equip_unit(
         ("darkelf_infantry", 0), equipment_name="mechanical_imp", race_config=cfg
     )
-    .upgrade_all_models(("darkelf_infantry", 0), equipment_name="hide", race_config=cfg)
+    .equip_unit(("darkelf_infantry", 0), equipment_name="hide", race_config=cfg)
     .duplicate_unit(("darkelf_infantry", 0))
     .duplicate_unit(("darkelf_infantry", 0))
 )

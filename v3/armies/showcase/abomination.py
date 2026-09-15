@@ -10,7 +10,7 @@ army = ArmyList("abomination", "Showcase Abomination", [])
 # x2 Abomination Infantry
 army = (
     army.add_unit("abomination_infantry", race_config=cfg)
-    .upgrade_all_models(
+    .equip_unit(
         ("abomination_infantry", 0),
         equipment_name="fog_grenade_mortar",
         race_config=cfg,
@@ -21,10 +21,10 @@ army = (
 # 2x Forg Riders with frog armor
 army = (
     army.add_unit("giant_frog_riders", race_config=cfg)
-    .upgrade_all_models(
+    .equip_unit(
         ("giant_frog_riders", 0), equipment_name="frog_cavalry_armor", race_config=cfg
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("giant_frog_riders", 0),
         equipment_name="tentacle_cracklespears",
         race_config=cfg,

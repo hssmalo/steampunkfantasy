@@ -13,9 +13,7 @@ army = army.add_unit("ogre_hydra", race_config=cfg)
 # 5x Ogre Infantry with Fancy Arquebus
 army = (
     army.add_unit("ogre_infantry", race_config=cfg)
-    .upgrade_all_models(
-        ("ogre_infantry", 0), equipment_name="fancy_arquebus", race_config=cfg
-    )
+    .equip_unit(("ogre_infantry", 0), equipment_name="fancy_arquebus", race_config=cfg)
     .duplicate_unit(("ogre_infantry", 0))
     .duplicate_unit(("ogre_infantry", 0))
     .duplicate_unit(("ogre_infantry", 0))

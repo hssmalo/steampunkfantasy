@@ -18,9 +18,7 @@ army = (
 # 4x Gnome Infantry with Acid Splash
 army = (
     army.add_unit("gnome_infantry", race_config=cfg)
-    .upgrade_all_models(
-        ("gnome_infantry", 0), equipment_name="acid_splash", race_config=cfg
-    )
+    .equip_unit(("gnome_infantry", 0), equipment_name="acid_splash", race_config=cfg)
     .duplicate_unit(("gnome_infantry", 0))
     .duplicate_unit(("gnome_infantry", 0))
     .duplicate_unit(("gnome_infantry", 0))

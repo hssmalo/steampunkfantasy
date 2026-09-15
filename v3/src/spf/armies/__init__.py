@@ -12,6 +12,7 @@ from spf.armies.build import (
     ArmyList,
     army_violations,
     available_equipment,
+    available_fixtures,
     available_models,
     validate_army,
 )
@@ -25,6 +26,7 @@ __all__ = [
     "Unit",
     "army_violations",
     "available_equipment",
+    "available_fixtures",
     "available_models",
     "validate_army",
 ]

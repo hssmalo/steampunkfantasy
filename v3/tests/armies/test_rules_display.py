@@ -70,7 +70,7 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Short Bow",
                 cost=t.Cost(cp=1),
-                upgrade_all=True,
+                upgrade_all=False,
                 requires=[],
                 range=EquipmentRangeConfig(
                     range=30,
@@ -83,7 +83,7 @@ def simple_race() -> RaceConfig:
                 race="goblin",
                 name="Sword",
                 cost=t.Cost(cp=2),
-                upgrade_all=True,
+                upgrade_all=False,
                 requires=[],
             ),
         },

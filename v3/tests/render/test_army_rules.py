@@ -773,6 +773,7 @@ def test_no_rules_keeps_the_rules_reference_and_its_links_off_the_page(
 def test_an_equipment_upgrade_raises_its_units_armor_and_prints_its_note() -> None:
     shieldwall = synthetic_equipment(
         name="Wheeled ShieldWall",
+        upgrade_all=True,
         unit={"armor": {"add": [5, 0, 0, 0]}},
         note="Rolls with the Unit.",
     )
@@ -782,11 +783,8 @@ def test_an_equipment_upgrade_raises_its_units_armor_and_prints_its_note() -> No
             "shieldwall": shieldwall,
         }
     )
-    army_list = synthetic_army(race).upgrade_model(
-        ("squad", 0),
-        model_key=("soldier", 0),
-        equipment_name="shieldwall",
-        race_config=race,
+    army_list = synthetic_army(race).equip_unit(
+        ("squad", 0), equipment_name="shieldwall", race_config=race
     )
 
     reference = build_reference(

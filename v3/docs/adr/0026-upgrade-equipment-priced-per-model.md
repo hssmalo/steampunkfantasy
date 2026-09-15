@@ -22,21 +22,49 @@ Model is the only thing Equipment attaches to. Charging it once per Unit prices
 what the player actually bought, and keeping the distinction in the catalogue
 rather than in the pricing code means a new Unit-wide item is a data change.
 
-## The Fixture dedup is across Models, not within one
+## A Fixture's multiplicity is its purchase count
 
-`Unit.cost()` deduplicates a Fixture by Equipment name as it walks the Unit's
-Models, but it folds each Model's newly-seen names into the running set only
-*after* that Model's Equipment loop. Two copies of the same Fixture on a
-*single* Model are therefore charged twice, while one copy on each of four
-Models is charged once.
+A Unit Fixture is not a yes/no. It is bought *for the whole Unit* — one purchase
+equips every Model that can carry it with one copy, and each copy claims a
+Holder on the Model carrying it — and **it may be bought more than once**. N
+purchases cost N × Cost and apply their effects N times.
 
-This is a consequence of the loop's shape rather than a decision, and it
-disagrees with `Unit.armor`, which dedupes the same Fixtures against a set it
-updates immediately. Nothing stops a player reaching it: `ArmyModel.upgrade()`
-appends unconditionally, so the same Equipment can be bought twice on one Model
-whenever its Holders have room. The rule this ADR records is the per-Unit one;
-where the code charges twice, the code is wrong and not the record of a
-deliberate choice.
+"Every Model that can carry it" is the Equipment's own `requires`, not every
+Model in the Unit. A Fixture requiring `type:Tinkerer` reaches only the Model
+promoted to Tinkerer; the rest of the Unit is passed over, and the Unit is still
+charged the one purchase. `ArmyUnit.equip_unit()` skips the Models that
+cannot take it and refuses only when *no* Model can, because a purchase nobody
+can carry is a purchase of nothing.
+
+`Unit.fixture_purchases` is the one place that answers how many purchases a Unit
+holds, and `Unit.cost()` and `Unit.armor` both read it. They are not the last
+two traversals that will need the answer, and the rule drifting apart across
+hand-written walks of the same Models is how the rule broke once already:
+`cost()` charged the copies found on the first carrying Model, while `armor`
+collapsed every copy to a single application.
+
+The count is the **maximum** number of copies on any single Model, not the count
+on the first one. A Fixture need not reach every Model, so the first Model may
+be one it never reached. Promotion compounds this: it resets the promoted
+Model's `upgrades` to `[]`, so a Unit can go uneven without anyone buying or
+selling anything, and what the Unit paid for is what survives on the Models that
+were not promoted.
+
+A Unit uneven because some Models *cannot* carry the Fixture is not ragged; it
+is fully equipped. A ragged Unit — one where a Model that could have carried a
+purchase did not get one — is unbuyable at the builder and tolerated at load.
+The builder offers no way to express it: `ArmyUnit.upgrade_model()` asked for a
+Fixture delegates to `equip_unit()` rather than equipping the one Model, since
+half a Fixture is something the rules put no price on and the whole purchase is
+the only thing the request can legally mean. `io.load_army()` accepts a ragged
+Army that already exists on disk, because validity is referential (ADR 0036) and
+historical Armies stay loadable.
+
+The two doors are also the two menus a frontend draws.
+`available_equipment()` answers what one Model may be bought and excludes
+Fixtures; `available_fixtures()` answers what the Unit may be bought and is the
+only place they appear. Offering a Fixture in a Model's menu would put a
+Unit-priced choice where the player is choosing for one Model.
 
 ## `upgrade_all` is required wherever a `cost` is
 

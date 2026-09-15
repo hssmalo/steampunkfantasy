@@ -15,18 +15,16 @@ army = (
         upgrade_model_name="elite_dwarf_infantry",
         race_config=cfg,
     )
-    .upgrade_all_models(
-        ("dwarf_infantry", 0), equipment_name="blast_sticks", race_config=cfg
-    )
-    .upgrade_all_models(
+    .equip_unit(("dwarf_infantry", 0), equipment_name="blast_sticks", race_config=cfg)
+    .equip_unit(
         ("dwarf_infantry", 0), equipment_name="vest_of_life_support", race_config=cfg
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("dwarf_infantry", 0),
         equipment_name="trench_coat_of_resistance",
         race_config=cfg,
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("dwarf_infantry", 0),
         equipment_name="industrial_small_arms_production",
         race_config=cfg,

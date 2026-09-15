@@ -10,12 +10,8 @@ army = ArmyList("darkelf", "Showcase Dark Elf Spider Swarm", [])
 # 6x Roboprosthetic Dark Elf with SMG and Hide
 army = (
     army.add_unit("roboprosthetic_darkelf", race_config=cfg)
-    .upgrade_all_models(
-        ("roboprosthetic_darkelf", 0), equipment_name="smg", race_config=cfg
-    )
-    .upgrade_all_models(
-        ("roboprosthetic_darkelf", 0), equipment_name="hide", race_config=cfg
-    )
+    .equip_unit(("roboprosthetic_darkelf", 0), equipment_name="smg", race_config=cfg)
+    .equip_unit(("roboprosthetic_darkelf", 0), equipment_name="hide", race_config=cfg)
     .duplicate_unit(("roboprosthetic_darkelf", 0))
     .duplicate_unit(("roboprosthetic_darkelf", 0))
     .duplicate_unit(("roboprosthetic_darkelf", 0))

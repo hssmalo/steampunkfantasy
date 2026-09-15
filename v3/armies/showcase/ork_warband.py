@@ -20,9 +20,7 @@ army = (
 # 6x Warg Rider with Flame-covered-axe
 army = (
     army.add_unit("warg_rider", race_config=cfg)
-    .upgrade_all_models(
-        ("warg_rider", 0), equipment_name="flame_covered_axe", race_config=cfg
-    )
+    .equip_unit(("warg_rider", 0), equipment_name="flame_covered_axe", race_config=cfg)
     .duplicate_unit(("warg_rider", 0))
     .duplicate_unit(("warg_rider", 0))
     .duplicate_unit(("warg_rider", 0))

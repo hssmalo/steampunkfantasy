@@ -19,12 +19,10 @@ army = (
         upgrade_model_name="elite_ork_infantry",
         race_config=cfg,
     )
-    .upgrade_all_models(
+    .equip_unit(
         ("ork_infantry", 0), equipment_name="clockwork_power_spear", race_config=cfg
     )
-    .upgrade_all_models(
-        ("ork_infantry", 0), equipment_name="clockwork_wings", race_config=cfg
-    )
+    .equip_unit(("ork_infantry", 0), equipment_name="clockwork_wings", race_config=cfg)
     .duplicate_unit(("ork_infantry", 0))
 )
 
@@ -32,8 +30,8 @@ army = (
 # Add champion for each Elite infantry
 army = (
     army.add_unit("champion", race_config=cfg)
-    # Example code for weapons: .upgrade_all_models(("champion", 0), equipment_name="clockwork_power_spear", race_config=cfg)  # noqa: E501
-    #                           .upgrade_all_models(("champion", 0), equipment_name="clockwork_wings", race_config=cfg)  # noqa: E501
+    # Example code for weapons: .equip_unit(("champion", 0), equipment_name="clockwork_power_spear", race_config=cfg)  # noqa: E501
+    #                           .equip_unit(("champion", 0), equipment_name="clockwork_wings", race_config=cfg)  # noqa: E501
     .duplicate_unit(("champion", 0))
 )
 
@@ -41,18 +39,10 @@ army = (
 # 2x Bioengineered Ork
 army = (
     army.add_unit("bioengineered_ork", race_config=cfg)
-    .upgrade_all_models(
-        ("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg
-    )
-    .upgrade_all_models(
-        ("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg
-    )
-    .upgrade_all_models(
-        ("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg
-    )
-    .upgrade_all_models(
-        ("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg
-    )
+    .equip_unit(("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg)
+    .equip_unit(("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg)
+    .equip_unit(("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg)
+    .equip_unit(("bioengineered_ork", 0), equipment_name="ork_pistol", race_config=cfg)
     .duplicate_unit(("bioengineered_ork", 0))
 )
 

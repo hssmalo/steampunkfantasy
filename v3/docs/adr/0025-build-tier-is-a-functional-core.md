@@ -5,7 +5,7 @@ and resolved tiers are separate. This one records how the build tier behaves.
 
 `ArmyModel`, `ArmyUnit` and `ArmyList` are all `@dataclass(frozen=True)`. Every
 mutation — `upgrade`, `upgrade_model`, `upgrade_unit`, `upgrade_full_unit`,
-`upgrade_all_models`, `add_unit`, `nick_unit`, `nick_model`, `duplicate_unit`,
+`equip_unit`, `add_unit`, `nick_unit`, `nick_model`, `duplicate_unit`,
 `delete_unit` — returns a **new** instance built with `dataclasses.replace`
 rather than changing the receiver. A caller that wants the old army back keeps
 the old value; nothing has to be copied defensively or undone.
