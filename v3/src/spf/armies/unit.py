@@ -103,10 +103,12 @@ class Unit:
     def fixture_purchases(self) -> dict[str, int]:
         """How many times each Unit Fixture on this Unit was bought, by name.
 
-        One purchase equips every Model with one copy, so the purchase count is
-        the largest number of copies any single Model carries (ADR 0026). It is
-        the `max` and not the first Model's tally because promoting a Model
-        clears its upgrades, which can leave a Unit ragged with nothing bought
+        One purchase equips every Model that can carry the Fixture with one
+        copy, so the purchase count is the largest number of copies any single
+        Model carries (ADR 0026). It is the `max` and not the first Model's
+        tally because a Fixture need not reach every Model: one requiring
+        `type:Tinkerer` reaches only the promoted Model, and promoting a Model
+        clears its upgrades, which can leave a Unit uneven with nothing bought
         or sold.
         """
         purchases: dict[str, int] = {}

@@ -50,10 +50,9 @@ army = (
     .upgrade_all_models(
         ("gnome_infantry", 4), equipment_name="mechanical_owl", race_config=cfg
     )
-    .upgrade_model(
+    .upgrade_all_models(
         ("gnome_infantry", 4),
         equipment_name="experimental_death_ray",
-        model_key=("gnome_tinkerer", 0),
         race_config=cfg,
     )
 )
@@ -67,10 +66,9 @@ army = (
         upgrade_model_name="gnome_tinkerer",
         race_config=cfg,
     )
-    .upgrade_model(
+    .upgrade_all_models(
         ("gnome_infantry", 5),
         equipment_name="experimental_death_ray",
-        model_key=("gnome_tinkerer", 0),
         race_config=cfg,
     )
 )

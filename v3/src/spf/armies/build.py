@@ -90,17 +90,33 @@ class ArmyUnit:
     ) -> Self:
         """Return a new ArmyUnit with one purchase of `equipment_name` on every model.
 
-        This is how a Unit Fixture is bought: one purchase, one copy on each
-        Model. Per-model equipment may be bought this way too — it is then
-        simply charged once per model.
+        This is how a Unit Fixture is bought: one purchase, one copy on every
+        Model that can carry it. A Model whose `requires` the Equipment does not
+        satisfy — the wrong Type, or no Holder left — is passed over rather than
+        refused, so a Fixture only a promoted Tinkerer can hold is still a
+        single purchase for the whole Unit (ADR 0026). Per-model equipment may
+        be bought this way too — it is then simply charged once per model.
+
+        Raises ValueError when no Model in the Unit can carry it.
         """
+        equip = race_config.equipment[equipment_name]
         result = self
+        carriers = 0
         for model_idx in range(len(self.models)):
+            model = result.models[model_idx]
+            if not _satisfies_requires(
+                equip.requires, model=model, race_config=race_config
+            ):
+                continue
             result = result._equip(
-                model_idx,
-                result.models[model_idx],
-                equipment_name,
-                race_config=race_config,
+                model_idx, model, equipment_name, race_config=race_config
+            )
+            carriers += 1
+        if not carriers:
+            # Nothing was sold. Put the first Model through the door it failed
+            # at, so the refusal names the requirement it did not meet.
+            return self._equip(
+                0, self.models[0], equipment_name, race_config=race_config
             )
         return result
 

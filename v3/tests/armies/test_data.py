@@ -2426,3 +2426,76 @@ def test_upgrade_all_models_still_buys_a_fixture(squad_of_two: RaceConfig) -> No
     )
 
     assert [m.upgrades for m in army.units[0].models] == [["banner"], ["banner"]]
+
+
+def _race_with_elite_banner(race: RaceConfig) -> RaceConfig:
+    """`race` with an `elite_banner` Fixture only an Elite Model can carry."""
+    elite_banner = EquipmentConfig(
+        race="goblin",
+        name="Elite Banner",
+        cost=t.Cost(cp=2),
+        upgrade_all=True,
+        requires=[["type:Elite"]],  # pyright: ignore[reportArgumentType]
+    )
+    return race.model_copy(
+        update={"equipment": {**race.equipment, "elite_banner": elite_banner}}
+    )
+
+
+def test_upgrade_all_models_equips_only_the_models_that_can_carry_it(
+    squad_of_two: RaceConfig,
+) -> None:
+    """A Fixture goes on every Model that can hold it, and passes the rest over."""
+    race = _race_with_elite_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+    army = army.upgrade_unit(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        upgrade_model_name="elite_soldier",
+        race_config=race,
+    )
+
+    army = army.upgrade_all_models(
+        ("squad", 0), equipment_name="elite_banner", race_config=race
+    )
+
+    assert [m.upgrades for m in army.units[0].models] == [["elite_banner"], []]
+
+
+def test_upgrade_all_models_charges_one_purchase_for_a_single_carrier(
+    squad_of_two: RaceConfig,
+) -> None:
+    """One purchase is one Cost even when only one Model could take it."""
+    race = _race_with_elite_banner(squad_of_two)
+    army = (
+        ArmyList(race="goblin", nick="T", units=[])
+        .add_unit("squad", race_config=race)
+        .upgrade_unit(
+            ("squad", 0),
+            model_key=("soldier", 0),
+            upgrade_model_name="elite_soldier",
+            race_config=race,
+        )
+        .upgrade_all_models(
+            ("squad", 0), equipment_name="elite_banner", race_config=race
+        )
+    )
+
+    assert army.resolve(race).units[0].cost() == t.Cost(mp=3, cp=2, xp=1)
+
+
+def test_upgrade_all_models_refuses_when_no_model_can_carry_it(
+    squad_of_two: RaceConfig,
+) -> None:
+    """Passing over every Model would sell nothing; say why instead."""
+    race = _race_with_elite_banner(squad_of_two)
+    army = ArmyList(race="goblin", nick="T", units=[]).add_unit(
+        "squad", race_config=race
+    )
+
+    with pytest.raises(ValueError, match="type:Elite"):
+        army.upgrade_all_models(
+            ("squad", 0), equipment_name="elite_banner", race_config=race
+        )
