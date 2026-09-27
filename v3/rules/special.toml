@@ -485,7 +485,9 @@ see_also = ['orders.chase']
 [special.enormous]
 name = "Enormous"
 slots = ["unit"]
-todo = "Rule text not yet written: a unit occupying two hexes. Unrelated to the enormous size modifier despite the name."
+signature = "This unit takes two hexes"
+effect = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
+
 see_also = ["size.enormous"]
 
 [special.fire_order]

@@ -18,6 +18,14 @@ effect = "While shaken set unit speed to the specified speed, and how a unit beh
 remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
 see_also = ["special.heal", "special.repair"]
 
+
+[tokens.plus_minus_one]
+name = "Plus Minus One"
+phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
+effect = "Enemy get to add or subtract one on any die roll for damage versus this unit"
+remove = "This is a critical effect which may only be removed be repair ability"
+see_also = ["modifiers.plus_minus_one", "special.repair"]
+
 [tokens.into_the_fog]
 name = "Into the Fog"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]

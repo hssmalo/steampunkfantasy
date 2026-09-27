@@ -157,11 +157,11 @@
       ]
     },
     {
-      "name": "hammerhead",
-      "nick": "Crushing HammerHead",
+      "name": "battering_ram",
+      "nick": "Crushing Battering Ram",
       "models": [
         {
-          "name": "hammerhead",
+          "name": "battering_ram",
           "upgrades": []
         }
       ]

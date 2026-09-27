@@ -152,7 +152,7 @@ speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
 [[units.tiny_snake.specials.movement]]
-text = "If this unit is still hidden and any enemy in any movement phase is within range 2 of this unit, it revealse it self and assault the enemy in that hex. If there are multiple hexes with enemies in, you choose which one to assault. Also note, this unit only has follow as possible movement order. If this unit does not share any hex with any friendly unit, or does reveal itself, it stays still."
+text = "If this unit is hidden and any enemy in any movement phase is within range 2 of this unit, it revealse it self and assault the enemy in that hex. If there are multiple hexes with enemies in, you choose which one to assault. Also note, this unit only has follow as possible movement order. If this unit does not share any hex with any friendly unit, or does reveal itself, it stays still."
 
 [[units.tiny_snake.specials.hidden]]
 variant = "start_with_token"

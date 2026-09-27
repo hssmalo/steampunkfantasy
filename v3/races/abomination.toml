@@ -83,7 +83,7 @@ description = '''Huge flagship floating above the ground armed with a greater fo
 '''
 
 [[units.flagship.specials.enormous]]
-text = "This units takes two hexes. The back part is always directly behind the way the unit is facing. Thus, a L/R move the back part of the unit will move 1 hex and engage in assault if there is an enemy there."
+
 
 [[units.flagship.specials.fog]]
 text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token."
@@ -132,7 +132,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 rows = [
 	"1-4: +1 to future damage",
 	"5-8: as 1-4, critical damage",
-	"9+: As 5-8, plus minus one"
+	"9+: As 5-8, gain one plus minus one token."
 ]
 
 notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, shaken and it is on fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is shaken as normal."]
