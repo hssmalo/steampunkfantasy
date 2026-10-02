@@ -206,7 +206,10 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.goblin_infantry_carrier.specials.transport]]
-text = "May transport up to 3 Goblin infantry. Deploy order is Deploy(range=1). May not be deployed into assault."
+args.N = 3
+args.type = "infantry"
+args.deploy_range = 1
+variant = "regular"
 
 [[units.goblin_infantry_carrier.specials.forward_position]]
 args.N = 1
@@ -349,7 +352,10 @@ speed = "still"
 movement_order = ["-", "-", "-"]
 
 [[units.heavy_carrier.specials.transport]]
-text = "May transport up to 1 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Heavy Carrier enters an assault, you may optionally deploy the infantry to join the assault."
+args.N = 1
+args.type = "infantry"
+args.deploy_range = 1
+
 
 [[units.heavy_carrier.specials.forward_position]]
 args.N = 1
@@ -439,7 +445,12 @@ movement_order = ["-", "-", "-"]
 
 
 [[units.modified_truck.specials.transport]]
-text = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantry to join the assault."
+args.N = 2
+args.type = "infantry"
+args.deploy_range = 1
+variant = "assault"
+
+#text = "May transport up to 2 Goblin infantry. Deploy order is Deploy(range=1). May deploy directly into assault. If Modified Truck enters an assault, you may optionally deploy the infantry to join the assault."
 
 [[units.modified_truck.specials.forward_position]]
 args.N = 1
@@ -960,7 +971,7 @@ upgrade_all = true
 requires = [["Hands:2"], ["type:Infantry"]]
 
 [equipment.ogre_rifle.range]
-range = 2
+range = 4
 angle = [true, true, true, true]
 damage = "d8-2"
 ap = "2"

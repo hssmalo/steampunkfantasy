@@ -132,7 +132,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 rows = [
 	"1-4: +1 to future damage",
 	"5-8: as 1-4, critical damage",
-	"9+: As 5-8, gain one plus minus one token."
+	"9+: As 5-8, gain one plus minus one token." #token.plus_minus_one
 ]
 
 notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, shaken and it is on fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is shaken as normal."]
@@ -141,21 +141,21 @@ notes = ["Unit is destroyed if it has all of the following:no command, disabled 
 
 [units.flagship.damage_tables.Critical]
 rows = [
-	"1: d6 psychic damage to all friendly units within range 2. No command",
+	"1: d6 psychic damage to all friendly units within range 2. No command", #token.no_command: need to be written.
 	"2: If flying, decelerates to float",
-	"2: If floating, do d8 damage (ignore armor). Disable Repair",
-	"3: Cannot accelerate",
-	"4: Cannot turn",
-	"5: Shaken",
-	"6: Fire",
+	"2: If floating, do d8 damage (ignore armor). Disable Repair", #token.disable_repair. (need to be written)
+	"3: Cannot accelerate", #token.cannot_accelerate
+	"4: Cannot turn", #token.cannot_turn
+	"5: Shaken", #token.shaken
+	"6: Fire", # token.fire
 ]
 
 [units.flagship.damage_tables.Crew]
 rows = [
 	"4-5: If already shaken double initial Crew damage",
-	"6-7: As 4-5, and Crippled Crew",
-	"8-9: as 6-7, disable repair",
-	"10-17: as 8-9, +1 to future Crew damage",
+	"6-7: As 4-5, and Crippled Crew", #token.crippled_crew
+	"8-9: as 6-7, disable repair", #token.disable_repair
+	"10-17: as 8-9, +1 to future Crew damage", #token.plus_to_crew_damage (need to be written)
 	"18: Unit destroyed",
 ]
 
@@ -529,7 +529,7 @@ still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
 [units.giant_frog_riders.damage_tables.Regular]
 rows = [
-	"2-3: Bleed[4]",
+	"2-3: Bleed[4]",#token.bleed N=4
 	"4+: kill 1 model",
 ]
 notes = [
@@ -582,9 +582,9 @@ still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
 [units.hippopotamus_riders.damage_tables.Regular]
 rows = [
-	"2-3: Bleed[4]",
+	"2-3: Bleed[4]", #token.bleed. N=4
 	"4-6: as below, +1 to future damage",
-	"7-8: as below, shaken",
+	"7-8: as below, shaken", #token.shaken
 	"9+: unit destroyed",
 ]
 notes = ["bleeding does not cause more bleeding"]

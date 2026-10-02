@@ -248,7 +248,11 @@ movement_order = ["-", "F", "F"]
 comment = "May not deploy units while shaken"
 
 [[units.transport_zeppelin.specials.transport]]
-text = "May transport up to 2 unit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall."
+args.N = 2
+args.type = "Infantry or SteamPowerArmor"
+args.deploy_range = 2
+
+#text = "May transport up to 2 ulnit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall."
 
 [units.transport_zeppelin.orders.movement]
 fast_fly = [

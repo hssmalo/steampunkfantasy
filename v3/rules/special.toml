@@ -479,8 +479,7 @@ effect = "After activate fire order is given, a feature described by the unit/eq
 name = "Chase"
 slots = ["unit"]
 effect = "Modifies the chase order"
-see_also = ['orders.chase']
-
+#see_also = ["orders.movement.chs"]
 
 [special.enormous]
 name = "Enormous"
@@ -635,16 +634,21 @@ todo = "Rule text not yet written: moving models between two units sharing a hex
 [special.transport]
 name = "Transport"
 slots = ["unit"]
-todo = """Rule text not yet written: carrying units, and the deploy order that unloads them. Wants an orders namespace.
+effect = "May start the game carrying units onboard."
 
-Reserved by the designer in #165: C23 (ogre carrying 4 tiny drone units against 6) and C41 (goblin transporting 1 Goblin infantry against 2). Both differ by a count and by the transporting unit's own name, so they want a Variable rather than a variant."""
+
 
 [special.transport.variables]
-N = { type = "int", min = 1, max = 12, optional = true }
-
+N =            {type = "int", min = 1, max = 12, optional = true }
+type =         {type = "str"}
+deploy_range = {type ="int", min = 1, max = 3}
 
 [special.transport.variants]
-tiny_drones = "May carry {N} tiny drone units. Treat all movement 3 orders as including an optional +Deploy(range=2) order. May not be deployed into assault"
+regular = "May carry {N} {type}. Deploy units with deploy order within range={deploy_range} from the transport unit. Face the deployed units away from the unit. May not be deployed into assault"
+
+assault = "May carry {N} {type}. Deploy units with deploy order within range={deploy_range} from the transport unit. Face the deployed units away from the unit. May not be deployed into assault. Unit (if there is enough place in the hex) transported units may also join the assault"
+
+
 
 
 [special.vulnerability]
@@ -663,7 +667,9 @@ add_d4_fire = "Every time this unit takes at least 1 point of regular damage aft
 [special.escape_artist]
 name = "Escape Artist"
 slots = ["model"]
-todo = "Rule text not yet written: a model leaving the board and still counting as survived."
+signature = "In any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes."
+effect = "In any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes."
+
 
 [special.not_yet_dead]
 name = "Not Yet Dead"

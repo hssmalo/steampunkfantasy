@@ -508,7 +508,13 @@ text = "Blocks Line of Sight"
 text = "May tow one wagon. Towed wagon always faces the main engine, and when the engine leaves its hex, the towed wagon enters the hex the engine exited, and conduct assault if necessary."
 
 [[units.main_engine.specials.transport]]
-text = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault."
+args.N = 6
+args.type = "tiny drone"
+args.deploy_range = 2
+variant = "regular"
+
+
+#text = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault."
 
 [units.main_engine.orders.fire]
 still = [
@@ -523,20 +529,20 @@ slow = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
 fast = [["Fire", "-"], ["-", "Fire"], ["Aim", "-"], ["-", "Aim"]]
 
 [units.main_engine.orders.movement]
-still = [["L/R", "-", "(A)"]]
+still = [["L/R", "-", "(A)+(Deploy)"]]
 slow = [
-	["L/R", "F", "L/R"],
-	["L/R", "F", "(A)"],
-	["F", "L/R", "-"],
-	["F", "-", "-"]
+	["L/R", "F", "L/R+(Deploy)"],
+	["L/R", "F", "(A)+(Deploy)"],
+	["F", "L/R", "(Deploy)"],
+	["F", "-", "(Deploy)"]
 ]
 fast = [
-	["F", "F", "-"],
-	["L/R", "F", "F"],
-	["F", "L/R", "F"],
-	["F", "F", "L/R"],
-	["F", "L/R", "B"],
-	["F", "F", "B"],
+	["F", "F", "(Deploy)"],
+	["L/R", "F", "F+(Deploy)"],
+	["F", "L/R", "F+(Deploy)"],
+	["F", "F", "L/R+(Deploy)"],
+	["F", "L/R", "B+(Deploy)"],
+	["F", "F", "B+(Deploy)"],
 ]
 
 [units.main_engine.damage_tables.Critical]
@@ -771,7 +777,9 @@ description = "A regular Ogre assault scout which often carries tiny drones and 
 
 [[models.ogre_scout_engineer.unit_specials.transport]]
 args.N = 4
-variant = "tiny_drones"
+args.type = "tiny drones"
+args.deploy_range = 2
+variant = "regular"
 
 [[models.ogre_scout_engineer.unit_specials.repair]]
 args.N = 2
@@ -1028,7 +1036,9 @@ type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 
 [[models.ogre_engineer.unit_specials.transport]]
 args.N = 4
-variant = "tiny_drones"
+args.type = "tiny drones"
+args.deploy_range = 2
+variant="regular"
 
 [[models.ogre_engineer.unit_specials.repair]]
 args.N = 2

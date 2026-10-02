@@ -1251,7 +1251,6 @@ text = "Forced Movement: Twice per game, the darkelf officer may use force movem
 variant = "remove_shaken_in_hex"
 
 [[models.darkelf_officer.specials.escape_artist]]
-text = "Escape artist: in any aftermath phase, you may remove this model from the board. Treat it as survived for victory points purposes."
 
 [models.darkelf_officer.assault]
 strength = [3, 2, 1, 1]
