@@ -456,7 +456,7 @@ variant = "assault"
 args.N = 1
 
 [[units.modified_truck.specials.fire_order]]
-text = "Use both auto bow and goblin grenade on each fire order"
+text = "Use both auto bow and grenade thrower on each fire order"
 
 [units.modified_truck.orders.movement]
 slow = [
@@ -511,7 +511,7 @@ rows = [
 	"3-4: Crippled Crew, if already shaken double initial Crew damage",
 	"5-6: As 4-5, shaken",
 	"7-9: As 6-7, +3 to future Crew damage",
-	"10: Unit destroyed",
+	"10: Unit destroyed, forced deploy all transported units",
 ]
 
 [units.mechanical_fire_bird]
@@ -683,7 +683,7 @@ ap = 2
 [models.modified_truck]
 name = "Modified Truck"
 race = "goblin"
-equipment = ["goblin_auto_bow", "goblin_grenade_free", "goblin_grenade_free"]
+equipment = ["goblin_auto_bow", "grenade_thrower"]
 equipment_limit = ["Independent:∞"]
 type = ["Vehicle", "Tracked", "Mechanical"]
 
@@ -1028,18 +1028,22 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 2
 
-[equipment.goblin_grenade_free]
-name = "Goblin Grenade"
+[equipment.grenade_thrower]
+name = "Grenade Thrower"
 race = "goblin"
 requires = []
 
-[equipment.goblin_grenade_free.range]
-range = 1
+[equipment.grenade_thrower.range]
+range = 2
 angle = [true, true, true, true]
 damage = "d6"
 ap = 2
 
-[[equipment.goblin_grenade_free.range.specials.ammo]]
+[[equipment.grenade_thrower.range.specials.multiple_shots]]
+args.N = 2
+variant = "fire_n_times"
+
+[[equipment.grenade_thrower.range.specials.ammo]]
 variant = "always_loaded"
 
 [equipment.goblin_auto_bow]

@@ -5,7 +5,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 02.10.2026 | Goblin       | Ogre rifle range 4                                                          | Was always meant to have range 4.                                                     |
+| 07.10.2026 | Goblin       | Modified truck got grenade launcher instead of goblin grenade               | Fix bug, more fitting, needed something                                              |
+| 02.10.2026 | Goblin       | Ogre rifle range 4                                                          | Was always meant to have range 4.                                                    |
 | 15.09.2026 | Goblin       | Goblin now has only one movement order                                      | To make it easier to play a large number of goblin infantry. No big balance issue    |
 | 04.09.2026 | Dwarf        | Brother in Arms armor now only gives endurance tokens.                      | To easier let it be stackable with wheeled shield wall. Ant it is fun                |
 | 04.09.2026 | Goblin       | Snake Tamer spawn lots more tiny snake. Tiny snake only has follow, 1 model | To make the snake tamer feel more like a snake tamer                                 |
@@ -14,8 +15,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 | 04.09.2026 | Ogre,Goblin  | Snake Tamer and Cyclops own unit types                                      | To make room for specialized weapons in the future                                   |
 | 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | To cool not to implement. Armored, durable, big boulder size bomb. Will review power |
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because to fun not to add                                         |
-| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                  | Goblin infantry seemed overpowered and this is a significant and fun nerf             |
-| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.           | Was to easy to exploit, and rules was not elegant anyway                              |
+| 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                   | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
+| 19.08.2026 | Gnome       | To use deathray multiple aim potential, entire units need to aim.            | Was to easy to exploit, and rules was not elegant anyway                             |
 | 03.09.2026 | Ogre         | Added Cyclops, with a huge boulder size bomb                                | Too cool not to implement. Armored, durable, big boulder size bomb. Will review power|
 | 03.09.2026 | Goblin       | Snake Tamer                                                                 | Added Snake Tamer. Because too fun not to add                                        |
 | 03.09.2026 | Goblin       | Damage of 5-7 now causes d6 psychic damage instead of 6-7                   | Goblin infantry seemed overpowered and this is a significant and fun nerf            |
