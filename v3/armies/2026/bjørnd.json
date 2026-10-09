@@ -1,0 +1,424 @@
+{
+  "race": "goblin",
+  "nick": "Showcase Goblin",
+  "units": [
+    {
+      "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
+      "models": [
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
+      "models": [
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
+      "models": [
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "nick": "Elite Goblin Grenadier",
+      "models": [
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        },
+        {
+          "name": "elite_goblin_infantry",
+          "upgrades": [
+            "grenadier",
+            "acid_grenade",
+            "gear_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "nick": "Goblin Infantry with Poison Bow",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "poison_bow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "nick": "Goblin Infantry with Ogre Rifle",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": [
+            "ogre_rifle"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "goblin_infantry",
+      "models": [
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "goblin_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "modified_truck",
+      "models": [
+        {
+          "name": "modified_truck",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "modified_truck",
+      "models": [
+        {
+          "name": "modified_truck",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "modified_truck",
+      "models": [
+        {
+          "name": "modified_truck",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "modified_truck",
+      "models": [
+        {
+          "name": "modified_truck",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "modified_truck",
+      "models": [
+        {
+          "name": "modified_truck",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "modified_truck",
+      "models": [
+        {
+          "name": "modified_truck",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "mechanical_fire_bird",
+      "models": [
+        {
+          "name": "mechanical_fire_bird",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "mechanical_fire_bird",
+      "models": [
+        {
+          "name": "mechanical_fire_bird",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}

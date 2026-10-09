@@ -1,0 +1,216 @@
+{
+  "race": "gnome",
+  "nick": "Helicopters with Experimental Weapons",
+  "units": [
+    {
+      "name": "gnome_infantry",
+      "nick": "Frost Ray Infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "nick": "Frost Ray Infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "nick": "Frost Ray Infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "nick": "Frost Ray Infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": [
+            "frost_ray"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_infantry",
+      "models": [
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        },
+        {
+          "name": "gnome_infantry",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "tinkerer_helicopter",
+          "upgrades": [
+            "experimental_guided_missile",
+            "helicopter_mounted_green_gas_launcher"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "tinkerer_helicopter",
+          "upgrades": [
+            "experimental_guided_missile",
+            "helicopter_mounted_green_gas_launcher"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "tinkerer_helicopter",
+          "upgrades": [
+            "experimental_guided_missile",
+            "helicopter_mounted_green_gas_launcher"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gnome_helicopter",
+      "models": [
+        {
+          "name": "tinkerer_helicopter",
+          "upgrades": [
+            "experimental_guided_missile",
+            "helicopter_mounted_green_gas_launcher"
+          ]
+        }
+      ]
+    }
+  ]
+}

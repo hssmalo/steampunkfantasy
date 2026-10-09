@@ -1,0 +1,257 @@
+{
+  "race": "ork",
+  "nick": "Geir Arne's Pyro Slingers",
+  "units": [
+    {
+      "name": "battlewagon",
+      "models": [
+        {
+          "name": "battlewagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "battlewagon",
+      "models": [
+        {
+          "name": "battlewagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "battlewagon",
+      "models": [
+        {
+          "name": "battlewagon",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "bioengineered_ork",
+      "models": [
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "hand_catapult",
+            "grenade_sling",
+            "clockwork_monocular"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "hand_catapult",
+            "grenade_sling",
+            "clockwork_monocular"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "hand_catapult",
+            "grenade_sling",
+            "clockwork_monocular"
+          ]
+        },
+        {
+          "name": "bioengineered_ork",
+          "upgrades": [
+            "hand_catapult",
+            "grenade_sling",
+            "clockwork_monocular"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ork_werewarg",
+      "models": [
+        {
+          "name": "ork_werewarg",
+          "upgrades": [
+            "pyro",
+            "war_drum"
+          ]
+        },
+        {
+          "name": "ork_werewarg",
+          "upgrades": [
+            "pyro",
+            "war_drum"
+          ]
+        },
+        {
+          "name": "ork_werewarg",
+          "upgrades": [
+            "pyro",
+            "war_drum"
+          ]
+        },
+        {
+          "name": "ork_werewarg",
+          "upgrades": [
+            "pyro",
+            "war_drum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "warg_rider",
+      "models": [
+        {
+          "name": "warg_rider",
+          "upgrades": []
+        },
+        {
+          "name": "warg_rider",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "ork_infantry",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ork_infantry",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ork_infantry",
+      "models": [
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        },
+        {
+          "name": "ork_infantry",
+          "upgrades": [
+            "ork_pistol",
+            "ork_pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    },
+    {
+      "name": "grunt",
+      "models": [
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        },
+        {
+          "name": "grunt",
+          "upgrades": []
+        }
+      ]
+    }
+  ]
+}
