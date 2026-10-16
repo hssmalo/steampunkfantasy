@@ -1,3 +1,5 @@
+"""Create standard dwarf army for Hss."""
+
 from spf import races
 from spf.armies import ArmyList, io
 

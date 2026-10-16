@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("abomination")
 
-army = ArmyList("abomination", "Abomination Falgship", [])
+army = ArmyList("abomination", "Abomination Flagship", [])
 
 # x2 Abomination Infantry
 army = (
