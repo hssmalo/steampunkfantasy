@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("gnome")
 
-army = ArmyList("gnome", "Helicopters with Experimental Weapons", [])
+army = ArmyList("gnome", "Espens Tinkerer Helicopters", [])
 
 # x4 Frost Ray Infantry
 army = (

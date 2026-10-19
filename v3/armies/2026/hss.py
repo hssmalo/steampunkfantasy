@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("dwarf")
 
-army = ArmyList("dwarf", "SteamPowerArmor Dwarf", [])
+army = ArmyList("dwarf", "Hss Hated Overpowered SteamPowerArmor Dwarf", [])
 
 # x2 Dwarf Infantry
 army = army.add_unit("dwarf_infantry", race_config=cfg).duplicate_unit(
