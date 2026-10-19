@@ -66,6 +66,7 @@ jobs:
           echo "${{ github.workspace }}/.texlive/bin/x86_64-linux" >> "$GITHUB_PATH"
           export PATH="${{ github.workspace }}/.texlive/bin/x86_64-linux:$PATH"
           tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet
+          tlmgr update --self
           packages=$(uv run spf render tlmgr)
           tlmgr install $packages
 
