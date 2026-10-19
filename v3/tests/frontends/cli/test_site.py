@@ -333,6 +333,40 @@ def test_escapes_untrusted_looking_content() -> None:
     assert "&lt;b&gt;" in html
 
 
+def test_an_anchored_heading_links_to_itself() -> None:
+    """A reader can deep-link a section, and copy that link from its heading."""
+    html = render_landing_page(
+        [
+            SiteSection(
+                heading="Dummy Pack A",
+                anchor="dummy-a",
+                columns=(),
+                rows=(),
+                lines=(),
+            )
+        ]
+    )
+
+    assert '<h2 id="dummy-a"><a href="#dummy-a">Dummy Pack A</a></h2>' in html
+
+
+def test_escapes_the_anchor() -> None:
+    """An anchor is embedded in attributes, so it is escaped like any path."""
+    html = render_landing_page(
+        [
+            SiteSection(
+                heading="Dummy Pack A",
+                anchor='"><script>',
+                columns=(),
+                rows=(),
+                lines=(),
+            )
+        ]
+    )
+
+    assert "<script>" not in html
+
+
 @pytest.fixture
 def armies_dir(tmp_path: Path, *, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Redirect config.paths.armies to a temporary directory."""

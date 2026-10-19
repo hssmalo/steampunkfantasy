@@ -94,6 +94,13 @@ th, td {
 th {
   background: #f4f4f4;
 }
+h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+h2 a:hover {
+  text-decoration: underline;
+}
 footer {
   border-top: 1px solid #ccc;
   margin-top: 3rem;
@@ -144,6 +151,8 @@ class SiteSection:
 
     rows: tuple[SiteRow, ...]
     lines: tuple[SiteLine, ...]
+    anchor: str | None = None
+    """The heading's link target, so a URL can open the page at this section."""
 
 
 def _format_links(pages: Sequence[SitePage]) -> str:
@@ -225,11 +234,19 @@ def _render_table(section: SiteSection) -> str:
     return "<table>\n" + "\n".join(rows) + "\n</table>"
 
 
+def _render_heading(heading: str, anchor: str | None) -> str:
+    """Render a section heading, linking to itself when it has an anchor."""
+    if anchor is None:
+        return f"<h2>{escape(heading)}</h2>"
+    target = escape(anchor)
+    return f'<h2 id="{target}"><a href="#{target}">{escape(heading)}</a></h2>'
+
+
 def _render_section(section: SiteSection) -> str:
     """Render one section: its heading, its table, then its trailing lines."""
     parts = []
     if section.heading is not None:
-        parts.append(f"<h2>{escape(section.heading)}</h2>")
+        parts.append(_render_heading(section.heading, section.anchor))
     if section.columns:
         parts.append(_render_table(section))
     parts += [
