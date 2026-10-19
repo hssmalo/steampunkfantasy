@@ -198,7 +198,11 @@ def _rows_by_label(
 
 
 def pack_section(
-    heading: str, army_pages: Sequence[SitePage], pack_pages: Sequence[SitePage]
+    heading: str,
+    army_pages: Sequence[SitePage],
+    pack_pages: Sequence[SitePage],
+    *,
+    anchor: str,
 ) -> SiteSection:
     """Build one Army Pack's section: a row per Army, the Pack document below."""
     lines = (
@@ -208,6 +212,7 @@ def pack_section(
     )
     return SiteSection(
         heading=heading,
+        anchor=anchor,
         columns=("Army", *(_product_title(p) for p in _ARMY_PRODUCTS)),
         rows=_rows_by_label(army_pages, _ARMY_PRODUCTS),
         lines=lines,
@@ -218,6 +223,7 @@ def race_section(heading: str, pages: Sequence[SitePage]) -> SiteSection:
     """Build the Races section: a column per Race Product, one row per Race."""
     return SiteSection(
         heading=heading,
+        anchor="races",
         columns=("Race", *(_product_title(p) for p in _RACE_PRODUCTS)),
         rows=_rows_by_label(pages, _RACE_PRODUCTS),
         lines=(),
@@ -427,7 +433,11 @@ def _render_pack(pack: _LoadedPack, *, output_root: Path) -> SiteSection:
         label=pack.index.title,
         output_root=output_root,
     )
-    return pack_section(pack.entry.heading, army_pages, pack_pages)
+    # The pack directory, not the heading: rewording a heading must not break
+    # links into its section.
+    return pack_section(
+        pack.entry.heading, army_pages, pack_pages, anchor=pack.entry.pack
+    )
 
 
 def render_site() -> None:

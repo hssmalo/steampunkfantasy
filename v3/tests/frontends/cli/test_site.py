@@ -91,9 +91,11 @@ def test_pack_section_is_one_row_per_army_and_the_pack_below() -> None:
             *_army_pages("Dummy Army Two", "2026-dummy-two"),
         ],
         pack_pages,
+        anchor="dummy-a",
     )
 
     assert section.heading == "Dummy Pack A"
+    assert section.anchor == "dummy-a"
     assert section.columns == ("Army", "Army Reference", "Order Cards")
     assert [row.label for row in section.rows] == [
         "Dummy Army One",
@@ -106,7 +108,10 @@ def test_pack_section_is_one_row_per_army_and_the_pack_below() -> None:
 def test_a_pack_that_rendered_no_pack_document_has_no_trailing_line() -> None:
     """The page links what rendered; it never fabricates a link that did not."""
     section = pack_section(
-        "Dummy Pack A", _army_pages("Dummy Army One", "2026-dummy-one"), []
+        "Dummy Pack A",
+        _army_pages("Dummy Army One", "2026-dummy-one"),
+        [],
+        anchor="dummy-a",
     )
 
     assert section.lines == ()
@@ -123,6 +128,7 @@ def test_race_section_is_a_column_per_race_product() -> None:
     )
 
     assert section.heading == "Races"
+    assert section.anchor == "races"
     assert section.columns == ("Race", "Race Overview", "Gallery")
     assert [row.label for row in section.rows] == ["Dummy Race One", "Dummy Race Two"]
     assert [len(row.cells) for row in section.rows] == [2, 2]
@@ -144,6 +150,7 @@ def test_links_every_page() -> None:
                     )
                 ],
                 [],
+                anchor="dummy",
             ),
         ]
     )
@@ -158,12 +165,15 @@ def test_a_loose_section_renders_above_every_heading() -> None:
         [
             RULEBOOK_SECTION,
             pack_section(
-                "Dummy Pack C", _army_pages("Dummy Army One", "2026-dummy-one"), []
+                "Dummy Pack C",
+                _army_pages("Dummy Army One", "2026-dummy-one"),
+                [],
+                anchor="dummy-c",
             ),
         ]
     )
 
-    assert html.index("general-rules/rulebook.pdf") < html.index("<h2>")
+    assert html.index("general-rules/rulebook.pdf") < html.index("<h2")
 
 
 def test_sections_render_in_the_order_given() -> None:
@@ -172,13 +182,22 @@ def test_sections_render_in_the_order_given() -> None:
         [
             race_section("Races", _race_pages("Dummy Race One", "dummyone")),
             pack_section(
-                "Dummy Pack C", _army_pages("Dummy Army One", "2026-dummy-one"), []
+                "Dummy Pack C",
+                _army_pages("Dummy Army One", "2026-dummy-one"),
+                [],
+                anchor="dummy-c",
             ),
             pack_section(
-                "Dummy Pack A", _army_pages("Dummy Army One", "2026-dummy-one"), []
+                "Dummy Pack A",
+                _army_pages("Dummy Army One", "2026-dummy-one"),
+                [],
+                anchor="dummy-a",
             ),
             pack_section(
-                "Dummy Pack B", _army_pages("Dummy Army Two", "2026-dummy-two"), []
+                "Dummy Pack B",
+                _army_pages("Dummy Army Two", "2026-dummy-two"),
+                [],
+                anchor="dummy-b",
             ),
         ]
     )
@@ -193,7 +212,10 @@ def test_an_army_is_one_row_with_a_cell_per_product() -> None:
     html = render_landing_page(
         [
             pack_section(
-                "Dummy Pack A", _army_pages("Dummy Army One", "2026-dummy-one"), []
+                "Dummy Pack A",
+                _army_pages("Dummy Army One", "2026-dummy-one"),
+                [],
+                anchor="dummy-a",
             )
         ]
     )
@@ -230,7 +252,7 @@ def test_a_section_with_no_rows_still_renders_its_table() -> None:
     """An opted-in section with nothing in it says so, visibly."""
     html = render_landing_page([race_section("Races", [])])
 
-    assert "<h2>Races</h2>" in html
+    assert ">Races</a></h2>" in html
     rows = re.findall(r"<tr>(.*?)</tr>", html, flags=re.DOTALL)
     assert rows == ["<th>Race</th><th>Race Overview</th><th>Gallery</th>"]
 
@@ -250,6 +272,7 @@ def test_the_army_pack_renders_below_its_table_not_as_a_row() -> None:
                         relative_path="army-pack/2026-dummy.pdf",
                     )
                 ],
+                anchor="dummy",
             )
         ]
     )
@@ -275,6 +298,7 @@ def test_a_missing_product_leaves_an_empty_cell() -> None:
                     )
                 ],
                 [],
+                anchor="dummy",
             )
         ]
     )
