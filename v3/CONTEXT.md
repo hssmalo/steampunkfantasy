@@ -579,6 +579,9 @@ The generated entry page of the deployed reference site, linking to every
 Rendering published there. Its sections are of two kinds — a table of the
 published Races, then a table per Army Pack — in Site Index order, with the
 Rulebook standing outside both (ADR 0035).
+Each section can be linked to directly by its Site Index name — the Army
+Pack's directory (`#2025`), or `races` — so renaming a pack directory breaks
+links to its section.
 Generated from what actually built, so it cannot advertise a link to something
 that failed to render. Distinct from a Product: it binds to no source-of-truth
 object and no template family, so it is not a Rendering either — it is a
