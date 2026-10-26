@@ -3,6 +3,10 @@ pack = "showcase"
 heading = "Showcase Armies"
 
 [[packs]]
+pack = "2026"
+heading = "2026 Armies"
+
+[[packs]]
 pack = "2025"
 heading = "2025 Armies"
 

@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("elf")
 
-army = ArmyList("elf", "Armored Oliphant Riders", [])
+army = ArmyList("elf", "Knuts Armored Oliphant Riders", [])
 
 # x2 Elf Infantry
 army = army.add_unit("elf_infantry", race_config=cfg).duplicate_unit(
