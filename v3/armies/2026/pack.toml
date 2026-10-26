@@ -3,11 +3,6 @@ title = "SteamPunkFantasy Tournament 2026"
 [[armies]]
 army = "geir_arne"
 label = "Ork"
-
-[[armies]]
-army = "hss"
-label = "Dwarf"
-
 [[armies]]
 army = "martin"
 label = "DarkElf"
@@ -17,13 +12,5 @@ army = "knut"
 label = "Elf"
 
 [[armies]]
-army = "bjørnd"
-label = "Goblin"
-
-[[armies]]
 army = "ole_petter"
 label = "Abomination"
-
-[[armies]]
-army = "espen"
-label = "Gnome"
