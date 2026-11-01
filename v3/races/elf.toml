@@ -1,3 +1,4 @@
+
 [races]
 
 [races.elf]
@@ -1346,7 +1347,7 @@ args.version = "resistance_type.poison"
 args.N = 2
 
 [[units.armored_oliphant_riders.specials.fire_order]]
-text = "The Crew fires a bow or Throw grenade, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded."
+text = "The Crew fires a bow or Throw grenade with Fire(c) orders, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded."
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
@@ -1360,22 +1361,22 @@ fast = [["F", "F", "-"], ["F", "L/R", "F"], ["B", "360°", "F"]]
 
 [units.armored_oliphant_riders.orders.fire]
 still = [
-	["Fire", "Fire"],
-	["Fire", "Aim(g)"],
-	["Fire", "Load(g)"],
-	["Fire", "Fire(g)"]
+	["Fire(c)", "Fire(c)"],
+	["Fire(c)", "Aim(g)"],
+	["Fire(c)", "Load(g)"],
+	["Fire(c)", "Fire(g)"]
 ]
 slow = [
-	["Fire", "Fire"],
-	["Fire", "Aim(g)"],
-	["Fire", "Load(g)"],
-	["Fire", "Fire(g)"]
+	["Fire(c)", "Fire(c)"],
+	["Fire(c)", "Aim(g)"],
+	["Fire(c)", "Load(g)"],
+	["Fire(c)", "Fire(g)"]
 ]
 fast = [
-	["Fire", "Fire"],
-	["Fire", "Aim(g)"],
-	["Fire", "Load(g)"],
-	["Fire", "Fire(g)"]
+	["Fire(c)", "Fire(c)"],
+	["Fire(c)", "Aim(g)"],
+	["Fire(c)", "Load(g)"],
+	["Fire(c)", "Fire(g)"]
 ]
 
 [units.armored_oliphant_riders.damage_tables.Regular]
