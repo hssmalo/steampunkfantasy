@@ -15,6 +15,7 @@ concrete numbers live with the Unit and the general rule lives here.
 
 from collections.abc import Iterable
 from dataclasses import dataclass, field
+from itertools import chain
 
 from spf.armies.army import Army
 from spf.registry import SPECIAL, Registry
@@ -182,8 +183,8 @@ def _collect(
         for instance in instances:
             if instance.name:
                 aliases[instance.name, ref] = None
-            args = [instance.args, *(case.args for case in instance.cases)]
-            for value in (value for arg_set in args for value in arg_set.values()):
+            arg_sets = [instance.args, *(case.args for case in instance.cases)]
+            for value in chain.from_iterable(args.values() for args in arg_sets):
                 # A ref argument is one that resolves; a scalar names no
                 # record, so the registry is the whole test.
                 if isinstance(value, str) and registry.record(value) is not None:
@@ -211,7 +212,7 @@ def build_for_race(
 
 def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesReference:
     """Close `seeded` over the rule graph and shape the result into entries."""
-    entry_refs = _close(seeded.refs, registry)
+    entry_refs = _reachable(seeded.refs, registry)
     anchors = {ref: f"{prefix}{_ANCHOR_PREFIX}-{slug(ref)}" for ref in entry_refs}
     entries = [_entry(ref, registry, anchors=anchors) for ref in entry_refs]
     entries += _aliases(seeded.aliases, registry, anchors=anchors, prefix=prefix)
@@ -219,7 +220,7 @@ def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesRefe
     return RulesReference(entries=entries, anchors=anchors)
 
 
-def _close(refs: Iterable[str], registry: Registry) -> dict[str, None]:
+def _reachable(refs: Iterable[str], registry: Registry) -> dict[str, None]:
     """Close `refs` over `places` and `see_also`, at every level (ADR 0041).
 
     Rule cycles are legal and exist, so a visited-set is what terminates it.
@@ -236,7 +237,7 @@ def _close(refs: Iterable[str], registry: Registry) -> dict[str, None]:
 
 
 def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntry:
-    """Shape one Record into its entry, with its cross-reference links."""
+    """Shape one Record into its entry, with its links to other rules."""
     record = registry.record(ref)
     assert record is not None  # noqa: S101  guarded by the caller
     return RuleEntry(
@@ -250,20 +251,23 @@ def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntr
         to_hit=getattr(record, "to_hit", None),
         to_be_hit=getattr(record, "to_be_hit", None),
         written=record.written,
-        places=[
-            _link(target, registry, anchors=anchors)
-            for target in record.places
-            if registry.record(target) is not None
-        ],
+        places=_links(record.places, registry, anchors=anchors),
         # A target keeps its line even though the walk made it an entry: a Stub
         # whose `see_also` is the only thing explaining it would otherwise print
         # nothing at all.
-        see_also=[
-            _link(target, registry, anchors=anchors)
-            for target in record.see_also
-            if registry.record(target) is not None
-        ],
+        see_also=_links(record.see_also, registry, anchors=anchors),
     )
+
+
+def _links(
+    targets: Iterable[str], registry: Registry, *, anchors: dict[str, str]
+) -> list[RuleLink]:
+    """Shape the `targets` that resolve into links."""
+    return [
+        _link(target, registry, anchors=anchors)
+        for target in targets
+        if registry.record(target) is not None
+    ]
 
 
 def _aliases(

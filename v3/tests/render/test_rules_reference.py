@@ -184,8 +184,8 @@ def test_see_also_is_followed() -> None:
 
 
 def test_see_also_is_followed_into_every_namespace() -> None:
-    # No namespace is privileged: a cross-reference to another Special is a
-    # working link only if that Special is an entry too.
+    # A `see_also` to another Special is a working Rule Link only if that
+    # Special is an entry too.
     reference = _resolve("special.assault_poison")
 
     assert "special.range_poison" in _refs(reference)
@@ -232,7 +232,7 @@ def test_a_ref_that_resolves_to_no_record_is_no_entry() -> None:
 # --- Cross-references -------------------------------------------------------
 
 
-def test_a_see_also_becomes_a_cross_reference() -> None:
+def test_a_see_also_becomes_a_link() -> None:
     reference = _resolve("special.assault_poison")
 
     entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
@@ -241,7 +241,7 @@ def test_a_see_also_becomes_a_cross_reference() -> None:
     ]
 
 
-def test_a_cross_reference_links_to_its_targets_entry() -> None:
+def test_a_see_also_links_to_its_targets_entry() -> None:
     reference = _resolve("special.assault_poison")
 
     entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
@@ -256,7 +256,7 @@ def test_a_link_to_a_non_entry_carries_no_anchor() -> None:
     )
 
 
-def test_a_see_also_that_is_an_entry_keeps_its_cross_reference_line() -> None:
+def test_a_see_also_that_is_an_entry_keeps_its_line() -> None:
     # A Stub whose `see_also` is the only thing explaining it would otherwise
     # print a heading and nothing else, beside the entry that explains it.
     reference = _resolve("special.terror")
