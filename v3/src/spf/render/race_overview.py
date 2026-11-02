@@ -57,8 +57,8 @@ SPAWN = "spawn"
 # as `spf.schemas.type_aliases` states where it declares it.
 _MODEL_TYPE_ORDER: list[t.ModelType] = list(get_args(t.ModelType.__value__))
 
-type _AnchorFor = Callable[[str], str | None] | None
-"""Resolves a Special Identifier to its Rules Reference entry, or nothing."""
+type _AnchorOf = Callable[[str], str | None] | None
+"""Resolves a Ref to its Rules Reference entry, or nothing."""
 
 FIXTURE_PRICING = "per Unit"
 PER_MODEL_PRICING = "per Model"
@@ -294,7 +294,7 @@ class _Catalogue:
     race: t.RaceName
     config: RaceConfig
     image_for: ImageLookup
-    anchor_for: _AnchorFor
+    anchor_of: _AnchorOf
     fielded_in: dict[str, list[RaceLink]]
     replaced_by: dict[str, list[RaceLink]]
     carried_by: dict[str, list[RaceLink]]
@@ -489,7 +489,7 @@ def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEnt
         types=_common_types([models[name] for name in unit.models]),
         models=_links(MODEL, unit.models, models),
         model_count=len(unit.models),
-        specials=special_lines(unit.specials, anchor_for=catalogue.anchor_for),
+        specials=special_lines(unit.specials, anchor_of=catalogue.anchor_of),
         spawn_links=_spawn_links([unit.specials], catalogue.config.spawns),
         spawned_by=catalogue.spawned_by.get(key, []),
         shaken_speed=unit.shaken.speed,
@@ -515,7 +515,7 @@ def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEnt
 def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> ModelEntry:
     """Shape one catalogue Model into its entry."""
     assault = model.assault
-    anchor_for = catalogue.anchor_for
+    anchor_of = catalogue.anchor_of
     replaces = model.replaces
     limits = limit_rows(model.equipment_limit)
     return ModelEntry(
@@ -540,9 +540,9 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
         unit_modifiers=unit_modifier_lines(model.unit),
         # The three Slots stay apart: what a Model grants its Unit, what it is
         # itself, and what it brings to an assault are different claims.
-        unit_specials=special_lines(model.unit_specials, anchor_for=anchor_for),
-        specials=special_lines(model.specials, anchor_for=anchor_for),
-        assault_specials=special_lines(assault.specials, anchor_for=anchor_for),
+        unit_specials=special_lines(model.unit_specials, anchor_of=anchor_of),
+        specials=special_lines(model.specials, anchor_of=anchor_of),
+        assault_specials=special_lines(assault.specials, anchor_of=anchor_of),
         spawn_links=_spawn_links(
             [model.unit_specials, model.specials, assault.specials],
             catalogue.config.spawns,
@@ -568,7 +568,7 @@ def _equipment_entry(
     sub-entry there — but here every Equipment has an entry of its own, so all
     three print against the thing they are about.
     """
-    anchor_for = catalogue.anchor_for
+    anchor_of = catalogue.anchor_of
     ranged = equip.range
     assault = equip.assault
     orders = equip.orders_gained
@@ -586,7 +586,7 @@ def _equipment_entry(
         range_damage=ranged.damage if ranged is not None else None,
         range_ap=ranged.ap if ranged is not None else None,
         range_specials=(
-            special_lines(ranged.specials, anchor_for=anchor_for)
+            special_lines(ranged.specials, anchor_of=anchor_of)
             if ranged is not None
             else []
         ),
@@ -595,7 +595,7 @@ def _equipment_entry(
         # Equipment's assault block stacks onto stats it does not own.
         assault_modifiers=assault_modifier_lines(assault),
         assault_specials=(
-            special_lines(assault.specials, anchor_for=anchor_for)
+            special_lines(assault.specials, anchor_of=anchor_of)
             if assault is not None
             else []
         ),
@@ -603,8 +603,8 @@ def _equipment_entry(
         unit_modifiers=unit_modifier_lines(equip.unit),
         # The four Slots stay apart: what this grants a Unit, its carrier, its
         # assault and its shooting are different claims.
-        unit_specials=special_lines(equip.unit_specials, anchor_for=anchor_for),
-        model_specials=special_lines(equip.model_specials, anchor_for=anchor_for),
+        unit_specials=special_lines(equip.unit_specials, anchor_of=anchor_of),
+        model_specials=special_lines(equip.model_specials, anchor_of=anchor_of),
         spawn_links=_spawn_links(
             [
                 equip.unit_specials,
@@ -649,7 +649,7 @@ def build_overview(
         race=race,
         config=race_config,
         image_for=image_for,
-        anchor_for=reference.anchor_for if reference is not None else None,
+        anchor_of=reference.anchor_of if reference is not None else None,
         fielded_in=_fielded_in(units),
         replaced_by=_replaced_by(models),
         carried_by=_carried_by(models),

@@ -116,13 +116,11 @@ class ArmyReference:
     """The Rules Reference printed after the Units; `None` under `--no-rules`."""
 
 
-type _AnchorFor = Callable[[str], str | None] | None
-"""Resolves a Special Identifier to its Rules Reference entry, or nothing."""
+type _AnchorOf = Callable[[str], str | None] | None
+"""Resolves a Ref to its Rules Reference entry, or nothing."""
 
 
-def _equipment_entry(
-    equip: EquipmentConfig, *, anchor_for: _AnchorFor
-) -> EquipmentEntry:
+def _equipment_entry(equip: EquipmentConfig, *, anchor_of: _AnchorOf) -> EquipmentEntry:
     assert equip.range is not None  # noqa: S101  guarded by caller
     return EquipmentEntry(
         name=equip.name,
@@ -130,7 +128,7 @@ def _equipment_entry(
         angle=list(equip.range.angle),
         damage=equip.range.damage,
         ap=equip.range.ap,
-        specials=special_lines(equip.range.specials, anchor_for=anchor_for),
+        specials=special_lines(equip.range.specials, anchor_of=anchor_of),
         note=equip.range.note,
     )
 
@@ -144,20 +142,20 @@ def _dedup[T](entries: Sequence[T]) -> list[T]:
     return result
 
 
-def _model_entry(model: Model, *, anchor_for: _AnchorFor) -> ModelEntry:
+def _model_entry(model: Model, *, anchor_of: _AnchorOf) -> ModelEntry:
     ranged_equipment = [equip for equip in model.equipment if equip.range is not None]
     assault = model.assault()
     return ModelEntry(
         name=model.display_name,
         equipment_summary=_count_summary(model.equipment, lambda e: e.name),
-        specials=special_lines(model.model_specials, anchor_for=anchor_for),
+        specials=special_lines(model.model_specials, anchor_of=anchor_of),
         assault_strength=list(assault.strength),
         assault_strength_die=assault.strength_die,
         assault_deflection=list(assault.deflection),
         assault_deflection_die=assault.deflection_die,
         assault_damage=assault.damage,
         assault_ap=assault.ap,
-        assault_specials=special_lines(assault.specials, anchor_for=anchor_for),
+        assault_specials=special_lines(assault.specials, anchor_of=anchor_of),
         note=model.config.note,
         assault_note=assault.note,
         equipment_notes=_dedup(
@@ -168,13 +166,13 @@ def _model_entry(model: Model, *, anchor_for: _AnchorFor) -> ModelEntry:
             ]
         ),
         equipment=_dedup(
-            [_equipment_entry(e, anchor_for=anchor_for) for e in ranged_equipment]
+            [_equipment_entry(e, anchor_of=anchor_of) for e in ranged_equipment]
         ),
     )
 
 
 def _unit_entry(
-    unit: Unit, *, race: t.RaceName, image_for: ImageLookup, anchor_for: _AnchorFor
+    unit: Unit, *, race: t.RaceName, image_for: ImageLookup, anchor_of: _AnchorOf
 ) -> UnitEntry:
     return UnitEntry(
         name=unit.display_name,
@@ -193,7 +191,7 @@ def _unit_entry(
         shaken_speed=unit.config.shaken.speed,
         shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
-        specials=special_lines(unit.unit_specials, anchor_for=anchor_for),
+        specials=special_lines(unit.unit_specials, anchor_of=anchor_of),
         note=unit.config.note,
         damage_tables=[
             (
@@ -204,7 +202,7 @@ def _unit_entry(
             for name, table in unit.config.damage_tables.items()
         ],
         models=_dedup(
-            [_model_entry(model, anchor_for=anchor_for) for model in unit.models]
+            [_model_entry(model, anchor_of=anchor_of) for model in unit.models]
         ),
     )
 
@@ -248,7 +246,7 @@ def build_reference(
         if rules
         else None
     )
-    anchor_for = reference.anchor_for if reference is not None else None
+    anchor_of = reference.anchor_of if reference is not None else None
     return ArmyReference(
         stem=stem,
         nick=army.nick,
@@ -259,7 +257,7 @@ def build_reference(
         units=_collapse_units(
             [
                 _unit_entry(
-                    unit, race=army.race, image_for=image_for, anchor_for=anchor_for
+                    unit, race=army.race, image_for=image_for, anchor_of=anchor_of
                 )
                 for unit in army.units
             ]
