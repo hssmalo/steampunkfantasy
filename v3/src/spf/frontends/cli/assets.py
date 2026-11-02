@@ -8,7 +8,7 @@ subcommands accept, and the first concrete generate subcommand,
 
 import random
 import textwrap
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Generator
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
@@ -338,7 +338,7 @@ def promote_asset(race: t.RaceName, kind: Kind, name: str, *, pick: Lineage) -> 
 
 
 @contextmanager
-def _timed_candidates() -> Iterator[Callable[[Path], None]]:
+def _timed_candidates() -> Generator[Callable[[Path], None]]:
     """Yield an `on_candidate` reporting each Candidate with its elapsed time.
 
     The interval is the gap between two Service callbacks, so it is stopped and
