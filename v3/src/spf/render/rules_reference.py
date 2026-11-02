@@ -23,7 +23,7 @@ from spf.prose import resolve as resolve_prose
 from spf.registry import SPECIAL, Registry
 from spf.render.anchors import anchor as _anchor
 from spf.render.anchors import slug
-from spf.schemas.race import RaceConfig, fielded_prose, race_slots
+from spf.schemas.race import RaceConfig, prose_fields, race_slots
 from spf.schemas.special import SpecialInstance, Specials
 
 TITLE = "Rules Reference"
@@ -138,7 +138,7 @@ def seeds_from(
 
     Slots rather than a carrier: an Army and a Race hold their instances in
     different shapes, and everything past the walk is the same for both. `prose`
-    is the fielded text beside the Slots, whose Rule Links are seeds too.
+    is the prose fields beside the Slots, whose Rule Links are seeds too.
     """
     refs: dict[str, None] = {}
     aliases: dict[tuple[str, str], None] = {}
@@ -156,7 +156,7 @@ def seeds(army: Army, *, registry: Registry) -> Seeds:
     only removes entries identical to one already there, so the ref set is the
     same, and the raw walk cannot drift if the collapsing rules change.
     """
-    return seeds_from(_every_slot(army), registry=registry, prose=_fielded_prose(army))
+    return seeds_from(_every_slot(army), registry=registry, prose=_prose_fields(army))
 
 
 def _every_slot(army: Army) -> Iterable[Specials]:
@@ -176,7 +176,7 @@ def _every_slot(army: Army) -> Iterable[Specials]:
                     yield equip.assault.specials
 
 
-def _fielded_prose(army: Army) -> Iterable[str]:
+def _prose_fields(army: Army) -> Iterable[str]:
     """Yield the notes and damage table text an Army Reference prints."""
     for unit in army.units:
         yield unit.config.note
@@ -246,7 +246,7 @@ def build_for_race(
         seeds_from(
             race_slots(race_config),
             registry=registry,
-            prose=(prose for _, prose in fielded_prose(race_config)),
+            prose=(prose for _, prose in prose_fields(race_config)),
         ),
         registry,
         prefix=prefix,

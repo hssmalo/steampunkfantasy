@@ -1739,7 +1739,7 @@ def test_the_command_renders_through_the_cli(tmp_path: Path) -> None:
     assert RACE in out.read_text(encoding="utf-8").lower()
 
 
-def test_fielded_prose_carries_its_rule_links(
+def test_prose_fields_carries_its_rule_links(
     install_registry: InstallRegistry,
 ) -> None:
     install_registry()

@@ -283,12 +283,12 @@ class RaceConfig(StrictModel):
         return self
 
     @model_validator(mode="after")
-    def check_fielded_links(self) -> Self:
+    def check_prose_field_links(self) -> Self:
         """Resolve every Rule Link written in a note or a damage table (ADR 0042)."""
         rules = registry.load_registry()
         errors = [
             error
-            for where, prose in fielded_prose(self)
+            for where, prose in prose_fields(self)
             for error in registry.check_links(prose, where=where, registry=rules)
         ]
         if errors:
@@ -457,7 +457,7 @@ def special_slots(race: RaceConfig) -> Iterator[tuple[str, str, Specials]]:
             yield "equipment", key, equipment.range.specials
 
 
-def fielded_prose(race: RaceConfig) -> Iterator[tuple[str, str]]:
+def prose_fields(race: RaceConfig) -> Iterator[tuple[str, str]]:
     """Yield `(holder, prose)` for each note and damage table text a Race prints.
 
     These sit beside a Slot rather than in one, so a walk over the Slots misses

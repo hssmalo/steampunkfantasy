@@ -678,14 +678,14 @@ def test_a_case_drawing_a_variant_seeds_its_target() -> None:
     assert "terrain.forest" in seeded.refs
 
 
-def test_fielded_prose_seeds_its_targets() -> None:
+def test_prose_fields_seeds_its_targets() -> None:
     seeded = rr.seeds_from([], registry=_LINKED, prose=["See {it:terrain.forest}."])
 
     assert seeded.refs == ["terrain.forest"]
 
 
 def _prose_race() -> RaceConfig:
-    """Build a Race with a Rule Link in each kind of fielded prose."""
+    """Build a Race with a Rule Link in each kind of prose field."""
     return synthetic_race(
         units={
             "squad": synthetic_unit(
@@ -713,7 +713,7 @@ def _prose_race() -> RaceConfig:
     )
 
 
-_FIELDED_REFS = {
+_PROSE_FIELD_REFS = {
     "speed.slow",
     "speed.fast",
     "size.small",
@@ -723,15 +723,15 @@ _FIELDED_REFS = {
 }
 
 
-def test_a_race_seeds_from_its_fielded_prose(install_registry: InstallRegistry) -> None:
+def test_a_race_seeds_from_its_prose_fields(install_registry: InstallRegistry) -> None:
     registry = install_registry()
 
     reference = rr.build_for_race(_prose_race(), registry=registry)
 
-    assert set(reference.anchors) >= _FIELDED_REFS
+    assert set(reference.anchors) >= _PROSE_FIELD_REFS
 
 
-def test_an_army_seeds_from_its_fielded_prose(
+def test_an_army_seeds_from_its_prose_fields(
     install_registry: InstallRegistry,
 ) -> None:
     registry = install_registry()
@@ -740,7 +740,7 @@ def test_an_army_seeds_from_its_fielded_prose(
 
     reference = rr.build(army, registry=registry)
 
-    assert set(reference.anchors) >= _FIELDED_REFS
+    assert set(reference.anchors) >= _PROSE_FIELD_REFS
 
 
 def test_effect_and_remove_carry_resolved_rule_links() -> None:

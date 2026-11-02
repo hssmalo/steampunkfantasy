@@ -396,7 +396,7 @@ def test_an_unknown_speed_in_gained_orders_fails_the_race() -> None:
     ],
     ids=["unit-note", "row", "table-note", "model-note", "assault-note", "equip-note"],
 )
-def test_a_bad_rule_link_in_fielded_prose_fails_to_load(
+def test_a_bad_rule_link_in_prose_fields_fails_to_load(
     install_registry: InstallRegistry, race_fields: dict[str, object]
 ) -> None:
     install_registry()
@@ -405,7 +405,7 @@ def test_a_bad_rule_link_in_fielded_prose_fails_to_load(
         synthetic_race(**race_fields)  # ty: ignore[invalid-argument-type]
 
 
-def test_a_good_rule_link_in_fielded_prose_loads(
+def test_a_good_rule_link_in_prose_fields_loads(
     install_registry: InstallRegistry,
 ) -> None:
     install_registry()
