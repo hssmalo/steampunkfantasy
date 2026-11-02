@@ -17,7 +17,7 @@ from spf.schemas.race import (
     ShakenConfig,
     UnitConfig,
 )
-from spf.schemas.special import SpecialInstance, Specials
+from spf.schemas.special import SpecialCase, SpecialInstance, Specials
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -434,6 +434,32 @@ def test_a_ref_valued_argument_seeds_the_record_it_names() -> None:
     )
 
     assert "damage_type.poison" in rr.seeds(army, registry=REGISTRY).refs
+
+
+def test_a_ref_valued_case_argument_seeds_the_record_it_names() -> None:
+    # A Ref reached only through a Case is printed on the Unit line all the same.
+    army = _army(
+        {
+            "resistance": [
+                SpecialInstance(
+                    args={"N": 3},
+                    cases=[
+                        SpecialCase(
+                            text="Against poison.", args={"version": "token.poison"}
+                        )
+                    ],
+                )
+            ]
+        }
+    )
+
+    assert "token.poison" in rr.seeds(army, registry=REGISTRY).refs
+
+
+def test_a_scalar_case_argument_seeds_nothing() -> None:
+    army = _army({"resistance": [SpecialInstance(cases=[SpecialCase(args={"N": 3})])]})
+
+    assert rr.seeds(army, registry=REGISTRY).refs == ["special.resistance"]
 
 
 def test_a_scalar_argument_seeds_nothing() -> None:

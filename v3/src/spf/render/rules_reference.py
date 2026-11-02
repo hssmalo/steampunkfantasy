@@ -176,7 +176,8 @@ def _collect(
         for instance in instances:
             if instance.name:
                 aliases[instance.name, ref] = None
-            for value in instance.args.values():
+            args = [instance.args, *(case.args for case in instance.cases)]
+            for value in (value for arg_set in args for value in arg_set.values()):
                 # A ref argument is one that resolves; a scalar names no
                 # record, so the registry is the whole test.
                 if isinstance(value, str) and registry.record(value) is not None:
