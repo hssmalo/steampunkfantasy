@@ -25,7 +25,8 @@ raising.
   arrives as ordinary paragraph text and prints with its pipes and dashes
   intact.
 - Images are dropped entirely.
-- A link renders its text; the URL is discarded, so no `hyperref` dependency.
+- A link to an external URL renders its text and discards the URL. Only a link
+  to an anchor in this document, `(#anchor)`, becomes a `\hyperref`.
 - Block quotes lose their quoting and flow as ordinary paragraphs.
 - **Raw LaTeX in a Markdown source is escaped, not passed through** —
   markdown-it reads `\pagebreak` as text and `latex_escape` turns the backslash
@@ -108,6 +109,7 @@ class _Converter:
     def __init__(self) -> None:
         self.out: list[str] = []
         self._fresh_item = False
+        self._open_links: list[str] = []
 
     def convert(self, tokens: list[Token]) -> str:
         for token in tokens:
@@ -174,11 +176,19 @@ class _Converter:
                 self.out.append(f"{_WRAPPERS[token.type.removesuffix('_open')]}{{")
             case "strong_close" | "em_close":
                 self.out.append("}")
+            case "link_open":
+                href = str(token.attrGet("href") or "")
+                internal = href.startswith("#")
+                self._open_links.append("}" if internal else "")
+                if internal:
+                    self.out.append(rf"\hyperref[{href.removeprefix('#')}]{{")
+            case "link_close":
+                self.out.append(self._open_links.pop())
             case "softbreak":
                 self.out.append("\n")
             case "hardbreak":
                 self.out.append("\\\\\n")
             case _:
-                # Links keep their text and lose their URL; images and raw
-                # inline HTML vanish entirely. See the module docstring.
+                # Images and raw inline HTML vanish entirely. See the module
+                # docstring.
                 pass

@@ -69,6 +69,22 @@ def test_softbreak_becomes_a_newline() -> None:
     assert "one\ntwo" in latex
 
 
+def test_an_internal_link_becomes_a_hyperref() -> None:
+    assert md_to_latex("See [the_rule](#rule-a).").strip() == (
+        r"See \hyperref[rule-a]{the\_rule}."
+    )
+
+
+def test_adjacent_internal_links_keep_their_brackets() -> None:
+    assert md_to_latex("[Take Cover](#b)[[Still](#c)][-2]").strip() == (
+        r"\hyperref[b]{Take Cover}[\hyperref[c]{Still}][-2]"
+    )
+
+
+def test_a_label_with_brackets_keeps_them() -> None:
+    assert md_to_latex("[Bleed[4]](#t)").strip() == r"\hyperref[t]{Bleed[4]}"
+
+
 def test_link_keeps_its_text_and_drops_the_url() -> None:
     latex = md_to_latex("see [the rules](https://example.com/rules)\n")
     assert "see the rules" in latex

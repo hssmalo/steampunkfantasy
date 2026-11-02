@@ -94,6 +94,15 @@ def test_latex_links_the_anchored_spans_and_escapes_every_label() -> None:
     )
 
 
+def test_latex_can_print_linked_text_as_markdown_for_md_to_latex() -> None:
+    env = make_environments(templates_root=FIXTURES)["latex"]
+    template = env.from_string(r"\VAR{text | linked_md | md_to_latex}")
+
+    assert template.render(text=_LINKED).strip() == (
+        r"\hyperref[rule-take-cover]{Take\_Cover}[\hyperref[rule-still]{Still}][50\%]Fire"
+    )
+
+
 def test_text_with_no_anchors_prints_with_no_link_markup() -> None:
     text = LinkedText((Span("Fire", ref="token.fire"),))
 
