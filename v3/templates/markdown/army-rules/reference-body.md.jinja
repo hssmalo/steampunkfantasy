@@ -47,7 +47,6 @@
 {{ hashes }}# {{ model.name }}
 
 - Equipment: {{ model.equipment_summary | join(', ') }}
-- Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
 {% for line in model.specials %}
 - **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text }}{% endif %}
 {%- endfor %}
@@ -57,6 +56,7 @@
 {%- for name, text in model.equipment_notes %}
 - **Note ({{ name }})**: {{ text }}
 {%- endfor %}
+- Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
 {% for line in model.assault_specials %}
 - **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text }}{% endif %}
 {%- endfor %}
