@@ -10,6 +10,7 @@ from spf.prose import (
     linked_prose,
     malformed_links,
     plain,
+    plain_data,
 )
 from spf.schemas import rules as r
 from spf.schemas.race import spawn_reference
@@ -231,3 +232,9 @@ def test_a_rule_link_after_a_spawn_id_leaves_the_id_alone() -> None:
     instance = SpecialInstance(text="tiny_snake: place {it:token.bleed} nearby.")
 
     assert spawn_reference(instance) == "tiny_snake"
+
+
+def test_plain_data_reduces_every_string_it_holds() -> None:
+    data = {"a": "{x:token.one}", "b": ["{y:token.two}", 3], "c": {"d": None}}
+
+    assert plain_data(data) == {"a": "x", "b": ["y", 3], "c": {"d": None}}

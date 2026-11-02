@@ -146,6 +146,20 @@ def plain(raw: str | None) -> str | None:
     return None if raw is None else LINK.sub(r"\1", raw)
 
 
+def plain_data(data: Mapping[str, object]) -> dict[str, object]:
+    """Apply `plain` to every string in a dumped model, for a raw print of it."""
+    return {key: _plain_value(value) for key, value in data.items()}
+
+
+def _plain_value(value: object) -> object:
+    """Reduce one value of a dumped model, however deep its strings sit."""
+    if isinstance(value, Mapping):
+        return {key: _plain_value(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_plain_value(item) for item in value]
+    return plain(value) if isinstance(value, str) else value
+
+
 def link_refs(raw: str | None) -> list[str]:
     """List the Ref of each authored Rule Link in `raw`, in order."""
     return [] if raw is None else [match.group(2) for match in LINK.finditer(raw)]

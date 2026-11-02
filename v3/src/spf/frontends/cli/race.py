@@ -6,6 +6,7 @@ import cyclopts
 from spf import races
 from spf.config import config
 from spf.console import stdout
+from spf.prose import plain_data
 from spf.schemas import type_aliases as t
 from spf.schemas.race import RaceConfig
 
@@ -36,8 +37,10 @@ def list_races() -> None:
 
 def show_race(race_name: t.RaceName, section: str | None = None) -> None:
     """Load and display a saved race."""
-    race = races.get_race(race_name)
-    configaroo.print_configuration(race, section=section)
+    race = races.get_race(race_name).model_dump()
+    configaroo.print_configuration(
+        configaroo.Configuration(plain_data(race)), section=section
+    )
 
 
 def _cost_str(cost: t.Cost | None) -> str:
