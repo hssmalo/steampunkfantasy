@@ -17,7 +17,7 @@ from spf import rules
 from spf.config import config
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance
-from tests.conftest import committed_args
+from tests.conftest import committed_args, synthetic_registry
 
 
 def _registry() -> reg.Registry:
@@ -739,3 +739,104 @@ def test_an_unparsable_record_file_names_itself(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match=r"rules/special\.toml: "):
         reg.load_registry(rules_dir)
+
+
+def test_a_rule_link_to_no_record_in_a_record_fails_to_load(tmp_path: Path) -> None:
+    rules_dir = _copied_rules(tmp_path)
+    (rules_dir / "special.toml").write_text(
+        '[special.fear]\nname = "Fear"\nslots = ["assault"]\n'
+        'effect = "Causes {dread:token.nonesuch}."\n'
+    )
+
+    with pytest.raises(ValueError, match=r"token\.nonesuch"):
+        reg.load_registry(rules_dir)
+
+
+@pytest.mark.parametrize(
+    "fields",
+    [
+        'effect = "Causes {dread:Token}."\n',
+        'effect = "Fear."\nexample = "See {dread:Token}."\n',
+        'effect = "Fear."\n[special.fear.variants]\nloud = "Hear {dread:Token}."\n',
+        (
+            'effect = "Fear."\n[special.fear.versions."damage_type.poison"]\n'
+            'effect = "See {dread:Token}."\n'
+        ),
+    ],
+    ids=["effect", "example", "variant", "version"],
+)
+def test_a_malformed_rule_link_in_a_record_fails_to_load(
+    tmp_path: Path, fields: str
+) -> None:
+    rules_dir = _copied_rules(tmp_path)
+    (rules_dir / "special.toml").write_text(
+        f'[special.fear]\nname = "Fear"\nslots = ["assault"]\n{fields}'
+    )
+
+    with pytest.raises(ValueError, match=r"\{dread:Token\}"):
+        reg.load_registry(rules_dir)
+
+
+def test_a_rule_link_in_a_tokens_remove_is_checked(tmp_path: Path) -> None:
+    rules_dir = _copied_rules(tmp_path)
+    tokens = rules_dir / "tokens.toml"
+    tokens.write_text(
+        tokens.read_text()
+        + '\n[tokens.synthetic_mark]\nname = "Mark"\neffect = "Marked."\n'
+        'remove = "Spend {a thing:token.nonesuch}."\n'
+    )
+
+    with pytest.raises(ValueError, match=r"token\.nonesuch"):
+        reg.load_registry(rules_dir)
+
+
+@pytest.mark.parametrize(
+    "instance",
+    [
+        {"text": "Take {dread:token.nonesuch}."},
+        {"preamble": "Take {dread:token.nonesuch}.", "cases": [{"text": "One."}]},
+        {"cases": [{"text": "Take {dread:token.nonesuch}."}]},
+        {"text": "Take {dread:Token}."},
+    ],
+    ids=["text", "preamble", "case", "malformed"],
+)
+def test_a_bad_rule_link_in_an_instance_is_reported(
+    instance: dict[str, object],
+) -> None:
+    registry = synthetic_registry(specials={"fear": None})
+
+    errors = reg.check_instances(
+        {"fear": [SpecialInstance.model_validate(instance)]},
+        slot="unit",
+        context="unit 'Squad'",
+        registry=registry,
+    )
+
+    assert len(errors) == 1
+    assert "'fear'" in errors[0]
+
+
+def test_a_good_rule_link_in_an_instance_passes() -> None:
+    registry = synthetic_registry(specials={"fear": None})
+
+    errors = reg.check_instances(
+        {"fear": [SpecialInstance(text="Take {dread:damage_type.poison}.")]},
+        slot="unit",
+        context="unit 'Squad'",
+        registry=registry,
+    )
+
+    assert errors == []
+
+
+def test_a_placeholder_in_a_label_must_be_fillable() -> None:
+    registry = synthetic_registry(specials={"fear": None})
+
+    errors = reg.check_instances(
+        {"fear": [SpecialInstance(text="Take {dread[{N}]:damage_type.poison}.")]},
+        slot="unit",
+        context="unit 'Squad'",
+        registry=registry,
+    )
+
+    assert any("{N}" in error for error in errors)
