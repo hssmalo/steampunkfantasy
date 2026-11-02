@@ -21,11 +21,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import get_args
 
-from spf.prose import AnchorOf
+from spf.prose import AnchorOf, LinkedText, linked_prose
 from spf.registry import load_registry
 from spf.render.anchors import slug
 from spf.render.costs import cost_columns, cost_text
-from spf.render.damage import roll_text
+from spf.render.damage import DamageTableEntry, damage_table_entries
 from spf.render.declarations import (
     INFINITY,
     assault_modifier_lines,
@@ -133,8 +133,8 @@ class UnitEntry:
     shaken_fire: str
     movement_rows: Rows
     fire_rows: Rows
-    damage_tables: list[tuple[str, list[tuple[str, str]], list[str]]]
-    note: str
+    damage_tables: list[DamageTableEntry]
+    note: LinkedText
 
 
 @dataclass(frozen=True)
@@ -186,8 +186,8 @@ class ModelEntry:
     assault_deflection_die: t.DieResult
     assault_damage: t.Die
     assault_ap: t.ArmorPenetration
-    assault_note: str
-    note: str
+    assault_note: LinkedText
+    note: LinkedText
 
 
 @dataclass(frozen=True)
@@ -226,10 +226,10 @@ class EquipmentEntry:
     range_damage: t.Die | None
     range_ap: t.ArmorPenetration | None
     range_specials: list[SpecialLine]
-    range_note: str
+    range_note: LinkedText
     assault_modifiers: list[str]
     assault_specials: list[SpecialLine]
-    assault_note: str
+    assault_note: LinkedText
     unit_modifiers: list[str]
     unit_specials: list[SpecialLine]
     model_specials: list[SpecialLine]
@@ -242,7 +242,7 @@ class EquipmentEntry:
     is additive (ADR 0007), and only a fielded Unit has the fixed loadout a
     merged table would describe."""
 
-    note: str
+    note: LinkedText
 
 
 @dataclass(frozen=True)
@@ -498,15 +498,10 @@ def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEnt
         # has the fixed loadout a merged table would describe.
         movement_rows=flat_rows(unit.orders.movement),
         fire_rows=flat_rows(unit.orders.fire),
-        damage_tables=[
-            (
-                name,
-                [(roll_text(row.roll), row.effect) for row in table.rows],
-                list(table.notes),
-            )
-            for name, table in unit.damage_tables.items()
-        ],
-        note=unit.note,
+        damage_tables=damage_table_entries(
+            unit.damage_tables, anchor_of=catalogue.anchor_of
+        ),
+        note=linked_prose(unit.note, catalogue.anchor_of),
     )
 
 
@@ -551,8 +546,8 @@ def _model_entry(key: str, model: ModelConfig, *, catalogue: _Catalogue) -> Mode
         assault_deflection_die=assault.deflection_die,
         assault_damage=assault.damage,
         assault_ap=assault.ap,
-        assault_note=assault.note,
-        note=model.note,
+        assault_note=linked_prose(assault.note, anchor_of),
+        note=linked_prose(model.note, anchor_of),
     )
 
 
@@ -588,7 +583,7 @@ def _equipment_entry(
             if ranged is not None
             else []
         ),
-        range_note=ranged.note if ranged is not None else "",
+        range_note=linked_prose(ranged.note if ranged else None, anchor_of),
         # Deltas over whichever Model carries this, not results: an
         # Equipment's assault block stacks onto stats it does not own.
         assault_modifiers=assault_modifier_lines(assault),
@@ -597,7 +592,7 @@ def _equipment_entry(
             if assault is not None
             else []
         ),
-        assault_note=assault.note if assault is not None else "",
+        assault_note=linked_prose(assault.note if assault else None, anchor_of),
         unit_modifiers=unit_modifier_lines(equip.unit),
         # The four Slots stay apart: what this grants a Unit, its carrier, its
         # assault and its shooting are different claims.
@@ -614,7 +609,7 @@ def _equipment_entry(
         ),
         orders_gained_movement_rows=flat_rows(orders.movement if orders else None),
         orders_gained_fire_rows=flat_rows(orders.fire if orders else None),
-        note=equip.note,
+        note=linked_prose(equip.note, anchor_of),
     )
 
 

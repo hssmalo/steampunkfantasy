@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from itertools import chain
 
 from spf.armies.army import Army
-from spf.prose import link_refs
+from spf.prose import LinkedText, link_refs, linked_prose
 from spf.prose import resolve as resolve_prose
 from spf.registry import SPECIAL, Registry
 from spf.render.anchors import anchor as _anchor
@@ -59,9 +59,9 @@ class RuleEntry:
     name: str
     qualifier: str
     anchor: str
-    effect: str | None = None
+    effect: LinkedText = field(default_factory=LinkedText)
     phases: list[str] = field(default_factory=list)
-    remove: str | None = None
+    remove: LinkedText = field(default_factory=LinkedText)
     to_hit: str | None = None
     to_be_hit: str | None = None
     written: bool = False
@@ -100,9 +100,9 @@ class RuleEntry:
         )
 
     @property
-    def text(self) -> str:
+    def text(self) -> LinkedText:
         """The rule's general text, or the Stub marker when none is written."""
-        return self.effect or (PENDING if self.pending else "")
+        return self.effect or linked_prose(PENDING if self.pending else None)
 
 
 @dataclass(frozen=True)
@@ -295,9 +295,9 @@ def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntr
         name=record.name,
         qualifier=_qualifier(ref, registry),
         anchor=anchors[ref],
-        effect=record.effect,
+        effect=linked_prose(record.effect, anchors.get),
         phases=[str(phase) for phase in getattr(record, "phases", [])],
-        remove=getattr(record, "remove", None),
+        remove=linked_prose(getattr(record, "remove", None), anchors.get),
         to_hit=getattr(record, "to_hit", None),
         to_be_hit=getattr(record, "to_be_hit", None),
         written=record.written,

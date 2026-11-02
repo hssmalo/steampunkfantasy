@@ -143,7 +143,7 @@
 - Places: {{ links(unit.spawn_links) }}
 {%- endif %}
 {%- if unit.note %}
-- **Note**: {{ unit.note | trim }}
+- **Note**: {{ unit.note | linked | trim }}
 {%- endif %}
 {#- The tip is army-building advice and may run to several paragraphs, so it
     is a block of its own rather than a bullet a second paragraph would break
@@ -161,11 +161,11 @@
 | Roll | Effect |
 | ---- | ------ |
 {%- for roll, effect in rows %}
-| {{ roll }} | {{ effect }} |
+| {{ roll }} | {{ effect | linked }} |
 {%- endfor %}
 {%- if notes %}
 {% for note in notes %}
-- {{ note }}
+- {{ note | linked }}
 {%- endfor %}
 {%- endif %}
 {%- endfor %}
@@ -210,10 +210,10 @@
 - Places: {{ links(model.spawn_links) }}
 {%- endif %}
 {%- if model.assault_note %}
-- **Note (assault)**: {{ model.assault_note | trim }}
+- **Note (assault)**: {{ model.assault_note | linked | trim }}
 {%- endif %}
 {%- if model.note %}
-- **Note**: {{ model.note | trim }}
+- **Note**: {{ model.note | linked | trim }}
 {%- endif %}
 {%- if model.equipment_limits %}
 
@@ -257,12 +257,12 @@
 {%- endif %}
 {{- slot_specials("When shooting", equip.range_specials) }}
 {%- if equip.range_note %}
-- **Note (range)**: {{ equip.range_note | trim }}
+- **Note (range)**: {{ equip.range_note | linked | trim }}
 {%- endif %}
 {{- deltas("In assault", equip.assault_modifiers) }}
 {{- slot_specials("In assault", equip.assault_specials) }}
 {%- if equip.assault_note %}
-- **Note (assault)**: {{ equip.assault_note | trim }}
+- **Note (assault)**: {{ equip.assault_note | linked | trim }}
 {%- endif %}
 {{- deltas("Grants its Unit", equip.unit_modifiers) }}
 {{- slot_specials("Grants its Unit", equip.unit_specials) }}
@@ -271,7 +271,7 @@
 - Places: {{ links(equip.spawn_links) }}
 {%- endif %}
 {%- if equip.note %}
-- **Note**: {{ equip.note | trim }}
+- **Note**: {{ equip.note | linked | trim }}
 {%- endif %}
 {#- Orders an Equipment grants stay on the Equipment: `orders_gained` is
     additive (ADR 0007), and only a fielded Unit has the fixed loadout a

@@ -169,7 +169,7 @@
 \item Places: \VAR{links(unit.spawn_links)}
 \BLOCK{endif}
 \BLOCK{if unit.note}
-\item \textbf{Note}: \VAR{unit.note | md_to_latex | trim}
+\item \textbf{Note}: \VAR{unit.note | linked_md | md_to_latex | trim}
 \BLOCK{endif}
 \end{itemize}
 {#- The tip is army-building advice and may run to several paragraphs, so it is
@@ -189,13 +189,13 @@
    sets the longest one as a single line and pushes it off the page. #}
 \begin{tabular}{@{}lp{0.85\textwidth}@{}}
 \BLOCK{for roll, effect in rows}
-\VAR{roll | latex_escape} & \VAR{effect | latex_escape} \\
+\VAR{roll | latex_escape} & \VAR{effect | linked} \\
 \BLOCK{endfor}
 \end{tabular}
 \BLOCK{if notes}
 \begin{itemize}
 \BLOCK{for note in notes}
-\item \VAR{note | latex_escape}
+\item \VAR{note | linked}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -248,10 +248,10 @@
 \item Places: \VAR{links(model.spawn_links)}
 \BLOCK{endif}
 \BLOCK{if model.assault_note}
-\item \textbf{Note (assault)}: \VAR{model.assault_note | md_to_latex | trim}
+\item \textbf{Note (assault)}: \VAR{model.assault_note | linked_md | md_to_latex | trim}
 \BLOCK{endif}
 \BLOCK{if model.note}
-\item \textbf{Note}: \VAR{model.note | md_to_latex | trim}
+\item \textbf{Note}: \VAR{model.note | linked_md | md_to_latex | trim}
 \BLOCK{endif}
 \end{itemize}
 \BLOCK{if model.equipment_limits}
@@ -307,12 +307,12 @@
 \BLOCK{endif}
 \VAR{slot_specials("When shooting", equip.range_specials)}
 \BLOCK{if equip.range_note}
-\item \textbf{Note (range)}: \VAR{equip.range_note | md_to_latex | trim}
+\item \textbf{Note (range)}: \VAR{equip.range_note | linked_md | md_to_latex | trim}
 \BLOCK{endif}
 \VAR{deltas("In assault", equip.assault_modifiers)}
 \VAR{slot_specials("In assault", equip.assault_specials)}
 \BLOCK{if equip.assault_note}
-\item \textbf{Note (assault)}: \VAR{equip.assault_note | md_to_latex | trim}
+\item \textbf{Note (assault)}: \VAR{equip.assault_note | linked_md | md_to_latex | trim}
 \BLOCK{endif}
 \VAR{deltas("Grants its Unit", equip.unit_modifiers)}
 \VAR{slot_specials("Grants its Unit", equip.unit_specials)}
@@ -321,7 +321,7 @@
 \item Places: \VAR{links(equip.spawn_links)}
 \BLOCK{endif}
 \BLOCK{if equip.note}
-\item \textbf{Note}: \VAR{equip.note | md_to_latex | trim}
+\item \textbf{Note}: \VAR{equip.note | linked_md | md_to_latex | trim}
 \BLOCK{endif}
 \end{itemize}
 {#- Orders an Equipment grants stay on the Equipment: `orders_gained` is

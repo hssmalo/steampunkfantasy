@@ -13,7 +13,7 @@ from spf.frontends.cli.render import (
     RenderOpts,
     render_race_overview,
 )
-from spf.prose import LinkedText, Span
+from spf.prose import LinkedText, Span, linked_prose
 from spf.races import get_race
 from spf.render import render
 from spf.render.formats import get_format
@@ -36,6 +36,14 @@ from spf.schemas.race import (
 )
 from spf.schemas.special import SpecialInstance, Specials
 from spf.schemas.type_aliases import Cost, ModelType
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_assault,
+    synthetic_equipment,
+    synthetic_model,
+    synthetic_race,
+    synthetic_unit,
+)
 from tests.render.conftest import ART, FakeLookup
 
 RACE = "goblin"
@@ -242,7 +250,15 @@ def test_unit_entry_carries_the_declared_catalogue_fields() -> None:
     assert unit.fire_rows == [("sneak", ["Fire", "Fire"])]
     assert unit.movement_rows == [("slow", ["360°", "F", "B"])]
     assert unit.damage_tables == [
-        ("Regular", [("1", "Fine"), ("2-3", "Hurt"), ("4+", "Dead")], ["Calm"]),
+        (
+            "Regular",
+            [
+                ("1", linked_prose("Fine")),
+                ("2-3", linked_prose("Hurt")),
+                ("4+", linked_prose("Dead")),
+            ],
+            [linked_prose("Calm")],
+        ),
     ]
 
 
@@ -263,7 +279,7 @@ def test_unit_entry_keeps_the_flavor_text_but_drops_the_description() -> None:
     (unit,) = overview.units
     assert unit.lore == "They were born in the dark."
     assert unit.tip == "Field two, never one."
-    assert unit.note == "Counts as Infantry."
+    assert str(unit.note) == "Counts as Infantry."
     # `description` doubles as the image-generation prompt, so no entry prints it.
     assert not hasattr(unit, "description")
 
@@ -445,8 +461,8 @@ def test_model_entry_carries_the_declared_catalogue_fields() -> None:
     assert model.assault_deflection_die == "4+"
     assert model.assault_damage == "d4"
     assert model.assault_ap == 0
-    assert model.assault_note == "Swings wide."
-    assert model.note == "Never alone."
+    assert str(model.assault_note) == "Swings wide."
+    assert str(model.note) == "Never alone."
     # `description` doubles as the image-generation prompt, so no entry prints it.
     assert not hasattr(model, "description")
 
@@ -717,7 +733,7 @@ def test_equipment_entry_carries_the_declared_catalogue_fields() -> None:
     assert equip.name == "Short Bow"
     assert equip.anchor == "equipment-short-bow"
     assert equip.cost == "1ip 2mp"
-    assert equip.note == "Two hands to draw."
+    assert str(equip.note) == "Two hands to draw."
     # `description` doubles as the image-generation prompt, so no entry prints it.
     assert not hasattr(equip, "description")
     # An Equipment has no art of its own.
@@ -975,7 +991,7 @@ def test_ranged_equipment_carries_its_whole_range_profile() -> None:
     assert equip.range_damage == "d8"
     assert equip.range_ap == 2
     assert [line.name for line in equip.range_specials] == ["Burst"]
-    assert equip.range_note == "Reload after firing."
+    assert str(equip.range_note) == "Reload after firing."
 
 
 def test_rangeless_equipment_has_no_range_profile() -> None:
@@ -990,7 +1006,7 @@ def test_rangeless_equipment_has_no_range_profile() -> None:
     assert equip.range_damage is None
     assert equip.range_ap is None
     assert equip.range_specials == []
-    assert equip.range_note == ""
+    assert str(equip.range_note) == ""
 
 
 def test_each_note_stays_with_the_profile_it_qualifies() -> None:
@@ -1012,9 +1028,9 @@ def test_each_note_stays_with_the_profile_it_qualifies() -> None:
     overview = build_overview(race, stem="goblin", image_for=FakeLookup(None))
 
     (equip,) = overview.equipment
-    assert equip.note == "Goblin-made."
-    assert equip.assault_note == "Clumsy in melee."
-    assert equip.range_note == "Reload."
+    assert str(equip.note) == "Goblin-made."
+    assert str(equip.assault_note) == "Clumsy in melee."
+    assert str(equip.range_note) == "Reload."
 
 
 # --- Specials slots ---------------------------------------------------------
@@ -1721,3 +1737,40 @@ def test_the_command_renders_through_the_cli(tmp_path: Path) -> None:
     )
 
     assert RACE in out.read_text(encoding="utf-8").lower()
+
+
+def test_fielded_prose_carries_its_rule_links(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry()
+    link = "{it:damage_type.poison}"
+    race = synthetic_race(
+        units={
+            "squad": synthetic_unit(
+                note=link,
+                damage_tables={"Regular": {"rows": [f"1: {link}"], "notes": [link]}},
+            )
+        },
+        models={
+            "soldier": synthetic_model(note=link, assault=synthetic_assault(note=link))
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife", cost=None, upgrade_all=None, note=link
+            ),
+        },
+    )
+
+    overview = build_overview(race, stem="goblin", image_for=FakeLookup(ART))
+
+    expected = (Span("it", ref="damage_type.poison", anchor="rule-damage-type-poison"),)
+    (unit, *_) = overview.units
+    ((_, rows, notes),) = unit.damage_tables
+    (model,) = overview.models
+    (equip,) = overview.equipment
+    assert unit.note.spans == expected
+    assert rows[0][1].spans == expected
+    assert notes[0].spans == expected
+    assert model.note.spans == expected
+    assert model.assault_note.spans == expected
+    assert equip.note.spans == expected

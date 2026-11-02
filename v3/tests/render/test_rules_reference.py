@@ -5,6 +5,7 @@ import pytest
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
+from spf.prose import Span
 from spf.registry import Registry
 from spf.render import rules_reference as rr
 from spf.schemas import rules as r
@@ -221,7 +222,7 @@ def test_a_hex_reached_only_by_see_also_prints_its_rule() -> None:
     reference = _resolve("special.fog")
 
     hex_entry = next(e for e in reference.entries if e.ref == "hex.fog")
-    assert hex_entry.effect == "Line of sight is blocked."
+    assert str(hex_entry.effect) == "Line of sight is blocked."
 
 
 def test_the_walk_crosses_places_and_see_also_at_every_depth() -> None:
@@ -319,19 +320,21 @@ def test_a_written_rule_is_not_pending() -> None:
 
 def test_the_generic_text_keeps_its_placeholders() -> None:
     # The Unit line prints the filled signature; the general rule lives here.
-    assert _resolve("special.resistance").entries[0].effect == "Ignore {N} damage."
+    assert str(_resolve("special.resistance").entries[0].effect) == "Ignore {N} damage."
 
 
 def test_an_entry_carries_the_phases_and_removal_its_record_declares() -> None:
     entry = _resolve("token.terror").entries[0]
 
-    assert (entry.phases, entry.remove) == (["Aftermath"], "At the end of the round.")
+    assert entry.phases == ["Aftermath"]
+    assert str(entry.remove) == "At the end of the round."
 
 
 def test_a_record_with_no_such_fields_carries_neither() -> None:
     entry = _resolve("special.burst").entries[0]
 
-    assert (entry.phases, entry.remove) == ([], None)
+    assert entry.phases == []
+    assert not entry.remove
 
 
 def test_a_modifier_record_prints_the_numbers_that_are_its_meaning() -> None:
@@ -738,3 +741,21 @@ def test_an_army_seeds_from_its_fielded_prose(
     reference = rr.build(army, registry=registry)
 
     assert set(reference.anchors) >= _FIELDED_REFS
+
+
+def test_effect_and_remove_carry_resolved_rule_links() -> None:
+    seeded = rr.Seeds(refs=["token.linker"], aliases=[])
+
+    reference = rr.resolve(seeded, _LINKED)
+
+    entry = next(e for e in reference.entries if e.ref == "token.linker")
+    assert entry.text.spans == (
+        Span("Roll on "),
+        Span("poison", ref="damage_type.poison", anchor="rule-damage-type-poison"),
+        Span("."),
+    )
+    assert entry.remove.spans == (
+        Span("Spend "),
+        Span("a slow", ref="speed.slow", anchor="rule-speed-slow"),
+        Span("."),
+    )

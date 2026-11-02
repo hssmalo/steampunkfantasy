@@ -17,10 +17,10 @@ from pathlib import Path
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
-from spf.prose import AnchorOf
+from spf.prose import AnchorOf, LinkedText, linked_prose
 from spf.registry import load_registry
 from spf.render import rules_reference
-from spf.render.damage import roll_text
+from spf.render.damage import DamageTableEntry, damage_table_entries
 from spf.render.images import ImageLookup, committed_image
 from spf.render.rules_reference import RulesReference
 from spf.render.specials import SpecialLine, special_lines
@@ -57,9 +57,9 @@ class ModelEntry:
     assault_damage: t.Die
     assault_ap: t.ArmorPenetration
     assault_specials: _Specials
-    note: str
-    assault_note: str
-    equipment_notes: list[tuple[str, str]]
+    note: LinkedText
+    assault_note: LinkedText
+    equipment_notes: list[tuple[str, LinkedText]]
     """(Equipment name, note) for each rangeless Equipment carrying one.
 
     A rangeless Equipment gets no sub-entry of its own, so its note is printed
@@ -79,7 +79,7 @@ class EquipmentEntry:
     damage: t.Die
     ap: t.ArmorPenetration
     specials: _Specials
-    note: str
+    note: LinkedText
 
 
 @dataclass(frozen=True)
@@ -98,8 +98,8 @@ class UnitEntry:
     shaken_movement: list[str]
     shaken_fire: str
     specials: _Specials
-    note: str
-    damage_tables: list[tuple[str, list[tuple[str, str]], list[str]]]
+    note: LinkedText
+    damage_tables: list[DamageTableEntry]
     models: list[ModelEntry]
 
 
@@ -128,7 +128,7 @@ def _equipment_entry(
         damage=equip.range.damage,
         ap=equip.range.ap,
         specials=special_lines(equip.range.specials, anchor_of=anchor_of),
-        note=equip.range.note,
+        note=linked_prose(equip.range.note, anchor_of),
     )
 
 
@@ -155,11 +155,11 @@ def _model_entry(model: Model, *, anchor_of: AnchorOf | None) -> ModelEntry:
         assault_damage=assault.damage,
         assault_ap=assault.ap,
         assault_specials=special_lines(assault.specials, anchor_of=anchor_of),
-        note=model.config.note,
-        assault_note=assault.note,
+        note=linked_prose(model.config.note, anchor_of),
+        assault_note=linked_prose(assault.note, anchor_of),
         equipment_notes=_dedup(
             [
-                (equip.name, equip.note)
+                (equip.name, linked_prose(equip.note, anchor_of))
                 for equip in model.equipment
                 if equip.note and equip.range is None
             ]
@@ -191,15 +191,10 @@ def _unit_entry(
         shaken_movement=list(unit.config.shaken.movement_order),
         shaken_fire=unit.config.shaken.fire_order,
         specials=special_lines(unit.unit_specials, anchor_of=anchor_of),
-        note=unit.config.note,
-        damage_tables=[
-            (
-                name,
-                [(roll_text(row.roll), row.effect) for row in table.rows],
-                list(table.notes),
-            )
-            for name, table in unit.config.damage_tables.items()
-        ],
+        note=linked_prose(unit.config.note, anchor_of),
+        damage_tables=damage_table_entries(
+            unit.config.damage_tables, anchor_of=anchor_of
+        ),
         models=_dedup(
             [_model_entry(model, anchor_of=anchor_of) for model in unit.models]
         ),

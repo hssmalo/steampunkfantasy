@@ -39,7 +39,7 @@
 \item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | linked) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if unit.note}
-\item \textbf{Note}: \VAR{unit.note | latex_escape}
+\item \textbf{Note}: \VAR{unit.note | linked}
 \BLOCK{endif}
 \end{itemize}
 \BLOCK{endif}
@@ -58,13 +58,13 @@
 
 \begin{tabular}{ll}
 \BLOCK{for roll, effect in rows}
-\VAR{roll | latex_escape} & \VAR{effect | latex_escape} \\
+\VAR{roll | latex_escape} & \VAR{effect | linked} \\
 \BLOCK{endfor}
 \end{tabular}
 \BLOCK{if notes}
 \begin{itemize}
 \BLOCK{for note in notes}
-\item \VAR{note | latex_escape}
+\item \VAR{note | linked}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -82,10 +82,10 @@
 \item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | linked) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if model.note}
-\item \textbf{Note}: \VAR{model.note | latex_escape}
+\item \textbf{Note}: \VAR{model.note | linked}
 \BLOCK{endif}
 \BLOCK{for name, text in model.equipment_notes}
-\item \textbf{Note (\VAR{name | latex_escape})}: \VAR{text | latex_escape}
+\item \textbf{Note (\VAR{name | latex_escape})}: \VAR{text | linked}
 \BLOCK{endfor}
 \end{itemize}
 \BLOCK{endif}
@@ -99,7 +99,7 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 \item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | linked) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if model.assault_note}
-\item \textbf{Note}: \VAR{model.assault_note | latex_escape}
+\item \textbf{Note}: \VAR{model.assault_note | linked}
 \BLOCK{endif}
 \end{itemize}
 \BLOCK{endif}
@@ -115,7 +115,7 @@ damage \VAR{model.assault_damage | latex_escape}, AP \VAR{model.assault_ap}
 \item \textbf{\BLOCK{if line.anchor}\hyperref[\VAR{line.anchor}]{\VAR{line.name | latex_escape}}\BLOCK{else}\VAR{line.name | latex_escape}\BLOCK{endif}}\VAR{': ' ~ (line.text | linked) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{if equip.note}
-\item \textbf{Note}: \VAR{equip.note | latex_escape}
+\item \textbf{Note}: \VAR{equip.note | linked}
 \BLOCK{endif}
 \end{itemize}
 \BLOCK{endif}
