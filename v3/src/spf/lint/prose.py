@@ -45,21 +45,13 @@ a cell to sentence punctuation would put a period on one row of a table and
 not on the terser row beside it, which is less consistent, not more.
 """
 
-LINKLESS_FIELDS = frozenset(
-    {
-        "comment",
-        "description",
-        "explanation",
-        "flavor",
-        "lore",
-        "name",
-        "signature",
-        "tip",
-        "todo",
-    }
+LINK_FIELDS = frozenset(
+    {"effect", "example", "note", "notes", "preamble", "remove", "text", "variants"}
 )
-"""The fields that may not author a Rule Link (ADR 0042): flavor, working notes
-and labels, none of which print where a link could lead anywhere."""
+"""The only fields that may author a Rule Link (ADR 0042)."""
+
+_POOLS = frozenset({"variants"})
+"""Fields whose keys are ids a rule owns, so a value answers to the pool itself."""
 
 SENTENCE_PUNCTUATION = ".!?:"
 """What closes a sentence, and what proves an earlier one was closed."""
@@ -120,9 +112,32 @@ def check_prose(value: str) -> Iterator[tuple[str, str]]:
             yield rule, message
 
 
-def check_rule_links(
-    data: object, path: str = "", field: str = ""
+def _walk_strings(
+    data: object, *, path: str = "", field: str = "", skip: frozenset[str] = frozenset()
 ) -> Iterator[tuple[str, str, str]]:
+    """Yield `(location, field, value)` for every string under `data`, bar `skip`.
+
+    The field name travels separately from the path because a list index is
+    not a field: `notes = ["...", "..."]` is two pieces of prose, and both are
+    `notes`.
+    """
+    if isinstance(data, Mapping):
+        for key, value in data.items():
+            if key in skip:
+                continue
+            location = f"{path}.{key}" if path else str(key)
+            inner = field if field in _POOLS else str(key)
+            yield from _walk_strings(value, path=location, field=inner, skip=skip)
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            yield from _walk_strings(
+                value, path=f"{path}.{index}", field=field, skip=skip
+            )
+    elif isinstance(data, str):
+        yield path, field, data
+
+
+def check_rule_links(data: object) -> Iterator[tuple[str, str, str]]:
     """Yield `(location, rule, message)` for each Rule Link written wrongly.
 
     The load gate has already rejected a bad Ref in a field that may hold one
@@ -130,20 +145,13 @@ def check_rule_links(
     takes none, and a label whose brackets would break the Markdown link. So
     this walks every string, including the table cells `walk_prose` skips.
     """
-    if isinstance(data, Mapping):
-        for key, value in data.items():
-            location = f"{path}.{key}" if path else str(key)
-            yield from check_rule_links(value, location, str(key))
-    elif isinstance(data, list):
-        for index, value in enumerate(data):
-            yield from check_rule_links(value, f"{path}.{index}", field)
-    elif isinstance(data, str):
-        yield from ((path, *found) for found in _rule_link_findings(data, field))
+    for location, field, value in _walk_strings(data):
+        yield from ((location, *found) for found in _rule_link_findings(value, field))
 
 
 def _rule_link_findings(value: str, field: str) -> Iterator[tuple[str, str]]:
     """Yield `(rule, message)` for one string, given the field it sits in."""
-    if field in LINKLESS_FIELDS and writes_link(value):
+    if field not in LINK_FIELDS and writes_link(value):
         yield "link-field", f"{field} may not hold a Rule Link: {_excerpt(value)}"
     for label in link_labels(value):
         if not _balanced(label):
@@ -167,31 +175,16 @@ def findings_in(data: object) -> Iterator[tuple[str, str, str]]:
     yield from check_rule_links(data)
 
 
-def walk_prose(
-    data: object, path: str = "", field: str = ""
-) -> Iterator[tuple[str, str]]:
+def walk_prose(data: object) -> Iterator[tuple[str, str]]:
     """Yield `(location, value)` for every prose field under `data`.
 
     Walks a dumped model rather than the file, so the fields a schema does not
     declare never reach the rules -- which is what keeps a rules file still
     being drafted out of the corpus these checks police.
-
-    The field name travels separately from the path because a list index is
-    not a field: `notes = ["...", "..."]` is two pieces of prose, and both are
-    `notes`.
     """
-    if isinstance(data, Mapping):
-        for key, value in data.items():
-            if key in TABLE_FIELDS:
-                continue
-            yield from walk_prose(
-                value, f"{path}.{key}" if path else str(key), str(key)
-            )
-    elif isinstance(data, list):
-        for index, value in enumerate(data):
-            yield from walk_prose(value, f"{path}.{index}", field)
-    elif isinstance(data, str) and field in PROSE_FIELDS and data.strip():
-        yield path, data
+    for location, field, value in _walk_strings(data, skip=TABLE_FIELDS):
+        if field in PROSE_FIELDS and value.strip():
+            yield location, value
 
 
 def _excerpt(value: str, limit: int = 40) -> str:

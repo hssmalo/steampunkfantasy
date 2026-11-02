@@ -97,11 +97,11 @@ The label is required, prints as written, and may hold placeholders
 (`{Poison[{N}]:token.poison}`). An unknown Ref or a malformed link fails at load,
 and the target gets a Rules Reference entry in any document that prints the link.
 
-- **Allowed:** Record `effect`, `remove`, `example`, and Variant and Version prose;
-  Instance `text`, `preamble` and Case text; damage table rows and `notes`; `note`
-  on a Unit, Model, Equipment, Assault or Range.
-- **Not allowed, and a lint finding:** `flavor`, `todo`, `explanation`,
-  `description`, `lore`, `tip`, and Rulebook `.md` sources.
+- **Allowed, and this list is exhaustive:** Record `effect`, `remove`, `example`,
+  and Variant and Version prose; Instance `text`, `preamble` and Case text; damage
+  table rows and `notes`; `note` on a Unit, Model, Equipment, Assault or Range.
+- **Anything else is a lint finding,** such as `flavor`, `todo`, `explanation`,
+  `description`, `lore`, `tip`, or a Rulebook `.md` source.
 - **Link the first mention** in a row or a paragraph, and only where the word means
   the rule: "fire" in "fire order" isn't `token.fire`.
 

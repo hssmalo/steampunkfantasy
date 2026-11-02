@@ -26,15 +26,16 @@ console and lint a plain form from a single parser.
 
 ## Allowed fields
 
-| Allowed | Not allowed (lint error) |
-| --- | --- |
-| Records: `effect`, `remove`, `example`, Variant and Version prose | `flavor`, `todo`, section `explanation` |
-| Instances: `text`, `preamble`, Case text | Race, Unit and Equipment `description`, `lore`, `tip` |
-| Damage table rows and `notes` | Rulebook `.md` sources |
-| `note` on Unit, Model, Equipment, Assault and Range | |
+The list is exhaustive, and any other field holding link syntax is a lint finding:
 
-Flavor text doesn't take links. A field can be added later without changing the
-syntax.
+- Records: `effect`, `remove`, `example`, Variant and Version prose.
+- Instances: `text`, `preamble`, Case text.
+- Damage table rows and `notes`.
+- `note` on Unit, Model, Equipment, Assault and Range.
+
+So flavor text, working notes, `explanation`, `description`, `lore`, `tip`, names,
+signatures and to-hit numbers take no link. Rulebook `.md` sources don't either, and
+are checked by file. A field can be added later without changing the syntax.
 
 ## Which links are edges
 

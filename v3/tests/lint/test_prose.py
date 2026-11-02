@@ -171,11 +171,38 @@ def test_prose_is_judged_by_its_label_as_well() -> None:
     assert list(prose.check_prose("Stop. See {it:token.one}"))
 
 
-@pytest.mark.parametrize("field", ["flavor", "todo", "explanation", "description"])
-def test_a_rule_link_in_a_linkless_field_is_a_finding(field: str) -> None:
+@pytest.mark.parametrize(
+    "field",
+    [
+        "flavor",
+        "todo",
+        "explanation",
+        "description",
+        "to_hit",
+        "phases",
+        "comment",
+        "name",
+        "signature",
+    ],
+)
+def test_a_rule_link_outside_the_allowed_fields_is_a_finding(field: str) -> None:
     found = list(prose.check_rule_links({field: "See {it:token.one}."}))
 
     assert [(location, rule) for location, rule, _ in found] == [(field, "link-field")]
+
+
+def test_a_rule_link_in_a_list_answers_to_the_field_holding_the_list() -> None:
+    found = list(prose.check_rule_links({"phases": ["{it:token.one}"]}))
+
+    assert [(location, rule) for location, rule, _ in found] == [
+        ("phases.0", "link-field")
+    ]
+
+
+def test_a_variants_id_is_not_the_field_it_answers_to() -> None:
+    data = {"variants": {"anything": "See {it:token.one}."}}
+
+    assert not list(prose.check_rule_links(data))
 
 
 def test_something_malformed_in_a_linkless_field_is_a_finding_too() -> None:
@@ -184,7 +211,9 @@ def test_something_malformed_in_a_linkless_field_is_a_finding_too() -> None:
     assert [rule for _, rule, _ in found] == ["link-field"]
 
 
-@pytest.mark.parametrize("field", ["effect", "remove", "example", "text", "note"])
+@pytest.mark.parametrize(
+    "field", ["effect", "remove", "example", "text", "preamble", "note", "notes"]
+)
 def test_a_rule_link_in_an_allowed_field_is_clean(field: str) -> None:
     assert not list(prose.check_rule_links({field: "See {it:token.one}."}))
 
