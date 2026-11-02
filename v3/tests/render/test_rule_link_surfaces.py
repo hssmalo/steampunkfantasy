@@ -1,9 +1,14 @@
 """No surface prints a Rule Link's raw syntax (ADR 0042).
 
 A link authored anywhere it is allowed reaches a lot of places, and a surface
-that forgets to reduce it prints `{label:namespace.id}` to a player. So every
-surface renders one synthetic Race here. The assertion is on the Ref's raw
-spelling alone, so it says nothing about a production template's content.
+that forgets to reduce it prints `{label:namespace.id}` to a player. So each
+surface here reads one synthetic Race or Rulebook.
+
+The documents render through the production templates, a deliberate exemption
+from `docs/agents/testing.md`. The only assertion on their output is that the raw
+Ref is absent, so no edit to a template's content can fail one of these unless it
+leaks the syntax. Each test first shows that what its surface reads carries a
+link, because without one the absence would prove nothing.
 """
 
 from collections.abc import Callable
@@ -11,17 +16,17 @@ from pathlib import Path
 
 import pytest
 
-from spf.armies.io import load_army, print_army_rules
+from spf.armies.io import load_army, print_army, print_army_rules
+from spf.frontends.cli.race import show_race
 from spf.frontends.cli.render import (
     RenderOpts,
     render_army_pack,
     render_army_rules,
-    render_cards,
-    render_gallery,
     render_general_rules,
     render_race_overview,
 )
 from spf.frontends.cli.special import list_specials, show_special
+from spf.races import get_race
 from spf.schemas import rules as r
 from spf.schemas.race import RaceConfig
 from tests.conftest import (
@@ -94,7 +99,11 @@ def _race() -> RaceConfig:
         },
         equipment={
             "knife": synthetic_equipment(
-                name="Knife", cost=None, upgrade_all=None, note=f"Note {LINK}."
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                note=f"Note {LINK}.",
+                assault={"note": f"Note {LINK}."},
             ),
             "gun": synthetic_equipment(
                 name="Gun",
@@ -168,13 +177,65 @@ def corpus(
 
 
 _RACE_NAME = "goblin"
-_PRODUCTS: dict[str, Callable[[RenderOpts], None]] = {
-    "army-rules": lambda opts: render_army_rules("linked", opts=opts),
-    "cards": lambda opts: render_cards("linked", opts=opts),
-    "army-pack": lambda opts: render_army_pack("linked", opts=opts),
-    "race-overview": lambda opts: render_race_overview(_RACE_NAME, opts=opts),
-    "gallery": lambda opts: render_gallery(_RACE_NAME, opts=opts),
+
+
+def _prose_the_army_reads() -> str:
+    """Return the Unit note every Army surface reads from the loaded Army."""
+    return load_army("linked").units[0].config.note
+
+
+def _prose_the_race_reads() -> str:
+    """Return a Unit note from the loaded Race."""
+    return get_race(_RACE_NAME).units["squad"].note
+
+
+def _prose_the_registry_reads() -> str | None:
+    """Return the Special's effect from the installed Registry."""
+    return REGISTRY.specials["linked"].effect
+
+
+_PRODUCTS: dict[str, tuple[Callable[[RenderOpts], None], Callable[[], object]]] = {
+    "army-rules": (
+        lambda opts: render_army_rules("linked", opts=opts),
+        _prose_the_army_reads,
+    ),
+    "army-pack": (
+        lambda opts: render_army_pack("linked", opts=opts),
+        _prose_the_army_reads,
+    ),
+    "race-overview": (
+        lambda opts: render_race_overview(_RACE_NAME, opts=opts),
+        _prose_the_race_reads,
+    ),
 }
+
+
+@pytest.mark.usefixtures("corpus")
+def test_the_race_carries_a_link_in_every_field_that_allows_one() -> None:
+    race = _race()
+    squad, soldier = race.units["squad"], race.models["soldier"]
+    knife, gun = race.equipment["knife"], race.equipment["gun"]
+    table = squad.damage_tables["Regular"]
+    assert knife.assault is not None
+    assert gun.range is not None
+    instances = squad.specials["linked"]
+
+    prose = [
+        squad.note,
+        table.rows[0].effect,
+        table.notes[0],
+        soldier.note,
+        soldier.assault.note,
+        knife.note,
+        knife.assault.note,
+        gun.range.note,
+        instances[0].text,
+        instances[2].preamble,
+        instances[2].cases[0].text,
+        REGISTRY.specials["linked"].variants["pooled"],
+    ]
+
+    assert all(LINK in (text or "") for text in prose)
 
 
 @pytest.mark.usefixtures("corpus")
@@ -184,9 +245,11 @@ _PRODUCTS: dict[str, Callable[[RenderOpts], None]] = {
 def test_no_document_prints_raw_link_syntax(
     tmp_path: Path, product: str, output_format: str, *, no_rules: bool
 ) -> None:
+    render, carrier = _PRODUCTS[product]
+    assert LINK in str(carrier())
     out = tmp_path / "document"
 
-    _PRODUCTS[product](RenderOpts(format=output_format, out=out, no_rules=no_rules))
+    render(RenderOpts(format=output_format, out=out, no_rules=no_rules))
 
     assert RAW not in out.read_text()
 
@@ -198,31 +261,37 @@ def test_the_rulebook_prints_no_raw_link_syntax(
 ) -> None:
     out = tmp_path / "rulebook"
     index = _rulebook_index(tmp_path)
+    assert LINK in (tmp_path / "tokens.toml").read_text()
 
     render_general_rules(index=index, opts=RenderOpts(format=output_format, out=out))
 
-    text = out.read_text()
-    assert "Effect it" in text
-    assert RAW not in text
+    assert RAW not in out.read_text()
 
 
-def _console_army() -> None:
-    print_army_rules(load_army("linked"))
-
-
-def _console_special() -> None:
-    show_special("linked")
+_CONSOLE: dict[str, tuple[Callable[[], None], Callable[[], object]]] = {
+    "army-rules": (
+        lambda: print_army_rules(load_army("linked")),
+        _prose_the_army_reads,
+    ),
+    "army": (lambda: print_army(load_army("linked")), _prose_the_army_reads),
+    "race-show": (lambda: show_race(_RACE_NAME), _prose_the_race_reads),
+    "race-show-section": (
+        lambda: show_race(_RACE_NAME, "units"),
+        _prose_the_race_reads,
+    ),
+    "special-show": (lambda: show_special("linked"), _prose_the_registry_reads),
+    "special-list": (list_specials, _prose_the_registry_reads),
+}
 
 
 @pytest.mark.usefixtures("corpus")
-@pytest.mark.parametrize(
-    "surface",
-    [_console_army, _console_special, list_specials],
-    ids=["army", "special-show", "special-list"],
-)
+@pytest.mark.parametrize("surface", _CONSOLE)
 def test_the_console_prints_no_raw_link_syntax(
-    capsys: pytest.CaptureFixture[str], surface: Callable[[], None]
+    capsys: pytest.CaptureFixture[str], surface: str
 ) -> None:
-    surface()
+    show, carrier = _CONSOLE[surface]
+    assert LINK in str(carrier())
+
+    show()
 
     assert RAW not in capsys.readouterr().out
