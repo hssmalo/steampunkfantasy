@@ -132,6 +132,11 @@ identical line — `special_lines` deduplicates on the *rendered* string, so an
 Instance naming a Variant and one writing the same sentence longhand collapse
 into a single printed line automatically.
 
+> **Amended.** This section originally said `special_lines` deduplicates on the
+> rendered string. It groups on the line's `LinkedText`, so lines that print alike
+> but point at different Refs stay separate. A Variant and its longhand carry the
+> same words and Refs, so they still collapse.
+
 That is deliberate. It is what let the corpus migrate 189 sites in one reviewable
 commit whose golden output is byte-for-byte unchanged, and it is why writing the
 prose longhand is a **lint** finding rather than a load error: a half-migrated

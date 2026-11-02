@@ -13,6 +13,7 @@ from spf.frontends.cli.render import (
     RenderOpts,
     render_race_overview,
 )
+from spf.prose import LinkedText, Span
 from spf.races import get_race
 from spf.render import render
 from spf.render.formats import get_format
@@ -237,7 +238,7 @@ def test_unit_entry_carries_the_declared_catalogue_fields() -> None:
     assert unit.shaken_speed == "slow"
     assert unit.shaken_movement == ["-", "-", "Flee"]
     assert unit.shaken_fire == "No weapons"
-    assert unit.specials == [SpecialLine("Evasion", "[4+]", None)]
+    assert unit.specials == [SpecialLine("Evasion", LinkedText((Span("[4+]"),)), None)]
     assert unit.fire_rows == [("sneak", ["Fire", "Fire"])]
     assert unit.movement_rows == [("slow", ["360°", "F", "B"])]
     assert unit.damage_tables == [
@@ -1205,9 +1206,9 @@ def test_the_spawn_link_leaves_the_interpolated_prose_untouched() -> None:
     # names it, exactly as `special_lines` rendered it.
     assert overview.rules is not None
     assert cavalry.specials == special_lines(
-        specials, anchor_for=overview.rules.anchor_for
+        specials, anchor_of=overview.rules.anchor_of
     )
-    assert "tiny_snake: place it somewhere" in cavalry.specials[0].text
+    assert "tiny_snake: place it somewhere" in str(cavalry.specials[0].text)
 
 
 def test_a_model_links_to_the_spawns_of_either_of_its_slots() -> None:
@@ -1334,7 +1335,7 @@ def test_a_special_line_links_into_the_rules_reference() -> None:
     (line,) = overview.units[0].specials
     # The line takes its anchor from the very entry it points at, so the two
     # cannot disagree.
-    assert line.anchor == overview.rules.anchor_for("evasion")
+    assert line.anchor == overview.rules.anchor_of("special.evasion")
     assert line.anchor is not None
 
 

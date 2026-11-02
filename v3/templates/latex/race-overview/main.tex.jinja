@@ -29,7 +29,7 @@
 {#- One Special per `\item`, for a list the caller has already opened. -#}
 \BLOCK{macro special_items(lines)}
 \BLOCK{for line in lines}
-\item \textbf{\VAR{rule(line)}}\VAR{': ' ~ (line.text | latex_escape) if line.text else ''}
+\item \textbf{\VAR{rule(line)}}\VAR{': ' ~ (line.text | linked) if line.text else ''}
 \BLOCK{endfor}
 \BLOCK{endmacro}
 {#- One Slot's Specials, under the label naming what the Slot grants. Slots

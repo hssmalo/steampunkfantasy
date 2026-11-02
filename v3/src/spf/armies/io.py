@@ -169,11 +169,11 @@ def _print_specials(lines: list[SpecialLine], *, indent: int) -> None:
     if not lines:
         return
     stdout.print(f"{' ' * indent}- [dim]Specials:[/]", highlight=False)
-    for heading, special, _anchor in lines:
+    for heading, text, _anchor in lines:
         # A signature is full of square brackets, which are Rich's own markup:
         # printed raw, `[range=1]` would vanish as a tag.
         stdout.print(
-            f"{' ' * (indent + 2)}- [blue]{escape(heading)}:[/] {escape(special)}",
+            f"{' ' * (indent + 2)}- [blue]{escape(heading)}:[/] {escape(str(text))}",
             highlight=False,
         )
 

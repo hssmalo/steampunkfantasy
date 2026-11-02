@@ -1,9 +1,15 @@
 """Tests for presenting Special instances: signatures, headings, grouping."""
 
+from spf.prose import LinkedText, Span
 from spf.registry import Registry, load_registry
 from spf.render.specials import SpecialLine, special_lines, special_row
-from spf.schemas.rules import DamageTypeRuleConfig, SpecialRuleConfig
+from spf.schemas.rules import (
+    DamageTypeRuleConfig,
+    SpecialRuleConfig,
+    TokenRuleConfig,
+)
 from spf.schemas.special import SpecialInstance
+from tests.conftest import synthetic_registry, synthetic_special
 
 REGISTRY = load_registry()
 
@@ -174,10 +180,16 @@ def test_two_case_shaped_instances_read_as_two_condition_groups() -> None:
     assert special_lines(specials, registry=REGISTRY) == [
         SpecialLine(
             "Area",
-            "If fired from a unit with 1-2 alive models: [4+] at point blank,"
-            " [5+] at range=2, [6+] at range=3 or 4;"
-            " If fired from a unit with 3-4 alive models: [2+] at point blank,"
-            " [4+] at range=2, [5+] at range=3 or 4",
+            LinkedText(
+                (
+                    Span(
+                        "If fired from a unit with 1-2 alive models: [4+] at point"
+                        " blank, [5+] at range=2, [6+] at range=3 or 4;"
+                        " If fired from a unit with 3-4 alive models: [2+] at point"
+                        " blank, [4+] at range=2, [5+] at range=3 or 4"
+                    ),
+                )
+            ),
             None,
         )
     ]
@@ -210,9 +222,9 @@ def test_instances_of_one_id_group_under_one_heading() -> None:
         ]
     }
 
-    assert special_lines(specials, registry=REGISTRY) == [
-        SpecialLine("Resistance", "Poison[12]; Fire[3]", None)
-    ]
+    (line,) = special_lines(specials, registry=REGISTRY)
+
+    assert (line.name, str(line.text)) == ("Resistance", "Poison[12]; Fire[3]")
 
 
 def test_instances_that_read_alike_are_printed_once() -> None:
@@ -220,9 +232,9 @@ def test_instances_that_read_alike_are_printed_once() -> None:
     instance = SpecialInstance(args={"version": "damage_type.psychic", "N": 1})
     specials = {"resistance": [instance, instance, instance]}
 
-    assert special_lines(specials, registry=REGISTRY) == [
-        SpecialLine("Resistance", "Psychic[1]", None)
-    ]
+    (line,) = special_lines(specials, registry=REGISTRY)
+
+    assert (line.name, str(line.text)) == ("Resistance", "Psychic[1]")
 
 
 def test_grouping_keeps_the_order_the_ids_were_contributed_in() -> None:
@@ -246,24 +258,24 @@ def test_a_line_carries_no_anchor_without_a_lookup() -> None:
     assert special_lines(specials, registry=REGISTRY)[0].anchor is None
 
 
-def test_a_lookup_is_asked_about_the_identifier_not_the_heading() -> None:
+def test_a_lookup_is_asked_about_the_ref_not_the_heading() -> None:
     # An atmospheric name is what the reader sees; the Identifier is what
     # addresses the rule, so only it can find the rule's entry.
     specials = {"evasion": [SpecialInstance(name="Nimble", args={"N": 4})]}
 
     (line,) = special_lines(
-        specials, registry=REGISTRY, anchor_for={"evasion": "rule-special-evasion"}.get
+        specials,
+        registry=REGISTRY,
+        anchor_of={"special.evasion": "rule-special-evasion"}.get,
     )
 
     assert (line.name, line.anchor) == ("Nimble", "rule-special-evasion")
 
 
-def test_an_identifier_the_lookup_does_not_know_leaves_the_anchor_unset() -> None:
+def test_a_ref_the_lookup_does_not_know_leaves_the_anchor_unset() -> None:
     specials = {"evasion": [SpecialInstance(args={"N": 4})]}
 
-    (line,) = special_lines(
-        specials, registry=REGISTRY, anchor_for=lambda _identifier: None
-    )
+    (line,) = special_lines(specials, registry=REGISTRY, anchor_of=lambda _ref: None)
 
     assert line.anchor is None
 
@@ -339,7 +351,7 @@ def test_a_named_and_a_longhand_instance_collapse_to_one_line() -> None:
 
     (line,) = special_lines(specials, registry=VARIANTS)
 
-    assert line.text == "[2]. Always treated as loaded"
+    assert str(line.text) == "[2]. Always treated as loaded"
 
 
 def test_an_unresolvable_variant_renders_as_no_prose() -> None:
@@ -466,3 +478,76 @@ def test_prose_of_an_unknown_rule_still_renders() -> None:
     _, text = _prose_row("never_declared", text="Up to {N} shots", args={"N": 5})
 
     assert text == "Up to 5 shots"
+
+
+# --- Rule Links: the Refs a line prints --------------------------------------
+
+LINKS = synthetic_registry(
+    specials={
+        "resistance": synthetic_special(
+            name="Resistance",
+            signature="{version}[{N}]",
+            variables={
+                "version": {"type": "ref", "namespaces": ["damage_type", "token"]},
+                "N": {"type": "int"},
+            },
+        ),
+    },
+    records={
+        "token": {"poison": TokenRuleConfig(name="Poison", effect="Poisoned.")},
+    },
+)
+
+
+def test_a_line_keeps_the_refs_its_signature_prints() -> None:
+    specials = {
+        "resistance": [SpecialInstance(args={"version": "damage_type.poison", "N": 1})]
+    }
+
+    (line,) = special_lines(specials, registry=LINKS)
+
+    assert line.text.spans == (
+        Span("Poison", ref="damage_type.poison"),
+        Span("[1]"),
+    )
+
+
+def test_a_line_anchors_only_the_refs_with_an_entry() -> None:
+    specials = {
+        "resistance": [SpecialInstance(args={"version": "damage_type.poison", "N": 1})]
+    }
+
+    (line,) = special_lines(
+        specials,
+        registry=LINKS,
+        anchor_of={"damage_type.poison": "rule-poison"}.get,
+    )
+
+    assert line.text.spans[0].anchor == "rule-poison"
+    assert line.anchor is None
+
+
+def test_instances_that_print_alike_but_name_different_refs_stay_apart() -> None:
+    specials = {
+        "resistance": [
+            SpecialInstance(args={"version": "damage_type.poison", "N": 1}),
+            SpecialInstance(args={"version": "token.poison", "N": 1}),
+        ]
+    }
+
+    (line,) = special_lines(specials, registry=LINKS)
+
+    assert str(line.text) == "Poison[1]; Poison[1]"
+    assert [span.ref for span in line.text.spans if span.ref] == [
+        "damage_type.poison",
+        "token.poison",
+    ]
+
+
+def test_the_console_row_stays_plain_text() -> None:
+    instance = SpecialInstance(args={"version": "damage_type.poison", "N": 1})
+
+    assert special_row("resistance", instance, registry=LINKS) == (
+        "Resistance",
+        "Poison[1]",
+    )

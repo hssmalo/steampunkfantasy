@@ -115,9 +115,9 @@ class RulesReference:
 
     title: str = TITLE
 
-    def anchor_for(self, identifier: str) -> str | None:
-        """Return the anchor a Special identifier's entry sits at, or None."""
-        return self.anchors.get(f"{SPECIAL}.{identifier}")
+    def anchor_of(self, ref: str) -> str | None:
+        """Return the anchor a Ref's entry sits at, or None."""
+        return self.anchors.get(ref)
 
 
 @dataclass(frozen=True)

@@ -49,6 +49,11 @@ string. Filling `{N}` only inside a Variant would break that: `variant =
 "load_n_shots"` and the same sentence typed out would stop collapsing, and
 `text` would become the way to smuggle an unfilled placeholder past the gate.
 
+> **Amended.** `special_lines` now groups on the line's `LinkedText` rather than
+> the rendered string, so lines that print alike but point at different Refs stay
+> separate. The argument stands: a Variant and its longhand must fill alike to
+> collapse.
+
 The rule belongs to the slot. `name` is deliberately **not** in the slot: it is a
 heading, and ADR 0032 already holds it apart from everything shareable. A number
 in a heading is written, not computed.

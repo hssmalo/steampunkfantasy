@@ -434,14 +434,14 @@ def test_a_prefix_namespaces_every_anchor() -> None:
     assert reference.entries[0].anchor == "abomination-rule-special-terror"
 
 
-def test_a_specials_anchor_is_looked_up_by_its_identifier() -> None:
+def test_a_specials_anchor_is_looked_up_by_its_ref() -> None:
     reference = _resolve("special.terror", prefix="abomination-")
 
-    assert reference.anchor_for("terror") == "abomination-rule-special-terror"
+    assert reference.anchor_of("special.terror") == "abomination-rule-special-terror"
 
 
-def test_an_identifier_that_is_no_entry_has_no_anchor() -> None:
-    assert _resolve("special.terror").anchor_for("burst") is None
+def test_a_ref_that_is_no_entry_has_no_anchor() -> None:
+    assert _resolve("special.terror").anchor_of("special.burst") is None
 
 
 # --- Seeding from a resolved Army -------------------------------------------
@@ -566,7 +566,7 @@ def test_a_race_resolves_its_own_rules_reference() -> None:
         _race({"terror": [SpecialInstance(args={"N": 1, "M": 4})]}), registry=REGISTRY
     )
 
-    assert reference.anchor_for("terror") == "rule-special-terror"
+    assert reference.anchor_of("special.terror") == "rule-special-terror"
     # The graph is closed over from a Race's Slots exactly as from an Army's.
     assert "token.terror" in reference.anchors
 

@@ -11,11 +11,16 @@ instance's arguments, followed by whatever prose the instance adds about its
 own occurrence.
 """
 
-from collections.abc import Callable
 from typing import NamedTuple
 
-from spf.prose import fill, interpolate, resolve
-from spf.registry import Registry, load_registry
+from spf.prose import (
+    AnchorOf,
+    LinkedText,
+    fill_linked,
+    interpolate_linked,
+    resolve,
+)
+from spf.registry import SPECIAL, Registry, load_registry
 from spf.schemas.rules import RuleRecord, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance, Specials
 
@@ -48,7 +53,7 @@ class SpecialLine(NamedTuple):
     """
 
     name: str
-    text: str
+    text: LinkedText
     anchor: str | None
     """Where this rule's Rules Reference entry sits, when there is one."""
 
@@ -57,6 +62,14 @@ def special_row(
     identifier: str, instance: SpecialInstance, *, registry: Registry
 ) -> tuple[str, str]:
     """Render one instance as the (heading, text) pair a reader is shown."""
+    heading, text = _linked_row(identifier, instance, registry=registry)
+    return heading, str(text)
+
+
+def _linked_row(
+    identifier: str, instance: SpecialInstance, *, registry: Registry
+) -> tuple[str, LinkedText]:
+    """Render one instance's heading, and its text with the Refs it prints."""
     rule = registry.specials.get(identifier)
     heading = instance.name or (rule.name if rule is not None else identifier)
     if instance.cases:
@@ -79,7 +92,7 @@ def _prose(
     rule: SpecialRuleConfig | None,
     args: dict[str, int | str],
     registry: Registry,
-) -> str | None:
+) -> LinkedText | None:
     """Resolve the prose slot and fill its placeholders from `args` (ADR 0037).
 
     Total by design (ADR 0032): an id resolving to nothing renders as no prose,
@@ -88,12 +101,12 @@ def _prose(
     """
     variants = rule.variants if rule is not None else {}
     resolved = resolve(text, variant, variants)
-    return None if resolved is None else fill(resolved, args, registry)
+    return None if resolved is None else fill_linked(resolved, args, registry)
 
 
 def _cases(
     instance: SpecialInstance, rule: SpecialRuleConfig | None, registry: Registry
-) -> str:
+) -> LinkedText:
     """Render a case-shaped instance: its preamble, then its cases (ADR 0030).
 
     Each case fills the signature and its own prose with its own args over the
@@ -128,21 +141,21 @@ def _cases(
 
 def _signature(
     rule: RuleRecord | None, args: dict[str, int | str], registry: Registry
-) -> str:
+) -> LinkedText:
     """Fill in the rule's signature, or nothing at all for an unknown id."""
-    return "" if rule is None else interpolate(rule, args, registry)
+    return LinkedText() if rule is None else interpolate_linked(rule, args, registry)
 
 
-def _join(separator: str, *parts: str | None) -> str:
+def _join(separator: str, *parts: LinkedText | None) -> LinkedText:
     """Join the parts that are there, so an absent one leaves no separator."""
-    return separator.join(part for part in parts if part)
+    return LinkedText.join(separator, (part for part in parts if part))
 
 
 def special_lines(
     specials: Specials,
     *,
     registry: Registry | None = None,
-    anchor_for: Callable[[str], str | None] | None = None,
+    anchor_of: AnchorOf | None = None,
 ) -> list[SpecialLine]:
     """Render one slot's instances as lines, grouped by heading.
 
@@ -153,23 +166,30 @@ def special_lines(
 
     Instances that read exactly alike are printed once. Three Models of a Unit
     each granting the same Resistance say one thing between them, and the
-    reader learns nothing from the second and third copy.
+    reader learns nothing from the second and third copy. Instances naming
+    different Refs do not read alike, whatever their words: each still links to
+    its own rule.
 
-    `anchor_for` resolves an Identifier to its Rules Reference entry. Without
-    one every line's `anchor` is `None`, which is what the console printing
-    and a `--no-rules` document want.
+    `anchor_of` resolves a Ref to its Rules Reference entry, for the line's own
+    rule and for each Rule Link in its text. Without one nothing is anchored,
+    which is what the console printing and a `--no-rules` document want.
     """
     registry = registry if registry is not None else load_registry()
-    grouped: dict[tuple[str, str], dict[str, None]] = {}
+    grouped: dict[tuple[str, str], dict[LinkedText, None]] = {}
     for identifier, instances in specials.items():
         for instance in instances:
-            heading, text = special_row(identifier, instance, registry=registry)
+            heading, text = _linked_row(identifier, instance, registry=registry)
             grouped.setdefault((identifier, heading), {})[text] = None
+    resolve_anchor = anchor_of if anchor_of is not None else _no_anchor
     return [
         SpecialLine(
             name=heading,
-            text=_INSTANCE_SEPARATOR.join(text for text in texts if text),
-            anchor=anchor_for(identifier) if anchor_for is not None else None,
+            text=_join(_INSTANCE_SEPARATOR, *texts).resolved(resolve_anchor),
+            anchor=resolve_anchor(f"{SPECIAL}.{identifier}"),
         )
         for (identifier, heading), texts in grouped.items()
     ]
+
+
+def _no_anchor(_ref: str) -> None:
+    """Resolve nothing, for a document with no Rules Reference to link into."""

@@ -227,8 +227,8 @@ _Avoid_: link, pointer, cross-reference
 
 **Rule Link**:
 The printed, navigable form of a **Ref** in a document that holds its target's
-entry — from a typed Arg in a filled **Signature**, or from an authored
-`{label:<namespace>.<id>}` in prose. A Ref is data; a Rule Link is presentation,
+entry — from a typed Arg filled into a **Signature** or an **Instance**'s prose,
+or from an authored `{label:<namespace>.<id>}` in prose. A Ref is data; a Rule Link is presentation,
 and prints as plain text where there is nothing to navigate to.
 _Avoid_: magic link, auto-link (nothing is inferred), hyperlink
 

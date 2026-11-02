@@ -11,6 +11,7 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
+from spf.prose import LinkedText, Span
 from spf.render import render, rules_reference
 from spf.render.army_rules import UnitEntry, build_reference
 from spf.render.art import art_src
@@ -150,7 +151,7 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
     assert unit_entry.shaken_movement == ["-", "-", "flee"]
     assert unit_entry.shaken_fire == "No weapons"
     assert unit_entry.specials == [
-        SpecialLine("Evasion", "[4+]", "rule-special-evasion")
+        SpecialLine("Evasion", LinkedText((Span("[4+]"),)), "rule-special-evasion")
     ]
     assert unit_entry.damage_tables == [
         ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
@@ -215,7 +216,9 @@ def test_build_reference_ranged_equipment_gets_sub_entry() -> None:
     assert equip_entry.damage == "d6"
     assert equip_entry.ap == 2
     assert equip_entry.specials == [
-        SpecialLine("Sniper", "Choose the model", "rule-special-sniper")
+        SpecialLine(
+            "Sniper", LinkedText((Span("Choose the model"),)), "rule-special-sniper"
+        )
     ]
 
 
@@ -421,7 +424,7 @@ def test_build_reference_model_assault_is_resolved_not_raw() -> None:
     assert model_entry.assault_damage == "d8"
     assert model_entry.assault_ap == 1
     assert model_entry.assault_specials == [
-        SpecialLine("Ork Reroll", "[3]", "rule-special-ork-reroll")
+        SpecialLine("Ork Reroll", LinkedText((Span("[3]"),)), "rule-special-ork-reroll")
     ]
 
 
