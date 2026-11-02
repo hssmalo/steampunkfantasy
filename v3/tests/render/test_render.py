@@ -9,11 +9,12 @@ from jinja2 import TemplateNotFound
 
 from spf.config import config
 from spf.frontends.cli.render import DEFAULT_FORMAT, RenderOpts
+from spf.prose import LinkedText, Span
 from spf.render import Product, render
 from spf.render.art import art_src
 from spf.render.derivations import RenderError, latex_to_pdf, md_to_html
 from spf.render.environments import make_environments, posix_path, relative_to
-from spf.render.formats import FORMATS, get_format
+from spf.render.formats import FORMATS, Family, get_format
 from spf.render.products import PRODUCTS, get_product, register_product
 from spf.version import spf_version
 
@@ -61,6 +62,51 @@ def test_injected_templates_root_loads_fixture() -> None:
     envs = make_environments(templates_root=FIXTURES)
     template = envs["markdown"].get_template("_test/main.md.jinja")
     assert "Name" in template.render(source=FakeSource())
+
+
+# --- The `linked` filter: one LinkedText, each family's link syntax ----------
+
+_LINKED = LinkedText(
+    (
+        Span("Take_Cover", ref="ability.take_cover", anchor="rule-take-cover"),
+        Span("["),
+        Span("Still", ref="speed.still", anchor="rule-still"),
+        Span("][50%]"),
+        Span("Fire", ref="token.fire"),
+    )
+)
+
+
+def _render_linked(family: Family, name: str, text: LinkedText) -> str:
+    env = make_environments(templates_root=FIXTURES)[family]
+    return env.get_template(f"_test/{name}").render(text=text).strip()
+
+
+def test_markdown_links_the_anchored_spans_and_leaves_the_rest_as_text() -> None:
+    assert _render_linked("markdown", "linked.md.jinja", _LINKED) == (
+        "[Take_Cover](#rule-take-cover)[[Still](#rule-still)][50%]Fire"
+    )
+
+
+def test_latex_links_the_anchored_spans_and_escapes_every_label() -> None:
+    assert _render_linked("latex", "linked.tex.jinja", _LINKED) == (
+        r"\hyperref[rule-take-cover]{Take\_Cover}[\hyperref[rule-still]{Still}][50\%]Fire"
+    )
+
+
+def test_text_with_no_anchors_prints_with_no_link_markup() -> None:
+    text = LinkedText((Span("Fire", ref="token.fire"),))
+
+    assert _render_linked("markdown", "linked.md.jinja", text) == "Fire"
+    assert _render_linked("latex", "linked.tex.jinja", text) == "Fire"
+
+
+def test_a_template_that_forgets_the_filter_prints_the_labels() -> None:
+    env = make_environments(templates_root=FIXTURES)["markdown"]
+
+    assert env.from_string("{{ text }}").render(text=_LINKED) == (
+        "Take_Cover[Still][50%]Fire"
+    )
 
 
 # --- Path filters: separators must survive Markdown and LaTeX ---------------

@@ -14,6 +14,7 @@ from typing import cast
 from jinja2 import Environment, FileSystemLoader
 
 from spf.config import config
+from spf.prose import LinkedText
 from spf.render.formats import Family
 from spf.render.latex_text import latex_escape
 from spf.render.md_latex import md_to_latex, shift_headings
@@ -49,6 +50,24 @@ def relative_to(value: PurePath, start: PurePath) -> str:
     return posix_path(value.relative_to(start, walk_up=True))
 
 
+def linked_markdown(text: LinkedText) -> str:
+    """Print `text` as Markdown, each anchored span a link to its entry."""
+    return "".join(
+        f"[{span.text}](#{span.anchor})" if span.anchor else span.text
+        for span in text.spans
+    )
+
+
+def linked_latex(text: LinkedText) -> str:
+    """Print `text` as LaTeX, each anchored span a link to its entry."""
+    return "".join(
+        rf"\hyperref[{span.anchor}]{{{latex_escape(span.text)}}}"
+        if span.anchor
+        else latex_escape(span.text)
+        for span in text.spans
+    )
+
+
 def make_environments(templates_root: Path | None = None) -> dict[Family, Environment]:
     """Build the per-family Jinja2 environments.
 
@@ -68,6 +87,7 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
         keep_trailing_newline=True,
     )
     latex.filters["latex_escape"] = latex_escape
+    latex.filters["linked"] = linked_latex
     latex.filters["posix_path"] = posix_path
     # Markdown that arrives inside the *data* — free-text Rulebook Sections and
     # prose fields in the rules TOML — has no authored per-family form, so each
@@ -81,6 +101,7 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
     # The Markdown family needs no conversion — its data is already Markdown —
     # only the source's headings pushed below the one it renders under.
     markdown.filters["shift_headings"] = shift_headings
+    markdown.filters["linked"] = linked_markdown
 
     # A global rather than render context: every document stamps the version it
     # was rendered by, and no render call site should have to thread it through.

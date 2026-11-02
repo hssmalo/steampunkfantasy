@@ -26,7 +26,7 @@
 - Points: {{ unit.points }}
 - Shaken: {{ unit.shaken_speed }} [{{ unit.shaken_movement | join(', ') }}] / {{ unit.shaken_fire }}
 {% for line in unit.specials %}
-- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text }}{% endif %}
+- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if unit.note %}
 - **Note**: {{ unit.note }}
@@ -48,7 +48,7 @@
 
 - Equipment: {{ model.equipment_summary | join(', ') }}
 {% for line in model.specials %}
-- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text }}{% endif %}
+- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if model.note %}
 - **Note**: {{ model.note }}
@@ -58,7 +58,7 @@
 {%- endfor %}
 - Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
 {% for line in model.assault_specials %}
-- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text }}{% endif %}
+- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if model.assault_note %}
 - **Note**: {{ model.assault_note }}
@@ -68,7 +68,7 @@
 
 - Range: {{ equip.range }}, angle {{ equip.angle | join('/') }}, damage {{ equip.damage }}, AP {{ equip.ap }}
 {%- for line in equip.specials %}
-- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text }}{% endif %}
+- **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if equip.note %}
 - **Note**: {{ equip.note }}

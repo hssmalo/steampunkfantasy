@@ -32,7 +32,7 @@
 
 {%- macro bullets(lines) -%}
 {% for line in lines %}
-- **{{ rule(line) }}**{% if line.text %}: {{ line.text }}{% endif %}
+- **{{ rule(line) }}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- endmacro -%}
 
@@ -43,7 +43,7 @@
 {% if lines %}
 - *{{ label }}:*
 {%- for line in lines %}
-    - **{{ rule(line) }}**{% if line.text %}: {{ line.text }}{% endif %}
+    - **{{ rule(line) }}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- endif %}
 {%- endmacro -%}
