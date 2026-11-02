@@ -6,7 +6,17 @@ from pydantic import ValidationError
 from spf.registry import load_registry
 from spf.schemas.race import RaceConfig, race_slots
 from spf.schemas.special import SpecialInstance
-from tests.conftest import committed_args
+from tests.conftest import (
+    InstallRegistry,
+    committed_args,
+    synthetic_assault,
+    synthetic_equipment,
+    synthetic_model,
+    synthetic_race,
+    synthetic_unit,
+)
+
+BAD_LINK = "See {it:token.nonesuch}."
 
 
 def test_an_instance_may_be_empty() -> None:
@@ -354,3 +364,50 @@ def test_an_unknown_speed_in_an_orders_table_fails_the_race() -> None:
 def test_an_unknown_speed_in_gained_orders_fails_the_race() -> None:
     with pytest.raises(ValidationError, match="'dawdle' is not a speed"):
         race(equipment={"orders_gained": {"fire": {"dawdle": [["Fire"]]}}})
+
+
+@pytest.mark.parametrize(
+    "race_fields",
+    [
+        {"units": {"squad": synthetic_unit(note=BAD_LINK)}},
+        {
+            "units": {
+                "squad": synthetic_unit(
+                    damage_tables={"Regular": {"rows": [f"1: {BAD_LINK}"]}}
+                )
+            }
+        },
+        {
+            "units": {
+                "squad": synthetic_unit(
+                    damage_tables={
+                        "Regular": {"rows": ["1: Fine"], "notes": [BAD_LINK]}
+                    }
+                )
+            }
+        },
+        {"models": {"soldier": synthetic_model(note=BAD_LINK)}},
+        {
+            "models": {
+                "soldier": synthetic_model(assault=synthetic_assault(note=BAD_LINK))
+            }
+        },
+        {"equipment": {"sword": synthetic_equipment(note=BAD_LINK)}},
+    ],
+    ids=["unit-note", "row", "table-note", "model-note", "assault-note", "equip-note"],
+)
+def test_a_bad_rule_link_in_fielded_prose_fails_to_load(
+    install_registry: InstallRegistry, race_fields: dict[str, object]
+) -> None:
+    install_registry()
+
+    with pytest.raises(ValidationError, match=r"token\.nonesuch"):
+        synthetic_race(**race_fields)  # ty: ignore[invalid-argument-type]
+
+
+def test_a_good_rule_link_in_fielded_prose_loads(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry()
+
+    synthetic_race(units={"squad": synthetic_unit(note="See {it:damage_type.poison}.")})

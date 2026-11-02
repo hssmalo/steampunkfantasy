@@ -283,6 +283,19 @@ class RaceConfig(StrictModel):
         return self
 
     @model_validator(mode="after")
+    def check_fielded_links(self) -> Self:
+        """Resolve every Rule Link written in a note or a damage table (ADR 0042)."""
+        rules = registry.load_registry()
+        errors = [
+            error
+            for where, prose in fielded_prose(self)
+            for error in registry.check_links(prose, where=where, registry=rules)
+        ]
+        if errors:
+            raise ValueError("\n".join(errors))
+        return self
+
+    @model_validator(mode="after")
     def check_vocabulary(self) -> Self:
         """Check every Speed and Size against the registry that owns it.
 
@@ -442,6 +455,31 @@ def special_slots(race: RaceConfig) -> Iterator[tuple[str, str, Specials]]:
             yield "equipment", key, equipment.assault.specials
         if equipment.range is not None:
             yield "equipment", key, equipment.range.specials
+
+
+def fielded_prose(race: RaceConfig) -> Iterator[tuple[str, str]]:
+    """Yield `(holder, prose)` for each note and damage table text a Race prints.
+
+    These sit beside a Slot rather than in one, so a walk over the Slots misses
+    them; they may author Rule Links all the same (ADR 0042).
+    """
+    for unit in race.units.values():
+        where = f"unit '{unit.name}'"
+        yield where, unit.note
+        for table in unit.damage_tables.values():
+            yield from ((where, row.effect) for row in table.rows)
+            yield from ((where, note) for note in table.notes)
+    for model in race.models.values():
+        where = f"model '{model.name}'"
+        yield where, model.note
+        yield where, model.assault.note
+    for equipment in race.equipment.values():
+        where = f"equipment '{equipment.name}'"
+        yield where, equipment.note
+        if equipment.assault is not None:
+            yield where, equipment.assault.note
+        if equipment.range is not None:
+            yield where, equipment.range.note
 
 
 def race_slots(race: RaceConfig) -> Iterator[Specials]:
