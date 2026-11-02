@@ -25,7 +25,7 @@ from spf.prose import AnchorOf, LinkedText, linked_prose
 from spf.registry import load_registry
 from spf.render.anchors import slug
 from spf.render.costs import cost_columns, cost_text
-from spf.render.damage import DamageTableEntry, damage_table_entries
+from spf.render.damage import DamageTableView, damage_table_views
 from spf.render.declarations import (
     INFINITY,
     assault_modifier_lines,
@@ -133,7 +133,7 @@ class UnitEntry:
     shaken_fire: str
     movement_rows: Rows
     fire_rows: Rows
-    damage_tables: list[DamageTableEntry]
+    damage_tables: list[DamageTableView]
     note: LinkedText
 
 
@@ -498,7 +498,7 @@ def _unit_entry(key: str, unit: UnitConfig, *, catalogue: _Catalogue) -> UnitEnt
         # has the fixed loadout a merged table would describe.
         movement_rows=flat_rows(unit.orders.movement),
         fire_rows=flat_rows(unit.orders.fire),
-        damage_tables=damage_table_entries(
+        damage_tables=damage_table_views(
             unit.damage_tables, anchor_of=catalogue.anchor_of
         ),
         note=linked_prose(unit.note, catalogue.anchor_of),

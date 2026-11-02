@@ -20,7 +20,7 @@ from spf.armies.unit import Unit
 from spf.prose import AnchorOf, LinkedText, linked_prose
 from spf.registry import load_registry
 from spf.render import rules_reference
-from spf.render.damage import DamageTableEntry, damage_table_entries
+from spf.render.damage import DamageTableView, damage_table_views
 from spf.render.images import ImageLookup, committed_image
 from spf.render.rules_reference import RulesReference
 from spf.render.specials import SpecialLine, special_lines
@@ -99,7 +99,7 @@ class UnitEntry:
     shaken_fire: str
     specials: _Specials
     note: LinkedText
-    damage_tables: list[DamageTableEntry]
+    damage_tables: list[DamageTableView]
     models: list[ModelEntry]
 
 
@@ -192,7 +192,7 @@ def _unit_entry(
         shaken_fire=unit.config.shaken.fire_order,
         specials=special_lines(unit.unit_specials, anchor_of=anchor_of),
         note=linked_prose(unit.config.note, anchor_of),
-        damage_tables=damage_table_entries(
+        damage_tables=damage_table_views(
             unit.config.damage_tables, anchor_of=anchor_of
         ),
         models=_dedup(

@@ -1,17 +1,23 @@
-"""Rendering a damage table.
+"""Shaping a Unit's damage tables for the templates to print.
 
-Pure over a parsed `DamageRoll`, which every Product printing a Unit's damage
-tables needs in the same shape whether it reads a resolved Army or a
-`RaceConfig`.
+Pure over the parsed tables, which every Product printing them needs in the same
+shape whether it reads a resolved Army or a `RaceConfig`.
 """
 
 from collections.abc import Mapping
+from typing import NamedTuple
 
 from spf.prose import AnchorOf, LinkedText, linked_prose
 from spf.schemas import type_aliases as t
 
-type DamageTableEntry = tuple[str, list[tuple[str, LinkedText]], list[LinkedText]]
-"""(table name, (roll, effect) rows, notes) as a template prints them."""
+
+class DamageTableView(NamedTuple):
+    """One damage table as a template prints it."""
+
+    name: str
+    rows: list[tuple[str, LinkedText]]
+    """(roll, effect) per row."""
+    notes: list[LinkedText]
 
 
 def roll_text(roll: t.DamageRoll) -> str:
@@ -25,18 +31,18 @@ def roll_text(roll: t.DamageRoll) -> str:
             return f"{value}+"
 
 
-def damage_table_entries(
+def damage_table_views(
     tables: Mapping[t.DamageTableName, t.DamageTable], *, anchor_of: AnchorOf | None
-) -> list[DamageTableEntry]:
+) -> list[DamageTableView]:
     """Shape a Unit's damage tables, resolving each Rule Link against `anchor_of`."""
     return [
-        (
-            name,
-            [
+        DamageTableView(
+            name=name,
+            rows=[
                 (roll_text(row.roll), linked_prose(row.effect, anchor_of))
                 for row in table.rows
             ],
-            [linked_prose(note, anchor_of) for note in table.notes],
+            notes=[linked_prose(note, anchor_of) for note in table.notes],
         )
         for name, table in tables.items()
     ]
