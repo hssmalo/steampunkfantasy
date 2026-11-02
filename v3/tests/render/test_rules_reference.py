@@ -759,3 +759,38 @@ def test_effect_and_remove_carry_resolved_rule_links() -> None:
         Span("a slow", ref="speed.slow", anchor="rule-speed-slow"),
         Span("."),
     )
+
+
+def test_an_army_walks_only_the_equipment_notes_it_prints(
+    install_registry: InstallRegistry,
+) -> None:
+    registry = install_registry()
+    race = synthetic_race(
+        models={"soldier": synthetic_model(equipment=["gun", "knife"])},
+        equipment={
+            # A ranged Equipment prints its range note and not its own.
+            "gun": synthetic_equipment(
+                name="Gun",
+                cost=None,
+                upgrade_all=None,
+                note="{a:speed.slow}",
+                range={
+                    "range": "6",
+                    "angle": [True, False, False, False],
+                    "damage": "d4",
+                    "ap": 0,
+                    "note": "{b:speed.fast}",
+                },
+            ),
+            "knife": synthetic_equipment(
+                name="Knife", cost=None, upgrade_all=None, note="{c:size.small}"
+            ),
+        },
+    )
+    army = synthetic_army(race).resolve(race)
+
+    anchors = rr.build(army, registry=registry).anchors
+
+    assert "speed.slow" not in anchors
+    assert "speed.fast" in anchors
+    assert "size.small" in anchors

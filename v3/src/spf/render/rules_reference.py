@@ -187,9 +187,9 @@ def _fielded_prose(army: Army) -> Iterable[str]:
             yield model.config.note
             yield model.assault().note  # holds its Equipment's assault notes too
             for equip in model.equipment:
-                yield equip.note
-                if equip.range is not None:
-                    yield equip.range.note
+                # A ranged Equipment prints its range note and not its own, and a
+                # walked link with no printed path would dead-end (ADR 0042).
+                yield equip.note if equip.range is None else equip.range.note
 
 
 def _instance_prose(
