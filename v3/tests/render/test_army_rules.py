@@ -11,7 +11,7 @@ from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
 from spf.frontends.cli.render import ARMY_RULES, RenderOpts, render_army_rules
-from spf.prose import LinkedText, Span
+from spf.prose import LinkedText, Span, linked_prose
 from spf.render import render, rules_reference
 from spf.render.army_rules import UnitEntry, build_reference
 from spf.render.art import art_src
@@ -154,7 +154,11 @@ def test_build_reference_basic_unit_and_model_fields() -> None:
         SpecialLine("Evasion", LinkedText((Span("[4+]"),)), "rule-special-evasion")
     ]
     assert unit_entry.damage_tables == [
-        ("Regular", [("1", "Fine"), ("2", "Dead")], ["Stay calm"]),
+        (
+            "Regular",
+            [("1", linked_prose("Fine")), ("2", linked_prose("Dead"))],
+            [linked_prose("Stay calm")],
+        ),
     ]
     (model_entry,) = unit_entry.models
     assert model_entry.name == "Soldier"
@@ -626,7 +630,7 @@ def test_unit_entry_carries_the_unit_note() -> None:
     reference = build_reference(_army(unit), stem="test")
 
     (unit_entry,) = reference.units
-    assert unit_entry.note == "May not enter buildings"
+    assert str(unit_entry.note) == "May not enter buildings"
 
 
 def test_model_entry_carries_the_model_and_assault_notes() -> None:
@@ -644,8 +648,8 @@ def test_model_entry_carries_the_model_and_assault_notes() -> None:
     reference = build_reference(_army(unit), stem="test")
 
     (model_entry,) = reference.units[0].models
-    assert model_entry.note == "Floats"
-    assert model_entry.assault_note == "Fights on after losing a limb"
+    assert str(model_entry.note) == "Floats"
+    assert str(model_entry.assault_note) == "Fights on after losing a limb"
 
 
 def test_model_entry_carries_the_note_of_a_rangeless_equipment() -> None:
@@ -657,7 +661,9 @@ def test_model_entry_carries_the_note_of_a_rangeless_equipment() -> None:
     reference = build_reference(_army(unit), stem="test")
 
     (model_entry,) = reference.units[0].models
-    assert model_entry.equipment_notes == [("Remote Control", "Grants no immunity")]
+    assert model_entry.equipment_notes == [
+        ("Remote Control", linked_prose("Grants no immunity"))
+    ]
 
 
 def test_equipment_entry_carries_the_range_note() -> None:
@@ -676,7 +682,7 @@ def test_equipment_entry_carries_the_range_note() -> None:
     reference = build_reference(_army(unit), stem="test")
 
     (equipment_entry,) = reference.units[0].models[0].equipment
-    assert equipment_entry.note == "Remember to track ammo."
+    assert str(equipment_entry.note) == "Remember to track ammo."
 
 
 # --- The Rules Reference in a standalone Army Reference (ADR 0029) ----------
@@ -799,5 +805,54 @@ def test_an_equipment_upgrade_raises_its_units_armor_and_prints_its_note() -> No
     assert unit_entry.armor == [5, 0, 0, 0]
     (model_entry,) = unit_entry.models
     assert model_entry.equipment_notes == [
-        ("Wheeled ShieldWall", "Rolls with the Unit.")
+        ("Wheeled ShieldWall", linked_prose("Rolls with the Unit."))
     ]
+
+
+_LINK = Span("it", ref="damage_type.poison", anchor="rule-damage-type-poison")
+
+
+def _linked_army(install_registry: InstallRegistry) -> Army:
+    """Field an Army with a Rule Link in a Unit's note and damage table."""
+    install_registry()
+    race = synthetic_race(
+        units={
+            "squad": synthetic_unit(
+                note="See {it:damage_type.poison}.",
+                damage_tables={
+                    "Regular": {
+                        "rows": ["1: {it:damage_type.poison}"],
+                        "notes": ["{it:damage_type.poison}"],
+                    }
+                },
+            )
+        }
+    )
+    return synthetic_army(race).resolve(race)
+
+
+def test_a_unit_note_carries_its_rule_link(install_registry: InstallRegistry) -> None:
+    reference = build_reference(_linked_army(install_registry), stem="test")
+
+    assert reference.units[0].note.spans == (Span("See "), _LINK, Span("."))
+
+
+def test_a_damage_table_carries_its_rule_links(
+    install_registry: InstallRegistry,
+) -> None:
+    reference = build_reference(_linked_army(install_registry), stem="test")
+
+    ((_, rows, notes),) = reference.units[0].damage_tables
+    assert rows[0][1].spans == (_LINK,)
+    assert notes[0].spans == (_LINK,)
+
+
+def test_no_rules_reference_leaves_a_rule_link_unanchored(
+    install_registry: InstallRegistry,
+) -> None:
+    army = _linked_army(install_registry)
+
+    reference = build_reference(army, stem="test", rules=False)
+
+    assert reference.units[0].note.spans[1].anchor is None
+    assert str(reference.units[0].note) == "See it."

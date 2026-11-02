@@ -10,7 +10,7 @@ the build fails.
 
 import cyclopts
 
-from spf import lint
+from spf import lint, rules
 from spf.config import config
 from spf.lint import latex, loading
 from spf.lint.findings import LintFinding
@@ -80,18 +80,26 @@ def rules_findings() -> list[LintFinding]:
     probe = loading.probe_rules()
     if probe.registry is None:
         return probe.findings
-    return [
-        *probe.findings,
-        *(
-            LintFinding(
-                file=f"rules/{finding.file}",
-                location=f"{finding.namespace}.{finding.key}",
-                rule=finding.rule,
-                message=finding.message,
-            )
-            for finding in lint.lint_registry(probe.registry, config.lint)
-        ),
+    registry_findings = [
+        LintFinding(
+            file=f"rules/{finding.file}",
+            location=f"{finding.namespace}.{finding.key}",
+            rule=finding.rule,
+            message=finding.message,
+        )
+        for finding in lint.lint_registry(probe.registry, config.lint)
     ]
+    # A Load finding may mean the Index or a source will not read, and the probe
+    # has reported that once already (ADR 0036). The sources wait for a clean load.
+    source_findings = (
+        []
+        if probe.findings
+        else lint.lint_rulebook_sources(
+            [section.source for section in rules.get_rulebook().sections],
+            config.paths.rules,
+        )
+    )
+    return [*probe.findings, *registry_findings, *source_findings]
 
 
 def armies_findings(*, broken_races: frozenset[str]) -> list[LintFinding]:

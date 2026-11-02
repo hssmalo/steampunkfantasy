@@ -29,7 +29,7 @@
 - **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if unit.note %}
-- **Note**: {{ unit.note }}
+- **Note**: {{ unit.note | linked }}
 {%- endif %}
 {% for name, rows, notes in unit.damage_tables %}
 **Damage Table: {{ name }}**
@@ -37,10 +37,10 @@
 | Roll | Effect |
 | ---- | ------ |
 {% for roll, effect in rows -%}
-| {{ roll }} | {{ effect }} |
+| {{ roll }} | {{ effect | linked }} |
 {% endfor -%}
 {% for note in notes -%}
-- {{ note }}
+- {{ note | linked }}
 {% endfor -%}
 {% endfor %}
 {% for model in unit.models %}
@@ -51,17 +51,17 @@
 - **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if model.note %}
-- **Note**: {{ model.note }}
+- **Note**: {{ model.note | linked }}
 {%- endif %}
 {%- for name, text in model.equipment_notes %}
-- **Note ({{ name }})**: {{ text }}
+- **Note ({{ name }})**: {{ text | linked }}
 {%- endfor %}
 - Assault: strength {{ model.assault_strength | join('/') }} ({{ model.assault_strength_die }}), deflection {{ model.assault_deflection | join('/') }} ({{ model.assault_deflection_die }}), damage {{ model.assault_damage }}, AP {{ model.assault_ap }}
 {% for line in model.assault_specials %}
 - **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if model.assault_note %}
-- **Note**: {{ model.assault_note }}
+- **Note**: {{ model.assault_note | linked }}
 {%- endif %}
 {% for equip in model.equipment %}
 {{ hashes }}## {{ equip.name }}
@@ -71,7 +71,7 @@
 - **{% if line.anchor %}[{{ line.name }}](#{{ line.anchor }}){% else %}{{ line.name }}{% endif %}**{% if line.text %}: {{ line.text | linked }}{% endif %}
 {%- endfor %}
 {%- if equip.note %}
-- **Note**: {{ equip.note }}
+- **Note**: {{ equip.note | linked }}
 {%- endif %}
 {% endfor %}
 {% endfor %}

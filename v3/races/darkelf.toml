@@ -1479,7 +1479,7 @@ requires = []
 note = "Neither this unit or the trainee units are immune to poison clouds"
 
 [[equipment.remote_control.unit_specials.activate]]
-text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. After activated, whenever one of the activated infantry tries to enter an hex, place a {{\\bf Poison Cloud[6]}} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round. Once activated, the ability is permanent."
+text = "Activate poison cloud collars by an activate fire order, on either all multicultural trainee units or all multicultural infantry you have. After activated, whenever one of the activated infantry tries to enter an hex, place a {Poison Cloud[6]:hex.poison_cloud} in that hex with at least one generic_multicultural_infantry model. This happens in all pre-assault phase this round. Once activated, the ability is permanent."
 
 [equipment.officer_mask]
 name = "Officer Mask"

@@ -279,6 +279,22 @@ def test_lint_all_reports_an_unreadable_rules_file_exactly_once(
     assert finding[-1].startswith("Unclosed array")
 
 
+@pytest.mark.parametrize(
+    "index",
+    ['title = "Unclosed\n', 'title = "Rulebook"\nunexpected = 1\n'],
+    ids=["unparsable", "invalid"],
+)
+def test_lint_rules_reports_a_broken_rulebook_index_as_a_finding(
+    registry_reading_corpus: Path, capsys: pytest.CaptureFixture[str], index: str
+) -> None:
+    (registry_reading_corpus / "rulebook.toml").write_text(index)
+
+    with pytest.raises(SystemExit):
+        _lint("rules")
+
+    assert {finding[0] for finding in _findings(capsys)} == {"rules/rulebook.toml"}
+
+
 def test_lint_all_reports_a_rules_schema_failure_exactly_once(
     registry_reading_corpus: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

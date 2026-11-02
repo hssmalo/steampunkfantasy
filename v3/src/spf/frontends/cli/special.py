@@ -14,6 +14,7 @@ from rich.text import Text
 from spf import races
 from spf.console import stdout
 from spf.frontends.cli.suggest import resolve_or_raise
+from spf.prose import plain
 from spf.registry import Registry, load_registry
 from spf.render.rulebook import constraint_text
 from spf.render.specials import special_row
@@ -67,7 +68,7 @@ def _build_row(key: str, rule: SpecialRuleConfig) -> SpecialRow:
     if rule.written:
         # An effect may run to several lines; the row is one logical line, so
         # it is folded rather than cut and the list stays greppable.
-        text, is_stub = " ".join((rule.effect or "").split()), False
+        text, is_stub = " ".join((plain(rule.effect) or "").split()), False
     else:
         # A Stub always has a `todo` — the schema admits no third state — and
         # only its first line fits a one-line row.
@@ -183,19 +184,19 @@ def special_record(
         marks=_slot_marks(rule.slots),
         label=f"{key}{rule.signature or ''}",
         name=rule.name,
-        effect=rule.effect,
+        effect=plain(rule.effect),
         flavor=rule.flavor,
-        example=rule.example,
+        example=plain(rule.example),
         variables=[
             (name, constraint_text(spec)) for name, spec in rule.variables.items()
         ],
         places=[_ref_label(ref, registry) for ref in rule.places],
         see_also=[_ref_label(ref, registry) for ref in rule.see_also],
         versions=[
-            (_ref_label(ref, registry), overlay.effect)
+            (_ref_label(ref, registry), plain(overlay.effect))
             for ref, overlay in rule.versions.items()
         ],
-        variants=list(rule.variants.items()),
+        variants=[(key, plain(text)) for key, text in rule.variants.items()],
         todo=rule.todo,
     )
 

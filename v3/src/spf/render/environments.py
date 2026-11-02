@@ -88,6 +88,8 @@ def make_environments(templates_root: Path | None = None) -> dict[Family, Enviro
     )
     latex.filters["latex_escape"] = latex_escape
     latex.filters["linked"] = linked_latex
+    # Prose bound for `md_to_latex`: there the link has to arrive as Markdown.
+    latex.filters["linked_md"] = linked_markdown
     latex.filters["posix_path"] = posix_path
     # Markdown that arrives inside the *data* — free-text Rulebook Sections and
     # prose fields in the rules TOML — has no authored per-family form, so each

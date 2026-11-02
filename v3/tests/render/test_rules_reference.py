@@ -5,6 +5,7 @@ import pytest
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
+from spf.prose import Span
 from spf.registry import Registry
 from spf.render import rules_reference as rr
 from spf.schemas import rules as r
@@ -18,6 +19,17 @@ from spf.schemas.race import (
     UnitConfig,
 )
 from spf.schemas.special import SpecialCase, SpecialInstance, Specials
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_army,
+    synthetic_assault,
+    synthetic_equipment,
+    synthetic_model,
+    synthetic_race,
+    synthetic_registry,
+    synthetic_special,
+    synthetic_unit,
+)
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -210,7 +222,7 @@ def test_a_hex_reached_only_by_see_also_prints_its_rule() -> None:
     reference = _resolve("special.fog")
 
     hex_entry = next(e for e in reference.entries if e.ref == "hex.fog")
-    assert hex_entry.effect == "Line of sight is blocked."
+    assert str(hex_entry.effect) == "Line of sight is blocked."
 
 
 def test_the_walk_crosses_places_and_see_also_at_every_depth() -> None:
@@ -308,19 +320,21 @@ def test_a_written_rule_is_not_pending() -> None:
 
 def test_the_generic_text_keeps_its_placeholders() -> None:
     # The Unit line prints the filled signature; the general rule lives here.
-    assert _resolve("special.resistance").entries[0].effect == "Ignore {N} damage."
+    assert str(_resolve("special.resistance").entries[0].effect) == "Ignore {N} damage."
 
 
 def test_an_entry_carries_the_phases_and_removal_its_record_declares() -> None:
     entry = _resolve("token.terror").entries[0]
 
-    assert (entry.phases, entry.remove) == (["Aftermath"], "At the end of the round.")
+    assert entry.phases == ["Aftermath"]
+    assert str(entry.remove) == "At the end of the round."
 
 
 def test_a_record_with_no_such_fields_carries_neither() -> None:
     entry = _resolve("special.burst").entries[0]
 
-    assert (entry.phases, entry.remove) == ([], None)
+    assert entry.phases == []
+    assert not entry.remove
 
 
 def test_a_modifier_record_prints_the_numbers_that_are_its_meaning() -> None:
@@ -573,3 +587,210 @@ def test_a_race_resolves_its_own_rules_reference() -> None:
 
 if __name__ == "__main__":  # pragma: no cover
     pytest.main([__file__])
+
+
+_LINKED = synthetic_registry(
+    specials={
+        "plain": None,
+        "pooled": synthetic_special(
+            name="Pooled",
+            variants={
+                "marked": "Take {it:terrain.forest}.",
+                "unused": "{x:speed.fast}",
+            },
+        ),
+    },
+    records={
+        "token": {
+            "linker": r.TokenRuleConfig(
+                name="Linker",
+                effect="Roll on {poison:damage_type.poison}.",
+                remove="Spend {a slow:speed.slow}.",
+                example="As {good:ability.good_shot}.",
+            ),
+        },
+    },
+)
+
+
+def _refs_of(ref: str) -> set[str]:
+    """Return the Rules Reference entries that walking from `ref` reaches."""
+    seeded = rr.Seeds(refs=[ref], aliases=[])
+    return {entry.ref for entry in rr.resolve(seeded, _LINKED).entries}
+
+
+def test_a_rule_link_in_effect_is_an_edge() -> None:
+    assert "damage_type.poison" in _refs_of("token.linker")
+
+
+def test_a_rule_link_in_remove_is_an_edge() -> None:
+    assert "speed.slow" in _refs_of("token.linker")
+
+
+def test_a_rule_link_in_unprinted_prose_is_no_edge() -> None:
+    # An entry does not print `example`, so there'd be no visible path here.
+    assert "ability.good_shot" not in _refs_of("token.linker")
+
+
+def test_a_rule_link_is_not_added_to_the_see_also_line() -> None:
+    seeded = rr.Seeds(refs=["token.linker"], aliases=[])
+
+    entry = next(
+        e for e in rr.resolve(seeded, _LINKED).entries if e.ref == "token.linker"
+    )
+
+    assert entry.see_also == []
+
+
+@pytest.mark.parametrize(
+    "instance",
+    [
+        SpecialInstance(text="Take {it:terrain.forest}."),
+        SpecialInstance(
+            preamble="Take {it:terrain.forest}.", cases=[SpecialCase(text="One.")]
+        ),
+        SpecialInstance(cases=[SpecialCase(text="Take {it:terrain.forest}.")]),
+    ],
+    ids=["text", "preamble", "case"],
+)
+def test_a_rule_link_in_instance_prose_seeds_its_target(
+    instance: SpecialInstance,
+) -> None:
+    seeded = rr.seeds_from([{"plain": [instance]}], registry=_LINKED)
+
+    assert "terrain.forest" in seeded.refs
+
+
+def test_a_variant_seeds_its_target_only_when_an_instance_draws_it() -> None:
+    drawn = rr.seeds_from(
+        [{"pooled": [SpecialInstance(variant="marked")]}], registry=_LINKED
+    )
+
+    assert "terrain.forest" in drawn.refs
+    assert "speed.fast" not in drawn.refs
+
+
+def test_a_case_drawing_a_variant_seeds_its_target() -> None:
+    instance = SpecialInstance(cases=[SpecialCase(variant="marked")])
+
+    seeded = rr.seeds_from([{"pooled": [instance]}], registry=_LINKED)
+
+    assert "terrain.forest" in seeded.refs
+
+
+def test_prose_fields_seeds_its_targets() -> None:
+    seeded = rr.seeds_from([], registry=_LINKED, prose=["See {it:terrain.forest}."])
+
+    assert seeded.refs == ["terrain.forest"]
+
+
+def _prose_race() -> RaceConfig:
+    """Build a Race with a Rule Link in each kind of prose field."""
+    return synthetic_race(
+        units={
+            "squad": synthetic_unit(
+                note="{a:speed.slow}",
+                damage_tables={
+                    "Regular": {
+                        "rows": ["1: {b:speed.fast}"],
+                        "notes": ["{c:size.small}"],
+                    }
+                },
+            )
+        },
+        models={
+            "soldier": synthetic_model(
+                note="{d:ability.good_shot}",
+                assault=synthetic_assault(note="{e:terrain.forest}"),
+                equipment=["sword"],
+            )
+        },
+        equipment={
+            "sword": synthetic_equipment(
+                note="{f:damage_type.poison}", cost=None, upgrade_all=None
+            ),
+        },
+    )
+
+
+_PROSE_FIELD_REFS = {
+    "speed.slow",
+    "speed.fast",
+    "size.small",
+    "ability.good_shot",
+    "terrain.forest",
+    "damage_type.poison",
+}
+
+
+def test_a_race_seeds_from_its_prose_fields(install_registry: InstallRegistry) -> None:
+    registry = install_registry()
+
+    reference = rr.build_for_race(_prose_race(), registry=registry)
+
+    assert set(reference.anchors) >= _PROSE_FIELD_REFS
+
+
+def test_an_army_seeds_from_its_prose_fields(
+    install_registry: InstallRegistry,
+) -> None:
+    registry = install_registry()
+    race = _prose_race()
+    army = synthetic_army(race).resolve(race)
+
+    reference = rr.build(army, registry=registry)
+
+    assert set(reference.anchors) >= _PROSE_FIELD_REFS
+
+
+def test_effect_and_remove_carry_resolved_rule_links() -> None:
+    seeded = rr.Seeds(refs=["token.linker"], aliases=[])
+
+    reference = rr.resolve(seeded, _LINKED)
+
+    entry = next(e for e in reference.entries if e.ref == "token.linker")
+    assert entry.text.spans == (
+        Span("Roll on "),
+        Span("poison", ref="damage_type.poison", anchor="rule-damage-type-poison"),
+        Span("."),
+    )
+    assert entry.remove.spans == (
+        Span("Spend "),
+        Span("a slow", ref="speed.slow", anchor="rule-speed-slow"),
+        Span("."),
+    )
+
+
+def test_an_army_walks_only_the_equipment_notes_it_prints(
+    install_registry: InstallRegistry,
+) -> None:
+    registry = install_registry()
+    race = synthetic_race(
+        models={"soldier": synthetic_model(equipment=["gun", "knife"])},
+        equipment={
+            # A ranged Equipment prints its range note and not its own.
+            "gun": synthetic_equipment(
+                name="Gun",
+                cost=None,
+                upgrade_all=None,
+                note="{a:speed.slow}",
+                range={
+                    "range": "6",
+                    "angle": [True, False, False, False],
+                    "damage": "d4",
+                    "ap": 0,
+                    "note": "{b:speed.fast}",
+                },
+            ),
+            "knife": synthetic_equipment(
+                name="Knife", cost=None, upgrade_all=None, note="{c:size.small}"
+            ),
+        },
+    )
+    army = synthetic_army(race).resolve(race)
+
+    anchors = rr.build(army, registry=registry).anchors
+
+    assert "speed.slow" not in anchors
+    assert "speed.fast" in anchors
+    assert "size.small" in anchors

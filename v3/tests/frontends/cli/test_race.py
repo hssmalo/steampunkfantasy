@@ -21,6 +21,7 @@ from spf.schemas.type_aliases import Cost
 from tests.conftest import (
     InstallRegistry,
     synthetic_race,
+    synthetic_unit,
     write_race_toml,
 )
 
@@ -209,3 +210,21 @@ def test_an_unknown_race_fails_the_way_show_does(command: str) -> None:
 
     assert str(listed.value) == str(shown.value)
     assert "nosuchrace" in str(listed.value)
+
+
+@pytest.mark.parametrize("arguments", [[], ["units"]], ids=["whole", "section"])
+def test_race_show_prints_a_rule_links_label_not_its_syntax(
+    arguments: list[str],
+    install_registry: InstallRegistry,
+    races_dir: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    install_registry()
+    race = synthetic_race(units={"squad": synthetic_unit(note="See {it:speed.slow}.")})
+    write_race_toml(races_dir, race)
+
+    _race("show", RACE, *arguments)
+
+    printed = capsys.readouterr().out
+    assert "See it." in printed
+    assert ":speed" not in printed

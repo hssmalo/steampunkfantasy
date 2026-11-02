@@ -8,7 +8,7 @@ untidy corpus is left to lint.
 """
 
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from functools import cache
 from pathlib import Path
@@ -18,7 +18,7 @@ import pydantic
 
 from spf import rules
 from spf.config import config
-from spf.prose import PLACEHOLDER, resolve
+from spf.prose import PLACEHOLDER, link_refs, malformed_links, resolve
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance, Specials
 
@@ -113,6 +113,7 @@ def _load_registry(rules_dir: Path) -> Registry:
         },
     )
     _check_version_keys(registry)
+    _check_record_links(registry)
     return registry
 
 
@@ -187,6 +188,45 @@ def _check_version_keys(registry: Registry) -> None:
         raise ValueError(msg)
 
 
+def check_links(prose: str | None, *, where: str, registry: Registry) -> list[str]:
+    """List what is wrong with the Rule Links authored in `prose` (ADR 0042)."""
+    malformed = [
+        f"{where}: {written} is not a Rule Link; write {{label:<namespace>.<id>}}"
+        for written in malformed_links(prose)
+    ]
+    dangling = [
+        f"{where}: a Rule Link names '{ref}', which resolves to no record"
+        for ref in link_refs(prose)
+        if registry.record(ref) is None
+    ]
+    return malformed + dangling
+
+
+def _record_prose(record: r.RuleRecord) -> Iterator[str | None]:
+    """Yield every field of a Record that may author a Rule Link."""
+    yield record.effect
+    yield record.example
+    yield getattr(record, "remove", None)
+    if isinstance(record, r.SpecialRuleConfig):
+        yield from record.variants.values()
+        yield from (overlay.effect for overlay in record.versions.values())
+
+
+def _check_record_links(registry: Registry) -> None:
+    """Resolve every Rule Link the Records author, naming all that fail."""
+    errors = [
+        error
+        for namespace, records in registry.records.items()
+        for identifier, record in records.items()
+        for prose in _record_prose(record)
+        for error in check_links(
+            prose, where=f"'{namespace}.{identifier}'", registry=registry
+        )
+    ]
+    if errors:
+        raise ValueError("\n".join(errors))
+
+
 def check_instances(
     specials: Specials, *, slot: r.Slot, context: str, registry: Registry
 ) -> list[str]:
@@ -236,6 +276,7 @@ def _check_instance(
     if not instance.cases:
         return (
             errors
+            + check_links(instance.text, where=where, registry=registry)
             + _check_prose(
                 resolve(instance.text, instance.variant, rule.variants),
                 instance.variant,
@@ -247,8 +288,10 @@ def _check_instance(
             )
         )
     errors += _check_preamble(instance, rule=rule, where=where)
+    errors += check_links(instance.preamble, where=where, registry=registry)
     for number, case in enumerate(instance.cases, start=1):
         located = f"{where}, case {number}"
+        errors += check_links(case.text, where=located, registry=registry)
         errors += _check_variant(case.variant, rule=rule, where=located)
         errors += _check_prose(
             resolve(case.text, case.variant, rule.variants),

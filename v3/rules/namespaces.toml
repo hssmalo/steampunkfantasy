@@ -32,17 +32,17 @@ effect = "Roll damage versus psychic damage table of target. If target has no ps
 [damage_type.fire]
 name = "Fire"
 see_also = ["token.fire"]
-effect = "The result of fire token is considered fire damage."
+effect = "The result of {fire token:token.fire} is considered fire damage."
 
 [damage_type.poison]
 name = "Poison"
 see_also = ["token.poison"]
-effect = "The result of poison token is considered poison damage."
+effect = "The result of {poison token:token.poison} is considered poison damage."
 
 [damage_type.acid]
 name = "Acid"
 see_also = ["token.acid", "token.minor_acid"]
-effect = "The result of (minor) acid token is considered acid damage."
+effect = "The result of ({minor:token.minor_acid}) {acid token:token.acid} is considered acid damage."
 
 [damage_type.crew]
 name = "Crew"
