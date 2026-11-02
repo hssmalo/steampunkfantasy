@@ -557,14 +557,23 @@ def image(  # noqa: PLR0913  CLI surface, parameters are fixed
     for target in briefed:
         if len(briefed) > 1:
             stdout.print(f"[green]{target.name}[/]")
-        _generate_image(kind, race, target, opts, svc, env_name, profile_name)
+        _generate_image(
+            kind,
+            race,
+            target,
+            opts,
+            svc=svc,
+            env_name=env_name,
+            profile_name=profile_name,
+        )
 
 
-def _generate_image(  # noqa: PLR0913, PLR0917  internal seam, parameters are fixed
+def _generate_image(  # noqa: PLR0913  internal seam, parameters are fixed
     kind: AssetKind,
     race: t.RaceName,
     target: Target,
     opts: AssetOpts,
+    *,
     svc: ComfyUIService,
     env_name: str,
     profile_name: str,

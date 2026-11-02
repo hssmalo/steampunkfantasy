@@ -5,10 +5,8 @@ pure over a `Registry` and whatever holds the Specials: no disk access, no
 templates. An Army reaches the rules of the loadout it chose and a Race
 catalogue the rules of everything it could field, so both seed the same walk.
 
-The Specials are the seeds. From there the walk follows `places`
-unbounded, because a rule's mechanical consequence is part of the rule, and
-`see_also` exactly one hop, promoting only the targets a player has to resolve
-on the table (ADR 0029).
+The Specials are the seeds. From there the walk follows `places` and `see_also`
+at every level, so every rule an entry points at is itself an entry (ADR 0041).
 
 One entry per Record, printing the Record's *general* text with its `{N}`
 placeholders intact: the Unit line already prints the filled signature, so the
@@ -17,6 +15,7 @@ concrete numbers live with the Unit and the general rule lives here.
 
 from collections.abc import Iterable
 from dataclasses import dataclass, field
+from itertools import chain
 
 from spf.armies.army import Army
 from spf.registry import SPECIAL, Registry
@@ -30,9 +29,6 @@ TITLE = "Rules Reference"
 PENDING = "Rule text pending."
 """Shown in place of a Stub's text: omitting the entry silently would let the
 Rules Reference lie about what a Unit needs."""
-
-PLAYER_FACING = frozenset({"token", "hex", "damage_type"})
-"""The namespaces a one-hop `see_also` promotes to a full entry (ADR 0029)."""
 
 _ANCHOR_PREFIX = "rule"
 _ALIAS_PREFIX = "rule-alias"
@@ -67,6 +63,7 @@ class RuleEntry:
     to_hit: str | None = None
     to_be_hit: str | None = None
     written: bool = False
+    places: list[RuleLink] = field(default_factory=list)
     see_also: list[RuleLink] = field(default_factory=list)
     alias_for: RuleLink | None = None
     """Set on an Alias Entry, naming the Record the Instance is an occurrence of."""
@@ -92,7 +89,12 @@ class RuleEntry:
     def fields(self) -> bool:
         """Whether the entry has anything to list beneath its rule text."""
         return bool(
-            self.phases or self.remove or self.to_hit or self.to_be_hit or self.see_also
+            self.phases
+            or self.remove
+            or self.to_hit
+            or self.to_be_hit
+            or self.places
+            or self.see_also
         )
 
     @property
@@ -181,7 +183,8 @@ def _collect(
         for instance in instances:
             if instance.name:
                 aliases[instance.name, ref] = None
-            for value in instance.args.values():
+            arg_sets = [instance.args, *(case.args for case in instance.cases)]
+            for value in chain.from_iterable(args.values() for args in arg_sets):
                 # A ref argument is one that resolves; a scalar names no
                 # record, so the registry is the whole test.
                 if isinstance(value, str) and registry.record(value) is not None:
@@ -208,16 +211,8 @@ def build_for_race(
 
 
 def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesReference:
-    """Close `seeded` over the rule graph and shape the result into entries.
-
-    `see_also` is walked one hop from the core — what the Army's Specials
-    themselves reach — and never from what promotion brings in, which is what
-    keeps the walk bounded. `places` is then closed over everything: a
-    promoted token that places a Terror token is no more explained without it
-    than a seeded rule would be (ADR 0029).
-    """
-    core = _close_over_places(seeded.refs, registry)
-    entry_refs = _close_over_places([*core, *_promotions(core, registry)], registry)
+    """Close `seeded` over the rule graph and shape the result into entries."""
+    entry_refs = _reachable(seeded.refs, registry)
     anchors = {ref: f"{prefix}{_ANCHOR_PREFIX}-{slug(ref)}" for ref in entry_refs}
     entries = [_entry(ref, registry, anchors=anchors) for ref in entry_refs]
     entries += _aliases(seeded.aliases, registry, anchors=anchors, prefix=prefix)
@@ -225,37 +220,24 @@ def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesRefe
     return RulesReference(entries=entries, anchors=anchors)
 
 
-def _close_over_places(refs: Iterable[str], registry: Registry) -> dict[str, None]:
-    """Close `refs` over `places`, unbounded.
+def _reachable(refs: Iterable[str], registry: Registry) -> dict[str, None]:
+    """Close `refs` over `places` and `see_also`, at every level (ADR 0041).
 
     Rule cycles are legal and exist, so a visited-set is what terminates it.
     """
-    core: dict[str, None] = {}
+    reached: dict[str, None] = {}
     pending = list(refs)
     while pending:
         ref = pending.pop(0)
-        if ref in core or (record := registry.record(ref)) is None:
+        if ref in reached or (record := registry.record(ref)) is None:
             continue
-        core[ref] = None
-        pending += record.places
-    return core
-
-
-def _promotions(core: dict[str, None], registry: Registry) -> dict[str, None]:
-    """Collect the one-hop `see_also` targets that become entries themselves."""
-    promoted: dict[str, None] = {}
-    for ref in core:
-        record = registry.record(ref)
-        assert record is not None  # noqa: S101  `_close_over_places` only keeps these
-        for target in record.see_also:
-            namespace = target.partition(".")[0]
-            if namespace in PLAYER_FACING and target not in core:
-                promoted[target] = None
-    return promoted
+        reached[ref] = None
+        pending += [*record.places, *record.see_also]
+    return reached
 
 
 def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntry:
-    """Shape one Record into its entry, with its cross-reference links."""
+    """Shape one Record into its entry, with its links to other rules."""
     record = registry.record(ref)
     assert record is not None  # noqa: S101  guarded by the caller
     return RuleEntry(
@@ -269,15 +251,23 @@ def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntr
         to_hit=getattr(record, "to_hit", None),
         to_be_hit=getattr(record, "to_be_hit", None),
         written=record.written,
-        # Every target the reader can be sent to, linked when it is an entry
-        # here. A target that is one keeps its line: a Stub whose `see_also` is
-        # the only thing explaining it would otherwise print nothing at all.
-        see_also=[
-            _link(target, registry, anchors=anchors)
-            for target in record.see_also
-            if registry.record(target) is not None
-        ],
+        places=_links(record.places, registry, anchors=anchors),
+        # A target keeps its line even though the walk made it an entry: a Stub
+        # whose `see_also` is the only thing explaining it would otherwise print
+        # nothing at all.
+        see_also=_links(record.see_also, registry, anchors=anchors),
     )
+
+
+def _links(
+    targets: Iterable[str], registry: Registry, *, anchors: dict[str, str]
+) -> list[RuleLink]:
+    """Shape the `targets` that resolve into links."""
+    return [
+        _link(target, registry, anchors=anchors)
+        for target in targets
+        if registry.record(target) is not None
+    ]
 
 
 def _aliases(

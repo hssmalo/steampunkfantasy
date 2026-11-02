@@ -1,5 +1,9 @@
 # The Rules Reference promotes see_also by namespace
 
+> The `see_also` bound and the promotion are superseded by
+> [ADR-0041](0041-the-rules-reference-walks-every-level.md). Following `places`
+> unbounded, and one entry per Record, still stand.
+
 A **Rules Reference** lists the rule Records an Army's Specials reach. Which
 records those are is a graph walk over the two edge kinds
 [ADR-0024](0024-specials-are-identified-instances-over-a-registry.md) gave a

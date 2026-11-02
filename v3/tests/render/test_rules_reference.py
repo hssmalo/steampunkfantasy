@@ -1,4 +1,4 @@
-"""Tests for resolving an Army's Rules Reference (ADR 0029)."""
+"""Tests for resolving an Army's Rules Reference (ADR 0029, ADR 0041)."""
 
 import pytest
 
@@ -17,7 +17,7 @@ from spf.schemas.race import (
     ShakenConfig,
     UnitConfig,
 )
-from spf.schemas.special import SpecialInstance, Specials
+from spf.schemas.special import SpecialCase, SpecialInstance, Specials
 
 _ASSAULT = AssaultConfig(
     strength=[1, 0, 0, 0],
@@ -177,26 +177,33 @@ def test_places_is_followed() -> None:
     assert "token.poison" in _refs(reference)
 
 
-def test_a_places_cycle_terminates() -> None:
-    # `assault_poison` and `range_poison` see_also each other; a visited-set is
-    # what keeps a legal cycle from looping forever.
-    reference = _resolve("special.assault_poison", "special.range_poison")
-
-    assert _refs(reference).count("token.poison") == 1
-
-
-def test_a_see_also_into_a_player_facing_namespace_is_promoted() -> None:
-    # A token is a physical thing on the table, so it prints its own rule.
+def test_see_also_is_followed() -> None:
     reference = _resolve("special.terror")
 
     assert "token.terror" in _refs(reference)
 
 
-def test_a_see_also_into_special_is_not_promoted() -> None:
-    # Another Special is editorial cross-reference, not a thing to resolve.
+def test_see_also_is_followed_into_every_namespace() -> None:
+    # A `see_also` to another Special is a working Rule Link only if that
+    # Special is an entry too.
     reference = _resolve("special.assault_poison")
 
-    assert "special.range_poison" not in _refs(reference)
+    assert "special.range_poison" in _refs(reference)
+
+
+def test_a_see_also_cycle_terminates() -> None:
+    # `assault_poison` and `range_poison` see_also each other; a visited-set is
+    # what keeps a legal cycle from looping forever.
+    reference = _resolve("special.assault_poison")
+
+    assert _refs(reference).count("special.assault_poison") == 1
+    assert _refs(reference).count("special.range_poison") == 1
+
+
+def test_a_record_reached_twice_is_one_entry() -> None:
+    reference = _resolve("special.assault_poison", "special.range_poison")
+
+    assert _refs(reference).count("token.poison") == 1
 
 
 def test_a_hex_reached_only_by_see_also_prints_its_rule() -> None:
@@ -206,34 +213,26 @@ def test_a_hex_reached_only_by_see_also_prints_its_rule() -> None:
     assert hex_entry.effect == "Line of sight is blocked."
 
 
-def test_a_promoted_records_own_places_are_followed() -> None:
-    # A promoted token that sets the unit on fire is no more explained without
-    # the Fire token than a seeded rule would be.
+def test_the_walk_crosses_places_and_see_also_at_every_depth() -> None:
+    # corrode -see_also-> acid -places-> fire, and acid -see_also-> poison.
     reference = _resolve("special.corrode")
 
-    assert set(_refs(reference)) == {"special.corrode", "token.acid", "token.fire"}
+    assert set(_refs(reference)) == {
+        "special.corrode",
+        "token.acid",
+        "token.fire",
+        "damage_type.poison",
+    }
 
 
-def test_see_also_is_not_followed_from_a_promoted_record() -> None:
-    # `places` is unbounded from everything; `see_also` stays one hop from the
-    # rules the Army's own Specials reach, which is what bounds the walk.
-    reference = _resolve("special.corrode")
-
-    assert "damage_type.poison" not in _refs(reference)
-
-
-def test_see_also_is_followed_one_hop_only() -> None:
-    # `special.terror` promotes `token.terror`; nothing that token points at
-    # joins in turn.
-    reference = _resolve("special.terror")
-
-    assert set(_refs(reference)) == {"special.terror", "token.terror"}
+def test_a_ref_that_resolves_to_no_record_is_no_entry() -> None:
+    assert _refs(_resolve("special.burst", "token.missing")) == ["special.burst"]
 
 
 # --- Cross-references -------------------------------------------------------
 
 
-def test_an_unpromoted_see_also_becomes_a_cross_reference() -> None:
+def test_a_see_also_becomes_a_link() -> None:
     reference = _resolve("special.assault_poison")
 
     entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
@@ -242,21 +241,22 @@ def test_an_unpromoted_see_also_becomes_a_cross_reference() -> None:
     ]
 
 
-def test_a_cross_reference_links_when_its_target_is_an_entry() -> None:
-    reference = _resolve("special.assault_poison", "special.range_poison")
+def test_a_see_also_links_to_its_targets_entry() -> None:
+    reference = _resolve("special.assault_poison")
 
     entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
     assert entry.see_also[0].anchor == "rule-special-range-poison"
 
 
-def test_a_cross_reference_to_a_non_entry_carries_no_anchor() -> None:
-    reference = _resolve("special.assault_poison")
+def test_a_link_to_a_non_entry_carries_no_anchor() -> None:
+    reference = _resolve(aliases=[("Insanity Field", "special.terror")])
 
-    entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
-    assert entry.see_also[0].anchor is None
+    assert reference.entries[0].alias_for == rr.RuleLink(
+        name="Terror", qualifier="special", anchor=None
+    )
 
 
-def test_a_promoted_see_also_keeps_its_cross_reference_line() -> None:
+def test_a_see_also_that_is_an_entry_keeps_its_line() -> None:
     # A Stub whose `see_also` is the only thing explaining it would otherwise
     # print a heading and nothing else, beside the entry that explains it.
     reference = _resolve("special.terror")
@@ -265,6 +265,31 @@ def test_a_promoted_see_also_keeps_its_cross_reference_line() -> None:
     assert entry.see_also == [
         rr.RuleLink(name="Terror", qualifier="token", anchor="rule-token-terror")
     ]
+
+
+def test_a_places_target_links_to_its_entry() -> None:
+    reference = _resolve("special.assault_poison")
+
+    entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
+    assert entry.places == [
+        rr.RuleLink(name="Poison", qualifier="token", anchor="rule-token-poison")
+    ]
+
+
+def test_an_entry_with_only_a_places_line_has_fields_to_list() -> None:
+    registry = Registry(
+        namespaces=_namespaces(),
+        records={
+            "special": {
+                "plant": _special("Plant", todo="Unwritten.", places=["token.poison"])
+            },
+            "token": {"poison": r.TokenRuleConfig(name="Poison", effect="Hurts.")},
+        },
+    )
+
+    reference = rr.resolve(rr.Seeds(refs=["special.plant"], aliases=[]), registry)
+
+    assert next(e for e in reference.entries if e.ref == "special.plant").fields
 
 
 # --- Entry content ----------------------------------------------------------
@@ -436,6 +461,32 @@ def test_a_ref_valued_argument_seeds_the_record_it_names() -> None:
     assert "damage_type.poison" in rr.seeds(army, registry=REGISTRY).refs
 
 
+def test_a_ref_valued_case_argument_seeds_the_record_it_names() -> None:
+    # A Ref reached only through a Case is printed on the Unit line all the same.
+    army = _army(
+        {
+            "resistance": [
+                SpecialInstance(
+                    args={"N": 3},
+                    cases=[
+                        SpecialCase(
+                            text="Against poison.", args={"version": "token.poison"}
+                        )
+                    ],
+                )
+            ]
+        }
+    )
+
+    assert "token.poison" in rr.seeds(army, registry=REGISTRY).refs
+
+
+def test_a_scalar_case_argument_seeds_nothing() -> None:
+    army = _army({"resistance": [SpecialInstance(cases=[SpecialCase(args={"N": 3})])]})
+
+    assert rr.seeds(army, registry=REGISTRY).refs == ["special.resistance"]
+
+
 def test_a_scalar_argument_seeds_nothing() -> None:
     army = _army({"resistance": [SpecialInstance(args={"N": 3})]})
 
@@ -516,8 +567,7 @@ def test_a_race_resolves_its_own_rules_reference() -> None:
     )
 
     assert reference.anchor_for("terror") == "rule-special-terror"
-    # The graph is closed over from a Race's Slots exactly as from an Army's:
-    # Terror's `see_also` promotes the token a player has to resolve (ADR 0029).
+    # The graph is closed over from a Race's Slots exactly as from an Army's.
     assert "token.terror" in reference.anchors
 
 

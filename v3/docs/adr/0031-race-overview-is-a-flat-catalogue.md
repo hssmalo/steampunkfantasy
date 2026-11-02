@@ -103,8 +103,8 @@ which is how a data question gets noticed rather than buried.
 
 - **The Rules Reference is included and unchanged.** It is seeded from the
   Race's Slots rather than an Army's
-  ([ADR-0029](0029-the-rules-reference-promotes-see-also-by-namespace.md) governs
-  the walk either way), so a Race Overview explains every rule its catalogue
+  ([ADR-0041](0041-the-rules-reference-walks-every-level.md) governs the walk
+  either way), so a Race Overview explains every rule its catalogue
   names. `--no-rules` drops it and every link into it.
 
 ## Rejected: nest, and print a record once at its first occurrence
