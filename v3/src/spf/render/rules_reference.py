@@ -13,16 +13,18 @@ placeholders intact: the Unit line already prints the filled signature, so the
 concrete numbers live with the Unit and the general rule lives here.
 """
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from itertools import chain
 
 from spf.armies.army import Army
+from spf.prose import link_refs
+from spf.prose import resolve as resolve_prose
 from spf.registry import SPECIAL, Registry
 from spf.render.anchors import anchor as _anchor
 from spf.render.anchors import slug
-from spf.schemas.race import RaceConfig, race_slots
-from spf.schemas.special import Specials
+from spf.schemas.race import RaceConfig, fielded_prose, race_slots
+from spf.schemas.special import SpecialInstance, Specials
 
 TITLE = "Rules Reference"
 
@@ -129,16 +131,21 @@ class Seeds:
     """(the Instance's atmospheric name, the ref of the Record it occurs of)."""
 
 
-def seeds_from(slots: Iterable[Specials], *, registry: Registry) -> Seeds:
+def seeds_from(
+    slots: Iterable[Specials], *, registry: Registry, prose: Iterable[str] = ()
+) -> Seeds:
     """Collect every ref the given Slots name, in printed order.
 
     Slots rather than a carrier: an Army and a Race hold their instances in
-    different shapes, and everything past the walk is the same for both.
+    different shapes, and everything past the walk is the same for both. `prose`
+    is the fielded text beside the Slots, whose Rule Links are seeds too.
     """
     refs: dict[str, None] = {}
     aliases: dict[tuple[str, str], None] = {}
     for specials in slots:
         _collect(specials, registry, refs=refs, aliases=aliases)
+    for text in prose:
+        refs.update(dict.fromkeys(link_refs(text)))
     return Seeds(refs=list(refs), aliases=list(aliases))
 
 
@@ -149,7 +156,7 @@ def seeds(army: Army, *, registry: Registry) -> Seeds:
     only removes entries identical to one already there, so the ref set is the
     same, and the raw walk cannot drift if the collapsing rules change.
     """
-    return seeds_from(_every_slot(army), registry=registry)
+    return seeds_from(_every_slot(army), registry=registry, prose=_fielded_prose(army))
 
 
 def _every_slot(army: Army) -> Iterable[Specials]:
@@ -169,6 +176,32 @@ def _every_slot(army: Army) -> Iterable[Specials]:
                     yield equip.assault.specials
 
 
+def _fielded_prose(army: Army) -> Iterable[str]:
+    """Yield the notes and damage table text an Army Reference prints."""
+    for unit in army.units:
+        yield unit.config.note
+        for table in unit.config.damage_tables.values():
+            yield from (row.effect for row in table.rows)
+            yield from table.notes
+        for model in unit.models:
+            yield model.config.note
+            yield model.assault().note  # holds its Equipment's assault notes too
+            for equip in model.equipment:
+                yield equip.note
+                if equip.range is not None:
+                    yield equip.range.note
+
+
+def _instance_prose(
+    instance: SpecialInstance, variants: Mapping[str, str]
+) -> Iterable[str | None]:
+    """Yield the prose an Instance prints, each Variant as drawn (ADR 0042)."""
+    yield resolve_prose(instance.text, instance.variant, variants)
+    yield resolve_prose(instance.preamble, instance.variant, variants)
+    for case in instance.cases:
+        yield resolve_prose(case.text, case.variant, variants)
+
+
 def _collect(
     specials: Specials,
     registry: Registry,
@@ -180,7 +213,11 @@ def _collect(
     for identifier, instances in specials.items():
         ref = f"{SPECIAL}.{identifier}"
         refs[ref] = None
+        rule = registry.specials.get(identifier)
+        variants = rule.variants if rule is not None else {}
         for instance in instances:
+            for prose in _instance_prose(instance, variants):
+                refs.update(dict.fromkeys(link_refs(prose)))
             if instance.name:
                 aliases[instance.name, ref] = None
             arg_sets = [instance.args, *(case.args for case in instance.cases)]
@@ -206,7 +243,13 @@ def build_for_race(
     resolution, so they share one.
     """
     return resolve(
-        seeds_from(race_slots(race_config), registry=registry), registry, prefix=prefix
+        seeds_from(
+            race_slots(race_config),
+            registry=registry,
+            prose=(prose for _, prose in fielded_prose(race_config)),
+        ),
+        registry,
+        prefix=prefix,
     )
 
 
@@ -221,7 +264,7 @@ def resolve(seeded: Seeds, registry: Registry, *, prefix: str = "") -> RulesRefe
 
 
 def _reachable(refs: Iterable[str], registry: Registry) -> dict[str, None]:
-    """Close `refs` over `places` and `see_also`, at every level (ADR 0041).
+    """Close `refs` over `places`, `see_also` and printed Rule Links (ADR 0041).
 
     Rule cycles are legal and exist, so a visited-set is what terminates it.
     """
@@ -232,7 +275,14 @@ def _reachable(refs: Iterable[str], registry: Registry) -> dict[str, None]:
         if ref in reached or (record := registry.record(ref)) is None:
             continue
         reached[ref] = None
-        pending += [*record.places, *record.see_also]
+        # Only what an entry prints is an edge, so no entry is left with no
+        # visible path to it (ADR 0042).
+        pending += [
+            *record.places,
+            *record.see_also,
+            *link_refs(record.effect),
+            *link_refs(getattr(record, "remove", None)),
+        ]
     return reached
 
 
