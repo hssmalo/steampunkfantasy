@@ -8,6 +8,10 @@ over one grammar, so it lives here rather than inside any one of them.
 Filling yields linked text: the same words, with each Ref that printed still
 attached to its span. The plain string is `str()` of that, so the two forms
 cannot drift, and a surface that ignores the links degrades to text.
+
+Prose may also author a **Rule Link** as `{label:<namespace>.<id>}` (ADR 0042).
+Links parse before placeholders, so a placeholder in a label fills as text and
+links never nest.
 """
 
 import re
@@ -22,6 +26,16 @@ if TYPE_CHECKING:
 
 PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
 """A variable slot: `{N}`, or `{version.id}` for the raw ref."""
+
+LINK = re.compile(
+    r"\{((?:[^{}]|\{[A-Za-z_][A-Za-z0-9_]*(?:\.id)?\})+)"
+    r":([a-z][a-z0-9_]*\.[a-z][a-z0-9_]*)\}"
+)
+"""An authored Rule Link. The Ref is anchored at the end, so a label may hold a
+colon, and placeholders are the only braces it may hold."""
+
+_LINK_SHAPED = re.compile(r"\{(?:[^{}]|\{[^{}]*\})*:[^{}]*\}")
+"""Braces around a colon: what an author wrote when meaning a link."""
 
 type AnchorOf = Callable[[str], str | None]
 """Resolves a Ref to its Rules Reference entry, or nothing."""
@@ -100,6 +114,42 @@ def _merged(spans: Iterable[Span]) -> tuple[Span, ...]:
     return tuple(merged)
 
 
+def _pieces(raw: str) -> Iterator[tuple[str, str | None]]:
+    """Split authored prose into `(text, ref)` runs, in order."""
+    position = 0
+    for match in LINK.finditer(raw):
+        yield raw[position : match.start()], None
+        yield match.group(1), match.group(2)
+        position = match.end()
+    yield raw[position:], None
+
+
+def linked_prose(raw: str | None, anchor_of: AnchorOf | None = None) -> LinkedText:
+    """Parse prose that has no Args to fill, so its `{N}` stay verbatim (ADR 0037).
+
+    With `anchor_of`, each Rule Link is resolved against a Rules Reference.
+    """
+    if raw is None:
+        return LinkedText()
+    text = LinkedText(_merged(Span(*piece) for piece in _pieces(raw)))
+    return text if anchor_of is None else text.resolved(anchor_of)
+
+
+def plain(raw: str) -> str:
+    """Reduce every authored Rule Link to its label, for a surface without links."""
+    return LINK.sub(r"\1", raw)
+
+
+def link_refs(raw: str | None) -> list[str]:
+    """List the Ref of each authored Rule Link in `raw`, in order."""
+    return [] if raw is None else [match.group(2) for match in LINK.finditer(raw)]
+
+
+def malformed_links(raw: str | None) -> list[str]:
+    """List what `raw` writes as a link but the grammar does not accept."""
+    return [] if raw is None else _LINK_SHAPED.findall(LINK.sub("", raw))
+
+
 def fill_linked(
     template: str,
     args: dict[str, int | str],
@@ -114,13 +164,30 @@ def fill_linked(
     declares them. `{var.id}` asks for the raw id instead.
     """
     spans: list[Span] = []
+    for text, ref in _pieces(template):
+        filled = _placeholders_filled(text, args, registry, seen)
+        if ref is None:
+            spans += filled
+        else:
+            spans.append(Span("".join(span.text for span in filled), ref=ref))
+    return LinkedText(_merged(spans))
+
+
+def _placeholders_filled(
+    text: str,
+    args: dict[str, int | str],
+    registry: "Registry",
+    seen: frozenset[str],
+) -> list[Span]:
+    """Return the spans of a run of `text`, each placeholder filled."""
+    spans: list[Span] = []
     position = 0
-    for match in PLACEHOLDER.finditer(template):
-        spans.append(Span(template[position : match.start()]))
+    for match in PLACEHOLDER.finditer(text):
+        spans.append(Span(text[position : match.start()]))
         spans += _filled(match, args, registry, seen)
         position = match.end()
-    spans.append(Span(template[position:]))
-    return LinkedText(_merged(spans))
+    spans.append(Span(text[position:]))
+    return spans
 
 
 def _filled(
