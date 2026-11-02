@@ -100,7 +100,9 @@ def test_a_rulebook_source_may_not_author_a_rule_link(tmp_path: Path) -> None:
 
     findings = registries.lint_rulebook_sources(["round.md"], tmp_path)
 
-    assert [(f.file, f.rule) for f in findings] == [("round.md", "link-field")]
+    assert [(f.file, f.location, f.rule) for f in findings] == [
+        ("rules/round.md", "", "link-field")
+    ]
 
 
 def test_a_section_explanation_may_not_author_a_rule_link(tmp_path: Path) -> None:
@@ -108,7 +110,9 @@ def test_a_section_explanation_may_not_author_a_rule_link(tmp_path: Path) -> Non
 
     findings = registries.lint_rulebook_sources(["tokens.toml"], tmp_path)
 
-    assert [(f.key, f.rule) for f in findings] == [("explanation", "link-field")]
+    assert [(f.file, f.location, f.rule) for f in findings] == [
+        ("rules/tokens.toml", "explanation", "link-field")
+    ]
 
 
 def test_a_rulebook_source_with_no_rule_link_is_clean(tmp_path: Path) -> None:

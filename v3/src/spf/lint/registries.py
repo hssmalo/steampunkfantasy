@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from spf.lint import names, prose
+from spf.lint.findings import LintFinding
 from spf.prose import writes_link
 from spf.registry import Registry
 from spf.schemas.config import LintConfig
@@ -69,28 +70,27 @@ def lint_registry_prose(registry: Registry) -> list[RegistryFinding]:
     ]
 
 
-def lint_rulebook_sources(sources: list[str], rules_dir: Path) -> list[RegistryFinding]:
+def lint_rulebook_sources(sources: list[str], rules_dir: Path) -> list[LintFinding]:
     """Find any Rule Link in what the Rulebook prints as document prose (ADR 0042).
 
     A Rulebook source and a section's `explanation` sit outside every Record, so
     the walk above never sees them, and the Rulebook has no anchors to link to.
     """
-    findings: list[RegistryFinding] = []
+    findings: list[LintFinding] = []
     for source in sources:
         path = rules_dir / source
         if path.suffix == ".md":
-            key, value = "source", path.read_text()
+            location, value = "", path.read_text()
         else:
-            key = "explanation"
-            value = str(tomllib.loads(path.read_text()).get(key, ""))
+            location = "explanation"
+            value = str(tomllib.loads(path.read_text()).get(location, ""))
         if writes_link(value):
             findings.append(
-                RegistryFinding(
-                    file=source,
-                    namespace="rulebook",
-                    key=key,
+                LintFinding(
+                    file=f"rules/{source}",
+                    location=location,
                     rule="link-field",
-                    message=f"{source} may not hold a Rule Link in its {key}",
+                    message="Rulebook document prose may not hold a Rule Link",
                 )
             )
     return findings
