@@ -2,7 +2,7 @@
 
 Plus a generated Landing Page.
 
-The Landing Page is *not* a Product (`CONTEXT.md`): it is a build-time artifact
+The Landing Page is *not* a Product (`GLOSSARY.md`): it is a build-time artifact
 over what actually got rendered, not a source-of-truth object bound to a
 template family. Keeping it here, rather than in `spf/render/`, keeps that
 package's contract "Products to Formats" exactly.

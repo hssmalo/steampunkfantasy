@@ -212,7 +212,7 @@ class RuleEntry:
 
     Every field the three schemas hold, flattened into one shape: the Army
     Reference carries a Special's `short` override text, while the *full* rule
-    text belongs here (CONTEXT.md). A field the source leaves out is `None` or
+    text belongs here (GLOSSARY.md). A field the source leaves out is `None` or
     empty, and the partials emit nothing for it.
     """
 
