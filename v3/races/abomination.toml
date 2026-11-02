@@ -132,7 +132,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 rows = [
 	"1-4: +1 to future damage",
 	"5-8: as 1-4, critical damage",
-	"9+: As 5-8, gain one plus minus one token." #token.plus_minus_one
+	"9+: As 5-8, gain one {±1 token:token.plus_minus_one}."
 ]
 
 notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, shaken and it is on fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is shaken as normal."]
