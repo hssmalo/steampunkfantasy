@@ -219,11 +219,18 @@ the file layout. The list is open: adding one is a single line.
 **Ref** (reference):
 A typed pointer into rules data, always fully qualified as `<namespace>.<id>` —
 `token.poison`, `hex.fog`. One value type with one syntax wherever a reference
-appears: as an **Arg**, in a record's `places` or `see_also`, or as the target of
-a **Version** overlay. Every Ref is *structural* — a declared field or a typed
-Arg, never a name mentioned in prose — which is what makes the reference graph
-traversable.
+appears: as an **Arg**, in a record's `places` or `see_also`, as the target of a
+**Version** overlay, or written into prose as `{label:<namespace>.<id>}`. Every
+Ref is *structural* — declared and validated, never inferred from a name that
+happens to appear in prose — which is what makes the reference graph traversable.
 _Avoid_: link, pointer, cross-reference
+
+**Rule Link**:
+The printed, navigable form of a **Ref** in a document that holds its target's
+entry — from a typed Arg in a filled **Signature**, or from an authored
+`{label:<namespace>.<id>}` in prose. A Ref is data; a Rule Link is presentation,
+and prints as plain text where there is nothing to navigate to.
+_Avoid_: magic link, auto-link (nothing is inferred), hyperlink
 
 **Variable** / **Arg**:
 A rule declares **Variables** (a name, a type, and constraints); an **Instance**
@@ -472,10 +479,11 @@ the rules it reaches in its **Rules Reference**), and damage tables. Orders are
 _Avoid_: army sheet, roster printout
 
 **Rules Reference**:
-The flat, alphabetical list of rule Records an Army's Specials reach, printed
-after the Units in an Army Reference and in each Army's entry in an Army Pack.
-One entry per Record, showing the rule's general text; the Unit lines link into
-it. Omitted with `--no-rules`.
+The flat, alphabetical list of rule Records an Army reaches, at any depth,
+through its Specials and the **Rule Links** written in its prose, printed after
+the Units in an Army Reference and in each Army's entry in an Army Pack. One
+entry per Record, showing the rule's general text; the Unit lines link into it.
+Omitted with `--no-rules`.
 _Avoid_: appendix, glossary, rules index
 
 **Kind Qualifier**:
