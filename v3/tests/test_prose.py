@@ -5,7 +5,6 @@ from spf.prose import (
     Span,
     fill,
     fill_linked,
-    interpolate,
     interpolate_linked,
 )
 from spf.schemas import rules as r
@@ -103,7 +102,7 @@ def test_a_value_that_is_no_ref_stays_text() -> None:
     assert text.spans == (Span("not.a_record"),)
 
 
-def test_an_argument_never_given_keeps_its_placeholder() -> None:
+def test_an_arg_never_given_keeps_its_placeholder() -> None:
     assert fill_linked("[{N}]", {}, REGISTRY).spans == (Span("[{N}]"),)
 
 
@@ -112,13 +111,12 @@ def test_the_plain_form_reads_the_labels_alone() -> None:
     rule = REGISTRY.specials["to_hit"]
 
     assert str(interpolate_linked(rule, args, REGISTRY)) == "Take Cover[Slow][-2]"
-    assert interpolate(rule, args, REGISTRY) == "Take Cover[Slow][-2]"
     assert fill("{version}", args, REGISTRY) == "Take Cover[Slow]"
 
 
 def test_empty_text_is_falsy_and_written_text_is_not() -> None:
-    assert not LinkedText.plain("")
-    assert LinkedText.plain("x")
+    assert not LinkedText()
+    assert LinkedText((Span("x"),))
 
 
 def test_joining_merges_adjacent_plain_spans_and_keeps_links() -> None:
@@ -126,7 +124,7 @@ def test_joining_merges_adjacent_plain_spans_and_keeps_links() -> None:
         "; ",
         [
             LinkedText((Span("Poison", ref="damage_type.poison"),)),
-            LinkedText.plain("Fire"),
+            LinkedText((Span("Fire"),)),
         ],
     )
 

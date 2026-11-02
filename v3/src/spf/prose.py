@@ -5,7 +5,7 @@ from that Instance's **Args**. The registry checks a placeholder is fillable,
 rendering fills it, and lint compares two strings once filled — three modules
 over one grammar, so it lives here rather than inside any one of them.
 
-Filling yields **linked text**: the same words, with each Ref that printed still
+Filling yields linked text: the same words, with each Ref that printed still
 attached to its span. The plain string is `str()` of that, so the two forms
 cannot drift, and a surface that ignores the links degrades to text.
 """
@@ -22,6 +22,9 @@ if TYPE_CHECKING:
 
 PLACEHOLDER = re.compile(r"\{([A-Za-z_][A-Za-z0-9_]*)(\.id)?\}")
 """A variable slot: `{N}`, or `{version.id}` for the raw ref."""
+
+type AnchorOf = Callable[[str], str | None]
+"""Resolves a Ref to its Rules Reference entry, or nothing."""
 
 _GROUP = re.compile(r"\[[^][]*\]")
 """One bracketed group of a signature: `[{N}+]`, `[1 for {M}]`."""
@@ -55,11 +58,6 @@ class LinkedText:
     spans: tuple[Span, ...] = ()
 
     @classmethod
-    def plain(cls, text: str) -> "LinkedText":
-        """Wrap `text` that names no Ref."""
-        return cls(_merged([Span(text)]))
-
-    @classmethod
     def join(cls, separator: str, parts: Iterable["LinkedText"]) -> "LinkedText":
         """Join `parts` with a plain `separator`, as `str.join` does."""
         spans: list[Span] = []
@@ -69,7 +67,7 @@ class LinkedText:
             spans += part.spans
         return cls(_merged(spans))
 
-    def resolved(self, anchor_of: Callable[[str], str | None]) -> "LinkedText":
+    def resolved(self, anchor_of: AnchorOf) -> "LinkedText":
         """Anchor each span whose Ref has an entry; the rest stay plain text."""
         return LinkedText(
             tuple(
@@ -149,14 +147,9 @@ def _filled(
             yield from nested.spans
 
 
-def fill(
-    template: str,
-    args: dict[str, int | str],
-    registry: "Registry",
-    seen: frozenset[str] = frozenset(),
-) -> str:
+def fill(template: str, args: dict[str, int | str], registry: "Registry") -> str:
     """Fill `template` as `fill_linked` does, keeping only the words."""
-    return str(fill_linked(template, args, registry, seen))
+    return str(fill_linked(template, args, registry))
 
 
 def interpolate_linked(
@@ -173,16 +166,6 @@ def interpolate_linked(
     if not rule.signature:
         return LinkedText()
     return fill_linked(_elide(rule.signature, args), args, registry, seen)
-
-
-def interpolate(
-    rule: RuleRecord,
-    args: dict[str, int | str],
-    registry: "Registry",
-    seen: frozenset[str] = frozenset(),
-) -> str:
-    """Fill `rule`'s signature as `interpolate_linked` does, keeping only the words."""
-    return str(interpolate_linked(rule, args, registry, seen))
 
 
 def _elide(signature: str, args: dict[str, int | str]) -> str:

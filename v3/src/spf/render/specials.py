@@ -11,10 +11,15 @@ instance's arguments, followed by whatever prose the instance adds about its
 own occurrence.
 """
 
-from collections.abc import Callable
 from typing import NamedTuple
 
-from spf.prose import LinkedText, fill_linked, interpolate_linked, resolve
+from spf.prose import (
+    AnchorOf,
+    LinkedText,
+    fill_linked,
+    interpolate_linked,
+    resolve,
+)
 from spf.registry import SPECIAL, Registry, load_registry
 from spf.schemas.rules import RuleRecord, SpecialRuleConfig
 from spf.schemas.special import SpecialInstance, Specials
@@ -150,7 +155,7 @@ def special_lines(
     specials: Specials,
     *,
     registry: Registry | None = None,
-    anchor_of: Callable[[str], str | None] | None = None,
+    anchor_of: AnchorOf | None = None,
 ) -> list[SpecialLine]:
     """Render one slot's instances as lines, grouped by heading.
 

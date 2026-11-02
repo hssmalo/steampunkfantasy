@@ -17,6 +17,7 @@ from pathlib import Path
 from spf.armies.army import Army
 from spf.armies.model import Model
 from spf.armies.unit import Unit
+from spf.prose import AnchorOf
 from spf.registry import load_registry
 from spf.render import rules_reference
 from spf.render.damage import roll_text
@@ -116,11 +117,9 @@ class ArmyReference:
     """The Rules Reference printed after the Units; `None` under `--no-rules`."""
 
 
-type _AnchorOf = Callable[[str], str | None] | None
-"""Resolves a Ref to its Rules Reference entry, or nothing."""
-
-
-def _equipment_entry(equip: EquipmentConfig, *, anchor_of: _AnchorOf) -> EquipmentEntry:
+def _equipment_entry(
+    equip: EquipmentConfig, *, anchor_of: AnchorOf | None
+) -> EquipmentEntry:
     assert equip.range is not None  # noqa: S101  guarded by caller
     return EquipmentEntry(
         name=equip.name,
@@ -142,7 +141,7 @@ def _dedup[T](entries: Sequence[T]) -> list[T]:
     return result
 
 
-def _model_entry(model: Model, *, anchor_of: _AnchorOf) -> ModelEntry:
+def _model_entry(model: Model, *, anchor_of: AnchorOf | None) -> ModelEntry:
     ranged_equipment = [equip for equip in model.equipment if equip.range is not None]
     assault = model.assault()
     return ModelEntry(
@@ -172,7 +171,7 @@ def _model_entry(model: Model, *, anchor_of: _AnchorOf) -> ModelEntry:
 
 
 def _unit_entry(
-    unit: Unit, *, race: t.RaceName, image_for: ImageLookup, anchor_of: _AnchorOf
+    unit: Unit, *, race: t.RaceName, image_for: ImageLookup, anchor_of: AnchorOf | None
 ) -> UnitEntry:
     return UnitEntry(
         name=unit.display_name,

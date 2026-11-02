@@ -180,11 +180,15 @@ def test_two_case_shaped_instances_read_as_two_condition_groups() -> None:
     assert special_lines(specials, registry=REGISTRY) == [
         SpecialLine(
             "Area",
-            LinkedText.plain(
-                "If fired from a unit with 1-2 alive models: [4+] at point blank,"
-                " [5+] at range=2, [6+] at range=3 or 4;"
-                " If fired from a unit with 3-4 alive models: [2+] at point blank,"
-                " [4+] at range=2, [5+] at range=3 or 4"
+            LinkedText(
+                (
+                    Span(
+                        "If fired from a unit with 1-2 alive models: [4+] at point"
+                        " blank, [5+] at range=2, [6+] at range=3 or 4;"
+                        " If fired from a unit with 3-4 alive models: [2+] at point"
+                        " blank, [4+] at range=2, [5+] at range=3 or 4"
+                    ),
+                )
             ),
             None,
         )
@@ -254,7 +258,7 @@ def test_a_line_carries_no_anchor_without_a_lookup() -> None:
     assert special_lines(specials, registry=REGISTRY)[0].anchor is None
 
 
-def test_a_lookup_is_asked_about_the_identifier_not_the_heading() -> None:
+def test_a_lookup_is_asked_about_the_ref_not_the_heading() -> None:
     # An atmospheric name is what the reader sees; the Identifier is what
     # addresses the rule, so only it can find the rule's entry.
     specials = {"evasion": [SpecialInstance(name="Nimble", args={"N": 4})]}
@@ -268,7 +272,7 @@ def test_a_lookup_is_asked_about_the_identifier_not_the_heading() -> None:
     assert (line.name, line.anchor) == ("Nimble", "rule-special-evasion")
 
 
-def test_an_identifier_the_lookup_does_not_know_leaves_the_anchor_unset() -> None:
+def test_a_ref_the_lookup_does_not_know_leaves_the_anchor_unset() -> None:
     specials = {"evasion": [SpecialInstance(args={"N": 4})]}
 
     (line,) = special_lines(specials, registry=REGISTRY, anchor_of=lambda _ref: None)

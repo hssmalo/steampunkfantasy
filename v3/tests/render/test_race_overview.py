@@ -13,7 +13,7 @@ from spf.frontends.cli.render import (
     RenderOpts,
     render_race_overview,
 )
-from spf.prose import LinkedText
+from spf.prose import LinkedText, Span
 from spf.races import get_race
 from spf.render import render
 from spf.render.formats import get_format
@@ -238,7 +238,7 @@ def test_unit_entry_carries_the_declared_catalogue_fields() -> None:
     assert unit.shaken_speed == "slow"
     assert unit.shaken_movement == ["-", "-", "Flee"]
     assert unit.shaken_fire == "No weapons"
-    assert unit.specials == [SpecialLine("Evasion", LinkedText.plain("[4+]"), None)]
+    assert unit.specials == [SpecialLine("Evasion", LinkedText((Span("[4+]"),)), None)]
     assert unit.fire_rows == [("sneak", ["Fire", "Fire"])]
     assert unit.movement_rows == [("slow", ["360°", "F", "B"])]
     assert unit.damage_tables == [

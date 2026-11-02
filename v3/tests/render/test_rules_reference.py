@@ -434,13 +434,13 @@ def test_a_prefix_namespaces_every_anchor() -> None:
     assert reference.entries[0].anchor == "abomination-rule-special-terror"
 
 
-def test_a_specials_anchor_is_looked_up_by_its_identifier() -> None:
+def test_a_specials_anchor_is_looked_up_by_its_ref() -> None:
     reference = _resolve("special.terror", prefix="abomination-")
 
     assert reference.anchor_of("special.terror") == "abomination-rule-special-terror"
 
 
-def test_an_identifier_that_is_no_entry_has_no_anchor() -> None:
+def test_a_ref_that_is_no_entry_has_no_anchor() -> None:
     assert _resolve("special.terror").anchor_of("special.burst") is None
 
 

@@ -16,11 +16,12 @@ the committed Asset store whether a Target has art (ADR 0017); it is injected,
 so a test can build an overview without a filesystem at all.
 """
 
-from collections.abc import Callable, Iterable, Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import get_args
 
+from spf.prose import AnchorOf
 from spf.registry import load_registry
 from spf.render.anchors import slug
 from spf.render.costs import cost_columns, cost_text
@@ -56,9 +57,6 @@ SPAWN = "spawn"
 # The `ModelType` literal's order is the canonical order a Type line prints in,
 # as `spf.schemas.type_aliases` states where it declares it.
 _MODEL_TYPE_ORDER: list[t.ModelType] = list(get_args(t.ModelType.__value__))
-
-type _AnchorOf = Callable[[str], str | None] | None
-"""Resolves a Ref to its Rules Reference entry, or nothing."""
 
 FIXTURE_PRICING = "per Unit"
 PER_MODEL_PRICING = "per Model"
@@ -294,7 +292,7 @@ class _Catalogue:
     race: t.RaceName
     config: RaceConfig
     image_for: ImageLookup
-    anchor_of: _AnchorOf
+    anchor_of: AnchorOf | None
     fielded_in: dict[str, list[RaceLink]]
     replaced_by: dict[str, list[RaceLink]]
     carried_by: dict[str, list[RaceLink]]
