@@ -5,6 +5,8 @@ hand: what is under test is which findings the walk produces, not what is on
 disk.
 """
 
+from pathlib import Path
+
 from spf.lint import registries
 from spf.registry import Registry
 from spf.schemas import rules as r
@@ -79,3 +81,40 @@ def test_trailing_space_in_a_name_is_a_finding() -> None:
     assert [f.rule for f in registries.lint_registry(registry, CONVENTIONS)] == [
         "trimmed"
     ]
+
+
+def test_a_rule_link_in_a_flavor_is_a_finding() -> None:
+    record = r.SpecialRuleConfig(
+        name="Fear", slots=["unit"], effect="Bad.", flavor="See {it:token.one}."
+    )
+
+    findings = registries.lint_registry(
+        _registry({"special": {"fear": record}}), CONVENTIONS
+    )
+
+    assert [(f.key, f.rule) for f in findings] == [("fear.flavor", "link-field")]
+
+
+def test_a_rulebook_source_may_not_author_a_rule_link(tmp_path: Path) -> None:
+    (tmp_path / "round.md").write_text("See {it:token.one}.\n")
+
+    findings = registries.lint_rulebook_sources(["round.md"], tmp_path)
+
+    assert [(f.file, f.rule) for f in findings] == [("round.md", "link-field")]
+
+
+def test_a_section_explanation_may_not_author_a_rule_link(tmp_path: Path) -> None:
+    (tmp_path / "tokens.toml").write_text('explanation = "See {it:token.one}."\n')
+
+    findings = registries.lint_rulebook_sources(["tokens.toml"], tmp_path)
+
+    assert [(f.key, f.rule) for f in findings] == [("explanation", "link-field")]
+
+
+def test_a_rulebook_source_with_no_rule_link_is_clean(tmp_path: Path) -> None:
+    (tmp_path / "round.md").write_text("Roll {N} dice.\n")
+    (tmp_path / "tokens.toml").write_text(
+        'explanation = "Tokens."\n[tokens.x]\neffect = "Take {it:token.one}."\n'
+    )
+
+    assert not registries.lint_rulebook_sources(["round.md", "tokens.toml"], tmp_path)

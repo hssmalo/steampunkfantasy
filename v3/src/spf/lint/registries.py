@@ -7,9 +7,12 @@ registry that fails schema validation never reaches here, because loading it
 is what raises (ADR 0016).
 """
 
+import tomllib
 from dataclasses import dataclass
+from pathlib import Path
 
 from spf.lint import names, prose
+from spf.prose import writes_link
 from spf.registry import Registry
 from spf.schemas.config import LintConfig
 
@@ -62,6 +65,32 @@ def lint_registry_prose(registry: Registry) -> list[RegistryFinding]:
         )
         for namespace, records in registry.records.items()
         for key, record in records.items()
-        for location, value in prose.walk_prose(record.model_dump())
-        for rule, message in prose.check_prose(value)
+        for location, rule, message in prose.findings_in(record.model_dump())
     ]
+
+
+def lint_rulebook_sources(sources: list[str], rules_dir: Path) -> list[RegistryFinding]:
+    """Find any Rule Link in what the Rulebook prints as document prose (ADR 0042).
+
+    A Rulebook source and a section's `explanation` sit outside every Record, so
+    the walk above never sees them, and the Rulebook has no anchors to link to.
+    """
+    findings: list[RegistryFinding] = []
+    for source in sources:
+        path = rules_dir / source
+        if path.suffix == ".md":
+            key, value = "source", path.read_text()
+        else:
+            key = "explanation"
+            value = str(tomllib.loads(path.read_text()).get(key, ""))
+        if writes_link(value):
+            findings.append(
+                RegistryFinding(
+                    file=source,
+                    namespace="rulebook",
+                    key=key,
+                    rule="link-field",
+                    message=f"{source} may not hold a Rule Link in its {key}",
+                )
+            )
+    return findings

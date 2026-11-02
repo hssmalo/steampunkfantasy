@@ -19,6 +19,7 @@ from spf.schemas.race import (
     RaceMetadata,
 )
 from spf.schemas.special import SpecialInstance
+from tests.conftest import InstallRegistry, synthetic_race, synthetic_unit
 
 REGISTRY = Registry(records={})
 """Only a ref-valued arg reaches the registry, and no instance here has one."""
@@ -293,3 +294,14 @@ def test_a_race_the_pools_say_nothing_about_is_clean() -> None:
     )
 
     assert [f for f in findings if f.rule == "variant-longhand"] == []
+
+
+def test_a_rule_link_in_a_races_tip_is_a_finding(
+    install_registry: InstallRegistry,
+) -> None:
+    install_registry()
+    race = synthetic_race(units={"squad": synthetic_unit(tip="See {it:speed.slow}.")})
+
+    findings = collect.lint_prose("ork", race)
+
+    assert [(f.key, f.rule) for f in findings] == [("squad.tip", "link-field")]

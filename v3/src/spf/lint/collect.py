@@ -161,8 +161,7 @@ def lint_prose(race: t.RaceName, race_config: RaceConfig) -> list[Finding]:
             rule=rule,
             message=message,
         )
-        for location, value in prose.walk_prose(race_config.model_dump())
-        for rule, message in prose.check_prose(value)
+        for location, rule, message in prose.findings_in(race_config.model_dump())
     ]
 
 

@@ -150,6 +150,16 @@ def malformed_links(raw: str | None) -> list[str]:
     return [] if raw is None else _LINK_SHAPED.findall(LINK.sub("", raw))
 
 
+def writes_link(raw: str) -> bool:
+    """Return whether `raw` writes anything shaped like a link, valid or not."""
+    return _LINK_SHAPED.search(raw) is not None
+
+
+def link_labels(raw: str) -> list[str]:
+    """List the label of each authored Rule Link in `raw`, in order."""
+    return [match.group(1) for match in LINK.finditer(raw)]
+
+
 def fill_linked(
     template: str,
     args: dict[str, int | str],

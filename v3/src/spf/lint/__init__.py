@@ -18,7 +18,11 @@ from spf.lint.loading import (
     probe_render,
     probe_rules,
 )
-from spf.lint.registries import RegistryFinding, lint_registry
+from spf.lint.registries import (
+    RegistryFinding,
+    lint_registry,
+    lint_rulebook_sources,
+)
 
 __all__ = [
     "Finding",
@@ -29,6 +33,7 @@ __all__ = [
     "latex",
     "lint_race",
     "lint_registry",
+    "lint_rulebook_sources",
     "loading",
     "print_findings",
     "probe_armies",

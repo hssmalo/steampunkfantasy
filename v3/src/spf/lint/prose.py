@@ -12,6 +12,8 @@ where the data contradicts itself, never where it merely could read better.
 import re
 from collections.abc import Iterator, Mapping
 
+from spf.prose import link_labels, plain, writes_link
+
 PROSE_FIELDS = frozenset(
     {
         "comment",
@@ -42,6 +44,22 @@ damage, destroy one minor head` -- and a row carries its own `effect`. Holding
 a cell to sentence punctuation would put a period on one row of a table and
 not on the terser row beside it, which is less consistent, not more.
 """
+
+LINKLESS_FIELDS = frozenset(
+    {
+        "comment",
+        "description",
+        "explanation",
+        "flavor",
+        "lore",
+        "name",
+        "signature",
+        "tip",
+        "todo",
+    }
+)
+"""The fields that may not author a Rule Link (ADR 0042): flavor, working notes
+and labels, none of which print where a link could lead anywhere."""
 
 SENTENCE_PUNCTUATION = ".!?:"
 """What closes a sentence, and what proves an earlier one was closed."""
@@ -88,14 +106,65 @@ def check_terminal_punctuation(value: str) -> str | None:
 
 
 def check_prose(value: str) -> Iterator[tuple[str, str]]:
-    """Yield `(rule, message)` for every prose rule `value` breaks."""
+    """Yield `(rule, message)` for every prose rule `value` breaks.
+
+    Prose is judged as it prints, so a Rule Link counts as its label: the colon
+    in `{label:token.id}` closes no sentence.
+    """
     checks = {
         "whitespace": check_whitespace,
         "terminal-punctuation": check_terminal_punctuation,
     }
     for rule, check in checks.items():
-        if (message := check(value)) is not None:
+        if (message := check(plain(value))) is not None:
             yield rule, message
+
+
+def check_rule_links(
+    data: object, path: str = "", field: str = ""
+) -> Iterator[tuple[str, str, str]]:
+    """Yield `(location, rule, message)` for each Rule Link written wrongly.
+
+    The load gate has already rejected a bad Ref in a field that may hold one
+    (ADR 0036). Lint owns what the gate does not read: a link in a field that
+    takes none, and a label whose brackets would break the Markdown link. So
+    this walks every string, including the table cells `walk_prose` skips.
+    """
+    if isinstance(data, Mapping):
+        for key, value in data.items():
+            location = f"{path}.{key}" if path else str(key)
+            yield from check_rule_links(value, location, str(key))
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            yield from check_rule_links(value, f"{path}.{index}", field)
+    elif isinstance(data, str):
+        yield from ((path, *found) for found in _rule_link_findings(data, field))
+
+
+def _rule_link_findings(value: str, field: str) -> Iterator[tuple[str, str]]:
+    """Yield `(rule, message)` for one string, given the field it sits in."""
+    if field in LINKLESS_FIELDS and writes_link(value):
+        yield "link-field", f"{field} may not hold a Rule Link: {_excerpt(value)}"
+    for label in link_labels(value):
+        if not _balanced(label):
+            yield "link-label", f"Rule Link label {label!r} has unbalanced brackets"
+
+
+def _balanced(label: str) -> bool:
+    """Return whether every `[` in `label` closes, and nothing else does."""
+    depth = 0
+    for mark in label:
+        depth += {"[": 1, "]": -1}.get(mark, 0)
+        if depth < 0:
+            return False
+    return depth == 0
+
+
+def findings_in(data: object) -> Iterator[tuple[str, str, str]]:
+    """Yield `(location, rule, message)` for every prose finding under `data`."""
+    for location, value in walk_prose(data):
+        yield from ((location, *found) for found in check_prose(value))
+    yield from check_rule_links(data)
 
 
 def walk_prose(

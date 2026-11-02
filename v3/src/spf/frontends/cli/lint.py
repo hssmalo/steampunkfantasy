@@ -10,7 +10,7 @@ the build fails.
 
 import cyclopts
 
-from spf import lint
+from spf import lint, rules
 from spf.config import config
 from spf.lint import latex, loading
 from spf.lint.findings import LintFinding
@@ -89,7 +89,13 @@ def rules_findings() -> list[LintFinding]:
                 rule=finding.rule,
                 message=finding.message,
             )
-            for finding in lint.lint_registry(probe.registry, config.lint)
+            for finding in [
+                *lint.lint_registry(probe.registry, config.lint),
+                *lint.lint_rulebook_sources(
+                    [section.source for section in rules.get_rulebook().sections],
+                    config.paths.rules,
+                ),
+            ]
         ),
     ]
 

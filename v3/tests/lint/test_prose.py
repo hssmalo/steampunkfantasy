@@ -148,3 +148,63 @@ def test_check_prose_names_the_rule_it_broke() -> None:
     rules = [rule for rule, _ in prose.check_prose("Two sentences.  Padded")]
 
     assert rules == ["whitespace", "terminal-punctuation"]
+
+
+# ---------------------------------------------------------------------------
+# Rule Links
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "Take a {poison token:token.poison}",
+        "Take a {poison token:token.poison}.",
+        "See {one:token.one} and {two:token.two}",
+    ],
+)
+def test_the_colon_of_a_rule_link_does_not_close_a_sentence(value: str) -> None:
+    assert not list(prose.check_prose(value))
+
+
+def test_prose_is_judged_by_its_label_as_well() -> None:
+    assert list(prose.check_prose("Stop. See {it:token.one}"))
+
+
+@pytest.mark.parametrize("field", ["flavor", "todo", "explanation", "description"])
+def test_a_rule_link_in_a_linkless_field_is_a_finding(field: str) -> None:
+    found = list(prose.check_rule_links({field: "See {it:token.one}."}))
+
+    assert [(location, rule) for location, rule, _ in found] == [(field, "link-field")]
+
+
+def test_something_malformed_in_a_linkless_field_is_a_finding_too() -> None:
+    found = list(prose.check_rule_links({"lore": "See {it:Token}."}))
+
+    assert [rule for _, rule, _ in found] == ["link-field"]
+
+
+@pytest.mark.parametrize("field", ["effect", "remove", "example", "text", "note"])
+def test_a_rule_link_in_an_allowed_field_is_clean(field: str) -> None:
+    assert not list(prose.check_rule_links({field: "See {it:token.one}."}))
+
+
+@pytest.mark.parametrize("label", ["a]b", "a[b", "]a["])
+def test_an_unbalanced_label_is_a_finding(label: str) -> None:
+    found = list(prose.check_rule_links({"text": f"See {{{label}:token.one}}."}))
+
+    assert [rule for _, rule, _ in found] == ["link-label"]
+
+
+def test_a_balanced_label_is_clean() -> None:
+    assert not list(prose.check_rule_links({"text": "{Bleed[{N}]:token.one}"}))
+
+
+def test_a_damage_row_is_held_to_the_label_rule() -> None:
+    data = {"rows": [{"effect": "{a]b:token.one}"}]}
+
+    found = list(prose.check_rule_links(data))
+
+    assert [(location, rule) for location, rule, _ in found] == [
+        ("rows.0.effect", "link-label")
+    ]
