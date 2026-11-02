@@ -17,7 +17,7 @@ links never nest.
 import re
 from collections.abc import Callable, Iterable, Iterator, Mapping
 from dataclasses import dataclass, replace
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, overload
 
 from spf.schemas.rules import RuleRecord
 
@@ -135,9 +135,15 @@ def linked_prose(raw: str | None, anchor_of: AnchorOf | None = None) -> LinkedTe
     return text if anchor_of is None else text.resolved(anchor_of)
 
 
-def plain(raw: str) -> str:
+@overload
+def plain(raw: str) -> str: ...
+@overload
+def plain(raw: None) -> None: ...
+@overload
+def plain(raw: str | None) -> str | None: ...
+def plain(raw: str | None) -> str | None:
     """Reduce every authored Rule Link to its label, for a surface without links."""
-    return LINK.sub(r"\1", raw)
+    return None if raw is None else LINK.sub(r"\1", raw)
 
 
 def link_refs(raw: str | None) -> list[str]:

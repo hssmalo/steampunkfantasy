@@ -18,6 +18,7 @@ from spf.armies.build import (
 from spf.armies.model import Model
 from spf.config import config
 from spf.console import stdout
+from spf.prose import plain
 from spf.races import get_race
 from spf.render.specials import SpecialLine, special_lines
 from spf.schemas.army_pack import ArmyPackConfig
@@ -158,7 +159,8 @@ def print_army(army: Army) -> None:
 def _print_note(note: str, *, indent: int) -> None:
     """Print a record's `note` — a sibling of its Specials, not one (ADR 0024)."""
     if note:
-        stdout.print(f"{' ' * indent}- [dim]Note:[/] {escape(note)}", highlight=False)
+        text = escape(plain(note))
+        stdout.print(f"{' ' * indent}- [dim]Note:[/] {text}", highlight=False)
 
 
 def _print_specials(lines: list[SpecialLine], *, indent: int) -> None:

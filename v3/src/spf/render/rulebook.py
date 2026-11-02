@@ -22,6 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from spf import rules
+from spf.prose import plain
 from spf.registry import Registry, load_registry
 from spf.render.anchors import anchor as _anchor
 from spf.schemas.rulebook import RulebookConfig
@@ -310,11 +311,11 @@ def _effect_entry(config: TokenRuleConfig | HexRuleConfig) -> RuleEntry:
     return RuleEntry(
         name=config.name,
         short=_signature(config.name, config.signature),
-        body=config.effect or "",
+        body=plain(config.effect) or "",
         description=config.flavor,
-        example=config.example,
+        example=plain(config.example),
         phases=list(getattr(config, "phases", [])),
-        remove=config.remove,
+        remove=plain(config.remove),
         token=None,
         variables=_variables(config.variables),
         versions=[],
@@ -380,15 +381,15 @@ def _special_entry(config: SpecialRuleConfig, token: str | None) -> RuleEntry:
     return RuleEntry(
         name=config.name,
         short=_signature(config.name, config.signature),
-        body=config.effect or "",
+        body=plain(config.effect) or "",
         description=config.flavor,
-        example=config.example,
+        example=plain(config.example),
         phases=[],
         remove=None,
         token=token,
         variables=_variables(config.variables),
         versions=[
-            (version.partition(".")[2], overlay.effect)
+            (version.partition(".")[2], plain(overlay.effect))
             for version, overlay in config.versions.items()
         ],
     )
@@ -474,7 +475,9 @@ def _modifier_rows(records: Mapping[str, RuleRecord]) -> list[ModifierRow]:
             name=record.name,
             to_hit=_modifier(record, "to_hit"),
             to_be_hit=_modifier(record, "to_be_hit"),
-            note=(record.effect if isinstance(record, ModifierRuleConfig) else None)
+            note=(
+                plain(record.effect) if isinstance(record, ModifierRuleConfig) else None
+            )
             or None,
         )
         for record in records.values()

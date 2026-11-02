@@ -12,6 +12,8 @@ from spf.prose import (
     plain,
 )
 from spf.schemas import rules as r
+from spf.schemas.race import spawn_reference
+from spf.schemas.special import SpecialInstance
 from tests.conftest import synthetic_registry, synthetic_special
 
 REGISTRY = synthetic_registry(
@@ -208,6 +210,7 @@ def test_fill_keeps_only_the_label() -> None:
 
 def test_plain_reduces_a_link_to_its_label() -> None:
     assert plain("{Poison[{N}]:token.poison} and {N}") == "Poison[{N}] and {N}"
+    assert plain(None) is None
 
 
 def test_link_refs_lists_each_ref_written() -> None:
@@ -222,3 +225,9 @@ def test_malformed_links_finds_what_the_grammar_rejects() -> None:
 
 def test_a_placeholder_is_not_a_malformed_link() -> None:
     assert malformed_links("Roll {N} or {version.id}, then {ok[{N}]:token.a}") == []
+
+
+def test_a_rule_link_after_a_spawn_id_leaves_the_id_alone() -> None:
+    instance = SpecialInstance(text="tiny_snake: place {it:token.bleed} nearby.")
+
+    assert spawn_reference(instance) == "tiny_snake"
