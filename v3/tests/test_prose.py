@@ -1,5 +1,7 @@
 """Tests for the placeholder grammar's linked form: spans carrying their Refs."""
 
+import pytest
+
 from spf.prose import (
     LinkedText,
     Span,
@@ -238,3 +240,35 @@ def test_plain_data_reduces_every_string_it_holds() -> None:
     data = {"a": "{x:token.one}", "b": ["{y:token.two}", 3], "c": {"d": None}}
 
     assert plain_data(data) == {"a": "x", "b": ["y", 3], "c": {"d": None}}
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "See {x:token.bleed",
+        "See {x:token.bleed and {N}",
+        "See {{x:token.bleed}}",
+        "See {x:token.bleed}}",
+        "See {{x:token.bleed}",
+    ],
+    ids=["unclosed", "unclosed-before-brace", "doubled", "extra-close", "extra-open"],
+)
+def test_broken_braces_around_a_link_are_malformed(raw: str) -> None:
+    assert malformed_links(raw)
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "Roll {N}: then {M}.",
+        "{N}{x:token.bleed}",
+        "{x:token.bleed}{N}",
+        "{x[{N}]:token.bleed}",
+        "{{N}x:token.bleed}",
+        "A colon: and no braces.",
+        "{{\\bf Poison Cloud[6]}} in that hex",
+    ],
+    ids=["placeholders", "before", "after", "in-label", "leads-label", "text", "tex"],
+)
+def test_well_formed_prose_is_not_malformed(raw: str) -> None:
+    assert malformed_links(raw) == []

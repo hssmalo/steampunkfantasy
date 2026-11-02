@@ -34,8 +34,9 @@ LINK = re.compile(
 """An authored Rule Link. The Ref is anchored at the end, so a label may hold a
 colon, and placeholders are the only braces it may hold."""
 
-_LINK_SHAPED = re.compile(r"\{(?:[^{}]|\{[^{}]*\})*:[^{}]*\}")
-"""Braces around a colon: what an author wrote when meaning a link."""
+_LINK_SHAPED = re.compile(r"\{(?:[^{}]|\{[^{}]*\})*:[^{}]*(?:\}|(?=\{|\Z))")
+"""An opening brace and a colon, closed or not: what an author wrote when meaning
+a link."""
 
 type AnchorOf = Callable[[str], str | None]
 """Resolves a Ref to its Rules Reference entry, or nothing."""
@@ -167,7 +168,15 @@ def link_refs(raw: str | None) -> list[str]:
 
 def malformed_links(raw: str | None) -> list[str]:
     """List what `raw` writes as a link but the grammar does not accept."""
-    return [] if raw is None else _LINK_SHAPED.findall(LINK.sub("", raw))
+    if raw is None:
+        return []
+    doubled = [
+        match.group(0)
+        for match in LINK.finditer(raw)
+        if raw[max(match.start() - 1, 0) : match.start()] == "{"
+        or raw[match.end() : match.end() + 1] == "}"
+    ]
+    return doubled + _LINK_SHAPED.findall(LINK.sub("", raw))
 
 
 def writes_link(raw: str) -> bool:
