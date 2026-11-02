@@ -1,6 +1,6 @@
 {#
   One Army's Rules Reference: the rule Records its Specials reach, flat and
-  alphabetical across every namespace (ADR 0029). Printed after all the Units,
+  alphabetical across every namespace (ADR 0041). Printed after all the Units,
   once per Army — in an Army Pack that means inside each Army's entry, so a
   player's own pages are complete on their own.
 
@@ -36,6 +36,9 @@
 {%- endif %}
 {%- if entry.to_be_hit %}
 - *To be hit:* {{ entry.to_be_hit }}
+{%- endif %}
+{%- if entry.places %}
+- *Places:* {% for link in entry.places %}{% if not loop.first %}, {% endif %}{% if link.anchor %}[{{ link.heading }}](#{{ link.anchor }}){% else %}{{ link.heading }}{% endif %}{% endfor %}
 {%- endif %}
 {%- if entry.see_also %}
 - *See also:* {% for link in entry.see_also %}{% if not loop.first %}, {% endif %}{% if link.anchor %}[{{ link.heading }}](#{{ link.anchor }}){% else %}{{ link.heading }}{% endif %}{% endfor %}

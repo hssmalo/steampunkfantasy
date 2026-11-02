@@ -1,6 +1,6 @@
 {#
   One Army's Rules Reference: the rule Records its Specials reach, flat and
-  alphabetical across every namespace (ADR 0029). Printed after all the Units,
+  alphabetical across every namespace (ADR 0041). Printed after all the Units,
   once per Army — in an Army Pack that means inside each Army's entry, before
   the `\clearpage`, so a player's own pages are complete on their own.
 
@@ -45,6 +45,10 @@
 \BLOCK{endif}
 \BLOCK{if entry.to_be_hit}
 \item \textit{To be hit:} \VAR{entry.to_be_hit | latex_escape}
+\BLOCK{endif}
+\BLOCK{if entry.places}
+\item \textit{Places:} \BLOCK{for link in entry.places}\BLOCK{if not loop.first}, \BLOCK{endif}\BLOCK{if link.anchor}\hyperref[\VAR{link.anchor}]{\VAR{link.heading | latex_escape}}\BLOCK{else}\VAR{link.heading | latex_escape}\BLOCK{endif}\BLOCK{endfor}
+
 \BLOCK{endif}
 \BLOCK{if entry.see_also}
 \item \textit{See also:} \BLOCK{for link in entry.see_also}\BLOCK{if not loop.first}, \BLOCK{endif}\BLOCK{if link.anchor}\hyperref[\VAR{link.anchor}]{\VAR{link.heading | latex_escape}}\BLOCK{else}\VAR{link.heading | latex_escape}\BLOCK{endif}\BLOCK{endfor}

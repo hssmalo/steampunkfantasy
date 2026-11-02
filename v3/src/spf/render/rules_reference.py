@@ -62,6 +62,7 @@ class RuleEntry:
     to_hit: str | None = None
     to_be_hit: str | None = None
     written: bool = False
+    places: list[RuleLink] = field(default_factory=list)
     see_also: list[RuleLink] = field(default_factory=list)
     alias_for: RuleLink | None = None
     """Set on an Alias Entry, naming the Record the Instance is an occurrence of."""
@@ -87,7 +88,12 @@ class RuleEntry:
     def fields(self) -> bool:
         """Whether the entry has anything to list beneath its rule text."""
         return bool(
-            self.phases or self.remove or self.to_hit or self.to_be_hit or self.see_also
+            self.phases
+            or self.remove
+            or self.to_hit
+            or self.to_be_hit
+            or self.places
+            or self.see_also
         )
 
     @property
@@ -244,6 +250,11 @@ def _entry(ref: str, registry: Registry, *, anchors: dict[str, str]) -> RuleEntr
         to_hit=getattr(record, "to_hit", None),
         to_be_hit=getattr(record, "to_be_hit", None),
         written=record.written,
+        places=[
+            _link(target, registry, anchors=anchors)
+            for target in record.places
+            if registry.record(target) is not None
+        ],
         # A target keeps its line even though the walk made it an entry: a Stub
         # whose `see_also` is the only thing explaining it would otherwise print
         # nothing at all.

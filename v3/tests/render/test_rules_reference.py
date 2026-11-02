@@ -267,6 +267,31 @@ def test_a_see_also_that_is_an_entry_keeps_its_cross_reference_line() -> None:
     ]
 
 
+def test_a_places_target_links_to_its_entry() -> None:
+    reference = _resolve("special.assault_poison")
+
+    entry = next(e for e in reference.entries if e.ref == "special.assault_poison")
+    assert entry.places == [
+        rr.RuleLink(name="Poison", qualifier="token", anchor="rule-token-poison")
+    ]
+
+
+def test_an_entry_with_only_a_places_line_has_fields_to_list() -> None:
+    registry = Registry(
+        namespaces=_namespaces(),
+        records={
+            "special": {
+                "plant": _special("Plant", todo="Unwritten.", places=["token.poison"])
+            },
+            "token": {"poison": r.TokenRuleConfig(name="Poison", effect="Hurts.")},
+        },
+    )
+
+    reference = rr.resolve(rr.Seeds(refs=["special.plant"], aliases=[]), registry)
+
+    assert next(e for e in reference.entries if e.ref == "special.plant").fields
+
+
 # --- Entry content ----------------------------------------------------------
 
 
