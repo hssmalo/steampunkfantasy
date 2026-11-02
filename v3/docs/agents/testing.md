@@ -96,7 +96,7 @@ committed, with no list to keep in step.
 `tests/conftest.py` provides shared builders for synthetic Races, Registries and
 Armies. Use them rather than hand-rolling another minimal `RaceConfig`, and
 rather than reaching for `races.get_race(...)`. Name what you build with the
-`CONTEXT.md` vocabulary — Race, Unit, Model, Equipment, Holder, Special
+`GLOSSARY.md` vocabulary — Race, Unit, Model, Equipment, Holder, Special
 Instance.
 
 What they are:

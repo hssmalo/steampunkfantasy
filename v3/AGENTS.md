@@ -36,5 +36,5 @@ The five canonical triage roles map 1:1 to same-named labels. See
 
 ### Domain docs
 
-Single-context repo (`CONTEXT.md` + `docs/adr/` at the root, created lazily). See
-`docs/agents/domain.md`.
+Single-context repo (`GLOSSARY.md` + `docs/adr/` at the root, created lazily).
+See `docs/agents/domain.md`.

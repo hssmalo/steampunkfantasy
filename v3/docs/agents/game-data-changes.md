@@ -1,7 +1,7 @@
 # Changing game data
 
 Read this before editing anything that changes what the documents print. The
-vocabulary is in [`CONTEXT.md`](../../CONTEXT.md) — **Golden**, **Changelog** —
+vocabulary is in [`GLOSSARY.md`](../../GLOSSARY.md) — **Golden**, **Changelog** —
 and the reasoning is in
 [ADR-0033](../adr/0033-tests-exercise-spf-not-the-game-rules.md).
 

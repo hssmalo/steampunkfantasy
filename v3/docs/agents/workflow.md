@@ -26,7 +26,7 @@ them for that reader.
   stops being true the minute the issue is merged doesn't belong in the source
   — that context goes in the commit message, the PR description, or the issue.
 - **Do refer to durable context**: ADRs in `docs/adr/` (by number) and the
-  vocabulary defined in `CONTEXT.md`. Use the glossary's terms rather than
+  vocabulary defined in `GLOSSARY.md`. Use the glossary's terms rather than
   synonyms.
 - **Keep comments short and focused** — a line or two explaining *why*, right
   next to the code it explains. No multi-paragraph comments: if an explanation
