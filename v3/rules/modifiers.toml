@@ -9,13 +9,11 @@
 # Speed
 #
 #Note: reference to all in speed is outdated. They should be removed. I think I removed all of them.
-
 #Who uses setup_speed??? I did not find any. If so, remove.
 #[speed.setup_speed]
 #name = "Setup Speed"
 #to_hit = "+1"
 #to_be_hit = "+1"
-
 [speed.rest]
 name = "Rest"
 to_hit = "+1"
@@ -30,7 +28,6 @@ to_be_hit = "+1"
 name = "Still Fly"
 see_also = ["speed.still", "speed.flying"]
 todo = "For to_hit purposes, slow_flying =still+flying. No need to included in to_hit table. But slow_fly is a speed, and would be nice as an entry for future use"
-
 
 [speed.crawl]
 name = "Crawl"
@@ -47,7 +44,6 @@ name = "Slow"
 to_hit = "0"
 to_be_hit = "0"
 
-
 [speed.slow_fly]
 name = "Slow Fly"
 see_also = ["speed.slow", "speed.flying"]
@@ -62,7 +58,6 @@ to_be_hit = "-1"
 name = "Fast Fly"
 see_also = ["speed.fast", "speed.flying"]
 todo = "For to_hit purposes, fast_flying =fast+flying. No need to included in to_hit table. But slow_fly is a speed, and would be nice as an entry for future use"
-
 
 [speed.flying]
 name = "Flying"
@@ -179,14 +174,12 @@ to_hit = "+1"
 to_be_hit = "+1"
 signature = " +1 to hit, +1 to be hit"
 
-
 [ability.camouflage]
 name = "Camouflage"
 signature = "[{terrain}][-1]"
 to_hit = "0"
 to_be_hit = "-1"
 effect = "Applies when the unit is in the given terrain"
-
 
 [ability.camouflage.variables]
 terrain = { type = "ref", namespaces = ["terrain"] }
@@ -230,8 +223,6 @@ to_be_hit = "0"
 [ability.enhanced_accuracy.variables]
 N = { type = "int", min = 1, max = 6 }
 
-
-
 [ability.thrown_weapons]
 name = "Thrown Weapons"
 signature = " +{N}"
@@ -257,7 +248,6 @@ name = "Out of Command"
 to_hit = "-2"
 to_be_hit = "0"
 signature = " -2"
-
 effect = "Applies while the unit is not connected to a main engine"
 
 [ability.out_of_the_fog]
@@ -267,7 +257,6 @@ to_be_hit = "0"
 signature = " +1"
 effect = "Applies while the unit holds an out of the fog token"
 see_also = ["token.out_of_fog"]
-
 
 [ability.plus_minus_one]
 name = "Plus Minus One"
@@ -296,14 +285,12 @@ to_hit = "+N"
 to_be_hit = "0"
 see_also = ["speed.fast"]
 
-
 [ability.ignore_fly_penalty]
 name = "Ignore Fly Penalty"
 effect = "Ignores the to-hit penalty for flying, both for flying and targeting flying units"
 to_hit = "+N"
 to_be_hit = "0"
 see_also = ["speed.fast"]
-
 
 [ability.even_range]
 name = "Even Range"
@@ -316,8 +303,6 @@ name = "Odd Range"
 to_hit = "-1"
 to_be_hit = "0"
 signature = "Odd Range -1"
-
-
 
 [ability.ranged_reroll]
 name = "Ranged Reroll"

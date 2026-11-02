@@ -749,7 +749,6 @@ deflection_die = "5+"
 damage = "d8"
 ap = 3
 
-
 [models.cyclops]
 name = "Cyclops"
 race = "ogre"
@@ -1038,7 +1037,7 @@ type = ["Bio", "Infantry", "Walking", "Engineer", "Carrier"]
 args.N = 4
 args.type = "tiny drones"
 args.deploy_range = 2
-variant="regular"
+variant = "regular"
 
 [[models.ogre_engineer.unit_specials.repair]]
 args.N = 2
@@ -1089,7 +1088,6 @@ angle = [true, true, true, true]
 damage = "d8-2"
 ap = 2
 
-
 [equipment.cyclops_plasma_gun]
 name = "Cyclops Plasma Gun"
 race = "ogre"
@@ -1103,7 +1101,6 @@ ap = 3
 
 [[equipment.cyclops_plasma_gun.range.specials.range_extra_damage]]
 args.version = "token.fire"
-
 
 [equipment.boulder_bomb]
 name = "Boulder Bomb"

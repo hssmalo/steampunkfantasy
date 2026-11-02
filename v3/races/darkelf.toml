@@ -1429,7 +1429,6 @@ variant = "reroll_assault_crawling"
 
 [[models.elite_roboprosthetic_darkelf.assault.specials.counter_attack]]
 
-
 [equipment]
 
 [equipment.rifle]
@@ -1678,9 +1677,8 @@ angle = [true, false, false, false]
 damage = "d8 Crew damage"
 ap = 0
 
-
 [[equipment.nightmare_breath.range.specials.area]]
-preamble ="Targe all hexes within normal range and within front arc"
+preamble = "Target all hexes within normal range and within front arc"
 
 [[equipment.nightmare_breath.range.specials.area.cases]]
 args.N = 4
@@ -1818,11 +1816,9 @@ angle = [true, false, false, false]
 damage = "-"
 ap = 0
 
-
 [[equipment.acid_breath.range.specials.area]]
 variant = "all_hexes_arc_long"
 args.N = 1
-
 
 #ToDo: use preamble
 [[equipment.acid_breath.range.specials.range_extra_damage]]
@@ -1833,8 +1829,6 @@ args.version = "token.acid"
 
 [[equipment.acid_breath.range.specials.range_extra_damage.cases]]
 args.version = "token.minor_acid"
-
-
 
 [[equipment.acid_breath.range.specials.no_damage]]
 args.damage_type = "damage_type.regular"
@@ -1871,7 +1865,6 @@ ap = 0
 
 [[equipment.fire_breath.range.specials.area]]
 preamble = "Target hexes within long range and arc of fire"
-
 
 [[equipment.fire_breath.range.specials.area.cases]]
 args.N = 4

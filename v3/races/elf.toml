@@ -1,4 +1,3 @@
-
 [races]
 
 [races.elf]
@@ -2073,8 +2072,8 @@ ap = "5"
 
 [[equipment.hand_grenade.range.specials.area]]
 variant = "one_hex_normal"
-#preamble = "Target one hex within normal range"
 
+#preamble = "Target one hex within normal range"
 [[equipment.hand_grenade.range.specials.area.cases]]
 args.N = 5
 text = "if used by 1-2 alive models"
@@ -2132,11 +2131,9 @@ angle = [true, true, false, false]
 damage = "d6"
 ap = "5"
 
-
 [[equipment.heavy_mortar.range.specials.area]]
 text = "Chose one hex within normal range: Wide Blast Radius[1]: target all hexes within range 1 of chosen hex."
 args.N = 4
-
 
 [equipment.deflection_field]
 name = "Deflection Field"

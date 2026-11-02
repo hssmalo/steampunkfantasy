@@ -6,7 +6,6 @@
 # Declaration order is display-group order for the to-hit table. A namespace
 # may declare `group` to render under another's heading. `name` heads the whole
 # registry; the singular `label` qualifies one record of it, as `Fog (hex)`.
-
 [namespaces]
 special = { name = "Specials", label = "special", file = "special.toml", table = "special" }
 speed = { name = "Speeds", label = "speed", file = "modifiers.toml", table = "speed" }
@@ -20,10 +19,8 @@ token = { name = "Tokens", label = "token", file = "tokens.toml", table = "token
 damage_type = { name = "Damage Types", label = "damage type", file = "namespaces.toml", table = "damage_type" }
 resistance_type = { name = "Resistance Types", label = "resistance type", file = "namespaces.toml", table = "resistance_type" }
 
-
 # The damage-type registry: the categories of harm a Resistance or an Immunity
 # is against. It lives here because it is small and has no file of its own.
-
 [damage_type.regular]
 name = "Regular"
 effect = "Any unnamed damage is regular damage."
@@ -31,7 +28,6 @@ effect = "Any unnamed damage is regular damage."
 [damage_type.psychic]
 name = "Psychic"
 effect = "Roll damage versus psychic damage table of target. If target has no psychic damage table, the target is immune to psychic damage."
-
 
 [damage_type.fire]
 name = "Fire"
@@ -52,7 +48,6 @@ effect = "The result of (minor) acid token is considered acid damage."
 name = "Crew"
 see_also = ["token.crippled_crew"]
 effect = "Ignore armor, roll damage versus crew damage table of target. If target has no crew damage table, the target is immune to crew damage."
-
 
 [resistance_type.regular]
 name = "Regular"

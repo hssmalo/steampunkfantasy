@@ -1002,7 +1002,7 @@ requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.mechanical_owl.model_specials.to_hit]]
 args.ability = "ability.enhanced_accuracy"
-args.N= 1
+args.N = 1
 
 [equipment.frost_ray]
 race = "gnome"
@@ -1125,10 +1125,8 @@ angle = [true, false, false, false]
 damage = "d6-1"
 ap = 6
 
-
 [[equipment.helicopter_gatling_gun.range.specials.focus_fire]]
 args.N = 6
-
 
 [[equipment.helicopter_gatling_gun.range.specials.area]]
 preamble = "If not using aim, target all hexes within long range and arc of fire"
@@ -1161,7 +1159,6 @@ args.version = "token.minor_acid"
 
 [[equipment.acidic_napalm_bomb.range.specials.range_extra_damage]]
 args.version = "token.fire"
-
 
 [[equipment.acidic_napalm_bomb.range.specials.limited_ammo]]
 args.N = 2
@@ -1379,8 +1376,8 @@ ap = 2
 
 [[equipment.splintbombgrenade_launcher.range.specials.area]]
 variant = "one_hex_normal"
-#preamble = "Target one hex within normal range"
 
+#preamble = "Target one hex within normal range"
 [[equipment.splintbombgrenade_launcher.range.specials.area.cases]]
 text = "If fired from 3 models"
 args.N = 4

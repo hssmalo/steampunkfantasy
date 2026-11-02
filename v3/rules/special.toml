@@ -2,7 +2,6 @@
 # declaring the slots it may be used in (ADR 0024). Where a Special applies is
 # a field, not a section, because `Bonus`, `Extra Damage`, `Fog`, `LoS` and
 # `Spawn` are one rule each used in several slots.
-
 #
 # Assault
 #
@@ -16,7 +15,6 @@ effect = "Each natural 6 rolled in assault count as 2 hits. Further, any natural
 N = { type = "int" }
 
 [special.no_surviving_vp]
-
 name = "No Surviving VP"
 slots = ["unit"]
 effect = "You get no victory point for surviving."
@@ -69,7 +67,6 @@ N = { type = "int", min = 2, max = 6 }
 
 [special.pre_assault_retreat.variants]
 while_superelite_alive = "As long as at least 1 superelite is alive"
-
 
 [special.retreat]
 name = "Retreat"
@@ -809,18 +806,14 @@ fog_instead_of_ammo = "May start the game without ammo, but instead place fog in
 loaded_after_assault = "Gun automatically loaded after an assault"
 load_n_ammo = "May be loaded (one at a time) with up to {N} ammo"
 
-
-
 [special.area]
 name = "Area"
 slots = ["range"]
 signature = "[{N}+]"
 effect = "Roll a die per enemy model in the hex. For each die at {N}+, roll for damage and and add extra damage to the corresponding unit."
 
-
-
 [special.area.variables]
-N = { type = "int", min = 1, max = 6, optional = true}
+N = { type = "int", min = 1, max = 6, optional = true }
 
 [special.area.variants]
 long_range = "at long range"
@@ -832,19 +825,10 @@ one_hex_normal = "Target one hex within normal range"
 
 #at_range_2 = "at range=2"
 #at_range_3_4 = "at range=3 or 4"
-
-
-
-
-
 [special.drag]
 name = "Drag"
 slots = ["range"]
-
 effect = "If one unit of size large or smaller is hit by this weapon but not killed, ignore the first step of the units next movement order (movement phase 1) and replace it with a special movement instead. Carry out the second and third part of the movement order as normal. Move the target one hex towards you while keeping the orientation of the unit. If there are multiple hexes which you can move the target to, you may choose where to move the enemy. However you cannot choose to move the unit into an impassable hex, or overcrowded hex. If this is not possible, the unit is shaken instead of moved. If this movement forces the target to move into a hex occupied by you, carry out an assault."
-
-
-
 
 [special.focus_fire]
 name = "Focus Fire"
@@ -854,7 +838,7 @@ effect = "When using aim, roll {N} dice at the same target"
 see_also = ["token.aim"]
 
 [special.focus_fire.variables]
-N = { type = "int", min = 1, max = 12}
+N = { type = "int", min = 1, max = 12 }
 
 [special.focus_fire.variants]
 aim_n_dice = "When using aim: roll {N} dice at same unit."
@@ -875,7 +859,6 @@ fire_per_minor_head = "Fire one time per alive minor head"
 left_and_right = "Fire once to the right and once to the left per fire order"
 d12_shots_same_unit = "Fire d12 shots each time and all at the same unit"
 
-
 [special.multipurpose]
 name = "Multipurpose"
 slots = ["range"]
@@ -883,7 +866,6 @@ todo = "Rule text not yet written: a weapon with more than one firing setting."
 
 [special.multipurpose.variants]
 reserve_weapon = "Reserve weapon: may use this weapon instead of main gun when fire (res) orders is given, but you may only use one reserve weapon at any given time."
-
 
 [special.order]
 name = "Order"
@@ -894,7 +876,6 @@ todo = "Rule text not yet written: which firing order a weapon is used with. Nam
 one_instead_of_regular_weapons = "Unit gets the option to fire ONE of this weapon instead of regular weapons."
 used_with_throw_order = "Used with Throw order"
 
-
 [special.range]
 name = "Range"
 slots = ["range"]
@@ -904,7 +885,6 @@ see_also = ["distance.normal_range", "distance.long_range"]
 [special.range.variants]
 #target_hex_normal_range = "Target any hex within normal range"
 extra_range_flying = "+1 range if you are flying"
-
 
 [special.recoil]
 name = "Recoil"
@@ -919,7 +899,6 @@ todo = "Rule text not yet written: choosing which model a kill removes."
 [special.sniper.variants]
 choose_model_after_aim = "After eliminating one model with the use of aim, you get to choose which model to destroy"
 
-
 [special.type]
 name = "Type"
 slots = ["range"]
@@ -928,7 +907,6 @@ todo = "Rule text not yet written: what kind of weapon this is, which today is f
 [special.type.variants]
 thrown_weapon = "Thrown weapon"
 
-
 [special.destroy_terrain]
 name = "Destroy Terrain"
 slots = ["unit"]
@@ -936,5 +914,15 @@ signature = "Replace any {terrain} with {terrain_replacement} in any hex you are
 effect = "Replace any {terrain1} with {terrain2} in any hex you are entering. Apply the change in destroy terrain part of movement phase."
 
 [special.destroy_terrain.variables]
-terrain = {type = "str", values = ['Forest', 'Ruins', 'Rough terrain', 'Building']}
-terrain_replacement = {type = "str", values = ['Forest', 'Ruins', 'Rough Terrain', 'Building']}
+terrain = { type = "str", values = [
+    'Forest',
+    'Ruins',
+    'Rough terrain',
+    'Building'
+] }
+terrain_replacement = { type = "str", values = [
+    'Forest',
+    'Ruins',
+    'Rough Terrain',
+    'Building'
+] }

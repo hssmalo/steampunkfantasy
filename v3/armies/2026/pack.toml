@@ -3,6 +3,7 @@ title = "SteamPunkFantasy Tournament 2026"
 [[armies]]
 army = "geir_arne"
 label = "Ork"
+
 [[armies]]
 army = "martin"
 label = "DarkElf"

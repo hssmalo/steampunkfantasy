@@ -1222,7 +1222,6 @@ ap = 7
 
 [[equipment.big_blaster.range.specials.shared]]
 
-
 [equipment.vest_of_life_support]
 name = "Vest of Life Support"
 race = "dwarf"
@@ -1284,9 +1283,6 @@ args.N = 3
 args.model_class = "elite model"
 text = "In addition to the normal rules for endurance tokens, the unit may use one endurance token in healing phase 1, to replace any bleeding with poison[6]"
 
-
-
-
 [equipment.steamblower]
 name = "Steamblower"
 race = "dwarf"
@@ -1299,7 +1295,6 @@ range = 2
 angle = [true, true, true, true]
 damage = "d6-2+d4 Crew damage"
 ap = 2
-
 
 [[equipment.steamblower.range.specials.area]]
 preamble = "Target one hex within long range. If fired from a unit with 1-2 alive models."
@@ -1439,8 +1434,6 @@ ap = 9
 
 [[equipment.tank_gun.range.specials.ammo]]
 text = "Load unstable: If it hits the target, it in addition to normal damage it gets gets Area[5+] effect, with AP=3, and damage=d6-2. But if loading an unstable round, it must be fired in next round. May fire at an empty hex."
-
-
 
 [equipment.array_of_enhanced_heavy_muskets]
 name = "Array of Enhanced Heavy Muskets"

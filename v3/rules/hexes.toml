@@ -13,7 +13,6 @@ Hexes could also have traps.
 # Fog is one object: a placed Hex Effect that behaves like Terrain for to-hit
 # purposes, so it carries the numbers itself and renders among the Terrain
 # rows (ADR 0024).
-
 [hexes]
 
 [hexes.poison_cloud]

@@ -361,6 +361,7 @@ rows = [
 	"6: Unit set on fire", #token.fire
 ]
 
+
 [units.battlewagon.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
@@ -1102,8 +1103,6 @@ requires = [["type:Infantry"], ["Independent:1"]]
 
 [[equipment.clockwork_monocular.model_specials.to_hit]]
 args.ability = "ability.ranged_reroll"
-
-
 text = "Reroll 2 dice in ranged to-hit (either area effect or direct shot) per natural 6 rolled (regardless of whether that was a hit or not). If you roll a natural 6 for one weapon, you may reroll a to-hit from another weapon this unit has. However, Each die may be rerolled a maximum of one time (for each wave of rerolls). A new wave of rerolls starts when you get at least one 6 in the rerolled dice."
 
 [equipment.clockwork_spear]
@@ -1326,8 +1325,8 @@ ap = 0
 
 [[equipment.flamethrower.range.specials.area]]
 variant = "all_hexes_arc_normal"
-#preamble = "Target all hexes within normal range and arc of fire"
 
+#preamble = "Target all hexes within normal range and arc of fire"
 [[equipment.flamethrower.range.specials.area.cases]]
 args.N = 3
 variant = "point_blank"
@@ -1335,7 +1334,6 @@ variant = "point_blank"
 [[equipment.flamethrower.range.specials.area.cases]]
 args.N = 5
 variant = "normal_range"
-
 
 [[equipment.flamethrower.range.specials.range_extra_damage]]
 args.version = "token.fire"
@@ -1405,7 +1403,6 @@ angle = [true, true, true, true]
 damage = "d6"
 ap = 6
 
-
 [[equipment.hand_catapult.range.specials.area]]
 preamble = "Target one hex within normal range. If fired from a unit with 1-2 alive models:"
 
@@ -1427,8 +1424,6 @@ variant = "point_blank"
 [[equipment.hand_catapult.range.specials.area.cases]]
 args.N = 4
 variant = "normal_range"
-
-
 
 [equipment.big_gun]
 race = "ork"

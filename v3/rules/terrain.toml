@@ -5,7 +5,6 @@
 # Every record carries its to-hit numbers and nothing else: the board rules
 # these ids stand for — destructibility, line of sight, movement — are written
 # down nowhere yet, so every record is a stub.
-
 [terrain]
 
 [terrain.forest]

@@ -747,8 +747,6 @@ ap = 2
 [[models.elite_goblin_infantry.assault.specials.cunning_assault]]
 args.N = 1
 
-
-
 [models.snake_tamer]
 name = "Snake Tamer"
 race = "goblin"
@@ -773,7 +771,6 @@ args.M = 2
 
 [[models.snake_tamer.unit_specials.spawn]]
 text = "tiny_snake:If there are no friendly units sharing the hex with you in gunnery phase 1, place a (hidden) tiny snake in your hex. In addition, if there are less than 2 tiny snakes within range 2, place one tiny snake in an empty hex adjent to you."
-
 
 [[models.snake_tamer.assault.specials.cunning_assault]]
 args.N = 1
@@ -1002,7 +999,6 @@ deflection_die.replace = "6+"
 
 [[equipment.poison_deflection_dagger.assault.specials.damage_on_deflect]]
 args.N = 4
-
 
 [equipment.combat_screw_driver]
 name = "Combat Screw Driver"
