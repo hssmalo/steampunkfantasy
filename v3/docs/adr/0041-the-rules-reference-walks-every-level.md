@@ -1,5 +1,9 @@
 # The Rules Reference walks every level
 
+> [ADR-0042](0042-rule-links-are-authored-never-inferred.md) adds edges: the walk
+> also seeds from the Rule Links in printed prose and follows them from a Record's
+> `effect` and `remove`. Everything else here still stands.
+
 From the rules an Army's Specials name, the walk follows `places` and `see_also`
 unbounded, with a visited-set. This supersedes
 [ADR-0029](0029-the-rules-reference-promotes-see-also-by-namespace.md)'s one-hop

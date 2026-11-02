@@ -55,5 +55,8 @@ whose brackets would break the Markdown link.
 
 ## Amends
 
-The glossary's "never a name mentioned in prose": what makes a Ref structural is
-that it is declared and validated.
+- The glossary's "never a name mentioned in prose": what makes a Ref structural is
+  that it is declared and validated.
+- [ADR-0041](0041-the-rules-reference-walks-every-level.md): the walk also seeds from
+  the Rule Links in printed prose, and follows them from a Record's `effect` and
+  `remove`, as well as following `places` and `see_also`.
