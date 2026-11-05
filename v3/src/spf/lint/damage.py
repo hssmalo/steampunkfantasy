@@ -28,6 +28,8 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
                 yield RULE, f"row {roll!r} says {match[0]!r}: it must come first"
             elif match[0].startswith("as"):
                 yield RULE, f"row {roll!r} says {match[0]!r}: write it 'As'"
+            if effect[match.end() :][:1] not in {"", ","}:
+                yield RULE, f"row {roll!r} says {match[0]!r}: follow it with a comma"
             if target not in every_roll:
                 yield RULE, f"row {roll!r} names {target!r}: no such row"
             elif target not in earlier:

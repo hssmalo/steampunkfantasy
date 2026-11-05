@@ -68,3 +68,11 @@ def test_a_lowercase_reference_fires() -> None:
     found = messages(("1-3", "Shaken"), ("4", "as 1-3, Shaken"))
     assert len(found) == 1
     assert "'As'" in found[0]
+
+
+@pytest.mark.parametrize("effect", ["As 1-3 , Shaken", "As 1-3 plus Shaken"])
+def test_a_reference_not_followed_by_a_comma_fires(effect: str) -> None:
+    """The form is `As <roll>, <effect>`, with no connector."""
+    found = messages(("1-3", "Shaken"), ("4", effect))
+    assert len(found) == 1
+    assert "comma" in found[0]
