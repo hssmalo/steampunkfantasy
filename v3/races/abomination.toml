@@ -131,7 +131,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.flagship.damage_tables.Regular]
 rows = [
 	"1-4: +1 to future damage",
-	"5-8: As 1-4, critical damage",
+	"5-8: As 1-4, d6 critical damage",
 	"9+: As 5-8, gain one {±1 token:token.plus_minus_one}."
 ]
 
@@ -278,7 +278,7 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 [units.abomination_infantry.damage_tables.Regular]
 rows = [
 	"1-6: Kill 1 model",
-	"7-8: Kill 1 model, Psychic damage[d6]",
+	"7-8: Kill 1 model, d6 psychic damage",
 	"9+: Unit killed",
 ]
 notes = [

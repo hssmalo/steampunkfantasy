@@ -56,7 +56,7 @@ sneak = [["360°", "F", "360°"]]
 [units.goblin_infantry.damage_tables.Regular]
 rows = [
 	"0-4: Kill 1 model",
-	"5-7: Kill 1 model, Psychic damage[d6]",
+	"5-7: Kill 1 model, d6 psychic damage",
 	"8+: Unit killed",
 ]
 notes = [
@@ -245,7 +245,7 @@ rows = [
 
 [units.goblin_infantry_carrier.damage_tables.Critical]
 rows = [
-	"1-2: 1d4 damage to all transported units",
+	"1-2: d4 damage to all transported units",
 	"3: Forced Deploy (all units, empty hexes only)",
 	"4: Cannot rotate",
 	"5: Unit cannot move",
@@ -404,7 +404,7 @@ rows = [
 
 [units.heavy_carrier.damage_tables.Critical]
 rows = [
-	"1: 1d4 damage to all transported units",
+	"1: d4 damage to all transported units",
 	"2: Forced Deploy (empty hexes only)",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
@@ -499,7 +499,7 @@ rows = [
 
 [units.modified_truck.damage_tables.Critical]
 rows = [
-	"1: 1d4 damage to all transported units",
+	"1: d4 damage to all transported units",
 	"2: Forced Deploy (empty hexes only)",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
