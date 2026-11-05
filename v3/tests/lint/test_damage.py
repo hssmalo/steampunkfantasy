@@ -61,3 +61,10 @@ def test_a_reference_after_another_effect_fires() -> None:
     found = messages(("1-3", "Shaken"), ("4", "Kill 1 model, as 1-3"))
     assert len(found) == 1
     assert "first" in found[0]
+
+
+def test_a_lowercase_reference_fires() -> None:
+    """The reference has one spelling, even when it resolves."""
+    found = messages(("1-3", "Shaken"), ("4", "as 1-3, Shaken"))
+    assert len(found) == 1
+    assert "'As'" in found[0]
