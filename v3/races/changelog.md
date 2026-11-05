@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 05.11.2026 | Elf          | Illusion row is 0-3 instead of 0-4                                          | A roll of 4 matched two rows                                                         |
 | 05.11.2026 | Elf, Ogre    | Hydra row is 11-17 instead of 10-17                                         | A roll of 10 matched two rows                                                        |
 | 05.11.2026 | Elf          | Pachycephalosaurus Riders row is 2-5 instead of 2-3                         | Rolls of 4 and 5 had no result                                                       |
 | 05.11.2026 | Ogre         | Assault Scout row is 2-6 instead of 2-5                                     | A roll of 6 had no result                                                            |

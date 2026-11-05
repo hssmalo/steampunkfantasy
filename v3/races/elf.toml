@@ -193,7 +193,7 @@ slow = [["-", "-", "Chs"],["Follow", "Follow", "Follow"]]
 
 [units.illusion.damage_tables.Regular]
 rows = [
-	"0-4: kill 1 model",
+	"0-3: kill 1 model",
 	"4+: destroy unit",
 ]
 notes = [
