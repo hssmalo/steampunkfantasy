@@ -13,6 +13,7 @@ RULE = "row-reference"
 _ROLL = r"\d+(?:-\d+|\+)?"
 _REFERENCE = re.compile(rf"\bas ({_ROLL})(?![\w-])", re.IGNORECASE)
 _DIRECTION = re.compile(r"\bas (below|above)\b", re.IGNORECASE)
+_BARE = re.compile(rf"^{_ROLL},")
 
 
 def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
@@ -22,6 +23,8 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
     for roll, effect in rows:
         if direction := _DIRECTION.search(effect):
             yield RULE, f"row {roll!r} says {direction[0]!r}: a direction names no row"
+        if _BARE.match(effect):
+            yield RULE, f"row {roll!r} says {effect!r}: a reference starts 'As'"
         for match in _REFERENCE.finditer(effect):
             target = match[1]
             if match.start() > 0:

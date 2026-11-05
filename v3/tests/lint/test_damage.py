@@ -76,3 +76,13 @@ def test_a_reference_not_followed_by_a_comma_fires(effect: str) -> None:
     found = messages(("1-3", "Shaken"), ("4", effect))
     assert len(found) == 1
     assert "comma" in found[0]
+
+
+@pytest.mark.parametrize("effect", ["1-3, Shaken", "1, Shaken", "6+, Shaken"])
+def test_a_leading_roll_without_its_word_fires(effect: str) -> None:
+    """A bare leading roll is a reference missing its `As`."""
+    found = messages(
+        ("1", "Shaken"), ("1-3", "Shaken"), ("6+", "Shaken"), ("7", effect)
+    )
+    assert len(found) == 1
+    assert "'As'" in found[0]
