@@ -305,3 +305,25 @@ def test_a_rule_link_in_a_races_tip_is_a_finding(
     findings = collect.lint_prose("ork", race)
 
     assert [(f.key, f.rule) for f in findings] == [("squad.tip", "link-field")]
+
+
+def test_a_broken_row_reference_surfaces_as_a_finding() -> None:
+    """The rule reaches `lint_race_config` and locates the Damage table it fired on."""
+    race_config = synthetic_race(
+        race="ogre",
+        units={
+            "brute": synthetic_unit(
+                damage_tables={"Crew": {"rows": ["4-5: Shaken", "6-7: As 1-3"]}}
+            )
+        },
+    )
+
+    findings = collect.lint_race_config(
+        "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
+    )
+
+    (finding,) = [f for f in findings if f.rule == "row-reference"]
+    assert finding.race == "ogre"
+    assert finding.section == "units"
+    assert finding.key == "brute.damage_tables.Crew"
+    assert "1-3" in finding.message

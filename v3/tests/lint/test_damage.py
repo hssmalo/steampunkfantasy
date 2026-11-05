@@ -86,3 +86,23 @@ def test_a_leading_roll_without_its_word_fires(effect: str) -> None:
     )
     assert len(found) == 1
     assert "'As'" in found[0]
+
+
+@pytest.mark.parametrize(
+    "effect",
+    [
+        "As 1-3, {Shaken:token.shaken}",
+        "+1 to future damage",
+        "d6 psychic damage",
+        "2 damage",
+        "x3 d6 light damage",
+        "-1 to-hit, +1 to-be-hit",
+        "Kill 4 models",
+        "Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
+        "d8 psychic damage to all friendly units within range 2",
+        "Damage is treated as normal",
+    ],
+)
+def test_an_effect_with_no_broken_reference_is_quiet(effect: str) -> None:
+    """Numbers in prose, an `as` with no roll, and a linked effect are not defects."""
+    assert not messages(("1-3", "Shaken"), ("4", effect))
