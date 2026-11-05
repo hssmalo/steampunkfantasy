@@ -63,9 +63,10 @@ def test_a_reference_after_another_effect_fires() -> None:
     assert "first" in found[0]
 
 
-def test_a_lowercase_reference_fires() -> None:
+@pytest.mark.parametrize("effect", ["as 1-3, Shaken", "AS 1-3, Shaken"])
+def test_a_misspelled_reference_fires(effect: str) -> None:
     """The reference has one spelling, even when it resolves."""
-    found = messages(("1-3", "Shaken"), ("4", "as 1-3, Shaken"))
+    found = messages(("1-3", "Shaken"), ("4", effect))
     assert len(found) == 1
     assert "'As'" in found[0]
 
