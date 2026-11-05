@@ -254,9 +254,9 @@ rows = [
 
 [units.goblin_infantry_carrier.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -309,7 +309,7 @@ rows = [
 
 [units.bipedal_mech.damage_tables.Critical]
 rows = [
-	"1: Take d12 Crew damage (note, it is not shaken before the apply damage step)",
+	"1: Take d12 crew damage (note, it is not shaken before the apply damage step)",
 	"2: Unit gets a minor acid token",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
@@ -319,9 +319,9 @@ rows = [
 
 [units.bipedal_mech.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -414,9 +414,9 @@ rows = [
 
 [units.heavy_carrier.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -508,9 +508,9 @@ rows = [
 
 [units.modified_truck.damage_tables.Crew]
 rows = [
-	"3-4: Crippled Crew, if already shaken double initial Crew damage",
+	"3-4: Crippled Crew, if already shaken double initial crew damage",
 	"5-6: As 3-4, shaken",
-	"7-9: As 5-6, +3 to future Crew damage",
+	"7-9: As 5-6, +3 to future crew damage",
 	"10: Unit destroyed, forced deploy all transported units",
 ]
 

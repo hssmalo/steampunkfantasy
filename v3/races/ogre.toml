@@ -563,9 +563,9 @@ rows = [
 
 [units.main_engine.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-12: As 6-7, +3 to future Crew damage",
+	"8-12: As 6-7, +3 to future crew damage",
 	"13: Unit destroyed",
 ]
 
@@ -614,9 +614,9 @@ rows = [
 
 [units.broadside_wagon.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-12: As 6-7, +3 to future Crew damage",
+	"8-12: As 6-7, +3 to future crew damage",
 	"13: Unit destroyed",
 ]
 
@@ -663,9 +663,9 @@ rows = [
 
 [units.artillery_wagon.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-12: As 6-7, +3 to future Crew damage",
+	"8-12: As 6-7, +3 to future crew damage",
 	"13: Unit destroyed",
 ]
 

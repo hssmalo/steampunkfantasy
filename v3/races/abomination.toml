@@ -65,9 +65,9 @@ rows = [
 
 [units.confusiator.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -152,10 +152,10 @@ rows = [
 
 [units.flagship.damage_tables.Crew]
 rows = [
-	"4-5: If already shaken double initial Crew damage",
+	"4-5: If already shaken double initial crew damage",
 	"6-7: As 4-5, Crippled Crew", #token.crippled_crew
 	"8-9: As 6-7, disable repair", #token.disable_repair
-	"10-17: As 8-9, +1 to future Crew damage", #token.plus_to_crew_damage (need to be written)
+	"10-17: As 8-9, +1 to future crew damage", #token.plus_to_crew_damage (need to be written)
 	"18: Unit destroyed",
 ]
 
@@ -224,9 +224,9 @@ rows = [
 
 [units.frost_88.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
+	"4-5: Crippled Crew, if already shaken double initial crew damage",
 	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
