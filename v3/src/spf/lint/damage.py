@@ -14,7 +14,16 @@ _LEADING = re.compile(rf"^As ({_ROLL})(?:,|$)")
 
 def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
     """Yield `(rule, message)` for every Row reference that breaks the rule."""
-    rolls = {roll for roll, _ in rows}
+    every_roll = {roll for roll, _ in rows}
+    earlier: set[str] = set()
     for roll, effect in rows:
-        if (match := _LEADING.match(effect)) and match[1] not in rolls:
-            yield "row-reference", f"row {roll!r} names roll {match[1]!r}: no such row"
+        if match := _LEADING.match(effect):
+            target = match[1]
+            if target not in every_roll:
+                yield "row-reference", f"row {roll!r} names {target!r}: no such row"
+            elif target not in earlier:
+                yield (
+                    "row-reference",
+                    f"row {roll!r} names {target!r}: not an earlier row",
+                )
+        earlier.add(roll)
