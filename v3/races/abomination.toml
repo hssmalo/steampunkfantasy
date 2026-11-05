@@ -279,7 +279,7 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 rows = [
 	"1-6: Kill 1 model",
 	"7-8: Kill 1 model, Psychic damage[d6]",
-	"9+: Unit destroyed",
+	"9+: Unit killed",
 ]
 notes = [
 	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
@@ -340,7 +340,7 @@ rows = [
 	"1-3: Bleed[6]",
 	"4-5: As 1-3, +1 to future damage",
 	"6-8: As 4-5, if caused by bleeding, amplify bleeding",
-	"9+: Unit destroyed",
+	"9+: Unit killed",
 ]
 notes = [
 	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
@@ -384,7 +384,7 @@ rows = [
 	"1-3: Bleed[4]",
 	"4-5: Bleed[6], +1 to future damage",
 	"6-7: Bleed[8], +2 to future damage",
-	"8+: Unit destroyed",
+	"8+: Unit killed",
 ]
 notes = [
 	"Bleeding does not cause more bleeding",
@@ -445,7 +445,7 @@ slow = [["-", "Load"], ["-", "Fire"]]
 rows = [
 	"1-2: +1 to future damage",
 	"3-4: +2 to future damage",
-	"5+: Shaken, Destroy one model",
+	"5+: Shaken, destroy 1 model",
 ]
 notes = [
 	"If one model is destroyed remove half of the +1 future damage tokens",
@@ -485,7 +485,7 @@ fast = [["Chs", "Chs", "Chs"]]
 
 [units.robot_crab.damage_tables.Regular]
 rows = [
-	"1-8: Kill 1 model",
+	"1-8: Destroy 1 model",
 	"9+: Unit destroyed",
 ]
 
@@ -585,7 +585,7 @@ rows = [
 	"2-3: Bleed[4]", #token.bleed. N=4
 	"4-6: As 2-3, +1 to future damage",
 	"7-8: As 4-6, shaken", #token.shaken
-	"9+: Unit destroyed",
+	"9+: Unit killed",
 ]
 notes = ["Bleeding does not cause more bleeding"]
 

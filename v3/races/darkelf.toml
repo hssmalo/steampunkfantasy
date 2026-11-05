@@ -222,7 +222,7 @@ rows = [
 	"4-7: Double initial Crew damage if already shaken",
 	"8-10: As 4-7, Crippled Crew",
 	"11-12: As 8-10, +3 to future Crew damage",
-	"13: Crew Killed, unit destroyed",
+	"13: Crew killed, unit destroyed",
 ]
 
 [units.queen_xy]
@@ -293,7 +293,7 @@ rows = [
 	"4-7: Double initial Crew damage if already shaken",
 	"8-10: As 4-7, Crippled Crew",
 	"11-12: As 8-10, +3 to future Crew damage",
-	"13: Crew Killed, unit destroyed",
+	"13: Crew killed, unit destroyed",
 ]
 
 [units.nightmare_mechanical_cavalry]
@@ -423,7 +423,7 @@ rows = [
 	"1-2: +1 to future damage",
 	"3: As 1-2, shaken",
 	"4-6: As 3, critical damage[d6]",
-	"7+: Destroy unit",
+	"7+: Unit destroyed",
 ]
 
 [units.mechanical_assault_spider.damage_tables.Critical]
@@ -465,7 +465,7 @@ rows = [
 	"1-2: +1 to future damage",
 	"3: As 1-2, shaken",
 	"4-6: As 3, critical damage[d6]",
-	"7+: Destroy unit",
+	"7+: Unit destroyed",
 ]
 
 [units.mechanical_scorpion.damage_tables.Critical]
@@ -537,7 +537,7 @@ still = [
 rows = [
 	"0-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 Psychic damage",
-	"9: Destroy unit",
+	"9: Unit killed",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
@@ -605,7 +605,7 @@ slow = [["Activate", "-"]]
 
 [units.multicultural_infantry.damage_tables.Regular]
 rows = [
-	"0-1: If number of alive models is more than 2, Kill 1 model",
+	"0-1: If number of alive models is more than 2, kill 1 model",
 	"2-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 Psychic damage",
 	"9: Kill 4 models, d6 Psychic damage",
@@ -650,7 +650,7 @@ slow = [["-", "-", "Chs"]]
 [units.multicultural_trainee.damage_tables.Regular]
 rows = [
 	"1-8: Kill 1 model",
-	"9: Destroy unit",
+	"9: Unit killed",
 ]
 
 [units.multicultural_trainee.damage_tables.Psychic]
@@ -719,7 +719,7 @@ still = [
 rows = [
 	"0-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 Psychic damage",
-	"9: Destroy unit",
+	"9: Unit killed",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",

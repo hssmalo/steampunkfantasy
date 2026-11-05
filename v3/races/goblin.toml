@@ -57,7 +57,7 @@ sneak = [["360°", "F", "360°"]]
 rows = [
 	"0-4: Kill 1 model",
 	"5-7: Kill 1 model, Psychic damage[d6]",
-	"8+: Unit destroyed",
+	"8+: Unit killed",
 ]
 notes = [
 	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
@@ -125,7 +125,7 @@ slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chs", "-"]]
 rows = [
 	"1-6: Bleed[8]",
 	"7-8: +1 to future damage, Bleed[8]",
-	"9+: Unit destroyed",
+	"9+: Unit killed",
 ]
 notes = [
 	"Bleeding does not cause more bleeding",
@@ -169,8 +169,8 @@ slow = [["Follow", "Follow",  "Follow"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
-	"0-3: Kill one model",
-	"4+: Unit destroyed",
+	"0-3: Kill 1 model",
+	"4+: Unit killed",
 ]
 
 [units.tiny_snake.damage_tables.Psychic]
