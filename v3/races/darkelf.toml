@@ -220,7 +220,7 @@ rows = [
 [units.queen_yy.damage_tables.Crew]
 rows = [
 	"4-7: Double initial Crew damage if already shaken",
-	"8-10: As below, Crippled Crew",
+	"8-10: As 4-7, Crippled Crew",
 	"11-12: as 10, +3 to future Crew damage",
 	"13: Crew Killed, unit destroyed",
 ]
@@ -291,8 +291,8 @@ rows = [
 [units.queen_xy.damage_tables.Crew]
 rows = [
 	"4-7: double initial Crew damage if already shaken",
-	"8-10: As below, Crippled Crew",
-	"11-12: As below, +3 to future Crew damage",
+	"8-10: As 4-7, Crippled Crew",
+	"11-12: As 8-10, +3 to future Crew damage",
 	"13: Crew Killed, unit destroyed",
 ]
 
@@ -421,8 +421,8 @@ slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.mechanical_assault_spider.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: as below, shaken",
-	"4-6: as below, critical damage[d6]",
+	"3: As 1-2, shaken",
+	"4-6: As 3, critical damage[d6]",
 	"7+: Destroy unit",
 ]
 
@@ -463,8 +463,8 @@ slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.mechanical_scorpion.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: as below, shaken",
-	"4-6: as below, critical damage[d6]",
+	"3: As 1-2, shaken",
+	"4-6: As 3, critical damage[d6]",
 	"7+: Destroy unit",
 ]
 
