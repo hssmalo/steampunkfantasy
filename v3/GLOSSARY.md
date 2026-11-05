@@ -146,6 +146,12 @@ _Avoid_: damage line, damage table entry
 The roll portion of a Damage row that a rolled result is checked against —
 an exact value, a range, or an "at least" threshold.
 
+**Row reference**:
+A Damage row's effect that builds on an earlier row in the same Damage table. It
+comes first in the effect and names that row by its Damage roll, as printed:
+`As 1-3, Shaken`.
+_Avoid_: "as below", "as above"
+
 **Special** (special rule):
 A rule that modifies a Unit, Model, Equipment, Assault, or Range beyond the base
 stats. Defined once in `rules/special.toml` and referred to by **Identifier**,
