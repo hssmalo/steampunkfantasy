@@ -675,7 +675,7 @@ still = [["A+(A)", "360°+(F)", "F"]]
 
 [units.pachycephalosaurus_riders.damage_tables.Regular]
 rows = [
-	"2-3: Bleed[6]",
+	"2-5: Bleed[6]",
 	"6+: kill 1 model, d4 Psychic damage",
 ]
 notes = [
