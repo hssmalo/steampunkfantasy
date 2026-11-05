@@ -7,7 +7,7 @@ registry declares. Five order rules — **order-whitespace**, **order-separator*
 **order-name**, **order-spacing** and **order-argument** — apply to every cell
 of every Order Card. One damage rule, **row-reference**, applies to every Damage
 row: a Row reference must come first and name an earlier row. Coming first is
-the one convention here, kept because it makes a reference recognisable.
+the one convention here, kept because it makes a reference recognizable.
 
 Each fires only where the data disagrees with itself. None encodes a preference
 about how the game should be written.
