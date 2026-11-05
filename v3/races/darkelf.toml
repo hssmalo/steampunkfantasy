@@ -291,7 +291,7 @@ rows = [
 [units.queen_xy.damage_tables.Crew]
 rows = [
 	"4-7: double initial Crew damage if already shaken",
-	"9-10: As below, Crippled Crew",
+	"8-10: As below, Crippled Crew",
 	"11-12: As below, +3 to future Crew damage",
 	"13: Crew Killed, unit destroyed",
 ]
