@@ -280,7 +280,7 @@ fast = [
 
 [units.ogre_assault_scout.damage_tables.Regular]
 rows = [
-	"2-5: Bleed[8]",
+	"2-6: Bleed[8]",
 	"7-8: As below, +1 to future damage",
 	"9+: unit destroyed",
 ]
