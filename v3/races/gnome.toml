@@ -314,7 +314,7 @@ rows = [
 	"3: +1 to be hit, -1 to hit",
 	"4: Rotate unit 180°",
 	"5: Place fog and poison cloud[8] in this and all adjacent hexes.",
-	"6: set on fire",
+	"6: Set on fire",
 ]
 
 [units.ballista_tractor_mark_i.damage_tables.Crew]
@@ -373,7 +373,7 @@ rows = [
 	"3: +1 to be hit, -1 to hit",
 	"4: Rotate unit 180°",
 	"5: Place fog and poison cloud[8] in this and all adjacent hexes.",
-	"6: set on fire",
+	"6: Set on fire",
 ]
 
 [units.ballista_tractor_mark_ii.damage_tables.Crew]
@@ -435,7 +435,7 @@ rows = [
 	"3: +1 to be hit, -1 to hit",
 	"4: Rotate unit 180°",
 	"5: Place fog and poison cloud[8] in this and all adjacent hexes.",
-	"6: set on fire",
+	"6: Set on fire",
 ]
 
 [units.ballista_tractor_mark_iii.damage_tables.Crew]

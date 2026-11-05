@@ -212,9 +212,9 @@ rows = [
 	"1: -1 to-hit, +1 to-be-hit",
 	"2: Rotates right in agony 0 step",
 	"3: Rotates left in agony 1 and in agony 3",
-	"4: cannot move",
-	"5: unit is covered in acid",
-	"6: unit is set on fire",
+	"4: Cannot move",
+	"5: Unit is covered in acid",
+	"6: Unit is set on fire",
 ]
 
 [units.queen_yy.damage_tables.Crew]
@@ -282,15 +282,15 @@ rows = [
 rows = [
 	"1: -1 to-hit, +1 to-be-hit",
 	"2: Rotates right in agony 0 step",
-	"3: rotates left in agony 1 and in agony 3",
-	"4: only still available",
-	"5: unit is covered in acid",
-	"6: unit is set on fire",
+	"3: Rotates left in agony 1 and in agony 3",
+	"4: Only still available",
+	"5: Unit is covered in acid",
+	"6: Unit is set on fire",
 ]
 
 [units.queen_xy.damage_tables.Crew]
 rows = [
-	"4-7: double initial Crew damage if already shaken",
+	"4-7: Double initial Crew damage if already shaken",
 	"8-10: As 4-7, Crippled Crew",
 	"11-12: As 8-10, +3 to future Crew damage",
 	"13: Crew Killed, unit destroyed",
@@ -341,7 +341,7 @@ notes = [
 
 [units.nightmare_mechanical_cavalry.damage_tables.Psychic]
 rows = [
-	"6+: unit shaken",
+	"6+: Unit shaken",
 ]
 
 [units.elite_mechanical_cavalry]
@@ -384,7 +384,7 @@ fast = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 rows = [
 	"2-3: +1 on future damage",
 	"4: +2 on future damage",
-	"5-6: kill 1 model",
+	"5-6: Kill 1 model",
 ]
 notes = [
 	"If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
@@ -392,7 +392,7 @@ notes = [
 
 [units.elite_mechanical_cavalry.damage_tables.Psychic]
 rows = [
-	"5+: unit shaken",
+	"5+: Unit shaken",
 ]
 
 [units.mechanical_assault_spider]
@@ -432,7 +432,7 @@ rows = [
 	"2: Cannot move",
 	"3: Cannot rotate",
 	"4: x3 +3 to future damage",
-	"5: half, rounded down, all assault strength and deflection values",
+	"5: Half, rounded down, all assault strength and deflection values",
 	"6: Unit set on Fire",
 ]
 
@@ -785,7 +785,7 @@ still = [
 
 [units.assassin.damage_tables.Regular]
 rows = [
-	"1+: unit killed",
+	"1+: Unit killed",
 ]
 
 [units.assassin.damage_tables.Psychic]
@@ -847,7 +847,7 @@ slow = [["-", "Fire"], ["Fire", "-"]]
 
 [units.roboprosthetic_assassin.damage_tables.Regular]
 rows = [
-	"1+: unit killed",
+	"1+: Unit killed",
 ]
 
 [units.roboprosthetic_assassin.damage_tables.Psychic]
@@ -911,7 +911,7 @@ still = [
 slow = [["Spot", "Spot"]]
 
 [units.scout.damage_tables.Regular]
-rows = ["0+: unit killed"]
+rows = ["0+: Unit killed"]
 
 [units.scout.damage_tables.Psychic]
 rows = ["3+: Unit shaken"]

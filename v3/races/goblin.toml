@@ -65,7 +65,7 @@ notes = [
 
 [units.goblin_infantry.damage_tables.Psychic]
 rows = [
-	"4+: shaken",
+	"4+: Shaken",
 ]
 
 
@@ -133,7 +133,7 @@ notes = [
 
 [units.giant_snake_cavalry.damage_tables.Psychic]
 rows = [
-	"6+: shaken",
+	"6+: Shaken",
 ]
 
 
@@ -169,13 +169,13 @@ slow = [["Follow", "Follow",  "Follow"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
-	"0-3: kill one model",
-	"4+: unit destroyed",
+	"0-3: Kill one model",
+	"4+: Unit destroyed",
 ]
 
 [units.tiny_snake.damage_tables.Psychic]
 rows = [
-	"2+: shaken",
+	"2+: Shaken",
 ]
 
 
@@ -560,7 +560,7 @@ notes = [
 ]
 
 [units.mechanical_fire_bird.damage_tables.Inner]
-rows = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
+rows = ["1-5: Add one minor acid token", "6+: Remove reassemble token"]
 
 [models]
 
