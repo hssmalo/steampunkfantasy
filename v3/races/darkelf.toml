@@ -91,7 +91,7 @@ fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
 [units.mechanical_red_dragon.damage_tables.Regular]
 rows = [
 	"1-4: +1 to future damage",
-	"5-12: +1 to future damage, shaken",
+	"5-12: +1 to future damage, Shaken",
 	"13+: Unit destroyed",
 ]
 
@@ -145,7 +145,7 @@ fast_fly = [
 [units.mechanical_iron_dragon.damage_tables.Regular]
 rows = [
 	"1-4: +1 to future damage",
-	"5-12: +1 to future damage, shaken",
+	"5-12: +1 to future damage, Shaken",
 	"13+: Unit destroyed",
 ]
 
@@ -202,7 +202,7 @@ fast = [["-", "Fire"], ["-", "Fire"], ["-", "Fire"], ["-", "Release"]]
 [units.queen_yy.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4-5: As 1-3, shaken",
+	"4-5: As 1-3, Shaken",
 	"6-8: As 4-5, d6 critical damage",
 	"9+: Unit destroyed",
 ]
@@ -219,7 +219,7 @@ rows = [
 
 [units.queen_yy.damage_tables.Crew]
 rows = [
-	"4-7: Double initial crew damage if already shaken",
+	"4-7: Double initial crew damage if already Shaken",
 	"8-10: As 4-7, Crippled Crew",
 	"11-12: As 8-10, +3 to future crew damage",
 	"13: Crew killed, unit destroyed",
@@ -273,7 +273,7 @@ fast = [["-", "Release"]]
 [units.queen_xy.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4-5: As 1-3, shaken",
+	"4-5: As 1-3, Shaken",
 	"6-8: As 4-5, d6 critical damage",
 	"9+: Unit destroyed",
 ]
@@ -290,7 +290,7 @@ rows = [
 
 [units.queen_xy.damage_tables.Crew]
 rows = [
-	"4-7: Double initial crew damage if already shaken",
+	"4-7: Double initial crew damage if already Shaken",
 	"8-10: As 4-7, Crippled Crew",
 	"11-12: As 8-10, +3 to future crew damage",
 	"13: Crew killed, unit destroyed",
@@ -341,7 +341,7 @@ notes = [
 
 [units.nightmare_mechanical_cavalry.damage_tables.Psychic]
 rows = [
-	"6+: Unit shaken",
+	"6+: Shaken",
 ]
 
 [units.elite_mechanical_cavalry]
@@ -392,7 +392,7 @@ notes = [
 
 [units.elite_mechanical_cavalry.damage_tables.Psychic]
 rows = [
-	"5+: Unit shaken",
+	"5+: Shaken",
 ]
 
 [units.mechanical_assault_spider]
@@ -421,7 +421,7 @@ slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.mechanical_assault_spider.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: As 1-2, shaken",
+	"3: As 1-2, Shaken",
 	"4-6: As 3, d6 critical damage",
 	"7+: Unit destroyed",
 ]
@@ -463,7 +463,7 @@ slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.mechanical_scorpion.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: As 1-2, shaken",
+	"3: As 1-2, Shaken",
 	"4-6: As 3, d6 critical damage",
 	"7+: Unit destroyed",
 ]
@@ -546,7 +546,7 @@ notes = [
 
 [units.darkelf_infantry.damage_tables.Psychic]
 rows = [
-	"4+: Unit shaken",
+	"4+: Shaken",
 ]
 
 [units.multicultural_infantry]
@@ -618,7 +618,7 @@ notes = [
 
 [units.multicultural_infantry.damage_tables.Psychic]
 rows = [
-	"5+: Unit shaken",
+	"5+: Shaken",
 ]
 
 [units.multicultural_trainee]
@@ -655,7 +655,7 @@ rows = [
 
 [units.multicultural_trainee.damage_tables.Psychic]
 rows = [
-	"3+: Unit shaken",
+	"3+: Shaken",
 ]
 
 [units.roboprosthetic_darkelf]
@@ -728,7 +728,7 @@ notes = [
 
 [units.roboprosthetic_darkelf.damage_tables.Psychic]
 rows = [
-	"5+: Unit shaken",
+	"5+: Shaken",
 ]
 
 [units.assassin]
@@ -790,7 +790,7 @@ rows = [
 
 [units.assassin.damage_tables.Psychic]
 rows = [
-	"6+: Unit shaken",
+	"6+: Shaken",
 ]
 
 [units.roboprosthetic_assassin]
@@ -852,7 +852,7 @@ rows = [
 
 [units.roboprosthetic_assassin.damage_tables.Psychic]
 rows = [
-	"6+: Unit shaken",
+	"6+: Shaken",
 ]
 
 [units.scout]
@@ -914,7 +914,7 @@ slow = [["Spot", "Spot"]]
 rows = ["0+: Unit killed"]
 
 [units.scout.damage_tables.Psychic]
-rows = ["3+: Unit shaken"]
+rows = ["3+: Shaken"]
 
 #
 # Models
