@@ -11,7 +11,7 @@ from collections.abc import Iterator, Sequence
 RULE = "row-reference"
 
 _ROLL = r"\d+(?:-\d+|\+)?"
-_LEADING = re.compile(rf"^As ({_ROLL})(?:,|$)")
+_REFERENCE = re.compile(rf"\bas ({_ROLL})(?![\w-])", re.IGNORECASE)
 _DIRECTION = re.compile(r"\bas (below|above)\b", re.IGNORECASE)
 
 
@@ -22,8 +22,10 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
     for roll, effect in rows:
         if direction := _DIRECTION.search(effect):
             yield RULE, f"row {roll!r} says {direction[0]!r}: a direction names no row"
-        if match := _LEADING.match(effect):
+        for match in _REFERENCE.finditer(effect):
             target = match[1]
+            if match.start() > 0:
+                yield RULE, f"row {roll!r} says {match[0]!r}: it must come first"
             if target not in every_roll:
                 yield RULE, f"row {roll!r} names {target!r}: no such row"
             elif target not in earlier:

@@ -54,3 +54,10 @@ def test_a_direction_instead_of_a_roll_fires(effect: str) -> None:
     found = messages(("1-3", "+1 to future damage"), ("4", effect))
     assert len(found) == 1
     assert "direction" in found[0]
+
+
+def test_a_reference_after_another_effect_fires() -> None:
+    """Coming first is what makes a reference recognisable in free text."""
+    found = messages(("1-3", "Shaken"), ("4", "Kill 1 model, as 1-3"))
+    assert len(found) == 1
+    assert "first" in found[0]
