@@ -42,15 +42,15 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 [units.ork_infantry.damage_tables.Regular]
 rows = [
     "1-5: Kill 1 model",
-    "6-7: Kill 1 model, Psychic damage[d6]",
-    "8+: Unit destroyed",
+    "6-7: Kill 1 model, d6 psychic damage",
+    "8+: Unit killed",
 ]
 notes = [
-    "If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+    "If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.ork_infantry.damage_tables.Psychic]
-rows = ["4+: shaken"]
+rows = ["4+: Shaken"]
 
 [units]
 
@@ -98,10 +98,10 @@ slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
 [units.troll.damage_tables.Regular]
 rows = [
-	"3-9: +1 on future damage",
-	"10-14: +1 for future damage, Bleed[12]",
-	"15-19: as 10-14 plus Troll unconscious",
-	"20+: permanent dead",
+	"3-9: +1 to future damage",
+	"10-14: +1 to future damage, Bleed[12]",
+	"15-19: As 10-14, Troll unconscious",
+	"20+: Unit killed",
 ]
 
 [units.champion]
@@ -124,8 +124,8 @@ text = "ork_champion: Has same orders available as the unit it awakened from, an
 
 [units.champion.damage_tables.Regular]
 rows = [
-	"2-3: Bleeding[4]",
-	"4+: Killed",
+	"2-3: Bleed[4]",
+	"4+: Unit killed",
 ]
 
 [units.champion.orders.movement]
@@ -178,18 +178,18 @@ fast = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [units.warg_rider.damage_tables.Psychic]
 rows = [
-	"5+: unit shaken",
+	"5+: Shaken",
 ]
 
 [units.warg_rider.damage_tables.Regular]
 rows = [
-	"2-3: Bleeding[6]",
-	"4-6: Bleeding[6], +1 to future damage, Psychic damage[d6]",
-	"7+: kill 1 model, Psychic damage[d6]",
+	"2-3: Bleed[6]",
+	"4-6: Bleed[6], +1 to future damage, d6 psychic damage",
+	"7+: Kill 1 model, d6 psychic damage",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison or bleeding, remove that instance",
+	"If killed by Poison or Bleed, remove that instance",
 ]
 
 [units.speedhead]
@@ -228,24 +228,24 @@ fast = [["Load", "Load"], ["Load", "Fire Burst(5)"], ["Fire Burst(5)", "Load"]]
 [units.speedhead.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: as 1-3, shaken",
-	"5-8: 4, Critical Damage[d6]",
-	"9+: unit destroyed",
+	"4: As 1-3, Shaken",
+	"5-8: As 4, d6 critical damage",
+	"9+: Unit destroyed",
 ]
 
 [units.speedhead.damage_tables.Critical]
 rows = [
 	"1-3: +3 to future damage",
 	"4: Cannot rotate",
-	"5: -1 to hit, +1 to be hit (ranged and assault)",
-	"6: Unit set on fire",
+	"5: -1 to-hit, +1 to-be-hit (ranged and assault)",
+	"6: Fire",
 ]
 
 [units.speedhead.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"4-5: Crippled Crew, if already Shaken double initial crew damage",
+	"6-7: As 4-5, Shaken",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12+: Unit destroyed",
 ]
 
@@ -271,24 +271,24 @@ movement_order = ["-", "-", "-"]
 [units.battering_ram.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: 1-3, shaken",
-	"5-8: as 4, Critical Damage",
-	"9+: unit destroyed",
+	"4: As 1-3, Shaken",
+	"5-8: As 4, d6 critical damage",
+	"9+: Unit destroyed",
 ]
 
 [units.battering_ram.damage_tables.Critical]
 rows = [
 	"1-3: +3 to future damage",
 	"4: Unit cannot rotate",
-	"5: Unit Cannot move",
+	"5: Cannot Move",
 	"6: -5 to assault strength.",
 ]
 
 [units.battering_ram.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"4-5: Crippled Crew, if already Shaken double initial crew damage",
+	"6-7: As 4-5, Shaken",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12+: Unit destroyed",
 ]
 
@@ -349,24 +349,24 @@ variant = "fire_and_load_simultaneously"
 [units.battlewagon.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: as 1-3, shaken", #token.shaken
-	"5-8: as 4, Critical Damage",
-	"9+: unit destroyed, any transported units takes d6 regular damage and exit the vehicle",
+	"4: As 1-3, Shaken", #token.shaken
+	"5-8: As 4, d6 critical damage",
+	"9+: Unit destroyed, any transported units takes d6 regular damage and exit the vehicle",
 ]
 
 [units.battlewagon.damage_tables.Critical]
 rows = [
 	"1-3: +3 to future damage",
-	"4-5: gain one extra shaken token", #token.shaken
-	"6: Unit set on fire", #token.fire
+	"4-5: Gain one extra Shaken token", #token.shaken
+	"6: Fire", #token.fire
 ]
 
 
 [units.battlewagon.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"4-5: Crippled Crew, if already Shaken double initial crew damage",
+	"6-7: As 4-5, Shaken",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12+: Unit destroyed",
 ]
 
@@ -419,13 +419,13 @@ slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 [units.grunt.damage_tables.Regular]
 rows = [
 	"1-5: Kill 1 model",
-	"6-8: Kill 1 model, d6 Psychic damage",
-	"9: Destroy unit",
+	"6-8: Kill 1 model, d6 psychic damage",
+	"9: Unit killed",
 ]
 
 [units.grunt.damage_tables.Psychic]
 rows = [
-	"4+: Unit shaken",
+	"4+: Shaken",
 ]
 
 [units.ork_werewarg]
@@ -481,17 +481,17 @@ still = [
 [units.ork_werewarg.damage_tables.Regular]
 rows = [
 	"1-3: Bleed[4]", #tokens.bleed. N=4
-	"4-9: Temporarily Kill 1 model, d6 Psychic damage",
-	"10: Unit Permanently Destroyed, stops regenerating",
+	"4-9: Temporarily kill 1 model, d6 psychic damage",
+	"10: Unit killed, stops regenerating",
 ]
 notes = [
-	"When all models are temporarily killed: replace kill 1 model with +1 on future damage and keep all remaining bleeding.",
-	"If one model is temporarily killed by bleed or poison, remove that instance",
+	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining Bleed.",
+	"If one model is temporarily killed by Bleed or Poison, remove that instance",
 ]
 
 [units.ork_werewarg.damage_tables.Psychic]
 rows = [
-	"6+: Unit shaken",
+	"6+: Shaken",
 ]
 
 [units.bioengineered_ork]
@@ -555,17 +555,17 @@ slow = [
 rows = [
 	"1: Bleed[4]", #token.bleed N=4
 	"2-5: Kill 1 model",
-	"6-8: Kill 1 model, d6 Psychic damage",
-	"9: Destroy unit",
+	"6-8: Kill 1 model, d6 psychic damage",
+	"9: Unit killed",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison or bleeding, remove that instance",
+	"If killed by Poison or Bleed, remove that instance",
 ]
 
 [units.bioengineered_ork.damage_tables.Psychic]
 rows = [
-	"5+: Unit shaken",
+	"5+: Shaken",
 ]
 
 [units.ork_char_b1]
@@ -638,25 +638,25 @@ still = [
 [units.ork_char_b1.damage_tables.Regular]
 rows = [
     "1-3: +1 to future damage",
-    "4: as 1-3, shaken",
-    "5-8: as 4, Critical Damage[d6]",
-    "9+: Unit Destroyed",
+    "4: As 1-3, Shaken",
+    "5-8: As 4, d6 critical damage",
+    "9+: Unit destroyed",
 ]
 
 [units.ork_char_b1.damage_tables.Critical]
 rows = [
-    "1: Cannot Rotate",
-    "2: Cannot move",
-    "3: -1 to hit, +1 to be hit (ranged and assault)",
+    "1: Cannot rotate",
+    "2: Cannot Move",
+    "3: -1 to-hit, +1 to-be-hit (ranged and assault)",
     "4-5: +3 to future damage",
-    "6: Unit set on fire",
+    "6: Fire",
 ]
 
 [units.ork_char_b1.damage_tables.Crew]
 rows = [
-    "4-5: Crippled Crew, if already shaken double initial Crew damage",
-    "6-7: as 4-5, shaken",
-    "8-11: as 6-7, +3 to future Crew damage",
+    "4-5: Crippled Crew, if already Shaken double initial crew damage",
+    "6-7: As 4-5, Shaken",
+    "8-11: As 6-7, +3 to future crew damage",
     "12+: Unit destroyed",
 ]
 
@@ -669,7 +669,7 @@ text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for t
 name = "Troll"
 race = "ork"
 equipment = ['troll_gatling_gun']
-type = ["Monster", "Walking"]
+type = ["Bio", "Monster", "Walking"]
 equipment_limit = ["Hands:2", "Independent:∞"]
 
 [[models.troll.specials.to_hit]]
@@ -747,7 +747,7 @@ name = "Ork Infantry"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipment = ['ork_musket']
-type = ["Infantry", "Walking"]
+type = ["Bio", "Infantry", "Walking"]
 
 [[models.ork_infantry.specials.to_hit]]
 args.ability = "ability.bad_shot"
@@ -771,7 +771,7 @@ name = "Ork WereWarg"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipment = ['ork_musket']
-type = ["Infantry", "Walking", "Elite", "Monster"]
+type = ["Bio", "Infantry", "Walking", "Elite", "Monster"]
 
 [models.ork_werewarg.assault]
 strength = [3, 3, 2, 2]
@@ -792,7 +792,7 @@ name = "Champion"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
-type = ["Elite", "Infantry", "Walking"]
+type = ["Bio", "Elite", "Infantry", "Walking"]
 
 [models.champion.assault]
 strength = [6, 3, 3, 3]

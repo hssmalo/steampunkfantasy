@@ -56,16 +56,16 @@ sneak = [["360°", "F", "360°"]]
 [units.goblin_infantry.damage_tables.Regular]
 rows = [
 	"0-4: Kill 1 model",
-	"5-7: Kill 1 model, Psychic damage[d6]",
-	"8+: Unit destroyed",
+	"5-7: Kill 1 model, d6 psychic damage",
+	"8+: Unit killed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.goblin_infantry.damage_tables.Psychic]
 rows = [
-	"4+: shaken",
+	"4+: Shaken",
 ]
 
 
@@ -125,15 +125,15 @@ slow = [["360°", "F", "360°"], ["360°", "B", "-"], ["360°", "Chs", "-"]]
 rows = [
 	"1-6: Bleed[8]",
 	"7-8: +1 to future damage, Bleed[8]",
-	"9+: Unit destroyed",
+	"9+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.giant_snake_cavalry.damage_tables.Psychic]
 rows = [
-	"6+: shaken",
+	"6+: Shaken",
 ]
 
 
@@ -169,13 +169,13 @@ slow = [["Follow", "Follow",  "Follow"]]
 
 [units.tiny_snake.damage_tables.Regular]
 rows = [
-	"0-3: kill one model",
-	"4+: unit destroyed",
+	"0-3: Kill 1 model",
+	"4+: Unit killed",
 ]
 
 [units.tiny_snake.damage_tables.Psychic]
 rows = [
-	"2+: shaken",
+	"2+: Shaken",
 ]
 
 
@@ -238,25 +238,25 @@ still = [["-", "Load"], ["-", "Fire"]]
 [units.goblin_infantry_carrier.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: As 1-3, shaken",
+	"4: As 1-3, Shaken",
 	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
 
 [units.goblin_infantry_carrier.damage_tables.Critical]
 rows = [
-	"1-2: 1d4 damage to all transported units",
-	"3: Forced Deploy (all units, empty hexes only)",
+	"1-2: d4 damage to all transported units",
+	"3: Forced deploy (all units, empty hexes only)",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
+	"5: Cannot Move",
 	"6: Fire",
 ]
 
 [units.goblin_infantry_carrier.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"4-5: Crippled Crew, if already Shaken double initial crew damage",
+	"6-7: As 4-5, Shaken",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -302,26 +302,26 @@ slow =  [["Load", "-"], ["Fire", "-"]]
 [units.bipedal_mech.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: As 1-3, shaken",
+	"4: As 1-3, Shaken",
 	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
 
 [units.bipedal_mech.damage_tables.Critical]
 rows = [
-	"1: Take d12 Crew damage (note, it is not shaken before the apply damage step)",
-	"2: Unit gets a minor acid token",
-	"3: +1 to be hit, -1 to hit",
+	"1: Take d12 crew damage (note, it is not Shaken before the apply damage step)",
+	"2: Minor Acid",
+	"3: +1 to-be-hit, -1 to-hit",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
-	"6: +1 to future damage and unit gets another shaken token",
+	"5: Cannot Move",
+	"6: +1 to future damage and unit gets another Shaken token",
 ]
 
 [units.bipedal_mech.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"4-5: Crippled Crew, if already Shaken double initial crew damage",
+	"6-7: As 4-5, Shaken",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -397,26 +397,26 @@ still = [["Load", "Load"],["Load", "Fire"]]
 [units.heavy_carrier.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: As 1-3 , shaken",
+	"4: As 1-3, Shaken",
 	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
 
 [units.heavy_carrier.damage_tables.Critical]
 rows = [
-	"1: 1d4 damage to all transported units",
-	"2: Forced Deploy (empty hexes only)",
-	"3: +1 to be hit, -1 to hit",
+	"1: d4 damage to all transported units",
+	"2: Forced deploy (empty hexes only)",
+	"3: +1 to-be-hit, -1 to-hit",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
+	"5: Cannot Move",
 	"6: Fire",
 ]
 
 [units.heavy_carrier.damage_tables.Crew]
 rows = [
-	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: As 4-5, shaken",
-	"8-11: As 6-7, +3 to future Crew damage",
+	"4-5: Crippled Crew, if already Shaken double initial crew damage",
+	"6-7: As 4-5, Shaken",
+	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -492,25 +492,25 @@ still = [["Fire", "Fire"]]
 [units.modified_truck.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: As 1-2, shaken",
+	"3: As 1-2, Shaken",
 	"4-7: As 3, d6 critical damage",
 	"8: Unit destroyed",
 ]
 
 [units.modified_truck.damage_tables.Critical]
 rows = [
-	"1: 1d4 damage to all transported units",
-	"2: Forced Deploy (empty hexes only)",
-	"3: +1 to be hit, -1 to hit",
+	"1: d4 damage to all transported units",
+	"2: Forced deploy (empty hexes only)",
+	"3: +1 to-be-hit, -1 to-hit",
 	"4: Cannot rotate",
-	"5-6: Unit cannot move",
+	"5-6: Cannot Move",
 ]
 
 [units.modified_truck.damage_tables.Crew]
 rows = [
-	"3-4: Crippled Crew, if already shaken double initial Crew damage",
-	"5-6: As 4-5, shaken",
-	"7-9: As 6-7, +3 to future Crew damage",
+	"3-4: Crippled Crew, if already Shaken double initial crew damage",
+	"5-6: As 3-4, Shaken",
+	"7-9: As 5-6, +3 to future crew damage",
 	"10: Unit destroyed, forced deploy all transported units",
 ]
 
@@ -560,7 +560,7 @@ notes = [
 ]
 
 [units.mechanical_fire_bird.damage_tables.Inner]
-rows = ["1-5: add one minor acid token", "6+: Remove reassemble token"]
+rows = ["1-5: Minor Acid", "6+: Remove reassemble token"]
 
 [models]
 

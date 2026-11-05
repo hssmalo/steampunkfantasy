@@ -5,10 +5,14 @@ rules it already ran. Two prose rules — **whitespace** and
 **terminal-punctuation** — apply to every sentence field a Race or a rule
 registry declares. Five order rules — **order-whitespace**, **order-separator**,
 **order-name**, **order-spacing** and **order-argument** — apply to every cell
-of every Order Card.
+of every Order Card. One damage rule, **row-reference**, applies to every Damage
+row: a Row reference must name an earlier row.
 
 Each fires only where the data disagrees with itself. None encodes a preference
-about how the game should be written.
+about how the game should be written, with one exception the game designer asked
+for: **row-reference** also holds a reference to its form, `As <roll>` first in
+the effect, because that form is what makes a reference recognizable in free
+text.
 
 ## Why the punctuation rule runs one way only
 

@@ -11,8 +11,9 @@ from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import holders, names, orders, prose, variants
+from spf.lint import damage, holders, names, orders, prose, variants
 from spf.registry import Registry, load_registry
+from spf.render.damage import roll_text
 from spf.schemas import type_aliases as t
 from spf.schemas.config import LintConfig
 from spf.schemas.race import RaceConfig, special_slots
@@ -125,7 +126,26 @@ def lint_race_config(
         findings.extend(lint_entries(race, section, entries, conventions))
     findings += lint_prose(race, race_config)
     findings += lint_order_cells(race, race_config, conventions)
+    findings += lint_damage_tables(race, race_config)
     return findings
+
+
+def lint_damage_tables(race: t.RaceName, race_config: RaceConfig) -> list[Finding]:
+    """Apply the Row reference rule to every Damage table, using the printed rolls."""
+    return [
+        Finding(
+            race=race,
+            section="units",
+            key=f"{unit_key}.damage_tables.{kind}",
+            rule=rule,
+            message=message,
+        )
+        for unit_key, unit in race_config.units.items()
+        for kind, table in unit.damage_tables.items()
+        for rule, message in damage.check_table(
+            [(roll_text(row.roll), row.effect) for row in table.rows]
+        )
+    ]
 
 
 def lint_order_cells(

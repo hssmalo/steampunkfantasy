@@ -1,0 +1,109 @@
+"""Tests for the Row reference rule, a pure predicate over a Damage table's rows.
+
+Table-driven over plain `(roll, effect)` pairs, like the prose rules: the rule
+needs no fixture, no disk and no schema.
+"""
+
+import pytest
+
+from spf.lint import damage
+
+
+def messages(*rows: tuple[str, str]) -> list[str]:
+    """Return the message of every finding on `rows`, checking the rule's name."""
+    findings = list(damage.check_table(rows))
+    assert {rule for rule, _ in findings} <= {"row-reference"}
+    return [message for _, message in findings]
+
+
+def test_a_reference_to_a_roll_no_row_has_fires() -> None:
+    """`As 1-4` contradicts a table that has no row `1-4`."""
+    found = messages(("1-3", "+1 to future damage"), ("4-5", "As 1-4, Shaken"))
+    assert len(found) == 1
+    assert "1-4" in found[0]
+
+
+def test_a_reference_forward_fires() -> None:
+    """A row can only build on what is printed above it."""
+    found = messages(("4", "As 5-8, Shaken"), ("5-8", "d6 critical damage"))
+    assert len(found) == 1
+    assert "5-8" in found[0]
+
+
+def test_a_row_naming_itself_fires() -> None:
+    """A row is not earlier than itself."""
+    assert len(messages(("4", "As 4, Shaken"))) == 1
+
+
+def test_a_reference_to_an_earlier_row_is_quiet() -> None:
+    """The form the rule exists to protect, with and without a further effect."""
+    assert not messages(
+        ("1-3", "+1 to future damage"),
+        ("4", "As 1-3"),
+        ("5", "As 4, Shaken"),
+        ("6+", "d6 critical damage"),
+        ("7+", "As 6+, Shaken"),
+    )
+
+
+@pytest.mark.parametrize(
+    "effect", ["As below, Shaken", "as below", "as above", "Shaken, as below"]
+)
+def test_a_direction_instead_of_a_roll_fires(effect: str) -> None:
+    """Below and above don't name a row, however they are spelled or placed."""
+    found = messages(("1-3", "+1 to future damage"), ("4", effect))
+    assert len(found) == 1
+    assert "direction" in found[0]
+
+
+def test_a_reference_after_another_effect_fires() -> None:
+    """Coming first is what makes a reference recognizable in free text."""
+    found = messages(("1-3", "Shaken"), ("4", "Kill 1 model, as 1-3"))
+    assert len(found) == 1
+    assert "first" in found[0]
+
+
+@pytest.mark.parametrize("effect", ["as 1-3, Shaken", "AS 1-3, Shaken"])
+def test_a_misspelled_reference_fires(effect: str) -> None:
+    """The reference has one spelling, even when it resolves."""
+    found = messages(("1-3", "Shaken"), ("4", effect))
+    assert len(found) == 1
+    assert "'As'" in found[0]
+
+
+@pytest.mark.parametrize("effect", ["As 1-3 , Shaken", "As 1-3 plus Shaken"])
+def test_a_reference_not_followed_by_a_comma_fires(effect: str) -> None:
+    """The form is `As <roll>, <effect>`, with no connector."""
+    found = messages(("1-3", "Shaken"), ("4", effect))
+    assert len(found) == 1
+    assert "comma" in found[0]
+
+
+@pytest.mark.parametrize("effect", ["1-3, Shaken", "1, Shaken", "6+, Shaken"])
+def test_a_leading_roll_without_its_word_fires(effect: str) -> None:
+    """A bare leading roll is a reference missing its `As`."""
+    found = messages(
+        ("1", "Shaken"), ("1-3", "Shaken"), ("6+", "Shaken"), ("7", effect)
+    )
+    assert len(found) == 1
+    assert "'As'" in found[0]
+
+
+@pytest.mark.parametrize(
+    "effect",
+    [
+        "As 1-3, {Shaken:token.shaken}",
+        "+1 to future damage",
+        "d6 psychic damage",
+        "2 damage",
+        "x3 d6 light damage",
+        "-1 to-hit, +1 to-be-hit",
+        "Kill 4 models",
+        "Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
+        "d8 psychic damage to all friendly units within range 2",
+        "Damage is treated as normal",
+    ],
+)
+def test_an_effect_with_no_broken_reference_is_quiet(effect: str) -> None:
+    """Numbers in prose, an `as` with no roll, and a linked effect are not defects."""
+    assert not messages(("1-3", "Shaken"), ("4", effect))
