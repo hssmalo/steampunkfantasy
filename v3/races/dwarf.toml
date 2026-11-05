@@ -389,7 +389,7 @@ rows = [
 	"2: Cannot Rotate",
 	"3: Cannot move",
 	"4-5: +3 to future damage",
-	"6: Set on Fire",
+	"6: Fire",
 ]
 
 [units.gunblasterwagon.damage_tables.Crew]
@@ -453,7 +453,7 @@ still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"], ["Load Unstable", "-"]]
 rows = [
 	"1-4: +3 to future damage",
 	"5: Cannot move",
-	"6: Set on Fire",
+	"6: Fire",
 ]
 
 [units.dw42.damage_tables.Regular]
@@ -531,7 +531,7 @@ rows = [
 	"3: Cannot Rotate",
 	"4: Cannot move",
 	"5: +3 to future damage",
-	"6: Set on fire",
+	"6: Fire",
 ]
 
 [units.zap.damage_tables.Regular]
@@ -593,7 +593,7 @@ slow = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
 rows = [
 	"1-4: +1 to future damage,",
 	"5-8: +1 to future damage, Shaken",
-	"9-13: +2 to future damage, Shaken, set on fire",
+	"9-13: +2 to future damage, Shaken, Fire",
 	"14+: Unit destroyed",
 ]
 

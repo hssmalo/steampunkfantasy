@@ -360,7 +360,7 @@ rows = [
 	"3: Cannot Rotate",
 	"4: +3 to future damage",
 	"5: Stuck turret: firing angle is now only forward",
-	"6: Unit is set on Fire",
+	"6: Fire",
 ]
 
 [units.e34.damage_tables.Crew]
@@ -429,7 +429,7 @@ rows = [
 	"3: Cannot rotate",
 	"4: +3 to future damage",
 	"5: Unit cannot change speed.",
-	"6: Set unit on Fire!",
+	"6: Fire",
 ]
 
 [units.tattoo_ink.damage_tables.Regular]
