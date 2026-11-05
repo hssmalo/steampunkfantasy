@@ -480,7 +480,7 @@ still = [["360°", "A", "F"]]
 [units.bear_rider.damage_tables.Regular]
 rows = [
 	"2-7: +1 to future damage, Bleed[4]",
-	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
+	"8-10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
 ]
 notes = [
@@ -528,7 +528,7 @@ still = [["360°", "A", "F"]]
 [units.dire_polar_bear_riders.damage_tables.Regular]
 rows = [
 	"2-7: +1 to future damage, Bleed[4]",
-	"8:10: +2 to future damage, Bleed[6], Psychic damage[d6]",
+	"8-10: +2 to future damage, Bleed[6], Psychic damage[d6]",
 	"11+: killed",
 ]
 notes = [
