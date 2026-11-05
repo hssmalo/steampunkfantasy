@@ -509,8 +509,8 @@ rows = [
 [units.modified_truck.damage_tables.Crew]
 rows = [
 	"3-4: Crippled Crew, if already shaken double initial Crew damage",
-	"5-6: As 4-5, shaken",
-	"7-9: As 6-7, +3 to future Crew damage",
+	"5-6: As 3-4, shaken",
+	"7-9: As 5-6, +3 to future Crew damage",
 	"10: Unit destroyed, forced deploy all transported units",
 ]
 
