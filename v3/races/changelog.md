@@ -5,6 +5,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
 | ---------- | ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 05.11.2026 | Ork          | Infantry, Troll, Champion and WereWarg are now Bio                          | Were missing the tag other biological units have; bio-only rules now affect them     |
 | 07.10.2026 | Goblin       | Modified truck got grenade launcher instead of goblin grenade               | Fix bug, more fitting, needed something                                              |
 | 02.10.2026 | Goblin       | Ogre rifle range 4                                                          | Was always meant to have range 4.                                                    |
 | 15.09.2026 | Goblin       | Goblin now has only one movement order                                      | To make it easier to play a large number of goblin infantry. No big balance issue    |

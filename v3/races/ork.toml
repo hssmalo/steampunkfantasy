@@ -669,7 +669,7 @@ text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for t
 name = "Troll"
 race = "ork"
 equipment = ['troll_gatling_gun']
-type = ["Monster", "Walking"]
+type = ["Bio", "Monster", "Walking"]
 equipment_limit = ["Hands:2", "Independent:∞"]
 
 [[models.troll.specials.to_hit]]
@@ -747,7 +747,7 @@ name = "Ork Infantry"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipment = ['ork_musket']
-type = ["Infantry", "Walking"]
+type = ["Bio", "Infantry", "Walking"]
 
 [[models.ork_infantry.specials.to_hit]]
 args.ability = "ability.bad_shot"
@@ -771,7 +771,7 @@ name = "Ork WereWarg"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞", "Shared:1"]
 equipment = ['ork_musket']
-type = ["Infantry", "Walking", "Elite", "Monster"]
+type = ["Bio", "Infantry", "Walking", "Elite", "Monster"]
 
 [models.ork_werewarg.assault]
 strength = [3, 3, 2, 2]
@@ -792,7 +792,7 @@ name = "Champion"
 race = "ork"
 equipment_limit = ["Hands:2", "Independent:∞"]
 equipment = []
-type = ["Elite", "Infantry", "Walking"]
+type = ["Bio", "Elite", "Infantry", "Walking"]
 
 [models.champion.assault]
 strength = [6, 3, 3, 3]
