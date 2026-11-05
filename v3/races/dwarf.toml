@@ -386,8 +386,8 @@ rows = [
 [units.gunblasterwagon.damage_tables.Critical]
 rows = [
 	"1: -1 to-hit, +1 to-be-hit",
-	"2: Cannot Rotate",
-	"3: Cannot move",
+	"2: Cannot rotate",
+	"3: Cannot Move",
 	"4-5: +3 to future damage",
 	"6: Fire",
 ]
@@ -452,7 +452,7 @@ still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"], ["Load Unstable", "-"]]
 [units.dw42.damage_tables.Critical]
 rows = [
 	"1-4: +3 to future damage",
-	"5: Cannot move",
+	"5: Cannot Move",
 	"6: Fire",
 ]
 
@@ -528,8 +528,8 @@ still = [["Fire", "-"], ["Load", "Aim"]]
 [units.zap.damage_tables.Critical]
 rows = [
 	"1-2: -1 to hit, +1 to-be-hit",
-	"3: Cannot Rotate",
-	"4: Cannot move",
+	"3: Cannot rotate",
+	"4: Cannot Move",
 	"5: +3 to future damage",
 	"6: Fire",
 ]
@@ -649,7 +649,7 @@ slow = [["Fire", "-"], ["-", "Fire"]]
 rows = [
     "1-9: +1 to future damage",
     "10-11: +2 to future damage",
-    "12: +3 to future damage, assault -3, Loses Terror, Shaken",
+    "12: +3 to future damage, assault -3, loses Terror, Shaken",
     "13+: Unit killed",
 ]
 

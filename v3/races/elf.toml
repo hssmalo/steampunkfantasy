@@ -355,9 +355,9 @@ rows = [
 
 [units.e34.damage_tables.Critical]
 rows = [
-	"1: Cannot move",
+	"1: Cannot Move",
 	"2: -1 to hit, +1 to be hit(ranged and assault)",
-	"3: Cannot Rotate",
+	"3: Cannot rotate",
 	"4: +3 to future damage",
 	"5: Stuck turret: firing angle is now only forward",
 	"6: Fire",

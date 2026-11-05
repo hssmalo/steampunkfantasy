@@ -212,8 +212,8 @@ rows = [
 	"1: -1 to-hit, +1 to-be-hit",
 	"2: Rotates right in agony 0 step",
 	"3: Rotates left in agony 1 and in agony 3",
-	"4: Cannot move",
-	"5: Unit is covered in acid",
+	"4: Cannot Move",
+	"5: Acid",
 	"6: Fire",
 ]
 
@@ -284,7 +284,7 @@ rows = [
 	"2: Rotates right in agony 0 step",
 	"3: Rotates left in agony 1 and in agony 3",
 	"4: Only still available",
-	"5: Unit is covered in acid",
+	"5: Acid",
 	"6: Fire",
 ]
 
@@ -429,7 +429,7 @@ rows = [
 [units.mechanical_assault_spider.damage_tables.Critical]
 rows = [
 	"1: -1 to-hit, +1 to-be-hit (ranged and assault)",
-	"2: Cannot move",
+	"2: Cannot Move",
 	"3: Cannot rotate",
 	"4: x3 +3 to future damage",
 	"5: Half, rounded down, all assault strength and deflection values",
@@ -471,7 +471,7 @@ rows = [
 [units.mechanical_scorpion.damage_tables.Critical]
 rows = [
 	"1: -1 to-hit, +1 to-be-hit (ranged and assault)",
-	"2: Cannot move, loses fear",
+	"2: Cannot Move, loses fear",
 	"3: Cannot rotate",
 	"4-5: x3 d6 light damage",
 	"6: Fire",

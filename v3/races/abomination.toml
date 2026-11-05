@@ -59,7 +59,7 @@ rows = [
 	"1-2: +3 to future damage",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
+	"5: Cannot Move",
 	"6: Fire",
 ]
 
@@ -132,7 +132,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 rows = [
 	"1-4: +1 to future damage",
 	"5-8: As 1-4, d6 critical damage",
-	"9+: As 5-8, gain one {±1 token:token.plus_minus_one}."
+	"9+: As 5-8, {Plus Minus One:token.plus_minus_one}"
 ]
 
 notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, Shaken and it has Fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is Shaken as normal."]
@@ -141,11 +141,11 @@ notes = ["Unit is destroyed if it has all of the following:no command, disabled 
 
 [units.flagship.damage_tables.Critical]
 rows = [
-	"1: d6 psychic damage to all friendly units within range 2. No command", #token.no_command: need to be written.
+	"1: d6 psychic damage to all friendly units within range 2. No Command", #token.no_command: need to be written.
 	"2: If flying, decelerates to float",
-	"2: If floating, do d8 damage (ignore armor). Disable Repair", #token.disable_repair. (need to be written)
-	"3: Cannot accelerate", #token.cannot_accelerate
-	"4: Cannot turn", #token.cannot_turn
+	"2: If floating, do d8 damage (ignore armor). Disabled Repair", #token.disable_repair. (need to be written)
+	"3: Cannot Accelerate", #token.cannot_accelerate
+	"4: Cannot Turn", #token.cannot_turn
 	"5: Shaken", #token.shaken
 	"6: Fire", # token.fire
 ]
@@ -154,7 +154,7 @@ rows = [
 rows = [
 	"4-5: If already Shaken double initial crew damage",
 	"6-7: As 4-5, Crippled Crew", #token.crippled_crew
-	"8-9: As 6-7, disable repair", #token.disable_repair
+	"8-9: As 6-7, Disabled Repair", #token.disable_repair
 	"10-17: As 8-9, +1 to future crew damage", #token.plus_to_crew_damage (need to be written)
 	"18: Unit destroyed",
 ]
@@ -218,7 +218,7 @@ rows = [
 	"1: +3 to future damage",
 	"2: +1 to be hit, -1 to hit",
 	"3: Cannot rotate",
-	"4-5: Unit cannot move",
+	"4-5: Cannot Move",
 	"6: Fire",
 ]
 

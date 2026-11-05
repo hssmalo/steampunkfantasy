@@ -259,7 +259,7 @@ still = [
 rows = [
 	"2-3: +1 to future damage",
 	"4-5: +1 to future damage, Shaken",
-	"6-7: As 4-5, cannot move or rotate, speed set to still",
+	"6-7: As 4-5, Cannot Move, cannot rotate, speed set to still",
 	"8: Unit destroyed",
 ]
 

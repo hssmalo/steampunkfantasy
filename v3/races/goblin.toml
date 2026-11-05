@@ -246,9 +246,9 @@ rows = [
 [units.goblin_infantry_carrier.damage_tables.Critical]
 rows = [
 	"1-2: d4 damage to all transported units",
-	"3: Forced Deploy (all units, empty hexes only)",
+	"3: Forced deploy (all units, empty hexes only)",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
+	"5: Cannot Move",
 	"6: Fire",
 ]
 
@@ -310,10 +310,10 @@ rows = [
 [units.bipedal_mech.damage_tables.Critical]
 rows = [
 	"1: Take d12 crew damage (note, it is not Shaken before the apply damage step)",
-	"2: Unit gets a minor acid token",
+	"2: Minor Acid",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
+	"5: Cannot Move",
 	"6: +1 to future damage and unit gets another Shaken token",
 ]
 
@@ -405,10 +405,10 @@ rows = [
 [units.heavy_carrier.damage_tables.Critical]
 rows = [
 	"1: d4 damage to all transported units",
-	"2: Forced Deploy (empty hexes only)",
+	"2: Forced deploy (empty hexes only)",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
-	"5: Unit cannot move",
+	"5: Cannot Move",
 	"6: Fire",
 ]
 
@@ -500,10 +500,10 @@ rows = [
 [units.modified_truck.damage_tables.Critical]
 rows = [
 	"1: d4 damage to all transported units",
-	"2: Forced Deploy (empty hexes only)",
+	"2: Forced deploy (empty hexes only)",
 	"3: +1 to be hit, -1 to hit",
 	"4: Cannot rotate",
-	"5-6: Unit cannot move",
+	"5-6: Cannot Move",
 ]
 
 [units.modified_truck.damage_tables.Crew]
@@ -560,7 +560,7 @@ notes = [
 ]
 
 [units.mechanical_fire_bird.damage_tables.Inner]
-rows = ["1-5: Add one minor acid token", "6+: Remove reassemble token"]
+rows = ["1-5: Minor Acid", "6+: Remove reassemble token"]
 
 [models]
 
