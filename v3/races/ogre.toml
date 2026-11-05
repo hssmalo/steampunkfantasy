@@ -52,7 +52,7 @@ rows = [
 	"1-2: Bleed[4]",
 	"3-5: +1 to future damage, Bleed[4]",
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
-	"10-17: As below, d6 Psychic damage",
+	"11-17: As below, d6 Psychic damage",
 	"18: Unit destroyed",
 ]
 notes = [
