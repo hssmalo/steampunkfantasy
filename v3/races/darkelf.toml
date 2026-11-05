@@ -91,7 +91,7 @@ fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
 [units.mechanical_red_dragon.damage_tables.Regular]
 rows = [
 	"1-4: +1 on future damage",
-	"5-10: +1 on future damage, shaken",
+	"5-12: +1 on future damage, shaken",
 	"13+: Unit destroyed",
 ]
 
@@ -145,7 +145,7 @@ fast_fly = [
 [units.mechanical_iron_dragon.damage_tables.Regular]
 rows = [
 	"1-4: +1 on future damage",
-	"5-10: +1 on future damage, shaken",
+	"5-12: +1 on future damage, shaken",
 	"13+: Unit destroyed",
 ]
 
