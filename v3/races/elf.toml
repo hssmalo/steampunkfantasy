@@ -356,7 +356,7 @@ rows = [
 [units.e34.damage_tables.Critical]
 rows = [
 	"1: Cannot Move",
-	"2: -1 to hit, +1 to be hit(ranged and assault)",
+	"2: -1 to-hit, +1 to-be-hit (ranged and assault)",
 	"3: Cannot rotate",
 	"4: +3 to future damage",
 	"5: Stuck turret: firing angle is now only forward",
@@ -425,7 +425,7 @@ still = [
 [units.tattoo_ink.damage_tables.Critical]
 rows = [
 	"1: Shaken",
-	"2: -1 to hit, +1 to be hit",
+	"2: -1 to-hit, +1 to-be-hit",
 	"3: Cannot rotate",
 	"4: +3 to future damage",
 	"5: Unit cannot change speed.",

@@ -311,7 +311,7 @@ rows = [
 rows = [
 	"1: Take d12 crew damage (note, it is not Shaken before the apply damage step)",
 	"2: Minor Acid",
-	"3: +1 to be hit, -1 to hit",
+	"3: +1 to-be-hit, -1 to-hit",
 	"4: Cannot rotate",
 	"5: Cannot Move",
 	"6: +1 to future damage and unit gets another Shaken token",
@@ -406,7 +406,7 @@ rows = [
 rows = [
 	"1: d4 damage to all transported units",
 	"2: Forced deploy (empty hexes only)",
-	"3: +1 to be hit, -1 to hit",
+	"3: +1 to-be-hit, -1 to-hit",
 	"4: Cannot rotate",
 	"5: Cannot Move",
 	"6: Fire",
@@ -501,7 +501,7 @@ rows = [
 rows = [
 	"1: d4 damage to all transported units",
 	"2: Forced deploy (empty hexes only)",
-	"3: +1 to be hit, -1 to hit",
+	"3: +1 to-be-hit, -1 to-hit",
 	"4: Cannot rotate",
 	"5-6: Cannot Move",
 ]

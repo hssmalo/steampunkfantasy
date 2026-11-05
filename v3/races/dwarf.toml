@@ -527,7 +527,7 @@ still = [["Fire", "-"], ["Load", "Aim"]]
 
 [units.zap.damage_tables.Critical]
 rows = [
-	"1-2: -1 to hit, +1 to-be-hit",
+	"1-2: -1 to-hit, +1 to-be-hit",
 	"3: Cannot rotate",
 	"4: Cannot Move",
 	"5: +3 to future damage",
