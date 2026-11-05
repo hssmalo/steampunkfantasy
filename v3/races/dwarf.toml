@@ -182,8 +182,8 @@ rows = [
 	"10+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
-	"If one model is killed by bleeding/poison, remove that bleeding/poison token and remove half of the +1 future damage tokens",
+	"Bleed does not cause more Bleed",
+	"If one model is killed by Bleed/Poison, remove that Bleed/Poison token and remove half of the +1 future damage tokens",
 ]
 
 [units.steampowerarmor.damage_tables.Psychic]

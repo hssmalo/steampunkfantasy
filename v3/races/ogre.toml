@@ -56,7 +56,7 @@ rows = [
 	"18: Unit killed",
 ]
 notes = [
-	"Bleed does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.ogre_hydra.damage_tables.Psychic]
@@ -116,7 +116,7 @@ rows = [
 	"11+: Unit killed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.ogre_infantry.damage_tables.Psychic]

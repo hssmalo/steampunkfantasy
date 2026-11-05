@@ -60,7 +60,7 @@ rows = [
 	"8+: Unit killed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.goblin_infantry.damage_tables.Psychic]
@@ -128,7 +128,7 @@ rows = [
 	"9+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.giant_snake_cavalry.damage_tables.Psychic]

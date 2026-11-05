@@ -336,7 +336,7 @@ rows = [
 	"7+: Kill 1 model, d6 psychic damage",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Poison, remove that Poison token",
 ]
 
 [units.nightmare_mechanical_cavalry.damage_tables.Psychic]
@@ -387,7 +387,7 @@ rows = [
 	"5-6: Kill 1 model",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by poison, remove that poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Poison, remove that Poison token",
 ]
 
 [units.elite_mechanical_cavalry.damage_tables.Psychic]
@@ -541,7 +541,7 @@ rows = [
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison, remove that instance",
+	"If killed by Poison, remove that instance",
 ]
 
 [units.darkelf_infantry.damage_tables.Psychic]
@@ -612,7 +612,7 @@ rows = [
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison, remove that instance",
+	"If killed by Poison, remove that instance",
 	"Count the number of alive models before the apply damage step",
 ]
 
@@ -723,7 +723,7 @@ rows = [
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison, remove that instance",
+	"If killed by Poison, remove that instance",
 ]
 
 [units.roboprosthetic_darkelf.damage_tables.Psychic]

@@ -46,7 +46,7 @@ rows = [
     "8+: Unit killed",
 ]
 notes = [
-    "If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+    "If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.ork_infantry.damage_tables.Psychic]
@@ -189,7 +189,7 @@ rows = [
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison or bleeding, remove that instance",
+	"If killed by Poison or Bleed, remove that instance",
 ]
 
 [units.speedhead]
@@ -485,8 +485,8 @@ rows = [
 	"10: Unit killed, stops regenerating",
 ]
 notes = [
-	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining bleeding.",
-	"If one model is temporarily killed by bleed or poison, remove that instance",
+	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining Bleed.",
+	"If one model is temporarily killed by Bleed or Poison, remove that instance",
 ]
 
 [units.ork_werewarg.damage_tables.Psychic]
@@ -560,7 +560,7 @@ rows = [
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
-	"If killed by poison or bleeding, remove that instance",
+	"If killed by Poison or Bleed, remove that instance",
 ]
 
 [units.bioengineered_ork.damage_tables.Psychic]

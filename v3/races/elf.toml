@@ -50,7 +50,7 @@ rows = [
 	"18: Unit killed",
 ]
 notes = [
-	"Bleed does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.elf_hydra.damage_tables.Psychic]
@@ -102,7 +102,7 @@ rows = [
 	"9+: Unit killed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.elf_infantry.damage_tables.Psychic]
@@ -160,7 +160,7 @@ rows = [
 	"9+: Unit killed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.elf_archer.damage_tables.Psychic]
@@ -197,7 +197,7 @@ rows = [
 	"4+: Unit destroyed",
 ]
 notes = [
-	"Immune to poison",
+	"Immune to Poison",
 ]
 
 [units.elf_scout]
@@ -484,8 +484,8 @@ rows = [
 	"11+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
-	"If one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
+	"Bleed does not cause more Bleed",
+	"If one model is killed by Bleed/Poison, remove that instance Bleed/Poison and remove up to half + to future token",
 ]
 
 [units.bear_rider.damage_tables.Psychic]
@@ -532,8 +532,8 @@ rows = [
 	"11+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
-	"If one model is killed by bleeding/poison, remove that instance bleeding/poison and remove up to half + to future token",
+	"Bleed does not cause more Bleed",
+	"If one model is killed by Bleed/Poison, remove that instance Bleed/Poison and remove up to half + to future token",
 ]
 
 [units.dire_polar_bear_riders.damage_tables.Psychic]
@@ -620,7 +620,7 @@ rows = [
 	"6+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.armored_unicorn_rider.damage_tables.Psychic]
@@ -679,8 +679,8 @@ rows = [
 	"6+: Kill 1 model, d4 psychic damage",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"Bleed does not cause more Bleed",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.pachycephalosaurus_riders.damage_tables.Psychic]
@@ -795,8 +795,8 @@ rows = [
 	"4+: Kill 1 model",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"Bleed does not cause more Bleed",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.pegasus_rider.damage_tables.Psychic]
@@ -1320,7 +1320,7 @@ rows = [
 ]
 notes = [
 	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.sauropod_riders.damage_tables.Psychic]
@@ -1385,7 +1385,7 @@ rows = [
 	"8+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.armored_oliphant_riders.damage_tables.Psychic]
@@ -1433,7 +1433,7 @@ rows = [
 	"7+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.eagle_rider.damage_tables.Psychic]

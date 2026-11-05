@@ -135,7 +135,7 @@ rows = [
 	"9+: As 5-8, {Plus Minus One:token.plus_minus_one}"
 ]
 
-notes = ["Unit is destroyed if it has all of the following:no command, disabled repair, cannot accelerate, cannot turn, Shaken and it has Fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is Shaken as normal."]
+notes = ["Unit is destroyed if it has all of the following:No Command, Disabled Repair, Cannot Accelerate, Cannot Turn, Shaken and it has Fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is Shaken as normal."]
 
 
 
@@ -282,7 +282,7 @@ rows = [
 	"9+: Unit killed",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.abomination_infantry.damage_tables.Psychic]
@@ -344,7 +344,7 @@ rows = [
 ]
 notes = [
 	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.horror.damage_tables.Psychic]
@@ -387,7 +387,7 @@ rows = [
 	"8+: Unit killed",
 ]
 notes = [
-	"Bleeding does not cause more bleeding",
+	"Bleed does not cause more Bleed",
 ]
 
 [units.shriek_monstrosity.damage_tables.Psychic]
@@ -533,7 +533,7 @@ rows = [
 	"4+: Kill 1 model",
 ]
 notes = [
-	"If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
+	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
 [units.giant_frog_riders.damage_tables.Psychic]
@@ -587,7 +587,7 @@ rows = [
 	"7-8: As 4-6, Shaken", #token.shaken
 	"9+: Unit killed",
 ]
-notes = ["Bleeding does not cause more bleeding"]
+notes = ["Bleed does not cause more Bleed"]
 
 [units.hippopotamus_riders.damage_tables.Psychic]
 rows = ["6+: Shaken"]
