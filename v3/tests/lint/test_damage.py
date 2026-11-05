@@ -4,6 +4,8 @@ Table-driven over plain `(roll, effect)` pairs, like the prose rules: the rule
 needs no fixture, no disk and no schema.
 """
 
+import pytest
+
 from spf.lint import damage
 
 
@@ -42,3 +44,13 @@ def test_a_reference_to_an_earlier_row_is_quiet() -> None:
         ("6+", "d6 critical damage"),
         ("7+", "As 6+, Shaken"),
     )
+
+
+@pytest.mark.parametrize(
+    "effect", ["As below, Shaken", "as below", "as above", "Shaken, as below"]
+)
+def test_a_direction_instead_of_a_roll_fires(effect: str) -> None:
+    """Below and above don't name a row, however they are spelled or placed."""
+    found = messages(("1-3", "+1 to future damage"), ("4", effect))
+    assert len(found) == 1
+    assert "direction" in found[0]
