@@ -90,8 +90,8 @@ fast = [["-", "-"], ["-", "-"], ["-", "Load"]]
 
 [units.mechanical_red_dragon.damage_tables.Regular]
 rows = [
-	"1-4: +1 on future damage",
-	"5-12: +1 on future damage, shaken",
+	"1-4: +1 to future damage",
+	"5-12: +1 to future damage, shaken",
 	"13+: Unit destroyed",
 ]
 
@@ -144,8 +144,8 @@ fast_fly = [
 
 [units.mechanical_iron_dragon.damage_tables.Regular]
 rows = [
-	"1-4: +1 on future damage",
-	"5-12: +1 on future damage, shaken",
+	"1-4: +1 to future damage",
+	"5-12: +1 to future damage, shaken",
 	"13+: Unit destroyed",
 ]
 
@@ -330,8 +330,8 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 
 [units.nightmare_mechanical_cavalry.damage_tables.Regular]
 rows = [
-	"2-3: +1 on future damage",
-	"4: +2 on future damage",
+	"2-3: +1 to future damage",
+	"4: +2 to future damage",
 	"5-6: Kill 1 model",
 	"7+: Kill 1 model, d6 Psychic damage",
 ]
@@ -382,8 +382,8 @@ fast = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 
 [units.elite_mechanical_cavalry.damage_tables.Regular]
 rows = [
-	"2-3: +1 on future damage",
-	"4: +2 on future damage",
+	"2-3: +1 to future damage",
+	"4: +2 to future damage",
 	"5-6: Kill 1 model",
 ]
 notes = [

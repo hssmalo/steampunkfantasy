@@ -98,8 +98,8 @@ slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
 [units.troll.damage_tables.Regular]
 rows = [
-	"3-9: +1 on future damage",
-	"10-14: +1 for future damage, Bleed[12]",
+	"3-9: +1 to future damage",
+	"10-14: +1 to future damage, Bleed[12]",
 	"15-19: As 10-14, Troll unconscious",
 	"20+: Unit killed",
 ]
@@ -485,7 +485,7 @@ rows = [
 	"10: Unit killed, stops regenerating",
 ]
 notes = [
-	"When all models are temporarily killed: replace kill 1 model with +1 on future damage and keep all remaining bleeding.",
+	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining bleeding.",
 	"If one model is temporarily killed by bleed or poison, remove that instance",
 ]
 

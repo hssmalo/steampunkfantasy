@@ -217,7 +217,7 @@ fast = [["-", "Fire"]]
 
 [units.gnome_motorcycle.damage_tables.Regular]
 rows = [
-	"2-3: +1 on future damage",
+	"2-3: +1 to future damage",
 	"4+: Kill 1 model",
 ]
 
@@ -257,8 +257,8 @@ still = [
 
 [units.ballista_drone.damage_tables.Regular]
 rows = [
-	"2-3: +1 on future damage",
-	"4-5: +1 on future damage, shaken",
+	"2-3: +1 to future damage",
+	"4-5: +1 to future damage, shaken",
 	"6-7: As 4-5, cannot move or rotate, speed set to still",
 	"8: Unit destroyed",
 ]
