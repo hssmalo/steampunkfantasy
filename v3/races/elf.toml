@@ -366,8 +366,8 @@ rows = [
 [units.e34.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12+: Unit destroyed",
 ]
 
@@ -443,8 +443,8 @@ rows = [
 [units.tattoo_ink.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12+: Unit destroyed",
 ]
 

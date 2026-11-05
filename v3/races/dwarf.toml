@@ -268,7 +268,7 @@ fast_fly = [
 [units.transport_zeppelin.damage_tables.Regular]
 rows = [
 	"1-3: +1 on future damage",
-	"4-8:As 1-3, d6-2 damage to each unit transported by this unit.",
+	"4-8: As 1-3, d6-2 damage to each unit transported by this unit.",
 	"9: unit and all transported units killed",
 ]
 
@@ -276,7 +276,7 @@ rows = [
 rows = [
 	"4-5: All transported units gain Poison[4] and takes d6 Psychic damage. Shaken transported units may not be deployed. Double initial Crew damage if already shaken",
 	"6-7: As 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12: unit destroyed",
 ]
 
@@ -315,7 +315,7 @@ still = [["Fire", "-"], ["Load", "-"], ["Aim", "-"]]
 [units.dwarf_at_gun.damage_tables.Regular]
 rows = [
 	"1-3: kill 1 Crew, +1 to future damage",
-	"4-6: as 1-3, shaken",
+	"4-6: As 1-3, shaken",
 	"7-8: kill 2 Crew, +3 to future damage, shaken",
 	"9+: Unit destroyed",
 ]
@@ -378,8 +378,8 @@ fast = [["Load", "-"], ["Load", "-"]]
 [units.gunblasterwagon.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: as 1-3, shaken",
-	"5-8: as 4, Critical damage[d6]",
+	"4: As 1-3, shaken",
+	"5-8: As 4, Critical damage[d6]",
 	"9+: Destroyed",
 ]
 
@@ -395,8 +395,8 @@ rows = [
 [units.gunblasterwagon.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-12: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-12: As 6-7, +3 to future Crew damage",
 	"13: Unit destroyed",
 ]
 
@@ -467,8 +467,8 @@ rows = [
 [units.dw42.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-12: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-12: As 6-7, +3 to future Crew damage",
 	"13: Unit destroyed",
 ]
 
@@ -545,8 +545,8 @@ rows = [
 [units.zap.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-12: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-12: As 6-7, +3 to future Crew damage",
 	"13: Unit destroyed",
 ]
 
@@ -600,8 +600,8 @@ rows = [
 [units.zeppelin.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-12: as 6-7, +1 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-12: As 6-7, +1 to future Crew damage",
 	"13: Unit destroyed",
 ]
 

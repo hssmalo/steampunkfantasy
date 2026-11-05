@@ -66,8 +66,8 @@ rows = [
 [units.confusiator.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -131,7 +131,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.flagship.damage_tables.Regular]
 rows = [
 	"1-4: +1 to future damage",
-	"5-8: as 1-4, critical damage",
+	"5-8: As 1-4, critical damage",
 	"9+: As 5-8, gain one {±1 token:token.plus_minus_one}."
 ]
 
@@ -153,9 +153,9 @@ rows = [
 [units.flagship.damage_tables.Crew]
 rows = [
 	"4-5: If already shaken double initial Crew damage",
-	"6-7: As 4-5, and Crippled Crew", #token.crippled_crew
-	"8-9: as 6-7, disable repair", #token.disable_repair
-	"10-17: as 8-9, +1 to future Crew damage", #token.plus_to_crew_damage (need to be written)
+	"6-7: As 4-5, Crippled Crew", #token.crippled_crew
+	"8-9: As 6-7, disable repair", #token.disable_repair
+	"10-17: As 8-9, +1 to future Crew damage", #token.plus_to_crew_damage (need to be written)
 	"18: Unit destroyed",
 ]
 
@@ -225,8 +225,8 @@ rows = [
 [units.frost_88.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already shaken double initial Crew damage",
-	"6-7: as 4-5, shaken",
-	"8-11: as 6-7, +3 to future Crew damage",
+	"6-7: As 4-5, shaken",
+	"8-11: As 6-7, +3 to future Crew damage",
 	"12: Unit destroyed",
 ]
 
@@ -445,7 +445,7 @@ slow = [["-", "Load"], ["-", "Fire"]]
 rows = [
 	"1-2: +1 to future damage",
 	"3-4: +2 to future damage",
-	"5+:  shaken, Destroy one model",
+	"5+: shaken, Destroy one model",
 ]
 notes = [
 	"If one model is destroyed remove half of the +1 future damage tokens",
