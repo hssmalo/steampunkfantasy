@@ -16,15 +16,14 @@ name = "Shaken"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 effect = "While shaken set unit speed to the specified speed, and how a unit behaves is described by each unit. Disregard the original orders and replace them with the order(s) described by the unit."
 remove = "Remove one each aftermath phase. Can also be removed by appropriate repair or healing abilities"
-see_also = ["special.heal", "special.repair"]
 
 
 [tokens.plus_minus_one]
 name = "Plus Minus One"
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
-effect = "Enemy get to add or subtract one on any die roll for damage versus this unit"
+effect = "-1 to hit, +1 to be hit for range attacks.. Unit also get -1 for assault success while enemy get +1 for assault success. In addition, the enemy may add or subtract one to any critical damage die."
 remove = "This is a critical effect which may only be removed be repair ability"
-see_also = ["ability.plus_minus_one", "special.repair"]
+see_also = ["ability.plus_minus_one"]
 
 [tokens.into_the_fog]
 name = "Into the Fog"
@@ -53,16 +52,7 @@ effect = "Get -1 to hit and -1 on all assault dice. In addition, if unit is also
 remove = "Only by healing ability"
 to_hit = "-1"
 to_be_hit = "0"
-see_also = ["special.heal", "token.shaken", "damage_type.psychic"]
-
-[tokens.critical_damage]
-name = "Critical Damage"
-effect = "Get -1 to hit and -1 on all assault dice, while enemy gets +1 to hit this unit with by range and assaults. Enemy also gets to add or subtract one to critical effects."
-remove = "Only by repair ability: repair Critical."
-to_hit = "-1"
-to_be_hit = "+1"
-see_also = ["special.repair", "special.critical"]
-todo = "Named here for the first time: the record carried a description of its own numbers rather than a name. Confirm what a player calls this token."
+see_also = ["damage_type.psychic"]
 
 [tokens.disabled_repair]
 name = "Disabled Repair"
@@ -76,21 +66,20 @@ name = "No Command"
 phases = []
 effect = "Unit cannot use command abilities"
 remove = "This is an critical effect which my be repair by repair critical."
-see_also = ["special.repair"]
+
 
 [tokens.cannot_move]
 name = "Cannot Move"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Speed is set to still and unit cannot move. Treat all F as -"
 remove = "This is an critical effect which my be repair by repair critical."
-see_also = ["special.repair", "speed.still"]
+see_also = ["speed.still"]
 
 [tokens.cannot_accelerate]
 name = "Cannot Accelerate"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Unit can move, but cannot increase speed. This also includes starting flying. Treat all A as -"
 remove = "This is an critical effect which my be repair by repair critical."
-see_also = ["special.repair"]
 
 [tokens.cannot_turn]
 name = "Cannot Turn"
@@ -104,7 +93,7 @@ name = "Minor Acid"
 phases = ["Agony 1"]
 remove = "Only as part of effect"
 effect = "Roll a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid."
-see_also = ["token.acid", "damage_type.acid"]
+see_also = ["damage_type.acid"]
 
 [tokens.fire]
 name = "Fire"
@@ -185,7 +174,6 @@ Otherwise:
 - Apply damage to the regular damage table, with the exception that bleed does not cause more bleed.
 - If bleed killed a model, remove bleed.
 """
-see_also = ["special.heal"]
 
 [tokens.bleed.variables]
 N = { type = "int", values = [4, 6, 8, 10, 12] }

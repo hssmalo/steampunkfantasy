@@ -276,7 +276,7 @@ effect = "Applies when firing in the forward direction"
 name = "Double Speed Modifiers"
 effect = "Doubles the to-hit modifiers for movement speed, for this unit and for its target"
 see_also = ["speed.fast", "speed.still"]
-todo = "No numbers of its own: it scales whatever the speed registry says. State how that composes with the other modifiers."
+todo ="Have just check allow this entry "
 
 [ability.ignore_fast_penalty]
 name = "Ignore Fast Penalty"

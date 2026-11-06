@@ -2004,8 +2004,22 @@ requires = [
     ["type:Roboprosthetic", "type:Infantry", "type:Cavalry"]
 ]
 
-[[equipment.poison_fog_grenade.unit_specials.fire_order]]
-text = "Use twice per game, use an throw fire order to place fog and poison cloud[6] in either an adjacent hex or the hex you are standing in. Note that this does not make you immune to the effect of your own grenade."
+[equipment.poison_fog_grenade.range]
+range = 1
+angle = [true, true, true, true]
+damage = "N/A"
+ap = "N/A"
+
+
+[[equipment.poison_fog_grenade.range.specials.order]]
+variant = "used_with_throw_order"
+
+[[equipment.poison_fog_grenade.range.specials.limited_ammo]]
+args.N = 2
+
+[[equipment.poison_fog_grenade.range.specials.cloud]]
+variant = "poison_fog_cloud"
+args.N = 6
 
 [equipment.poison_fog_grenade.orders_gained.fire]
 still = [["-", "Throw"], ["Throw", "-"]]

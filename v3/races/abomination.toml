@@ -132,7 +132,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 rows = [
 	"1-4: +1 to future damage",
 	"5-8: As 1-4, d6 critical damage",
-	"9+: As 5-8, {Plus Minus One:token.plus_minus_one}"
+	"9+: As 5-8, {±1:token.plus_minus_one}"
 ]
 
 notes = ["Unit is destroyed if it has all of the following:No Command, Disabled Repair, Cannot Accelerate, Cannot Turn, Shaken and it has Fire. If so, do d8 psychic damage to all friendly units within range 8.","Considered crippled for victory point purposes if it has more than 6 +1 to future damage tokens. It is also considered crippled if it has at least one critical effect or is Shaken as normal."]
@@ -1047,6 +1047,9 @@ cost.cp = 24
 upgrade_all = true
 requires = [["Tentacles:4"], ["type:Infantry"]]
 
+[[equipment.fog_grenade_mortar.unit_specials.fire_order]]
+text = "Fog Grenade fire simultaneously with other weapons on regular Fire(s) order, not Fire(b) order"
+
 [equipment.fog_grenade_mortar.range]
 range = 4
 angle = [true, true, true, true]
@@ -1055,6 +1058,8 @@ ap = "N/A"
 
 [[equipment.fog_grenade_mortar.range.specials.cloud]]
 variant = "fog_one_hex_per_model"
+
+
 
 [[equipment.fog_grenade_mortar.range.specials.ammo]]
 variant = "fog_instead_of_ammo"
