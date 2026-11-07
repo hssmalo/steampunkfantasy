@@ -50,7 +50,7 @@ notes = [
 ]
 
 [units.ork_infantry.damage_tables.Psychic]
-rows = ["4+: Shaken"]
+rows = ["4+: {Shaken:token.shaken}"]
 
 [units]
 
@@ -425,7 +425,7 @@ rows = [
 
 [units.grunt.damage_tables.Psychic]
 rows = [
-	"4+: Shaken",
+	"4+: {Shaken:token.shaken}",
 ]
 
 [units.ork_werewarg]

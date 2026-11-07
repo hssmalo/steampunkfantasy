@@ -18,7 +18,7 @@ Hexes could also have traps.
 [hexes.poison_cloud]
 name = "Poison Cloud"
 signature = "[{N}]"
-effect = "Area(5+): roll a die per unit, at 5+, target unit gets a poison[N] or take dN in crew damage if it is a vehicle with a crew damage table."
+effect = "Area(5+): roll a die per unit, at 5+, target unit gets a {poison[N]:token.poison} or take dN in crew damage if it is a vehicle with a crew damage table."
 remove = "Remove one Poison Cloud in each hex in aftermath phase"
 places = ["token.poison"]
 see_also = ["damage_type.poison"]

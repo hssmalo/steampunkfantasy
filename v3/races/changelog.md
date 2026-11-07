@@ -4,6 +4,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
+| 07.11.2026 | Darkelf      | replaced reference to light damage on damage table with two other options   | Light damage is removed from game. So more a bug fix                                 |
 | 07.10.2026 | Goblin       | Modified truck got grenade launcher instead of goblin grenade               | Fix bug, more fitting, needed something                                              |
 | 02.10.2026 | Goblin       | Ogre rifle range 4                                                          | Was always meant to have range 4.                                                    |
 | 15.09.2026 | Goblin       | Goblin now has only one movement order                                      | To make it easier to play a large number of goblin infantry. No big balance issue    |

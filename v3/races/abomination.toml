@@ -49,7 +49,7 @@ still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.confusiator.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4: As 1-3, Shaken",
+	"4: As 1-3, {Shaken:token.shaken}",
 	"5-8: As 4, d6 critical damage",
 	"9: Unit destroyed",
 ]
@@ -66,7 +66,7 @@ rows = [
 [units.confusiator.damage_tables.Crew]
 rows = [
 	"4-5: Crippled Crew, if already Shaken double initial crew damage",
-	"6-7: As 4-5, Shaken",
+	"6-7: As 4-5, {Shaken:token.shaken}",
 	"8-11: As 6-7, +3 to future crew damage",
 	"12: Unit destroyed",
 ]
@@ -86,12 +86,12 @@ description = '''Huge flagship floating above the ground armed with a greater fo
 
 
 [[units.flagship.specials.fog]]
-text = "If both parts of the flagship is inside a fog during any movement, gain one into the fog token."
+text = "If both parts of the flagship is inside a fog during any movement, gain {one into the fog:token.into_the_fog}."
 
 [[units.flagship.specials.terror]]
 args.N = 1
 args.M = 8
-text = "If this unit has an out of the fog token, the unit gains Terror[8](range=1)"
+text = "If this unit has an {out of the fog:token.out_of_the_fog}, the unit gains Terror[8](range=1)"
 
 [[units.flagship.specials.fire_order]]
 variant = "fire_and_load_simultaneously"
@@ -143,19 +143,19 @@ notes = ["Unit is destroyed if it has all of the following:No Command, Disabled 
 rows = [
 	"1: d6 psychic damage to all friendly units within range 2. No Command", #token.no_command: need to be written.
 	"2: If flying, decelerates to float",
-	"2: If floating, do d8 damage (ignore armor). Disabled Repair", #token.disable_repair. (need to be written)
-	"3: Cannot Accelerate", #token.cannot_accelerate
-	"4: Cannot Turn", #token.cannot_turn
-	"5: Shaken", #token.shaken
-	"6: Fire", # token.fire
+	"2: If floating, do d8 damage (ignore armor). {Disabled Repair:token.disabled_repair}", #token.disable_repair. (need to be written)
+	"3: {Cannot Accelerate:token.cannot_accelerate}", #token.cannot_accelerate
+	"4: {Cannot Turn:token.cannot_turn}", #token.cannot_turn
+	"5: {Shaken:token.shaken}", #token.shaken
+	"6: {Fire:token.fire}", # token.fire
 ]
 
 [units.flagship.damage_tables.Crew]
 rows = [
-	"4-5: If already Shaken double initial crew damage",
-	"6-7: As 4-5, Crippled Crew", #token.crippled_crew
-	"8-9: As 6-7, Disabled Repair", #token.disable_repair
-	"10-17: As 8-9, +1 to future crew damage", #token.plus_to_crew_damage (need to be written)
+	"4-5: If already {Shaken:token.shaken} double initial crew damage",
+	"6-7: As 4-5, Crippled Crew",
+	"8-9: As 6-7, {Disabled Repair:token.disabled_repair}",
+	"10-17: As 8-9, +1 to future crew damage",
 	"18: Unit destroyed",
 ]
 
@@ -287,7 +287,7 @@ notes = [
 
 [units.abomination_infantry.damage_tables.Psychic]
 rows = [
-	"4+: Shaken",
+	"4+: {Shaken:token.shaken}",
 ]
 
 [units.horror]
@@ -529,7 +529,7 @@ still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
 [units.giant_frog_riders.damage_tables.Regular]
 rows = [
-	"2-3: Bleed[4]",#token.bleed N=4
+	"2-3: {Bleed[4]:token.bleed}",#token.bleed N=4
 	"4+: Kill 1 model",
 ]
 notes = [
@@ -538,7 +538,7 @@ notes = [
 
 [units.giant_frog_riders.damage_tables.Psychic]
 rows = [
-	"6+: Shaken",
+	"6+: {Shaken:token.shaken}",
 ]
 
 [units.hippopotamus_riders]
@@ -582,15 +582,15 @@ still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
 [units.hippopotamus_riders.damage_tables.Regular]
 rows = [
-	"2-3: Bleed[4]", #token.bleed. N=4
+	"2-3: {Bleed[4]:token.bleed}", #token.bleed. N=4
 	"4-6: As 2-3, +1 to future damage",
-	"7-8: As 4-6, Shaken", #token.shaken
+	"7-8: As 4-6, {Shaken:token.bleed}", #token.shaken
 	"9+: Unit killed",
 ]
 notes = ["Bleed does not cause more Bleed"]
 
 [units.hippopotamus_riders.damage_tables.Psychic]
-rows = ["6+: Shaken"]
+rows = ["6+: {Shaken:token.shaken}"]
 
 [models]
 
@@ -926,7 +926,7 @@ damage = "d10 Psychic"
 ap = "N/A"
 
 [[equipment.greater_insanity_blast.range.specials.insanity]]
-text = "Only affects bio units. Any unit affected by the greater insanity blast gets an insane token in addition to the normal effects of psychic damage. (ps! unit does not need to be already shaken to be affected)."
+text = "Only affects bio units. Any unit affected by the greater insanity blast gets {insane:token.insane} token in addition to the normal effects of psychic damage. (ps! unit does not need to be already shaken to be affected)."
 
 [[equipment.greater_insanity_blast.range.specials.los]]
 text = "Trace line of sight from front of the unit"
@@ -943,7 +943,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.insanity_contraption.range.specials.insanity]]
-text = "Only affects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an Insane token in addition to the regular effect of Psychic damage."
+text = "Only affects bio units which are already shaken. If you inflict damage with this weapon, the enemy unit gains an {insane:token.insane} token in addition to the regular effect of Psychic damage."
 
 [[equipment.insanity_contraption.range.specials.ammo]]
 text = "Track ammo separately from other ammo and start game with no ammo. When you use melee contraption in an assault, Load the insanity contraption with 4 ammo. This is the only way to load the weapon. Once it is loaded, you may spend one ammo in any gunnery phase to fire the weapon."
@@ -960,7 +960,7 @@ damage = "d6 Psychic"
 ap = "N/A"
 
 [[equipment.multipurpose_gun.range.specials.multipurpose]]
-text = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect shaken bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an insane token, in addition to the normal effects of the Psychic damage table."
+text = "Has two settings. Scare and blow gun. Scare do the regular Psychic damage, used by Fire orders. Blow gun is used by Fire(b) orders and only effect {insane.token.shaken} bio units. All other units are immune. However, if you manage to cause Psychic damage the unit gets an {insane:token.insane} token, in addition to the normal effects of the Psychic damage table."
 
 [equipment.tentacle_cracklespears]
 name = "Tentacle CrackleSpears"
@@ -1095,7 +1095,7 @@ damage = "N/A"
 ap = "N/A"
 
 [[equipment.multipurpose_mortar.range.specials.multipurpose]]
-text = "Either place fog in two different hexes, or give two different units one minor acid each. All targets must be within normal range."
+text = "Either place {fog:hex.fog} in two different hexes, or give two different units one {minor acid:token.minor_acid} each. All targets must be within normal range."
 
 [equipment.double_barreled_oversized_musket]
 name = "Double Barreled Oversized Musket"
