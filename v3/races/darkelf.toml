@@ -202,25 +202,25 @@ fast = [["-", "Fire"], ["-", "Fire"], ["-", "Fire"], ["-", "Release"]]
 [units.queen_yy.damage_tables.Regular]
 rows = [
 	"1-3: +1 to future damage",
-	"4-5: As 1-3, Shaken",
+	"4-5: As 1-3, {Shaken:token.shaken}",
 	"6-8: As 4-5, d6 critical damage",
 	"9+: Unit destroyed",
 ]
 
 [units.queen_yy.damage_tables.Critical]
 rows = [
-	"1: -1 to-hit, +1 to-be-hit",
+	"1: {±1:token.plus_minus_one}",
 	"2: Rotates right in agony 0 step",
 	"3: Rotates left in agony 1 and in agony 3",
-	"4: Cannot Move",
-	"5: Acid",
-	"6: Fire",
+	"4: {Cannot Move:token.cannot_move}",
+	"5: {Acid:token.acid}",
+	"6: {Fire:token.fire}",
 ]
 
 [units.queen_yy.damage_tables.Crew]
 rows = [
-	"4-7: Double initial crew damage if already Shaken",
-	"8-10: As 4-7, Crippled Crew",
+	"4-7: Double initial crew damage if already {Shaken:token.shaken}",
+	"8-10: As 4-7, {Crippled Crew:token.crippled_crew}",
 	"11-12: As 8-10, +3 to future crew damage",
 	"13: Crew killed, unit destroyed",
 ]
@@ -341,7 +341,7 @@ notes = [
 
 [units.nightmare_mechanical_cavalry.damage_tables.Psychic]
 rows = [
-	"6+: Shaken",
+	"6+: {Shaken:token.shaken}",
 ]
 
 [units.elite_mechanical_cavalry]
@@ -463,18 +463,19 @@ slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
 [units.mechanical_scorpion.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: As 1-2, Shaken",
+	"3: As 1-2, {Shaken:token.shaken}",
 	"4-6: As 3, d6 critical damage",
 	"7+: Unit destroyed",
 ]
 
 [units.mechanical_scorpion.damage_tables.Critical]
 rows = [
-	"1: -1 to-hit, +1 to-be-hit (ranged and assault)",
-	"2: Cannot Move, loses fear",
+	"1: {±1:token.plus_minus_one}",
+	"2: {Cannot Move:token.cannot_move}, loses {fear:special.fear}",
 	"3: Cannot rotate",
-	"4-5: x3 d6 light damage",
-	"6: Fire",
+	"4: +3 to future damage",
+	"5: {Shaken:token.shaken}",
+	"6: {Fire:token.fire}",
 ]
 
 [units.darkelf_infantry]
@@ -546,7 +547,7 @@ notes = [
 
 [units.darkelf_infantry.damage_tables.Psychic]
 rows = [
-	"4+: Shaken",
+	"4+: {Shaken:token.shaken}",
 ]
 
 [units.multicultural_infantry]
@@ -728,7 +729,7 @@ notes = [
 
 [units.roboprosthetic_darkelf.damage_tables.Psychic]
 rows = [
-	"5+: Shaken",
+	"5+: {Shaken:token.shaken}",
 ]
 
 [units.assassin]
