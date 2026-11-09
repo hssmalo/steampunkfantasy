@@ -537,7 +537,7 @@ still = [
 rows = [
 	"0-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
-	"9: Unit killed",
+	"9: Unit Destroied",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
@@ -650,7 +650,7 @@ slow = [["-", "-", "Chs"]]
 [units.multicultural_trainee.damage_tables.Regular]
 rows = [
 	"1-8: Kill 1 model",
-	"9: Unit killed",
+	"9: Unit Destroied",
 ]
 
 [units.multicultural_trainee.damage_tables.Psychic]
@@ -718,7 +718,7 @@ still = [
 rows = [
 	"0-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
-	"9: Unit killed",
+	"9: Unit Destroied",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
@@ -784,7 +784,7 @@ still = [
 
 [units.assassin.damage_tables.Regular]
 rows = [
-	"1+: Unit killed",
+	"1+: Unit Destroied",
 ]
 
 [units.assassin.damage_tables.Psychic]
@@ -846,7 +846,7 @@ slow = [["-", "Fire"], ["Fire", "-"]]
 
 [units.roboprosthetic_assassin.damage_tables.Regular]
 rows = [
-	"1+: Unit killed",
+	"1+: Unit Destroied",
 ]
 
 [units.roboprosthetic_assassin.damage_tables.Psychic]
@@ -910,7 +910,7 @@ still = [
 slow = [["Spot", "Spot"]]
 
 [units.scout.damage_tables.Regular]
-rows = ["0+: Unit killed"]
+rows = ["0+: Unit Destroied"]
 
 [units.scout.damage_tables.Psychic]
 rows = ["3+: Shaken"]

@@ -154,7 +154,7 @@ rows = [
 [units.flagship.damage_tables.Crew]
 rows = [
 	"4-5: If already {Shaken:token.shaken} double initial crew damage",
-	"6-7: As 4-5, Crippled Crew",
+	"6-7: As 4-5, {Crippled Crew:token.crippled_crew}",
 	"8-9: As 6-7, {Disabled Repair:token.disabled_repair}",
 	"10-17: As 8-9, +1 to future crew damage",
 	"18: Unit destroyed",
