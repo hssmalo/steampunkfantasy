@@ -513,7 +513,6 @@ slow = [
     ["Chs", "-", "-"],
     ["-", "-", "Chs"],
     ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
     ["360°", "B", "-"],
     ["360°", "B[crawl]", "-"],
 ]
@@ -695,7 +694,6 @@ slow = [
     ["Chs", "-", "-"],
     ["-", "-", "Chs"],
     ["360°", "F", "360°"],
-    ["360°", "360°", "360°"],
     ["360°", "B", "-"],
     ["360°", "B[crawl]", "-"],
 ]
@@ -2023,8 +2021,8 @@ variant = "poison_fog_cloud"
 args.N = 6
 
 [equipment.poison_fog_grenade.orders_gained.fire]
-still = [["-", "Throw"], ["Throw", "-"]]
-slow = [["-", "Throw"], ["Throw", "-"]]
+still = [["Fire", "Throw"], ["Throw", "Fire"]]
+slow = [["Fire", "Throw"], ["Throw", "Fire"]]
 
 [equipment.hide]
 name = "Hide"

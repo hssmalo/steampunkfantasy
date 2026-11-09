@@ -141,13 +141,14 @@ notes = ["Unit is destroyed if it has all of the following:No Command, Disabled 
 
 [units.flagship.damage_tables.Critical]
 rows = [
-	"1: d6 psychic damage to all friendly units within range 2. No Command", #token.no_command: need to be written.
+	"1: d6 psychic damage to all friendly units within range 2. {No Command:token.no_command}",
 	"2: If flying, decelerates to float",
-	"2: If floating, do d8 damage (ignore armor). {Disabled Repair:token.disabled_repair}", #token.disable_repair. (need to be written)
-	"3: {Cannot Accelerate:token.cannot_accelerate}", #token.cannot_accelerate
-	"4: {Cannot Turn:token.cannot_turn}", #token.cannot_turn
-	"5: {Shaken:token.shaken}", #token.shaken
-	"6: {Fire:token.fire}", # token.fire
+	"2: If floating, do d8 damage (ignore armor). {Disabled Repair:token.disabled_repair}. Follow slow movement order for rest of turn",
+
+	"3: {Cannot Accelerate:token.cannot_accelerate}",
+	"4: {Cannot Turn:token.cannot_turn}",
+	"5: {Shaken:token.shaken}",
+	"6: {Fire:token.fire}",
 ]
 
 [units.flagship.damage_tables.Crew]
@@ -761,7 +762,7 @@ damage = "d6-2"
 ap = 2
 
 [[models.flagship.assault.specials.size]]
-text = "Automatically considered winning without assault taking place versus large or smaller units. Ie the enemy retreat but neither you or them suffer any additional damage from assault."
+text = "Automatically considered winning without assault taking place versus large or smaller units. Ie the enemy retreat but neither you or them suffer any other damage from assault."
 
 [models.frost_88]
 name = "Frost 88"

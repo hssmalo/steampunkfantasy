@@ -2115,11 +2115,6 @@ variant = "always_loaded"
 [[equipment.crew_hand_grenade.range.specials.order]]
 variant = "used_with_throw_order"
 
-[equipment.crew_hand_grenade.orders_gained.fire]
-still = [["-", "Throw"]]
-slow = [["-", "Throw"]]
-fast = [["-", "Throw"]]
-
 [equipment.heavy_mortar]
 name = "Heavy Mortar"
 race = "elf"
