@@ -261,7 +261,7 @@ see_also = ["token.out_of_fog"]
 [ability.plus_minus_one]
 name = "Plus Minus One"
 to_hit = "-1"
-to_be_hit = "+2"
+to_be_hit = "+1"
 signature = " -1 to hit, +1 to be hit"
 effect = "Applies while the unit holds an plus minus one token"
 see_also = ["token.plus_minus_one"]
