@@ -43,7 +43,7 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 rows = [
     "1-5: Kill 1 model",
     "6-7: Kill 1 model, d6 psychic damage",
-    "8+: Unit Destroied",
+    "8+: Unit Destroyed",
 ]
 notes = [
     "If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
@@ -101,7 +101,7 @@ rows = [
 	"3-9: +1 to future damage",
 	"10-14: +1 to future damage, Bleed[12]",
 	"15-19: As 10-14, Troll unconscious",
-	"20+: Unit Destroied",
+	"20+: Unit Destroyed",
 ]
 
 [units.champion]
@@ -125,7 +125,7 @@ text = "ork_champion: Has same orders available as the unit it awakened from, an
 [units.champion.damage_tables.Regular]
 rows = [
 	"2-3: Bleed[4]",
-	"4+: Unit Destroied",
+	"4+: Unit Destroyed",
 ]
 
 [units.champion.orders.movement]
@@ -420,7 +420,7 @@ slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 rows = [
 	"1-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
-	"9: Unit Destroied",
+	"9: Unit Destroyed",
 ]
 
 [units.grunt.damage_tables.Psychic]
@@ -482,7 +482,7 @@ still = [
 rows = [
 	"1-3: {Bleed[4]:token.poison}", #tokens.bleed. N=4
 	"4-9: Temporarily kill 1 model, d6 psychic damage",
-	"10: Unit Destroied, stops regenerating",
+	"10: Unit Destroyed, stops regenerating",
 ]
 notes = [
 	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining Bleed.",
@@ -556,7 +556,7 @@ rows = [
 	"1: {Bleed[4]:token.bleed}", #token.bleed N=4
 	"2-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
-	"9: Unit Destroied",
+	"9: Unit Destroyed",
 ]
 notes = [
 	"When one model is killed, half all +1 to future damage rounded down",
