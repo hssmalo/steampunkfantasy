@@ -9,7 +9,7 @@ effect is otherwise worded is not the linter's business.
 import re
 from collections.abc import Collection, Iterator, Sequence
 
-RULE = "row-reference"
+ROW_REFERENCE = "row-reference"
 TOP_ROW = "top-row"
 
 _ROLL = r"\d+(?:-\d+|\+)?"
@@ -24,7 +24,7 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
     earlier: set[str] = set()
     for roll, effect in rows:
         for problem in _check_effect(effect, every_roll, earlier):
-            yield RULE, f"row {roll!r}: {problem}"
+            yield ROW_REFERENCE, f"row {roll!r}: {problem}"
         earlier.add(roll)
 
 
