@@ -184,7 +184,7 @@ fast = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [units.warg_rider.damage_tables.Psychic]
 rows = [
-	"5+: Shaken",
+	"6+: Shaken",
 ]
 
 [units.warg_rider.damage_tables.Regular]

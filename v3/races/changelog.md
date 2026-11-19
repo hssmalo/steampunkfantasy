@@ -4,6 +4,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
+| 19.11.2026 | Ork          | Warg Rider is Shaken by psychic damage on 6+ instead of 5+                  | Buff the warg rider slightly against psychic damage                                  |
 | 19.11.2026 | Abomination, Ogre, Ork | Added "Bleed does not cause more Bleed" to the damage tables of Giant Frog Riders, Ogre Infantry, Pet Panther, Ogre Assault Scout, Cyclops, Troll, Champion, Warg Rider and Bioengineered Ork | They could bleed into more bleed, unlike the 15 other units whose tables place Bleed. Matches the Bleed token's own rule |
 | 09.11.2026 | Darkelf      | removed rotate 3 times order for roboprostetic and infantry                 | Unnecessary order.                                                                   |
 | 07.11.2026 | Darkelf      | replaced reference to light damage on damage table with two other options   | Light damage is removed from game. So more a bug fix                                 |
