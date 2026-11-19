@@ -45,8 +45,8 @@ class Scenario:
 
     `resistance` is keyed by damage type: `regular`, `psychic`, `fire`, `poison`
     and `acid`, each kind holding every Instance's strength, which add up.
-    `incoming` is empty for an aftermath run and holds the hits that
-    land every Round for an attrition run.
+    `incoming` holds the hits that land every Round, if any; without them a run
+    ends with the Unit's Continuing Damage.
     """
 
     unit: str

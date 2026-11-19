@@ -94,9 +94,21 @@ def print_report(report: DamageReport) -> None:
         summary.add_row(f"Ended: {ended_by}", f"{count / report.runs:.1%}")
     stdout.print(summary)
 
-    rounds = Table("Rounds", "Runs", title="Rounds played", title_justify="left")
-    for played, count in report.rounds.items():
-        rounds.add_row(str(played), f"{count / report.runs:.1%}")
+    endings = list(report.rounds)
+    rounds = Table(
+        "Rounds",
+        *(f"Ended: {ending}" for ending in endings),
+        title="Rounds played, by how the run ended",
+        title_justify="left",
+    )
+    for played in sorted({n for by_round in report.rounds.values() for n in by_round}):
+        rounds.add_row(
+            str(played),
+            *(
+                f"{report.rounds[ending].get(played, 0) / report.runs:.1%}"
+                for ending in endings
+            ),
+        )
     stdout.print(rounds)
 
     tokens = sorted({name for summary in report.per_round for name in summary.tokens})

@@ -56,8 +56,8 @@ class DamageReport:
     seed: int
     p_destroyed: float
     models_lost: Spread
-    rounds: dict[int, int]
-    """How many runs ended after each number of Rounds."""
+    rounds: dict[EndedBy, dict[int, int]]
+    """How many runs ended after each number of Rounds, by how they ended."""
     ended_by: dict[EndedBy, int]
     per_round: list[RoundSummary]
     table_rolls: dict[DamageTableName, int]
@@ -102,6 +102,16 @@ def _summaries(results: list[RunResult]) -> list[RoundSummary]:
     return summaries
 
 
+def _rounds(results: list[RunResult]) -> dict[EndedBy, dict[int, int]]:
+    """Count runs by how they ended and after how many Rounds."""
+    rounds: dict[EndedBy, Counter[int]] = {}
+    for result in results:
+        rounds.setdefault(result.ended_by, Counter())[result.rounds] += 1
+    return {
+        ended_by: dict(sorted(counts.items())) for ended_by, counts in rounds.items()
+    }
+
+
 def _entry_first(
     counts: Counter[DamageTableName], entry: DamageTableName
 ) -> dict[DamageTableName, int]:
@@ -136,7 +146,7 @@ def simulate(
         seed=seed,
         p_destroyed=sum(result.destroyed for result in results) / runs,
         models_lost=_spread([result.models_lost for result in results]),
-        rounds=dict(sorted(Counter(result.rounds for result in results).items())),
+        rounds=_rounds(results),
         ended_by=dict(Counter(result.ended_by for result in results)),
         per_round=_summaries(results),
         table_rolls=_entry_first(table_rolls, entry),

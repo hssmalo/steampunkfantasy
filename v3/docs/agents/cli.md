@@ -93,15 +93,15 @@ it — currently image alone.
 ## Damage simulator
 
 A Monte Carlo balancing aid: how a Damage table plays out on one Unit over time.
-*Aftermath* gives a starting state and plays Agony Phases until Continuing
-Damage ends; *attrition* adds hits landing every Round. `--help` documents the
-`--start` / `--incoming` grammar.
+`--start` gives a starting state, and the run plays Agony Phases until
+Continuing Damage ends; `--incoming` adds hits landing every Round. `--help`
+documents the grammar both take.
 
 ```console
-# Aftermath: one landed d6, a Bleed[4] and +2 Future Damage
+# One landed d6, a Bleed[4] and +2 Future Damage
 uv run spf sim damage dwarf.dwarf_infantry --start "d6, bleed=4, future=2"
 
-# Attrition: a d6-2 lands every Round, for at most 6 Rounds
+# A d6-2 lands every Round, for at most 6 Rounds
 uv run spf sim damage ogre.main_engine --incoming "d6-2" --max-rounds 6
 
 # Reproduce a report, or compare without resistance

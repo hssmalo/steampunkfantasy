@@ -71,8 +71,10 @@ def test_rounds_until_continuing_damage_ends() -> None:
         {"Regular": ["1+: Dazed"]}, hits=0, tokens=[bleed], max_rounds=2
     )
     report = simulate(scenario, runs=30, seed=3)
-    assert set(report.rounds) <= {1, 2}
-    assert sum(report.rounds.values()) == 30
+    assert set(report.rounds) == {"no continuing damage", "max rounds"}
+    assert set(report.rounds["no continuing damage"]) == {1, 2}
+    assert set(report.rounds["max rounds"]) == {2}
+    assert sum(sum(by_round.values()) for by_round in report.rounds.values()) == 30
 
 
 def test_each_round_averages_over_every_run() -> None:
