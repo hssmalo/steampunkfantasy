@@ -13,7 +13,7 @@ from spf import races
 from spf.console import stdout
 from spf.frontends.cli import app
 from spf.frontends.cli.sim import UNPARSED_STYLE, damage_table, token_columns
-from spf.schemas.type_aliases import DamageTable
+from spf.schemas.type_aliases import DamageTable, RaceName
 from spf.sim.effects import Vocabulary
 from spf.sim.report import RoundSummary
 from spf.sim.tables import CompiledTable, compile_table
@@ -73,6 +73,36 @@ def test_damage_prints_the_units_tables_above_the_report(
     out = capsys.readouterr().out
     assert "Regular damage table" in out
     assert out.index("Regular damage table") < out.index("P(Unit Destroyed)")
+
+
+def _sim_race(*args: str) -> None:
+    app(
+        ["sim", "damage-race", *args], exit_on_error=False, result_action="return_value"
+    )
+
+
+def test_damage_race_reports_one_line_per_unit(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    unit, _ = _live_unit()
+    race_name = unit.partition(".")[0]
+    names = [
+        config.name
+        for config in races.get_units(cast("RaceName", race_name)).values()
+        if "Regular" in config.damage_tables
+    ]
+    _sim_race(race_name, "--start", "d6, bleed=4", "--runs", "3", "--seed", "7")
+    out = capsys.readouterr().out
+    assert "seed 7" in out
+    assert "P(Unit Destroyed)" in out
+    for name in names:
+        assert name in out
+
+
+def test_damage_race_rejects_an_unknown_race() -> None:
+    unit, _ = _live_unit()
+    with pytest.raises(ValueError, match="Did you mean"):
+        _sim_race(f"{unit.partition('.')[0]}x", "--start", "d6")
 
 
 def _compiled(*rows: str, notes: list[str] | None = None) -> CompiledTable:

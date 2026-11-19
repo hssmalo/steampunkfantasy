@@ -51,6 +51,15 @@ thing (see [Which table a roll goes to](#which-table-a-roll-goes-to)).
 The first answers "what does this hit do to the Unit, all told?" The second is
 a Unit under steady fire: "how long does it last?"
 
+### Every Unit of a Race at once
+
+`spf sim damage-race RACE` takes the same options and simulates every Unit of
+the Race, printing one line per Unit: P(Unit Destroyed), mean Models lost, and
+the last row of that Unit's mean-state table. That row's Round is the Unit's
+longest run, so it differs from Unit to Unit. Units without the `--table`
+table are skipped and named. Every Unit is simulated with the same seed, so
+`spf sim damage race.unit --seed N` gives the full report behind any line.
+
 ## One run, step by step
 
 ### Before Round 1: the starting state

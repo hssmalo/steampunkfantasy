@@ -15,6 +15,7 @@ from spf.frontends.cli.suggest import resolve_or_raise
 from spf.prose import plain
 from spf.registry import load_registry
 from spf.schemas import type_aliases as t
+from spf.schemas.race import RaceConfig
 from spf.sim.report import DamageReport, RoundSummary, simulate
 from spf.sim.scenario import GRAMMAR, Scenario, parse_hits, parse_start
 from spf.sim.tables import CompiledTable
@@ -29,6 +30,7 @@ UNPARSED_STYLE = "bold red"
 def add_commands(app: cyclopts.App) -> None:
     """Add simulator commands to the CLI."""
     app.command(damage, name="damage")
+    app.command(damage_race, name="damage-race")
 
 
 def damage(  # noqa: PLR0913
@@ -65,10 +67,7 @@ def damage(  # noqa: PLR0913
 
     """
     race_name, _, unit_key = unit.partition(".")
-    race_name = resolve_or_raise(
-        race_name, races.list_races(), noun="race", see="spf race list"
-    )
-    race = races.get_race(cast("t.RaceName", race_name))
+    race = _race(race_name)
     unit_key = resolve_or_raise(
         unit_key, race.units, noun="unit", see=f"spf race units {race_name}"
     )
@@ -83,6 +82,111 @@ def damage(  # noqa: PLR0913
     )
     print_tables(scenario, entry=table)
     print_report(simulate(scenario, runs=runs, seed=seed, entry=table))
+
+
+def damage_race(  # noqa: PLR0913
+    race_name: str,
+    *,
+    table: t.DamageTableName = "Regular",
+    start: Annotated[str, cyclopts.Parameter(help=_START_HELP)] = "",
+    incoming: str = "",
+    runs: int = 10_000,
+    seed: int | None = None,
+    max_rounds: int = 20,
+    resistance: bool = True,
+) -> None:
+    """Simulate the same damage on every Unit of a Race, one line per Unit.
+
+    Every Unit uses the same seed, so `spf sim damage race.unit --seed N`
+    reproduces any line in full.
+
+    Parameters
+    ----------
+    race_name
+        The Race: `dwarf`.
+    table
+        The Damage table bare rolls land on. Units without it are skipped.
+    start
+        The starting state; the full grammar is in `--help`.
+    incoming
+        Rolls landing every Round, written as for --start.
+    runs
+        How many runs to simulate per Unit.
+    seed
+        Seed for the dice. A seed is chosen and printed when none is given.
+    max_rounds
+        The most Rounds one run plays.
+    resistance
+        Apply the Units' resistances. Turn off to compare.
+
+    """
+    race = _race(race_name)
+    registry = load_registry()
+    hits, rolling = parse_start(start, table=table), parse_hits(incoming, table=table)
+    reports: list[DamageReport] = []
+    skipped: list[str] = []
+    for unit_key, config in race.units.items():
+        if table not in config.damage_tables:
+            skipped.append(config.name)
+            continue
+        scenario = unit_scenario(
+            race,
+            unit_key,
+            registry=registry,
+            start=hits,
+            incoming=rolling,
+            max_rounds=max_rounds,
+            resistance=resistance,
+        )
+        reports.append(simulate(scenario, runs=runs, seed=seed, entry=table))
+        seed = reports[-1].seed
+    print_race_report(reports, race=race_name)
+    if skipped:
+        stdout.print(f"No {table} damage table, skipped: {escape(', '.join(skipped))}")
+
+
+def _race(name: str) -> RaceConfig:
+    """Look up a Race by name, suggesting a close match when it is unknown."""
+    name = resolve_or_raise(name, races.list_races(), noun="race", see="spf race list")
+    return races.get_race(cast("t.RaceName", name))
+
+
+def print_race_report(reports: list[DamageReport], *, race: str) -> None:
+    """Print one line per Unit: its odds, its losses and its state at the end."""
+    if not reports:
+        return
+    first = reports[0]
+    stdout.print(
+        f"[bold]{escape(race)}[/] — {first.runs} runs per Unit, seed {first.seed},"
+        f" entry table {first.entry}",
+        highlight=False,
+    )
+    finals = [report.per_round[-1] for report in reports]
+    tokens = token_columns(finals)
+    lines = Table(
+        "Unit",
+        "P(Unit Destroyed)",
+        "Models lost",
+        "Round",
+        "Models",
+        "Future",
+        "Future Crew",
+        *tokens,
+        title="Mean state at the end of the last Round",
+        title_justify="left",
+    )
+    for report, final in zip(reports, finals, strict=True):
+        lines.add_row(
+            escape(report.unit),
+            f"{report.p_destroyed:.1%}",
+            f"{report.models_lost.mean:.2f}",
+            str(final.round),
+            f"{final.models:.2f}",
+            f"{final.future:.2f}",
+            f"{final.future_crew:.2f}",
+            *(f"{final.tokens.get(name, 0.0):.2f}" for name in tokens),
+        )
+    stdout.print(lines)
 
 
 def print_tables(scenario: Scenario, *, entry: t.DamageTableName) -> None:

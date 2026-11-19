@@ -107,6 +107,9 @@ uv run spf sim damage ogre.main_engine --incoming "d6-2" --max-rounds 6
 
 # Reproduce a report, or compare without resistance
 uv run spf sim damage dwarf.dwarf_infantry --start d6 --seed 7 --no-resistance
+
+# The same damage on every Unit of a Race, one line each
+uv run spf sim damage-race ork --start "d6, bleed=4"
 ```
 
 The Unit's Damage tables print above the report, with the text the parser
