@@ -1,5 +1,6 @@
 """Damage tables compiled for the simulator: rows looked up by a rolled value."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from spf.schemas.type_aliases import (
@@ -9,7 +10,13 @@ from spf.schemas.type_aliases import (
     DamageTableName,
     ExactRoll,
 )
-from spf.sim.effects import Vocabulary
+from spf.sim.effects import (
+    Effect,
+    RowReference,
+    Unparsed,
+    Vocabulary,
+    parse_effect,
+)
 
 
 def roll_label(roll: DamageRoll) -> str:
@@ -41,6 +48,7 @@ class CompiledRow:
     label: str
     low: int
     high: int | None
+    effects: list[Effect]
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -65,14 +73,33 @@ class CompiledTable:
         return None
 
 
+def _inline_references(
+    effects: list[Effect], earlier: Mapping[str, list[Effect]]
+) -> list[Effect]:
+    """Replace a Row reference with the effects of the earlier row it names."""
+    inlined: list[Effect] = []
+    for effect in effects:
+        if not isinstance(effect, RowReference):
+            inlined.append(effect)
+        elif effect.label in earlier:
+            inlined.extend(earlier[effect.label])
+        else:
+            inlined.append(Unparsed(text=f"As {effect.label}"))
+    return inlined
+
+
 def compile_table(
     name: DamageTableName, table: DamageTable, *, vocabulary: Vocabulary
 ) -> CompiledTable:
-    """Compile a Damage table's rows for lookup."""
-    del vocabulary
-    rows = [
-        CompiledRow(label=roll_label(row.roll), low=low, high=high)
-        for row in table.rows
-        for low, high in [_bounds(row.roll)]
-    ]
+    """Compile a Damage table's rows for lookup, with Row references inlined."""
+    earlier: dict[str, list[Effect]] = {}
+    rows: list[CompiledRow] = []
+    for row in table.rows:
+        label = roll_label(row.roll)
+        low, high = _bounds(row.roll)
+        effects = _inline_references(
+            parse_effect(row.effect, vocabulary=vocabulary), earlier
+        )
+        earlier[label] = effects
+        rows.append(CompiledRow(label=label, low=low, high=high, effects=effects))
     return CompiledTable(name=name, rows=rows)
