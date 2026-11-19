@@ -214,6 +214,32 @@ def test_poison_that_kills_a_model_is_removed() -> None:
     assert result.snapshots[-1].tokens["poison"] == 0
 
 
+FIRE = PlaceToken(name="fire")
+
+
+def test_fire_goes_out_at_a_one() -> None:
+    result = _run(_scenario(tokens=[FIRE]), [(6, 1)])
+    assert (result.rounds, result.snapshots[-1].tokens["fire"]) == (1, 0)
+
+
+def test_fire_burns_on_the_regular_table_and_keeps_burning() -> None:
+    result = _run(_scenario(tokens=[FIRE], max_rounds=2), [(6, 2), (6, 2)])
+    assert result.ended_by == "max rounds"
+    assert [snapshot.future for snapshot in result.snapshots] == [0, 1, 2]
+    assert result.snapshots[-1].tokens["fire"] == 1
+
+
+def test_fire_accumulates_and_every_token_rolls() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1-5: Fire", "6+: Kill 1 model"]
+    }
+    scenario = _scenario(tables, hits=["d6", "d6"], max_rounds=1)
+    result = _run(scenario, [(6, 1), (6, 1), (6, 6), (6, 1)])
+    assert result.snapshots[0].tokens["fire"] == 2
+    assert result.snapshots[1].tokens["fire"] == 1
+    assert result.models_lost == 1
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)

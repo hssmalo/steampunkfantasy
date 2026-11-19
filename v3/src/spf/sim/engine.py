@@ -33,6 +33,12 @@ MAX_STRENGTH = 12
 STRENGTH_STEP = 2
 """How far one downgrade or amplification moves a strength: 4, 6, 8, 10, 12."""
 
+FIRE_OUT = 1
+"""A Fire roll at or below this, after fire resistance, puts the Fire out."""
+
+_COUNTED_CONTINUING = ["fire"]
+"""Continuing Damage Tokens without a strength, tracked as plain counts."""
+
 _RESISTED_BY = {"Regular": "regular", "Psychic": "psychic"}
 """The resistance that reduces a hit on each Damage table, where one does."""
 
@@ -82,7 +88,11 @@ class UnitState:
     @property
     def continuing(self) -> bool:
         """Whether a Token that deals Continuing Damage remains."""
-        return any(self.bleeds) or any(self.poisons)
+        return (
+            any(self.bleeds)
+            or any(self.poisons)
+            or any(self.counters[token] for token in _COUNTED_CONTINUING)
+        )
 
     def snapshot(self) -> Snapshot:
         """Freeze the state as the report sees it."""
@@ -236,6 +246,20 @@ class _Run:
             poisons[index] = 0 if killed or downgraded < MIN_STRENGTH else downgraded
         self.state.poisons = [strength for strength in poisons if strength]
 
+    def agony_fire(self) -> None:
+        """Agony 2: every Fire rolls before any of its damage applies (`token.fire`)."""
+        counters = self.state.counters
+        rolls = [
+            self.roller.roll(6) - self.resistance("fire")
+            for _ in range(counters["fire"])
+        ]
+        burning = [roll for roll in rolls if roll > FIRE_OUT]
+        counters["fire"] = len(burning)
+        for roll in burning:
+            if self.state.destroyed:
+                return
+            self.roll_on("Regular", roll)
+
     def resistance(self, kind: str) -> int:
         """Roll the Unit's resistance against one damage type; 0 if it has none."""
         dice = self.scenario.resistance.get(kind)
@@ -243,7 +267,7 @@ class _Run:
 
     def play_round(self) -> None:
         """Play one Round's Agony Phases, in order."""
-        for phase in [self.agony_poison, self.agony_bleed]:
+        for phase in [self.agony_fire, self.agony_poison, self.agony_bleed]:
             if self.state.destroyed:
                 return
             phase()
