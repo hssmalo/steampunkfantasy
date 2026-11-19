@@ -129,7 +129,7 @@ class UnitState:
         tokens["bleed"] = sum(1 for strength in self.bleeds if strength)
         tokens["poison"] = sum(1 for strength in self.poisons if strength)
         return Snapshot(
-            models=self.models,
+            models=0 if self.destroyed else self.models,
             future=self.future,
             future_crew=self.future_crew,
             tokens=+tokens,
