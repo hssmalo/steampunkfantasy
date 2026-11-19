@@ -259,8 +259,10 @@ These are open questions for the game designer, not oversights:
   *Not simulated*.
 - **Shaken is never removed.** It only matters for routing psychic damage to
   the Crew table.
-- **Bleed causes Bleed** unless a table note says it doesn't, even though
-  `token.bleed`'s own text says it never does.
+- **Bleed is kept from causing Bleed only by the table note.** Every Unit
+  whose table places Bleed carries "Bleed does not cause more Bleed", so in
+  practice it always applies. A new Unit written without that note would
+  bleed into more Bleed in the simulator, whatever `token.bleed` says.
 - Conditional rows ("If more than 2 models are alive, …"), crew kills, and
   "temporarily destroyed" are not simulated. They are listed under
   *Not simulated*.
