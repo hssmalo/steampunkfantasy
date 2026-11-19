@@ -99,7 +99,7 @@ see_also = ["damage_type.acid"]
 name = "Fire"
 phases = ["Agony 2"]
 remove = "Only as part of effect"
-effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise:
+effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 2 or below, fire is removed. Otherwise:
 
 
 - Ignore armor and regular damage resistance

@@ -35,7 +35,7 @@ MAX_STRENGTH = 12
 STRENGTH_STEP = 2
 """How far one downgrade or amplification moves a strength: 4, 6, 8, 10, 12."""
 
-FIRE_OUT = 1
+FIRE_OUT = 2
 """A Fire roll at or below this, after fire resistance, puts the Fire out."""
 
 BLEED_STOPS = 2

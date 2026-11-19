@@ -230,13 +230,16 @@ def test_poison_that_kills_a_model_is_removed() -> None:
 FIRE = PlaceToken(name="fire")
 
 
-def test_fire_goes_out_at_a_one() -> None:
-    result = _run(_scenario(tokens=[FIRE]), [(6, 1)])
+@pytest.mark.parametrize("roll", [1, 2])
+def test_fire_goes_out_at_a_one_or_two(roll: int) -> None:
+    result = _run(_scenario(tokens=[FIRE]), [(6, roll)])
     assert (result.rounds, result.snapshots[-1].tokens["fire"]) == (1, 0)
 
 
 def test_fire_burns_on_the_regular_table_and_keeps_burning() -> None:
-    result = _run(_scenario(tokens=[FIRE], max_rounds=2), [(6, 2), (6, 2)])
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: +1 to future damage"]}
+    scenario = _scenario(tables, tokens=[FIRE], max_rounds=2)
+    result = _run(scenario, [(6, 3), (6, 3)])
     assert result.ended_by == "max rounds"
     assert [snapshot.future for snapshot in result.snapshots] == [0, 1, 2]
     assert result.snapshots[-1].tokens["fire"] == 1
@@ -435,7 +438,7 @@ def test_continuing_damage_ignores_regular_resistance() -> None:
 
 def test_fire_resistance_helps_put_fire_out() -> None:
     scenario = _scenario(tokens=[FIRE], resistance={"fire": "1"})
-    assert _run(scenario, [(6, 2)]).snapshots[-1].tokens["fire"] == 0
+    assert _run(scenario, [(6, 3)]).snapshots[-1].tokens["fire"] == 0
 
 
 def test_poison_resistance_reduces_poison_damage() -> None:
