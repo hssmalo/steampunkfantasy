@@ -3,7 +3,7 @@
 from collections import Counter
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Literal, Protocol
 
 from spf.schemas.type_aliases import DamageTableName
 from spf.sim.dice import Dice, Roller
@@ -136,6 +136,22 @@ class UnitState:
         )
 
 
+class Policy(Protocol):
+    """The player's choices during a run, kept apart so they can be swapped."""
+
+    def spend_endurance(self, state: UnitState) -> bool:
+        """Decide whether to spend an Endurance Token to save a dying Model."""
+        ...
+
+
+class FixedPolicy:
+    """Always spend Endurance when it is legal; never heal or repair."""
+
+    def spend_endurance(self, state: UnitState) -> bool:
+        """Spend Endurance whenever the Unit has some."""
+        return state.counters["endurance"] > 0
+
+
 @dataclass(kw_only=True)
 class _Run:
     """The mutable working of one run; `run_once` is its only caller."""
@@ -145,6 +161,9 @@ class _Run:
     state: UnitState
     notes: NoteRules
     """What every one of the Unit's table notes says, taken together."""
+    policy: Policy
+    saved_bleed: bool = False
+    """Whether Endurance saved a Model from the Bleed now rolling."""
     table_rolls: Counter[DamageTableName] = field(default_factory=Counter)
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
@@ -200,7 +219,7 @@ class _Run:
         match effect:
             case Kill(count=count):
                 for _ in range(count):
-                    self.kill_one()
+                    self.kill_one(cause=cause)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -244,8 +263,21 @@ class _Run:
             case RowReference():
                 self.unparsed[table, label, str(effect)] += 1
 
-    def kill_one(self) -> None:
-        """Kill one Model; the last one takes the Unit with it."""
+    def kill_one(self, *, cause: Cause) -> None:
+        """Kill one Model; the last one takes the Unit with it.
+
+        Spending Endurance instead gives the Unit Bleed[4], or keeps the Bleed
+        that was killing at Bleed[4], and Future Damage is not halved
+        (`token.endurance`).
+        """
+        state = self.state
+        if state.counters["endurance"] and self.policy.spend_endurance(state):
+            state.counters["endurance"] -= 1
+            if cause.source == "bleed":
+                self.saved_bleed = True
+            else:
+                state.bleeds.append(MIN_STRENGTH)
+            return
         self.kills += 1
         self.state.models -= 1
         if self.notes.halve_future_on_kill:
@@ -292,10 +324,12 @@ class _Run:
                 source="bleed",
                 roll=lambda strength=strength: self.roller.roll(strength),
             )
-            kills = self.kills
+            kills, self.saved_bleed = self.kills, False
             self.roll_on("Regular", roll, cause=cause)
             if self.kills > kills:
                 bleeds[index] = 0
+            elif self.saved_bleed:
+                bleeds[index] = MIN_STRENGTH
         self.state.bleeds = [strength for strength in bleeds if strength]
 
     def agony_poison(self) -> None:
@@ -440,7 +474,9 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     )
 
 
-def run_once(scenario: Scenario, roller: Roller) -> RunResult:
+def run_once(
+    scenario: Scenario, roller: Roller, *, policy: Policy | None = None
+) -> RunResult:
     """Simulate one run of a Scenario: the starting hits, then Rounds.
 
     A run stops when the Unit is destroyed, when no Continuing Damage remains,
@@ -451,11 +487,13 @@ def run_once(scenario: Scenario, roller: Roller) -> RunResult:
         scenario=scenario,
         roller=roller,
         notes=_merged_notes(scenario),
+        policy=policy or FixedPolicy(),
         state=UnitState(
             models=scenario.models, future=start.future, future_crew=start.future_crew
         ),
     )
     state = run.state
+    state.counters["endurance"] = scenario.endurance
     for token in start.tokens:
         run.place(token)
     for hit in start.hits:

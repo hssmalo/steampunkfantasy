@@ -6,7 +6,7 @@ from typing import cast
 from spf.schemas.type_aliases import DamageTable, DamageTableName
 from spf.sim.dice import Dice
 from spf.sim.effects import PlaceToken, Vocabulary
-from spf.sim.engine import RunResult, run_once
+from spf.sim.engine import RunResult, UnitState, run_once
 from spf.sim.scenario import Hit, Scenario, Start
 from spf.sim.tables import compile_table
 from tests.sim.conftest import ScriptedRoller
@@ -363,6 +363,37 @@ def test_an_unparsed_note_is_reported_each_time_its_table_rolls() -> None:
     note = "Count the alive models first"
     result = _run(_scenario(hits=["d6", "d6"], notes=[note]), [(6, 1), (6, 1)])
     assert result.unparsed == {("Regular", "note", note): 2}
+
+
+def test_endurance_turns_a_kill_into_bleed() -> None:
+    scenario = _scenario(hits=["d6"], future=3, notes=[HALVING], endurance=1)
+    result = _run(scenario, [(6, 1), (4, 1)])
+    assert result.models_lost == 0
+    first = result.snapshots[0]
+    assert (first.future, first.tokens["bleed"], first.tokens["endurance"]) == (3, 1, 0)
+
+
+def test_endurance_runs_out() -> None:
+    scenario = _scenario(hits=["d6", "d6"], endurance=1)
+    result = _run(scenario, [(6, 4), (6, 4), (4, 1)])
+    assert result.models_lost == 1
+
+
+def test_a_bleed_saved_by_endurance_continues_as_bleed_four() -> None:
+    scenario = _scenario(tokens=[_bleed(8)], endurance=1)
+    result = _run(scenario, [(8, 5), (4, 1)])
+    assert (result.models_lost, result.rounds) == (0, 2)
+
+
+class _NeverSpend:
+    def spend_endurance(self, state: UnitState) -> bool:  # noqa: ARG002
+        return False
+
+
+def test_the_player_policy_decides_whether_to_spend_endurance() -> None:
+    scenario = _scenario(hits=["d6"], endurance=1)
+    result = run_once(scenario, ScriptedRoller([(6, 4)]), policy=_NeverSpend())
+    assert result.models_lost == 1
 
 
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
