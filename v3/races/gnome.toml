@@ -62,7 +62,7 @@ slow = [["Fire(res)", "Fire(res)"]]
 rows = [
 	"1-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
-	"9+: Unit killed",
+	"9+: Unit destroyed",
 ]
 
 [units.gnome_infantry.damage_tables.Psychic]
@@ -114,7 +114,7 @@ fast = [["Fire(res)", "Fire(res)"]]
 rows = [
 	"1-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
-	"9+: Unit killed",
+	"9+: Unit destroyed",
 ]
 
 [units.quad_bike.damage_tables.Psychic]

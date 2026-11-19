@@ -53,7 +53,7 @@ rows = [
 	"3-5: +1 to future damage, Bleed[4]",
 	"6-10: +1 to future damage, Bleed[6], destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"11-17: As 6-10, d6 psychic damage",
-	"18+: Unit killed",
+	"18+: Unit destroyed",
 ]
 notes = [
 	"Bleed does not cause more Bleed",
@@ -113,7 +113,7 @@ rows = [
 	"2-3: Bleed[4]",
 	"4-6: Kill 1 model",
 	"7-10: Kill 1 model, d6 psychic damage",
-	"11+: Unit killed",
+	"11+: Unit destroyed",
 ]
 notes = [
 	"Bleed does not cause more Bleed",
@@ -168,7 +168,7 @@ rows = [
 	"2-3: +1 to future damage",
 	"4-6: +2 to future damage",
 	"7-10: Kill 1 model",
-	"11+: Unit killed",
+	"11+: Unit destroyed",
 ]
 notes = [
 	"Remove half of the +1 future damage tokens when one robots dies",
@@ -224,7 +224,7 @@ fast = [
 rows = [
 	"2-3: Bleed[4]",
 	"4-5: As 2-3, +1 to future damage",
-	"6+: Unit killed",
+	"6+: Unit destroyed",
 ]
 notes = [
 	"Bleed does not cause more Bleed",
@@ -286,7 +286,7 @@ fast = [
 rows = [
 	"2-6: Bleed[8]",
 	"7-8: As 2-6, +1 to future damage",
-	"9+: Unit killed",
+	"9+: Unit destroyed",
 ]
 notes = [
 	"Bleed does not cause more Bleed",
@@ -339,7 +339,7 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 rows = [
 	"2-3: Bleed[4]",
 	"4-8: As 2-3, +1 to future damage",
-	"9+: Unit killed",
+	"9+: Unit destroyed",
 ]
 notes = [
 	"Bleed does not cause more Bleed",
