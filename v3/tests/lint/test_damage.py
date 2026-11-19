@@ -120,6 +120,7 @@ def top_row_messages(*rolls: str) -> list[str]:
     ("rolls", "named", "fix"),
     [
         (("1-3", "4"), "'4'", "'4+'"),
+        (("1-4", "5-6"), "'5-6'", "'5+'"),
     ],
 )
 def test_a_bounded_top_row_fires(rolls: tuple[str, ...], named: str, fix: str) -> None:

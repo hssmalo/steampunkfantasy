@@ -30,7 +30,8 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
 def check_top_row(rolls: Sequence[str]) -> Iterator[tuple[str, str]]:
     """Yield `(rule, message)` if a table's top row is not `N+`, or another row is."""
     top = rolls[-1]
-    yield TOP_ROW, f"row {top!r}: the top row must be '{top}+'"
+    low = top.split("-")[0]
+    yield TOP_ROW, f"row {top!r}: the top row must be '{low}+'"
 
 
 def _check_effect(
