@@ -146,6 +146,10 @@ _Avoid_: damage line, damage table entry
 The roll portion of a Damage row that a rolled result is checked against —
 an exact value, a range, or an "at least" threshold.
 
+**Top row**:
+The last Damage row in a Damage table. Its Damage roll is always an "at least"
+threshold, so it catches every result from that value up.
+
 **Row reference**:
 A Damage row's effect that builds on an earlier row in the same Damage table. It
 comes first in the effect and names that row by its Damage roll, as printed:
