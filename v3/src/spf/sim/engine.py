@@ -45,7 +45,7 @@ ACID_ROLLS_AGAIN = 8
 """The Acid result that rolls three more times on the acid table."""
 
 ACID_SPILLS = {
-    4: "poison cloud[4] and minor acid on the hex",
+    4: "poison cloud[4] and minor acid to other Units in the hex",
     5: "minor acid to Units within range 2",
 }
 """Acid results whose effect lands beyond this Unit, from `token.acid`."""
@@ -360,12 +360,14 @@ class _Run:
             self.acid_result(self.acid_roll(8))
 
     def acid_roll(self, sides: int) -> int:
-        """Roll an Acid or Minor Acid die, less acid resistance, never below 1."""
-        return max(1, self.roller.roll(sides) - self.resistance("acid"))
+        """Roll an Acid or Minor Acid die, less acid resistance."""
+        return self.roller.roll(sides) - self.resistance("acid")
 
     def acid_result(self, result: int) -> None:
         """Apply one result of the acid table; each row is the one below plus more."""
         state = self.state
+        if result < 1:
+            return
         if result >= ACID_ROLLS_AGAIN:
             for _ in range(3):
                 self.acid_result(self.acid_roll(8))
@@ -378,6 +380,7 @@ class _Run:
         state.future += 1
         steps: list[tuple[int, Callable[[], None]]] = [
             (3, lambda: self.place(PlaceToken(name="armor_reduced"))),
+            (4, lambda: self.place(PlaceToken(name="minor_acid"))),
             (4, lambda: self.spill(ACID_SPILLS[4])),
             (5, lambda: self.spill(ACID_SPILLS[5])),
             (6, lambda: self.place(PlaceToken(name="terror"))),

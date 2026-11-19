@@ -265,10 +265,15 @@ def test_acid_adds_future_damage_and_stays() -> None:
 
 
 def test_acid_spills_onto_the_hex_and_places_terror() -> None:
-    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 6)])
-    assert result.snapshots[-1].future == 1
+    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 6), (6, 3)])
     assert result.snapshots[-1].tokens["terror"] == 1
     assert sum(result.spillover.values()) == 2
+
+
+def test_acid_at_four_gives_the_unit_in_the_hex_minor_acid_too() -> None:
+    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 4), (6, 3)])
+    assert result.snapshots[-1].tokens["minor_acid"] == 1
+    assert result.snapshots[-1].future == 2
 
 
 def test_terror_spills_onto_friendly_units_each_round() -> None:
@@ -278,7 +283,7 @@ def test_terror_spills_onto_friendly_units_each_round() -> None:
 
 
 def test_acid_at_seven_sets_the_unit_on_fire() -> None:
-    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 7), (6, 1)])
+    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 7), (6, 3), (6, 1)])
     assert result.snapshots[-1].tokens["terror"] == 1
 
 
@@ -434,6 +439,13 @@ def test_psychic_resistance_reduces_psychic_damage() -> None:
 def test_acid_resistance_reduces_acid_dice() -> None:
     scenario = _scenario(tokens=[ACID], resistance={"acid": "1"})
     result = _run(scenario, [(8, 2), (6, 3)])
+    assert result.snapshots[-1].future == 0
+
+
+def test_acid_resisted_below_one_has_no_effect() -> None:
+    scenario = _scenario(tokens=[ACID], resistance={"acid": "2"}, max_rounds=1)
+    result = _run(scenario, [(8, 2)])
+    assert result.snapshots[-1].tokens["acid"] == 1
     assert result.snapshots[-1].future == 0
 
 
