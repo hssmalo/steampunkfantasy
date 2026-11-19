@@ -33,11 +33,6 @@ def test_each_roll_shape_matches(value: int, label: str) -> None:
     assert _label(["2-3: A", "4: B", "5+: C"], value) == label
 
 
-def test_above_the_top_row_reads_as_the_top_row() -> None:
-    assert _label(["1-3: A", "4-18: Unit Destroyed"], 19) == "4-18"
-    assert _label(["1: A", "2: B"], 7) == "2"
-
-
 def test_below_the_lowest_row_has_no_effect() -> None:
     assert _label(["4-5: A", "6: B"], 3) is None
     assert _label(["1: A"], -2) is None

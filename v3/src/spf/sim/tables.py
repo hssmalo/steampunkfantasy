@@ -151,15 +151,11 @@ class CompiledTable:
     def row_for(self, value: int) -> CompiledRow | None:
         """Find the row a rolled value lands on.
 
-        The top row reads as "N and higher"; a value below the lowest row, or in
-        a gap between rows, has no effect.
+        A value below the lowest row, or in a gap between rows, has no effect.
         """
         for row in self.rows:
             if row.low <= value and (row.high is None or value <= row.high):
                 return row
-        top = max(self.rows, key=lambda row: row.low, default=None)
-        if top is not None and value > (top.high or top.low):
-            return top
         return None
 
 
