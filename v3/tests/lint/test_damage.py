@@ -12,7 +12,7 @@ from spf.lint import damage
 def messages(*rows: tuple[str, str]) -> list[str]:
     """Return the message of every finding on `rows`, checking the rule's name."""
     findings = list(damage.check_table(rows))
-    assert {rule for rule, _ in findings} <= {"row-reference"}
+    assert {rule for rule, _ in findings} <= {damage.ROW_REFERENCE}
     return [message for _, message in findings]
 
 
@@ -112,7 +112,7 @@ def test_an_effect_with_no_broken_reference_is_quiet(effect: str) -> None:
 def top_row_messages(*rolls: str) -> list[str]:
     """Return the message of every Top row finding on `rolls`, checking the rule."""
     findings = list(damage.check_top_row(rolls))
-    assert {rule for rule, _ in findings} <= {"top-row"}
+    assert {rule for rule, _ in findings} <= {damage.TOP_ROW}
     return [message for _, message in findings]
 
 

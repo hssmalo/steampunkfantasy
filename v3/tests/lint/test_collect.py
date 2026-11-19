@@ -8,7 +8,7 @@ linter looks at.
 
 from dataclasses import dataclass
 
-from spf.lint import collect, holders
+from spf.lint import collect, damage, holders
 from spf.registry import Registry
 from spf.schemas.config import LintConfig
 from spf.schemas.race import (
@@ -322,7 +322,7 @@ def test_a_broken_row_reference_surfaces_as_a_finding() -> None:
         "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
     )
 
-    (finding,) = [f for f in findings if f.rule == "row-reference"]
+    (finding,) = [f for f in findings if f.rule == damage.ROW_REFERENCE]
     assert finding.race == "ogre"
     assert finding.section == "units"
     assert finding.key == "brute.damage_tables.Crew"
@@ -344,7 +344,7 @@ def test_a_bounded_top_row_surfaces_as_a_finding() -> None:
         "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
     )
 
-    (finding,) = [f for f in findings if f.rule == "top-row"]
+    (finding,) = [f for f in findings if f.rule == damage.TOP_ROW]
     assert finding.race == "ogre"
     assert finding.section == "units"
     assert finding.key == "brute.damage_tables.Regular"
