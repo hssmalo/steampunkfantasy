@@ -1,7 +1,8 @@
-"""The Row reference rule, as a pure predicate over a Damage table's rows.
+"""The Row reference and Top row rules, as pure predicates over a Damage table.
 
 A reference to a row that isn't there is the data contradicting itself, and its
-form is what makes a reference recognizable in free text (ADR 0038). How an
+form is what makes a reference recognizable in free text (ADR 0038). A bounded
+Top row contradicts itself too: it leaves a reachable roll with no row. How an
 effect is otherwise worded is not the linter's business.
 """
 
@@ -29,6 +30,8 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
 
 def check_top_row(rolls: Sequence[str]) -> Iterator[tuple[str, str]]:
     """Yield `(rule, message)` if a table's top row is not `N+`, or another row is."""
+    if not rolls:
+        return
     *below, top = rolls
     for roll in below:
         if roll.endswith("+"):

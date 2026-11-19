@@ -142,3 +142,8 @@ def test_an_open_row_below_the_top_fires() -> None:
     found = top_row_messages("1-3", "4+", "5+")
     assert len(found) == 1
     assert "'4+'" in found[0]
+
+
+def test_a_table_with_no_rows_is_quiet() -> None:
+    """A table that only points at another has no top row to check."""
+    assert not top_row_messages()
