@@ -312,6 +312,22 @@ def test_roll_again_rerolls_the_same_dice() -> None:
     assert result.snapshots[0].tokens["dazed"] == 2
 
 
+def test_attrition_lands_incoming_hits_every_round() -> None:
+    scenario = _scenario(incoming=["d6"], max_rounds=2)
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert (result.rounds, result.ended_by) == (2, "max rounds")
+    assert [snapshot.future for snapshot in result.snapshots] == [0, 1, 2]
+
+
+def test_incoming_hits_land_before_the_agony_phases() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1-3: Bleed[4]", *LADDER[1:]]
+    }
+    scenario = _scenario(tables, models=1, incoming=["d6"])
+    result = _run(scenario, [(6, 1), (4, 4)])
+    assert (result.rounds, result.ended_by) == (1, "destroyed")
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)

@@ -376,9 +376,17 @@ class _Run:
         dice = self.scenario.resistance.get(kind)
         return 0 if dice is None else dice.roll(self.roller)
 
+    def incoming(self) -> None:
+        """Land this Round's incoming hits, ahead of the Agony Phases."""
+        for hit in self.scenario.incoming:
+            if self.state.destroyed:
+                return
+            self.hit(hit)
+
     def play_round(self) -> None:
-        """Play one Round's Agony Phases, in order."""
+        """Play one Round: incoming hits, then the Agony Phases in order."""
         phases = [
+            self.incoming,
             self.agony_acid,
             self.agony_minor_acid,
             self.agony_fire,
@@ -438,7 +446,7 @@ def run_once(scenario: Scenario, roller: Roller) -> RunResult:
         if state.destroyed:
             ended_by = "destroyed"
             break
-        if not state.continuing:
+        if not (state.continuing or scenario.incoming):
             ended_by = "no continuing damage"
             break
         if rounds == scenario.max_rounds:
