@@ -11,7 +11,7 @@ from spf.sim.effects import (
     Unparsed,
     Vocabulary,
 )
-from spf.sim.tables import NoteRules, compile_table
+from spf.sim.tables import CompiledRow, NoteRules, Segment, compile_table
 
 VOCABULARY = Vocabulary(tokens={})
 
@@ -115,3 +115,47 @@ def test_a_reference_to_no_row_is_unparsed() -> None:
         Unparsed(text="As 7"),
         Kill(count=1),
     ]
+
+
+def _row(text: str, *, tokens: dict[str, str] | None = None) -> CompiledRow:
+    table = compile_table(
+        "Regular", _table(f"1: {text}"), vocabulary=Vocabulary(tokens=tokens or {})
+    )
+    return table.rows[0]
+
+
+def test_a_fully_parsed_row_is_one_simulated_segment() -> None:
+    assert _row("Kill 1 model").segments() == [
+        Segment(text="Kill 1 model", simulated=True)
+    ]
+
+
+def test_an_unparsed_clause_is_marked_where_it_is_written() -> None:
+    assert _row("Kill 1 model, Wobble twice, +2 to future damage").segments() == [
+        Segment(text="Kill 1 model, ", simulated=True),
+        Segment(text="Wobble twice", simulated=False),
+        Segment(text=", +2 to future damage", simulated=True),
+    ]
+
+
+def test_a_segment_prints_a_rule_link_as_its_label() -> None:
+    row = _row("{Wobble:token.wobble} twice, Kill 1 model")
+    assert row.segments() == [
+        Segment(text="Wobble twice", simulated=False),
+        Segment(text=", Kill 1 model", simulated=True),
+    ]
+
+
+def test_an_unparsed_reference_to_no_row_is_marked() -> None:
+    assert _row("As 7, Kill 1 model").segments() == [
+        Segment(text="As 7", simulated=False),
+        Segment(text=", Kill 1 model", simulated=True),
+    ]
+
+
+def test_a_table_keeps_its_notes_as_written() -> None:
+    notes = ["Bleed does not cause more Bleed", "Count the models first"]
+    table = compile_table(
+        "Regular", _table("1: Dazed", notes=notes), vocabulary=VOCABULARY
+    )
+    assert table.written_notes == notes

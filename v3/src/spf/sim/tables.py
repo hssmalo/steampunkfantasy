@@ -96,6 +96,14 @@ def _bounds(roll: DamageRoll) -> tuple[int, int | None]:
 
 
 @dataclass(frozen=True, kw_only=True)
+class Segment:
+    """A stretch of a Damage row's text, and whether the simulator plays it."""
+
+    text: str
+    simulated: bool
+
+
+@dataclass(frozen=True, kw_only=True)
 class CompiledRow:
     """One Damage row, keyed by its printed Damage roll."""
 
@@ -103,6 +111,31 @@ class CompiledRow:
     low: int
     high: int | None
     effects: list[Effect]
+    text: str = ""
+    """The effect as written, Rule Links included."""
+
+    def segments(self) -> list[Segment]:
+        """Split the written effect into stretches the simulator plays or skips.
+
+        An unparsed clause inlined from an earlier row is not written here, so
+        it is marked on that row instead.
+        """
+        segments: list[Segment] = []
+        cursor = 0
+        for effect in self.effects:
+            if not isinstance(effect, Unparsed):
+                continue
+            if (at := self.text.find(effect.text, cursor)) < 0:
+                continue
+            segments.append(Segment(text=self.text[cursor:at], simulated=True))
+            cursor = at + len(effect.text)
+            segments.append(Segment(text=self.text[at:cursor], simulated=False))
+        segments.append(Segment(text=self.text[cursor:], simulated=True))
+        return [
+            Segment(text=plain(segment.text), simulated=segment.simulated)
+            for segment in segments
+            if segment.text
+        ]
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -112,6 +145,8 @@ class CompiledTable:
     name: DamageTableName
     rows: list[CompiledRow]
     notes: NoteRules = field(default_factory=NoteRules)
+    written_notes: list[str] = field(default_factory=list)
+    """The notes as written, Rule Links included."""
 
     def row_for(self, value: int) -> CompiledRow | None:
         """Find the row a rolled value lands on.
@@ -156,7 +191,14 @@ def compile_table(
             parse_effect(row.effect, vocabulary=vocabulary), earlier
         )
         earlier[label] = effects
-        rows.append(CompiledRow(label=label, low=low, high=high, effects=effects))
+        rows.append(
+            CompiledRow(
+                label=label, low=low, high=high, effects=effects, text=row.effect
+            )
+        )
     return CompiledTable(
-        name=name, rows=rows, notes=parse_notes(table.notes, vocabulary=vocabulary)
+        name=name,
+        rows=rows,
+        notes=parse_notes(table.notes, vocabulary=vocabulary),
+        written_notes=list(table.notes),
     )
