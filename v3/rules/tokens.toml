@@ -165,7 +165,7 @@ effect = """Apply any damage of a poison token to psychic damage table as well a
 name = "Bleed"
 signature = "[{N}]"
 phases = ["Agony 4"]
-effect = """Roll a d{N}. At 1, remove bleed token.
+effect = """Roll a d{N}. At 1 or 2, remove bleed token.
 
 Otherwise:
 

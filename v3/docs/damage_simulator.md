@@ -77,7 +77,7 @@ Every Round runs these steps in order. They follow the end of a Round in
 | **Agony 1: Minor Acid** | Each Minor Acid rolls a d6, less acid resistance. On 3+ the Unit gains +1 Future Damage and the Minor Acid stays; otherwise the Minor Acid is removed. |
 | **Agony 2: Fire** | *Every* Fire Token rolls a d6, less fire resistance, **before any of them deals damage**. A Fire at 1 or below goes out. Each one still burning then deals its roll as damage on the Regular table, plus Future Damage. |
 | **Agony 3: Poison** | Each Poison[N] rolls a dN, less poison resistance, and deals that as damage on the Regular table, plus Future Damage. A Poison that killed a Model is removed; otherwise it drops one step (Poison[8] → Poison[6]), and Poison[4] is removed. |
-| **Agony 4: Bleed** | Each Bleed[N] rolls a dN. On a 1 it is removed. Otherwise it deals that roll as damage on the Regular table, plus Future Damage. A Bleed that killed a Model is removed. |
+| **Agony 4: Bleed** | Each Bleed[N] rolls a dN. On a 1 or 2 it is removed. Otherwise it deals that roll as damage on the Regular table, plus Future Damage. A Bleed that killed a Model is removed. |
 
 After the last step the state is recorded for the report. The run then checks
 whether it should go on (see [The two modes](#the-two-modes)).

@@ -38,6 +38,9 @@ STRENGTH_STEP = 2
 FIRE_OUT = 1
 """A Fire roll at or below this, after fire resistance, puts the Fire out."""
 
+BLEED_STOPS = 2
+"""A Bleed roll at or below this removes the Bleed (`token.bleed`)."""
+
 MINOR_ACID_HOLDS = 3
 """A Minor Acid roll at or above this adds Future Damage; below it, it is removed."""
 
@@ -313,7 +316,7 @@ class _Run:
             if not bleeds[index]:
                 continue
             roll = self.roller.roll(bleeds[index])
-            if roll == 1:
+            if roll <= BLEED_STOPS:
                 bleeds[index] = 0
                 continue
             strength = bleeds[index]
