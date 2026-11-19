@@ -4,11 +4,18 @@ The Unit is picked at run time from whatever the committed Races hold, so no
 rules edit can break these tests.
 """
 
+from typing import cast
+
 import pytest
+from rich.text import Text
 
 from spf import races
 from spf.console import stdout
 from spf.frontends.cli import app
+from spf.frontends.cli.sim import UNPARSED_STYLE, damage_table
+from spf.schemas.type_aliases import DamageTable
+from spf.sim.effects import Vocabulary
+from spf.sim.tables import CompiledTable, compile_table
 
 
 @pytest.fixture(autouse=True)
@@ -55,3 +62,38 @@ def test_a_bad_start_names_the_option() -> None:
     unit, _ = _live_unit()
     with pytest.raises(ValueError, match="--start"):
         _sim(unit, "--start", "bleed")
+
+
+def test_damage_prints_the_units_tables_above_the_report(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    unit, _ = _live_unit()
+    _sim(unit, "--start", "d6", "--runs", "5")
+    out = capsys.readouterr().out
+    assert "Regular damage table" in out
+    assert out.index("Regular damage table") < out.index("P(Unit Destroyed)")
+
+
+def _compiled(*rows: str, notes: list[str] | None = None) -> CompiledTable:
+    table = DamageTable.model_validate({"rows": list(rows), "notes": notes or []})
+    return compile_table("Regular", table, vocabulary=Vocabulary(tokens={}))
+
+
+def _styles(text: Text) -> dict[str, str]:
+    """Map each styled stretch of a cell to its style."""
+    return {text.plain[span.start : span.end]: str(span.style) for span in text.spans}
+
+
+def test_an_unparsed_stretch_is_colored() -> None:
+    table = damage_table(_compiled("1: Kill 1 model, Wobble twice"))
+    effect = cast("Text", next(iter(table.columns[1].cells)))
+    assert effect.plain == "Kill 1 model, Wobble twice"
+    assert _styles(effect) == {"Wobble twice": UNPARSED_STYLE}
+
+
+def test_an_unparsed_note_is_colored() -> None:
+    notes = ["Bleed does not cause more Bleed", "Count the models first"]
+    table = damage_table(_compiled("1: Kill 1 model", notes=notes))
+    caption = cast("Text", table.caption)
+    assert "Bleed does not cause more Bleed" in caption.plain
+    assert _styles(caption) == {"Count the models first": UNPARSED_STYLE}

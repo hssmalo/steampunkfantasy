@@ -109,6 +109,7 @@ uv run spf sim damage ogre.main_engine --incoming "d6-2" --max-rounds 6
 uv run spf sim damage dwarf.dwarf_infantry --start d6 --seed 7 --no-resistance
 ```
 
-The parser behind it is best-effort. Its **Not simulated** table lists every row
-or note text it could not follow, with how often a run reached it — read that
+The Unit's Damage tables print above the report, with the text the parser
+skipped colored red. The parser behind it is best-effort. Its **Not simulated**
+table lists every row or note text it could not follow, with how often a run reached it — read that
 before trusting a figure.

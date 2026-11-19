@@ -209,6 +209,7 @@ chosen and printed.
 
 | Section | What it shows |
 |---|---|
+| **The Unit's Damage tables** | Printed first, the chosen table on top, each with its notes underneath. Text the parser skipped is colored red, so you see exactly which parts of a row are left out |
 | **Summary** | P(Unit Destroyed); Models lost (mean, median, 90th percentile, where a destroyed Unit counts as losing all its Models); how runs ended |
 | **Rounds played, by how the run ended** | The share of runs that ended after each number of Rounds, in separate columns for runs that ran out of Continuing Damage, were destroyed, or hit the cap |
 | **Mean state at the end of each Round** | Mean Models alive, Future Damage, Future Crew Damage and every Token count. Round 0 is the state after the starting rolls. A run that has already ended is held at its final state, so the means stay comparable from Round to Round |

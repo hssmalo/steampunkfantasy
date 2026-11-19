@@ -6,17 +6,22 @@ from typing import Annotated, cast
 import cyclopts
 from rich.markup import escape
 from rich.table import Table
+from rich.text import Text
 
 from spf import races
 from spf.console import stdout
 from spf.frontends.cli.suggest import resolve_or_raise
+from spf.prose import plain
 from spf.registry import load_registry
 from spf.schemas import type_aliases as t
 from spf.sim.report import DamageReport, simulate
-from spf.sim.scenario import GRAMMAR, parse_hits, parse_start
+from spf.sim.scenario import GRAMMAR, Scenario, parse_hits, parse_start
+from spf.sim.tables import CompiledTable
 from spf.sim.units import unit_scenario
 
 _START_HELP = f"The starting state. {GRAMMAR}"
+UNPARSED_STYLE = "bold red"
+"""How Damage table text the simulator does not play is colored."""
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -74,7 +79,51 @@ def damage(  # noqa: PLR0913
         max_rounds=max_rounds,
         resistance=resistance,
     )
+    print_tables(scenario, entry=table)
     print_report(simulate(scenario, runs=runs, seed=seed, entry=table))
+
+
+def print_tables(scenario: Scenario, *, entry: t.DamageTableName) -> None:
+    """Print the Unit's Damage tables, the entry table first."""
+    tables = sorted(scenario.tables.values(), key=lambda table: table.name != entry)
+    for table in tables:
+        stdout.print(damage_table(table))
+    if any(_has_unparsed(table) for table in tables):
+        stdout.print(Text("Colored text is not simulated.", style=UNPARSED_STYLE))
+
+
+def _has_unparsed(table: CompiledTable) -> bool:
+    """Tell whether any of a table's rows or notes holds text not simulated."""
+    return bool(table.notes.unparsed) or any(
+        not segment.simulated for row in table.rows for segment in row.segments()
+    )
+
+
+def damage_table(table: CompiledTable) -> Table:
+    """Render one Damage table, coloring the text the simulator does not play."""
+    rendered = Table(
+        "Roll",
+        "Effect",
+        title=f"{table.name} damage table",
+        title_justify="left",
+        caption_justify="left",
+    )
+    for row in table.rows:
+        effect = Text()
+        for segment in row.segments():
+            effect.append(
+                segment.text, style=None if segment.simulated else UNPARSED_STYLE
+            )
+        rendered.add_row(row.label, effect)
+    if table.written_notes:
+        rendered.caption = Text("\n").join(
+            Text(
+                plain(note),
+                style=UNPARSED_STYLE if note in table.notes.unparsed else "",
+            )
+            for note in table.written_notes
+        )
+    return rendered
 
 
 def print_report(report: DamageReport) -> None:
