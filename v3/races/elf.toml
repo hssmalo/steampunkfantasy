@@ -47,7 +47,7 @@ rows = [
 	"3-5: +1 to future damage, {Bleed[4]:token.bleed}",
 	"6-10: +1 to future damage, {Bleed[6]:token.bleed}, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"11-17: As 6-10, d6 psychic damage",
-	"18: Unit Destroyed",
+	"18+: Unit Destroyed",
 ]
 notes = [
 	"Bleed does not cause more Bleed",
@@ -360,7 +360,7 @@ rows = [
 	"3: {Cannot Turn:token.cannot_turn}",
 	"4: +3 to future damage",
 	"5: Stuck turret: firing angle is now only forward",
-	"6: {Fire:token.fire}",
+	"6+: {Fire:token.fire}",
 ]
 
 [units.e34.damage_tables.Crew]
@@ -429,7 +429,7 @@ rows = [
 	"3: Cannot rotate",
 	"4: +3 to future damage",
 	"5: Unit cannot change speed.",
-	"6: Fire",
+	"6+: Fire",
 ]
 
 [units.tattoo_ink.damage_tables.Regular]
@@ -1316,7 +1316,7 @@ rows = [
 	"4-8: As 2-3, if caused by bleeding, amplify bleeding",
 	"9-11: As 4-8, +1 to future damage",
 	"12-19: As 9-11, d8 psychic damage",
-	"20: Unit Destroyed",
+	"20+: Unit Destroyed",
 ]
 notes = [
 	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
