@@ -173,10 +173,7 @@ class _Run:
 
     def resisted(self, dice: Dice, table: DamageTableName) -> int:
         """Roll a hit's damage, less the resistance that table's damage meets."""
-        resistance = self.scenario.resistance.get(_RESISTED_BY.get(table, ""))
-        return dice.roll(self.roller) - (
-            resistance.roll(self.roller) if resistance else 0
-        )
+        return dice.roll(self.roller) - self.resistance(_RESISTED_BY.get(table, ""))
 
     def hit(self, hit: Hit) -> None:
         """Resolve one landed hit."""
@@ -419,8 +416,9 @@ class _Run:
 
     def resistance(self, kind: str) -> int:
         """Roll the Unit's resistance against one damage type; 0 if it has none."""
-        dice = self.scenario.resistance.get(kind)
-        return 0 if dice is None else dice.roll(self.roller)
+        return sum(
+            dice.roll(self.roller) for dice in self.scenario.resistance.get(kind, [])
+        )
 
     def incoming(self) -> None:
         """Land this Round's incoming hits, ahead of the Agony Phases."""

@@ -32,7 +32,8 @@ class Scenario:
     """One Unit in isolation, ready to be simulated.
 
     `resistance` is keyed by damage type: `regular`, `psychic`, `fire`, `poison`
-    and `acid`. `incoming` is empty for an aftermath run and holds the hits that
+    and `acid`, each kind holding every Instance's strength, which add up.
+    `incoming` is empty for an aftermath run and holds the hits that
     land every Round for an attrition run.
     """
 
@@ -41,6 +42,6 @@ class Scenario:
     tables: Mapping[DamageTableName, CompiledTable]
     start: Start = field(default_factory=Start)
     incoming: list[Hit] = field(default_factory=list)
-    resistance: Mapping[str, Dice] = field(default_factory=dict)
+    resistance: Mapping[str, list[Dice]] = field(default_factory=dict)
     endurance: int = 0
     max_rounds: int = 20

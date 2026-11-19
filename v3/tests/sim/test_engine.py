@@ -63,7 +63,7 @@ def _scenario(  # noqa: PLR0913
         ),
         incoming=[_hit(hit) for hit in incoming or []],
         resistance={
-            kind: Dice.parse(dice) for kind, dice in (resistance or {}).items()
+            kind: [Dice.parse(dice)] for kind, dice in (resistance or {}).items()
         },
         endurance=endurance,
         max_rounds=max_rounds,
