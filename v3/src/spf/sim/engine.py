@@ -22,6 +22,7 @@ from spf.sim.effects import (
     Unparsed,
 )
 from spf.sim.scenario import Hit, Scenario
+from spf.sim.tables import NoteRules
 
 type EndedBy = Literal["destroyed", "no continuing damage", "max rounds"]
 
@@ -142,6 +143,8 @@ class _Run:
     scenario: Scenario
     roller: Roller
     state: UnitState
+    notes: NoteRules
+    """What every one of the Unit's table notes says, taken together."""
     table_rolls: Counter[DamageTableName] = field(default_factory=Counter)
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
@@ -179,6 +182,8 @@ class _Run:
             self.missing_tables[table] += 1
             return
         self.table_rolls[table] += 1
+        for note in compiled.notes.unparsed:
+            self.unparsed[table, "note", note] += 1
         row = compiled.row_for(value)
         if row is None:
             return
@@ -201,7 +206,7 @@ class _Run:
             case FutureCrewDamage(amount=amount):
                 state.future_crew += amount
             case PlaceToken():
-                self.place(effect)
+                self.place(effect, cause=cause)
             case UnitDestroyed():
                 state.destroyed = True
             case AmplifyBleeding(only_from_bleeding=only_from_bleeding):
@@ -243,16 +248,23 @@ class _Run:
         """Kill one Model; the last one takes the Unit with it."""
         self.kills += 1
         self.state.models -= 1
+        if self.notes.halve_future_on_kill:
+            self.state.future //= 2
         if self.state.models <= 0:
             self.state.destroyed = True
 
-    def place(self, token: PlaceToken) -> None:
+    def place(self, token: PlaceToken, *, cause: Cause | None = None) -> None:
         """Place one Token.
 
         Shaken is placed twice on a Unit that has none (`explanation` in
         `rules/tokens.toml`).
         """
         state = self.state
+        if token.name in self.notes.immune:
+            return
+        from_bleed = cause is not None and cause.source == "bleed"
+        if token.name == "bleed" and from_bleed and not self.notes.bleed_causes_bleed:
+            return
         if token.name == "bleed" and token.strength:
             state.bleeds.append(token.strength)
             return
@@ -418,6 +430,16 @@ class _Run:
         )
 
 
+def _merged_notes(scenario: Scenario) -> NoteRules:
+    """Take every table's notes together: they describe one Unit."""
+    notes = [table.notes for table in scenario.tables.values()]
+    return NoteRules(
+        bleed_causes_bleed=all(note.bleed_causes_bleed for note in notes),
+        halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
+        immune=frozenset().union(*(note.immune for note in notes)),
+    )
+
+
 def run_once(scenario: Scenario, roller: Roller) -> RunResult:
     """Simulate one run of a Scenario: the starting hits, then Rounds.
 
@@ -428,6 +450,7 @@ def run_once(scenario: Scenario, roller: Roller) -> RunResult:
     run = _Run(
         scenario=scenario,
         roller=roller,
+        notes=_merged_notes(scenario),
         state=UnitState(
             models=scenario.models, future=start.future, future_crew=start.future_crew
         ),

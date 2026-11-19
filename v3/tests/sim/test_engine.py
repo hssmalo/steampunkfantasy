@@ -328,6 +328,43 @@ def test_incoming_hits_land_before_the_agony_phases() -> None:
     assert (result.rounds, result.ended_by) == (1, "destroyed")
 
 
+HALVING = "If one model is killed remove half of the +1 future damage tokens"
+
+
+def test_a_kill_halves_future_damage_rounding_down() -> None:
+    scenario = _scenario(hits=["d6"], future=3, notes=[HALVING])
+    result = _run(scenario, [(6, 1)])
+    assert (result.models_lost, result.snapshots[0].future) == (1, 1)
+
+
+def test_without_the_note_future_damage_stays() -> None:
+    result = _run(_scenario(hits=["d6"], future=3), [(6, 1)])
+    assert result.snapshots[0].future == 3
+
+
+def test_bleed_causes_bleed_unless_a_note_says_otherwise() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[4]"]}
+    plain = _scenario(tables, tokens=[_bleed(4)], max_rounds=1)
+    noted = _scenario(
+        tables, tokens=[_bleed(4)], notes=["Bleed does not cause Bleed"], max_rounds=1
+    )
+    assert _run(plain, [(4, 2)]).snapshots[1].tokens["bleed"] == 2
+    assert _run(noted, [(4, 2)]).snapshots[1].tokens["bleed"] == 1
+
+
+def test_an_immune_unit_never_takes_the_token() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Poison[6]"]}
+    scenario = _scenario(tables, hits=["d6"], notes=["Immune to Poison"])
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[0].tokens["poison"] == 0
+
+
+def test_an_unparsed_note_is_reported_each_time_its_table_rolls() -> None:
+    note = "Count the alive models first"
+    result = _run(_scenario(hits=["d6", "d6"], notes=[note]), [(6, 1), (6, 1)])
+    assert result.unparsed == {("Regular", "note", note): 2}
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)
