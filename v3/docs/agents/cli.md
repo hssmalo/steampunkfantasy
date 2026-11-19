@@ -95,7 +95,8 @@ it — currently image alone.
 A Monte Carlo balancing aid: how a Damage table plays out on one Unit over time.
 `--start` gives a starting state, and the run plays Agony Phases until
 Continuing Damage ends; `--incoming` adds hits landing every Round. `--help`
-documents the grammar both take.
+documents the grammar both take. What a run does, Round by Round, is explained
+in [`docs/damage_simulator.md`](../damage_simulator.md).
 
 ```console
 # One landed d6, a Bleed[4] and +2 Future Damage
