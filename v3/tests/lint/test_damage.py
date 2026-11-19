@@ -107,3 +107,24 @@ def test_a_leading_roll_without_its_word_fires(effect: str) -> None:
 def test_an_effect_with_no_broken_reference_is_quiet(effect: str) -> None:
     """Numbers in prose, an `as` with no roll, and a linked effect are not defects."""
     assert not messages(("1-3", "Shaken"), ("4", effect))
+
+
+def top_row_messages(*rolls: str) -> list[str]:
+    """Return the message of every Top row finding on `rolls`, checking the rule."""
+    findings = list(damage.check_top_row(rolls))
+    assert {rule for rule, _ in findings} <= {"top-row"}
+    return [message for _, message in findings]
+
+
+@pytest.mark.parametrize(
+    ("rolls", "named", "fix"),
+    [
+        (("1-3", "4"), "'4'", "'4+'"),
+    ],
+)
+def test_a_bounded_top_row_fires(rolls: tuple[str, ...], named: str, fix: str) -> None:
+    """The Top row catches every result from its value up, so it reads `N+`."""
+    found = top_row_messages(*rolls)
+    assert len(found) == 1
+    assert named in found[0]
+    assert fix in found[0]

@@ -9,6 +9,7 @@ import re
 from collections.abc import Collection, Iterator, Sequence
 
 RULE = "row-reference"
+TOP_ROW = "top-row"
 
 _ROLL = r"\d+(?:-\d+|\+)?"
 _REFERENCE = re.compile(rf"\bas ({_ROLL})(?![\w-])(?P<after>.?)", re.IGNORECASE)
@@ -24,6 +25,12 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
         for problem in _check_effect(effect, every_roll, earlier):
             yield RULE, f"row {roll!r}: {problem}"
         earlier.add(roll)
+
+
+def check_top_row(rolls: Sequence[str]) -> Iterator[tuple[str, str]]:
+    """Yield `(rule, message)` if a table's top row is not `N+`, or another row is."""
+    top = rolls[-1]
+    yield TOP_ROW, f"row {top!r}: the top row must be '{top}+'"
 
 
 def _check_effect(
