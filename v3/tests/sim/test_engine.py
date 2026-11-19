@@ -240,6 +240,54 @@ def test_fire_accumulates_and_every_token_rolls() -> None:
     assert result.models_lost == 1
 
 
+MINOR_ACID = PlaceToken(name="minor_acid")
+ACID = PlaceToken(name="acid")
+
+
+def test_minor_acid_adds_future_damage_until_it_fails() -> None:
+    result = _run(_scenario(tokens=[MINOR_ACID]), [(6, 3), (6, 2)])
+    assert (result.rounds, result.ended_by) == (2, "no continuing damage")
+    assert result.snapshots[-1].future == 1
+
+
+def test_acid_at_one_downgrades_to_minor_acid_that_rolls_the_same_round() -> None:
+    result = _run(_scenario(tokens=[ACID]), [(8, 1), (6, 1)])
+    assert result.rounds == 1
+    tokens = result.snapshots[1].tokens
+    assert (tokens["acid"], tokens["minor_acid"]) == (0, 0)
+
+
+def test_acid_adds_future_damage_and_stays() -> None:
+    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 2)])
+    assert result.ended_by == "max rounds"
+    assert result.snapshots[-1].future == 1
+    assert result.snapshots[-1].tokens["acid"] == 1
+
+
+def test_acid_spills_onto_the_hex_and_places_terror() -> None:
+    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 6)])
+    assert result.snapshots[-1].future == 1
+    assert result.snapshots[-1].tokens["terror"] == 1
+    assert sum(result.spillover.values()) == 2
+
+
+def test_terror_spills_onto_friendly_units_each_round() -> None:
+    scenario = _scenario(tokens=[ACID, PlaceToken(name="terror")], max_rounds=1)
+    result = _run(scenario, [(8, 2)])
+    assert sum(result.spillover.values()) == 1
+
+
+def test_acid_at_seven_sets_the_unit_on_fire() -> None:
+    result = _run(_scenario(tokens=[ACID], max_rounds=1), [(8, 7), (6, 1)])
+    assert result.snapshots[-1].tokens["terror"] == 1
+
+
+def test_acid_at_eight_rolls_three_more_times() -> None:
+    scenario = _scenario(tokens=[ACID], max_rounds=1)
+    result = _run(scenario, [(8, 8), (8, 2), (8, 2), (8, 2)])
+    assert result.snapshots[-1].future == 3
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)

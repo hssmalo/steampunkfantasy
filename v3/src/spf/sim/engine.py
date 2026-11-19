@@ -2,7 +2,7 @@
 
 from collections import Counter
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 from spf.schemas.type_aliases import DamageTableName
 from spf.sim.dice import Dice, Roller
@@ -22,6 +22,9 @@ from spf.sim.effects import (
 )
 from spf.sim.scenario import Hit, Scenario
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
 type EndedBy = Literal["destroyed", "no continuing damage", "max rounds"]
 
 MIN_STRENGTH = 4
@@ -36,7 +39,21 @@ STRENGTH_STEP = 2
 FIRE_OUT = 1
 """A Fire roll at or below this, after fire resistance, puts the Fire out."""
 
-_COUNTED_CONTINUING = ["fire"]
+MINOR_ACID_HOLDS = 3
+"""A Minor Acid roll at or above this adds Future Damage; below it, it is removed."""
+
+ACID_ROLLS_AGAIN = 8
+"""The Acid result that rolls three more times on the acid table."""
+
+ACID_SPILLS = {
+    4: "poison cloud[4] and minor acid on the hex",
+    5: "minor acid to Units within range 2",
+}
+"""Acid results whose effect lands beyond this Unit, from `token.acid`."""
+
+TERROR_SPILLS = "terror on friendly Units"
+
+_COUNTED_CONTINUING = ["fire", "acid", "minor_acid"]
 """Continuing Damage Tokens without a strength, tracked as plain counts."""
 
 _RESISTED_BY = {"Regular": "regular", "Psychic": "psychic"}
@@ -246,6 +263,55 @@ class _Run:
             poisons[index] = 0 if killed or downgraded < MIN_STRENGTH else downgraded
         self.state.poisons = [strength for strength in poisons if strength]
 
+    def agony_acid(self) -> None:
+        """Agony 0: Terror spills onto friends, then each Acid rolls (`token.acid`)."""
+        counters = self.state.counters
+        if counters["terror"]:
+            self.spillover[TERROR_SPILLS] += counters["terror"]
+        for _ in range(counters["acid"]):
+            self.acid_result(self.acid_roll(8))
+
+    def acid_roll(self, sides: int) -> int:
+        """Roll an Acid or Minor Acid die, less acid resistance, never below 1."""
+        return max(1, self.roller.roll(sides) - self.resistance("acid"))
+
+    def acid_result(self, result: int) -> None:
+        """Apply one result of the acid table; each row is the one below plus more."""
+        state = self.state
+        if result >= ACID_ROLLS_AGAIN:
+            for _ in range(3):
+                self.acid_result(self.acid_roll(8))
+            return
+        if result == 1:
+            if state.counters["acid"]:
+                state.counters["acid"] -= 1
+                state.counters["minor_acid"] += 1
+            return
+        state.future += 1
+        steps: list[tuple[int, Callable[[], None]]] = [
+            (3, lambda: self.place(PlaceToken(name="armor_reduced"))),
+            (4, lambda: self.spill(ACID_SPILLS[4])),
+            (5, lambda: self.spill(ACID_SPILLS[5])),
+            (6, lambda: self.place(PlaceToken(name="terror"))),
+            (7, lambda: self.place(PlaceToken(name="fire"))),
+        ]
+        for threshold, step in steps:
+            if result >= threshold:
+                step()
+
+    def spill(self, text: str) -> None:
+        """Count one spillover event."""
+        self.spillover[text] += 1
+
+    def agony_minor_acid(self) -> None:
+        """Agony 1: each Minor Acid adds Future Damage or is removed."""
+        counters = self.state.counters
+        for _ in range(counters["minor_acid"]):
+            if self.acid_roll(6) >= MINOR_ACID_HOLDS:
+                self.state.future += 1
+            else:
+                counters["minor_acid"] -= 1
+
     def agony_fire(self) -> None:
         """Agony 2: every Fire rolls before any of its damage applies (`token.fire`)."""
         counters = self.state.counters
@@ -267,7 +333,14 @@ class _Run:
 
     def play_round(self) -> None:
         """Play one Round's Agony Phases, in order."""
-        for phase in [self.agony_fire, self.agony_poison, self.agony_bleed]:
+        phases = [
+            self.agony_acid,
+            self.agony_minor_acid,
+            self.agony_fire,
+            self.agony_poison,
+            self.agony_bleed,
+        ]
+        for phase in phases:
             if self.state.destroyed:
                 return
             phase()
