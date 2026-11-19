@@ -135,3 +135,10 @@ def test_a_bounded_top_row_fires(rolls: tuple[str, ...], named: str, fix: str) -
 def test_an_open_top_row_is_quiet(rolls: tuple[str, ...]) -> None:
     """A top row that reads `N+` is the form the rule exists to protect."""
     assert not top_row_messages(*rolls)
+
+
+def test_an_open_row_below_the_top_fires() -> None:
+    """An `N+` row overlaps every row printed after it."""
+    found = top_row_messages("1-3", "4+", "5+")
+    assert len(found) == 1
+    assert "'4+'" in found[0]
