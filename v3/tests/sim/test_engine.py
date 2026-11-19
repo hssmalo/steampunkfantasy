@@ -159,3 +159,44 @@ def test_unparsed_and_spillover_are_counted() -> None:
     result = _run(_scenario(tables, hits=["d6", "d6"]), [(6, 1), (6, 2)])
     assert result.unparsed == {("Regular", "1+", "Rotate unit"): 2}
     assert result.spillover == {"d4 damage to all transported units": 2}
+
+
+def _bleed(strength: int) -> PlaceToken:
+    return PlaceToken(name="bleed", strength=strength)
+
+
+def test_bleed_ends_at_a_one() -> None:
+    result = _run(_scenario(tokens=[_bleed(4)]), [(4, 1)])
+    assert (result.rounds, result.ended_by) == (1, "no continuing damage")
+    assert result.snapshots[0].tokens["bleed"] == 1
+    assert result.snapshots[1].tokens["bleed"] == 0
+
+
+def test_bleed_rolls_on_the_regular_table_with_future_damage() -> None:
+    result = _run(_scenario(tokens=[_bleed(6)], future=1), [(6, 2), (6, 1)])
+    assert result.rounds == 2
+    assert [snapshot.future for snapshot in result.snapshots] == [1, 2, 2]
+
+
+def test_bleed_that_kills_a_model_is_removed() -> None:
+    result = _run(_scenario(tokens=[_bleed(4)]), [(4, 4)])
+    assert (result.rounds, result.models_lost) == (1, 1)
+    assert result.snapshots[-1].tokens["bleed"] == 0
+
+
+def test_each_bleed_rolls_on_its_own() -> None:
+    result = _run(_scenario(tokens=[_bleed(4), _bleed(8)]), [(4, 1), (8, 1)])
+    assert result.rounds == 1
+
+
+def test_a_run_stops_at_the_round_cap() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Dazed"]}
+    scenario = _scenario(tables, tokens=[_bleed(4)], max_rounds=3)
+    result = _run(scenario, [(4, 2)] * 3)
+    assert (result.rounds, result.ended_by) == (3, "max rounds")
+    assert result.snapshots[-1].tokens["dazed"] == 3
+
+
+def test_a_run_stops_when_the_unit_is_destroyed() -> None:
+    result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
+    assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)

@@ -64,14 +64,24 @@ class UnitState:
     future: int = 0
     future_crew: int = 0
     counters: Counter[str] = field(default_factory=Counter)
+    """Tokens without a strength, by id."""
+    bleeds: list[int] = field(default_factory=list)
+    """The strength of each Bleed; a 0 marks one removed mid-Phase."""
+
+    @property
+    def continuing(self) -> bool:
+        """Whether a Token that deals Continuing Damage remains."""
+        return any(self.bleeds)
 
     def snapshot(self) -> Snapshot:
         """Freeze the state as the report sees it."""
+        tokens = Counter(self.counters)
+        tokens["bleed"] = sum(1 for strength in self.bleeds if strength)
         return Snapshot(
             models=self.models,
             future=self.future,
             future_crew=self.future_crew,
-            tokens=+self.counters,
+            tokens=+tokens,
         )
 
 
@@ -86,6 +96,8 @@ class _Run:
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
     unparsed: Counter[tuple[DamageTableName, str, str]] = field(default_factory=Counter)
+    kills: int = 0
+    """Models killed so far, so a Token can tell whether its damage killed one."""
 
     def resisted(self, dice: Dice, table: DamageTableName) -> int:
         """Roll a hit's damage, less the resistance that table's damage meets."""
@@ -156,6 +168,7 @@ class _Run:
 
     def kill_one(self) -> None:
         """Kill one Model; the last one takes the Unit with it."""
+        self.kills += 1
         self.state.models -= 1
         if self.state.models <= 0:
             self.state.destroyed = True
@@ -166,20 +179,49 @@ class _Run:
         Shaken is placed twice on a Unit that has none (`explanation` in
         `rules/tokens.toml`).
         """
-        counters = self.state.counters
-        if token.name == "shaken" and not counters["shaken"]:
-            counters["shaken"] += 1
-        counters[token.name] += 1
+        state = self.state
+        if token.name == "bleed" and token.strength:
+            state.bleeds.append(token.strength)
+            return
+        if token.name == "shaken" and not state.counters["shaken"]:
+            state.counters["shaken"] += 1
+        state.counters[token.name] += 1
 
-    def result(self, *, rounds: int, snapshots: list[Snapshot]) -> RunResult:
+    def agony_bleed(self) -> None:
+        """Agony 4: each Bleed rolls on its own (`token.bleed`)."""
+        bleeds = self.state.bleeds
+        for index in range(len(bleeds)):
+            if self.state.destroyed:
+                return
+            if not bleeds[index]:
+                continue
+            roll = self.roller.roll(bleeds[index])
+            if roll == 1:
+                bleeds[index] = 0
+                continue
+            kills = self.kills
+            self.roll_on("Regular", roll)
+            if self.kills > kills:
+                bleeds[index] = 0
+        self.state.bleeds = [strength for strength in bleeds if strength]
+
+    def play_round(self) -> None:
+        """Play one Round's Agony Phases, in order."""
+        for phase in [self.agony_bleed]:
+            if self.state.destroyed:
+                return
+            phase()
+
+    def result(
+        self, *, rounds: int, ended_by: EndedBy, snapshots: list[Snapshot]
+    ) -> RunResult:
         """Gather the run's outcome."""
         state = self.state
-        ended_by: EndedBy = "destroyed" if state.destroyed else "no continuing damage"
         return RunResult(
             destroyed=state.destroyed,
-            models_lost=self.scenario.models - max(state.models, 0)
-            if not state.destroyed
-            else self.scenario.models,
+            models_lost=self.scenario.models
+            if state.destroyed
+            else self.scenario.models - state.models,
             rounds=rounds,
             ended_by=ended_by,
             snapshots=snapshots,
@@ -191,7 +233,11 @@ class _Run:
 
 
 def run_once(scenario: Scenario, roller: Roller) -> RunResult:
-    """Simulate one run of a Scenario: the starting hits, then Agony Phases."""
+    """Simulate one run of a Scenario: the starting hits, then Rounds.
+
+    A run stops when the Unit is destroyed, when no Continuing Damage remains,
+    or at the Scenario's Round cap.
+    """
     start = scenario.start
     run = _Run(
         scenario=scenario,
@@ -200,10 +246,26 @@ def run_once(scenario: Scenario, roller: Roller) -> RunResult:
             models=scenario.models, future=start.future, future_crew=start.future_crew
         ),
     )
+    state = run.state
     for token in start.tokens:
         run.place(token)
     for hit in start.hits:
-        if run.state.destroyed:
+        if state.destroyed:
             break
         run.hit(hit)
-    return run.result(rounds=0, snapshots=[run.state.snapshot()])
+    snapshots = [state.snapshot()]
+    rounds = 0
+    ended_by: EndedBy = "max rounds"
+    while True:
+        if state.destroyed:
+            ended_by = "destroyed"
+            break
+        if not state.continuing:
+            ended_by = "no continuing damage"
+            break
+        if rounds == scenario.max_rounds:
+            break
+        rounds += 1
+        run.play_round()
+        snapshots.append(state.snapshot())
+    return run.result(rounds=rounds, ended_by=ended_by, snapshots=snapshots)
