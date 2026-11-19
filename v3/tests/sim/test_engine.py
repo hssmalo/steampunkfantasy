@@ -288,6 +288,30 @@ def test_acid_at_eight_rolls_three_more_times() -> None:
     assert result.snapshots[-1].future == 3
 
 
+def test_amplify_bleeding_steps_every_bleed_up_to_twelve() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Amplify all bleeding"]}
+    scenario = _scenario(tables, hits=["d6"], tokens=[_bleed(4), _bleed(12)])
+    result = _run(scenario, [(6, 1), (6, 1), (12, 1)])
+    assert result.rounds == 1
+
+
+def test_amplify_if_caused_by_bleeding_ignores_other_hits() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1-2: Dazed", "3+: if caused by bleeding, amplify bleeding"]
+    }
+    scenario = _scenario(tables, hits=["d6"], tokens=[_bleed(4)])
+    result = _run(scenario, [(6, 3), (4, 3), (6, 1)])
+    assert result.rounds == 2
+
+
+def test_roll_again_rerolls_the_same_dice() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1: Dazed", "2: Roll two times on this table"]
+    }
+    result = _run(_scenario(tables, hits=["d6"]), [(6, 2), (6, 1), (6, 1)])
+    assert result.snapshots[0].tokens["dazed"] == 2
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)

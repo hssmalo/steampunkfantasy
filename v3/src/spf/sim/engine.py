@@ -1,8 +1,9 @@
 """One simulated run: a Unit's state, changed row by row and Round by Round."""
 
 from collections import Counter
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Literal
+from typing import Literal
 
 from spf.schemas.type_aliases import DamageTableName
 from spf.sim.dice import Dice, Roller
@@ -21,9 +22,6 @@ from spf.sim.effects import (
     Unparsed,
 )
 from spf.sim.scenario import Hit, Scenario
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
 
 type EndedBy = Literal["destroyed", "no continuing damage", "max rounds"]
 
@@ -58,6 +56,19 @@ _COUNTED_CONTINUING = ["fire", "acid", "minor_acid"]
 
 _RESISTED_BY = {"Regular": "regular", "Psychic": "psychic"}
 """The resistance that reduces a hit on each Damage table, where one does."""
+
+
+@dataclass(frozen=True, kw_only=True)
+class Cause:
+    """What made a Damage table roll, and how to roll the same damage again."""
+
+    source: Literal["hit", "fire", "poison", "bleed"]
+    roll: Callable[[], int]
+
+
+def _amplified(strength: int) -> int:
+    """Step one Bleed up a size, capped at the strongest; 0 stays removed."""
+    return min(strength + STRENGTH_STEP, MAX_STRENGTH) if strength else 0
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -147,9 +158,10 @@ class _Run:
 
     def hit(self, hit: Hit) -> None:
         """Resolve one landed hit."""
-        self.roll_on(hit.table, self.resisted(hit.dice, hit.table))
+        cause = Cause(source="hit", roll=lambda: self.resisted(hit.dice, hit.table))
+        self.roll_on(hit.table, cause.roll(), cause=cause)
 
-    def roll_on(self, table: DamageTableName, value: int) -> None:
+    def roll_on(self, table: DamageTableName, value: int, *, cause: Cause) -> None:
         """Look `value` up on a Damage table, with its Future Damage, and apply it."""
         state = self.state
         if (
@@ -173,9 +185,11 @@ class _Run:
         for effect in row.effects:
             if state.destroyed:
                 return
-            self.apply(effect, table=table, label=row.label)
+            self.apply(effect, table=table, label=row.label, cause=cause)
 
-    def apply(self, effect: Effect, *, table: DamageTableName, label: str) -> None:
+    def apply(
+        self, effect: Effect, *, table: DamageTableName, label: str, cause: Cause
+    ) -> None:
         """Apply one effect of a row."""
         state = self.state
         match effect:
@@ -188,12 +202,32 @@ class _Run:
                 state.future_crew += amount
             case PlaceToken():
                 self.place(effect)
-            case DamageOn(dice=dice, table=other):
-                self.roll_on(other, self.resisted(dice, other))
             case UnitDestroyed():
                 state.destroyed = True
+            case AmplifyBleeding(only_from_bleeding=only_from_bleeding):
+                if cause.source == "bleed" or not only_from_bleeding:
+                    state.bleeds[:] = [
+                        _amplified(strength) for strength in state.bleeds
+                    ]
+            case DamageOn() | RollAgain():
+                self.roll_further(effect, table=table, cause=cause)
             case _:
                 self.record(effect, table=table, label=label)
+
+    def roll_further(
+        self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
+    ) -> None:
+        """Roll again, on another Damage table or on this one."""
+        match effect:
+            case DamageOn(dice=dice, table=other):
+                onward = Cause(
+                    source=cause.source, roll=lambda: self.resisted(dice, other)
+                )
+                self.roll_on(other, onward.roll(), cause=onward)
+            case RollAgain(times=times):
+                for _ in range(times):
+                    if not self.state.destroyed:
+                        self.roll_on(table, cause.roll(), cause=cause)
 
     def record(self, effect: Effect, *, table: DamageTableName, label: str) -> None:
         """Count an effect the run does not follow."""
@@ -202,7 +236,7 @@ class _Run:
                 self.spillover[text] += 1
             case Unparsed(text=text):
                 self.unparsed[table, label, text] += 1
-            case AmplifyBleeding() | RollAgain() | RowReference():
+            case RowReference():
                 self.unparsed[table, label, str(effect)] += 1
 
     def kill_one(self) -> None:
@@ -241,8 +275,13 @@ class _Run:
             if roll == 1:
                 bleeds[index] = 0
                 continue
+            strength = bleeds[index]
+            cause = Cause(
+                source="bleed",
+                roll=lambda strength=strength: self.roller.roll(strength),
+            )
             kills = self.kills
-            self.roll_on("Regular", roll)
+            self.roll_on("Regular", roll, cause=cause)
             if self.kills > kills:
                 bleeds[index] = 0
         self.state.bleeds = [strength for strength in bleeds if strength]
@@ -255,9 +294,15 @@ class _Run:
                 return
             if not poisons[index]:
                 continue
-            roll = self.roller.roll(poisons[index]) - self.resistance("poison")
+            strength = poisons[index]
+            cause = Cause(
+                source="poison",
+                roll=lambda strength=strength: (
+                    self.roller.roll(strength) - self.resistance("poison")
+                ),
+            )
             kills = self.kills
-            self.roll_on("Regular", roll)
+            self.roll_on("Regular", cause.roll(), cause=cause)
             killed = self.kills > kills
             downgraded = poisons[index] - STRENGTH_STEP
             poisons[index] = 0 if killed or downgraded < MIN_STRENGTH else downgraded
@@ -315,16 +360,16 @@ class _Run:
     def agony_fire(self) -> None:
         """Agony 2: every Fire rolls before any of its damage applies (`token.fire`)."""
         counters = self.state.counters
-        rolls = [
-            self.roller.roll(6) - self.resistance("fire")
-            for _ in range(counters["fire"])
-        ]
+        cause = Cause(
+            source="fire", roll=lambda: self.roller.roll(6) - self.resistance("fire")
+        )
+        rolls = [cause.roll() for _ in range(counters["fire"])]
         burning = [roll for roll in rolls if roll > FIRE_OUT]
         counters["fire"] = len(burning)
         for roll in burning:
             if self.state.destroyed:
                 return
-            self.roll_on("Regular", roll)
+            self.roll_on("Regular", roll, cause=cause)
 
     def resistance(self, kind: str) -> int:
         """Roll the Unit's resistance against one damage type; 0 if it has none."""
