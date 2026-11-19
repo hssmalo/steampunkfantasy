@@ -457,8 +457,8 @@ slow = [["360°", "F", "360°"], ["B", "360°", "360°"], ["A", "F", "F"]]
 fast = [["360°", "F", "B"]]
 
 [units.mechanical_scorpion.orders.fire]
-still = [["-", "Load"], ["-", "Fire"], ["Load", "Aim"]]
-slow = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+still = [["-", "Load"], ["-", "Fire"], ["-", "Aim"]]
+slow = [["-", "-"], ["-", "Fire"], ["-", "Aim"]]
 
 [units.mechanical_scorpion.damage_tables.Regular]
 rows = [
@@ -1505,7 +1505,7 @@ race = "darkelf"
 requires = []
 
 [equipment.tail_gatling_gun.range]
-range = 3
+range = 2
 angle = [true, false, false, false]
 damage = "d6 + d6 Psychic damage"
 ap = 3
@@ -1528,7 +1528,7 @@ variant = "long_range"
 args.version = "token.minor_acid"
 
 [[equipment.tail_gatling_gun.range.specials.ammo]]
-text = "May be load with up to 4 ammo, but spend 2 ammo each time the weapon is used"
+text = "May be load with up to 2 ammo"
 
 [equipment.heavy_rifle]
 name = "Heavy Rifle"
@@ -2008,7 +2008,6 @@ range = 1
 angle = [true, true, true, true]
 damage = "N/A"
 ap = "N/A"
-
 
 [[equipment.poison_fog_grenade.range.specials.order]]
 variant = "used_with_throw_order"
