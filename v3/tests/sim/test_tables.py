@@ -11,7 +11,7 @@ from spf.sim.effects import (
     Unparsed,
     Vocabulary,
 )
-from spf.sim.tables import compile_table
+from spf.sim.tables import NoteRules, compile_table
 
 VOCABULARY = Vocabulary(tokens={})
 
@@ -68,6 +68,46 @@ def test_a_row_reference_inlines_the_earlier_row() -> None:
         Kill(count=1),
         FutureDamage(amount=2),
     ]
+
+
+def _notes(*notes: str) -> NoteRules:
+    table = DamageTable.model_validate({"rows": ["1: Dazed"], "notes": list(notes)})
+    vocabulary = Vocabulary(tokens={"poison": "poison", "dazed": "dazed"})
+    return compile_table("Regular", table, vocabulary=vocabulary).notes
+
+
+def test_a_table_without_notes_changes_nothing() -> None:
+    assert _notes() == NoteRules()
+
+
+def test_bleed_does_not_cause_bleed() -> None:
+    assert not _notes("Bleed does not cause more Bleed").bleed_causes_bleed
+
+
+@pytest.mark.parametrize(
+    "note",
+    [
+        "When one model is killed, half all +1 to future damage rounded down",
+        "If one model is killed remove half of the +1 future damage tokens",
+        "Remove half of the +1 future damage tokens when one robots dies",
+    ],
+)
+def test_halving_future_damage_on_a_kill(note: str) -> None:
+    assert _notes(note).halve_future_on_kill
+
+
+def test_removing_the_token_that_killed_is_recognised() -> None:
+    notes = _notes("If killed by Poison or Bleed, remove that instance")
+    assert notes == NoteRules()
+
+
+def test_immunity_to_a_token() -> None:
+    assert _notes("Immune to Poison").immune == frozenset({"poison"})
+
+
+def test_an_unrecognised_note_is_unparsed() -> None:
+    note = "Count the number of alive models before the apply damage step"
+    assert _notes(note).unparsed == [note]
 
 
 def test_a_reference_to_no_row_is_unparsed() -> None:
