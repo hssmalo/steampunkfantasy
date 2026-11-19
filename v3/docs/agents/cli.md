@@ -89,3 +89,30 @@ Refinement needs a refine Workflow authored for the resolved Environment and
 Profile (`--env` / `--profile`, or the config defaults); see
 `workflows/README.md`. It is available only for kinds whose Service implements
 it — currently image alone.
+
+## Damage simulator
+
+A Monte Carlo balancing aid: how a Damage table plays out on one Unit over time.
+`--start` gives a starting state, and the run plays Agony Phases until
+Continuing Damage ends; `--incoming` adds hits landing every Round. `--help`
+documents the grammar both take. What a run does, Round by Round, is explained
+in [`docs/damage_simulator.md`](../damage_simulator.md).
+
+```console
+# One landed d6, a Bleed[4] and +2 Future Damage
+uv run spf sim damage dwarf.dwarf_infantry --start "d6, bleed=4, future=2"
+
+# A d6-2 lands every Round, for at most 6 Rounds
+uv run spf sim damage ogre.main_engine --incoming "d6-2" --max-rounds 6
+
+# Reproduce a report, or compare without resistance
+uv run spf sim damage dwarf.dwarf_infantry --start d6 --seed 7 --no-resistance
+
+# The same damage on every Unit of a Race, one line each
+uv run spf sim damage-race ork --start "d6, bleed=4"
+```
+
+The Unit's Damage tables print above the report, with the text the parser
+skipped colored red. The parser behind it is best-effort. Its **Not simulated**
+table lists every row or note text it could not follow, with how often a run reached it — read that
+before trusting a figure.

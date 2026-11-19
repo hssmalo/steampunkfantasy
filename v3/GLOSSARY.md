@@ -352,6 +352,27 @@ _Avoid_: "terrain effect" for this — that names Terrain, not a Hex Effect.
 A marker tracking transient state on a Unit or Model (bleeding, poison, +1
 future damage, …), placed and removed in specific Phases.
 
+**Future Damage**:
+A stacking modifier on a Unit, each token adding +1 to every later roll on its
+Regular Damage table, whether that roll comes from a hit or from Continuing
+Damage. It never touches the Psychic or Critical tables. It stays until an
+effect or a table note removes it, such as halving it when a Model is killed.
+_Avoid_: plus one, +1 token (`plus_minus_one` is a to-hit Token)
+
+**Future Crew Damage**:
+The Crew-table counterpart of Future Damage: a stacking +1 on later rolls on a
+Unit's Crew Damage table, kept separately from Future Damage.
+
+**Continuing Damage**:
+Damage a Token deals to its own Unit during the Agony Phases, without any new
+attack: acid, minor acid, fire, poison and bleed. A Unit is finished with
+it when it carries no Token that deals Continuing Damage.
+_Avoid_: damage over time, DoT, agony damage
+
+**Armor**:
+A Unit's protection, which decides whether an attack gets through at all. Once
+an attack gets through, Armor plays no part in the damage rolled.
+
 **Nick**:
 The player-chosen name of an Army, Unit, or Model instance.
 _Avoid_: nickname, label, title

@@ -99,7 +99,7 @@ see_also = ["damage_type.acid"]
 name = "Fire"
 phases = ["Agony 2"]
 remove = "Only as part of effect"
-effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 1 or below, fire is removed. Otherwise:
+effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 2 or below, fire is removed. Otherwise:
 
 
 - Ignore armor and regular damage resistance
@@ -165,7 +165,7 @@ effect = """Apply any damage of a poison token to psychic damage table as well a
 name = "Bleed"
 signature = "[{N}]"
 phases = ["Agony 4"]
-effect = """Roll a d{N}. At 1, remove bleed token.
+effect = """Roll a d{N}. At 1 or 2, remove bleed token.
 
 Otherwise:
 

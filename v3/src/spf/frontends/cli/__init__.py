@@ -7,6 +7,7 @@ from spf.frontends.cli import (
     race,
     render,
     rules,
+    sim,
     site,
     special,
 )
@@ -20,6 +21,7 @@ __all__ = [
     "race",
     "render",
     "rules",
+    "sim",
     "site",
     "special",
 ]

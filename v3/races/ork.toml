@@ -103,6 +103,9 @@ rows = [
 	"15-19: As 10-14, Troll unconscious",
 	"20+: Unit Destroyed",
 ]
+notes = [
+	"Bleed does not cause more Bleed",
+]
 
 [units.champion]
 race = "ork"
@@ -126,6 +129,9 @@ text = "ork_champion: Has same orders available as the unit it awakened from, an
 rows = [
 	"2-3: Bleed[4]",
 	"4+: Unit Destroyed",
+]
+notes = [
+	"Bleed does not cause more Bleed",
 ]
 
 [units.champion.orders.movement]
@@ -178,7 +184,7 @@ fast = [["Load", "-"], ["Fire", "-"], ["-", "Fire"]]
 
 [units.warg_rider.damage_tables.Psychic]
 rows = [
-	"5+: Shaken",
+	"6+: Shaken",
 ]
 
 [units.warg_rider.damage_tables.Regular]
@@ -188,6 +194,7 @@ rows = [
 	"7+: Kill 1 model, d6 psychic damage",
 ]
 notes = [
+	"Bleed does not cause more Bleed",
 	"When one model is killed, half all +1 to future damage rounded down",
 	"If killed by Poison or Bleed, remove that instance",
 ]
@@ -559,6 +566,7 @@ rows = [
 	"9: Unit Destroyed",
 ]
 notes = [
+	"Bleed does not cause more Bleed",
 	"When one model is killed, half all +1 to future damage rounded down",
 	"If killed by Poison or Bleed, remove that instance",
 ]

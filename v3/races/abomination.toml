@@ -534,6 +534,7 @@ rows = [
 	"4+: Kill 1 model",
 ]
 notes = [
+	"Bleed does not cause more Bleed",
 	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
