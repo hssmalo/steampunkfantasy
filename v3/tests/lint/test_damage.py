@@ -129,3 +129,9 @@ def test_a_bounded_top_row_fires(rolls: tuple[str, ...], named: str, fix: str) -
     assert len(found) == 1
     assert named in found[0]
     assert fix in found[0]
+
+
+@pytest.mark.parametrize("rolls", [("1-3", "4", "5+"), ("1+",)])
+def test_an_open_top_row_is_quiet(rolls: tuple[str, ...]) -> None:
+    """A top row that reads `N+` is the form the rule exists to protect."""
+    assert not top_row_messages(*rolls)
