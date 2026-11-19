@@ -1,5 +1,6 @@
 """Simulator commands for the SteamPunkFantasy CLI."""
 
+import re
 from collections.abc import Iterable
 from typing import Annotated, cast
 
@@ -14,12 +15,13 @@ from spf.frontends.cli.suggest import resolve_or_raise
 from spf.prose import plain
 from spf.registry import load_registry
 from spf.schemas import type_aliases as t
-from spf.sim.report import DamageReport, simulate
+from spf.sim.report import DamageReport, RoundSummary, simulate
 from spf.sim.scenario import GRAMMAR, Scenario, parse_hits, parse_start
 from spf.sim.tables import CompiledTable
 from spf.sim.units import unit_scenario
 
 _START_HELP = f"The starting state. {GRAMMAR}"
+_STRENGTH = re.compile(r"(?P<name>.+)\[(?P<strength>\d+)\]")
 UNPARSED_STYLE = "bold red"
 """How Damage table text the simulator does not play is colored."""
 
@@ -160,7 +162,7 @@ def print_report(report: DamageReport) -> None:
         )
     stdout.print(rounds)
 
-    tokens = sorted({name for summary in report.per_round for name in summary.tokens})
+    tokens = token_columns(report.per_round)
     per_round = Table(
         "Round",
         "Models",
@@ -196,6 +198,19 @@ def print_report(report: DamageReport) -> None:
         for hit in report.unparsed:
             unparsed.add_row(hit.table, hit.row, escape(hit.text), str(hit.hits))
         stdout.print(unparsed)
+
+
+def token_columns(per_round: Iterable[RoundSummary]) -> list[str]:
+    """List every Token any Round holds, a token's strengths smallest first."""
+    names = {name for summary in per_round for name in summary.tokens}
+    return sorted(names, key=_by_strength)
+
+
+def _by_strength(name: str) -> tuple[str, int]:
+    """Sort `bleed[10]` after `bleed[4]`: by name, then by numeric strength."""
+    if match := _STRENGTH.fullmatch(name):
+        return match["name"], int(match["strength"])
+    return name, 0
 
 
 def _counts(title: str, label: str, counts: Iterable[tuple[str, int]]) -> None:

@@ -127,10 +127,14 @@ class UnitState:
         )
 
     def snapshot(self) -> Snapshot:
-        """Freeze the state as the report sees it."""
+        """Freeze the state as the report sees it.
+
+        Bleed and Poison are counted per strength, as `bleed[4]`, since a
+        smaller die stops or fades sooner.
+        """
         tokens = Counter(self.counters)
-        tokens["bleed"] = sum(1 for strength in self.bleeds if strength)
-        tokens["poison"] = sum(1 for strength in self.poisons if strength)
+        tokens.update(f"bleed[{strength}]" for strength in self.bleeds if strength)
+        tokens.update(f"poison[{strength}]" for strength in self.poisons if strength)
         return Snapshot(
             models=0 if self.destroyed else self.models,
             future=self.future,

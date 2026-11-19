@@ -212,7 +212,7 @@ chosen and printed.
 | **The Unit's Damage tables** | Printed first, the chosen table on top, each with its notes underneath. Text the parser skipped is colored red, so you see exactly which parts of a row are left out |
 | **Summary** | P(Unit Destroyed); Models lost (mean, median, 90th percentile, where a destroyed Unit counts as losing all its Models); how runs ended |
 | **Rounds played, by how the run ended** | The share of runs that ended after each number of Rounds, in separate columns for runs that ran out of Continuing Damage, were destroyed, or hit the cap |
-| **Mean state at the end of each Round** | Mean Models alive, Future Damage, Future Crew Damage and every Token count. Round 0 is the state after the starting rolls. A run that has already ended is held at its final state, so the means stay comparable from Round to Round |
+| **Mean state at the end of each Round** | Mean Models alive, Future Damage, Future Crew Damage and every Token count. Bleed and Poison get a column per strength (`bleed[4]`, `bleed[6]`, …), since strengths change during a run: Poison steps down each Round, and amplified or saved Bleed changes die. Round 0 is the state after the starting rolls. A run that has already ended is held at its final state, so the means stay comparable from Round to Round |
 | **Damage table rolls** | How many rolls each table got over all runs, with the chosen table first |
 | **Rolls on a table the Unit lacks** | Effects that pointed at a table this Unit doesn't have |
 | **Spillover events** | Effects aimed beyond this Unit, with how often they happened |

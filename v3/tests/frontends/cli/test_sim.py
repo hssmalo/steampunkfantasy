@@ -12,9 +12,10 @@ from rich.text import Text
 from spf import races
 from spf.console import stdout
 from spf.frontends.cli import app
-from spf.frontends.cli.sim import UNPARSED_STYLE, damage_table
+from spf.frontends.cli.sim import UNPARSED_STYLE, damage_table, token_columns
 from spf.schemas.type_aliases import DamageTable
 from spf.sim.effects import Vocabulary
+from spf.sim.report import RoundSummary
 from spf.sim.tables import CompiledTable, compile_table
 
 
@@ -89,6 +90,24 @@ def test_an_unparsed_stretch_is_colored() -> None:
     effect = cast("Text", next(iter(table.columns[1].cells)))
     assert effect.plain == "Kill 1 model, Wobble twice"
     assert _styles(effect) == {"Wobble twice": UNPARSED_STYLE}
+
+
+def _round(**tokens: float) -> RoundSummary:
+    return RoundSummary(round=0, models=1.0, future=0.0, future_crew=0.0, tokens=tokens)
+
+
+def test_token_columns_order_strengths_by_size() -> None:
+    per_round = [
+        _round(**{"bleed[10]": 0.1, "shaken": 1.0}),
+        _round(**{"bleed[4]": 0.5, "poison[6]": 0.2, "bleed[6]": 0.3}),
+    ]
+    assert token_columns(per_round) == [
+        "bleed[4]",
+        "bleed[6]",
+        "bleed[10]",
+        "poison[6]",
+        "shaken",
+    ]
 
 
 def test_an_unparsed_note_is_colored() -> None:

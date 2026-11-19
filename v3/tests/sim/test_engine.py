@@ -171,8 +171,8 @@ def _bleed(strength: int) -> PlaceToken:
 def test_bleed_ends_at_a_one_or_two(roll: int) -> None:
     result = _run(_scenario(tokens=[_bleed(4)]), [(4, roll)])
     assert (result.rounds, result.ended_by) == (1, "no continuing damage")
-    assert result.snapshots[0].tokens["bleed"] == 1
-    assert result.snapshots[1].tokens["bleed"] == 0
+    assert result.snapshots[0].tokens["bleed[4]"] == 1
+    assert result.snapshots[1].tokens["bleed[4]"] == 0
     assert result.snapshots[1].future == 0
 
 
@@ -184,12 +184,18 @@ def test_bleed_rolls_on_the_regular_table_with_future_damage() -> None:
 def test_bleed_that_kills_a_model_is_removed() -> None:
     result = _run(_scenario(tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.models_lost) == (1, 1)
-    assert result.snapshots[-1].tokens["bleed"] == 0
+    assert result.snapshots[-1].tokens["bleed[4]"] == 0
 
 
 def test_each_bleed_rolls_on_its_own() -> None:
     result = _run(_scenario(tokens=[_bleed(4), _bleed(8)]), [(4, 1), (8, 1)])
     assert result.rounds == 1
+
+
+def test_bleeds_are_counted_by_strength() -> None:
+    scenario = _scenario(tokens=[_bleed(4), _bleed(6), _bleed(6)], max_rounds=1)
+    result = _run(scenario, [(4, 1), (6, 1), (6, 1)])
+    assert result.snapshots[0].tokens == {"bleed[4]": 1, "bleed[6]": 2}
 
 
 def test_a_run_stops_at_the_round_cap() -> None:
@@ -208,13 +214,17 @@ def test_poison_downgrades_when_it_does_not_kill() -> None:
     result = _run(_scenario(tokens=[_poison(6)]), [(6, 2), (4, 2)])
     assert (result.rounds, result.ended_by) == (2, "no continuing damage")
     assert [snapshot.future for snapshot in result.snapshots] == [0, 1, 2]
-    assert [snapshot.tokens["poison"] for snapshot in result.snapshots] == [1, 1, 0]
+    assert [dict(snapshot.tokens) for snapshot in result.snapshots] == [
+        {"poison[6]": 1},
+        {"poison[4]": 1},
+        {},
+    ]
 
 
 def test_poison_that_kills_a_model_is_removed() -> None:
     result = _run(_scenario(tokens=[_poison(8)]), [(8, 5)])
     assert (result.rounds, result.models_lost) == (1, 1)
-    assert result.snapshots[-1].tokens["poison"] == 0
+    assert result.snapshots[-1].tokens["poison[8]"] == 0
 
 
 FIRE = PlaceToken(name="fire")
@@ -356,15 +366,15 @@ def test_bleed_causes_bleed_unless_a_note_says_otherwise() -> None:
     noted = _scenario(
         tables, tokens=[_bleed(4)], notes=["Bleed does not cause Bleed"], max_rounds=1
     )
-    assert _run(plain, [(4, 3)]).snapshots[1].tokens["bleed"] == 2
-    assert _run(noted, [(4, 3)]).snapshots[1].tokens["bleed"] == 1
+    assert _run(plain, [(4, 3)]).snapshots[1].tokens["bleed[4]"] == 2
+    assert _run(noted, [(4, 3)]).snapshots[1].tokens["bleed[4]"] == 1
 
 
 def test_an_immune_unit_never_takes_the_token() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Poison[6]"]}
     scenario = _scenario(tables, hits=["d6"], notes=["Immune to Poison"])
     result = _run(scenario, [(6, 1)])
-    assert result.snapshots[0].tokens["poison"] == 0
+    assert result.snapshots[0].tokens == {}
 
 
 def test_an_unparsed_note_is_reported_each_time_its_table_rolls() -> None:
@@ -378,7 +388,11 @@ def test_endurance_turns_a_kill_into_bleed() -> None:
     result = _run(scenario, [(6, 1), (4, 1)])
     assert result.models_lost == 0
     first = result.snapshots[0]
-    assert (first.future, first.tokens["bleed"], first.tokens["endurance"]) == (3, 1, 0)
+    assert (first.future, first.tokens["bleed[4]"], first.tokens["endurance"]) == (
+        3,
+        1,
+        0,
+    )
 
 
 def test_endurance_runs_out() -> None:
