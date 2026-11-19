@@ -396,6 +396,47 @@ def test_the_player_policy_decides_whether_to_spend_endurance() -> None:
     assert result.models_lost == 1
 
 
+def test_regular_resistance_reduces_a_hit() -> None:
+    scenario = _scenario(hits=["d6"], resistance={"regular": "2"})
+    assert _run(scenario, [(6, 5)]).models_lost == 0
+
+
+def test_a_resistance_may_be_a_die() -> None:
+    scenario = _scenario(hits=["d6"], resistance={"regular": "d4"})
+    assert _run(scenario, [(6, 6), (4, 2)]).models_lost == 1
+
+
+def test_continuing_damage_ignores_regular_resistance() -> None:
+    scenario = _scenario(tokens=[_bleed(4)], resistance={"regular": "2"})
+    assert _run(scenario, [(4, 4)]).models_lost == 1
+
+
+def test_fire_resistance_helps_put_fire_out() -> None:
+    scenario = _scenario(tokens=[FIRE], resistance={"fire": "1"})
+    assert _run(scenario, [(6, 2)]).snapshots[-1].tokens["fire"] == 0
+
+
+def test_poison_resistance_reduces_poison_damage() -> None:
+    scenario = _scenario(tokens=[_poison(6)], resistance={"poison": "2"})
+    result = _run(scenario, [(6, 5), (4, 1)])
+    assert (result.models_lost, result.snapshots[-1].future) == (0, 1)
+
+
+def test_psychic_resistance_reduces_psychic_damage() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: d6 psychic damage"],
+        "Psychic": ["1-3: Dazed", "4+: Kill 1 model"],
+    }
+    scenario = _scenario(tables, hits=["d6"], resistance={"psychic": "1"})
+    assert _run(scenario, [(6, 1), (6, 4)]).models_lost == 0
+
+
+def test_acid_resistance_reduces_acid_dice() -> None:
+    scenario = _scenario(tokens=[ACID], resistance={"acid": "1"})
+    result = _run(scenario, [(8, 2), (6, 3)])
+    assert result.snapshots[-1].future == 0
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)
