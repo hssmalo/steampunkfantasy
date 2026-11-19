@@ -197,6 +197,23 @@ def test_a_run_stops_at_the_round_cap() -> None:
     assert result.snapshots[-1].tokens["dazed"] == 3
 
 
+def _poison(strength: int) -> PlaceToken:
+    return PlaceToken(name="poison", strength=strength)
+
+
+def test_poison_downgrades_when_it_does_not_kill() -> None:
+    result = _run(_scenario(tokens=[_poison(6)]), [(6, 2), (4, 2)])
+    assert (result.rounds, result.ended_by) == (2, "no continuing damage")
+    assert [snapshot.future for snapshot in result.snapshots] == [0, 1, 2]
+    assert [snapshot.tokens["poison"] for snapshot in result.snapshots] == [1, 1, 0]
+
+
+def test_poison_that_kills_a_model_is_removed() -> None:
+    result = _run(_scenario(tokens=[_poison(8)]), [(8, 5)])
+    assert (result.rounds, result.models_lost) == (1, 1)
+    assert result.snapshots[-1].tokens["poison"] == 0
+
+
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)

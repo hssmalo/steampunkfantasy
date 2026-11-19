@@ -24,6 +24,15 @@ from spf.sim.scenario import Hit, Scenario
 
 type EndedBy = Literal["destroyed", "no continuing damage", "max rounds"]
 
+MIN_STRENGTH = 4
+"""The weakest Bleed or Poison: `[4]`."""
+
+MAX_STRENGTH = 12
+"""The strongest Bleed or Poison: `[12]`."""
+
+STRENGTH_STEP = 2
+"""How far one downgrade or amplification moves a strength: 4, 6, 8, 10, 12."""
+
 _RESISTED_BY = {"Regular": "regular", "Psychic": "psychic"}
 """The resistance that reduces a hit on each Damage table, where one does."""
 
@@ -67,16 +76,19 @@ class UnitState:
     """Tokens without a strength, by id."""
     bleeds: list[int] = field(default_factory=list)
     """The strength of each Bleed; a 0 marks one removed mid-Phase."""
+    poisons: list[int] = field(default_factory=list)
+    """The strength of each Poison; a 0 marks one removed mid-Phase."""
 
     @property
     def continuing(self) -> bool:
         """Whether a Token that deals Continuing Damage remains."""
-        return any(self.bleeds)
+        return any(self.bleeds) or any(self.poisons)
 
     def snapshot(self) -> Snapshot:
         """Freeze the state as the report sees it."""
         tokens = Counter(self.counters)
         tokens["bleed"] = sum(1 for strength in self.bleeds if strength)
+        tokens["poison"] = sum(1 for strength in self.poisons if strength)
         return Snapshot(
             models=self.models,
             future=self.future,
@@ -183,6 +195,9 @@ class _Run:
         if token.name == "bleed" and token.strength:
             state.bleeds.append(token.strength)
             return
+        if token.name == "poison" and token.strength:
+            state.poisons.append(token.strength)
+            return
         if token.name == "shaken" and not state.counters["shaken"]:
             state.counters["shaken"] += 1
         state.counters[token.name] += 1
@@ -205,9 +220,30 @@ class _Run:
                 bleeds[index] = 0
         self.state.bleeds = [strength for strength in bleeds if strength]
 
+    def agony_poison(self) -> None:
+        """Agony 3: each Poison rolls, then goes or downgrades (`token.poison`)."""
+        poisons = self.state.poisons
+        for index in range(len(poisons)):
+            if self.state.destroyed:
+                return
+            if not poisons[index]:
+                continue
+            roll = self.roller.roll(poisons[index]) - self.resistance("poison")
+            kills = self.kills
+            self.roll_on("Regular", roll)
+            killed = self.kills > kills
+            downgraded = poisons[index] - STRENGTH_STEP
+            poisons[index] = 0 if killed or downgraded < MIN_STRENGTH else downgraded
+        self.state.poisons = [strength for strength in poisons if strength]
+
+    def resistance(self, kind: str) -> int:
+        """Roll the Unit's resistance against one damage type; 0 if it has none."""
+        dice = self.scenario.resistance.get(kind)
+        return 0 if dice is None else dice.roll(self.roller)
+
     def play_round(self) -> None:
         """Play one Round's Agony Phases, in order."""
-        for phase in [self.agony_bleed]:
+        for phase in [self.agony_poison, self.agony_bleed]:
             if self.state.destroyed:
                 return
             phase()
