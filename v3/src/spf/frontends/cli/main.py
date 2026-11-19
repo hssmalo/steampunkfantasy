@@ -33,6 +33,10 @@ lint_app = app.command(
     cyclopts.App(name="lint", help="Lint the committed corpus, one corpus at a time.")
 )
 cli.lint.add_commands(lint_app)
+sim_app = app.command(
+    cyclopts.App(name="sim", help="Simulate how play goes, for game balancing.")
+)
+cli.sim.add_commands(sim_app)
 
 
 @app.command
