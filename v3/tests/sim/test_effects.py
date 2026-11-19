@@ -129,7 +129,7 @@ def test_destroyed_with_its_passengers() -> None:
     ]
 
 
-def test_unrecognised_text_is_unparsed() -> None:
+def test_unrecognized_text_is_unparsed() -> None:
     assert _parse("Rotate unit 180°") == [Unparsed(text="Rotate unit 180°")]
     assert _parse("Dazed, loses {fear:special.fear}") == [
         PlaceToken(name="dazed"),

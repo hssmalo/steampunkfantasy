@@ -1,6 +1,6 @@
 """The closed effect vocabulary a Damage row's text is parsed into.
 
-The parser is best-effort: a clause it does not recognise becomes `Unparsed`, a
+The parser is best-effort: a clause it does not recognize becomes `Unparsed`, a
 no-op the report lists with how often it was hit.
 """
 
@@ -93,7 +93,7 @@ class Spillover:
 
 @dataclass(frozen=True, kw_only=True)
 class Unparsed:
-    """Text the parser did not recognise: a no-op that is reported."""
+    """Text the parser did not recognize: a no-op that is reported."""
 
     text: str
 
@@ -170,7 +170,7 @@ def _clauses(text: str) -> list[str]:
 
 
 def _token(text: str, vocabulary: Vocabulary) -> PlaceToken | Unparsed | None:
-    """Recognise one Token, by Rule Link first and by its plain name otherwise."""
+    """Recognize one Token, by Rule Link first and by its plain name otherwise."""
     if link := LINK.fullmatch(text):
         namespace, _, token = link[2].partition(".")
         if namespace != "token":

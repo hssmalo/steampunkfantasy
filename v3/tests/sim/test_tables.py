@@ -96,7 +96,7 @@ def test_halving_future_damage_on_a_kill(note: str) -> None:
     assert _notes(note).halve_future_on_kill
 
 
-def test_removing_the_token_that_killed_is_recognised() -> None:
+def test_removing_the_token_that_killed_is_recognized() -> None:
     notes = _notes("If killed by Poison or Bleed, remove that instance")
     assert notes == NoteRules()
 
@@ -105,7 +105,7 @@ def test_immunity_to_a_token() -> None:
     assert _notes("Immune to Poison").immune == frozenset({"poison"})
 
 
-def test_an_unrecognised_note_is_unparsed() -> None:
+def test_an_unrecognized_note_is_unparsed() -> None:
     note = "Count the number of alive models before the apply damage step"
     assert _notes(note).unparsed == [note]
 

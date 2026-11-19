@@ -68,7 +68,7 @@ class DamageReport:
 
 
 def _spread(values: list[int]) -> Spread:
-    """Summarise one figure; the 90th percentile is by nearest rank."""
+    """Summarize one figure; the 90th percentile is by nearest rank."""
     ordered = sorted(values)
     return Spread(
         mean=statistics.fmean(ordered),

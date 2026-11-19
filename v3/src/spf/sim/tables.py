@@ -46,24 +46,24 @@ def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
 
     Removing the Bleed or Poison that killed a Model, and what amplifying
     bleeding means, are already part of those Tokens, so such a note is
-    recognised and changes nothing.
+    recognized and changes nothing.
     """
     bleed_causes_bleed, halve, immune, unparsed = True, False, set[str](), []
     for note in notes:
         text = plain(note)
-        recognised = bool(
+        recognized = bool(
             _KILLED_BY_TOKEN.search(text) or _AMPLIFY_DEFINED.search(text)
         )
         if _NO_BLEED_FROM_BLEED.search(text):
-            bleed_causes_bleed, recognised = False, True
+            bleed_causes_bleed, recognized = False, True
         if _HALF_FUTURE.search(text) and _ON_A_KILL.search(text):
-            halve, recognised = True, True
+            halve, recognized = True, True
         if (match := _IMMUNE.match(text)) and (
             token := vocabulary.tokens.get(match["name"].lower())
         ):
             immune.add(token)
-            recognised = True
-        if not recognised:
+            recognized = True
+        if not recognized:
             unparsed.append(note)
     return NoteRules(
         bleed_causes_bleed=bleed_causes_bleed,
