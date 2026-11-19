@@ -327,3 +327,25 @@ def test_a_broken_row_reference_surfaces_as_a_finding() -> None:
     assert finding.section == "units"
     assert finding.key == "brute.damage_tables.Crew"
     assert "1-3" in finding.message
+
+
+def test_a_bounded_top_row_surfaces_as_a_finding() -> None:
+    """The rule reaches `lint_race_config` and locates the Damage table it fired on."""
+    race_config = synthetic_race(
+        race="ogre",
+        units={
+            "brute": synthetic_unit(
+                damage_tables={"Regular": {"rows": ["1-8: Shaken", "9: Kill 1 model"]}}
+            )
+        },
+    )
+
+    findings = collect.lint_race_config(
+        "ogre", race_config, CONVENTIONS, pools={}, registry=REGISTRY
+    )
+
+    (finding,) = [f for f in findings if f.rule == "top-row"]
+    assert finding.race == "ogre"
+    assert finding.section == "units"
+    assert finding.key == "brute.damage_tables.Regular"
+    assert "'9+'" in finding.message

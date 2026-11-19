@@ -5,6 +5,7 @@ mapping of key to something with a `.name`, so it is exercised with plain
 stubs. `lint_race` is the thin layer that loads real config and Race data.
 """
 
+import itertools
 from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Protocol
@@ -131,21 +132,28 @@ def lint_race_config(
 
 
 def lint_damage_tables(race: t.RaceName, race_config: RaceConfig) -> list[Finding]:
-    """Apply the Row reference rule to every Damage table, using the printed rolls."""
-    return [
-        Finding(
-            race=race,
-            section="units",
-            key=f"{unit_key}.damage_tables.{kind}",
-            rule=rule,
-            message=message,
-        )
-        for unit_key, unit in race_config.units.items()
-        for kind, table in unit.damage_tables.items()
-        for rule, message in damage.check_table(
-            [(roll_text(row.roll), row.effect) for row in table.rows]
-        )
-    ]
+    """Apply the Row reference and Top row rules to every Damage table.
+
+    Both run on the rolls as printed, so they check exactly what a player reads.
+    """
+    findings: list[Finding] = []
+    for unit_key, unit in race_config.units.items():
+        for kind, table in unit.damage_tables.items():
+            rows = [(roll_text(row.roll), row.effect) for row in table.rows]
+            findings += [
+                Finding(
+                    race=race,
+                    section="units",
+                    key=f"{unit_key}.damage_tables.{kind}",
+                    rule=rule,
+                    message=message,
+                )
+                for rule, message in itertools.chain(
+                    damage.check_table(rows),
+                    damage.check_top_row([roll for roll, _ in rows]),
+                )
+            ]
+    return findings
 
 
 def lint_order_cells(
