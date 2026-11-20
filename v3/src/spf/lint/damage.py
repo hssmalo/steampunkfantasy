@@ -1,14 +1,16 @@
-"""The Row reference rule, as a pure predicate over a Damage table's rows.
+"""The Row reference and Top row rules, as pure predicates over a Damage table.
 
 A reference to a row that isn't there is the data contradicting itself, and its
-form is what makes a reference recognizable in free text (ADR 0038). How an
+form is what makes a reference recognizable in free text (ADR 0038). A bounded
+Top row contradicts itself too: it leaves a reachable roll with no row. How an
 effect is otherwise worded is not the linter's business.
 """
 
 import re
 from collections.abc import Collection, Iterator, Sequence
 
-RULE = "row-reference"
+ROW_REFERENCE = "row-reference"
+TOP_ROW = "top-row"
 
 _ROLL = r"\d+(?:-\d+|\+)?"
 _REFERENCE = re.compile(rf"\bas ({_ROLL})(?![\w-])(?P<after>.?)", re.IGNORECASE)
@@ -22,8 +24,21 @@ def check_table(rows: Sequence[tuple[str, str]]) -> Iterator[tuple[str, str]]:
     earlier: set[str] = set()
     for roll, effect in rows:
         for problem in _check_effect(effect, every_roll, earlier):
-            yield RULE, f"row {roll!r}: {problem}"
+            yield ROW_REFERENCE, f"row {roll!r}: {problem}"
         earlier.add(roll)
+
+
+def check_top_row(rolls: Sequence[str]) -> Iterator[tuple[str, str]]:
+    """Yield `(rule, message)` if a table's top row is not `N+`, or another row is."""
+    if not rolls:
+        return
+    *below, top = rolls
+    for roll in below:
+        if roll.endswith("+"):
+            yield TOP_ROW, f"row {roll!r}: only the top row may be 'N+'"
+    if not top.endswith("+"):
+        low = top.split("-")[0]
+        yield TOP_ROW, f"row {top!r}: the top row must be '{low}+'"
 
 
 def _check_effect(
