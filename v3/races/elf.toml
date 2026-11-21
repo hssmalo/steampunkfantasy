@@ -16,10 +16,11 @@ cost.xp = 96
 
 description = '''Huge regenerating Hydra with 1 major head and 6 minor heads, with 4 elves riding on the hydra. The elf are really small compared to the hydra. Major head has an acid breath, minor heads spits poison, while the four elf wields a bow each. Elf are elegant and smooth.'''
 
+#ToDo: think about hydra crew regards to area effects and crew damage table...
 
 [units.elf_hydra.shaken]
 speed = "slow"
-movement_order = ["-", "-", "Flee"]
+movement_order = ["-", "-", "Chs"]
 
 [[units.elf_hydra.specials.regeneration]]
 variant = "heal_per_head"
@@ -44,9 +45,9 @@ still = [["360°", "360°", "360°"], ["360°", "A", "F"]]
 [units.elf_hydra.damage_tables.Regular]
 rows = [
 	"1-2: {Bleed[4]:token.bleed}",
-	"3-5: +1 to future damage, {Bleed[4]:token.bleed}",
-	"6-10: +1 to future damage, {Bleed[6]:token.bleed}, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
-	"11-17: As 6-10, d6 psychic damage",
+	"3-5: +1 to future damage, {Bleed[6]:token.bleed}",
+	"6-10: +1 to future damage, {Bleed[8]:token.bleed}, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead.",
+	"11-17: As 6-10, amplify all bleeding one step, d8 psychic damage",
 	"18+: Unit destroyed",
 ]
 notes = [
@@ -55,8 +56,18 @@ notes = [
 
 [units.elf_hydra.damage_tables.Psychic]
 rows = [
-	"6+: Shaken",
+	"8+: Shaken",
 ]
+
+[units.elf_hydra.damage_tables.Crew]
+rows = [
+     "6+: Kill one crew model",
+]
+
+notes = ["Unit is not destroyed even if it has no crew. You just cannot use the weapons wielded by the crew."]
+
+
+
 
 [units.elf_infantry]
 race = "elf"
@@ -70,6 +81,7 @@ description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
 [units.elf_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire at closest enemy. May Load, but may not aim"
 
 [[units.elf_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -124,6 +136,7 @@ description = '''An elegant elf wielding an steampunk bow. The bow has some cloc
 [units.elf_archer.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire at closest enemy. May Load, but may not aim"
 
 [[units.elf_archer.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -455,7 +468,7 @@ models = ["bear_rider"]
 size = "medium"
 cost.mp = 8
 cost.xp = 24
-armor = [7, 6, 6, 6]
+armor = [5, 4, 4, 4]
 description = '''An medium sized bear with one elf riding the bear. The elf is wielding a gatling gun.
 '''
 
@@ -465,9 +478,11 @@ description = '''An medium sized bear with one elf riding the bear. The elf is w
 args.version = "resistance_type.poison"
 args.N = 3
 
+
 [units.bear_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire at closest enemy. May Load, but may not aim"
 
 [units.bear_rider.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -479,7 +494,9 @@ still = [["360°", "A", "F"]]
 
 [units.bear_rider.damage_tables.Regular]
 rows = [
-	"2-7: +1 to future damage, Bleed[4]",
+	"1-2: Bleed[4]",
+	"3-4: Bleed[6]",
+	"5-7: Bleed[6], +1 to future damage",
 	"8-10: +2 to future damage, Bleed[6], d6 psychic damage",
 	"11+: Unit destroyed",
 ]
@@ -501,7 +518,7 @@ size = "medium"
 cost.mp = 8
 cost.xp = 32
 cost.cp = 24
-armor = [8, 6, 6, 6]
+armor = [6, 5, 5, 5]
 description = '''A huge dire polar bear with one two elf riding the bear. The first elf is wielding a gatling gun, the other a bow which fires fire burning arrows.
 '''
 
@@ -511,11 +528,12 @@ args.version = "resistance_type.poison"
 args.N = 3
 
 [[units.dire_polar_bear_riders.specials.fire_order]]
-text = "Flame arrow fires every gunnery phase independent of gatling gun. Always treated as loaded."
+text = "Flame arrow fires every gunnery phase independent of gatling gun. Flame Arrow always treated as loaded."
 
 [units.dire_polar_bear_riders.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire all weapons at closest enemy. May Load, but may not aim"
 
 [units.dire_polar_bear_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -526,10 +544,15 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
 [units.dire_polar_bear_riders.damage_tables.Regular]
+
+
+
 rows = [
-	"2-7: +1 to future damage, Bleed[4]",
+	"1-2: Bleed[4]",
+	"3-4: Bleed[6]",
+	"5-7: Bleed[6], +1 to future damage",
 	"8-10: +2 to future damage, Bleed[6], d6 psychic damage",
-	"11+: Unit destroyed",
+	"12+: Unit destroyed",
 ]
 notes = [
 	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
@@ -557,6 +580,8 @@ description = '''An elegant armored elf riding on an armored unicorn. The elf is
 [units.armored_unicorn_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire at closest enemy."
+
 
 [[units.armored_unicorn_rider.specials.resistance]]
 args.version = "resistance_type.poison"
@@ -640,7 +665,6 @@ size = "medium"
 cost.mp = 16
 cost.xp = 24
 cost.cp = 24
-armor = [3, 3, 0, 0]
 description = '''Pachycephalosaurus is a two legged dinosaur. On the pachycephalosaurus there is an elegant elf wielding an smg. On the sides of the pachycephalosaurus there are two cannons, one on each side of the Pachycephalosaurus.'''
 
 
@@ -653,7 +677,7 @@ text = "Fire SMG in both gunnery phases regardless of orders. Fire orders are fo
 
 [units.pachycephalosaurus_riders.shaken]
 speed = "slow"
-movement_order = ["-", "-", "Flee"]
+movement_order = ["-", "-", "Chs"]
 
 [units.pachycephalosaurus_riders.orders.fire]
 still = [["Fire", "Load"], ["Load", "-"], ["-", "Aim"], ["-", "Fire"]]
@@ -675,7 +699,9 @@ still = [["A+(A)", "360°+(F)", "F"]]
 
 [units.pachycephalosaurus_riders.damage_tables.Regular]
 rows = [
-	"2-5: Bleed[6]",
+        "1: Bleed[4]",
+	"2-3: Bleed[6]",
+	"4-5: Bleed[8]",
 	"6+: Kill 1 model, d4 psychic damage",
 ]
 notes = [
@@ -740,6 +766,8 @@ args.N = 2
 [units.pegasus_rider.shaken]
 speed = "slow_fly"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must Fire Burst(5) at closest enemy. If shriek SMG is  not loaded you must fire(bow) at closest enemy"
+
 
 [units.pegasus_rider.orders.fire]
 still = [
@@ -792,7 +820,8 @@ fast_fly = [
 [units.pegasus_rider.damage_tables.Regular]
 rows = [
 	"2-3: Bleed[4]",
-	"4+: Kill 1 model",
+	"4-5: Bleed[12]",
+	"6+: Kill 1 model",
 ]
 notes = [
 	"Bleed does not cause more {Bleed[4]:token.bleed}",
@@ -1301,6 +1330,7 @@ text = "Starts battle with one aim token. (note that it is lost if you don't fir
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
 
+
 [units.sauropod_riders.orders.fire]
 still = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
 slow = [["-", "Fire"], ["-", "Load"], ["-", "Aim"]]
@@ -1310,13 +1340,12 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
 [units.sauropod_riders.damage_tables.Regular]
-rows = [
-	"2-3: Bleed[4]",
-	"4-5: Bleed[6]",
-	"6-7: Bleed[8]",
-	"7-8: Bleed[10]",
-	"9-11: +1 to future damage, Bleed[12]"
-	"12-19: As 9-11, d8 psychic damage",
+rows = ["1: Bleed[4]",
+	"2-3: Bleed[6]",
+	"4-5: Bleed[7]",
+	"6-7: Bleed[10]",
+	"8-9: Bleed[12], +1 to future damage",
+	"10-19: As 8-9, d8 psychic damage",
 	"20+: Unit destroyed",
 ]
 notes = [
@@ -1337,7 +1366,7 @@ size = "large"
 cost.mp = 8
 cost.xp = 24
 cost.cp = 24
-armor = [8, 6, 4, 3]
+armor = [6, 4, 3, 3]
 description = '''Oliphant is a big elephant with a platform on top where there are several elves. On each side of the elephant there is a gatling gun. The elves on the elephant are armed with bows and grenades.
 '''
 
@@ -1347,7 +1376,7 @@ args.version = "resistance_type.poison"
 args.N = 2
 
 [[units.armored_oliphant_riders.specials.fire_order]]
-text = "The Crew fires a bow or Throw grenade with Fire(c) orders, while Fire(g), aim(g) and load(g) orders are for the gatling guns only. Only the gatling gun needs to be reloaded."
+text = "The Crew fires a bow or Throw grenade with Fire(c) orders, while aim(g) is for the gatling gun only, while Fire(gc) means both gatlling gun and Crew fire simulatiniously. Only the gatling gun needs to ammo."
 
 [units.armored_oliphant_riders.shaken]
 speed = 'slow'
@@ -1363,26 +1392,25 @@ fast = [["F", "F", "-"], ["F", "L/R", "F"], ["B", "360°", "F"]]
 still = [
 	["Fire(c)", "Fire(c)"],
 	["Fire(c)", "Aim(g)"],
-	["Fire(c)", "Load(g)"],
-	["Fire(c)", "Fire(g)"]
+	["Fire(c)", "Fire(gc)"]
 ]
 slow = [
 	["Fire(c)", "Fire(c)"],
 	["Fire(c)", "Aim(g)"],
-	["Fire(c)", "Load(g)"],
-	["Fire(c)", "Fire(g)"]
+	["Fire(c)", "Fire(gc)"]
 ]
 fast = [
 	["Fire(c)", "Fire(c)"],
 	["Fire(c)", "Aim(g)"],
-	["Fire(c)", "Load(g)"],
-	["Fire(c)", "Fire(g)"]
+	["Fire(c)", "Fire(gc)"]
 ]
 
 [units.armored_oliphant_riders.damage_tables.Regular]
 rows = [
-	"2-6: {Bleed[8]:token.bleed}",
-	"7: As 2-6, d6 psychic damage",
+        "2: Bleed[4]",
+	"3-5: Bleed[6]",
+	"6: Bleed[8]",
+	"7: Bleed[10], d6 psychic damage",
 	"8+: Unit destroyed",
 ]
 notes = [
@@ -1391,8 +1419,14 @@ notes = [
 
 [units.armored_oliphant_riders.damage_tables.Psychic]
 rows = [
-	"6+: {Shaken:token.shaken}",
+	"6+: {Shaken:token.shaken}. d6 crew damage",
 ]
+
+[units.armored_oliphant_riders.damage_tables.Crew]
+rows = [
+	"4+: Kill one Crew Model",
+]
+
 
 [units.eagle_rider]
 race = "elf"
@@ -1401,7 +1435,7 @@ models = ["eagle_rider"]
 size = "medium"
 cost.mp = 8
 cost.xp = 32
-armor = [6, 6, 6, 6]
+armor = [4, 4, 4, 4]
 description = '''An elegant elf riding a giant eagle. The elf is wielding an anti-tank rifle.
 '''
 
@@ -1414,6 +1448,9 @@ args.N = 2
 [units.eagle_rider.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire AT-rifle at closest enemy. May Load, but may not aim"
+
+
 
 [units.eagle_rider.orders.fire]
 fast_fly = [["-", "Fire"], ["-", "Load"], ["-", "Throw"]]
@@ -1429,8 +1466,9 @@ slow = [
 
 [units.eagle_rider.damage_tables.Regular]
 rows = [
-	"2-3: +1 to future damage, Bleed[4]",
-	"4-6: +2 to future damage, Bleed[6], d6 psychic damage",
+	"2-3: Bleed[4]",
+	"4: Bleed[6]",
+	"5-6: Bleed[6], +1 to future damage, d6 psychic damage",
 	"7+: Unit destroyed",
 ]
 notes = [
@@ -1693,6 +1731,9 @@ range = 4
 angle = [false, true, true, false]
 damage = "d6-1"
 ap = "3"
+
+[[equipment.oliphant_gatling_guns.range.specials.limited_ammo]]
+args.N = 1
 
 [[equipment.oliphant_gatling_guns.range.specials.multiple_shots]]
 text = "May fire at both sides with each fire order."
