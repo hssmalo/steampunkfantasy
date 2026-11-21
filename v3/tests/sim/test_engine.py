@@ -416,6 +416,16 @@ def test_a_bleed_saved_by_endurance_is_bleed_four_even_when_it_was_raised() -> N
     assert result.snapshots[1].tokens == {"bleed[4]": 1}
 
 
+@pytest.mark.parametrize(("strength", "key"), [(4, "bleed[8]"), (8, "bleed[10]")])
+def test_raise_and_amplify_apply_in_the_order_written(strength: int, key: str) -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Bleed[6], Amplify all bleeding"]
+    }
+    scenario = _scenario(tables, tokens=[_bleed(strength)], max_rounds=1)
+    result = _run(scenario, [(strength, 3)])
+    assert result.snapshots[1].tokens == {key: 1}
+
+
 def test_a_raise_leaves_the_unit_s_other_bleeds_alone() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["3: Bleed[8]", "4+: Dazed"]}
     scenario = _scenario(tables, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
