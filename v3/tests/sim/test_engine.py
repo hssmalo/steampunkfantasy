@@ -373,9 +373,26 @@ def test_bleed_placing_a_bleed_no_larger_changes_nothing(
     assert result.snapshots[1].tokens == {key: 1}
 
 
-def test_bleed_placing_a_larger_bleed_raises_the_rolling_bleed() -> None:
+RAISE_NOTE = (
+    "Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a"
+    " Bleed[M] and M is higher than N, it is raised to Bleed[M] instead."
+)
+
+
+@pytest.mark.parametrize(
+    "notes",
+    [
+        [],
+        ["Bleed does not cause more Bleed"],
+        ["Bleed does not cause more {Bleed[4]:token.bleed}"],
+        [RAISE_NOTE],
+    ],
+)
+def test_bleed_placing_a_larger_bleed_raises_the_rolling_bleed(
+    notes: list[str],
+) -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[8]"]}
-    scenario = _scenario(tables, tokens=[_bleed(4)], max_rounds=2)
+    scenario = _scenario(tables, tokens=[_bleed(4)], notes=notes, max_rounds=2)
     result = _run(scenario, [(4, 3), (8, 1)])
     assert result.snapshots[1].tokens == {"bleed[8]": 1}
 
