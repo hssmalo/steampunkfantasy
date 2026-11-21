@@ -553,3 +553,12 @@ def test_a_temporary_kill_of_the_last_model_leaves_the_unit_standing() -> None:
     result = _run(_scenario({"Regular": TEMPORARY}, models=1, hits=["d6"]), [(6, 5)])
     assert (result.destroyed, result.models_lost) == (False, 1)
     assert result.snapshots[-1].models == 0
+
+
+def test_a_kill_with_every_model_down_does_nothing() -> None:
+    scenario = _scenario(
+        {"Regular": TEMPORARY}, models=1, hits=["d6"], tokens=[_bleed(4)]
+    )
+    result = _run(scenario, [(6, 5), (4, 4), (4, 1)])
+    assert (result.destroyed, result.models_lost, result.rounds) == (False, 1, 2)
+    assert result.snapshots[1].tokens == {"bleed[4]": 1}

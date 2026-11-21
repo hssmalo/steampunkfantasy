@@ -277,6 +277,8 @@ class _Run:
         (`token.endurance`).
         """
         state = self.state
+        if state.models <= 0:
+            return
         if state.counters["endurance"] and self.policy.spend_endurance(state):
             state.counters["endurance"] -= 1
             if cause.source == "bleed":
