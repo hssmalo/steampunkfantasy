@@ -12,7 +12,7 @@ from spf.lint import damage
 def messages(*rows: tuple[str, str]) -> list[str]:
     """Return the message of every finding on `rows`, checking the rule's name."""
     findings = list(damage.check_table(rows))
-    assert {rule for rule, _ in findings} <= {"row-reference"}
+    assert {rule for rule, _ in findings} <= {damage.ROW_REFERENCE}
     return [message for _, message in findings]
 
 
@@ -107,3 +107,43 @@ def test_a_leading_roll_without_its_word_fires(effect: str) -> None:
 def test_an_effect_with_no_broken_reference_is_quiet(effect: str) -> None:
     """Numbers in prose, an `as` with no roll, and a linked effect are not defects."""
     assert not messages(("1-3", "Shaken"), ("4", effect))
+
+
+def top_row_messages(*rolls: str) -> list[str]:
+    """Return the message of every Top row finding on `rolls`, checking the rule."""
+    findings = list(damage.check_top_row(rolls))
+    assert {rule for rule, _ in findings} <= {damage.TOP_ROW}
+    return [message for _, message in findings]
+
+
+@pytest.mark.parametrize(
+    ("rolls", "named", "fix"),
+    [
+        (("1-3", "4"), "'4'", "'4+'"),
+        (("1-4", "5-6"), "'5-6'", "'5+'"),
+    ],
+)
+def test_a_bounded_top_row_fires(rolls: tuple[str, ...], named: str, fix: str) -> None:
+    """The Top row catches every result from its value up, so it reads `N+`."""
+    found = top_row_messages(*rolls)
+    assert len(found) == 1
+    assert named in found[0]
+    assert fix in found[0]
+
+
+@pytest.mark.parametrize("rolls", [("1-3", "4", "5+"), ("1+",)])
+def test_an_open_top_row_is_quiet(rolls: tuple[str, ...]) -> None:
+    """A top row that reads `N+` is the form the rule exists to protect."""
+    assert not top_row_messages(*rolls)
+
+
+def test_an_open_row_below_the_top_fires() -> None:
+    """An `N+` row overlaps every row printed after it."""
+    found = top_row_messages("1-3", "4+", "5+")
+    assert len(found) == 1
+    assert "'4+'" in found[0]
+
+
+def test_a_table_with_no_rows_is_quiet() -> None:
+    """A table that only points at another has no top row to check."""
+    assert not top_row_messages()

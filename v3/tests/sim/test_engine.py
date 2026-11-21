@@ -363,14 +363,81 @@ def test_without_the_note_future_damage_stays() -> None:
     assert result.snapshots[0].future == 3
 
 
-def test_bleed_causes_bleed_unless_a_note_says_otherwise() -> None:
+@pytest.mark.parametrize(("strength", "key"), [(4, "bleed[4]"), (6, "bleed[6]")])
+def test_bleed_placing_a_bleed_no_larger_changes_nothing(
+    strength: int, key: str
+) -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[4]"]}
-    plain = _scenario(tables, tokens=[_bleed(4)], max_rounds=1)
-    noted = _scenario(
-        tables, tokens=[_bleed(4)], notes=["Bleed does not cause Bleed"], max_rounds=1
-    )
-    assert _run(plain, [(4, 3)]).snapshots[1].tokens["bleed[4]"] == 2
-    assert _run(noted, [(4, 3)]).snapshots[1].tokens["bleed[4]"] == 1
+    scenario = _scenario(tables, tokens=[_bleed(strength)], max_rounds=1)
+    result = _run(scenario, [(strength, 3)])
+    assert result.snapshots[1].tokens == {key: 1}
+
+
+RAISE_NOTE = (
+    "Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a"
+    " Bleed[M] and M is higher than N, it is raised to Bleed[M] instead."
+)
+
+
+@pytest.mark.parametrize(
+    "notes",
+    [
+        [],
+        ["Bleed does not cause more Bleed"],
+        ["Bleed does not cause more {Bleed[4]:token.bleed}"],
+        [RAISE_NOTE],
+    ],
+)
+def test_bleed_placing_a_larger_bleed_raises_the_rolling_bleed(
+    notes: list[str],
+) -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[8]"]}
+    scenario = _scenario(tables, tokens=[_bleed(4)], notes=notes, max_rounds=2)
+    result = _run(scenario, [(4, 3), (8, 1)])
+    assert result.snapshots[1].tokens == {"bleed[8]": 1}
+
+
+KILL_AND_RAISE: dict[DamageTableName, list[str]] = {
+    "Regular": ["1+: Kill 1 model, Bleed[8]"]
+}
+
+
+def test_a_kill_removes_the_bleed_even_when_it_was_raised() -> None:
+    scenario = _scenario(KILL_AND_RAISE, tokens=[_bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3)])
+    assert result.models_lost == 1
+    assert result.snapshots[1].tokens == {}
+
+
+def test_a_bleed_saved_by_endurance_is_bleed_four_even_when_it_was_raised() -> None:
+    scenario = _scenario(KILL_AND_RAISE, tokens=[_bleed(4)], endurance=1, max_rounds=1)
+    result = _run(scenario, [(4, 3)])
+    assert result.models_lost == 0
+    assert result.snapshots[1].tokens == {"bleed[4]": 1}
+
+
+@pytest.mark.parametrize(("strength", "key"), [(4, "bleed[8]"), (8, "bleed[10]")])
+def test_raise_and_amplify_apply_in_the_order_written(strength: int, key: str) -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Bleed[6], Amplify all bleeding"]
+    }
+    scenario = _scenario(tables, tokens=[_bleed(strength)], max_rounds=1)
+    result = _run(scenario, [(strength, 3)])
+    assert result.snapshots[1].tokens == {key: 1}
+
+
+def test_bleed_from_hits_stacks() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[4]"]}
+    scenario = _scenario(tables, hits=["d6", "d6"], max_rounds=0)
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert result.snapshots[0].tokens == {"bleed[4]": 2}
+
+
+def test_a_raise_leaves_other_bleeds_alone() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["3: Bleed[8]", "4+: Dazed"]}
+    scenario = _scenario(tables, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 4)])
+    assert result.snapshots[1].tokens == {"bleed[8]": 1, "bleed[4]": 1, "dazed": 1}
 
 
 def test_an_immune_unit_never_takes_the_token() -> None:
@@ -472,3 +539,69 @@ def test_acid_resisted_below_one_has_no_effect() -> None:
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)
+
+
+TEMPORARY = [
+    "1-3: +1 to future damage",
+    "4-5: Temporarily kill 1 model",
+    "6+: Unit destroyed",
+]
+"""The ladder with a Temporary Kill in place of the kill."""
+
+
+def test_a_temporary_kill_of_the_last_model_leaves_the_unit_standing() -> None:
+    result = _run(_scenario({"Regular": TEMPORARY}, models=1, hits=["d6"]), [(6, 5)])
+    assert (result.destroyed, result.models_lost) == (False, 1)
+    assert result.snapshots[-1].models == 0
+
+
+def test_a_kill_with_every_model_temporarily_killed_does_nothing() -> None:
+    scenario = _scenario(
+        {"Regular": TEMPORARY}, models=1, hits=["d6"], tokens=[_bleed(4)]
+    )
+    result = _run(scenario, [(6, 5), (4, 4), (4, 1)])
+    assert (result.destroyed, result.models_lost, result.rounds) == (False, 1, 2)
+    assert result.snapshots[1].tokens == {"bleed[4]": 1}
+
+
+ALL_TEMPORARILY_KILLED = (
+    "When all models are temporarily killed: replace kill 1 model with +1 to future"
+    " damage and keep all remaining Bleed."
+)
+
+
+def test_with_every_model_temporarily_killed_the_note_replaces_the_kill() -> None:
+    scenario = _scenario(
+        {"Regular": TEMPORARY},
+        models=1,
+        hits=["d6"],
+        tokens=[_bleed(4)],
+        notes=[ALL_TEMPORARILY_KILLED],
+    )
+    result = _run(scenario, [(6, 5), (4, 4), (4, 1)])
+    assert (result.destroyed, result.models_lost, result.rounds) == (False, 1, 2)
+    assert (result.snapshots[1].future, result.snapshots[1].tokens) == (
+        1,
+        {"bleed[4]": 1},
+    )
+
+
+def test_the_replacement_waits_until_every_model_is_temporarily_killed() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Temporarily kill 2 models"]
+    }
+    scenario = _scenario(tables, models=1, hits=["d6"], notes=[ALL_TEMPORARILY_KILLED])
+    result = _run(scenario, [(6, 1)])
+    assert (result.models_lost, result.snapshots[0].future) == (1, 1)
+
+
+def test_a_replacement_stops_once_the_unit_is_destroyed() -> None:
+    note = (
+        "When all models are temporarily killed: replace kill 1 model with Unit"
+        " destroyed, +1 to future damage"
+    )
+    scenario = _scenario(
+        {"Regular": TEMPORARY}, models=1, hits=["d6", "d6"], notes=[note]
+    )
+    result = _run(scenario, [(6, 5), (6, 5)])
+    assert (result.destroyed, result.snapshots[0].future) == (True, 0)

@@ -42,6 +42,8 @@ def _parse(text: str) -> list[Effect]:
         ("Kill 1 model", [Kill(count=1)]),
         ("Destroy 2 models", [Kill(count=2)]),
         ("destroy one model", [Kill(count=1)]),
+        ("Temporarily kill 1 model", [Kill(count=1, temporary=True)]),
+        ("temporarily kill two models", [Kill(count=2, temporary=True)]),
         ("+1 to future damage", [FutureDamage(amount=1)]),
         ("+3 to future damage,", [FutureDamage(amount=3)]),
         ("x3 +3 to future damage", [FutureDamage(amount=9)]),

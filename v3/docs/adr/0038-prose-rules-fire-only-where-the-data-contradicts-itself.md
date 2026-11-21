@@ -5,8 +5,9 @@ rules it already ran. Two prose rules — **whitespace** and
 **terminal-punctuation** — apply to every sentence field a Race or a rule
 registry declares. Five order rules — **order-whitespace**, **order-separator**,
 **order-name**, **order-spacing** and **order-argument** — apply to every cell
-of every Order Card. One damage rule, **row-reference**, applies to every Damage
-row: a Row reference must name an earlier row.
+of every Order Card. Two damage rules, **row-reference** and **top-row**, apply
+to every Damage table: a Row reference must name an earlier row, and the Top row,
+and only the Top row, must be an `N+` roll.
 
 Each fires only where the data disagrees with itself. None encodes a preference
 about how the game should be written, with one exception the game designer asked
@@ -55,6 +56,17 @@ Holding a cell to sentence punctuation would put a period on one row of a table
 and not on the terser row beside it, which is less consistent than leaving both
 alone. `todo` is out for a different reason: it is the game designer's working
 notes, kept verbatim, and part of it is Norwegian.
+
+## Why a bounded top row is a contradiction
+
+A Damage table's Top row reads "N and higher": the game designer confirmed that
+reading for the simulator. A table ending `9: Unit destroyed` therefore
+contradicts itself twice. Its printed roll says 9 while the rule says 9 and up,
+and, read literally, it gives a reachable roll like 10 no row and so no effect.
+**top-row** removes that contradiction by requiring the Top row to be written
+the way it is read. It sits within the principle above and is not a second
+exception like **row-reference**'s form check. An `N+` roll on any other row
+overlaps every row after it, which is the same contradiction in reverse.
 
 ## Why Order Cards need rules of their own
 

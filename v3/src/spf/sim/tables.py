@@ -14,6 +14,7 @@ from spf.schemas.type_aliases import (
 )
 from spf.sim.effects import (
     Effect,
+    Kill,
     RowReference,
     Unparsed,
     Vocabulary,
@@ -27,6 +28,13 @@ _HALF_FUTURE = re.compile(r"\bhalf\b.*\bfuture\b", re.IGNORECASE)
 _ON_A_KILL = re.compile(r"\b(?:killed|dies|destroyed)\b", re.IGNORECASE)
 _KILLED_BY_TOKEN = re.compile(r"killed by (?:bleed|poison)", re.IGNORECASE)
 _AMPLIFY_DEFINED = re.compile(r"^amplify bleeding:", re.IGNORECASE)
+# Keeping the remaining Bleed needs no rule: a replaced kill is not a kill, so
+# the Bleed that rolled is never removed for it.
+_ALL_TEMPORARILY_KILLED = re.compile(
+    r"^when all models are temporarily killed: replace kill (?:1|one) model with"
+    r" (?P<effects>.+?)(?: and keep all remaining bleed)?\.?$",
+    re.IGNORECASE,
+)
 _IMMUNE = re.compile(r"^immune to (?P<name>.+?)\.?$", re.IGNORECASE)
 
 
@@ -34,28 +42,43 @@ _IMMUNE = re.compile(r"^immune to (?P<name>.+?)\.?$", re.IGNORECASE)
 class NoteRules:
     """What a Damage table's notes change about how damage plays out."""
 
-    bleed_causes_bleed: bool = True
     halve_future_on_kill: bool = False
     immune: frozenset[str] = frozenset()
     """Tokens the Unit never takes, by id."""
+    replace_kill_when_all_temporarily_killed: tuple[Effect, ...] = ()
+    """What a kill does instead once every Model is temporarily killed."""
     unparsed: list[str] = field(default_factory=list)
+
+
+def _replacement(text: str, vocabulary: Vocabulary) -> tuple[Effect, ...] | None:
+    """Read what replaces a kill once every Model is temporarily killed.
+
+    A replacement that is not fully parsed, or that kills again, is not followed.
+    """
+    if not (match := _ALL_TEMPORARILY_KILLED.match(text)):
+        return None
+    effects = tuple(parse_effect(match["effects"], vocabulary=vocabulary))
+    if any(isinstance(effect, Kill | RowReference | Unparsed) for effect in effects):
+        return None
+    return effects
 
 
 def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
     """Read the notes the simulator understands; report the rest as unparsed.
 
-    Removing the Bleed or Poison that killed a Model, and what amplifying
-    bleeding means, are already part of those Tokens, so such a note is
-    recognized and changes nothing.
+    Removing the Bleed or Poison that killed a Model, what amplifying
+    bleeding means, and that a Bleed never causes a new Bleed are already part
+    of those Tokens, so such a note is recognized and changes nothing.
     """
-    bleed_causes_bleed, halve, immune, unparsed = True, False, set[str](), []
+    halve, immune, unparsed = False, set[str](), []
+    replacement: tuple[Effect, ...] = ()
     for note in notes:
         text = plain(note)
         recognized = bool(
-            _KILLED_BY_TOKEN.search(text) or _AMPLIFY_DEFINED.search(text)
+            _KILLED_BY_TOKEN.search(text)
+            or _AMPLIFY_DEFINED.search(text)
+            or _NO_BLEED_FROM_BLEED.search(text)
         )
-        if _NO_BLEED_FROM_BLEED.search(text):
-            bleed_causes_bleed, recognized = False, True
         if _HALF_FUTURE.search(text) and _ON_A_KILL.search(text):
             halve, recognized = True, True
         if (match := _IMMUNE.match(text)) and (
@@ -63,12 +86,15 @@ def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
         ):
             immune.add(token)
             recognized = True
+        if (effects := _replacement(text, vocabulary)) is not None:
+            replacement += effects
+            recognized = True
         if not recognized:
             unparsed.append(note)
     return NoteRules(
-        bleed_causes_bleed=bleed_causes_bleed,
         halve_future_on_kill=halve,
         immune=frozenset(immune),
+        replace_kill_when_all_temporarily_killed=replacement,
         unparsed=unparsed,
     )
 
@@ -151,15 +177,11 @@ class CompiledTable:
     def row_for(self, value: int) -> CompiledRow | None:
         """Find the row a rolled value lands on.
 
-        The top row reads as "N and higher"; a value below the lowest row, or in
-        a gap between rows, has no effect.
+        A value below the lowest row, or in a gap between rows, has no effect.
         """
         for row in self.rows:
             if row.low <= value and (row.high is None or value <= row.high):
                 return row
-        top = max(self.rows, key=lambda row: row.low, default=None)
-        if top is not None and value > (top.high or top.low):
-            return top
         return None
 
 

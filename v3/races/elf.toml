@@ -47,10 +47,10 @@ rows = [
 	"3-5: +1 to future damage, {Bleed[4]:token.bleed}",
 	"6-10: +1 to future damage, {Bleed[6]:token.bleed}, destroy one minor head. If all minor heads are destroyed, add additional +3 to future damage instead. Amplify all bleeding one step. (4 to 6, 6 to 8, 8 to 10 and 10 to 12)",
 	"11-17: As 6-10, d6 psychic damage",
-	"18: Unit Destroyed",
+	"18+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.elf_hydra.damage_tables.Psychic]
@@ -99,7 +99,7 @@ fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 rows = [
 	"0-6: Kill 1 model",
 	"7-8: Kill 1 model, d6 psychic damage",
-	"9+: Unit Destroyed",
+	"9+: Unit destroyed",
 ]
 notes = [
 	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
@@ -157,7 +157,7 @@ fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 rows = [
 	"0-6: Kill 1 model",
 	"7-8: Kill 1 model, d6 psychic damage",
-	"9+: Unit Destroyed",
+	"9+: Unit destroyed",
 ]
 notes = [
 	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
@@ -241,7 +241,7 @@ fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elf_scout.damage_tables.Regular]
 rows = [
-	"0+: Unit Destroyed",
+	"0+: Unit destroyed",
 ]
 
 [units.elf_scout.damage_tables.Psychic]
@@ -295,7 +295,7 @@ fast = [["360°", "F", "B"], ["360°", "F", "B+B"]]
 
 [units.elite_elf_scout.damage_tables.Regular]
 rows = [
-	"0+: Unit Destroyed",
+	"0+: Unit destroyed",
 ]
 
 [units.elite_elf_scout.damage_tables.Psychic]
@@ -360,7 +360,7 @@ rows = [
 	"3: {Cannot Turn:token.cannot_turn}",
 	"4: +3 to future damage",
 	"5: Stuck turret: firing angle is now only forward",
-	"6: {Fire:token.fire}",
+	"6+: {Fire:token.fire}",
 ]
 
 [units.e34.damage_tables.Crew]
@@ -429,7 +429,7 @@ rows = [
 	"3: Cannot rotate",
 	"4: +3 to future damage",
 	"5: Unit cannot change speed.",
-	"6: Fire",
+	"6+: Fire",
 ]
 
 [units.tattoo_ink.damage_tables.Regular]
@@ -481,10 +481,10 @@ still = [["360°", "A", "F"]]
 rows = [
 	"2-7: +1 to future damage, Bleed[4]",
 	"8-10: +2 to future damage, Bleed[6], d6 psychic damage",
-	"11+: Unit Destroyed",
+	"11+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 	"If one model is killed by Bleed/Poison, remove that instance Bleed/Poison and remove up to half + to future token",
 ]
 
@@ -529,10 +529,10 @@ still = [["360°", "A", "F"]]
 rows = [
 	"2-7: +1 to future damage, Bleed[4]",
 	"8-10: +2 to future damage, Bleed[6], d6 psychic damage",
-	"11+: Unit Destroyed",
+	"11+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 	"If one model is killed by Bleed/Poison, remove that instance Bleed/Poison and remove up to half + to future token",
 ]
 
@@ -617,10 +617,10 @@ fast = [
 [units.armored_unicorn_rider.damage_tables.Regular]
 rows = [
 	"2-5: Bleed[6]",
-	"6+: Unit Destroyed",
+	"6+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.armored_unicorn_rider.damage_tables.Psychic]
@@ -679,7 +679,7 @@ rows = [
 	"6+: Kill 1 model, d4 psychic damage",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
@@ -716,7 +716,7 @@ rows = [
 #regular = [
 #	"2-3: Bleed[4]",
 #	"4+: kill 1 model, d4 Psychic damage",
-#	"Note: bleeding does not cause more bleeding",
+#	"Note: Bleed does not cause more {Bleed[4]:token.bleed}",
 #	"Note: If one model is killed remove half of the +1 future damage tokens and if killed by bleeding/poison, remove that bleeding/poison token",
 #]
 #Psychic = ["4+: shaken"]
@@ -795,7 +795,7 @@ rows = [
 	"4+: Kill 1 model",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
@@ -1317,11 +1317,11 @@ rows = [
 	"7-8: Bleed[10]",
 	"9-11: +1 to future damage, Bleed[12]"
 	"12-19: As 9-11, d8 psychic damage",
-	"20: Unit Destroyed",
+	"20+: Unit destroyed",
 ]
 notes = [
 	"Amplify bleeding: Bleed[4] becomes Bleed[6], Bleed[6] becomes Bleed[8] etc up to max Bleed[12].",
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 ]
 
 [units.sauropod_riders.damage_tables.Psychic]
@@ -1383,10 +1383,10 @@ fast = [
 rows = [
 	"2-6: {Bleed[8]:token.bleed}",
 	"7: As 2-6, d6 psychic damage",
-	"8+: Unit Destroyed",
+	"8+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.armored_oliphant_riders.damage_tables.Psychic]
@@ -1431,10 +1431,10 @@ slow = [
 rows = [
 	"2-3: +1 to future damage, Bleed[4]",
 	"4-6: +2 to future damage, Bleed[6], d6 psychic damage",
-	"7+: Unit Destroyed",
+	"7+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.eagle_rider.damage_tables.Psychic]
