@@ -555,7 +555,7 @@ def test_a_temporary_kill_of_the_last_model_leaves_the_unit_standing() -> None:
     assert result.snapshots[-1].models == 0
 
 
-def test_a_kill_with_every_model_down_does_nothing() -> None:
+def test_a_kill_with_every_model_temporarily_killed_does_nothing() -> None:
     scenario = _scenario(
         {"Regular": TEMPORARY}, models=1, hits=["d6"], tokens=[_bleed(4)]
     )
@@ -564,19 +564,19 @@ def test_a_kill_with_every_model_down_does_nothing() -> None:
     assert result.snapshots[1].tokens == {"bleed[4]": 1}
 
 
-ALL_DOWN = (
+ALL_TEMPORARILY_KILLED = (
     "When all models are temporarily killed: replace kill 1 model with +1 to future"
     " damage and keep all remaining Bleed."
 )
 
 
-def test_with_every_model_down_the_note_replaces_the_kill() -> None:
+def test_with_every_model_temporarily_killed_the_note_replaces_the_kill() -> None:
     scenario = _scenario(
         {"Regular": TEMPORARY},
         models=1,
         hits=["d6"],
         tokens=[_bleed(4)],
-        notes=[ALL_DOWN],
+        notes=[ALL_TEMPORARILY_KILLED],
     )
     result = _run(scenario, [(6, 5), (4, 4), (4, 1)])
     assert (result.destroyed, result.models_lost, result.rounds) == (False, 1, 2)
@@ -586,10 +586,10 @@ def test_with_every_model_down_the_note_replaces_the_kill() -> None:
     )
 
 
-def test_the_replacement_waits_until_every_model_is_down() -> None:
+def test_the_replacement_waits_until_every_model_is_temporarily_killed() -> None:
     tables: dict[DamageTableName, list[str]] = {
         "Regular": ["1+: Temporarily kill 2 models"]
     }
-    scenario = _scenario(tables, models=1, hits=["d6"], notes=[ALL_DOWN])
+    scenario = _scenario(tables, models=1, hits=["d6"], notes=[ALL_TEMPORARILY_KILLED])
     result = _run(scenario, [(6, 1)])
     assert (result.models_lost, result.snapshots[0].future) == (1, 1)

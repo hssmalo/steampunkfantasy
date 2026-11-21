@@ -29,10 +29,10 @@ plays no part in the damage, so the simulator starts from the damage roll.
 
 **Models are a count.** "Kill 1 model" takes one off the count. The Unit is
 destroyed when the count reaches 0 or a row says "Unit destroyed". Which Model
-dies is not tracked: every Model is treated alike. A Temporary Kill ("Temporarily
-kill 1 model") takes one off the same count, but reaching 0 does not destroy the
-Unit. Since nothing heals, a temporarily killed Model stays down and counts as
-lost.
+dies is not tracked: every Model is treated alike. A Temporary Kill
+("Temporarily kill 1 model") takes one off the same count, but reaching 0 does
+not destroy the Unit. Since nothing heals, a temporarily killed Model stays
+that way and counts as lost.
 
 **No player decisions beyond one.** The simulated player always spends
 Endurance when it is legal. They never heal or repair, and nothing else is
@@ -213,11 +213,11 @@ fallback.
 
 #### Killing a Model
 
-1. If every Model is already down (only possible after Temporary Kills), no
-   Model dies. A table note "When all models are temporarily killed: replace
-   kill 1 model with …" applies its effects instead; without one, nothing
-   happens. Either way it is not a kill, so no Endurance is spent and the
-   Bleed or Poison that rolled stays.
+1. If every Model is already temporarily killed, no Model dies. A table note
+   "When all models are temporarily killed: replace kill 1 model with …"
+   applies its effects instead; without one, nothing happens. Either way it is
+   not a kill, so no Endurance is spent and the Bleed or Poison that rolled
+   stays.
 2. If the Unit has an **Endurance Token**, it is spent. No Model dies, Future
    Damage is not halved, and the Unit gains Bleed[4]. If a Bleed was doing the
    killing, that Bleed is set back to Bleed[4] instead (`token.endurance`).
@@ -290,5 +290,5 @@ These are open questions for the game designer, not oversights:
 - **Shaken is never removed.** It only matters for routing psychic damage to
   the Crew table.
 - Conditional rows ("If more than 2 models are alive, …"), crew kills, and a
-  whole Unit being "temporarily destroyed" are not simulated. They are listed under
-  *Not simulated*.
+  whole Unit being "temporarily destroyed" are not simulated. They are listed
+  under *Not simulated*.

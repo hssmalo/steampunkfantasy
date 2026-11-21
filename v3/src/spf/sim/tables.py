@@ -27,7 +27,7 @@ _HALF_FUTURE = re.compile(r"\bhalf\b.*\bfuture\b", re.IGNORECASE)
 _ON_A_KILL = re.compile(r"\b(?:killed|dies|destroyed)\b", re.IGNORECASE)
 _KILLED_BY_TOKEN = re.compile(r"killed by (?:bleed|poison)", re.IGNORECASE)
 _AMPLIFY_DEFINED = re.compile(r"^amplify bleeding:", re.IGNORECASE)
-_ALL_DOWN = re.compile(
+_ALL_TEMPORARILY_KILLED = re.compile(
     r"^when all models are temporarily killed: replace kill (?:1|one) model with"
     r" (?P<effects>.+?)(?: and keep all remaining bleed)?\.?$",
     re.IGNORECASE,
@@ -42,7 +42,7 @@ class NoteRules:
     halve_future_on_kill: bool = False
     immune: frozenset[str] = frozenset()
     """Tokens the Unit never takes, by id."""
-    replace_kill_when_all_down: tuple[Effect, ...] = ()
+    replace_kill_when_all_temporarily_killed: tuple[Effect, ...] = ()
     """What a kill does instead once every Model is temporarily killed."""
     unparsed: list[str] = field(default_factory=list)
 
@@ -55,7 +55,7 @@ def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
     of those Tokens, so such a note is recognized and changes nothing.
     """
     halve, immune, unparsed = False, set[str](), []
-    all_down: tuple[Effect, ...] = ()
+    replacement: tuple[Effect, ...] = ()
     for note in notes:
         text = plain(note)
         recognized = bool(
@@ -70,15 +70,15 @@ def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
         ):
             immune.add(token)
             recognized = True
-        if match := _ALL_DOWN.match(text):
-            all_down = tuple(parse_effect(match["effects"], vocabulary=vocabulary))
+        if match := _ALL_TEMPORARILY_KILLED.match(text):
+            replacement = tuple(parse_effect(match["effects"], vocabulary=vocabulary))
             recognized = True
         if not recognized:
             unparsed.append(note)
     return NoteRules(
         halve_future_on_kill=halve,
         immune=frozenset(immune),
-        replace_kill_when_all_down=all_down,
+        replace_kill_when_all_temporarily_killed=replacement,
         unparsed=unparsed,
     )
 

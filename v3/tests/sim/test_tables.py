@@ -121,9 +121,9 @@ def test_removing_the_token_that_killed_is_recognized() -> None:
         ),
     ],
 )
-def test_replacing_a_kill_once_every_model_is_down(note: str) -> None:
+def test_replacing_a_kill_once_every_model_is_temporarily_killed(note: str) -> None:
     assert _notes(note) == NoteRules(
-        replace_kill_when_all_down=(FutureDamage(amount=1),)
+        replace_kill_when_all_temporarily_killed=(FutureDamage(amount=1),)
     )
 
 

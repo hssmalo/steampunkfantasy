@@ -244,13 +244,13 @@ class _Run:
                 self.record(effect, table=table, label=label)
 
     def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> None:
-        """Kill Models one at a time, or replace a kill once every Model is down."""
+        """Kill Models one at a time; once all are temporarily killed, replace it."""
         for _ in range(effect.count):
             if self.state.models > 0:
                 self.kill_one(cause=cause, temporary=effect.temporary)
                 continue
-            for instead in self.notes.replace_kill_when_all_down:
-                self.apply(instead, table=table, label="note", cause=cause)
+            for replacement in self.notes.replace_kill_when_all_temporarily_killed:
+                self.apply(replacement, table=table, label="note", cause=cause)
 
     def roll_further(
         self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
@@ -494,11 +494,11 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     return NoteRules(
         halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
         immune=frozenset().union(*(note.immune for note in notes)),
-        replace_kill_when_all_down=next(
+        replace_kill_when_all_temporarily_killed=next(
             (
-                note.replace_kill_when_all_down
+                note.replace_kill_when_all_temporarily_killed
                 for note in notes
-                if note.replace_kill_when_all_down
+                if note.replace_kill_when_all_temporarily_killed
             ),
             (),
         ),
