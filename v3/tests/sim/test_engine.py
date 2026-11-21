@@ -397,6 +397,18 @@ def test_bleed_placing_a_larger_bleed_raises_the_rolling_bleed(
     assert result.snapshots[1].tokens == {"bleed[8]": 1}
 
 
+KILL_AND_RAISE: dict[DamageTableName, list[str]] = {
+    "Regular": ["1+: Kill 1 model, Bleed[8]"]
+}
+
+
+def test_a_kill_removes_the_bleed_even_when_it_was_raised() -> None:
+    scenario = _scenario(KILL_AND_RAISE, tokens=[_bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3)])
+    assert result.models_lost == 1
+    assert result.snapshots[1].tokens == {}
+
+
 def test_a_raise_leaves_the_unit_s_other_bleeds_alone() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["3: Bleed[8]", "4+: Dazed"]}
     scenario = _scenario(tables, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
