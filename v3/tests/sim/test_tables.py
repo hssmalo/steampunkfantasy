@@ -75,8 +75,20 @@ def test_a_table_without_notes_changes_nothing() -> None:
     assert _notes() == NoteRules()
 
 
-def test_bleed_does_not_cause_bleed() -> None:
-    assert not _notes("Bleed does not cause more Bleed").bleed_causes_bleed
+@pytest.mark.parametrize(
+    "note",
+    [
+        "Bleed does not cause more Bleed",
+        "Bleed does not cause more {Bleed[4]:token.bleed}",
+        (
+            "Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would"
+            " cause a Bleed[M] and M is higher than N, it is raised to Bleed[M]"
+            " instead."
+        ),
+    ],
+)
+def test_a_bleed_note_is_recognized_and_changes_nothing(note: str) -> None:
+    assert _notes(note) == NoteRules()
 
 
 @pytest.mark.parametrize(
@@ -94,6 +106,35 @@ def test_halving_future_damage_on_a_kill(note: str) -> None:
 def test_removing_the_token_that_killed_is_recognized() -> None:
     notes = _notes("If killed by Poison or Bleed, remove that instance")
     assert notes == NoteRules()
+
+
+@pytest.mark.parametrize(
+    "note",
+    [
+        (
+            "When all models are temporarily killed: replace kill 1 model with +1"
+            " to future damage and keep all remaining Bleed."
+        ),
+        (
+            "When all models are temporarily killed: replace kill one model with"
+            " +1 to future damage"
+        ),
+    ],
+)
+def test_replacing_a_kill_once_every_model_is_temporarily_killed(note: str) -> None:
+    assert _notes(note) == NoteRules(
+        replace_kill_when_all_temporarily_killed=(FutureDamage(amount=1),)
+    )
+
+
+@pytest.mark.parametrize(
+    "effects", ["+1 to future damage, howl at the moon", "Kill 1 model"]
+)
+def test_an_unfollowable_replacement_is_unparsed(effects: str) -> None:
+    note = (
+        f"When all models are temporarily killed: replace kill 1 model with {effects}"
+    )
+    assert _notes(note) == NoteRules(unparsed=[note])
 
 
 def test_immunity_to_a_token() -> None:

@@ -128,7 +128,7 @@ rows = [
 	"9+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.giant_snake_cavalry.damage_tables.Psychic]

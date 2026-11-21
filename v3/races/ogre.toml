@@ -56,7 +56,7 @@ rows = [
 	"18+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.ogre_hydra.damage_tables.Psychic]
@@ -116,7 +116,7 @@ rows = [
 	"11+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 	"If one model is killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 ]
 
@@ -227,7 +227,7 @@ rows = [
 	"6+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 ]
 
 [units.pet_panther.damage_tables.Psychic]
@@ -289,7 +289,7 @@ rows = [
 	"9+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.ogre_assault_scout.damage_tables.Psychic]
@@ -342,7 +342,7 @@ rows = [
 	"9+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 ]
 
 [units.cyclops.damage_tables.Psychic]

@@ -171,7 +171,10 @@ Otherwise:
 
 - Ignore armor and regular damage resistances
 - Apply bonus to damage based on the number +future damage tokens
-- Apply damage to the regular damage table, with the exception that bleed does not cause more bleed.
+- Apply damage to the regular damage table. Bleed does not cause more
+  bleed: if the damage would give the unit Bleed[M], this bleed is instead
+  raised to Bleed[M] when M is higher than its own size, and otherwise
+  nothing happens.
 - If bleed killed a model, remove bleed.
 """
 

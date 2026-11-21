@@ -29,7 +29,10 @@ plays no part in the damage, so the simulator starts from the damage roll.
 
 **Models are a count.** "Kill 1 model" takes one off the count. The Unit is
 destroyed when the count reaches 0 or a row says "Unit destroyed". Which Model
-dies is not tracked: every Model is treated alike.
+dies is not tracked: every Model is treated alike. A Temporary Kill
+("Temporarily kill 1 model") takes one off the same count, but reaching 0 does
+not destroy the Unit. Since nothing heals, a temporarily killed Model stays
+that way and counts as lost.
 
 **No player decisions beyond one.** The simulated player always spends
 Endurance when it is legal. They never heal or repair, and nothing else is
@@ -86,7 +89,7 @@ Every Round runs these steps in order. They follow the end of a Round in
 | **Agony 1: Minor Acid** | Each Minor Acid rolls a d6, less acid resistance. On 3+ the Unit gains +1 Future Damage and the Minor Acid stays; otherwise the Minor Acid is removed. |
 | **Agony 2: Fire** | *Every* Fire Token rolls a d6, less fire resistance, **before any of them deals damage**. A Fire at 2 or below goes out. Each one still burning then deals its roll as damage on the Regular table, plus Future Damage. |
 | **Agony 3: Poison** | Each Poison[N] rolls a dN, less poison resistance, and deals that as damage on the Regular table, plus Future Damage. A Poison that killed a Model is removed; otherwise it drops one step (Poison[8] → Poison[6]), and Poison[4] is removed. |
-| **Agony 4: Bleed** | Each Bleed[N] rolls a dN. On a 1 or 2 it is removed. Otherwise it deals that roll as damage on the Regular table, plus Future Damage. A Bleed that killed a Model is removed. |
+| **Agony 4: Bleed** | Each Bleed[N] rolls a dN. On a 1 or 2 it is removed. Otherwise it deals that roll as damage on the Regular table, plus Future Damage. That damage never places a new Bleed: a Bleed it would place instead Raises the rolling Bleed, if larger. A Bleed that killed a Model is removed. |
 
 After the last step the state is recorded for the report. The run then checks
 whether it should go on (see [The two modes](#the-two-modes)).
@@ -100,8 +103,8 @@ A few details matter for reading the results:
 - **Tokens placed earlier in a Round act later in the same Round.** If Acid
   rolls a 7 in Agony 0 and sets the Unit on fire, that Fire burns in Agony 2.
   A Bleed placed by Fire damage bleeds in Agony 4. A Token placed during its
-  own Phase waits for the next Round: a Bleed placed by Bleed damage first
-  rolls next Round.
+  own Phase waits for the next Round: a Bleed Raised during Agony 4 rolls at
+  its new size next Round.
 - **Continuing Damage ignores Armor and regular resistance.** Only fire,
   poison and acid resistance touch their own Tokens. Bleed has no resistance.
 
@@ -174,11 +177,13 @@ The row's effects apply in the order written:
 | Effect as written | What the simulator does |
 |---|---|
 | Kill N models / Destroy N models | Kills N Models, one at a time (see [Killing a Model](#killing-a-model)) |
+| Temporarily kill N models | The same, except the Unit is not destroyed when the last Model goes |
 | +N to future damage (also "x3 +3 …") | Adds Future Damage |
 | +N to future crew damage | Adds Future Crew Damage |
 | Unit destroyed / Unit killed | The Unit is destroyed |
 | d6 psychic damage, d6 critical damage, … | Rolls on that table |
-| Bleed[6], Poison[4], Fire, Acid, Minor Acid | Places that Token |
+| Bleed[6], Poison[4], Fire, Acid, Minor Acid | Places that Token, except a Bleed rolled by a Bleed (see [Placing a Token](#placing-a-token)) |
+| Bleed[M], when a Bleed[N] made this roll | Raises the rolling Bleed to Bleed[M] if M is larger than N; otherwise nothing |
 | Shaken, Crippled Crew, Cannot Move, … | Places that Token (counted only, apart from Shaken's routing above) |
 | Amplify (all) bleeding | Steps every Bleed up one size: 4→6→8→10→12, capped at 12 |
 | If caused by bleeding, amplify bleeding | The same, but only when a Bleed made this roll |
@@ -197,18 +202,33 @@ fallback.
 - **Fire** stacks: two Fire placements make two Fire Tokens.
 - A Unit **immune** to a Token (a table note such as "Immune to Poison") never
   takes it.
-- Where a table note says **"Bleed does not cause Bleed"**, a Bleed placed by
-  damage that a Bleed rolled is ignored.
+- **Bleed never causes a new Bleed** (`token.bleed`). When a Bleed[N]'s own
+  damage would place a Bleed[M], it **Raises** the rolling Bleed instead: to
+  Bleed[M] if M is larger than N, and otherwise nothing happens. Only the Bleed
+  that rolled is touched. This comes from the Token, not from the table notes:
+  the "Bleed does not cause more Bleed" notes are recognized and change
+  nothing. Bleed placed by a hit, Fire, Poison or Endurance stacks as usual.
+- A Raise and an Amplify in the same row apply in the order written:
+  "Bleed[6], Amplify all bleeding" turns a rolling Bleed[4] into Bleed[8].
 
 #### Killing a Model
 
-1. If the Unit has an **Endurance Token**, it is spent. No Model dies, Future
+1. If every Model is already temporarily killed, no Model dies. A table note
+   "When all models are temporarily killed: replace kill 1 model with …"
+   applies its effects instead; without one, nothing happens. Either way it is
+   not a kill, so no Endurance is spent and the Bleed or Poison that rolled
+   stays.
+2. If the Unit has an **Endurance Token**, it is spent. No Model dies, Future
    Damage is not halved, and the Unit gains Bleed[4]. If a Bleed was doing the
    killing, that Bleed is set back to Bleed[4] instead (`token.endurance`).
-2. Otherwise a Model dies. If any of the Unit's table notes halve Future Damage
+3. Otherwise a Model dies. If any of the Unit's table notes halve Future Damage
    on a kill, Future Damage is halved, **rounding down**. This happens once for
    each Model killed.
-3. If no Models are left, the Unit is destroyed.
+4. If no Models are left and the kill was not a Temporary Kill, the Unit is
+   destroyed.
+
+When a Bleed's roll both kills (or is saved by Endurance) and Raises that
+Bleed, the kill wins: the Bleed is removed, or set back to Bleed[4].
 
 ## Reading the report
 
@@ -269,10 +289,6 @@ These are open questions for the game designer, not oversights:
   *Not simulated*.
 - **Shaken is never removed.** It only matters for routing psychic damage to
   the Crew table.
-- **Bleed is kept from causing Bleed only by the table note.** Every Unit
-  whose table places Bleed carries "Bleed does not cause more Bleed", so in
-  practice it always applies. A new Unit written without that note would
-  bleed into more Bleed in the simulator, whatever `token.bleed` says.
-- Conditional rows ("If more than 2 models are alive, …"), crew kills, and
-  "temporarily destroyed" are not simulated. They are listed under
-  *Not simulated*.
+- Conditional rows ("If more than 2 models are alive, …"), crew kills, and a
+  whole Unit being "temporarily destroyed" are not simulated. They are listed
+  under *Not simulated*.

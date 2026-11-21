@@ -5,6 +5,7 @@ captures *why* a rule was changed.
 
 | Date | Description | Why |
 | ---------- | ------------------------------ | ------------------------------ |
+| 21.11.2026 | A Bleed no longer ignores Bleed its own damage would cause: it is raised to the larger Bleed instead | A big wound reopening a small one should make it worse. Bleed still never causes a new Bleed Token |
 | 19.11.2026 | Fire is removed on a roll of 2 or below, not only 1 or below | Matches Bleed and Minor Acid, which also end on a 1 or 2 |
 | 19.11.2026 | Bleed is removed on a roll of 1 or 2, not only on a 1 | Bleeding ends sooner: a Bleed[4] now stops half the time each Agony 4, instead of a quarter |
 | 15.09.2026 | Lots of minor tweaks, added into the fog and out of fog tokens | Improve consistency of rules. |

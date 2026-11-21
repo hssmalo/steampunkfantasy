@@ -373,6 +373,24 @@ attack: acid, minor acid, fire, poison and bleed. A Unit is finished with
 it when it carries no Token that deals Continuing Damage.
 _Avoid_: damage over time, DoT, agony damage
 
+**Amplify** (bleeding):
+To step a Bleed up exactly one size, 4 → 6 → 8 → 10 → 12, capped at 12. A
+Damage row says which Bleeds are amplified, often all of them.
+_Avoid_: raise (that is a different effect, which may skip sizes)
+
+**Raise** (a Bleed):
+What happens when a Bleed[N]'s own damage would place a Bleed[M]. No new Bleed
+is placed. If M is greater than N, the rolling Bleed becomes Bleed[M].
+Otherwise nothing happens. Only the Bleed that rolled is affected, never any
+other Bleed on the Unit. A Bleed never causes a new Bleed.
+_Avoid_: amplify (which is exactly one step), upgrade, stack
+
+**Temporary Kill**:
+Removing a Model in a way that healing can undo. A Unit whose Models are all
+temporarily killed is not destroyed; it is destroyed only by an effect that
+says so.
+_Avoid_: temporarily destroyed (a whole-Unit state that some Units have)
+
 **Armor**:
 A Unit's protection, which decides whether an attack gets through at all. Once
 an attack gets through, Armor plays no part in the damage rolled.

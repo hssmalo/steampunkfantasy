@@ -104,7 +104,7 @@ rows = [
 	"20+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 ]
 
 [units.champion]
@@ -131,7 +131,7 @@ rows = [
 	"4+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 ]
 
 [units.champion.orders.movement]
@@ -194,7 +194,7 @@ rows = [
 	"7+: Kill 1 model, d6 psychic damage",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
 	"When one model is killed, half all +1 to future damage rounded down",
 	"If killed by Poison or Bleed, remove that instance",
 ]
@@ -487,13 +487,14 @@ still = [
 
 [units.ork_werewarg.damage_tables.Regular]
 rows = [
-	"1-3: {Bleed[4]:token.poison}", #tokens.bleed. N=4
+	"1-3: {Bleed[4]:token.bleed}",
 	"4-9: Temporarily kill 1 model, d6 psychic damage",
 	"10+: Unit destroyed, stops regenerating",
 ]
 notes = [
 	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining Bleed.",
 	"If one model is temporarily killed by Bleed or Poison, remove that instance",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 ]
 
 [units.ork_werewarg.damage_tables.Psychic]
@@ -566,7 +567,7 @@ rows = [
 	"9+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 	"When one model is killed, half all +1 to future damage rounded down",
 	"If killed by Poison or Bleed, remove that instance",
 ]

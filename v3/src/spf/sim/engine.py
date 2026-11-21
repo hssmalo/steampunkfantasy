@@ -171,6 +171,8 @@ class _Run:
     policy: Policy
     saved_bleed: bool = False
     """Whether Endurance saved a Model from the Bleed now rolling."""
+    rolling_bleed: int | None = None
+    """Where in `state.bleeds` the Bleed now rolling sits, so it can be Raised."""
     table_rolls: Counter[DamageTableName] = field(default_factory=Counter)
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
@@ -221,9 +223,8 @@ class _Run:
         """Apply one effect of a row."""
         state = self.state
         match effect:
-            case Kill(count=count):
-                for _ in range(count):
-                    self.kill_one(cause=cause)
+            case Kill():
+                self.kill(effect, table=table, cause=cause)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -241,6 +242,17 @@ class _Run:
                 self.roll_further(effect, table=table, cause=cause)
             case _:
                 self.record(effect, table=table, label=label)
+
+    def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> None:
+        """Kill Models one at a time; once all are temporarily killed, replace it."""
+        for _ in range(effect.count):
+            if self.state.models > 0:
+                self.kill_one(cause=cause, temporary=effect.temporary)
+                continue
+            for replacement in self.notes.replace_kill_when_all_temporarily_killed:
+                if self.state.destroyed:
+                    return
+                self.apply(replacement, table=table, label="note", cause=cause)
 
     def roll_further(
         self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
@@ -267,8 +279,8 @@ class _Run:
             case RowReference():
                 self.unparsed[table, label, str(effect)] += 1
 
-    def kill_one(self, *, cause: Cause) -> None:
-        """Kill one Model; the last one takes the Unit with it.
+    def kill_one(self, *, cause: Cause, temporary: bool = False) -> None:
+        """Kill one Model; the last one takes the Unit with it, unless temporary.
 
         Spending Endurance instead gives the Unit Bleed[4], or keeps the Bleed
         that was killing at Bleed[4], and Future Damage is not halved
@@ -286,7 +298,7 @@ class _Run:
         self.state.models -= 1
         if self.notes.halve_future_on_kill:
             self.state.future //= 2
-        if self.state.models <= 0:
+        if self.state.models <= 0 and not temporary:
             self.state.destroyed = True
 
     def place(self, token: PlaceToken, *, cause: Cause | None = None) -> None:
@@ -299,7 +311,11 @@ class _Run:
         if token.name in self.notes.immune:
             return
         from_bleed = cause is not None and cause.source == "bleed"
-        if token.name == "bleed" and from_bleed and not self.notes.bleed_causes_bleed:
+        if token.name == "bleed" and from_bleed:
+            if token.strength and self.rolling_bleed is not None:
+                bleeds = state.bleeds
+                index = self.rolling_bleed
+                bleeds[index] = max(bleeds[index], token.strength)
             return
         if token.name == "bleed" and token.strength:
             state.bleeds.append(token.strength)
@@ -329,7 +345,9 @@ class _Run:
                 roll=lambda strength=strength: self.roller.roll(strength),
             )
             kills, self.saved_bleed = self.kills, False
+            self.rolling_bleed = index
             self.roll_on("Regular", roll, cause=cause)
+            self.rolling_bleed = None
             if self.kills > kills:
                 bleeds[index] = 0
             elif self.saved_bleed:
@@ -476,9 +494,13 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     """Take every table's notes together: they describe one Unit."""
     notes = [table.notes for table in scenario.tables.values()]
     return NoteRules(
-        bleed_causes_bleed=all(note.bleed_causes_bleed for note in notes),
         halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
         immune=frozenset().union(*(note.immune for note in notes)),
+        replace_kill_when_all_temporarily_killed=tuple(
+            effect
+            for note in notes
+            for effect in note.replace_kill_when_all_temporarily_killed
+        ),
     )
 
 
