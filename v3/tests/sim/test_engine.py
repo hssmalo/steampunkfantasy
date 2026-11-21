@@ -433,7 +433,7 @@ def test_bleed_from_hits_stacks() -> None:
     assert result.snapshots[0].tokens == {"bleed[4]": 2}
 
 
-def test_a_raise_leaves_the_unit_s_other_bleeds_alone() -> None:
+def test_a_raise_leaves_other_bleeds_alone() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["3: Bleed[8]", "4+: Dazed"]}
     scenario = _scenario(tables, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
     result = _run(scenario, [(4, 3), (4, 4)])

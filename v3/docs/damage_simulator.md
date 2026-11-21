@@ -99,8 +99,9 @@ A few details matter for reading the results:
   each with its own chance to stop or to kill.
 - **Tokens placed earlier in a Round act later in the same Round.** If Acid
   rolls a 7 in Agony 0 and sets the Unit on fire, that Fire burns in Agony 2.
-  A Bleed placed by Fire damage bleeds in Agony 4. A Bleed Raised during
-  Agony 4 rolls at its new size next Round.
+  A Bleed placed by Fire damage bleeds in Agony 4. A Token placed during its
+  own Phase waits for the next Round: a Bleed Raised during Agony 4 rolls at
+  its new size next Round.
 - **Continuing Damage ignores Armor and regular resistance.** Only fire,
   poison and acid resistance touch their own Tokens. Bleed has no resistance.
 
