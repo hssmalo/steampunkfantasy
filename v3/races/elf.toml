@@ -1284,7 +1284,6 @@ size = "huge"
 cost.mp = 8
 cost.xp = 48
 cost.cp = 48
-armor = [4, 3, 3, 3]
 description = '''A sauropod dinosaur with elves riding on its back and head. The elves are tiny compared to the sauropod dinosaur. Sauropod is a plant eating dinosaur with long necks and walking on 4 legs. On the dinosaurs head is an elf sniper aiming towards you. On the back of the dinosaur is a huge mortar. Behind the dinosaur it is towing a big napoleonic steampunk cannon. The cannon points backwards.'''
 
 
@@ -1313,8 +1312,10 @@ still = [["360°", "A", "F"]]
 [units.sauropod_riders.damage_tables.Regular]
 rows = [
 	"2-3: Bleed[4]",
-	"4-8: As 2-3, if caused by bleeding, amplify bleeding",
-	"9-11: As 4-8, +1 to future damage",
+	"4-5: Bleed[6]",
+	"6-7: Bleed[8]",
+	"7-8: Bleed[10]",
+	"9-11: +1 to future damage, Bleed[12]"
 	"12-19: As 9-11, d8 psychic damage",
 	"20: Unit Destroyed",
 ]
