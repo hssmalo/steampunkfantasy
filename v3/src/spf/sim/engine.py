@@ -171,6 +171,8 @@ class _Run:
     policy: Policy
     saved_bleed: bool = False
     """Whether Endurance saved a Model from the Bleed now rolling."""
+    rolling_bleed: int | None = None
+    """Where in `state.bleeds` the Bleed now rolling sits, so it can be Raised."""
     table_rolls: Counter[DamageTableName] = field(default_factory=Counter)
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
@@ -300,6 +302,10 @@ class _Run:
             return
         from_bleed = cause is not None and cause.source == "bleed"
         if token.name == "bleed" and from_bleed:
+            if token.strength and self.rolling_bleed is not None:
+                bleeds = state.bleeds
+                index = self.rolling_bleed
+                bleeds[index] = max(bleeds[index], token.strength)
             return
         if token.name == "bleed" and token.strength:
             state.bleeds.append(token.strength)
@@ -329,7 +335,9 @@ class _Run:
                 roll=lambda strength=strength: self.roller.roll(strength),
             )
             kills, self.saved_bleed = self.kills, False
+            self.rolling_bleed = index
             self.roll_on("Regular", roll, cause=cause)
+            self.rolling_bleed = None
             if self.kills > kills:
                 bleeds[index] = 0
             elif self.saved_bleed:

@@ -373,6 +373,13 @@ def test_bleed_placing_a_bleed_no_larger_changes_nothing(
     assert result.snapshots[1].tokens == {key: 1}
 
 
+def test_bleed_placing_a_larger_bleed_raises_the_rolling_bleed() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[8]"]}
+    scenario = _scenario(tables, tokens=[_bleed(4)], max_rounds=2)
+    result = _run(scenario, [(4, 3), (8, 1)])
+    assert result.snapshots[1].tokens == {"bleed[8]": 1}
+
+
 def test_an_immune_unit_never_takes_the_token() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Poison[6]"]}
     scenario = _scenario(tables, hits=["d6"], notes=["Immune to Poison"])
