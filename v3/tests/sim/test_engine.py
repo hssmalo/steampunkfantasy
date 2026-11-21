@@ -426,6 +426,13 @@ def test_raise_and_amplify_apply_in_the_order_written(strength: int, key: str) -
     assert result.snapshots[1].tokens == {key: 1}
 
 
+def test_bleed_from_hits_stacks() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[4]"]}
+    scenario = _scenario(tables, hits=["d6", "d6"], max_rounds=0)
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert result.snapshots[0].tokens == {"bleed[4]": 2}
+
+
 def test_a_raise_leaves_the_unit_s_other_bleeds_alone() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["3: Bleed[8]", "4+: Dazed"]}
     scenario = _scenario(tables, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
