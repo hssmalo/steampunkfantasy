@@ -250,6 +250,8 @@ class _Run:
                 self.kill_one(cause=cause, temporary=effect.temporary)
                 continue
             for replacement in self.notes.replace_kill_when_all_temporarily_killed:
+                if self.state.destroyed:
+                    return
                 self.apply(replacement, table=table, label="note", cause=cause)
 
     def roll_further(
@@ -494,13 +496,10 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     return NoteRules(
         halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
         immune=frozenset().union(*(note.immune for note in notes)),
-        replace_kill_when_all_temporarily_killed=next(
-            (
-                note.replace_kill_when_all_temporarily_killed
-                for note in notes
-                if note.replace_kill_when_all_temporarily_killed
-            ),
-            (),
+        replace_kill_when_all_temporarily_killed=tuple(
+            effect
+            for note in notes
+            for effect in note.replace_kill_when_all_temporarily_killed
         ),
     )
 

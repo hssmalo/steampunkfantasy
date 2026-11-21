@@ -593,3 +593,15 @@ def test_the_replacement_waits_until_every_model_is_temporarily_killed() -> None
     scenario = _scenario(tables, models=1, hits=["d6"], notes=[ALL_TEMPORARILY_KILLED])
     result = _run(scenario, [(6, 1)])
     assert (result.models_lost, result.snapshots[0].future) == (1, 1)
+
+
+def test_a_replacement_stops_once_the_unit_is_destroyed() -> None:
+    note = (
+        "When all models are temporarily killed: replace kill 1 model with Unit"
+        " destroyed, +1 to future damage"
+    )
+    scenario = _scenario(
+        {"Regular": TEMPORARY}, models=1, hits=["d6", "d6"], notes=[note]
+    )
+    result = _run(scenario, [(6, 5), (6, 5)])
+    assert (result.destroyed, result.snapshots[0].future) == (True, 0)
