@@ -299,7 +299,7 @@ class _Run:
         if token.name in self.notes.immune:
             return
         from_bleed = cause is not None and cause.source == "bleed"
-        if token.name == "bleed" and from_bleed and not self.notes.bleed_causes_bleed:
+        if token.name == "bleed" and from_bleed:
             return
         if token.name == "bleed" and token.strength:
             state.bleeds.append(token.strength)

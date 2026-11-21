@@ -363,14 +363,14 @@ def test_without_the_note_future_damage_stays() -> None:
     assert result.snapshots[0].future == 3
 
 
-def test_bleed_causes_bleed_unless_a_note_says_otherwise() -> None:
+@pytest.mark.parametrize(("strength", "key"), [(4, "bleed[4]"), (6, "bleed[6]")])
+def test_bleed_placing_a_bleed_no_larger_changes_nothing(
+    strength: int, key: str
+) -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Bleed[4]"]}
-    plain = _scenario(tables, tokens=[_bleed(4)], max_rounds=1)
-    noted = _scenario(
-        tables, tokens=[_bleed(4)], notes=["Bleed does not cause Bleed"], max_rounds=1
-    )
-    assert _run(plain, [(4, 3)]).snapshots[1].tokens["bleed[4]"] == 2
-    assert _run(noted, [(4, 3)]).snapshots[1].tokens["bleed[4]"] == 1
+    scenario = _scenario(tables, tokens=[_bleed(strength)], max_rounds=1)
+    result = _run(scenario, [(strength, 3)])
+    assert result.snapshots[1].tokens == {key: 1}
 
 
 def test_an_immune_unit_never_takes_the_token() -> None:
