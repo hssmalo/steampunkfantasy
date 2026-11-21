@@ -223,9 +223,8 @@ class _Run:
         """Apply one effect of a row."""
         state = self.state
         match effect:
-            case Kill(count=count):
-                for _ in range(count):
-                    self.kill_one(cause=cause)
+            case Kill():
+                self.kill(effect, table=table, cause=cause)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -243,6 +242,17 @@ class _Run:
                 self.roll_further(effect, table=table, cause=cause)
             case _:
                 self.record(effect, table=table, label=label)
+
+    def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> None:
+        """Kill Models one at a time; once all are temporarily killed, replace it."""
+        for _ in range(effect.count):
+            if self.state.models > 0:
+                self.kill_one(cause=cause, temporary=effect.temporary)
+                continue
+            for replacement in self.notes.replace_kill_when_all_temporarily_killed:
+                if self.state.destroyed:
+                    return
+                self.apply(replacement, table=table, label="note", cause=cause)
 
     def roll_further(
         self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
@@ -269,8 +279,8 @@ class _Run:
             case RowReference():
                 self.unparsed[table, label, str(effect)] += 1
 
-    def kill_one(self, *, cause: Cause) -> None:
-        """Kill one Model; the last one takes the Unit with it.
+    def kill_one(self, *, cause: Cause, temporary: bool = False) -> None:
+        """Kill one Model; the last one takes the Unit with it, unless temporary.
 
         Spending Endurance instead gives the Unit Bleed[4], or keeps the Bleed
         that was killing at Bleed[4], and Future Damage is not halved
@@ -288,7 +298,7 @@ class _Run:
         self.state.models -= 1
         if self.notes.halve_future_on_kill:
             self.state.future //= 2
-        if self.state.models <= 0:
+        if self.state.models <= 0 and not temporary:
             self.state.destroyed = True
 
     def place(self, token: PlaceToken, *, cause: Cause | None = None) -> None:
@@ -486,6 +496,11 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     return NoteRules(
         halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
         immune=frozenset().union(*(note.immune for note in notes)),
+        replace_kill_when_all_temporarily_killed=tuple(
+            effect
+            for note in notes
+            for effect in note.replace_kill_when_all_temporarily_killed
+        ),
     )
 
 

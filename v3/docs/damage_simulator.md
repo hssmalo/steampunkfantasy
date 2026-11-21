@@ -29,7 +29,10 @@ plays no part in the damage, so the simulator starts from the damage roll.
 
 **Models are a count.** "Kill 1 model" takes one off the count. The Unit is
 destroyed when the count reaches 0 or a row says "Unit destroyed". Which Model
-dies is not tracked: every Model is treated alike.
+dies is not tracked: every Model is treated alike. A Temporary Kill
+("Temporarily kill 1 model") takes one off the same count, but reaching 0 does
+not destroy the Unit. Since nothing heals, a temporarily killed Model stays
+that way and counts as lost.
 
 **No player decisions beyond one.** The simulated player always spends
 Endurance when it is legal. They never heal or repair, and nothing else is
@@ -174,6 +177,7 @@ The row's effects apply in the order written:
 | Effect as written | What the simulator does |
 |---|---|
 | Kill N models / Destroy N models | Kills N Models, one at a time (see [Killing a Model](#killing-a-model)) |
+| Temporarily kill N models | The same, except the Unit is not destroyed when the last Model goes |
 | +N to future damage (also "x3 +3 …") | Adds Future Damage |
 | +N to future crew damage | Adds Future Crew Damage |
 | Unit destroyed / Unit killed | The Unit is destroyed |
@@ -209,13 +213,19 @@ fallback.
 
 #### Killing a Model
 
-1. If the Unit has an **Endurance Token**, it is spent. No Model dies, Future
+1. If every Model is already temporarily killed, no Model dies. A table note
+   "When all models are temporarily killed: replace kill 1 model with …"
+   applies its effects instead; without one, nothing happens. Either way it is
+   not a kill, so no Endurance is spent and the Bleed or Poison that rolled
+   stays.
+2. If the Unit has an **Endurance Token**, it is spent. No Model dies, Future
    Damage is not halved, and the Unit gains Bleed[4]. If a Bleed was doing the
    killing, that Bleed is set back to Bleed[4] instead (`token.endurance`).
-2. Otherwise a Model dies. If any of the Unit's table notes halve Future Damage
+3. Otherwise a Model dies. If any of the Unit's table notes halve Future Damage
    on a kill, Future Damage is halved, **rounding down**. This happens once for
    each Model killed.
-3. If no Models are left, the Unit is destroyed.
+4. If no Models are left and the kill was not a Temporary Kill, the Unit is
+   destroyed.
 
 When a Bleed's roll both kills (or is saved by Endurance) and Raises that
 Bleed, the kill wins: the Bleed is removed, or set back to Bleed[4].
@@ -279,6 +289,6 @@ These are open questions for the game designer, not oversights:
   *Not simulated*.
 - **Shaken is never removed.** It only matters for routing psychic damage to
   the Crew table.
-- Conditional rows ("If more than 2 models are alive, …"), crew kills, and
-  "temporarily destroyed" are not simulated. They are listed under
-  *Not simulated*.
+- Conditional rows ("If more than 2 models are alive, …"), crew kills, and a
+  whole Unit being "temporarily destroyed" are not simulated. They are listed
+  under *Not simulated*.

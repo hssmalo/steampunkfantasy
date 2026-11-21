@@ -23,9 +23,10 @@ class Vocabulary:
 
 @dataclass(frozen=True, kw_only=True)
 class Kill:
-    """Kill `count` Models."""
+    """Kill `count` Models, or Temporary Kill them."""
 
     count: int
+    temporary: bool = False
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -126,7 +127,10 @@ _SPILLOVER = re.compile(
     re.IGNORECASE,
 )
 
-_KILL = re.compile(r"(?:kill|destroy) (\d+|one|a) models?", re.IGNORECASE)
+_KILL = re.compile(
+    r"(?P<temporary>temporarily )?(?:kill|destroy) (\w+) models?",
+    re.IGNORECASE,
+)
 _FUTURE = re.compile(r"(?:x(\d+) )?\+(\d+) to future (crew )?damage", re.IGNORECASE)
 _DESTROYED = re.compile(
     r"unit(?P<passengers> and all transported units)? (?:destroyed|killed)",
@@ -213,9 +217,9 @@ def _effects_of(clause: str, vocabulary: Vocabulary) -> list[Effect] | None:
 
 
 def _kill(clause: str) -> list[Effect] | None:
-    """Parse `Kill N models`."""
-    if (match := _KILL.fullmatch(clause)) and (count := _number(match[1])):
-        return [Kill(count=count)]
+    """Parse `Kill N models` and `Temporarily kill N models`."""
+    if (match := _KILL.fullmatch(clause)) and (count := _number(match[2])):
+        return [Kill(count=count, temporary=bool(match["temporary"]))]
     return None
 
 
