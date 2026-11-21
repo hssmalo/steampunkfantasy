@@ -4,6 +4,7 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why                                                                                  |
+| 21.11.2026 | Ork | Ork Werewarg's damage table row 1-3 gives Bleed[4], not Poison | The row always said Bleed, but it linked to the Poison token, so the Poison rules applied |
 | 19.11.2026 | Ork          | Warg Rider is Shaken by psychic damage on 6+ instead of 5+                  | Buff the warg rider slightly against psychic damage                                  |
 | 19.11.2026 | Abomination, Ogre, Ork | Added "Bleed does not cause more Bleed" to the damage tables of Giant Frog Riders, Ogre Infantry, Pet Panther, Ogre Assault Scout, Cyclops, Troll, Champion, Warg Rider and Bioengineered Ork | They could bleed into more bleed, unlike the 15 other units whose tables place Bleed. Matches the Bleed token's own rule |
 | 09.11.2026 | Darkelf      | removed rotate 3 times order for roboprostetic and infantry                 | Unnecessary order.                                                                   |
