@@ -182,7 +182,7 @@ rows = [
 	"10+: Unit destroyed",
 ]
 notes = [
-	"Bleed does not cause more Bleed",
+	"Bleed does not cause more {Bleed[4]:token.bleed}",
 	"If one model is killed by Bleed/Poison, remove that Bleed/Poison token and remove half of the +1 future damage tokens",
 ]
 
