@@ -108,6 +108,25 @@ def test_removing_the_token_that_killed_is_recognized() -> None:
     assert notes == NoteRules()
 
 
+@pytest.mark.parametrize(
+    "note",
+    [
+        (
+            "When all models are temporarily killed: replace kill 1 model with +1"
+            " to future damage and keep all remaining Bleed."
+        ),
+        (
+            "When all models are temporarily killed: replace kill one model with"
+            " +1 to future damage"
+        ),
+    ],
+)
+def test_replacing_a_kill_once_every_model_is_down(note: str) -> None:
+    assert _notes(note) == NoteRules(
+        replace_kill_when_all_down=(FutureDamage(amount=1),)
+    )
+
+
 def test_immunity_to_a_token() -> None:
     assert _notes("Immune to Poison").immune == frozenset({"poison"})
 
