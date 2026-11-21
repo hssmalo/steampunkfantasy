@@ -223,9 +223,8 @@ class _Run:
         """Apply one effect of a row."""
         state = self.state
         match effect:
-            case Kill(count=count, temporary=temporary):
-                for _ in range(count):
-                    self.kill_one(cause=cause, temporary=temporary)
+            case Kill():
+                self.kill(effect, table=table, cause=cause)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -243,6 +242,15 @@ class _Run:
                 self.roll_further(effect, table=table, cause=cause)
             case _:
                 self.record(effect, table=table, label=label)
+
+    def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> None:
+        """Kill Models one at a time, or replace a kill once every Model is down."""
+        for _ in range(effect.count):
+            if self.state.models > 0:
+                self.kill_one(cause=cause, temporary=effect.temporary)
+                continue
+            for instead in self.notes.replace_kill_when_all_down:
+                self.apply(instead, table=table, label="note", cause=cause)
 
     def roll_further(
         self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
@@ -277,8 +285,6 @@ class _Run:
         (`token.endurance`).
         """
         state = self.state
-        if state.models <= 0:
-            return
         if state.counters["endurance"] and self.policy.spend_endurance(state):
             state.counters["endurance"] -= 1
             if cause.source == "bleed":
@@ -488,6 +494,14 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     return NoteRules(
         halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
         immune=frozenset().union(*(note.immune for note in notes)),
+        replace_kill_when_all_down=next(
+            (
+                note.replace_kill_when_all_down
+                for note in notes
+                if note.replace_kill_when_all_down
+            ),
+            (),
+        ),
     )
 
 

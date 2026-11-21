@@ -562,3 +562,34 @@ def test_a_kill_with_every_model_down_does_nothing() -> None:
     result = _run(scenario, [(6, 5), (4, 4), (4, 1)])
     assert (result.destroyed, result.models_lost, result.rounds) == (False, 1, 2)
     assert result.snapshots[1].tokens == {"bleed[4]": 1}
+
+
+ALL_DOWN = (
+    "When all models are temporarily killed: replace kill 1 model with +1 to future"
+    " damage and keep all remaining Bleed."
+)
+
+
+def test_with_every_model_down_the_note_replaces_the_kill() -> None:
+    scenario = _scenario(
+        {"Regular": TEMPORARY},
+        models=1,
+        hits=["d6"],
+        tokens=[_bleed(4)],
+        notes=[ALL_DOWN],
+    )
+    result = _run(scenario, [(6, 5), (4, 4), (4, 1)])
+    assert (result.destroyed, result.models_lost, result.rounds) == (False, 1, 2)
+    assert (result.snapshots[1].future, result.snapshots[1].tokens) == (
+        1,
+        {"bleed[4]": 1},
+    )
+
+
+def test_the_replacement_waits_until_every_model_is_down() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Temporarily kill 2 models"]
+    }
+    scenario = _scenario(tables, models=1, hits=["d6"], notes=[ALL_DOWN])
+    result = _run(scenario, [(6, 1)])
+    assert (result.models_lost, result.snapshots[0].future) == (1, 1)
