@@ -14,6 +14,7 @@ from spf.schemas.type_aliases import (
 )
 from spf.sim.effects import (
     Effect,
+    Kill,
     RowReference,
     Unparsed,
     Vocabulary,
@@ -27,6 +28,8 @@ _HALF_FUTURE = re.compile(r"\bhalf\b.*\bfuture\b", re.IGNORECASE)
 _ON_A_KILL = re.compile(r"\b(?:killed|dies|destroyed)\b", re.IGNORECASE)
 _KILLED_BY_TOKEN = re.compile(r"killed by (?:bleed|poison)", re.IGNORECASE)
 _AMPLIFY_DEFINED = re.compile(r"^amplify bleeding:", re.IGNORECASE)
+# Keeping the remaining Bleed needs no rule: a replaced kill is not a kill, so
+# the Bleed that rolled is never removed for it.
 _ALL_TEMPORARILY_KILLED = re.compile(
     r"^when all models are temporarily killed: replace kill (?:1|one) model with"
     r" (?P<effects>.+?)(?: and keep all remaining bleed)?\.?$",
@@ -45,6 +48,19 @@ class NoteRules:
     replace_kill_when_all_temporarily_killed: tuple[Effect, ...] = ()
     """What a kill does instead once every Model is temporarily killed."""
     unparsed: list[str] = field(default_factory=list)
+
+
+def _replacement(text: str, vocabulary: Vocabulary) -> tuple[Effect, ...] | None:
+    """Read what replaces a kill once every Model is temporarily killed.
+
+    A replacement that is not fully parsed, or that kills again, is not followed.
+    """
+    if not (match := _ALL_TEMPORARILY_KILLED.match(text)):
+        return None
+    effects = tuple(parse_effect(match["effects"], vocabulary=vocabulary))
+    if any(isinstance(effect, Kill | RowReference | Unparsed) for effect in effects):
+        return None
+    return effects
 
 
 def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
@@ -70,8 +86,8 @@ def parse_notes(notes: list[str], *, vocabulary: Vocabulary) -> NoteRules:
         ):
             immune.add(token)
             recognized = True
-        if match := _ALL_TEMPORARILY_KILLED.match(text):
-            replacement = tuple(parse_effect(match["effects"], vocabulary=vocabulary))
+        if (effects := _replacement(text, vocabulary)) is not None:
+            replacement += effects
             recognized = True
         if not recognized:
             unparsed.append(note)

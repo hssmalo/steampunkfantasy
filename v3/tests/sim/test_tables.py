@@ -127,6 +127,16 @@ def test_replacing_a_kill_once_every_model_is_temporarily_killed(note: str) -> N
     )
 
 
+@pytest.mark.parametrize(
+    "effects", ["+1 to future damage, howl at the moon", "Kill 1 model"]
+)
+def test_an_unfollowable_replacement_is_unparsed(effects: str) -> None:
+    note = (
+        f"When all models are temporarily killed: replace kill 1 model with {effects}"
+    )
+    assert _notes(note) == NoteRules(unparsed=[note])
+
+
 def test_immunity_to_a_token() -> None:
     assert _notes("Immune to Poison").immune == frozenset({"poison"})
 
