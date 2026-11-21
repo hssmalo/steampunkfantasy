@@ -409,6 +409,13 @@ def test_a_kill_removes_the_bleed_even_when_it_was_raised() -> None:
     assert result.snapshots[1].tokens == {}
 
 
+def test_a_bleed_saved_by_endurance_is_bleed_four_even_when_it_was_raised() -> None:
+    scenario = _scenario(KILL_AND_RAISE, tokens=[_bleed(4)], endurance=1, max_rounds=1)
+    result = _run(scenario, [(4, 3)])
+    assert result.models_lost == 0
+    assert result.snapshots[1].tokens == {"bleed[4]": 1}
+
+
 def test_a_raise_leaves_the_unit_s_other_bleeds_alone() -> None:
     tables: dict[DamageTableName, list[str]] = {"Regular": ["3: Bleed[8]", "4+: Dazed"]}
     scenario = _scenario(tables, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
