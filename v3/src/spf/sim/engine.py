@@ -484,7 +484,6 @@ def _merged_notes(scenario: Scenario) -> NoteRules:
     """Take every table's notes together: they describe one Unit."""
     notes = [table.notes for table in scenario.tables.values()]
     return NoteRules(
-        bleed_causes_bleed=all(note.bleed_causes_bleed for note in notes),
         halve_future_on_kill=any(note.halve_future_on_kill for note in notes),
         immune=frozenset().union(*(note.immune for note in notes)),
     )

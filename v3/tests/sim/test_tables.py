@@ -75,8 +75,20 @@ def test_a_table_without_notes_changes_nothing() -> None:
     assert _notes() == NoteRules()
 
 
-def test_bleed_does_not_cause_bleed() -> None:
-    assert not _notes("Bleed does not cause more Bleed").bleed_causes_bleed
+@pytest.mark.parametrize(
+    "note",
+    [
+        "Bleed does not cause more Bleed",
+        "Bleed does not cause more {Bleed[4]:token.bleed}",
+        (
+            "Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would"
+            " cause a Bleed[M] and M is higher than N, it is raised to Bleed[M]"
+            " instead."
+        ),
+    ],
+)
+def test_a_bleed_note_is_recognized_and_changes_nothing(note: str) -> None:
+    assert _notes(note) == NoteRules()
 
 
 @pytest.mark.parametrize(
