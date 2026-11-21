@@ -539,3 +539,17 @@ def test_acid_resisted_below_one_has_no_effect() -> None:
 def test_a_run_stops_when_the_unit_is_destroyed() -> None:
     result = _run(_scenario(models=1, tokens=[_bleed(4)]), [(4, 4)])
     assert (result.rounds, result.ended_by, result.destroyed) == (1, "destroyed", True)
+
+
+TEMPORARY = [
+    "1-3: +1 to future damage",
+    "4-5: Temporarily kill 1 model",
+    "6+: Unit destroyed",
+]
+"""The ladder with a Temporary Kill in place of the kill."""
+
+
+def test_a_temporary_kill_of_the_last_model_leaves_the_unit_standing() -> None:
+    result = _run(_scenario({"Regular": TEMPORARY}, models=1, hits=["d6"]), [(6, 5)])
+    assert (result.destroyed, result.models_lost) == (False, 1)
+    assert result.snapshots[-1].models == 0

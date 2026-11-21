@@ -223,9 +223,9 @@ class _Run:
         """Apply one effect of a row."""
         state = self.state
         match effect:
-            case Kill(count=count):
+            case Kill(count=count, temporary=temporary):
                 for _ in range(count):
-                    self.kill_one(cause=cause)
+                    self.kill_one(cause=cause, temporary=temporary)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -269,8 +269,8 @@ class _Run:
             case RowReference():
                 self.unparsed[table, label, str(effect)] += 1
 
-    def kill_one(self, *, cause: Cause) -> None:
-        """Kill one Model; the last one takes the Unit with it.
+    def kill_one(self, *, cause: Cause, temporary: bool = False) -> None:
+        """Kill one Model; the last one takes the Unit with it, unless temporary.
 
         Spending Endurance instead gives the Unit Bleed[4], or keeps the Bleed
         that was killing at Bleed[4], and Future Damage is not halved
@@ -288,7 +288,7 @@ class _Run:
         self.state.models -= 1
         if self.notes.halve_future_on_kill:
             self.state.future //= 2
-        if self.state.models <= 0:
+        if self.state.models <= 0 and not temporary:
             self.state.destroyed = True
 
     def place(self, token: PlaceToken, *, cause: Cause | None = None) -> None:
