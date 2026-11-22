@@ -18,7 +18,7 @@ description = "Bloodthirsty ork in leather rags wielding a napoleonic style musk
 
 [units.ork_infantry.shaken]
 speed = "slow"
-movement_order = ["-", "-", "Flee"]
+movement_order = ["-", "-", "Chs"]
 
 [[units.ork_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -97,10 +97,13 @@ args.terrain_replacement = 'Rough Terrain'
 slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
 [units.troll.damage_tables.Regular]
-rows = [
-	"3-9: +1 to future damage",
-	"10-14: +1 to future damage, Bleed[12]",
-	"15-19: As 10-14, Troll unconscious",
+rows = ["1-3: +1 to future damage",
+        "4: +1 to future damage, Bleed[4]",
+	"5: +1 to future damage, Bleed[6]",
+        "6: +1 to future damage, Bleed[8]",
+	"7: +1 to future damage, Bleed[10]",
+	"8-14: +1 to future damage, Bleed[12]",
+	"15-19: As 10-14, temporarily kill model",
 	"20+: Unit destroyed",
 ]
 notes = [
@@ -120,14 +123,14 @@ description = '''An ork warhero with clockwork wings on its back. The ork is wie
 
 [units.champion.shaken]
 speed = "slow"
-movement_order = ["-", "-", "Flee"]
+movement_order = ["-", "-", "Chs"]
 
 [[units.champion.specials.spawn]]
 text = "ork_champion: Has same orders available as the unit it awakened from, and the same weapons as the last surviving model of the unit."
 
 [units.champion.damage_tables.Regular]
 rows = [
-	"2-3: Bleed[4]",
+	"2-3: {Bleed[4]:token.bleed}",
 	"4+: Unit destroyed",
 ]
 notes = [
@@ -190,8 +193,10 @@ rows = [
 [units.warg_rider.damage_tables.Regular]
 rows = [
 	"2-3: {Bleed[4]:token.bleed}",
-	"4-6: {Bleed[6]:token.bleed}, +1 to future damage, d6 psychic damage",
-	"7+: Kill 1 model, d6 psychic damage",
+	"4-7: {Bleed[6]:token.bleed}, +1 to future damage",
+        "8: {Bleed[8]:token.bleed}, +1 to future damage, d6 psychic damage",
+        "9: {Bleed[10]:token.bleed}, +1 to future damage, d6 psychic damage",
+	"10+: Kill 1 model, d6 psychic damage",
 ]
 notes = [
 	"Bleed does not cause more {Bleed:token.bleed}. If a Bleed[N] would cause a Bleed[M] and M is higher than N, it is raised to Bleed[M] instead.",
@@ -449,7 +454,7 @@ description = '''An ork werewarg is a mix between a warg and and ork, wielding a
 
 [units.ork_werewarg.shaken]
 speed = "slow"
-movement_order = ["-", "-", "Flee"]
+movement_order = ["-", "-", "Chs"]
 
 [[units.ork_werewarg.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -457,11 +462,7 @@ args.speed = "speed.still"
 args.N = 2
 
 [[units.ork_werewarg.specials.regeneration]]
-text = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, but at a cost of +1 to future damage token. Regeneration works even if all models are killed, and only stops if unit is permanently destroyed. When all models are killed, treat unit as still for to-hit penalties."
-
-[[units.ork_werewarg.specials.resistance]]
-args.version = "resistance_type.poison"
-args.N = 2
+text = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, at a cost of +2 to future damage. While all models are temporarily killed you gain improved regeneration Heal[2, self, 2nd Healing] instead. Regeneration only stops if unit is permanently destroyed."
 
 [units.ork_werewarg.orders.movement]
 slow = [
@@ -493,7 +494,8 @@ rows = [
 ]
 notes = [
 	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining Bleed.",
-	"If one model is temporarily killed by Bleed or Poison, remove that instance",
+	"When all models are temporarily killed, treat unit as still for to-hit penalties, and as one model for purpose of area attacks. It keeps all of its units abilities, but none abilities of the models abilities, including firing options and assault stats",
+    "If one model is temporarily killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
 	"Bleed does not cause more {Bleed[4]:token.bleed}",
 ]
 
@@ -523,6 +525,7 @@ description = '''An bloodthirsty ork in finer clothes with 4 arms and wielding 4
 [units.bioengineered_ork.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
+fire_order = "Shaken Fire: if loaded, you must fire at closest enemy. May Load, but may not aim"
 
 [[units.bioengineered_ork.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -561,7 +564,7 @@ slow = [
 
 [units.bioengineered_ork.damage_tables.Regular]
 rows = [
-	"1: {Bleed[4]:token.bleed}", #token.bleed N=4
+	"1: {Bleed[4]:token.bleed}",
 	"2-5: Kill 1 model",
 	"6-8: Kill 1 model, d6 psychic damage",
 	"9+: Unit destroyed",

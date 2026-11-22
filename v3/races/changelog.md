@@ -4,13 +4,22 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why
-| 21.11.2026 | Sauropod Rider     | Removed armor, Teaked damage table                                    | Take advantage new bleed mechanism
-| 21.11.2026 | Pegasus      | Teaked damage table                                                         | Take advantage new bleed mechanism
-| 21.11.2026 | Pachcepalosourus | Reduced armor, Tweaked damage table.                                    | Take advantage new bleed mechanism
-| 21.11.2026 | Polar Bear Rider | Reduced armor, Tweaked damage table.                                    | Take advantage new bleed mechanism.
-| 21.11.2026 | Elf Bear Rider | Reduced armor, Tweaked damage table.                                      | Take advantage new bleed mechanism.
-| 21.11.2026 | Elf Hydra    | Tweaked damage table                                                        | Take advantage new bleed mechanism
-| 21.11.2026 | Elf Hydra    | Added Crew Damage table                                                     | Crew can now be killed by crew damage.
+| 22.11.2026 | Ork          | Some units gained limited actions while shaken.                             | Make shaken less booring for receiving part.
+| 22.11.2026 | Ork          | Troll: rewored damage table. Less resilience                                | Heavy weapons do more damage. Take advantage of new bleed mechanism.
+| 22.11.2026 | Ork          | Werewarg: Removed poison resistance, reving models cost more future damage  | Keep it balanced, vulnerable to poison.
+| 22.11.2026 | Ork          | Werewarg: double regeneration while all models are killed.                   | Make it easier to regenerate from the dead.
+| 22.11.2026 | Ork          | Wargrider: improved damage table                                            | Take advantage of new bleed mechanism, make it more robust.
+| 21.11.2026 | Elf          | More bio units can do limited actions while shaken                          | Make shaken less boring for the receiving part.
+| 21.11.2026 | Elf          | Armored oliphant riders: added crew damage table                            | Added d6 crew damage if oliphant is shaken. For fun.
+| 21.11.2026 | Elf          | Armored oliphant riders: added crew damage table                            | Crew can now be killed by crew damage. For fun.
+| 21.11.2026 | Elf          | Armored oliphant riders: tweaked damage table, reduced armor                | Take advantage of new bleed mechanism
+| 21.11.2026 | Elf          |Sauropod Rider,  Removed armor, Teaked damage table                          | Take advantage of new bleed mechanism
+| 21.11.2026 | Elf          |Pegasus,  Teaked damage table                                                | Take advantage of new bleed mechanism
+| 21.11.2026 | Elf          | Pachcepalosourus Reduced armor, Tweaked damage table.                       | Take advantage of new bleed mechanism
+| 21.11.2026 | Elf          | Polar Bear Rider Reduced armor, Tweaked damage table.                       | Take advantage of new bleed mechanism.
+| 21.11.2026 | Elf          | Bear Rider Reduced armor, Tweaked damage table.                             | Take advantage of new bleed mechanism.
+| 21.11.2026 | Elf          | Hydra Tweaked damage table                                                  | Take advantage of new bleed mechanism
+| 21.11.2026 | Elf          | Hydra Added Crew Damage table                                               | Crew can now be killed by crew damage.
 | 19.11.2026 | Ork          | Warg Rider is Shaken by psychic damage on 6+ instead of 5+                  | Buff the warg rider slightly against psychic damage
 | 09.11.2026 | Darkelf      | removed rotate 3 times order for roboprostetic and infantry                 | Unnecessary order.                                                                   |
 | 07.11.2026 | Darkelf      | replaced reference to light damage on damage table with two other options   | Light damage is removed from game. So more a bug fix                                 |

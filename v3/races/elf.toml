@@ -61,7 +61,7 @@ rows = [
 
 [units.elf_hydra.damage_tables.Crew]
 rows = [
-     "6+: Kill one crew model",
+     "6+: Kill one model (crew)",
 ]
 
 notes = ["Unit is not destroyed even if it has no crew. You just cannot use the weapons wielded by the crew."]
@@ -1424,7 +1424,7 @@ rows = [
 
 [units.armored_oliphant_riders.damage_tables.Crew]
 rows = [
-	"4+: Kill one Crew Model",
+	"4+: Kill one Model (crew)",
 ]
 
 
