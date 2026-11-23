@@ -167,7 +167,9 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
     tokens = token_columns(finals)
     lines = Table(
         "Unit",
+        "Points",
         "P(Destroyed)",
+        "E(Points Destroyed)",
         "Models lost",
         "Round",
         "Models",
@@ -180,7 +182,9 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
     for report, final in zip(reports, finals, strict=True):
         lines.add_row(
             escape(report.unit),
+            points_text(report.points),
             f"{report.p_destroyed:.1%}",
+            expected_points_text(report.expected_points_destroyed),
             f"{report.models_lost.mean:.2f}",
             str(final.round),
             f"{final.models:.2f}",
@@ -244,6 +248,10 @@ def print_report(report: DamageReport) -> None:
     lost = report.models_lost
     summary = Table("Outcome", "Value", title="Summary", title_justify="left")
     summary.add_row("P(Destroyed)", f"{report.p_destroyed:.1%}")
+    summary.add_row("Points", points_text(report.points))
+    summary.add_row(
+        "E(Points Destroyed)", expected_points_text(report.expected_points_destroyed)
+    )
     summary.add_row(
         "Models lost", f"mean {lost.mean:.2f}, median {lost.median:g}, p90 {lost.p90:g}"
     )

@@ -52,6 +52,8 @@ def test_damage_reports_a_live_unit(capsys: pytest.CaptureFixture[str]) -> None:
     assert "seed 7" in out
     assert "50 runs" in out
     assert "P(Destroyed)" in out
+    assert "Points" in out
+    assert out.index("P(Destroyed)") < out.index("E(Points Destroyed)")
 
 
 def test_attrition_reports_a_live_unit(capsys: pytest.CaptureFixture[str]) -> None:
@@ -101,7 +103,12 @@ def test_damage_race_reports_one_line_per_unit(
     _sim_race(race_name, "--start", "d6, bleed=4", "--runs", "3", "--seed", "7")
     out = capsys.readouterr().out
     assert "seed 7" in out
-    assert "P(Destroyed)" in out
+    header = next(line for line in out.splitlines() if "P(Destroyed)" in line)
+    assert (
+        header.index("Points")
+        < header.index("P(Destroyed)")
+        < header.index("E(Points Destroyed)")
+    )
     for name in names:
         assert name in out
 
