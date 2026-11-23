@@ -11,9 +11,10 @@ from spf.schemas import rules as r
 from spf.schemas.race import RaceConfig
 from spf.sim.dice import Dice
 from spf.sim.scenario import Start
-from spf.sim.units import unit_scenario, vocabulary_of
+from spf.sim.units import scenario_of, unit_scenario, vocabulary_of
 from tests.conftest import (
     InstallRegistry,
+    synthetic_army,
     synthetic_equipment,
     synthetic_model,
     synthetic_race,
@@ -139,3 +140,56 @@ def test_points_triple_ip_and_add_the_vpm(registry: Registry) -> None:
 def test_a_unit_with_no_cost_has_no_points(registry: Registry) -> None:
     scenario = unit_scenario(_costed(None), "squad", registry=registry, start=Start())
     assert scenario.points is None
+
+
+def _upgradable() -> RaceConfig:
+    """Build a squad of three soldiers, with a costed sword and a promoted veteran."""
+    return synthetic_race(
+        units={"squad": synthetic_unit(models=["soldier"] * 3)},
+        models={
+            "soldier": synthetic_model(),
+            "veteran": synthetic_model(
+                name="Veteran", replaces="soldier", cost={"mp": 1}
+            ),
+        },
+        equipment={
+            "knife": synthetic_equipment(name="Knife", cost=None, upgrade_all=None),
+            "sword": synthetic_equipment(),
+        },
+    )
+
+
+def test_a_scenario_of_an_army_unit_is_named_by_its_nick(registry: Registry) -> None:
+    race = _upgradable()
+    army = synthetic_army(race, units=[])
+    army = army.add_unit("squad", nick="Red Squad", race_config=race)
+    army = army.add_unit("squad", race_config=race)
+    units = army.resolve(race).units
+    names = [scenario_of(unit, registry=registry, start=Start()).unit for unit in units]
+    assert names == ["Red Squad", "Squad"]
+
+
+def test_a_scenario_of_an_army_unit_prices_its_upgrades(registry: Registry) -> None:
+    race = _upgradable()
+    army = synthetic_army(race).upgrade_model(
+        ("squad", 0),
+        model_key=("soldier", 0),
+        equipment_name="sword",
+        race_config=race,
+    )
+    unit = army.resolve(race).units[0]
+    assert scenario_of(unit, registry=registry, start=Start()).points == 5
+
+
+def test_an_upgrade_model_keeps_its_slot(registry: Registry) -> None:
+    race = _upgradable()
+    army = synthetic_army(race).upgrade_unit(
+        ("squad", 0),
+        model_key=("soldier", 1),
+        upgrade_model_name="veteran",
+        race_config=race,
+    )
+    scenario = scenario_of(
+        army.resolve(race).units[0], registry=registry, start=Start()
+    )
+    assert (scenario.models, scenario.points) == (3, 4)

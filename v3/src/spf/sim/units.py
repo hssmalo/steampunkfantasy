@@ -1,8 +1,9 @@
-"""Build a Scenario from a catalogue Unit: its Models, Damage tables and Instances."""
+"""Build a Scenario from a Unit: its Models, Damage tables and Instances."""
 
 from collections import defaultdict
 
 from spf.armies.build import ArmyList
+from spf.armies.unit import Unit
 from spf.registry import Registry
 from spf.schemas.race import RaceConfig
 from spf.sim.dice import Dice
@@ -34,14 +35,34 @@ def unit_scenario(  # noqa: PLR0913
     max_rounds: int = 20,
     resistance: bool = True,
 ) -> Scenario:
-    """Build the Scenario for one Unit at its default loadout.
-
-    Resistance and Endurance are read from the Unit-level Instances of the Unit,
-    its Models and their Default Equipment (ADR 0027 for resistance).
-    """
+    """Build the Scenario for one catalogue Unit at its default Loadout."""
     army = ArmyList(race=next(iter(race.races)), nick="", units=[])
     resolved = army.add_unit(unit, race_config=race).resolve(race).units[0]
-    specials = resolved.unit_specials
+    return scenario_of(
+        resolved,
+        registry=registry,
+        start=start,
+        incoming=incoming,
+        max_rounds=max_rounds,
+        resistance=resistance,
+    )
+
+
+def scenario_of(  # noqa: PLR0913
+    unit: Unit,
+    *,
+    registry: Registry,
+    start: Start,
+    incoming: list[Hit] | None = None,
+    max_rounds: int = 20,
+    resistance: bool = True,
+) -> Scenario:
+    """Build the Scenario for a resolved Unit at whatever Loadout it carries.
+
+    Resistance and Endurance are read from the Unit-level Instances of the Unit,
+    its Models and their effective Equipment (ADR 0027 for resistance).
+    """
+    specials = unit.unit_specials
     vocabulary = vocabulary_of(registry)
     resistances: defaultdict[str, list[Dice]] = defaultdict(list)
     for instance in specials.get("resistance", []) if resistance else []:
@@ -55,16 +76,16 @@ def unit_scenario(  # noqa: PLR0913
         if isinstance(strength := instance.args.get("N"), int)
     )
     return Scenario(
-        unit=resolved.config.name,
-        models=len(resolved.models),
+        unit=unit.display_name,
+        models=len(unit.models),
         tables={
             name: compile_table(name, table, vocabulary=vocabulary)
-            for name, table in resolved.config.damage_tables.items()
+            for name, table in unit.config.damage_tables.items()
         },
         start=start,
         incoming=incoming or [],
         resistance=dict(resistances),
         endurance=endurance,
         max_rounds=max_rounds,
-        points=None if resolved.config.cost is None else resolved.cost().to_points(),
+        points=None if unit.config.cost is None else unit.cost().to_points(),
     )
