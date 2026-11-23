@@ -69,8 +69,9 @@ points** (`ip`). Costs add dimension-by-dimension; they are never collapsed to a
 single number except as Points.
 
 **Points**:
-The single scalar value of an Army for balancing, `mp + cp + xp + 3·ip + VPM`
-(industry points count triple). This is the victory-point value a player fields.
+The single scalar value of a Unit or an Army for balancing,
+`mp + cp + xp + 3·ip + VPM` (industry points count triple); an Army's Points are
+the sum of its Units'. This is the victory-point value a player fields.
 _Avoid_: score, value, price (price is the multi-dimensional Cost)
 
 **Victory Point Modification** (VPM):

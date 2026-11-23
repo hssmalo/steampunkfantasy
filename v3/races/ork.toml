@@ -1465,8 +1465,8 @@ ap = 5
 
 [[equipment.big_gun.range.specials.cloud]]
 text = "Place {fog:hex.fog} in the hex directly ahead of this unit"
-#text = "Place fog in the hex directly ahead of this unit"
 
+#text = "Place fog in the hex directly ahead of this unit"
 [equipment.spear_shooter]
 race = "ork"
 name = "Spear Shooter"
@@ -1479,7 +1479,6 @@ ap = 2
 
 [[equipment.spear_shooter.range.specials.multiple_shots]]
 text = "{[x2,x2,x2,x2]:special.array_of_shots}"
-
 
 [equipment.grenade_launcher]
 race = "ork"
