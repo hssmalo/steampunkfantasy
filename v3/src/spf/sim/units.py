@@ -66,10 +66,10 @@ def scenario_of(  # noqa: PLR0913
     Resistance and Endurance are read from the Unit-level Instances of the Unit,
     its Models and their effective Equipment (ADR 0027 for resistance).
     """
-    sources = merge_specials(*_resistance_sources(unit))
+    chain = merge_specials(*_resistance_contributors(unit))
     vocabulary = vocabulary_of(registry)
     resistances: defaultdict[str, list[Dice]] = defaultdict(list)
-    for instance in sources.get("resistance", []) if resistance else []:
+    for instance in chain.get("resistance", []) if resistance else []:
         version, strength = instance.args.get("version"), instance.args.get("N")
         if isinstance(version, str) and strength is not None:
             kind = version.removeprefix(_RESISTANCE_TYPE)
@@ -90,37 +90,33 @@ def scenario_of(  # noqa: PLR0913
     )
 
 
-def _resistance_sources(unit: Unit) -> list[Specials]:
-    """Each source's Unit-level Instances once; a Unit Fixture's once per purchase.
+def _resistance_contributors(unit: Unit) -> list[Specials]:
+    """Each contributor's Unit-level Instances once; a Unit Fixture's per purchase.
 
-    A source is the Unit, a Model kind or an Equipment kind, however many Models
-    carry it. A Unit Fixture is bought for the whole Unit (ADR 0026).
+    A contributor is the Unit, a Model kind or an Equipment kind, however many
+    Models carry it. A Unit Fixture is bought for the whole Unit (ADR 0026).
     """
-    sources = [unit.config.specials]
+    contributors = [unit.config.specials]
     models: set[str] = set()
     equipment: set[str] = set()
     purchases = unit.fixture_purchases
     for model in unit.models:
         if model.name not in models:
             models.add(model.name)
-            sources.append(model.config.unit_specials)
+            contributors.append(model.config.unit_specials)
         for equip in model.equipment:
             if equip.name not in equipment:
                 equipment.add(equip.name)
                 copies = purchases.get(equip.name, 1) if equip.upgrade_all else 1
-                sources.extend([equip.unit_specials] * copies)
-    return sources
+                contributors.extend([equip.unit_specials] * copies)
+    return contributors
 
 
 def _endurance(unit: Unit) -> int:
     """Endurance Tokens: N per Model of the named class, for every carrier."""
     total = 0
     for model in unit.models:
-        chain = merge_specials(
-            unit.config.specials,
-            model.config.unit_specials,
-            *(equip.unit_specials for equip in model.equipment),
-        )
+        chain = merge_specials(unit.config.specials, model.unit_specials)
         for instance in chain.get("endurance", []):
             strength = instance.args.get("N")
             if isinstance(strength, int) and _of_class(

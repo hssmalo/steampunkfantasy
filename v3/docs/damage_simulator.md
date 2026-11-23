@@ -76,9 +76,9 @@ it has none. A Unit without the `--table` table is skipped and named, and keeps
 its number, so the numbers can have gaps.
 
 A **Total** row sums the Points and E(Points Destroyed) of the Units simulated
-that have a Cost. Read its E(Points Destroyed) as "if every Unit took this
-damage separately": what an opponent would expect to score, summed over the
-Units.
+that have a Cost, and shows `–` when none of them has one. Read its E(Points
+Destroyed) as "if every Unit took this damage separately": what an opponent
+would expect to score, summed over the Units.
 
 A fielded Unit usually carries a different Loadout from the catalogue Unit that
 `spf sim damage` plays, so `spf sim damage` does not reproduce a line of this
@@ -183,11 +183,11 @@ through the same steps.
 
 Future Damage applies to **every** roll on the Regular table, whatever caused
 it, and never to Psychic or Critical. Each resistance comes from the Unit's
-`resistance` Instances. Each source counts once however many Models carry it:
-the Unit itself, a kind of Model, or a kind of Equipment. A Unit Fixture counts
-once per purchase. Resistances of the same kind from different sources add up,
-and a resistance written as a die is rolled each time. `--no-resistance`
-ignores them all, so you can compare.
+`resistance` Instances. Each contributor counts once however many Models carry
+it: the Unit itself, a kind of Model, or a kind of Equipment. A Unit Fixture
+counts once per purchase. Resistances of the same kind from different
+contributors add up, and a resistance written as a die is rolled each time.
+`--no-resistance` ignores them all, so you can compare.
 
 ### Finding the row
 
