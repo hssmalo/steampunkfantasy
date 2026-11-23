@@ -5,6 +5,7 @@ rules edit can break these tests.
 """
 
 from dataclasses import replace
+from pathlib import Path
 from typing import cast
 
 import pytest
@@ -27,6 +28,14 @@ from spf.sim.effects import Vocabulary
 from spf.sim.report import DamageReport, RoundSummary, simulate
 from spf.sim.scenario import Scenario
 from spf.sim.tables import CompiledTable, compile_table
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_model,
+    synthetic_race,
+    synthetic_unit,
+    write_army_json,
+    write_race_toml,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -190,8 +199,10 @@ def _report(unit: str, *, points: int | None, p_destroyed: float) -> DamageRepor
 
 def _cells(out: str, label: str) -> list[str]:
     """Split the table row holding `label` into its stripped cells."""
-    line = next(line for line in out.splitlines() if f" {label} " in line)
-    return [cell.strip() for cell in line.split("│")[1:-1]]
+    rows = [
+        [cell.strip() for cell in line.split("│")[1:-1]] for line in out.splitlines()
+    ]
+    return next(row for row in rows if label in row)
 
 
 def test_the_army_report_numbers_its_columns_first(
@@ -245,3 +256,75 @@ def test_an_army_with_no_costed_unit_has_no_total(
     total = _cells(capsys.readouterr().out, "Total")
     assert total[2] == NO_POINTS
     assert total[4] == NO_POINTS
+
+
+def _army_unit(name: str, *, nick: str | None = None) -> dict[str, object]:
+    return {"name": name, "nick": nick, "models": [{"name": "soldier", "upgrades": []}]}
+
+
+@pytest.fixture
+def army_on_disk(
+    races_dir: Path, armies_dir: Path, install_registry: InstallRegistry
+) -> str:
+    """Write a Race and an Army of it: a nicked squad, a beast, another squad.
+
+    Only the squads have a Regular Damage table.
+    """
+    install_registry()
+    race = synthetic_race(
+        units={
+            "squad": synthetic_unit(),
+            "beast": synthetic_unit(
+                name="Beast", damage_tables={"Crew": {"rows": ["1+: Fine"]}}
+            ),
+        },
+        models={"soldier": synthetic_model(equipment=[])},
+        equipment={},
+    )
+    write_race_toml(races_dir, race)
+    (armies_dir / "cup").mkdir()
+    army = {
+        "race": next(iter(race.races)),
+        "nick": "Reds",
+        "units": [
+            _army_unit("squad", nick="Red Squad"),
+            _army_unit("beast"),
+            _army_unit("squad"),
+        ],
+    }
+    write_army_json(armies_dir / "cup", "reds", army)
+    return "cup/reds"
+
+
+def _sim_army(*args: str) -> None:
+    app(
+        ["sim", "damage-army", *args], exit_on_error=False, result_action="return_value"
+    )
+
+
+def test_damage_army_names_the_army_and_how_it_ran(
+    capsys: pytest.CaptureFixture[str], army_on_disk: str
+) -> None:
+    _sim_army(army_on_disk, "--start", "d6", "--runs", "50", "--seed", "7")
+    heading = capsys.readouterr().out.splitlines()[0]
+    assert "Reds (Goblin)" in heading
+    assert "50 runs per Unit" in heading
+    assert "seed 7" in heading
+
+
+def test_damage_army_numbers_its_units_and_skips_by_table(
+    capsys: pytest.CaptureFixture[str], army_on_disk: str
+) -> None:
+    _sim_army(army_on_disk, "--start", "d6", "--runs", "5", "--seed", "7")
+    out = capsys.readouterr().out
+    assert _cells(out, "Red Squad")[:2] == ["1", "Red Squad"]
+    assert _cells(out, "Squad")[:2] == ["3", "Squad"]
+    assert "skipped: Beast" in out
+
+
+def test_damage_army_rejects_an_unknown_army(
+    capsys: pytest.CaptureFixture[str], army_on_disk: str
+) -> None:
+    with pytest.raises(SystemExit):
+        _sim_army(f"{army_on_disk}x", "--start", "d6")
+    assert "Error" in capsys.readouterr().err

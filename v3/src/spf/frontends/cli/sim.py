@@ -10,7 +10,8 @@ from rich.table import Table
 from rich.text import Text
 
 from spf import races
-from spf.console import stdout
+from spf.armies import io
+from spf.console import stderr, stdout
 from spf.frontends.cli.suggest import resolve_or_raise
 from spf.prose import plain
 from spf.registry import load_registry
@@ -19,7 +20,7 @@ from spf.schemas.race import RaceConfig
 from spf.sim.report import DamageReport, RoundSummary, simulate
 from spf.sim.scenario import GRAMMAR, Scenario, parse_hits, parse_start
 from spf.sim.tables import CompiledTable
-from spf.sim.units import unit_scenario
+from spf.sim.units import scenario_of, unit_scenario
 
 _START_HELP = f"The starting state. {GRAMMAR}"
 _STRENGTH = re.compile(r"(?P<name>.+)\[(?P<strength>\d+)\]")
@@ -33,6 +34,7 @@ def add_commands(app: cyclopts.App) -> None:
     """Add simulator commands to the CLI."""
     app.command(damage, name="damage")
     app.command(damage_race, name="damage-race")
+    app.command(damage_army, name="damage-army")
 
 
 def damage(  # noqa: PLR0913
@@ -143,6 +145,73 @@ def damage_race(  # noqa: PLR0913
         reports.append(simulate(scenario, runs=runs, seed=seed, entry=table))
         seed = reports[-1].seed
     print_race_report(reports, race=race_name)
+    if skipped:
+        stdout.print(f"No {table} damage table, skipped: {escape(', '.join(skipped))}")
+
+
+def damage_army(  # noqa: PLR0913
+    army_name: str,
+    *,
+    table: t.DamageTableName = "Regular",
+    start: Annotated[str, cyclopts.Parameter(help=_START_HELP)] = "",
+    incoming: str = "",
+    runs: int = 10_000,
+    seed: int | None = None,
+    max_rounds: int = 20,
+    resistance: bool = True,
+) -> None:
+    """Simulate the same damage on every Unit of an Army, one line per Unit.
+
+    Each Unit plays at the Loadout its player bought, and every Unit uses the
+    same seed.
+
+    Parameters
+    ----------
+    army_name
+        The Army, as `spf army show` names it: `showcase/dwarf`.
+    table
+        The Damage table bare rolls land on. Units without it are skipped.
+    start
+        The starting state; the full grammar is in `--help`.
+    incoming
+        Rolls landing every Round, written as for --start.
+    runs
+        How many runs to simulate per Unit.
+    seed
+        Seed for the dice. A seed is chosen and printed when none is given.
+    max_rounds
+        The most Rounds one run plays.
+    resistance
+        Apply the Units' resistances. Turn off to compare.
+
+    """
+    try:
+        army = io.load_army(army_name)
+    except (FileNotFoundError, ValueError) as err:
+        stderr.print(f"[red]Error:[/] {err}")
+        raise SystemExit(1) from None
+    registry = load_registry()
+    hits, rolling = parse_start(start, table=table), parse_hits(incoming, table=table)
+    reports: list[DamageReport] = []
+    positions: list[int] = []
+    skipped: list[str] = []
+    for position, unit in enumerate(army.units, start=1):
+        if table not in unit.config.damage_tables:
+            skipped.append(unit.display_name)
+            continue
+        scenario = scenario_of(
+            unit,
+            registry=registry,
+            start=hits,
+            incoming=rolling,
+            max_rounds=max_rounds,
+            resistance=resistance,
+        )
+        reports.append(simulate(scenario, runs=runs, seed=seed, entry=table))
+        positions.append(position)
+        seed = reports[-1].seed
+    race = races.get_metadata(army.race).name
+    print_army_report(reports, title=f"{army.nick} ({race})", positions=positions)
     if skipped:
         stdout.print(f"No {table} damage table, skipped: {escape(', '.join(skipped))}")
 
