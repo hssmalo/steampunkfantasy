@@ -55,6 +55,8 @@ class DamageReport:
     runs: int
     seed: int
     p_destroyed: float
+    points: int | None
+    """The Unit's Points, `None` when it has no Cost."""
     models_lost: Spread
     rounds: dict[EndedBy, dict[int, int]]
     """How many runs ended after each number of Rounds, by how they ended."""
@@ -65,6 +67,11 @@ class DamageReport:
     missing_tables: dict[DamageTableName, int]
     spillover: dict[str, int]
     unparsed: list[UnparsedHit]
+
+    @property
+    def expected_points_destroyed(self) -> float | None:
+        """The Points an opponent expects to score: all on Unit Destroyed, else none."""
+        return None if self.points is None else self.p_destroyed * self.points
 
 
 def _spread(values: list[int]) -> Spread:
@@ -145,6 +152,7 @@ def simulate(
         runs=runs,
         seed=seed,
         p_destroyed=sum(result.destroyed for result in results) / runs,
+        points=scenario.points,
         models_lost=_spread([result.models_lost for result in results]),
         rounds=_rounds(results),
         ended_by=dict(Counter(result.ended_by for result in results)),
