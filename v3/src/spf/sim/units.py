@@ -3,6 +3,7 @@
 from collections import defaultdict
 
 from spf.armies.build import ArmyList
+from spf.armies.model import Model
 from spf.armies.specials import merge_specials
 from spf.armies.unit import Unit
 from spf.registry import Registry
@@ -14,6 +15,7 @@ from spf.sim.scenario import Hit, Scenario, Start
 from spf.sim.tables import compile_table
 
 _RESISTANCE_TYPE = "resistance_type."
+_ELITE_TYPES = {"Elite", "SuperElite"}
 
 
 def vocabulary_of(registry: Registry) -> Vocabulary:
@@ -64,7 +66,6 @@ def scenario_of(  # noqa: PLR0913
     Resistance and Endurance are read from the Unit-level Instances of the Unit,
     its Models and their effective Equipment (ADR 0027 for resistance).
     """
-    specials = unit.unit_specials
     sources = merge_specials(*_resistance_sources(unit))
     vocabulary = vocabulary_of(registry)
     resistances: defaultdict[str, list[Dice]] = defaultdict(list)
@@ -73,11 +74,6 @@ def scenario_of(  # noqa: PLR0913
         if isinstance(version, str) and strength is not None:
             kind = version.removeprefix(_RESISTANCE_TYPE)
             resistances[kind].append(Dice.parse(str(strength)))
-    endurance = sum(
-        strength
-        for instance in specials.get("endurance", [])
-        if isinstance(strength := instance.args.get("N"), int)
-    )
     return Scenario(
         unit=unit.display_name,
         models=len(unit.models),
@@ -88,7 +84,7 @@ def scenario_of(  # noqa: PLR0913
         start=start,
         incoming=incoming or [],
         resistance=dict(resistances),
-        endurance=endurance,
+        endurance=_endurance(unit),
         max_rounds=max_rounds,
         points=None if unit.config.cost is None else unit.cost().to_points(),
     )
@@ -114,3 +110,37 @@ def _resistance_sources(unit: Unit) -> list[Specials]:
                 copies = purchases.get(equip.name, 1) if equip.upgrade_all else 1
                 sources.extend([equip.unit_specials] * copies)
     return sources
+
+
+def _endurance(unit: Unit) -> int:
+    """Endurance Tokens: N per Model of the named class, for every carrier."""
+    total = 0
+    for model in unit.models:
+        chain = merge_specials(
+            unit.config.specials,
+            model.config.unit_specials,
+            *(equip.unit_specials for equip in model.equipment),
+        )
+        for instance in chain.get("endurance", []):
+            strength = instance.args.get("N")
+            if isinstance(strength, int) and _of_class(
+                model, model_class=instance.args.get("model_class")
+            ):
+                total += strength
+    return total
+
+
+def _of_class(model: Model, *, model_class: object) -> bool:
+    """Tell whether the Model is of the class an endurance Instance names.
+
+    An elite is a Model of Type Elite or SuperElite; any class other than
+    elite or regular names every Model.
+    """
+    elite = bool(_ELITE_TYPES.intersection(model.config.type))
+    match str(model_class).strip().casefold():
+        case "elite model":
+            return elite
+        case "regular model":
+            return not elite
+        case _:
+            return True

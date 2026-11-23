@@ -213,7 +213,17 @@ def _kitted(**unit_fields: object) -> RaceConfig:
                 replaces="soldier",
                 cost={"mp": 1},
                 type=["Infantry", "Elite"],
-                unit_specials={"resistance": [_resistance("psychic", 1)]},
+                unit_specials={
+                    "resistance": [_resistance("psychic", 1)],
+                    "endurance": [_endurance(1, "elite model")],
+                },
+            ),
+            "champion": synthetic_model(
+                **soldier,
+                name="Champion",
+                replaces="soldier",
+                cost={"mp": 2},
+                type=["Infantry", "SuperElite"],
             ),
         },
         equipment={
@@ -229,24 +239,43 @@ def _kitted(**unit_fields: object) -> RaceConfig:
                 requires=[["Independent:1"]],
                 unit_specials={"resistance": [_resistance("fire", 1)]},
             ),
+            "vest": synthetic_equipment(
+                name="Vest",
+                upgrade_all=True,
+                requires=[["Independent:1"]],
+                unit_specials={
+                    "endurance": [
+                        _endurance(1, "regular model"),
+                        _endurance(2, "elite model"),
+                    ]
+                },
+            ),
         },
     )
 
 
-def _promote(army: ArmyList, race: RaceConfig, *, slots: int) -> ArmyList:
+def _endurance(strength: int, model_class: str) -> dict[str, object]:
+    return {"args": {"N": strength, "model_class": model_class}}
+
+
+def _promote(
+    army: ArmyList, race: RaceConfig, *, slots: int, to: str = "elite"
+) -> ArmyList:
     for _ in range(slots):
         army = army.upgrade_unit(
             ("squad", 0),
             model_key=("soldier", 0),
-            upgrade_model_name="elite",
+            upgrade_model_name=to,
             race_config=race,
         )
     return army
 
 
-def _buy(army: ArmyList, race: RaceConfig, *, purchases: int) -> ArmyList:
+def _buy(
+    army: ArmyList, race: RaceConfig, *, purchases: int = 1, fixture: str = "cloak"
+) -> ArmyList:
     for _ in range(purchases):
-        army = army.equip_unit(("squad", 0), equipment_name="cloak", race_config=race)
+        army = army.equip_unit(("squad", 0), equipment_name=fixture, race_config=race)
     return army
 
 
@@ -274,3 +303,27 @@ def test_resistance_from_different_sources_adds_up(registry: Registry) -> None:
     race = _kitted(specials={"resistance": [_resistance("poison", 2)]})
     poison = _scenario(synthetic_army(race), race, registry).resistance["poison"]
     assert poison == [Dice.parse("2"), Dice.parse("d4")]
+
+
+def test_endurance_counts_a_regular_carrier_once(registry: Registry) -> None:
+    race = _kitted()
+    army = _buy(synthetic_army(race), race, fixture="vest")
+    assert _scenario(army, race, registry).endurance == 3
+
+
+def test_endurance_counts_an_elite_carrier_as_elite(registry: Registry) -> None:
+    race = _kitted()
+    army = _buy(_promote(synthetic_army(race), race, slots=1), race, fixture="vest")
+    assert _scenario(army, race, registry).endurance == 2 * 1 + 2 + 1
+
+
+def test_a_superelite_counts_as_elite(registry: Registry) -> None:
+    race = _kitted()
+    army = _promote(synthetic_army(race), race, slots=1, to="champion")
+    army = _buy(army, race, fixture="vest")
+    assert _scenario(army, race, registry).endurance == 2 * 1 + 2
+
+
+def test_any_other_class_counts_for_every_model(registry: Registry) -> None:
+    race = _kitted(specials={"endurance": [_endurance(1, " Model")]})
+    assert _scenario(synthetic_army(race), race, registry).endurance == 3
