@@ -4,6 +4,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why
+| 23.11.2026 | DarkElf      | Added Acid SMG                                                              | With new rules, this equipment can be made balanced
+| 23.11.2026 | Ork          | WarDrum: now cost 12cp, but may rally shaken troops                         | Rally fleeing troops could be fun.
 | 22.11.2026 | Ork          | Some units gained limited actions while shaken.                             | Make shaken less booring for receiving part.
 | 22.11.2026 | Ork          | Troll: rewored damage table. Less resilience                                | Heavy weapons do more damage. Take advantage of new bleed mechanism.
 | 22.11.2026 | Ork          | Werewarg: Removed poison resistance, reving models cost more future damage  | Keep it balanced, vulnerable to poison.

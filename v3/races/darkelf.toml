@@ -1591,6 +1591,30 @@ variant = "fire_n_times"
 still = [["Fire", "Fire"]]
 slow = [["Fire", "Fire"]]
 
+
+[equipment.acid_smg]
+name = "Acid SMG"
+race = "darkelf"
+cost.cp = 8
+upgrade_all = true
+requires = [["Hands:2"], ["type:Infantry"]]
+
+[equipment.acid_smg.range]
+range = 3
+angle = [true, true, true, true]
+damage = "d6-3"
+ap = 1
+
+[[equipment.crossbow.range.specials.range_extra_damage]]
+args.version = "token.minor_acid"
+
+[[equipment.acid_smg.range.specials.ammo]]
+variant = "always_loaded"
+
+[equipment.acid_smg.orders_gained.fire]
+still = [["Fire", "Fire"]]
+slow = [["Fire", "Fire"]]
+
 [equipment.smg_free]
 name = "SMG"
 race = "darkelf"

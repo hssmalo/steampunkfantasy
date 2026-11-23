@@ -98,12 +98,12 @@ slow = [["Chs", "-", "-"], ["-", "-", "Chs"]]
 
 [units.troll.damage_tables.Regular]
 rows = ["1-3: +1 to future damage",
-        "4: +1 to future damage, Bleed[4]",
-	"5: +1 to future damage, Bleed[6]",
-        "6: +1 to future damage, Bleed[8]",
-	"7: +1 to future damage, Bleed[10]",
-	"8-14: +1 to future damage, Bleed[12]",
-	"15-19: As 10-14, temporarily kill model",
+        "4: +1 to future damage, {Bleed[5]:token.bleed}",
+	"5: +1 to future damage, {Bleed[6]:token.bleed}",
+        "6: +1 to future damage, {Bleed[8]:token.bleed}",
+	"7: +1 to future damage, {Bleed[10]:token.bleed}",
+	"8-14: +1 to future damage, {Bleed[12]:token.bleed}",
+	"15-19: As 8-14, temporarily kill 1 model",
 	"20+: Unit destroyed",
 ]
 notes = [
@@ -462,7 +462,7 @@ args.speed = "speed.still"
 args.N = 2
 
 [[units.ork_werewarg.specials.regeneration]]
-text = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, at a cost of +2 to future damage. While all models are temporarily killed you gain improved regeneration Heal[2, self, 2nd Healing] instead. Regeneration only stops if unit is permanently destroyed."
+text = "[2] = Heal[2, self, 2nd Healing]. Instead of Healing normal effect, you may use 2 heal points to revive a fallen model, at a cost of +1 to future damage. While all models are temporarily killed you gain improved regeneration Heal[2, self, 2nd Healing] instead. Regeneration only stops if unit is permanently destroyed."
 
 [units.ork_werewarg.orders.movement]
 slow = [
@@ -494,9 +494,9 @@ rows = [
 ]
 notes = [
 	"When all models are temporarily killed: replace kill 1 model with +1 to future damage and keep all remaining Bleed.",
-	"When all models are temporarily killed, treat unit as still for to-hit penalties, and as one model for purpose of area attacks. It keeps all of its units abilities, but none abilities of the models abilities, including firing options and assault stats",
-    "If one model is temporarily killed remove half of the +1 future damage tokens and if killed by Bleed/Poison, remove that Bleed/Poison token",
-	"Bleed does not cause more {Bleed[4]:token.bleed}",
+	"When all models are temporarily killed, treat unit as still for to-hit penalties, and as one model for purpose of area attacks. It keeps all of its units abilities, but none abilities of the models abilities, including firing options and assault stats.",
+    "If one model is temporarily killed Bleed/Poison, remove that Bleed/Poison token.",
+	"Bleed does not cause more {Bleed[4]:token.bleed}.",
 ]
 
 [units.ork_werewarg.damage_tables.Psychic]
@@ -525,7 +525,6 @@ description = '''An bloodthirsty ork in finer clothes with 4 arms and wielding 4
 [units.bioengineered_ork.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
-fire_order = "Shaken Fire: if loaded, you must fire at closest enemy. May Load, but may not aim"
 
 [[units.bioengineered_ork.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -540,8 +539,9 @@ args.N = 1
 args.version = "resistance_type.fire"
 args.N = 1
 
-[[units.bioengineered_ork.specials.immunity]]
-args.feature = "token.minor_acid"
+[[units.bioengineered_ork.specials.resistance]]
+args.version = "resistance_type.acid"
+args.N = 1
 
 [units.bioengineered_ork.orders.fire]
 still = [
@@ -1222,12 +1222,12 @@ variant = "one_instead_of_regular_weapons"
 [equipment.war_drum]
 name = "War Drum"
 race = "ork"
-cost.xp = 8
+cost.xp = 12
 upgrade_all = true
 requires = [["type:Infantry"], ["type:Elite"], ["Independent:1"]]
 
 [[equipment.war_drum.unit_specials.movement]]
-text = "At start of any round set target to either infantry, cavalry or mechanical. All Chs orders of all units are replaced with Chs[target]."
+text = "At start of any round set target to either infantry, cavalry or mechanical. All Chs orders of all units are replaced with Chs[target]. In addition, you may rally troops: flee orders counts as Chs[target] instead."
 
 #see_also orders.chs
 [[equipment.war_drum.unit_specials.terror]]
@@ -1436,6 +1436,22 @@ variant = "point_blank"
 [[equipment.hand_catapult.range.specials.area.cases]]
 args.N = 4
 variant = "normal_range"
+
+[equipment.grenade_extension]
+race = "ork"
+name = "Grenade Extension"
+cost.cp = 8
+requires = [["type:Infantry"], ["Hands:1"]]
+upgrade_all = false
+
+[equipment.grenade_extension.range]
+range = 3
+angle = [true, true, true, true]
+damage = "N/A"
+ap = "N/A"
+
+[[equipment.grenade_extension.range.specials.cloud]]
+text = "Place {Poison Cloud[4]:hex.poison_cloud} in a hex you attacked with an area attack. Range is increased to 6 if combined with a hand catapult."
 
 [equipment.big_gun]
 race = "ork"

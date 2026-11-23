@@ -81,7 +81,6 @@ description = '''An elegant elf wielding a ww1 style rifle, aiming towards you.
 [units.elf_infantry.shaken]
 speed = "slow"
 movement_order = ["-", "-", "Flee"]
-fire_order = "Shaken Fire: if loaded, you must fire at closest enemy. May Load, but may not aim"
 
 [[units.elf_infantry.specials.to_hit]]
 args.ability = "ability.take_cover"
@@ -1342,7 +1341,7 @@ still = [["360°", "A", "F"]]
 [units.sauropod_riders.damage_tables.Regular]
 rows = ["1: Bleed[4]",
 	"2-3: Bleed[6]",
-	"4-5: Bleed[7]",
+	"4-5: Bleed[8]",
 	"6-7: Bleed[10]",
 	"8-9: Bleed[12], +1 to future damage",
 	"10-19: As 8-9, d8 psychic damage",
