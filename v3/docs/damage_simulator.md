@@ -57,11 +57,12 @@ a Unit under steady fire: "how long does it last?"
 ### Every Unit of a Race at once
 
 `spf sim damage-race RACE` takes the same options and simulates every Unit of
-the Race, printing one line per Unit: P(Unit Destroyed), mean Models lost, and
-the last row of that Unit's mean-state table. That row's Round is the Unit's
-longest run, so it differs from Unit to Unit. Units without the `--table`
-table are skipped and named. Every Unit is simulated with the same seed, so
-`spf sim damage race.unit --seed N` gives the full report behind any line.
+the Race, printing one line per Unit: its Points, P(Destroyed), E(Points
+Destroyed), mean Models lost, and the last row of that Unit's mean-state table.
+That row's Round is the Unit's longest run, so it differs from Unit to Unit.
+Units without the `--table` table are skipped and named. Every Unit is
+simulated with the same seed, so `spf sim damage race.unit --seed N` gives the
+full report behind any line.
 
 ## One run, step by step
 
@@ -239,7 +240,7 @@ chosen and printed.
 | Section | What it shows |
 |---|---|
 | **The Unit's Damage tables** | Printed first, the chosen table on top, each with its notes underneath. Text the parser skipped is colored red, so you see exactly which parts of a row are left out |
-| **Summary** | P(Unit Destroyed); Models lost (mean, median, 90th percentile, where a destroyed Unit counts as losing all its Models); how runs ended |
+| **Summary** | P(Destroyed); the Unit's Points at its default loadout (`–` for a Unit with no Cost); E(Points Destroyed), P(Destroyed) × Points; Models lost (mean, median, 90th percentile, where a destroyed Unit counts as losing all its Models); how runs ended. E(Points Destroyed) assumes the attacker scores a Unit's Points only when the whole Unit is destroyed, and leaves out every other victory-point rule |
 | **Rounds played, by how the run ended** | The share of runs that ended after each number of Rounds, in separate columns for runs that ran out of Continuing Damage, were destroyed, or hit the cap |
 | **Mean state at the end of each Round** | Mean Models alive, Future Damage, Future Crew Damage and every Token count. Bleed and Poison get a column per strength (`bleed[4]`, `bleed[6]`, …), since strengths change during a run: Poison steps down each Round, and amplified or saved Bleed changes die. Round 0 is the state after the starting rolls. A run that has already ended is held at its final state, so the means stay comparable from Round to Round |
 | **Damage table rolls** | How many rolls each table got over all runs, with the chosen table first |

@@ -22,10 +22,12 @@ def _scenario(
     hits: int = 1,
     tokens: list[PlaceToken] | None = None,
     max_rounds: int = 20,
+    points: int | None = None,
 ) -> Scenario:
     return Scenario(
         unit="Squad",
         models=4,
+        points=points,
         tables={
             name: compile_table(
                 name, DamageTable.model_validate({"rows": rows}), vocabulary=VOCABULARY
@@ -51,6 +53,25 @@ def test_models_lost_statistics() -> None:
     lost = report.models_lost
     assert (lost.mean, lost.median, lost.p90) == (2, 2, 2)
     assert report.p_destroyed == 0.0
+
+
+def test_certain_destruction_scores_all_the_points() -> None:
+    scenario = _scenario({"Regular": ["1+: Unit destroyed"]}, points=6)
+    report = simulate(scenario, runs=50, seed=1)
+    assert report.points == 6
+    assert report.expected_points_destroyed == 6.0
+
+
+def test_lost_models_score_no_points() -> None:
+    scenario = _scenario({"Regular": ["1+: Kill 1 model"]}, hits=2, points=6)
+    report = simulate(scenario, runs=20, seed=1)
+    assert report.expected_points_destroyed == 0.0
+
+
+def test_a_unit_with_no_points_expects_none() -> None:
+    report = simulate(_scenario({"Regular": ["1+: Unit destroyed"]}), runs=5, seed=1)
+    assert report.points is None
+    assert report.expected_points_destroyed is None
 
 
 def test_the_seed_and_run_count_are_reported_and_reproduce_the_result() -> None:

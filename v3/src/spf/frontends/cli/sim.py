@@ -25,6 +25,8 @@ _START_HELP = f"The starting state. {GRAMMAR}"
 _STRENGTH = re.compile(r"(?P<name>.+)\[(?P<strength>\d+)\]")
 UNPARSED_STYLE = "bold red"
 """How Damage table text the simulator does not play is colored."""
+NO_POINTS = "\N{EN DASH}"
+"""How a Unit with no Cost shows its Points and E(Points Destroyed)."""
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -165,7 +167,9 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
     tokens = token_columns(finals)
     lines = Table(
         "Unit",
-        "P(Unit Destroyed)",
+        "Points",
+        "P(Destroyed)",
+        "E(Points Destroyed)",
         "Models lost",
         "Round",
         "Models",
@@ -178,7 +182,9 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
     for report, final in zip(reports, finals, strict=True):
         lines.add_row(
             escape(report.unit),
+            points_text(report.points),
             f"{report.p_destroyed:.1%}",
+            expected_points_text(report.expected_points_destroyed),
             f"{report.models_lost.mean:.2f}",
             str(final.round),
             f"{final.models:.2f}",
@@ -241,7 +247,11 @@ def print_report(report: DamageReport) -> None:
     )
     lost = report.models_lost
     summary = Table("Outcome", "Value", title="Summary", title_justify="left")
-    summary.add_row("P(Unit Destroyed)", f"{report.p_destroyed:.1%}")
+    summary.add_row("P(Destroyed)", f"{report.p_destroyed:.1%}")
+    summary.add_row("Points", points_text(report.points))
+    summary.add_row(
+        "E(Points Destroyed)", expected_points_text(report.expected_points_destroyed)
+    )
     summary.add_row(
         "Models lost", f"mean {lost.mean:.2f}, median {lost.median:g}, p90 {lost.p90:g}"
     )
@@ -302,6 +312,16 @@ def print_report(report: DamageReport) -> None:
         for hit in report.unparsed:
             unparsed.add_row(hit.table, hit.row, escape(hit.text), str(hit.hits))
         stdout.print(unparsed)
+
+
+def points_text(points: int | None) -> str:
+    """Show a Unit's Points, or `NO_POINTS` when it has no Cost."""
+    return NO_POINTS if points is None else str(points)
+
+
+def expected_points_text(value: float | None) -> str:
+    """Show E(Points Destroyed), or `NO_POINTS` when the Unit has no Cost."""
+    return NO_POINTS if value is None else f"{value:.2f}"
 
 
 def token_columns(per_round: Iterable[RoundSummary]) -> list[str]:

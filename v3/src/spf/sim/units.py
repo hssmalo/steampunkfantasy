@@ -66,4 +66,5 @@ def unit_scenario(  # noqa: PLR0913
         resistance=dict(resistances),
         endurance=endurance,
         max_rounds=max_rounds,
+        points=None if resolved.config.cost is None else resolved.cost().to_points(),
     )

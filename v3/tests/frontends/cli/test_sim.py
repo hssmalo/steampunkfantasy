@@ -12,7 +12,14 @@ from rich.text import Text
 from spf import races
 from spf.console import stdout
 from spf.frontends.cli import app
-from spf.frontends.cli.sim import UNPARSED_STYLE, damage_table, token_columns
+from spf.frontends.cli.sim import (
+    NO_POINTS,
+    UNPARSED_STYLE,
+    damage_table,
+    expected_points_text,
+    points_text,
+    token_columns,
+)
 from spf.schemas.type_aliases import DamageTable, RaceName
 from spf.sim.effects import Vocabulary
 from spf.sim.report import RoundSummary
@@ -44,7 +51,9 @@ def test_damage_reports_a_live_unit(capsys: pytest.CaptureFixture[str]) -> None:
     assert name in out
     assert "seed 7" in out
     assert "50 runs" in out
-    assert "P(Unit Destroyed)" in out
+    assert "P(Destroyed)" in out
+    assert "Points" in out
+    assert out.index("P(Destroyed)") < out.index("E(Points Destroyed)")
 
 
 def test_attrition_reports_a_live_unit(capsys: pytest.CaptureFixture[str]) -> None:
@@ -72,7 +81,7 @@ def test_damage_prints_the_units_tables_above_the_report(
     _sim(unit, "--start", "d6", "--runs", "5")
     out = capsys.readouterr().out
     assert "Regular damage table" in out
-    assert out.index("Regular damage table") < out.index("P(Unit Destroyed)")
+    assert out.index("Regular damage table") < out.index("P(Destroyed)")
 
 
 def _sim_race(*args: str) -> None:
@@ -94,7 +103,12 @@ def test_damage_race_reports_one_line_per_unit(
     _sim_race(race_name, "--start", "d6, bleed=4", "--runs", "3", "--seed", "7")
     out = capsys.readouterr().out
     assert "seed 7" in out
-    assert "P(Unit Destroyed)" in out
+    header = next(line for line in out.splitlines() if "P(Destroyed)" in line)
+    assert (
+        header.index("Points")
+        < header.index("P(Destroyed)")
+        < header.index("E(Points Destroyed)")
+    )
     for name in names:
         assert name in out
 
@@ -146,3 +160,15 @@ def test_an_unparsed_note_is_colored() -> None:
     caption = cast("Text", table.caption)
     assert "Bleed does not cause more Bleed" in caption.plain
     assert _styles(caption) == {"Count the models first": UNPARSED_STYLE}
+
+
+def test_points_show_as_a_whole_number_and_zero_is_a_value() -> None:
+    assert points_text(None) == NO_POINTS
+    assert points_text(0) == "0"
+    assert points_text(16) == "16"
+
+
+def test_expected_points_show_two_decimals() -> None:
+    assert expected_points_text(None) == NO_POINTS
+    assert expected_points_text(0.0) == "0.00"
+    assert expected_points_text(4.4875) == "4.49"
