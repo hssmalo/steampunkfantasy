@@ -165,7 +165,7 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
     tokens = token_columns(finals)
     lines = Table(
         "Unit",
-        "P(Unit Destroyed)",
+        "P(Destroyed)",
         "Models lost",
         "Round",
         "Models",
@@ -241,7 +241,7 @@ def print_report(report: DamageReport) -> None:
     )
     lost = report.models_lost
     summary = Table("Outcome", "Value", title="Summary", title_justify="left")
-    summary.add_row("P(Unit Destroyed)", f"{report.p_destroyed:.1%}")
+    summary.add_row("P(Destroyed)", f"{report.p_destroyed:.1%}")
     summary.add_row(
         "Models lost", f"mean {lost.mean:.2f}, median {lost.median:g}, p90 {lost.p90:g}"
     )
