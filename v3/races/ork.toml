@@ -1069,7 +1069,6 @@ args.version = "token.fire"
 
 [[equipment.flame_covered_axe.assault.specials.assault_extra_damage]]
 args.version = "token.minor_acid"
-args.M = 2
 
 [[equipment.flame_covered_axe.assault.specials.assault_extra_damage]]
 args.version = "token.poison"
@@ -1089,7 +1088,6 @@ args.version = "token.fire"
 
 [[equipment.flame_covered_axe_free.assault.specials.assault_extra_damage]]
 args.version = "token.minor_acid"
-args.M = 2
 
 [[equipment.flame_covered_axe_free.assault.specials.assault_extra_damage]]
 args.version = "token.poison"

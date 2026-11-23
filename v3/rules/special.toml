@@ -89,11 +89,6 @@ slots = ["assault"]
 signature = "{version}[1 for {M}]"
 effect = "The target gets one {version} if hit at least once. Where a ratio is given, it gets one per {M} hits instead."
 see_also = ["special.range_extra_damage", "special.assault_gear_disruption"]
-todo = """The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
-
-From reference.toml:
-#Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
-#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed"""
 
 [special.array_of_shots]
 name = "Array of Shots"
@@ -117,11 +112,6 @@ name = "Range Extra Damage"
 slots = ["range"]
 signature = "{version}"
 effect = "The target gets one {version}."
-todo = """The Race data spelled this Extra Damage, Extra Damage 2 and Extra Damage 3, which the instance shape collapses onto one id. Confirm they were always one ability stacked, rather than three.
-
-From reference.toml:
-#Til Geir Arne: Hvordan skille på Extra Damage assault og extra damage ranged. Må kanskje sette inn special.XXX.
-#Note to self: maybe make a generic 1 per N rule. You get 1 per N hits of given token or effect... Then assault versions of rules maybe not needed"""
 
 [special.range_extra_damage.variables]
 version = { type = "ref", namespaces = ["token", "damage_type"] }

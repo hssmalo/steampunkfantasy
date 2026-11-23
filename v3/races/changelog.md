@@ -4,6 +4,9 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why
+| 23.11.2026 | Abomination  | Hippo, gained flee order at slow                                            | Very useful to avoid assault.
+| 23.11.2026 | Abomination  | Hippo , tweaked damage table, reduced armor                                 | Take advantage of new bleed mechanism
+| 23.11.2026 | Abomination  | Horror, tweaked damage table                                                | Needed a buff
 | 23.11.2026 | DarkElf      | Added Acid SMG                                                              | With new rules, this equipment can be made balanced
 | 23.11.2026 | Ork          | WarDrum: now cost 12cp, but may rally shaken troops                         | Rally fleeing troops could be fun.
 | 22.11.2026 | Ork          | Some units gained limited actions while shaken.                             | Make shaken less booring for receiving part.

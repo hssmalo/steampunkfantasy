@@ -92,13 +92,15 @@ see_also = ["special.repair"]
 name = "Minor Acid"
 phases = ["Agony 1"]
 remove = "Only as part of effect"
-effect = "Roll a die, at 3+, unit gets +1 on future damage. Otherwise, remove minor acid."
+#apply = When hit at least once with a weapon/effect with acid in one phase, gain one fire token.
+effect = "Roll a die, at 3+, unit gets +1 on future damage and reduce armor by 1. Otherwise, remove minor acid."
 see_also = ["damage_type.acid"]
 
 [tokens.fire]
 name = "Fire"
 phases = ["Agony 2"]
 remove = "Only as part of effect"
+#apply = When hit at least once with a weapon/effect with fire in one phase, gain one fire token.
 effect = '''Roll a d6 and subtract unit fire resistance if any. If this number is 2 or below, fire is removed. Otherwise:
 
 
@@ -112,6 +114,7 @@ see_also = ["damage_type.fire", "special.resistance"]
 name = "Acid"
 phases = ["Agony 0"]
 remove = "Downgraded as part of effect"
+#apply = When hit at least once with a weapon/effect with acid in one phase, gain one fire token.
 effect = """Roll a d8 on the following damage table:
 
 1. Downgrade from acid to minor acid.
@@ -193,7 +196,9 @@ to_be_hit = "0"
 name = "Insane"
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 remove = "When unit is not longer shaken"
-effect = "Can only be given to bio units which are already shaken. If also hypnotized, remove hypnotized token and replace it with insane. Any flee order is treated at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go."
+effect = """Can only be given to bio units which are also are shaken. If also hypnotized, remove hypnotized token and replace it with insane. Any flee order is treated at chase, but targets friends or foe alike. If there are two or more equally valid hexes to move to with chase, the owner still decides where to go. If attacking a friendly unit, the friendly unit must fight back.
+
+In addition, a shaken token may only be removed on the roll of 5+"""
 see_also = ["token.shaken", "token.hypnotized", "special.insanity_field"]
 
 
