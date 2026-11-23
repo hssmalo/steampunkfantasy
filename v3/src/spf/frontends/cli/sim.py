@@ -157,15 +157,49 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
     """Print one line per Unit: its odds, its losses and its state at the end."""
     if not reports:
         return
-    first = reports[0]
+    _print_heading(reports[0], title=race)
+    stdout.print(_unit_lines(reports))
+
+
+def print_army_report(
+    reports: list[DamageReport], *, title: str, positions: list[int]
+) -> None:
+    """Print one line per Army Unit, numbered by its position, then a Total row.
+
+    The Total sums the Points and E(Points Destroyed) of the Units with a Cost:
+    what an opponent expects to score if every Unit took this damage separately.
+    """
+    if not reports:
+        return
+    _print_heading(reports[0], title=title)
+    lines = _unit_lines(reports, positions=positions)
+    costed = [report for report in reports if report.points is not None]
+    points = sum(report.points or 0 for report in costed)
+    expected = sum(report.expected_points_destroyed or 0.0 for report in costed)
+    total = ["", "Total", points_text(points if costed else None), ""]
+    total.append(expected_points_text(expected if costed else None))
+    lines.add_section()
+    lines.add_row(*total, *[""] * (len(lines.columns) - len(total)))
+    stdout.print(lines)
+
+
+def _print_heading(first: DamageReport, *, title: str) -> None:
+    """Print the line naming what was simulated, and how."""
     stdout.print(
-        f"[bold]{escape(race)}[/] — {first.runs} runs per Unit, seed {first.seed},"
+        f"[bold]{escape(title)}[/] — {first.runs} runs per Unit, seed {first.seed},"
         f" entry table {first.entry}",
         highlight=False,
     )
+
+
+def _unit_lines(
+    reports: list[DamageReport], *, positions: list[int] | None = None
+) -> Table:
+    """Build the table of one line per Unit, numbered when `positions` is given."""
     finals = [report.per_round[-1] for report in reports]
     tokens = token_columns(finals)
     lines = Table(
+        *(["#"] if positions is not None else []),
         "Unit",
         "Points",
         "P(Destroyed)",
@@ -179,8 +213,10 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
         title="Mean state at the end of the last Round",
         title_justify="left",
     )
-    for report, final in zip(reports, finals, strict=True):
+    numbers = [[str(n)] for n in positions] if positions is not None else None
+    for i, (report, final) in enumerate(zip(reports, finals, strict=True)):
         lines.add_row(
+            *(numbers[i] if numbers is not None else []),
             escape(report.unit),
             points_text(report.points),
             f"{report.p_destroyed:.1%}",
@@ -192,7 +228,7 @@ def print_race_report(reports: list[DamageReport], *, race: str) -> None:
             f"{final.future_crew:.2f}",
             *(f"{final.tokens.get(name, 0.0):.2f}" for name in tokens),
         )
-    stdout.print(lines)
+    return lines
 
 
 def print_tables(scenario: Scenario, *, entry: t.DamageTableName) -> None:

@@ -4,6 +4,7 @@ The Unit is picked at run time from whatever the committed Races hold, so no
 rules edit can break these tests.
 """
 
+from dataclasses import replace
 from typing import cast
 
 import pytest
@@ -18,11 +19,13 @@ from spf.frontends.cli.sim import (
     damage_table,
     expected_points_text,
     points_text,
+    print_army_report,
     token_columns,
 )
 from spf.schemas.type_aliases import DamageTable, RaceName
 from spf.sim.effects import Vocabulary
-from spf.sim.report import RoundSummary
+from spf.sim.report import DamageReport, RoundSummary, simulate
+from spf.sim.scenario import Scenario
 from spf.sim.tables import CompiledTable, compile_table
 
 
@@ -172,3 +175,73 @@ def test_expected_points_show_two_decimals() -> None:
     assert expected_points_text(None) == NO_POINTS
     assert expected_points_text(0.0) == "0.00"
     assert expected_points_text(4.4875) == "4.49"
+
+
+def _report(unit: str, *, points: int | None, p_destroyed: float) -> DamageReport:
+    """Build a report with the Points and P(Destroyed) a test names."""
+    scenario = Scenario(
+        unit=unit,
+        models=1,
+        tables={"Regular": _compiled("1+: Dazed")},
+    )
+    report = simulate(scenario, runs=1, seed=1)
+    return replace(report, points=points, p_destroyed=p_destroyed)
+
+
+def _cells(out: str, label: str) -> list[str]:
+    """Split the table row holding `label` into its stripped cells."""
+    line = next(line for line in out.splitlines() if f" {label} " in line)
+    return [cell.strip() for cell in line.split("│")[1:-1]]
+
+
+def test_the_army_report_numbers_its_columns_first(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    report = _report("Squad", points=4, p_destroyed=0.5)
+    print_army_report([report], title="Army", positions=[1])
+    out = capsys.readouterr().out
+    header = next(line for line in out.splitlines() if "P(Destroyed)" in line)
+    assert (
+        header.index("#")
+        < header.index("Unit")
+        < header.index("Points")
+        < header.index("P(Destroyed)")
+        < header.index("E(Points Destroyed)")
+    )
+
+
+def test_the_army_report_keeps_each_units_position(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    reports = [
+        _report("Red Squad", points=4, p_destroyed=0.5),
+        _report("Blue Squad", points=4, p_destroyed=0.5),
+    ]
+    print_army_report(reports, title="Army", positions=[1, 3])
+    out = capsys.readouterr().out
+    assert _cells(out, "Red Squad")[:2] == ["1", "Red Squad"]
+    assert _cells(out, "Blue Squad")[:2] == ["3", "Blue Squad"]
+
+
+def test_the_army_total_sums_the_costed_units(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    reports = [
+        _report("Red Squad", points=4, p_destroyed=0.5),
+        _report("Mob", points=None, p_destroyed=1.0),
+        _report("Blue Squad", points=8, p_destroyed=0.25),
+    ]
+    print_army_report(reports, title="Army", positions=[1, 2, 3])
+    total = _cells(capsys.readouterr().out, "Total")
+    assert total[:5] == ["", "Total", "12", "", "4.00"]
+    assert set(total[5:]) == {""}
+
+
+def test_an_army_with_no_costed_unit_has_no_total(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    reports = [_report("Mob", points=None, p_destroyed=1.0)]
+    print_army_report(reports, title="Army", positions=[1])
+    total = _cells(capsys.readouterr().out, "Total")
+    assert total[2] == NO_POINTS
+    assert total[4] == NO_POINTS
