@@ -25,6 +25,8 @@ _START_HELP = f"The starting state. {GRAMMAR}"
 _STRENGTH = re.compile(r"(?P<name>.+)\[(?P<strength>\d+)\]")
 UNPARSED_STYLE = "bold red"
 """How Damage table text the simulator does not play is colored."""
+NO_POINTS = "\N{EN DASH}"
+"""How a Unit with no Cost shows its Points and E(Points Destroyed)."""
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -302,6 +304,16 @@ def print_report(report: DamageReport) -> None:
         for hit in report.unparsed:
             unparsed.add_row(hit.table, hit.row, escape(hit.text), str(hit.hits))
         stdout.print(unparsed)
+
+
+def points_text(points: int | None) -> str:
+    """Show a Unit's Points, or `NO_POINTS` when it has no Cost."""
+    return NO_POINTS if points is None else str(points)
+
+
+def expected_points_text(value: float | None) -> str:
+    """Show E(Points Destroyed), or `NO_POINTS` when the Unit has no Cost."""
+    return NO_POINTS if value is None else f"{value:.2f}"
 
 
 def token_columns(per_round: Iterable[RoundSummary]) -> list[str]:
