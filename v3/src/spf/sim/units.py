@@ -3,9 +3,11 @@
 from collections import defaultdict
 
 from spf.armies.build import ArmyList
+from spf.armies.specials import merge_specials
 from spf.armies.unit import Unit
 from spf.registry import Registry
 from spf.schemas.race import RaceConfig
+from spf.schemas.special import Specials
 from spf.sim.dice import Dice
 from spf.sim.effects import Vocabulary
 from spf.sim.scenario import Hit, Scenario, Start
@@ -63,9 +65,10 @@ def scenario_of(  # noqa: PLR0913
     its Models and their effective Equipment (ADR 0027 for resistance).
     """
     specials = unit.unit_specials
+    sources = merge_specials(*_resistance_sources(unit))
     vocabulary = vocabulary_of(registry)
     resistances: defaultdict[str, list[Dice]] = defaultdict(list)
-    for instance in specials.get("resistance", []) if resistance else []:
+    for instance in sources.get("resistance", []) if resistance else []:
         version, strength = instance.args.get("version"), instance.args.get("N")
         if isinstance(version, str) and strength is not None:
             kind = version.removeprefix(_RESISTANCE_TYPE)
@@ -89,3 +92,25 @@ def scenario_of(  # noqa: PLR0913
         max_rounds=max_rounds,
         points=None if unit.config.cost is None else unit.cost().to_points(),
     )
+
+
+def _resistance_sources(unit: Unit) -> list[Specials]:
+    """Each source's Unit-level Instances once; a Unit Fixture's once per purchase.
+
+    A source is the Unit, a Model kind or an Equipment kind, however many Models
+    carry it. A Unit Fixture is bought for the whole Unit (ADR 0026).
+    """
+    sources = [unit.config.specials]
+    models: set[str] = set()
+    equipment: set[str] = set()
+    purchases = unit.fixture_purchases
+    for model in unit.models:
+        if model.name not in models:
+            models.add(model.name)
+            sources.append(model.config.unit_specials)
+        for equip in model.equipment:
+            if equip.name not in equipment:
+                equipment.add(equip.name)
+                copies = purchases.get(equip.name, 1) if equip.upgrade_all else 1
+                sources.extend([equip.unit_specials] * copies)
+    return sources

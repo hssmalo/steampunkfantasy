@@ -6,11 +6,12 @@ these tests expect.
 
 import pytest
 
+from spf.armies.build import ArmyList
 from spf.registry import Registry
 from spf.schemas import rules as r
 from spf.schemas.race import RaceConfig
 from spf.sim.dice import Dice
-from spf.sim.scenario import Start
+from spf.sim.scenario import Scenario, Start
 from spf.sim.units import scenario_of, unit_scenario, vocabulary_of
 from tests.conftest import (
     InstallRegistry,
@@ -45,7 +46,7 @@ def _registry() -> Registry:
         records={
             "resistance_type": {
                 kind: r.DamageTypeRuleConfig(name=kind.title(), effect="Resists.")
-                for kind in ["regular", "poison"]
+                for kind in ["regular", "poison", "psychic", "fire"]
             },
             "token": {
                 "dazed": r.TokenRuleConfig(name="Dazed", effect="Reels."),
@@ -101,10 +102,10 @@ def test_a_scenario_counts_the_units_models(registry: Registry) -> None:
     assert list(scenario.tables) == ["Regular"]
 
 
-def test_resistance_comes_from_every_instance(registry: Registry) -> None:
+def test_resistance_counts_each_source_once(registry: Registry) -> None:
     scenario = unit_scenario(_race(), "squad", registry=registry, start=Start())
     assert scenario.resistance["regular"] == [Dice.parse("1")]
-    assert scenario.resistance["poison"] == [Dice.parse("d4")] * 3
+    assert scenario.resistance["poison"] == [Dice.parse("d4")]
 
 
 def test_resistance_can_be_turned_off(registry: Registry) -> None:
@@ -193,3 +194,83 @@ def test_an_upgrade_model_keeps_its_slot(registry: Registry) -> None:
         army.resolve(race).units[0], registry=registry, start=Start()
     )
     assert (scenario.models, scenario.points) == (3, 4)
+
+
+def _kitted(**unit_fields: object) -> RaceConfig:
+    """Build a squad of three soldiers, an elite to promote and a Unit Fixture.
+
+    The Fixture sits on its own Holder so buying it never evicts the Default
+    knife.
+    """
+    soldier = {"holders": ["Hands:2", "Independent:2"]}
+    return synthetic_race(
+        units={"squad": synthetic_unit(models=["soldier"] * 3, **unit_fields)},
+        models={
+            "soldier": synthetic_model(**soldier),
+            "elite": synthetic_model(
+                **soldier,
+                name="Elite",
+                replaces="soldier",
+                cost={"mp": 1},
+                type=["Infantry", "Elite"],
+                unit_specials={"resistance": [_resistance("psychic", 1)]},
+            ),
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                unit_specials={"resistance": [_resistance("poison", "d4")]},
+            ),
+            "cloak": synthetic_equipment(
+                name="Cloak",
+                upgrade_all=True,
+                requires=[["Independent:1"]],
+                unit_specials={"resistance": [_resistance("fire", 1)]},
+            ),
+        },
+    )
+
+
+def _promote(army: ArmyList, race: RaceConfig, *, slots: int) -> ArmyList:
+    for _ in range(slots):
+        army = army.upgrade_unit(
+            ("squad", 0),
+            model_key=("soldier", 0),
+            upgrade_model_name="elite",
+            race_config=race,
+        )
+    return army
+
+
+def _buy(army: ArmyList, race: RaceConfig, *, purchases: int) -> ArmyList:
+    for _ in range(purchases):
+        army = army.equip_unit(("squad", 0), equipment_name="cloak", race_config=race)
+    return army
+
+
+def _scenario(army: ArmyList, race: RaceConfig, registry: Registry) -> Scenario:
+    return scenario_of(army.resolve(race).units[0], registry=registry, start=Start())
+
+
+def test_resistance_counts_a_model_kind_once(registry: Registry) -> None:
+    race = _kitted()
+    army = _promote(synthetic_army(race), race, slots=2)
+    assert _scenario(army, race, registry).resistance["psychic"] == [Dice.parse("1")]
+
+
+@pytest.mark.parametrize("purchases", [1, 2])
+def test_resistance_counts_a_unit_fixture_once_per_purchase(
+    registry: Registry, purchases: int
+) -> None:
+    race = _kitted()
+    army = _buy(synthetic_army(race), race, purchases=purchases)
+    fire = _scenario(army, race, registry).resistance["fire"]
+    assert fire == [Dice.parse("1")] * purchases
+
+
+def test_resistance_from_different_sources_adds_up(registry: Registry) -> None:
+    race = _kitted(specials={"resistance": [_resistance("poison", 2)]})
+    poison = _scenario(synthetic_army(race), race, registry).resistance["poison"]
+    assert poison == [Dice.parse("2"), Dice.parse("d4")]
