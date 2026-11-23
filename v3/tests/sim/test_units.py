@@ -116,3 +116,26 @@ def test_resistance_can_be_turned_off(registry: Registry) -> None:
 def test_endurance_sums_every_instance(registry: Registry) -> None:
     scenario = unit_scenario(_race(), "squad", registry=registry, start=Start())
     assert scenario.endurance == 3
+
+
+def _costed(cost: dict[str, int] | None) -> RaceConfig:
+    return synthetic_race(
+        units={"squad": synthetic_unit(cost=cost)},
+        models={"soldier": synthetic_model()},
+    )
+
+
+def test_a_scenario_carries_the_units_points(registry: Registry) -> None:
+    scenario = unit_scenario(_race(), "squad", registry=registry, start=Start())
+    assert scenario.points == 3
+
+
+def test_points_triple_ip_and_add_the_vpm(registry: Registry) -> None:
+    race = _costed({"mp": 2, "cp": 1, "xp": 1, "ip": 1, "vpm": 2})
+    scenario = unit_scenario(race, "squad", registry=registry, start=Start())
+    assert scenario.points == 9
+
+
+def test_a_unit_with_no_cost_has_no_points(registry: Registry) -> None:
+    scenario = unit_scenario(_costed(None), "squad", registry=registry, start=Start())
+    assert scenario.points is None
