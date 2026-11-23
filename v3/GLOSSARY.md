@@ -54,6 +54,15 @@ _Avoid_: free equipment, base equipment
 Equipment a player buys for a Model, adding to its Cost. Never yields a Holder
 to anything else.
 
+**Loadout**:
+The Models and Equipment a Unit is fielded with. Its *default* Loadout is the
+catalogue Unit before anything is bought: its own Models carrying their Default
+Equipment. A Unit in an Army has the Loadout its player bought: upgrade Models
+in some slots, and Upgrade Equipment on top of the Defaults. Two Units of the
+same kind in one Army may differ in Loadout; a Nick is how a player tells them
+apart.
+_Avoid_: configuration, build, kit, setup
+
 **Holder**:
 A named place on a Model where Equipment sits, with a limited capacity — Hands,
 Tentacles, Reserve Melee and so on. Each piece of Equipment claims capacity in
