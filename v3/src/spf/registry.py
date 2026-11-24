@@ -231,7 +231,7 @@ def _label_problems(label: str, record: r.RuleRecord) -> Iterator[tuple[str, str
         if not (text.isascii() and text.isdigit()) or variable is None:
             continue
         if isinstance(variable, r.RefVariableConfig):
-            continue
+            continue  # a Ref states a record, not a value to check
         if (problem := _check_scalar(int(text), variable)) is not None:
             yield name, problem
 

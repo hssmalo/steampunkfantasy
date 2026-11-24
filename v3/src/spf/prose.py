@@ -207,7 +207,8 @@ def label_args(
     if not signature:
         return None
     names = PLACEHOLDER.findall(signature)
-    literals = PLACEHOLDER.split(signature)[::3]
+    # `split` interleaves each placeholder's two groups between the literals.
+    literals = PLACEHOLDER.split(signature)[:: PLACEHOLDER.groups + 1]
     pattern = re.escape(name) + "".join(
         re.escape(literal) + (r"([^\[\]]+?)" if index < len(names) else "")
         for index, literal in enumerate(literals)
