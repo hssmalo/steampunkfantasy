@@ -13,8 +13,10 @@ from spf.schemas.type_aliases import (
     ExactRoll,
 )
 from spf.sim.effects import (
+    DamageOn,
     Effect,
     Kill,
+    RollAgain,
     RowReference,
     Unparsed,
     Vocabulary,
@@ -53,12 +55,15 @@ class NoteRules:
 def _replacement(text: str, vocabulary: Vocabulary) -> tuple[Effect, ...] | None:
     """Read what replaces a kill once every Model is temporarily killed.
 
-    A replacement that is not fully parsed, or that kills again, is not followed.
+    A replacement that is not fully parsed, that kills again, or that sets off a
+    roll is not followed: it applies with the casualties, after the Phase's
+    rolls were looked up (ADR-0043).
     """
     if not (match := _ALL_TEMPORARILY_KILLED.match(text)):
         return None
     effects = tuple(parse_effect(match["effects"], vocabulary=vocabulary))
-    if any(isinstance(effect, Kill | RowReference | Unparsed) for effect in effects):
+    unfollowable = Kill | RowReference | Unparsed | DamageOn | RollAgain
+    if any(isinstance(effect, unfollowable) for effect in effects):
         return None
     return effects
 
