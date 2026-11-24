@@ -349,9 +349,9 @@ Types. Summarizes a Unit's classification when its Models differ; empty when
 they share nothing.
 
 **Bio**:
-The Type of a living Model. Rules that act on living things — Healing,
-Confused, poison — reach Bio Models. A Unit with no Bio Model is immune to
-poison, and says so with its own Immunity Special.
+The Type of a living Model. Poison reaches only Bio Models: a Unit with no Bio
+Model is immune to it, and says so with its own Immunity Special. Some rules,
+such as Healing and Confused, reach Bio Crew as well.
 _Avoid_: biological, organic, living (as a Type)
 
 **Bio Crew**:

@@ -6,11 +6,12 @@ the rules: a player reads the card, so the card has to say it.
 
 from collections.abc import Mapping
 
+from spf.schemas import type_aliases as t
 from spf.schemas.race import ModelConfig, UnitConfig
 
 POISON = "damage_type.poison"
 
-BIO = "Bio"
+BIO: t.ModelType = "Bio"
 
 
 def check_poison_immunity(
