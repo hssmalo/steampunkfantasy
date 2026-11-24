@@ -67,6 +67,10 @@ class DamageReport:
     missing_tables: dict[DamageTableName, int]
     spillover: dict[str, int]
     unparsed: list[UnparsedHit]
+    healing: dict[str, int]
+    """How often each Heal or Repair action was taken, the most common first."""
+    unplayed_healing: list[str]
+    """Heal and Repair Instances the simulator could not play."""
 
     @property
     def expected_points_destroyed(self) -> float | None:
@@ -141,11 +145,13 @@ def simulate(
     missing: Counter[DamageTableName] = Counter()
     spillover: Counter[str] = Counter()
     unparsed: Counter[tuple[DamageTableName, str, str]] = Counter()
+    healing: Counter[str] = Counter()
     for result in results:
         table_rolls.update(result.table_rolls)
         missing.update(result.missing_tables)
         spillover.update(result.spillover)
         unparsed.update(result.unparsed)
+        healing.update(result.healing)
     return DamageReport(
         unit=scenario.unit,
         entry=entry,
@@ -167,4 +173,6 @@ def simulate(
                 key=lambda item: (item[0][0] != entry, item[0][0], -item[1]),
             )
         ],
+        healing={str(action): count for action, count in healing.most_common()},
+        unplayed_healing=list(scenario.unplayed_healing),
     )

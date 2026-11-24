@@ -5,12 +5,13 @@ whatever the dice do.
 """
 
 from collections.abc import Mapping
+from dataclasses import replace
 
 from spf.schemas.type_aliases import DamageTable, DamageTableName
 from spf.sim.dice import Dice
 from spf.sim.effects import PlaceToken, Vocabulary
 from spf.sim.report import simulate
-from spf.sim.scenario import Hit, Scenario, Start
+from spf.sim.scenario import Healer, Hit, Scenario, Start
 from spf.sim.tables import compile_table
 
 VOCABULARY = Vocabulary(tokens={"dazed": "dazed", "bleed": "bleed"})
@@ -149,3 +150,14 @@ def test_spillover_counts_add_up_over_runs() -> None:
     }
     report = simulate(_scenario(tables), runs=7, seed=1)
     assert report.spillover == {"d4 damage to all transported units": 7}
+
+
+def test_healing_counts_add_up_over_runs() -> None:
+    scenario = replace(
+        _scenario({"Regular": ["1+: Dazed"]}, hits=0, tokens=[PlaceToken(name="fire")]),
+        healers=[Healer(kind="heal", points=3, phase=1)],
+        unplayed_healing=["Heal[three-ish, self, 1st Healing]"],
+    )
+    report = simulate(scenario, runs=6, seed=1)
+    assert report.healing == {"Extinguish one Fire": 6}
+    assert report.unplayed_healing == ["Heal[three-ish, self, 1st Healing]"]
