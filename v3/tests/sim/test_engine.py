@@ -720,7 +720,7 @@ def test_a_bleed_that_stops_is_removed_before_another_amplifies() -> None:
     assert result.snapshots[1].tokens == {"bleed[6]": 1}
 
 
-def test_one_bleeds_amplify_does_not_change_anothers_die_this_round() -> None:
+def test_a_bleeds_amplify_leaves_the_other_bleed_dice_alone_this_round() -> None:
     scenario = _scenario(AMPLIFY_AT_THREE, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
     result = _run(scenario, [(4, 3), (4, 4)])
     assert result.snapshots[1].tokens == {"bleed[6]": 2, "dazed": 1}

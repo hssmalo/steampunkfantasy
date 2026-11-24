@@ -2,7 +2,7 @@
 
 `rules/round.md` says everything in a Phase happens at once: "roll all the
 damage for a Phase together … and only then remove casualties." The damage
-simulator resolves a Phase in two steps to honour that (#248):
+simulator resolves a Phase in two steps to honor that (#248):
 
 1. **Roll and look up.** Every die of the Phase is rolled: hits, every Token's
    die, resistance dice, and any roll a row sets off ("roll again", "d6 psychic
