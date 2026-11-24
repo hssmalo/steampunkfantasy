@@ -120,7 +120,7 @@ _Avoid_: game mode, scenario, ruleset, bracket
 **Round**:
 One full turn cycle. It opens with a planning phase in which players commit
 their Orders, then runs through fixed Phases: Gunnery 1, Movement 1–3, Gunnery
-2, and several clean-up phases (Healing, Agony, Aftermath).
+2, and clean-up phases: Healing 1, Agony 0–4, Healing 2, Aftermath.
 _Avoid_: turn
 
 **Phase**:
@@ -406,12 +406,45 @@ To step a Bleed up exactly one size, 4 → 6 → 8 → 10 → 12, capped at 12. 
 Damage row says which Bleeds are amplified, often all of them.
 _Avoid_: raise (that is a different effect, which may skip sizes)
 
+**Downgrade**:
+To step a Token down one size. A Bleed or Poison goes 12 → 10 → 8 → 6 → 4,
+and a Bleed[4] or Poison[4] is removed. An Acid becomes a Minor Acid. Poison
+downgrades itself after its damage, and Heal and Repair can also downgrade.
+_Avoid_: degrade, reduce, weaken
+
 **Raise** (a Bleed):
 What happens when a Bleed[N]'s own damage would place a Bleed[M]. No new Bleed
 is placed. If M is greater than N, the rolling Bleed becomes Bleed[M].
 Otherwise nothing happens. Only the Bleed that rolled is affected, never any
 other Bleed on the Unit. A Bleed never causes a new Bleed.
 _Avoid_: amplify (which is exactly one step), upgrade, stack
+
+**Heal**:
+A Special that lets a biological Unit spend N points, in one Healing Phase, on
+actions that each cost points, such as easing a Poison or Bleed, removing Future
+Damage, or putting out a Fire. Its Instance says whether it works on its own Unit,
+on another Unit, or on either. Points left unspent are lost.
+_Avoid_: cure, regenerate (a Race's own rule built on Heal)
+
+**Repair**:
+The counterpart of Heal for mechanical and drone Units. It spends N points the
+same way, and it is the only thing that removes a Critical Damage Effect. A Unit
+with Disabled Repair cannot Repair.
+_Avoid_: fix, mend; Repairing (a separate Special about what being repaired
+allows)
+
+**Healing Phase**:
+One of the two Phases in a Round where Heal and Repair act: Healing 1, before
+the Agony Phases, and Healing 2, after them. Each Heal or Repair Instance names
+exactly one of them.
+_Avoid_: repair phase, healing window
+
+**Critical Damage Effect**:
+A Token for lasting damage to a Unit's workings: Cannot Move, Cannot Turn,
+Cannot Accelerate, No Command, Disabled Repair, and Plus Minus One. It never
+wears off, and only Repair removes it.
+_Avoid_: crit, critical token; critical damage (that is the Critical Damage
+table)
 
 **Temporary Kill**:
 Removing a Model in a way that healing can undo. A Unit whose Models are all

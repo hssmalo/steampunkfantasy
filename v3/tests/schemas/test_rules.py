@@ -358,3 +358,10 @@ def test_a_variant_is_keyed_by_a_bare_identifier() -> None:
                 "variants": {"Always Loaded": "Always treated as loaded"},
             }
         )
+
+
+def test_a_token_is_a_critical_damage_effect_only_when_flagged() -> None:
+    plain = r.TokenRuleConfig(name="Dazed", effect="Reels.")
+    critical = r.TokenRuleConfig(name="Stuck", effect="Cannot move.", critical=True)
+
+    assert (plain.critical, critical.critical) == (False, True)

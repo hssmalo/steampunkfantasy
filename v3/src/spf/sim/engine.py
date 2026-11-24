@@ -1,8 +1,9 @@
 """One simulated run: a Unit's state, changed row by row and Round by Round."""
 
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field, replace
+from enum import StrEnum
 from typing import Literal, Protocol
 
 from spf.schemas.type_aliases import DamageTableName
@@ -21,7 +22,7 @@ from spf.sim.effects import (
     UnitDestroyed,
     Unparsed,
 )
-from spf.sim.scenario import Hit, Scenario
+from spf.sim.scenario import Healer, HealingKind, HealingPhase, Hit, Scenario
 from spf.sim.tables import NoteRules
 
 type EndedBy = Literal["destroyed", "no continuing damage", "max rounds"]
@@ -60,6 +61,54 @@ _COUNTED_CONTINUING = ["fire", "acid", "minor_acid"]
 
 _RESISTED_BY = {"Regular": "regular", "Psychic": "psychic"}
 """The resistance that reduces a hit on each Damage table, where one does."""
+
+DISABLED_REPAIR = "disabled_repair"
+"""The Critical Damage Effect that stops the Unit's Repair (`token.disabled_repair`)."""
+
+
+class HealingAction(StrEnum):
+    """One thing a Heal or Repair point buys; the value is how the report names it."""
+
+    EXTINGUISH_FIRE = "Extinguish one Fire"
+    DOWNGRADE_POISON = "Downgrade one Poison"
+    DOWNGRADE_BLEED = "Downgrade one Bleed"
+    NEUTRALIZE_MINOR_ACID = "Neutralize one Minor Acid"
+    REMOVE_FUTURE = "Remove one Future Damage"
+    DOWNGRADE_ACID = "Downgrade one Acid to Minor Acid"
+    REMOVE_SHAKEN = "Remove one Shaken"
+    REMOVE_CRITICAL = "Remove one Critical Damage Effect"
+
+
+ACTION_COST: dict[HealingAction, int] = {
+    HealingAction.EXTINGUISH_FIRE: 3,
+    HealingAction.DOWNGRADE_POISON: 1,
+    HealingAction.DOWNGRADE_BLEED: 1,
+    HealingAction.NEUTRALIZE_MINOR_ACID: 1,
+    HealingAction.REMOVE_FUTURE: 1,
+    HealingAction.DOWNGRADE_ACID: 4,
+    HealingAction.REMOVE_SHAKEN: 1,
+    HealingAction.REMOVE_CRITICAL: 3,
+}
+"""Points per action, from `special.heal` and `special.repair`.
+
+An action both lists offer costs the same in each.
+"""
+
+_ACTS_ON = {
+    HealingAction.EXTINGUISH_FIRE: "fire",
+    HealingAction.NEUTRALIZE_MINOR_ACID: "minor_acid",
+    HealingAction.DOWNGRADE_ACID: "acid",
+    HealingAction.REMOVE_SHAKEN: "shaken",
+}
+"""The counted Token each plain action removes one of."""
+
+
+def _downgrade_strongest(strengths: list[int]) -> None:
+    """Downgrade the strongest Bleed or Poison one step; a `[4]` is removed."""
+    index = strengths.index(max(strengths))
+    strengths[index] -= STRENGTH_STEP
+    if strengths[index] < MIN_STRENGTH:
+        del strengths[index]
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -131,6 +180,8 @@ class RunResult:
     spillover: Counter[str]
     unparsed: Counter[tuple[DamageTableName, str, str]]
     """Hits on unparsed text, keyed by table, row label and the text itself."""
+    healing: Counter[HealingAction] = field(default_factory=Counter)
+    """How often each Heal or Repair action was taken."""
 
 
 @dataclass(kw_only=True)
@@ -181,13 +232,42 @@ class Policy(Protocol):
         """Decide whether to spend an Endurance Token to save a dying Model."""
         ...
 
+    def healing_priority(self, kind: HealingKind) -> Sequence[HealingAction]:
+        """Order the actions a Heal or Repair point may buy, most wanted first."""
+        ...
+
 
 class FixedPolicy:
-    """Always spend Endurance when it is legal; never heal or repair."""
+    """Always spend Endurance when it is legal; heal and repair by fixed lists.
+
+    Each point goes, greedily, on the first action in the list that the Unit
+    has a Token for and the points left can pay.
+    """
+
+    HEAL: Sequence[HealingAction] = (
+        HealingAction.EXTINGUISH_FIRE,
+        HealingAction.DOWNGRADE_POISON,
+        HealingAction.DOWNGRADE_BLEED,
+        HealingAction.NEUTRALIZE_MINOR_ACID,
+        HealingAction.REMOVE_FUTURE,
+        HealingAction.DOWNGRADE_ACID,
+    )
+    REPAIR: Sequence[HealingAction] = (
+        HealingAction.REMOVE_SHAKEN,
+        HealingAction.EXTINGUISH_FIRE,
+        HealingAction.REMOVE_CRITICAL,
+        HealingAction.REMOVE_FUTURE,
+        HealingAction.DOWNGRADE_ACID,
+        HealingAction.NEUTRALIZE_MINOR_ACID,
+    )
 
     def spend_endurance(self, state: UnitState) -> bool:
         """Spend Endurance whenever the Unit has some."""
         return state.counters["endurance"] > 0
+
+    def healing_priority(self, kind: HealingKind) -> Sequence[HealingAction]:
+        """Return the fixed Heal or Repair list."""
+        return self.HEAL if kind == "heal" else self.REPAIR
 
 
 @dataclass(kw_only=True)
@@ -204,6 +284,7 @@ class _Run:
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
     unparsed: Counter[tuple[DamageTableName, str, str]] = field(default_factory=Counter)
+    healing: Counter[HealingAction] = field(default_factory=Counter)
 
     def resisted(self, dice: Dice, table: DamageTableName) -> int:
         """Roll a hit's damage, less the resistance that table's damage meets."""
@@ -553,20 +634,102 @@ class _Run:
         """Land this Round's incoming hits, ahead of the Agony Phases."""
         self.phase([self.hit(hit) for hit in self.scenario.incoming])
 
+    def healing_1(self) -> None:
+        """Healing 1, before Agony 0."""
+        self.heal_phase(1)
+
+    def healing_2(self) -> None:
+        """Healing 2, after Agony 4."""
+        self.heal_phase(2)
+
+    def heal_phase(self, phase: HealingPhase) -> None:
+        """Let every Healer of this Healing Phase spend its points in turn.
+
+        A Unit with Disabled Repair cannot Repair (`token.disabled_repair`).
+        Points that buy nothing more are lost.
+        """
+        for healer in self.scenario.healers:
+            if healer.phase != phase:
+                continue
+            if healer.kind == "repair" and self.state.counters[DISABLED_REPAIR]:
+                continue
+            self.spend(healer)
+
+    def spend(self, healer: Healer) -> None:
+        """Take the first possible, affordable action until none is left."""
+        points = self.state.models if healer.points == "alive" else healer.points
+        priority = self.policy.healing_priority(healer.kind)
+        while action := next(
+            (
+                action
+                for action in priority
+                if ACTION_COST[action] <= points and self.can_take(action)
+            ),
+            None,
+        ):
+            self.take(action)
+            self.healing[action] += 1
+            points -= ACTION_COST[action]
+
+    def can_take(self, action: HealingAction) -> bool:
+        """Tell whether the Unit carries what `action` acts on."""
+        state, counters = self.state, self.state.counters
+        match action:
+            case HealingAction.DOWNGRADE_POISON:
+                return bool(state.poisons)
+            case HealingAction.DOWNGRADE_BLEED:
+                return bool(state.bleeds)
+            case HealingAction.REMOVE_FUTURE:
+                return state.future > 0
+            case HealingAction.REMOVE_CRITICAL:
+                return bool(self.critical_effects())
+            case _:
+                return counters[_ACTS_ON[action]] > 0
+
+    def take(self, action: HealingAction) -> None:
+        """Take one Heal or Repair action (`special.heal`, `special.repair`)."""
+        state, counters = self.state, self.state.counters
+        match action:
+            case HealingAction.DOWNGRADE_POISON:
+                _downgrade_strongest(state.poisons)
+            case HealingAction.DOWNGRADE_BLEED:
+                _downgrade_strongest(state.bleeds)
+            case HealingAction.REMOVE_FUTURE:
+                state.future -= 1
+            case HealingAction.REMOVE_CRITICAL:
+                counters[self.critical_effects()[0]] -= 1
+            case HealingAction.DOWNGRADE_ACID:
+                counters["acid"] -= 1
+                counters["minor_acid"] += 1
+            case _:
+                counters[_ACTS_ON[action]] -= 1
+
+    def critical_effects(self) -> list[str]:
+        """List the Critical Damage Effects the Unit carries, in removal order."""
+        carried = [
+            token for token in self.scenario.critical if self.state.counters[token]
+        ]
+        return sorted(carried, key=lambda token: (token != DISABLED_REPAIR, token))
+
     def aftermath(self) -> None:
         """Aftermath: remove one Shaken Token, if the Unit has any (`token.shaken`)."""
         if self.state.counters["shaken"]:
             self.state.counters["shaken"] -= 1
 
     def play_round(self) -> None:
-        """Play one Round: incoming hits, the Agony Phases, then Aftermath."""
+        """Play one Round.
+
+        Incoming hits, Healing 1, the Agony Phases, Healing 2, then Aftermath.
+        """
         phases = [
             self.incoming,
+            self.healing_1,
             self.agony_acid,
             self.agony_minor_acid,
             self.agony_fire,
             self.agony_poison,
             self.agony_bleed,
+            self.healing_2,
             self.aftermath,
         ]
         for phase in phases:
@@ -591,6 +754,7 @@ class _Run:
             missing_tables=self.missing_tables,
             spillover=self.spillover,
             unparsed=self.unparsed,
+            healing=self.healing,
         )
 
 

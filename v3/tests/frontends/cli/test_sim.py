@@ -13,7 +13,7 @@ from rich.text import Text
 
 from spf import races
 from spf.console import stdout
-from spf.frontends.cli import app
+from spf.frontends.cli import app, sim
 from spf.frontends.cli.sim import (
     NO_POINTS,
     UNPARSED_STYLE,
@@ -21,6 +21,7 @@ from spf.frontends.cli.sim import (
     expected_points_text,
     points_text,
     print_army_report,
+    print_report,
     token_columns,
 )
 from spf.schemas.type_aliases import DamageTable, RaceName
@@ -322,9 +323,79 @@ def test_damage_army_numbers_its_units_and_skips_by_table(
     assert "skipped: Beast" in out
 
 
+def _spy_on_healing(monkeypatch: pytest.MonkeyPatch, builder: str) -> list[bool]:
+    """Record, per Scenario `builder` builds, whether it was allowed to heal."""
+    could_heal: list[bool] = []
+    build = getattr(sim, builder)
+
+    def spy(*args: object, **kwargs: object) -> Scenario:
+        scenario = build(*args, **kwargs)
+        could_heal.append(bool(scenario.healers) or kwargs.get("healing") is not False)
+        return scenario
+
+    monkeypatch.setattr(sim, builder, spy)
+    return could_heal
+
+
+@pytest.mark.parametrize(
+    ("command", "builder"),
+    [("damage", "unit_scenario"), ("damage-race", "unit_scenario")],
+)
+def test_no_healing_builds_scenarios_without_healers(
+    monkeypatch: pytest.MonkeyPatch, command: str, builder: str
+) -> None:
+    could_heal = _spy_on_healing(monkeypatch, builder)
+    unit, _ = _live_unit()
+    target = unit if command == "damage" else unit.partition(".")[0]
+    app(
+        ["sim", command, target, "--start", "d6", "--runs", "1", "--no-healing"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+    assert could_heal
+    assert not any(could_heal)
+
+
+def test_damage_army_takes_no_healing_too(
+    monkeypatch: pytest.MonkeyPatch, army_on_disk: str
+) -> None:
+    could_heal = _spy_on_healing(monkeypatch, "scenario_of")
+    _sim_army(army_on_disk, "--start", "d6", "--runs", "1", "--no-healing")
+    assert could_heal
+    assert not any(could_heal)
+
+
 def test_damage_army_rejects_an_unknown_army(
     capsys: pytest.CaptureFixture[str], army_on_disk: str
 ) -> None:
     with pytest.raises(SystemExit):
         _sim_army(f"{army_on_disk}x", "--start", "d6")
     assert "Error" in capsys.readouterr().err
+
+
+def test_the_report_counts_each_healing_action(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    report = replace(
+        _report("Squad", points=4, p_destroyed=0.5),
+        healing={"Extinguish one Fire": 7},
+    )
+    print_report(report)
+    out = capsys.readouterr().out
+    assert "Healing and repair" in out
+    assert _cells(out, "Extinguish one Fire") == ["Extinguish one Fire", "7"]
+
+
+def test_unplayed_healing_is_listed_as_not_simulated(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    report = replace(
+        _report("Squad", points=4, p_destroyed=0.5),
+        unparsed=[],
+        unplayed_healing=["Repair[one per alive drone, self, 2nd Healing]"],
+    )
+    print_report(report)
+    out = capsys.readouterr().out
+    assert "Not simulated" in out
+    row = _cells(out, "Repair[one per alive drone, self, 2nd Healing]")
+    assert row == ["Repair", "—", "Repair[one per alive drone, self, 2nd Healing]", "—"]

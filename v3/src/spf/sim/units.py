@@ -1,5 +1,6 @@
 """Build a Scenario from a Unit: its Models, Damage tables and Instances."""
 
+import re
 from collections import defaultdict
 
 from spf.armies.build import ArmyList
@@ -8,14 +9,19 @@ from spf.armies.specials import merge_specials
 from spf.armies.unit import Unit
 from spf.registry import Registry
 from spf.schemas.race import RaceConfig
+from spf.schemas.rules import TokenRuleConfig
 from spf.schemas.special import Specials
 from spf.sim.dice import Dice
 from spf.sim.effects import Vocabulary
-from spf.sim.scenario import Hit, Scenario, Start
+from spf.sim.scenario import Healer, HealingKind, HealingPhase, Hit, Scenario, Start
 from spf.sim.tables import compile_table
 
 _RESISTANCE_TYPE = "resistance_type."
 _ELITE_TYPES = {"Elite", "SuperElite"}
+_HEALING_KINDS: tuple[HealingKind, ...] = ("heal", "repair")
+_HEALING_PHASES: dict[str, HealingPhase] = {"1st Healing": 1, "2nd Healing": 2}
+_PER_ALIVE_MODEL = re.compile(r"one per alive( .+)? model", re.IGNORECASE)
+_NEVER_BOTH = "never both"
 
 
 def vocabulary_of(registry: Registry) -> Vocabulary:
@@ -29,6 +35,15 @@ def vocabulary_of(registry: Registry) -> Vocabulary:
     )
 
 
+def _critical(registry: Registry) -> frozenset[str]:
+    """List the Tokens the rules flag as a Critical Damage Effect."""
+    return frozenset(
+        identifier
+        for identifier, record in registry.records.get("token", {}).items()
+        if isinstance(record, TokenRuleConfig) and record.critical
+    )
+
+
 def unit_scenario(  # noqa: PLR0913
     race: RaceConfig,
     unit: str,
@@ -38,6 +53,7 @@ def unit_scenario(  # noqa: PLR0913
     incoming: list[Hit] | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> Scenario:
     """Build the Scenario for one catalogue Unit at its default Loadout."""
     army = ArmyList(race=next(iter(race.races)), nick="", units=[])
@@ -49,6 +65,7 @@ def unit_scenario(  # noqa: PLR0913
         incoming=incoming,
         max_rounds=max_rounds,
         resistance=resistance,
+        healing=healing,
     )
 
 
@@ -60,11 +77,13 @@ def scenario_of(  # noqa: PLR0913
     incoming: list[Hit] | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> Scenario:
     """Build the Scenario for a resolved Unit at whatever Loadout it carries.
 
-    Resistance and Endurance are read from the Unit-level Instances of the Unit,
-    its Models and their effective Equipment (ADR 0027 for resistance).
+    Resistance, Endurance, Heal and Repair are read from the Unit-level
+    Instances of the Unit, its Models and their effective Equipment (ADR 0027
+    for resistance).
     """
     chain = merge_specials(*_resistance_contributors(unit))
     vocabulary = vocabulary_of(registry)
@@ -74,6 +93,7 @@ def scenario_of(  # noqa: PLR0913
         if isinstance(version, str) and strength is not None:
             kind = version.removeprefix(_RESISTANCE_TYPE)
             resistances[kind].append(Dice.parse(str(strength)))
+    healers, unplayed = _healers(chain) if healing else ([], [])
     return Scenario(
         unit=unit.display_name,
         models=len(unit.models),
@@ -85,6 +105,9 @@ def scenario_of(  # noqa: PLR0913
         incoming=incoming or [],
         resistance=dict(resistances),
         endurance=_endurance(unit),
+        healers=healers,
+        critical=_critical(registry),
+        unplayed_healing=unplayed,
         max_rounds=max_rounds,
         points=None if unit.config.cost is None else unit.cost().to_points(),
     )
@@ -110,6 +133,64 @@ def _resistance_contributors(unit: Unit) -> list[Specials]:
                 copies = purchases.get(equip.name, 1) if equip.upgrade_all else 1
                 contributors.extend([equip.unit_specials] * copies)
     return contributors
+
+
+def _healers(chain: Specials) -> tuple[list[Healer], list[str]]:
+    """Read the Heal and Repair Instances this Unit plays on itself.
+
+    Return the Healers in collection order, and the spelling of each Instance
+    the simulator cannot play. An Instance for other Units only is no concern
+    of this Unit. Where an Instance says "never both", only the largest of its
+    kind in its Healing Phase acts.
+    """
+    healers: list[Healer] = []
+    unplayed: list[str] = []
+    for kind in _HEALING_KINDS:
+        played: list[Healer] = []
+        exclusive: set[int] = set()
+        for instance in chain.get(kind, []):
+            args = instance.args
+            if args.get("unit") == "other":
+                continue
+            if (healer := _healer(kind, args)) is None:
+                unplayed.append(_spelled(kind, args))
+                continue
+            played.append(healer)
+            if _NEVER_BOTH in (instance.text or "").casefold():
+                exclusive.add(healer.phase)
+        for phase in exclusive:
+            largest = max(
+                (healer for healer in played if healer.phase == phase),
+                key=_known_points,
+            )
+            played = [h for h in played if h.phase != phase or h is largest]
+        healers.extend(played)
+    return healers, unplayed
+
+
+def _known_points(healer: Healer) -> int:
+    """Compare Healers by N; one point per alive Model is not known until play."""
+    return healer.points if isinstance(healer.points, int) else 0
+
+
+def _healer(kind: HealingKind, args: dict[str, int | str]) -> Healer | None:
+    """Make one Instance a Healer, or `None` when its args cannot be played."""
+    phase = _HEALING_PHASES.get(str(args.get("phase")))
+    if args.get("unit") not in {"self", "any"} or phase is None:
+        return None
+    match args.get("N"):
+        case int(points):
+            return Healer(kind=kind, points=points, phase=phase)
+        case str(text) if _PER_ALIVE_MODEL.fullmatch(text.strip()):
+            return Healer(kind=kind, points="alive", phase=phase)
+        case _:
+            return None
+
+
+def _spelled(kind: str, args: dict[str, int | str]) -> str:
+    """Spell an Instance as its Signature prints it (`special.heal`)."""
+    values = (str(args.get(name, "?")) for name in ["N", "unit", "phase"])
+    return f"{kind.title()}[{', '.join(values)}]"
 
 
 def _endurance(unit: Unit) -> int:
