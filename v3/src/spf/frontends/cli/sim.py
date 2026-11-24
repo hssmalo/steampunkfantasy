@@ -47,6 +47,7 @@ def damage(  # noqa: PLR0913
     seed: int | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> None:
     """Simulate how damage plays out on one Unit over time.
 
@@ -68,6 +69,8 @@ def damage(  # noqa: PLR0913
         The most Rounds one run plays.
     resistance
         Apply the Unit's resistances. Turn off to compare.
+    healing
+        Let the Unit heal and repair itself. Turn off to compare.
 
     """
     race_name, _, unit_key = unit.partition(".")
@@ -83,6 +86,7 @@ def damage(  # noqa: PLR0913
         incoming=parse_hits(incoming, table=table),
         max_rounds=max_rounds,
         resistance=resistance,
+        healing=healing,
     )
     print_tables(scenario, entry=table)
     print_report(simulate(scenario, runs=runs, seed=seed, entry=table))
@@ -98,6 +102,7 @@ def damage_race(  # noqa: PLR0913
     seed: int | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> None:
     """Simulate the same damage on every Unit of a Race, one line per Unit.
 
@@ -122,6 +127,8 @@ def damage_race(  # noqa: PLR0913
         The most Rounds one run plays.
     resistance
         Apply the Units' resistances. Turn off to compare.
+    healing
+        Let the Units heal and repair themselves. Turn off to compare.
 
     """
     race = _race(race_name)
@@ -141,6 +148,7 @@ def damage_race(  # noqa: PLR0913
             incoming=rolling,
             max_rounds=max_rounds,
             resistance=resistance,
+            healing=healing,
         )
         reports.append(simulate(scenario, runs=runs, seed=seed, entry=table))
         seed = reports[-1].seed
@@ -159,6 +167,7 @@ def damage_army(  # noqa: PLR0913
     seed: int | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> None:
     """Simulate the same damage on every Unit of an Army, one line per Unit.
 
@@ -183,6 +192,8 @@ def damage_army(  # noqa: PLR0913
         The most Rounds one run plays.
     resistance
         Apply the Units' resistances. Turn off to compare.
+    healing
+        Let the Units heal and repair themselves. Turn off to compare.
 
     """
     try:
@@ -206,6 +217,7 @@ def damage_army(  # noqa: PLR0913
             incoming=rolling,
             max_rounds=max_rounds,
             resistance=resistance,
+            healing=healing,
         )
         reports.append(simulate(scenario, runs=runs, seed=seed, entry=table))
         positions.append(position)

@@ -13,7 +13,7 @@ from rich.text import Text
 
 from spf import races
 from spf.console import stdout
-from spf.frontends.cli import app
+from spf.frontends.cli import app, sim
 from spf.frontends.cli.sim import (
     NO_POINTS,
     UNPARSED_STYLE,
@@ -320,6 +320,48 @@ def test_damage_army_numbers_its_units_and_skips_by_table(
     assert _cells(out, "Red Squad")[:2] == ["1", "Red Squad"]
     assert _cells(out, "Squad")[:2] == ["3", "Squad"]
     assert "skipped: Beast" in out
+
+
+def _spy_on_healing(monkeypatch: pytest.MonkeyPatch, builder: str) -> list[bool]:
+    """Record the `healing` flag every Scenario `builder` builds is asked for."""
+    asked: list[bool] = []
+    build = getattr(sim, builder)
+
+    def spy(*args: object, **kwargs: object) -> Scenario:
+        scenario = build(*args, **kwargs)
+        asked.append(bool(scenario.healers) or kwargs.get("healing") is not False)
+        return scenario
+
+    monkeypatch.setattr(sim, builder, spy)
+    return asked
+
+
+@pytest.mark.parametrize(
+    ("command", "builder"),
+    [("damage", "unit_scenario"), ("damage-race", "unit_scenario")],
+)
+def test_no_healing_builds_scenarios_without_healers(
+    monkeypatch: pytest.MonkeyPatch, command: str, builder: str
+) -> None:
+    asked = _spy_on_healing(monkeypatch, builder)
+    unit, _ = _live_unit()
+    target = unit if command == "damage" else unit.partition(".")[0]
+    app(
+        ["sim", command, target, "--start", "d6", "--runs", "1", "--no-healing"],
+        exit_on_error=False,
+        result_action="return_value",
+    )
+    assert asked
+    assert not any(asked)
+
+
+def test_damage_army_takes_no_healing_too(
+    monkeypatch: pytest.MonkeyPatch, army_on_disk: str
+) -> None:
+    asked = _spy_on_healing(monkeypatch, "scenario_of")
+    _sim_army(army_on_disk, "--start", "d6", "--runs", "1", "--no-healing")
+    assert asked
+    assert not any(asked)
 
 
 def test_damage_army_rejects_an_unknown_army(
