@@ -214,6 +214,9 @@ variant = "regular"
 [[units.goblin_infantry_carrier.specials.forward_position]]
 args.N = 1
 
+[[units.goblin_infantry_carrier.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.goblin_infantry_carrier.orders.movement]
 slow = [
 	["L/R", "(L/R)", "-"],
@@ -287,6 +290,9 @@ text = "Fire and load all weapons simultaneously. Fire stinkbomb in addition to 
 
 [[units.bipedal_mech.specials.forward_position]]
 args.N = 2
+
+[[units.bipedal_mech.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.bipedal_mech.orders.movement]
 still = [["360°", "360°", "360°"],["360°", "A", "360°"]]
@@ -362,6 +368,9 @@ args.N = 1
 
 [[units.heavy_carrier.specials.fire_order]]
 text = "Fire and load all weapons simultaneously, with identical ammo usage for all weapons"
+
+[[units.heavy_carrier.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.heavy_carrier.orders.movement]
 slow = [
@@ -458,6 +467,9 @@ args.N = 1
 [[units.modified_truck.specials.fire_order]]
 text = "Use both auto bow and grenade thrower on each fire order"
 
+[[units.modified_truck.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.modified_truck.orders.movement]
 slow = [
 	["L/R", "(L/R)", "-"],
@@ -540,6 +552,9 @@ text = "Starts the game with one reassemble token. If temporarily destroyed in 2
 
 [[units.mechanical_fire_bird.specials.immunity]]
 args.feature = "token.fire"
+
+[[units.mechanical_fire_bird.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.mechanical_fire_bird.orders.movement]
 fast_fly = [["L/R+F", "F", "F+L/R"], ["F", "F", "F"], ["F+L/R", "F+L/R", "F"]]

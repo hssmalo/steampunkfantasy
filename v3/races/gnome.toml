@@ -140,6 +140,9 @@ movement_order = ["-", "-", "Flee"]
 
 [[units.assault_bots.specials.no_surviving_vp]]
 
+[[units.assault_bots.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.assault_bots.orders.movement]
 slow = [["-", "-", "Chs"]]
 
@@ -160,6 +163,9 @@ description = '''Tiny robotic rat.
 cost.vpm = 1
 
 [[units.mechanical_rat.specials.no_surviving_vp]]
+
+[[units.mechanical_rat.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.mechanical_rat.shaken]
 speed = "still"
@@ -236,6 +242,9 @@ cost.cp = 24
 description = '''A robot firing a ballista.
 '''
 
+[[units.ballista_drone.specials.immunity]]
+args.feature = "damage_type.poison"
+
 
 [units.ballista_drone.shaken]
 speed = "still"
@@ -276,6 +285,9 @@ description = '''An armored steampunk tractor firing a big ballista. On the back
 
 [[units.ballista_tractor_mark_i.specials.fire_order]]
 variant = "fire_and_load_simultaneously"
+
+[[units.ballista_tractor_mark_i.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.ballista_tractor_mark_i.shaken]
 speed = "still"
@@ -334,6 +346,9 @@ armor = [12, 8, 8, 7]
 cost.ip = 32
 description = '''An armored steampunk tractor firing a big fancy ballista.
 '''
+
+[[units.ballista_tractor_mark_ii.specials.immunity]]
+args.feature = "damage_type.poison"
 
 
 [units.ballista_tractor_mark_ii.shaken]
@@ -398,6 +413,9 @@ description = '''An armored steampunk tractor firing a big ballista. It also has
 [[units.ballista_tractor_mark_iii.specials.fire_order]]
 text = "Fires and loads both weapons at fire and load actions"
 
+[[units.ballista_tractor_mark_iii.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.ballista_tractor_mark_iii.shaken]
 speed = "still"
 movement_order = ["-", "-", "-"]
@@ -459,6 +477,9 @@ description = '''A steampunk helicopter with lots of gadgets and firing a gatlin
 
 [[units.gnome_helicopter.specials.fire_order]]
 text = "Drop weapon is used with Throw(d) orders. All other weapons (relevant if given side weapons) fires, loads and aim simultaneously."
+
+[[units.gnome_helicopter.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.gnome_helicopter.shaken]
 speed = "still"

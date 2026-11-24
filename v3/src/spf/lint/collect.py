@@ -12,7 +12,7 @@ from typing import Protocol
 
 from spf import races
 from spf.config import config
-from spf.lint import damage, holders, names, orders, prose, variants
+from spf.lint import damage, holders, immunity, names, orders, prose, variants
 from spf.registry import Registry, load_registry
 from spf.render.damage import roll_text
 from spf.schemas import type_aliases as t
@@ -94,6 +94,18 @@ def lint_race_config(
                 message=message,
             )
         )
+    for unit_key, unit in race_config.units.items():
+        message = immunity.check_poison_immunity(unit, race_config.models)
+        if message is not None:
+            findings.append(
+                Finding(
+                    race=race,
+                    section="units",
+                    key=unit_key,
+                    rule="poison-immunity",
+                    message=message,
+                )
+            )
     for model_key, model in race_config.models.items():
         message = holders.check_default_equipment_fits(model, race_config.equipment)
         if message is not None:
