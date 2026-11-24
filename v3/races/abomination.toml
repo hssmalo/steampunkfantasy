@@ -444,7 +444,7 @@ slow = [["-", "Load"], ["-", "Fire"]]
 [units.water_elemental.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: {Shaken:token.shaken}, destroy 1 model",
+	"3+: {Shaken:token.shaken}, destroy 1 model",
 ]
 notes = [
 	"If one model is destroyed remove half of the +1 future damage tokens",
@@ -579,7 +579,12 @@ fast = [
 	["F", "B", "-"],
 	["-", "Chs", "Chs"],
 ]
-slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"], ["Flee", "360°", "360°"]]
+slow = [
+	["360°", "A", "F"],
+	["B", "360°", "-"],
+	["360°", "F", "360°"],
+	["Flee", "360°", "360°"]
+]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
 [units.hippopotamus_riders.damage_tables.Regular]
