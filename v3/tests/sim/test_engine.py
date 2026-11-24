@@ -812,3 +812,16 @@ def test_heal_in_healing_one_puts_a_fire_out_before_it_rolls() -> None:
     result = _run(scenario, [])
     assert (result.rounds, result.snapshots[1].tokens) == (1, {})
     assert result.healing == {"Extinguish one Fire": 1}
+
+
+def test_points_go_on_the_first_action_they_can_pay_for() -> None:
+    scenario = _scenario(tokens=[*_tokens("fire"), _poison(6)], healers=[_heal(2)])
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {}
+    assert result.healing == {"Downgrade one Poison": 2}
+
+
+def test_a_downgrade_takes_the_strongest_bleed() -> None:
+    scenario = _scenario(tokens=[_bleed(4), _bleed(8)], healers=[_heal(1)])
+    result = _run(scenario, [(4, 1), (6, 1)])
+    assert result.healing == {"Downgrade one Bleed": 1}
