@@ -5,6 +5,7 @@ from pydantic import ValidationError
 
 from spf.registry import load_registry
 from spf.schemas.race import RaceConfig, race_slots
+from spf.schemas.rules import TokenRuleConfig
 from spf.schemas.special import SpecialInstance
 from tests.conftest import (
     InstallRegistry,
@@ -13,6 +14,7 @@ from tests.conftest import (
     synthetic_equipment,
     synthetic_model,
     synthetic_race,
+    synthetic_registry,
     synthetic_unit,
 )
 
@@ -411,3 +413,23 @@ def test_a_good_rule_link_in_prose_fields_loads(
     install_registry()
 
     synthetic_race(units={"squad": synthetic_unit(note="See {it:damage_type.poison}.")})
+
+
+def test_a_misstated_rule_link_label_in_a_damage_row_fails_to_load(
+    install_registry: InstallRegistry,
+) -> None:
+    sting = TokenRuleConfig.model_validate(
+        {
+            "name": "Sting",
+            "effect": "Hurts.",
+            "signature": "[{N}]",
+            "variables": {"N": {"type": "int", "values": [2, 4]}},
+        }
+    )
+    install_registry(synthetic_registry(records={"token": {"sting": sting}}))
+    row = "1: {Sting[3]:token.sting}"
+
+    with pytest.raises(ValidationError, match="Value 3"):
+        synthetic_race(
+            units={"squad": synthetic_unit(damage_tables={"Regular": {"rows": [row]}})}
+        )

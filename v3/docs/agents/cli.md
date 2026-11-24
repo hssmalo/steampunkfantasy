@@ -110,6 +110,9 @@ uv run spf sim damage dwarf.dwarf_infantry --start d6 --seed 7 --no-resistance
 
 # The same damage on every Unit of a Race, one line each
 uv run spf sim damage-race ork --start "d6, bleed=4"
+
+# The same damage on every Unit of an Army, each at its bought Loadout
+uv run spf sim damage-army showcase/dwarf --start d6
 ```
 
 The Unit's Damage tables print above the report, with the text the parser

@@ -112,7 +112,7 @@ def test_killing_the_last_model_destroys_the_unit() -> None:
 
 
 def test_a_destroyed_unit_stops_resolving() -> None:
-    result = _run(_scenario(hits=["d6", "d6"]), [(6, 6)])
+    result = _run(_scenario(hits=["d6", "d6"]), [(6, 6), (6, 1)])
     assert result.destroyed
     assert result.models_lost == 3
 
@@ -144,13 +144,13 @@ def test_shaken_is_placed_twice_the_first_time() -> None:
 
 def test_crippled_crew_and_shaken_turn_psychic_into_crew_damage() -> None:
     tables: dict[DamageTableName, list[str]] = {
-        "Regular": ["1: Crippled Crew", "2: Shaken", "3+: d6 psychic damage"],
+        "Regular": ["1+: d6 psychic damage"],
         "Psychic": ["1+: Dazed"],
-        "Crew": ["1-6: +1 to future crew damage", "7+: Unit destroyed"],
+        "Crew": ["1-5: +1 to future crew damage", "6+: Unit destroyed"],
     }
-    rolls = [(6, 1), (6, 2), (6, 3), (6, 6), (6, 3), (6, 6)]
-    result = _run(_scenario(tables, hits=["d6"] * 4), rolls)
-    assert result.table_rolls == {"Regular": 4, "Crew": 2}
+    tokens = [PlaceToken(name="crippled_crew"), PlaceToken(name="shaken")]
+    result = _run(_scenario(tables, hits=["d6"], tokens=tokens), [(6, 1), (6, 6)])
+    assert result.table_rolls == {"Regular": 1, "Crew": 1}
     assert result.destroyed
 
 
@@ -417,7 +417,7 @@ def test_a_bleed_saved_by_endurance_is_bleed_four_even_when_it_was_raised() -> N
 
 
 @pytest.mark.parametrize(("strength", "key"), [(4, "bleed[8]"), (8, "bleed[10]")])
-def test_raise_and_amplify_apply_in_the_order_written(strength: int, key: str) -> None:
+def test_amplify_comes_after_a_raise_in_the_same_row(strength: int, key: str) -> None:
     tables: dict[DamageTableName, list[str]] = {
         "Regular": ["1+: Bleed[6], Amplify all bleeding"]
     }
@@ -605,3 +605,187 @@ def test_a_replacement_stops_once_the_unit_is_destroyed() -> None:
     )
     result = _run(scenario, [(6, 5), (6, 5)])
     assert (result.destroyed, result.snapshots[0].future) == (True, 0)
+
+
+NUDGE = ["1-3: +1 to future damage", "4+: +1 to future damage, Bleed[4]"]
+"""A table where Future Damage alone decides whether a Bleed is placed."""
+
+
+def test_starting_hits_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario({"Regular": NUDGE}, hits=["d4-1"] * 4, max_rounds=0)
+    result = _run(scenario, [(4, 4)] * 4)
+    assert (result.snapshots[0].future, result.snapshots[0].tokens) == (4, {})
+
+
+def test_a_rounds_incoming_hits_see_the_future_damage_the_round_began_with() -> None:
+    scenario = _scenario({"Regular": NUDGE}, incoming=["d4-1"] * 4, max_rounds=1)
+    result = _run(scenario, [(4, 4)] * 4)
+    assert (result.snapshots[1].future, result.snapshots[1].tokens) == (4, {})
+
+
+def test_a_roll_a_row_sets_off_sees_the_phases_future_damage() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": [
+            "1: Dazed",
+            "2: +1 to future damage, roll one times on this table",
+            "3+: Kill 1 model",
+        ]
+    }
+    result = _run(_scenario(tables, hits=["d6"]), [(6, 2), (6, 1)])
+    assert result.models_lost == 0
+    assert (result.snapshots[0].future, result.snapshots[0].tokens) == (1, {"dazed": 1})
+
+
+def test_future_crew_damage_is_fixed_for_the_phase() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Crew": ["1-3: +1 to future crew damage", "4+: Dazed"]
+    }
+    result = _run(_scenario(tables, hits=["crew:d4-1"] * 2), [(4, 4), (4, 4)])
+    assert (result.snapshots[0].future_crew, result.snapshots[0].tokens) == (2, {})
+
+
+def test_shaken_placed_in_a_phase_does_not_reroute_its_psychic_rolls() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Shaken"],
+        "Psychic": ["1+: Dazed"],
+        "Crew": ["1+: Unit destroyed"],
+    }
+    scenario = _scenario(
+        tables, hits=["d6", "psychic:d6"], tokens=[PlaceToken(name="crippled_crew")]
+    )
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert result.table_rolls == {"Regular": 1, "Psychic": 1}
+    assert result.snapshots[0].tokens["dazed"] == 1
+
+
+EDGE = ["1-3: +1 to future damage", "4+: Kill 1 model"]
+"""A nudge just below a kill: one more Future Damage turns the one into the other."""
+
+
+def test_fires_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario({"Regular": EDGE}, tokens=[FIRE, FIRE], max_rounds=1)
+    result = _run(scenario, [(6, 3), (6, 3)])
+    assert (result.models_lost, result.snapshots[1].future) == (0, 2)
+
+
+def test_poisons_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario(
+        {"Regular": EDGE}, tokens=[_poison(6), _poison(6)], max_rounds=1
+    )
+    result = _run(scenario, [(6, 3), (6, 3)])
+    assert (result.models_lost, result.snapshots[1].future) == (0, 2)
+    assert result.snapshots[1].tokens == {"poison[4]": 2}
+
+
+def test_bleeds_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario({"Regular": EDGE}, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 3)])
+    assert (result.models_lost, result.snapshots[1].future) == (0, 2)
+    assert result.snapshots[1].tokens == {"bleed[4]": 2}
+
+
+def test_a_unit_destroyed_in_a_phase_takes_nothing_else_from_it() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1: Dazed", "2+: Unit destroyed"]
+    }
+    result = _run(_scenario(tables, hits=["d6", "d6"]), [(6, 1), (6, 2)])
+    assert result.destroyed
+    assert result.snapshots[0].tokens == {}
+
+
+@pytest.mark.parametrize("kill_at", [0, 1, 2])
+def test_a_kill_halves_future_damage_after_the_phases_additions(kill_at: int) -> None:
+    rolls = [(6, 1), (6, 1)]
+    rolls.insert(kill_at, (6, 2))
+    scenario = _scenario(hits=["d6"] * 3, future=2, notes=[HALVING])
+    result = _run(scenario, rolls)
+    assert (result.models_lost, result.snapshots[0].future) == (1, 2)
+
+
+def test_endurance_saves_the_first_kill_in_roll_order() -> None:
+    scenario = _scenario(tokens=[_bleed(8), _bleed(6)], endurance=1, max_rounds=1)
+    result = _run(scenario, [(8, 4), (6, 5)])
+    assert result.models_lost == 1
+    assert result.snapshots[1].tokens == {"bleed[4]": 1}
+
+
+AMPLIFY_AT_THREE: dict[DamageTableName, list[str]] = {
+    "Regular": ["3: Amplify all bleeding", "4+: Dazed"]
+}
+
+
+def test_a_bleed_that_stops_is_removed_before_another_amplifies() -> None:
+    scenario = _scenario(AMPLIFY_AT_THREE, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 2)])
+    assert result.snapshots[1].tokens == {"bleed[6]": 1}
+
+
+def test_a_bleeds_amplify_leaves_the_other_bleed_dice_alone_this_round() -> None:
+    scenario = _scenario(AMPLIFY_AT_THREE, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 4)])
+    assert result.snapshots[1].tokens == {"bleed[6]": 2, "dazed": 1}
+
+
+def test_every_roll_of_the_phase_counts_after_the_unit_is_destroyed() -> None:
+    result = _run(_scenario(hits=["d6", "d6"]), [(6, 6), (6, 1)])
+    assert result.destroyed
+    assert result.table_rolls == {"Regular": 2}
+
+
+def test_amplify_comes_after_a_later_rows_bleed() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1: Amplify all bleeding", "2+: Bleed[4]"]
+    }
+    scenario = _scenario(tables, hits=["d6", "d6"], max_rounds=0)
+    result = _run(scenario, [(6, 1), (6, 2)])
+    assert result.snapshots[0].tokens == {"bleed[6]": 1}
+
+
+def test_each_amplify_of_a_phase_steps_once() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Amplify all bleeding"]}
+    scenario = _scenario(tables, hits=["d6", "d6"], tokens=[_bleed(4)], max_rounds=0)
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert result.snapshots[0].tokens == {"bleed[8]": 1}
+
+
+def test_amplify_written_before_a_raise_still_comes_after_it() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Amplify all bleeding, Bleed[6]"]
+    }
+    scenario = _scenario(tables, tokens=[_bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3)])
+    assert result.snapshots[1].tokens == {"bleed[8]": 1}
+
+
+def test_a_poison_placed_in_agony_three_does_not_step_down_that_round() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Poison[6]"]}
+    scenario = _scenario(tables, tokens=[_poison(6)], max_rounds=1)
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {"poison[4]": 1, "poison[6]": 1}
+
+
+def test_aftermath_removes_one_shaken_each_round() -> None:
+    scenario = _scenario(
+        tokens=[PlaceToken(name="shaken")], incoming=["d6"], max_rounds=3
+    )
+    result = _run(scenario, [(6, 1)] * 3)
+    shaken = [snapshot.tokens["shaken"] for snapshot in result.snapshots]
+    assert shaken == [2, 1, 0, 0]
+
+
+def test_psychic_damage_returns_to_its_table_once_aftermath_clears_shaken() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Psychic": ["1+: Dazed"],
+        "Crew": ["1+: Dazed"],
+    }
+    tokens = [PlaceToken(name="crippled_crew"), PlaceToken(name="shaken")]
+    scenario = _scenario(tables, tokens=tokens, incoming=["psychic:d6"], max_rounds=3)
+    result = _run(scenario, [(6, 1)] * 3)
+    assert result.table_rolls == {"Crew": 2, "Psychic": 1}
+
+
+def test_a_shaken_placed_during_a_round_has_lost_one_by_its_end() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Shaken"]}
+    scenario = _scenario(tables, incoming=["d6"], max_rounds=1)
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens["shaken"] == 1

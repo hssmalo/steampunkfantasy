@@ -8,6 +8,7 @@ from spf.prose import (
     fill,
     fill_linked,
     interpolate_linked,
+    label_args,
     link_refs,
     linked_prose,
     malformed_links,
@@ -272,3 +273,40 @@ def test_broken_braces_around_a_link_are_malformed(raw: str) -> None:
 )
 def test_well_formed_prose_is_not_malformed(raw: str) -> None:
     assert malformed_links(raw) == []
+
+
+def test_a_label_in_its_targets_signature_shape_states_its_args() -> None:
+    assert label_args("Bleed[6]", name="Bleed", signature="[{N}]") == {"N": "6"}
+
+
+def test_a_labels_name_matches_whatever_its_case() -> None:
+    assert label_args("poison[6]", name="Poison", signature="[{N}]") == {"N": "6"}
+
+
+@pytest.mark.parametrize("label", ["Bleed", "bleed token", "Bleed[6] twice"])
+def test_a_label_in_other_words_states_no_args(label: str) -> None:
+    assert label_args(label, name="Bleed", signature="[{N}]") is None
+
+
+def test_a_target_without_a_signature_takes_no_args() -> None:
+    assert label_args("Fear", name="Fear", signature=None) is None
+
+
+def test_every_group_of_a_signature_states_its_arg() -> None:
+    args = label_args("Blast[range=3][d6]", name="Blast", signature="[range={N}][d{M}]")
+
+    assert args == {"N": "3", "M": "6"}
+
+
+@pytest.mark.parametrize(
+    ("label", "signature"),
+    [
+        ("Swap forest forest", " {terrain} {terrain}"),
+        ("Charge +2", " +{N}"),
+        ("Hit x2/x3", "x{N}/x{M}"),
+        ("Poison[4", "Poison[{N}"),
+        ("Order Chs", "Chs"),
+    ],
+)
+def test_any_signature_shape_reads_without_raising(label: str, signature: str) -> None:
+    label_args(label, name="Rule", signature=signature)
