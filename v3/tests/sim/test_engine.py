@@ -841,3 +841,38 @@ def test_healing_two_comes_before_aftermath() -> None:
     result = _run(scenario, [(6, 1)])
     assert result.snapshots[1].future == 1
     assert result.healing == {"Remove one Shaken": 2}
+
+
+def test_repair_skips_what_it_cannot_afford_and_spends_the_rest() -> None:
+    scenario = _scenario(
+        tokens=_tokens("shaken", "fire", "cannot_move"),
+        future=1,
+        healers=[_repair(3)],
+        critical=frozenset({"cannot_move"}),
+    )
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {"cannot_move": 1}
+    assert result.snapshots[1].future == 0
+    assert result.healing == {"Remove one Shaken": 2, "Remove one Future Damage": 1}
+
+
+def test_repair_removes_a_critical_damage_effect_and_nothing_else() -> None:
+    scenario = _scenario(
+        tokens=[*_tokens("cannot_move", "dazed"), _bleed(4)],
+        healers=[_repair(3)],
+        critical=frozenset({"cannot_move"}),
+    )
+    result = _run(scenario, [(4, 1)])
+    assert result.snapshots[1].tokens == {"dazed": 1}
+    assert result.healing == {"Remove one Critical Damage Effect": 1}
+
+
+def test_disabled_repair_stops_repair_but_not_heal() -> None:
+    scenario = _scenario(
+        tokens=[*_tokens("disabled_repair", "cannot_move"), _bleed(6)],
+        healers=[_repair(3), _heal(1)],
+        critical=frozenset({"disabled_repair", "cannot_move"}),
+    )
+    result = _run(scenario, [(4, 1)])
+    assert result.snapshots[1].tokens == {"disabled_repair": 1, "cannot_move": 1}
+    assert result.healing == {"Downgrade one Bleed": 1}
