@@ -278,14 +278,14 @@ slots = ["unit"]
 signature = "[{N}, {unit}, {phase}]"
 effect = """Healing only works on biological units and removing crippled crew for units with bio crew. You have{N}points to spend on the following actions:
 
-- Degrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
-- Degrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
+- Downgrade one poison token one step. (ie. d6 becomes d4 (d4 are removed)). Cost 1.
+- Downgrade one bleeding token one step. (ie d6 becomes d4 (d4 are removed)). Cost 1.
 - Remove one +1 to future damage token. Cost 1.
 - Neutralize one minor acid. Cost 1.
 - Extinguish one fire. Cost 3.
 - Neutralize one poison token: Cost 3.
 - Remove one bleeding token: Cost 3.
-- Degrade one acid to minor acid. Cost 4.
+- Downgrade one acid to minor acid. Cost 4.
 - Remove crippled crew token. Cost 4.
 """
 see_also = ["token.poison", "token.bleed", "token.minor_acid", "token.acid", "token.fire", "token.crippled_crew"]
@@ -324,7 +324,7 @@ effect = """Repair only works on mechanical and drone units. You have {N} points
 - Remove 1 shaken token to any unit which is not bio. Cost 1
 - Extinguish one fire. Cost 3.
 - Remove 1 critical damage effect. Cost 3.
-- Degrade one acid to minor acid. Cost 4.
+- Downgrade one acid to minor acid. Cost 4.
 """
 see_also = ["token.minor_acid", "token.acid", "token.fire", "token.shaken", "token.disabled_repair"]
 todo = "Some Race grants scale {N} with the number of alive models, which no scalar type can express: those instances carry the formula as text. The `formula` type now exists (ADR 0027); decide whether these instances should use it."
