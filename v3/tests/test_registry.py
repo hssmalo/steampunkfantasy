@@ -860,6 +860,17 @@ TOKEN_REGISTRY = synthetic_registry(
             "sting": _token(
                 "Sting", "[{N}]", {"N": {"type": "int", "values": [2, 4, 6]}}
             ),
+            "venom": _token(
+                "Venom",
+                "[{N}]",
+                {"N": {"type": ["int", "formula"], "values": [4, 6]}},
+            ),
+            "mark": _token(
+                "Mark",
+                "[{kind}]",
+                {"kind": {"type": "ref", "namespaces": ["damage_type"]}},
+            ),
+            "smudge": _token("Smudge", "[{N}]", {}),
         }
     }
 )
@@ -875,4 +886,27 @@ def test_a_label_stating_a_value_its_target_forbids_is_reported() -> None:
 
     assert len(errors) == 1
     assert "argument 'N'" in errors[0]
+    assert "Value 5" in errors[0]
+
+
+@pytest.mark.parametrize(
+    "prose",
+    [
+        "Place {Sting[4]:token.sting}.",
+        "Place {Sting[N]:token.sting}.",
+        "Place {Sting[{N}]:token.sting}.",
+        "Place {Venom[X]:token.venom}.",
+        "Place {Mark[3]:token.mark}.",
+        "Place {Smudge[3]:token.smudge}.",
+    ],
+    ids=["allowed", "letter", "placeholder", "formula", "ref-variable", "undeclared"],
+)
+def test_a_label_stating_no_forbidden_integer_passes(prose: str) -> None:
+    assert _label_errors(prose) == []
+
+
+def test_a_union_variable_still_forbids_an_integer_outside_its_values() -> None:
+    errors = _label_errors("Place {Venom[5]:token.venom}.")
+
+    assert len(errors) == 1
     assert "Value 5" in errors[0]
