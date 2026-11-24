@@ -39,6 +39,9 @@ args.N = 1
 args.version = "resistance_type.fire"
 args.N = 1
 
+[[units.mechahydra.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.mechahydra.orders.fire]
 still = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"]]
 slow = [["Load", "-"], ["-", "Load"], ["Fire", "-"], ["-", "Fire"]]
@@ -70,6 +73,9 @@ description = '''A robotic red dragon breathing fire
 [[units.mechanical_red_dragon.specials.resistance]]
 args.version = "resistance_type.fire"
 args.N = 2
+
+[[units.mechanical_red_dragon.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [[units.mechanical_red_dragon.specials.immunity]]
 args.feature = "token.acid"
@@ -114,6 +120,9 @@ args.N = 2
 
 [[units.mechanical_iron_dragon.specials.fire_order]]
 text = "Fire(acid): use acid and poison breath, while Fire(shrapnel) uses shrapnel breath instead."
+
+[[units.mechanical_iron_dragon.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [[units.mechanical_iron_dragon.specials.immunity]]
 args.feature = "token.acid"
@@ -166,6 +175,9 @@ text = "You fire 2 independent heavy rifles in addition to acid cannon each fire
 [[units.queen_yy.specials.resistance]]
 args.version = "resistance_type.acid"
 args.N = 2
+
+[[units.queen_yy.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.queen_yy.shaken]
 speed = 'still'
@@ -237,6 +249,9 @@ description = '''Large steampunk tank with no weapons, just poison gas exiting f
 
 [[units.queen_xy.specials.fire_order]]
 text = "If you use the order release as an firing option, you may place a poison cloud[12] during any movement phase in any the hex you are in, including contested hexes for assaults"
+
+[[units.queen_xy.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.queen_xy.shaken]
 speed = 'still'
@@ -405,6 +420,9 @@ cost.ip = 16
 description = '''A giant black steampunk robotic spider with a weapon replacing the head.
 '''
 
+[[units.mechanical_assault_spider.specials.immunity]]
+args.feature = "damage_type.poison"
+
 
 [units.mechanical_assault_spider.shaken]
 speed = "still"
@@ -445,6 +463,9 @@ armor = [9, 7, 6, 5]
 cost.ip = 16
 description = '''A large robotic scorpion with a gatling gun on its tail.
 '''
+
+[[units.mechanical_scorpion.specials.immunity]]
+args.feature = "damage_type.poison"
 
 
 [units.mechanical_scorpion.shaken]

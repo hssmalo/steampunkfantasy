@@ -1,15 +1,15 @@
 """One simulated run, on synthetic Damage tables, against a scripted die."""
 
 from collections.abc import Mapping
-from typing import cast
+from typing import Literal, cast
 
 import pytest
 
 from spf.schemas.type_aliases import DamageTable, DamageTableName
 from spf.sim.dice import Dice
 from spf.sim.effects import PlaceToken, Vocabulary
-from spf.sim.engine import RunResult, UnitState, run_once
-from spf.sim.scenario import Hit, Scenario, Start
+from spf.sim.engine import FixedPolicy, RunResult, UnitState, run_once
+from spf.sim.scenario import Healer, Hit, Scenario, Start
 from spf.sim.tables import compile_table
 from tests.sim.conftest import ScriptedRoller
 
@@ -43,6 +43,8 @@ def _scenario(  # noqa: PLR0913
     endurance: int = 0,
     incoming: list[str] | None = None,
     max_rounds: int = 20,
+    healers: list[Healer] | None = None,
+    critical: frozenset[str] = frozenset(),
 ) -> Scenario:
     tables = tables or {"Regular": LADDER}
     return Scenario(
@@ -68,6 +70,8 @@ def _scenario(  # noqa: PLR0913
             kind: [Dice.parse(dice)] for kind, dice in (resistance or {}).items()
         },
         endurance=endurance,
+        healers=healers or [],
+        critical=critical,
         max_rounds=max_rounds,
     )
 
@@ -477,7 +481,7 @@ def test_a_bleed_saved_by_endurance_continues_as_bleed_four() -> None:
     assert (result.models_lost, result.rounds) == (0, 2)
 
 
-class _NeverSpend:
+class _NeverSpend(FixedPolicy):
     def spend_endurance(self, state: UnitState) -> bool:  # noqa: ARG002
         return False
 
@@ -789,3 +793,117 @@ def test_a_shaken_placed_during_a_round_has_lost_one_by_its_end() -> None:
     scenario = _scenario(tables, incoming=["d6"], max_rounds=1)
     result = _run(scenario, [(6, 1)])
     assert result.snapshots[1].tokens["shaken"] == 1
+
+
+def _heal(points: int | Literal["alive"], phase: Literal[1, 2] = 1) -> Healer:
+    return Healer(kind="heal", points=points, phase=phase)
+
+
+def _repair(points: int, phase: Literal[1, 2] = 1) -> Healer:
+    return Healer(kind="repair", points=points, phase=phase)
+
+
+def _tokens(*names: str) -> list[PlaceToken]:
+    return [PlaceToken(name=name) for name in names]
+
+
+def test_heal_in_healing_one_puts_a_fire_out_before_it_rolls() -> None:
+    scenario = _scenario(tokens=_tokens("fire"), healers=[_heal(3)])
+    result = _run(scenario, [])
+    assert (result.rounds, result.snapshots[1].tokens) == (1, {})
+    assert result.healing == {"Extinguish one Fire": 1}
+
+
+def test_points_go_on_the_first_action_they_can_pay_for() -> None:
+    scenario = _scenario(tokens=[*_tokens("fire"), _poison(6)], healers=[_heal(2)])
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {}
+    assert result.healing == {"Downgrade one Poison": 2}
+
+
+def test_a_downgrade_takes_the_strongest_bleed() -> None:
+    scenario = _scenario(tokens=[_bleed(4), _bleed(8)], healers=[_heal(1)])
+    result = _run(scenario, [(4, 1), (6, 1)])
+    assert result.healing == {"Downgrade one Bleed": 1}
+
+
+def test_healing_two_comes_after_the_agony_phases() -> None:
+    scenario = _scenario(tokens=_tokens("fire"), healers=[_heal(3, phase=2)])
+    result = _run(scenario, [(6, 3)])
+    assert (result.rounds, result.snapshots[1].future) == (1, 1)
+    assert result.snapshots[1].tokens == {}
+
+
+def test_healing_two_comes_before_aftermath() -> None:
+    scenario = _scenario(
+        tokens=_tokens("shaken", "fire"), future=1, healers=[_repair(2, phase=2)]
+    )
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].future == 1
+    assert result.healing == {"Remove one Shaken": 2}
+
+
+def test_repair_skips_what_it_cannot_afford_and_spends_the_rest() -> None:
+    scenario = _scenario(
+        tokens=_tokens("shaken", "fire", "cannot_move"),
+        future=1,
+        healers=[_repair(3)],
+        critical=frozenset({"cannot_move"}),
+    )
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {"cannot_move": 1}
+    assert result.snapshots[1].future == 0
+    assert result.healing == {"Remove one Shaken": 2, "Remove one Future Damage": 1}
+
+
+def test_repair_removes_a_critical_damage_effect_and_nothing_else() -> None:
+    scenario = _scenario(
+        tokens=[*_tokens("cannot_move", "dazed"), _bleed(4)],
+        healers=[_repair(3)],
+        critical=frozenset({"cannot_move"}),
+    )
+    result = _run(scenario, [(4, 1)])
+    assert result.snapshots[1].tokens == {"dazed": 1}
+    assert result.healing == {"Remove one Critical Damage Effect": 1}
+
+
+def test_disabled_repair_stops_repair_but_not_heal() -> None:
+    scenario = _scenario(
+        tokens=[*_tokens("disabled_repair", "cannot_move"), _bleed(6)],
+        healers=[_repair(3), _heal(1)],
+        critical=frozenset({"disabled_repair", "cannot_move"}),
+    )
+    result = _run(scenario, [(4, 1)])
+    assert result.snapshots[1].tokens == {"disabled_repair": 1, "cannot_move": 1}
+    assert result.healing == {"Downgrade one Bleed": 1}
+
+
+def test_one_point_per_alive_model_counts_the_models_alive_now() -> None:
+    scenario = _scenario(hits=["d6"], tokens=[_bleed(4)] * 3, healers=[_heal("alive")])
+    result = _run(scenario, [(6, 4), (4, 1)])
+    assert result.healing == {"Downgrade one Bleed": 2}
+
+
+def test_acid_downgraded_in_healing_one_rolls_as_minor_acid_that_round() -> None:
+    scenario = _scenario(tokens=_tokens("acid"), healers=[_heal(4)])
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {}
+    assert result.healing == {"Downgrade one Acid to Minor Acid": 1}
+
+
+def test_healing_the_last_continuing_damage_ends_the_run() -> None:
+    scenario = _scenario(tokens=[_poison(4)], healers=[_heal(1)])
+    result = _run(scenario, [])
+    assert (result.rounds, result.ended_by) == (1, "no continuing damage")
+
+
+class _NeverHeal(FixedPolicy):
+    def healing_priority(self, kind: str) -> tuple[()]:  # noqa: ARG002
+        return ()
+
+
+def test_the_player_policy_decides_what_healing_buys() -> None:
+    scenario = _scenario(tokens=_tokens("fire"), healers=[_heal(3)])
+    roller = ScriptedRoller([(6, 1)])
+    result = run_once(scenario, roller, policy=_NeverHeal())
+    assert (roller.exhausted, result.healing) == (True, {})

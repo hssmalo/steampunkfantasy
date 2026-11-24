@@ -137,7 +137,7 @@ def synthetic_model(
             "name": "Soldier",
             "equipment_limit": holders if holders is not None else ["Hands:2"],
             "equipment": ["knife"],
-            "type": ["Infantry"],
+            "type": ["Bio", "Infantry"],
             "assault": synthetic_assault(),
         }
         | fields

@@ -11,7 +11,7 @@ from spf.registry import Registry
 from spf.schemas import rules as r
 from spf.schemas.race import RaceConfig
 from spf.sim.dice import Dice
-from spf.sim.scenario import Scenario, Start
+from spf.sim.scenario import Healer, Scenario, Start
 from spf.sim.units import scenario_of, unit_scenario, vocabulary_of
 from tests.conftest import (
     InstallRegistry,
@@ -42,6 +42,19 @@ def _registry() -> Registry:
                 slots=["unit"],
                 variables={"N": {"type": "int"}, "model_class": {"type": "str"}},
             ),
+            **{
+                kind: synthetic_special(
+                    name=kind.title(),
+                    slots=["unit"],
+                    signature="[{N}, {unit}, {phase}]",
+                    variables={
+                        "N": {"type": ["int", "str"]},
+                        "unit": {"type": "str"},
+                        "phase": {"type": "str"},
+                    },
+                )
+                for kind in ["heal", "repair"]
+            },
         },
         records={
             "resistance_type": {
@@ -51,6 +64,9 @@ def _registry() -> Registry:
             "token": {
                 "dazed": r.TokenRuleConfig(name="Dazed", effect="Reels."),
                 "bleed": r.TokenRuleConfig(name="Bleed", effect="Bleeds."),
+                "stuck": r.TokenRuleConfig(
+                    name="Stuck", effect="Cannot move.", critical=True
+                ),
             },
         },
     )
@@ -93,7 +109,11 @@ def _race() -> RaceConfig:
 
 
 def test_the_vocabulary_is_every_token_name(registry: Registry) -> None:
-    assert vocabulary_of(registry).tokens == {"dazed": "dazed", "bleed": "bleed"}
+    assert vocabulary_of(registry).tokens == {
+        "dazed": "dazed",
+        "bleed": "bleed",
+        "stuck": "stuck",
+    }
 
 
 def test_a_scenario_counts_the_units_models(registry: Registry) -> None:
@@ -327,3 +347,115 @@ def test_a_superelite_counts_as_elite(registry: Registry) -> None:
 def test_any_other_class_counts_for_every_model(registry: Registry) -> None:
     race = _kitted(specials={"endurance": [_endurance(1, " Model")]})
     assert _scenario(synthetic_army(race), race, registry).endurance == 3
+
+
+def _healing(
+    points: int | str, unit: str = "self", phase: str = "1st Healing", text: str = ""
+) -> dict[str, object]:
+    return {
+        "args": {"N": points, "unit": unit, "phase": phase},
+        **({"text": text} if text else {}),
+    }
+
+
+def _healed(registry: Registry, **unit_fields: object) -> Scenario:
+    race = synthetic_race(units={"squad": synthetic_unit(**unit_fields)})
+    return unit_scenario(race, "squad", registry=registry, start=Start())
+
+
+def test_a_unit_heal_becomes_a_healer(registry: Registry) -> None:
+    scenario = _healed(registry, specials={"heal": [_healing(2)]})
+    assert scenario.healers == [Healer(kind="heal", points=2, phase=1)]
+
+
+def test_healing_for_other_units_is_skipped_silently(registry: Registry) -> None:
+    scenario = _healed(registry, specials={"heal": [_healing(2, unit="other")]})
+    assert (scenario.healers, scenario.unplayed_healing) == ([], [])
+
+
+def test_model_and_equipment_healing_counts_each_kind_once(registry: Registry) -> None:
+    race = synthetic_race(
+        units={"squad": synthetic_unit(models=["soldier"] * 3)},
+        models={
+            "soldier": synthetic_model(
+                unit_specials={"repair": [_healing(1, phase="2nd Healing")]}
+            )
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                unit_specials={"repair": [_healing(2, unit="any")]},
+            )
+        },
+    )
+    scenario = unit_scenario(race, "squad", registry=registry, start=Start())
+    assert scenario.healers == [
+        Healer(kind="repair", points=1, phase=2),
+        Healer(kind="repair", points=2, phase=1),
+    ]
+
+
+@pytest.mark.parametrize(
+    "points", ["one per alive model", "One per alive repair drone model"]
+)
+def test_one_point_per_alive_model_counts_the_living(
+    registry: Registry, points: str
+) -> None:
+    scenario = _healed(registry, specials={"repair": [_healing(points)]})
+    assert scenario.healers == [Healer(kind="repair", points="alive", phase=1)]
+
+
+@pytest.mark.parametrize(
+    ("args", "spelled"),
+    [
+        ({"N": "three-ish", "unit": "self"}, "Heal[three-ish, self, 1st Healing]"),
+        ({"N": 2, "unit": "nearby"}, "Heal[2, nearby, 1st Healing]"),
+        ({"N": 2, "phase": "Agony 0"}, "Heal[2, self, Agony 0]"),
+    ],
+)
+def test_healing_the_simulator_cannot_play_is_listed(
+    registry: Registry, args: dict[str, object], spelled: str
+) -> None:
+    instance = _healing(2)
+    instance["args"] = {"N": 2, "unit": "self", "phase": "1st Healing", **args}
+    scenario = _healed(registry, specials={"heal": [instance]})
+    assert (scenario.healers, scenario.unplayed_healing) == ([], [spelled])
+
+
+def test_never_both_keeps_only_the_larger_healer_of_the_phase(
+    registry: Registry,
+) -> None:
+    heals = [
+        _healing(2, unit="any"),
+        _healing(3, text="Either this or the other, Never both."),
+        _healing(1, phase="2nd Healing"),
+    ]
+    scenario = _healed(registry, specials={"heal": heals, "repair": [_healing(1)]})
+    assert scenario.healers == [
+        Healer(kind="heal", points=3, phase=1),
+        Healer(kind="heal", points=1, phase=2),
+        Healer(kind="repair", points=1, phase=1),
+    ]
+
+
+def test_without_never_both_every_healer_of_the_phase_acts(
+    registry: Registry,
+) -> None:
+    scenario = _healed(registry, specials={"heal": [_healing(2), _healing(3)]})
+    assert [healer.points for healer in scenario.healers] == [2, 3]
+
+
+def test_critical_damage_effects_are_the_flagged_tokens(registry: Registry) -> None:
+    assert _healed(registry).critical == {"stuck"}
+
+
+def test_healing_can_be_turned_off(registry: Registry) -> None:
+    race = synthetic_race(
+        units={"squad": synthetic_unit(specials={"heal": [_healing("three-ish")]})}
+    )
+    scenario = unit_scenario(
+        race, "squad", registry=registry, start=Start(), healing=False
+    )
+    assert (scenario.healers, scenario.unplayed_healing) == ([], [])

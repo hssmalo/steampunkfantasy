@@ -294,6 +294,8 @@ class TokenRuleConfig(RuleRecord):
     remove: str | None = None
     to_hit: Modifier | None = None
     to_be_hit: Modifier | None = None
+    critical: bool = False
+    """Whether this Token is a Critical Damage Effect, which only Repair removes."""
 
 
 class TokenRulesConfig(StrictModel):

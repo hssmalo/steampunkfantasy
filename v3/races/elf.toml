@@ -196,6 +196,9 @@ text = "When fired at, you may pretend to look at normal infantry damage table u
 [[units.illusion.specials.forward_position]]
 args.N = 2
 
+[[units.illusion.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.illusion.shaken]
 speed = 'slow'
 movement_order = ["-", "-", "Flee"]
@@ -207,9 +210,6 @@ slow = [["-", "-", "Chs"],["Follow", "Follow", "Follow"]]
 rows = [
 	"0-3: Destroy 1 model",
 	"4+: Unit destroyed",
-]
-notes = [
-	"Immune to Poison",
 ]
 
 [units.elf_scout]
@@ -325,6 +325,9 @@ armor = [10, 9, 9, 8]
 description = '''An elegant steampunk tank with a main gun on a rotating turret. On the turret two small arms guns are pointing out of the turret and in the same direction as the main gun.
 '''
 
+[[units.e34.specials.immunity]]
+args.feature = "damage_type.poison"
+
 
 [units.e34.shaken]
 speed = "still"
@@ -395,6 +398,9 @@ description = '''An elegant steampunk armored vehicle with an rapid fire gun on 
 
 [[units.tattoo_ink.specials.fire_order]]
 text = "May fire two SMG (and each SMG fire twice) in addition to PentaGun any time a fire order is given. One of the SMG must fire in same angle as PentaGun, the other SMG must fire in the forward direction. However, SMG never gains benefit of aim, only PentaGun do."
+
+[[units.tattoo_ink.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.tattoo_ink.shaken]
 speed = "still"

@@ -4,6 +4,8 @@ A record of deliberate balance changes to the Race data in `races/`. It captures
 *why* a Unit, Model, Equipment, or Special was changed.
 
 | Date       | Race         | Description                                                                 | Why
+| 24.11.2026 | All          | Every unit without a Bio model is immune to poison (Illusion's note too)   | Non-living units shrug off poison; stated on each unit where players look.
+| 24.11.2026 | Dwarf        | Zeppelin and Transport Zeppelin are typed Bio Crew                          | They were always crewed; the Type was missing.
 | 23.11.2026 | Abomination  | Hippo, gained flee order at slow                                            | Very useful to avoid assault.
 | 23.11.2026 | Abomination  | Hippo , tweaked damage table, reduced armor                                 | Take advantage of new bleed mechanism
 | 23.11.2026 | Abomination  | Horror, tweaked damage table                                                | Needed a buff

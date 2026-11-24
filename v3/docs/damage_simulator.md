@@ -31,18 +31,18 @@ plays no part in the damage, so the simulator starts from the damage roll.
 destroyed when the count reaches 0 or a row says "Unit destroyed". Which Model
 dies is not tracked: every Model is treated alike. A Temporary Kill
 ("Temporarily kill 1 model") takes one off the same count, but reaching 0 does
-not destroy the Unit. Since nothing heals, a temporarily killed Model stays
-that way and counts as lost.
+not destroy the Unit. Nothing brings a Model back, so a temporarily killed
+Model stays that way and counts as lost.
 
-**No player decisions beyond one.** The simulated player always spends
-Endurance when it is legal. They never heal or repair, and nothing else is
-chosen.
+**No player decisions beyond two.** The simulated player always spends
+Endurance when it is legal, and spends Heal and Repair points by a fixed list
+(see [Healing and repair](#healing-and-repair)). Nothing else is chosen.
 
-**Not simulated at all:** movement, facing, to-hit modifiers, speed, orders,
-healing and repair. Any Token without a damage effect of its own (Cannot Move,
-Cannot Turn, …) is only *counted*: it shows up in the per-Round Token means, but
-it does nothing. Shaken is also counted, and loses one Token each Aftermath, but
-it does do one thing (see
+**Not simulated at all:** movement, facing, to-hit modifiers, speed and
+orders. Any Token without a damage effect of its own (Cannot Move, Cannot Turn,
+…) is only *counted*: it shows up in the per-Round Token means, and Repair may
+remove it, but it does nothing. Shaken is also counted, and loses one Token each
+Aftermath, but it does do one thing (see
 [Which table a roll goes to](#which-table-a-roll-goes-to)).
 
 ## The two modes
@@ -112,12 +112,14 @@ Every Round runs these steps in order. They follow the end of a Round in
 | Step | What happens |
 |---|---|
 | **Incoming** | The `--incoming` rolls land on the Unit together and resolve as one Phase, like the starting rolls. |
+| **Healing 1** | Each Heal and Repair Instance of the 1st Healing Phase spends its points (see [Healing and repair](#healing-and-repair)). |
 | **Agony 0: Terror and Acid** | Each Terror Token counts one spillover event (Terror on friendly Units). Then each Acid Token rolls a d8 on the acid table, less acid resistance (see below). |
 | **Agony 1: Minor Acid** | Each Minor Acid rolls a d6, less acid resistance. On 3+ the Unit gains +1 Future Damage and the Minor Acid stays; otherwise the Minor Acid is removed. |
 | **Agony 2: Fire** | *Every* Fire Token rolls a d6, less fire resistance, **before any of them deals damage**. A Fire at 2 or below goes out. Each one still burning then deals its roll as damage on the Regular table, plus Future Damage. |
 | **Agony 3: Poison** | *Every* Poison[N] rolls a dN, less poison resistance, **before any of them deals damage**. Each deals its roll as damage on the Regular table, plus Future Damage. A Poison that killed a Model is removed; otherwise it drops one step (Poison[8] → Poison[6]), and Poison[4] is removed. |
 | **Agony 4: Bleed** | *Every* Bleed[N] rolls a dN **before any of them deals damage**. A Bleed that rolled 1 or 2 is removed first, so nothing the other Bleeds do this Round touches it. Each one left deals its roll as damage on the Regular table, plus Future Damage. That damage never places a new Bleed: a Bleed it would place instead Raises the rolling Bleed, if larger. A Bleed that killed a Model is removed. |
-| **Aftermath** | One Shaken Token is removed, if the Unit has any. Healing and repair, which come just before Aftermath in `rules/round.md`, are skipped. |
+| **Healing 2** | Each Heal and Repair Instance of the 2nd Healing Phase spends its points. |
+| **Aftermath** | One Shaken Token is removed, if the Unit has any. |
 
 After Aftermath, the last step, the state is recorded for the report. The run
 then checks whether it should go on (see [The two modes](#the-two-modes)).
@@ -155,8 +157,47 @@ the one below it:
 | 7 | As 6; the Unit gains a Fire Token |
 | 8+ | Roll three more times on this table |
 
-An Acid Token is never removed except by rolling a 1, so Acid keeps a run going
-for a long time.
+An Acid Token is never removed except by rolling a 1 or by Healing, so Acid
+keeps a run going for a long time.
+
+### Healing and repair
+
+A Unit's own `heal` and `repair` Instances act in the Healing Phase their
+`phase` names: Healing 1 comes before Agony 0, Healing 2 after Agony 4
+(`rules/round.md`). Each contributor counts once, as for resistance: the Unit,
+a kind of Model, a kind of Equipment.
+
+**Greedy spending.** An Instance with N points takes the first action in its
+list that the Unit has a Token for and the points left can pay, then again,
+until no action is both possible and affordable. Points left over are lost.
+
+| Heal | Cost | Repair | Cost |
+|---|---|---|---|
+| 1. Extinguish one Fire | 3 | 1. Remove one Shaken | 1 |
+| 2. Downgrade one Poison | 1 | 2. Extinguish one Fire | 3 |
+| 3. Downgrade one Bleed | 1 | 3. Remove one Critical Damage Effect | 3 |
+| 4. Neutralize one Minor Acid | 1 | 4. Remove one Future Damage | 1 |
+| 5. Remove one Future Damage | 1 | 5. Downgrade one Acid to Minor Acid | 4 |
+| 6. Downgrade one Acid to Minor Acid | 4 | 6. Neutralize one Minor Acid | 1 |
+
+- **Downgrade** takes the strongest Poison or Bleed one step down. A `[4]` is
+  removed.
+- A **Critical Damage Effect** is a Token flagged `critical` in
+  `rules/tokens.toml`: Cannot Move, Cannot Turn, Cannot Accelerate, No Command,
+  Disabled Repair and Plus Minus One.
+- **Which Instances act.** Those for `self` or `any` Unit. An Instance for
+  `other` Units never acts on this one. An N written as "one per alive …
+  model" is the Models alive when the Healing Phase runs. Any other N in words,
+  or a `unit` or `phase` the simulator doesn't know, is skipped and listed
+  under *Not simulated*.
+- **Several Instances in one Healing Phase** each spend their own points, in
+  turn. When one of them says "never both", only the largest Heal (or Repair)
+  of that Phase acts.
+- **Disabled Repair** stops every Repair of the Unit. Its Heal still acts.
+- An Acid downgraded in Healing 1 rolls as a Minor Acid in Agony 1 of the same
+  Round. Healing that removes the last Continuing Damage Token ends the run.
+
+`--no-healing` turns all of this off, so you can compare.
 
 ## Resolving a Phase
 
@@ -322,7 +363,8 @@ chosen and printed.
 | **Damage table rolls** | How many rolls each table got over all runs, with the chosen table first |
 | **Rolls on a table the Unit lacks** | Effects that pointed at a table this Unit doesn't have |
 | **Spillover events** | Effects aimed beyond this Unit, with how often they happened |
-| **Not simulated** | Every row clause and note the parser skipped, with how often runs reached it. A note is counted each time its table was rolled |
+| **Healing and repair** | How often each Heal or Repair action was taken, over all runs |
+| **Not simulated** | Every row clause and note the parser skipped, with how often runs reached it. A note is counted each time its table was rolled. A Heal or Repair Instance the simulator cannot play gets a row too, with `—` for Row and Hits |
 
 **Read *Not simulated* before trusting a figure.** A rarely hit clause hardly
 matters. A clause hit thousands of times may be what decides the outcome. When
@@ -343,7 +385,7 @@ Both take a comma-separated list:
 | `shaken`, `crippled_crew` | One Token (`--start` only) |
 
 Other options: `--runs` (default 10 000), `--seed`, `--max-rounds` (default
-20), `--no-resistance`.
+20), `--no-resistance`, `--no-healing`.
 
 ```console
 # How bad is a Bleed[6] with +2 Future Damage, after a hit?
@@ -355,6 +397,10 @@ uv run spf sim damage ogre.main_engine --incoming "d6, psychic:d6" --max-rounds 
 # The same starting hit, with and without resistance
 uv run spf sim damage ork.troll --start "d8, poison=8" --seed 1
 uv run spf sim damage ork.troll --start "d8, poison=8" --seed 1 --no-resistance
+
+# What the Unit's own Repair is worth
+uv run spf sim damage dwarf.steampowerarmor --start "fire=2, shaken, future=2" --seed 1
+uv run spf sim damage dwarf.steampowerarmor --start "fire=2, shaken, future=2" --seed 1 --no-healing
 ```
 
 ## Known gaps
@@ -364,8 +410,13 @@ These are open questions for the game designer, not oversights:
 - **"if already Shaken double initial crew damage"** is not simulated, because
   "initial crew damage" can be read more than one way. It appears under
   *Not simulated*.
-- **Healing and repair are not simulated**, so Aftermath is the only thing
-  that removes Shaken.
+- **A healer Model's death is not tracked.** A Heal or Repair a Model brings
+  keeps acting after that Model is killed, unless its N counts alive Models.
+- **Only the Heal actions in the list above are taken.** Removing Crippled
+  Crew, neutralizing a Poison and removing a Bleed outright are never chosen.
+- **Of the Critical Damage Effects, only Cannot Move is placed by today's
+  Damage tables**, so Repair's Remove one Critical Damage Effect rarely has
+  anything to act on.
 - **Insane's 5+ removal roll is not simulated**, because nothing in the
   simulator places Insane.
 - Conditional rows ("If more than 2 models are alive, …"), crew kills, and a

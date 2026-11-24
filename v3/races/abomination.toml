@@ -18,6 +18,9 @@ cost.ip = 24
 description = '''Horrifying steampunk tank with a rotating turret with a beamweapon causing confusion
 '''
 
+[[units.confusiator.specials.immunity]]
+args.feature = "damage_type.poison"
+
 
 [units.confusiator.shaken]
 speed = "still"
@@ -104,6 +107,9 @@ args.phase = "2nd Healing"
 [[units.flagship.specials.officer]]
 text = "Once per game, in any movement one single movement phase, all friendly units within range=2 may replace 360° into either an F movement or an aim order."
 
+[[units.flagship.specials.immunity]]
+args.feature = "damage_type.poison"
+
 
 [units.flagship.shaken]
 speed = "slow"
@@ -177,6 +183,9 @@ movement_order = ["-", "-", "-"]
 
 [[units.frost_88.specials.fire_order]]
 text = "Fire(wj) fires the water jet, while Fire(fr) fires frost ray. Track ammo only for main gun, while frost ray is always loaded."
+
+[[units.frost_88.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.frost_88.orders.movement]
 slow = [
@@ -433,6 +442,9 @@ args.feature = "token.fire"
 [[units.water_elemental.specials.fire_order]]
 variant = "fire_and_load_simultaneously"
 
+[[units.water_elemental.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.water_elemental.orders.movement]
 slow = [["360°", "F", "360°"], ["360°", "F", "B"]]
 still = [["360°", "-", "360°"], ["360°", "A", "F"]]
@@ -444,7 +456,7 @@ slow = [["-", "Load"], ["-", "Fire"]]
 [units.water_elemental.damage_tables.Regular]
 rows = [
 	"1-2: +1 to future damage",
-	"3: {Shaken:token.shaken}, destroy 1 model",
+	"3+: {Shaken:token.shaken}, destroy 1 model",
 ]
 notes = [
 	"If one model is destroyed remove half of the +1 future damage tokens",
@@ -480,6 +492,9 @@ movement_order = ["-", "-", "-"]
 
 [[units.robot_crab.specials.chase]]
 text = "Primary target for all chase orders are enemies drone. Move towards nearest enemy robot instead of nearest enemy. If there are no enemy robots, treat it as normal chase instead."
+
+[[units.robot_crab.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.robot_crab.orders.movement]
 fast = [["Chs", "Chs", "Chs"]]
@@ -579,7 +594,12 @@ fast = [
 	["F", "B", "-"],
 	["-", "Chs", "Chs"],
 ]
-slow = [["360°", "A", "F"], ["B", "360°", "-"], ["360°", "F", "360°"], ["Flee", "360°", "360°"]]
+slow = [
+	["360°", "A", "F"],
+	["B", "360°", "-"],
+	["360°", "F", "360°"],
+	["Flee", "360°", "360°"]
+]
 still = [["360°", "A", "F"], ["360°", "360°", "360°"]]
 
 [units.hippopotamus_riders.damage_tables.Regular]
