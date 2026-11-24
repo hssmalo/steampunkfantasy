@@ -19,7 +19,12 @@ from spf.schemas.race import (
     RaceMetadata,
 )
 from spf.schemas.special import SpecialInstance
-from tests.conftest import InstallRegistry, synthetic_race, synthetic_unit
+from tests.conftest import (
+    InstallRegistry,
+    synthetic_model,
+    synthetic_race,
+    synthetic_unit,
+)
 
 REGISTRY = Registry(records={})
 """Only a ref-valued arg reaches the registry, and no instance here has one."""
@@ -251,6 +256,23 @@ def test_over_committed_defaults_surface_as_a_finding() -> None:
     assert finding.section == "models"
     assert finding.key == "ogre_scout_engineer"
     assert "Reserve Melee:1" in finding.message
+
+
+def test_a_missing_poison_immunity_surfaces_as_a_finding() -> None:
+    """The rule reaches `lint_race_config` and locates the Unit it fired on."""
+    race_config = synthetic_race(
+        units={"robots": synthetic_unit(models=["robot"])},
+        models={"robot": synthetic_model(type=["Drone", "Mechanical"])},
+    )
+
+    findings = collect.lint_race_config(
+        "goblin", race_config, CONVENTIONS, pools={}, registry=REGISTRY
+    )
+
+    (finding,) = [f for f in findings if f.rule == "poison-immunity"]
+    assert finding.section == "units"
+    assert finding.key == "robots"
+    assert "damage_type.poison" in finding.message
 
 
 _POOLS = {"fog": {"ignores_weather": "Ignores the weather"}}

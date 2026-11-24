@@ -254,6 +254,9 @@ args.deploy_range = 2
 
 #text = "May transport up to 2 ulnit of Infantry or one SteamPowerArmor. Has Deploy[range=2] which may be used with Deploy orders. May not transport any infantry with wheeled shieldwall."
 
+[[units.transport_zeppelin.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.transport_zeppelin.orders.movement]
 fast_fly = [
     ["(L/R)", "F", "F+Deploy"],
@@ -347,6 +350,9 @@ movement_order = ["-", "-", "-"]
 args.version = "resistance_type.fire"
 args.N = 2
 
+[[units.gunblasterwagon.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.gunblasterwagon.orders.movement]
 fast = [
     ["F", "L/R", "(BB)"],
@@ -418,6 +424,9 @@ movement_order = ["-", "-", "-"]
 [[units.dw42.specials.resistance]]
 args.version = "resistance_type.fire"
 args.N = 2
+
+[[units.dw42.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.dw42.orders.movement]
 fast = [
@@ -497,6 +506,9 @@ text = "The unit loses its aim when it moves away from the hex it aimed from"
 [[units.zap.specials.resistance]]
 args.version = "resistance_type.fire"
 args.N = 2
+
+[[units.zap.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.zap.orders.movement]
 fast = [
@@ -578,6 +590,9 @@ args.phase = "2nd Healing"
 
 [[units.zeppelin.specials.vulnerability]]
 text = "When damaged, add 1 to the result for each shaken token on the Zeppelin."
+
+[[units.zeppelin.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.zeppelin.orders.movement]
 slow_fly = [
@@ -914,7 +929,7 @@ name = "Transport Zeppelin"
 race = "dwarf"
 equipment_limit = ["Independent:∞"]
 equipment = []
-type = ["Zeppelin", "Flying"]
+type = ["Zeppelin", "Flying", "Bio Crew"]
 
 [models.transport_zeppelin.assault]
 strength = [2, 1, 1, 1]
@@ -1017,7 +1032,7 @@ name = "Zeppelin"
 race = "dwarf"
 equipment_limit = ["Independent:∞"]
 equipment = ["array_of_enhanced_heavy_muskets", "fear_ray_free", "zeppelin_gun"]
-type = ["Flying", "Zeppelin"]
+type = ["Flying", "Zeppelin", "Bio Crew"]
 
 [models.zeppelin.assault]
 strength = [6, 6, 6, 6]

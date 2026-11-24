@@ -390,6 +390,9 @@ args.N = 3
 [[units.drone_swarm.specials.chase]]
 text = "Chase orders avoid entering assault if able. Treat target hex to be one hex at point blank range to an enemy."
 
+[[units.drone_swarm.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.drone_swarm.orders.fire]
 still = [
 	["Fire", "-"],
@@ -449,6 +452,9 @@ variant = "revive_drone"
 [[units.repair_drone.specials.evasion]]
 args.N = 3
 
+[[units.repair_drone.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.repair_drone.orders.movement]
 slow = [["360°", "F", "360°"]]
 
@@ -483,6 +489,9 @@ variant = "revive_drone"
 
 [[units.medic_drone.specials.evasion]]
 args.N = 3
+
+[[units.medic_drone.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.medic_drone.orders.movement]
 fast = [["Help", "Help", "Help"]]
@@ -525,6 +534,9 @@ variant = "regular"
 
 
 #text = "May carry up to 6 tiny drone units. Treat all 3rd movement steps as including an optional + deploy(range=2) order. May not be deployed into assault."
+
+[[units.main_engine.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.main_engine.orders.fire]
 still = [
@@ -603,6 +615,9 @@ movement_order = ["-", "-", "-"]
 [[units.broadside_wagon.specials.tow]]
 variant = "must_be_towed"
 
+[[units.broadside_wagon.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.broadside_wagon.orders.fire]
 still = [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
 slow =  [["Fire", "-"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]
@@ -654,6 +669,9 @@ variant = "must_be_towed"
 
 [[units.artillery_wagon.specials.fire_order]]
 text = "May not Aim without firing, and may only aim if a scout has line of sight to target (ie you must spend one ammo to get aim bonuses) You only get aim bonuses versus the same target unit. You retain aim while loading."
+
+[[units.artillery_wagon.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.artillery_wagon.orders.fire]
 still = [["Fire", "Aim"], ["-", "Fire"], ["Load", "-"], ["-", "Load"]]

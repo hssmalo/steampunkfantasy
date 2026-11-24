@@ -348,6 +348,18 @@ The Types shared by *every* Model in a Unit — the intersection of the Models'
 Types. Summarizes a Unit's classification when its Models differ; empty when
 they share nothing.
 
+**Bio**:
+The Type of a living Model. Poison reaches only Bio Models: a Unit with no Bio
+Model is immune to it, and says so with its own Immunity Special. Some rules,
+such as Healing and Confused, reach Bio Crew as well.
+_Avoid_: biological, organic, living (as a Type)
+
+**Bio Crew**:
+The Type of a non-living Model worked by a living crew — a tank, a tractor, a
+Zeppelin. Not Bio: immune to poison like any other non-Bio Model, though its
+crew can still be harmed (a Poison Cloud deals it crew damage).
+_Avoid_: Bio (for a crewed machine)
+
 ### Board and state
 
 **Hex**:

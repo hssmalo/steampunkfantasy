@@ -221,6 +221,9 @@ movement_order = ["-", "-", "-"]
 [[units.speedhead.specials.fire_order]]
 text = "Fire and load both rear guns (Speed Cannon and Shriek) simultaneously, and track ammo simultaneously. All targets of both weapons must be within the same angle, but not necessarily same target. Flamethrower: may always be fired in any shooting step as long as you still have ammo left. Do not need an order to do so."
 
+[[units.speedhead.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.speedhead.orders.movement]
 slow = [["L/R", "F", "L/R"], ["F", "-", "-"], ["A", "F", "F"]]
 fast = [
@@ -331,6 +334,9 @@ still = [
 [[units.battering_ram.specials.fire_order]]
 text = "All 4 harpoon gun must fire at same sector"
 
+[[units.battering_ram.specials.immunity]]
+args.feature = "damage_type.poison"
+
 [units.battlewagon]
 race = "ork"
 name = "Battlewagon"
@@ -356,6 +362,9 @@ variant = "assault"
 
 [[units.battlewagon.specials.fire_order]]
 variant = "fire_and_load_simultaneously"
+
+[[units.battlewagon.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [units.battlewagon.damage_tables.Regular]
 rows = [
@@ -673,6 +682,9 @@ rows = [
 
 [[units.ork_char_b1.specials.fire_order]]
 text = "Pop gun uses orders with (p) and heavy orders with (h). Track ammo for them separately."
+
+[[units.ork_char_b1.specials.immunity]]
+args.feature = "damage_type.poison"
 
 [models]
 
