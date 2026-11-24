@@ -47,7 +47,7 @@ class Scenario:
     and `acid`, each kind holding every Instance's strength, which add up.
     `incoming` holds the hits that land every Round, if any; without them a run
     ends with the Unit's Continuing Damage.
-    `points` is the Unit's Points at its default loadout, `None` when it has no
+    `points` is the Unit's Points at its Loadout, `None` when it has no
     Cost.
     """
 

@@ -64,11 +64,36 @@ Units without the `--table` table are skipped and named. Every Unit is
 simulated with the same seed, so `spf sim damage race.unit --seed N` gives the
 full report behind any line.
 
+### Every Unit of an Army at once
+
+`spf sim damage-army ARMY` names the Army as `spf army show` does
+(`showcase/dwarf`, `2026/knut`) and takes the same options as `damage-race`. It
+prints one line per Unit of the Army, in Army order, each Unit at the Loadout
+its player bought: its upgrade Models, its Upgrade Equipment and its Unit
+Fixtures. Repeated Units keep a line each. The `#` column is the Unit's
+position in the Army, and the Unit column its Nick, or its catalogue name when
+it has none. A Unit without the `--table` table is skipped and named, and keeps
+its number, so the numbers can have gaps.
+
+A **Total** row sums the Points and E(Points Destroyed) of the Units simulated
+that have a Cost, and shows `–` when none of them has one. Read its E(Points
+Destroyed) as "if every Unit took this damage separately": what an opponent
+would expect to score, summed over the Units.
+
+A fielded Unit usually carries a different Loadout from the catalogue Unit that
+`spf sim damage` plays, so `spf sim damage` does not reproduce a line of this
+report.
+
 ## One run, step by step
 
 ### Before Round 1: the starting state
 
-1. The Unit starts with all its Models and its Endurance Tokens.
+1. The Unit starts with all its Models and its Endurance Tokens. An
+   `endurance` Instance gives N Tokens for every Model of the class it names
+   that it reaches, whether from the Unit, the Model or the Model's
+   Equipment: an elite Model is one of Type Elite or SuperElite, a regular
+   Model is neither, and any other class (`model`, `soldier`) counts every
+   Model.
 2. Future Damage and Future Crew Damage from `--start` are placed.
 3. Tokens from `--start` are placed (`bleed=4`, `fire=2`, `shaken`, …).
 4. Each starting roll is resolved, one after another, as described under
@@ -158,9 +183,11 @@ through the same steps.
 
 Future Damage applies to **every** roll on the Regular table, whatever caused
 it, and never to Psychic or Critical. Each resistance comes from the Unit's
-`resistance` Instances. Several resistances of the same kind add up, and a
-resistance written as a die is rolled each time. `--no-resistance` ignores them
-all, so you can compare.
+`resistance` Instances. Each contributor counts once however many Models carry
+it: the Unit itself, a kind of Model, or a kind of Equipment. A Unit Fixture
+counts once per purchase. Resistances of the same kind from different
+contributors add up, and a resistance written as a die is rolled each time.
+`--no-resistance` ignores them all, so you can compare.
 
 ### Finding the row
 
@@ -293,3 +320,9 @@ These are open questions for the game designer, not oversights:
 - Conditional rows ("If more than 2 models are alive, …"), crew kills, and a
   whole Unit being "temporarily destroyed" are not simulated. They are listed
   under *Not simulated*.
+- **Conditional resistances are always on.** A resistance that holds only
+  while an elite is alive applies for the whole run, because the simulator
+  does not track which Model dies. The owner chooses which Model to remove, so
+  elites tend to be the last to go.
+- **"Counts as an elite"** in prose, such as the dwarf Battle Medic's for the
+  Vest of Life Support, is not simulated: the Model counts by its Type.
