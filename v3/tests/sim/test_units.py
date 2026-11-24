@@ -395,3 +395,30 @@ def test_model_and_equipment_healing_counts_each_kind_once(registry: Registry) -
         Healer(kind="repair", points=1, phase=2),
         Healer(kind="repair", points=2, phase=1),
     ]
+
+
+@pytest.mark.parametrize(
+    "points", ["one per alive model", "One per alive repair drone model"]
+)
+def test_one_point_per_alive_model_counts_the_living(
+    registry: Registry, points: str
+) -> None:
+    scenario = _healed(registry, specials={"repair": [_healing(points)]})
+    assert scenario.healers == [Healer(kind="repair", points="alive", phase=1)]
+
+
+@pytest.mark.parametrize(
+    ("args", "spelled"),
+    [
+        ({"N": "three-ish", "unit": "self"}, "Heal[three-ish, self, 1st Healing]"),
+        ({"N": 2, "unit": "nearby"}, "Heal[2, nearby, 1st Healing]"),
+        ({"N": 2, "phase": "Agony 0"}, "Heal[2, self, Agony 0]"),
+    ],
+)
+def test_healing_the_simulator_cannot_play_is_listed(
+    registry: Registry, args: dict[str, object], spelled: str
+) -> None:
+    instance = _healing(2)
+    instance["args"] = {"N": 2, "unit": "self", "phase": "1st Healing", **args}
+    scenario = _healed(registry, specials={"heal": [instance]})
+    assert (scenario.healers, scenario.unplayed_healing) == ([], [spelled])

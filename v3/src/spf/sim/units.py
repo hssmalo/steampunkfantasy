@@ -1,5 +1,6 @@
 """Build a Scenario from a Unit: its Models, Damage tables and Instances."""
 
+import re
 from collections import defaultdict
 from typing import Literal
 
@@ -19,6 +20,7 @@ _RESISTANCE_TYPE = "resistance_type."
 _ELITE_TYPES = {"Elite", "SuperElite"}
 _HEALING_KINDS: tuple[Literal["heal", "repair"], ...] = ("heal", "repair")
 _HEALING_PHASES: dict[str, Literal[1, 2]] = {"1st Healing": 1, "2nd Healing": 2}
+_PER_ALIVE_MODEL = re.compile(r"one per alive( .+)? model", re.IGNORECASE)
 
 
 def vocabulary_of(registry: Registry) -> Vocabulary:
@@ -77,8 +79,8 @@ def scenario_of(  # noqa: PLR0913
         if isinstance(version, str) and strength is not None:
             kind = version.removeprefix(_RESISTANCE_TYPE)
             resistances[kind].append(Dice.parse(str(strength)))
+    healers, unplayed = _healers(chain)
     return Scenario(
-        healers=_healers(chain),
         unit=unit.display_name,
         models=len(unit.models),
         tables={
@@ -89,6 +91,8 @@ def scenario_of(  # noqa: PLR0913
         incoming=incoming or [],
         resistance=dict(resistances),
         endurance=_endurance(unit),
+        healers=healers,
+        unplayed_healing=unplayed,
         max_rounds=max_rounds,
         points=None if unit.config.cost is None else unit.cost().to_points(),
     )
@@ -116,31 +120,47 @@ def _resistance_contributors(unit: Unit) -> list[Specials]:
     return contributors
 
 
-def _healers(chain: Specials) -> list[Healer]:
+def _healers(chain: Specials) -> tuple[list[Healer], list[str]]:
     """Read the Heal and Repair Instances this Unit plays on itself.
 
-    An Instance for other Units only is no concern of this Unit.
+    Return the Healers in collection order, and the spelling of each Instance
+    the simulator cannot play. An Instance for other Units only is no concern
+    of this Unit.
     """
-    return [
-        healer
-        for kind in _HEALING_KINDS
-        for instance in chain.get(kind, [])
-        if (healer := _healer(kind, instance.args)) is not None
-    ]
+    healers: list[Healer] = []
+    unplayed: list[str] = []
+    for kind in _HEALING_KINDS:
+        for instance in chain.get(kind, []):
+            args = instance.args
+            if args.get("unit") == "other":
+                continue
+            if (healer := _healer(kind, args)) is None:
+                unplayed.append(_spelled(kind, args))
+            else:
+                healers.append(healer)
+    return healers, unplayed
 
 
 def _healer(
     kind: Literal["heal", "repair"], args: dict[str, int | str]
 ) -> Healer | None:
-    """Make one Instance a Healer, or `None` when it cannot be played."""
+    """Make one Instance a Healer, or `None` when its args cannot be played."""
     phase = _HEALING_PHASES.get(str(args.get("phase")))
     if args.get("unit") not in {"self", "any"} or phase is None:
         return None
     match args.get("N"):
         case int(points):
             return Healer(kind=kind, points=points, phase=phase)
+        case str(text) if _PER_ALIVE_MODEL.fullmatch(text.strip()):
+            return Healer(kind=kind, points="alive", phase=phase)
         case _:
             return None
+
+
+def _spelled(kind: str, args: dict[str, int | str]) -> str:
+    """Spell an Instance as its Signature prints it (`special.heal`)."""
+    values = (str(args.get(name, "?")) for name in ["N", "unit", "phase"])
+    return f"{kind.title()}[{', '.join(values)}]"
 
 
 def _endurance(unit: Unit) -> int:
