@@ -700,3 +700,33 @@ def test_a_kill_halves_future_damage_after_the_phases_additions(kill_at: int) ->
     scenario = _scenario(hits=["d6"] * 3, future=2, notes=[HALVING])
     result = _run(scenario, rolls)
     assert (result.models_lost, result.snapshots[0].future) == (1, 2)
+
+
+def test_endurance_saves_the_first_kill_in_roll_order() -> None:
+    scenario = _scenario(tokens=[_bleed(8), _bleed(6)], endurance=1, max_rounds=1)
+    result = _run(scenario, [(8, 4), (6, 5)])
+    assert result.models_lost == 1
+    assert result.snapshots[1].tokens == {"bleed[4]": 1}
+
+
+AMPLIFY_AT_THREE: dict[DamageTableName, list[str]] = {
+    "Regular": ["3: Amplify all bleeding", "4+: Dazed"]
+}
+
+
+def test_a_bleed_that_stops_is_removed_before_another_amplifies() -> None:
+    scenario = _scenario(AMPLIFY_AT_THREE, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 2)])
+    assert result.snapshots[1].tokens == {"bleed[6]": 1}
+
+
+def test_one_bleeds_amplify_does_not_change_anothers_die_this_round() -> None:
+    scenario = _scenario(AMPLIFY_AT_THREE, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 4)])
+    assert result.snapshots[1].tokens == {"bleed[6]": 2, "dazed": 1}
+
+
+def test_every_roll_of_the_phase_counts_after_the_unit_is_destroyed() -> None:
+    result = _run(_scenario(hits=["d6", "d6"]), [(6, 6), (6, 1)])
+    assert result.destroyed
+    assert result.table_rolls == {"Regular": 2}
