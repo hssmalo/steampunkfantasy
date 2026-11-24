@@ -513,10 +513,7 @@ class _Run:
         rolls = [cause.roll() for _ in range(counters["fire"])]
         burning = [roll for roll in rolls if roll > FIRE_OUT]
         counters["fire"] = len(burning)
-        for roll in burning:
-            if self.state.destroyed:
-                return
-            self.roll_on("Regular", roll, cause=cause)
+        self.phase([("Regular", roll, cause) for roll in burning])
 
     def resistance(self, kind: str) -> int:
         """Roll the Unit's resistance against one damage type; 0 if it has none."""

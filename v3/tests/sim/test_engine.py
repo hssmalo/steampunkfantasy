@@ -656,3 +656,13 @@ def test_shaken_placed_in_a_phase_does_not_reroute_its_psychic_rolls() -> None:
     result = _run(scenario, [(6, 1), (6, 1)])
     assert result.table_rolls == {"Regular": 1, "Psychic": 1}
     assert result.snapshots[0].tokens["dazed"] == 1
+
+
+EDGE = ["1-3: +1 to future damage", "4+: Kill 1 model"]
+"""A nudge just below a kill: one more Future Damage turns the one into the other."""
+
+
+def test_fires_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario({"Regular": EDGE}, tokens=[FIRE, FIRE], max_rounds=1)
+    result = _run(scenario, [(6, 3), (6, 3)])
+    assert (result.models_lost, result.snapshots[1].future) == (0, 2)
