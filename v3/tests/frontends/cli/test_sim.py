@@ -324,17 +324,17 @@ def test_damage_army_numbers_its_units_and_skips_by_table(
 
 
 def _spy_on_healing(monkeypatch: pytest.MonkeyPatch, builder: str) -> list[bool]:
-    """Record the `healing` flag every Scenario `builder` builds is asked for."""
-    asked: list[bool] = []
+    """Record, per Scenario `builder` builds, whether it was allowed to heal."""
+    could_heal: list[bool] = []
     build = getattr(sim, builder)
 
     def spy(*args: object, **kwargs: object) -> Scenario:
         scenario = build(*args, **kwargs)
-        asked.append(bool(scenario.healers) or kwargs.get("healing") is not False)
+        could_heal.append(bool(scenario.healers) or kwargs.get("healing") is not False)
         return scenario
 
     monkeypatch.setattr(sim, builder, spy)
-    return asked
+    return could_heal
 
 
 @pytest.mark.parametrize(
@@ -344,7 +344,7 @@ def _spy_on_healing(monkeypatch: pytest.MonkeyPatch, builder: str) -> list[bool]
 def test_no_healing_builds_scenarios_without_healers(
     monkeypatch: pytest.MonkeyPatch, command: str, builder: str
 ) -> None:
-    asked = _spy_on_healing(monkeypatch, builder)
+    could_heal = _spy_on_healing(monkeypatch, builder)
     unit, _ = _live_unit()
     target = unit if command == "damage" else unit.partition(".")[0]
     app(
@@ -352,17 +352,17 @@ def test_no_healing_builds_scenarios_without_healers(
         exit_on_error=False,
         result_action="return_value",
     )
-    assert asked
-    assert not any(asked)
+    assert could_heal
+    assert not any(could_heal)
 
 
 def test_damage_army_takes_no_healing_too(
     monkeypatch: pytest.MonkeyPatch, army_on_disk: str
 ) -> None:
-    asked = _spy_on_healing(monkeypatch, "scenario_of")
+    could_heal = _spy_on_healing(monkeypatch, "scenario_of")
     _sim_army(army_on_disk, "--start", "d6", "--runs", "1", "--no-healing")
-    assert asked
-    assert not any(asked)
+    assert could_heal
+    assert not any(could_heal)
 
 
 def test_damage_army_rejects_an_unknown_army(

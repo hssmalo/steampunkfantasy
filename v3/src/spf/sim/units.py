@@ -2,7 +2,6 @@
 
 import re
 from collections import defaultdict
-from typing import Literal
 
 from spf.armies.build import ArmyList
 from spf.armies.model import Model
@@ -14,13 +13,13 @@ from spf.schemas.rules import TokenRuleConfig
 from spf.schemas.special import Specials
 from spf.sim.dice import Dice
 from spf.sim.effects import Vocabulary
-from spf.sim.scenario import Healer, Hit, Scenario, Start
+from spf.sim.scenario import Healer, HealingKind, HealingPhase, Hit, Scenario, Start
 from spf.sim.tables import compile_table
 
 _RESISTANCE_TYPE = "resistance_type."
 _ELITE_TYPES = {"Elite", "SuperElite"}
-_HEALING_KINDS: tuple[Literal["heal", "repair"], ...] = ("heal", "repair")
-_HEALING_PHASES: dict[str, Literal[1, 2]] = {"1st Healing": 1, "2nd Healing": 2}
+_HEALING_KINDS: tuple[HealingKind, ...] = ("heal", "repair")
+_HEALING_PHASES: dict[str, HealingPhase] = {"1st Healing": 1, "2nd Healing": 2}
 _PER_ALIVE_MODEL = re.compile(r"one per alive( .+)? model", re.IGNORECASE)
 _NEVER_BOTH = "never both"
 
@@ -174,9 +173,7 @@ def _known_points(healer: Healer) -> int:
     return healer.points if isinstance(healer.points, int) else 0
 
 
-def _healer(
-    kind: Literal["heal", "repair"], args: dict[str, int | str]
-) -> Healer | None:
+def _healer(kind: HealingKind, args: dict[str, int | str]) -> Healer | None:
     """Make one Instance a Healer, or `None` when its args cannot be played."""
     phase = _HEALING_PHASES.get(str(args.get("phase")))
     if args.get("unit") not in {"self", "any"} or phase is None:

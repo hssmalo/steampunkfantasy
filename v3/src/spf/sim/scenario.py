@@ -39,6 +39,13 @@ class Start:
     future_crew: int = 0
 
 
+type HealingKind = Literal["heal", "repair"]
+"""Which Special a Healer plays: `special.heal` or `special.repair`."""
+
+type HealingPhase = Literal[1, 2]
+"""Healing 1, before Agony 0, or Healing 2, after Agony 4."""
+
+
 @dataclass(frozen=True, kw_only=True)
 class Healer:
     """One Heal or Repair Instance, ready to act in its Healing Phase.
@@ -47,9 +54,9 @@ class Healer:
     Healing Phase runs.
     """
 
-    kind: Literal["heal", "repair"]
+    kind: HealingKind
     points: int | Literal["alive"]
-    phase: Literal[1, 2]
+    phase: HealingPhase
 
 
 @dataclass(frozen=True, kw_only=True)

@@ -22,7 +22,7 @@ from spf.sim.effects import (
     UnitDestroyed,
     Unparsed,
 )
-from spf.sim.scenario import Healer, Hit, Scenario
+from spf.sim.scenario import Healer, HealingKind, HealingPhase, Hit, Scenario
 from spf.sim.tables import NoteRules
 
 type EndedBy = Literal["destroyed", "no continuing damage", "max rounds"]
@@ -63,6 +63,7 @@ _RESISTED_BY = {"Regular": "regular", "Psychic": "psychic"}
 """The resistance that reduces a hit on each Damage table, where one does."""
 
 DISABLED_REPAIR = "disabled_repair"
+"""The Critical Damage Effect that stops the Unit's Repair (`token.disabled_repair`)."""
 
 
 class HealingAction(StrEnum):
@@ -78,7 +79,7 @@ class HealingAction(StrEnum):
     REMOVE_CRITICAL = "Remove one Critical Damage Effect"
 
 
-ACTION_COST = {
+ACTION_COST: dict[HealingAction, int] = {
     HealingAction.EXTINGUISH_FIRE: 3,
     HealingAction.DOWNGRADE_POISON: 1,
     HealingAction.DOWNGRADE_BLEED: 1,
@@ -231,9 +232,7 @@ class Policy(Protocol):
         """Decide whether to spend an Endurance Token to save a dying Model."""
         ...
 
-    def healing_priority(
-        self, kind: Literal["heal", "repair"]
-    ) -> Sequence[HealingAction]:
+    def healing_priority(self, kind: HealingKind) -> Sequence[HealingAction]:
         """Order the actions a Heal or Repair point may buy, most wanted first."""
         ...
 
@@ -266,10 +265,8 @@ class FixedPolicy:
         """Spend Endurance whenever the Unit has some."""
         return state.counters["endurance"] > 0
 
-    def healing_priority(
-        self, kind: Literal["heal", "repair"]
-    ) -> Sequence[HealingAction]:
-        """Put the Unit's worst Continuing Damage out first."""
+    def healing_priority(self, kind: HealingKind) -> Sequence[HealingAction]:
+        """Return the fixed Heal or Repair list."""
         return self.HEAL if kind == "heal" else self.REPAIR
 
 
@@ -645,7 +642,7 @@ class _Run:
         """Healing 2, after Agony 4."""
         self.heal_phase(2)
 
-    def heal_phase(self, phase: Literal[1, 2]) -> None:
+    def heal_phase(self, phase: HealingPhase) -> None:
         """Let every Healer of this Healing Phase spend its points in turn.
 
         A Unit with Disabled Repair cannot Repair (`token.disabled_repair`).
