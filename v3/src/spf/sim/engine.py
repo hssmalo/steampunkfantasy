@@ -303,7 +303,14 @@ class _Run:
                 return []
 
     def resolve(self, looked_up: list[_LookedUp]) -> None:
-        """Apply a Phase's looked-up rows in roll order."""
+        """Apply a Phase's looked-up rows in layers (ADR-0043)."""
+        if any(
+            isinstance(effect, UnitDestroyed)
+            for entry in looked_up
+            for effect in entry.effects
+        ):
+            self.state.destroyed = True
+            return
         for entry in looked_up:
             for effect in entry.effects:
                 if self.state.destroyed:

@@ -682,3 +682,12 @@ def test_bleeds_see_the_future_damage_the_phase_began_with() -> None:
     result = _run(scenario, [(4, 3), (4, 3)])
     assert (result.models_lost, result.snapshots[1].future) == (0, 2)
     assert result.snapshots[1].tokens == {"bleed[4]": 2}
+
+
+def test_a_unit_destroyed_in_a_phase_takes_nothing_else_from_it() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1: Dazed", "2+: Unit destroyed"]
+    }
+    result = _run(_scenario(tables, hits=["d6", "d6"]), [(6, 1), (6, 2)])
+    assert result.destroyed
+    assert result.snapshots[0].tokens == {}
