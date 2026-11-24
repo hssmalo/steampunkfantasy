@@ -914,7 +914,7 @@ name = "Transport Zeppelin"
 race = "dwarf"
 equipment_limit = ["Independent:∞"]
 equipment = []
-type = ["Zeppelin", "Flying"]
+type = ["Zeppelin", "Flying", "Bio Crew"]
 
 [models.transport_zeppelin.assault]
 strength = [2, 1, 1, 1]
@@ -1017,7 +1017,7 @@ name = "Zeppelin"
 race = "dwarf"
 equipment_limit = ["Independent:∞"]
 equipment = ["array_of_enhanced_heavy_muskets", "fear_ray_free", "zeppelin_gun"]
-type = ["Flying", "Zeppelin"]
+type = ["Flying", "Zeppelin", "Bio Crew"]
 
 [models.zeppelin.assault]
 strength = [6, 6, 6, 6]
