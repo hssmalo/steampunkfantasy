@@ -615,3 +615,44 @@ def test_starting_hits_see_the_future_damage_the_phase_began_with() -> None:
     scenario = _scenario({"Regular": NUDGE}, hits=["d4-1"] * 4, max_rounds=0)
     result = _run(scenario, [(4, 4)] * 4)
     assert (result.snapshots[0].future, result.snapshots[0].tokens) == (4, {})
+
+
+def test_a_rounds_incoming_hits_see_the_future_damage_the_round_began_with() -> None:
+    scenario = _scenario({"Regular": NUDGE}, incoming=["d4-1"] * 4, max_rounds=1)
+    result = _run(scenario, [(4, 4)] * 4)
+    assert (result.snapshots[1].future, result.snapshots[1].tokens) == (4, {})
+
+
+def test_a_roll_a_row_sets_off_sees_the_phases_future_damage() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": [
+            "1: Dazed",
+            "2: +1 to future damage, roll one times on this table",
+            "3+: Kill 1 model",
+        ]
+    }
+    result = _run(_scenario(tables, hits=["d6"]), [(6, 2), (6, 1)])
+    assert result.models_lost == 0
+    assert (result.snapshots[0].future, result.snapshots[0].tokens) == (1, {"dazed": 1})
+
+
+def test_future_crew_damage_is_fixed_for_the_phase() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Crew": ["1-3: +1 to future crew damage", "4+: Dazed"]
+    }
+    result = _run(_scenario(tables, hits=["crew:d4-1"] * 2), [(4, 4), (4, 4)])
+    assert (result.snapshots[0].future_crew, result.snapshots[0].tokens) == (2, {})
+
+
+def test_shaken_placed_in_a_phase_does_not_reroute_its_psychic_rolls() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Shaken"],
+        "Psychic": ["1+: Dazed"],
+        "Crew": ["1+: Unit destroyed"],
+    }
+    scenario = _scenario(
+        tables, hits=["d6", "psychic:d6"], tokens=[PlaceToken(name="crippled_crew")]
+    )
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert result.table_rolls == {"Regular": 1, "Psychic": 1}
+    assert result.snapshots[0].tokens["dazed"] == 1
