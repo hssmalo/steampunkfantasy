@@ -184,9 +184,42 @@ def writes_link(raw: str) -> bool:
     return _LINK_SHAPED.search(raw) is not None
 
 
+def link_pairs(raw: str | None) -> list[tuple[str, str]]:
+    """List the `(label, ref)` of each authored Rule Link in `raw`, in order."""
+    if raw is None:
+        return []
+    return [(match.group(1), match.group(2)) for match in LINK.finditer(raw)]
+
+
 def link_labels(raw: str) -> list[str]:
     """List the label of each authored Rule Link in `raw`, in order."""
     return [match.group(1) for match in LINK.finditer(raw)]
+
+
+def label_args(
+    label: str, *, name: str, signature: str | None
+) -> dict[str, str] | None:
+    """Read the Args a Rule Link label states in its target's Signature shape.
+
+    `None` when the label doesn't spell `<name><signature>`: a label in other
+    words states no Args, and there is nothing to check.
+    """
+    if not signature:
+        return None
+    names = PLACEHOLDER.findall(signature)
+    # `split` interleaves each placeholder's two groups between the literals.
+    literals = PLACEHOLDER.split(signature)[:: PLACEHOLDER.groups + 1]
+    pattern = re.escape(name) + "".join(
+        re.escape(literal) + (r"([^\[\]]+?)" if index < len(names) else "")
+        for index, literal in enumerate(literals)
+    )
+    match = re.fullmatch(pattern, label, flags=re.IGNORECASE)
+    if match is None:
+        return None
+    args: dict[str, str] = {}
+    for (placeholder, _), value in zip(names, match.groups(), strict=True):
+        args.setdefault(placeholder, value)
+    return args
 
 
 def fill_linked(

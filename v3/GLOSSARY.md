@@ -251,7 +251,9 @@ _Avoid_: link, pointer, cross-reference
 The printed, navigable form of a **Ref** in a document that holds its target's
 entry — from a typed Arg filled into a **Signature** or an **Instance**'s prose,
 or from an authored `{label:<namespace>.<id>}` in prose. A Ref is data; a Rule Link is presentation,
-and prints as plain text where there is nothing to navigate to.
+and prints as plain text where there is nothing to navigate to. A label that
+spells its target's Signature, `Bleed[4]`, must state values the target's
+Variables allow.
 _Avoid_: magic link, auto-link (nothing is inferred), hyperlink
 
 **Variable** / **Arg**:

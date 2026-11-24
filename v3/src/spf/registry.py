@@ -18,7 +18,14 @@ import pydantic
 
 from spf import rules
 from spf.config import config
-from spf.prose import PLACEHOLDER, link_refs, malformed_links, resolve
+from spf.prose import (
+    PLACEHOLDER,
+    label_args,
+    link_pairs,
+    link_refs,
+    malformed_links,
+    resolve,
+)
 from spf.schemas import rules as r
 from spf.schemas.special import SpecialInstance, Specials
 
@@ -189,7 +196,11 @@ def _check_version_keys(registry: Registry) -> None:
 
 
 def check_links(prose: str | None, *, where: str, registry: Registry) -> list[str]:
-    """List what is wrong with the Rule Links authored in `prose` (ADR 0042)."""
+    """List what is wrong with the Rule Links authored in `prose` (ADR 0042).
+
+    A label spelling its target's Signature, `Bleed[4]`, states Args, and each
+    integer it states must be one the target's Variables allow (ADR 0036).
+    """
     malformed = [
         f"{where}: {written} is not a Rule Link; write {{label:<namespace>.<id>}}"
         for written in malformed_links(prose)
@@ -199,7 +210,30 @@ def check_links(prose: str | None, *, where: str, registry: Registry) -> list[st
         for ref in link_refs(prose)
         if registry.record(ref) is None
     ]
-    return malformed + dangling
+    misstated = [
+        f"{where}: Rule Link {{{label}:{ref}}}: argument '{name}': {problem}"
+        for label, ref in link_pairs(prose)
+        if (record := registry.record(ref)) is not None
+        for name, problem in _label_problems(label, record)
+    ]
+    return malformed + dangling + misstated
+
+
+def _label_problems(label: str, record: r.RuleRecord) -> Iterator[tuple[str, str]]:
+    """Yield each integer Arg a label states that the record's Variable forbids.
+
+    Only integer literals are checked: a letter or a placeholder in a label
+    stands for a value rather than stating one.
+    """
+    args = label_args(label, name=record.name, signature=record.signature) or {}
+    for name, text in args.items():
+        variable = record.variables.get(name)
+        if not (text.isascii() and text.isdigit()) or variable is None:
+            continue
+        if isinstance(variable, r.RefVariableConfig):
+            continue  # a Ref states a record, not a value to check
+        if (problem := _check_scalar(int(text), variable)) is not None:
+            yield name, problem
 
 
 def _record_prose(record: r.RuleRecord) -> Iterator[str | None]:
