@@ -840,3 +840,39 @@ def test_a_placeholder_in_a_label_must_be_fillable() -> None:
     )
 
     assert any("{N}" in error for error in errors)
+
+
+def _token(name: str, signature: str, variables: dict[str, object]) -> r.RuleRecord:
+    """Build a token whose Signature a Rule Link label may spell."""
+    return r.TokenRuleConfig.model_validate(
+        {
+            "name": name,
+            "effect": "Hurts.",
+            "signature": signature,
+            "variables": variables,
+        }
+    )
+
+
+TOKEN_REGISTRY = synthetic_registry(
+    records={
+        "token": {
+            "sting": _token(
+                "Sting", "[{N}]", {"N": {"type": "int", "values": [2, 4, 6]}}
+            ),
+        }
+    }
+)
+
+
+def _label_errors(prose: str) -> list[str]:
+    """Check one prose string's Rule Links against the token registry."""
+    return reg.check_links(prose, where="unit 'Squad'", registry=TOKEN_REGISTRY)
+
+
+def test_a_label_stating_a_value_its_target_forbids_is_reported() -> None:
+    errors = _label_errors("Place {Sting[5]:token.sting}.")
+
+    assert len(errors) == 1
+    assert "argument 'N'" in errors[0]
+    assert "Value 5" in errors[0]

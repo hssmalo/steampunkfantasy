@@ -184,6 +184,13 @@ def writes_link(raw: str) -> bool:
     return _LINK_SHAPED.search(raw) is not None
 
 
+def link_pairs(raw: str | None) -> list[tuple[str, str]]:
+    """List the `(label, ref)` of each authored Rule Link in `raw`, in order."""
+    if raw is None:
+        return []
+    return [(match.group(1), match.group(2)) for match in LINK.finditer(raw)]
+
+
 def link_labels(raw: str) -> list[str]:
     """List the label of each authored Rule Link in `raw`, in order."""
     return [match.group(1) for match in LINK.finditer(raw)]
