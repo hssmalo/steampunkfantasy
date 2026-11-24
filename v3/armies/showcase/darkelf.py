@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("darkelf")
 
-army = ArmyList("darkelf", "Showcase Dark Elf Spider Swarm", [])
+army = ArmyList("darkelf", "Showcase DarkElf", [])
 
 # 6x Roboprosthetic Dark Elf with SMG and Hide
 army = (

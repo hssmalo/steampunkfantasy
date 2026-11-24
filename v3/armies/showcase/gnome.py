@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("gnome")
 
-army = ArmyList("gnome", "Showcase Gnome Ballista Battery", [])
+army = ArmyList("gnome", "Showcase Gnome", [])
 
 # 6x Gnome Motorcycle
 army = (

@@ -5,7 +5,7 @@ from spf.armies import ArmyList, io
 
 cfg = races.get_race("ork")
 
-army = ArmyList("ork", "Showcase Ork Warband", [])
+army = ArmyList("ork", "Showcase Ork", [])
 
 # 6x Grunt
 army = (
