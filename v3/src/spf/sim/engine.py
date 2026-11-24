@@ -471,9 +471,9 @@ class _Run:
         killed = {cause.poison for cause in casualties.killed_by}
         self.state.poisons = [
             strength - STRENGTH_STEP
-            for index, strength in enumerate(poisons)
+            for index, strength in enumerate(poisons[: len(rolls)])
             if index not in killed and strength - STRENGTH_STEP >= MIN_STRENGTH
-        ]
+        ] + poisons[len(rolls) :]
 
     def agony_acid(self) -> None:
         """Agony 0: Terror spills onto friends, then each Acid rolls (`token.acid`)."""

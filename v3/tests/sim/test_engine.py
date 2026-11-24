@@ -755,3 +755,10 @@ def test_amplify_written_before_a_raise_still_comes_after_it() -> None:
     scenario = _scenario(tables, tokens=[_bleed(4)], max_rounds=1)
     result = _run(scenario, [(4, 3)])
     assert result.snapshots[1].tokens == {"bleed[8]": 1}
+
+
+def test_a_poison_placed_in_agony_three_does_not_step_down_that_round() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Poison[6]"]}
+    scenario = _scenario(tables, tokens=[_poison(6)], max_rounds=1)
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {"poison[4]": 1, "poison[6]": 1}
