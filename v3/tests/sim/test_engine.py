@@ -1,15 +1,15 @@
 """One simulated run, on synthetic Damage tables, against a scripted die."""
 
 from collections.abc import Mapping
-from typing import cast
+from typing import Literal, cast
 
 import pytest
 
 from spf.schemas.type_aliases import DamageTable, DamageTableName
 from spf.sim.dice import Dice
 from spf.sim.effects import PlaceToken, Vocabulary
-from spf.sim.engine import RunResult, UnitState, run_once
-from spf.sim.scenario import Hit, Scenario, Start
+from spf.sim.engine import FixedPolicy, RunResult, UnitState, run_once
+from spf.sim.scenario import Healer, Hit, Scenario, Start
 from spf.sim.tables import compile_table
 from tests.sim.conftest import ScriptedRoller
 
@@ -43,6 +43,8 @@ def _scenario(  # noqa: PLR0913
     endurance: int = 0,
     incoming: list[str] | None = None,
     max_rounds: int = 20,
+    healers: list[Healer] | None = None,
+    critical: frozenset[str] = frozenset(),
 ) -> Scenario:
     tables = tables or {"Regular": LADDER}
     return Scenario(
@@ -68,6 +70,8 @@ def _scenario(  # noqa: PLR0913
             kind: [Dice.parse(dice)] for kind, dice in (resistance or {}).items()
         },
         endurance=endurance,
+        healers=healers or [],
+        critical=critical,
         max_rounds=max_rounds,
     )
 
@@ -477,7 +481,7 @@ def test_a_bleed_saved_by_endurance_continues_as_bleed_four() -> None:
     assert (result.models_lost, result.rounds) == (0, 2)
 
 
-class _NeverSpend:
+class _NeverSpend(FixedPolicy):
     def spend_endurance(self, state: UnitState) -> bool:  # noqa: ARG002
         return False
 
@@ -789,3 +793,22 @@ def test_a_shaken_placed_during_a_round_has_lost_one_by_its_end() -> None:
     scenario = _scenario(tables, incoming=["d6"], max_rounds=1)
     result = _run(scenario, [(6, 1)])
     assert result.snapshots[1].tokens["shaken"] == 1
+
+
+def _heal(points: int | Literal["alive"], phase: Literal[1, 2] = 1) -> Healer:
+    return Healer(kind="heal", points=points, phase=phase)
+
+
+def _repair(points: int, phase: Literal[1, 2] = 1) -> Healer:
+    return Healer(kind="repair", points=points, phase=phase)
+
+
+def _tokens(*names: str) -> list[PlaceToken]:
+    return [PlaceToken(name=name) for name in names]
+
+
+def test_heal_in_healing_one_puts_a_fire_out_before_it_rolls() -> None:
+    scenario = _scenario(tokens=_tokens("fire"), healers=[_heal(3)])
+    result = _run(scenario, [])
+    assert (result.rounds, result.snapshots[1].tokens) == (1, {})
+    assert result.healing == {"Extinguish one Fire": 1}
