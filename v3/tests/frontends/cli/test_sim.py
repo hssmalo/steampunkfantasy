@@ -21,6 +21,7 @@ from spf.frontends.cli.sim import (
     expected_points_text,
     points_text,
     print_army_report,
+    print_report,
     token_columns,
 )
 from spf.schemas.type_aliases import DamageTable, RaceName
@@ -370,3 +371,31 @@ def test_damage_army_rejects_an_unknown_army(
     with pytest.raises(SystemExit):
         _sim_army(f"{army_on_disk}x", "--start", "d6")
     assert "Error" in capsys.readouterr().err
+
+
+def test_the_report_counts_each_healing_action(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    report = replace(
+        _report("Squad", points=4, p_destroyed=0.5),
+        healing={"Extinguish one Fire": 7},
+    )
+    print_report(report)
+    out = capsys.readouterr().out
+    assert "Healing and repair" in out
+    assert _cells(out, "Extinguish one Fire") == ["Extinguish one Fire", "7"]
+
+
+def test_unplayed_healing_is_listed_as_not_simulated(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    report = replace(
+        _report("Squad", points=4, p_destroyed=0.5),
+        unparsed=[],
+        unplayed_healing=["Repair[one per alive drone, self, 2nd Healing]"],
+    )
+    print_report(report)
+    out = capsys.readouterr().out
+    assert "Not simulated" in out
+    row = _cells(out, "Repair[one per alive drone, self, 2nd Healing]")
+    assert row == ["Repair", "—", "Repair[one per alive drone, self, 2nd Healing]", "—"]

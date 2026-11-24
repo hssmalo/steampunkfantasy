@@ -28,6 +28,8 @@ UNPARSED_STYLE = "bold red"
 """How Damage table text the simulator does not play is colored."""
 NO_POINTS = "\N{EN DASH}"
 """How a Unit with no Cost shows its Points and E(Points Destroyed)."""
+NOT_ROLLED = "\N{EM DASH}"
+"""The Row and Hits of a Heal or Repair Instance under Not simulated."""
 
 
 def add_commands(app: cyclopts.App) -> None:
@@ -416,8 +418,9 @@ def print_report(report: DamageReport) -> None:
     _counts("Damage table rolls", "Table", report.table_rolls.items())
     _counts("Rolls on a table the Unit lacks", "Table", report.missing_tables.items())
     _counts("Spillover events", "Effect", report.spillover.items())
+    _counts("Healing and repair", "Action", report.healing.items())
 
-    if report.unparsed:
+    if report.unparsed or report.unplayed_healing:
         unparsed = Table(
             "Table",
             "Row",
@@ -428,6 +431,9 @@ def print_report(report: DamageReport) -> None:
         )
         for hit in report.unparsed:
             unparsed.add_row(hit.table, hit.row, escape(hit.text), str(hit.hits))
+        for spelled in report.unplayed_healing:
+            rule = spelled.partition("[")[0]
+            unparsed.add_row(rule, NOT_ROLLED, escape(spelled), NOT_ROLLED)
         stdout.print(unparsed)
 
 
