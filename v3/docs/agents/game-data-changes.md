@@ -104,6 +104,10 @@ and the target gets a Rules Reference entry in any document that prints the link
   `description`, `lore`, `tip`, or a Rulebook `.md` source.
 - **Link the first mention** in a row or a paragraph, and only where the word means
   the rule: "fire" in "fire order" isn't `token.fire`.
+- **A label in the target's Signature shape is checked:** in
+  `{Bleed[4]:token.bleed}`, the `4` must be a value `token.bleed`'s Variables
+  allow, or the load fails. Letters (`Bleed[N]`) and placeholders
+  (`Bleed[{N}]`) are not checked, and neither is a label in other words.
 
 The reasoning is in
 [ADR-0042](../adr/0042-rule-links-are-authored-never-inferred.md).
