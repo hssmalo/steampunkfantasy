@@ -96,8 +96,8 @@ report.
    Model.
 2. Future Damage and Future Crew Damage from `--start` are placed.
 3. Tokens from `--start` are placed (`bleed=4`, `fire=2`, `shaken`, …).
-4. Each starting roll is resolved, one after another, as described under
-   [Resolving one roll](#resolving-one-roll).
+4. The starting rolls resolve together as one Phase, as described under
+   [Resolving a Phase](#resolving-a-phase).
 
 The Unit's state now is **Round 0** in the report. If the Unit is already
 destroyed, or carries no Continuing Damage and nothing is incoming, the run is
@@ -110,12 +110,12 @@ Every Round runs these steps in order. They follow the end of a Round in
 
 | Step | What happens |
 |---|---|
-| **Incoming** | Each `--incoming` roll lands on the Unit and is resolved like a starting roll. |
+| **Incoming** | The `--incoming` rolls land on the Unit together and resolve as one Phase, like the starting rolls. |
 | **Agony 0: Terror and Acid** | Each Terror Token counts one spillover event (Terror on friendly Units). Then each Acid Token rolls a d8 on the acid table, less acid resistance (see below). |
 | **Agony 1: Minor Acid** | Each Minor Acid rolls a d6, less acid resistance. On 3+ the Unit gains +1 Future Damage and the Minor Acid stays; otherwise the Minor Acid is removed. |
 | **Agony 2: Fire** | *Every* Fire Token rolls a d6, less fire resistance, **before any of them deals damage**. A Fire at 2 or below goes out. Each one still burning then deals its roll as damage on the Regular table, plus Future Damage. |
-| **Agony 3: Poison** | Each Poison[N] rolls a dN, less poison resistance, and deals that as damage on the Regular table, plus Future Damage. A Poison that killed a Model is removed; otherwise it drops one step (Poison[8] → Poison[6]), and Poison[4] is removed. |
-| **Agony 4: Bleed** | Each Bleed[N] rolls a dN. On a 1 or 2 it is removed. Otherwise it deals that roll as damage on the Regular table, plus Future Damage. That damage never places a new Bleed: a Bleed it would place instead Raises the rolling Bleed, if larger. A Bleed that killed a Model is removed. |
+| **Agony 3: Poison** | *Every* Poison[N] rolls a dN, less poison resistance, **before any of them deals damage**. Each deals its roll as damage on the Regular table, plus Future Damage. A Poison that killed a Model is removed; otherwise it drops one step (Poison[8] → Poison[6]), and Poison[4] is removed. |
+| **Agony 4: Bleed** | *Every* Bleed[N] rolls a dN **before any of them deals damage**. A Bleed that rolled 1 or 2 is removed first, so nothing the other Bleeds do this Round touches it. Each one left deals its roll as damage on the Regular table, plus Future Damage. That damage never places a new Bleed: a Bleed it would place instead Raises the rolling Bleed, if larger. A Bleed that killed a Model is removed. |
 
 After the last step the state is recorded for the report. The run then checks
 whether it should go on (see [The two modes](#the-two-modes)).
@@ -123,7 +123,9 @@ whether it should go on (see [The two modes](#the-two-modes)).
 A few details matter for reading the results:
 
 - **The Unit can die mid-Round.** As soon as it is destroyed, the run stops,
-  even halfway through a Phase.
+  even halfway through a Phase. Every roll of that Phase was already looked
+  up, so all of them still count under **Damage table rolls** and
+  **Not simulated**.
 - **Every Token rolls on its own.** Two Bleed[4] are two separate d4 rolls,
   each with its own chance to stop or to kill.
 - **Tokens placed earlier in a Round act later in the same Round.** If Acid
@@ -154,10 +156,38 @@ the one below it:
 An Acid Token is never removed except by rolling a 1, so Acid keeps a run going
 for a long time.
 
+## Resolving a Phase
+
+`rules/round.md` says everything in a Phase happens at once. The simulator
+resolves the rolls that land together as one Phase: all the starting rolls,
+one Round's incoming rolls, and each Agony Phase. It works in two steps
+([ADR-0043](adr/0043-a-phases-damage-is-looked-up-before-any-of-it-applies.md)):
+
+1. **Roll and look up.** Every die of the Phase is rolled, including the rolls
+   a row sets off ("d6 psychic damage", "Roll N times on this table"). Each
+   roll is looked up as in [Resolving one roll](#resolving-one-roll), against
+   the Unit **as it stood when the Phase began**: its Future Damage, its Future
+   Crew Damage, and its Tokens for routing. Nothing a roll does changes how
+   another roll of the same Phase is looked up.
+2. **Apply, in layers.**
+   1. **Unit destroyed.** If any looked-up row says so, the Unit is destroyed
+      and nothing else applies.
+   2. **Everything else**, in roll order, each row in the order written:
+      Tokens, Raises, Future Damage, Future Crew Damage, spillover.
+   3. **Amplify.** Every Amplify of the Phase, each stepping every Bleed once.
+   4. **Casualties.** Kills in roll order, each with its own consequences
+      (see [Killing a Model](#killing-a-model)). Then the Bleed or Poison that
+      made a kill is removed, and the Poisons that did not kill step down.
+
+For example, a Unit of 3 Models with +2 Future Damage and a note that halves
+Future Damage on a kill takes three starting rolls: two land on "+1 to future
+damage" and one on "Kill 1 model". The two +1s apply first (Future Damage 4),
+then the kill halves it to **2**, whichever order the dice came in.
+
 ## Resolving one roll
 
-Starting rolls, incoming rolls, and all damage from Fire, Poison and Bleed go
-through the same steps.
+Starting rolls, incoming rolls, and all damage from Fire, Poison and Bleed are
+each looked up the same way.
 
 ### Which table a roll goes to
 
@@ -165,9 +195,10 @@ through the same steps.
   by default), or the one written in front of it (`psychic:d6`).
 - A row's "d6 psychic damage" or "d6 critical damage" rolls on that other
   table.
-- If the Unit has **both Crippled Crew and Shaken**, psychic damage goes to the
-  **Crew** table instead (`token.crippled_crew`). This is the one thing Shaken
-  does in the simulator.
+- If the Unit has **both Crippled Crew and Shaken** when the Phase begins,
+  psychic damage goes to the **Crew** table instead (`token.crippled_crew`). A
+  Shaken placed during the Phase reroutes nothing until the next Phase. This
+  is the one thing Shaken does in the simulator.
 - If the Unit has no such table, the roll has no effect. It is counted under
   "Rolls on a table the Unit lacks".
 
@@ -181,6 +212,8 @@ through the same steps.
 | Crew | roll + Future Crew Damage |
 | Critical, Inner | roll |
 
+Future Damage and Future Crew Damage are the values the Unit had when the
+Phase began: a +1 from one roll does not reach another roll of the same Phase.
 Future Damage applies to **every** roll on the Regular table, whatever caused
 it, and never to Psychic or Critical. Each resistance comes from the Unit's
 `resistance` Instances. Each contributor counts once however many Models carry
@@ -200,7 +233,10 @@ contributors add up, and a resistance written as a die is rolled each time.
 
 ### Applying the row
 
-The row's effects apply in the order written:
+The row's effects apply in the order written, within the layers of
+[Resolving a Phase](#resolving-a-phase): "Unit destroyed" comes before
+everything else in the Phase, Amplify after every placement and Raise, and
+kills last.
 
 | Effect as written | What the simulator does |
 |---|---|
@@ -209,13 +245,13 @@ The row's effects apply in the order written:
 | +N to future damage (also "x3 +3 …") | Adds Future Damage |
 | +N to future crew damage | Adds Future Crew Damage |
 | Unit destroyed / Unit killed | The Unit is destroyed |
-| d6 psychic damage, d6 critical damage, … | Rolls on that table |
+| d6 psychic damage, d6 critical damage, … | Rolls on that table, as part of the same Phase |
 | Bleed[6], Poison[4], Fire, Acid, Minor Acid | Places that Token, except a Bleed rolled by a Bleed (see [Placing a Token](#placing-a-token)) |
 | Bleed[M], when a Bleed[N] made this roll | Raises the rolling Bleed to Bleed[M] if M is larger than N; otherwise nothing |
 | Shaken, Crippled Crew, Cannot Move, … | Places that Token (counted only, apart from Shaken's routing above) |
 | Amplify (all) bleeding | Steps every Bleed up one size: 4→6→8→10→12, capped at 12 |
 | If caused by bleeding, amplify bleeding | The same, but only when a Bleed made this roll |
-| Roll N times on this table | Rolls the same damage N more times on this table |
+| Roll N times on this table | Rolls the same damage N more times on this table, as part of the same Phase |
 | Anything aimed at other Units or the hex | Counted as spillover |
 | Anything else | Skipped, and listed under **Not simulated** |
 
@@ -226,7 +262,8 @@ fallback.
 #### Placing a Token
 
 - **Shaken** is placed twice when the Unit has none, and once otherwise
-  (`rules/tokens.toml`).
+  (`rules/tokens.toml`). Two rows of one Phase that each place Shaken on a Unit
+  with none give 3, not 4: the Unit becomes Shaken only once.
 - **Fire** stacks: two Fire placements make two Fire Tokens.
 - A Unit **immune** to a Token (a table note such as "Immune to Poison") never
   takes it.
@@ -236,8 +273,11 @@ fallback.
   that rolled is touched. This comes from the Token, not from the table notes:
   the "Bleed does not cause more Bleed" notes are recognized and change
   nothing. Bleed placed by a hit, Fire, Poison or Endurance stacks as usual.
-- A Raise and an Amplify in the same row apply in the order written:
-  "Bleed[6], Amplify all bleeding" turns a rolling Bleed[4] into Bleed[8].
+- **Amplify comes after every Raise and placement of the Phase**, whichever
+  is written first: "Bleed[6], Amplify all bleeding" turns a rolling Bleed[4]
+  into Bleed[8], and so does "Amplify all bleeding, Bleed[6]". A Bleed placed
+  by a later hit of the same Phase is amplified too. Two Amplify rows step a
+  Bleed twice.
 
 #### Killing a Model
 
@@ -245,7 +285,9 @@ fallback.
    "When all models are temporarily killed: replace kill 1 model with …"
    applies its effects instead; without one, nothing happens. Either way it is
    not a kill, so no Endurance is spent and the Bleed or Poison that rolled
-   stays.
+   stays. A replacement that rolls again, or rolls on another table, is not
+   followed and appears under *Not simulated*, since the Phase's rolls were
+   already looked up.
 2. If the Unit has an **Endurance Token**, it is spent. No Model dies, Future
    Damage is not halved, and the Unit gains Bleed[4]. If a Bleed was doing the
    killing, that Bleed is set back to Bleed[4] instead (`token.endurance`).
@@ -254,6 +296,10 @@ fallback.
    each Model killed.
 4. If no Models are left and the kill was not a Temporary Kill, the Unit is
    destroyed.
+
+With more kills in a Phase than Endurance Tokens, the Tokens save the **first
+kills in roll order**. In play the owning player chooses; the simulator fixes
+this rule.
 
 When a Bleed's roll both kills (or is saved by Endurance) and Raises that
 Bleed, the kill wins: the Bleed is removed, or set back to Bleed[4].
