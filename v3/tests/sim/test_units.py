@@ -371,3 +371,27 @@ def test_a_unit_heal_becomes_a_healer(registry: Registry) -> None:
 def test_healing_for_other_units_is_skipped_silently(registry: Registry) -> None:
     scenario = _healed(registry, specials={"heal": [_healing(2, unit="other")]})
     assert (scenario.healers, scenario.unplayed_healing) == ([], [])
+
+
+def test_model_and_equipment_healing_counts_each_kind_once(registry: Registry) -> None:
+    race = synthetic_race(
+        units={"squad": synthetic_unit(models=["soldier"] * 3)},
+        models={
+            "soldier": synthetic_model(
+                unit_specials={"repair": [_healing(1, phase="2nd Healing")]}
+            )
+        },
+        equipment={
+            "knife": synthetic_equipment(
+                name="Knife",
+                cost=None,
+                upgrade_all=None,
+                unit_specials={"repair": [_healing(2, unit="any")]},
+            )
+        },
+    )
+    scenario = unit_scenario(race, "squad", registry=registry, start=Start())
+    assert scenario.healers == [
+        Healer(kind="repair", points=1, phase=2),
+        Healer(kind="repair", points=2, phase=1),
+    ]
