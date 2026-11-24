@@ -41,8 +41,9 @@ chosen.
 **Not simulated at all:** movement, facing, to-hit modifiers, speed, orders,
 healing and repair. Any Token without a damage effect of its own (Cannot Move,
 Cannot Turn, …) is only *counted*: it shows up in the per-Round Token means, but
-it does nothing. Shaken is also counted, and loses one Token each Aftermath. It
-does one thing (see [Which table a roll goes to](#which-table-a-roll-goes-to)).
+it does nothing. Shaken is also counted, and loses one Token each Aftermath, but
+it does do one thing (see
+[Which table a roll goes to](#which-table-a-roll-goes-to)).
 
 ## The two modes
 
@@ -118,8 +119,8 @@ Every Round runs these steps in order. They follow the end of a Round in
 | **Agony 4: Bleed** | *Every* Bleed[N] rolls a dN **before any of them deals damage**. A Bleed that rolled 1 or 2 is removed first, so nothing the other Bleeds do this Round touches it. Each one left deals its roll as damage on the Regular table, plus Future Damage. That damage never places a new Bleed: a Bleed it would place instead Raises the rolling Bleed, if larger. A Bleed that killed a Model is removed. |
 | **Aftermath** | One Shaken Token is removed, if the Unit has any. Healing and repair, which come just before Aftermath in `rules/round.md`, are skipped. |
 
-After Aftermath, the last step, the state is recorded for the report. The run then checks
-whether it should go on (see [The two modes](#the-two-modes)).
+After Aftermath, the last step, the state is recorded for the report. The run
+then checks whether it should go on (see [The two modes](#the-two-modes)).
 
 A few details matter for reading the results:
 
