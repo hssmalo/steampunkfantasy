@@ -825,3 +825,19 @@ def test_a_downgrade_takes_the_strongest_bleed() -> None:
     scenario = _scenario(tokens=[_bleed(4), _bleed(8)], healers=[_heal(1)])
     result = _run(scenario, [(4, 1), (6, 1)])
     assert result.healing == {"Downgrade one Bleed": 1}
+
+
+def test_healing_two_comes_after_the_agony_phases() -> None:
+    scenario = _scenario(tokens=_tokens("fire"), healers=[_heal(3, phase=2)])
+    result = _run(scenario, [(6, 3)])
+    assert (result.rounds, result.snapshots[1].future) == (1, 1)
+    assert result.snapshots[1].tokens == {}
+
+
+def test_healing_two_comes_before_aftermath() -> None:
+    scenario = _scenario(
+        tokens=_tokens("shaken", "fire"), future=1, healers=[_repair(2, phase=2)]
+    )
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].future == 1
+    assert result.healing == {"Remove one Shaken": 2}
