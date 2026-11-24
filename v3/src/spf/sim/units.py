@@ -1,6 +1,7 @@
 """Build a Scenario from a Unit: its Models, Damage tables and Instances."""
 
 from collections import defaultdict
+from typing import Literal
 
 from spf.armies.build import ArmyList
 from spf.armies.model import Model
@@ -11,11 +12,13 @@ from spf.schemas.race import RaceConfig
 from spf.schemas.special import Specials
 from spf.sim.dice import Dice
 from spf.sim.effects import Vocabulary
-from spf.sim.scenario import Hit, Scenario, Start
+from spf.sim.scenario import Healer, Hit, Scenario, Start
 from spf.sim.tables import compile_table
 
 _RESISTANCE_TYPE = "resistance_type."
 _ELITE_TYPES = {"Elite", "SuperElite"}
+_HEALING_KINDS: tuple[Literal["heal", "repair"], ...] = ("heal", "repair")
+_HEALING_PHASES: dict[str, Literal[1, 2]] = {"1st Healing": 1, "2nd Healing": 2}
 
 
 def vocabulary_of(registry: Registry) -> Vocabulary:
@@ -75,6 +78,7 @@ def scenario_of(  # noqa: PLR0913
             kind = version.removeprefix(_RESISTANCE_TYPE)
             resistances[kind].append(Dice.parse(str(strength)))
     return Scenario(
+        healers=_healers(chain),
         unit=unit.display_name,
         models=len(unit.models),
         tables={
@@ -110,6 +114,33 @@ def _resistance_contributors(unit: Unit) -> list[Specials]:
                 copies = purchases.get(equip.name, 1) if equip.upgrade_all else 1
                 contributors.extend([equip.unit_specials] * copies)
     return contributors
+
+
+def _healers(chain: Specials) -> list[Healer]:
+    """Read the Heal and Repair Instances this Unit plays on itself.
+
+    An Instance for other Units only is no concern of this Unit.
+    """
+    return [
+        healer
+        for kind in _HEALING_KINDS
+        for instance in chain.get(kind, [])
+        if (healer := _healer(kind, instance.args)) is not None
+    ]
+
+
+def _healer(
+    kind: Literal["heal", "repair"], args: dict[str, int | str]
+) -> Healer | None:
+    """Make one Instance a Healer, or `None` when it cannot be played."""
+    phase = _HEALING_PHASES.get(str(args.get("phase")))
+    if args.get("unit") not in {"self", "any"} or phase is None:
+        return None
+    match args.get("N"):
+        case int(points):
+            return Healer(kind=kind, points=points, phase=phase)
+        case _:
+            return None
 
 
 def _endurance(unit: Unit) -> int:

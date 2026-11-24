@@ -3,7 +3,7 @@
 import re
 from collections.abc import Mapping
 from dataclasses import dataclass, field
-from typing import cast, get_args
+from typing import Literal, cast, get_args
 
 from spf.schemas.type_aliases import DamageTableName
 from spf.sim.dice import Dice
@@ -40,6 +40,19 @@ class Start:
 
 
 @dataclass(frozen=True, kw_only=True)
+class Healer:
+    """One Heal or Repair Instance, ready to act in its Healing Phase.
+
+    `points` is either a number or `alive`: one point per Model alive when the
+    Healing Phase runs.
+    """
+
+    kind: Literal["heal", "repair"]
+    points: int | Literal["alive"]
+    phase: Literal[1, 2]
+
+
+@dataclass(frozen=True, kw_only=True)
 class Scenario:
     """One Unit in isolation, ready to be simulated.
 
@@ -49,6 +62,9 @@ class Scenario:
     ends with the Unit's Continuing Damage.
     `points` is the Unit's Points at its Loadout, `None` when it has no
     Cost.
+    `critical` holds the id of every Critical Damage Effect, and
+    `unplayed_healing` the Heal and Repair Instances the simulator cannot play,
+    spelled as their Signature prints them.
     """
 
     unit: str
@@ -59,6 +75,9 @@ class Scenario:
     incoming: list[Hit] = field(default_factory=list)
     resistance: Mapping[str, list[Dice]] = field(default_factory=dict)
     endurance: int = 0
+    healers: list[Healer] = field(default_factory=list)
+    critical: frozenset[str] = frozenset()
+    unplayed_healing: list[str] = field(default_factory=list)
     max_rounds: int = 20
 
 

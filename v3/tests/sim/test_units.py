@@ -11,7 +11,7 @@ from spf.registry import Registry
 from spf.schemas import rules as r
 from spf.schemas.race import RaceConfig
 from spf.sim.dice import Dice
-from spf.sim.scenario import Scenario, Start
+from spf.sim.scenario import Healer, Scenario, Start
 from spf.sim.units import scenario_of, unit_scenario, vocabulary_of
 from tests.conftest import (
     InstallRegistry,
@@ -42,6 +42,19 @@ def _registry() -> Registry:
                 slots=["unit"],
                 variables={"N": {"type": "int"}, "model_class": {"type": "str"}},
             ),
+            **{
+                kind: synthetic_special(
+                    name=kind.title(),
+                    slots=["unit"],
+                    signature="[{N}, {unit}, {phase}]",
+                    variables={
+                        "N": {"type": ["int", "str"]},
+                        "unit": {"type": "str"},
+                        "phase": {"type": "str"},
+                    },
+                )
+                for kind in ["heal", "repair"]
+            },
         },
         records={
             "resistance_type": {
@@ -51,6 +64,9 @@ def _registry() -> Registry:
             "token": {
                 "dazed": r.TokenRuleConfig(name="Dazed", effect="Reels."),
                 "bleed": r.TokenRuleConfig(name="Bleed", effect="Bleeds."),
+                "stuck": r.TokenRuleConfig(
+                    name="Stuck", effect="Cannot move.", critical=True
+                ),
             },
         },
     )
@@ -93,7 +109,11 @@ def _race() -> RaceConfig:
 
 
 def test_the_vocabulary_is_every_token_name(registry: Registry) -> None:
-    assert vocabulary_of(registry).tokens == {"dazed": "dazed", "bleed": "bleed"}
+    assert vocabulary_of(registry).tokens == {
+        "dazed": "dazed",
+        "bleed": "bleed",
+        "stuck": "stuck",
+    }
 
 
 def test_a_scenario_counts_the_units_models(registry: Registry) -> None:
@@ -327,3 +347,27 @@ def test_a_superelite_counts_as_elite(registry: Registry) -> None:
 def test_any_other_class_counts_for_every_model(registry: Registry) -> None:
     race = _kitted(specials={"endurance": [_endurance(1, " Model")]})
     assert _scenario(synthetic_army(race), race, registry).endurance == 3
+
+
+def _healing(
+    points: int | str, unit: str = "self", phase: str = "1st Healing", text: str = ""
+) -> dict[str, object]:
+    return {
+        "args": {"N": points, "unit": unit, "phase": phase},
+        **({"text": text} if text else {}),
+    }
+
+
+def _healed(registry: Registry, **unit_fields: object) -> Scenario:
+    race = synthetic_race(units={"squad": synthetic_unit(**unit_fields)})
+    return unit_scenario(race, "squad", registry=registry, start=Start())
+
+
+def test_a_unit_heal_becomes_a_healer(registry: Registry) -> None:
+    scenario = _healed(registry, specials={"heal": [_healing(2)]})
+    assert scenario.healers == [Healer(kind="heal", points=2, phase=1)]
+
+
+def test_healing_for_other_units_is_skipped_silently(registry: Registry) -> None:
+    scenario = _healed(registry, specials={"heal": [_healing(2, unit="other")]})
+    assert (scenario.healers, scenario.unplayed_healing) == ([], [])
