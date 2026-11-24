@@ -449,3 +449,13 @@ def test_without_never_both_every_healer_of_the_phase_acts(
 
 def test_critical_damage_effects_are_the_flagged_tokens(registry: Registry) -> None:
     assert _healed(registry).critical == {"stuck"}
+
+
+def test_healing_can_be_turned_off(registry: Registry) -> None:
+    race = synthetic_race(
+        units={"squad": synthetic_unit(specials={"heal": [_healing("three-ish")]})}
+    )
+    scenario = unit_scenario(
+        race, "squad", registry=registry, start=Start(), healing=False
+    )
+    assert (scenario.healers, scenario.unplayed_healing) == ([], [])

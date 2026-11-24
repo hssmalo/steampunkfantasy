@@ -54,6 +54,7 @@ def unit_scenario(  # noqa: PLR0913
     incoming: list[Hit] | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> Scenario:
     """Build the Scenario for one catalogue Unit at its default Loadout."""
     army = ArmyList(race=next(iter(race.races)), nick="", units=[])
@@ -65,6 +66,7 @@ def unit_scenario(  # noqa: PLR0913
         incoming=incoming,
         max_rounds=max_rounds,
         resistance=resistance,
+        healing=healing,
     )
 
 
@@ -76,11 +78,13 @@ def scenario_of(  # noqa: PLR0913
     incoming: list[Hit] | None = None,
     max_rounds: int = 20,
     resistance: bool = True,
+    healing: bool = True,
 ) -> Scenario:
     """Build the Scenario for a resolved Unit at whatever Loadout it carries.
 
-    Resistance and Endurance are read from the Unit-level Instances of the Unit,
-    its Models and their effective Equipment (ADR 0027 for resistance).
+    Resistance, Endurance, Heal and Repair are read from the Unit-level
+    Instances of the Unit, its Models and their effective Equipment (ADR 0027
+    for resistance).
     """
     chain = merge_specials(*_resistance_contributors(unit))
     vocabulary = vocabulary_of(registry)
@@ -90,7 +94,7 @@ def scenario_of(  # noqa: PLR0913
         if isinstance(version, str) and strength is not None:
             kind = version.removeprefix(_RESISTANCE_TYPE)
             resistances[kind].append(Dice.parse(str(strength)))
-    healers, unplayed = _healers(chain)
+    healers, unplayed = _healers(chain) if healing else ([], [])
     return Scenario(
         unit=unit.display_name,
         models=len(unit.models),
