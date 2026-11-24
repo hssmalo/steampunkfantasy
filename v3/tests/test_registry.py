@@ -905,6 +905,35 @@ def test_a_label_stating_no_forbidden_integer_passes(prose: str) -> None:
     assert _label_errors(prose) == []
 
 
+def test_a_misstated_label_in_an_instance_is_reported() -> None:
+    errors = reg.check_instances(
+        {"fear": [SpecialInstance(text="Take {Sting[5]:token.sting}.")]},
+        slot="unit",
+        context="unit 'Squad'",
+        registry=TOKEN_REGISTRY,
+    )
+
+    assert len(errors) == 1
+    assert "Value 5" in errors[0]
+
+
+def test_a_misstated_label_in_a_record_fails_to_load(tmp_path: Path) -> None:
+    rules_dir = _copied_rules(tmp_path)
+    tokens = rules_dir / "tokens.toml"
+    tokens.write_text(
+        tokens.read_text()
+        + '\n[tokens.synthetic_sting]\nname = "Sting"\nsignature = "[{N}]"\n'
+        'effect = "Stings."\n'
+        "[tokens.synthetic_sting.variables.N]\n"
+        'type = "int"\nvalues = [2, 4]\n'
+        '\n[tokens.synthetic_swarm]\nname = "Swarm"\n'
+        'effect = "Gain {Sting[3]:token.synthetic_sting}."\n'
+    )
+
+    with pytest.raises(ValueError, match=r"Sting\[3\].*Value 3"):
+        reg.load_registry(rules_dir)
+
+
 def test_a_union_variable_still_forbids_an_integer_outside_its_values() -> None:
     errors = _label_errors("Place {Venom[5]:token.venom}.")
 
