@@ -128,7 +128,13 @@ def test_replacing_a_kill_once_every_model_is_temporarily_killed(note: str) -> N
 
 
 @pytest.mark.parametrize(
-    "effects", ["+1 to future damage, howl at the moon", "Kill 1 model"]
+    "effects",
+    [
+        "+1 to future damage, howl at the moon",
+        "Kill 1 model",
+        "d6 psychic damage",
+        "roll two times on this table",
+    ],
 )
 def test_an_unfollowable_replacement_is_unparsed(effects: str) -> None:
     note = (

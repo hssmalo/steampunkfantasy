@@ -125,7 +125,9 @@ _Avoid_: turn
 
 **Phase**:
 One named step within a Round (e.g. Gunnery 1, Movement 2). Orders, Tokens, and
-Hexes take effect in specific phases.
+Hexes take effect in specific phases. Everything in one Phase happens at once:
+all its damage is rolled together, so no roll in a Phase sees what another roll
+in the same Phase did.
 
 **Order**:
 The actions available to a Unit at a given Speed, arranged per Phase and
@@ -367,15 +369,17 @@ A marker tracking transient state on a Unit or Model (bleeding, poison, +1
 future damage, …), placed and removed in specific Phases.
 
 **Future Damage**:
-A stacking modifier on a Unit, each token adding +1 to every later roll on its
-Regular Damage table, whether that roll comes from a hit or from Continuing
-Damage. It never touches the Psychic or Critical tables. It stays until an
+A stacking modifier on a Unit, each token adding +1 to every roll on its
+Regular Damage table in a later Phase, whether that roll comes from a hit or
+from Continuing Damage. Every roll in one Phase sees the Future Damage the Unit
+had when that Phase began, including a roll that another roll of the Phase sets
+off. It never touches the Psychic or Critical tables. It stays until an
 effect or a table note removes it, such as halving it when a Model is killed.
 _Avoid_: plus one, +1 token (`plus_minus_one` is a to-hit Token)
 
 **Future Crew Damage**:
-The Crew-table counterpart of Future Damage: a stacking +1 on later rolls on a
-Unit's Crew Damage table, kept separately from Future Damage.
+The Crew-table counterpart of Future Damage: a stacking +1 on rolls on a
+Unit's Crew Damage table in a later Phase, kept separately from Future Damage.
 
 **Continuing Damage**:
 Damage a Token deals to its own Unit during the Agony Phases, without any new

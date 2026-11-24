@@ -2,7 +2,7 @@
 
 from collections import Counter
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Literal, Protocol
 
 from spf.schemas.type_aliases import DamageTableName
@@ -68,6 +68,37 @@ class Cause:
 
     source: Literal["hit", "fire", "poison", "bleed"]
     roll: Callable[[], int]
+    bleed: int | None = None
+    """Where in `state.bleeds` the Bleed that rolled sits, so it can be Raised."""
+    poison: int | None = None
+    """Where in `state.poisons` the Poison that rolled sits."""
+
+
+@dataclass(frozen=True, kw_only=True)
+class _PhaseStart:
+    """The Unit as it stood when a Phase began; every roll of it is looked up here."""
+
+    future: int
+    future_crew: int
+    psychic_to_crew: bool
+
+
+@dataclass(frozen=True, kw_only=True)
+class _LookedUp:
+    """One roll of a Phase, looked up but not yet applied (ADR 0043)."""
+
+    table: DamageTableName
+    label: str
+    effects: list[Effect]
+    cause: Cause
+
+
+@dataclass(frozen=True, kw_only=True)
+class _Casualties:
+    """Which rolls of a Phase killed a Model, and which Endurance saved."""
+
+    killed_by: tuple[Cause, ...] = ()
+    saved_from: tuple[Cause, ...] = ()
 
 
 def _amplified(strength: int) -> int:
@@ -169,62 +200,138 @@ class _Run:
     notes: NoteRules
     """What every one of the Unit's table notes says, taken together."""
     policy: Policy
-    saved_bleed: bool = False
-    """Whether Endurance saved a Model from the Bleed now rolling."""
-    rolling_bleed: int | None = None
-    """Where in `state.bleeds` the Bleed now rolling sits, so it can be Raised."""
     table_rolls: Counter[DamageTableName] = field(default_factory=Counter)
     missing_tables: Counter[DamageTableName] = field(default_factory=Counter)
     spillover: Counter[str] = field(default_factory=Counter)
     unparsed: Counter[tuple[DamageTableName, str, str]] = field(default_factory=Counter)
-    kills: int = 0
-    """Models killed so far, so a Token can tell whether its damage killed one."""
 
     def resisted(self, dice: Dice, table: DamageTableName) -> int:
         """Roll a hit's damage, less the resistance that table's damage meets."""
         return dice.roll(self.roller) - self.resistance(_RESISTED_BY.get(table, ""))
 
-    def hit(self, hit: Hit) -> None:
-        """Resolve one landed hit."""
+    def hit(self, hit: Hit) -> tuple[DamageTableName, int, Cause]:
+        """Roll one landed hit, ready to be looked up."""
         cause = Cause(source="hit", roll=lambda: self.resisted(hit.dice, hit.table))
-        self.roll_on(hit.table, cause.roll(), cause=cause)
+        return hit.table, cause.roll(), cause
 
-    def roll_on(self, table: DamageTableName, value: int, *, cause: Cause) -> None:
-        """Look `value` up on a Damage table, with its Future Damage, and apply it."""
+    def phase_start(self) -> _PhaseStart:
+        """Fix what a Phase's rolls are looked up against."""
         state = self.state
-        if (
-            table == "Psychic"
-            and state.counters["crippled_crew"]
-            and state.counters["shaken"]
-        ):
+        return _PhaseStart(
+            future=state.future,
+            future_crew=state.future_crew,
+            psychic_to_crew=bool(
+                state.counters["crippled_crew"] and state.counters["shaken"]
+            ),
+        )
+
+    def phase(self, rolls: list[tuple[DamageTableName, int, Cause]]) -> _Casualties:
+        """Resolve one Phase: look every roll up, then apply them (ADR 0043)."""
+        start = self.phase_start()
+        looked_up = [
+            entry
+            for table, value, cause in rolls
+            for entry in self.look_up(table, value, cause=cause, start=start)
+        ]
+        return self.resolve(looked_up)
+
+    def look_up(
+        self,
+        table: DamageTableName,
+        value: int,
+        *,
+        cause: Cause,
+        start: _PhaseStart,
+    ) -> list[_LookedUp]:
+        """Look `value` up, with the rolls its row sets off right after it."""
+        if table == "Psychic" and start.psychic_to_crew:
             table = "Crew"
         if table == "Regular":
-            value += state.future
+            value += start.future
         elif table == "Crew":
-            value += state.future_crew
+            value += start.future_crew
         compiled = self.scenario.tables.get(table)
         if compiled is None:
             self.missing_tables[table] += 1
-            return
+            return []
         self.table_rolls[table] += 1
         for note in compiled.notes.unparsed:
             self.unparsed[table, "note", note] += 1
         row = compiled.row_for(value)
         if row is None:
-            return
-        for effect in row.effects:
-            if state.destroyed:
-                return
-            self.apply(effect, table=table, label=row.label, cause=cause)
+            return []
+        entry = _LookedUp(
+            table=table, label=row.label, effects=row.effects, cause=cause
+        )
+        return [
+            entry,
+            *(
+                set_off
+                for effect in row.effects
+                for set_off in self.set_off(
+                    effect, table=table, cause=cause, start=start
+                )
+            ),
+        ]
+
+    def set_off(
+        self,
+        effect: Effect,
+        *,
+        table: DamageTableName,
+        cause: Cause,
+        start: _PhaseStart,
+    ) -> list[_LookedUp]:
+        """Roll and look up what a row sets off, as part of the same Phase."""
+        match effect:
+            case DamageOn(dice=dice, table=other):
+                onward = replace(cause, roll=lambda: self.resisted(dice, other))
+                return self.look_up(other, onward.roll(), cause=onward, start=start)
+            case RollAgain(times=times):
+                return [
+                    entry
+                    for _ in range(times)
+                    for entry in self.look_up(
+                        table, cause.roll(), cause=cause, start=start
+                    )
+                ]
+            case _:
+                return []
+
+    def resolve(self, looked_up: list[_LookedUp]) -> _Casualties:
+        """Apply a Phase's looked-up rows in layers (ADR 0043).
+
+        Unit destroyed first, then every other effect in roll order, then
+        Amplify, and casualties last.
+        """
+        effects = [(entry, effect) for entry in looked_up for effect in entry.effects]
+        if any(isinstance(effect, UnitDestroyed) for _, effect in effects):
+            self.state.destroyed = True
+            return _Casualties()
+        for entry, effect in effects:
+            if not isinstance(effect, AmplifyBleeding | Kill):
+                self.apply(
+                    effect, table=entry.table, label=entry.label, cause=entry.cause
+                )
+        for entry, effect in effects:
+            if isinstance(effect, AmplifyBleeding):
+                self.amplify(effect, cause=entry.cause)
+        killed_by: list[Cause] = []
+        saved_from: list[Cause] = []
+        for entry, effect in effects:
+            if self.state.destroyed:
+                break
+            if isinstance(effect, Kill):
+                for died in self.kill(effect, table=entry.table, cause=entry.cause):
+                    (killed_by if died else saved_from).append(entry.cause)
+        return _Casualties(killed_by=tuple(killed_by), saved_from=tuple(saved_from))
 
     def apply(
         self, effect: Effect, *, table: DamageTableName, label: str, cause: Cause
     ) -> None:
-        """Apply one effect of a row."""
+        """Apply one effect of a row that is neither a kill nor a set-off roll."""
         state = self.state
         match effect:
-            case Kill():
-                self.kill(effect, table=table, cause=cause)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -233,41 +340,36 @@ class _Run:
                 self.place(effect, cause=cause)
             case UnitDestroyed():
                 state.destroyed = True
-            case AmplifyBleeding(only_from_bleeding=only_from_bleeding):
-                if cause.source == "bleed" or not only_from_bleeding:
-                    state.bleeds[:] = [
-                        _amplified(strength) for strength in state.bleeds
-                    ]
-            case DamageOn() | RollAgain():
-                self.roll_further(effect, table=table, cause=cause)
+            case AmplifyBleeding():
+                self.amplify(effect, cause=cause)
+            case DamageOn() | RollAgain() | Kill():
+                pass
             case _:
                 self.record(effect, table=table, label=label)
 
-    def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> None:
-        """Kill Models one at a time; once all are temporarily killed, replace it."""
+    def amplify(self, effect: AmplifyBleeding, *, cause: Cause) -> None:
+        """Step every Bleed up one size, if this roll's cause allows it."""
+        if cause.source == "bleed" or not effect.only_from_bleeding:
+            self.state.bleeds[:] = [
+                _amplified(strength) for strength in self.state.bleeds
+            ]
+
+    def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> list[bool]:
+        """Kill Models one at a time; once all are temporarily killed, replace it.
+
+        Return, for each Model the kill reached, whether it died or Endurance
+        saved it.
+        """
+        reached: list[bool] = []
         for _ in range(effect.count):
             if self.state.models > 0:
-                self.kill_one(cause=cause, temporary=effect.temporary)
+                reached.append(self.kill_one(cause=cause, temporary=effect.temporary))
                 continue
             for replacement in self.notes.replace_kill_when_all_temporarily_killed:
                 if self.state.destroyed:
-                    return
+                    return reached
                 self.apply(replacement, table=table, label="note", cause=cause)
-
-    def roll_further(
-        self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
-    ) -> None:
-        """Roll again, on another Damage table or on this one."""
-        match effect:
-            case DamageOn(dice=dice, table=other):
-                onward = Cause(
-                    source=cause.source, roll=lambda: self.resisted(dice, other)
-                )
-                self.roll_on(other, onward.roll(), cause=onward)
-            case RollAgain(times=times):
-                for _ in range(times):
-                    if not self.state.destroyed:
-                        self.roll_on(table, cause.roll(), cause=cause)
+        return reached
 
     def record(self, effect: Effect, *, table: DamageTableName, label: str) -> None:
         """Count an effect the run does not follow."""
@@ -279,27 +381,26 @@ class _Run:
             case RowReference():
                 self.unparsed[table, label, str(effect)] += 1
 
-    def kill_one(self, *, cause: Cause, temporary: bool = False) -> None:
+    def kill_one(self, *, cause: Cause, temporary: bool = False) -> bool:
         """Kill one Model; the last one takes the Unit with it, unless temporary.
 
-        Spending Endurance instead gives the Unit Bleed[4], or keeps the Bleed
-        that was killing at Bleed[4], and Future Damage is not halved
-        (`token.endurance`).
+        Spending Endurance instead saves the Model and Future Damage is not
+        halved (`token.endurance`). The Unit gains Bleed[4], unless a Bleed was
+        killing: `agony_bleed` sets that one back to Bleed[4]. Return whether
+        the Model died.
         """
         state = self.state
         if state.counters["endurance"] and self.policy.spend_endurance(state):
             state.counters["endurance"] -= 1
-            if cause.source == "bleed":
-                self.saved_bleed = True
-            else:
+            if cause.bleed is None:
                 state.bleeds.append(MIN_STRENGTH)
-            return
-        self.kills += 1
+            return False
         self.state.models -= 1
         if self.notes.halve_future_on_kill:
             self.state.future //= 2
         if self.state.models <= 0 and not temporary:
             self.state.destroyed = True
+        return True
 
     def place(self, token: PlaceToken, *, cause: Cause | None = None) -> None:
         """Place one Token.
@@ -310,12 +411,10 @@ class _Run:
         state = self.state
         if token.name in self.notes.immune:
             return
-        from_bleed = cause is not None and cause.source == "bleed"
-        if token.name == "bleed" and from_bleed:
-            if token.strength and self.rolling_bleed is not None:
+        if token.name == "bleed" and cause is not None and cause.source == "bleed":
+            if token.strength and cause.bleed is not None:
                 bleeds = state.bleeds
-                index = self.rolling_bleed
-                bleeds[index] = max(bleeds[index], token.strength)
+                bleeds[cause.bleed] = max(bleeds[cause.bleed], token.strength)
             return
         if token.name == "bleed" and token.strength:
             state.bleeds.append(token.strength)
@@ -328,53 +427,58 @@ class _Run:
         state.counters[token.name] += 1
 
     def agony_bleed(self) -> None:
-        """Agony 4: each Bleed rolls on its own (`token.bleed`)."""
+        """Agony 4: each Bleed rolls on its own (`token.bleed`).
+
+        A Bleed that stops is removed before any Bleed deals damage (ADR 0043).
+        """
         bleeds = self.state.bleeds
-        for index in range(len(bleeds)):
-            if self.state.destroyed:
-                return
-            if not bleeds[index]:
-                continue
-            roll = self.roller.roll(bleeds[index])
+        rolls = [self.roller.roll(strength) for strength in bleeds]
+        for index, roll in enumerate(rolls):
             if roll <= BLEED_STOPS:
                 bleeds[index] = 0
-                continue
-            strength = bleeds[index]
-            cause = Cause(
-                source="bleed",
-                roll=lambda strength=strength: self.roller.roll(strength),
-            )
-            kills, self.saved_bleed = self.kills, False
-            self.rolling_bleed = index
-            self.roll_on("Regular", roll, cause=cause)
-            self.rolling_bleed = None
-            if self.kills > kills:
-                bleeds[index] = 0
-            elif self.saved_bleed:
-                bleeds[index] = MIN_STRENGTH
+        casualties = self.phase(
+            [
+                ("Regular", roll, self.bleed_cause(index))
+                for index, roll in enumerate(rolls)
+                if bleeds[index]
+            ]
+        )
+        for cause in casualties.saved_from:
+            if cause.bleed is not None:
+                bleeds[cause.bleed] = MIN_STRENGTH
+        for cause in casualties.killed_by:
+            if cause.bleed is not None:
+                bleeds[cause.bleed] = 0
         self.state.bleeds = [strength for strength in bleeds if strength]
+
+    def bleed_cause(self, index: int) -> Cause:
+        """Make the Bleed at `index` a cause; it rolls again at its size now."""
+        strength = self.state.bleeds[index]
+        return Cause(
+            source="bleed", roll=lambda: self.roller.roll(strength), bleed=index
+        )
 
     def agony_poison(self) -> None:
         """Agony 3: each Poison rolls, then goes or downgrades (`token.poison`)."""
         poisons = self.state.poisons
-        for index in range(len(poisons)):
-            if self.state.destroyed:
-                return
-            if not poisons[index]:
-                continue
-            strength = poisons[index]
+        rolls: list[tuple[DamageTableName, int, Cause]] = []
+        for index, strength in enumerate(poisons):
             cause = Cause(
                 source="poison",
                 roll=lambda strength=strength: (
                     self.roller.roll(strength) - self.resistance("poison")
                 ),
+                poison=index,
             )
-            kills = self.kills
-            self.roll_on("Regular", cause.roll(), cause=cause)
-            killed = self.kills > kills
-            downgraded = poisons[index] - STRENGTH_STEP
-            poisons[index] = 0 if killed or downgraded < MIN_STRENGTH else downgraded
-        self.state.poisons = [strength for strength in poisons if strength]
+            rolls.append(("Regular", cause.roll(), cause))
+        casualties = self.phase(rolls)
+        killed = {cause.poison for cause in casualties.killed_by}
+        # A Poison placed during this Phase sits past the ones that rolled.
+        self.state.poisons = [
+            strength - STRENGTH_STEP
+            for index, strength in enumerate(poisons[: len(rolls)])
+            if index not in killed and strength - STRENGTH_STEP >= MIN_STRENGTH
+        ] + poisons[len(rolls) :]
 
     def agony_acid(self) -> None:
         """Agony 0: Terror spills onto friends, then each Acid rolls (`token.acid`)."""
@@ -437,10 +541,7 @@ class _Run:
         rolls = [cause.roll() for _ in range(counters["fire"])]
         burning = [roll for roll in rolls if roll > FIRE_OUT]
         counters["fire"] = len(burning)
-        for roll in burning:
-            if self.state.destroyed:
-                return
-            self.roll_on("Regular", roll, cause=cause)
+        self.phase([("Regular", roll, cause) for roll in burning])
 
     def resistance(self, kind: str) -> int:
         """Roll the Unit's resistance against one damage type; 0 if it has none."""
@@ -450,10 +551,7 @@ class _Run:
 
     def incoming(self) -> None:
         """Land this Round's incoming hits, ahead of the Agony Phases."""
-        for hit in self.scenario.incoming:
-            if self.state.destroyed:
-                return
-            self.hit(hit)
+        self.phase([self.hit(hit) for hit in self.scenario.incoming])
 
     def play_round(self) -> None:
         """Play one Round: incoming hits, then the Agony Phases in order."""
@@ -526,10 +624,7 @@ def run_once(
     state.counters["endurance"] = scenario.endurance
     for token in start.tokens:
         run.place(token)
-    for hit in start.hits:
-        if state.destroyed:
-            break
-        run.hit(hit)
+    run.phase([run.hit(hit) for hit in start.hits])
     snapshots = [state.snapshot()]
     rounds = 0
     ended_by: EndedBy = "max rounds"
