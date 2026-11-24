@@ -553,8 +553,13 @@ class _Run:
         """Land this Round's incoming hits, ahead of the Agony Phases."""
         self.phase([self.hit(hit) for hit in self.scenario.incoming])
 
+    def aftermath(self) -> None:
+        """Aftermath: remove one Shaken Token, if the Unit has any (`token.shaken`)."""
+        if self.state.counters["shaken"]:
+            self.state.counters["shaken"] -= 1
+
     def play_round(self) -> None:
-        """Play one Round: incoming hits, then the Agony Phases in order."""
+        """Play one Round: incoming hits, the Agony Phases, then Aftermath."""
         phases = [
             self.incoming,
             self.agony_acid,
@@ -562,6 +567,7 @@ class _Run:
             self.agony_fire,
             self.agony_poison,
             self.agony_bleed,
+            self.aftermath,
         ]
         for phase in phases:
             if self.state.destroyed:
