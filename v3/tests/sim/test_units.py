@@ -422,3 +422,26 @@ def test_healing_the_simulator_cannot_play_is_listed(
     instance["args"] = {"N": 2, "unit": "self", "phase": "1st Healing", **args}
     scenario = _healed(registry, specials={"heal": [instance]})
     assert (scenario.healers, scenario.unplayed_healing) == ([], [spelled])
+
+
+def test_never_both_keeps_only_the_larger_healer_of_the_phase(
+    registry: Registry,
+) -> None:
+    heals = [
+        _healing(2, unit="any"),
+        _healing(3, text="Either this or the other, Never both."),
+        _healing(1, phase="2nd Healing"),
+    ]
+    scenario = _healed(registry, specials={"heal": heals, "repair": [_healing(1)]})
+    assert scenario.healers == [
+        Healer(kind="heal", points=3, phase=1),
+        Healer(kind="heal", points=1, phase=2),
+        Healer(kind="repair", points=1, phase=1),
+    ]
+
+
+def test_without_never_both_every_healer_of_the_phase_acts(
+    registry: Registry,
+) -> None:
+    scenario = _healed(registry, specials={"heal": [_healing(2), _healing(3)]})
+    assert [healer.points for healer in scenario.healers] == [2, 3]

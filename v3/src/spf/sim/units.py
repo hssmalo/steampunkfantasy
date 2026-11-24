@@ -21,6 +21,7 @@ _ELITE_TYPES = {"Elite", "SuperElite"}
 _HEALING_KINDS: tuple[Literal["heal", "repair"], ...] = ("heal", "repair")
 _HEALING_PHASES: dict[str, Literal[1, 2]] = {"1st Healing": 1, "2nd Healing": 2}
 _PER_ALIVE_MODEL = re.compile(r"one per alive( .+)? model", re.IGNORECASE)
+_NEVER_BOTH = "never both"
 
 
 def vocabulary_of(registry: Registry) -> Vocabulary:
@@ -125,20 +126,37 @@ def _healers(chain: Specials) -> tuple[list[Healer], list[str]]:
 
     Return the Healers in collection order, and the spelling of each Instance
     the simulator cannot play. An Instance for other Units only is no concern
-    of this Unit.
+    of this Unit. Where an Instance says "never both", only the largest of its
+    kind in its Healing Phase acts.
     """
     healers: list[Healer] = []
     unplayed: list[str] = []
     for kind in _HEALING_KINDS:
+        played: list[Healer] = []
+        exclusive: set[int] = set()
         for instance in chain.get(kind, []):
             args = instance.args
             if args.get("unit") == "other":
                 continue
             if (healer := _healer(kind, args)) is None:
                 unplayed.append(_spelled(kind, args))
-            else:
-                healers.append(healer)
+                continue
+            played.append(healer)
+            if _NEVER_BOTH in (instance.text or "").casefold():
+                exclusive.add(healer.phase)
+        for phase in exclusive:
+            largest = max(
+                (healer for healer in played if healer.phase == phase),
+                key=_known_points,
+            )
+            played = [h for h in played if h.phase != phase or h is largest]
+        healers.extend(played)
     return healers, unplayed
+
+
+def _known_points(healer: Healer) -> int:
+    """Compare Healers by N; one point per alive Model is not known until play."""
+    return healer.points if isinstance(healer.points, int) else 0
 
 
 def _healer(
