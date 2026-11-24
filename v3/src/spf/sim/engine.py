@@ -313,11 +313,16 @@ class _Run:
             return
         for entry in looked_up:
             for effect in entry.effects:
+                if not isinstance(effect, Kill):
+                    self.apply(
+                        effect, table=entry.table, label=entry.label, cause=entry.cause
+                    )
+        for entry in looked_up:
+            for effect in entry.effects:
                 if self.state.destroyed:
                     return
-                self.apply(
-                    effect, table=entry.table, label=entry.label, cause=entry.cause
-                )
+                if isinstance(effect, Kill):
+                    self.kill(effect, table=entry.table, cause=entry.cause)
 
     def apply(
         self, effect: Effect, *, table: DamageTableName, label: str, cause: Cause

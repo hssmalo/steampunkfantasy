@@ -691,3 +691,12 @@ def test_a_unit_destroyed_in_a_phase_takes_nothing_else_from_it() -> None:
     result = _run(_scenario(tables, hits=["d6", "d6"]), [(6, 1), (6, 2)])
     assert result.destroyed
     assert result.snapshots[0].tokens == {}
+
+
+@pytest.mark.parametrize("kill_at", [0, 1, 2])
+def test_a_kill_halves_future_damage_after_the_phases_additions(kill_at: int) -> None:
+    rolls = [(6, 1), (6, 1)]
+    rolls.insert(kill_at, (6, 2))
+    scenario = _scenario(hits=["d6"] * 3, future=2, notes=[HALVING])
+    result = _run(scenario, rolls)
+    assert (result.models_lost, result.snapshots[0].future) == (1, 2)
