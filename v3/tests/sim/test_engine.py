@@ -417,7 +417,7 @@ def test_a_bleed_saved_by_endurance_is_bleed_four_even_when_it_was_raised() -> N
 
 
 @pytest.mark.parametrize(("strength", "key"), [(4, "bleed[8]"), (8, "bleed[10]")])
-def test_raise_and_amplify_apply_in_the_order_written(strength: int, key: str) -> None:
+def test_amplify_comes_after_a_raise_in_the_same_row(strength: int, key: str) -> None:
     tables: dict[DamageTableName, list[str]] = {
         "Regular": ["1+: Bleed[6], Amplify all bleeding"]
     }
@@ -730,3 +730,28 @@ def test_every_roll_of_the_phase_counts_after_the_unit_is_destroyed() -> None:
     result = _run(_scenario(hits=["d6", "d6"]), [(6, 6), (6, 1)])
     assert result.destroyed
     assert result.table_rolls == {"Regular": 2}
+
+
+def test_amplify_comes_after_a_later_rows_bleed() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1: Amplify all bleeding", "2+: Bleed[4]"]
+    }
+    scenario = _scenario(tables, hits=["d6", "d6"], max_rounds=0)
+    result = _run(scenario, [(6, 1), (6, 2)])
+    assert result.snapshots[0].tokens == {"bleed[6]": 1}
+
+
+def test_each_amplify_of_a_phase_steps_once() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Amplify all bleeding"]}
+    scenario = _scenario(tables, hits=["d6", "d6"], tokens=[_bleed(4)], max_rounds=0)
+    result = _run(scenario, [(6, 1), (6, 1)])
+    assert result.snapshots[0].tokens == {"bleed[8]": 1}
+
+
+def test_amplify_written_before_a_raise_still_comes_after_it() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Regular": ["1+: Amplify all bleeding, Bleed[6]"]
+    }
+    scenario = _scenario(tables, tokens=[_bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3)])
+    assert result.snapshots[1].tokens == {"bleed[8]": 1}

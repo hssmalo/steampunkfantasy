@@ -303,35 +303,35 @@ class _Run:
                 return []
 
     def resolve(self, looked_up: list[_LookedUp]) -> None:
-        """Apply a Phase's looked-up rows in layers (ADR-0043)."""
-        if any(
-            isinstance(effect, UnitDestroyed)
-            for entry in looked_up
-            for effect in entry.effects
-        ):
+        """Apply a Phase's looked-up rows in layers (ADR-0043).
+
+        Unit destroyed first, then every other effect in roll order, then
+        Amplify, and casualties last.
+        """
+        effects = [(entry, effect) for entry in looked_up for effect in entry.effects]
+        if any(isinstance(effect, UnitDestroyed) for _, effect in effects):
             self.state.destroyed = True
             return
-        for entry in looked_up:
-            for effect in entry.effects:
-                if not isinstance(effect, Kill):
-                    self.apply(
-                        effect, table=entry.table, label=entry.label, cause=entry.cause
-                    )
-        for entry in looked_up:
-            for effect in entry.effects:
-                if self.state.destroyed:
-                    return
-                if isinstance(effect, Kill):
-                    self.kill(effect, table=entry.table, cause=entry.cause)
+        for entry, effect in effects:
+            if not isinstance(effect, AmplifyBleeding | Kill):
+                self.apply(
+                    effect, table=entry.table, label=entry.label, cause=entry.cause
+                )
+        for entry, effect in effects:
+            if isinstance(effect, AmplifyBleeding):
+                self.amplify(effect, cause=entry.cause)
+        for entry, effect in effects:
+            if self.state.destroyed:
+                return
+            if isinstance(effect, Kill):
+                self.kill(effect, table=entry.table, cause=entry.cause)
 
     def apply(
         self, effect: Effect, *, table: DamageTableName, label: str, cause: Cause
     ) -> None:
-        """Apply one effect of a row."""
+        """Apply one effect of a row that is neither a kill nor a set-off roll."""
         state = self.state
         match effect:
-            case Kill():
-                self.kill(effect, table=table, cause=cause)
             case FutureDamage(amount=amount):
                 state.future += amount
             case FutureCrewDamage(amount=amount):
@@ -340,15 +340,19 @@ class _Run:
                 self.place(effect, cause=cause)
             case UnitDestroyed():
                 state.destroyed = True
-            case AmplifyBleeding(only_from_bleeding=only_from_bleeding):
-                if cause.source == "bleed" or not only_from_bleeding:
-                    state.bleeds[:] = [
-                        _amplified(strength) for strength in state.bleeds
-                    ]
-            case DamageOn() | RollAgain():
+            case AmplifyBleeding():
+                self.amplify(effect, cause=cause)
+            case DamageOn() | RollAgain() | Kill():
                 pass
             case _:
                 self.record(effect, table=table, label=label)
+
+    def amplify(self, effect: AmplifyBleeding, *, cause: Cause) -> None:
+        """Step every Bleed up one size, if this roll's cause allows it."""
+        if cause.source == "bleed" or not effect.only_from_bleeding:
+            self.state.bleeds[:] = [
+                _amplified(strength) for strength in self.state.bleeds
+            ]
 
     def kill(self, effect: Kill, *, table: DamageTableName, cause: Cause) -> None:
         """Kill Models one at a time; once all are temporarily killed, replace it."""
