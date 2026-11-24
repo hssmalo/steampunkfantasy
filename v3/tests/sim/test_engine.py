@@ -876,3 +876,34 @@ def test_disabled_repair_stops_repair_but_not_heal() -> None:
     result = _run(scenario, [(4, 1)])
     assert result.snapshots[1].tokens == {"disabled_repair": 1, "cannot_move": 1}
     assert result.healing == {"Downgrade one Bleed": 1}
+
+
+def test_one_point_per_alive_model_counts_the_models_alive_now() -> None:
+    scenario = _scenario(hits=["d6"], tokens=[_bleed(4)] * 3, healers=[_heal("alive")])
+    result = _run(scenario, [(6, 4), (4, 1)])
+    assert result.healing == {"Downgrade one Bleed": 2}
+
+
+def test_acid_downgraded_in_healing_one_rolls_as_minor_acid_that_round() -> None:
+    scenario = _scenario(tokens=_tokens("acid"), healers=[_heal(4)])
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens == {}
+    assert result.healing == {"Downgrade one Acid to Minor Acid": 1}
+
+
+def test_healing_the_last_continuing_damage_ends_the_run() -> None:
+    scenario = _scenario(tokens=[_poison(4)], healers=[_heal(1)])
+    result = _run(scenario, [])
+    assert (result.rounds, result.ended_by) == (1, "no continuing damage")
+
+
+class _NeverHeal(FixedPolicy):
+    def healing_priority(self, kind: str) -> tuple[()]:  # noqa: ARG002
+        return ()
+
+
+def test_the_player_policy_decides_what_healing_buys() -> None:
+    scenario = _scenario(tokens=_tokens("fire"), healers=[_heal(3)])
+    roller = ScriptedRoller([(6, 1)])
+    result = run_once(scenario, roller, policy=_NeverHeal())
+    assert (roller.exhausted, result.healing) == (True, {})
