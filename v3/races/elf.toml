@@ -1339,12 +1339,12 @@ slow = [["360°", "F", "360°"], ["360°", "B", "360°"]]
 still = [["360°", "A", "F"]]
 
 [units.sauropod_riders.damage_tables.Regular]
-rows = ["1: Bleed[4]",
-	"2-3: Bleed[6]",
-	"4-5: Bleed[8]",
-	"6-7: Bleed[10]",
-	"8-9: Bleed[12], +1 to future damage",
-	"10-19: As 8-9, d8 psychic damage",
+rows = ["1-2: Bleed[4]",
+	"3-4: Bleed[6]",
+	"5-6: Bleed[8]",
+	"7-8: Bleed[10], +1 to future damage",
+	"9-10: Bleed[12], +1 to future damage",
+	"11-19: As 9-10, d8 psychic damage",
 	"20+: Unit destroyed",
 ]
 notes = [

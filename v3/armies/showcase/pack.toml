@@ -7,7 +7,7 @@ army = "abomination"
 army = "darkelf_dragon_flight"
 
 [[armies]]
-army = "darkelf_spider_swarm"
+army = "darkelf"
 
 [[armies]]
 army = "darkelf_mechahydra"
@@ -19,7 +19,7 @@ army = "dwarf"
 army = "elf"
 
 [[armies]]
-army = "gnome_ballista_battery"
+army = "gnome"
 
 [[armies]]
 army = "gnome_air_wing"
@@ -28,7 +28,7 @@ army = "gnome_air_wing"
 army = "goblin"
 
 [[armies]]
-army = "ogre_hydra"
+army = "ogre"
 
 [[armies]]
-army = "ork_warband"
+army = "ork"
