@@ -173,7 +173,8 @@ one Round's incoming rolls, and each Agony Phase. It works in two steps
    1. **Unit destroyed.** If any looked-up row says so, the Unit is destroyed
       and nothing else applies.
    2. **Everything else**, in roll order, each row in the order written:
-      Tokens, Raises, Future Damage, Future Crew Damage, spillover.
+      Tokens, Raises, Future Damage, Future Crew Damage, spillover, and the
+      clauses listed under *Not simulated*.
    3. **Amplify.** Every Amplify of the Phase, each stepping every Bleed once.
    4. **Casualties.** Kills in roll order, each with its own consequences
       (see [Killing a Model](#killing-a-model)). Then the Bleed or Poison that

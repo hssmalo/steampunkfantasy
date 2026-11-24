@@ -57,7 +57,7 @@ def _replacement(text: str, vocabulary: Vocabulary) -> tuple[Effect, ...] | None
 
     A replacement that is not fully parsed, that kills again, or that sets off a
     roll is not followed: it applies with the casualties, after the Phase's
-    rolls were looked up (ADR-0043).
+    rolls were looked up (ADR 0043).
     """
     if not (match := _ALL_TEMPORARILY_KILLED.match(text)):
         return None
