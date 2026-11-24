@@ -20,6 +20,7 @@ remove = "Remove one each aftermath phase. Can also be removed by appropriate re
 
 [tokens.plus_minus_one]
 name = "Plus Minus One"
+critical = true
 phases = ["Gunnery 1", "Movement 1", "Movement 2", "Movement 3", "Gunnery 2"]
 effect = "-1 to hit, +1 to be hit for range attacks.. Unit also get -1 for assault success while enemy get +1 for assault success. In addition, the enemy may add or subtract one to any critical damage die."
 remove = "This is a critical effect which may only be removed be repair ability"
@@ -56,6 +57,7 @@ see_also = ["damage_type.psychic"]
 
 [tokens.disabled_repair]
 name = "Disabled Repair"
+critical = true
 phases = ["Healing 1", "Healing 2"]
 effect = "Repair ability disabled."
 remove = "This is an critical effect which may be repaired by repair critical. (however obviously this ability cannot be repaired by this unit)"
@@ -63,6 +65,7 @@ see_also = ["special.repair"]
 
 [tokens.no_command]
 name = "No Command"
+critical = true
 phases = []
 effect = "Unit cannot use command abilities"
 remove = "This is an critical effect which my be repair by repair critical."
@@ -70,6 +73,7 @@ remove = "This is an critical effect which my be repair by repair critical."
 
 [tokens.cannot_move]
 name = "Cannot Move"
+critical = true
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Speed is set to still and unit cannot move. Treat all F as -"
 remove = "This is an critical effect which my be repair by repair critical."
@@ -77,12 +81,14 @@ see_also = ["speed.still"]
 
 [tokens.cannot_accelerate]
 name = "Cannot Accelerate"
+critical = true
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Unit can move, but cannot increase speed. This also includes starting flying. Treat all A as -"
 remove = "This is an critical effect which my be repair by repair critical."
 
 [tokens.cannot_turn]
 name = "Cannot Turn"
+critical = true
 phases = ["Movement 1", "Movement 2", "Movement 3"]
 effect = "Unit cannot turn. Treat all L/R and 360° as -"
 remove = "This is an critical effect which my be repair by repair critical."
