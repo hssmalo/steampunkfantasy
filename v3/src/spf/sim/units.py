@@ -10,6 +10,7 @@ from spf.armies.specials import merge_specials
 from spf.armies.unit import Unit
 from spf.registry import Registry
 from spf.schemas.race import RaceConfig
+from spf.schemas.rules import TokenRuleConfig
 from spf.schemas.special import Specials
 from spf.sim.dice import Dice
 from spf.sim.effects import Vocabulary
@@ -32,6 +33,15 @@ def vocabulary_of(registry: Registry) -> Vocabulary:
             for identifier, record in registry.records.get("token", {}).items()
             if record.name
         }
+    )
+
+
+def _critical(registry: Registry) -> frozenset[str]:
+    """List the Tokens the rules flag as a Critical Damage Effect."""
+    return frozenset(
+        identifier
+        for identifier, record in registry.records.get("token", {}).items()
+        if isinstance(record, TokenRuleConfig) and record.critical
     )
 
 
@@ -93,6 +103,7 @@ def scenario_of(  # noqa: PLR0913
         resistance=dict(resistances),
         endurance=_endurance(unit),
         healers=healers,
+        critical=_critical(registry),
         unplayed_healing=unplayed,
         max_rounds=max_rounds,
         points=None if unit.config.cost is None else unit.cost().to_points(),

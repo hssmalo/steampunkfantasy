@@ -445,3 +445,7 @@ def test_without_never_both_every_healer_of_the_phase_acts(
 ) -> None:
     scenario = _healed(registry, specials={"heal": [_healing(2), _healing(3)]})
     assert [healer.points for healer in scenario.healers] == [2, 3]
+
+
+def test_critical_damage_effects_are_the_flagged_tokens(registry: Registry) -> None:
+    assert _healed(registry).critical == {"stuck"}
