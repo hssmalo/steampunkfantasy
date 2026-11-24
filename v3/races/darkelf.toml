@@ -1605,7 +1605,7 @@ angle = [true, true, true, true]
 damage = "d6-3"
 ap = 1
 
-[[equipment.crossbow.range.specials.range_extra_damage]]
+[[equipment.acid_smg.range.specials.range_extra_damage]]
 args.version = "token.minor_acid"
 
 [[equipment.acid_smg.range.specials.ammo]]
