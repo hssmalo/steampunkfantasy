@@ -41,8 +41,8 @@ chosen.
 **Not simulated at all:** movement, facing, to-hit modifiers, speed, orders,
 healing and repair. Any Token without a damage effect of its own (Cannot Move,
 Cannot Turn, …) is only *counted*: it shows up in the per-Round Token means, but
-it does nothing. Shaken is also counted and never removed, but it does do one
-thing (see [Which table a roll goes to](#which-table-a-roll-goes-to)).
+it does nothing. Shaken is also counted, and loses one Token each Aftermath. It
+does one thing (see [Which table a roll goes to](#which-table-a-roll-goes-to)).
 
 ## The two modes
 
@@ -116,8 +116,9 @@ Every Round runs these steps in order. They follow the end of a Round in
 | **Agony 2: Fire** | *Every* Fire Token rolls a d6, less fire resistance, **before any of them deals damage**. A Fire at 2 or below goes out. Each one still burning then deals its roll as damage on the Regular table, plus Future Damage. |
 | **Agony 3: Poison** | *Every* Poison[N] rolls a dN, less poison resistance, **before any of them deals damage**. Each deals its roll as damage on the Regular table, plus Future Damage. A Poison that killed a Model is removed; otherwise it drops one step (Poison[8] → Poison[6]), and Poison[4] is removed. |
 | **Agony 4: Bleed** | *Every* Bleed[N] rolls a dN **before any of them deals damage**. A Bleed that rolled 1 or 2 is removed first, so nothing the other Bleeds do this Round touches it. Each one left deals its roll as damage on the Regular table, plus Future Damage. That damage never places a new Bleed: a Bleed it would place instead Raises the rolling Bleed, if larger. A Bleed that killed a Model is removed. |
+| **Aftermath** | One Shaken Token is removed, if the Unit has any. Healing and repair, which come just before Aftermath in `rules/round.md`, are skipped. |
 
-After the last step the state is recorded for the report. The run then checks
+After Aftermath, the last step, the state is recorded for the report. The run then checks
 whether it should go on (see [The two modes](#the-two-modes)).
 
 A few details matter for reading the results:
@@ -316,7 +317,7 @@ chosen and printed.
 | **The Unit's Damage tables** | Printed first, the chosen table on top, each with its notes underneath. Text the parser skipped is colored red, so you see exactly which parts of a row are left out |
 | **Summary** | P(Destroyed); the Unit's Points at its default loadout (`–` for a Unit with no Cost); E(Points Destroyed), P(Destroyed) × Points; Models lost (mean, median, 90th percentile, where a destroyed Unit counts as losing all its Models); how runs ended. E(Points Destroyed) assumes the attacker scores a Unit's Points only when the whole Unit is destroyed, and leaves out every other victory-point rule |
 | **Rounds played, by how the run ended** | The share of runs that ended after each number of Rounds, in separate columns for runs that ran out of Continuing Damage, were destroyed, or hit the cap |
-| **Mean state at the end of each Round** | Mean Models alive, Future Damage, Future Crew Damage and every Token count. Bleed and Poison get a column per strength (`bleed[4]`, `bleed[6]`, …), since strengths change during a run: Poison steps down each Round, and amplified or saved Bleed changes die. Round 0 is the state after the starting rolls. A run that has already ended is held at its final state, so the means stay comparable from Round to Round |
+| **Mean state at the end of each Round** | Mean Models alive, Future Damage, Future Crew Damage and every Token count. Bleed and Poison get a column per strength (`bleed[4]`, `bleed[6]`, …), since strengths change during a run: Poison steps down each Round, and amplified or saved Bleed changes die. Each Round's state is taken after Aftermath, so it is what the Unit carries into the next Round. Round 0 is the state after the starting rolls. A run that has already ended is held at its final state, so the means stay comparable from Round to Round |
 | **Damage table rolls** | How many rolls each table got over all runs, with the chosen table first |
 | **Rolls on a table the Unit lacks** | Effects that pointed at a table this Unit doesn't have |
 | **Spillover events** | Effects aimed beyond this Unit, with how often they happened |
@@ -362,8 +363,10 @@ These are open questions for the game designer, not oversights:
 - **"if already Shaken double initial crew damage"** is not simulated, because
   "initial crew damage" can be read more than one way. It appears under
   *Not simulated*.
-- **Shaken is never removed.** It only matters for routing psychic damage to
-  the Crew table.
+- **Healing and repair are not simulated**, so Aftermath is the only thing
+  that removes Shaken.
+- **Insane's 5+ removal roll is not simulated**, because nothing in the
+  simulator places Insane.
 - Conditional rows ("If more than 2 models are alive, …"), crew kills, and a
   whole Unit being "temporarily destroyed" are not simulated. They are listed
   under *Not simulated*.
