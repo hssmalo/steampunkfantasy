@@ -762,3 +762,30 @@ def test_a_poison_placed_in_agony_three_does_not_step_down_that_round() -> None:
     scenario = _scenario(tables, tokens=[_poison(6)], max_rounds=1)
     result = _run(scenario, [(6, 1)])
     assert result.snapshots[1].tokens == {"poison[4]": 1, "poison[6]": 1}
+
+
+def test_aftermath_removes_one_shaken_each_round() -> None:
+    scenario = _scenario(
+        tokens=[PlaceToken(name="shaken")], incoming=["d6"], max_rounds=3
+    )
+    result = _run(scenario, [(6, 1)] * 3)
+    shaken = [snapshot.tokens["shaken"] for snapshot in result.snapshots]
+    assert shaken == [2, 1, 0, 0]
+
+
+def test_psychic_damage_returns_to_its_table_once_aftermath_clears_shaken() -> None:
+    tables: dict[DamageTableName, list[str]] = {
+        "Psychic": ["1+: Dazed"],
+        "Crew": ["1+: Dazed"],
+    }
+    tokens = [PlaceToken(name="crippled_crew"), PlaceToken(name="shaken")]
+    scenario = _scenario(tables, tokens=tokens, incoming=["psychic:d6"], max_rounds=3)
+    result = _run(scenario, [(6, 1)] * 3)
+    assert result.table_rolls == {"Crew": 2, "Psychic": 1}
+
+
+def test_a_shaken_placed_during_a_round_has_lost_one_by_its_end() -> None:
+    tables: dict[DamageTableName, list[str]] = {"Regular": ["1+: Shaken"]}
+    scenario = _scenario(tables, incoming=["d6"], max_rounds=1)
+    result = _run(scenario, [(6, 1)])
+    assert result.snapshots[1].tokens["shaken"] == 1
