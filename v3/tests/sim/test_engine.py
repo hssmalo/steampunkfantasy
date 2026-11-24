@@ -666,3 +666,19 @@ def test_fires_see_the_future_damage_the_phase_began_with() -> None:
     scenario = _scenario({"Regular": EDGE}, tokens=[FIRE, FIRE], max_rounds=1)
     result = _run(scenario, [(6, 3), (6, 3)])
     assert (result.models_lost, result.snapshots[1].future) == (0, 2)
+
+
+def test_poisons_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario(
+        {"Regular": EDGE}, tokens=[_poison(6), _poison(6)], max_rounds=1
+    )
+    result = _run(scenario, [(6, 3), (6, 3)])
+    assert (result.models_lost, result.snapshots[1].future) == (0, 2)
+    assert result.snapshots[1].tokens == {"poison[4]": 2}
+
+
+def test_bleeds_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario({"Regular": EDGE}, tokens=[_bleed(4), _bleed(4)], max_rounds=1)
+    result = _run(scenario, [(4, 3), (4, 3)])
+    assert (result.models_lost, result.snapshots[1].future) == (0, 2)
+    assert result.snapshots[1].tokens == {"bleed[4]": 2}
