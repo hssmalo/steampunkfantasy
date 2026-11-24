@@ -189,6 +189,31 @@ def link_labels(raw: str) -> list[str]:
     return [match.group(1) for match in LINK.finditer(raw)]
 
 
+def label_args(
+    label: str, *, name: str, signature: str | None
+) -> dict[str, str] | None:
+    """Read the Args a Rule Link label states in its target's Signature shape.
+
+    `None` when the label doesn't spell `<name><signature>`: a label in other
+    words states no Args, and there is nothing to check.
+    """
+    if not signature:
+        return None
+    names = PLACEHOLDER.findall(signature)
+    literals = PLACEHOLDER.split(signature)[::3]
+    pattern = re.escape(name) + "".join(
+        re.escape(literal) + (r"([^\[\]]+?)" if index < len(names) else "")
+        for index, literal in enumerate(literals)
+    )
+    match = re.fullmatch(pattern, label, flags=re.IGNORECASE)
+    if match is None:
+        return None
+    args: dict[str, str] = {}
+    for (placeholder, _), value in zip(names, match.groups(), strict=True):
+        args.setdefault(placeholder, value)
+    return args
+
+
 def fill_linked(
     template: str,
     args: dict[str, int | str],

@@ -8,6 +8,7 @@ from spf.prose import (
     fill,
     fill_linked,
     interpolate_linked,
+    label_args,
     link_refs,
     linked_prose,
     malformed_links,
@@ -272,3 +273,7 @@ def test_broken_braces_around_a_link_are_malformed(raw: str) -> None:
 )
 def test_well_formed_prose_is_not_malformed(raw: str) -> None:
     assert malformed_links(raw) == []
+
+
+def test_a_label_in_its_targets_signature_shape_states_its_args() -> None:
+    assert label_args("Bleed[6]", name="Bleed", signature="[{N}]") == {"N": "6"}
