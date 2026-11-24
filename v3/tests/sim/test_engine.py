@@ -112,7 +112,7 @@ def test_killing_the_last_model_destroys_the_unit() -> None:
 
 
 def test_a_destroyed_unit_stops_resolving() -> None:
-    result = _run(_scenario(hits=["d6", "d6"]), [(6, 6)])
+    result = _run(_scenario(hits=["d6", "d6"]), [(6, 6), (6, 1)])
     assert result.destroyed
     assert result.models_lost == 3
 
@@ -144,13 +144,13 @@ def test_shaken_is_placed_twice_the_first_time() -> None:
 
 def test_crippled_crew_and_shaken_turn_psychic_into_crew_damage() -> None:
     tables: dict[DamageTableName, list[str]] = {
-        "Regular": ["1: Crippled Crew", "2: Shaken", "3+: d6 psychic damage"],
+        "Regular": ["1+: d6 psychic damage"],
         "Psychic": ["1+: Dazed"],
-        "Crew": ["1-6: +1 to future crew damage", "7+: Unit destroyed"],
+        "Crew": ["1-5: +1 to future crew damage", "6+: Unit destroyed"],
     }
-    rolls = [(6, 1), (6, 2), (6, 3), (6, 6), (6, 3), (6, 6)]
-    result = _run(_scenario(tables, hits=["d6"] * 4), rolls)
-    assert result.table_rolls == {"Regular": 4, "Crew": 2}
+    tokens = [PlaceToken(name="crippled_crew"), PlaceToken(name="shaken")]
+    result = _run(_scenario(tables, hits=["d6"], tokens=tokens), [(6, 1), (6, 6)])
+    assert result.table_rolls == {"Regular": 1, "Crew": 1}
     assert result.destroyed
 
 
@@ -605,3 +605,13 @@ def test_a_replacement_stops_once_the_unit_is_destroyed() -> None:
     )
     result = _run(scenario, [(6, 5), (6, 5)])
     assert (result.destroyed, result.snapshots[0].future) == (True, 0)
+
+
+NUDGE = ["1-3: +1 to future damage", "4+: +1 to future damage, Bleed[4]"]
+"""A table where Future Damage alone decides whether a Bleed is placed."""
+
+
+def test_starting_hits_see_the_future_damage_the_phase_began_with() -> None:
+    scenario = _scenario({"Regular": NUDGE}, hits=["d4-1"] * 4, max_rounds=0)
+    result = _run(scenario, [(4, 4)] * 4)
+    assert (result.snapshots[0].future, result.snapshots[0].tokens) == (4, {})

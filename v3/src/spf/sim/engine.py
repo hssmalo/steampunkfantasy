@@ -70,6 +70,25 @@ class Cause:
     roll: Callable[[], int]
 
 
+@dataclass(frozen=True, kw_only=True)
+class _PhaseStart:
+    """The Unit as it stood when a Phase began; every roll of it is looked up here."""
+
+    future: int
+    future_crew: int
+    psychic_to_crew: bool
+
+
+@dataclass(frozen=True, kw_only=True)
+class _LookedUp:
+    """One roll of a Phase, looked up but not yet applied (ADR-0043)."""
+
+    table: DamageTableName
+    label: str
+    effects: list[Effect]
+    cause: Cause
+
+
 def _amplified(strength: int) -> int:
     """Step one Bleed up a size, capped at the strongest; 0 stays removed."""
     return min(strength + STRENGTH_STEP, MAX_STRENGTH) if strength else 0
@@ -184,38 +203,110 @@ class _Run:
         """Roll a hit's damage, less the resistance that table's damage meets."""
         return dice.roll(self.roller) - self.resistance(_RESISTED_BY.get(table, ""))
 
-    def hit(self, hit: Hit) -> None:
-        """Resolve one landed hit."""
+    def hit(self, hit: Hit) -> tuple[DamageTableName, int, Cause]:
+        """Roll one landed hit, ready to be looked up."""
         cause = Cause(source="hit", roll=lambda: self.resisted(hit.dice, hit.table))
-        self.roll_on(hit.table, cause.roll(), cause=cause)
+        return hit.table, cause.roll(), cause
 
-    def roll_on(self, table: DamageTableName, value: int, *, cause: Cause) -> None:
-        """Look `value` up on a Damage table, with its Future Damage, and apply it."""
+    def phase_start(self) -> _PhaseStart:
+        """Fix what a Phase's rolls are looked up against."""
         state = self.state
-        if (
-            table == "Psychic"
-            and state.counters["crippled_crew"]
-            and state.counters["shaken"]
-        ):
+        return _PhaseStart(
+            future=state.future,
+            future_crew=state.future_crew,
+            psychic_to_crew=bool(
+                state.counters["crippled_crew"] and state.counters["shaken"]
+            ),
+        )
+
+    def phase(self, rolls: list[tuple[DamageTableName, int, Cause]]) -> None:
+        """Resolve one Phase: look every roll up, then apply them (ADR-0043)."""
+        start = self.phase_start()
+        looked_up = [
+            entry
+            for table, value, cause in rolls
+            for entry in self.look_up(table, value, cause=cause, start=start)
+        ]
+        self.resolve(looked_up)
+
+    def look_up(
+        self,
+        table: DamageTableName,
+        value: int,
+        *,
+        cause: Cause,
+        start: _PhaseStart,
+    ) -> list[_LookedUp]:
+        """Look `value` up, with the rolls its row sets off right after it."""
+        if table == "Psychic" and start.psychic_to_crew:
             table = "Crew"
         if table == "Regular":
-            value += state.future
+            value += start.future
         elif table == "Crew":
-            value += state.future_crew
+            value += start.future_crew
         compiled = self.scenario.tables.get(table)
         if compiled is None:
             self.missing_tables[table] += 1
-            return
+            return []
         self.table_rolls[table] += 1
         for note in compiled.notes.unparsed:
             self.unparsed[table, "note", note] += 1
         row = compiled.row_for(value)
         if row is None:
-            return
-        for effect in row.effects:
-            if state.destroyed:
-                return
-            self.apply(effect, table=table, label=row.label, cause=cause)
+            return []
+        entry = _LookedUp(
+            table=table, label=row.label, effects=row.effects, cause=cause
+        )
+        return [
+            entry,
+            *(
+                set_off
+                for effect in row.effects
+                for set_off in self.set_off(
+                    effect, table=table, cause=cause, start=start
+                )
+            ),
+        ]
+
+    def set_off(
+        self,
+        effect: Effect,
+        *,
+        table: DamageTableName,
+        cause: Cause,
+        start: _PhaseStart,
+    ) -> list[_LookedUp]:
+        """Roll and look up what a row sets off, as part of the same Phase."""
+        match effect:
+            case DamageOn(dice=dice, table=other):
+                onward = Cause(
+                    source=cause.source, roll=lambda: self.resisted(dice, other)
+                )
+                return self.look_up(other, onward.roll(), cause=onward, start=start)
+            case RollAgain(times=times):
+                return [
+                    entry
+                    for _ in range(times)
+                    for entry in self.look_up(
+                        table, cause.roll(), cause=cause, start=start
+                    )
+                ]
+            case _:
+                return []
+
+    def roll_on(self, table: DamageTableName, value: int, *, cause: Cause) -> None:
+        """Resolve one roll on its own."""
+        self.phase([(table, value, cause)])
+
+    def resolve(self, looked_up: list[_LookedUp]) -> None:
+        """Apply a Phase's looked-up rows in roll order."""
+        for entry in looked_up:
+            for effect in entry.effects:
+                if self.state.destroyed:
+                    return
+                self.apply(
+                    effect, table=entry.table, label=entry.label, cause=entry.cause
+                )
 
     def apply(
         self, effect: Effect, *, table: DamageTableName, label: str, cause: Cause
@@ -239,7 +330,7 @@ class _Run:
                         _amplified(strength) for strength in state.bleeds
                     ]
             case DamageOn() | RollAgain():
-                self.roll_further(effect, table=table, cause=cause)
+                pass
             case _:
                 self.record(effect, table=table, label=label)
 
@@ -253,21 +344,6 @@ class _Run:
                 if self.state.destroyed:
                     return
                 self.apply(replacement, table=table, label="note", cause=cause)
-
-    def roll_further(
-        self, effect: DamageOn | RollAgain, *, table: DamageTableName, cause: Cause
-    ) -> None:
-        """Roll again, on another Damage table or on this one."""
-        match effect:
-            case DamageOn(dice=dice, table=other):
-                onward = Cause(
-                    source=cause.source, roll=lambda: self.resisted(dice, other)
-                )
-                self.roll_on(other, onward.roll(), cause=onward)
-            case RollAgain(times=times):
-                for _ in range(times):
-                    if not self.state.destroyed:
-                        self.roll_on(table, cause.roll(), cause=cause)
 
     def record(self, effect: Effect, *, table: DamageTableName, label: str) -> None:
         """Count an effect the run does not follow."""
@@ -450,10 +526,7 @@ class _Run:
 
     def incoming(self) -> None:
         """Land this Round's incoming hits, ahead of the Agony Phases."""
-        for hit in self.scenario.incoming:
-            if self.state.destroyed:
-                return
-            self.hit(hit)
+        self.phase([self.hit(hit) for hit in self.scenario.incoming])
 
     def play_round(self) -> None:
         """Play one Round: incoming hits, then the Agony Phases in order."""
@@ -526,10 +599,7 @@ def run_once(
     state.counters["endurance"] = scenario.endurance
     for token in start.tokens:
         run.place(token)
-    for hit in start.hits:
-        if state.destroyed:
-            break
-        run.hit(hit)
+    run.phase([run.hit(hit) for hit in start.hits])
     snapshots = [state.snapshot()]
     rounds = 0
     ended_by: EndedBy = "max rounds"
